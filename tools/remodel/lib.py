@@ -84,3 +84,48 @@ def scarf(kit, rig, color, length=9.0, width=3.0, salt=70, ring=True):
     rig.box("scarf", (-width * 0.9, d.sh_y - 1.0 - length, d.td / 2 - 0.5), (width, length, 0.9), cloth)
     rig.box("scarf", (width * 0.1, d.sh_y - 1.0 - length * 0.8, d.td / 2 - 0.5), (width, length * 0.8, 0.9), cloth)
     rig.animate("scarf", sway=1.2)
+
+
+def _sample(track, t):
+    """The value of a clip track {"0.00": [x, y, z], ...} at second t (linear between keys, held outside them), as the game plays it."""
+    keys = sorted((float(k), v) for k, v in track.items())
+    if t <= keys[0][0]:
+        return tuple(keys[0][1])
+    for (t0, a), (t1, b) in zip(keys, keys[1:]):
+        if t <= t1:
+            f = (t - t0) / (t1 - t0) if t1 > t0 else 1.0
+            return tuple(x + (y - x) * f for x, y in zip(a, b))
+    return tuple(keys[-1][1])
+
+
+def pose_clip(rig, name, src, t, length, adds=None, ramp=0.0, loop=False, sway=None):
+    """A clip that HOLDS the pose another clip of the model has at second `t`, so the arms stay solved against the prop by the kit (a staff levelled at a target is the attack's thrust
+    frozen at its hit, not an arm guessed by hand). `adds` = {bone: (x, y, z)} degrees added to that pose's rotation (a bow leans the body and turns the arms back by the same angle);
+    `ramp` > 0 eases in from the source clip's first pose over that many seconds; `sway` = {bone: (x, y, z)} a slow breath of that amplitude (a loop must not look frozen)."""
+    clip = rig.A.clips[src]["bones"]
+    adds, sway = adds or {}, sway or {}
+    out = {}
+    for bone in set(clip) | set(adds) | set(sway):
+        if not rig.has(bone):
+            continue
+        tracks = clip.get(bone, {})
+        entry = {}
+        for kind in ("rotation", "position", "scale"):
+            track = tracks.get(kind)
+            if not track and not (kind == "rotation" and (bone in adds or bone in sway)):
+                continue
+            rest = (1.0, 1.0, 1.0) if kind == "scale" else (0.0, 0.0, 0.0)
+            hold = _sample(track, t) if track else rest
+            first = _sample(track, 0.0) if track else rest
+            if kind == "rotation" and bone in adds:
+                hold = tuple(h + a for h, a in zip(hold, adds[bone]))
+            if kind == "rotation" and bone in sway:
+                keys = {length * k / 4.0: tuple(h + math.sin(2 * math.pi * k / 4.0) * a for h, a in zip(hold, sway[bone])) for k in range(5)}
+            elif ramp > 0.0:
+                keys = {0.0: first, ramp: hold, length: hold}
+            else:
+                keys = {0.0: hold, length: hold}
+            entry[kind] = {_key(tt): [round(float(v), 4) for v in vec] for tt, vec in keys.items()}
+        if entry:
+            out[bone] = entry
+    rig.A.clips[name] = {"loop": bool(loop), "animation_length": float(length), "bones": out}
