@@ -184,6 +184,16 @@ class ItemAssetsTest {
     }
 
     @Test
+    void healthPotionsAreCraftableAndChain() throws Exception {
+        for (HealthPotionTier t : HealthPotionTier.values()) {
+            String r = text("/data/nusmp/recipe/" + t.itemId() + ".json");
+            assertTrue(r.contains("\"nusmp:" + t.itemId() + "\""), t.itemId() + " recipe result");
+        }
+        assertTrue(text("/data/nusmp/recipe/health_potion_medium.json").contains("nusmp:health_potion_small"));
+        assertTrue(text("/data/nusmp/recipe/health_potion_large.json").contains("nusmp:health_potion_medium"));
+    }
+
+    @Test
     void healthPotionsGrowWithSize() {
         HealthPotionTier s = HealthPotionTier.SMALL, m = HealthPotionTier.MEDIUM, l = HealthPotionTier.LARGE;
         assertTrue(s.totalHeal() < m.totalHeal() && m.totalHeal() < l.totalHeal());

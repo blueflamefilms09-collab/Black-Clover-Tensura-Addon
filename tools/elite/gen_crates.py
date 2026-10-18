@@ -10,6 +10,7 @@ Per tier <t> in (common, rare, elite) this writes
   assets/nusmp/models/item/<t>_crate.json                                  the closed model with the block display transforms
   data/nusmp/loot_table/blocks/<t>_crate.json                              the crate drops itself
   data/nusmp/recipe/<t>_crate.json                                         common: planks and iron; rare: a Common Crate, diamonds, iron; elite: a Rare Crate, gold blocks, netherite
+  data/nusmp/recipe/health_potion_<size>.json                              the three Health Potions (they chain: two of one size and a golden food make the next)
 (the keys are loot only, they have no recipe). Deterministic.
 """
 import json
@@ -138,10 +139,29 @@ RECIPES = {
 }
 
 
+def shapeless(result, *ingredients):
+    return {"type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": [{"item": i} for i in ingredients], "result": {"id": "nusmp:" + result, "count": 1}}
+
+
+# the Health Potions (the three sizes chain: two of one size and a golden food make the next; the sums keep the value: 8 + 8 = 16, 16 + 16 = 32 >= 28 and a golden apple's absorption)
+POTION_RECIPES = {
+    "health_potion_small": shapeless("health_potion_small", "minecraft:glass_bottle", "minecraft:glistering_melon_slice", "minecraft:redstone"),
+    "health_potion_medium": shapeless("health_potion_medium", "nusmp:health_potion_small", "nusmp:health_potion_small", "minecraft:golden_carrot"),
+    "health_potion_large": shapeless("health_potion_large", "nusmp:health_potion_medium", "nusmp:health_potion_medium", "minecraft:golden_apple"),
+}
+
+
 def main(argv):
     check = "--check" in argv
     dirty = 0
     sheets = []
+    for pid, rec in POTION_RECIPES.items():
+        path = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "recipe", pid + ".json")
+        if check:
+            if not os.path.exists(path) or open(path, encoding="utf-8").read() != jdump(rec):
+                dirty += 1
+        else:
+            write_text(path, jdump(rec))
     for tier in TIERS:
         files, closed = files_for(tier)
         files["data/nusmp/recipe/%s_crate.json" % tier] = jdump(RECIPES[tier])

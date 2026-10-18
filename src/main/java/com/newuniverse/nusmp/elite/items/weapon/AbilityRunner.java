@@ -82,7 +82,8 @@ public final class AbilityRunner {
     static MobEffectInstance instance(AbilitySpec.EffectSpec e) {
         ResourceLocation rl = ResourceLocation.tryParse(e.id());
         if (rl == null) return null;
-        return BuiltInRegistries.MOB_EFFECT.getHolder(rl).map(h -> new MobEffectInstance(h, e.ticks(), e.amp(), false, true, true)).orElse(null);
+        java.util.Optional<net.minecraft.core.Holder.Reference<net.minecraft.world.effect.MobEffect>> h = BuiltInRegistries.MOB_EFFECT.getHolder(rl);
+        return h.isEmpty() ? null : new MobEffectInstance(h.get(), e.ticks(), e.amp(), false, true, true);
     }
 
     static void strip(LivingEntity t, int n) {

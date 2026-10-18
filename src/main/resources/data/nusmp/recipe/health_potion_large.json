@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nusmp:health_potion_medium"
+    },
+    {
+      "item": "nusmp:health_potion_medium"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    }
+  ],
+  "result": {
+    "id": "nusmp:health_potion_large",
+    "count": 1
+  }
+}

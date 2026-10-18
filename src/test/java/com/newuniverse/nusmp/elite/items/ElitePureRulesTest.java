@@ -76,7 +76,7 @@ class ElitePureRulesTest {
         assertTrue(NightingaleRules.needsNightVision(7));
         assertFalse(NightingaleRules.needsNightVision(8));
         assertFalse(NightingaleRules.needsNightVision(-1));
-        assertTrue(NightingaleRules.NIGHT_VISION_TICKS > 220, "longer than the 11 s at which vanilla starts to flash Night Vision");
+        assertTrue(NightingaleRules.NIGHT_VISION_TICKS > 200, "longer than the 10 s (200 ticks) at which vanilla starts to flash Night Vision");
         assertTrue(NightingaleRules.lullabySecond(0) && !NightingaleRules.lullabySecond(1) && NightingaleRules.lullabySecond(2));
     }
 

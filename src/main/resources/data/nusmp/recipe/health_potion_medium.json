@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nusmp:health_potion_small"
+    },
+    {
+      "item": "nusmp:health_potion_small"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    }
+  ],
+  "result": {
+    "id": "nusmp:health_potion_medium",
+    "count": 1
+  }
+}

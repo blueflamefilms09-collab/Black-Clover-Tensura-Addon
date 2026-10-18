@@ -5,7 +5,7 @@ package com.newuniverse.nusmp.elite.items.armor;
  * Nightingale is a night singer, so the full set (hood, cloak, leggings, boots) makes its wearer quick, lets them see in the dark and lets a quiet wearer sing the people around them back to health.
  * <ul>
  *   <li>4 of 4 pieces: Speed I, refreshed every second;</li>
- *   <li>in the dark (block and sky light at the feet at most {@link #DARK_LIGHT}): Night Vision, lasting {@link #NIGHT_VISION_TICKS} (longer than 11 s so it never flickers);</li>
+ *   <li>in the dark (block and sky light at the feet at most {@link #DARK_LIGHT}): Night Vision, lasting {@link #NIGHT_VISION_TICKS} (longer than 10 s (200 ticks, where vanilla starts to flash it) so it never flickers);</li>
  *   <li>sneaking: the Lullaby, once every {@link #LULLABY_PERIOD} ticks the wearer and allied players within {@link #LULLABY_RADIUS} blocks regain {@link #LULLABY_HEAL} health.</li>
  * </ul>
  */
