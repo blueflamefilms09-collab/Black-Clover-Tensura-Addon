@@ -54,7 +54,7 @@ public final class ModWorldDropData extends SavedData {
         DropLedger.Claim old = ledger.adminClear(bossId);
         if (old != null) {
             setDirty();
-            LOG.warn("[nusmp] Charter Grimoire lock of '{}' cleared by {} (it had been claimed by {} on day {})", bossId, by, old.name(), old.day());
+            LOG.warn("[nusmp] Canon Grimoire lock of '{}' cleared by {} (it had been claimed by {} on day {})", bossId, by, old.name(), old.day());
         }
         return old;
     }

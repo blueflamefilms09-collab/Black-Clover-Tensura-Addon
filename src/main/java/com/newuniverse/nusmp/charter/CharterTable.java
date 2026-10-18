@@ -58,26 +58,26 @@ public final class CharterTable {
 
     static {
         add("dante", "dante_zogratis", "Dante Zogratis", "LEGEND", 0.25, 0x4B2D8A, 0xC9A7FF,
-                "The Charter of the Gravity Devil: weight that bends the room around its holder.",
+                "The Canon of the Gravity Devil: weight that bends the room around its holder.",
                 "gravity_domination", "gravity_manipulation", "gravity_field", "gravity_flight", "gravity_attack_resistance", "burden", "oppressor", "strengthen_body");
         add("vanica", "vanica_zogratis", "Vanica Zogratis", "LEGEND", 0.25, 0x9B1230, 0xFF8FA3,
-                "The Charter of the Curse-Warding Devil: blood and curses on loan.",
+                "The Canon of the Curse-Warding Devil: blood and curses on loan.",
                 "blood_mist", "curse", "curse_bind", "darkness", "shadow_bind", "shadow_motion", "drain", "self_regeneration");
         add("zenon", "zenon_zogratis", "Zenon Zogratis", "LEGEND", 0.25, 0x1C7C8C, 0x8CF2FF,
-                "The Charter of the Spatial Devil: doors where there are no doors.",
+                "The Canon of the Spatial Devil: doors where there are no doors.",
                 "spatial_manipulation", "spatial_domination", "spatial_motion", "spatial_storage", "spatial_attack_resistance", "dimension_cutter", "instant_move", "danger_sense");
         add("lucius", "lucius_zogratis", "Lucius Zogratis", "GOD", 0.25, 0xD9B43A, 0x2B2410,
-                "The Charter of the Time Devil's Vessel: nothing it names is allowed to stay as it was.",
+                "The Canon of the Time Devil's Vessel: nothing it names is allowed to stay as it was.",
                 "anti_skill", "tuner", "absolute_severance", "megiddo", "true_darkness", "dimension_cutter", "thought_acceleration",
                 "spiritual_attack_resistance", "holy_attack_resistance");
         add("devil_avatar", "devil_avatar", "the Devil Avatar", "GOD", 0.40, 0x2A2024, 0xFF6A1A,
-                "The Charter of a devil that walked: hellfire borrowed for as long as you hold it.",
+                "The Canon of a devil that walked: hellfire borrowed for as long as you hold it.",
                 "hellfire", "black_flame", "flame_manipulation", "flame_domination", "flame_attack_resistance", "darkness_attack_resistance", "demon_lord_haki", "summon_daemon");
         add("goliath", "goliath", "Goliath", "LEGEND", 0.40, 0x6B5A3C, 0xE3C98A,
-                "The Charter of the Pit's giant: stone, weight and a very large fist.",
+                "The Canon of the Pit's giant: stone, weight and a very large fist.",
                 "earth_manipulation", "earth_domination", "earth_wall", "earth_spikes", "earthshatter_kick", "giantification", "physical_attack_resistance", "steel_strength", "strengthen_body");
         add("charybdis_spawn", "charybdis_spawn", "the Charybdis Spawn", "LEGEND", 0.40, 0x1D4F9C, 0x9AD8FF,
-                "The Charter of the Basin's whirlpool: every current answers to it.",
+                "The Canon of the Basin's whirlpool: every current answers to it.",
                 "water_manipulation", "water_domination", "water_current_control", "water_jail", "water_blade", "water_breathing", "water_attack_resistance", "hydraulic_propulsion");
     }
 

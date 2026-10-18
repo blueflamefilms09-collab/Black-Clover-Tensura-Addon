@@ -180,11 +180,11 @@ public final class ArcSelfTests {
             if (!c.hasCharter() || com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) continue;     // 1.61.0: the older seven keep their own Charter rows (arcworld.roster)
             n++;
             CharterTable.Boss b = CharterTable.byId(c.charterId());
-            if (b == null) { bad.add(c.id() + " has no Charter row"); continue; }
+            if (b == null) { bad.add(c.id() + " has no Canon row"); continue; }
             if (CharterTable.byEntity("nusmp", c.id()) != b) bad.add(c.id() + ": the entity does not resolve to its grimoire");
             if (CharterItems.item(b.id()) == null) bad.add(c.id() + " has no grimoire item");
             if (!BossRegistry.known(c.id()) || BossBuffTable.profile(c.id()) == null) bad.add(c.id() + " has no buff row");
-            for (String d : ArcCharterRules.dropped(c.charterSkills())) bad.add(c.id() + " lists the skill '" + d + "', which the Charter laws drop");
+            for (String d : ArcCharterRules.dropped(c.charterSkills())) bad.add(c.id() + " lists the skill '" + d + "', which the Canon laws drop");
             for (String skill : b.skills()) {
                 ResourceLocation rl = ResourceLocation.tryParse(skill);
                 Object found = null;
@@ -265,7 +265,7 @@ public final class ArcSelfTests {
                 boss = r.boss();
                 if (!c.equals(boss.character())) return fail("the summoned boss is not " + c.id());
                 if (!c.id().equals(BossEntities.bossId(boss))) return fail(c.id() + " is not recognised as a boss by the boss registry");
-                if (CharterTable.byEntity("nusmp", c.id()) == null && c.hasCharter()) return fail(c.id() + " is not recognised by the Charter table");
+                if (CharterTable.byEntity("nusmp", c.id()) == null && c.hasCharter()) return fail(c.id() + " is not recognised by the Canon table");
                 if (ArcSpawner.standing(level, c.id(), where).isEmpty()) return fail("a summoned " + c.id() + " is not found standing");
                 done.add(c.id() + " summoned and recognised");
             }

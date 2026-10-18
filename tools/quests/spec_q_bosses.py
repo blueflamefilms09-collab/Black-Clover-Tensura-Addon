@@ -160,8 +160,8 @@ def hard(reg):
     c.q("cores", "Nine Devil Cores", (3, 3), "nusmp:devil_core_beelzebub", "boss", "The whole choir",
         "Carry all nine devil cores.", deps=["all_magic"], tasks=[T.adv("spirits/devil_cores_all")], optional=True,
         rewards=[R.xp(1000), R.loot("legend_trophy")])
-    c.q("charters", "The Complete Charter", (4, 1), "nusmp:charter_grimoire_lucius", "mile", "Seven charters",
-        "Carry all seven boss charter grimoires.", deps=["seals", "vecna"], dep_any=True, tasks=[T.adv("squads/charter_all")], optional=True)
+    c.q("charters", "The Complete Canon", (4, 1), "nusmp:charter_grimoire_lucius", "mile", "Seven canons",
+        "Carry all seven boss canon grimoires.", deps=["seals", "vecna"], dep_any=True, tasks=[T.adv("squads/charter_all")], optional=True)
     c.q("four_forms", "Four Forms of the Shadow", (4, 3), "minecraft:ender_eye", "mile", "Unite",
         "Take all four Unite forms.", deps=["cores"], tasks=[T.adv("spells/unite_all")], optional=True)
     c.q("roster", "The Whole Roster", (5, 2), "minecraft:totem_of_undying", "boss", "Twenty canon pages",

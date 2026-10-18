@@ -176,10 +176,10 @@
 	"quest.072803DDD6E83007.quest_subtitle": "The spire's top"
 	"quest.072803DDD6E83007.title": "Vault Opened"
 	"quest.0771DC0B1327EB21.quest_desc": [
-		"A charter grimoire marks a boss hunt as a squad affair. Carry one."
+		"A canon grimoire marks a boss hunt as a squad affair. Carry one."
 	]
-	"quest.0771DC0B1327EB21.quest_subtitle": "Boss charters"
-	"quest.0771DC0B1327EB21.title": "A Written Charter"
+	"quest.0771DC0B1327EB21.quest_subtitle": "Boss canons"
+	"quest.0771DC0B1327EB21.title": "A Written Canon"
 	"quest.07778E5B9BFC03D8.quest_desc": [
 		"Submit 256 magic stones to the squad's treasury. Item tasks are shared by the whole team: every member can put stones in, and the quest completes when the total reaches 256."
 	]
@@ -347,10 +347,10 @@
 	"quest.15DADB4602A4328D.quest_subtitle": "A delicacy"
 	"quest.15DADB4602A4328D.title": "Basilisk Fillet"
 	"quest.16547121D8B77F3A.quest_desc": [
-		"A charter grimoire marks a boss hunt as a squad affair. Carry one."
+		"A canon grimoire marks a boss hunt as a squad affair. Carry one."
 	]
-	"quest.16547121D8B77F3A.quest_subtitle": "Boss charters"
-	"quest.16547121D8B77F3A.title": "A Written Charter"
+	"quest.16547121D8B77F3A.quest_subtitle": "Boss canons"
+	"quest.16547121D8B77F3A.title": "A Written Canon"
 	"quest.16EB9E3B1461127B.quest_desc": [
 		"Every magic of the branch cast, and a signature page after it. You are a master of this branch."
 	]
@@ -689,10 +689,10 @@
 	"quest.32AA0A22DB66B1CD.quest_subtitle": "Arts that move the unseen"
 	"quest.32AA0A22DB66B1CD.title": "Song, Butoh, Soul and Shadow: Awaken"
 	"quest.32DD7D81636D3F72.quest_desc": [
-		"All seven boss charters, carried by the squad."
+		"All seven boss canons, carried by the squad."
 	]
-	"quest.32DD7D81636D3F72.quest_subtitle": "Seven charters"
-	"quest.32DD7D81636D3F72.title": "The Complete Charter"
+	"quest.32DD7D81636D3F72.quest_subtitle": "Seven canons"
+	"quest.32DD7D81636D3F72.title": "The Complete Canon"
 	"quest.3324A66A6EAD81BE.quest_desc": [
 		"You have a squad, a treasury and a place in the kingdoms. A bigger fight is waiting: the arena of the Final Hour has a chapter of its own in this book."
 	]
@@ -1313,9 +1313,9 @@
 	]
 	"quest.639C3B8BA9C544E8.quest_subtitle": "Everything that binds"
 	"quest.639C3B8BA9C544E8.title": "Thread, Seal and Chain: Awaken"
-	"quest.63E0F32943DEEBD1.quest_desc": ["Carry all seven boss charter grimoires."]
-	"quest.63E0F32943DEEBD1.quest_subtitle": "Seven charters"
-	"quest.63E0F32943DEEBD1.title": "The Complete Charter"
+	"quest.63E0F32943DEEBD1.quest_desc": ["Carry all seven boss canon grimoires."]
+	"quest.63E0F32943DEEBD1.quest_subtitle": "Seven canons"
+	"quest.63E0F32943DEEBD1.title": "The Complete Canon"
 	"quest.63E175378A296ED8.quest_desc": ["Carry the Hourglass of the Final Hour."]
 	"quest.63E175378A296ED8.quest_subtitle": "Carry it"
 	"quest.63E175378A296ED8.title": "The Hourglass"

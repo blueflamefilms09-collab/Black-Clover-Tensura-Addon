@@ -240,8 +240,8 @@ def arc9(reg):
     c = start(reg, "arc09_spade_raid", "Spade Kingdom Raid", "minecraft:black_banner", "Dante, Vanica and Zenon.",
               "The Spade Kingdom sends its Dark Triad. Three siblings, three kinds of magic, and a bond between them that makes the second fall "
               "harder than the first.", 9, prev_of(9))
-    c.q("charter", "A Written Charter", (1, 1), "nusmp:charter_grimoire_dante", "step", "Boss charters",
-        "A charter grimoire marks a boss hunt as a squad affair. Carry one.", deps=["welcome"], tasks=[T.adv("squads/charter")])
+    c.q("charter", "A Written Canon", (1, 1), "nusmp:charter_grimoire_dante", "step", "Boss canons",
+        "A canon grimoire marks a boss hunt as a squad affair. Carry one.", deps=["welcome"], tasks=[T.adv("squads/charter")])
     c.q("spade", "A Grimoire of Spades", (1, 2), "minecraft:black_banner", "side", "The Spade suit",
         "Receive a grimoire from the Spade Kingdom.", deps=["welcome"], tasks=[T.adv("world/kingdom_spade")])
     c.q("first", "First Blood", (2, 1), "minecraft:iron_sword", "step", "Fell a boss",

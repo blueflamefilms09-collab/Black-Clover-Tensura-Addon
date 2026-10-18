@@ -11,11 +11,11 @@ public final class CharterConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("charter");
-        ENABLED = b.comment("The first-kill Charter Grimoire drops. false = no boss leaves one and nothing is locked (grimoires can still be given with /multiverse charter give).")
+        ENABLED = b.comment("The first-kill Canon Grimoire drops. false = no boss leaves one and nothing is locked (grimoires can still be given with /multiverse charter give).")
                 .define("enabled", true);
-        DROP_CHANCE = b.comment("Multiplies each boss's chance to leave its Charter Grimoire (25% for the four Zogratis, 40% for the floor bosses). It only rolls while the grimoire is unclaimed in this world; 0 = never, 4 = four times as likely (capped at 100%).")
+        DROP_CHANCE = b.comment("Multiplies each boss's chance to leave its Canon Grimoire (25% for the four Zogratis, 40% for the floor bosses). It only rolls while the grimoire is unclaimed in this world; 0 = never, 4 = four times as likely (capped at 100%).")
                 .defineInRange("dropChance", 1.0, 0.0, 10.0);
-        MIRROR = b.comment("A held Charter Grimoire lends its boss's skills for as long as it is held. false = the grimoires lend nothing.")
+        MIRROR = b.comment("A held Canon Grimoire lends its boss's skills for as long as it is held. false = the grimoires lend nothing.")
                 .define("mirror", true);
         b.pop();
         SPEC = b.build();

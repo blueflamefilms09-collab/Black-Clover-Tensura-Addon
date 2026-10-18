@@ -86,7 +86,7 @@ public final class ArcWorldSelfTests {
             if (in == null) { bad.add(c.id() + " is not in the roster (ArcCharacters.bootstrap or ArcWorldSystem.init did not register it)"); continue; }
             if (!in.equals(c)) bad.add(c.id() + ": the roster holds another record under this id");
             if (!BossRegistry.known(c.id())) bad.add(c.id() + " is not in the boss registry");
-            if (c.hasCharter() && CharterTable.byId(c.charterId()) == null) bad.add(c.id() + " declares a grimoire the Charter table does not have");
+            if (c.hasCharter() && CharterTable.byId(c.charterId()) == null) bad.add(c.id() + " declares a grimoire the Canon table does not have");
             EntityType<?> type = ExistingBossSpawner.typeOf(c.id());
             if (type == null) { bad.add(c.id() + " has no entity type (nusmp:" + ExistingBosses.entityPath(c.id()) + ")"); continue; }
             var probe = type.create(level);
@@ -95,7 +95,7 @@ public final class ArcWorldSelfTests {
             if (probe != null) probe.discard();
         }
         if (!bad.isEmpty()) return problems(bad);
-        return ok(ExistingBosses.all().size() + " older bosses are characters, with entity types, registry ids and (where they had one) Charter rows");
+        return ok(ExistingBosses.all().size() + " older bosses are characters, with entity types, registry ids and (where they had one) Canon rows");
     }
 
     // ================================================================ floor boss
