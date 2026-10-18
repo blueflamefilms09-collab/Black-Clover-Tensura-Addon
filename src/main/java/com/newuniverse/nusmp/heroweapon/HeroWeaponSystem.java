@@ -21,11 +21,24 @@ public final class HeroWeaponSystem {
     private HeroWeaponSystem() {}
 
     private static boolean done;
+    private static IEventBus bus;
+    private static ModContainer container;
+
+    /**
+     * The mod event bus, set before the weapon logics are constructed, so that a logic that needs registry or payload events (the Carriage's entity type, a weapon's
+     * network payload) can attach them from its constructor. Null before {@link #init}.
+     */
+    public static IEventBus modBus() { return bus; }
+
+    /** The mod container, set like {@link #modBus}; a logic registers its own config file with it when it has one. */
+    public static ModContainer modContainer() { return container; }
 
     /** The single entry point, called from the mod constructor on both sides. */
     public static synchronized void init(IEventBus modBus, ModContainer modContainer) {
         if (done) return;
         done = true;
+        bus = modBus;
+        container = modContainer;
         HeroItems.REGISTER.register(modBus);
         HeroComponents.COMPONENTS.register(modBus);
         HeroBonds.ATTACHMENTS.register(modBus);
