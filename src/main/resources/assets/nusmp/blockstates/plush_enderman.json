@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nusmp:block/plush/enderman"
+    },
+    "facing=east": {
+      "model": "nusmp:block/plush/enderman",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "nusmp:block/plush/enderman",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nusmp:block/plush/enderman",
+      "y": 270
+    }
+  }
+}
