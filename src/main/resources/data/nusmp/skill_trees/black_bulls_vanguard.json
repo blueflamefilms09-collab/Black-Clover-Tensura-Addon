@@ -1,0 +1,1089 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Black Bulls Vanguard",
+  "desc": "The reckless frontliner of a squad of misfits: draw the whole battlefield onto yourself, laugh at the damage and hit back twice as hard. Strength through spite.",
+  "book": "nusmp:black_bulls_vanguard_book",
+  "book_name": "Hideout Brawl Handbook",
+  "book_lore": "A battered log from a squad hideout that is half battle plan, half bar tab.",
+  "color": "#3A3340",
+  "icon": "minecraft:black_banner",
+  "class_id": "black_bulls_vanguard",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/black_bulls_vanguard.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "reckless_charge",
+      "name": "Reckless Charge",
+      "desc": "Give up your guard for a harder punch and a faster stride.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "hold_the_line",
+      "name": "Hold the Line",
+      "desc": "Plant yourself and become the wall your squad leans on.",
+      "parents": [
+        {
+          "node": "reckless_charge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "bottomless_guts",
+      "name": "Bottomless Guts",
+      "desc": "A body that keeps standing after everyone else would not.",
+      "parents": [
+        {
+          "node": "reckless_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "heavy_hand",
+      "name": "Heavy Hand",
+      "desc": "Brawls toughen the fists.",
+      "parents": [
+        {
+          "node": "hold_the_line",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "bull_s_neck",
+      "name": "Bull's Neck",
+      "desc": "Hard to push around.",
+      "parents": [
+        {
+          "node": "reckless_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "rowdy_challenge",
+      "name": "Rowdy Challenge",
+      "desc": "Bellow an insult that draws every hostile creature nearby onto you.",
+      "parents": [
+        {
+          "node": "reckless_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "bullhorn_charge",
+      "name": "Bullhorn Charge",
+      "desc": "Lower your head and run through a line of foes, goring everyone in your path.",
+      "parents": [
+        {
+          "node": "hold_the_line",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "squad_brawl_leap",
+      "name": "Squad Brawl Leap",
+      "desc": "Jump into the crowd and land with a crunch that throws foes aside.",
+      "parents": [
+        {
+          "node": "rowdy_challenge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "barroom_sweep",
+      "name": "Barroom Sweep",
+      "desc": "A wide swinging blow into the cone of foes in front of you.",
+      "parents": [
+        {
+          "node": "bullhorn_charge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          60.0,
+          66.0,
+          72.0,
+          78.0
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:wooden_sword"
+    },
+    {
+      "id": "raider_s_feast",
+      "name": "Raider's Feast",
+      "desc": "Bite into a foe in melee and heal on the flesh you take back.",
+      "parents": [
+        {
+          "node": "squad_brawl_leap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.4,
+          0.448,
+          0.496,
+          0.544
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cooked_porkchop"
+    },
+    {
+      "id": "hideout_cheer",
+      "name": "Hideout Cheer",
+      "desc": "Shout the squad's battle cry: you and your allies around you gain strength.",
+      "parents": [
+        {
+          "node": "barroom_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:cake"
+    },
+    {
+      "id": "spite_haymaker",
+      "name": "Spite Haymaker",
+      "desc": "A telegraphed, devastating punch that hits much harder against a wounded foe.",
+      "parents": [
+        {
+          "node": "raider_s_feast",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          12.0,
+          15.0,
+          18.0,
+          21.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "lucky_last_gasp",
+      "name": "Lucky Last Gasp",
+      "desc": "Under a quarter of your health you hit much harder.",
+      "parents": [
+        {
+          "node": "rowdy_challenge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "bonus": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "bar_fight_appetite",
+      "name": "Bar Fight Appetite",
+      "desc": "A share of the damage you deal comes back to you as health.",
+      "parents": [
+        {
+          "node": "bullhorn_charge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "spiked_pride",
+      "name": "Spiked Pride",
+      "desc": "Whoever strikes you takes some of the blow back.",
+      "parents": [
+        {
+          "node": "squad_brawl_leap",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "stubborn_to_the_end",
+      "name": "Stubborn to the End",
+      "desc": "When you are nearly dead you are shielded for a few seconds.",
+      "parents": [
+        {
+          "node": "barroom_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "monster_hunter_s_grudge",
+      "name": "Monster Hunter's Grudge",
+      "desc": "You deal more damage to boss-class creatures.",
+      "parents": [
+        {
+          "node": "raider_s_feast",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "never_backing_down",
+      "name": "Never Backing Down",
+      "desc": "The longer the brawl, the harder you hit: blows in a row grow stronger.",
+      "parents": [
+        {
+          "node": "hideout_cheer",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "squad_spirit",
+      "name": "Squad Spirit",
+      "desc": "The people close to you fight with more fire in them.",
+      "parents": [
+        {
+          "node": "spite_haymaker",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "strength",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:red_banner"
+    },
+    {
+      "id": "underdog_overdrive",
+      "name": "Underdog Overdrive",
+      "desc": "Throw everything you have into one crushing sweep that sends a whole cone of foes flying.",
+      "parents": [
+        {
+          "node": "spite_haymaker",
+          "level": 3
+        },
+        {
+          "node": "squad_spirit",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "range": [
+          6.0,
+          6.48,
+          6.96
+        ],
+        "half_angle": [
+          60.0,
+          66.0,
+          72.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0
+        ],
+        "knockback": [
+          1.5,
+          1.65,
+          1.8
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "all_hands_brawl",
+      "name": "All Hands Brawl",
+      "desc": "Call the whole squad's fury down around you: foes nearby are torn at again and again.",
+      "parents": [
+        {
+          "node": "hideout_cheer",
+          "level": 3
+        },
+        {
+          "node": "never_backing_down",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "radius": [
+          5.0,
+          5.4,
+          5.8
+        ],
+        "hits": [
+          7.0,
+          9.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:red_banner"
+    }
+  ]
+}
