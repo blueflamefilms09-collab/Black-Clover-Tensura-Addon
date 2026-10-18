@@ -13,6 +13,10 @@ import java.util.function.Supplier;
  * put it back where it was), or, with no free slot, to the stash list, which the caller saves with the player and which gives its items back at the
  * end.
  *
+ * <p>The one exception is the bearer's own vessel ({@link Ops#overlays}): when that stands in the home slot (a weapon that is also the Djinn's vessel)
+ * the weapon overlays it in place. The vessel is not moved to another slot (a vessel that leaves the hands is no longer found, which ended the Equip);
+ * it is kept in the loan state, in no slot at all, and returns to the home slot unchanged at the end.
+ *
  * <p>The slots are a flat view the caller builds over the player's inventory: indices 0-8 the hotbar, 9-35 the rest of the main inventory
  * ({@link #MAIN} slots, the only ones an item is ever placed in), then any number of other places a weapon must not be (the offhand, the armour, the
  * cursor): {@link #ensure} and {@link #release} wipe a weapon from all of them. Nothing but the weapon token is ever removed, and the only items that
@@ -32,6 +36,13 @@ public final class WeaponLoan<T> {
         boolean isEmpty(T t);
         boolean isWeapon(T t);
         boolean same(T a, T b);
+
+        /**
+         * Is this item one the weapon must OVERLAY instead of displace: the bearer's own vessel. A vessel is only found while it is held, worn or
+         * carried in a Curios slot, so moving a vessel weapon out of the selected slot made the engine lose it and end the Equip ("your vessel left
+         * you"). An overlaid item stays out of every slot (it lives in the loan's record) and goes back to the home slot, unchanged, when the loan ends.
+         */
+        default boolean overlays(T t) { return false; }
     }
 
     public static final int HOTBAR = 9, MAIN = 36;
@@ -39,6 +50,7 @@ public final class WeaponLoan<T> {
     private final Ops<T> ops;
     private int home = -1, moved = -1;
     private T movedItem;
+    private T overlaid;
     private final List<T> stash = new ArrayList<>();
 
     public WeaponLoan(Ops<T> ops) { this.ops = ops; }
@@ -52,13 +64,23 @@ public final class WeaponLoan<T> {
 
     public T movedItem() { return movedItem; }
 
+    /** The item the weapon overlays in the home slot (the bearer's vessel), or null. It is in no inventory slot while the loan lasts. */
+    public T overlaid() { return overlaid; }
+
     public List<T> stash() { return Collections.unmodifiableList(stash); }
 
     /** Takes a saved state back (the caller read it from the player's record). A home outside the hotbar means "no loan". */
-    public void load(int home, int moved, T movedItem, List<T> stash) {
+    public void load(int home, int moved, T movedItem, List<T> stash) { load(home, moved, movedItem, stash, null); }
+
+    /**
+     * The same with the overlaid item (the vessel the weapon sits over). An empty or weapon item is read as none. An overlaid item with no valid home
+     * is still kept, so that {@link #release} can give it back (to the first free slot).
+     */
+    public void load(int home, int moved, T movedItem, List<T> stash, T overlaid) {
         this.home = home >= 0 && home < HOTBAR ? home : -1;
         this.moved = moved >= 0 && moved < MAIN ? moved : -1;
         this.movedItem = this.moved >= 0 ? movedItem : null;
+        this.overlaid = overlaid != null && !ops.isEmpty(overlaid) && !ops.isWeapon(overlaid) ? overlaid : null;
         this.stash.clear();
         if (stash != null) for (T t : stash) if (!ops.isEmpty(t) && !ops.isWeapon(t)) this.stash.add(t);
     }
@@ -76,9 +98,15 @@ public final class WeaponLoan<T> {
         home = Math.max(0, Math.min(HOTBAR - 1, selected));
         moved = -1;
         movedItem = null;
+        T stale = overlaid;                                                    // an overlaid item left by a record that lost its home: it is not dropped, it is displaced like any other
+        overlaid = null;
         wipe(s);
         T occupant = s.get(home);
-        if (!ops.isEmpty(occupant)) displace(s, occupant);
+        if (!ops.isEmpty(occupant)) {
+            if (ops.overlays(occupant)) overlaid = occupant;                  // the vessel stays in the hand's place: not moved, the weapon takes its slot
+            else displace(s, occupant);
+        }
+        if (stale != null) displace(s, stale);
         s.set(home, weapon.get());
     }
 
@@ -97,7 +125,10 @@ public final class WeaponLoan<T> {
         }
         if (ok) return;
         T occupant = s.get(home);
-        if (!ops.isEmpty(occupant)) displace(s, occupant);
+        if (!ops.isEmpty(occupant)) {
+            if (overlaid == null && ops.overlays(occupant)) overlaid = occupant;      // the vessel was put into the home slot meanwhile: it is overlaid too, not shoved out of the hand
+            else displace(s, occupant);
+        }
         s.set(home, weapon.get());
     }
 
@@ -109,13 +140,14 @@ public final class WeaponLoan<T> {
     public List<T> release(Slots<T> s) {
         wipe(s);
         List<T> overflow = new ArrayList<>();
-        if (home < 0 && stash.isEmpty()) {
+        if (home < 0 && stash.isEmpty() && overlaid == null) {
             reset();
             return overflow;
         }
         List<T> toPlace = new ArrayList<>(stash);
         T first = null;
-        if (!toPlace.isEmpty()) first = toPlace.remove(0);
+        if (overlaid != null) first = overlaid;                               // the vessel the weapon overlaid goes back first, into its own slot
+        else if (!toPlace.isEmpty()) first = toPlace.remove(0);
         else if (home >= 0 && moved >= 0 && movedItem != null) {
             T there = s.get(moved);
             if (!ops.isEmpty(there) && !ops.isWeapon(there) && ops.same(there, movedItem) && ops.isEmpty(s.get(home))) {
@@ -141,6 +173,7 @@ public final class WeaponLoan<T> {
         home = -1;
         moved = -1;
         movedItem = null;
+        overlaid = null;
         stash.clear();
     }
 
