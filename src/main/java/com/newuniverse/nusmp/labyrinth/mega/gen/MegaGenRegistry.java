@@ -36,6 +36,8 @@ public final class MegaGenRegistry {
         MegaDungeon.setChainTravel(MegaTravel::enterChain);          // 1.55.0: the Hub's gates take a player up or down a road through the facade
         CoreSelfTests.register();
         StairSelfTests.register();                                    // 1.58.0: stairs.layout and stairs.travel
+        CyclicSettings.register();                                    // 1.83.0: generation.cyclic and its knobs (nusmp-labyrinth-mega-gen-server.toml)
+        CyclicSelfTests.register();                                   // 1.83.0: gen.cyclic
     }
 
     public static void register(IEventBus gameBus) {

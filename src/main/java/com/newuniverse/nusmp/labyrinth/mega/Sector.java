@@ -95,6 +95,13 @@ public final class Sector {
     /** Where a player stands when they come back to this floor from the next one: the {@code arrival} marker of the forward stairwell. Null on a sector without one. */
     public BlockPos stairForwardPad;
 
+    /**
+     * 1.83.0 (anti-dead-end cyclic WFC, {@code generation.cyclic}): was this sector created while the cyclic generator was on? Decided once at creation and saved ("cyc",
+     * only when true), so a sector from before the switch (no saved value) keeps the old generator on every regeneration and repair, and a cyclic one keeps the cyclic
+     * generator. Never changed afterwards.
+     */
+    public boolean cyclic;
+
     public final Crucible crucible = new Crucible();
 
     public Sector(int id) {
@@ -231,6 +238,7 @@ public final class Sector {
         if (stairBack != null) t.putLong("sbk", stairBack.asLong());
         if (stairForward != null) t.putLong("sfw", stairForward.asLong());
         if (stairForwardPad != null) t.putLong("sfp", stairForwardPad.asLong());
+        if (cyclic) t.putBoolean("cyc", true);                          // left out when false, so the save of a sector that is not cyclic is byte for byte what it was
         t.put("crucible", crucible.save());
         return t;
     }
@@ -278,6 +286,7 @@ public final class Sector {
         if (t.contains("sbk")) s.stairBack = BlockPos.of(t.getLong("sbk"));
         if (t.contains("sfw")) s.stairForward = BlockPos.of(t.getLong("sfw"));
         if (t.contains("sfp")) s.stairForwardPad = BlockPos.of(t.getLong("sfp"));
+        s.cyclic = t.getBoolean("cyc");                                 // no saved value (every sector before 1.83.0) = the old generator
         if (t.contains("crucible")) s.crucible.load(t.getCompound("crucible"));
         return s;
     }

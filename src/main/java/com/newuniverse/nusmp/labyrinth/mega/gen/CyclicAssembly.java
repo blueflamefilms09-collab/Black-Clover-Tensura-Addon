@@ -61,9 +61,10 @@ final class CyclicAssembly {
         for (Placed p : a.placed) {
             if (p.shape.isCap()) continue;
             if (!p.link) counts[RoomCategory.of(p.shape.kind, p.shape.id).ordinal()]++;
+            boolean locked = p.index == a.landing || (Roles.of(p.shape.kind) & Roles.LOCKED) != 0;      // the placement step never SEEKS a doorway into the boss chain or the stairs
             for (int si = 0; si < p.shape.sockets.size(); si++) {
                 Socket s = p.shape.sockets.get(si);
-                if (p.isUsed(si) || s.sealed() || !s.isDoor()) continue;
+                if (locked || p.isUsed(si) || s.sealed() || !s.isDoor()) continue;
                 Open o = new Open(p, si, p.socketFront(si), p.socketFacing(si));
                 opens.add(o);
                 byCell.put(p.socketCell(si), o);

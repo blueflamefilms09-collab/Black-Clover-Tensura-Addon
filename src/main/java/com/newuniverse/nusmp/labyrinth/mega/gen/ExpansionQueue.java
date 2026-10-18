@@ -294,6 +294,7 @@ public final class ExpansionQueue implements Expander {
         s.threat = d.threat();
         s.state = Sector.State.GENERATING;
         s.relicCount = d.relicCount();
+        s.cyclic = CyclicSettings.enabled();                       // 1.83.0: decided ONCE, when the sector is created; saved with it ("cyc"), so a regeneration plans the same way
         return s;
     }
 

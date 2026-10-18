@@ -162,6 +162,7 @@ public final class SectorGenerator {
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         for (String n : prep.notes()) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        if (s.cyclic) prep.request().cyclic = CyclicSettings.loopConfig();            // 1.83.0: a sector created while generation.cyclic was on is planned cyclic, for ever (also on regen and repair); older sectors never are
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no sector could be assembled: " + SectorSolver.summary(solved.failures(), 4));
@@ -183,6 +184,7 @@ public final class SectorGenerator {
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         for (String n : prep.notes()) LOG.warn("[nusmp] Mega floor {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        if (s.cyclic) prep.request().cyclic = CyclicSettings.loopConfig();            // 1.83.0: a sector created while generation.cyclic was on is planned cyclic, for ever (also on regen and repair); older sectors never are
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no floor could be assembled: " + SectorSolver.summary(solved.failures(), 4));
@@ -214,6 +216,7 @@ public final class SectorGenerator {
                 plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), first.relicCount(), first.theme().id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        if (CyclicSettings.enabled()) prep.request().cyclic = CyclicSettings.loopConfig();       // 1.83.0: a probe plans what a sector created now would get
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no sector could be assembled: " + SectorSolver.summary(solved.failures(), 4));
@@ -235,6 +238,7 @@ public final class SectorGenerator {
                 plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), draft.relicCount(), draft.theme().id(), pools.themes(), spec);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        if (CyclicSettings.enabled()) prep.request().cyclic = CyclicSettings.loopConfig();       // 1.83.0: a probe plans what a sector created now would get
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no floor could be assembled: " + SectorSolver.summary(solved.failures(), 4));
