@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_step",
+  "shadow_dash",
+  "life_drain"
+ ],
+ "animation": "slim__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "monarch_of_shades_lieutenant",
+ "name": "Monarch of Shades Lieutenant",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Solo Leveling",
+ "tier": 4
+}

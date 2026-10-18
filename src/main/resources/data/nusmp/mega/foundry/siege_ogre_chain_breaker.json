@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "cleave",
+  "ground_slam",
+  "enrage"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "ogre",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "siege_ogre_chain_breaker",
+ "name": "Siege Ogre Chain Breaker",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Attack on Titan",
+ "tier": 4
+}

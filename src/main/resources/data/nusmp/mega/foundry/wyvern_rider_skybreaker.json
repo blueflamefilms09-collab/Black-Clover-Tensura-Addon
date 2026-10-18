@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "sky_dive",
+  "lunge",
+  "acid_spit"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "wyvern_rider_skybreaker",
+ "name": "Wyvern Rider Skybreaker",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "D&D: wyvern",
+ "tier": 4
+}

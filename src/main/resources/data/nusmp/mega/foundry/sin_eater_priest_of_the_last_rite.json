@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "mending_light",
+  "hex"
+ ],
+ "animation": "average__mace-orb__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "sin_eater_priest_of_the_last_rite",
+ "name": "Sin Eater Priest of the Last Rite",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 4
+}

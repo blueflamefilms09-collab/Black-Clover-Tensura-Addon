@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "swarm_call",
+  "miasma",
+  "web_shot"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#efe990",
+ "height": 1.94,
+ "id": "hunger_moth_empress",
+ "name": "Hunger Moth Empress",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "Made in Abyss",
+ "tier": 4
+}

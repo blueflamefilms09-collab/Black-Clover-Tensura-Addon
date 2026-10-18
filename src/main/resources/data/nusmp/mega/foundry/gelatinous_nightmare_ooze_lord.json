@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "acid_spit",
+  "miasma"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "slime",
+ "glow": "#b8ffe0",
+ "height": 3.09,
+ "id": "gelatinous_nightmare_ooze_lord",
+ "name": "Gelatinous Nightmare Ooze Lord",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Tensura",
+ "tier": 4
+}

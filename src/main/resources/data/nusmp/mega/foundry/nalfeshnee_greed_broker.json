@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "war_cry",
+  "ground_slam"
+ ],
+ "animation": "huge__mace-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "demon",
+ "glow": "#c2636b",
+ "height": 3.09,
+ "id": "nalfeshnee_greed_broker",
+ "name": "Nalfeshnee Greed Broker",
+ "road": "abyssal",
+ "size": 1.5,
+ "source": "D&D: nalfeshnee",
+ "tier": 4
+}

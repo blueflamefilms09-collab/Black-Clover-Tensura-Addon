@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "dread_gaze",
+  "ice_bind"
+ ],
+ "animation": "huge__trident-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "aquatic",
+ "glow": "#9775c2",
+ "height": 3.09,
+ "id": "aboleth_deepwater_prophet",
+ "name": "Aboleth Deepwater Prophet",
+ "road": "abyssal",
+ "size": 1.5,
+ "source": "D&D: aboleth",
+ "tier": 4
+}

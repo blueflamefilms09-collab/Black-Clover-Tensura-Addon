@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "shadow_dash",
+  "ground_slam"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "demon",
+ "glow": "#de6868",
+ "height": 3.09,
+ "id": "cursed_spirit_special_grade",
+ "name": "Cursed Spirit Special Grade",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "Jujutsu Kaisen",
+ "tier": 4
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "acid_spit",
+  "leap_slam",
+  "miasma"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#b7ff79",
+ "height": 3.09,
+ "id": "black_dragon_mire_lord",
+ "name": "Black Dragon Mire Lord",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "D&D: black dragon",
+ "tier": 4
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "soul_siphon",
+  "dread_gaze",
+  "hex"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#bcde6e",
+ "height": 1.94,
+ "id": "mind_flayer_elder_brain_herald",
+ "name": "Mind Flayer Elder Brain Herald",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "D&D: elder brain",
+ "tier": 4
+}

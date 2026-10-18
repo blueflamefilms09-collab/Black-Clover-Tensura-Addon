@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "raise_dead",
+  "conjure_imps",
+  "dread_gaze"
+ ],
+ "animation": "lanky__orb-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "nameless_black_mass_hierophant",
+ "name": "Nameless Black Mass Hierophant",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 4
+}

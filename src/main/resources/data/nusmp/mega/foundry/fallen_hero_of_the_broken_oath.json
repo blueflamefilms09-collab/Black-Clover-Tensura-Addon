@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shield_bash",
+  "life_drain",
+  "blood_rage"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#c2636b",
+ "height": 2.09,
+ "id": "fallen_hero_of_the_broken_oath",
+ "name": "Fallen Hero of the Broken Oath",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "Dragon Quest",
+ "tier": 4
+}

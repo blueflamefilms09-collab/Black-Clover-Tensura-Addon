@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "dread_gaze",
+  "blink"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "nightmare_choir_conductor",
+ "name": "Nightmare Choir Conductor",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Re:Zero",
+ "tier": 4
+}
