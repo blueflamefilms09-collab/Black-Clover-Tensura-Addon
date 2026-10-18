@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": { "item": "minecraft:amethyst_shard" },
+    "G": { "item": "minecraft:gold_ingot" },
+    "L": { "item": "minecraft:lapis_lazuli" },
+    "T": { "item": "minecraft:ghast_tear" }
+  },
+  "pattern": [
+    "AGA",
+    "LTL",
+    "AGA"
+  ],
+  "result": { "id": "nusmp:purification_charm", "count": 1 }
+}
