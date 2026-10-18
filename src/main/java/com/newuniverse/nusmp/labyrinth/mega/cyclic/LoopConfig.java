@@ -16,8 +16,8 @@ package com.newuniverse.nusmp.labyrinth.mega.cyclic;
  * @param lockedMask       roles into which no doorway may be cut ({@link Roles#LOCKED})
  * @param protectedMask    roles the pruner may not remove ({@link Roles#PROTECTED})
  * @param prune            may the pass remove dangling rooms that no loop can cure (never a terminal, never a required room)
- * @param overgrow         the generator may place this many times its room budget before the pass trims it (the dangling rooms are the first to go)
- * @param lookahead        how many fitting candidates the placement step compares by {@link SocketRules#placementScore} (1 = take the first, the old behaviour)
+ * @param overgrow         the ordinary filler may place this fraction of the floor's room budget (0.9 = 90 %): the hallways the pass adds make up the rest, so the floor ends near the budget
+ * @param lookahead        how many fitting templates (different shapes, each in every turn that fits) the placement step compares by {@link SocketRules#placementScore} (1 = take the first, the old behaviour)
  * @param balanceWeight    how strongly a placement and a prune are nudged towards the target category shares (0 = not at all)
  */
 public record LoopConfig(double deadEndTarget, double cycleTarget, int maxHallway, double hallwayShare, int maxLinks, int minCycleFix, int minCycle, int terminalMask,
@@ -31,14 +31,14 @@ public record LoopConfig(double deadEndTarget, double cycleTarget, int maxHallwa
         maxLinks = Math.max(0, maxLinks);
         minCycleFix = Math.max(3, minCycleFix);
         minCycle = Math.max(3, minCycle);
-        overgrow = Math.max(1.0, Math.min(2.0, overgrow));
+        overgrow = Double.isNaN(overgrow) ? 1.0 : Math.max(0.5, Math.min(2.0, overgrow));
         lookahead = Math.max(1, Math.min(32, lookahead));
         balanceWeight = Math.max(0.0, balanceWeight);
     }
 
     /** The shipped defaults: at most 8 % dead ends, hallways of up to 3 modules, loops until 60 % of the rooms lie on a cycle. */
     public static LoopConfig defaults() {
-        return new LoopConfig(0.08, 0.60, 3, 0.20, 16, 4, 6, Roles.TERMINAL, Roles.LOCKED, Roles.PROTECTED, true, 1.25, 6, 1.0);
+        return new LoopConfig(0.08, 0.60, 3, 0.20, 16, 4, 6, Roles.TERMINAL, Roles.LOCKED, Roles.PROTECTED, true, 0.9, 12, 2.0);
     }
 
     public LoopConfig withDeadEndTarget(double v) { return new LoopConfig(v, cycleTarget, maxHallway, hallwayShare, maxLinks, minCycleFix, minCycle, terminalMask, lockedMask, protectedMask, prune, overgrow, lookahead, balanceWeight); }

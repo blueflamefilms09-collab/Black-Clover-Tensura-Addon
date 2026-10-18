@@ -53,25 +53,25 @@ public final class MegaAssembler {
 
     private static final int MODULE = MegaGrid.MODULE;
 
-    private final Request req;
-    private final Recipe rc;
-    private final PoolSource src;
-    private final Rng rng;
-    private final Box region;
+    final Request req;
+    final Recipe rc;
+    final PoolSource src;
+    final Rng rng;
+    final Box region;
 
-    private final ArrayList<Placed> placed = new ArrayList<>();
-    private final BoxIndex index = new BoxIndex();
-    private final int[] kindCount = new int[RoomKind.values().length];
-    private final HashMap<String, Integer> shapeCount = new HashMap<>();
+    final ArrayList<Placed> placed = new ArrayList<>();
+    BoxIndex index = new BoxIndex();
+    final int[] kindCount = new int[RoomKind.values().length];
+    final HashMap<String, Integer> shapeCount = new HashMap<>();
     /** Boxes no room may overlap / no door cap may overlap (the reserved band while the first fill runs; later the keep-clear strip in front of the seal). */
-    private final List<Box> roomBlockers = new ArrayList<>();
+    final List<Box> roomBlockers = new ArrayList<>();
     private final List<Box> capBlockers = new ArrayList<>();
     private final List<String> warnings = new ArrayList<>();
     private final HashSet<String> warned = new HashSet<>();
     private final Map<String, Integer> stats = new LinkedHashMap<>();
 
     /** Number of unused, non-sealed sockets over all placed pieces: the most door caps still to come. */
-    private int unresolved;
+    int unresolved;
     private long steps;
     /** The step budget is a runaway guard for the backtracking searches only (the boss chain and the extras); the fills are bounded by their own sockets. */
     private boolean budgeted;
@@ -79,11 +79,11 @@ public final class MegaAssembler {
     private Box zone;
     private Box strip;
     /** The rooms placed so far (every piece that is neither a door cap nor a tunnel segment), and the limit the filling phases keep to (floor model; unlimited otherwise). */
-    private int roomsPlaced;
+    int roomsPlaced;
     private int roomLimit = Integer.MAX_VALUE;
-    private boolean limitRooms;
-    private Result.Expansion expansion;
-    private int landing = -1;
+    boolean limitRooms;
+    Result.Expansion expansion;
+    int landing = -1;
     private double landingCx, landingCz;
 
     private MegaAssembler(Request req) {
@@ -128,6 +128,7 @@ public final class MegaAssembler {
         }
         budgeted = false;
         if (!req.fallback) fill(Mode.FILL, req.maxPieces, true);
+        if (!req.fallback && req.cyclic != null) CyclicAssembly.pass(this);          // 1.83.0: loose doorways become loops, dangling rooms are trimmed (cyclic WFC; off when req.cyclic is null)
         fill(Mode.CAPS, req.maxPieces, true);
         List<Result.Loop> loops = findLoops();
         return new Result(region, placed, loops, expansion, null, warnings, req.seed, req.fallback, landing, stats);
@@ -156,9 +157,10 @@ public final class MegaAssembler {
         landingCx = land.box.centerX();
         landingCz = land.box.centerZ();
         int target = Math.max(2, fl.rooms());
+        int grown = req.cyclic == null ? target : (int) Math.ceil(target * req.cyclic.overgrow());       // 1.83.0: the cyclic generator grows a little past the budget, the pass trims it back
         if (!req.fallback) {
             if (fl.boss()) reserveZone(land);
-            roomLimit = Math.max(roomsPlaced + 2, target - (fl.boss() ? BOSS_RESERVE : ORDINARY_RESERVE));
+            roomLimit = Math.max(roomsPlaced + 2, grown - (fl.boss() ? BOSS_RESERVE : ORDINARY_RESERVE));
             limitRooms = true;
             fill(Mode.FILL, Math.max(placed.size() + 1, req.maxPieces - rc.capReserve), false);
             limitRooms = false;
@@ -178,10 +180,11 @@ public final class MegaAssembler {
         }
         budgeted = false;
         if (!req.fallback) {
-            roomLimit = target;
+            roomLimit = grown;
             limitRooms = true;
             fill(Mode.FILL, req.maxPieces, true);
             limitRooms = false;
+            if (req.cyclic != null) CyclicAssembly.pass(this);       // 1.83.0: before the forward stairs, so their host is chosen on the final graph
         }
         if (!fl.boss() && !placeForwardStairs()) return fail("no forward stairwell fits any free doorway (" + stairStats() + ")");
         fill(Mode.CAPS, req.maxPieces, true);
@@ -457,15 +460,22 @@ public final class MegaAssembler {
         }
         WeightedDraw d = new WeightedDraw(pool, false, rng);
         PoolEntry e;
+        List<Placed> fits = req.cyclic != null && req.cyclic.lookahead() > 1 ? new ArrayList<>() : null;       // 1.83.0: the cyclic generator compares several fitting templates
+        int shapesFit = 0;
         while ((e = d.next()) != null) {
             Shape sh = shapeOf(e, pool.id());
             if (sh == null) continue;
+            boolean fitted = false;
             for (int k : order(sh)) {
                 Placed c = tryOne(p, si, sh, e, k, limit, null);
-                if (c != null) return c;
+                if (c == null) continue;
+                if (fits == null) return c;
+                fits.add(c);
+                fitted = true;
             }
+            if (fitted && ++shapesFit >= req.cyclic.lookahead()) return CyclicAssembly.best(this, fits);
         }
-        return null;
+        return fits == null || fits.isEmpty() ? null : CyclicAssembly.best(this, fits);
     }
 
     private Placed capSocket(Placed p, int si, int limit) {
@@ -822,7 +832,7 @@ public final class MegaAssembler {
     }
 
     /** The candidate placement of shape {@code sh} (its door {@code k}) on the door {@code (parent, ps)}, or null when the names or the space do not allow it. */
-    private Placed tryOne(Placed parent, int ps, Shape sh, PoolEntry e, int k, int limit, Predicate<Box> where) {
+    Placed tryOne(Placed parent, int ps, Shape sh, PoolEntry e, int k, int limit, Predicate<Box> where) {
         Socket from = parent.shape.sockets.get(ps);
         Socket to = sh.sockets.get(k);
         if (!from.target().equals(to.name())) return null;
@@ -850,12 +860,12 @@ public final class MegaAssembler {
         return new Placed(placed.size(), sh, e.processors(), r, o, parent.depth + 1, parent.index, ps, k, false);
     }
 
-    private boolean hitsExclusion(Box box) {
+    boolean hitsExclusion(Box box) {
         for (Box ex : req.exclusions) if (ex.overlaps(box)) return true;
         return false;
     }
 
-    private void pushRaw(Placed c) {
+    void pushRaw(Placed c) {
         placed.add(c);
         index.add(c.box);
         if (isRoomPiece(c)) roomsPlaced++;
@@ -864,7 +874,7 @@ public final class MegaAssembler {
         unresolved += openUnused(c);
     }
 
-    private void push(Placed c) {
+    void push(Placed c) {
         pushRaw(c);
         if (c.parent >= 0) {
             Placed par = placed.get(c.parent);
@@ -875,7 +885,7 @@ public final class MegaAssembler {
         }
     }
 
-    private void rollbackTo(int mark) {
+    void rollbackTo(int mark) {
         while (placed.size() > mark) {
             Placed c = placed.remove(placed.size() - 1);
             index.removeLast();
@@ -890,6 +900,42 @@ public final class MegaAssembler {
                     if (!par.shape.sockets.get(c.parentSocket).sealed()) unresolved++;
                 }
             }
+        }
+    }
+
+    /**
+     * 1.83.0 (cyclic WFC): takes the pieces whose index is set in {@code gone} out of the plan for good and renumbers the rest (indices stay 0..n-1 in order, parents
+     * follow, the Landing and the Way Onward's record follow). Only for pieces that nothing hangs from (the caller removes leaves, children first): the socket of a kept
+     * parent that led to a removed child becomes free again, so the door cap pass walls it. Never called with the chain, the Landing or a tunnel piece.
+     */
+    void removePieces(java.util.BitSet gone) {
+        int n = placed.size();
+        int[] map = new int[n];
+        int next = 0;
+        for (int i = 0; i < n; i++) map[i] = gone.get(i) ? -1 : next++;
+        List<Placed> kept = new ArrayList<>(next);
+        for (Placed p : placed) {
+            if (gone.get(p.index)) continue;
+            int parent = p.parent >= 0 ? map[p.parent] : -1;
+            if (p.parent >= 0 && parent < 0) throw new IllegalStateException("piece " + p + " hangs from a removed piece");
+            Placed c = new Placed(map[p.index], p.shape, p.processors, p.rot, p.origin, p.depth, parent, parent < 0 ? -1 : p.parentSocket, p.ownSocket, p.link);
+            for (int si = 0; si < p.shape.sockets.size(); si++) c.markUsed(si, p.isUsed(si));
+            kept.add(c);
+        }
+        for (Placed p : placed) {
+            if (gone.get(p.index) && p.parent >= 0 && !gone.get(p.parent)) kept.get(map[p.parent]).markUsed(p.parentSocket, false);
+        }
+        placed.clear();
+        index = new BoxIndex();
+        java.util.Arrays.fill(kindCount, 0);
+        shapeCount.clear();
+        roomsPlaced = 0;
+        unresolved = 0;
+        for (Placed c : kept) pushRaw(c);
+        if (landing >= 0) landing = map[landing];
+        if (expansion != null) {
+            Result.Expansion e = expansion;
+            expansion = new Result.Expansion(map[e.piece()], e.seal(), e.facing(), e.w(), e.h(), e.d(), e.strip(), e.cost());
         }
     }
 
@@ -914,7 +960,7 @@ public final class MegaAssembler {
     }
 
     /** The loops the pieces placed so far already make (two free doorways facing each other across a shared wall), without marking them used. */
-    private List<Result.Loop> loopsNow() {
+    List<Result.Loop> loopsNow() {
         HashMap<Vec, int[]> open = new HashMap<>();
         for (Placed p : placed) {
             if (p.shape.isCap()) continue;
@@ -948,7 +994,7 @@ public final class MegaAssembler {
         return Math.hypot(x - landingCx, z - landingCz) / MODULE;
     }
 
-    private Shape shapeOf(PoolEntry e, String poolId) {
+    Shape shapeOf(PoolEntry e, String poolId) {
         if (!allowedHere(e.shape())) return null;                      // reserved for another theme: not an error, just not drawn here
         Shape sh = src.shape(e.shape());
         if (sh == null) warn("pool " + poolId + " names the missing template " + e.shape());
@@ -956,18 +1002,18 @@ public final class MegaAssembler {
     }
 
     /** May this template be drawn in the sector being planned (is it free for every theme, or reserved for this one)? */
-    private boolean allowedHere(String templateId) { return req.themes == null || req.themes.allows(templateId, req.themeId); }
+    boolean allowedHere(String templateId) { return req.themes == null || req.themes.allows(templateId, req.themeId); }
 
     private void warn(String w) {
         if (warned.add(w)) warnings.add(w);
     }
 
-    private void bump(String key, int by) {
+    void bump(String key, int by) {
         stats.merge(key, by, Integer::sum);
     }
 
     /** The sockets of a shape in the order to try them: higher selection priority first, equal priorities in random order. */
-    private int[] order(Shape sh) {
+    int[] order(Shape sh) {
         int n = sh.sockets.size();
         int[] idx = new int[n];
         long[] key = new long[n];

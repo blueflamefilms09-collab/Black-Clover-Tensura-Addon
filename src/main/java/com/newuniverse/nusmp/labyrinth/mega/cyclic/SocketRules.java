@@ -41,14 +41,22 @@ public final class SocketRules {
     public record PlacementFacts(int alignedPairs, int blockedOwn, int killedOthers, int freeFronts, int otherDoors, RoomCategory category, boolean leafAllowed) {}
 
     /**
-     * The score of a candidate; higher is better. A free loop is worth four points, a doorway walled into a blank wall costs one, walling up somebody else's
-     * costs 0.6, a doorway that can still grow earns 0.15, a leaf costs 2.5, and the category nudge is {@code balanceWeight * 3 * want} (about -1 .. +1).
-     * The weights are chosen so one aligned pair outweighs any single blocked doorway, and so balance can break a tie but not undo a loop.
+     * The score of a candidate; higher is better. The first free loop is worth four points (the second 2.5, each further 1.5), a doorway walled into a blank wall costs one, walling up somebody else's
+     * costs 0.6, a doorway that can still grow earns 0.15, a leaf costs 2.5, and the category nudge is {@code balanceWeight * 3 * want} (about -1 .. +1) plus a steep penalty once the category is more than
+     * {@link CategoryBalance#SLACK} over its target share. The weights are chosen so one aligned pair outweighs any single blocked doorway, a category that is on
+     * target never decides against a loop, and one that has run away (the Transition share of a corridor-heavy pool) does.
      */
     public static double placementScore(PlacementFacts f, LoopConfig cfg, int[] categoryCounts) {
-        double s = 4.0 * f.alignedPairs() - 1.0 * f.blockedOwn() - 0.6 * f.killedOthers() + 0.15 * f.freeFronts();
+        int n = f.alignedPairs();
+        double loops = n == 0 ? 0.0 : 4.0 + 2.5 * Math.min(1, n - 1) + 1.5 * Math.max(0, n - 2);          // the first free loop is worth most: a room with five aligned doors is a grid, not a dungeon
+        double s = loops - 1.0 * f.blockedOwn() - 0.6 * f.killedOthers() + 0.15 * f.freeFronts();
         if (f.otherDoors() == 0 && !f.leafAllowed()) s -= 2.5;
-        if (cfg.balanceWeight() > 0 && categoryCounts != null) s += cfg.balanceWeight() * 3.0 * CategoryBalance.want(f.category(), categoryCounts);
+        if (cfg.balanceWeight() > 0 && categoryCounts != null) {
+            double want = CategoryBalance.want(f.category(), categoryCounts);
+            double nudge = 3.0 * want;
+            if (want < -CategoryBalance.SLACK) nudge -= 40.0 * (-want - CategoryBalance.SLACK);              // far over its share: this alone outweighs two free loops
+            s += cfg.balanceWeight() * nudge;
+        }
         return s;
     }
 }

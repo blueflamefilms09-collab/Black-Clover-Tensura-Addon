@@ -11,6 +11,9 @@ package com.newuniverse.nusmp.labyrinth.mega.cyclic;
 public final class CategoryBalance {
     private CategoryBalance() {}
 
+    /** A category may exceed its target by this much before placement starts to refuse more of it. */
+    public static final double SLACK = 0.10;
+
     /** Target share of each category, in {@link RoomCategory} order (COMBAT, PUZZLE_HAZARD, LORE, TRANSITION, SAFE); sums to 1. */
     public static final double[] TARGET = {0.24, 0.14, 0.20, 0.34, 0.08};
 
