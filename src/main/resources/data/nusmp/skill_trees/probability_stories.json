@@ -1,0 +1,1066 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Probability Stories",
+  "desc": "A story's odds can be bent when the narrator holds enough belief. Tilt chance in your favour: lucky crits, lucky dodges and a lucky escape from death.",
+  "book": "nusmp:probability_stories_book",
+  "book_name": "Almanac of Improbable Odds",
+  "book_lore": "The impossible is only a story nobody has believed hard enough yet.",
+  "color": "#B388FF",
+  "icon": "minecraft:rabbit_foot",
+  "class_id": "probability_stories",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/probability_stories.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "tower",
+  "nodes": [
+    {
+      "id": "calm_odds",
+      "name": "Calm Odds",
+      "desc": "Play the safe numbers: a bit of armor and crit chance, but a little less damage.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:compass"
+    },
+    {
+      "id": "gambler_s_edge",
+      "name": "Gambler's Edge",
+      "desc": "All in: huge crit chance and more damage, but without any armor.",
+      "parents": [
+        {
+          "node": "calm_odds",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "fortune_s_child",
+      "name": "Fortune's Child",
+      "desc": "The odds are on your side: bonus luck.",
+      "parents": [
+        {
+          "node": "calm_odds",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "odds_reader",
+      "name": "Odds Reader",
+      "desc": "You live to see the long shot pay out: more maximum health.",
+      "parents": [
+        {
+          "node": "gambler_s_edge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "lucky_streak",
+      "name": "Lucky Streak",
+      "desc": "A run of luck on the blade: bonus attack speed.",
+      "parents": [
+        {
+          "node": "calm_odds",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "improbable_uppercut",
+      "name": "Improbable Uppercut",
+      "desc": "A blow with unlikely force that sends the foe in front of you flying.",
+      "parents": [
+        {
+          "node": "calm_odds",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "long_shot_beam",
+      "name": "Long-Shot Beam",
+      "desc": "A thin beam that has absolutely no right to hit and goes right through a line of foes.",
+      "parents": [
+        {
+          "node": "gambler_s_edge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          1.0,
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "fate_turned_aside",
+      "name": "Fate Turned Aside",
+      "desc": "For a few seconds a share of every hit is thrown back at whoever made it.",
+      "parents": [
+        {
+          "node": "improbable_uppercut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "lucky_break",
+      "name": "Lucky Break",
+      "desc": "You feel lucky: you gain luck and speed for a while.",
+      "parents": [
+        {
+          "node": "long_shot_beam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "luck",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:emerald"
+    },
+    {
+      "id": "branching_odds",
+      "name": "Branching Odds",
+      "desc": "One strike that jumps from foe to foe by chance.",
+      "parents": [
+        {
+          "node": "fate_turned_aside",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "skip_the_bad_ending",
+      "name": "Skip the Bad Ending",
+      "desc": "Slip along a better branch of the story and reappear a few blocks away.",
+      "parents": [
+        {
+          "node": "lucky_break",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "burst_of_chance",
+      "name": "Burst of Chance",
+      "desc": "A ring of wild probability crackles outward around you.",
+      "parents": [
+        {
+          "node": "branching_odds",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:firework_rocket"
+    },
+    {
+      "id": "lucky_hit",
+      "name": "Lucky Hit",
+      "desc": "Your blows often strike critically.",
+      "parents": [
+        {
+          "node": "improbable_uppercut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "statistical_anomaly",
+      "name": "Statistical Anomaly",
+      "desc": "You sometimes avoid a blow completely.",
+      "parents": [
+        {
+          "node": "long_shot_beam",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "plot_convenience",
+      "name": "Plot Convenience",
+      "desc": "When nearly dead, the story shields you for a few seconds.",
+      "parents": [
+        {
+          "node": "fate_turned_aside",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "windfall",
+      "name": "Windfall",
+      "desc": "A kill heals you and grants a brief gift of luck.",
+      "parents": [
+        {
+          "node": "lucky_break",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "luck"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "fate_smiles",
+      "name": "Fate Smiles",
+      "desc": "While at full health you have extra luck.",
+      "parents": [
+        {
+          "node": "branching_odds",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "luck",
+        "condition": "full_health"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "streak_of_luck",
+      "name": "Streak of Luck",
+      "desc": "Blows in a row grow stronger the longer your streak lasts.",
+      "parents": [
+        {
+          "node": "skip_the_bad_ending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "unlikely_finish",
+      "name": "Unlikely Finish",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "burst_of_chance",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "improbable_miracle",
+      "name": "Improbable Miracle",
+      "desc": "Against all odds you are made whole: a large heal and a long regeneration.",
+      "parents": [
+        {
+          "node": "burst_of_chance",
+          "level": 3
+        },
+        {
+          "node": "unlikely_finish",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          30.0,
+          37.5,
+          40
+        ],
+        "regen_seconds": [
+          12.0,
+          14.0,
+          16.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          3000.0,
+          2820.0,
+          2640.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "branching_futures",
+      "name": "Branching Futures",
+      "desc": "A single hit splits into many futures and strikes a whole crowd.",
+      "parents": [
+        {
+          "node": "skip_the_bad_ending",
+          "level": 3
+        },
+        {
+          "node": "streak_of_luck",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "jumps": [
+          7.0,
+          10.0,
+          10.0
+        ],
+        "jump_range": [
+          7.0,
+          7.0,
+          8.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2700.0,
+          2484.0,
+          2268.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    }
+  ]
+}

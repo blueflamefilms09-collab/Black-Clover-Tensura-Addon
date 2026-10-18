@@ -1,0 +1,1054 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Demon King of Salvation",
+  "desc": "A feared mask worn to protect people from worse. The hero's wrath is dark, the savior's hand is gentle, and neither of them backs down.",
+  "book": "nusmp:demon_king_of_salvation_book",
+  "book_name": "Testament of the Masked Protector",
+  "book_lore": "Some saviors are loved, and some are only obeyed, and he accepted both.",
+  "color": "#4A4E69",
+  "icon": "minecraft:wither_skeleton_skull",
+  "class_id": "demon_king_of_salvation",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/demon_king_of_salvation.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "void",
+  "nodes": [
+    {
+      "id": "salvation_s_burden",
+      "name": "Salvation's Burden",
+      "desc": "Carry everyone's weight: armor and strong resistance to being pushed, but slow going.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "demon_king_s_mask",
+      "name": "Demon King's Mask",
+      "desc": "Wear the mask and let them fear you: more damage and speed, with a thin guard.",
+      "parents": [
+        {
+          "node": "salvation_s_burden",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "king_without_a_kingdom",
+      "name": "King Without a Kingdom",
+      "desc": "Few follow, all are protected: more maximum health.",
+      "parents": [
+        {
+          "node": "salvation_s_burden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_ingot"
+    },
+    {
+      "id": "demon_mask",
+      "name": "Demon Mask",
+      "desc": "A face made of fear: bonus attack damage.",
+      "parents": [
+        {
+          "node": "demon_king_s_mask",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "salvation_s_weight",
+      "name": "Salvation's Weight",
+      "desc": "A burden shouldered long ago: bonus armor toughness.",
+      "parents": [
+        {
+          "node": "salvation_s_burden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_scrap"
+    },
+    {
+      "id": "dread_decree",
+      "name": "Dread Decree",
+      "desc": "A roar that draws the attention of nearby monsters onto you.",
+      "parents": [
+        {
+          "node": "salvation_s_burden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "terror_of_the_demon_king",
+      "name": "Terror of the Demon King",
+      "desc": "A cone of black dread blinds and weakens everyone in front of you.",
+      "parents": [
+        {
+          "node": "demon_king_s_mask",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "darkness",
+        "effect2": "weakness",
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "feast_of_the_wicked",
+      "name": "Feast of the Wicked",
+      "desc": "Bite into a foe and recover part of what you dealt.",
+      "parents": [
+        {
+          "node": "dread_decree",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:ghast_tear"
+    },
+    {
+      "id": "shadow_passage",
+      "name": "Shadow Passage",
+      "desc": "Step through the dark and appear a few blocks away.",
+      "parents": [
+        {
+          "node": "terror_of_the_demon_king",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "protector_s_oath",
+      "name": "Protector's Oath",
+      "desc": "Swear to shield them: you and your allies gain resistance.",
+      "parents": [
+        {
+          "node": "feast_of_the_wicked",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:black_banner"
+    },
+    {
+      "id": "king_s_silence",
+      "name": "King's Silence",
+      "desc": "A heartbeat of horror freezes the creatures around you in place.",
+      "parents": [
+        {
+          "node": "shadow_passage",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:crying_obsidian"
+    },
+    {
+      "id": "execution_of_the_wicked",
+      "name": "Execution of the Wicked",
+      "desc": "A merciless blow that hits much harder the weaker the foe is.",
+      "parents": [
+        {
+          "node": "protector_s_oath",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "dread_presence",
+      "name": "Dread Presence",
+      "desc": "Foes near you are weakened by your menace.",
+      "parents": [
+        {
+          "node": "dread_decree",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "weakness",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "cloak_of_night",
+      "name": "Cloak of Night",
+      "desc": "At night you take less damage.",
+      "parents": [
+        {
+          "node": "terror_of_the_demon_king",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "night"
+      },
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:black_wool"
+    },
+    {
+      "id": "night_eyes",
+      "name": "Night Eyes",
+      "desc": "At night you see in the dark.",
+      "parents": [
+        {
+          "node": "feast_of_the_wicked",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "night"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "mark_of_fear",
+      "name": "Mark of Fear",
+      "desc": "Struck foes are sometimes shrouded in darkness.",
+      "parents": [
+        {
+          "node": "shadow_passage",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "darkness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:ink_sac"
+    },
+    {
+      "id": "savior_s_instinct",
+      "name": "Savior's Instinct",
+      "desc": "When your health is low you heal steadily.",
+      "parents": [
+        {
+          "node": "protector_s_oath",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "mask_of_ward",
+      "name": "Mask of Ward",
+      "desc": "You take less magic damage.",
+      "parents": [
+        {
+          "node": "king_s_silence",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "moonlit_wrath",
+      "name": "Moonlit Wrath",
+      "desc": "At night you deal more damage.",
+      "parents": [
+        {
+          "node": "execution_of_the_wicked",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "night"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "salvation_of_the_abandoned",
+      "name": "Salvation of the Abandoned",
+      "desc": "A warm shock of light that heals you and every ally in a wide circle.",
+      "parents": [
+        {
+          "node": "execution_of_the_wicked",
+          "level": 3
+        },
+        {
+          "node": "moonlit_wrath",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14
+        ],
+        "amount": [
+          22.0,
+          27.5,
+          30
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          2700.0,
+          2538.0,
+          2376.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "demon_king_s_decree",
+      "name": "Demon King's Decree",
+      "desc": "A command that stops every creature in a wide circle for a few seconds.",
+      "parents": [
+        {
+          "node": "king_s_silence",
+          "level": 3
+        },
+        {
+          "node": "mask_of_ward",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          7.0
+        ],
+        "targets": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    }
+  ]
+}
