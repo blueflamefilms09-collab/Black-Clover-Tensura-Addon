@@ -1,42 +1,55 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
-
+import com.newuniverse.nusmp.skill.rules.GodRules;
+import com.newuniverse.nusmp.skill.rules.Tier;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
-/** Loki, the Trickster: vanish and blink forward. */
+/**
+ * Loki, the Trickster: vanish and blink forward. The blink uses the relics' safe-landing search (a spot with room to stand and ground
+ * below, never lava or fire, never inside a wall) and fails without cost if there is no such spot in reach. On arrival you turn
+ * invisible and every monster nearby that was hunting you forgets you. Numbers: {@link GodRules.Loki}.
+ */
 public class LokiSkill extends GodSkill {
-    private static final ResourceLocation ICON = ResourceLocation.withDefaultNamespace("textures/item/ender_pearl.png");
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
-    @Override protected double cost() { return 800; }
-    @Override protected int cooldownTicks() { return 400; }
+    static final SkillText TEXT = SkillText.of("loki", "Loki",
+            "Unique. The Trickster. Vanish from sight and blink forward; monsters that were hunting you lose track of you.");
+
+    public LokiSkill() { super(TEXT); }
+
+    @Override protected double cost() { return GodRules.Loki.COST; }
+    @Override protected int cooldownTicks() { return GodRules.Loki.COOLDOWN; }
+    @Override protected int color() { return 0xFF3FD8A8; }
 
     @Override
-    protected boolean use(ManasSkillInstance instance, ServerPlayer player, boolean mastered) {
+    protected boolean use(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
         ServerLevel level = player.serverLevel();
         Vec3 from = player.position();
-        Vec3 look = player.getViewVector(1.0F);
-        double max = mastered ? 16 : 10;
-        Vec3 dest = null;
-        for (double d = max; d >= 2; d -= 0.5) {
-            Vec3 p = from.add(look.x * d, Math.max(0, look.y * d), look.z * d);
-            if (level.noCollision(player, player.getBoundingBox().move(p.subtract(from)))) { dest = p; break; }
+        if (!com.newuniverse.nusmp.relics.Fx.teleportLook(player, GodRules.Loki.blinkRange(tier))) {
+            SkillUtil.fail(player, SkillMsg.t("loki.no_room", "No room to blink."));
+            return false;
         }
-        if (dest == null) { SkillUtil.fail(player, "No room to blink."); return false; }
-        RukhFx.spray(level, RukhFx.Alignment.DARK, from.x, from.y + 1, from.z, 30, 0.3, 0.6, 0.3, 0.02);
-        player.teleportTo(dest.x, dest.y, dest.z);
-        player.fallDistance = 0;
-        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, mastered ? 200 : 100, 0));
-        level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.3F);
+        Vec3 to = player.position();
+        if (from.distanceTo(to) < GodRules.Loki.minBlink()) {           // a wall right in front: put the player back
+            player.teleportTo(from.x, from.y, from.z);
+            SkillUtil.fail(player, SkillMsg.t("loki.no_room", "No room to blink."));
+            return false;
+        }
+        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, GodRules.Loki.invisibleTicks(tier), 0));
+        for (LivingEntity foe : SkillTargets.foes(player, from, GodRules.Loki.forgetRadius(tier))) {
+            if (foe instanceof Mob mob && mob.getTarget() == player) mob.setTarget(null);
+        }
+        SkillFx.burst(level, from.add(0, 1, 0), true, 12, 0.5);
+        SkillFx.burst(level, to.add(0, 1, 0), true, 12, 0.5);
+        SkillFx.shape(level, VfxShape.SPATIAL_RIFT, from.add(0, 1, 0), to.add(0, 1, 0), 0xFF6A3FC0, 20, 0.8f);
+        SkillFx.sound(level, to, SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.3F);
         return true;
     }
 }

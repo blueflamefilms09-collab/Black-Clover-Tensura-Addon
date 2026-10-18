@@ -1,41 +1,48 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
-
+import com.newuniverse.nusmp.skill.rules.ChantRules;
+import com.newuniverse.nusmp.skill.rules.Tier;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.HashSet;
-import java.util.Set;
-
-/** Arcs Ray (Lefiya): a piercing beam of light that hits everything in a line. 1-line chant. */
+/**
+ * Arcs Ray (Lefiya): a one-line chant, a piercing beam of light along your line of sight that strikes every foe on the way and stops at
+ * the first wall. Light burns the undead half again as hard. The cheapest and fastest of the chants. Numbers: {@link ChantRules} (ray*).
+ */
 public class ArcsRaySkill extends ChantedMagicSkill {
-    private static final ResourceLocation ICON = ResourceLocation.withDefaultNamespace("textures/item/spectral_arrow.png");
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
-    @Override protected int chantLines() { return 1; }
-    @Override protected double totalCost() { return 800; }
-    @Override protected int castCooldown() { return 100; }
+    static final SkillText TEXT = SkillText.of("arcs_ray", "Arcs Ray",
+            "Chanted magic (1 line). A piercing beam of light strikes everything in a line, and burns the undead even harder.");
+
+    public ArcsRaySkill() { super(TEXT, ChantRules.Spell.ARCS_RAY); }
+
+    @Override protected int color() { return 0xFFFFFFD2; }
 
     @Override
-    protected boolean cast(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, boolean mastered) {
-        Vec3 start = player.getEyePosition();
-        Vec3 end = DMUtil.lookPoint(player, 48);
-        Vec3 dir = end.subtract(start).normalize();
-        Set<LivingEntity> hit = new HashSet<>();
-        for (double d = 0; d < start.distanceTo(end); d += 0.5) {
-            Vec3 p = start.add(dir.scale(d));
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.x, p.y, p.z, 1, 0.02, 0.02, 0.02, 0.0);
-            hit.addAll(DMUtil.around(player, p, 1.2));
+    protected MutableComponent chantLine(int line) {
+        return SkillMsg.chant("arcs_ray", 1, "Arcs Ray: pierce them, arrow of light.");
+    }
+
+    @Override
+    protected boolean cast(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, Tier tier) {
+        Vec3 start = player.getEyePosition().add(0, -0.15, 0);
+        Vec3 end = DMUtil.lookPoint(player, ChantRules.rayRange(tier));
+        double mastery = masteryFrac(instance);
+        for (LivingEntity t : SkillTargets.foesAlong(player, start, end, ChantRules.rayWidth())) {
+            double dmg = ChantRules.rayDamage(tier) * (t.getType().is(EntityTypeTags.UNDEAD) ? ChantRules.rayUndeadFactor() : 1.0);
+            SkillDamage.hit(player, t, dmg, mastery, SkillDamage.Kind.MAGIC);
+            SkillFx.spray(level, false, t.position().add(0, t.getBbHeight() * 0.6, 0), 5, 0.3, 0.3, 0.3, 0.02);
         }
-        for (LivingEntity t : hit) t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 22 : 14));
-        level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 2.0F, 1.5F);
+        SkillFx.beam(level, start, end, false);
+        SkillFx.shape(level, VfxShape.MIRROR_RAY, start, end, 0xFFFFFFD2, 12, 1.0f);
+        SkillFx.shape(level, VfxShape.LIGHT_FLARE, end, end, 0xFFFFFFD2, 10, 0.8f);
+        SkillFx.sound(level, player.position(), SoundEvents.AMETHYST_BLOCK_RESONATE, 2.0F, 1.5F);
         return true;
     }
 }

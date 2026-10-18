@@ -1,12 +1,10 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
-
+import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.skill.rules.AuraRules;
+import com.newuniverse.nusmp.skill.rules.Tier;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.tensura.ability.skill.Skill;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,14 +14,15 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * Hati (Bete Loga): PASSIVE. Fire, lightning and magic hitting you is partly absorbed
- * and turned into strength.
+ * Hati (Bete Loga): PASSIVE. Fire, lightning and magic that hit you are partly absorbed (only 60% lands, 40% when mastered) and the
+ * absorbed part is turned into Strength: every absorbed hit raises your Strength by one level (up to II, or IV when mastered) for ten
+ * seconds (fifteen when mastered), refreshed by each hit. A mastered Hati also heals a quarter of what it absorbed. Numbers: {@link AuraRules}.
  */
-public class HatiSkill extends Skill {
-    private static final ResourceLocation ICON = ResourceLocation.withDefaultNamespace("textures/item/magma_cream.png");
-    public HatiSkill() { super(SkillType.UNIQUE); }
+public class HatiSkill extends NUSkill {
+    static final SkillText TEXT = SkillText.of("hati", "Hati",
+            "Unique. Passive. Fire, lightning and magic hitting you are partly absorbed and turned into stacking Strength.");
 
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
+    public HatiSkill() { super(SkillType.UNIQUE, TEXT, false); }
 
     @Override
     public boolean onTakenDamage(ManasSkillInstance instance, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
@@ -31,11 +30,18 @@ public class HatiSkill extends Skill {
                 || source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC);
         if (!magical || amount.get() <= 0) return true;
 
-        boolean mastered = instance.isMastered(owner);
-        amount.set(amount.get() * (mastered ? 0.4F : 0.6F));
-        owner.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, mastered ? 2 : 1));
+        Tier tier = tier(instance, owner);
+        double incoming = amount.get();
+        double absorbed = AuraRules.hatiAbsorbed(incoming, tier);
+        amount.set((float) (incoming - absorbed));
+
+        MobEffectInstance current = owner.getEffect(MobEffects.DAMAGE_BOOST);
+        int next = AuraRules.hatiNextAmp(current == null ? -1 : current.getAmplifier(), tier);
+        owner.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, AuraRules.hatiTicks(tier), next));
+        double heal = AuraRules.hatiHeal(absorbed, tier);
+        if (heal > 0) BalanceLaw.heal(owner, (float) heal);
         if (owner.level() instanceof ServerLevel level) {
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, owner.getX(), owner.getY() + 1, owner.getZ(), 15, 0.4, 0.6, 0.4, 0.02);
+            SkillFx.spray(level, false, owner.position().add(0, 1, 0), 8, 0.4, 0.6, 0.4, 0.02);
         }
         if (owner.getRandom().nextInt(4) == 0) instance.addMasteryPoint(owner);
         instance.markDirty();

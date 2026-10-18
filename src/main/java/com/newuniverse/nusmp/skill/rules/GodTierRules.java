@@ -35,7 +35,6 @@ public final class GodTierRules {
     public static int meteorCooldown() { return 600; }
     public static double meteorRadius(boolean m) { return m ? 8 : 6; }
     public static double meteorDamage(boolean m) { return m ? 50 : 35; }
-    public static float meteorBlast(boolean m) { return m ? 6.0F : 4.0F; }
     public static double voidCost() { return 3500; }
     public static int voidCooldown() { return 700; }
     public static double voidRadius(boolean m) { return m ? 9 : 6; }

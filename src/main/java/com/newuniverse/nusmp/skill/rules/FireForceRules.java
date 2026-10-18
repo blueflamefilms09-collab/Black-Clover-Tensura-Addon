@@ -17,7 +17,8 @@ public final class FireForceRules {
     public static double dashCost(Tier t) { return t == Tier.ULTIMATE ? 600 : 150; }
     public static int dashCooldown(Tier t) { return t == Tier.ULTIMATE ? 60 : 30; }
     public static double dashPower(Tier t) { return t == Tier.BASE ? 1.7 : 2.4; }
-    public static double lightSpeedRange(Tier t) { return t == Tier.MASTERED ? 28 : 40; }
+    /** Light Speed's reach in blocks (the safe-landing search of the relics' blink is capped at 32). */
+    public static double lightSpeedRange(Tier t) { return t == Tier.MASTERED ? 28 : 32; }
     public static double lightSpeedDamage(Tier t) { return 22.0; }
     public static double lightSpeedWidth() { return 1.8; }
 

@@ -1,116 +1,99 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
-
+import com.newuniverse.nusmp.skill.rules.FireForceRules;
+import com.newuniverse.nusmp.skill.rules.Tier;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.tensura.ability.skill.Skill;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Devil's Footprints (Shinra Kusakabe, Fire Force): flames from your feet.
- * Modes: Ignition Dash, Devil's Kick. Passive: your own flames can't burn you.
+ * Devil's Footprints (Shinra Kusakabe, Fire Force): flames from your feet. Modes: Ignition Dash (rocket through the air; no fall damage
+ * from it) and Devil's Kick (a burning kick on everything in front of you, thrown back and set alight). Passive: your own flames cannot
+ * burn you (all fire damage is cancelled). Adolla Burst (the Ultimate) extends this class. Numbers: {@link FireForceRules}.
  */
-public class DevilsFootprintsSkill extends Skill {
-    protected static final int DASH = 0, KICK = 1;
-    protected final boolean ultimate;
-    private static final ResourceLocation ICON = ResourceLocation.withDefaultNamespace("textures/item/fire_charge.png");
+public class DevilsFootprintsSkill extends NUSkill {
+    static final SkillText TEXT = SkillText.of("devils_footprints", "Devil's Footprints",
+            "Unique. Flames burst from your feet: dash through the air or deliver a burning kick. Your own fire cannot hurt you.");
 
-    public DevilsFootprintsSkill() { this(SkillType.UNIQUE, false); }
-    protected DevilsFootprintsSkill(SkillType type, boolean ultimate) { super(type); this.ultimate = ultimate; }
+    public DevilsFootprintsSkill() { this(SkillType.UNIQUE, TEXT, false); }
 
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
+    protected DevilsFootprintsSkill(SkillType type, SkillText text, boolean ultimate) { super(type, text, ultimate); }
+
     @Override public int getModes(ManasSkillInstance i) { return 2; }
-    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) { return mode == DASH ? KICK : DASH; }
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return mode == DASH ? "fireforce.dash" : "fireforce.kick"; }
-    @Override public Component getModeName(ManasSkillInstance i, int mode) {
-        return Component.translatable(mode == DASH
-                ? (ultimate ? "nusmp.skill.mode.fireforce.light_speed" : "nusmp.skill.mode.fireforce.dash")
-                : "nusmp.skill.mode.fireforce.kick");
+    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) { return mode == FireForceRules.DASH ? FireForceRules.KICK : FireForceRules.DASH; }
+
+    @Override
+    public String getModeId(ManasSkillInstance i, int mode) { return mode == FireForceRules.KICK ? "fireforce.kick" : "fireforce.dash"; }
+
+    @Override
+    public Component getModeName(ManasSkillInstance i, int mode) {
+        return mode == FireForceRules.KICK ? SkillMsg.mode("fireforce.kick", "Devil's Kick") : SkillMsg.mode("fireforce.dash", "Ignition Dash");
     }
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
-        if (!(entity instanceof ServerPlayer player)) return;
-        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, "Your flames need a moment."); return; }
-        ServerLevel level = player.serverLevel();
-        boolean mastered = instance.isMastered(player);
+        if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
+        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("fireforce.cooldown", "Your flames need a moment.")); return; }
+        Tier tier = tier(instance, player);
 
-        if (mode == DASH) {
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(ultimate ? 600 : 150))) return;
-            if (ultimate) lightSpeed(player, level, mastered); else dash(player, level, mastered);
-            instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(ultimate ? 60 : 30)), DASH);
+        if (mode == FireForceRules.DASH) {
+            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FireForceRules.dashCost(tier)))) return;
+            dash(player, tier);
+            cooldown(instance, mode, DMUtil.cooldown(FireForceRules.dashCooldown(tier)));
+        } else if (mode == FireForceRules.KICK) {
+            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FireForceRules.kickCost(tier)))) return;
+            kick(instance, player, tier);
+            cooldown(instance, mode, DMUtil.cooldown(FireForceRules.kickCooldown(tier)));
         } else {
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(ultimate ? 800 : 300))) return;
-            kick(player, level, mastered);
-            instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(ultimate ? 60 : 100)), KICK);
+            return;
         }
         SkillUtil.castVfx(player, 0xFFFF5A1E);
-        instance.addMasteryPoint(player);
-        instance.markDirty();
+        grow(instance, player, 1);
     }
 
-    private void dash(ServerPlayer player, ServerLevel level, boolean mastered) {
+    private void dash(ServerPlayer player, Tier tier) {
+        ServerLevel level = player.serverLevel();
         Vec3 look = player.getViewVector(1.0F);
-        double power = mastered ? 2.4 : 1.7;
+        double power = FireForceRules.dashPower(tier);
         player.setDeltaMovement(look.x * power, Math.max(0.35, look.y * power), look.z * power);
         player.hurtMarked = true;
         player.fallDistance = 0;
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY(), player.getZ(), 40, 0.2, 0.1, 0.2, 0.08);
-        level.playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.4F);
+        Vec3 from = player.position().add(0, 0.2, 0);
+        SkillFx.shape(level, VfxShape.FLAME_TRAIL, from, from.add(look.scale(-6.0)), 0xFFFF5A1E, 16, 1.0f);
+        SkillFx.spray(level, false, from, 10, 0.2, 0.1, 0.2, 0.08);
+        SkillFx.sound(level, player.position(), SoundEvents.FIRECHARGE_USE, 1.0F, 1.4F);
     }
 
-    /** Adolla Burst: move at the speed of light, striking everything you pass. */
-    private void lightSpeed(ServerPlayer player, ServerLevel level, boolean mastered) {
-        Vec3 from = player.position();
-        Vec3 look = player.getViewVector(1.0F);
-        Vec3 dest = null;
-        for (double d = mastered ? 40 : 28; d >= 2; d -= 0.5) {
-            Vec3 p = from.add(look.scale(d));
-            if (level.noCollision(player, player.getBoundingBox().move(p.subtract(from)))) { dest = p; break; }
-        }
-        if (dest == null) { SkillUtil.fail(player, "No room to move."); return; }
-        for (double d = 0; d < from.distanceTo(dest); d += 1.0) {
-            Vec3 p = from.add(look.scale(d));
-            for (LivingEntity t : DMUtil.around(player, p.add(0, 1, 0), 1.8)) {
-                t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 30 : 20));
-                t.igniteForSeconds(5);
-            }
-        }
-        GodTier.line(level, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), from.add(0, 1, 0), dest.add(0, 1, 0));
-        player.teleportTo(dest.x, dest.y, dest.z);
-        player.fallDistance = 0;
-        level.playSound(null, player.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.5F, 0.6F);
-    }
-
-    private void kick(ServerPlayer player, ServerLevel level, boolean mastered) {
+    /** Shared with Adolla Burst: the kick. */
+    protected final void kick(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+        ServerLevel level = player.serverLevel();
         Vec3 eye = player.getEyePosition();
         Vec3 look = player.getViewVector(1.0F);
-        double range = ultimate ? 8 : 5;
-        for (LivingEntity t : DMUtil.around(player, player.position(), range)) {
-            Vec3 to = t.getBoundingBox().getCenter().subtract(eye);
-            if (to.normalize().dot(look) < 0.5) continue;
-            t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg((ultimate ? 30 : 14) * (mastered ? 1.5 : 1.0)));
-            t.igniteForSeconds(6);
-            t.knockback(1.5, -look.x, -look.z);
+        double damage = FireForceRules.kickDamage(tier);
+        for (LivingEntity t : SkillTargets.foesInCone(player, FireForceRules.kickRange(tier), 0.5)) {
+            if (SkillDamage.hit(player, t, damage, masteryFrac(instance)) > 0f) {
+                t.igniteForSeconds(FireForceRules.kickBurnSeconds(tier));
+                t.knockback(1.5, -look.x, -look.z);
+            }
         }
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, eye.x + look.x * 2, eye.y - 0.5, eye.z + look.z * 2, 80, 1.2, 0.4, 1.2, 0.05);
-        level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.5F, 0.7F);
+        Vec3 tip = eye.add(look.scale(3.0)).add(0, -0.6, 0);
+        SkillFx.shape(level, VfxShape.FIRE_BURST, tip, tip.add(0, 1, 0), 0xFFFF5A1E, 18, 1.2f);
+        SkillFx.spray(level, false, tip, 10, 1.0, 0.3, 1.0, 0.05);
+        SkillFx.sound(level, player.position(), SoundEvents.BLAZE_SHOOT, 1.5F, 0.7F);
     }
 
+    /** Shinra's own flames do not burn him. */
     @Override
     public boolean onTakenDamage(ManasSkillInstance instance, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
-        if (source.is(DamageTypeTags.IS_FIRE)) amount.set(0.0F); // Shinra's flames don't burn him
+        if (FireForceRules.fireImmune(true) && source.is(DamageTypeTags.IS_FIRE)) amount.set(0.0F);
         return true;
     }
 }

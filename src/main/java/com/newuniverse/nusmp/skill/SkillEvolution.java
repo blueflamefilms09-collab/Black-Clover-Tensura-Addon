@@ -43,6 +43,7 @@ public final class SkillEvolution {
     }
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        SkillEvents.onPlayerTick(event);   // zones, summon upkeep (rebuilt skills): runs on every player tick
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 100 != 0) return;
         if (!com.newuniverse.nusmp.NUGameRules.skillEvolution(player.level())) return;
         Skills skills = SkillAPI.getSkillsFrom(player);
@@ -58,8 +59,8 @@ public final class SkillEvolution {
             IExistence existence = TensuraStorages.getExistenceFrom(player);
             if (needEP > 0 && (existence == null || existence.getEP() < needEP)) {
                 if (player.tickCount % 6000 == 0) {
-                    player.displayClientMessage(Component.literal("Your mastered " + base.getName().getString()
-                            + " wants to evolve, but your soul needs " + (long) needEP + " EP.").withStyle(ChatFormatting.GRAY), false);
+                    player.displayClientMessage(SkillMsg.t("evolution.needs_ep", "Your mastered %s wants to evolve, but your soul needs %s EP.",
+                            base.getName(), (long) needEP).withStyle(ChatFormatting.GRAY), false);
                 }
                 continue;
             }
@@ -72,17 +73,18 @@ public final class SkillEvolution {
         ManasSkillInstance evolved = ult.createDefaultInstance();
         evolved.getOrCreateTag().merge(old.getOrCreateTag().copy()); // keep Faith points etc.
 
-        boolean learned = skills.learnSkill(evolved, Component.literal("Your skill has evolved!").withStyle(ChatFormatting.GOLD));
+        boolean learned = skills.learnSkill(evolved, SkillMsg.t("evolution.learned", "Your skill has evolved!").withStyle(ChatFormatting.GOLD));
         if (!learned) return;
         if (NUConfig.EVOLUTION_REPLACES_BASE.get()) skills.forgetSkill(old.getSkillId());
 
         player.serverLevel().playSound(null, player.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1.0F, 0.8F);
-        player.getServer().getPlayerList().broadcastSystemMessage(
-                Component.literal("[Voice of the World] ").withStyle(ChatFormatting.GOLD)
-                        .append(Component.literal("Confirmed. " + player.getName().getString() + "'s Unique Skill ").withStyle(ChatFormatting.WHITE))
-                        .append(old.getDisplayName().copy().withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal(" has evolved into the Ultimate Skill ").withStyle(ChatFormatting.WHITE))
-                        .append(ult.getName().copy().withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD))
-                        .append(Component.literal(".").withStyle(ChatFormatting.WHITE)), false);
+        var server = player.getServer();
+        if (server == null) return;
+        server.getPlayerList().broadcastSystemMessage(
+                SkillMsg.t("voice", "[Voice of the World] ").withStyle(ChatFormatting.GOLD)
+                        .append(SkillMsg.t("evolution.confirmed", "Confirmed. %s's Unique Skill %s has evolved into the Ultimate Skill %s.",
+                                player.getName().copy().withStyle(ChatFormatting.WHITE),
+                                old.getDisplayName().copy().withStyle(ChatFormatting.AQUA),
+                                ult.getName().copy().withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD)).withStyle(ChatFormatting.WHITE)), false);
     }
 }

@@ -1,84 +1,96 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
-
+import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.skill.rules.GodTierRules;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.tensura.ability.skill.Skill;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * The Visionary (Gremmy Thoumeaux): Ultimate. Whatever you imagine becomes real.
- * Meteor: imagine a meteor onto your target (no block damage). Void: imagine a void that
- * swallows everything in an area. Perfect Body: imagine your body stronger.
+ * The Visionary (Gremmy Thoumeaux): a standalone god-tier Ultimate. Whatever you imagine becomes real. Meteor: imagine a meteor onto the
+ * spot you look at (damages and ignites foes, never breaks or burns a block). Void: imagine a void that lifts, withers, blinds and
+ * darkens every foe in an area. Perfect Body: imagine your own body stronger for a minute. Only foes are hurt. Numbers:
+ * {@link GodTierRules}.
  */
-public class TheVisionarySkill extends Skill {
-    private static final int METEOR = 0, VOID = 1, BODY = 2, MODES = 3;
+public class TheVisionarySkill extends NUSkill {
     private static final String[] KEYS = {"meteor", "void", "body"};
-    private static final ResourceLocation ICON = ResourceLocation.withDefaultNamespace("textures/item/firework_star.png");
-    public TheVisionarySkill() { super(SkillType.ULTIMATE); }
 
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
-    @Override public int getModes(ManasSkillInstance i) { return MODES; }
-    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) { return r ? (mode + MODES - 1) % MODES : (mode + 1) % MODES; }
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return "visionary." + KEYS[mode]; }
-    @Override public Component getModeName(ManasSkillInstance i, int mode) { return Component.translatable("nusmp.skill.mode.visionary." + KEYS[mode]); }
+    static final SkillText TEXT = SkillText.of("the_visionary", "The Visionary",
+            "Ultimate. Whatever you imagine becomes reality: a meteor, a void, a perfect body.");
+
+    public TheVisionarySkill() { super(SkillType.ULTIMATE, TEXT, true); }
+
+    @Override public int getModes(ManasSkillInstance i) { return GodTierRules.MODES; }
+    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) { return r ? (mode + GodTierRules.MODES - 1) % GodTierRules.MODES : (mode + 1) % GodTierRules.MODES; }
+    @Override public String getModeId(ManasSkillInstance i, int mode) { return "visionary." + KEYS[Math.floorMod(mode, KEYS.length)]; }
+
+    @Override
+    public Component getModeName(ManasSkillInstance i, int mode) {
+        return switch (mode) {
+            case GodTierRules.METEOR -> SkillMsg.mode("visionary.meteor", "Meteor");
+            case GodTierRules.VOID -> SkillMsg.mode("visionary.void", "Void");
+            default -> SkillMsg.mode("visionary.body", "Perfect Body");
+        };
+    }
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
-        if (!(entity instanceof ServerPlayer player)) return;
-        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, "Your imagination needs rest."); return; }
+        if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
+        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("visionary.cooldown", "Your imagination needs rest.")); return; }
         ServerLevel level = player.serverLevel();
         boolean mastered = instance.isMastered(player);
+        double mastery = masteryFrac(instance);
 
         switch (mode) {
-            case METEOR -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(4000))) return;
+            case GodTierRules.METEOR -> {
+                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.meteorCost()))) return;
                 Vec3 c = DMUtil.lookPoint(player, 64);
-                GodTier.line(level, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.add(8, 40, 0), c);
-                level.explode(player, c.x, c.y, c.z, mastered ? 6.0F : 4.0F, true, Level.ExplosionInteraction.NONE);
-                for (LivingEntity t : DMUtil.around(player, c, mastered ? 8 : 6)) {
-                    t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 50 : 35));
-                    t.igniteForSeconds(6);
+                Vec3 sky = c.add(8, 40, 0);
+                SkillFx.beam(level, sky, c, false);
+                SkillFx.shape(level, VfxShape.DEMON_METEOR, sky, c, 0xFFFFA0E0, 24, 2.0f);
+                SkillFx.shape(level, VfxShape.FIRE_BURST, c, c.add(0, 1, 0), 0xFFFFA0E0, 24, (float) GodTierRules.meteorRadius(mastered) * 0.4f);
+                for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.meteorRadius(mastered))) {
+                    if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC) > 0f) t.igniteForSeconds(6);
                 }
-                instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(600)), METEOR);
+                SkillFx.sound(level, c, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.7F);
+                cooldown(instance, mode, DMUtil.cooldown(GodTierRules.meteorCooldown()));
             }
-            case VOID -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(3500))) return;
+            case GodTierRules.VOID -> {
+                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.voidCost()))) return;
                 Vec3 c = DMUtil.lookPoint(player, 40);
-                for (LivingEntity t : DMUtil.around(player, c, mastered ? 9 : 6)) {
-                    t.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2));
-                    t.addEffect(new MobEffectInstance(MobEffects.WITHER, 160, 2));
+                for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.voidRadius(mastered))) {
+                    t.addEffect(new MobEffectInstance(MobEffects.LEVITATION, BalanceLaw.controlTicks(t, 60), 2));
+                    t.addEffect(new MobEffectInstance(MobEffects.WITHER, GodTierRules.voidWitherTicks(), 2));
                     t.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160, 0));
                     t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
                 }
-                RukhFx.spray(level, RukhFx.Alignment.DARK, c.x, c.y + 1, c.z, 300, 3, 2, 3, 0.02);
-                level.playSound(null, player.blockPosition(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.PLAYERS, 1.0F, 0.5F);
-                instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(700)), VOID);
+                SkillFx.shape(level, VfxShape.NIHILITY_ZONE, c, c.add(0, 1, 0), 0xFF7A3FB8, 60, (float) GodTierRules.voidRadius(mastered));
+                SkillFx.spray(level, true, c.add(0, 1, 0), 12, 3, 2, 3, 0.02);
+                SkillFx.sound(level, c, SoundEvents.SCULK_SHRIEKER_SHRIEK, 1.0F, 0.5F);
+                cooldown(instance, mode, DMUtil.cooldown(GodTierRules.voidCooldown()));
             }
-            default -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(3000))) return;
-                int ticks = mastered ? 2400 : 1200;
+            case GodTierRules.BODY -> {
+                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.bodyCost()))) return;
+                int ticks = GodTierRules.bodyTicks(mastered);
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, 1));
-                RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 60, 0.5, 1, 0.5, 0.3);
-                instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(3600)), BODY);
+                SkillFx.aura(level, player, false);
+                SkillFx.spray(level, false, player.position().add(0, 1, 0), 12, 0.5, 1, 0.5, 0.3);
+                SkillFx.sound(level, player.position(), SoundEvents.BEACON_POWER_SELECT, 1.0F, 1.2F);
+                cooldown(instance, mode, DMUtil.cooldown(GodTierRules.bodyCooldown()));
             }
+            default -> { return; }
         }
         SkillUtil.castVfx(player, 0xFFFFA0E0);
-        instance.addMasteryPoint(player);
-        instance.markDirty();
+        grow(instance, player, 1);
     }
 }

@@ -1,147 +1,159 @@
 package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.NUConfig;
+import com.newuniverse.nusmp.skill.rules.FaithRules;
+import com.newuniverse.nusmp.skill.rules.Tier;
 import io.github.manasmods.manascore.skill.api.ManasSkill;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import io.github.manasmods.manascore.skill.api.Skills;
-import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Faith: a Unique skill that bestows skills on others.
- * Faith points are saved on the skill itself, so admins can fix them with /nusmp faith.
- * Modes: Bestow (grant a skill to the player you look at), Pray (magicules -> faith), Check Faith.
+ * Faith: a Unique skill fuelled by devotion. Faith points are saved on the skill itself (tag "Faith", so admins can fix them with
+ * /nusmp faith, and they carry over unchanged when the skill evolves into Goddess of Faith). Modes: Bestow (teach the player you look at one
+ * random skill from the configured list, for Faith and a long wait), Pray (turn magicules into Faith) and Check Faith. The Ultimate
+ * adds Blessing and Miracle. The arithmetic is in {@link FaithRules}.
  */
-public class FaithSkill extends Skill {
-    public static final String FAITH_KEY = "Faith";
-    private static final int BESTOW = 0, PRAY = 1, CHECK = 2, MODE_COUNT = 3;
-    private static final ResourceLocation ICON =
-            ResourceLocation.withDefaultNamespace("textures/mob_effect/hero_of_the_village.png");
+public class FaithSkill extends NUSkill {
+    public static final String FAITH_KEY = FaithRules.FAITH_KEY;
+    static final int BESTOW = 0, PRAY = 1, CHECK = 2;
 
-    protected final boolean ultimate;
+    static final SkillText TEXT = SkillText.of("faith", "Faith",
+            "Unique. Pray to gather Faith, then spend it to bestow a skill upon a player you look at. Faith is kept when this skill evolves.");
 
-    public FaithSkill() { this(SkillType.UNIQUE, false); }
+    public FaithSkill() { this(SkillType.UNIQUE, TEXT, false); }
 
-    protected FaithSkill(SkillType type, boolean ultimate) {
-        super(type);
-        this.ultimate = ultimate;
-    }
+    protected FaithSkill(SkillType type, SkillText text, boolean ultimate) { super(type, text, ultimate); }
 
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
-    @Override public int getModes(ManasSkillInstance instance) { return MODE_COUNT; }
+    @Override public int getModes(ManasSkillInstance instance) { return 3; }
 
     @Override
     public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) {
-        return reverse ? (mode + MODE_COUNT - 1) % MODE_COUNT : (mode + 1) % MODE_COUNT;
+        int count = getModes(instance);
+        return reverse ? (mode + count - 1) % count : (mode + 1) % count;
     }
 
     @Override
     public String getModeId(ManasSkillInstance instance, int mode) {
-        return "faith." + modeKey(mode);
+        return "faith." + switch (mode) { case BESTOW -> "bestow"; case PRAY -> "pray"; default -> "check"; };
     }
 
     @Override
     public Component getModeName(ManasSkillInstance instance, int mode) {
-        return Component.translatable("nusmp.skill.mode.faith." + modeKey(mode));
-    }
-
-    private static String modeKey(int mode) {
         return switch (mode) {
-            case BESTOW -> "bestow";
-            case PRAY -> "pray";
-            default -> "check";
+            case BESTOW -> SkillMsg.mode("faith.bestow", "Bestow");
+            case PRAY -> SkillMsg.mode("faith.pray", "Pray");
+            default -> SkillMsg.mode("faith.check", "Check Faith");
         };
     }
 
     public static int getFaith(ManasSkillInstance instance) {
-        return instance.getOrCreateTag().getInt(FAITH_KEY);
+        return FaithRules.clamp(instance.getOrCreateTag().getInt(FAITH_KEY));
     }
 
     public static void setFaith(ManasSkillInstance instance, int value) {
-        instance.getOrCreateTag().putInt(FAITH_KEY, Math.max(0, value));
+        instance.getOrCreateTag().putInt(FAITH_KEY, FaithRules.clamp(value));
         instance.markDirty();
     }
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
-        if (!(entity instanceof ServerPlayer player)) return;
+        if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
         switch (mode) {
             case BESTOW -> bestow(instance, player);
             case PRAY -> pray(instance, player);
-            default -> SkillUtil.actionbar(player,
-                    Component.literal("Faith: " + getFaith(instance)).withStyle(ChatFormatting.GOLD));
+            case CHECK -> check(instance, player);
+            default -> { }
         }
     }
 
-    private void pray(ManasSkillInstance instance, ServerPlayer player) {
+    protected final void check(ManasSkillInstance instance, ServerPlayer player) {
+        int cost = FaithRules.bestowCost(NUConfig.BESTOW_FAITH_COST.get(), tier(instance, player));
+        SkillUtil.actionbar(player, SkillMsg.t("faith.check", "Faith: %s (a bestowal costs %s)", getFaith(instance), cost)
+                .withStyle(ChatFormatting.GOLD));
+    }
+
+    protected final void pray(ManasSkillInstance instance, ServerPlayer player) {
         if (instance.onCoolDown(PRAY)) {
-            SkillUtil.fail(player, "You cannot pray again yet.");
+            SkillUtil.fail(player, SkillMsg.t("faith.pray_cooldown", "You cannot pray again yet."));
             return;
         }
         if (!SkillUtil.spendMagicules(player, NUConfig.PRAY_MAGICULE_COST.get())) return;
-        setFaith(instance, getFaith(instance) + (ultimate ? 3 : 1));
-        instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(NUConfig.PRAY_COOLDOWN.get()), PRAY);
-        SkillUtil.actionbar(player, Component.literal("Faith: " + getFaith(instance)).withStyle(ChatFormatting.GOLD));
+        Tier tier = tier(instance, player);
+        setFaith(instance, FaithRules.add(getFaith(instance), FaithRules.prayGain(tier)));
+        cooldown(instance, PRAY, NUConfig.PRAY_COOLDOWN.get());
+        SkillUtil.actionbar(player, SkillMsg.t("faith.prayed", "You pray. Faith: %s", getFaith(instance)).withStyle(ChatFormatting.GOLD));
+        var level = player.serverLevel();
+        SkillFx.spray(level, false, player.position().add(0, 2.1, 0), 12, 0.4, 0.1, 0.4, 0.01);
+        SkillFx.sound(level, player.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0F, 1.2F);
+        grow(instance, player, 0.5);
     }
 
-    private void bestow(ManasSkillInstance instance, ServerPlayer player) {
+    /** Bestow: the target must be a real player in view; the gift is one configured skill they do not own yet. */
+    protected final void bestow(ManasSkillInstance instance, ServerPlayer player) {
         if (instance.onCoolDown(BESTOW)) {
-            SkillUtil.fail(player, "Bestow is on cooldown.");
+            SkillUtil.fail(player, SkillMsg.t("faith.bestow_cooldown", "Bestow is on cooldown."));
             return;
         }
-        int cost = NUConfig.BESTOW_FAITH_COST.get() / (ultimate ? 2 : 1);
-        if (getFaith(instance) < cost) {
-            SkillUtil.fail(player, "Not enough Faith (need " + cost + ", have " + getFaith(instance) + ").");
+        Tier tier = tier(instance, player);
+        int cost = FaithRules.bestowCost(NUConfig.BESTOW_FAITH_COST.get(), tier);
+        int faith = getFaith(instance);
+        if (!FaithRules.canSpend(faith, cost)) {
+            SkillUtil.fail(player, SkillMsg.t("faith.not_enough", "Not enough Faith (need %s, have %s).", cost, faith));
             return;
         }
-        ServerPlayer target = SkillUtil.lookTarget(player, 8.0);
+        ServerPlayer target = SkillUtil.lookTarget(player, tier == Tier.ULTIMATE ? 16.0 : 8.0);
         if (target == null) {
-            SkillUtil.fail(player, "Look at a player within 8 blocks to bestow.");
+            SkillUtil.fail(player, SkillMsg.t("faith.no_target", "Look at a player to bestow."));
             return;
         }
 
         Skills targetSkills = SkillAPI.getSkillsFrom(target);
-        List<ManasSkill> options = new ArrayList<>();
-        for (String id : NUConfig.BESTOWABLE_SKILLS.get()) {
-            ResourceLocation rl = ResourceLocation.tryParse(id);
-            if (rl == null || targetSkills.getSkill(rl).isPresent()) continue;
-            ManasSkill skill = SkillAPI.getSkillRegistry().get(rl);
-            if (skill != null) options.add(skill);
-        }
-        if (options.isEmpty()) {
-            SkillUtil.fail(player, target.getName().getString() + " already has every skill you can bestow.");
+        List<String> pool = FaithRules.giftPool(new ArrayList<String>(NUConfig.BESTOWABLE_SKILLS.get()),
+                id -> { ResourceLocation rl = ResourceLocation.tryParse(id); return rl != null && targetSkills.getSkill(rl).isPresent(); },
+                id -> { ResourceLocation rl = ResourceLocation.tryParse(id); return rl != null && SkillAPI.getSkillRegistry().get(rl) != null; });
+        if (pool.isEmpty()) {
+            SkillUtil.fail(player, SkillMsg.t("faith.has_all", "%s already has every skill you can bestow.", target.getName()));
             return;
         }
-
-        Collections.shuffle(options);
-        ManasSkill gift = options.get(0);
+        int pick = FaithRules.pickIndex(pool.size(), player.getRandom().nextInt());
+        ManasSkill gift = SkillAPI.getSkillRegistry().get(ResourceLocation.parse(pool.get(pick)));
+        if (gift == null) {
+            SkillUtil.fail(player, SkillMsg.t("faith.failed", "The bestowal failed."));
+            return;
+        }
         boolean learned = targetSkills.learnSkill(gift.createDefaultInstance(),
-                Component.literal("Bestowed by " + player.getName().getString()).withStyle(ChatFormatting.GOLD));
+                SkillMsg.t("faith.bestowed_by", "Bestowed by %s", player.getName()).withStyle(ChatFormatting.GOLD));
         if (!learned) {
-            SkillUtil.fail(player, "The bestowal failed.");
+            SkillUtil.fail(player, SkillMsg.t("faith.failed", "The bestowal failed."));
             return;
         }
 
-        setFaith(instance, getFaith(instance) - cost);
-        instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(NUConfig.BESTOW_COOLDOWN.get() / (ultimate ? 2 : 1)), BESTOW);
+        setFaith(instance, FaithRules.spend(faith, cost));
+        cooldown(instance, BESTOW, FaithRules.bestowCooldown(NUConfig.BESTOW_COOLDOWN.get(), tier));
         SkillUtil.castVfx(player, 0xFFFFE08A);
-        instance.addMasteryPoint(player, 1);
-        instance.markDirty();
+        var level = player.serverLevel();
+        Vec3 at = target.position().add(0, 1, 0);
+        SkillFx.beam(level, player.getEyePosition(), at, false);
+        SkillFx.spray(level, false, at.add(0, 1, 0), 12, 0.4, 0.5, 0.4, 0.02);
+        SkillFx.sound(level, target.position(), SoundEvents.BEACON_POWER_SELECT, 1.0F, 1.0F);
+        grow(instance, player, 1);
 
-        player.serverLevel().playSound(null, target.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1.0F, 1.0F);
-        player.getServer().getPlayerList().broadcastSystemMessage(Component.literal("[Voice of the World] ").withStyle(ChatFormatting.GOLD)
-                .append(Component.literal(player.getName().getString() + " has bestowed a skill upon "
-                        + target.getName().getString() + ".").withStyle(ChatFormatting.WHITE)), false);
+        var server = player.getServer();
+        if (server != null) {
+            server.getPlayerList().broadcastSystemMessage(SkillMsg.t("voice", "[Voice of the World] ").withStyle(ChatFormatting.GOLD)
+                    .append(SkillMsg.t("faith.bestowed", "%s has bestowed a skill upon %s.", player.getName(), target.getName())
+                            .withStyle(ChatFormatting.WHITE)), false);
+        }
     }
 }
