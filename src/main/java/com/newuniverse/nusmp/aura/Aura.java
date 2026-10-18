@@ -51,5 +51,10 @@ public enum Aura {
     /** 1.27.0: the merged-magic armour; RETIRED in 1.93.0 (no painter is registered for it any more; the constant stays so the ordinals after it never move) */
     MERGED,
     /** 1.27.0: the temporary armour / aura of the 30 wiki magics; the style is the magic's WikiStyles index (client.aura.WikiAura) */
-    WIKI
+    WIKI,
+    /** 1.93.0: the rebuilt temporary armours of Water, Dark, Lightning and Flame Magic (client.aura.WaterAura / DarkAura / LightningAura / FlameAura, pieces forged by EquipAnimation) */
+    WATER,
+    DARK,
+    LIGHTNING,
+    FLAME
 }

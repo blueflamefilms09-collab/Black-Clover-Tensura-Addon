@@ -64,6 +64,9 @@ public class Entity {
     public Vec3 getDeltaMovement() { return Vec3.ZERO; }
 
     public boolean isCrouching() { return false; }
+    /** 1.93.0: the armour rig reads these two (wings beat faster in the air); the preview player stands on the ground. */
+    public boolean onGround() { return true; }
+    public boolean isInWater() { return false; }
     public boolean isInvisible() { return false; }
     public boolean isSpectator() { return false; }
     public boolean isAlive() { return true; }

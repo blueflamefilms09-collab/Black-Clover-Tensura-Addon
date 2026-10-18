@@ -50,5 +50,9 @@ final class AuraRegistry {
         CompassAura.register();
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
+        WaterAura.register();                // 1.93.0: the Water / Dark / Lightning / Flame armours
+        DarkAura.register();
+        LightningAura.register();
+        FlameAura.register();
     }
 }
