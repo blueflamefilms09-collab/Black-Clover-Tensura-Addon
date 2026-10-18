@@ -183,6 +183,11 @@
       "fixed_scale": 0.808
     },
     {
+      "id": "chronicle_sigil",
+      "action": "keep",
+      "length_blocks": 0.95
+    },
+    {
       "id": "circlet_of_quickened_thought",
       "action": "keep",
       "length_blocks": 0.664
@@ -686,6 +691,44 @@
       "length_blocks": 1.318
     },
     {
+      "id": "legendary_bow",
+      "action": "skip_manual",
+      "length_blocks": 1.765
+    },
+    {
+      "id": "legendary_shield",
+      "action": "skip_manual",
+      "length_blocks": 1.01
+    },
+    {
+      "id": "legendary_spear",
+      "action": "preset",
+      "length_blocks": 3.882,
+      "first_person_scale": 0.265,
+      "first_person_translation_px": [
+        1.13,
+        2.35,
+        0.7
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.206,
+      "fixed_scale": 0.386
+    },
+    {
+      "id": "legendary_sword",
+      "action": "preset",
+      "length_blocks": 2.0,
+      "first_person_scale": 0.515,
+      "first_person_translation_px": [
+        1.13,
+        0.24,
+        0.02
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.4,
+      "fixed_scale": 0.75
+    },
+    {
       "id": "leviathan_axe",
       "action": "preset",
       "length_blocks": 1.435,
@@ -806,6 +849,11 @@
       "tip_out_of_view": false,
       "ground_scale": 0.435,
       "fixed_scale": 0.817
+    },
+    {
+      "id": "mana_core",
+      "action": "keep",
+      "length_blocks": 0.891
     },
     {
       "id": "mana_method_rune_stone",
@@ -1549,6 +1597,183 @@
       "fixed_scale": 0.849
     },
     {
+      "id": "vassal_axe",
+      "action": "preset",
+      "length_blocks": 2.141,
+      "first_person_scale": 0.533,
+      "first_person_translation_px": [
+        1.13,
+        1.89,
+        0.65
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.373,
+      "fixed_scale": 0.7
+    },
+    {
+      "id": "vassal_book",
+      "action": "keep",
+      "length_blocks": 1.174
+    },
+    {
+      "id": "vassal_carriage",
+      "action": "keep",
+      "length_blocks": 1.0
+    },
+    {
+      "id": "vassal_chain",
+      "action": "preset",
+      "length_blocks": 2.059,
+      "first_person_scale": 0.627,
+      "first_person_translation_px": [
+        1.13,
+        2.74,
+        0.88
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.388,
+      "fixed_scale": 0.728
+    },
+    {
+      "id": "vassal_claw",
+      "action": "keep",
+      "length_blocks": 1.177
+    },
+    {
+      "id": "vassal_fan",
+      "action": "keep",
+      "length_blocks": 0.941
+    },
+    {
+      "id": "vassal_gauntlet",
+      "action": "keep",
+      "length_blocks": 1.059
+    },
+    {
+      "id": "vassal_hammer",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.558,
+      "first_person_translation_px": [
+        1.13,
+        2.18,
+        0.76
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
+      "id": "vassal_harpoon",
+      "action": "preset",
+      "length_blocks": 2.823,
+      "first_person_scale": 0.357,
+      "first_person_translation_px": [
+        1.13,
+        1.3,
+        0.27
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.283,
+      "fixed_scale": 0.531
+    },
+    {
+      "id": "vassal_instrument",
+      "action": "keep",
+      "length_blocks": 1.353
+    },
+    {
+      "id": "vassal_katana",
+      "action": "preset",
+      "length_blocks": 1.953,
+      "first_person_scale": 0.508,
+      "first_person_translation_px": [
+        1.13,
+        1.88,
+        0.65
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.409,
+      "fixed_scale": 0.768,
+      "rewritten": true
+    },
+    {
+      "id": "vassal_mirror",
+      "action": "preset",
+      "length_blocks": 1.412,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.03,
+        0.89
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
+      "id": "vassal_projectile",
+      "action": "keep",
+      "length_blocks": 0.729
+    },
+    {
+      "id": "vassal_scythe",
+      "action": "preset",
+      "length_blocks": 2.765,
+      "first_person_scale": 0.444,
+      "first_person_translation_px": [
+        1.13,
+        2.72,
+        0.96
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.289,
+      "fixed_scale": 0.542,
+      "rewritten": true
+    },
+    {
+      "id": "vassal_sewing_set",
+      "action": "preset",
+      "length_blocks": 1.529,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        2.31,
+        1.11
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
+      "id": "vassal_staff",
+      "action": "preset",
+      "length_blocks": 2.588,
+      "first_person_scale": 0.382,
+      "first_person_translation_px": [
+        1.13,
+        2.48,
+        0.87
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.309,
+      "fixed_scale": 0.579
+    },
+    {
+      "id": "vassal_whip",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.492,
+      "first_person_translation_px": [
+        1.13,
+        1.15,
+        0.38
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "viola_of_moonlit_spirits",
       "action": "keep",
       "length_blocks": 0.95
@@ -1699,6 +1924,11 @@
       "id": "written_consent",
       "action": "keep",
       "length_blocks": 1.091
+    },
+    {
+      "id": "zogratis_hourglass",
+      "action": "keep",
+      "length_blocks": 0.891
     }
   ]
 }

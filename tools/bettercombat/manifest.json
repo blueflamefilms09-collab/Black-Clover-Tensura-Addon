@@ -356,6 +356,16 @@
       "profile": "shortsword",
       "source": "item"
     },
+    "legendary_spear": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
+    "legendary_sword": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
     "leviathan_axe": {
       "class": "handaxe",
       "profile": "handaxe",
@@ -701,6 +711,66 @@
       "profile": "hammer",
       "source": "relic"
     },
+    "vassal_axe": {
+      "class": "battleaxe",
+      "profile": "battleaxe",
+      "source": "table"
+    },
+    "vassal_chain": {
+      "class": "whip",
+      "profile": "whip",
+      "source": "table"
+    },
+    "vassal_claw": {
+      "class": "shortsword",
+      "profile": "shortsword",
+      "source": "table"
+    },
+    "vassal_hammer": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "table"
+    },
+    "vassal_harpoon": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
+    "vassal_instrument": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "table"
+    },
+    "vassal_katana": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "table"
+    },
+    "vassal_projectile": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "table"
+    },
+    "vassal_scythe": {
+      "class": "scythe",
+      "profile": "scythe",
+      "source": "table"
+    },
+    "vassal_sewing_set": {
+      "class": "rapier",
+      "profile": "rapier",
+      "source": "table"
+    },
+    "vassal_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
+    "vassal_whip": {
+      "class": "coilwhip",
+      "profile": "coilwhip",
+      "source": "table"
+    },
     "viper_whip": {
       "class": "coilwhip",
       "profile": "coilwhip",
@@ -776,6 +846,7 @@
     "bond_thread": "hand item / charm / book / key: not a weapon",
     "book_of_mispells": "hand item / charm / book / key: not a weapon",
     "celestial_support": "shield: no swing",
+    "chronicle_sigil": "hand item / charm / book / key: not a weapon",
     "circlet_of_quickened_thought": "hand item / charm / book / key: not a weapon",
     "communication_magic_device": "hand item / charm / book / key: not a weapon",
     "crossbow_of_swift_death": "ranged (crossbow): Better Combat only handles melee",
@@ -794,6 +865,9 @@
     "hand_of_providence": "hand item / charm / book / key: not a weapon",
     "heros_shield": "shield: no swing",
     "hyperborean_crossbow": "ranged (crossbow): Better Combat only handles melee",
+    "legendary_bow": "ranged (bow): Better Combat only handles melee",
+    "legendary_bow_curse": "ranged (bow): Better Combat only handles melee",
+    "legendary_shield": "shield: no swing",
     "magebane_shield": "shield: no swing",
     "magic_tool_bow": "ranged (crossbow): Better Combat only handles melee",
     "mana_core": "hand item / charm / book / key: not a weapon",
@@ -806,10 +880,14 @@
     "the_dragons_truth": "hand item / charm / book / key: not a weapon",
     "the_reaver": "ranged (bow): Better Combat only handles melee",
     "thunder_shield": "shield: no swing",
+    "vassal_book": "hand item / charm / book / key: not a weapon",
+    "vassal_carriage": "hand item / charm / book / key: not a weapon",
+    "vassal_fan": "hand item / charm / book / key: not a weapon",
+    "vassal_gauntlet": "hand item / charm / book / key: not a weapon",
+    "vassal_mirror": "shield: no swing",
     "viola_of_moonlit_spirits": "hand item / charm / book / key: not a weapon",
     "warlute": "ranged (crossbow): Better Combat only handles melee",
     "written_consent": "hand item / charm / book / key: not a weapon",
-    "zogratis_hourglass": "hand item / charm / book / key: not a weapon",
-    "chronicle_sigil": "hand item / charm / book / key: not a weapon"
+    "zogratis_hourglass": "hand item / charm / book / key: not a weapon"
   }
 }

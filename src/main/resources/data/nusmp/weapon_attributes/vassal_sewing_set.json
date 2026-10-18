@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:rapier",
+  "attributes": {
+    "range_bonus": 0.25
+  }
+}
