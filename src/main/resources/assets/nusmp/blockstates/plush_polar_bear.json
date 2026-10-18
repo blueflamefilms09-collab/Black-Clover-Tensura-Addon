@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nusmp:block/plush/polar_bear"
+    },
+    "facing=east": {
+      "model": "nusmp:block/plush/polar_bear",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "nusmp:block/plush/polar_bear",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nusmp:block/plush/polar_bear",
+      "y": 270
+    }
+  }
+}

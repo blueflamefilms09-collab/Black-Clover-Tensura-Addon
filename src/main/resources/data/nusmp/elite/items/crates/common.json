@@ -1,0 +1,18 @@
+{
+  "rolls": [1, 2],
+  "entries": [
+    { "type": "item", "id": "minecraft:iron_ingot", "weight": 14, "min": 3, "max": 8 },
+    { "type": "item", "id": "minecraft:gold_ingot", "weight": 8, "min": 2, "max": 5 },
+    { "type": "item", "id": "minecraft:redstone", "weight": 8, "min": 6, "max": 16 },
+    { "type": "item", "id": "minecraft:lapis_lazuli", "weight": 8, "min": 6, "max": 14 },
+    { "type": "item", "id": "minecraft:cooked_beef", "weight": 8, "min": 6, "max": 12 },
+    { "type": "item", "id": "minecraft:experience_bottle", "weight": 6, "min": 2, "max": 6 },
+    { "type": "item", "id": "nusmp:health_potion_small", "weight": 12, "min": 1, "max": 3 },
+    { "type": "item", "id": "nusmp:health_potion_medium", "weight": 3, "min": 1, "max": 1 },
+    { "type": "coins", "weight": 14, "min": 50, "max": 250, "label": "Tensura coins" },
+    { "type": "xp", "weight": 8, "min": 120, "max": 400 },
+    { "type": "sp", "weight": 5, "min": 1, "max": 2 },
+    { "type": "item", "id": "nusmp:common_crate_key", "weight": 4, "min": 1, "max": 1 },
+    { "type": "item", "id": "nusmp:rare_crate_key", "weight": 1, "min": 1, "max": 1 }
+  ]
+}

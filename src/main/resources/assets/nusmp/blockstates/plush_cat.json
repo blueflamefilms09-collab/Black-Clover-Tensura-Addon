@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nusmp:block/plush/cat"
+    },
+    "facing=east": {
+      "model": "nusmp:block/plush/cat",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "nusmp:block/plush/cat",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nusmp:block/plush/cat",
+      "y": 270
+    }
+  }
+}

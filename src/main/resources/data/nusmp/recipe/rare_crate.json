@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DID",
+    "ICI",
+    "DID"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "nusmp:common_crate"
+    }
+  },
+  "result": {
+    "id": "nusmp:rare_crate",
+    "count": 1
+  }
+}

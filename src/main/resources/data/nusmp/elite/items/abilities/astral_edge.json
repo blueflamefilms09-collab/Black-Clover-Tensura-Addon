@@ -1,0 +1,38 @@
+{
+  "item": "nusmp:astral_edge",
+  "primary": {
+    "kind": "line_slash",
+    "name": "Starfall Cut",
+    "desc": "A crescent of starlight 16 blocks long: foes it cuts are lit up and slowed.",
+    "cooldown": 180,
+    "damage": 11,
+    "range": 16,
+    "width": 1.8,
+    "color": "F7E7A0",
+    "dark": false,
+    "vfx": "WIND_SLASH",
+    "effects": [
+      { "id": "minecraft:glowing", "ticks": 100 },
+      { "id": "minecraft:slowness", "ticks": 40, "amp": 0 }
+    ]
+  },
+  "alt": {
+    "kind": "chain_marks",
+    "name": "Constellation",
+    "desc": "Marks up to five foes within 14 blocks with stars, then strikes each in turn along a line of light.",
+    "cooldown": 700,
+    "damage": 8,
+    "range": 14,
+    "count": 5,
+    "strip": 1,
+    "color": "BFD8FF",
+    "dark": false,
+    "vfx": "THREAD_LINE",
+    "effects": [ { "id": "minecraft:glowing", "ticks": 120 } ]
+  },
+  "swing": {
+    "damage": 4,
+    "heal": 1,
+    "effects": [ { "id": "minecraft:glowing", "ticks": 60 } ]
+  }
+}
