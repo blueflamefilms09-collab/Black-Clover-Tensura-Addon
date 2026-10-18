@@ -296,6 +296,7 @@ public final class RaceTransforms {
 
     public static void onLogout(ServerPlayer p) {
         RaceLedger.forget(p);
+        RaceNet.forget(p.getUUID());
         APPLIED.remove(p.getUUID());
         LAST_TICK.remove(p.getUUID());
     }

@@ -31,14 +31,28 @@ public final class RaceLedger {
         return root.getCompound(KEY);
     }
 
-    // ---------------------------------------------------------------- the state machine
-    public static TransformMachine machine(Player p) {
-        return MACHINES.computeIfAbsent(p.getUUID(), id -> TransformMachine.decode(data(p).getString("Machine")));
+    /** The player's compound if there is one, else a detached empty one: reading must not write an empty ledger into every player who is not an elite race. */
+    private static CompoundTag peek(Player p) {
+        CompoundTag pd = p.getPersistentData();
+        if (!pd.contains(Player.PERSISTED_NBT_TAG, 10)) return new CompoundTag();
+        CompoundTag root = pd.getCompound(Player.PERSISTED_NBT_TAG);
+        return root.contains(KEY, 10) ? root.getCompound(KEY) : new CompoundTag();
     }
 
+    private static final String FRESH = new TransformMachine().encode();
+
+    // ---------------------------------------------------------------- the state machine
+    public static TransformMachine machine(Player p) {
+        return MACHINES.computeIfAbsent(p.getUUID(), id -> TransformMachine.decode(peek(p).getString("Machine")));
+    }
+
+    /** Writes the machine into the player's data; a machine that never left its fresh state writes nothing. */
     public static void saveMachine(Player p) {
         TransformMachine m = MACHINES.get(p.getUUID());
-        if (m != null) data(p).putString("Machine", m.encode());
+        if (m == null) return;
+        String enc = m.encode();
+        if (enc.equals(FRESH) && !peek(p).contains("Machine")) return;
+        data(p).putString("Machine", enc);
     }
 
     /** Forget the cache (logout, clone): the next read decodes the saved string again. */
@@ -50,14 +64,13 @@ public final class RaceLedger {
     public static void drop(UUID id) { MACHINES.remove(id); }
 
     // ---------------------------------------------------------------- the race the machine belongs to
-    public static String template(Player p) { return data(p).getString("Template"); }
+    public static String template(Player p) { return peek(p).getString("Template"); }
 
     public static void setTemplate(Player p, String id) { data(p).putString("Template", id == null ? "" : id); }
 
     // ---------------------------------------------------------------- kills
     public static int kills(Player p, String key) {
-        CompoundTag k = data(p).getCompound("Kills");
-        return k.getInt(key);
+        return peek(p).getCompound("Kills").getInt(key);
     }
 
     public static void addKill(Player p, String key) {
@@ -75,7 +88,7 @@ public final class RaceLedger {
 
     // ---------------------------------------------------------------- Zenkai
     public static Zenkai.State zenkai(Player p) {
-        CompoundTag d = data(p);
+        CompoundTag d = peek(p);
         if (!d.contains("ZenkaiStacks")) return Zenkai.State.NONE;
         return new Zenkai.State(d.getInt("ZenkaiStacks"), d.getLong("ZenkaiAt"));
     }
@@ -87,7 +100,10 @@ public final class RaceLedger {
     }
 
     // ---------------------------------------------------------------- evolution bookkeeping
-    public static long lastConsume(Player p) { return data(p).contains("LastConsume") ? data(p).getLong("LastConsume") : -1L; }
+    public static long lastConsume(Player p) {
+        CompoundTag d = peek(p);
+        return d.contains("LastConsume") ? d.getLong("LastConsume") : -1L;
+    }
 
     public static void markConsumed(Player p, long gameTime) { data(p).putLong("LastConsume", gameTime); }
 
