@@ -107,7 +107,7 @@ public final class SystemStatsScreen extends Screen {
     public void render(GuiGraphics g, int mx, int my, float partial) {
         try {
             rebuild();
-            renderBackground(g, mx, my, partial);
+            g.fill(0, 0, width, height, 0xA0000000);                               // a plain dim (not the blurring vanilla background: ScreenBlurGuardTest)
             drawAll(g, mx, my, Minecraft.getInstance().level == null ? 0f : Minecraft.getInstance().level.getGameTime() + partial);
         } catch (RuntimeException e) {
             LOG.warn("[nusmp] The stat screen failed to draw and is closed", e);

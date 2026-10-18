@@ -9,6 +9,9 @@
 - **Normal, Special, Rare and Unique relics no longer need attunement** (your request: "normal-unique relics don't require attunements"). Only Legend, God and Genesis relics still do (`AttuneRules.REQUIRED_FROM`). The relic definitions are untouched; tooltips and the "needs attunement" prompts follow automatically, and the three-attuned-relics limit now counts only Legend and above.
 - **Bows face the way a vanilla bow faces** (your report: "bows are still facing the wrong way"): the six mesh bows (Divine Mercy, The Dragon's Spirit, The Reaver, Embrasure, Legendary Bow and its curse form, all draw stages) were placed with their limbs along the sprite's main diagonal, so the belly pointed down-right and the bow lay across the hand. A vanilla bow shoots along the main diagonal like a sword points, its limbs lie on the other diagonal and its belly faces up-right; the meshes are now placed at 135 degrees (was 45) about the same middle. `tools/relics/bow_vanilla.py` and `BowDisplayGuardTest` carry the new angle.
 
+### FIXED
+- 1.83.0 (the System points and mouse window) never got its own release: its build failed on `ScreenBlurGuardTest` because the two new System screens called `renderBackground` inside `render` (the vanilla blur trap of 1.15.0). They now draw a plain dim themselves. Everything of 1.83.0 is in this release.
+
 ### KEPT
 - All attunement data on existing relics, the five-second ritual for Legend and above, the sprite bows (they already used vanilla's model), all display blocks and sizes of 1.72.0.
 

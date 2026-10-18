@@ -85,7 +85,7 @@ public final class SystemEditScreen extends Screen {
     @Override
     public void render(GuiGraphics g, int mx, int my, float partial) {
         try {
-            renderBackground(g, mx, my, partial);
+            g.fill(0, 0, width, height, 0x70000000);                               // a plain dim (not the blurring vanilla background: ScreenBlurGuardTest)
             OverlayLayout.Frame f = SystemOverlay.drawPreview(g, Minecraft.getInstance(), partial);
             if (f != null) frame = f;
             if (frame != null) drawHandles(g, mx, my);
