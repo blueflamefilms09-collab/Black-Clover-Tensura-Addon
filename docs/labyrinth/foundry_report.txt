@@ -23,8 +23,8 @@ closest pairs (structure groups that differ, of 16):
 abilities used: 53 of the library; least used: triple_shot=4, arrow_rain=4, volley=5, death_burst=5, conjure_imps=7, phase_step=7
 
 models: geo avg 20.2 KB, texture avg 4.9 KB, glow avg 1.10 KB, cubes avg 61, max 126
-on disk: 402 geo 8089.3 KB, 804 textures 2415.3 KB, 107 shared animation files 6968.9 KB
-in the jar (deflate): geo 1267.0 KB, textures 1881.8 KB, animations 1552.0 KB, together 4.59 MB
+on disk: 400 geo 8071.4 KB, 800 textures 2408.2 KB, 107 shared animation files 6968.9 KB
+in the jar (deflate): geo 1263.9 KB, textures 1877.1 KB, animations 1552.0 KB, together 4.58 MB
 without sharing the clips each mob would own ~217 KB: 84.8 MB uncompressed, ~10.9 MB in the jar; with 107 shared classes it is 6.81 MB uncompressed
 
 animation classes (107), members each:

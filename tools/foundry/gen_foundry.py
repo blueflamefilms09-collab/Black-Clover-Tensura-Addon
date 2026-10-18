@@ -158,7 +158,38 @@ def build_all(rows, only, assets, data_dir, jobs, measure, use_cache=True):
         if f:
             index["mobs"][r["id"]] = {"anim": f["cls"], "glow": int(f["glow"].lstrip("#"), 16), "size": r["size"], "height": f["height"], "tier": r["tier"]}
     write_json(os.path.join(assets, "foundry", "index.json"), index)
+    if not only:
+        n = prune(rows, classes, assets, data_dir)
+        if n:
+            print("pruned %d orphan files of mobs that are no longer in the roster" % n)
     return facts, classes, csizes
+
+
+def prune(rows, classes, assets, data_dir):
+    """Deletes what an earlier run generated for a mob (or an animation class) that is no longer in the roster, so a removed row leaves no orphan files behind. Only files this
+    generator owns are touched: `foundry_*` assets and the non-underscore json files of the foundry data folder."""
+    ids = {r["id"] for r in rows}
+    gone = []
+    for sub, pre, suf in (("geo/entity", "foundry_", ".geo.json"), ("textures/entity", "foundry_", ".png")):
+        d = os.path.join(assets, sub)
+        for fn in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+            if not fn.startswith(pre) or fn.startswith("foundry_anim_") or not fn.endswith(suf):
+                continue
+            mid = fn[len(pre):-len(suf)]
+            if mid.endswith("_glow"):
+                mid = mid[:-5]
+            if mid not in ids:
+                gone.append(os.path.join(d, fn))
+    d = os.path.join(assets, "animations", "entity")
+    for fn in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if fn.startswith("foundry_anim_") and fn.endswith(".animation.json") and fn[len("foundry_anim_"):-len(".animation.json")] not in set(classes):
+            gone.append(os.path.join(d, fn))
+    for fn in sorted(os.listdir(data_dir)) if os.path.isdir(data_dir) else []:
+        if fn.endswith(".json") and not fn.startswith("_") and fn[:-5] not in ids:
+            gone.append(os.path.join(data_dir, fn))
+    for p in gone:
+        os.remove(p)
+    return len(gone)
 
 
 def folder_bytes(root, prefix, suffixes):
