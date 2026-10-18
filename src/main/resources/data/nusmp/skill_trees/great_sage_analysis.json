@@ -868,8 +868,8 @@
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "learning_curve",
-      "name": "Learning Curve",
+      "id": "rapid_learning",
+      "name": "Rapid Learning",
       "desc": "Kills give more experience.",
       "parents": [
         {

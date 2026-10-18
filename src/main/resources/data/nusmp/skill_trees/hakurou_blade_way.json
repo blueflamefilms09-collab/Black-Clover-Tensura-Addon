@@ -718,8 +718,8 @@
       "icon": "minecraft:shield"
     },
     {
-      "id": "blade_in_hand_focus",
-      "name": "Blade-in-Hand Focus",
+      "id": "drawn_blade_focus",
+      "name": "Drawn-Blade Focus",
       "desc": "More damage while a sword is in hand.",
       "parents": [
         {

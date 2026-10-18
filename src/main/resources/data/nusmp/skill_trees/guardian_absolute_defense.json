@@ -1,0 +1,1086 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Uriel's Absolute Defense",
+  "desc": "The guardian's power: an impenetrable barrier that shields allies, absorbs what comes, and lets the attacker taste a measure of what he sent.",
+  "book": "nusmp:guardian_absolute_defense_book",
+  "book_name": "Oath of the Lord of Guardian",
+  "book_lore": "Nothing was ever behind him that was hurt.",
+  "color": "#D4AC0D",
+  "icon": "minecraft:end_crystal",
+  "class_id": "guardian_absolute_defense",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/guardian_absolute_defense.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "holy",
+  "nodes": [
+    {
+      "id": "barrier_stance",
+      "name": "Barrier Stance",
+      "desc": "A barrier at all times: armor and knockback resistance, much slower.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.12,
+          -0.144,
+          -0.168
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:end_crystal"
+    },
+    {
+      "id": "reflective_stance",
+      "name": "Reflective Stance",
+      "desc": "A mirrored barrier: damage and crit, a thinner guard.",
+      "parents": [
+        {
+          "node": "barrier_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "barrier_vitality",
+      "name": "Barrier Vitality",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "barrier_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "layered_plating",
+      "name": "Layered Plating",
+      "desc": "A bonus to armor.",
+      "parents": [
+        {
+          "node": "reflective_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "guardian_toughness",
+      "name": "Guardian Toughness",
+      "desc": "A bonus to armor toughness.",
+      "parents": [
+        {
+          "node": "barrier_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_scrap"
+    },
+    {
+      "id": "unyielding_stance",
+      "name": "Unyielding Stance",
+      "desc": "Hard to knock back.",
+      "parents": [
+        {
+          "node": "reflective_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.15,
+          0.1875,
+          0.225,
+          0.2625,
+          0.3
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "absolute_barrier",
+      "name": "Absolute Barrier",
+      "desc": "A barrier of pure absorption wraps you.",
+      "parents": [
+        {
+          "node": "barrier_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          7.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:end_crystal"
+    },
+    {
+      "id": "mirrored_barrier",
+      "name": "Mirrored Barrier",
+      "desc": "For a few seconds, a large share of the damage you take is thrown back.",
+      "parents": [
+        {
+          "node": "reflective_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.45,
+          0.54,
+          0.63,
+          0.72
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "guardian_s_domain",
+      "name": "Guardian's Domain",
+      "desc": "You and your allies around you gain resistance.",
+      "parents": [
+        {
+          "node": "absolute_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "barrier_snap",
+      "name": "Barrier Snap",
+      "desc": "The barrier snaps outward and holds the creatures around you.",
+      "parents": [
+        {
+          "node": "mirrored_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:glowstone"
+    },
+    {
+      "id": "barrier_burst",
+      "name": "Barrier Burst",
+      "desc": "The barrier bursts outward and shoves back what crowds you.",
+      "parents": [
+        {
+          "node": "guardian_s_domain",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.4,
+          1.54,
+          1.68,
+          1.82
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "guardian_s_stand",
+      "name": "Guardian's Stand",
+      "desc": "Draw the attention of hostile creatures to the barrier.",
+      "parents": [
+        {
+          "node": "barrier_snap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "targets": [
+          7.0,
+          10.0,
+          13.0,
+          14.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "guardian_s_light",
+      "name": "Guardian's Light",
+      "desc": "A pulse of light heals you and your allies.",
+      "parents": [
+        {
+          "node": "barrier_burst",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "unbroken_barrier",
+      "name": "Unbroken Barrier",
+      "desc": "You take less damage at full health.",
+      "parents": [
+        {
+          "node": "absolute_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "pct": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "magic_proof_barrier",
+      "name": "Magic-Proof Barrier",
+      "desc": "Magic hurts you much less.",
+      "parents": [
+        {
+          "node": "mirrored_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:dragon_breath"
+    },
+    {
+      "id": "barbed_barrier",
+      "name": "Barbed Barrier",
+      "desc": "Part of the damage you take is thrown back.",
+      "parents": [
+        {
+          "node": "guardian_s_domain",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "last_wall",
+      "name": "Last Wall",
+      "desc": "When nearly dead, a brief shield.",
+      "parents": [
+        {
+          "node": "barrier_snap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "guardian_s_aura",
+      "name": "Guardian's Aura",
+      "desc": "Allies close to you gain resistance.",
+      "parents": [
+        {
+          "node": "barrier_burst",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "resistance",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "mending_barrier",
+      "name": "Mending Barrier",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "guardian_s_stand",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "patient_guardian",
+      "name": "Patient Guardian",
+      "desc": "You heal while sneaking.",
+      "parents": [
+        {
+          "node": "guardian_s_light",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "absolute_defense",
+      "name": "Absolute Defense",
+      "desc": "An unbreakable barrier: a huge absorption and a surge of resistance.",
+      "parents": [
+        {
+          "node": "guardian_s_light",
+          "level": 3
+        },
+        {
+          "node": "patient_guardian",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          16.0,
+          20.0,
+          20.0
+        ],
+        "seconds": [
+          16.0,
+          18.0,
+          19.0
+        ],
+        "resist_amp": [
+          2.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_block"
+    },
+    {
+      "id": "perfect_reflection",
+      "name": "Perfect Reflection",
+      "desc": "For a long while, almost all the damage you take returns to the one who dealt it.",
+      "parents": [
+        {
+          "node": "guardian_s_stand",
+          "level": 3
+        },
+        {
+          "node": "mending_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          15.0,
+          17.0
+        ],
+        "reflect_pct": [
+          0.8,
+          0.96,
+          1.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:end_crystal"
+    }
+  ]
+}

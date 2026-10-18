@@ -1,0 +1,1121 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Primordial Red's Destruction",
+  "desc": "A demon of ruin: every blow is an unmaking. Chains of disintegration jump from foe to foe, a gaze withers the strongest and the sky itself falls on whoever is marked.",
+  "book": "nusmp:primordial_red_destruction_book",
+  "book_name": "Ruin Ledger of the Primordial Red",
+  "book_lore": "She does not break things. She finishes them.",
+  "color": "#E74C3C",
+  "icon": "minecraft:redstone_block",
+  "class_id": "primordial_red_destruction",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/primordial_red_destruction.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "stellar",
+  "nodes": [
+    {
+      "id": "crimson_destruction",
+      "name": "Crimson Destruction",
+      "desc": "Pure ruin: huge damage and crit, with armor shed.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.35,
+          0.42,
+          0.49
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:redstone_block"
+    },
+    {
+      "id": "court_composure",
+      "name": "Court Composure",
+      "desc": "Calm and poised: armor and regeneration, restrained blows.",
+      "parents": [
+        {
+          "node": "crimson_destruction",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:red_banner"
+    },
+    {
+      "id": "ruinous_strength",
+      "name": "Ruinous Strength",
+      "desc": "A permanent bonus to attack damage.",
+      "parents": [
+        {
+          "node": "crimson_destruction",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:redstone_block"
+    },
+    {
+      "id": "primordial_vigor",
+      "name": "Primordial Vigor",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "court_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "poised_reach",
+      "name": "Poised Reach",
+      "desc": "Strike from slightly further.",
+      "parents": [
+        {
+          "node": "crimson_destruction",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "crimson_footing",
+      "name": "Crimson Footing",
+      "desc": "Faster steps.",
+      "parents": [
+        {
+          "node": "court_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "destruction_ray",
+      "name": "Destruction Ray",
+      "desc": "A beam of ruin pierces through everything ahead.",
+      "parents": [
+        {
+          "node": "crimson_destruction",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "pierce": [
+          4.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:redstone_block"
+    },
+    {
+      "id": "falling_ruin",
+      "name": "Falling Ruin",
+      "desc": "After a short pause, ruin falls where you look.",
+      "parents": [
+        {
+          "node": "court_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:crimson_stem"
+    },
+    {
+      "id": "cataclysm_ring",
+      "name": "Cataclysm Ring",
+      "desc": "A ring of destruction bursts from you.",
+      "parents": [
+        {
+          "node": "destruction_ray",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "withering_gaze",
+      "name": "Withering Gaze",
+      "desc": "A cold gaze on the foes in front: they wither and weaken.",
+      "parents": [
+        {
+          "node": "falling_ruin",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "wither",
+        "effect2": "weakness",
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "chain_of_disintegration",
+      "name": "Chain of Disintegration",
+      "desc": "A blow of ruin that jumps from one foe to the next.",
+      "parents": [
+        {
+          "node": "cataclysm_ring",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "jumps": [
+          5.0,
+          7.0,
+          9.0,
+          10.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "disintegrate",
+      "name": "Disintegrate",
+      "desc": "A blow of unmaking that hits much harder the weaker the foe.",
+      "parents": [
+        {
+          "node": "withering_gaze",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.9,
+          1.035,
+          1.17,
+          1.305
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "crimson_rush",
+      "name": "Crimson Rush",
+      "desc": "Rush through the foes ahead, leaving ruin in your wake.",
+      "parents": [
+        {
+          "node": "chain_of_disintegration",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:red_dye"
+    },
+    {
+      "id": "bane_of_champions",
+      "name": "Bane of Champions",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "destruction_ray",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "ruinous_crits",
+      "name": "Ruinous Crits",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "falling_ruin",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "final_unmaking",
+      "name": "Final Unmaking",
+      "desc": "Much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "cataclysm_ring",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "spell_proof_court",
+      "name": "Spell-Proof Court",
+      "desc": "Magic hurts you much less.",
+      "parents": [
+        {
+          "node": "withering_gaze",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:dragon_breath"
+    },
+    {
+      "id": "withering_presence",
+      "name": "Withering Presence",
+      "desc": "Foes close to you slowly wither.",
+      "parents": [
+        {
+          "node": "chain_of_disintegration",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "wither",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "stolen_vigor",
+      "name": "Stolen Vigor",
+      "desc": "Heal for a share of the damage you deal.",
+      "parents": [
+        {
+          "node": "disintegrate",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "desperate_elegance",
+      "name": "Desperate Elegance",
+      "desc": "You take less damage while nearly dead.",
+      "parents": [
+        {
+          "node": "crimson_rush",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "crimson_cataclysm",
+      "name": "Crimson Cataclysm",
+      "desc": "Ruin pours from above on the spot you look at, wide and final.",
+      "parents": [
+        {
+          "node": "crimson_rush",
+          "level": 3
+        },
+        {
+          "node": "desperate_elegance",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          26.0,
+          25.0,
+          23.0
+        ],
+        "damage": [
+          38.0,
+          47.5,
+          57.0
+        ],
+        "radius": [
+          10,
+          10,
+          10
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:crimson_nylium"
+    },
+    {
+      "id": "disintegration_beam",
+      "name": "Disintegration Beam",
+      "desc": "A single beam that unmakes everything in a very long line.",
+      "parents": [
+        {
+          "node": "disintegrate",
+          "level": 3
+        },
+        {
+          "node": "stolen_vigor",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "range": [
+          34.0,
+          37.4,
+          40
+        ],
+        "pierce": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    }
+  ]
+}

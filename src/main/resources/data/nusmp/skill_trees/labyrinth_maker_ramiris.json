@@ -1,0 +1,1103 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Ramiris's Labyrinth Maker",
+  "desc": "The fairy queen's craft: a dungeon is just a very polite spell. Warp between rooms, lock a pack in a corridor and let the walls do the arguing.",
+  "book": "nusmp:labyrinth_maker_ramiris_book",
+  "book_name": "Floor Plan of the Fairy Queen",
+  "book_lore": "She made the maze for fun. It did not stay fun for visitors.",
+  "color": "#F1948A",
+  "icon": "minecraft:mossy_stone_bricks",
+  "class_id": "labyrinth_maker_ramiris",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/labyrinth_maker_ramiris.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "tower",
+  "nodes": [
+    {
+      "id": "fairy_queen_s_whim",
+      "name": "Fairy Queen's Whim",
+      "desc": "Light as a feather: fast and lucky, with a delicate guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "maze_warden",
+      "name": "Maze Warden",
+      "desc": "Stand inside your own maze: armor and regeneration, a bit slower.",
+      "parents": [
+        {
+          "node": "fairy_queen_s_whim",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:mossy_stone_bricks"
+    },
+    {
+      "id": "fairy_vitality",
+      "name": "Fairy Vitality",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "fairy_queen_s_whim",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "wall_sense_steps",
+      "name": "Wall-Sense Steps",
+      "desc": "Step over small ledges.",
+      "parents": [
+        {
+          "node": "maze_warden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "step_height",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.3,
+          0.375,
+          0.45,
+          0.525,
+          0.6
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:ladder"
+    },
+    {
+      "id": "floating_wings",
+      "name": "Floating Wings",
+      "desc": "A longer safe fall.",
+      "parents": [
+        {
+          "node": "fairy_queen_s_whim",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "trap_maker_s_reach",
+      "name": "Trap-Maker's Reach",
+      "desc": "Mine and place from further away.",
+      "parents": [
+        {
+          "node": "maze_warden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "block_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "labyrinth_warp",
+      "name": "Labyrinth Warp",
+      "desc": "Warp through the maze to a point ahead.",
+      "parents": [
+        {
+          "node": "fairy_queen_s_whim",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "sealed_corridor",
+      "name": "Sealed Corridor",
+      "desc": "Walls shut around the creatures near you and hold them still.",
+      "parents": [
+        {
+          "node": "maze_warden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:chiseled_stone_bricks"
+    },
+    {
+      "id": "trapdoor_drop",
+      "name": "Trapdoor Drop",
+      "desc": "Open the floor beneath the place you look at: a stone drops on it.",
+      "parents": [
+        {
+          "node": "labyrinth_warp",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          13.0,
+          16.25,
+          19.5,
+          22.75
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "glittering_dust",
+      "name": "Glittering Dust",
+      "desc": "A cloud of fairy dust blinds the creatures around you.",
+      "parents": [
+        {
+          "node": "sealed_corridor",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "corridor_pull",
+      "name": "Corridor Pull",
+      "desc": "The walls slide and shove the creatures toward you.",
+      "parents": [
+        {
+          "node": "trapdoor_drop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "arrow_slit_volley",
+      "name": "Arrow Slit Volley",
+      "desc": "Arrows fly from the walls at the target.",
+      "parents": [
+        {
+          "node": "glittering_dust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "spike_floor",
+      "name": "Spike Floor",
+      "desc": "Spikes burst from the floor in a line ahead.",
+      "parents": [
+        {
+          "node": "corridor_pull",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:pointed_dripstone"
+    },
+    {
+      "id": "maze_reflexes",
+      "name": "Maze Reflexes",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "labyrinth_warp",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.13,
+          0.156,
+          0.182,
+          0.208
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "weightless_wings",
+      "name": "Weightless Wings",
+      "desc": "You take less fall damage.",
+      "parents": [
+        {
+          "node": "sealed_corridor",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dungeon_recovery",
+      "name": "Dungeon Recovery",
+      "desc": "You heal while underground.",
+      "parents": [
+        {
+          "node": "trapdoor_drop",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "dungeon_home_ground",
+      "name": "Dungeon Home Ground",
+      "desc": "You take less damage underground.",
+      "parents": [
+        {
+          "node": "glittering_dust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:deepslate"
+    },
+    {
+      "id": "trap_spoils",
+      "name": "Trap Spoils",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "corridor_pull",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "floor_mender",
+      "name": "Floor Mender",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "arrow_slit_volley",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "sticky_corridor",
+      "name": "Sticky Corridor",
+      "desc": "Whoever hits you may be slowed.",
+      "parents": [
+        {
+          "node": "spike_floor",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "labyrinth_collapse",
+      "name": "Labyrinth Collapse",
+      "desc": "The maze folds in on itself above the spot you look at, crushing everything there.",
+      "parents": [
+        {
+          "node": "spike_floor",
+          "level": 3
+        },
+        {
+          "node": "sticky_corridor",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:chiseled_stone_bricks"
+    },
+    {
+      "id": "maze_without_exit",
+      "name": "Maze Without Exit",
+      "desc": "The walls close around every creature in a wide ring and hold them still.",
+      "parents": [
+        {
+          "node": "arrow_slit_volley",
+          "level": 3
+        },
+        {
+          "node": "floor_mender",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          7.0
+        ],
+        "targets": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:deepslate_bricks"
+    }
+  ]
+}

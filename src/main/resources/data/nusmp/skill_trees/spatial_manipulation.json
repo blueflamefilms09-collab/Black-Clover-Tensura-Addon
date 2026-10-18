@@ -1,0 +1,1089 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Spatial Manipulation",
+  "desc": "Fold the room: walk between two points, cut the air along a line and pull a foe through a rift. The mind does the geometry, the body only moves where it is sent.",
+  "book": "nusmp:spatial_manipulation_book",
+  "book_name": "Treatise on Folded Space",
+  "book_lore": "The distance between them was only a suggestion.",
+  "color": "#1ABC9C",
+  "icon": "minecraft:ender_chest",
+  "class_id": "spatial_manipulation",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/spatial_manipulation.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "stellar",
+  "nodes": [
+    {
+      "id": "folded_space_stance",
+      "name": "Folded Space Stance",
+      "desc": "Hold the space around you folded: speed and evasion, with a light guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.14,
+          0.168,
+          0.196
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "dimensional_cage",
+      "name": "Dimensional Cage",
+      "desc": "Stabilize your own pocket: armor and regeneration, slower to move.",
+      "parents": [
+        {
+          "node": "folded_space_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "warped_step",
+      "name": "Warped Step",
+      "desc": "Faster steps.",
+      "parents": [
+        {
+          "node": "folded_space_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "pocket_reach",
+      "name": "Pocket Reach",
+      "desc": "Strike from slightly further.",
+      "parents": [
+        {
+          "node": "dimensional_cage",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "far_hand",
+      "name": "Far Hand",
+      "desc": "Mine and place from further away.",
+      "parents": [
+        {
+          "node": "folded_space_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "block_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.6,
+          0.75,
+          0.9,
+          1.05,
+          1.2
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "fold_ward",
+      "name": "Fold Ward",
+      "desc": "A bonus to armor.",
+      "parents": [
+        {
+          "node": "dimensional_cage",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "dimension_step",
+      "name": "Dimension Step",
+      "desc": "Fold the space ahead and step through it.",
+      "parents": [
+        {
+          "node": "folded_space_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          12.0,
+          13.44,
+          14.88,
+          16.32
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "cutting_space",
+      "name": "Cutting Space",
+      "desc": "Slice the air along your gaze: a line of cut space pierces several foes.",
+      "parents": [
+        {
+          "node": "dimensional_cage",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "rift_pull",
+      "name": "Rift Pull",
+      "desc": "Open a rift beneath the creatures around you and drag them toward you.",
+      "parents": [
+        {
+          "node": "dimension_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "lock_space",
+      "name": "Lock Space",
+      "desc": "Freeze the space around you: everything inside it stops for an instant.",
+      "parents": [
+        {
+          "node": "cutting_space",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:crying_obsidian"
+    },
+    {
+      "id": "coordinates_mark",
+      "name": "Coordinates Mark",
+      "desc": "Mark a foe's coordinates: it takes extra damage while marked.",
+      "parents": [
+        {
+          "node": "rift_pull",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:compass"
+    },
+    {
+      "id": "skip_strike",
+      "name": "Skip Strike",
+      "desc": "Skip across space in a dash that hits everything between.",
+      "parents": [
+        {
+          "node": "lock_space",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:chorus_fruit"
+    },
+    {
+      "id": "rift_rain",
+      "name": "Rift Rain",
+      "desc": "Open a rift above the spot you look at: a mass of stone falls through it.",
+      "parents": [
+        {
+          "node": "coordinates_mark",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          13.0,
+          16.25,
+          19.5,
+          22.75
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:end_stone"
+    },
+    {
+      "id": "space_slip",
+      "name": "Space Slip",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "dimension_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "landing_fold",
+      "name": "Landing Fold",
+      "desc": "You take less fall damage.",
+      "parents": [
+        {
+          "node": "cutting_space",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "warped_presence",
+      "name": "Warped Presence",
+      "desc": "Foes close to you are slowed.",
+      "parents": [
+        {
+          "node": "rift_pull",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "slowness",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:soul_sand"
+    },
+    {
+      "id": "precise_cut",
+      "name": "Precise Cut",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "lock_space",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "pocket_reserve",
+      "name": "Pocket Reserve",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "coordinates_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "step_between_fights",
+      "name": "Step Between Fights",
+      "desc": "A kill heals you and speeds you up.",
+      "parents": [
+        {
+          "node": "skip_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "void_sense",
+      "name": "Void Sense",
+      "desc": "You have night vision while underground.",
+      "parents": [
+        {
+          "node": "rift_rain",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "underground"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "dimension_walk",
+      "name": "Dimension Walk",
+      "desc": "Cross a vast distance in one step and leave a ripple behind.",
+      "parents": [
+        {
+          "node": "rift_rain",
+          "level": 3
+        },
+        {
+          "node": "void_sense",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          22.0,
+          24,
+          24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "space_collapse",
+      "name": "Space Collapse",
+      "desc": "Fold the space above the target: a mass of the void falls on the spot and crushes it.",
+      "parents": [
+        {
+          "node": "skip_strike",
+          "level": 3
+        },
+        {
+          "node": "step_between_fights",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:crying_obsidian"
+    }
+  ]
+}

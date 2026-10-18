@@ -1,0 +1,1101 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Treyni's World Tree Blessing",
+  "desc": "The forest guardian's craft: roots that bind, bark that blocks, and light that mends. Nature as a healer and a jailer.",
+  "book": "nusmp:dryad_world_tree_book",
+  "book_name": "Rings of the Elder Tree",
+  "book_lore": "The tree remembers every footstep in the forest.",
+  "color": "#27AE60",
+  "icon": "minecraft:oak_sapling",
+  "class_id": "dryad_world_tree",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/dryad_world_tree.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "rooted_guardian",
+      "name": "Rooted Guardian",
+      "desc": "Take root: armor and regeneration, much slower to move.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.12,
+          -0.144,
+          -0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.4,
+          1.68,
+          1.96
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:oak_log"
+    },
+    {
+      "id": "wandering_dryad",
+      "name": "Wandering Dryad",
+      "desc": "Walk freely through the grove: faster and keener, with a lighter guard.",
+      "parents": [
+        {
+          "node": "rooted_guardian",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "heartwood",
+      "name": "Heartwood",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "rooted_guardian",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:oak_log"
+    },
+    {
+      "id": "bark_skin",
+      "name": "Bark Skin",
+      "desc": "A bonus to armor.",
+      "parents": [
+        {
+          "node": "wandering_dryad",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:stripped_oak_log"
+    },
+    {
+      "id": "deep_roots",
+      "name": "Deep Roots",
+      "desc": "Hard to knock back.",
+      "parents": [
+        {
+          "node": "rooted_guardian",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.12,
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:dirt"
+    },
+    {
+      "id": "forest_luck",
+      "name": "Forest Luck",
+      "desc": "A permanent bonus to luck.",
+      "parents": [
+        {
+          "node": "wandering_dryad",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "forest_blessing",
+      "name": "Forest Blessing",
+      "desc": "A pulse of green light heals you and every ally around you.",
+      "parents": [
+        {
+          "node": "rooted_guardian",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:oak_sapling"
+    },
+    {
+      "id": "bark_armor",
+      "name": "Bark Armor",
+      "desc": "Grow a layer of bark: a shell of absorption hearts.",
+      "parents": [
+        {
+          "node": "wandering_dryad",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:stripped_oak_log"
+    },
+    {
+      "id": "vine_snare",
+      "name": "Vine Snare",
+      "desc": "Vines lash out in a cone: foes in front are slowed and poisoned.",
+      "parents": [
+        {
+          "node": "forest_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "poison",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:vine"
+    },
+    {
+      "id": "thorn_burst",
+      "name": "Thorn Burst",
+      "desc": "Spikes of root burst from the ground in a line ahead.",
+      "parents": [
+        {
+          "node": "bark_armor",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:pointed_dripstone"
+    },
+    {
+      "id": "verdant_boon",
+      "name": "Verdant Boon",
+      "desc": "A wave of growth: you and your allies gain regeneration.",
+      "parents": [
+        {
+          "node": "vine_snare",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:moss_block"
+    },
+    {
+      "id": "root_hook",
+      "name": "Root Hook",
+      "desc": "Roots drag the creatures around you toward your tree.",
+      "parents": [
+        {
+          "node": "thorn_burst",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:vine"
+    },
+    {
+      "id": "entangling_grove",
+      "name": "Entangling Grove",
+      "desc": "Roots coil around the creatures near you and hold them still.",
+      "parents": [
+        {
+          "node": "verdant_boon",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:mangrove_roots"
+    },
+    {
+      "id": "photosynthesis",
+      "name": "Photosynthesis",
+      "desc": "You heal during the day.",
+      "parents": [
+        {
+          "node": "forest_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "grove_s_warmth",
+      "name": "Grove's Warmth",
+      "desc": "Allies close to you regenerate.",
+      "parents": [
+        {
+          "node": "bark_armor",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:moss_block"
+    },
+    {
+      "id": "slow_growth",
+      "name": "Slow Growth",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "vine_snare",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          12.0,
+          11.0,
+          10.0,
+          8.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "fruit_of_the_grove",
+      "name": "Fruit of the Grove",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "thorn_burst",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "rain_drinker",
+      "name": "Rain Drinker",
+      "desc": "You take less damage while it rains.",
+      "parents": [
+        {
+          "node": "verdant_boon",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "raining"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "thorn_bark",
+      "name": "Thorn Bark",
+      "desc": "Part of the damage you take is thrown back.",
+      "parents": [
+        {
+          "node": "root_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "daylight_vigor",
+      "name": "Daylight Vigor",
+      "desc": "You have regeneration in daylight.",
+      "parents": [
+        {
+          "node": "entangling_grove",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "regeneration",
+        "condition": "day"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "world_tree_blessing",
+      "name": "World Tree Blessing",
+      "desc": "The tree's whole light: a vast pulse that mends everyone close to you.",
+      "parents": [
+        {
+          "node": "entangling_grove",
+          "level": 3
+        },
+        {
+          "node": "daylight_vigor",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          13.0,
+          14,
+          14
+        ],
+        "amount": [
+          26.0,
+          30,
+          30
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "great_root_bind",
+      "name": "Great Root Bind",
+      "desc": "Roots of the whole forest seize every creature in a wide ring.",
+      "parents": [
+        {
+          "node": "root_hook",
+          "level": 3
+        },
+        {
+          "node": "thorn_bark",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          7.0
+        ],
+        "targets": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:mangrove_roots"
+    }
+  ]
+}

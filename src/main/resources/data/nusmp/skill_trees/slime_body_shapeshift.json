@@ -1,0 +1,1097 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Slime Body Shapeshift",
+  "desc": "A body with no fixed shape: it splits, stretches, bounces and re-forms. Hits slide off it, wounds seal themselves, and anything that touches it may be absorbed.",
+  "book": "nusmp:slime_body_shapeshift_book",
+  "book_name": "Notes on the Shapeless Body",
+  "book_lore": "It was not a shield. It was just where he was not.",
+  "color": "#5DADE2",
+  "icon": "minecraft:slime_ball",
+  "class_id": "slime_body_shapeshift",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/slime_body_shapeshift.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "liquid_body",
+      "name": "Liquid Body",
+      "desc": "Flow around every strike: fast and elastic, with a flimsy armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "hardened_gel",
+      "name": "Hardened Gel",
+      "desc": "Stiffen into a thick gel: armor and knockback resistance, much slower.",
+      "parents": [
+        {
+          "node": "liquid_body",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "jelly_mass",
+      "name": "Jelly Mass",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "liquid_body",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "elastic_skin",
+      "name": "Elastic Skin",
+      "desc": "A bonus to armor toughness.",
+      "parents": [
+        {
+          "node": "hardened_gel",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:honey_block"
+    },
+    {
+      "id": "bouncy_legs",
+      "name": "Bouncy Legs",
+      "desc": "A higher jump.",
+      "parents": [
+        {
+          "node": "liquid_body",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.12,
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "soft_landing_body",
+      "name": "Soft Landing Body",
+      "desc": "A longer safe fall.",
+      "parents": [
+        {
+          "node": "hardened_gel",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "jelly_shield",
+      "name": "Jelly Shield",
+      "desc": "A thick wobbling shield of absorption surrounds you.",
+      "parents": [
+        {
+          "node": "liquid_body",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "self_regeneration",
+      "name": "Self-Regeneration",
+      "desc": "Close your wounds: heal and regenerate.",
+      "parents": [
+        {
+          "node": "hardened_gel",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "amount": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "absorb_tendrils",
+      "name": "Absorb Tendrils",
+      "desc": "Tendrils of slime drag the creatures around you toward you.",
+      "parents": [
+        {
+          "node": "jelly_shield",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "jelly_burst",
+      "name": "Jelly Burst",
+      "desc": "Your body bursts outward and splashes the foes around you.",
+      "parents": [
+        {
+          "node": "self_regeneration",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "bounce_slam",
+      "name": "Bounce Slam",
+      "desc": "Bounce high and land on the foes below.",
+      "parents": [
+        {
+          "node": "absorb_tendrils",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "split_body",
+      "name": "Split Body",
+      "desc": "Split into a puddle and re-form a few steps away.",
+      "parents": [
+        {
+          "node": "jelly_burst",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "elastic_body",
+      "name": "Elastic Body",
+      "desc": "For a few seconds, part of the damage you take is bounced back.",
+      "parents": [
+        {
+          "node": "bounce_slam",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:honey_block"
+    },
+    {
+      "id": "elastic_evasion",
+      "name": "Elastic Evasion",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "jelly_shield",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "cushion_body",
+      "name": "Cushion Body",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "self_regeneration",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.8,
+          0.96,
+          1.0,
+          1.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "automatic_repair",
+      "name": "Automatic Repair",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "absorb_tendrils",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          12.0,
+          11.0,
+          10.0,
+          8.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "slime_regeneration_passive",
+      "name": "Slime Regeneration Passive",
+      "desc": "You heal while in water.",
+      "parents": [
+        {
+          "node": "jelly_burst",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_water"
+      },
+      "values": {
+        "per_second": [
+          1.2,
+          1.44,
+          1.68,
+          1.92
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "sticky_surface",
+      "name": "Sticky Surface",
+      "desc": "Whoever hits you may be slowed.",
+      "parents": [
+        {
+          "node": "bounce_slam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "boing_back",
+      "name": "Boing Back",
+      "desc": "Part of the damage you take is bounced back.",
+      "parents": [
+        {
+          "node": "split_body",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "pliant_hide",
+      "name": "Pliant Hide",
+      "desc": "You take less damage while sneaking.",
+      "parents": [
+        {
+          "node": "elastic_body",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:leather"
+    },
+    {
+      "id": "slime_flood",
+      "name": "Slime Flood",
+      "desc": "Burst into a great wave of slime that sweeps the whole room.",
+      "parents": [
+        {
+          "node": "elastic_body",
+          "level": 3
+        },
+        {
+          "node": "pliant_hide",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          14.0,
+          16.0,
+          16.0
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "absolute_slime",
+      "name": "Absolute Slime",
+      "desc": "Become a perfectly elastic mass: an enormous shield that nothing can pierce.",
+      "parents": [
+        {
+          "node": "split_body",
+          "level": 3
+        },
+        {
+          "node": "boing_back",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          16.0,
+          20.0,
+          20.0
+        ],
+        "seconds": [
+          16.0,
+          18.0,
+          19.0
+        ],
+        "resist_amp": [
+          2.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:honey_block"
+    }
+  ]
+}
