@@ -1,0 +1,612 @@
+{
+  "weapon": "legendary_spear",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Spear",
+      "desc": "The Legendary Spear in its first shape: a short plain spear with a red jewel at its socket. It thrusts, vaults and dashes; every longer form comes from what its gem takes in.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": {},
+      "abilityBonus": {},
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.vault",
+        "key1": "spear.lunge"
+      },
+      "passives": [],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "hunters_spear",
+      "name": "Hunter's Spear",
+      "desc": "Bone, sinew and flint make a hunter's spear, longer and better balanced. Its thrusts reach farther (Longshaft) and it learns the Javelin Throw.",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:bone",
+          "count": 20
+        },
+        {
+          "item": "minecraft:string",
+          "count": 20
+        },
+        {
+          "item": "minecraft:flint",
+          "count": 12
+        }
+      ],
+      "mastery": 60,
+      "stats": {
+        "attack_damage": 1.0,
+        "reach": 0.3
+      },
+      "abilityBonus": {
+        "reach": 0.1
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.vault",
+        "key1": "spear.lunge",
+        "key2": "spear.javelin"
+      },
+      "passives": [
+        "longshaft"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "filolial_spear",
+      "name": "Filolial Spear",
+      "desc": "Feathers and eggs of the filolial birds make the spear light. Its wielder runs with Filo Rush and lands like a bird (Featherlight: no fall damage).",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:feather",
+          "count": 40
+        },
+        {
+          "item": "minecraft:egg",
+          "count": 12
+        }
+      ],
+      "mastery": 60,
+      "stats": {
+        "attack_damage": 0.5,
+        "movement_speed": 0.04
+      },
+      "abilityBonus": {
+        "movement_speed": 0.01
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.vault",
+        "key1": "spear.lunge",
+        "key2": "spear.filo_rush"
+      },
+      "passives": [
+        "featherlight"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "chaos_spear",
+      "name": "Chaos Spear",
+      "desc": "Ender pearls and amethyst split the point: the spear throws lances that find their own targets (Chaos Spear) and hooks a foe in (Hooked Pierce). Each kill mends a little (Victor's Vigor).",
+      "tier": 2,
+      "parents": [
+        "hunters_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 32
+        }
+      ],
+      "mastery": 100,
+      "stats": {
+        "attack_damage": 2.0,
+        "reach": 0.6
+      },
+      "abilityBonus": {
+        "attack_damage": 0.5
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.hooked_pierce",
+        "key1": "spear.chaos_spear",
+        "key2": "spear.javelin",
+        "key3": "spear.lunge"
+      },
+      "passives": [
+        "longshaft",
+        "kill_vigor"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "meteor_spear",
+      "name": "Meteor Spear",
+      "desc": "Blaze rods and glowstone set the point alight: it streaks across the sky like a shooting star (Meteor Spear) and sweeps the ground round its wielder (Windmill Sweep).",
+      "tier": 2,
+      "parents": [
+        "filolial_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:blaze_rod",
+          "count": 16
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "count": 48
+        }
+      ],
+      "mastery": 100,
+      "stats": {
+        "attack_damage": 2.0,
+        "reach": 0.6,
+        "movement_speed": 0.05
+      },
+      "abilityBonus": {
+        "movement_speed": 0.01
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.whirlwind",
+        "key1": "spear.meteor_spear",
+        "key2": "spear.filo_rush",
+        "key3": "spear.vault"
+      },
+      "passives": [
+        "featherlight",
+        "kill_vigor"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "portal_spear",
+      "name": "Portal Spear",
+      "desc": "Pearls, obsidian and magic stones open doors: the spear steps its wielder to the place they aim at (Portal Spear), and the step leaves a rush of speed (Portal Echo).",
+      "tier": 3,
+      "parents": [
+        "chaos_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 32
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 32
+        },
+        {
+          "item": "tensura:magic_stone",
+          "count": 24
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 3.0,
+        "reach": 0.9,
+        "movement_speed": 0.04
+      },
+      "abilityBonus": {
+        "max_health": 1.0
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.portal_spear",
+        "key1": "spear.chaos_spear",
+        "key2": "spear.hooked_pierce",
+        "key3": "spear.lunge"
+      },
+      "passives": [
+        "longshaft",
+        "portal_echo"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "triaina",
+      "name": "Triaina",
+      "desc": "Quartz, diamond and magic crystal make a beam of energy (Triaina), the precursor of Brionac. The spear also learns to meet a blow with a thrust (Counter Thrust).",
+      "tier": 3,
+      "parents": [
+        "meteor_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:quartz",
+          "count": 64
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        },
+        {
+          "item": "tensura:medium_quality_magic_crystal",
+          "count": 8
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 3.5,
+        "reach": 0.9,
+        "armor": 1.0
+      },
+      "abilityBonus": {
+        "armor": 0.5
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.riposte",
+        "key1": "spear.meteor_spear",
+        "key2": "spear.triaina",
+        "key3": "spear.whirlwind"
+      },
+      "passives": [
+        "longshaft",
+        "kill_vigor"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "bruenack",
+      "name": "Bruenack",
+      "desc": "The beam grows into Brionac, the spear's blazing white light. High-quality magic crystal, diamond and netherite scrap forge it; its ultimate drives back what it strikes.",
+      "tier": 4,
+      "parents": [
+        "triaina"
+      ],
+      "requires": [
+        {
+          "item": "tensura:high_quality_magic_crystal",
+          "count": 8
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 32
+        },
+        {
+          "item": "minecraft:netherite_scrap",
+          "count": 8
+        }
+      ],
+      "mastery": 240,
+      "stats": {
+        "attack_damage": 5.0,
+        "reach": 1.2,
+        "armor": 2.0,
+        "armor_toughness": 1.0
+      },
+      "abilityBonus": {
+        "attack_damage": 1.0
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.riposte",
+        "key1": "spear.triaina",
+        "key2": "spear.meteor_spear",
+        "key3": "spear.brionac"
+      },
+      "passives": [
+        "longshaft",
+        "kill_vigor"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "clockwork_spear",
+      "name": "Clockwork Spear",
+      "desc": "Clocks, gold and redstone give the spear a mechanism: it remembers its wielder's past second by second (Memory of the Hours) and its Minute Hand sweeps round them like the hand of a clock.",
+      "tier": 4,
+      "parents": [
+        "portal_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:clock",
+          "count": 8
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 64
+        },
+        {
+          "item": "minecraft:redstone",
+          "count": 64
+        }
+      ],
+      "mastery": 240,
+      "stats": {
+        "attack_damage": 4.0,
+        "reach": 1.2,
+        "movement_speed": 0.06
+      },
+      "abilityBonus": {
+        "movement_speed": 0.015
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.portal_spear",
+        "key1": "spear.minute_hand",
+        "key2": "spear.hooked_pierce",
+        "key3": "spear.whirlwind"
+      },
+      "passives": [
+        "portal_echo",
+        "time_memory"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "dragon_minute_hand",
+      "name": "Dragon Minute Hand Spear",
+      "desc": "The Minute Hand of the Dragon, hung with a feather: echo shards, dragon breath and the metal of the gods. It can turn time back for its wielder alone (Time Reversal), and it carries every gift of the tree below it.",
+      "tier": 5,
+      "parents": [
+        "bruenack",
+        "clockwork_spear"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:echo_shard",
+          "count": 16
+        },
+        {
+          "item": "minecraft:dragon_breath",
+          "count": 16
+        },
+        {
+          "item": "tensura:hihiirokane_ingot",
+          "count": 4
+        }
+      ],
+      "mastery": 400,
+      "stats": {
+        "attack_damage": 7.0,
+        "reach": 1.6,
+        "movement_speed": 0.08,
+        "max_health": 4.0,
+        "armor": 2.0
+      },
+      "abilityBonus": {
+        "max_health": 2.0,
+        "attack_damage": 1.5
+      },
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.riposte",
+        "key1": "spear.minute_hand",
+        "key2": "spear.portal_spear",
+        "key3": "spear.time_reversal"
+      },
+      "passives": [
+        "longshaft",
+        "portal_echo",
+        "time_memory",
+        "kill_vigor",
+        "featherlight"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "lust_spear_1",
+      "name": "Spear of Lust I",
+      "desc": "Despair gave the spear a hunger. Every blow makes the next one heavier (Fervor), the spear no longer lets its wielder aim away from prey (Ravenous Aim), and Temptation draws foes in.",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:nether_wart",
+          "count": 32
+        },
+        {
+          "item": "minecraft:magma_cream",
+          "count": 16
+        }
+      ],
+      "mastery": 80,
+      "stats": {
+        "attack_damage": 5.0,
+        "reach": 0.6,
+        "movement_speed": 0.05
+      },
+      "abilityBonus": {},
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.temptation",
+        "key1": "spear.lunge",
+        "key2": "spear.whirlwind"
+      },
+      "passives": [
+        "lust_fervor",
+        "ravenous_aim"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "lust",
+      "corruptionPerSecond": 2
+    },
+    {
+      "id": "lust_spear_2",
+      "name": "Spear of Lust II",
+      "desc": "The hunger deepens. Rapture runs the nearest foe down and drinks from it.",
+      "tier": 2,
+      "parents": [
+        "lust_spear_1"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:ghast_tear",
+          "count": 8
+        },
+        {
+          "item": "minecraft:crying_obsidian",
+          "count": 16
+        }
+      ],
+      "mastery": 120,
+      "stats": {
+        "attack_damage": 7.0,
+        "reach": 0.9,
+        "movement_speed": 0.07
+      },
+      "abilityBonus": {},
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.temptation",
+        "key1": "spear.rapture",
+        "key2": "spear.whirlwind",
+        "key3": "spear.lunge"
+      },
+      "passives": [
+        "lust_fervor",
+        "ravenous_aim",
+        "kill_vigor"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "lust",
+      "corruptionPerSecond": 3
+    },
+    {
+      "id": "lust_spear_3",
+      "name": "Spear of Lust III",
+      "desc": "Thorns and chains grow from the shaft. Thorn Chains cage the place the spear is pointed at, and the Meteor Spear streaks in the Lust's colours.",
+      "tier": 3,
+      "parents": [
+        "lust_spear_2"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:wither_skeleton_skull",
+          "count": 4
+        },
+        {
+          "item": "minecraft:crying_obsidian",
+          "count": 32
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 9.0,
+        "reach": 1.2,
+        "movement_speed": 0.09,
+        "attack_speed": 0.2
+      },
+      "abilityBonus": {},
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.temptation",
+        "key1": "spear.rapture",
+        "key2": "spear.thorn_chains",
+        "key3": "spear.meteor_spear"
+      },
+      "passives": [
+        "lust_fervor",
+        "ravenous_aim",
+        "kill_vigor",
+        "longshaft"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "lust",
+      "corruptionPerSecond": 4
+    },
+    {
+      "id": "lust_spear_4",
+      "name": "Lust Spear IV",
+      "desc": "The whole Lust Spear. Lust's Embrace drags everything near into the spear's reach and crushes it; the wielder pays in corruption.",
+      "tier": 4,
+      "parents": [
+        "lust_spear_3"
+      ],
+      "requires": [
+        {
+          "item": "tensura:high_quality_magic_crystal",
+          "count": 16
+        },
+        {
+          "item": "minecraft:ghast_tear",
+          "count": 24
+        },
+        {
+          "item": "minecraft:crying_obsidian",
+          "count": 48
+        }
+      ],
+      "mastery": 200,
+      "stats": {
+        "attack_damage": 11.0,
+        "reach": 1.5,
+        "movement_speed": 0.12,
+        "attack_speed": 0.3
+      },
+      "abilityBonus": {},
+      "skills": {
+        "use": "spear.piercing_thrust",
+        "sneak": "spear.temptation",
+        "key1": "spear.rapture",
+        "key2": "spear.thorn_chains",
+        "key3": "spear.lusts_embrace"
+      },
+      "passives": [
+        "lust_fervor",
+        "ravenous_aim",
+        "kill_vigor",
+        "longshaft"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "lust",
+      "corruptionPerSecond": 6
+    }
+  ]
+}

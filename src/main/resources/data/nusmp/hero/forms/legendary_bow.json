@@ -1,0 +1,561 @@
+{
+  "weapon": "legendary_bow",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Bow",
+      "desc": "The Legendary Bow in its first shape: a plain bow with a yellow jewel at the grip. It needs no arrows: it makes its own out of light, and a longer draw means a harder, farther shot. Sneak techniques change the next shot.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": {},
+      "abilityBonus": {},
+      "skills": {
+        "sneak": "bow.mark_arrow",
+        "key1": "bow.retreat_shot"
+      },
+      "passives": [],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "hunters_bow",
+      "name": "Hunter's Bow",
+      "desc": "String, feathers and bone make a hunter's bow. It draws a quarter faster (Quickdraw) and learns the Bind Arrow, which pins the foe it strikes.",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:string",
+          "count": 20
+        },
+        {
+          "item": "minecraft:feather",
+          "count": 20
+        },
+        {
+          "item": "minecraft:bone",
+          "count": 16
+        }
+      ],
+      "mastery": 60,
+      "stats": {
+        "attack_damage": 1.0,
+        "movement_speed": 0.02
+      },
+      "abilityBonus": {
+        "movement_speed": 0.005
+      },
+      "skills": {
+        "sneak": "bow.net_arrow",
+        "key1": "bow.mark_arrow",
+        "key2": "bow.retreat_shot"
+      },
+      "passives": [
+        "quickdraw"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "scouts_bow",
+      "name": "Scout's Bow",
+      "desc": "Leather, rabbit hide and copper make a light bow for a scout. Its arrows fly farther (Farsight) and it looses the Eagle Piercing Shot, a sniper arrow with a visible laser sight.",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:leather",
+          "count": 24
+        },
+        {
+          "item": "minecraft:rabbit_hide",
+          "count": 12
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "count": 16
+        }
+      ],
+      "mastery": 60,
+      "stats": {
+        "attack_damage": 0.5,
+        "movement_speed": 0.03,
+        "luck": 0.5
+      },
+      "abilityBonus": {
+        "luck": 0.25
+      },
+      "skills": {
+        "sneak": "bow.piercing_shot",
+        "key1": "bow.mark_arrow",
+        "key2": "bow.retreat_shot"
+      },
+      "passives": [
+        "farsight"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "bind_arrow",
+      "name": "Bind Arrow",
+      "desc": "Cobweb, slime and spider eyes make the arrows cling. The bow looses the Arrow Squall, a fan of seven arrows, and its plain arrows pierce a second foe (Piercing Arrows).",
+      "tier": 2,
+      "parents": [
+        "hunters_bow"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:cobweb",
+          "count": 24
+        },
+        {
+          "item": "minecraft:slime_ball",
+          "count": 32
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "count": 24
+        }
+      ],
+      "mastery": 100,
+      "stats": {
+        "attack_damage": 2.0,
+        "movement_speed": 0.03
+      },
+      "abilityBonus": {
+        "attack_damage": 0.5
+      },
+      "skills": {
+        "sneak": "bow.net_arrow",
+        "key1": "bow.arrow_squall",
+        "key2": "bow.mark_arrow",
+        "key3": "bow.retreat_shot"
+      },
+      "passives": [
+        "quickdraw",
+        "piercing_arrows"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "bird_hunting",
+      "name": "Bird Hunting",
+      "desc": "Phantom membrane, feathers and a rabbit's foot make arrows that hunt birds. Bird Hunting locks five shafts onto one foe, and the Seeker Arrow bends round to find its target.",
+      "tier": 2,
+      "parents": [
+        "scouts_bow"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "count": 16
+        },
+        {
+          "item": "minecraft:feather",
+          "count": 48
+        },
+        {
+          "item": "minecraft:rabbit_foot",
+          "count": 6
+        }
+      ],
+      "mastery": 100,
+      "stats": {
+        "attack_damage": 2.0,
+        "movement_speed": 0.04,
+        "luck": 1.0
+      },
+      "abilityBonus": {
+        "luck": 0.25
+      },
+      "skills": {
+        "sneak": "bow.piercing_shot",
+        "key1": "bow.bird_hunting",
+        "key2": "bow.tracking_shot",
+        "key3": "bow.retreat_shot"
+      },
+      "passives": [
+        "farsight",
+        "piercing_arrows"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "arrow_shower",
+      "name": "Arrow Shower",
+      "desc": "Gunpowder and a quiver of arrows, taken into the jewel, make the bow rain. It looses the Arrow Rain and the Burst Arrow, and a Second Arrow follows the first.",
+      "tier": 3,
+      "parents": [
+        "bind_arrow"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:gunpowder",
+          "count": 64
+        },
+        {
+          "item": "minecraft:arrow",
+          "count": 64
+        },
+        {
+          "item": "tensura:magic_stone",
+          "count": 24
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 3.0,
+        "armor": 1.0
+      },
+      "abilityBonus": {
+        "armor": 0.5
+      },
+      "skills": {
+        "sneak": "bow.second_arrow",
+        "key1": "bow.arrow_rain",
+        "key2": "bow.arrow_squall",
+        "key3": "bow.explosive_arrow"
+      },
+      "passives": [
+        "quickdraw",
+        "piercing_arrows"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "meteor_bow",
+      "name": "Meteor Bow",
+      "desc": "Glowstone, pearls and amethyst give the arrows a trail of stars: a star falls where the bow aims (Meteor Bow), and the Burst Arrow and Seeker Arrow join it.",
+      "tier": 3,
+      "parents": [
+        "bird_hunting"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "count": 64
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 32
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 3.5,
+        "luck": 1.0,
+        "movement_speed": 0.03
+      },
+      "abilityBonus": {
+        "luck": 0.25
+      },
+      "skills": {
+        "sneak": "bow.piercing_shot",
+        "key1": "bow.meteor_bow",
+        "key2": "bow.tracking_shot",
+        "key3": "bow.explosive_arrow"
+      },
+      "passives": [
+        "farsight",
+        "quickdraw"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "frozen_rain",
+      "name": "Frozen Rain",
+      "desc": "Blue ice, prismarine and magic crystal make the rain cold: Frozen Rain slows everything it falls on, and the Bind Arrow and the Second Arrow serve it.",
+      "tier": 4,
+      "parents": [
+        "arrow_shower"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:blue_ice",
+          "count": 32
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "count": 32
+        },
+        {
+          "item": "tensura:medium_quality_magic_crystal",
+          "count": 8
+        }
+      ],
+      "mastery": 240,
+      "stats": {
+        "attack_damage": 4.5,
+        "armor": 2.0,
+        "knockback_resistance": 0.1
+      },
+      "abilityBonus": {
+        "armor": 0.5
+      },
+      "skills": {
+        "sneak": "bow.second_arrow",
+        "key1": "bow.frozen_rain",
+        "key2": "bow.arrow_rain",
+        "key3": "bow.net_arrow"
+      },
+      "passives": [
+        "quickdraw",
+        "piercing_arrows"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "eagle_piercer",
+      "name": "Eagle Piercer",
+      "desc": "Diamond, netherite scrap and high-quality magic crystal sharpen the sniper arrow to its best: far foes take more (Eagle Eye), and the bow keeps the Meteor Bow, Bird Hunting and the Seeker Arrow.",
+      "tier": 4,
+      "parents": [
+        "meteor_bow"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:diamond",
+          "count": 24
+        },
+        {
+          "item": "minecraft:netherite_scrap",
+          "count": 8
+        },
+        {
+          "item": "tensura:high_quality_magic_crystal",
+          "count": 8
+        }
+      ],
+      "mastery": 240,
+      "stats": {
+        "attack_damage": 5.0,
+        "movement_speed": 0.04,
+        "luck": 1.5
+      },
+      "abilityBonus": {
+        "luck": 0.5
+      },
+      "skills": {
+        "sneak": "bow.piercing_shot",
+        "key1": "bow.meteor_bow",
+        "key2": "bow.bird_hunting",
+        "key3": "bow.tracking_shot"
+      },
+      "passives": [
+        "farsight",
+        "quickdraw",
+        "eagle_eye"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "sagittarius",
+      "name": "Sagittarius",
+      "desc": "The archer among the stars: the whole of the Bow in one, and the Starfall Volley, a storm of light arrows that rises and falls on a wide circle.",
+      "tier": 5,
+      "parents": [
+        "frozen_rain",
+        "eagle_piercer"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:nether_star",
+          "count": 4
+        },
+        {
+          "item": "minecraft:dragon_breath",
+          "count": 16
+        },
+        {
+          "item": "tensura:adamantite_ingot",
+          "count": 4
+        }
+      ],
+      "mastery": 400,
+      "stats": {
+        "attack_damage": 8.0,
+        "movement_speed": 0.06,
+        "armor": 2.0,
+        "max_health": 4.0,
+        "luck": 2.0
+      },
+      "abilityBonus": {
+        "max_health": 2.0,
+        "luck": 0.5
+      },
+      "skills": {
+        "sneak": "bow.second_arrow",
+        "key1": "bow.meteor_bow",
+        "key2": "bow.arrow_rain",
+        "key3": "bow.starfall_volley"
+      },
+      "passives": [
+        "farsight",
+        "quickdraw",
+        "piercing_arrows",
+        "eagle_eye"
+      ],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "bow_of_pride_1",
+      "name": "Bow of Pride I",
+      "desc": "Praise and ruin made the bow proud. Its arrows grow huge and hit harder (Pride Arrows), Law Fanatic armours its wielder, and the Bull of Phalaris roasts a foe in brass.",
+      "tier": 1,
+      "parents": [
+        "base"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 40
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 24
+        }
+      ],
+      "mastery": 80,
+      "stats": {
+        "attack_damage": 6.0,
+        "movement_speed": 0.02
+      },
+      "abilityBonus": {},
+      "skills": {
+        "sneak": "bow.law_fanatic",
+        "key1": "bow.bull_of_phalaris",
+        "key2": "bow.piercing_shot",
+        "key3": "bow.retreat_shot"
+      },
+      "passives": [
+        "pride_arrows"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "pride",
+      "corruptionPerSecond": 2
+    },
+    {
+      "id": "bow_of_pride_2",
+      "name": "Bow of Pride II",
+      "desc": "Obedience is the bow's due. Pride's Command turns the first monster it strikes against its own kind, and the Arrow Rain falls where the wielder points.",
+      "tier": 2,
+      "parents": [
+        "bow_of_pride_1"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:shulker_shell",
+          "count": 8
+        },
+        {
+          "item": "minecraft:gold_block",
+          "count": 8
+        }
+      ],
+      "mastery": 120,
+      "stats": {
+        "attack_damage": 8.0,
+        "armor": 1.0
+      },
+      "abilityBonus": {},
+      "skills": {
+        "sneak": "bow.law_fanatic",
+        "key1": "bow.bull_of_phalaris",
+        "key2": "bow.pride_command",
+        "key3": "bow.arrow_rain"
+      },
+      "passives": [
+        "pride_arrows",
+        "piercing_arrows"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "pride",
+      "corruptionPerSecond": 3
+    },
+    {
+      "id": "bow_of_pride_3",
+      "name": "Bow of Pride III",
+      "desc": "Autocracy: orbs of light pour from the bow and form a lion that tears at whatever it points at (Autocracy Justice). The wielder pays in corruption.",
+      "tier": 3,
+      "parents": [
+        "bow_of_pride_2"
+      ],
+      "requires": [
+        {
+          "item": "minecraft:totem_of_undying",
+          "count": 4
+        },
+        {
+          "item": "minecraft:shulker_shell",
+          "count": 16
+        },
+        {
+          "item": "minecraft:gold_block",
+          "count": 32
+        }
+      ],
+      "mastery": 160,
+      "stats": {
+        "attack_damage": 10.0,
+        "armor": 2.0,
+        "movement_speed": 0.04
+      },
+      "abilityBonus": {},
+      "skills": {
+        "sneak": "bow.law_fanatic",
+        "key1": "bow.bull_of_phalaris",
+        "key2": "bow.pride_command",
+        "key3": "bow.autocracy_justice"
+      },
+      "passives": [
+        "pride_arrows",
+        "piercing_arrows",
+        "farsight"
+      ],
+      "look": "curse",
+      "curse": true,
+      "sin": "pride",
+      "corruptionPerSecond": 5
+    }
+  ]
+}
