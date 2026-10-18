@@ -1,0 +1,27 @@
+{
+  "id": "gravebound_colossus",
+  "entity": "nusmp:gravebound_colossus",
+  "name": "Gravebound Colossus",
+  "enabled": true,
+  "weight": 3,
+  "cooldownMinutes": 180,
+  "warnSeconds": 20,
+  "healthMult": 1.0,
+  "damageMult": 1.0,
+  "phases": [0.66, 0.33],
+  "dimensions": ["minecraft:overworld"],
+  "color": "#8B7B5A",
+  "accent": "#D8C9A0",
+  "triggers": [
+    { "type": "sustained_magicule", "density": 0.92, "seconds": 1500 },
+    { "type": "mother_rocks", "count": 3, "radius": 48, "density": 0.75, "seconds": 300 },
+    { "type": "ritual" },
+    { "type": "command" }
+  ],
+  "announce": {
+    "omen": "The ground groans. Something old is climbing out of the graves.",
+    "spawn": "The Gravebound Colossus has risen!",
+    "phase": "The Colossus shudders, and the dead rise with it.",
+    "defeat": "The Gravebound Colossus crumbles back into the earth."
+  }
+}
