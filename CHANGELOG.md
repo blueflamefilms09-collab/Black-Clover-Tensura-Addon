@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.72.0] — Every bow is the size and pose of Minecraft's bow
+
+From your screenshots: the brown bow (vanilla's) looked right and the golden Legendary Bow did not. I could not look at the game here, so this is found by measuring the files.
+
+### FIXED
+- **Cause:** the mesh bows were 1.76 to 2.58 blocks long tip to tip (the Legendary Bow 1.76; the Reaver, Divine Mercy, the Dragon's Spirit and Embrasure 2.58), while vanilla's bow is about 1.15. So in first person they filled the right third of the screen and ran off its edges, and in third person they stood taller than the player. The display transforms were already vanilla's (1.63.0); the size was not.
+- **Fix:** all bows (the Legendary Bow and its Curse form, the Reaver, Divine Mercy, the Dragon's Spirit, Embrasure, and every draw stage `_pull1..3` of each) are scaled to 1.2 blocks, centred where vanilla's sprite is held, so the same draw animation, hand position and pose now show a bow of vanilla's apparent size. The class table's bow range is now 0.9 to 1.4 blocks (was 1.3 to 1.6), because the runtime would otherwise have scaled them back up.
+- Guard: `BowDisplayGuardTest.everyBowIsTheSizeOfTheVanillaBow` fails if any bow mesh is outside 0.9 to 1.4 blocks; `tools/relics/bow_vanilla.py` does the sizing (idempotent, `--check`).
+- The white "X" in the middle of your screenshot is a fired arrow seen from behind (vanilla's arrow is two crossed planes); that is not changed.
+
+### KEPT
+- Every bow, its meshes, glow, forms, engravings and abilities; only the scale and the position on the diagonal changed. If a bow now looks too small or too big to you, say which and by how much: the size is one number (`BOW_LENGTH`).
+
 ## [1.71.0] — Relics no longer hide under the skin's second layer; the Vassal Claw and Gauntlet are worn on the hand
 
 I cannot run the game here, so both fixes are built from the geometry and unit-tested, not looked at. If either needs a nudge, tell me what you see.

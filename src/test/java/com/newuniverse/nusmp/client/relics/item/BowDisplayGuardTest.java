@@ -129,4 +129,36 @@ class BowDisplayGuardTest {
         }
         assertEquals(List.of(), bad);
     }
+
+    /**
+     * 1.72.0 (owner screenshots): a bow is SIZED like vanilla's too. The mesh bows were 1.76 to 2.58 blocks tip to tip (vanilla's is about 1.15), so the golden Legendary Bow filled the
+     * screen in first person and stood taller than the player in third. Every mesh of a bow-class weapon, rest and draw stages, is between 0.9 and 1.4 blocks long (tools/relics/bow_vanilla.py).
+     */
+    @Test
+    void everyBowIsTheSizeOfTheVanillaBow() throws IOException {
+        WeaponClasses classes = WeaponMeshesTest.loadClasses();
+        List<String> bad = new ArrayList<>();
+        for (String id : bowIds()) {
+            if (!"bow".equals(classes.className(id))) continue;
+            try (Stream<Path> s = Files.list(RES.resolve("weapon_meshes"))) {
+                for (Path p : (Iterable<Path>) s::iterator) {
+                    String n = p.getFileName().toString();
+                    if (!n.equals(id + ".txt") && !(n.startsWith(id + "_") && n.endsWith(".txt"))) continue;
+                    String text = Files.readString(p);
+                    Matcher pl = PLACE.matcher(text);
+                    if (!pl.find()) continue;
+                    double scale = Double.parseDouble(pl.group(4)), ymin = Double.parseDouble(pl.group(5)), ymax = -1e9;
+                    for (String line : text.split("\n")) {
+                        String[] v = line.trim().split("\\s+");
+                        if (v.length < 22 || !(v[0].equals("q") || v[0].equals("qn"))) continue;
+                        int stride = v[0].equals("q") ? 5 : 8;
+                        for (int k = 0; k < 4; k++) ymax = Math.max(ymax, Double.parseDouble(v[2 + k * stride + 1]));
+                    }
+                    double length = (ymax - ymin) * scale;
+                    if (length < 0.9 || length > 1.4) bad.add(n + " is " + String.format(java.util.Locale.ROOT, "%.2f", length) + " blocks long (a bow is 0.9 to 1.4, vanilla's about 1.15)");
+                }
+            }
+        }
+        assertTrue(bad.isEmpty(), String.join("\n", bad));
+    }
 }

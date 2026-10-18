@@ -4,6 +4,9 @@ Vanilla's bow sprite lies on the item's diagonal and its model json carries thes
 its middle at the cube's centre, where the sprite's grip is) can take them unchanged, so the draw pose, the arm and the sizes match the vanilla bow. For every id of
 class "bow" in weapon_classes.json this tool (1) rewrites the `place` line of the rest mesh and of all its stage meshes (<id>_pull1..3, <id>_curse...) to angle 45 about
 the middle of the rest mesh, keeping the scale and ymin, and (2) writes vanilla's display block into the model json (marked "manual" so display_presets.py leaves it).
+1.72.0 (owner screenshots: the Legendary Bow filled the screen in first person and stood taller than the player in third, while vanilla's bow beside it looked right): every
+bow is also SIZED like vanilla's. The mesh bows were 1.76 to 2.58 blocks long (vanilla's bow is about 1.15 blocks along its diagonal), so the scale of the `place` line is now
+BOW_LENGTH / (the rest mesh's height) for the rest mesh and all its stages, which makes the drawn bow the same apparent size as the vanilla one under the same display.
 Idempotent. Run:  python tools/relics/bow_vanilla.py [--check]   (--check exits 1 when it would change something; BowDisplayGuardTest is the CI guard).
 """
 import glob
@@ -14,6 +17,8 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+
+BOW_LENGTH = 1.2      # blocks from tip to tip: vanilla's bow sprite spans about 18 pixels along its diagonal (1.15 blocks)
 
 VANILLA_DISPLAY = {
     "thirdperson_righthand": {"rotation": [-80, 260, -40], "translation": [-1, -2, 2.5], "scale": [0.9, 0.9, 0.9]},
@@ -49,11 +54,12 @@ def main(check):
         if not os.path.exists(base):
             continue
         place = next(l.split() for l in open(base, encoding="utf-8") if l.startswith("place "))
-        sc, ymin = float(place[4]), float(place[5])
+        ymin = float(place[5])
         lo, hi = y_range(base)
+        sc = BOW_LENGTH / (hi - lo)
         mid = 0.5 * (hi - lo) * sc
         ox, oy = 0.5 - mid * math.cos(math.radians(45)), 0.5 - mid * math.sin(math.radians(45))
-        line = "place %.5f %.5f 45.000 %s %s" % (ox, oy, place[4], place[5])
+        line = "place %.5f %.5f 45.000 %.6f %s" % (ox, oy, sc, place[5])
         own = set(bow_ids())
         stages = [q for q in sorted(glob.glob(os.path.join(ASSETS, "weapon_meshes", bid + "_*.txt")))
                   if not any((os.path.basename(q) == o + ".txt" or os.path.basename(q).startswith(o + "_")) and len(o) > len(bid) for o in own)]   # legendary_bow_curse_* belongs to legendary_bow_curse
