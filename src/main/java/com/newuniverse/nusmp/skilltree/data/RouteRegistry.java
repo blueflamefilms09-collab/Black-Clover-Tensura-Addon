@@ -74,5 +74,32 @@ public final class RouteRegistry {
     public static void setClient(List<SkillRoute> routes) { client = RouteIndex.of(routes == null ? List.of() : routes); }
 
     /** The client left its world: forget the copy of that server's routes. */
-    public static void clearClient() { client = RouteIndex.EMPTY; }
+    public static void clearClient() {
+        client = RouteIndex.EMPTY;
+        clientSummaries = List.of();
+    }
+
+    // ---------------------------------------------------------------- 1.82.0: the lines a client holds (owned ones, plus the ones an administrator asked to inspect)
+    private static volatile List<RouteIndex.Summary> clientSummaries = List.of();
+
+    /**
+     * Client thread: routes that arrive AFTER the first chunk of a sync, or that an administrator asked to inspect, are added to the client copy (a route with the same id is replaced). Why a
+     * merge and not another {@link #setClient}: with 283 lines a player's owned routes may not fit one payload, and an inspected line must not wipe the lines the player owns.
+     */
+    public static void addClient(List<SkillRoute> routes) {
+        if (routes == null || routes.isEmpty()) return;
+        java.util.Map<String, SkillRoute> merged = new java.util.LinkedHashMap<>();
+        for (SkillRoute r : client.all()) merged.put(r.id(), r);
+        for (SkillRoute r : routes) merged.put(r.id(), r);
+        client = RouteIndex.of(new java.util.ArrayList<>(merged.values()));
+    }
+
+    /** Client thread: the cards of every registered line, sent to an administrator who turned inspect mode on (a dedicated server does not send the trees themselves). */
+    public static void setClientSummaries(List<RouteIndex.Summary> summaries) { clientSummaries = summaries == null ? List.of() : List.copyOf(summaries); }
+
+    /**
+     * One card per registered line, in id order: the server snapshot's while a server runs in this JVM (single player: everything is already here), else the cards the server sent an
+     * administrator. Empty for an ordinary player on a remote server, who is never told about lines they do not own.
+     */
+    public static List<RouteIndex.Summary> summaries() { return serverLoaded ? server.summaries() : clientSummaries; }
 }

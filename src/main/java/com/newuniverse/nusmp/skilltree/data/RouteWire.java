@@ -65,6 +65,10 @@ public final class RouteWire {
         out.utf(r.classId(), RouteSchema.LEN_ID);
         out.varInt(r.duplicateSp());
         out.varInt(r.lootWeight());
+        out.utf(nz(r.franchise()), RouteSchema.LEN_KEY);                      // 1.82.0: the line fields (empty for a classic route)
+        out.utf(nz(r.guiBackground()), RouteSchema.LEN_PATH);
+        out.utf(nz(r.bookTexture()), RouteSchema.LEN_PATH);
+        out.utf(nz(r.backgroundTheme()), RouteSchema.LEN_KEY);
         out.varInt(r.nodes().size());
         for (SkillNode n : r.nodes()) writeNode(out, n);
     }
@@ -94,7 +98,17 @@ public final class RouteWire {
         out.varInt(n.x());
         out.varInt(n.y());
         out.utf(n.icon(), RouteSchema.LEN_RESOURCE);
+        out.utf(nz(n.type()), RouteSchema.LEN_KEY);                           // 1.82.0: the effect of a line node
+        out.utf(nz(n.kind()), RouteSchema.LEN_KEY);
+        Map<String, String> params = n.params() == null ? Map.of() : n.params();
+        out.varInt(params.size());
+        for (Map.Entry<String, String> e : params.entrySet()) {
+            out.utf(e.getKey(), RouteSchema.LEN_KEY);
+            out.utf(e.getValue(), RouteSchema.LEN_PARAM);
+        }
     }
+
+    private static String nz(String s) { return s == null ? "" : s; }
 
     /** All routes: a count, then each route. */
     public static void writeAll(Sink out, List<SkillRoute> routes) {
@@ -116,13 +130,19 @@ public final class RouteWire {
         String classId = in.utf(RouteSchema.LEN_ID);
         int duplicateSp = range(in.varInt(), 0, RouteSchema.MAX_DUPLICATE_SP, "duplicate_sp");
         int lootWeight = range(in.varInt(), 0, RouteSchema.MAX_LOOT_WEIGHT, "loot_weight");
+        String franchise = in.utf(RouteSchema.LEN_KEY);
+        String guiBackground = in.utf(RouteSchema.LEN_PATH);
+        String bookTexture = in.utf(RouteSchema.LEN_PATH);
+        String backgroundTheme = in.utf(RouteSchema.LEN_KEY);
+        boolean extended = !franchise.isEmpty();                              // the same rule as the schema: only a line may use the wider grid
         int n = range(in.varInt(), 1, RouteSchema.MAX_NODES, "nodes");
         List<SkillNode> nodes = new ArrayList<>(n);
-        for (int i = 0; i < n; i++) nodes.add(readNode(in));
-        return new SkillRoute(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, Collections.unmodifiableList(nodes));
+        for (int i = 0; i < n; i++) nodes.add(readNode(in, extended));
+        return new SkillRoute(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, Collections.unmodifiableList(nodes),
+                franchise, guiBackground, bookTexture, backgroundTheme);
     }
 
-    private static SkillNode readNode(Source in) {
+    private static SkillNode readNode(Source in, boolean extended) {
         String id = in.utf(RouteSchema.LEN_ID);
         String name = in.utf(RouteSchema.LEN_NAME);
         String desc = in.utf(RouteSchema.LEN_NODE_DESC);
@@ -147,11 +167,16 @@ public final class RouteWire {
             for (int j = 0; j < len; j++) table.add(in.f64());
             values.put(key, Collections.unmodifiableList(table));
         }
-        int x = range(in.varInt(), 0, RouteSchema.MAX_X, "x");
-        int y = range(in.varInt(), 0, RouteSchema.MAX_Y, "y");
+        int x = range(in.varInt(), 0, extended ? RouteSchema.MAX_LINE_X : RouteSchema.MAX_X, "x");
+        int y = range(in.varInt(), 0, extended ? RouteSchema.MAX_LINE_Y : RouteSchema.MAX_Y, "y");
         String icon = in.utf(RouteSchema.LEN_RESOURCE);
+        String type = in.utf(RouteSchema.LEN_KEY);
+        String kind = in.utf(RouteSchema.LEN_KEY);
+        int np2 = count(in.varInt(), RouteSchema.MAX_PARAMS, "params");
+        Map<String, String> params = new LinkedHashMap<>();
+        for (int i = 0; i < np2; i++) params.put(in.utf(RouteSchema.LEN_KEY), in.utf(RouteSchema.LEN_PARAM));
         return new SkillNode(id, name, desc, Collections.unmodifiableList(parents), cost, Collections.unmodifiableList(costs), maxLevel, skill,
-                Collections.unmodifiableList(passives), Collections.unmodifiableMap(values), x, y, icon);
+                Collections.unmodifiableList(passives), Collections.unmodifiableMap(values), x, y, icon, type, kind, Collections.unmodifiableMap(params));
     }
 
     /** All routes: a count (at most {@value #MAX_ROUTES}), then each route. */
@@ -168,6 +193,30 @@ public final class RouteWire {
     private static int range(int value, int min, int max, String what) {
         if (value < min || value > max) throw new IllegalArgumentException("a route packet carries " + what + " = " + value + " (allowed " + min + " to " + max + ")");
         return value;
+    }
+
+    // ---------------------------------------------------------------- chunks
+    /**
+     * Why: a clientbound payload carries at most 1 MiB, and a player who owns many lines (an administrator who unlocked them all) has more routes than one payload may hold, so the routes
+     * are cut into consecutive groups of at most {@code maxRoutes} routes and {@code maxBytes} bytes, each of which is one payload. A route that alone exceeds {@code maxBytes} still gets its own
+     * group (the registry refused such a route at load time, so this cannot happen for a loaded route). Order is kept. Pure and exact (it uses {@link #size}).
+     */
+    public static List<List<SkillRoute>> chunks(List<SkillRoute> routes, int maxRoutes, int maxBytes) {
+        List<List<SkillRoute>> out = new ArrayList<>();
+        List<SkillRoute> cur = new ArrayList<>();
+        int bytes = 0;
+        for (SkillRoute r : routes) {
+            int size = size(r);
+            if (!cur.isEmpty() && (cur.size() >= maxRoutes || bytes + size > maxBytes)) {
+                out.add(cur);
+                cur = new ArrayList<>();
+                bytes = 0;
+            }
+            cur.add(r);
+            bytes += size;
+        }
+        if (!cur.isEmpty()) out.add(cur);
+        return out;
     }
 
     // ---------------------------------------------------------------- size
