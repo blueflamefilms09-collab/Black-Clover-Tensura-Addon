@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.mega.system;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
+import com.newuniverse.nusmp.labyrinth.mega.system.PointsText;
 import com.newuniverse.nusmp.labyrinth.mega.system.Stat;
 import com.newuniverse.nusmp.labyrinth.mega.system.SystemNet;
 import com.newuniverse.nusmp.labyrinth.mega.system.SystemText;
@@ -28,59 +29,40 @@ import java.util.Locale;
  * layers are), so both are checked here. It must never take a frame down: the whole draw is inside a try, the pose stack is popped in a finally, and a failure
  * switches the window off until the server sends news ({@link ClientSystem#broken}) with one log line instead of one per frame.
  *
- * <p>1.58.0: the window shows for every player in the dungeon dimensions (the Mega-Dungeon on both roads, and the Hub, where it is the status window with no floor
- * and no quest), at the place the player chose ({@link SystemClientConfig#anchor}, offsets; {@link SystemEditMode}). While edit mode is on it is drawn even when
- * switched off, hidden or outside the dungeon (with a labelled sample then, so a player can set the place before going in), with the edit frame and the hint box,
- * and it is also drawn over open screens, because that is when the mouse can drag it ({@link #renderOnScreen}); the normal layer stays out of the way of screens.
+ * <p>The window shows for every player in the dungeon dimensions (the Mega-Dungeon on both roads, and the Hub, where it is the status window with no floor
+ * and no quest), at the place the player chose ({@link SystemClientConfig#place}, the size {@link SystemClientConfig#scale}). The place and the size are set with
+ * the mouse in {@link SystemEditScreen}, which draws the window through {@link #drawPreview} (the real window, or a labelled sample when the real one is not on).
+ * While free stat points are waiting, the header carries an amber badge with their number and the key that opens the stat screen.
  */
 public final class SystemOverlay {
     private SystemOverlay() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    /** The text of the four corners, by corner number. */
-    private static final String[] CORNERS = {SystemText.EDIT_CORNER_TL, SystemText.EDIT_CORNER_TR, SystemText.EDIT_CORNER_BL, SystemText.EDIT_CORNER_BR};
     private static OverlayLayout layout;
     private static Font layoutFont;
 
-    /** The layer: called every frame by the GUI. Open screens are left alone (edit mode is drawn over them by {@link #renderOnScreen}). */
+    /** The layer: called every frame by the GUI. Open screens are left alone (the edit screen draws the window itself, through {@link #drawPreview}). */
     public static void render(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.screen != null) return;
-        run(g, mc, delta.getGameTimeDeltaPartialTick(false), false);
+        run(g, mc, delta.getGameTimeDeltaPartialTick(false));
     }
 
-    /** Called after every open screen has drawn: in edit mode the window is drawn over the screen, so it can be dragged with the mouse. */
-    public static void renderOnScreen(GuiGraphics g, float partialTick) {
-        if (!SystemEditMode.on()) return;
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.screen == null) return;
-        run(g, mc, partialTick, true);
-    }
-
-    private static void run(GuiGraphics g, Minecraft mc, float partialTick, boolean onScreen) {
+    private static void run(GuiGraphics g, Minecraft mc, float partialTick) {
         if (ClientSystem.broken) return;
-        if (mc.player == null || mc.level == null || mc.options.hideGui) {
-            SystemEditMode.notDrawn();
-            return;
-        }
-        boolean editing = SystemEditMode.on();
+        if (mc.player == null || mc.level == null || mc.options.hideGui) return;
         boolean dungeon = Labyrinth.inMega(mc.level) || Labyrinth.inSanctuary(mc.level);
         boolean normal = SystemClientConfig.enabled() && !ClientSystem.hidden && dungeon;
         boolean live = normal && ClientSystem.active;
-        boolean panel = live || editing;
-        boolean toasts = normal && !onScreen && SystemClientConfig.toasts() && !ClientSystem.TOASTS.isEmpty();
-        if (!panel && !toasts) {
-            SystemEditMode.notDrawn();
-            return;
-        }
+        boolean toasts = normal && SystemClientConfig.toasts() && !ClientSystem.TOASTS.isEmpty();
+        if (!live && !toasts) return;
         boolean pushed = false;
         try {
             float scale = SystemClientConfig.scale();
             g.pose().pushPose();
             pushed = true;
-            if (onScreen) g.pose().translate(0.0f, 0.0f, 350.0f);                 // over the screen's items, below its tooltips (which the game draws at 400)
             g.pose().scale(scale, scale, 1.0f);
-            draw(g, mc, partialTick, scale, panel, live, editing, toasts);
+            draw(g, mc, partialTick, scale, live, toasts);
         } catch (RuntimeException | LinkageError e) {
             ClientSystem.broken = true;
             LOG.warn("[nusmp] The System window failed to draw and is switched off until the server sends news", e);
@@ -89,32 +71,60 @@ public final class SystemOverlay {
         }
     }
 
-    private static void draw(GuiGraphics g, Minecraft mc, float partialTick, float scale, boolean showPanel, boolean live, boolean editing, boolean showToasts) {
-        Font font = mc.font;
+    private static OverlayLayout.View view(GuiGraphics g, float scale, float time) {
+        return new OverlayLayout.View(g.guiWidth(), g.guiHeight(), scale, SystemClientConfig.anchor(), SystemClientConfig.alpha(), time,
+                SystemClientConfig.offsetX(), SystemClientConfig.offsetY(), SystemClientConfig.centerX(), SystemClientConfig.centerY());
+    }
+
+    private static OverlayLayout layoutFor(Font font) {
         if (layout == null || layoutFont != font) {
             layout = new OverlayLayout(font::width);
             layoutFont = font;
         }
+        return layout;
+    }
+
+    private static void draw(GuiGraphics g, Minecraft mc, float partialTick, float scale, boolean showPanel, boolean showToasts) {
+        Font font = mc.font;
+        OverlayLayout lay = layoutFor(font);
         long gameTime = mc.level.getGameTime();
         float time = gameTime + partialTick;
-        OverlayLayout.View view = new OverlayLayout.View(g.guiWidth(), g.guiHeight(), scale, SystemClientConfig.anchor(), SystemClientConfig.alpha(), time,
-                SystemClientConfig.offsetX(), SystemClientConfig.offsetY());
+        OverlayLayout.View view = view(g, scale, time);
         int toastY = OverlayStyle.MARGIN + 2;
         if (showPanel) {
-            OverlayLayout.Frame frame = layout.panel(live ? panel(time, gameTime) : samplePanel(), view);
+            OverlayLayout.Frame frame = lay.panel(panel(time, gameTime), view);
             replay(g, font, frame.ops());
-            SystemEditMode.drawn(frame, scale);
             toastY = OverlayMath.toastTop(frame.x(), frame.y(), frame.w(), frame.h(), view.h(), OverlayStyle.TOAST_COLUMN_W, OverlayStyle.MARGIN, 8);
-            if (editing) {
-                OverlayLayout.EditMarks marks = layout.edit(frame, view, editLines(frame));
-                replay(g, font, marks.ops());
-                toastY = OverlayMath.toastClear(toastY, marks.x(), marks.y(), marks.w(), marks.h(), OverlayStyle.TOAST_COLUMN_W,
-                        OverlayStyle.TOAST_MAX * (OverlayStyle.TOAST_H + OverlayStyle.TOAST_GAP), OverlayStyle.MARGIN, 4);
-            }
-        } else {
-            SystemEditMode.notDrawn();
         }
-        if (showToasts) replay(g, font, layout.toasts(toastViews(time), OverlayStyle.MARGIN, toastY));
+        if (showToasts) replay(g, font, lay.toasts(toastViews(time), OverlayStyle.MARGIN, toastY));
+    }
+
+    /**
+     * Draws the window for {@link SystemEditScreen}: the real one when the System has a picture for the player, else the labelled sample (outside the dungeon, switched
+     * off, hidden), at the place and size in the client config as they are RIGHT NOW (so a drag shows at once). Returns the frame (the window's rectangle in its own
+     * pixels), or null when the drawing failed. Never throws.
+     */
+    static OverlayLayout.Frame drawPreview(GuiGraphics g, Minecraft mc, float partialTick) {
+        boolean pushed = false;
+        try {
+            float scale = SystemClientConfig.scale();
+            g.pose().pushPose();
+            pushed = true;
+            g.pose().scale(scale, scale, 1.0f);
+            OverlayLayout lay = layoutFor(mc.font);
+            long gameTime = mc.level == null ? 0L : mc.level.getGameTime();
+            float time = gameTime + partialTick;
+            boolean dungeon = mc.level != null && (Labyrinth.inMega(mc.level) || Labyrinth.inSanctuary(mc.level));
+            boolean live = dungeon && ClientSystem.active && !ClientSystem.broken;
+            OverlayLayout.Frame frame = lay.panel(live ? panel(time, gameTime) : samplePanel(), view(g, scale, time));
+            replay(g, mc.font, frame.ops());
+            return frame;
+        } catch (RuntimeException | LinkageError e) {
+            LOG.warn("[nusmp] The System window preview failed to draw", e);
+            return null;
+        } finally {
+            if (pushed) g.pose().popPose();
+        }
     }
 
     /** The marks, in order, on the graphics. */
@@ -137,7 +147,8 @@ public final class SystemOverlay {
         OverlayLayout.Quest quest = ClientSystem.questState == SystemNet.Q_NONE || ClientSystem.boss ? null : quest(time, gameTime);
         String noQuest = ClientSystem.floor == 0 ? tr(SystemText.HUB) : tr(SystemText.NO_QUEST);               // Floor 0 is the Hub: a status window, no floor quests there
         return new OverlayLayout.Panel(tr(SystemText.HEADER), tr(SystemText.FLOOR), ClientSystem.floor, road, abyssal ? tr(SystemText.ABYSSAL) : tr(SystemText.HOLY),
-                tr(SystemText.THREAT), ClientSystem.threat, ClientSystem.boss, tr(SystemText.BOSS_FLOOR), noQuest, quest, stats());
+                tr(SystemText.THREAT), ClientSystem.threat, ClientSystem.boss, tr(SystemText.BOSS_FLOOR), noQuest, quest, stats(),
+                ClientPoints.free(), ClientPoints.free() > 0 ? tr(PointsText.BADGE, ClientPoints.free(), keyName(SystemClient.POINTS)) : "");
     }
 
     /** The stat row of the player's points, or null when the player switched the row off. */
@@ -155,28 +166,7 @@ public final class SystemOverlay {
                 tr(SystemText.NO_QUEST), quest, stats());
     }
 
-    /** The hint lines of edit mode: where the window is, then the keys (as the player has them bound), then the mouse. */
-    private static List<String> editLines(OverlayLayout.Frame frame) {
-        String corner = tr(CORNERS[OverlayMath.safeAnchor(SystemClientConfig.anchor())]);
-        List<String> lines = new ArrayList<>(3);
-        lines.add(tr(SystemText.EDIT_HEAD, corner, frame.x(), frame.y()));
-        lines.add(tr(SystemText.EDIT_KEYS, arrows(), keyName(SystemClient.CORNER), keyName(SystemClient.RESET), keyName(SystemClient.EDIT)));
-        lines.add(tr(SystemText.EDIT_MOUSE));
-        return lines;
-    }
-
     private static String keyName(KeyMapping k) { return k.getTranslatedKeyMessage().getString(); }
-
-    /** "Arrow keys" while the four nudge keys are the arrows, else their names as the player bound them. */
-    private static String arrows() {
-        KeyMapping[] four = {SystemClient.LEFT, SystemClient.RIGHT, SystemClient.UP, SystemClient.DOWN};
-        boolean defaults = true;
-        for (KeyMapping k : four) defaults &= k.isDefault();
-        if (defaults) return tr(SystemText.EDIT_ARROWS);
-        StringBuilder b = new StringBuilder();
-        for (KeyMapping k : four) b.append(b.length() == 0 ? "" : "/").append(keyName(k));
-        return b.toString();
-    }
 
     private static OverlayLayout.Quest quest(float time, long gameTime) {
         int state = switch (ClientSystem.questState) {

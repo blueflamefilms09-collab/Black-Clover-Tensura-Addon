@@ -15,11 +15,14 @@ import java.util.UUID;
 public final class RewardRoller {
     private RewardRoller() {}
 
-    public enum Kind { STAT, CORE, NONE }
+    /** {@code FREE} (points-choice update) is appended last: a number of points paid into the player's free pool, to be placed on the stat screen. */
+    public enum Kind { STAT, CORE, NONE, FREE }
 
-    /** What a success pays: a number of points of one stat, a Shadow Core, or nothing (every stat capped and no core allowed). */
+    /** What a success pays: a number of points of one stat, a Shadow Core, nothing (every stat capped and no core allowed), or points for the free pool. */
     public record Reward(Kind kind, Stat stat, int points) {
         public static Reward core() { return new Reward(Kind.CORE, null, 0); }
+
+        public static Reward free(int points) { return new Reward(Kind.FREE, null, points); }
 
         public static Reward none() { return new Reward(Kind.NONE, null, 0); }
     }
@@ -55,5 +58,19 @@ public final class RewardRoller {
         if (sw + cw > 0 && roll >= sw) return Reward.core();
         int give = Math.max(1, Math.min(points, cap - have[picked.ordinal()]));
         return new Reward(Kind.STAT, picked, give);
+    }
+
+    /**
+     * The roll of {@link PointMode#CHOOSE}: the same dice as {@link #roll} (a stat reward against a Shadow Core, weighted, seeded, reproducible), but a stat reward
+     * is not placed: it is {@code points} for the free pool, cut down to the {@code room} the player's stats still have under their caps (see
+     * {@link PointRules#room}). With no room left the core is paid instead (when the template allows it), else nothing, exactly as a capped stat does in random mode.
+     */
+    public static Reward rollChoose(long seed, int statWeight, int coreWeight, int points, boolean coreAllowed, int room) {
+        if (room <= 0) return coreAllowed ? Reward.core() : Reward.none();
+        Random rnd = new Random(seed);
+        int sw = Math.max(0, statWeight), cw = coreAllowed ? Math.max(0, coreWeight) : 0;
+        int roll = sw + cw == 0 ? 0 : rnd.nextInt(sw + cw);
+        if (sw + cw > 0 && roll >= sw) return Reward.core();
+        return Reward.free(Math.max(1, Math.min(points, room)));
     }
 }

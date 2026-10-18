@@ -15,7 +15,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class SystemConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, ABYSSAL_TOO, RECHARGE_FIRST, AMBUSH_QUESTS, BUFF_ONLY_IN_DUNGEON, HUD_HINT_ON_ENTRY, SHARE_PROGRESS;
+    public static final ModConfigSpec.BooleanValue ENABLED, ABYSSAL_TOO, RECHARGE_FIRST, AMBUSH_QUESTS, BUFF_ONLY_IN_DUNGEON, HUD_HINT_ON_ENTRY, SHARE_PROGRESS, ALLOW_RESPEC;
+    /** Points-choice update: {@code choose} or {@code random} (read with {@link PointMode#of}). */
+    public static final ModConfigSpec.ConfigValue<String> POINT_MODE;
     public static final ModConfigSpec.DoubleValue QUEST_CHANCE, MINION_STRENGTH;
     public static final ModConfigSpec.IntValue STAT_WEIGHT, SHADOW_CORE_WEIGHT, EXTRACT_WINDOW_TICKS, EXTRACT_RADIUS, MAX_MINIONS, MINION_MINUTES, MAX_STAT_POINTS, SHARE_RADIUS;
 
@@ -58,6 +60,12 @@ public final class SystemConfig {
                 .define("shareProgress", true);
         SHARE_RADIUS = b.comment("How close (blocks) a party member must be to the kill to be credited by shareProgress. 0 = anywhere on the floor.")
                 .defineInRange("shareRadius", 64, 0, 512);
+        POINT_MODE = b.comment("Where the stat point of a cleared floor quest goes. 'choose' (default) = into the player's free pool, and the player places it on the stat screen. "
+                        + "'random' = the System picks the stat by dice, as before 'choose' existed. Any other word reads as 'choose'.")
+                .define("pointMode", "choose");
+        ALLOW_RESPEC = b.comment("Players may take their placed points back into the free pool (the Reset button, and removing a point with the mouse wheel). Free of charge. "
+                        + "false = a placed point stays where it is. Note: with pointMode 'random', leaving this on lets players move their random points anywhere.")
+                .define("allowRespec", true);
         b.pop();
         SPEC = b.build();
     }
@@ -71,6 +79,12 @@ public final class SystemConfig {
 
     /** Convenience: is the System switched on? */
     public static boolean enabled() { return get(ENABLED); }
+
+    /** Convenience: where do quest stat rewards go (points-choice update)? */
+    public static PointMode pointMode() { return PointMode.of(get(POINT_MODE)); }
+
+    /** Convenience: may players take placed points back? */
+    public static boolean allowRespec() { return get(ALLOW_RESPEC); }
 
     /** Convenience: does the stat buff work only inside the dungeon dimensions? */
     public static boolean buffOnlyInDungeon() { return get(BUFF_ONLY_IN_DUNGEON); }

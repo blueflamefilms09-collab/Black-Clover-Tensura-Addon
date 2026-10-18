@@ -369,7 +369,7 @@ public final class SystemQuests implements FloorListener {
         SystemState s = state(p);
         if (s.hintShown()) return;
         s.setHintShown(true);
-        p.sendSystemMessage(SystemMsg.text(SystemText.MSG_WINDOW_HINT, Component.keybind(SystemText.KEY_EDIT), Component.keybind(SystemText.KEY_CORNER), Component.keybind(SystemText.KEY_RESET)));
+        p.sendSystemMessage(SystemMsg.text(PointsText.MSG_WINDOW_HINT_MOUSE, Component.keybind(SystemText.KEY_EDIT), Component.keybind(PointsText.KEY_POINTS)));
     }
 
     /** A player left: their scratch state goes. */

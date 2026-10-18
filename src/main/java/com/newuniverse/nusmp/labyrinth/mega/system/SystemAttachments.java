@@ -45,9 +45,10 @@ public final class SystemAttachments {
             Codec.INT.optionalFieldOf("done", 0).forGetter(SystemState.Data::done),
             Codec.INT.optionalFieldOf("failed", 0).forGetter(SystemState.Data::failed),
             QUEST_CODEC.optionalFieldOf("quest").forGetter(d -> Optional.ofNullable(d.quest())),
-            Codec.BOOL.optionalFieldOf("hint", false).forGetter(SystemState.Data::hint)
-    ).apply(i, (points, cores, maxFloor, lastKind, done, failed, quest, hint) ->
-            new SystemState.Data(points, cores, maxFloor, lastKind, done, failed, quest.orElse(null), hint)));
+            Codec.BOOL.optionalFieldOf("hint", false).forGetter(SystemState.Data::hint),
+            Codec.INT.optionalFieldOf("free", 0).forGetter(SystemState.Data::free)
+    ).apply(i, (points, cores, maxFloor, lastKind, done, failed, quest, hint, free) ->
+            new SystemState.Data(points, cores, maxFloor, lastKind, done, failed, quest.orElse(null), hint, free)));
 
     public static final Codec<SystemState> CODEC = DATA_CODEC.xmap(SystemState::of, SystemState::toData);
 

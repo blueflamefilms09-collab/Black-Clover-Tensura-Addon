@@ -28,6 +28,7 @@ public final class SystemRegistry {
         ShadowItems.COMPONENTS.register(modBus);
         SystemAttachments.ATTACHMENTS.register(modBus);
         modBus.addListener(SystemNet::register);
+        modBus.addListener(SystemPointsNet::register);
         MegaDungeon.addFloorListener(SystemQuests.LISTENER);
         SystemSelfTests.register();
     }

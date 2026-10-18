@@ -37,10 +37,15 @@ public final class OverlayLayout {
      * @param time   the game time in ticks plus the partial tick (drives every animation)
      * @param offX   1.58.0: how far the player moved the window from its corner, in the window's own pixels, inwards (see {@link OverlayMath#placeX})
      * @param offY   the same, vertically
+     * @param centerX the horizontal offset is measured from the middle of the screen instead of from the corner's edge (the mouse-placed window; see {@link OverlayDrag})
+     * @param centerY the same, vertically
      */
-    public record View(int guiW, int guiH, float scale, int anchor, float alpha, float time, int offX, int offY) {
+    public record View(int guiW, int guiH, float scale, int anchor, float alpha, float time, int offX, int offY, boolean centerX, boolean centerY) {
         /** A view with the window in its corner (no offset): the form before the window could be moved, kept so older callers and tests compile. */
-        public View(int guiW, int guiH, float scale, int anchor, float alpha, float time) { this(guiW, guiH, scale, anchor, alpha, time, 0, 0); }
+        public View(int guiW, int guiH, float scale, int anchor, float alpha, float time) { this(guiW, guiH, scale, anchor, alpha, time, 0, 0, false, false); }
+
+        /** A view with a corner and offsets (1.58.0), measured from the corner: the form before the mouse placement, kept so older callers and tests compile. */
+        public View(int guiW, int guiH, float scale, int anchor, float alpha, float time, int offX, int offY) { this(guiW, guiH, scale, anchor, alpha, time, offX, offY, false, false); }
 
         /** The screen width in the window's own (scaled) pixels. */
         public int w() { return OverlayMath.windowSize(guiW, scale); }
@@ -65,9 +70,17 @@ public final class OverlayLayout {
      * @param boss         a boss floor: no quest, the {@code bossText} is shown
      * @param quest        the quest, or null for none (then {@code noQuestText} is shown)
      * @param stats        the stat row, or null to leave it out
+     * @param free         unspent stat points waiting on the stat screen; above 0 a badge is drawn in the header
+     * @param freeText     the badge's words ("+3 PTS [I]"), already translated; the layout falls back to {@code "+3"} when they would not fit
      */
     public record Panel(String header, String floorWord, int floor, int road, String roadWord, String threatWord, int threat, boolean boss, String bossText,
-                        String noQuestText, Quest quest, Stats stats) {}
+                        String noQuestText, Quest quest, Stats stats, int free, String freeText) {
+        /** A panel without a badge: the form before the free points existed, kept so older callers and tests compile. */
+        public Panel(String header, String floorWord, int floor, int road, String roadWord, String threatWord, int threat, boolean boss, String bossText,
+                     String noQuestText, Quest quest, Stats stats) {
+            this(header, floorWord, floor, road, roadWord, threatWord, threat, boss, bossText, noQuestText, quest, stats, 0, "");
+        }
+    }
 
     /** A pop-up line: its tag ("[SYSTEM]"), its message, its kind code (see {@code ToastKind}) and its age in ticks. */
     public record ToastView(String prefix, String message, int kind, float age) {}
@@ -104,6 +117,7 @@ public final class OverlayLayout {
         text(fg, PAD_X, y, p.header(), CYAN_BRIGHT, crisp, !glitch);
         if (OverlayMath.blink(v.time())) fill(fg, PAD_X + width.applyAsInt(p.header()) + 3, y, PAD_X + width.applyAsInt(p.header()) + 8, y + TEXT_H - 1, CYAN, crisp);
         diamond(fg, w - PAD_X - 2, y + 1, roadColour(p.road()), crisp);
+        badge(fg, p, v, w, y, crisp);
         y += TEXT_H + GAP;
 
         // the floor, the road, the threat
@@ -151,9 +165,29 @@ public final class OverlayLayout {
         all.addAll(fg);
         border(all, w, h, crisp);
 
-        int x0 = OverlayMath.placeX(v.anchor(), v.w(), w, MARGIN, v.offX());
-        int y0 = OverlayMath.placeY(v.anchor(), v.h(), h, MARGIN, v.offY());
+        int x0 = OverlayDrag.placeX(v.anchor(), v.centerX(), v.w(), w, MARGIN, v.offX());
+        int y0 = OverlayDrag.placeY(v.anchor(), v.centerY(), v.h(), h, MARGIN, v.offY());
         return new Frame(shift(all, x0, y0), x0, y0, w, h);
+    }
+
+    /**
+     * The badge of unspent stat points, in the header between the title and the road's diamond: an amber pill that breathes. It uses the long words when they fit
+     * clear of the title and the short {@code +N} when not, and is left out when even that does not fit, so it can never touch the title or leave the panel.
+     */
+    private void badge(List<Op> out, Panel p, View v, int w, int y, float crisp) {
+        if (p.free() <= 0) return;
+        int right = w - PAD_X - 8;                                                     // the diamond takes the last 6 pixels
+        int left = PAD_X + width.applyAsInt(p.header()) + 12;                          // the title and its cursor
+        String text = p.freeText() == null || p.freeText().isEmpty() ? "+" + p.free() : p.freeText();
+        if (right - width.applyAsInt(text) - 6 < left) text = "+" + p.free();
+        int tw = width.applyAsInt(text);
+        if (right - tw - 6 < left) return;
+        float pulse = 0.75f + 0.25f * (float) Math.sin(v.time() * 0.2f);
+        int x2 = right + 2, x1 = right - tw - 4;
+        fill(out, x1, y - 1, x2, y + TEXT_H, AMBER, 0.20f * pulse);
+        fill(out, x1, y - 1, x2, y, AMBER, 0.55f * pulse);
+        fill(out, x1, y + TEXT_H - 1, x2, y + TEXT_H, AMBER, 0.55f * pulse);
+        text(out, right - tw, y, text, AMBER, crisp * pulse, true);
     }
 
     /** The quest block; returns the y below it. */

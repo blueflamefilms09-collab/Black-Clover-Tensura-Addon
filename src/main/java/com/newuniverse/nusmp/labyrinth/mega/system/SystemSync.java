@@ -49,6 +49,7 @@ public final class SystemSync {
         if (p == null || !hasConnection(p)) return;
         THROTTLES.put(p.getUUID(), new SyncThrottle(GAP_TICKS));
         THROTTLES.get(p.getUUID()).markDirty();
+        SystemPoints.forgetSignature(p.getUUID());                      // the stat screen's picture goes out again with it
     }
 
     /** A real player: a connection to send to, and not a fake player of a test or another mod. */
@@ -72,12 +73,19 @@ public final class SystemSync {
             if (!e.getValue().due(now)) continue;
             e.getValue().sent(now);
             send(p, build(p));
+            SystemPoints.syncIfChanged(p);                              // the free pool and the effect table, only when they differ from what the player was told
         }
     }
 
-    public static void forget(UUID player) { THROTTLES.remove(player); }
+    public static void forget(UUID player) {
+        THROTTLES.remove(player);
+        SystemPoints.forget(player);
+    }
 
-    public static void clear() { THROTTLES.clear(); }
+    public static void clear() {
+        THROTTLES.clear();
+        SystemPoints.clear();
+    }
 
     /** Sends any payload to a real player; never throws (a player who is just leaving has no connection any more). */
     public static void send(ServerPlayer p, CustomPacketPayload payload) {

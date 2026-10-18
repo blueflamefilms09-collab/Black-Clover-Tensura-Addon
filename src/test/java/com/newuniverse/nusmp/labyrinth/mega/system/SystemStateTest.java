@@ -106,7 +106,7 @@ class SystemStateTest {
     }
 
     @Test void everyKeyOfTheControlsScreenHasItsNameAndTheCategoryIsTheOwnersWord() {
-        for (String k : new String[]{SystemText.KEY_TOGGLE, SystemText.KEY_EDIT, SystemText.KEY_LEFT, SystemText.KEY_RIGHT, SystemText.KEY_UP, SystemText.KEY_DOWN, SystemText.KEY_RESET, SystemText.KEY_CORNER}) {
+        for (String k : new String[]{SystemText.KEY_TOGGLE, SystemText.KEY_EDIT}) {
             assertTrue(SystemText.all().containsKey(k), k);
             assertFalse(SystemText.english(k).isBlank(), k);
         }
