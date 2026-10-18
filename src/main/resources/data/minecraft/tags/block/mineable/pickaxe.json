@@ -12,15 +12,6 @@
     "nusmp:sigil_plate",
     "nusmp:riddle_stone",
     "nusmp:relic_forge",
-    "nusmp:soul_forge",
-    "nusmp:forge_station_basic",
-    "nusmp:forge_station_magisteel",
-    "nusmp:forge_station_mythril",
-    "nusmp:forge_station_dragonforge",
-    "nusmp:magic_bud_small",
-    "nusmp:magic_bud_medium",
-    "nusmp:magic_bud_large",
-    "nusmp:magic_crystal_cluster",
-    "nusmp:mother_rock"
+    "nusmp:soul_forge"
   ]
 }

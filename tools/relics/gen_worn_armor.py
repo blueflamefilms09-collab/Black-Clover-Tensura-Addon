@@ -962,18 +962,6 @@ def catalog_items(cat):
                 cat.theme(sid + suffix, theme)
 
 
-def catalog_elite(cat):
-    """1.83.0 (elite/items, docs/elite/items.md): the four Nightingale pieces. Their ids are not the robe pattern (id_hood, id, id_leggings, id_boots), so they are listed by hand: midnight
-    blue with moon silver, a cowl, a robe with wide sleeves and a bird emblem, wrapped legs and tall boots, the star particle theme."""
-    pal = (0x2E3C82, 0xD8E0F2, 0xBEE2FF)
-    cat.item("nightingale_hood", ("hood_cowl",), pal, 4)
-    cat.item("nightingale_cloak", ("chest_robe", "sleeve_wide@rarm", "sleeve_wide@larm~", "emblem_eagle"), pal, 4)
-    cat.item("nightingale_leggings", ("hip_sash", "legs_wrapped@rleg", "legs_wrapped@lleg"), pal, 4)
-    cat.item("nightingale_boots", ("boots_tall@rleg", "boots_tall@lleg"), pal, 4)
-    for key in ("nightingale_hood", "nightingale_cloak", "nightingale_leggings", "nightingale_boots"):
-        cat.theme(key, "star")
-
-
 # Curios-worn items of the mod that are not relics (the dungeon relics and the charter grimoires): the existing library models in their own palettes.
 CURIOS = [
     ("mantle_of_the_scavenger", "BACK", ("mantle_shoulder",), (0x6B5A3A, 0xC9A25A, 0xFFD27A), 3),

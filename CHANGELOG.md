@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.88.0] — EliteTensuraAddon systems removed (at the owner's request)
+
+The owner asked for everything built from the "EliteTensuraAddon" specification to be taken out. 1.85.0 and 1.87.1 never produced a release (their builds failed on tests), and 1.86.0 is the only published build that contained part of it.
+
+### REMOVED
+- **Races** (Lesser / Medium / High / Divine Saiyan, Primordial race, transformations), **records, titles and synergies**, **Nations and War**, the **Elite Forge** (stations, minigames, kits), the **21 elite skills and the evolution engine**, the **calamity and magicule world** (Gravebound Colossus, Lich Boss, Gaia Spike, Void Bolt, crystal blocks, ore conversion), and the **elite items** (Astral / Void / Fenrir / Runic weapons, Nightingale armour, potions, Potential Catalyst, Chronicle Book, Walpurgis Orb and Seal, crates and keys, 54 plushies).
+- With them: their commands, key bindings, screens, config files (`nusmp-elite-<area>-server.toml`), lang keys, recipes, loot tables, models, textures, sounds, tests, generators and docs; the rows they added to the engraving tables, weapon class tables, sounds, worn-armour catalog, the global loot modifier list and the pickaxe tag; and the self-test prefixes from the CI smoke test. `EliteHooks` keeps only the coin wallet.
+- Worlds that already contain the removed blocks, entities or items will lose them (unknown ids are dropped on load); player data written by the removed systems is ignored.
+
+### KEPT
+- The **Hub economy** (Tensura coins, Hub NPCs, quests, shop, Dungeon Map) and the **cyclic dungeon generation**: they came from the other specification, not the EliteTensuraAddon list.
+- The **Canon Grimoire** remake and the **map-mod compatibility** (Xaero's waypoint sharing, FTB Chunks claim check, map colours and their guard test).
+- Everything from 1.84.0 and earlier. The git history of 1.85.0 to 1.87.1 is the way back.
+
 ## [1.87.1] — Calamity bosses and the magicule world, elite items, crates and plushies, map-mod compatibility
 
 Everything merged since 1.86.0. As with the rest of the EliteTensuraAddon inventory, the original source was not available: names are the inventory's, every number and rule is designed here and lives in config / data (docs: `docs/elite/world.md`, `docs/elite/items.md`, `docs/compat/maps.md`).

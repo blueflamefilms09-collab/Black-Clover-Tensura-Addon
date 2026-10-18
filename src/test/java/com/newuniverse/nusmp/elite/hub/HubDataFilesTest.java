@@ -80,6 +80,6 @@ class HubDataFilesTest {
         String s = read("java/com/newuniverse/nusmp/elite/EliteSystem.java");
         int first = s.indexOf("elite.hub.HubRegistry.init(modBus, container);");
         assertTrue(first > 0 && first == s.lastIndexOf("elite.hub.HubRegistry.init(modBus, container);"), "exactly one wiring line");
-        assertTrue(first > s.indexOf("---- hub:") && first < s.indexOf("---- skills:"), "inside the hub section");
+        assertTrue(first > s.indexOf("---- hub:"), "inside the hub section");   // 1.88.0: the hub is the only section left
     }
 }

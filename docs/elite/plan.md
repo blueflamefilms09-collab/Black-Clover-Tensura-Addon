@@ -1,3 +1,5 @@
+> **1.88.0: removed.** At the owner's request every area of this plan except the **Hub economy** (`elite/hub`, `docs/elite/hub.md`) was taken out of the mod: races, records, nations, forge, skills, world and items were deleted (council, seasons and voice were never merged). The text below is the historical plan.
+
 # 1.83.0+: the Hub economy brief and the EliteTensuraAddon feature inventory
 
 Two uploads of the owner: (1) a brief for a Tensura-coin economy, Hub NPCs and quests, a cyclic (anti-dead-end) dungeon generator and the skill-line engine (already built in 1.82.0); (2) `elitetensuraaddon_specification_prompt.md`, a prompt plus a "Pre-Extracted Feature Inventory" of another addon (skills, races, forge, nations and war, Walpurgis council, seasons, records and titles, calamities and the magicule world, items and plushies, voice announcers). "Add this stuff" = build every item of the inventory into this mod. The names below are the inventory's; the implementations are the mod's own (the original source is not available, so numbers and rules are designed here and listed honestly as such).

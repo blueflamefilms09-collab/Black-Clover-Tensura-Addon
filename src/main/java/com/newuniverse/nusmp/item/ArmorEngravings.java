@@ -45,12 +45,7 @@ public final class ArmorEngravings {
             Map.entry("heart_kingdom_uniform", List.of(e("magic_capacity", 2), e("restoration", 1), e("magic_protection", 1))),       // a healer's and a spender's uniform
             Map.entry("diamond_mage_coat", List.of(e("magic_capacity", 1), e("vigor", 1), e("sturdy", 2))),                           // hard as a crystal, quick to recover
             Map.entry("spade_war_coat", List.of(e("sturdy", 2), e("magic_protection", 1), e("severance_protection", 1))),             // a war coat of the Spade Kingdom
-            Map.entry("devil_bound_coat", List.of(e("spiritual_protection", 2), e("magic_protection", 2), e("magicule_absorption", 1))),   // bound to a devil: it drinks what it is struck with
-            // 1.83.0 (elite/items): the Nightingale set. Its pieces are not named "<chest>_hood", so each piece is listed (the cloak carries the whole list, the leggings two, the hood and the boots one)
-            Map.entry("nightingale_cloak", List.of(e("magic_protection", 2), e("breathing_support", 1), e("vitality", 1), e("swift", 1))),   // a night singer's cloak: warded, light, a steady breath
-            Map.entry("nightingale_hood", List.of(e("magic_protection", 2))),
-            Map.entry("nightingale_leggings", List.of(e("magic_protection", 2), e("breathing_support", 1))),
-            Map.entry("nightingale_boots", List.of(e("swift", 1))));
+            Map.entry("devil_bound_coat", List.of(e("spiritual_protection", 2), e("magic_protection", 2), e("magicule_absorption", 1))));   // bound to a devil: it drinks what it is struck with
 
     /**
      * The armour relics (head, chest and feet defs of the relic catalog) by item id: the relic defs of waves 3, 6, 7, 14 and 15 name no engravings of their own, so this table gives

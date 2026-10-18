@@ -29,8 +29,6 @@
     "pitfall_tile": "DEEPSLATE",
     "snuffer_glyph": "COLOR_BLACK",
     "sigil_plate": "COLOR_PURPLE",
-    "riddle_stone": "COLOR_BLACK",
-    "nation_banner": "COLOR_RED",
-    "contract_board": "WOOD"
+    "riddle_stone": "COLOR_BLACK"
   }
 }

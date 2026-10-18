@@ -175,7 +175,6 @@ def catalog():
     gen_worn_unique.catalog_generated(cat, GENERATED_ROWS)
     gen_worn_armor_relics.catalog_relics(cat)              # the armour relics that only had the model of their look
     gen_worn_armor.catalog_items(cat)                      # the armour items (the robe sets)
-    gen_worn_armor.catalog_elite(cat)                      # 1.83.0: the Nightingale set of elite/items
     gen_worn_armor.catalog_anime(cat)                      # 1.48.0: the same robe sets as anime cloaks (`anime:<id>` keys, chosen by relicfx.robeAnime)
     gen_worn_modes.catalog_modes(cat)                      # the transformation overlays
     gen_worn_armor.catalog_curios(cat)                     # Curios-worn items that are not relics

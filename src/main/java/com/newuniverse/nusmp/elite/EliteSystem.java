@@ -4,10 +4,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 
 /**
- * Why: one entry point for everything built from the owner's "EliteTensuraAddon" feature inventory and the Hub economy brief (1.83.0 and later, docs/elite/plan.md). The mod class gains one line;
- * each subsystem owns ONE registry class in its own package under {@code elite/<area>/} with {@code init(IEventBus, ModContainer)} (DeferredRegisters, mod-bus listeners, config registration)
- * and registers its own game-bus handlers from there. The sections below are separated on purpose so that parallel builders each add their one line without touching each other's lines.
- * A subsystem that is not built yet has no line.
+ * Why: one entry point for the Hub economy brief (docs/elite/plan.md): the Tensura-coin economy, Hub NPCs, quests, shop and Dungeon Map live in {@code elite/hub/}. The other areas that were once
+ * built from the owner's "EliteTensuraAddon" inventory (races, records, nations, forge, skills, world, items) were removed at the owner's request in 1.88.0; their git history is the way back.
  */
 public final class EliteSystem {
     private EliteSystem() {}
@@ -15,63 +13,5 @@ public final class EliteSystem {
     public static void init(IEventBus modBus, ModContainer container) {
         // ---- hub: Tensura-coin economy, Hub NPCs, quests, Dungeon Map (elite/hub)
         com.newuniverse.nusmp.elite.hub.HubRegistry.init(modBus, container);
-
-
-
-
-        // ---- skills: aspectual magic, extra/intrinsic/unique/ultimate skills, evolution triggers (elite/skills)
-        com.newuniverse.nusmp.elite.skills.EliteSkills.init(modBus, container);
-
-
-
-        // ---- races: Saiyan tiers, Primordial race (elite/races)
-        com.newuniverse.nusmp.elite.races.EliteRaces.init(modBus, container);
-
-
-
-
-        // ---- forge: stations, minigames, quality, engraving (elite/forge)
-        com.newuniverse.nusmp.elite.forge.ForgeRegistry.init(modBus, container);   // 4 stations, 3 kits, minigames, quality, engraving, specializations, progress (nusmp-elite-forge-server.toml)
-
-
-
-        // ---- records: records, achievements, titles, synergies (elite/records)
-        com.newuniverse.nusmp.elite.records.RecordsSystem.init(modBus, container);                                         // records, 20 condition types, titles, synergies, Records screen, /records
-
-
-
-
-        // ---- world: calamities, bosses, the magicule world engine (elite/world)
-
-        com.newuniverse.nusmp.elite.world.WorldRegistry.init(modBus, container);
-
-
-
-        // ---- items: weapons, armor, consumables, crates, plushies (elite/items)
-        com.newuniverse.nusmp.elite.items.EliteItems.init(modBus, container);
-
-
-
-
-        // ---- nations: nations, economy, contracts, reputation, wars, alliances (elite/nations)
-        com.newuniverse.nusmp.elite.nations.NationsRegistry.init(modBus, container);
-
-
-
-        // ---- council: Walpurgis, governance, duels, dimension (elite/council)
-
-
-
-
-        // ---- seasons: chronicles, season finale, legacy store (elite/seasons)
-
-
-
-
-        // ---- voice: TTS providers and announcers, third-party integrations (elite/voice)
-
-
-
-
     }
 }

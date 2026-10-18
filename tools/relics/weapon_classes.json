@@ -612,25 +612,7 @@
   "vassal_harpoon": "staff",
   "vassal_chain": "whip",
   "vassal_instrument": "wand",
-  "vassal_sewing_set": "rapier",
-  "astral_edge": {
-   "class": "longsword"
-  },
-  "void_edge": {
-   "class": "longsword"
-  },
-  "fenrir_sword": {
-   "class": "greatsword"
-  },
-  "runic_sword_renewed": {
-   "class": "longsword"
-  },
-  "runic_sword_ancient": {
-   "class": "longsword"
-  },
-  "runic_sword_mythical": {
-   "class": "greatsword"
-  }
+  "vassal_sewing_set": "rapier"
  },
  "_excluded_was": {
   "elsdocia": "rebuilt by the Elsdocia agent",

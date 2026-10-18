@@ -372,12 +372,6 @@
   "vassal_harpoon": "staff",
   "vassal_chain": "whip",
   "vassal_instrument": "wand",
-  "vassal_sewing_set": "rapier",
-  "astral_edge": "longsword",
-  "void_edge": "longsword",
-  "fenrir_sword": "greatsword",
-  "runic_sword_renewed": "longsword",
-  "runic_sword_ancient": "longsword",
-  "runic_sword_mythical": "greatsword"
+  "vassal_sewing_set": "rapier"
  }
 }

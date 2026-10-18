@@ -512,10 +512,6 @@ fx devil_bound_coat_hood ember
 fx devil_bound_coat ember
 fx devil_bound_coat_leggings ember
 fx devil_bound_coat_boots ember
-fx nightingale_hood star
-fx nightingale_cloak star
-fx nightingale_leggings star
-fx nightingale_boots star
 fx anime:magic_knight_robe_senior_hood petal
 fx anime:magic_knight_robe_senior petal
 fx anime:golden_dawn_mantle_hood star
@@ -585,10 +581,6 @@ item devil_bound_coat_hood helm_devil
 item devil_bound_coat chest_devil sleeve_plated@rarm sleeve_plated@larm~ emblem_devil
 item devil_bound_coat_leggings hip_plated legs_devil@rleg legs_devil@lleg
 item devil_bound_coat_boots boots_devil@rleg boots_devil@lleg
-item nightingale_hood hood_cowl
-item nightingale_cloak chest_robe sleeve_wide@rarm sleeve_wide@larm~ emblem_eagle
-item nightingale_leggings hip_sash legs_wrapped@rleg legs_wrapped@lleg
-item nightingale_boots boots_tall@rleg boots_tall@lleg
 item anime:magic_knight_robe_junior_hood anime_hood_down
 item anime:magic_knight_robe_junior anime_cloak_junior
 item anime:magic_knight_robe_junior_leggings none
@@ -695,10 +687,6 @@ ipal devil_bound_coat_hood 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat_leggings 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat_boots 0C0C0C CC0C24 FF2038
-ipal nightingale_hood 2E3C82 D8E0F2 BEE2FF
-ipal nightingale_cloak 2E3C82 D8E0F2 BEE2FF
-ipal nightingale_leggings 2E3C82 D8E0F2 BEE2FF
-ipal nightingale_boots 2E3C82 D8E0F2 BEE2FF
 ipal anime:magic_knight_robe_junior_hood 6B5E50 B8B0A0 90B4E0
 ipal anime:magic_knight_robe_junior 6B5E50 B8B0A0 90B4E0
 ipal anime:magic_knight_robe_junior_leggings 6B5E50 B8B0A0 90B4E0
@@ -805,10 +793,6 @@ itier devil_bound_coat_hood 6
 itier devil_bound_coat 6
 itier devil_bound_coat_leggings 6
 itier devil_bound_coat_boots 6
-itier nightingale_hood 4
-itier nightingale_cloak 4
-itier nightingale_leggings 4
-itier nightingale_boots 4
 itier anime:magic_knight_robe_junior_hood 2
 itier anime:magic_knight_robe_junior 2
 itier anime:magic_knight_robe_junior_leggings 2

@@ -5,7 +5,6 @@
     "nusmp:gear_chests",
     "nusmp:skill_books",
     "nusmp:rift_books",
-    "nusmp:hub_coins",
-    "nusmp:elite_crate_keys"
+    "nusmp:hub_coins"
   ]
 }

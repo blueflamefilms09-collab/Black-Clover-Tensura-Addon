@@ -26,9 +26,5 @@
   "zagred_phase": {
     "subtitle": "subtitles.entity.nusmp.zagred_phase",
     "sounds": [{ "name": "nusmp:entity/zagred/phase", "stream": true }]
-  },
-  "plush_squeak": {"subtitle": "subtitles.nusmp.plush_squeak", "sounds": [{"name": "nusmp:elite/plush_squeak_a"}, {"name": "nusmp:elite/plush_squeak_b"}]},
-  "crate_unlock": {"subtitle": "subtitles.nusmp.crate_unlock", "sounds": [{"name": "nusmp:elite/crate_unlock"}]},
-  "crate_reveal": {"subtitle": "subtitles.nusmp.crate_reveal", "sounds": [{"name": "nusmp:elite/crate_reveal"}]},
-  "crate_locked": {"subtitle": "subtitles.nusmp.crate_locked", "sounds": [{"name": "nusmp:elite/crate_locked"}]}
+  }
 }

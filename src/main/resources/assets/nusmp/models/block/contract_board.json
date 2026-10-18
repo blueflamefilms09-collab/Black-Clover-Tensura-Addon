@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "minecraft:block/oak_planks",
-    "bottom": "minecraft:block/oak_planks",
-    "side": "nusmp:block/contract_board_side"
-  }
-}
