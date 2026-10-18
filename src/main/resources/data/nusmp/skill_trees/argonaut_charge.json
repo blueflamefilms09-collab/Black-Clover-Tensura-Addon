@@ -1,0 +1,1085 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Argonaut",
+  "desc": "The Skill that rewards daring: charge the strike, loose it all at once and hit the thing everyone else ran from.",
+  "book": "nusmp:argonaut_charge_book",
+  "book_name": "The Charge of the Hero",
+  "book_lore": "You do not need to be strong. You need to be about to be.",
+  "color": "#4AA3FF",
+  "icon": "minecraft:iron_sword",
+  "class_id": "argonaut_charge",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/argonaut_charge.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "tower",
+  "nodes": [
+    {
+      "id": "charging_stance",
+      "name": "Charging Stance",
+      "desc": "Gather the strike: far greater damage while you slow down to focus.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "run_toward_the_light",
+      "name": "Run Toward the Light",
+      "desc": "Charge in: faster and tougher at the front, at the cost of damage.",
+      "parents": [
+        {
+          "node": "charging_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "hero_s_resolve",
+      "name": "Hero's Resolve",
+      "desc": "Your will hardens your hide.",
+      "parents": [
+        {
+          "node": "charging_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "courage_under_fire",
+      "name": "Courage Under Fire",
+      "desc": "More maximum health.",
+      "parents": [
+        {
+          "node": "run_toward_the_light",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "charged_edge",
+      "name": "Charged Edge",
+      "desc": "The stored power shows in your sword arm.",
+      "parents": [
+        {
+          "node": "charging_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "charge_up",
+      "name": "Charge Up",
+      "desc": "Draw the power to a point: a long surge of Strength and Haste.",
+      "parents": [
+        {
+          "node": "charging_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "haste",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "charge_dash",
+      "name": "Charge Dash",
+      "desc": "Release the stored power in a straight line through the monsters.",
+      "parents": [
+        {
+          "node": "run_toward_the_light",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "heroic_finisher",
+      "name": "Heroic Finisher",
+      "desc": "One focused blow that hits much harder the weaker the monster is.",
+      "parents": [
+        {
+          "node": "charge_up",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          1.0,
+          1.15,
+          1.3,
+          1.45
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "hero_s_leap",
+      "name": "Hero's Leap",
+      "desc": "Leap and crash down with the charge behind you.",
+      "parents": [
+        {
+          "node": "charge_dash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.2,
+          3.52,
+          3.84,
+          4.16
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "giant_felling_upper",
+      "name": "Giant-Felling Upper",
+      "desc": "A rising blow that sends even a big monster airborne.",
+      "parents": [
+        {
+          "node": "heroic_finisher",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "release_the_charge",
+      "name": "Release the Charge",
+      "desc": "All the stored power goes outward at once in a ring.",
+      "parents": [
+        {
+          "node": "hero_s_leap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:glowstone"
+    },
+    {
+      "id": "rookie_s_dare",
+      "name": "Rookie's Dare",
+      "desc": "A shout that makes the monsters nearby turn and look at you.",
+      "parents": [
+        {
+          "node": "giant_felling_upper",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "charge_stacks",
+      "name": "Charge Stacks",
+      "desc": "Blows in a row build a charge that adds damage.",
+      "parents": [
+        {
+          "node": "charge_up",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.05,
+          0.0575,
+          0.065,
+          0.0725
+        ],
+        "max_stacks": [
+          7.0,
+          9.0,
+          11.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "three_beat_rhythm",
+      "name": "Three-Beat Rhythm",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "charge_dash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          3.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "bonus": [
+          0.55,
+          0.66,
+          0.77,
+          0.88
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "courage_in_crisis",
+      "name": "Courage in Crisis",
+      "desc": "At low health your blows land harder.",
+      "parents": [
+        {
+          "node": "heroic_finisher",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "heroic_momentum",
+      "name": "Heroic Momentum",
+      "desc": "Each kill heals you and fills you with Strength.",
+      "parents": [
+        {
+          "node": "hero_s_leap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:emerald"
+    },
+    {
+      "id": "finish_what_you_start",
+      "name": "Finish What You Start",
+      "desc": "You deal much more damage to nearly dead monsters.",
+      "parents": [
+        {
+          "node": "giant_felling_upper",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.25,
+          0.275,
+          0.3,
+          0.325
+        ],
+        "bonus": [
+          0.7,
+          0.84,
+          0.98,
+          1.12
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "not_backing_down",
+      "name": "Not Backing Down",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "release_the_charge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "run_up_bonus",
+      "name": "Run-Up Bonus",
+      "desc": "You take less damage while sprinting.",
+      "parents": [
+        {
+          "node": "rookie_s_dare",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "sprinting"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "argonaut_full_charge",
+      "name": "Argonaut: Full Charge",
+      "desc": "Hold it, hold it, release: a punishing run through everything in front of you.",
+      "parents": [
+        {
+          "node": "rookie_s_dare",
+          "level": 3
+        },
+        {
+          "node": "run_up_bonus",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "hero_s_descent",
+      "name": "Hero's Descent",
+      "desc": "Leap and fall like a thrown spear, shattering the floor.",
+      "parents": [
+        {
+          "node": "release_the_charge",
+          "level": 3
+        },
+        {
+          "node": "not_backing_down",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_sword"
+    }
+  ]
+}

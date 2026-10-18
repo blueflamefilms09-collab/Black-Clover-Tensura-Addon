@@ -1,0 +1,1105 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Falna: Hestia's Blessing",
+  "desc": "The goddess's mark on your back: Status that climbs with every dungeon floor, experience that never wastes and a hearth to come home to.",
+  "book": "nusmp:hestia_falna_book",
+  "book_name": "Hestia Familia Status Scroll",
+  "book_lore": "A small goddess, a smaller church, and a back that keeps getting stronger.",
+  "color": "#FF8A3D",
+  "icon": "minecraft:campfire",
+  "class_id": "hestia_falna",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/hestia_falna.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "dungeon_dive_stance",
+      "name": "Dungeon Dive Stance",
+      "desc": "Eyes ahead and no time to rest: quicker and sharper, lightly armored.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "hearthbound_rest",
+      "name": "Hearthbound Rest",
+      "desc": "Settle by the hearth: healing, sturdy, a bit sluggish.",
+      "parents": [
+        {
+          "node": "dungeon_dive_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "strength_status_rises",
+      "name": "Strength Status Rises",
+      "desc": "Your Strength column on the Falna climbs.",
+      "parents": [
+        {
+          "node": "dungeon_dive_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "endurance_status_rises",
+      "name": "Endurance Status Rises",
+      "desc": "Your Endurance column climbs: more maximum health.",
+      "parents": [
+        {
+          "node": "hearthbound_rest",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "dexterity_status_rises",
+      "name": "Dexterity Status Rises",
+      "desc": "Your Dexterity column climbs: faster hands.",
+      "parents": [
+        {
+          "node": "dungeon_dive_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "agility_status_rises",
+      "name": "Agility Status Rises",
+      "desc": "Your Agility column climbs: quicker feet.",
+      "parents": [
+        {
+          "node": "hearthbound_rest",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "dungeon_slash",
+      "name": "Dungeon Slash",
+      "desc": "A solid cone-shaped cut across the monsters in front.",
+      "parents": [
+        {
+          "node": "dungeon_dive_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.8,
+          4.104,
+          4.408,
+          4.712
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "adventurer_s_lunge",
+      "name": "Adventurer's Lunge",
+      "desc": "Lunge through the line of monsters before you.",
+      "parents": [
+        {
+          "node": "hearthbound_rest",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "falna_surge",
+      "name": "Falna Surge",
+      "desc": "The Blessing flares on your back: Strength and Speed for a while.",
+      "parents": [
+        {
+          "node": "dungeon_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "hearth_rest",
+      "name": "Hearth Rest",
+      "desc": "A moment by the hearth, in the middle of a fight: heal and regenerate.",
+      "parents": [
+        {
+          "node": "adventurer_s_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "amount": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "regen_seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "hearth_ward",
+      "name": "Hearth Ward",
+      "desc": "A warm shield of hearth-light absorbs a good deal of damage.",
+      "parents": [
+        {
+          "node": "falna_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "read_the_status",
+      "name": "Read the Status",
+      "desc": "Study the monster's strengths; it takes extra damage while you do.",
+      "parents": [
+        {
+          "node": "hearth_rest",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:book"
+    },
+    {
+      "id": "divine_release",
+      "name": "Divine Release",
+      "desc": "A release of godly light throws the monsters around you back.",
+      "parents": [
+        {
+          "node": "hearth_ward",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "excelia_gathering",
+      "name": "Excelia Gathering",
+      "desc": "Kills give more experience: Excelia piles up.",
+      "parents": [
+        {
+          "node": "dungeon_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "hearthfire_recovery",
+      "name": "Hearthfire Recovery",
+      "desc": "Your wounds close slowly over time, even out of combat.",
+      "parents": [
+        {
+          "node": "adventurer_s_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          14.0,
+          13.0,
+          11.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "drop_item_chance",
+      "name": "Drop Item Chance",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "falna_surge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "magic_stone_harvest",
+      "name": "Magic Stone Harvest",
+      "desc": "Each kill heals you.",
+      "parents": [
+        {
+          "node": "hearth_rest",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "none"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "the_goddess_s_whisper",
+      "name": "The Goddess's Whisper",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "hearth_ward",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "growing_resolve",
+      "name": "Growing Resolve",
+      "desc": "Blows in a row grow stronger.",
+      "parents": [
+        {
+          "node": "read_the_status",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "falna_guard",
+      "name": "Falna Guard",
+      "desc": "At low health you take less damage.",
+      "parents": [
+        {
+          "node": "divine_release",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "familia_gathering",
+      "name": "Familia Gathering",
+      "desc": "The whole familia lights up: you and your allies gain a long surge of Strength.",
+      "parents": [
+        {
+          "node": "divine_release",
+          "level": 3
+        },
+        {
+          "node": "falna_guard",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "seconds": [
+          20.0,
+          23.0,
+          26.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "hestia_s_embrace",
+      "name": "Hestia's Embrace",
+      "desc": "A goddess's hug heals you and your allies in a wide ring.",
+      "parents": [
+        {
+          "node": "read_the_status",
+          "level": 3
+        },
+        {
+          "node": "growing_resolve",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "amount": [
+          20.0,
+          25.0,
+          30
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1400.0,
+          1316.0,
+          1232.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:golden_apple"
+    }
+  ]
+}
