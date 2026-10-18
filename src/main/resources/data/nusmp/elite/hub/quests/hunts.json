@@ -1,0 +1,247 @@
+{
+ "quests": [
+  {
+   "id": "foundry_hunter_1",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Corrupted Foundations mobs",
+   "desc": "The Guild pays for every thing the Foundry makes and you unmake.",
+   "target": 100,
+   "reward": 1500,
+   "mob": "foundry",
+   "requires": [],
+   "minFloor": 0
+  },
+  {
+   "id": "foundry_hunter_2",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Corrupted Foundations mobs",
+   "desc": "The Guild pays for every thing the Foundry makes and you unmake.",
+   "target": 250,
+   "reward": 5000,
+   "mob": "foundry",
+   "requires": [
+    "foundry_hunter_1"
+   ],
+   "minFloor": 20
+  },
+  {
+   "id": "foundry_hunter_3",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Corrupted Foundations mobs",
+   "desc": "The Guild pays for every thing the Foundry makes and you unmake.",
+   "target": 500,
+   "reward": 12000,
+   "mob": "foundry",
+   "requires": [
+    "foundry_hunter_2"
+   ],
+   "minFloor": 30
+  },
+  {
+   "id": "foundry_hunter_4",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Corrupted Foundations mobs",
+   "desc": "The Guild pays for every thing the Foundry makes and you unmake.",
+   "target": 1000,
+   "reward": 30000,
+   "mob": "foundry",
+   "requires": [
+    "foundry_hunter_3"
+   ],
+   "minFloor": 40
+  },
+  {
+   "id": "floor_clearer_1",
+   "type": "progression",
+   "kind": "clear_floors",
+   "title": "Clear {n} floors",
+   "desc": "Stairs behind you, always. Clear floors on either road.",
+   "target": 5,
+   "reward": 800,
+   "requires": []
+  },
+  {
+   "id": "floor_clearer_2",
+   "type": "progression",
+   "kind": "clear_floors",
+   "title": "Clear {n} floors",
+   "desc": "Stairs behind you, always. Clear floors on either road.",
+   "target": 20,
+   "reward": 4000,
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "floor_clearer_3",
+   "type": "progression",
+   "kind": "clear_floors",
+   "title": "Clear {n} floors",
+   "desc": "Stairs behind you, always. Clear floors on either road.",
+   "target": 50,
+   "reward": 11000,
+   "requires": [
+    "floor_clearer_2"
+   ]
+  },
+  {
+   "id": "floor_clearer_4",
+   "type": "progression",
+   "kind": "clear_floors",
+   "title": "Clear {n} floors",
+   "desc": "Stairs behind you, always. Clear floors on either road.",
+   "target": 150,
+   "reward": 35000,
+   "requires": [
+    "floor_clearer_3"
+   ]
+  },
+  {
+   "id": "warden_undead",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Undead kin: defeat {n}",
+   "desc": "A standing bounty on every undead in the dungeon.",
+   "target": 100,
+   "reward": 1800,
+   "faction": "undead",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_goblin",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Goblin kin: defeat {n}",
+   "desc": "A standing bounty on every goblin in the dungeon.",
+   "target": 120,
+   "reward": 1800,
+   "faction": "goblin",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_ogre",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Ogre kin: defeat {n}",
+   "desc": "A standing bounty on every ogre in the dungeon.",
+   "target": 80,
+   "reward": 2200,
+   "faction": "ogre",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_beast",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Beast kin: defeat {n}",
+   "desc": "A standing bounty on every beast in the dungeon.",
+   "target": 120,
+   "reward": 1800,
+   "faction": "beast",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_slime",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Slime kin: defeat {n}",
+   "desc": "A standing bounty on every slime in the dungeon.",
+   "target": 120,
+   "reward": 1700,
+   "faction": "slime",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_construct",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Construct kin: defeat {n}",
+   "desc": "A standing bounty on every construct in the dungeon.",
+   "target": 80,
+   "reward": 2400,
+   "faction": "construct",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_cultist",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Cultist kin: defeat {n}",
+   "desc": "A standing bounty on every cultist in the dungeon.",
+   "target": 80,
+   "reward": 2400,
+   "faction": "cultist",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_demon",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Demon kin: defeat {n}",
+   "desc": "A standing bounty on every demon in the dungeon.",
+   "target": 80,
+   "reward": 3000,
+   "faction": "demon",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_elemental",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Elemental kin: defeat {n}",
+   "desc": "A standing bounty on every elemental in the dungeon.",
+   "target": 80,
+   "reward": 2600,
+   "faction": "elemental",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_aquatic",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Aquatic kin: defeat {n}",
+   "desc": "A standing bounty on every aquatic in the dungeon.",
+   "target": 80,
+   "reward": 2400,
+   "faction": "aquatic",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  },
+  {
+   "id": "warden_insect",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Warden of the Insect kin: defeat {n}",
+   "desc": "A standing bounty on every insect in the dungeon.",
+   "target": 120,
+   "reward": 1800,
+   "faction": "insect",
+   "requires": [
+    "floor_clearer_1"
+   ]
+  }
+ ]
+}

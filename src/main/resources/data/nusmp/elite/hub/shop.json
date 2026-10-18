@@ -1,0 +1,409 @@
+{
+ "offers": [
+  {
+   "id": "dungeon_map",
+   "item": "nusmp:dungeon_map",
+   "count": 1,
+   "price": 1500,
+   "category": "map",
+   "dailyLimit": 8,
+   "minFloor": 0
+  },
+  {
+   "id": "wooden_sword",
+   "item": "minecraft:wooden_sword",
+   "count": 1,
+   "price": 60,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "stone_sword",
+   "item": "minecraft:stone_sword",
+   "count": 1,
+   "price": 120,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_sword",
+   "item": "minecraft:iron_sword",
+   "count": 1,
+   "price": 400,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_axe",
+   "item": "minecraft:iron_axe",
+   "count": 1,
+   "price": 450,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_pickaxe",
+   "item": "minecraft:iron_pickaxe",
+   "count": 1,
+   "price": 450,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_shovel",
+   "item": "minecraft:iron_shovel",
+   "count": 1,
+   "price": 200,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "diamond_sword",
+   "item": "minecraft:diamond_sword",
+   "count": 1,
+   "price": 4500,
+   "category": "gear",
+   "dailyLimit": 1,
+   "minFloor": 10
+  },
+  {
+   "id": "bow",
+   "item": "minecraft:bow",
+   "count": 1,
+   "price": 350,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "crossbow",
+   "item": "minecraft:crossbow",
+   "count": 1,
+   "price": 600,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "arrows",
+   "item": "minecraft:arrow",
+   "count": 32,
+   "price": 160,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "shield",
+   "item": "minecraft:shield",
+   "count": 1,
+   "price": 350,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "leather_armor_helmet",
+   "item": "minecraft:leather_helmet",
+   "count": 1,
+   "price": 60,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "leather_armor_chestplate",
+   "item": "minecraft:leather_chestplate",
+   "count": 1,
+   "price": 100,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_helmet",
+   "item": "minecraft:iron_helmet",
+   "count": 1,
+   "price": 500,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_chestplate",
+   "item": "minecraft:iron_chestplate",
+   "count": 1,
+   "price": 800,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_leggings",
+   "item": "minecraft:iron_leggings",
+   "count": 1,
+   "price": 700,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "iron_boots",
+   "item": "minecraft:iron_boots",
+   "count": 1,
+   "price": 400,
+   "category": "gear",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "diamond_chestplate",
+   "item": "minecraft:diamond_chestplate",
+   "count": 1,
+   "price": 9000,
+   "category": "gear",
+   "dailyLimit": 1,
+   "minFloor": 25
+  },
+  {
+   "id": "bread",
+   "item": "minecraft:bread",
+   "count": 4,
+   "price": 40,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "baked_potato",
+   "item": "minecraft:baked_potato",
+   "count": 8,
+   "price": 40,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "cooked_beef",
+   "item": "minecraft:cooked_beef",
+   "count": 4,
+   "price": 120,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "cooked_porkchop",
+   "item": "minecraft:cooked_porkchop",
+   "count": 4,
+   "price": 110,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "cooked_chicken",
+   "item": "minecraft:cooked_chicken",
+   "count": 4,
+   "price": 90,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "cooked_salmon",
+   "item": "minecraft:cooked_salmon",
+   "count": 4,
+   "price": 100,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "golden_carrot",
+   "item": "minecraft:golden_carrot",
+   "count": 4,
+   "price": 200,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "honey_bottle",
+   "item": "minecraft:honey_bottle",
+   "count": 2,
+   "price": 120,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "pumpkin_pie",
+   "item": "minecraft:pumpkin_pie",
+   "count": 2,
+   "price": 90,
+   "category": "food",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "golden_apple",
+   "item": "minecraft:golden_apple",
+   "count": 1,
+   "price": 1500,
+   "category": "food",
+   "dailyLimit": 3,
+   "minFloor": 5
+  },
+  {
+   "id": "torches",
+   "item": "minecraft:torch",
+   "count": 16,
+   "price": 60,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "lantern",
+   "item": "minecraft:lantern",
+   "count": 2,
+   "price": 120,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "ladder",
+   "item": "minecraft:ladder",
+   "count": 16,
+   "price": 80,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "scaffolding",
+   "item": "minecraft:scaffolding",
+   "count": 8,
+   "price": 120,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "water_bucket",
+   "item": "minecraft:water_bucket",
+   "count": 1,
+   "price": 150,
+   "category": "utility",
+   "dailyLimit": 3,
+   "minFloor": 0
+  },
+  {
+   "id": "bucket",
+   "item": "minecraft:bucket",
+   "count": 1,
+   "price": 100,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "shears",
+   "item": "minecraft:shears",
+   "count": 1,
+   "price": 150,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "flint_and_steel",
+   "item": "minecraft:flint_and_steel",
+   "count": 1,
+   "price": 150,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "compass",
+   "item": "minecraft:compass",
+   "count": 1,
+   "price": 250,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "clock",
+   "item": "minecraft:clock",
+   "count": 1,
+   "price": 250,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "ender_pearl",
+   "item": "minecraft:ender_pearl",
+   "count": 2,
+   "price": 700,
+   "category": "utility",
+   "dailyLimit": 4,
+   "minFloor": 5
+  },
+  {
+   "id": "oak_boat",
+   "item": "minecraft:oak_boat",
+   "count": 1,
+   "price": 80,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "white_bed",
+   "item": "minecraft:white_bed",
+   "count": 1,
+   "price": 200,
+   "category": "utility",
+   "dailyLimit": 2,
+   "minFloor": 0
+  },
+  {
+   "id": "cobblestone",
+   "item": "minecraft:cobblestone",
+   "count": 64,
+   "price": 40,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "oak_planks",
+   "item": "minecraft:oak_planks",
+   "count": 64,
+   "price": 60,
+   "category": "utility",
+   "dailyLimit": 0,
+   "minFloor": 0
+  },
+  {
+   "id": "ender_chest",
+   "item": "minecraft:ender_chest",
+   "count": 1,
+   "price": 3000,
+   "category": "utility",
+   "dailyLimit": 1,
+   "minFloor": 10
+  }
+ ]
+}

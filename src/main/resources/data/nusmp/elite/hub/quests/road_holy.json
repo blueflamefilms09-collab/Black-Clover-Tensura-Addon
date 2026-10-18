@@ -1,0 +1,145 @@
+{
+ "quests": [
+  {
+   "id": "road_holy_reach_5",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +5",
+   "desc": "Climb the Holy road to floor +5 and come back to say you saw it.",
+   "target": 1,
+   "reward": 500,
+   "floor": 5,
+   "minFloor": 0,
+   "requires": []
+  },
+  {
+   "id": "road_holy_reach_10",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +10",
+   "desc": "Climb the Holy road to floor +10 and come back to say you saw it.",
+   "target": 1,
+   "reward": 1500,
+   "floor": 10,
+   "minFloor": 0,
+   "requires": [
+    "road_holy_reach_5"
+   ]
+  },
+  {
+   "id": "road_holy_reach_25",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +25",
+   "desc": "Climb the Holy road to floor +25 and come back to say you saw it.",
+   "target": 1,
+   "reward": 4000,
+   "floor": 25,
+   "minFloor": 7,
+   "requires": [
+    "road_holy_reach_10"
+   ]
+  },
+  {
+   "id": "road_holy_reach_50",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +50",
+   "desc": "Climb the Holy road to floor +50 and come back to say you saw it.",
+   "target": 1,
+   "reward": 9000,
+   "floor": 50,
+   "minFloor": 20,
+   "requires": [
+    "road_holy_reach_25"
+   ]
+  },
+  {
+   "id": "road_holy_reach_100",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +100",
+   "desc": "Climb the Holy road to floor +100 and come back to say you saw it.",
+   "target": 1,
+   "reward": 20000,
+   "floor": 100,
+   "minFloor": 45,
+   "requires": [
+    "road_holy_reach_50"
+   ]
+  },
+  {
+   "id": "road_holy_reach_201",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +201",
+   "desc": "Climb the Holy road to floor +201 and come back to say you saw it.",
+   "target": 1,
+   "reward": 45000,
+   "floor": 201,
+   "minFloor": 95,
+   "requires": [
+    "road_holy_reach_100"
+   ]
+  },
+  {
+   "id": "road_holy_reach_401",
+   "type": "progression",
+   "kind": "reach_floor",
+   "title": "Reach floor +401",
+   "desc": "Climb the Holy road to floor +401 and come back to say you saw it.",
+   "target": 1,
+   "reward": 120000,
+   "floor": 401,
+   "minFloor": 195,
+   "requires": [
+    "road_holy_reach_201"
+   ]
+  },
+  {
+   "id": "road_holy_hunt_1",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Tier 1 Holy monsters",
+   "desc": "A first proper hunt on the Holy road.",
+   "target": 100,
+   "reward": 1200,
+   "tier": 1,
+   "road": "holy",
+   "requires": [
+    "road_holy_reach_5"
+   ]
+  },
+  {
+   "id": "road_holy_hunt_2",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat {n} Tier 2 Holy monsters",
+   "desc": "The light thickens and so do its servants.",
+   "target": 150,
+   "reward": 7000,
+   "tier": 2,
+   "road": "holy",
+   "requires": [
+    "road_holy_reach_201"
+   ],
+   "minFloor": 200
+  },
+  {
+   "id": "road_holy_guardian",
+   "type": "progression",
+   "kind": "kill",
+   "title": "Defeat a Tier 1 Holy Guardian",
+   "desc": "The tenth floor has a keeper. Put it down and bring proof.",
+   "target": 1,
+   "reward": 6000,
+   "tier": 1,
+   "road": "holy",
+   "mob": "boss",
+   "requires": [
+    "road_holy_reach_10"
+   ],
+   "minFloor": 9
+  }
+ ]
+}

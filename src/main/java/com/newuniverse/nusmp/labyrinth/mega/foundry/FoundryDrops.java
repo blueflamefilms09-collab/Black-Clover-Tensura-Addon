@@ -74,7 +74,7 @@ public final class FoundryDrops {
     }
 
     private static void add(List<ItemStack> out, String path, int count) {
-        if (count <= 0) return;
+        if (count <= 0 || com.newuniverse.nusmp.elite.hub.Currency.stonesSuppressed()) return;      // 1.83.0 Hub economy: with Tensura coins as the currency the stones and crystals are replaced by coins (elite/hub)
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath("tensura", path);
         Item item = BuiltInRegistries.ITEM.getOptional(id).orElseGet(() -> BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("tensura", FactionLoot.STONE_PATH)).orElse(null));
         if (item == null) return;

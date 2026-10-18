@@ -79,10 +79,12 @@ public final class EconomyDrops {
         EconomyMath.Loot loot = EconomyMath.roll(path, grade, player, looting, DndConfig.get(DndConfig.STONE_CHANCE), DndConfig.get(DndConfig.MEAT_CHANCE), dice);
         if (loot.isEmpty()) return;
         List<ItemStack> out = new ArrayList<>();
-        add(out, STONE, loot.stones().stones());
-        add(out, LOW, loot.stones().low());
-        add(out, MEDIUM, loot.stones().medium());
-        add(out, HIGH, loot.stones().high());
+        if (!com.newuniverse.nusmp.elite.hub.Currency.stonesSuppressed(level)) {       // 1.83.0 Hub economy: in the Mega-Dungeon, with Tensura coins as the currency, coins replace the stones and crystals (elite/hub)
+            add(out, STONE, loot.stones().stones());
+            add(out, LOW, loot.stones().low());
+            add(out, MEDIUM, loot.stones().medium());
+            add(out, HIGH, loot.stones().high());
+        }
         if (!loot.meat().isEmpty()) {
             Item raw = DungeonFood.rawFor(loot.meat().kind());
             if (raw != null) out.add(new ItemStack(raw, loot.meat().count()));
