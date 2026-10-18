@@ -1,0 +1,177 @@
+{
+  "_why": "The old witch's words (the loader reads only 'character', 'voice' and 'lines'; a key that starts with an underscore is a comment). She is dry, greedy and cackling, because the owner asked for a hidden, dusty shop run by an old witch, and every line either sells her, teaches the player the one thing the shop needs (a plain right click talks, SNEAK and right click opens the shop), or names a book the way the owner's text does ('A fang that smoulders ... for the right price'). 'greeting' meets a stranger (some lines react to the first boss being down or to progress), 'hint' is the chatter that mixes the shop's rules into a conversation (the stock turns over every few days, a road-book is millions, the dungeon pays, primers are for small purses), 'shop' is what she says when the screen opens (picked on the server so the screen shows a real line of this book) and 'farewell' is dual-use on purpose: the NPC says its farewell 80 ticks after a conversation begins, which can be while the shop is still open, so no farewell line is a plain goodbye. No line quotes a number, because the prices move with every restock. The keys come from tools/gen_arc_dialogue_lang.py --write-keys; the tests WitchDialogueTest and DialogueFilesTest guard the rules above.",
+  "character": "black_market_witch",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hee hee hee... a customer. Shut the door behind you, {player}, the draught is bad for the books. And for my business.",
+        "key": "arc.dialogue.black_market_witch.1",
+        "first": true
+      },
+      {
+        "text": "Hush, hush. Keep your voice down, dearie. Nobody sold you anything and you were never here. Now then, what are you buying?",
+        "key": "arc.dialogue.black_market_witch.2",
+        "first": true
+      },
+      {
+        "text": "Well, well. Another one drawn in by the whisper of books. I am the Old Witch, {player}, and everything on these shelves has a price. Everything.",
+        "key": "arc.dialogue.black_market_witch.3",
+        "first": true
+      },
+      {
+        "text": "A new face. Fresh coin, I hope? Sneak up to me and show me your purse. I do not do business in the open.",
+        "key": "arc.dialogue.black_market_witch.4",
+        "first": true
+      },
+      {
+        "text": "Revchi Salik is down, I hear. Hee hee. Chain thieves are bad for trade and heroes are good for it. Come, come, sneak up and show me what the dungeon gave you.",
+        "key": "arc.dialogue.black_market_witch.5",
+        "first": true,
+        "defeated": [
+          "revchi_salik"
+        ]
+      },
+      {
+        "text": "You smell of the dungeon, {player}, and of coin. The finest perfume there is. Sneak up and show me your purse, we have a great deal to talk about.",
+        "key": "arc.dialogue.black_market_witch.6",
+        "first": true,
+        "minStage": 3
+      }
+    ],
+    "hint": [
+      {
+        "text": "Sneak and show me your coin, {player}. A plain knock gets you chatter, a crouch gets you the shelves. That is how it is done here.",
+        "key": "arc.dialogue.black_market_witch.7",
+        "priority": 1,
+        "weight": 4
+      },
+      {
+        "text": "Books. Dusty ones, rare ones. A fang that smoulders... for the right price. Hee hee. You know the one I mean.",
+        "key": "arc.dialogue.black_market_witch.8",
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "One of my books opens a whole road for you, dearie. Read it once and the road is yours for good. A bargain at any price. Mine are 'any price'.",
+        "key": "arc.dialogue.black_market_witch.9",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Those books fall from the dungeon too, did you know? The Abyssal side lets one slip now and then, and the guardians every tenth floor carry them. If you have the luck. I deal in certainty.",
+        "key": "arc.dialogue.black_market_witch.10",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Millions, for a road-book. Millions! Do not make that face. It is the market's mood, not mine. The price moves with the days, and I move with the price.",
+        "key": "arc.dialogue.black_market_witch.11",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "My stock turns over every few days. When a book is gone, it is gone until the shelves turn, and whoever is quicker with their coin gets it.",
+        "key": "arc.dialogue.black_market_witch.12",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Small purses have the primers. Archery for beginners, the elements for the curious, a booster for the greedy... and the Box, for the brave. Or the foolish. Same thing on a good day.",
+        "key": "arc.dialogue.black_market_witch.13",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Jack-in-the-Box? Little, usually. A great deal, sometimes. Hee hee. That is why it is called a gamble, dearie, and why the house loves it.",
+        "key": "arc.dialogue.black_market_witch.14",
+        "priority": 1,
+        "weight": 1
+      },
+      {
+        "text": "I pay for what the dungeon gives: stones, crystals, gems, monster meat and the rest. Sneak up and I will name my price. Gold is the only language the market speaks.",
+        "key": "arc.dialogue.black_market_witch.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Raw monster meat, cooked monster meat, I take both. Cooked fetches more, mind. A little fire and a little patience and the same meat is worth twice as much. That is alchemy, dearie.",
+        "key": "arc.dialogue.black_market_witch.16",
+        "priority": 1,
+        "weight": 1
+      },
+      {
+        "text": "Haggle? Hee hee hee. I never haggle. Ask the last fool who tried. Oh, you cannot. He is not here. Neither is the shop.",
+        "key": "arc.dialogue.black_market_witch.17",
+        "priority": 1,
+        "weight": 1
+      },
+      {
+        "text": "You have been busy. Bosses fall and purses fill. Bring me the pieces, {player}, and I will bring you what you came for.",
+        "key": "arc.dialogue.black_market_witch.18",
+        "priority": 1,
+        "weight": 2,
+        "minStage": 3
+      },
+      {
+        "text": "Early days for you, hm? Start with a primer. A few points go a long way when you have never had any. A road-book is for when your pockets are heavy.",
+        "key": "arc.dialogue.black_market_witch.19",
+        "priority": 1,
+        "weight": 2,
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ]
+      },
+      {
+        "text": "Do not touch the jars. The big one bites. The small one was a customer who was late with a payment.",
+        "key": "arc.dialogue.black_market_witch.20",
+        "priority": 1,
+        "weight": 1
+      }
+    ],
+    "shop": [
+      {
+        "text": "Come in, come in. Mind the cobwebs, they are older than you.",
+        "key": "arc.dialogue.black_market_witch.21"
+      },
+      {
+        "text": "Show me the coin first, dearie. Then the shelves. Those are the rules.",
+        "key": "arc.dialogue.black_market_witch.22"
+      },
+      {
+        "text": "Eyes on the shelf, hands off the shelf, purse on the counter. Lovely.",
+        "key": "arc.dialogue.black_market_witch.23"
+      },
+      {
+        "text": "Everything is for sale. Even my good mood, if the price is right.",
+        "key": "arc.dialogue.black_market_witch.24"
+      },
+      {
+        "text": "Take your time, {player}. Looking is free. Touching is a purchase.",
+        "key": "arc.dialogue.black_market_witch.25"
+      },
+      {
+        "text": "Welcome back to the dust, {player}. Let us see what your pockets have been up to.",
+        "key": "arc.dialogue.black_market_witch.26"
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Mind the jars. They bite.",
+        "key": "arc.dialogue.black_market_witch.27"
+      },
+      {
+        "text": "Spend freely, dearie, spend freely. I will not tell a soul. I never do. I have none.",
+        "key": "arc.dialogue.black_market_witch.28"
+      },
+      {
+        "text": "Hee hee hee. The door is where you left it. So am I.",
+        "key": "arc.dialogue.black_market_witch.29"
+      },
+      {
+        "text": "Still here? Buy something, or let the cobwebs have you.",
+        "key": "arc.dialogue.black_market_witch.30"
+      }
+    ]
+  }
+}

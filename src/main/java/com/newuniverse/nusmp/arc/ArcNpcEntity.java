@@ -148,6 +148,9 @@ public class ArcNpcEntity extends PathfinderMob {
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (level().isClientSide) return InteractionResult.SUCCESS;
+        if (player instanceof ServerPlayer shopper && com.newuniverse.nusmp.skilltree.shop.ShopHook.tryOpen(shopper, this)) {      // 1.62.0: the Black Market: a sneaking right click on the old witch opens her shop (the hook answers false for every other character)
+            return InteractionResult.CONSUME;
+        }
         if (player instanceof ServerPlayer sp && level().getGameTime() >= nextTalkAt) {
             nextTalkAt = level().getGameTime() + ArcConfig.talkCooldown();
             try {
