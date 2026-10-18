@@ -100,7 +100,7 @@ public final class ExistingBosses {
     /** The skills of the Charter row of a boss that already has one (the record never keeps a second copy: a typo here cannot make the grimoire differ). */
     private static String[] charterSkills(String id) {
         CharterTable.Boss row = CharterTable.byId(id);
-        if (row == null) throw new IllegalStateException("the Charter table has no row for " + id);
+        if (row == null) throw new IllegalStateException("the Canon table has no row for " + id);
         return row.skills().toArray(new String[0]);
     }
 

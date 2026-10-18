@@ -20,7 +20,7 @@ import java.util.UUID;
 
 /**
  * Skill mirroring: while a Charter Grimoire is in a hand or worn in a Curios slot, the skills of its boss are lent to the holder for sixty ticks,
- * renewed once a second (staggered by entity id). The lending is {@link MealSkills#grant} with the lender "Charter Grimoire": a skill the
+ * renewed once a second (staggered by entity id). The lending is {@link MealSkills#grant} with the lender "Canon Grimoire": a skill the
  * player owns is left alone, a lent one is only ever extended, and the lease is written down before the skill is, so it ends by itself a few
  * seconds after the book is put away, survives relog and death without becoming permanent, and never replaces, resets or removes anything of the
  * player's own ({@link MirrorPolicy} cannot even express that).
@@ -50,7 +50,7 @@ public final class CharterMirror {
             owned.removeAll(lent);
         }
         for (MirrorPolicy.Lease lease : MirrorPolicy.plan(owned, MirrorPolicy.union(held))) {
-            MealSkills.Outcome o = MealSkills.grant(p, lease.skillId(), lease.ticks(), "Charter Grimoire");
+            MealSkills.Outcome o = MealSkills.grant(p, lease.skillId(), lease.ticks(), "Canon Grimoire");
             if (o == MealSkills.Outcome.GRANTED || o == MealSkills.Outcome.EXTENDED) lent.add(lease.skillId());
             else lent.remove(lease.skillId());
         }

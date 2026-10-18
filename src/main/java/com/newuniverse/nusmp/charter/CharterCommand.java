@@ -29,7 +29,12 @@ public final class CharterCommand {
     private CharterCommand() {}
 
     public static void addTo(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("charter")
+        root.then(node("charter"));
+        root.then(node("canon"));      // the book is called the Canon Grimoire now: /multiverse canon ... does the same as /multiverse charter ... (the old word stays: scripts and datapacks use it)
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> node(String word) {
+        return Commands.literal(word)
                 .then(Commands.literal("status").executes(CharterCommand::status))
                 .then(Commands.literal("give").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player())
@@ -37,13 +42,13 @@ public final class CharterCommand {
                                         .executes(CharterCommand::give))))
                 .then(Commands.literal("reset").requires(s -> s.hasPermission(4))
                         .then(Commands.argument("boss", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(CharterTable.ids(), b))
-                                .executes(CharterCommand::reset))));
+                                .executes(CharterCommand::reset)));
     }
 
     private static int status(CommandContext<CommandSourceStack> ctx) {
         MinecraftServer server = ctx.getSource().getServer();
         ModWorldDropData data = ModWorldDropData.get(server);
-        ctx.getSource().sendSuccess(() -> Component.literal("Charter Grimoires:").withStyle(ChatFormatting.GOLD), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("Canon Grimoires:").withStyle(ChatFormatting.GOLD), false);
         for (CharterTable.Boss b : CharterTable.all()) {
             DropLedger.Claim c = data.claim(b.id());
             // 1.27.0 (discovery): a boss the player has not met (no grimoire of it found) stays "???"; operators and the console see all
@@ -64,7 +69,7 @@ public final class CharterCommand {
                 ctx.getSource().sendFailure(Component.literal("Unknown boss '" + boss + "'. Known: " + String.join(", ", CharterTable.ids())));
                 return 0;
             }
-            ctx.getSource().sendSuccess(() -> Component.literal("Gave the Charter Grimoire of " + boss + " to " + p.getGameProfile().getName() + " (the world's lock is untouched)."), true);
+            ctx.getSource().sendSuccess(() -> Component.literal("Gave the Canon Grimoire of " + boss + " to " + p.getGameProfile().getName() + " (the world's lock is untouched)."), true);
             return 1;
         } catch (com.mojang.brigadier.exceptions.CommandSyntaxException bad) {
             ctx.getSource().sendFailure(Component.literal("No such player."));
@@ -83,11 +88,11 @@ public final class CharterCommand {
         ModWorldDropData data = ModWorldDropData.get(server);
         DropLedger.Claim old = data.adminClear(b.id(), ctx.getSource().getTextName());
         if (old == null) {
-            ctx.getSource().sendFailure(Component.literal("The Charter Grimoire of " + b.id() + " is not claimed."));
+            ctx.getSource().sendFailure(Component.literal("The Canon Grimoire of " + b.id() + " is not claimed."));
             return 0;
         }
         CharterNet.sendAll(data);
-        ctx.getSource().sendSuccess(() -> Component.literal("The lock of the Charter Grimoire of " + b.id() + " is cleared (it was " + old.name() + "'s). The next kill rolls again."), true);
+        ctx.getSource().sendSuccess(() -> Component.literal("The lock of the Canon Grimoire of " + b.id() + " is cleared (it was " + old.name() + "'s). The next kill rolls again."), true);
         return 1;
     }
 }

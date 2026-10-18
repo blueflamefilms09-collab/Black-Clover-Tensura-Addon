@@ -122,7 +122,7 @@ public final class CharterEvents {
         try {
             server.overworld().getDataStorage().save();                              // written now, not at the next autosave: a crash must not lose the lock while the book is already in an inventory
         } catch (RuntimeException saveFailed) {
-            LOG.warn("[nusmp] could not write the Charter lock at once ({}); it is saved with the world", saveFailed.toString());
+            LOG.warn("[nusmp] could not write the Canon lock at once ({}); it is saved with the world", saveFailed.toString());
         }
         award(server, level, data, boss, killer, stack);
     }
@@ -135,9 +135,9 @@ public final class CharterEvents {
             drop.setInvulnerable(true);
             killer.serverLevel().addFreshEntity(drop);
         }
-        LOG.info("[nusmp] {} claimed the Charter Grimoire of {} (day {})", killer.getGameProfile().getName(), boss.id(), data.claim(boss.id()).day());
+        LOG.info("[nusmp] {} claimed the Canon Grimoire of {} (day {})", killer.getGameProfile().getName(), boss.id(), data.claim(boss.id()).day());
         server.getPlayerList().broadcastSystemMessage(Component.literal("[Server] " + killer.getGameProfile().getName()
-                + " is the first to claim the Charter Grimoire of " + boss.name() + ".").withStyle(ChatFormatting.GOLD), false);
+                + " is the first to claim the Canon Grimoire of " + boss.name() + ".").withStyle(ChatFormatting.GOLD), false);
         CharterNet.sendAll(data);
     }
 

@@ -432,11 +432,11 @@ add(sq + "joined", sq + "created", "Join the Ranks", "Join a Magic Knight squad.
 add(sq + "captain", sq + "created", "Captain", "Be named the captain of a squad.", "minecraft:black_banner", ev("squad.captain"), frame="goal",
     xp=60)
 add(sq + "vice", sq + "captain", "Vice-Captain", "Name or become a vice-captain.", "minecraft:shield", ev("squad.vice"), xp=40)
-add(sq + "charter", sq + "created", "A Written Charter", "Carry a charter grimoire for a boss.", "nusmp:charter_grimoire_goliath",
+add(sq + "charter", sq + "created", "A Written Canon", "Carry a canon grimoire for a boss.", "nusmp:charter_grimoire_goliath",
     have("nusmp:charter_grimoire_dante", "nusmp:charter_grimoire_vanica", "nusmp:charter_grimoire_zenon", "nusmp:charter_grimoire_lucius",
          "nusmp:charter_grimoire_devil_avatar", "nusmp:charter_grimoire_goliath", "nusmp:charter_grimoire_charybdis_spawn", mode="any"),
     xp=30)
-add(sq + "charter_all", sq + "charter", "The Complete Charter", "Carry all seven boss charter grimoires.", "nusmp:charter_grimoire_lucius",
+add(sq + "charter_all", sq + "charter", "The Complete Canon", "Carry all seven boss canon grimoires.", "nusmp:charter_grimoire_lucius",
     have("nusmp:charter_grimoire_dante", "nusmp:charter_grimoire_vanica", "nusmp:charter_grimoire_zenon", "nusmp:charter_grimoire_lucius",
          "nusmp:charter_grimoire_devil_avatar", "nusmp:charter_grimoire_goliath", "nusmp:charter_grimoire_charybdis_spawn", mode="all"),
     frame="challenge", xp=300)

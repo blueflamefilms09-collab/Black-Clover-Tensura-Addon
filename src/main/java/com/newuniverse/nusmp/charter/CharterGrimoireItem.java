@@ -37,7 +37,7 @@ public class CharterGrimoireItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         // the language entry when there is one (the seven bosses), otherwise a name made from the boss (the arc bosses: no hand-written entry per character)
-        return Component.translatableWithFallback(getDescriptionId(stack), "Charter Grimoire of " + boss.name()).withStyle(grade().colour());
+        return Component.translatableWithFallback(getDescriptionId(stack), "Canon Grimoire of " + boss.name()).withStyle(grade().colour());
     }
 
     @Override

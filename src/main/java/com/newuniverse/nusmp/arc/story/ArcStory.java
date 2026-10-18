@@ -71,7 +71,7 @@ public final class ArcStory {
         if (!BossBuffTable.addArc(ArcBossProfile.profileFor(c))) LOG.warn("[nusmp] arc boss {} has no global buff row (the id is taken)", c.id());
         if (c.hasCharter()) {
             CharterTable.Boss b = CharterTable.addArc(c);
-            if (b == null) LOG.warn("[nusmp] arc boss {} has no Charter Grimoire (no lawful skill left, or the id is taken)", c.id());
+            if (b == null) LOG.warn("[nusmp] arc boss {} has no Canon Grimoire (no lawful skill left, or the id is taken)", c.id());
             else CharterItems.registerArc(b);
         }
     }

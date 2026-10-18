@@ -133,7 +133,7 @@ public final class ArcCommand {
             say(ctx, " entity " + (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id()) ? "nusmp:" + com.newuniverse.nusmp.arc.world.ExistingBosses.entityPath(c.id()) + " (an older boss)"      // 1.61.0
                     : ArcSpawner.typeOf(c.id()) != null ? "nusmp:" + c.id() : "NOT REGISTERED"));
             CharterTable.Boss g = CharterTable.byId(c.charterId());
-            say(ctx, " grimoire " + (!c.hasCharter() ? "none" : g == null ? "declared but not in the Charter table" : g.skills().size() + " skills, first-kill chance " + g.chance()));
+            say(ctx, " grimoire " + (!c.hasCharter() ? "none" : g == null ? "declared but not in the Canon table" : g.skills().size() + " skills, first-kill chance " + g.chance()));
         }
         say(ctx, " follows " + (c.prerequisites().isEmpty() ? "nobody (open from the start)" : String.join(", ", c.prerequisites())));
         List<String> problems = DialogueLoader.problems().get(c.id());

@@ -379,11 +379,11 @@ def squads(reg):
     c.q("rank_one", "First Place", (6, 1.5), "minecraft:beacon", "boss", "Top of the standings",
         "Be first on the standings. It is a promise between the squad and the book: tick it when it is true.", deps=["standings"],
         tasks=[T.check("My squad is first")], rewards=[R.xp(300, True), R.item("minecraft:diamond", 8, team=True)], optional=True)
-    c.q("charter", "A Written Charter", (3, 3), "nusmp:charter_grimoire_goliath", "step", "Boss charters",
-        "A charter grimoire marks a boss hunt as a squad affair. Carry one.", deps=["created", "joined"], dep_any=True,
+    c.q("charter", "A Written Canon", (3, 3), "nusmp:charter_grimoire_goliath", "step", "Boss canons",
+        "A canon grimoire marks a boss hunt as a squad affair. Carry one.", deps=["created", "joined"], dep_any=True,
         tasks=[T.adv("squads/charter")])
-    c.q("charter_all", "The Complete Charter", (4, 3), "nusmp:charter_grimoire_lucius", "boss", "Seven charters",
-        "All seven boss charters, carried by the squad.", deps=["charter"], tasks=[T.adv("squads/charter_all")],
+    c.q("charter_all", "The Complete Canon", (4, 3), "nusmp:charter_grimoire_lucius", "boss", "Seven canons",
+        "All seven boss canons, carried by the squad.", deps=["charter"], tasks=[T.adv("squads/charter_all")],
         rewards=[R.xp(300), R.loot("legend_trophy")], optional=True)
     # team-wide quests: the tasks are split between members, the progress and the claim are the team's
     c.q("hunt_floors", "Squad Hunt: The Floors", (6, 3), "minecraft:heavy_core", "mile", "Split the work",

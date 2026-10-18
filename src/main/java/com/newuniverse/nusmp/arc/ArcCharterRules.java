@@ -45,7 +45,7 @@ public final class ArcCharterRules {
 
     /** The lore line of the grimoire's tooltip. */
     public static String loreFor(ArcCharacter c) {
-        return "The Charter of " + c.fullName() + (c.source().isEmpty() ? "" : ", from " + c.source()) + ": their power on loan for as long as you hold it.";
+        return "The Canon of " + c.fullName() + (c.source().isEmpty() ? "" : ", from " + c.source()) + ": their power on loan for as long as you hold it.";
     }
 
     /** The Charter row of a boss, or null when the character has no grimoire (not a boss, no skills, or none left after the laws). */

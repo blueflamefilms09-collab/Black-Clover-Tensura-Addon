@@ -118,7 +118,7 @@ def adv_doc():
         "weapons": "the named weapons, the anti-magic blades, the Genesis edge, engravings",
         "dungeon": "Mega-Dungeon, floor bosses, cooking, Labyrinth, wardens, keys, seals, vault",
         "spirits": "spirit charm and contract, elemental lords, devil contract, union, the nine cores",
-        "squads": "found, join, captain, vice, charters",
+        "squads": "found, join, captain, vice, canons",
         "world": "kingdoms, library, dream, the arena of the Final Hour, the codex",
         "challenges": "long deeds: no-relic arena win, necromancer, every magic, Genesis in hand",
     }
