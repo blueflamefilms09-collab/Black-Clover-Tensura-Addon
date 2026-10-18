@@ -70,3 +70,17 @@ def sleep_pose(rig, length=3.2):
         "forearm_r": {"rotation": {0.0: (50, 0, 0), length: (50, 0, 0)}},
     }
     add_clip(rig, "sleep", length, tracks, loop=True)
+
+
+def scarf(kit, rig, color, length=9.0, width=3.0, salt=70, ring=True):
+    """A scarf: a ring round the neck (`ring`) and two tails that hang down the back and swing in every clip. The kit's `neck.scarf` is a thin line, which a red scarf that is part of a
+    character's silhouette (Dante's) is not. Placed from the measured body (`rig.d`)."""
+    d = rig.d
+    cloth = kit.mat("cloth", kit.rgb(color), salt, seam=False)
+    if ring:
+        nw = max(5.0, d.tw * 0.62)
+        rig.box("head", (-nw / 2, d.sh_y - 0.9, -d.td / 2 - 0.5), (nw, 2.8, d.td + 1.0), cloth)
+    rig.bone("scarf", "body", (0.0, d.sh_y - 1.0, d.td / 2 - 0.4))
+    rig.box("scarf", (-width * 0.9, d.sh_y - 1.0 - length, d.td / 2 - 0.5), (width, length, 0.9), cloth)
+    rig.box("scarf", (width * 0.1, d.sh_y - 1.0 - length * 0.8, d.td / 2 - 0.5), (width, length * 0.8, 0.9), cloth)
+    rig.animate("scarf", sway=1.2)
