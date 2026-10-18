@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "root",
+  "web_shot"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.5,
+ "id": "kobold_trap_master_of_the_deep",
+ "name": "Kobold Trap Master of the Deep",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: kobold",
+ "tier": 2
+}

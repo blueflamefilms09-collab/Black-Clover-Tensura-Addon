@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "soul_siphon"
+ ],
+ "animation": "lanky__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#adcd74",
+ "height": 2.31,
+ "id": "flayer_cultist_brain_eater",
+ "name": "Flayer Cultist Brain Eater",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: mind flayer thrall",
+ "tier": 2
+}

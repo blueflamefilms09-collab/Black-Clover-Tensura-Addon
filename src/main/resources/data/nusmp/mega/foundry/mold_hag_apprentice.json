@@ -3,11 +3,11 @@
   "hex",
   "miasma"
  ],
- "animation": "lanky__staff-none__auto-auto-auto",
+ "animation": "small__wand-none__auto-auto-auto",
  "archetype": "caster",
  "faction": "cultist",
  "glow": "#e4b163",
- "height": 2.31,
+ "height": 1.5,
  "id": "mold_hag_apprentice",
  "name": "Mold Hag Apprentice",
  "road": "abyssal",

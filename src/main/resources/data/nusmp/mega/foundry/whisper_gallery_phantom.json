@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "soul_siphon",
+  "phase_step"
+ ],
+ "animation": "average__wand-none__auto-auto-hover",
+ "archetype": "caster",
+ "faction": "undead",
+ "glow": "#a0e8ff",
+ "height": 2.0,
+ "id": "whisper_gallery_phantom",
+ "name": "Whisper Gallery Phantom",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Spirited Away",
+ "tier": 2
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "dread_gaze"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "night_hag_coven_sister",
+ "name": "Night Hag Coven Sister",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: night hag",
+ "tier": 2
+}

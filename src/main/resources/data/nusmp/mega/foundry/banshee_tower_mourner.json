@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "hex"
+ ],
+ "animation": "slim__wand-none__auto-auto-hover",
+ "archetype": "caster",
+ "faction": "undead",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "banshee_tower_mourner",
+ "name": "Banshee Tower Mourner",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: banshee",
+ "tier": 2
+}

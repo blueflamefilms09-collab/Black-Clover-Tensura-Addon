@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "dread_gaze"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "beast",
+ "glow": "#9775c2",
+ "height": 2.31,
+ "id": "carrion_crow_pit_judge",
+ "name": "Carrion Crow Pit Judge",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: kenku",
+ "tier": 2
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "conjure_imps",
+  "ground_slam"
+ ],
+ "animation": "small__hammer-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "demon",
+ "glow": "#6a6766",
+ "height": 1.5,
+ "id": "imp_foundry_taskmaster",
+ "name": "Imp Foundry Taskmaster",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: imp",
+ "tier": 2
+}

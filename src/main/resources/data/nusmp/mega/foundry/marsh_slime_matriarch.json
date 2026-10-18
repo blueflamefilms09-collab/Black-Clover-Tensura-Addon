@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "acid_spit"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "slime",
+ "glow": "#adcd74",
+ "height": 3.09,
+ "id": "marsh_slime_matriarch",
+ "name": "Marsh Slime Matriarch",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "Tensura",
+ "tier": 2
+}

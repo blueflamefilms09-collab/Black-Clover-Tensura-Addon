@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "blink"
+ ],
+ "animation": "child__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 1.41,
+ "id": "bat_winged_whisper_imp",
+ "name": "Bat Winged Whisper Imp",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: imp",
+ "tier": 2
+}

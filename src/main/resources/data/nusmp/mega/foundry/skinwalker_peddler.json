@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "blink"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "skinwalker_peddler",
+ "name": "Skinwalker Peddler",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Hunter x Hunter",
+ "tier": 2
+}

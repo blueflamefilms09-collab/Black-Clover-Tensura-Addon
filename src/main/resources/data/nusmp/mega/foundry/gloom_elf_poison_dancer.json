@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "shadow_dash"
+ ],
+ "animation": "slim__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "elemental",
+ "glow": "#b7ff79",
+ "height": 1.94,
+ "id": "gloom_elf_poison_dancer",
+ "name": "Gloom Elf Poison Dancer",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: drow poisoner",
+ "tier": 2
+}

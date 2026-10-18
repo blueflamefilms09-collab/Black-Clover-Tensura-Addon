@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hunters_mark",
+  "volley"
+ ],
+ "animation": "slim__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 1.94,
+ "id": "bloodhound_cult_tracker",
+ "name": "Bloodhound Cult Tracker",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Bloodborne",
+ "tier": 2
+}

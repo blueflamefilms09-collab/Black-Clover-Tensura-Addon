@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "raise_dead",
+  "miasma"
+ ],
+ "animation": "small__hammer-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#cd9575",
+ "height": 1.5,
+ "id": "grave_robber_alchemist",
+ "name": "Grave Robber Alchemist",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Fullmetal Alchemist",
+ "tier": 2
+}
