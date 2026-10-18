@@ -96,7 +96,7 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
     private long riseTick, nextMoveAt, meleeReadyAt;
     private boolean fightEnded, tookDamage, barPrimed;
     private int barPhase = -1;
-    private float baseHealth = -1f, baseDamage = -1f;
+    private float baseHealth = -1f;
 
     protected CalamityBoss(EntityType<? extends CalamityBoss> type, Level level) {
         super(type, level);
@@ -163,9 +163,8 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
     public void setup(String id) {
         this.calamityId = id;
         bindDef();
-        AttributeInstance hp = getAttribute(Attributes.MAX_HEALTH), atk = getAttribute(Attributes.ATTACK_DAMAGE);
+        AttributeInstance hp = getAttribute(Attributes.MAX_HEALTH);
         if (baseHealth < 0f && hp != null) baseHealth = (float) hp.getBaseValue();
-        if (baseDamage < 0f && atk != null) baseDamage = (float) atk.getBaseValue();
         double hm = (def == null ? 1.0 : def.healthMult()) * WorldConfig.calamityHealth();
         if (hp != null) hp.setBaseValue(baseHealth * hm);
         setHealth(getMaxHealth());
@@ -240,7 +239,7 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         goalSelector.addGoal(2, new ChaseGoal());
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 24.0f));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 0, false, false, e -> !(e instanceof Player p) || (!p.isCreative() && !p.isSpectator())));
+        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, e -> !(e instanceof Player p) || (!p.isCreative() && !p.isSpectator())));
     }
 
     /** Walks to the target and, when the machine is idle, strikes in melee. */
@@ -279,6 +278,7 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         if (!(level() instanceof ServerLevel sl)) return;
         long now = sl.getGameTime();
         if (riseTick == 0L) {
+            if (baseHealth < 0f) setup(calamityId());                          // a /summon'ed boss gets the data file's and the config's multipliers on its first tick
             riseTick = now - pendingFought;                                  // a boss loaded from disk keeps its fight clock
             nextMoveAt = now + 40;
             if (pendingFought == 0L) CalamityManager.bossRose(this);
@@ -315,7 +315,7 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
 
     private void stepPhase(ServerLevel sl) {
         if (state == ST_TRANSFORM) return;
-        int due = CalamityPhases.phaseFor(getHealth() / getMaxHealth(), thresholds());
+        int due = CalamityPhases.phaseFor(fraction(), thresholds());
         if (due > phase()) beginPhase(sl, phase() + 1);
     }
 
@@ -444,10 +444,9 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         if (fightEnded || state == ST_TRANSFORM) return false;
         Entity attacker = source.getEntity();
         if (attacker instanceof CalamityBoss || (attacker != null && MobTouchHandler.isHelper(attacker))) return false;
-        if (CalamityPhases.phaseFor(getHealth() / getMaxHealth(), thresholds()) > phase()) return false;                                   // waiting for the transformation
+        if (CalamityPhases.phaseFor(fraction(), thresholds()) > phase()) return false;                                   // waiting for the transformation
         float a = amount * damageTakenFactor(source);
         if (staggered()) a *= 1.3f;
-        a = CalamityPhases.clampDamage(getHealth(), getMaxHealth(), phase(), thresholds(), a);
         if (!(a > 0f)) return false;
         ServerPlayer who = creditedPlayer(attacker);
         float before = getHealth();
@@ -458,6 +457,21 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
             CalamityManager.fire(new CalamityDamageEvent(calamityId(), this, who, dealt, true, phase(), fightTicks()));
         }
         return r;
+    }
+
+    /** The health as a fraction of the maximum, in double so that a health on a line compares equal to the line. */
+    private double fraction() { return (double) getHealth() / (double) getMaxHealth(); }
+
+    /**
+     * The phase guard: the damage that will really come off the health (after armor and the other reductions, the last step before the health is lowered) is cut so that the health
+     * stops ON the next line. Done here and not on the raw blow because armor would leave the boss a little above its line after every cut and it would creep toward it forever.
+     * Sources that bypass invulnerability (/kill, the void) are not cut: the damage budget already spreads them over seconds, and an operator must be able to remove a boss.
+     */
+    @Override
+    protected float getDamageAfterMagicAbsorb(DamageSource source, float amount) {
+        float a = super.getDamageAfterMagicAbsorb(source, amount);
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return a;
+        return CalamityPhases.clampDamage(getHealth(), getMaxHealth(), phase(), thresholds(), a);
     }
 
     private static ServerPlayer creditedPlayer(Entity attacker) {
@@ -608,7 +622,6 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         tag.putBoolean("CalShield", shielded());
         tag.putLong("CalFought", fightTicks());
         tag.putFloat("CalBaseHp", baseHealth);
-        tag.putFloat("CalBaseDmg", baseDamage);
     }
 
     @Override
@@ -618,7 +631,6 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         entityData.set(PHASE, Math.max(0, tag.getInt("CalPhase")));
         entityData.set(SHIELD, tag.getBoolean("CalShield"));
         baseHealth = tag.contains("CalBaseHp") ? tag.getFloat("CalBaseHp") : -1f;
-        baseDamage = tag.contains("CalBaseDmg") ? tag.getFloat("CalBaseDmg") : -1f;
         riseTick = 0L;
         long fought = tag.getLong("CalFought");
         pendingFought = fought;

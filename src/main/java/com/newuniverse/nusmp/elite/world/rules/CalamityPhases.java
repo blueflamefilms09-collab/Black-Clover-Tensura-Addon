@@ -11,10 +11,16 @@ import java.util.List;
 public final class CalamityPhases {
     private CalamityPhases() {}
 
+    /**
+     * A health this close to a line (a fraction of the maximum) counts as ON it: floats do not land exactly on 0.66 * 2400, and a boss that stopped a hair above its line must still change
+     * phase, or it would be stuck there (nothing can hurt it, and the phase never comes).
+     */
+    public static final double EPS = 1e-4;
+
     /** The phase index for a health fraction (1.0 = full). */
     public static int phaseFor(double healthFraction, List<Double> thresholds) {
         int p = 0;
-        for (double t : thresholds) if (healthFraction <= t + 1e-9) p++;
+        for (double t : thresholds) if (healthFraction <= t + EPS) p++;
         return p;
     }
 
@@ -34,7 +40,7 @@ public final class CalamityPhases {
         if (next < 0.0) return amount;
         float floor = (float) (next * max);
         float room = health - floor;
-        return room <= 0f ? 0f : Math.min(amount, room);
+        return room <= EPS * max ? 0f : Math.min(amount, room);
     }
 
     /** What a phase changes about the boss's pace. */

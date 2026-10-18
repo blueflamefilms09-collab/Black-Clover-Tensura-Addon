@@ -106,8 +106,9 @@ public final class WorldSelfTests {
             ServerPlayer fake = SelfTests.standIn(lv, "elite_world_density", ORIGIN.getX() + 0.5, ORIGIN.getY(), ORIGIN.getZ() + 0.5);
             double hook = EliteHooks.chunkMagicule.applyAsDouble(fake);
             if (Math.abs(hook - MagiculeApi.effectiveAt(fake)) > 1e-9 || hook < 0.85) return Result.fail("EliteHooks.chunkMagicule is not wired to the engine: " + hook);
+            float eventBefore = d.event;
             MagiculeApi.bump(lv, ORIGIN, -0.3, 0);
-            if (d.event >= 0f) return Result.fail("a negative bump must lower the event term");
+            if (d.event >= eventBefore) return Result.fail("a negative bump must lower the event term");
             int updated = MagiculeEngine.updatePass(server);
             if (updated < 0) return Result.fail("updatePass");
             MagiculeSync.tick(server);                                                    // must not throw with no players or with players
@@ -178,9 +179,10 @@ public final class WorldSelfTests {
             }
             if (countBuds(lv) <= budsBefore) return Result.fail("a Mother Rock did not seed a bud near it in 6000 ticks");
             double withRock = MagiculeApi.target(lv, ch, MagiculeApi.data(ch));
+            float eventBefore = MagiculeApi.data(ch).event;
             lv.setBlock(c, Blocks.AIR.defaultBlockState(), 3);
             if (MagiculeApi.mothersAt(lv, c) != 0) return Result.fail("a broken Mother Rock must leave the chunk's list");
-            if (MagiculeApi.data(ch).event >= 0f) return Result.fail("breaking a Mother Rock must thin the chunk (negative event)");
+            if (MagiculeApi.data(ch).event >= eventBefore) return Result.fail("breaking a Mother Rock must thin the chunk (the event term must fall)");
             return Result.ok("small -> medium -> large -> cluster -> Mother Rock -> seeded a bud; target with the rock " + String.format("%.2f", withRock));
         } finally {
             clearArea(lv);
@@ -210,8 +212,7 @@ public final class WorldSelfTests {
             d.ore.total = 0;
             lv.setBlock(ORIGIN, Blocks.IRON_ORE.defaultBlockState(), 3);
             Optional<String> target = OreConverter.targetFor("minecraft:iron_ore", 0.95, ORIGIN.getY());
-            Random r = new Random(1);
-            BlockPos done = OreConverter.pass(lv, ch, d, lv.getRandom());
+            BlockPos done = OreConverter.pass(lv, ch, d, lv.getRandom(), 200, 300);
             boolean tensura = target.isPresent();
             if (tensura && done == null) return Result.fail("iron ore at density 0.95 was not converted although the target " + target.get() + " exists");
             if (!tensura && done != null) return Result.fail("converted to a block that does not exist");
@@ -219,12 +220,12 @@ public final class WorldSelfTests {
                 if (lv.getBlockState(done).is(Blocks.IRON_ORE)) return Result.fail("the block did not change");
                 // the budget: one per window, so a second ore in the same window stays
                 lv.setBlock(ORIGIN.east(), Blocks.COAL_ORE.defaultBlockState(), 3);
-                if (OreConverter.pass(lv, ch, d, lv.getRandom()) != null) return Result.fail("the budget of one per window was exceeded");
+                if (OreConverter.pass(lv, ch, d, lv.getRandom(), 200, 300) != null) return Result.fail("the budget of one per window was exceeded");
                 // below the threshold nothing happens even with a fresh window
                 d.ore.windowStart = 0;
                 d.ore.usedInWindow = 0;
                 MagiculeApi.force(lv, ch, 0.3);
-                if (OreConverter.pass(lv, ch, d, lv.getRandom()) != null) return Result.fail("converted below the density threshold");
+                if (OreConverter.pass(lv, ch, d, lv.getRandom(), 200, 300) != null) return Result.fail("converted below the density threshold");
             }
             return Result.ok(tensura ? "iron ore became " + target.get() + ", one per window, nothing below the threshold" : "no Tensura target is registered: correctly nothing converted");
         } finally {
@@ -307,8 +308,14 @@ public final class WorldSelfTests {
         @SubscribeEvent public void onAny(CalamityEvents.Base e) { announce.add(e); }
     }
 
+    /** One tick of an entity driven by hand: the level's own tick raises tickCount before it calls tick(), so a test must do the same. */
+    private static void step(net.minecraft.world.entity.Entity e) {
+        e.tickCount++;
+        e.tick();
+    }
+
     private static void tickBoss(CalamityBoss b, int n) {
-        for (int i = 0; i < n && b.isAlive(); i++) b.tick();
+        for (int i = 0; i < n && b.isAlive(); i++) step(b);
     }
 
     private static Result bosses(MinecraftServer server) {
@@ -332,15 +339,16 @@ public final class WorldSelfTests {
             tickBoss(g, 3);
             if (g.phase() != 0 || g.phaseCount() != 3) return Result.fail("a new Colossus must be in phase 0 of 3: " + g.phase() + "/" + g.phaseCount());
             DamageSource hit = lv.damageSources().playerAttack(fake);
-            float before = g.getHealth();
             g.dpsBudget().bypass(() -> g.setHealth(g.getMaxHealth()));
             g.hurt(hit, 5f);
             if (got.damage.isEmpty() || !got.damage.get(0).toBoss() || got.damage.get(0).amount() <= 0f) return Result.fail("no CalamityDamageEvent for a player hitting the Colossus");
             if (!g.fighters().containsKey(fake.getUUID())) return Result.fail("the fighter was not recorded");
-            // a huge blow stops on the 66% line
+            tickBoss(g, 25);                                                             // the hit cooldown and the damage budget window pass
+            // a huge blow from just above the 66% line stops ON the line (it can never skip a phase)
+            g.dpsBudget().bypass(() -> g.setHealth(g.getMaxHealth() * 0.70f));
             g.hurt(hit, 100000f);
             float frac = g.getHealth() / g.getMaxHealth();
-            if (frac < 0.66f - 0.02f) return Result.fail("one blow crossed the 66% line: " + frac);
+            if (frac < 0.64f || frac > 0.67f) return Result.fail("one blow must stop on the 66% line, the Colossus is at " + frac);
             tickBoss(g, 2);
             if (g.phase() != 1) return Result.fail("crossing 66% must begin phase 1: " + g.phase());
             if (g.hurt(hit, 5f)) return Result.fail("the Colossus must be invulnerable while it transforms");
@@ -355,7 +363,6 @@ public final class WorldSelfTests {
             // ---- the kill report
             g.dpsBudget().bypass(() -> g.setHealth(1f));
             g.hurt(hit, 100000f);
-            tickBoss(g, 1);
             if (got.kills.isEmpty()) return Result.fail("no CalamityKillEvent when the Colossus fell");
             CalamityKillEvent k = got.kills.get(0);
             if (!k.calamityId().equals(GraveboundColossus.ID) || !k.participants().containsKey(fake.getUUID()) || k.phaseCount() != 3) return Result.fail("the kill event is wrong: " + k.calamityId() + " " + k.participants() + " " + k.phaseCount());
@@ -381,8 +388,7 @@ public final class WorldSelfTests {
             if (vs.size() != 3) return Result.fail("found " + vs.size() + " phylactery entities");
             for (PhylacteryEntity p : vs) p.hurt(lv.damageSources().genericKill(), 10000f);
             if (l.shielded()) return Result.fail("the shield must break with the last phylactery");
-            for (int i = 0; i < 3; i++) tickBoss(l, 1);
-            return Result.ok("Colossus 3 phases + damage/kill/announce events, Lich shield with 3 phylacteries; " + got.damage.size() + " damage events, " + got.announce.size() + " announcements");
+                        return Result.ok("Colossus 3 phases + damage/kill/announce events, Lich shield with 3 phylacteries; " + got.damage.size() + " damage events, " + got.announce.size() + " announcements");
         } finally {
             NeoForge.EVENT_BUS.unregister(got);
             for (CalamityBoss b : made) {
@@ -416,15 +422,15 @@ public final class WorldSelfTests {
             lv.addFreshEntity(victim);
             GaiaSpikeEntity s = GaiaSpikeEntity.raise(lv, new Vec3(ORIGIN.getX() + 0.5, ORIGIN.getY(), ORIGIN.getZ() + 0.5), null, 3, 4f);
             float hp = victim.getHealth();
-            for (int i = 0; i < 6; i++) s.tick();
+            for (int i = 0; i < 6; i++) step(s);
             if (victim.getHealth() >= hp) return Result.fail("the Gaia spike did not hurt a zombie standing on it");
-            for (int i = 0; i < GaiaSpikeEntity.UP_TICKS + 4; i++) s.tick();
+            for (int i = 0; i < GaiaSpikeEntity.UP_TICKS + 4; i++) step(s);
             if (!s.isRemoved()) return Result.fail("the Gaia spike must remove itself");
             victim.discard();
             // the bolt flies and ends
-            VoidBoltProjectile b = VoidBoltProjectile.launch(lv, null, new Vec3(ORIGIN.getX() + 0.5, ORIGIN.getY() + 3, ORIGIN.getZ() + 0.5), new Vec3(1, 0, 0), 1.0f, 5f, 0);
-            for (int i = 0; i < VoidBoltProjectile.LIFE_TICKS + 5 && !b.isRemoved(); i++) b.tick();
-            if (!b.isRemoved()) return Result.fail("a void bolt must end");
+            VoidBoltProjectile b = VoidBoltProjectile.launch(lv, null, new Vec3(ORIGIN.getX() + 3.5, ORIGIN.getY() + 3, ORIGIN.getZ() + 3.5), new Vec3(0, -1, 0), 1.0f, 5f, 0);
+            for (int i = 0; i < 20 && !b.isRemoved(); i++) step(b);
+            if (!b.isRemoved()) return Result.fail("a void bolt must end on the platform");
             // the omen and the rise
             CalamityDef def = WorldData.calamity(GraveboundColossus.ID);
             if (def == null) return Result.fail("the Colossus's data file is missing");

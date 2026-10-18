@@ -26,7 +26,7 @@ public final class WorldConfig {
     // ---- ore conversion
     public static final ModConfigSpec.BooleanValue ORES;
     public static final ModConfigSpec.DoubleValue ORE_THRESHOLD;
-    public static final ModConfigSpec.IntValue ORE_INTERVAL, ORE_PER_INTERVAL, ORE_LIFETIME, ORE_SAMPLES;
+    public static final ModConfigSpec.IntValue ORE_INTERVAL, ORE_PER_INTERVAL, ORE_LIFETIME;
     // ---- mob replacement
     public static final ModConfigSpec.BooleanValue MOBS, MOB_MARKER;
     public static final ModConfigSpec.DoubleValue MOB_THRESHOLD, MOB_CHANCE, MOB_MAX_CHANCE;
@@ -66,7 +66,6 @@ public final class WorldConfig {
         ORE_INTERVAL = b.comment("Ticks in one budget window of a chunk.").defineInRange("intervalTicks", 2400, 20, 72000);
         ORE_PER_INTERVAL = b.comment("Blocks one chunk may convert per window.").defineInRange("perInterval", 1, 0, 16);
         ORE_LIFETIME = b.comment("Blocks one chunk may convert in all, ever, so a rich chunk is never eaten whole.").defineInRange("perChunkLifetime", 24, 0, 4096);
-        ORE_SAMPLES = b.comment("Random positions looked at per pass of a chunk.").defineInRange("samples", 48, 1, 512);
         b.pop();
 
         b.push("mobReplacement");
@@ -137,8 +136,6 @@ public final class WorldConfig {
     public static int orePerInterval() { return get(ORE_PER_INTERVAL); }
 
     public static int oreLifetime() { return get(ORE_LIFETIME); }
-
-    public static int oreSamples() { return get(ORE_SAMPLES); }
 
     public static boolean mobs() { return enabled() && get(MOBS); }
 

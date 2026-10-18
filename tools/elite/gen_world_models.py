@@ -322,14 +322,12 @@ def build(name, fn, extras=None):
 
 # ====================================================================================================== painted details
 def paint_colossus(at, img, glow, info):
-    """The runes on the chest core and a few cracks of light in the stone."""
+    """The chest core: a pattern of bright and dim cells on the glow layer, like carved runes."""
     def runes(px, x0, y0, w, h):
         for x in range(w):
             for y in range(h):
-                lit = (x % 3 != 1) or (y % 2 == 0)
-                if not lit:
-                    px[x0 + x, y0 + y] = (16, 8, 6, 255)
-    draw_on_face(at, glow, info["eyes"], "front", lambda px, x0, y0, w, h: [px.__setitem__((x0 + x, y0 + y), (255, 190, 80, 255) if (x + y) % 3 else (160, 70, 20, 255)) for x in range(w) for y in range(h)])
+                px[x0 + x, y0 + y] = (255, 190, 80, 255) if (x + y) % 3 else (160, 70, 20, 255)
+    draw_on_face(at, glow, info["eyes"], "front", runes)
 
 
 def paint_none(at, img, glow, info):

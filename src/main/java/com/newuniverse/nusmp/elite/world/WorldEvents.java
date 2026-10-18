@@ -29,6 +29,8 @@ public final class WorldEvents {
     public static void onCreativeTab(BuildCreativeModeTabContentsEvent e) {
         if (!e.getTabKey().equals(NUCreativeTab.MAIN.getKey())) return;
         for (Item it : WorldItems.creative()) e.accept(it);
+        e.accept(com.newuniverse.nusmp.elite.world.item.CalamityCoreItem.stackFor(com.newuniverse.nusmp.elite.world.entity.GraveboundColossus.ID));
+        e.accept(com.newuniverse.nusmp.elite.world.item.CalamityCoreItem.stackFor(com.newuniverse.nusmp.elite.world.entity.LichBoss.ID));
     }
 
     public static void onBlockDrops(BlockDropsEvent e) {

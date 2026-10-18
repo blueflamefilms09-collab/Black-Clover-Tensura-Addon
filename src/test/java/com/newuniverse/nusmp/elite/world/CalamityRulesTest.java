@@ -183,6 +183,17 @@ class CalamityRulesTest {
     }
 
     @Test
+    void aBossThatStoppedAHairAboveItsLineStillChangesPhase() {
+        List<Double> th = List.of(0.66, 0.33);
+        float max = 2400f;
+        float hair = 0.66f * max + 0.01f;                                            // float rounding leaves it a little above the line
+        assertEquals(1, CalamityPhases.phaseFor((double) hair / (double) max, th), "within EPS of the line counts as on it");
+        assertEquals(0f, CalamityPhases.clampDamage(hair, max, 0, th, 50f), 1e-6f, "and nothing hurts it until the phase changes");
+        assertEquals(0, CalamityPhases.phaseFor(0.6603, th), "three hundredths of a percent above is still the old phase");
+        assertTrue(CalamityPhases.clampDamage(1700f, max, 0, th, 50f) > 0f);
+    }
+
+    @Test
     void eachPhaseTightensTheBoss() {
         CalamityPhases.Tuning a = CalamityPhases.tuning(0, 3), b = CalamityPhases.tuning(1, 3), c = CalamityPhases.tuning(2, 3);
         assertEquals(1.0, a.cooldownMult(), 1e-9);

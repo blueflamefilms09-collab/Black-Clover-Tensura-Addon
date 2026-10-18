@@ -45,8 +45,13 @@ public final class OreConverter {
         return rl != null && BuiltInRegistries.BLOCK.containsKey(rl);
     }
 
-    /** One pass over one chunk. Returns the converted position or null. Public for the self-test. */
+    /** One pass over one chunk. Returns the converted position or null. */
     public static BlockPos pass(ServerLevel level, LevelChunk chunk, ChunkMagicule d, RandomSource rnd) {
+        return pass(level, chunk, d, rnd, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    /** The same, looking only at blocks between {@code minY} and {@code maxY} (the self-test looks at the sky only, so it never changes a natural ore). */
+    public static BlockPos pass(ServerLevel level, LevelChunk chunk, ChunkMagicule d, RandomSource rnd, int minY, int maxY) {
         if (!WorldConfig.ores() || WorldData.ores().isEmpty() || !WorldGuard.allowed(level)) return null;
         if (d.density < WorldConfig.oreThreshold()) return null;
         long now = level.getGameTime();
@@ -60,6 +65,7 @@ public final class OreConverter {
             LevelChunkSection sec = sections[si];
             if (sec == null || sec.hasOnlyAir() || !sec.maybeHas(OreConverter::isOre)) continue;
             int baseY = (chunk.getMinSection() + si) << 4;
+            if (baseY + 15 < minY || baseY > maxY) continue;
             int from = rnd.nextInt(4096);
             for (int k = 0; k < 4096; k++) {
                 int idx = (from + k) & 4095;
@@ -67,6 +73,7 @@ public final class OreConverter {
                 BlockState s = sec.getBlockState(lx, ly, lz);
                 if (!isOre(s)) continue;
                 int y = baseY + ly;
+                if (y < minY || y > maxY) continue;
                 OreConversion.Entry e = WorldData.ores().lookup(idOf(s.getBlock()));
                 if (e == null || !e.fits(MagiculeModel.effective(d.density, y, level.getSeaLevel()), y)) continue;
                 String target = OreConversion.pick(e, rnd.nextDouble(), OreConverter::exists);
