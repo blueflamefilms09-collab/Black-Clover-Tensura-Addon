@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ground_slam",
+  "leap_slam",
+  "enrage"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "ogre",
+ "glow": "#f2ecde",
+ "height": 3.09,
+ "id": "founding_titan_gate_marshal",
+ "name": "Founding Titan Gate Marshal",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "Attack on Titan",
+ "tier": 5
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ground_slam",
+  "enrage",
+  "stoneskin"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "ogre",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "titan_of_the_drowned_stair",
+ "name": "Titan of the Drowned Stair",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "Attack on Titan",
+ "tier": 5
+}

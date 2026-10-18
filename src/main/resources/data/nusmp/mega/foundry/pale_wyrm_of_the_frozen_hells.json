@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "frost_aura",
+  "ice_bind",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "beast",
+ "glow": "#c8d8ff",
+ "height": 3.09,
+ "id": "pale_wyrm_of_the_frozen_hells",
+ "name": "Pale Wyrm of the Frozen Hells",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "D&D: white dragon",
+ "tier": 5
+}

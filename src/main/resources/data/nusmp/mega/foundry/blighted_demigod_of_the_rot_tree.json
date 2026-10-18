@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "miasma",
+  "acid_spit",
+  "root"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "blighted_demigod_of_the_rot_tree",
+ "name": "Blighted Demigod of the Rot Tree",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "Elden Ring",
+ "tier": 5
+}

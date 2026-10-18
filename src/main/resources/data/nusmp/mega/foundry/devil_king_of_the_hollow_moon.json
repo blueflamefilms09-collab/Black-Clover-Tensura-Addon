@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "dread_gaze",
+  "blink"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "demon",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "devil_king_of_the_hollow_moon",
+ "name": "Devil King of the Hollow Moon",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Black Clover",
+ "tier": 5
+}

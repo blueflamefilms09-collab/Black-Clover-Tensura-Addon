@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "vampiric_bite",
+  "blood_rage",
+  "shadow_step"
+ ],
+ "animation": "slim__scythe-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "scarlet_queen_of_the_gluttonous_vale",
+ "name": "Scarlet Queen of the Gluttonous Vale",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Chainsaw Man",
+ "tier": 5
+}

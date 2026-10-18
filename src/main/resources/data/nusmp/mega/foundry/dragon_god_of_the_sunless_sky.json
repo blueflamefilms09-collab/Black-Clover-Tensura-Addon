@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "sky_dive",
+  "frost_aura",
+  "thunder_clap"
+ ],
+ "animation": "huge__spear-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e4e6ec",
+ "height": 3.09,
+ "id": "dragon_god_of_the_sunless_sky",
+ "name": "Dragon God of the Sunless Sky",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "Mushoku Tensei",
+ "tier": 5
+}

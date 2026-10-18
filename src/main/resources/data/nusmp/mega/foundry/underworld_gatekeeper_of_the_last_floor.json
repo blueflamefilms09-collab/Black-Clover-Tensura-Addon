@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "bulwark",
+  "stoneskin",
+  "thunder_clap"
+ ],
+ "animation": "huge__hammer-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#8c5f71",
+ "height": 3.09,
+ "id": "underworld_gatekeeper_of_the_last_floor",
+ "name": "Underworld Gatekeeper of the Last Floor",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "Made in Abyss",
+ "tier": 5
+}

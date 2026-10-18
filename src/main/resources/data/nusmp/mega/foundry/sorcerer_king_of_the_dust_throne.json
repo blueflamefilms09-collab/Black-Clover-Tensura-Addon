@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "soul_siphon",
+  "death_burst",
+  "hex"
+ ],
+ "animation": "huge__scythe-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 3.09,
+ "id": "sorcerer_king_of_the_dust_throne",
+ "name": "Sorcerer King of the Dust Throne",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Overlord",
+ "tier": 5
+}

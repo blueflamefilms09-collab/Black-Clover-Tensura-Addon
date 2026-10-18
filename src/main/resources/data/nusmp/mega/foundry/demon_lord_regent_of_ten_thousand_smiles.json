@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "conjure_imps",
+  "hex",
+  "shadow_bolt"
+ ],
+ "animation": "average__wand-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "demon",
+ "glow": "#b060ff",
+ "height": 2.0,
+ "id": "demon_lord_regent_of_ten_thousand_smiles",
+ "name": "Demon Lord Regent of Ten Thousand Smiles",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Tensura",
+ "tier": 5
+}

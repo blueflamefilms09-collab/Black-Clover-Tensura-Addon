@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "cleave",
+  "blood_rage"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#ff5a1a",
+ "height": 2.09,
+ "id": "dark_lord_of_the_last_flame",
+ "name": "Dark Lord of the Last Flame",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Dark Souls",
+ "tier": 5
+}

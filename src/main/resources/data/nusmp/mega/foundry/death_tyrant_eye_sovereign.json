@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "soul_siphon",
+  "death_burst"
+ ],
+ "animation": "huge__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 3.09,
+ "id": "death_tyrant_eye_sovereign",
+ "name": "Death Tyrant Eye Sovereign",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "D&D: death tyrant",
+ "tier": 5
+}

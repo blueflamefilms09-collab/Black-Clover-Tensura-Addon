@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "frost_aura",
+  "cleave",
+  "ice_bind"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "demon",
+ "glow": "#c8d8ff",
+ "height": 2.09,
+ "id": "demon_king_grand_general_frostborn",
+ "name": "Demon King Grand General Frostborn",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Frieren",
+ "tier": 5
+}

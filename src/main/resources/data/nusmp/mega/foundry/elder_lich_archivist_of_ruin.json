@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "raise_dead",
+  "soul_siphon",
+  "hex"
+ ],
+ "animation": "lanky__orb-grimoire__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "undead",
+ "glow": "#b060ff",
+ "height": 2.31,
+ "id": "elder_lich_archivist_of_ruin",
+ "name": "Elder Lich Archivist of Ruin",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "D&D: arch-lich",
+ "tier": 5
+}

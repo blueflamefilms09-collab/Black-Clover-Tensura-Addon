@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "raise_dead",
+  "cleave"
+ ],
+ "animation": "huge__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "undead",
+ "glow": "#8c5f71",
+ "height": 3.09,
+ "id": "gravemaster_of_the_bone_throne",
+ "name": "Gravemaster of the Bone Throne",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "D&D: skeletal titan",
+ "tier": 5
+}

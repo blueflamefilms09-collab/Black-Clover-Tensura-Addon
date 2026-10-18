@@ -14,6 +14,13 @@
    "size": 1.5,
    "tier": 4
   },
+  "abyss_mother_of_the_cradle_below": {
+   "anim": "huge__wand-none__auto-auto-auto",
+   "glow": 13162751,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "admiral_of_the_gilded_fleet": {
    "anim": "broad__hammer-none__auto-auto-auto",
    "glow": 6318989,
@@ -26,6 +33,13 @@
    "glow": 12124128,
    "height": 2.09,
    "size": 1.6,
+   "tier": 5
+  },
+  "ancient_black_dragon_of_the_drowned_deep": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 12377710,
+   "height": 3.09,
+   "size": 2.0,
    "tier": 5
   },
   "ancient_gold_dragon_hierophant": {
@@ -47,6 +61,13 @@
    "glow": 10545407,
    "height": 2.09,
    "size": 1.6,
+   "tier": 5
+  },
+  "archdevil_of_the_ninth_pit": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 16734746,
+   "height": 3.09,
+   "size": 1.9,
    "tier": 5
   },
   "ash_alchemist_homunculus": {
@@ -181,6 +202,20 @@
    "height": 1.94,
    "size": 1.0,
    "tier": 1
+  },
+  "blighted_archmage_of_the_cinder_choir": {
+   "anim": "slim__staff-none__auto-auto-auto",
+   "glow": 16734746,
+   "height": 1.94,
+   "size": 1.6,
+   "tier": 5
+  },
+  "blighted_demigod_of_the_rot_tree": {
+   "anim": "huge__staff-none__auto-auto-auto",
+   "glow": 14801864,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
   },
   "bloat_fly_courier": {
    "anim": "child__dagger-none__auto-auto-auto",
@@ -378,6 +413,13 @@
    "size": 1.1,
    "tier": 3
   },
+  "chimera_ant_queen_regent": {
+   "anim": "huge__staff-none__auto-auto-auto",
+   "glow": 15920350,
+   "height": 3.09,
+   "size": 1.8,
+   "tier": 5
+  },
   "chimera_choir_beastmaster": {
    "anim": "broad__none-none__auto-auto-auto",
    "glow": 13460323,
@@ -553,6 +595,13 @@
    "size": 1.6,
    "tier": 4
   },
+  "dark_lord_of_the_last_flame": {
+   "anim": "broad__greatsword-none__auto-auto-auto",
+   "glow": 16734746,
+   "height": 2.09,
+   "size": 1.8,
+   "tier": 5
+  },
   "dawn_gate_cadet": {
    "anim": "average__katana-none__auto-auto-auto",
    "glow": 14795380,
@@ -588,10 +637,38 @@
    "size": 1.3,
    "tier": 4
   },
+  "death_tyrant_eye_sovereign": {
+   "anim": "huge__orb-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "demigod_warden_of_the_golden_tree": {
    "anim": "huge__greatsword-none__auto-auto-auto",
    "glow": 6316134,
    "height": 3.09,
+   "size": 1.7,
+   "tier": 5
+  },
+  "demon_king_grand_general_frostborn": {
+   "anim": "broad__greatsword-none__auto-auto-auto",
+   "glow": 13162751,
+   "height": 2.09,
+   "size": 1.8,
+   "tier": 5
+  },
+  "demon_lord_of_the_bleeding_throne": {
+   "anim": "huge__axe-none__auto-auto-auto",
+   "glow": 16724048,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
+  "demon_lord_regent_of_ten_thousand_smiles": {
+   "anim": "average__wand-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 2.0,
    "size": 1.7,
    "tier": 5
   },
@@ -601,6 +678,13 @@
    "height": 1.94,
    "size": 1.0,
    "tier": 3
+  },
+  "devil_king_of_the_hollow_moon": {
+   "anim": "slim__sword-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 1.94,
+   "size": 1.8,
+   "tier": 5
   },
   "dewdrop_slimeling": {
    "anim": "child__none-none__auto-auto-auto",
@@ -643,6 +727,13 @@
    "height": 1.94,
    "size": 1.0,
    "tier": 3
+  },
+  "dragon_god_of_the_sunless_sky": {
+   "anim": "huge__spear-none__auto-auto-auto",
+   "glow": 15001324,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
   },
   "dragon_knight_hero_of_the_spire": {
    "anim": "average__sword-shield__auto-auto-auto",
@@ -714,6 +805,13 @@
    "size": 1.9,
    "tier": 5
   },
+  "elder_lich_archivist_of_ruin": {
+   "anim": "lanky__orb-grimoire__auto-auto-auto",
+   "glow": 11559167,
+   "height": 2.31,
+   "size": 1.6,
+   "tier": 5
+  },
   "ember_bat_flameling_swarm_king": {
    "anim": "child__dagger-none__auto-auto-auto",
    "glow": 12739435,
@@ -763,6 +861,20 @@
    "size": 1.6,
    "tier": 5
   },
+  "evangelist_of_the_black_flame": {
+   "anim": "lanky__staff-none__auto-auto-auto",
+   "glow": 16734746,
+   "height": 2.31,
+   "size": 1.7,
+   "tier": 5
+  },
+  "evil_god_avatar_of_the_sunken_pantheon": {
+   "anim": "slim__staff-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 1.94,
+   "size": 1.8,
+   "tier": 5
+  },
   "executioner_of_the_black_mass": {
    "anim": "huge__axe-none__auto-auto-auto",
    "glow": 14801864,
@@ -783,6 +895,13 @@
    "height": 2.09,
    "size": 1.1,
    "tier": 4
+  },
+  "father_of_the_homunculi_court": {
+   "anim": "slim__orb-none__auto-auto-auto",
+   "glow": 12758389,
+   "height": 1.94,
+   "size": 1.6,
+   "tier": 5
   },
   "fen_frog_acolyte": {
    "anim": "small__wand-none__auto-auto-auto",
@@ -832,6 +951,13 @@
    "height": 2.09,
    "size": 1.0,
    "tier": 3
+  },
+  "founding_titan_gate_marshal": {
+   "anim": "huge__axe-none__auto-auto-auto",
+   "glow": 15920350,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
   },
   "gargoyle_spire_sentinel": {
    "anim": "broad__axe-none__auto-auto-auto",
@@ -980,6 +1106,13 @@
    "size": 1.0,
    "tier": 1
   },
+  "gravemaster_of_the_bone_throne": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 9199473,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
   "gravemaw_wurm_corpse_rider": {
    "anim": "lanky__spear-none__auto-auto-auto",
    "glow": 8423056,
@@ -1050,6 +1183,13 @@
    "size": 1.0,
    "tier": 4
   },
+  "hand_of_fate_sacrificial_herald": {
+   "anim": "broad__staff-none__auto-auto-auto",
+   "glow": 16724048,
+   "height": 2.09,
+   "size": 1.8,
+   "tier": 5
+  },
   "hearth_sprite": {
    "anim": "child__wand-none__auto-auto-auto",
    "glow": 16762944,
@@ -1098,6 +1238,13 @@
    "height": 2.09,
    "size": 1.3,
    "tier": 4
+  },
+  "hellmouth_gate_warden": {
+   "anim": "broad__spear-shield__auto-auto-auto",
+   "glow": 14795380,
+   "height": 2.09,
+   "size": 1.7,
+   "tier": 5
   },
   "hero_class_trainee": {
    "anim": "average__sword-shield__auto-auto-auto",
@@ -1161,6 +1308,13 @@
    "height": 2.09,
    "size": 1.0,
    "tier": 2
+  },
+  "hollow_prime_of_the_pale_desert": {
+   "anim": "broad__katana-none__auto-auto-auto",
+   "glow": 16724048,
+   "height": 2.09,
+   "size": 1.8,
+   "tier": 5
   },
   "hollow_squire": {
    "anim": "average__sword-shield__auto-auto-auto",
@@ -1273,6 +1427,13 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 3
+  },
+  "iron_lord_of_the_hundred_chains": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 16033379,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
   },
   "ivory_tower_reliquary_imp": {
    "anim": "small__dagger-none__auto-auto-auto",
@@ -1442,6 +1603,13 @@
    "size": 1.3,
    "tier": 2
   },
+  "maw_queen_of_the_endless_larder": {
+   "anim": "huge__staff-none__auto-auto-auto",
+   "glow": 12124128,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "meadow_satyr_reveler": {
    "anim": "average__staff-none__auto-auto-auto",
    "glow": 15722195,
@@ -1547,6 +1715,13 @@
    "size": 1.0,
    "tier": 2
   },
+  "night_empress_of_the_moonless_court": {
+   "anim": "slim__wand-none__auto-auto-auto",
+   "glow": 16724048,
+   "height": 1.94,
+   "size": 1.7,
+   "tier": 5
+  },
   "night_hag_coven_sister": {
    "anim": "lanky__staff-none__auto-auto-auto",
    "glow": 14801864,
@@ -1645,6 +1820,13 @@
    "size": 1.3,
    "tier": 4
   },
+  "pale_wyrm_of_the_frozen_hells": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 13162751,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
   "pebble_sentry": {
    "anim": "small__hammer-none__auto-auto-auto",
    "glow": 9211541,
@@ -1707,6 +1889,13 @@
    "height": 2.09,
    "size": 1.3,
    "tier": 3
+  },
+  "pit_lord_chain_warden": {
+   "anim": "broad__hammer-none__auto-auto-auto",
+   "glow": 14976096,
+   "height": 2.09,
+   "size": 1.7,
+   "tier": 5
   },
   "pixie_court_rapier": {
    "anim": "child__sword-none__auto-auto-auto",
@@ -1904,6 +2093,13 @@
    "size": 1.0,
    "tier": 2
   },
+  "scarlet_queen_of_the_gluttonous_vale": {
+   "anim": "slim__scythe-none__auto-auto-auto",
+   "glow": 14795380,
+   "height": 1.94,
+   "size": 1.7,
+   "tier": 5
+  },
   "scourge_seraph_of_the_fallen_choir": {
    "anim": "slim__sword-none__auto-auto-auto",
    "glow": 16724048,
@@ -1945,6 +2141,13 @@
    "height": 2.31,
    "size": 1.0,
    "tier": 3
+  },
+  "shadow_monarch_of_the_gate_below": {
+   "anim": "slim__dagger-dagger__auto-auto-auto",
+   "glow": 11559167,
+   "height": 1.94,
+   "size": 1.7,
+   "tier": 5
   },
   "shambling_farmhand": {
    "anim": "average__axe-none__auto-auto-auto",
@@ -2001,6 +2204,13 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 4
+  },
+  "sin_wyrm_of_greed_unending": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 9199473,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
   },
   "sinkhole_frog_cultist": {
    "anim": "small__trident-none__auto-auto-auto",
@@ -2079,6 +2289,13 @@
    "size": 1.7,
    "tier": 5
   },
+  "sorcerer_king_of_the_dust_throne": {
+   "anim": "huge__scythe-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 3.09,
+   "size": 1.8,
+   "tier": 5
+  },
   "soul_reaper_commander_in_white": {
    "anim": "lanky__katana-none__auto-auto-auto",
    "glow": 13162751,
@@ -2092,6 +2309,13 @@
    "height": 2.09,
    "size": 1.0,
    "tier": 2
+  },
+  "special_grade_curse_of_the_ninth_hour": {
+   "anim": "lanky__none-none__auto-auto-auto",
+   "glow": 16739972,
+   "height": 2.31,
+   "size": 2.0,
+   "tier": 5
   },
   "sphinx_riddle_warden": {
    "anim": "broad__none-none__auto-auto-auto",
@@ -2233,6 +2457,13 @@
    "size": 1.0,
    "tier": 4
   },
+  "tailed_calamity_of_the_sealed_valley": {
+   "anim": "huge__none-none__auto-auto-auto",
+   "glow": 14801864,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
   "tallow_candle_zealot": {
    "anim": "average__mace-orb__auto-auto-auto",
    "glow": 9199473,
@@ -2247,6 +2478,13 @@
    "size": 1.0,
    "tier": 1
   },
+  "tarrasque_shell_walker": {
+   "anim": "huge__none-none__auto-auto-auto",
+   "glow": 12739435,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
   "tentacle_choir_cultist_matron": {
    "anim": "broad__trident-none__auto-auto-auto",
    "glow": 14795380,
@@ -2260,6 +2498,13 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 1
+  },
+  "thistle_lord_of_the_golden_dungeon": {
+   "anim": "average__staff-none__auto-auto-auto",
+   "glow": 15920350,
+   "height": 2.0,
+   "size": 1.6,
+   "tier": 5
   },
   "thornhide_owlbear_brawler": {
    "anim": "huge__none-none__auto-auto-auto",
@@ -2302,6 +2547,13 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 1
+  },
+  "titan_of_the_drowned_stair": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 14801864,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
   },
   "titan_slayer_commander_of_walls": {
    "anim": "broad__sword-sword__auto-auto-auto",
@@ -2358,6 +2610,13 @@
    "height": 1.5,
    "size": 1.0,
    "tier": 1
+  },
+  "underworld_gatekeeper_of_the_last_floor": {
+   "anim": "huge__hammer-shield__auto-auto-auto",
+   "glow": 9199473,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
   },
   "unicorn_maiden_of_the_glade": {
    "anim": "slim__none-none__auto-auto-auto",
@@ -2429,6 +2688,13 @@
    "size": 1.0,
    "tier": 2
   },
+  "void_horror_of_the_star_drowned_sky": {
+   "anim": "huge__orb-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "wall_garrison_trooper": {
    "anim": "average__sword-dagger__auto-auto-auto",
    "glow": 9211541,
@@ -2485,6 +2751,13 @@
    "size": 1.0,
    "tier": 1
   },
+  "witch_of_envy_in_the_abyssal_garden": {
+   "anim": "slim__wand-none__auto-auto-auto",
+   "glow": 11559167,
+   "height": 1.94,
+   "size": 1.6,
+   "tier": 5
+  },
   "wraith_lord_of_the_cold_crypt": {
    "anim": "lanky__scythe-none__auto-auto-hover",
    "glow": 10545407,
@@ -2519,6 +2792,13 @@
    "height": 2.31,
    "size": 1.3,
    "tier": 4
+  },
+  "yonko_of_the_drowned_sea": {
+   "anim": "huge__trident-none__auto-auto-auto",
+   "glow": 14801864,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
   }
  },
  "why": "what the client needs to draw a foundry mob: anim = its shared animation class, glow = glow colour 0xRRGGBB, size = model scale, height = model height in blocks, tier = 1..5 (the glow burns brighter deeper down)"

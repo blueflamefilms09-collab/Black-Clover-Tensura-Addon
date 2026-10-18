@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "regrowth",
+  "soul_siphon"
+ ],
+ "animation": "huge__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#c8d8ff",
+ "height": 3.09,
+ "id": "abyss_mother_of_the_cradle_below",
+ "name": "Abyss Mother of the Cradle Below",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "Made in Abyss",
+ "tier": 5
+}

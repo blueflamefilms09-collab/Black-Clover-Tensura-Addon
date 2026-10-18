@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "soul_siphon",
+  "dread_gaze"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "witch_of_envy_in_the_abyssal_garden",
+ "name": "Witch of Envy in the Abyssal Garden",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "Re:Zero",
+ "tier": 5
+}
