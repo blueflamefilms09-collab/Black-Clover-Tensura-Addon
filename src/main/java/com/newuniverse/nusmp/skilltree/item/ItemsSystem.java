@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import com.newuniverse.nusmp.skilltree.loot.BossBookDrops;
+import com.newuniverse.nusmp.skilltree.loot.LinesLoot;
 import com.newuniverse.nusmp.skilltree.loot.LootConfig;
 import com.newuniverse.nusmp.skilltree.loot.SkillBookLootModifier;
 import net.minecraft.world.item.ItemStack;
@@ -39,6 +40,7 @@ public final class ItemsSystem {
         done = true;
         SkillItems.init(modBus);                                                                    // the two items and the three components
         SkillBookLootModifier.register(modBus);                                                     // the loot modifier type nusmp:skill_books
+        LinesLoot.init(modBus);                                                                     // 1.82.0: the rift chests' modifier nusmp:rift_books, the pity memory, tree.lines.loot
         modBus.addListener(RouteUnlockedPayload::register);                                         // the S2C packet of the banner
         modContainer.registerConfig(ModConfig.Type.SERVER, LootConfig.SPEC, "nusmp-skilltree-loot-server.toml");
         SkillTreeApi.addUnlockListener(UnlockFx::play);                                            // the show of every unlock, by any means

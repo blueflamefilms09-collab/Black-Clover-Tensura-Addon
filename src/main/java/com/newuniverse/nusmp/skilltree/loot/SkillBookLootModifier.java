@@ -88,7 +88,7 @@ public final class SkillBookLootModifier extends LootModifier {
         ServerPlayer killer = LootVictims.killer(context);
         Dice d = dice != null ? dice : context.getRandom()::nextDouble;
         LootRules.Victim victim = new LootRules.Victim(true, killer != null, kind, LootVictims.polarityAt(level, dead), LootVictims.floorAt(level, dead));
-        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d);
+        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d, killer);
         for (ItemStack s : stacks) loot.add(s);
         return stacks.size();
     }

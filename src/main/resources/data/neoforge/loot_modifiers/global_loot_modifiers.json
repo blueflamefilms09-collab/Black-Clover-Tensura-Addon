@@ -3,6 +3,7 @@
   "entries": [
     "nusmp:relic_chests",
     "nusmp:gear_chests",
-    "nusmp:skill_books"
+    "nusmp:skill_books",
+    "nusmp:rift_books"
   ]
 }
