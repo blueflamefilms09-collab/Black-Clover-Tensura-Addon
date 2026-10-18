@@ -26,7 +26,8 @@ BEGIN, END = "_generated.relic_waves.begin", "_generated.relic_waves.end"
 
 # (wave number, batch module, title of the wave in the Javadoc)
 BATCHES = [(31, "relic_rows_rezero", "Re:Zero"), (32, "relic_rows_abyss", "Made in Abyss"), (33, "relic_rows_trk", "Tomb Raider King"),
-           (34, "relic_rows_jjk", "Jujutsu Kaisen"), (35, "relic_rows_fate", "the Fate series"), (36, "relic_rows_rift", "the dimensional rifts and the waypoint")]
+           (34, "relic_rows_jjk", "Jujutsu Kaisen"), (35, "relic_rows_fate", "the Fate series"), (36, "relic_rows_rift", "the dimensional rifts and the waypoint"), (37, "relic_rows_overlord", "Overlord"), (38, "relic_rows_frieren", "Frieren"),
+           (39, "relic_rows_meshi", "Delicious in Dungeon"), (40, "relic_rows_solo", "Solo Leveling"), (41, "relic_rows_mushoku", "Mushoku Tensei")]
 
 
 def all_rows():

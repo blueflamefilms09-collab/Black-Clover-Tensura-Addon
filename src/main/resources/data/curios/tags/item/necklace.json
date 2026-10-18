@@ -160,6 +160,58 @@
     {
       "id": "nusmp:waypoint_anchor",
       "required": false
+    },
+    {
+      "id": "nusmp:albedos_black_wings_brooch",
+      "required": false
+    },
+    {
+      "id": "nusmp:auras_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:beast_clan_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_castle_crest",
+      "required": false
+    },
+    {
+      "id": "nusmp:healers_last_breath_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:lords_table_crest",
+      "required": false
+    },
+    {
+      "id": "nusmp:lycans_moonlit_collar",
+      "required": false
+    },
+    {
+      "id": "nusmp:rudeuss_soundless_chant_brooch",
+      "required": false
+    },
+    {
+      "id": "nusmp:ruijerds_spear_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:staff_mages_journey_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:stone_statue_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:sun_gate_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:wirbels_guard_pendant",
+      "required": false
     }
   ]
 }

@@ -473,6 +473,106 @@
     {
       "id": "nusmp:rift_compass",
       "required": false
+    },
+    {
+      "id": "nusmp:chimeras_spice_rack",
+      "required": false
+    },
+    {
+      "id": "nusmp:cooks_dungeon_pot",
+      "required": false
+    },
+    {
+      "id": "nusmp:crystal_of_resurrection",
+      "required": false
+    },
+    {
+      "id": "nusmp:great_tomb_sigil",
+      "required": false
+    },
+    {
+      "id": "nusmp:grimoire_of_flower_fields",
+      "required": false
+    },
+    {
+      "id": "nusmp:heiters_brandy_flask",
+      "required": false
+    },
+    {
+      "id": "nusmp:heros_statue_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:himmels_sword_sheath_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:hitogamis_dice_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:hobgoblins_rice_bowl",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunters_association_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunters_gate_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:instant_dungeon_compass",
+      "required": false
+    },
+    {
+      "id": "nusmp:kamishs_fang_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:knights_appetite_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:land_of_souls_lantern",
+      "required": false
+    },
+    {
+      "id": "nusmp:magic_of_the_soul_compass",
+      "required": false
+    },
+    {
+      "id": "nusmp:nanahoshis_phone_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:perugiuss_ancient_tower_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:rubedo_thread_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:rune_of_the_system",
+      "required": false
+    },
+    {
+      "id": "nusmp:salamanders_warming_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:scroll_case_of_the_tenth_tier",
+      "required": false
+    },
+    {
+      "id": "nusmp:series_ancient_grimoire",
+      "required": false
+    },
+    {
+      "id": "nusmp:witchs_ladle_of_stirring",
+      "required": false
     }
   ]
 }

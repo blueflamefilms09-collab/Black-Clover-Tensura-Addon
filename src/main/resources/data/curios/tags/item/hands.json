@@ -157,6 +157,66 @@
     {
       "id": "nusmp:zoaholic_ring",
       "required": false
+    },
+    {
+      "id": "nusmp:berus_carapace_gauntlets",
+      "required": false
+    },
+    {
+      "id": "nusmp:cocytuss_frost_gauntlets",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragon_scale_frying_pan",
+      "required": false
+    },
+    {
+      "id": "nusmp:elinalises_rouge_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:elven_healers_staff_bangle",
+      "required": false
+    },
+    {
+      "id": "nusmp:gloves_of_nazarick",
+      "required": false
+    },
+    {
+      "id": "nusmp:golem_garden_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:imitation_ring_of_the_first_class_exam",
+      "required": false
+    },
+    {
+      "id": "nusmp:knight_of_the_shadow_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:monarchs_command_sigil",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_sorcerer_king",
+      "required": false
+    },
+    {
+      "id": "nusmp:roxys_staff_wrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:sebass_butler_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:slime_jelly_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:ubels_slicing_cord",
+      "required": false
     }
   ]
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.74.0] — Crash fix, and 98 more relics (Overlord, Frieren, Delicious in Dungeon, Solo Leveling, Mushoku Tensei)
+
+### FIXED
+- **Server crash (your crash report: `ConcurrentModificationException` in `ExpansionTrigger.onServerTick`).** Cause: the once-a-second sweep that starts a waiting expansion looped over the live list of sectors while `requestPending` queued the next sector, which adds to that same list. Fix: it loops over a copy. I checked the other loops over the sector list: they only read.
+
+### NEW
+- **98 relics in five series**, each with its own sprite, palette and worn ornament (guarded by `RelicUniqueLooksTest`, now covering waves 31 to 80): Overlord (20, wave 37), Frieren (19, wave 38), Delicious in Dungeon (19, wave 39), Solo Leveling (20, wave 40), Mushoku Tensei (20, wave 41). With waves 31 to 36 that is 196 generated relics so far; about 100 more to reach the ~300 you asked for. Names are inspired by the works from my own knowledge of them; the rules text is the mod's own. The relic wave loader now reads waves up to 80.
+- No weapons or consumables in this batch (those need their own meshes and hand models).
+
+### KEPT
+- Everything older. Not done yet from the relic request: hidden relic rooms in ordinary floors.
+
 ## [1.73.0] — Dimensional rifts, hidden pocket realms and the last-location waypoint
 
 Your new brief (Rift Type A and B, the Return Portal and the Last Location Waypoint). **All of it is NEW: nothing like it existed, so nothing was replaced.** I cannot run the game here: the rules are unit-tested and the real-game paths have self-tests that the CI smoke test runs, but the look of the rift in particular has not been seen by me, so tell me what you see.

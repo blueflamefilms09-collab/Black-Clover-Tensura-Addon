@@ -25,7 +25,7 @@ public final class ExpansionTrigger {
         if (server.getTickCount() % EVERY != 0) return;
         ServerLevel level = MegaDungeon.level(server);
         if (level == null || level.players().isEmpty()) return;
-        for (Sector s : MegaData.get(server).sectors()) {
+        for (Sector s : new java.util.ArrayList<>(MegaData.get(server).sectors())) {          // a copy: requestPending queues the next sector, which adds to the live list (the 1.67.0 crash: ConcurrentModificationException)
             if (!s.expansionPending || s.expansionPos == null) continue;
             BlockPos seal = s.expansionPos;
             for (ServerPlayer p : level.players()) {

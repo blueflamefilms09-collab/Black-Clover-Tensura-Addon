@@ -119,6 +119,50 @@
     {
       "id": "nusmp:shroud_of_the_sixth_layer",
       "required": false
+    },
+    {
+      "id": "nusmp:cloak_of_the_floor_guardian",
+      "required": false
+    },
+    {
+      "id": "nusmp:flammes_founder_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:griffins_wing_harness",
+      "required": false
+    },
+    {
+      "id": "nusmp:guild_banner_of_ainz_ooal_gown",
+      "required": false
+    },
+    {
+      "id": "nusmp:mantle_of_the_overlord",
+      "required": false
+    },
+    {
+      "id": "nusmp:mimic_chest_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:sages_bandit_hunter_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:shadow_monarchs_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:six_faced_dragons_scale",
+      "required": false
+    },
+    {
+      "id": "nusmp:zeniths_healing_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:zoltraak_mages_mantle",
+      "required": false
     }
   ]
 }

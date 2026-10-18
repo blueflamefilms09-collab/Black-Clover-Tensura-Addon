@@ -16,7 +16,7 @@ final class WaveRegistry {
 
     private static final Logger LOG = LoggerFactory.getLogger("nusmp");
     private static final String PKG = "com.newuniverse.nusmp.relics.wave.";
-    static final int FIRST = 8, LAST = 40;
+    static final int FIRST = 8, LAST = 80;
 
     static void defs(Consumer<RelicDef> out) {
         call("WaveBoss", "defs", out);

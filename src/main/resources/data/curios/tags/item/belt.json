@@ -60,6 +60,46 @@
     {
       "id": "nusmp:rikos_satchel",
       "required": false
+    },
+    {
+      "id": "nusmp:adventurers_ration_satchel",
+      "required": false
+    },
+    {
+      "id": "nusmp:belt_of_the_eight_edge",
+      "required": false
+    },
+    {
+      "id": "nusmp:dagger_masters_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwarfs_knife_roll",
+      "required": false
+    },
+    {
+      "id": "nusmp:eisens_shield_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:eriss_flaming_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:kelpies_bridle",
+      "required": false
+    },
+    {
+      "id": "nusmp:pauls_old_sword_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:starks_cowardly_axe_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:walking_mushroom_pouch",
+      "required": false
     }
   ]
 }
