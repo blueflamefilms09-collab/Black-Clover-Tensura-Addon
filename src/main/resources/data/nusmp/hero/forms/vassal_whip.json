@@ -1,0 +1,106 @@
+{
+  "weapon": "vassal_whip",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Whip",
+      "desc": "The Vassal Whip as it first answers a wielder: a short braided lash with a violet spark in its pommel. It reaches farther than any blade, slows what it hits, and can bind a foe and pull it in.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "movement_speed": 0.01 },
+      "abilityBonus": {},
+      "skills": { "use": "whip.lash", "sneak": "whip.bind_whip", "key1": "whip.reel_in" },
+      "passives": ["coil"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "vine_whip",
+      "name": "Vine Whip",
+      "desc": "String, leather and vines feed the gem and the lash grows long and supple. The wielder can swing on the whip itself, to a foe or to a ledge.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [
+        { "item": "minecraft:string", "count": 48 },
+        { "item": "minecraft:leather", "count": 16 },
+        { "item": "minecraft:vine", "count": 24 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_speed": 0.2, "reach": 0.5, "movement_speed": 0.02 },
+      "abilityBonus": { "reach": 0.1, "movement_speed": 0.005 },
+      "skills": { "use": "whip.lash", "sneak": "whip.bind_whip", "key1": "whip.reel_in", "key2": "whip.tether_swing" },
+      "passives": ["coil"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "storm_whip",
+      "name": "Storm Whip",
+      "desc": "Copper, lightning rods and amethyst charge the gem. The lash leaves a charge on the foe, the Lightning Whip jumps from foe to foe, and the whip takes up the power of monsters at last: the Command.",
+      "tier": 2,
+      "parents": ["vine_whip"],
+      "requires": [
+        { "item": "minecraft:copper_ingot", "count": 48 },
+        { "item": "minecraft:lightning_rod", "count": 4 },
+        { "item": "minecraft:amethyst_shard", "count": 16 }
+      ],
+      "mastery": 180,
+      "stats": { "attack_damage": 1.0, "reach": 0.5, "movement_speed": 0.03 },
+      "abilityBonus": { "attack_damage": 0.25 },
+      "skills": { "use": "whip.lash", "sneak": "whip.lightning_whip", "key1": "whip.bind_whip", "key2": "whip.tether_swing", "key3": "whip.command" },
+      "passives": ["coil", "static_charge"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "morning_star_whip",
+      "name": "Morning Star Whip",
+      "desc": "Iron and chain weigh the tip into a spiked star, the Morning Star form of the series. The Gigantic Star flattens a crowd, a bound foe takes more from it, and the Command is stronger: the monsters it takes are strengthened.",
+      "tier": 2,
+      "parents": ["vine_whip"],
+      "requires": [
+        { "item": "minecraft:iron_ingot", "count": 40 },
+        { "item": "minecraft:chain", "count": 8 },
+        { "item": "minecraft:flint", "count": 16 }
+      ],
+      "mastery": 180,
+      "stats": { "attack_damage": 3.0, "armor": 2.0, "knockback_resistance": 0.15, "reach": 0.5 },
+      "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "whip.lash", "sneak": "whip.gigantic_star", "key1": "whip.reel_in", "key2": "whip.bind_whip", "key3": "whip.command" },
+      "passives": ["coil", "star_weight", "taskmaster"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "hourglass_whip",
+      "name": "Hourglass Sand Whip",
+      "desc": "Sand, ender pearls and clocks open a door in the lash, the Dragon Hourglass Sand Whip of the series. The wielder steps through gates and swings, the movement techniques come back a fifth sooner, the Command is stronger, and the Dimension Whip binds every foe in reach.",
+      "tier": 3,
+      "parents": ["storm_whip", "morning_star_whip"],
+      "requires": [
+        { "item": "minecraft:sand", "count": 64 },
+        { "item": "minecraft:ender_pearl", "count": 16 },
+        { "item": "minecraft:clock", "count": 4 }
+      ],
+      "mastery": 320,
+      "stats": { "attack_damage": 3.0, "armor": 2.0, "reach": 1.0, "movement_speed": 0.05 },
+      "abilityBonus": { "attack_damage": 0.75, "reach": 0.25, "movement_speed": 0.01 },
+      "skills": { "use": "whip.lash", "sneak": "whip.portal_whip", "key1": "whip.command", "key2": "whip.tether_swing", "key3": "whip.dimension_whip" },
+      "passives": ["coil", "taskmaster", "hourglass_flow"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    }
+  ]
+}

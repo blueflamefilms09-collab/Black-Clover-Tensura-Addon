@@ -1,0 +1,100 @@
+{
+  "weapon": "vassal_axe",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Axe",
+      "desc": "The Vassal Axe as it first answers a wielder: a plain hatchet with a green spark in its cheek. Every full swing, every technique that lands and every kill builds Brawn, the muscle of the axe; spend five of it on Shine Axe Burst.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "movement_speed": 0.01 },
+      "abilityBonus": {},
+      "skills": { "use": "axe.crescent_break", "sneak": "axe.power_break", "key1": "axe.accelerator_smash" },
+      "passives": ["muscle_enhancement"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "timber_axe",
+      "name": "Timber Axe",
+      "desc": "Logs and flint feed the gem and the head widens like a woodcutter's. A full swing now cuts the foes beside the one struck, and the wielder gains the Tornado Axe.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [
+        { "tag": "minecraft:logs", "count": 48 },
+        { "item": "minecraft:flint", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 1.5, "movement_speed": 0.02 },
+      "abilityBonus": { "movement_speed": 0.005 },
+      "skills": { "use": "axe.crescent_break", "sneak": "axe.power_break", "key1": "axe.accelerator_smash", "key2": "axe.tornado_axe" },
+      "passives": ["muscle_enhancement", "cleaving"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "pipe_axe",
+      "name": "Pipe Axe",
+      "desc": "Iron and chain make the haft a pipe of iron, the Pipe Axe of the series. The wielder is harder to move, can hurl the axe and have it return, cuts a line through a crowd with Mountain Break, and the Guillotine and the Headsman finish the wounded.",
+      "tier": 2,
+      "parents": ["timber_axe"],
+      "requires": [
+        { "item": "minecraft:iron_ingot", "count": 56 },
+        { "item": "minecraft:chain", "count": 6 }
+      ],
+      "mastery": 180,
+      "stats": { "attack_damage": 3.0, "attack_speed": -0.1, "armor": 2.0, "knockback_resistance": 0.2 },
+      "abilityBonus": { "armor": 0.5, "knockback_resistance": 0.05 },
+      "skills": { "use": "axe.crescent_break", "sneak": "axe.mountain_break", "key1": "axe.axe_throw", "key2": "axe.power_break", "key3": "axe.guillotine" },
+      "passives": ["muscle_enhancement", "cleaving", "headsman"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "shine_axe",
+      "name": "Shine Axe",
+      "desc": "Emerald, diamond and gold fill the gem with light. Brawn fades half as fast and the axe glows with it, and the blow that spends it, Shine Axe Burst, lights the whole fight.",
+      "tier": 3,
+      "parents": ["pipe_axe"],
+      "requires": [
+        { "item": "minecraft:emerald", "count": 48 },
+        { "item": "minecraft:diamond", "count": 24 },
+        { "item": "minecraft:gold_block", "count": 8 }
+      ],
+      "mastery": 300,
+      "stats": { "attack_damage": 4.5, "armor": 3.0, "knockback_resistance": 0.3, "max_health": 4.0, "movement_speed": 0.03 },
+      "abilityBonus": { "attack_damage": 1.0, "max_health": 1.0 },
+      "skills": { "use": "axe.crescent_break", "sneak": "axe.mountain_break", "key1": "axe.guillotine", "key2": "axe.tornado_axe", "key3": "axe.shine_axe_burst" },
+      "passives": ["muscle_enhancement", "cleaving", "headsman", "radiance"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "curse_axe",
+      "name": "Curse Axe",
+      "desc": "The Curse Axe of the series, taken up in despair: it mends its wielder a little every two seconds as it repairs itself, the Cursed Penetration knocks a raised shield down and leaves a wound that opens a moment later, and the Guillotine finishes the wounded. Only a wielder who has embraced the curse can wear it.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [],
+      "mastery": 150,
+      "stats": { "attack_damage": 5.0, "movement_speed": 0.03, "armor": -2.0 },
+      "abilityBonus": {},
+      "skills": { "use": "axe.crescent_break", "sneak": "axe.cursed_penetration", "key1": "axe.guillotine", "key2": "axe.mountain_break", "key3": "axe.tornado_axe" },
+      "passives": ["muscle_enhancement", "headsman", "self_repair"],
+      "look": "base",
+      "curse": true,
+      "sin": "greed",
+      "corruptionPerSecond": 5
+    }
+  ]
+}
