@@ -240,7 +240,19 @@ public final class RelicDef {
     public Look look() { return look != null ? look : Look.defaultFor(slot); }
 
     /** Every relic is one of a kind in the world except the consumables. */
-    public boolean isUnique() { return slot != RelicSlot.CONSUMABLE; }
+    public boolean isUnique() {
+        Boolean o = UNIQUE_OVERRIDE.apply(id);
+        return o != null ? o : slot != RelicSlot.CONSUMABLE;
+    }
+
+    /** 1.68.0: the God of Order's list of what is and is not one-world-only (UniqueRules sets it while a server runs); null answer = the relic's own default (everything but a consumable). */
+    private static volatile java.util.function.Function<String, Boolean> UNIQUE_OVERRIDE = id -> null;
+
+    /** Sets the list's lookup (the Order's {@code UniqueRules} only). */
+    public static void setUniqueOverride(java.util.function.Function<String, Boolean> f) { UNIQUE_OVERRIDE = f == null ? id -> null : f; }
+
+    /** The default of this relic with no override: one world only, except a consumable. */
+    public boolean uniqueByDefault() { return slot != RelicSlot.CONSUMABLE; }
 
     public Act firstAct() { return acts.isEmpty() ? null : acts.get(0); }
 

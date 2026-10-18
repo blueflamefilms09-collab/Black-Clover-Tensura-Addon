@@ -19,7 +19,7 @@ public final class NUGameRules {
     private NUGameRules() {}
 
     public static GameRules.Key<GameRules.BooleanValue> ZAGRED_BOSS, KOTODAMA_BOSS_REWARD, GRIEF_BLOCKS, WORLD_TREE_TREES_STAY, GOD_TIER_AFFECTS_PLAYERS,
-            FORBIDDEN_START, ANNOUNCE_THREE_LEAF, GRIMOIRE_ROLLS, SKILL_EVOLUTION, ANTI_MAGIC_EVENT_ONLY;
+            FORBIDDEN_START, ANNOUNCE_THREE_LEAF, GRIMOIRE_ROLLS, SKILL_EVOLUTION, ANTI_MAGIC_EVENT_ONLY, GOD_OF_ORDER;
     public static GameRules.Key<GameRules.IntegerValue> PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;
     static final int PVP_CAP_DEFAULT = 40, DAMAGE_DEFAULT = 100, COOLDOWN_DEFAULT = 60;
 
@@ -36,6 +36,7 @@ public final class NUGameRules {
         GRIMOIRE_ROLLS = GameRules.register("nusmpGrimoireRolls", c, GameRules.BooleanValue.create(true));
         SKILL_EVOLUTION = GameRules.register("nusmpSkillEvolution", c, GameRules.BooleanValue.create(true));
         ANTI_MAGIC_EVENT_ONLY = GameRules.register("nusmpAntiMagicEventOnly", c, GameRules.BooleanValue.create(true));
+        GOD_OF_ORDER = GameRules.register("nusmpGodOfOrder", c, GameRules.BooleanValue.create(true));                    // 1.68.0: false = the God of Order never appears (no visits, no taking of duplicates)
         PVP_HIT_CAP_PERCENT = GameRules.register("nusmpPvpHitCapPercent", c, GameRules.IntegerValue.create(PVP_CAP_DEFAULT));
         SPELL_DAMAGE_PERCENT = GameRules.register("nusmpSpellDamagePercent", c, GameRules.IntegerValue.create(DAMAGE_DEFAULT));
         SPELL_COOLDOWN_PERCENT = GameRules.register("nusmpSpellCooldownPercent", c, GameRules.IntegerValue.create(COOLDOWN_DEFAULT));
@@ -65,6 +66,9 @@ public final class NUGameRules {
     public static boolean grimoireRolls(Level l) { return NUConfig.GRIMOIRE_ENABLED.get() && rule(l, GRIMOIRE_ROLLS, true); }
     public static boolean skillEvolution(Level l) { return NUConfig.EVOLUTION_ENABLED.get() && rule(l, SKILL_EVOLUTION, true); }
     public static boolean antiMagicEventOnly(Level l) { return NUConfig.ANTI_MAGIC_EVENT_ONLY.get() && rule(l, ANTI_MAGIC_EVENT_ONLY, true); }
+
+    /** 1.68.0: may the God of Order appear (and the Order enforce the one-world relics)? The gamerule {@code nusmpGodOfOrder}, default true. */
+    public static boolean godOfOrder(Level l) { return rule(l, GOD_OF_ORDER, true); }
 
     // ---------------------------------------------------------------- numbers: the gamerule once changed, else the config
     /** The most one addon spell hit can take from a player, as a share of their max health (0..1). */

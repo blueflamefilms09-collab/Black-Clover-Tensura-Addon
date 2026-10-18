@@ -65,6 +65,7 @@ public final class OrderEvents {
     static void onServerStarted(ServerStartedEvent e) {
         MinecraftServer server = e.getServer();
         UniqueLedger.bind(server);
+        UniqueRules.bind(server);                                                          // 1.68.0: the God of Order's list of one-world-only relics
         UniqueLedger l = UniqueLedger.get(server);
         LOG.info("[nusmp] The Order's ledger: {} relics written ({} alive), mode {}", l.entries().size(), l.liveCount(), l.mode(server.overworld().getGameTime()));
     }
@@ -73,6 +74,7 @@ public final class OrderEvents {
         OrderDirector.clear();
         RelicScanner.clear();
         UniqueLedger.unbind();
+        UniqueRules.unbind();
     }
 
     static void onServerTick(ServerTickEvent.Post e) { OrderDirector.onServerTick(e.getServer()); }

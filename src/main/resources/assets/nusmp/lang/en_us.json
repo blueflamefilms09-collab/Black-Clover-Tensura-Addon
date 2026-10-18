@@ -637,6 +637,8 @@
   "block.nusmp.underworld_matter": "Underworld Matter",
   "item.nusmp.otherworld_trident": "Otherworldly Trident",
   "item.nusmp.otherworld_trident.desc": "Spoken into being by Kotodama. Right-click: hurl a void bolt. Fades after 60 s or if it leaves your hands.",
+  "gamerule.nusmpGodOfOrder": "The God of Order may appear",
+  "gamerule.nusmpGodOfOrder.description": "On by default. Off: the God of Order never appears (no visits, nothing is taken), a visit in progress ends, and /multiverse relic order summon refuses. The one-world list (/multiverse relic order unique ...) still decides what counts as a duplicate.",
   "gamerule.nusmpZagredBoss": "Zagred boss can be summoned",
   "gamerule.nusmpZagredBoss.description": "Lets an op summon the Zagred boss with /multiverse boss zagred (also on if zagredBossEnabled is on in the server config).",
   "gamerule.nusmpKotodamaBossReward": "Zagred boss gives Kotodama",

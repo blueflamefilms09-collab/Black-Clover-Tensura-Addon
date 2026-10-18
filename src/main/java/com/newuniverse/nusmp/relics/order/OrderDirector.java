@@ -76,6 +76,11 @@ public final class OrderDirector {
     /** Every server tick (post). */
     public static void onServerTick(MinecraftServer server) {
         long now = server.overworld().getGameTime();
+        if (!com.newuniverse.nusmp.NUGameRules.godOfOrder(server.overworld())) {         // 1.68.0: the gamerule nusmpGodOfOrder is off: no visit, the one in progress ends, nothing is taken
+            if (active != null) finish(server, active);
+            for (String id : BOOK.ids()) BOOK.forget(id);
+            return;
+        }
         if (active != null) {
             try {
                 tickCase(server, active, now);
@@ -115,6 +120,7 @@ public final class OrderDirector {
      */
     static boolean start(MinecraftServer server, Sighting s, boolean show) {
         if (active != null) return false;
+        if (!com.newuniverse.nusmp.NUGameRules.godOfOrder(server.overworld())) return false;      // 1.68.0: the gamerule keeps the God away, even when an admin calls it
         ServerLevel level = RelicScanner.levelOf(server, s.spot().dim());
         if (level == null) return false;
         long now = server.overworld().getGameTime();

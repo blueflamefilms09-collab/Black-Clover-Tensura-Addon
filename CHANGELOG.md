@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.68.0] — The God of Order's rulebook: a gamerule and a one-world command list
+
+The owner asked for a gamerule that disables the God of Order entity and for a command list on the God of Order that sets what is and is not one world only. **Nothing has been run in a game client.**
+
+### NEW (nothing replaced)
+- **Gamerule `nusmpGodOfOrder`** (default true). Off: the God never appears, a visit in progress ends, the waiting list is dropped, `/multiverse relic order summon` refuses, and nothing is taken.
+- **`/multiverse relic order unique ...`** (permission 2): `list`, `show <id>`, `set <id> one_world|many`, `reset <id>`, `reset_all`, `grade <grade> one_world|many`, `all one_world|many`. The list is saved with the world (`nusmp_relic_unique_rules`, only what an operator changed) and plugged into `RelicDef.isUnique`, so the ledger, the scanner, the loot roll, the commands and the vaults all obey it. A relic set to `many` can be rolled from loot as often as it comes up; a relic set to `one_world` after copies exist is not purged (the first copy found becomes the valid one).
+- By default nothing changes: every relic but a consumable is one world only, as before.
+
 ## [1.67.0] — D&D's famous bosses in the dungeons
 
 The owner asked for famous D&D bosses in the dungeons. **Nothing has been run in a game client.**

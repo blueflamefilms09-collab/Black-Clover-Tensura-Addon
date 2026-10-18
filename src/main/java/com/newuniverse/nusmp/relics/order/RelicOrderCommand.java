@@ -26,6 +26,8 @@ import java.util.Map;
  *   <li>{@code status}: the mode, the waiting list, the running visit and every relic's last known place</li>
  *   <li>{@code release <id>}: the valid copy of a relic is declared lost (it can be issued or found again; the old copy becomes a duplicate if it shows up)</li>
  *   <li>{@code summon <player> <id>}: the God of Order is sent to a player for a relic, at once, whether or not a duplicate exists</li>
+ *   <li>1.68.0 {@code unique ...}: the list of what is and is not one world only (see {@link UniqueRules}): {@code list}, {@code show <id>}, {@code set <id> one_world|many}, {@code reset <id>},
+ *       {@code reset_all}, {@code grade <grade> one_world|many}, {@code all one_world|many}. The gamerule {@code nusmpGodOfOrder} (default true) keeps the God away altogether.</li>
  * </ul>
  */
 public final class RelicOrderCommand {
@@ -40,10 +42,125 @@ public final class RelicOrderCommand {
                 .then(Commands.literal("release")
                         .then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(ids(), b))
                                 .executes(RelicOrderCommand::release)))
+                .then(uniqueTree())
                 .then(Commands.literal("summon")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(ids(), b))
                                         .executes(RelicOrderCommand::summon))))));
+    }
+
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> uniqueTree() {
+        var mode = Commands.argument("mode", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(List.of("one_world", "many"), b));
+        return Commands.literal("unique")
+                .then(Commands.literal("list").executes(RelicOrderCommand::uniqueList))
+                .then(Commands.literal("show").then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(ids(), b)).executes(RelicOrderCommand::uniqueShow)))
+                .then(Commands.literal("set").then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(ids(), b))
+                        .then(mode.executes(RelicOrderCommand::uniqueSet))))
+                .then(Commands.literal("reset").then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(ids(), b)).executes(RelicOrderCommand::uniqueReset)))
+                .then(Commands.literal("reset_all").executes(RelicOrderCommand::uniqueResetAll))
+                .then(Commands.literal("grade").then(Commands.argument("grade", StringArgumentType.word())
+                        .suggests((c, b) -> SharedSuggestionProvider.suggest(java.util.Arrays.stream(com.newuniverse.nusmp.relics.Grade.values()).map(g -> g.name().toLowerCase(java.util.Locale.ROOT)).toList(), b))
+                        .then(Commands.argument("mode", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(List.of("one_world", "many"), b)).executes(RelicOrderCommand::uniqueGrade))))
+                .then(Commands.literal("all").then(Commands.argument("mode", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(List.of("one_world", "many"), b)).executes(RelicOrderCommand::uniqueAll)));
+    }
+
+    /** "one_world" -> true, "many" -> false, anything else null. */
+    static Boolean parseMode(String s) {
+        if (s == null) return null;
+        return switch (s.toLowerCase(java.util.Locale.ROOT)) {
+            case "one_world", "one", "unique" -> Boolean.TRUE;
+            case "many", "any", "free" -> Boolean.FALSE;
+            default -> null;
+        };
+    }
+
+    private static int uniqueList(CommandContext<CommandSourceStack> ctx) {
+        UniqueRules r = UniqueRules.get(ctx.getSource().getServer());
+        int[] c = UniqueRules.counts();
+        ctx.getSource().sendSuccess(() -> Component.literal("One world only: " + c[0] + " relics. May exist many times: " + c[1] + ". Changed by an operator: " + r.all().size() + "."), false);
+        int shown = 0;
+        for (Map.Entry<String, Boolean> e : r.all().entrySet()) {
+            if (shown++ >= 40) {
+                int more = r.all().size() - 40;
+                ctx.getSource().sendSuccess(() -> Component.literal("  ... and " + more + " more"), false);
+                break;
+            }
+            String line = "  " + e.getKey() + ": " + (e.getValue() ? "one world only" : "many");
+            ctx.getSource().sendSuccess(() -> Component.literal(line), false);
+        }
+        return 1;
+    }
+
+    private static int uniqueShow(CommandContext<CommandSourceStack> ctx) {
+        String id = StringArgumentType.getString(ctx, "id");
+        RelicDef d = Relics.byId(id);
+        if (d == null) { ctx.getSource().sendFailure(Component.literal("There is no relic '" + id + "'.")); return 0; }
+        Boolean o = UniqueRules.get(ctx.getSource().getServer()).override(id);
+        ctx.getSource().sendSuccess(() -> Component.literal(OrderText.titleCase(id) + ": " + (d.isUnique() ? "one world only" : "may exist many times")
+                + (o == null ? " (the default)" : " (set by an operator; the default is " + (d.uniqueByDefault() ? "one world only" : "many") + ")")), false);
+        return 1;
+    }
+
+    private static int uniqueSet(CommandContext<CommandSourceStack> ctx) {
+        String id = StringArgumentType.getString(ctx, "id");
+        Boolean mode = parseMode(StringArgumentType.getString(ctx, "mode"));
+        RelicDef d = Relics.byId(id);
+        if (d == null) { ctx.getSource().sendFailure(Component.literal("There is no relic '" + id + "'.")); return 0; }
+        if (mode == null) { ctx.getSource().sendFailure(Component.literal("Say one_world or many.")); return 0; }
+        UniqueRules.get(ctx.getSource().getServer()).set(d.isPairLeft() ? d.pairBaseId() : id, mode);
+        ctx.getSource().sendSuccess(() -> Component.literal(OrderText.titleCase(id) + " is now " + (mode ? "one world only (a copy that already exists becomes the valid one; extra copies are taken once the Order enforces)" : "allowed to exist many times") + "."), true);
+        UniqueLedger.scan(ctx.getSource().getServer());
+        return 1;
+    }
+
+    private static int uniqueReset(CommandContext<CommandSourceStack> ctx) {
+        String id = StringArgumentType.getString(ctx, "id");
+        boolean had = UniqueRules.get(ctx.getSource().getServer()).reset(id);
+        ctx.getSource().sendSuccess(() -> Component.literal(had ? OrderText.titleCase(id) + " is back to its default." : OrderText.titleCase(id) + " had no setting."), true);
+        return had ? 1 : 0;
+    }
+
+    private static int uniqueResetAll(CommandContext<CommandSourceStack> ctx) {
+        int n = UniqueRules.get(ctx.getSource().getServer()).resetAll();
+        ctx.getSource().sendSuccess(() -> Component.literal(n + " settings cleared: every relic has its default again."), true);
+        return n;
+    }
+
+    private static int uniqueGrade(CommandContext<CommandSourceStack> ctx) {
+        String g = StringArgumentType.getString(ctx, "grade");
+        Boolean mode = parseMode(StringArgumentType.getString(ctx, "mode"));
+        com.newuniverse.nusmp.relics.Grade grade = null;
+        for (com.newuniverse.nusmp.relics.Grade x : com.newuniverse.nusmp.relics.Grade.values()) if (x.name().equalsIgnoreCase(g)) grade = x;
+        if (grade == null) { ctx.getSource().sendFailure(Component.literal("There is no grade '" + g + "'.")); return 0; }
+        if (mode == null) { ctx.getSource().sendFailure(Component.literal("Say one_world or many.")); return 0; }
+        UniqueRules r = UniqueRules.get(ctx.getSource().getServer());
+        int n = 0;
+        for (RelicDef d : Relics.all()) {
+            if (d.grade() != grade || d.isPairLeft() || d.slot() == com.newuniverse.nusmp.relics.RelicSlot.CONSUMABLE) continue;
+            r.set(d.id(), mode);
+            n++;
+        }
+        int count = n;
+        String gradeLabel = grade.label();
+        ctx.getSource().sendSuccess(() -> Component.literal(count + " " + gradeLabel + " relics are now " + (mode ? "one world only" : "allowed to exist many times") + "."), true);
+        UniqueLedger.scan(ctx.getSource().getServer());
+        return count;
+    }
+
+    private static int uniqueAll(CommandContext<CommandSourceStack> ctx) {
+        Boolean mode = parseMode(StringArgumentType.getString(ctx, "mode"));
+        if (mode == null) { ctx.getSource().sendFailure(Component.literal("Say one_world or many.")); return 0; }
+        UniqueRules r = UniqueRules.get(ctx.getSource().getServer());
+        int n = 0;
+        for (RelicDef d : Relics.all()) {
+            if (d.isPairLeft() || d.slot() == com.newuniverse.nusmp.relics.RelicSlot.CONSUMABLE) continue;
+            r.set(d.id(), mode);
+            n++;
+        }
+        int count = n;
+        ctx.getSource().sendSuccess(() -> Component.literal(count + " relics are now " + (mode ? "one world only" : "allowed to exist many times") + "."), true);
+        UniqueLedger.scan(ctx.getSource().getServer());
+        return count;
     }
 
     private static List<String> ids() {
@@ -115,6 +232,10 @@ public final class RelicOrderCommand {
     private static int summon(CommandContext<CommandSourceStack> ctx) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
         String id = StringArgumentType.getString(ctx, "id");
+        if (!com.newuniverse.nusmp.NUGameRules.godOfOrder(ctx.getSource().getServer().overworld())) {
+            ctx.getSource().sendFailure(Component.literal("The God of Order is switched off by the gamerule nusmpGodOfOrder."));
+            return 0;
+        }
         RelicDef def = Relics.byId(id);
         if (def == null) {
             ctx.getSource().sendFailure(Component.literal("There is no relic '" + id + "'."));
