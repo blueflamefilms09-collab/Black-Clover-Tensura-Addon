@@ -25,6 +25,7 @@ public final class MegaCommands {
         mega.then(com.newuniverse.nusmp.labyrinth.mega.flow.FlowRegistry.command());         // flow: the Rukh flow
         mega.then(com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.command());         // gear: standard Normal / Special / Rare gear
         mega.then(com.newuniverse.nusmp.labyrinth.mega.party.PartyRegistry.command());       // party: list, of, tp, set (admin)
+        mega.then(com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.command());         // rift: dimensional rifts, pocket realms, the waypoint (open, list, pocket, waypoint)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.hub.HubRegistry.command());           // hub: Floor 0, the Sanctuary Hub (status, tp, plaza, gates)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.crucible.CrucibleCommand.command());   // crucible: status, roll, reset, catastrophe
         mega.then(com.newuniverse.nusmp.labyrinth.mega.macro.MacroCommand.command());         // macro: info, sample (what the Hub generator would place)

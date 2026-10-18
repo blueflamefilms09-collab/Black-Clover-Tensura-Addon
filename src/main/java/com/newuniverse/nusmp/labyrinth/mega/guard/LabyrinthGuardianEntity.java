@@ -120,6 +120,15 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
                 sector == null ? null : FloorMap.label(sector.lastFloor()));
     }
 
+    /**
+     * 1.72.0: the secret boss of a pocket realm (a rift): it gates no sector (id -1) and calls from no altar, but it is scaled and given its D&D profile by the signed floor the rift was opened on, and
+     * the boss bar names that floor.
+     */
+    public void configureForFloor(int floor, RegionTheme theme) {
+        floorNo = Math.max(1, Math.abs(floor));
+        configure(-1, FloorMap.threat(floor), theme, null, FloorMap.label(floor));
+    }
+
     /** Sets which sector's boss this is (a bare id, for tests) and rescales it; the boss bar then names no floor. */
     public void configure(int sectorId, int threat, RegionTheme theme, BlockPos anchor) {
         floorNo = Math.max(1, threat);

@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.73.0] — Dimensional rifts, hidden pocket realms and the last-location waypoint
+
+Your new brief (Rift Type A and B, the Return Portal and the Last Location Waypoint). **All of it is NEW: nothing like it existed, so nothing was replaced.** I cannot run the game here: the rules are unit-tested and the real-game paths have self-tests that the CI smoke test runs, but the look of the rift in particular has not been seen by me, so tell me what you see.
+
+### NEW
+- **The rift** (`nusmp:dimensional_rift`, no item): a vertical tear drawn by a block entity renderer: a window onto another place (End star field / the mod's crimson void / End gateway field), a bright rim and jagged electrical arcs that re-roll every 3 ticks, a soft glow, Light/Dark Rukh aura particles; opens, holds, gutters, closes.
+- **Type B, shortcut rifts:** jump 3 to 5 floors on, never past a boss floor's seal; a rift whose destination is not built yet is dim and has the floors built for it.
+- **Type A, pocket rifts:** an instanced hidden realm (a cell of a far field of the Mega-Dungeon's dimension; a second dimension per rift cannot be made at run time) with either a secret boss or a puzzle vault, a vault of three chests with the dungeon's loot tables (the rare loot), a collapse timer and a clean-up. Whoever enters the same rift shares it.
+- **The waypoint** (your `PlayerDungeonWaypoint`; dimension, level, floor, position, rotation) kept in the player's persistent data (NeoForge 1.21 has no capability for this), sampled every 2 s, honoured only on a floor of the player's own party.
+- **Relics (wave 36):** Return Crystal, Gate Key (also opens a Return Portal on Floor 0), Rift Compass, Pocket Key, Waypoint Anchor, each with its own sprite, palette and worn ornament.
+- Config `nusmp-labyrinth-mega-rift-server.toml`, commands `/multiverse mega rift ...`, self-tests `rift.*`, docs `docs/labyrinth/rifts.md`.
+
+### KEPT
+- Everything else. The Labyrinth Guardian gained one method (`configureForFloor`) for the pocket's secret boss; its other behaviour is unchanged.
+
+### Not done
+- Rift Type B jumps are held at boss floors on purpose; tell me if you want them to cross cleared boss floors.
+- The Tier / "Metal Vessel" / 15-mob / WFC systems of the same brief already exist from 1.54.0 to 1.58.0 and were not rebuilt.
+
 ## [1.72.0] — Every bow is the size and pose of Minecraft's bow
 
 From your screenshots: the brown bow (vanilla's) looked right and the golden Legendary Bow did not. I could not look at the game here, so this is found by measuring the files.

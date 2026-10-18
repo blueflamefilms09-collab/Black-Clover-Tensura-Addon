@@ -30,6 +30,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowRegistry.init(modBus);         // the Rukh flow, the decennial Metal Vessel
         com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.init(modBus);         // standard Normal / Special / Rare gear drops
         com.newuniverse.nusmp.labyrinth.mega.party.PartyRegistry.init(modBus);       // 1.58.0 parties: lanes per party, the book, the System's party provider, self-tests
+        com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.init(modBus);         // 1.72.0 dimensional rifts, pocket realms and the waypoint
         var bus = NeoForge.EVENT_BUS;
         com.newuniverse.nusmp.labyrinth.mega.gen.MegaGenRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
@@ -47,5 +48,6 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.party.PartyRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.register(bus);
     }
 }

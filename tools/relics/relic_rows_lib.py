@@ -13,6 +13,7 @@ A relic is one `R(...)` row:  R(name, slot, look, grade, (main, trim, glow), ico
   acts    a tuple of (name, cooldown_seconds, mana_percent, spec, flavour[, uses_per_day[, needs_sneak]]); the first runs on use, the second on sneak + use, the rest on the key
       spec = one or more calls joined by '+':
         heal:N  regen:SEC:AMP  buff:EFFECT:SEC:AMP  shield:ABSORB:SEC  aoe:RADIUS:DAMAGE:TYPE:EFFECT:SEC:AMP  bolt:RANGE:DAMAGE:TYPE:EFFECT:SEC:AMP  dash:N  blink:N  lend:SKILL:SEC
+        rift:crystal|key|portal|mark|sense|pocket  (the dimensional rifts and the waypoint: RiftActs)
         cleanse  allies:RADIUS:EFFECT:SEC:AMP  mark:RADIUS:SEC  second:FRACTION:SEC  drain:RADIUS:DAMAGE:TYPE  gale:RADIUS:STRENGTH  pull:RADIUS:STRENGTH  ignite:RADIUS:SEC
         (TYPE: magic fire cold bolt expl wither thorns hit sonic; EFFECT '-' = none)
 Why a vocabulary: see labyrinth-free Wave31Acts.java: every ability is one of these shapes on the relic core's own helpers."""
@@ -114,6 +115,9 @@ def call_java(spec):
     if k == "gale": return "Wave31Acts.gale(ctx, %s, %s)" % (f(1), f(2))
     if k == "pull": return "Wave31Acts.pull(ctx, %s, %s)" % (f(1), f(2))
     if k == "ignite": return "Wave31Acts.ignite(ctx, %s, %d)" % (f(1), n(2))
+    if k == "rift":                                         # 1.72.0: rift:crystal | key | portal | mark | sense | pocket  (RiftActs, the dimensional rifts and the waypoint)
+        if p[1] not in ("crystal", "key", "portal", "mark", "sense", "pocket"): raise ValueError("unknown rift call " + spec)
+        return "RiftActs.%s(ctx)" % p[1]
     raise ValueError("unknown act spec " + spec)
 
 

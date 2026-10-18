@@ -156,6 +156,10 @@
     {
       "id": "nusmp:white_whistle",
       "required": false
+    },
+    {
+      "id": "nusmp:waypoint_anchor",
+      "required": false
     }
   ]
 }

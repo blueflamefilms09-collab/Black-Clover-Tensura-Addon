@@ -218,6 +218,11 @@ relic assassins_hundred_faces_mask helm_horned uq_assassins_hundred_faces_mask
 relic casters_rule_breaker_cowl hood_pointed uq_casters_rule_breaker_cowl
 relic kotomines_black_keys_cord belt_buckled uq_kotomines_black_keys_cord
 relic noble_phantasm_token charm_orbit uq_noble_phantasm_token
+relic return_crystal charm_orbit uq_return_crystal
+relic gate_key charm_tome uq_gate_key
+relic rift_compass charm_orbit uq_rift_compass
+relic pocket_key charm_beads uq_pocket_key
+relic waypoint_anchor pendant_drop uq_waypoint_anchor
 relic arcane_conduction_armor chest_conduction coil_arm@rarm coil_arm@larm~
 relic armor_of_plot chest_plot pauldron_plate@rarm pauldron_plate@larm~ deco_halo_back
 relic armor_of_the_defiant_dawn chest_dawn pauldron_rays@rarm pauldron_rays@larm~

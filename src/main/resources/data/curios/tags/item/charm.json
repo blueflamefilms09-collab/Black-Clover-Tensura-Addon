@@ -457,6 +457,22 @@
     {
       "id": "nusmp:unlimited_blade_works_brooch",
       "required": false
+    },
+    {
+      "id": "nusmp:gate_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:pocket_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:return_crystal",
+      "required": false
+    },
+    {
+      "id": "nusmp:rift_compass",
+      "required": false
     }
   ]
 }
