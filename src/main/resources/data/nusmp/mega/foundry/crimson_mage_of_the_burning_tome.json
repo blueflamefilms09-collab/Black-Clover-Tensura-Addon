@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura"
+ ],
+ "animation": "slim__none-grimoire__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e4b163",
+ "height": 1.94,
+ "id": "crimson_mage_of_the_burning_tome",
+ "name": "Crimson Mage of the Burning Tome",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 3
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "regrowth",
+  "ice_bind",
+  "ward_allies"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "tentacle_choir_cultist_matron",
+ "name": "Tentacle Choir Cultist Matron",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Re:Zero",
+ "tier": 3
+}

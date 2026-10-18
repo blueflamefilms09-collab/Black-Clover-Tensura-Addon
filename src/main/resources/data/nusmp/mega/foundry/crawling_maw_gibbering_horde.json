@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "vampiric_bite"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "slime",
+ "glow": "#e1dbc8",
+ "height": 1.41,
+ "id": "crawling_maw_gibbering_horde",
+ "name": "Crawling Maw Gibbering Horde",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gibbering mouther",
+ "tier": 3
+}

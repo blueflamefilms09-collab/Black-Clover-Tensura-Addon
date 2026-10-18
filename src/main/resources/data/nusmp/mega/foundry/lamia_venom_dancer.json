@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "shadow_step"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#606066",
+ "height": 1.94,
+ "id": "lamia_venom_dancer",
+ "name": "Lamia Venom Dancer",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: lamia",
+ "tier": 3
+}

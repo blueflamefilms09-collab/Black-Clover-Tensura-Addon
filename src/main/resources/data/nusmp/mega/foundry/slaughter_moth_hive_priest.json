@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "swarm_call",
+  "miasma"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#efe990",
+ "height": 1.94,
+ "id": "slaughter_moth_hive_priest",
+ "name": "Slaughter Moth Hive Priest",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Made in Abyss",
+ "tier": 3
+}

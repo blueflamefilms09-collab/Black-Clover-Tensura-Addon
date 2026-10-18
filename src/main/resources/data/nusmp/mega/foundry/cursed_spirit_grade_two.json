@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "ground_slam"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "demon",
+ "glow": "#cdd3d8",
+ "height": 3.09,
+ "id": "cursed_spirit_grade_two",
+ "name": "Cursed Spirit Grade Two",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "Jujutsu Kaisen",
+ "tier": 3
+}

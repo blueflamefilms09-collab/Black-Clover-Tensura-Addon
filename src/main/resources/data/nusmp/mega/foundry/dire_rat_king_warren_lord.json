@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "swarm_call",
+  "call_wolves"
+ ],
+ "animation": "broad__mace-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "beast",
+ "glow": "#d8c8a0",
+ "height": 2.09,
+ "id": "dire_rat_king_warren_lord",
+ "name": "Dire Rat King Warren Lord",
+ "road": "abyssal",
+ "size": 1.1,
+ "source": "D&D: rat king",
+ "tier": 3
+}

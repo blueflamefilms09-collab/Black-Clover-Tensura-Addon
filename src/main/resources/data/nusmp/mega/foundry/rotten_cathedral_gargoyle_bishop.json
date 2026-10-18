@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "hex"
+ ],
+ "animation": "broad__mace-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "rotten_cathedral_gargoyle_bishop",
+ "name": "Rotten Cathedral Gargoyle Bishop",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gargoyle",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "frost_aura",
+  "dread_gaze"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "undead",
+ "glow": "#c8d8ff",
+ "height": 1.94,
+ "id": "gelid_banshee_choirmaster",
+ "name": "Gelid Banshee Choirmaster",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: banshee",
+ "tier": 3
+}

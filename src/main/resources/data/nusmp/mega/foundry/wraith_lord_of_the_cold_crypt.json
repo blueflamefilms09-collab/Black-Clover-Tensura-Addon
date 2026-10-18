@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "frost_aura",
+  "shadow_dash"
+ ],
+ "animation": "lanky__scythe-none__auto-auto-hover",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#a0e8ff",
+ "height": 2.31,
+ "id": "wraith_lord_of_the_cold_crypt",
+ "name": "Wraith Lord of the Cold Crypt",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: wraith",
+ "tier": 3
+}

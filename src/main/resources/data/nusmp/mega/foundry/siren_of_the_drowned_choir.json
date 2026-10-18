@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "soul_siphon",
+  "ice_bind"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#f4f0f4",
+ "height": 1.94,
+ "id": "siren_of_the_drowned_choir",
+ "name": "Siren of the Drowned Choir",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 3
+}

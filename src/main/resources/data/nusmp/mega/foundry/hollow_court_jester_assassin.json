@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "lunge"
+ ],
+ "animation": "small__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 1.5,
+ "id": "hollow_court_jester_assassin",
+ "name": "Hollow Court Jester Assassin",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 3
+}

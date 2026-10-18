@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "miasma",
+  "troll_blood"
+ ],
+ "animation": "lanky__scythe-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#97976a",
+ "height": 2.31,
+ "id": "rotwood_treant_blightcaller",
+ "name": "Rotwood Treant Blightcaller",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "D&D: blight",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "stoneskin"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#cdac75",
+ "height": 3.09,
+ "id": "hag_coven_mother",
+ "name": "Hag Coven Mother",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "D&D: annis hag",
+ "tier": 3
+}

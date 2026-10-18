@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "life_drain",
+  "cleave"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "undead",
+ "glow": "#ff3050",
+ "height": 2.09,
+ "id": "skull_throne_death_knight",
+ "name": "Skull Throne Death Knight",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: death knight",
+ "tier": 3
+}

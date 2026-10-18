@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "vampiric_bite",
+  "blink"
+ ],
+ "animation": "average__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "vampire_count_of_the_blood_gala",
+ "name": "Vampire Count of the Blood Gala",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: vampire",
+ "tier": 3
+}
