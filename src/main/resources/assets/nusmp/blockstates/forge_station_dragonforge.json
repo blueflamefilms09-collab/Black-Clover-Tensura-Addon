@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "nusmp:block/forge_station_dragonforge"
+    },
+    "lit=true": {
+      "model": "nusmp:block/forge_station_dragonforge_lit"
+    }
+  }
+}

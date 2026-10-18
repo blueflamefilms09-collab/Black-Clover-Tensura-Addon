@@ -12,6 +12,10 @@
     "nusmp:sigil_plate",
     "nusmp:riddle_stone",
     "nusmp:relic_forge",
-    "nusmp:soul_forge"
+    "nusmp:soul_forge",
+    "nusmp:forge_station_basic",
+    "nusmp:forge_station_magisteel",
+    "nusmp:forge_station_mythril",
+    "nusmp:forge_station_dragonforge"
   ]
 }

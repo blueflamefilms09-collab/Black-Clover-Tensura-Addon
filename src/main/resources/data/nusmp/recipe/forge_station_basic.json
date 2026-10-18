@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "F": { "item": "minecraft:furnace" },
+    "A": { "item": "minecraft:anvil" },
+    "S": { "item": "minecraft:smooth_stone" }
+  },
+  "pattern": [
+    "III",
+    "FAF",
+    "SSS"
+  ],
+  "result": { "id": "nusmp:forge_station_basic", "count": 1 }
+}

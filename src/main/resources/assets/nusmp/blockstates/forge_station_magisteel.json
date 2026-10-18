@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "nusmp:block/forge_station_magisteel"
+    },
+    "lit=true": {
+      "model": "nusmp:block/forge_station_magisteel_lit"
+    }
+  }
+}
