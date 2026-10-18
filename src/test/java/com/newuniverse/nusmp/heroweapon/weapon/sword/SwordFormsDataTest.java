@@ -75,7 +75,10 @@ class SwordFormsDataTest {
         assertTrue(checkText(text.replaceFirst("\"attack_speed\": 0.3", "\"attack_speed\": 3.3")).stream().anyMatch(s -> s.contains("attack_speed")));
         assertTrue(checkText(text.replaceFirst("tensura:mithril_ingot", "tensura:no_such_item")).stream().anyMatch(s -> s.contains("verified")));
         assertTrue(checkText(text.replaceFirst("\"sin\": \"gluttony\"", "\"sin\": \"lust\"")).stream().anyMatch(s -> s.contains("sin")));
-        assertTrue(checkText(text.replaceFirst("\"parents\": \\[\"hundred_sword\", \"phoenix_sword\"\\]", "\"parents\": [\"hundred_sword\", \"no_form\"]")).stream().anyMatch(s -> s.contains("unknown parent")));
+        assertTrue(checkText(text.replaceFirst("\"parents\": \\[\"hundred_sword\", \"tortoise_carapace_sword\"\\]", "\"parents\": [\"hundred_sword\", \"no_form\"]")).stream().anyMatch(s -> s.contains("unknown parent")));
+        // the tier is the depth in the tree: a tier-2 form under the base form (depth 1), and the old tier 3 of Sword of Greed III under a tier-1 parent, are both refused
+        assertTrue(checkText(text.replaceFirst("\"tier\": 2, \"parents\": \\[\"flash_sword\"\\]", "\"tier\": 2, \"parents\": [\"base\"]")).stream().anyMatch(s -> s.contains("must be 1")));
+        assertTrue(checkText(text.replaceFirst("\"parents\": \\[\"sword_of_greed\", \"assassin_sword\"\\]", "\"parents\": [\"sword_of_greed\"]")).stream().anyMatch(s -> s.contains("must be 2")));
         assertTrue(checkText(text.replaceFirst("\"key3\": \"sword.insatiable_maw\"", "\"key3\": \"sword.lightning_hundred\"")).stream().anyMatch(s -> s.contains("ultimates") || s.contains("no form lists")));
         assertFalse(checkText("{ \"weapon\": \"legendary_sword\", \"forms\": [] }").isEmpty());
     }

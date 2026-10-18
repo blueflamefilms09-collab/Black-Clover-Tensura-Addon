@@ -32,7 +32,7 @@
     {
       "id": "meteor_sword", "name": "Meteor Sword",
       "desc": "The sword of the shooting star. Every fifth blow calls a star down on the foe, and the blade can rain stars in a ring and cleave from the air.",
-      "tier": 2, "parents": ["base"],
+      "tier": 2, "parents": ["flash_sword"],
       "requires": [ { "item": "minecraft:amethyst_shard", "count": 32 }, { "item": "minecraft:iron_ingot", "count": 32 }, { "item": "minecraft:gold_ingot", "count": 16 } ],
       "mastery": 140,
       "stats": { "attack_damage": 3.0, "attack_speed": 0.2 }, "abilityBonus": { "attack_damage": 0.5 },
@@ -52,7 +52,7 @@
     {
       "id": "spirit_tortoise_sword", "name": "Spirit Tortoise Sword",
       "desc": "A heavy, patient blade. Its blows drag at a foe's legs, it makes the weight round a foe grow, and its point can go through armour.",
-      "tier": 2, "parents": ["base"],
+      "tier": 2, "parents": ["wind_king_katana"],
       "requires": [ { "item": "tensura:armorsaurus_scale", "count": 16 }, { "item": "minecraft:prismarine_shard", "count": 32 } ],
       "mastery": 150,
       "stats": { "attack_damage": 3.0, "armor": 2.0, "knockback_resistance": 0.1 }, "abilityBonus": { "armor": 0.5 },
@@ -82,7 +82,7 @@
     {
       "id": "hundred_sword", "name": "Hundred Sword",
       "desc": "The blade that splits into a hundred. Every tenth blow rains a few of them on the foe, and the Hundred Swords technique rains them on a whole circle.",
-      "tier": 4, "parents": ["meteor_sword", "wind_king_katana"],
+      "tier": 4, "parents": ["phoenix_sword", "wind_king_katana"],
       "requires": [ { "item": "minecraft:iron_ingot", "count": 64 }, { "item": "minecraft:diamond", "count": 12 }, { "item": "tensura:mithril_ingot", "count": 8 } ],
       "mastery": 330,
       "stats": { "attack_damage": 8.0, "attack_speed": 0.4 }, "abilityBonus": { "attack_damage": 1.5 },
@@ -92,7 +92,7 @@
     {
       "id": "thunder_god_sword", "name": "Thunder God Sword",
       "desc": "The fastest and fiercest of the sword's shapes. Its blows jump to a second foe in a blink of lightning, and the Lightning Hundred Swords cover a whole ring with blades of thunder.",
-      "tier": 5, "parents": ["hundred_sword", "phoenix_sword"],
+      "tier": 5, "parents": ["hundred_sword", "tortoise_carapace_sword"],
       "requires": [ { "item": "minecraft:nether_star", "count": 4 }, { "item": "tensura:high_quality_magic_crystal", "count": 8 }, { "item": "minecraft:lightning_rod", "count": 32 } ],
       "mastery": 400,
       "stats": { "attack_damage": 12.0, "attack_speed": 0.6 }, "abilityBonus": { "attack_damage": 2.0, "attack_speed": 0.1 },
@@ -112,7 +112,7 @@
     {
       "id": "sword_of_greed_3", "name": "Sword of Greed III",
       "desc": "The Greed series grown full. Gold Rebellion gilds every foe round the wielder, and the next blow on a gilded foe takes more of it.",
-      "tier": 3, "parents": ["sword_of_greed"],
+      "tier": 3, "parents": ["sword_of_greed", "assassin_sword"],
       "requires": [ { "item": "minecraft:gold_block", "count": 16 }, { "item": "minecraft:diamond", "count": 16 }, { "item": "tensura:gold_coin", "count": 32 } ],
       "mastery": 270,
       "stats": { "attack_damage": 9.0, "attack_speed": 0.4 }, "abilityBonus": { "attack_damage": 2.0 },
@@ -122,7 +122,7 @@
     {
       "id": "sword_of_gluttony", "name": "Sword of Gluttony",
       "desc": "The first sword of the Gluttony series. It is always hungry: the Maneater closes a maw on the foes in front and feeds its wielder, and its fangs bite deepest into a foe that is already hurt.",
-      "tier": 2, "parents": ["base"],
+      "tier": 2, "parents": ["wind_king_katana"],
       "requires": [ { "item": "minecraft:cooked_beef", "count": 48 }, { "item": "minecraft:bread", "count": 32 }, { "item": "minecraft:golden_apple", "count": 4 } ],
       "mastery": 150,
       "stats": { "attack_damage": 6.0, "attack_speed": 0.2, "max_health": 4.0 }, "abilityBonus": { "attack_damage": 1.0, "max_health": 1.0 },

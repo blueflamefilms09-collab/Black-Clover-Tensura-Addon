@@ -94,13 +94,16 @@ public final class FormsFileCheck {
                 }
             int tier = num(f, "tier");
             if (tier < 0 || tier > 5) bad.add(id + ": tier " + tier + " out of 0..5");
-            // parents
+            // parents: the tier is the DEPTH in the tree, 1 + the highest tier among the parents (the real validator, forms/FormsSchema, enforces the same)
+            int deepest = -1;
             for (JsonElement p : arr(f, "parents")) {
                 JsonObject parent = byId.get(p.getAsString());
                 if (parent == null) bad.add(id + ": unknown parent " + p.getAsString());
-                else if (num(parent, "tier") >= tier) bad.add(id + ": tier " + tier + " is not above its parent " + p.getAsString() + " (tier " + num(parent, "tier") + ")");
+                else deepest = Math.max(deepest, num(parent, "tier"));
                 if (p.getAsString().equals(id)) bad.add(id + ": its own parent");
             }
+            if (deepest >= 0 && tier != deepest + 1)
+                bad.add(id + ": tier " + tier + " but its highest parent is tier " + deepest + ", so the tier must be " + (deepest + 1) + " (tier is the depth in the tree)");
             if (!"base".equals(id)) {
                 if (arr(f, "parents").size() == 0) bad.add(id + ": a form other than base needs a parent");
                 int mastery = num(f, "mastery");
