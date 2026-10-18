@@ -82,6 +82,7 @@ def build(layers):
     pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "vfx")
     os.makedirs(os.path.join(pkg, "client", "layer"), exist_ok=True)
     shutil.copy(os.path.join(VFX, "VfxShape.java"), pkg)
+    shutil.copy(os.path.join(VFX, "EarthFxStyle.java"), pkg)               # 1.93.0: the pure palette table of the earth-family layer (colour -> magic identity)
     for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures"):
         shutil.copy(os.path.join(VFX, "client", name + ".java"), os.path.join(pkg, "client"))
     with open(os.path.join(VFX, "client", "VfxVertexBuffer.java"), encoding="utf-8") as f:

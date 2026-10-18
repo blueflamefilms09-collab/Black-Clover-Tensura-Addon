@@ -42,3 +42,16 @@ for name, typ, scale, ages in (("golem", 0, 1.0, [2, 6, 12, 40, 80, 92]), ("tita
 with open(os.path.join(HERE, "render_preview", "scenes.d", "earth_family_props.json"), "w") as f:
     json.dump(props, f, indent=1)
 print(len(props), "prop scenes")
+
+# the effect layer (EarthFamilyLayer): three shapes for each of the six magics, run with tools/vfx_preview/preview.py <scene> ...
+vfx = {"_comment": "Earth family effect scenes (EarthFamilyLayer): efx_<magic>_cast / _zone / _burst for Sandstone, Rock, Red Ochre, Stone, Earth, Mineral."}
+for key, color in (("sandstone", "FFD5A76C"), ("rock", "FF777C86"), ("red_ochre", "FFD64C37"), ("stone", "FF8F8C86"), ("earth", "FFB08850"), ("mineral", "FF78A8C8")):
+    vfx["efx_%s_cast" % key] = {"layer": "EarthFamilyLayer", "shape": "EARTHFAM_CAST", "color": color, "from": [0, 1.5, 0], "to": [0, 1.3, 10], "power": 1.0, "duration": 16,
+                                "cam": [4.5, 2.0, 5.5], "target": [0, 1.4, 5.5], "ages": [2, 6, 9, 12, 14, 15], "figures": [[0, 0, -0.4, 1.8], [0, 0, 10.4, 1.8]]}
+    vfx["efx_%s_zone" % key] = {"layer": "EarthFamilyLayer", "shape": "EARTHFAM_ZONE", "color": color, "from": [0, 0, 0], "to": [0, 1, 0], "power": 4.0, "duration": 80,
+                                "cam": [7.5, 5.5, 8.5], "target": [0, 0.8, 0], "ages": [6, 14, 30, 60, 72], "figures": [[0, 0, 0, 1.8]]}
+    vfx["efx_%s_burst" % key] = {"layer": "EarthFamilyLayer", "shape": "EARTHFAM_BURST", "color": color, "from": [0, 0, 0], "to": [0, 1, 0], "power": 1.4, "duration": 28,
+                                 "cam": [5.5, 3.2, 6.5], "target": [0, 1.0, 0], "ages": [2, 5, 9, 16, 24], "figures": [[2.2, 0, 0.6, 1.8]]}
+with open(os.path.join(HERE, "vfx_preview", "scenes.d", "earth_family.json"), "w") as f:
+    json.dump(vfx, f, indent=1)
+print(len(vfx) - 1, "effect scenes")

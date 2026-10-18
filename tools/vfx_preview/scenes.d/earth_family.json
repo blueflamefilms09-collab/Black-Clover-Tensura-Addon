@@ -1,0 +1,801 @@
+{
+ "_comment": "Earth family effect scenes (EarthFamilyLayer): efx_<magic>_cast / _zone / _burst for Sandstone, Rock, Red Ochre, Stone, Earth, Mineral.",
+ "efx_sandstone_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FFD5A76C",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_sandstone_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FFD5A76C",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_sandstone_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FFD5A76C",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "efx_rock_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FF777C86",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_rock_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FF777C86",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_rock_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FF777C86",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "efx_red_ochre_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FFD64C37",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_red_ochre_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FFD64C37",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_red_ochre_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FFD64C37",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "efx_stone_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FF8F8C86",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_stone_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FF8F8C86",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_stone_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FF8F8C86",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "efx_earth_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FFB08850",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_earth_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FFB08850",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_earth_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FFB08850",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "efx_mineral_cast": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_CAST",
+  "color": "FF78A8C8",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   12,
+   14,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10.4,
+    1.8
+   ]
+  ]
+ },
+ "efx_mineral_zone": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_ZONE",
+  "color": "FF78A8C8",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7.5,
+   5.5,
+   8.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30,
+   60,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "efx_mineral_burst": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FF78A8C8",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ }
+}

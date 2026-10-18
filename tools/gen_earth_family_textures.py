@@ -11,6 +11,7 @@ are brighter at the core so additive blending reads as light. Everything is supe
     stone      block  rune  circle (runic circle)  shard  dust
     earth      clod  blade (grass)  root (a tendril)  circle (gnome sigil)  dust
     mineral    shard  flare (four-point star)  facet (hexagon)  circle (hex lattice)  ring (ring of crystals)
+    all        trail (the streak a thrown body drags)
 """
 import math
 import os
@@ -348,6 +349,17 @@ def mineral():
     save(finish(im, 256, shade=0.85 + 0.15 * rng.random((256, 256)), seed=26, blur=0.3), "mineral", "ring")
 
 
+def shared():
+    rng = np.random.default_rng(79)
+    w, h = 128, 32                                                                             # the trail every magic's thrown body drags: a grainy streak, bright at the head (right)
+    yy, xx = np.mgrid[0:h, 0:w]
+    across = np.clip(1 - np.abs((yy + 0.5) / h * 2 - 1), 0, 1) ** 1.5
+    along = ((xx + 0.5) / w) ** 1.6
+    grain = 0.75 + 0.25 * rng.random((h, w))
+    a = np.clip(across * along * grain * 1.2, 0, 1)
+    save(Image.fromarray(np.dstack([np.full((h, w, 3), 255), a * 255]).astype(np.uint8), "RGBA"), "all", "trail")
+
+
 if __name__ == "__main__":
-    for fn in (sandstone, rock, red_ochre, stone, earth, mineral):
+    for fn in (sandstone, rock, red_ochre, stone, earth, mineral, shared):
         fn()

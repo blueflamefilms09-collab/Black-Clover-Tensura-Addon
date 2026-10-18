@@ -165,6 +165,7 @@ public final class VfxManager {
         register(new LegionLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.ElementIdentityLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.WikiMagicLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.EarthFamilyLayer());          // 1.93.0: Sandstone / Rock / Red Ochre / Stone / Earth / Mineral
         register(new LightLayer());
         register(new PaintingLayer());
         register(new KotodamaFxLayer());
