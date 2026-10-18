@@ -79,6 +79,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");   // 1.61.0: the Eye of the Midnight Sun bosses
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.sds.SdsaConfig.SPEC, "nusmp-arc-sdsa-server.toml");   // 1.61.0: the Seven Deadly Sins, part 1 (Meliodas, Escanor, Ban)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.danmachi.DanMachiConfig.SPEC, "nusmp-danmachi-server.toml");   // 1.61.0: DanMachi: the Dungeon Level of the monsters
+        com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
@@ -121,6 +122,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
+            com.newuniverse.nusmp.client.heroweapon.HeroClient.init(modEventBus);                                           // 1.62.0: hero weapon keys, HUD, forms book, curse screen
             com.newuniverse.nusmp.client.arc.ArcClient.init(modEventBus);                                                   // 1.58.0: renderers of the arc characters, spawn egg colours
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
