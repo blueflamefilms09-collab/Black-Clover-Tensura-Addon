@@ -32,8 +32,8 @@ public final class DndRules {
     public static final int MAX_RESISTANCES = 5, MAX_POINTS = 5;
 
     /** The legendary actions the code knows (a profile naming another is refused) with their cost in points. */
-    public static final List<String> LEGENDARY_IDS = List.of("tail_sweep", "blink", "cantrip", "wing_buffet", "frightful_presence", "magic_drain");
-    public static final List<String> LAIR_IDS = List.of("tremor", "anti_magic_field", "searing_light");
+    public static final List<String> LEGENDARY_IDS = List.of("tail_sweep", "blink", "cantrip", "wing_buffet", "frightful_presence", "magic_drain", "counterspell", "life_drain", "haki_pulse", "gravity_crush");
+    public static final List<String> LAIR_IDS = List.of("tremor", "anti_magic_field", "searing_light", "falling_stars", "necrotic_mist");
 
     /** A saving throw: true when {@code d20 + bonus >= dc}; a natural 20 always saves, a natural 1 never does. */
     public static boolean save(int dc, int d20, int bonus) {

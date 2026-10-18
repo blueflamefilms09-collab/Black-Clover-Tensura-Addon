@@ -37,12 +37,21 @@
     {
       "id": "frightful_presence",
       "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 2
     }
   ],
   "lair_actions": [
     "tremor",
     "searing_light",
-    "anti_magic_field"
+    "anti_magic_field",
+    "falling_stars"
   ],
   "anti_magic_aura": false,
   "frightful_aura": true,

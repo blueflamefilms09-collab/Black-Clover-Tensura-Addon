@@ -41,12 +41,26 @@
     {
       "id": "magic_drain",
       "cost": 2
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 2
+    },
+    {
+      "id": "gravity_crush",
+      "cost": 2
     }
   ],
   "lair_actions": [
     "tremor",
     "searing_light",
-    "anti_magic_field"
+    "anti_magic_field",
+    "necrotic_mist",
+    "falling_stars"
   ],
   "anti_magic_aura": true,
   "frightful_aura": true,

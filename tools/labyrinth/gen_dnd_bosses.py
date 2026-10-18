@@ -35,6 +35,7 @@ T = [
 ]
 LEG = [("tail_sweep", 1), ("cantrip", 1), ("blink", 1), ("wing_buffet", 2), ("frightful_presence", 2), ("magic_drain", 2)]
 LAIR = ["tremor", "searing_light", "anti_magic_field"]
+# 1.66.0: more of the kit, by side: the Holy road snaps spells back and rains stars; the Evil road drains life and breathes a necrotic mist; the dragons add a haki pulse, the deep ones a gravity crush
 
 def build(row):
     side, tier, variant, name, anime, dnd, forms, flags = row
@@ -42,9 +43,18 @@ def build(row):
     legendary = [{"id": i, "cost": c} for i, c in LEG[:n_leg]]
     if "F" not in flags: legendary = [a for a in legendary if a["id"] != "frightful_presence"]
     if "A" not in flags and tier < 3: legendary = [a for a in legendary if a["id"] != "magic_drain"]
+    if side == "holy":
+        if tier >= 2: legendary.append({"id": "counterspell", "cost": 1})
+    else:
+        legendary.append({"id": "life_drain", "cost": 1})
+    if "F" in flags and tier >= 3: legendary.append({"id": "haki_pulse", "cost": 2})
+    if tier >= 4: legendary.append({"id": "gravity_crush", "cost": 2})
+    lair = (LAIR[:1 + min(2, (tier + 1) // 2 - (1 if tier == 1 else 0))] if tier > 1 else LAIR[:1])
+    if tier >= 2: lair = lair + ["falling_stars" if side == "holy" else "necrotic_mist"]
+    if tier >= 4: lair = lair + ["necrotic_mist" if side == "holy" else "falling_stars"]
     return {"side": side, "tier": tier, "variant": variant, "name": name, "anime": anime, "dnd": dnd, "forms": forms,
             "resistances": 2 + (tier + 1) // 2, "legendary_points": 3 if tier < 4 else 4 if tier == 4 else 5,
-            "legendary_actions": legendary, "lair_actions": LAIR[:1 + min(2, (tier + 1) // 2 - (1 if tier == 1 else 0))] if tier > 1 else LAIR[:1],
+            "legendary_actions": legendary, "lair_actions": lair,
             "anti_magic_aura": "A" in flags, "frightful_aura": "F" in flags, "absorb_magic": "M" in flags, "mythic": True, "execution": "X" in flags}
 
 def main(check):

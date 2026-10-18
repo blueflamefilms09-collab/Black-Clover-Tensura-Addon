@@ -33,11 +33,16 @@
     {
       "id": "wing_buffet",
       "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
     }
   ],
   "lair_actions": [
     "tremor",
-    "searing_light"
+    "searing_light",
+    "falling_stars"
   ],
   "anti_magic_aura": false,
   "frightful_aura": true,

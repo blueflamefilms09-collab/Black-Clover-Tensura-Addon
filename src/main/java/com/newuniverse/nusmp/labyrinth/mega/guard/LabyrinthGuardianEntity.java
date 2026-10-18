@@ -161,7 +161,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         put(Attributes.SCALE, GuardianScaling.scale(GuardConfig.get(GuardConfig.GUARDIAN_SCALE), threat));
         if (trait == Trait.GRAVITY) put(Attributes.KNOCKBACK_RESISTANCE, 1.0);
         if (trait == Trait.BLOOD) put(Attributes.MAX_ABSORPTION, hp * GuardianScaling.spec(Trait.BLOOD, true).count() / 100.0);
-        if (dnd.profile.absorbMagic()) put(Attributes.MAX_ABSORPTION, Math.max(getAttributeValue(Attributes.MAX_ABSORPTION), hp * 0.1));      // room for the shield that eaten magic becomes
+        if (dnd.profile.absorbMagic() || dnd.profile.legendary().contains("life_drain")) put(Attributes.MAX_ABSORPTION, Math.max(getAttributeValue(Attributes.MAX_ABSORPTION), hp * 0.1));      // room for the shield that eaten magic becomes
         dpsBudget.bypass(() -> setHealth((float) hp));                                      // a fresh boss starts full; that is not a heal
         Component themeName = Component.translatable("message.nusmp.mega.mgd.theme." + theme.id());
         setCustomName(floorLabel == null ? Component.translatable("entity.nusmp.labyrinth_guardian.bar", themeName)

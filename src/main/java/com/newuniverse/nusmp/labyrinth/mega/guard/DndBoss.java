@@ -37,8 +37,8 @@ import java.util.UUID;
  * The state is runtime only except the three facts a reload must not undo (mythic spent, resistances left, phase), which go through {@link #save} and {@link #load}.
  */
 final class DndBoss {
-    /** A zone that acts for a while: an anti-magic field (drains) at x, y, z. */
-    private record Field(double x, double y, double z, double r, long end) {}
+    /** A zone that acts for a while at x, y, z: an anti-magic field (drains magicules) or a necrotic mist (hurts, a little, each second). */
+    private record Field(double x, double y, double z, double r, long end, boolean mist) {}
 
     /** A telegraphed blow that lands at {@code at}: a ring of {@code r}, {@code damage} to every survivor inside it. */
     private record Strike(double x, double y, double z, double r, long at, float damage, boolean light) {}
@@ -227,6 +227,45 @@ final class DndBoss {
                 ring(sl, c, 8.0, ParticleTypes.SCULK_SOUL);
                 sl.playSound(null, g.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 1.2f, 1.4f);
             }
+            case "counterspell" -> {                                            // the boss snaps a spell back at whoever just hit it
+                drain(attacker, 0.10);
+                attacker.hurt(g.damageSources().indirectMagic(g, g), atk * 0.3f);
+                bolt(sl, g, attacker);
+                sl.playSound(null, g.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 1.6f, 0.6f);
+            }
+            case "life_drain" -> {                                              // a necrotic bolt; half of it becomes a shield (never health)
+                float dmg = atk * 0.3f;
+                attacker.hurt(g.damageSources().indirectMagic(g, g), dmg);
+                g.addShield(dmg * 0.5f);
+                bolt(sl, g, attacker);
+                sl.playSound(null, g.blockPosition(), SoundEvents.WITHER_SHOOT, SoundSource.HOSTILE, 1.2f, 0.7f);
+            }
+            case "haki_pulse" -> {                                              // the True Dragon's pressure as a wave: a save or be slowed and weakened
+                int fails = 0;
+                for (Player p : GuardianTraits.players(sl, g, 14.0)) {
+                    int roll = sl.random.nextInt(20) + 1;
+                    if (!DndRules.save(DndRules.DC, roll, DndRules.saveBonus(p.getArmorValue(), p.getAttributeValue(Attributes.LUCK)))) {
+                        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
+                        p.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 60, 0));
+                        knock(g, p, 0.6);
+                        fails++;
+                    }
+                }
+                ring(sl, c, 12.0, ParticleTypes.CRIMSON_SPORE);
+                sl.playSound(null, g.blockPosition(), SoundEvents.WARDEN_ROAR, SoundSource.HOSTILE, 1.6f, 1.0f);
+                say(sl, g, "haki", fails);
+            }
+            case "gravity_crush" -> {                                           // everyone nearby is dragged to its feet
+                for (Player p : GuardianTraits.players(sl, g, 12.0)) {
+                    double dx = g.getX() - p.getX(), dz = g.getZ() - p.getZ(), d = Math.max(0.5, Math.hypot(dx, dz));
+                    p.setDeltaMovement(dx / d * 1.0, 0.2, dz / d * 1.0);
+                    p.hurtMarked = true;
+                    p.hurt(g.damageSources().mobAttack(g), atk * 0.2f);
+                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 0));
+                }
+                ring(sl, c, 11.0, ParticleTypes.PORTAL);
+                sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_STARE, SoundSource.HOSTILE, 1.4f, 0.4f);
+            }
             default -> { }
         }
     }
@@ -248,8 +287,19 @@ final class DndBoss {
                 say(sl, g, "lair_light");
             }
             case "anti_magic_field" -> {
-                fields.add(new Field(target.getX(), target.getY(), target.getZ(), 6.0, now + 160));
+                fields.add(new Field(target.getX(), target.getY(), target.getZ(), 6.0, now + 160, false));
                 say(sl, g, "lair_field");
+            }
+            case "falling_stars" -> {
+                for (int i = 0; i < 5; i++) {                                    // five stars round the party, staggered so each has its own warning
+                    double a = sl.random.nextDouble() * Math.PI * 2, d = sl.random.nextDouble() * 9.0;
+                    strikes.add(new Strike(target.getX() + Math.cos(a) * d, target.getY(), target.getZ() + Math.sin(a) * d, 2.5, now + 30 + i * 8L, atk * 0.25f, true));
+                }
+                say(sl, g, "lair_stars");
+            }
+            case "necrotic_mist" -> {
+                fields.add(new Field(target.getX(), target.getY(), target.getZ(), 5.5, now + 140, true));
+                say(sl, g, "lair_mist");
             }
             default -> { }
         }
@@ -277,10 +327,12 @@ final class DndBoss {
             Field f = it.next();
             if (now >= f.end()) { it.remove(); continue; }
             if (now % 20 == 0) {
-                ring(sl, new Vec3(f.x(), f.y(), f.z()), f.r(), ParticleTypes.PORTAL);
+                ring(sl, new Vec3(f.x(), f.y(), f.z()), f.r(), f.mist() ? ParticleTypes.SQUID_INK : ParticleTypes.PORTAL);
                 for (Player p : GuardianTraits.players(sl, g, 48.0)) {
                     double dx = p.getX() - f.x(), dz = p.getZ() - f.z();
-                    if (dx * dx + dz * dz <= f.r() * f.r()) drain(p, 0.05);
+                    if (dx * dx + dz * dz > f.r() * f.r()) continue;
+                    if (f.mist()) p.hurt(g.damageSources().indirectMagic(g, g), (float) g.attackDamage() * 0.08f);
+                    else drain(p, 0.05);
                 }
             }
         }

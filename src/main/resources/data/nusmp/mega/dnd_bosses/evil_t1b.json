@@ -29,6 +29,10 @@
     {
       "id": "blink",
       "cost": 1
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
     }
   ],
   "lair_actions": [

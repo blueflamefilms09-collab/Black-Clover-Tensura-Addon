@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.66.0] — More of the D&D boss kit
+
+The owner said "add more" after the D&D Decennial boss system. **Nothing has been run in a game client.**
+
+### NEW (nothing replaced)
+- **Four legendary actions:** counterspell, life drain (half becomes a shield, never health), haki pulse (a save against DC 15) and gravity crush.
+- **Two lair actions:** falling stars (five telegraphed strikes) and necrotic mist (a damage zone for 7 s).
+- The twenty profiles in `data/nusmp/mega/dnd_bosses/` carry them by side and tier (Holy: counterspell and stars; Evil: life drain and mist; dragons: haki pulse; tiers 4 and 5: gravity crush and both zones). The generator, the id lists, the lang and `docs/labyrinth/dnd_boss.md` follow. A Guardian with `[guard] dnd = false` is unchanged.
+
 ## [1.65.0] — The D&D Decennial boss system
 
 The owner asked for the multi-phase Decennial boss system of the Mega-Dungeon spec: D&D lethality (legendary actions, lair actions, legendary resistances, mythic phase-shifting, Power Word Kill, anti-magic fields) fused with anime spectacle (Acnologia-style magic absorption, True Dragon pressure, the Anti-Magic Devil). **Nothing has been run in a game client**; the numbers are first guesses. Docs: `docs/labyrinth/dnd_boss.md`.
