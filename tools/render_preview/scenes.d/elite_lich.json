@@ -1,0 +1,317 @@
+{
+ "elite_lich_idle": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_walk": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_windup": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   8,
+   14
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "windup",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_strike": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   8
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "strike",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_cast": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   20
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_transform": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   36,
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ },
+ "elite_lich_death": {
+  "kind": "geo",
+  "model": "elite_lich",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.720000000000001
+   }
+  ]
+ }
+}

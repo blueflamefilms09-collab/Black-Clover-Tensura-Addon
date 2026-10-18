@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:copper_ingot"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    },
+    "S": {
+      "item": "nusmp:magicule_shard"
+    }
+  },
+  "pattern": [
+    " S ",
+    "ICI",
+    " I "
+  ],
+  "result": {
+    "id": "nusmp:magicule_gauge",
+    "count": 1
+  }
+}

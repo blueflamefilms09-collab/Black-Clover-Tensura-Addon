@@ -16,6 +16,11 @@
     "nusmp:forge_station_basic",
     "nusmp:forge_station_magisteel",
     "nusmp:forge_station_mythril",
-    "nusmp:forge_station_dragonforge"
+    "nusmp:forge_station_dragonforge",
+    "nusmp:magic_bud_small",
+    "nusmp:magic_bud_medium",
+    "nusmp:magic_bud_large",
+    "nusmp:magic_crystal_cluster",
+    "nusmp:mother_rock"
   ]
 }
