@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.87.1] — Calamity bosses and the magicule world, elite items, crates and plushies, map-mod compatibility
+
+Everything merged since 1.86.0. As with the rest of the EliteTensuraAddon inventory, the original source was not available: names are the inventory's, every number and rule is designed here and lives in config / data (docs: `docs/elite/world.md`, `docs/elite/items.md`, `docs/compat/maps.md`).
+
+### NEW
+- **Calamities, bosses and magicule** (`elite/world`): a per-chunk magicule density, five crystal blocks (small / medium / large bud, crystal cluster, Mother Rock) that grow with it, ore conversion, stronger "touched" mobs, and a calamity director (omen, rise, three phases, Calamity Core drop and ritual). Bosses: **Gravebound Colossus** and **Lich Boss** (with breakable phylacteries), plus Gaia Spike and Void Bolt entities. Public events `CalamityEvents`, `CalamityDamageEvent`, `CalamityKillEvent`. Commands `/multiverse elite magicule` and `/multiverse elite calamity`; config `nusmp-elite-world-server.toml`.
+- **Elite items** (`elite/items`): six weapons (Astral Edge, Void Edge, Fenrir Sword, Runic Swords Renewed / Ancient / Mythical, with techniques and engravings), the **Nightingale** armour set with its set bonus, Potential Catalyst, small / medium / large Health Potions, Chronicle Book, Walpurgis Orb and Seal, **Common / Rare / Elite crates** with keys (loot-only) and data-driven reward tables, and **54 plushies**. Config `nusmp-elite-items-server.toml`.
+- **Map-mod compatibility** (`compat/maps`): map colours checked for every block, a guard test for new blocks, waypoint sharing in Xaero's format (`/multiverse waypoint share|here|gate|return`), a check that warns ops when FTB Chunks can still claim the mod's dimensions, a minimap-avoidance helper for HUD layers, and `/multiverse compat maps`. Nothing imports or reflects a map mod.
+
+### REPLACED
+- Nothing. Two blocks that had no map colour (`arena_return_sigil`, `relic_forge`) and the two Nations blocks now have one; a vanilla map no longer looks through them.
+
+### KEPT
+- Everything in 1.86.0 and earlier. The Foundry lich mobs and the Lich Wand stay untouched; the new Lich Boss is a separate mob.
+
+### Honest notes
+- Nothing has been run in the game: boss balance, the crate opening animation, rune drag-and-drop, the waypoint chat line against a real Xaero's, the FTB Chunks config key names (from memory) and the sounds (synthesised, never listened to) are all unverified. The in-game self-tests `elite.world.*`, `elite.items.*` and `compat.maps` run in the CI smoke test.
+- The four forge station blocks and the world / plush / crate blocks have computed ids, so the map-colour guard test cannot list them; their colours are set in code.
+
 ## [1.86.0] — Nations and wars, the Elite Forge, 21 elite skills with evolution, Canon Grimoire remake (also carries everything in 1.85.0, whose build was never released)
 
 1.85.0 failed its build on one stale test (a records test asserted that `en_us.json` held no records text, which the lead had just merged), so it was never published. This release contains all of 1.85.0 below plus the next three EliteTensuraAddon pieces and the Canon Grimoire remake. As before, the original addon source was not available: names are the inventory's, every number and rule is invented and lives in config / data.
