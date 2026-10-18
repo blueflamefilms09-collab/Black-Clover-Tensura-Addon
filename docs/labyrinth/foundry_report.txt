@@ -7,6 +7,7 @@ factions: aquatic=21, beast=72, construct=56, cultist=88, demon=34, elemental=42
 archetypes: archer=11, assassin=53, brute=62, caster=68, charger=29, flier=24, skirmisher=23, summoner=37, support=44, tank=49
 builds: average=49, broad=77, child=19, huge=83, lanky=54, slim=90, small=28
 sources: 194 different (dnd 178 mobs, anime/game 222 mobs); largest: berserk=16, frieren=15, fate=12, made in abyss=11, dark souls=11, overlord=11
+look distance (structure groups that differ, of 16) over all 79800 pairs: 3: 38 pairs, 4: 109 pairs, 5: 332 pairs, 6: 998 pairs, 7: 2595 pairs, 8: 6417 pairs
 closest pairs (structure groups that differ, of 16):
    3  Beholder Warden of Seven Gazes / Death Tyrant Eye Sovereign
    3  Beholder Warden of Seven Gazes / Void Horror of the Star Drowned Sky

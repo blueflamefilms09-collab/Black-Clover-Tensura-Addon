@@ -256,7 +256,21 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!level().isClientSide && level() instanceof ServerLevel sl) FoundryAbilityRunner.tick(this, sl);
+        if (level().isClientSide || !(level() instanceof ServerLevel sl)) return;
+        if (tickCount == 1 && foundryId().isEmpty()) becomeSomeone();
+        FoundryAbilityRunner.tick(this, sl);
+    }
+
+    /**
+     * A blank mob (made by {@code /summon nusmp:foundry_mob}, which cannot name an identity) would be hostile and INVISIBLE: it becomes a random mob of the roster instead, so the
+     * plain summon command is safe and the admin sees something. The Director and {@code /multiverse mega foundry spawn} always give an identity, so this never runs for them.
+     */
+    private void becomeSomeone() {
+        java.util.List<FoundryDef> all = FoundryData.roster().all();
+        if (all.isEmpty()) return;
+        FoundryDef d = all.get(getRandom().nextInt(all.size()));
+        setFoundry(d, 0);
+        makeDungeonMonster();
     }
 
     @Override

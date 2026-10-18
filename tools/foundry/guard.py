@@ -88,7 +88,10 @@ def report(rows):
     src = Counter(source_key(r["source"]) for r in rows)
     fam = Counter(source_family(r["source"]) for r in rows)
     out.append("sources: %d different (dnd %d mobs, anime/game %d mobs); largest: %s" % (len(src), fam["dnd"], fam["anime"], ", ".join("%s=%d" % kv for kv in src.most_common(6))))
-    pairs = sorted(((RC.struct_distance(a, b), a["name"], b["name"]) for a, b in itertools.combinations(rows, 2)))[:12]
+    allpairs = sorted(((RC.struct_distance(a, b), a["name"], b["name"]) for a, b in itertools.combinations(rows, 2)))
+    hist = Counter(d for d, _, _ in allpairs)
+    out.append("look distance (structure groups that differ, of %d) over all %d pairs: %s" % (len(RC.STRUCT_GROUPS), len(allpairs), ", ".join("%d: %d pairs" % kv for kv in sorted(hist.items())[:6])))
+    pairs = allpairs[:12]
     out.append("closest pairs (structure groups that differ, of %d):" % len(RC.STRUCT_GROUPS))
     for d, a, b in pairs:
         out.append("  %2d  %s / %s" % (d, a, b))

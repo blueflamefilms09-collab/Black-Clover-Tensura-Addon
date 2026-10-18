@@ -92,6 +92,9 @@ public record FoundryDef(String id, String name, Polarity road, int tier, String
 
     public String entityKey() { return ENTITY_ID + "#" + id; }
 
+    /** The registry id of the entity type to create for a key: {@code nusmp:foundry_mob} for a foundry key, the text itself for anything else. */
+    public static String baseId(String key) { return idOfKey(key) == null ? key : ENTITY_ID; }
+
     /** The id of a key made by {@link #entityKey()}, or null when the text is not one. */
     public static String idOfKey(String key) {
         if (key == null || !key.startsWith(ENTITY_ID + "#")) return null;

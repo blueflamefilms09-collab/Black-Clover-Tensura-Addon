@@ -97,7 +97,7 @@ def kit_stamp():
     h = hashlib.sha1()
     for d in (os.path.join(HERE, "..", "arc_kit"), HERE):
         for fn in sorted(os.listdir(d)):
-            if fn.endswith(".py") and fn not in ("gen_foundry.py", "guard.py") and not fn.startswith("roster"):
+            if fn.endswith(".py") and fn not in ("gen_foundry.py", "guard.py", "palette.py") and not fn.startswith(("roster", "test_")):
                 h.update(open(os.path.join(d, fn), "rb").read())
     return h.hexdigest()
 
@@ -300,6 +300,12 @@ def same_file(src, dst):
 def main(argv):
     args = [a for a in argv if not a.startswith("--")]
     flags = [a for a in argv if a.startswith("--")]
+    measure = 0
+    if "--measure" in flags:                                     # `--measure N`: the number belongs to the flag, not to the list of mobs
+        i = argv.index("--measure")
+        measure = int(argv[i + 1]) if i + 1 < len(argv) and argv[i + 1].isdigit() else 12
+        if i + 1 < len(argv) and argv[i + 1].isdigit():
+            args.remove(argv[i + 1])
     jobs = max(1, min(8, os.cpu_count() or 1))
     rows = load_rows()
     abilities = load_abilities()
@@ -335,11 +341,6 @@ def main(argv):
         if o not in {r["id"] for r in rows}:
             print("no such mob", o)
             return 1
-    measure = 0
-    if "--measure" in flags:
-        i = argv.index("--measure")
-        measure = int(argv[i + 1]) if i + 1 < len(argv) and argv[i + 1].isdigit() else 12
-        only.discard(str(measure))
     facts, classes, csizes = build_all(rows, only, ASSETS, DATA, jobs, measure)
     measured = measure_sample(rows, facts, measure) if measure else []
     lines = write_report(rows, facts, classes, csizes, measured, REPORT)

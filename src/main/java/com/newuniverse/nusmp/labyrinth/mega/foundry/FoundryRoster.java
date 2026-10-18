@@ -37,6 +37,9 @@ public final class FoundryRoster {
         }
     }
 
+    /** Does a spawn become a foundry one? {@code weight} is a percent, 0..100 (below 0 counts as 0). */
+    public static boolean chance(int weight, Random rnd) { return weight > 0 && rnd.nextInt(100) < weight; }
+
     public int size() { return byId.size(); }
 
     public FoundryDef byId(String id) { return id == null ? null : byId.get(id); }

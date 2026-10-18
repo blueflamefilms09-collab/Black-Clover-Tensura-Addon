@@ -259,6 +259,7 @@ public final class EncounterDirector {
         List<EncounterRoll.Pick> picks = new ArrayList<>();
         Map<String, String> factionOf = new HashMap<>();
         Map<String, Double> costOf = new HashMap<>();
+        int foundryFloor = FoundryEncounters.floorOf(sector, v.floor());          // Mob Foundry: the floor the foundry tier is read from
         for (EncounterTable.MobSpec spec : entry.mobs()) {
             EncounterRoll.Pick pick = null;
             if (spec.kind() == EncounterTable.Kind.ENTITY) {
@@ -286,7 +287,7 @@ public final class EncounterDirector {
                     factionOf.put(c.id(), used);
                 }
             }
-            EncounterRoll.Pick fp = FoundryEncounters.pick(sector.polarity, sector.theme.id(), v.floor(), spec.kind() == EncounterTable.Kind.FACTION ? factionOf.getOrDefault(pick == null ? "" : pick.entity(), nativeFaction) : null, rnd);   // Mob Foundry: sometimes a foundry mob of this floor's tier and road instead
+            EncounterRoll.Pick fp = FoundryEncounters.pick(sector.polarity, sector.theme.id(), foundryFloor, spec.kind() == EncounterTable.Kind.FACTION ? factionOf.getOrDefault(pick == null ? "" : pick.entity(), nativeFaction) : null, rnd);   // Mob Foundry: sometimes a foundry mob of this floor's tier and road instead
             if (fp != null) { pick = fp; factionOf.put(fp.entity(), FoundryEncounters.factionOf(fp.entity())); }
             picks.add(pick);
             if (pick != null) costOf.put(pick.entity(), pick.cost());
@@ -306,7 +307,7 @@ public final class EncounterDirector {
             if (type == null) continue;
             for (int i = 0; i < pl.count(); i++) {
                 SpawnPicker.Cell cell = cells.get(at++ % cells.size());
-                FoundryEncounters.expect(pl.entity(), v.floor());
+                FoundryEncounters.expect(pl.entity(), foundryFloor);
                 Mob m = EncounterSpawner.spawn(level, type, new BlockPos(cell.x(), cell.y(), cell.z()), rules, threat, factionOf.getOrDefault(pl.entity(), entry.faction()), entry.id(), rnd);
                 if (m != null) {
                     made.add(m);

@@ -24,8 +24,14 @@ public final class FoundryEncounters {
     private static String pendingKey;
     private static int pendingFloor;
 
+    /** The signed floor the foundry tier is read from: the Director's own reading of the party's floor, or, when the floor threat switch is off and it reads 0, the sector's first floor. */
+    public static int floorOf(com.newuniverse.nusmp.labyrinth.mega.Sector sector, int viewFloor) {
+        if (viewFloor != 0 || sector == null) return viewFloor;
+        return com.newuniverse.nusmp.labyrinth.mega.FloorMap.floorOf(sector.polarity, sector.chainIndex, 1, sector.perRegion);
+    }
+
     /** Does a spawn become a foundry one? {@code weight} is a percent, 0..100. */
-    public static boolean roll(int weight, Random rnd) { return weight > 0 && rnd.nextInt(100) < weight; }
+    public static boolean roll(int weight, Random rnd) { return FoundryRoster.chance(weight, rnd); }
 
     /**
      * The foundry mob that replaces one monster of an encounter, or null to keep the table's own.
@@ -53,7 +59,7 @@ public final class FoundryEncounters {
     }
 
     /** The registry id of the entity type to create: {@code nusmp:foundry_mob} for a foundry key, the text itself otherwise. */
-    public static String baseId(String key) { return FoundryDef.idOfKey(key) == null ? key : FoundryDef.ENTITY_ID; }
+    public static String baseId(String key) { return FoundryDef.baseId(key); }
 
     private static FoundryDef defOf(String key) {
         String id = FoundryDef.idOfKey(key);
