@@ -29,7 +29,8 @@
     },
     "great_ape": {
       "from": ["base"], "min_tier": 1, "duration_seconds": 240, "cooldown_seconds": 600, "ends_at_dawn": true, "color": "#4A2A12", "rukh": "dark",
-      "entries": [{"moon": "full_moon", "sky": true, "auto": true}],
+      "entries": [{"moon": "full_moon", "sky": true, "auto": true},
+        {"item": "minecraft:sea_lantern", "item_count": 1, "consume": true, "sky": true}],
       "modifiers": [
         {"attribute": "scale", "amount": 1.0, "op": "mult_base"},
         {"attribute": "attack_damage", "amount": 0.60, "op": "mult_base"},

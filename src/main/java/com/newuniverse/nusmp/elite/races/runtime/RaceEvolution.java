@@ -10,6 +10,7 @@ import com.newuniverse.nusmp.elite.races.rule.RaceEvolutionRule;
 import com.newuniverse.nusmp.elite.races.rule.RaceRuleSet;
 import io.github.manasmods.manascore.race.api.ManasRace;
 import io.github.manasmods.manascore.race.api.RaceAPI;
+import io.github.manasmods.tensura.race.RaceHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -45,7 +46,7 @@ public final class RaceEvolution {
         RaceLedger.markConsumed(p, p.serverLevel().getGameTime());
         boolean changed;
         try {
-            changed = RaceAPI.getRaceFrom(p).evolveRace(next);
+            changed = RaceHelper.evolveRace(p, next, true, true);   // the call this mod already uses for the Wizard King's awakening (multiverse/CrownAwakening)
         } catch (RuntimeException e) {
             return fail("error", "The change of race failed (%s).", e.getClass().getSimpleName());
         }

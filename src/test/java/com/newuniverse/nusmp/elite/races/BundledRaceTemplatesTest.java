@@ -125,7 +125,8 @@ class BundledRaceTemplatesTest {
             assertTrue(ape.darkRukh());
             assertTrue(ape.modifiers().stream().anyMatch(m -> m.attribute().equals("scale") && m.amount() > 0), "the ape is bigger");
             assertTrue(ape.entries().stream().anyMatch(e -> e.auto() && e.moon() == com.newuniverse.nusmp.elite.races.state.MoonRule.FULL_MOON), id + ": the moon raises the ape");
-            assertTrue(ape.entries().stream().allMatch(e -> e.auto() ? e.moon() != com.newuniverse.nusmp.elite.races.state.MoonRule.ANY : e.epMin() > 0), id + ": an at-will ape needs a power gate");
+            assertTrue(ape.entries().stream().allMatch(e -> e.auto() ? e.moon() != com.newuniverse.nusmp.elite.races.state.MoonRule.ANY : (e.epMin() > 0 || !e.item().isEmpty())), id + ": an at-will ape needs a power gate or the Power Ball item");
+            assertTrue(ape.entries().stream().anyMatch(e -> e.item().equals("minecraft:sea_lantern") && e.consume() && !e.auto()), id + ": the Power Ball (an artificial moon) is a way into the ape");
         }
         // the ascension opens at tier 2 and is first reached in a rage
         assertNull(t.get("lesser_saiyan").spec(TransformState.ASCENDED));

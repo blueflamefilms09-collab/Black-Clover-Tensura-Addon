@@ -26,7 +26,7 @@ import static com.newuniverse.nusmp.elite.races.rule.RaceRuleParser.str;
 
 /**
  * Why: the race files are data a datapack can replace, so the parser is the gate. It is strict and says where it stopped ("lesser_saiyan.transformations.great_ape.entries[0]:
- * 'moon' ..."): unknown keys or states, a range turned round (min above max), a number outside a sane band, an attribute the mod does not know, an extra attribute the stats
+ * 'moon' ..."): an unknown state, trait, attribute or rule type, a range turned round (min above max), a number outside a sane band, an attribute the mod does not know, an extra attribute the stats
  * already set, a natural skill that is not one of the race's skills, and an {@code auto} entry that has no condition (it would fire at every tick). Pure (Gson),
  * tested against the bundled files by {@code BundledRaceTemplatesTest}. Durations in the files are seconds; the template holds ticks.
  */

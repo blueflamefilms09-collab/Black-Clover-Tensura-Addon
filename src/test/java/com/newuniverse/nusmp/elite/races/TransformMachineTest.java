@@ -139,6 +139,34 @@ class TransformMachineTest {
     }
 
     @Test
+    void anItemEntryNeedsTheItemAndNamesTheEntryThatLetItThrough() {
+        TransformMachine m = new TransformMachine();
+        Ctx c = new Ctx();
+        c.tier = 1;
+        c.ep = 0;
+        EntryCondition moon = entry(0, 1.0, MoonRule.FULL_MOON, true, "", 1, true);
+        EntryCondition powerBall = new EntryCondition(0, 1.0, MoonRule.ANY, true, "minecraft:sea_lantern", 1, true, 1, false);
+        TransformSpec ape = spec(TransformState.GREAT_APE, Set.of(TransformState.BASE), 6000, 12000, 0.0, true, moon, powerBall);
+        TransformMachine.Result none = m.check(ape, c);
+        assertFalse(none.ok());
+        assertEquals(Reason.MOON, none.reason());              // the first entry's reason is the one reported
+        c.items.put("minecraft:sea_lantern", 1);
+        TransformMachine.Result lit = m.check(ape, c);
+        assertTrue(lit.ok());
+        assertSame(powerBall, lit.entry());                    // so the runtime knows to take the lantern
+        assertTrue(lit.entry().consume());
+        c.sky = false;                                         // a Power Ball needs the open sky too
+        assertFalse(m.check(ape, c).ok());
+        c.sky = true;
+        c.night = true;
+        c.fullMoon = true;                                     // a real full moon is tried first, so the lantern is not wasted
+        assertSame(moon, m.check(ape, c).entry());
+        assertFalse(m.check(ape, c).entry().consume());
+        // the automatic trigger never uses the item entry
+        assertNull(new TransformMachine().autoTrigger(Map.of(TransformState.GREAT_APE, spec(TransformState.GREAT_APE, Set.of(TransformState.BASE), 6000, 12000, 0.0, true, powerBall)), c));
+    }
+
+    @Test
     void theApeEndsWithTheNight() {
         TransformMachine m = new TransformMachine();
         Ctx c = new Ctx();
