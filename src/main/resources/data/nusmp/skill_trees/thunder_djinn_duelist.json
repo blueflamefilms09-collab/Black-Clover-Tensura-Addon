@@ -1,0 +1,1096 @@
+{
+  "magic": "magi",
+  "franchise": "magi",
+  "name": "Thunder Djinn Duelist",
+  "desc": "A lightning Djinn's speed in your muscles: blink in, strike, blink out and be across the field before the thunder arrives. Blows that jump from one foe to the next.",
+  "book": "nusmp:thunder_djinn_duelist_book",
+  "book_name": "Equip of the Quick Flash",
+  "book_lore": "A short manual full of arrows pointing at where you used to be.",
+  "color": "#F0D33C",
+  "icon": "minecraft:lightning_rod",
+  "class_id": "thunder_djinn_duelist",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/thunder_djinn_duelist.png",
+  "book_texture": "nusmp:item/skill_book_3d/magi",
+  "background_theme": "storm",
+  "nodes": [
+    {
+      "id": "lightning_sprint",
+      "name": "Lightning Sprint",
+      "desc": "Fully charged: much faster, but little armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.22,
+          0.264,
+          0.308
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "grounded_charge",
+      "name": "Grounded Charge",
+      "desc": "Keep the charge stored: steadier and harder to push, a little slower.",
+      "parents": [
+        {
+          "node": "lightning_sprint",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "storm_heart",
+      "name": "Storm Heart",
+      "desc": "A body that holds a charge.",
+      "parents": [
+        {
+          "node": "lightning_sprint",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "lightning_reflex",
+      "name": "Lightning Reflex",
+      "desc": "Faster feet.",
+      "parents": [
+        {
+          "node": "grounded_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.07,
+          0.0875,
+          0.105,
+          0.1225,
+          0.14
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "static_edge",
+      "name": "Static Edge",
+      "desc": "Every touch bites a little.",
+      "parents": [
+        {
+          "node": "lightning_sprint",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "quick_draw",
+      "name": "Quick Draw",
+      "desc": "Faster sword hand.",
+      "parents": [
+        {
+          "node": "grounded_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "thunder_step",
+      "name": "Thunder Step",
+      "desc": "Vanish in a crackle and appear a long step ahead.",
+      "parents": [
+        {
+          "node": "lightning_sprint",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.32,
+          13.64,
+          14.96
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "spark_lunge",
+      "name": "Spark Lunge",
+      "desc": "A bolt-fast lunge forward that cuts everything you cross.",
+      "parents": [
+        {
+          "node": "grounded_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "chain_bolt",
+      "name": "Chain Bolt",
+      "desc": "A bolt that arcs from foe to foe.",
+      "parents": [
+        {
+          "node": "thunder_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "static_surge",
+      "name": "Static Surge",
+      "desc": "Flood your muscles with current: speed and haste for a while.",
+      "parents": [
+        {
+          "node": "spark_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "haste",
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "thunder_lance",
+      "name": "Thunder Lance",
+      "desc": "A spear of lightning along your sight line, piercing everything.",
+      "parents": [
+        {
+          "node": "chain_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "storm_spin",
+      "name": "Storm Spin",
+      "desc": "Spin in a ring of arcs, hitting everything around you several times.",
+      "parents": [
+        {
+          "node": "static_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "crackling_rise",
+      "name": "Crackling Rise",
+      "desc": "A short rising slash that launches the foe in front of you.",
+      "parents": [
+        {
+          "node": "thunder_lance",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:redstone_torch"
+    },
+    {
+      "id": "charged_footfall",
+      "name": "Charged Footfall",
+      "desc": "Blows in a row grow stronger until you stop fighting.",
+      "parents": [
+        {
+          "node": "thunder_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "sprinter_s_strike",
+      "name": "Sprinter's Strike",
+      "desc": "You hit harder while sprinting.",
+      "parents": [
+        {
+          "node": "spark_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "blur_dodge",
+      "name": "Blur Dodge",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "chain_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "rapid_fire",
+      "name": "Rapid Fire",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "static_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          3.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "spark_crits",
+      "name": "Spark Crits",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "thunder_lance",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "charge_reserve",
+      "name": "Charge Reserve",
+      "desc": "While sprinting you move faster still.",
+      "parents": [
+        {
+          "node": "storm_spin",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "sprinting"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "lightning_rod",
+      "name": "Lightning Rod",
+      "desc": "Lightning damage barely hurts you.",
+      "parents": [
+        {
+          "node": "crackling_rise",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "lightning"
+      },
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "thunder_god_s_chain",
+      "name": "Thunder God's Chain",
+      "desc": "A single bolt that leaps through a whole battlefield of foes.",
+      "parents": [
+        {
+          "node": "crackling_rise",
+          "level": 3
+        },
+        {
+          "node": "lightning_rod",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "jumps": [
+          5.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          9.0,
+          9.0,
+          10.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "rain_of_bolts",
+      "name": "Rain of Bolts",
+      "desc": "A barrage of lightning spears pours down on the foe you look at.",
+      "parents": [
+        {
+          "node": "storm_spin",
+          "level": 3
+        },
+        {
+          "node": "charge_reserve",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:end_rod"
+    }
+  ]
+}

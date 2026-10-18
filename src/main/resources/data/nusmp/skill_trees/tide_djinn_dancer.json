@@ -1,0 +1,1047 @@
+{
+  "magic": "magi",
+  "franchise": "magi",
+  "name": "Tide Djinn Dancer",
+  "desc": "Water winds around you like a ribbon: flowing, quick and kind. Heal with the tide, drive off the enemy with a lash of water and never stay where the blow lands.",
+  "book": "nusmp:tide_djinn_dancer_book",
+  "book_name": "Equip of the Rolling Tide",
+  "book_lore": "A ribbon-bound pamphlet of steps, pivots and the curve of a falling wave.",
+  "color": "#46A7D9",
+  "icon": "minecraft:heart_of_the_sea",
+  "class_id": "tide_djinn_dancer",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tide_djinn_dancer.png",
+  "book_texture": "nusmp:item/skill_book_3d/magi",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "flowing_cloak",
+      "name": "Flowing Cloak",
+      "desc": "Move with the water: fast and quick to heal, a light guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.7,
+          0.84,
+          0.98
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "breaking_wave",
+      "name": "Breaking Wave",
+      "desc": "Gather for the break: heavy blows and a stout stance, you move slower.",
+      "parents": [
+        {
+          "node": "flowing_cloak",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.22,
+          0.264,
+          0.308
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "tidal_vitality",
+      "name": "Tidal Vitality",
+      "desc": "Constantly renewed.",
+      "parents": [
+        {
+          "node": "flowing_cloak",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:cooked_cod"
+    },
+    {
+      "id": "dancer_s_step",
+      "name": "Dancer's Step",
+      "desc": "Smooth, easy footwork.",
+      "parents": [
+        {
+          "node": "breaking_wave",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "waterwhip_reach",
+      "name": "Waterwhip Reach",
+      "desc": "Longer reach with a water lash.",
+      "parents": [
+        {
+          "node": "flowing_cloak",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "water_whip_spin",
+      "name": "Water Whip Spin",
+      "desc": "Whirl a whip of water around you, hitting everything near several times.",
+      "parents": [
+        {
+          "node": "flowing_cloak",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "healing_tide",
+      "name": "Healing Tide",
+      "desc": "A warm tide washes over you and your allies, healing them.",
+      "parents": [
+        {
+          "node": "breaking_wave",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "water_veil",
+      "name": "Water Veil",
+      "desc": "A veil of water wraps around you and soaks up damage.",
+      "parents": [
+        {
+          "node": "water_whip_spin",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "current_lunge",
+      "name": "Current Lunge",
+      "desc": "Ride a current forward, striking everything in your path.",
+      "parents": [
+        {
+          "node": "healing_tide",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:nautilus_shell"
+    },
+    {
+      "id": "crashing_wave",
+      "name": "Crashing Wave",
+      "desc": "A wave breaks around you and throws everything outward.",
+      "parents": [
+        {
+          "node": "water_veil",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:sea_pickle"
+    },
+    {
+      "id": "undertow",
+      "name": "Undertow",
+      "desc": "The current drags the creatures around you toward you.",
+      "parents": [
+        {
+          "node": "current_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:kelp"
+    },
+    {
+      "id": "ripple_step",
+      "name": "Ripple Step",
+      "desc": "Skip along the water: a short teleport forward.",
+      "parents": [
+        {
+          "node": "crashing_wave",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          10.08,
+          11.16,
+          12.24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lily_pad"
+    },
+    {
+      "id": "tide_s_mending",
+      "name": "Tide's Mending",
+      "desc": "While in water you heal faster.",
+      "parents": [
+        {
+          "node": "water_whip_spin",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_water"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "rain_dancer_s_aura",
+      "name": "Rain Dancer's Aura",
+      "desc": "Allies near you regenerate a little.",
+      "parents": [
+        {
+          "node": "healing_tide",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:blue_banner"
+    },
+    {
+      "id": "slip_the_blow",
+      "name": "Slip the Blow",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "water_veil",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "draining_currents",
+      "name": "Draining Currents",
+      "desc": "A share of the damage you deal comes back as health.",
+      "parents": [
+        {
+          "node": "current_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "flowing_wounds",
+      "name": "Flowing Wounds",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "crashing_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:kelp"
+    },
+    {
+      "id": "smoother_than_fire",
+      "name": "Smoother than Fire",
+      "desc": "Fire damage hardly hurts you.",
+      "parents": [
+        {
+          "node": "undertow",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "wave_rider",
+      "name": "Wave Rider",
+      "desc": "While in water you move faster.",
+      "parents": [
+        {
+          "node": "ripple_step",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "in_water"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:sea_pickle"
+    },
+    {
+      "id": "rain_of_restoration",
+      "name": "Rain of Restoration",
+      "desc": "A warm rain falls on the whole battle, healing you and everyone near you.",
+      "parents": [
+        {
+          "node": "ripple_step",
+          "level": 3
+        },
+        {
+          "node": "wave_rider",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0
+        ],
+        "amount": [
+          16.0,
+          20.0,
+          24.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1300.0,
+          1222.0,
+          1144.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "great_flood",
+      "name": "Great Flood",
+      "desc": "A towering wave erupts around you and crashes outward in every direction.",
+      "parents": [
+        {
+          "node": "undertow",
+          "level": 3
+        },
+        {
+          "node": "smoother_than_fire",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:heart_of_the_sea"
+    }
+  ]
+}
