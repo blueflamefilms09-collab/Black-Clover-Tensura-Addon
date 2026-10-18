@@ -1,0 +1,1124 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Kasaka's Venom Fang",
+  "desc": "A poison-dripping dagger and the serpent's patience: lunge, poison and wait for the venom to finish the job.",
+  "book": "nusmp:kasaka_venom_fang_book",
+  "book_name": "Notes on the Serpent's Tooth",
+  "book_lore": "Cut once. The rest is arithmetic.",
+  "color": "#6FC93A",
+  "icon": "minecraft:fermented_spider_eye",
+  "class_id": "kasaka_venom_fang",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/kasaka_venom_fang.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "fang_drawn",
+      "name": "Fang Drawn",
+      "desc": "Dagger out and ready: quick and sharp, but with little protection.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "coiled_viper",
+      "name": "Coiled Viper",
+      "desc": "Wait, coiled and watchful: critical strikes come easier, at the cost of damage per blow.",
+      "parents": [
+        {
+          "node": "fang_drawn",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "serpentine_reflexes",
+      "name": "Serpentine Reflexes",
+      "desc": "A lunging snake's speed.",
+      "parents": [
+        {
+          "node": "fang_drawn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "venomed_edge",
+      "name": "Venomed Edge",
+      "desc": "A dagger edge honed on poison.",
+      "parents": [
+        {
+          "node": "coiled_viper",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "slither_stride",
+      "name": "Slither Stride",
+      "desc": "Low and light on your feet.",
+      "parents": [
+        {
+          "node": "fang_drawn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "viper_lunge",
+      "name": "Viper Lunge",
+      "desc": "Dart forward and stab everything in your line, leaving the wounds green.",
+      "parents": [
+        {
+          "node": "fang_drawn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "venom_mist",
+      "name": "Venom Mist",
+      "desc": "Exhale a cone of green mist that poisons and withers everything in it.",
+      "parents": [
+        {
+          "node": "coiled_viper",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "poison",
+        "effect2": "wither",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "hydra_fangs",
+      "name": "Hydra Fangs",
+      "desc": "Strike from three angles at once: the stab jumps between foes.",
+      "parents": [
+        {
+          "node": "viper_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "fang_sip",
+      "name": "Fang Sip",
+      "desc": "Drive the dagger in and drink some of the foe's life.",
+      "parents": [
+        {
+          "node": "venom_mist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "rending_bite",
+      "name": "Rending Bite",
+      "desc": "Slash a tight cone with the venom dagger.",
+      "parents": [
+        {
+          "node": "hydra_fangs",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:stone_sword"
+    },
+    {
+      "id": "needle_spit",
+      "name": "Needle Spit",
+      "desc": "Spit a spray of venom needles at the foe you look at.",
+      "parents": [
+        {
+          "node": "fang_sip",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "spore_cloud",
+      "name": "Spore Cloud",
+      "desc": "Burst a spore bomb that blinds the creatures around you.",
+      "parents": [
+        {
+          "node": "rending_bite",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:red_mushroom"
+    },
+    {
+      "id": "venom_coating",
+      "name": "Venom Coating",
+      "desc": "Your blows may poison the foe.",
+      "parents": [
+        {
+          "node": "viper_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "poison"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:poisonous_potato"
+    },
+    {
+      "id": "hit_the_vitals",
+      "name": "Hit the Vitals",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "venom_mist",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "needle_combo",
+      "name": "Needle Combo",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "hydra_fangs",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "hunter_of_beasts",
+      "name": "Hunter of Beasts",
+      "desc": "You deal more damage to animals.",
+      "parents": [
+        {
+          "node": "fang_sip",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "animal"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:beef"
+    },
+    {
+      "id": "poisoned_reprisal",
+      "name": "Poisoned Reprisal",
+      "desc": "Whoever strikes you may be poisoned.",
+      "parents": [
+        {
+          "node": "rending_bite",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "poison"
+      },
+      "values": {
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "sap_the_dying",
+      "name": "Sap the Dying",
+      "desc": "Kills heal you and speed you up.",
+      "parents": [
+        {
+          "node": "needle_spit",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "quick_silence",
+      "name": "Quick Silence",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "spore_cloud",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "serpent_s_deathblow",
+      "name": "Serpent's Deathblow",
+      "desc": "Strike a poisoned foe for a huge execution blow.",
+      "parents": [
+        {
+          "node": "spore_cloud",
+          "level": 3
+        },
+        {
+          "node": "quick_silence",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "range": [
+          4.5,
+          4.77,
+          5.04
+        ],
+        "bonus": [
+          2.0,
+          2.3,
+          2.6
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "king_cobra_s_cloud",
+      "name": "King Cobra's Cloud",
+      "desc": "A vast cloud of venom erupts from your blade, afflicting everything in a wide ring.",
+      "parents": [
+        {
+          "node": "needle_spit",
+          "level": 3
+        },
+        {
+          "node": "sap_the_dying",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "targets": [
+          7.0,
+          10.0,
+          13.0
+        ],
+        "knockback": [
+          0.8,
+          0.88,
+          0.96
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:dragon_breath"
+    }
+  ]
+}

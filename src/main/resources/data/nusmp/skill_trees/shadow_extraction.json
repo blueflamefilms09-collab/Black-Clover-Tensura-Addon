@@ -1,0 +1,1128 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Arise: Shadow Extraction",
+  "desc": "The Shadow Monarch's first gift: rip the shades of the fallen out of the dark and make their strength your own. A necromancer's line of drain, fear and harvested souls.",
+  "book": "nusmp:shadow_extraction_book",
+  "book_name": "Grimoire of the Fallen Shades",
+  "book_lore": "Every grave is a recruiting office, and the dead never say no.",
+  "color": "#6A3DE8",
+  "icon": "minecraft:wither_skeleton_skull",
+  "class_id": "shadow_extraction",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/shadow_extraction.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "void",
+  "nodes": [
+    {
+      "id": "stance_of_the_gathering_dark",
+      "name": "Stance of the Gathering Dark",
+      "desc": "Shadows pool around your feet and sharpen your blows, but they leave your guard thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:soul_lantern"
+    },
+    {
+      "id": "stance_of_quiet_graves",
+      "name": "Stance of Quiet Graves",
+      "desc": "A cold stillness settles on you: slower to move, hard to hurt and slowly knitting your wounds.",
+      "parents": [
+        {
+          "node": "stance_of_the_gathering_dark",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:soul_campfire"
+    },
+    {
+      "id": "monarch_s_mana_pool",
+      "name": "Monarch's Mana Pool",
+      "desc": "Ashborn's reserves flow through you: more maximum health.",
+      "parents": [
+        {
+          "node": "stance_of_the_gathering_dark",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "soul_bound_resolve",
+      "name": "Soul-Bound Resolve",
+      "desc": "The dead stand behind you and your hide hardens.",
+      "parents": [
+        {
+          "node": "stance_of_quiet_graves",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:netherite_scrap"
+    },
+    {
+      "id": "shade_touched_reflexes",
+      "name": "Shade-Touched Reflexes",
+      "desc": "Your shadow moves a heartbeat before you do.",
+      "parents": [
+        {
+          "node": "stance_of_the_gathering_dark",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "grave_reach",
+      "name": "Grave Reach",
+      "desc": "Your arms stretch through the dark, extending your reach.",
+      "parents": [
+        {
+          "node": "stance_of_quiet_graves",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.3,
+          0.375,
+          0.45,
+          0.525,
+          0.6
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "arise",
+      "name": "Arise!",
+      "desc": "Reach into a foe's last breath and tear a shade of its strength loose; you heal for a large share of the blow.",
+      "parents": [
+        {
+          "node": "stance_of_the_gathering_dark",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.35,
+          0.392,
+          0.434,
+          0.476
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:soul_torch"
+    },
+    {
+      "id": "shade_surge",
+      "name": "Shade Surge",
+      "desc": "Black mist erupts around you and hurls nearby foes back.",
+      "parents": [
+        {
+          "node": "stance_of_quiet_graves",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:black_dye"
+    },
+    {
+      "id": "soldier_s_chain_lash",
+      "name": "Soldier's Chain Lash",
+      "desc": "Whips of shadow lash one foe and leap from enemy to enemy.",
+      "parents": [
+        {
+          "node": "arise",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "dread_whisper",
+      "name": "Dread Whisper",
+      "desc": "The dead whisper through a cone before you, sapping the strength and slowing the steps of the living.",
+      "parents": [
+        {
+          "node": "shade_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "weakness",
+        "effect2": "slowness",
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "umbral_grasp",
+      "name": "Umbral Grasp",
+      "desc": "Hands of shadow drag the creatures around you to your feet.",
+      "parents": [
+        {
+          "node": "soldier_s_chain_lash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "marked_for_extraction",
+      "name": "Marked for Extraction",
+      "desc": "Brand a foe with violet sigils; it takes extra damage while you prepare to claim its shade.",
+      "parents": [
+        {
+          "node": "dread_whisper",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "shade_ward",
+      "name": "Shade Ward",
+      "desc": "A cloak of grave mist flings part of every blow you suffer back at the attacker.",
+      "parents": [
+        {
+          "node": "umbral_grasp",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:echo_shard"
+    },
+    {
+      "id": "spoils_of_the_fallen",
+      "name": "Spoils of the Fallen",
+      "desc": "Every kill heals you and fills you with the dead one's vigor.",
+      "parents": [
+        {
+          "node": "arise",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "gravebound_hunger",
+      "name": "Gravebound Hunger",
+      "desc": "Your blows siphon life back to you.",
+      "parents": [
+        {
+          "node": "shade_surge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.06,
+          0.072,
+          0.084,
+          0.096
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "midnight_dominion",
+      "name": "Midnight Dominion",
+      "desc": "Under the night sky your shadows swell and you strike harder.",
+      "parents": [
+        {
+          "node": "soldier_s_chain_lash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "night"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "presence_of_the_host",
+      "name": "Presence of the Host",
+      "desc": "An unseen army stands at your shoulder; allies near you feel stronger.",
+      "parents": [
+        {
+          "node": "dread_whisper",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "strength",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "shadows_mend_shadows",
+      "name": "Shadows Mend Shadows",
+      "desc": "While fighting, your wounds are stitched by creeping dark.",
+      "parents": [
+        {
+          "node": "umbral_grasp",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:glow_ink_sac"
+    },
+    {
+      "id": "last_shade_standing",
+      "name": "Last Shade Standing",
+      "desc": "When you are nearly dead a shade throws itself over you and shields you.",
+      "parents": [
+        {
+          "node": "marked_for_extraction",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "harvest_of_souls",
+      "name": "Harvest of Souls",
+      "desc": "Kills yield extra experience as the shades pay tribute.",
+      "parents": [
+        {
+          "node": "shade_ward",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "arise_my_army",
+      "name": "Arise, My Army",
+      "desc": "Call the entire host of shades: you and your allies in a wide ring gain a long surge of Strength.",
+      "parents": [
+        {
+          "node": "shade_ward",
+          "level": 3
+        },
+        {
+          "node": "harvest_of_souls",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "seconds": [
+          20.0,
+          23.0,
+          26.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "requiem_of_the_shadow_monarch",
+      "name": "Requiem of the Shadow Monarch",
+      "desc": "A tidal wave of shadow explodes around you, smashing every foe nearby.",
+      "parents": [
+        {
+          "node": "marked_for_extraction",
+          "level": 3
+        },
+        {
+          "node": "last_shade_standing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "knockback": [
+          1.5,
+          1.65,
+          1.8
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:dragon_breath"
+    }
+  ]
+}
