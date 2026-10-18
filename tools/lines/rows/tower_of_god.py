@@ -747,3 +747,283 @@ LINES.append(Line(
         A("Absolute Law", "For a long breath, over half of every blow you take is thrown back on the attacker.", "ward_reflect", "minecraft:totem_of_undying", vfx="MIRROR_PANE", seconds=10, reflect_pct=0.65, cost=0.05, cooldown=1700),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------- 19
+LINES.append(Line(
+    id="tog_wolhaiguk_moon", name="Wolhaiguk Moon Arts", franchise=F,
+    desc="Blade and tide techniques of the Moon-Sea house: thin crescents of light, pulling tides and a step that follows the moon. Strongest when the sky is dark.",
+    color="#B3E5FC", background="frost", icon="minecraft:clock",
+    book_name="Tide-Tables of the Pale Moon", book_lore="Each page is dated by the phase of the moon it was written under.",
+    stances=[
+        S("Waxing Moon Stance", "Let the light build: sharper strikes and a better crit chance, but your guard is thin.", "minecraft:quartz", damage_pct=0.12, crit_chance=0.06, armor=-1, vfx="WATER_RING"),
+        S("Waning Moon Stance", "Draw the light back in: sturdier and recovering, a little faster on the feet.", "minecraft:ender_pearl", armor=2, regen=0.4, speed_pct=0.03, vfx="WATER_RING"),
+    ],
+    stats=[
+        T("Moonlit Blood", "The moon lends your body its tide.", "max_health", 2, "minecraft:quartz"),
+        T("Tide-Pull Footwork", "You move as if pulled along by the sea.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Pale Edge", "A thin edge that cuts true.", "attack_damage", 1, "minecraft:iron_sword"),
+        T("Night Fortune", "The moon is on your side.", "luck", 1, "minecraft:clock"),
+    ],
+    arts=[
+        A("Crescent Slash", "Draw a pale crescent through the air and cut the cone in front of you.", "cone_strike", "minecraft:iron_sword", vfx="WIND_SLASH", damage=7, half_angle=55),
+        A("Moonlit Step", "Slip along a silver path and reappear a few blocks ahead.", "blink", "minecraft:ender_pearl", vfx="WATER_RING", distance=9),
+        A("Tidal Pull", "Let the tide reach out and drag the foes around you toward the blade.", "pull", "minecraft:nautilus_shell", vfx="WATER_RING", radius=8, strength=1.0),
+        A("Full Moon Ring", "A shining ring of moonlight bursts out around you.", "ring_burst", "minecraft:sea_lantern", vfx="WATER_RING", damage=5, radius=4),
+        A("Moonbeam", "Fire a thin beam of moonlight down your line of sight.", "ray_shot", "minecraft:end_rod", vfx="LIGHTNING_SPEAR", damage=7, range=18, pierce=2),
+        A("Eclipse Veil", "Dim the light around you: the creatures nearby cannot see you.", "smoke", "minecraft:black_dye", vfx="SHADOW_POOL", radius=5, seconds=6),
+        A("Phase Mark", "Mark a foe under the moon: it takes more damage for a while.", "mark", "minecraft:spyglass", vfx="MAGIC_CIRCLE", bonus=0.3, range=24),
+    ],
+    passives=[
+        P("Moon-Strength", "At night your blows hit harder.", "dmg_when", "minecraft:iron_sword", condition="night", bonus=0.2),
+        P("Tidal Healing", "At night your wounds close quickly.", "regen_when", "minecraft:glow_berries", condition="night", per_second=0.6),
+        P("Owl Sight", "At night you see clearly.", "self_effect_when", "minecraft:golden_carrot", effect="night_vision", condition="night"),
+        P("Night Veil", "At night you take less damage.", "reduce_when", "minecraft:black_dye", condition="night", pct=0.12),
+        P("Thin Edge", "Your crescent cuts land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("Wave Step", "You may slip out of the way of a blow.", "dodge", "minecraft:feather", chance=0.1),
+        P("Cold Thirst", "Part of the damage you deal returns to you.", "lifesteal", "minecraft:redstone", pct=0.05),
+    ],
+    finishers=[
+        A("Moonfall", "Gather the moon in your blade and loose a vast beam through everything in front of you.", "ray_shot", "minecraft:sea_lantern", vfx="LIGHTNING_SPEAR", damage=28, range=30, pierce=4, cost=0.06, cooldown=1600),
+        A("Crescent Eclipse", "One enormous crescent cut that fills the cone ahead with silver and shadow.", "cone_strike", "minecraft:netherite_sword", vfx="WIND_SLASH", damage=28, range=5.5, half_angle=70, targets=9, cost=0.06, cooldown=1700),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 20
+LINES.append(Line(
+    id="tog_lighthouse_keeper", name="Lighthouse Keeper", franchise=F,
+    desc="A keeper stands still on a tall stone and sweeps the dark with a beam. Long reach, loud warnings and a slow turning light nothing can hide from.",
+    color="#FFF176", background="ocean", icon="minecraft:sea_lantern",
+    book_name="The Keeper's Night Log", book_lore="Entry after entry: all well. The last one reads: all well, and something is looking back.",
+    stances=[
+        S("Keeper's Watch", "Stay on your stone: very sturdy and unmovable, but slow.", "minecraft:stone_bricks", armor=3, knockback_res=0.4, speed_pct=-0.12, vfx="SPIRIT_AURA"),
+        S("Sweeping Beam", "Swing the beam freely: stronger and quicker, with less guard.", "minecraft:end_rod", damage_pct=0.12, crit_chance=0.05, speed_pct=0.03, armor=-1, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Tall Tower", "Your frame is tall and stone-hard.", "armor", 1, "minecraft:stone_bricks"),
+        T("Keeper's Lungs", "Years in sea air and long stairs.", "max_health", 2, "minecraft:cooked_cod"),
+        T("Far Beam", "Your reach goes as far as the light does.", "entity_interaction_range", 0.5, "minecraft:spyglass"),
+        T("Salt-Weathered", "You do not get pushed over easily.", "knockback_resistance", 0.1, "minecraft:prismarine_bricks"),
+    ],
+    arts=[
+        A("Sweep of Light", "Swing the lighthouse beam in a single line: it pierces through a row of foes.", "ray_shot", "minecraft:end_rod", vfx="LIGHTNING_SPEAR", damage=7, range=22, pierce=3),
+        A("Foghorn", "A long, deep horn stops the creatures around you where they stand.", "stun_ring", "minecraft:goat_horn", vfx="WIND_RING", radius=4.5, seconds=2),
+        A("Warning Flare", "Fire a flare in a cone: the foes in it are blinded and lit up.", "debuff_cone", "minecraft:firework_rocket", vfx="FIRE_BURST", effect="blindness", effect2="glowing", seconds=5, seconds2=8),
+        A("Guiding Beam", "Light the way for your friends: you and the allies near you gain haste.", "buff_aura", "minecraft:lantern", vfx="SPIRIT_AURA", effect="haste", radius=9, seconds=12),
+        A("Harbor Shield", "A bright shell of light holds the waves back: it absorbs damage.", "shield", "minecraft:prismarine_bricks", vfx="WATER_RING", absorb_hearts=5),
+        A("Lamp Oil Mending", "Burn a drop of oil and the light heals you.", "heal_self", "minecraft:honey_bottle", vfx="SPIRIT_AURA", amount=7),
+        A("Signal Fire", "Light a signal fire on the spot you look at; it falls as a roaring blaze after a short pause.", "meteor_drop", "minecraft:campfire", vfx="FLAME_EXPLOSION", damage=11, radius=3.5),
+    ],
+    passives=[
+        P("Guiding Light", "Allies near you stay tougher while your beam is up.", "aura", "minecraft:lantern", effect="resistance", target="allies", radius=7),
+        P("Steady on the Stone", "While fighting you take less damage.", "reduce_when", "minecraft:stone_bricks", condition="in_combat", pct=0.1),
+        P("Storm Watch", "In rain you recover steadily.", "regen_when", "minecraft:water_bucket", condition="raining", per_second=0.6),
+        P("Beacon Glass", "You shrug off fire damage.", "resist", "minecraft:glass", damage_kind="fire", pct=0.25),
+        P("Ghost Ward", "The undead flinch from your beam: they take more damage from you.", "dmg_vs", "minecraft:skeleton_skull", category="undead", bonus=0.2),
+        P("Night Vigil", "At night you see clearly.", "self_effect_when", "minecraft:golden_carrot", effect="night_vision", condition="night"),
+        P("Hold the Light", "When nearly dead you hold on behind a brief shield.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+    ],
+    finishers=[
+        A("Lighthouse Sweep", "The whole lamp turns: a huge beam of white light carves a lane through the foes ahead.", "ray_shot", "minecraft:beacon", vfx="LIGHTNING_SPEAR", damage=26, range=32, pierce=5, cost=0.06, cooldown=1700),
+        A("Storm Beacon", "Raise a shell of storm light that soaks a huge amount of damage.", "shield", "minecraft:sea_lantern", vfx="SPIRIT_AURA", absorb_hearts=10, seconds=10, resist_amp=2, cost=0.05, cooldown=1600),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 21
+LINES.append(Line(
+    id="tog_black_march", name="Black March", franchise=F,
+    desc="A black blade that drinks in the light around it. Long dark cuts, shadow rushes and a thirst that gets worse the longer the fight goes.",
+    color="#37474F", background="ruin", icon="minecraft:netherite_sword",
+    book_name="Black March: A Sword's Diary", book_lore="The blade writes in the dark, and the ink is a color nobody has named.",
+    stances=[
+        S("Drawn Blade Stance", "The blade is out and hungry: huge damage and crits, a very thin guard.", "minecraft:netherite_sword", damage_pct=0.18, crit_chance=0.08, armor=-2, vfx="SHADOW_POOL"),
+        S("Sheathed Dark Stance", "Keep the blade covered: sturdier and quicker on your feet, but lighter blows.", "minecraft:black_dye", armor=2, regen=0.3, speed_pct=0.04, damage_pct=-0.04, vfx="SHADOW_POOL"),
+    ],
+    stats=[
+        T("Black Edge", "The blade bites deeper.", "attack_damage", 1, "minecraft:netherite_sword"),
+        T("Shadow Marrow", "The shadow lends you more strength.", "max_health", 2, "minecraft:coal"),
+        T("Dark Step", "You move silently and fast.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Grim Grip", "The blade is quick in your hands.", "attack_speed", 0.2, "minecraft:iron_nugget"),
+    ],
+    arts=[
+        A("Black Slash", "Cut a dark crescent through the cone in front of you.", "cone_strike", "minecraft:netherite_sword", vfx="SHADOW_POOL", damage=7, half_angle=55),
+        A("Shadow Rush", "Dissolve into shadow and dash through the foes in front of you.", "dash_strike", "minecraft:black_dye", vfx="SHADOW_POOL", damage=7, distance=8),
+        A("Dark Wave", "Send a wave of black force along the floor ahead.", "ground_wave", "minecraft:coal_block", vfx="SHADOW_POOL", damage=6, length=11),
+        A("Void Bite", "The blade bites the foe in front of you and drinks some of its life.", "drain_bite", "minecraft:spider_eye", vfx="SHADOW_POOL", damage=7, heal_pct=0.35),
+        A("Night Sweep", "Spin with the blade extended and cut everything around you several times.", "whirlwind", "minecraft:wither_skeleton_skull", vfx="WIND_TORNADO", damage=3, hits=4),
+        A("Pall of Darkness", "A dark cloud rolls over the cone ahead: the foes in it lose their sight and strength drains away.", "debuff_cone", "minecraft:ink_sac", vfx="SHADOW_POOL", effect="darkness", effect2="wither", seconds=6, seconds2=5),
+        A("Obsidian Fall", "Leap and bring the blade down hard on the foes below.", "leap_slam", "minecraft:obsidian", vfx="DEVIL_CIRCLE", damage=8, height=0.9),
+    ],
+    passives=[
+        P("Blood Price", "A share of the damage you deal returns to you.", "lifesteal", "minecraft:redstone", pct=0.06),
+        P("Slash Chain", "Every few hits in a row land much harder.", "combo", "minecraft:clock", hits=4, bonus=0.6),
+        P("Withering Cut", "Your blade may leave the foe withered.", "on_hit_effect", "minecraft:wither_rose", effect="wither", chance=0.2),
+        P("Dark Edge", "Cuts of the black blade land critically more often.", "crit", "minecraft:flint", chance=0.12, mult=1.7),
+        P("Midnight Hunger", "At night you deal more damage.", "dmg_when", "minecraft:black_dye", condition="night", bonus=0.2),
+        P("Rising Dark", "The longer the fight goes, the more the blade grows.", "momentum", "minecraft:coal", per_stack=0.04, max_stacks=6),
+        P("Final Cut", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.25, bonus=0.7),
+    ],
+    finishers=[
+        A("Black March Unsheathed", "Drag the blade across the floor and let a huge black wave rip along it.", "ground_wave", "minecraft:netherite_sword", vfx="SHADOW_POOL", damage=28, length=20, width=4, knockback=1.6, cost=0.06, cooldown=1700),
+        A("Endless Night Cut", "One enormous arc of darkness that fills the whole cone in front of you.", "cone_strike", "minecraft:wither_skeleton_skull", vfx="SHADOW_POOL", damage=30, range=5.5, half_angle=75, targets=10, cost=0.06, cooldown=1800),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 22
+LINES.append(Line(
+    id="tog_agnis_ice", name="Agnis Ice Crystals", franchise=F,
+    desc="Cold Shinsu of a Great Family's heir: hard crystals of ice grown from the hand. Volleys of shards, glacier waves and a mirror-bright wall for protection.",
+    color="#81D4FA", background="frost", icon="minecraft:blue_ice",
+    book_name="Crystal Primer of the Cold Line", book_lore="Every page is a thin sheet of ice. The ink is meltwater.",
+    stances=[
+        S("Frostbound Stance", "Freeze your own edges: heavy armor and a slow regeneration, a little slower.", "minecraft:packed_ice", armor=3, regen=0.3, speed_pct=-0.05, vfx="MIRROR_PANE"),
+        S("Crystal Edge Stance", "Grow shards along your arms: harder and crit-prone, with less guard.", "minecraft:prismarine_shard", damage_pct=0.15, crit_chance=0.06, armor=-1, vfx="MIRROR_PANE"),
+    ],
+    stats=[
+        T("Frozen Core", "Cold hardens the body.", "max_health", 2, "minecraft:ice"),
+        T("Crystal Skin", "A rime on your skin turns blows aside.", "armor", 1, "minecraft:blue_ice"),
+        T("Cold Focus", "Frozen clarity makes your shots sharper.", "attack_damage", 1, "minecraft:snowball"),
+        T("Glide on Ice", "Your steps skate rather than walk.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+    ],
+    arts=[
+        A("Shard Volley", "Spit a volley of ice shards at the foe you look at.", "barrage", "minecraft:prismarine_shard", vfx="MIRROR_PANE", damage=3, shots=6),
+        A("Frost Lance", "Grow a long lance of ice and loose it through a line of foes.", "ray_shot", "minecraft:blue_ice", vfx="MIRROR_PANE", damage=8, range=18, pierce=2),
+        A("Frozen Ground", "Ice spreads from your feet and locks the creatures around you in place.", "stun_ring", "minecraft:packed_ice", vfx="MIRROR_PANE", radius=4, seconds=2),
+        A("Glacier Wave", "A wave of ice crystals slides along the floor ahead of you.", "ground_wave", "minecraft:snow_block", vfx="STONE_SPIKES", damage=6, length=11),
+        A("Chill Breath", "A cone of freezing air slows and wears out the foes in front of you.", "debuff_cone", "minecraft:powder_snow_bucket", vfx="MIRROR_PANE", effect="slowness", effect2="mining_fatigue", seconds=7, seconds2=7),
+        A("Crystal Mirror Wall", "Raise a wall of mirror-clear ice around you that absorbs damage.", "shield", "minecraft:glass", vfx="MIRROR_PANE", absorb_hearts=5),
+        A("Hailstone Drop", "Call down a great block of ice on the spot you look at.", "meteor_drop", "minecraft:ice", vfx="MIRROR_PANE", damage=11, radius=3.5),
+    ],
+    passives=[
+        P("Cold-Blooded", "You take less damage from freezing attacks.", "resist", "minecraft:snowball", damage_kind="freeze", pct=0.3),
+        P("Chilling Presence", "Enemies close to you move slower in the cold.", "aura", "minecraft:cobweb", effect="slowness", target="enemies", radius=5),
+        P("Frostbite", "Your hits may leave the foe slowed.", "on_hit_effect", "minecraft:snowball", effect="slowness", chance=0.25),
+        P("Icicle Hide", "Blows against you are partly returned by the shards in your skin.", "thorns", "minecraft:prismarine_shard", pct=0.15),
+        P("Thaw Hunter", "You hit burning foes harder.", "dmg_vs", "minecraft:magma_cream", category="burning", bonus=0.2),
+        P("Snowfall Recovery", "In rain or snow you recover steadily.", "regen_when", "minecraft:snow_block", condition="raining", per_second=0.6),
+        P("Perfect Facet", "Your shards land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+    ],
+    finishers=[
+        A("Absolute Zero", "Drop the whole room to freezing: everything around you is locked in ice for a long moment.", "stun_ring", "minecraft:blue_ice", vfx="MIRROR_PANE", radius=9, seconds=5, targets=12, cost=0.09, cooldown=1900),
+        A("Crystal Cathedral", "Raise a forest of ice spears and loose them all at the foe in front of you.", "barrage", "minecraft:amethyst_cluster", vfx="MIRROR_PANE", damage=5, shots=12, range=18, cost=0.08, cooldown=1800),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 23
+LINES.append(Line(
+    id="tog_jahad_royal", name="Royal Blood of Jahad", franchise=F,
+    desc="Crown-and-banner combat of the royal house: a straight sword, a commanding voice and a presence that makes soldiers fall in. Strong when at full strength.",
+    color="#AD1457", background="city", icon="minecraft:golden_sword",
+    book_name="Primer of the Royal House", book_lore="Every court has a speaker; this volume is the speaker's whisper.",
+    stances=[
+        S("Crown Posture", "Stand upright in your regalia: heavier armor and a slight bonus to damage, a little slow.", "minecraft:golden_helmet", armor=2, damage_pct=0.08, speed_pct=-0.05, vfx="MAGIC_CIRCLE"),
+        S("Heir Unbound Stance", "Cast off the regalia: fast and fierce, but exposed.", "minecraft:golden_sword", damage_pct=0.15, speed_pct=0.06, armor=-2, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Royal Blood", "A strong line makes strong bodies.", "max_health", 2, "minecraft:golden_apple"),
+        T("Regal Poise", "Hard to knock off a throne.", "armor_toughness", 1, "minecraft:gold_ingot"),
+        T("Reach of the Throne", "A king's reach is long.", "entity_interaction_range", 0.4, "minecraft:bell"),
+        T("Commanding Strike", "A trained royal hand.", "attack_damage", 1, "minecraft:golden_sword"),
+    ],
+    arts=[
+        A("Royal Slash", "A clean, wide cut in front of you, as drilled in the court.", "cone_strike", "minecraft:golden_sword", vfx="WIND_SLASH", damage=7, half_angle=55),
+        A("Command to Arms", "A short command: you and the allies near you move faster.", "buff_aura", "minecraft:red_banner", vfx="SPIRIT_AURA", effect="speed", radius=9, seconds=12),
+        A("Bannerman's Charge", "Charge forward and strike everything in the way.", "dash_strike", "minecraft:golden_boots", vfx="WIND_SLASH", damage=7, distance=8),
+        A("Crown Barrier", "Gold-lit absorption wraps you like regalia.", "shield", "minecraft:golden_chestplate", vfx="MAGIC_CIRCLE", absorb_hearts=5),
+        A("Throne Pulse", "A ring of royal force throws back every foe around you.", "ring_burst", "minecraft:gold_block", vfx="MAGIC_CIRCLE", damage=5, radius=4),
+        A("Sovereign's Gaze", "Your look alone weakens the foes in a cone and marks them out for your people.", "debuff_cone", "minecraft:ender_eye", vfx="MAGIC_CIRCLE", effect="weakness", effect2="glowing", seconds=7, seconds2=8),
+        A("Royal Verdict", "A blow reserved for the weakened: much stronger at low health.", "execute", "minecraft:diamond_sword", vfx="WIND_SLASH", damage=9, bonus=0.8),
+    ],
+    passives=[
+        P("Unbowed", "While your health is full you strike harder.", "dmg_when", "minecraft:golden_sword", condition="full_health", bonus=0.15),
+        P("Untroubled Bearing", "While your health is full you take less damage.", "reduce_when", "minecraft:golden_chestplate", condition="full_health", pct=0.1),
+        P("Court Presence", "Allies near you fight harder.", "aura", "minecraft:red_banner", effect="strength", target="allies", radius=7),
+        P("Royal Training", "Strikes of the royal line land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("The Crown Does Not Fall", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("Throne Weight", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.3),
+        P("Spoils of the Realm", "Every kill restores a little health.", "kill_reward", "minecraft:golden_apple", heal=3, effect="none"),
+    ],
+    finishers=[
+        A("Decree of Jahad", "A royal command that rolls outward as a huge shock ring around you.", "ring_burst", "minecraft:gold_block", vfx="MAGIC_CIRCLE", damage=24, radius=7, targets=9, knockback=1.7, cost=0.06, cooldown=1800),
+        A("Fall of the Royal Banner", "Hurl the banner from the sky: a huge strike on the place you look at.", "meteor_drop", "minecraft:red_banner", vfx="FLAME_EXPLOSION", damage=28, radius=5, cost=0.09, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 24
+LINES.append(Line(
+    id="tog_fug_assassin", name="FUG Hunter", franchise=F,
+    desc="An organised killer of the shadows: fang-thin blades, poisoned darts and a smoke bomb, made for ending a fight before it starts. Pick a mark and finish it.",
+    color="#880E4F", background="void", icon="minecraft:spider_eye",
+    book_name="Hunter's Contract Ledger", book_lore="Each page lists a name, a price and a crossed-out line.",
+    stances=[
+        S("Poisoned Edge Stance", "Coat the blade: stronger, crit-prone strikes, a thinner guard.", "minecraft:fermented_spider_eye", damage_pct=0.1, crit_chance=0.08, armor=-1, vfx="POISON_BREATH"),
+        S("Grave Silence Stance", "Make no sound at all: much faster, but your strikes are a little weaker.", "minecraft:leather_boots", speed_pct=0.08, armor=-1, damage_pct=-0.03, vfx="SHADOW_POOL"),
+    ],
+    stats=[
+        T("Hunter's Reflex", "You are quick on the draw.", "attack_speed", 0.2, "minecraft:iron_nugget"),
+        T("Venom-Tempered Body", "Poison has made you hardy.", "max_health", 2, "minecraft:spider_eye"),
+        T("Shadow Footwork", "No sound, no weight.", "movement_speed", 0.05, "minecraft:leather_boots", op="mult"),
+        T("Killer's Eye", "You see the target before it sees you.", "entity_interaction_range", 0.4, "minecraft:ender_eye"),
+    ],
+    arts=[
+        A("Venom Dart Flurry", "Flick a volley of poisoned darts at the foe you look at.", "barrage", "minecraft:arrow", vfx="POISON_BREATH", damage=3, shots=6),
+        A("Wither Fang", "A quick bite of the blade at the foe in front of you; you heal from the wound.", "drain_bite", "minecraft:iron_sword", vfx="SHADOW_POOL", damage=6, heal_pct=0.3),
+        A("Mark for Death", "Brand a target from afar: it takes extra damage until the mark fades.", "mark", "minecraft:skeleton_skull", vfx="SHADOW_POOL", bonus=0.3, range=26),
+        A("Smoke Bomb", "Burst a smoke bomb: everything around you goes blind for a moment.", "smoke", "minecraft:gunpowder", vfx="ASH_FORMATION", radius=5, seconds=6),
+        A("Poison Gas", "Breathe out a gas into the cone ahead: the foes in it are poisoned and withered.", "debuff_cone", "minecraft:fermented_spider_eye", vfx="POISON_BREATH", effect="poison", effect2="wither", seconds=6, seconds2=4),
+        A("Grave Rush", "Slip through the foes in front of you in a flash of black.", "dash_strike", "minecraft:black_dye", vfx="SHADOW_POOL", damage=7, distance=8),
+        A("Neck Cut", "A merciless slash at a weakened foe: far stronger the lower its health.", "execute", "minecraft:iron_sword", vfx="SHADOW_POOL", damage=9, bonus=0.9),
+    ],
+    passives=[
+        P("Toxic Edge", "Your blows may leave the foe poisoned.", "on_hit_effect", "minecraft:spider_eye", effect="poison", chance=0.25),
+        P("Contract Fulfilled", "A kill returns health and a short burst of speed.", "kill_reward", "minecraft:gold_nugget", heal=3, effect="speed", seconds=4),
+        P("Coup de Grace", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.25, bonus=0.7),
+        P("Slip Away", "You may avoid a blow completely.", "dodge", "minecraft:feather", chance=0.12),
+        P("Artery Finder", "Your strikes land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.14, mult=1.8),
+        P("Spoils of the Hunt", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:chest", chance=0.1),
+        P("Prey on Rivals", "You hit other players harder.", "dmg_vs", "minecraft:player_head", category="player", bonus=0.15),
+    ],
+    finishers=[
+        A("A Hundred Fangs", "Release a huge cloud of poisoned needles at the foe in front of you.", "barrage", "minecraft:spider_eye", vfx="POISON_BREATH", damage=5, shots=12, range=16, cost=0.08, cooldown=1800),
+        A("Silent Verdict", "A single, perfect cut meant to end a weakened target outright.", "execute", "minecraft:netherite_sword", vfx="SHADOW_POOL", damage=28, bonus=2.2, cost=0.06, cooldown=1600),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 25
+LINES.append(Line(
+    id="tog_beast_tamer", name="Floor Beast Rider", franchise=F,
+    desc="Some climbers ride the Tower's beasts instead of fighting them. Pounces, charges and a howl that rallies the pack; you fight with a beast's weight and instinct.",
+    color="#8BC34A", background="forest", icon="minecraft:saddle",
+    book_name="A Rider's Bestiary", book_lore="Fifty beasts, forty-nine of them hungry, one of them yours.",
+    stances=[
+        S("Rider's Seat Stance", "Ride with the beast: faster and a little armored, softer blows.", "minecraft:saddle", speed_pct=0.08, armor=1, damage_pct=-0.03, vfx="WIND_RING"),
+        S("Pack Leader Stance", "Take the alpha's place: harder hits and regeneration, thin guard.", "minecraft:bone", damage_pct=0.12, regen=0.3, armor=-1, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Beast Bond", "Your bond with the beast shares its vigor.", "max_health", 2, "minecraft:bone"),
+        T("Wild Stride", "You run as a beast runs.", "movement_speed", 0.05, "minecraft:leather_boots", op="mult"),
+        T("Claw Strength", "Your arms strike with the weight of a beast.", "attack_damage", 1, "minecraft:rabbit_hide"),
+        T("Steady Seat", "Not easy to shake off.", "knockback_resistance", 0.1, "minecraft:lead"),
+    ],
+    arts=[
+        A("Pounce", "Spring at the foes below like a hunting cat and land with your whole weight.", "leap_slam", "minecraft:rabbit_foot", vfx="WIND_SLASH", damage=8, height=0.9),
+        A("Wolf-Pack Charge", "Rush forward like a pack at full speed and knock back everyone in the way.", "dash_strike", "minecraft:bone", vfx="WIND_SLASH", damage=7, distance=8),
+        A("Pack Howl", "A long howl: you and your allies near you grow stronger.", "buff_aura", "minecraft:goat_horn", vfx="WIND_RING", effect="strength", radius=9, seconds=12),
+        A("Bestial Roar", "A great roar draws the attention of the hostile creatures around you.", "taunt", "minecraft:rotten_flesh", vfx="DEVIL_CIRCLE", radius=9, targets=5),
+        A("Claw Rake", "Rake the cone in front of you with great claws.", "cone_strike", "minecraft:rabbit_hide", vfx="WIND_SLASH", damage=7, half_angle=55),
+        A("Feral Frenzy", "Thrash in a circle and hit everything around you several times.", "whirlwind", "minecraft:bone_meal", vfx="WIND_TORNADO", damage=3, hits=4),
+        A("Beast Recovery", "Lick your wounds: you heal and regenerate for a few seconds.", "heal_self", "minecraft:cooked_beef", vfx="SPIRIT_AURA", amount=7),
+    ],
+    passives=[
+        P("Beast Rush", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:sugar", bonus=0.2),
+        P("Pack Tempo", "The longer the fight, the stronger every blow.", "momentum", "minecraft:bone", per_stack=0.04, max_stacks=6),
+        P("Pack Scent", "Allies near you run a little faster.", "aura", "minecraft:sugar", effect="speed", target="allies", radius=7),
+        P("Fangs", "Part of what you deal returns as health.", "lifesteal", "minecraft:redstone", pct=0.05),
+        P("Thick Hide", "Slow regeneration in a fight.", "regen_when", "minecraft:leather", condition="in_combat", per_second=0.4),
+        P("Kill and Feed", "Each kill restores some health.", "kill_reward", "minecraft:cooked_beef", heal=3, effect="none"),
+        P("Salvaged Pelts", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:rabbit_hide", chance=0.1),
+    ],
+    finishers=[
+        A("Stampede", "Charge with the whole herd behind you: a long rush that tramples a huge number of foes.", "dash_strike", "minecraft:saddle", vfx="WIND_SLASH", damage=24, distance=12, targets=8, cost=0.06, cooldown=1600),
+        A("Alpha's Howl", "The alpha cry bursts out as a huge ring that hurls every foe nearby.", "ring_burst", "minecraft:goat_horn", vfx="WIND_RING", damage=22, radius=6.5, targets=9, knockback=1.8, cost=0.06, cooldown=1800),
+    ],
+))
