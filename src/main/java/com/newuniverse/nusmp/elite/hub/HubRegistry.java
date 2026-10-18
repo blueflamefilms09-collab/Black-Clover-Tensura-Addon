@@ -40,6 +40,7 @@ public final class HubRegistry {
 
         NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> e.addListener(new HubReload()));
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, CoinBossDrops::onDrops);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOW, CoinMobDrops::onDrops);
         QuestEvents.register(NeoForge.EVENT_BUS);
         QuestEvents.registerFloorListener();
         HubNpcSpawner.register(NeoForge.EVENT_BUS);

@@ -48,7 +48,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * never a boss or a servant), a PLAYER did the killing (so a monster that died to another in a turf war is no farm), it stood on a Holy or Abyssal floor (never the Hub), and the pure
  * {@link CoinLoot} rolls the payout at that floor with the killer's Looting. (2) A CHEST: any loot table under {@code chests/} rolled in the Mega-Dungeon (the dungeon's own chests) adds coins at
  * the chest's floor; inside a Secret Rift pocket the amount is the rift multiplier and the floor is the pocket's own. When coins are the currency the chest's Magic Stones and crystals are
- * taken out of the roll (the economy is REPLACED), unless {@code economy.keepStoneDrops}. The decennial Guardian rolls no table and is paid by {@link CoinBossDrops}. Does nothing unless
+ * taken out of the roll (the economy is REPLACED), unless {@code economy.keepStoneDrops}. A creature whose class rolls no loot table at all (the 400 Mob Foundry mobs, which are one entity type with
+ * {@code dropFromLootTable} switched off) never reaches a modifier, so {@link CoinMobDrops} pays those from {@code LivingDropsEvent}, and the decennial Guardian, which also rolls no table, is paid
+ * by {@link CoinBossDrops}; a creature this modifier has decided for carries {@link CoinMobDrops#PAID_TAG} so the two never pay twice. Does nothing unless
  * {@link Currency#coins()}. An exception is logged once and the loot goes through unchanged: a loot roll must never fail because of a coin. Server side.
  */
 public final class CoinLootModifier extends LootModifier {
@@ -117,6 +119,7 @@ public final class CoinLootModifier extends LootModifier {
         if (LootVictims.kindOf(dead) != com.newuniverse.nusmp.skilltree.loot.LootRules.Kind.MONSTER) return 0;
         ServerPlayer killer = LootVictims.killer(context);
         if (killer == null) return 0;
+        dead.addTag(CoinMobDrops.PAID_TAG);                      // decided: the death listener for table-less mobs must not roll a second time
         int floor = MegaDungeon.floorAt(level, dead.blockPosition());
         return CoinLoot.roll(CoinLoot.Source.MOB, floor, looting(level, killer), params, d);
     }

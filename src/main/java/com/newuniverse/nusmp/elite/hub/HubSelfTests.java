@@ -171,7 +171,8 @@ public final class HubSelfTests {
                 if (ShopService.purchase(p, limited.id()) != ShopRules.Verdict.SOLD_OUT) return fail(limited.id() + " was sold past its daily limit of " + limited.dailyLimit());
             }
             p.getInventory().clearContent();
-            if (ShopService.purchase(p, "dungeon_map") != ShopRules.Verdict.CANNOT_AFFORD) return fail("the Dungeon Map was sold to a player with no coins");
+            ShopTable.Offer pricey = shop.offers().stream().filter(o -> o.dailyLimit() == 0 && o.minFloor() == 0 && o.price() > 0).findFirst().orElse(null);
+            if (pricey != null && ShopService.purchase(p, pricey.id()) != ShopRules.Verdict.CANNOT_AFFORD) return fail(pricey.id() + " was sold to a player with no coins");
             return ok(shop.size() + " offers; bought bread for " + price + " bronze; unknown, locked, sold-out and unaffordable refused");
         } finally {
             p.getInventory().clearContent();
@@ -203,7 +204,7 @@ public final class HubSelfTests {
             if (QuestService.turnIn(p, reach) != 0) return fail("the quest paid twice");
             if (QuestService.accept(p, reach) != PlayerQuestData.AcceptResult.ALREADY_DONE) return fail("a done progression quest could be accepted again");
             QuestDef next = catalog.get("road_holy_reach_10");
-            if (next != null && QuestService.accept(p, next) != PlayerQuestData.AcceptResult.LOCKED && next.minFloor() > QuestService.data(p).maxFloor()) return fail("the next quest should be locked by its floor");
+            if (next != null && next.minFloor() > QuestService.data(p).maxFloor() && QuestService.accept(p, next) != PlayerQuestData.AcceptResult.LOCKED) return fail("the next quest should be locked by its floor");
             List<QuestDef> board = QuestService.board(QuestService.data(p), QuestService.today(server));
             if (HubConfig.get(HubConfig.DAILY_COUNT) > 0 && board.isEmpty()) return fail("today's daily board is empty");
             if (QuestService.hud(p).size() != QuestService.data(p).active().size()) return fail("the overlay does not list the accepted quests");

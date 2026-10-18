@@ -79,6 +79,20 @@ class MapViewTest {
     }
 
     @Test
+    void theMapModesCostWhatTheyPromise() {
+        assertEquals(MapMode.DURABLE, MapMode.parse(null));
+        assertEquals(MapMode.DURABLE, MapMode.parse("rubbish"));
+        assertEquals(MapMode.PER_FLOOR, MapMode.parse("Per-Floor"));
+        assertEquals(MapMode.CONSUMABLE, MapMode.parse(" consumable "));
+        for (boolean mapped : new boolean[] {false, true}) {
+            assertEquals(0, MapMode.DURABLE.cost(mapped), "a durable map is never used up");
+            assertEquals(1, MapMode.CONSUMABLE.cost(mapped), "a consumable map is always used up");
+        }
+        assertEquals(1, MapMode.PER_FLOOR.cost(false), "the first use on a floor costs one map");
+        assertEquals(0, MapMode.PER_FLOOR.cost(true), "opening it again on a mapped floor is free");
+    }
+
+    @Test
     void theNpcSpotsAreOnThePlazaAwayFromTheGateAndEachOther() {
         HubNpcLayout.Spot q = HubNpcLayout.questGiver(), m = HubNpcLayout.merchant();
         assertTrue(HubNpcLayout.onPlaza(q), "the Quest Giver stands on the plaza");
