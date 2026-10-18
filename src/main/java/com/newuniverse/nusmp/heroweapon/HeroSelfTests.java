@@ -18,11 +18,15 @@ import java.util.Set;
  * Why: nothing of the hero weapons can be played by its author, so the catalogue has a SELF-TEST that the CI server smoke test runs in the real game
  * ({@code /multiverse mega selftest}, key {@code hero.catalog}; the smoke script expects the prefix {@code hero}): every weapon of the enum has a registered
  * item under {@code nusmp:<itemId>}, a logic whose {@code kind()} matches, skills whose ids start with the weapon's short name and are not repeated, and a
- * non-empty list of forms that starts with the base form and whose parents all exist. Each system adds its own tests under {@code hero.<system>.*} in its own
+ * non-empty list of forms that starts with the base form and whose parents all exist, and at least the design's number of techniques (14 for a Holy Weapon,
+ * 6 for a Vassal weapon). Each system adds its own tests under {@code hero.<system>.*} in its own
  * {@code init}. The lead owns this file.
  */
 public final class HeroSelfTests {
     private HeroSelfTests() {}
+
+    /** The design's floor of techniques per weapon (design.md section 5): a Holy Weapon is the deep one, a Seven Star / Vassal weapon the lean one. */
+    static final int MIN_SKILLS_HOLY = 14, MIN_SKILLS_VASSAL = 6;
 
     public static void register() { SelfTests.register("hero.catalog", HeroSelfTests::catalog); }
 
@@ -36,11 +40,15 @@ public final class HeroSelfTests {
             if (!HeroLogics.has(k)) bad.add(k + " has no registered logic");
             else if (HeroLogics.of(k).kind() != k) bad.add(k + " has a logic that says it is " + HeroLogics.of(k).kind());
             String prefix = k.name().toLowerCase() + ".";
+            int own = 0;
             for (HeroSkill s : HeroLogics.skillsOf(k)) {
                 skills++;
+                own++;
                 if (!s.id().startsWith(prefix)) bad.add("skill " + s.id() + " of " + k + " must start with '" + prefix + "'");
                 if (!skillIds.add(s.id())) bad.add("skill id " + s.id() + " is used twice");
             }
+            int needed = k.isHoly() ? MIN_SKILLS_HOLY : MIN_SKILLS_VASSAL;
+            if (own < needed) bad.add(k + " has " + own + " skills; the design asks for at least " + needed);
             List<HeroForm> list = HeroForms.of(k);
             forms += list.size();
             if (list.isEmpty() || !HeroForm.BASE_ID.equals(list.get(0).id())) bad.add(k + " has no base form first");
