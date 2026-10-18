@@ -1,0 +1,25 @@
+{
+  "_doc": "Size classes of the hart3 weapons (tools/heroweapon/art_hart3.py); merge into tools/relics/weapon_classes.json 'weapons', then run tools/relics/audit_weapon_scale.py --write.",
+  "weapons": {
+    "vassal_book": {
+      "class": "handitem",
+      "why": "a heavy spellbook held upright: measured by its largest dimension (the cover 0.78 block tall in the cube, the loose pages and ribbon beyond it; 0.72 of that in the third person hand)"
+    },
+    "vassal_carriage": {
+      "class": "handitem",
+      "why": "a small carriage held upright on its wheels, nose to the right: measured by its largest dimension (1.0 block long in the item cube)"
+    },
+    "vassal_fan": {
+      "class": "handitem",
+      "why": "a held war fan: measured by its largest dimension (the span, about 0.9 blocks)"
+    },
+    "vassal_katana": {
+      "class": "katana",
+      "why": "a katana: the class length 1.4 to 1.8 blocks, tip bent toward the edge (-x)"
+    },
+    "vassal_scythe": {
+      "class": "scythe",
+      "why": "a tall scythe: the class length 2.0 to 2.6 blocks, head at least 0.6 across (the hook is 0.9)"
+    }
+  }
+}
