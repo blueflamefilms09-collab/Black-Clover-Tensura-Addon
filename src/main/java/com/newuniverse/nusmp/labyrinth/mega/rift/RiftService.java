@@ -100,6 +100,7 @@ public final class RiftService {
         p.displayClientMessage(Component.translatableWithFallback(pocket ? "message.nusmp.mega.rift.opened.pocket" : "message.nusmp.mega.rift.opened.shortcut",
                 pocket ? "The air tears open nearby: a hidden realm hums behind it." : "A tear in the air opens nearby. It leads further on.").withStyle(pocket ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.AQUA), true);
         NusmpEvents.fire(p, "mega.rift", pocket ? "pocket" : "shortcut");
+        com.newuniverse.nusmp.compat.maps.MapShare.rift(p, at, pocket);                                   // compat-maps: a clickable waypoint line for the rift (opt-in, rate limited)
     }
 
     private static BlockPos findSpot(ServerLevel level, Sector s, ServerPlayer p) {

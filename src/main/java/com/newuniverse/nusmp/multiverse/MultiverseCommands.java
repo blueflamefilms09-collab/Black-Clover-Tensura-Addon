@@ -209,6 +209,7 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.relics.order.RelicOrderCommand.addTo(root);                                              // relic order census|enforce|status|release|summon
         com.newuniverse.nusmp.relics.djinn.DjinnCommand.addTo(root);                                                   // djinn status|release|share|grant|phase
         root.then(com.newuniverse.nusmp.compat.CompatCommand.node());                                    // 1.33.0: compat book|status
+        root.then(com.newuniverse.nusmp.compat.maps.MapsCommand.waypointNode());                       // compat-maps: waypoint share on|off|here|gate|return
         root.then(com.newuniverse.nusmp.core.magic.merge.MergeCommand.node());                                          // 1.27.0: magic merge|list|info|remove|grant|revoke|audit
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
         root.then(com.newuniverse.nusmp.skilltree.SkillTreeCommand.node());                                    // 1.62.0: tree show|sp|route|node|class|reset|reload|routes

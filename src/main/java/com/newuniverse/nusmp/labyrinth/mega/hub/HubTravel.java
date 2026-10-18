@@ -62,9 +62,13 @@ public final class HubTravel {
             tell(p, "travel.no_level", "The Sanctuary does not answer: its dimension is not loaded.", ChatFormatting.GRAY);
             return false;
         }
-        if (!Labyrinth.inSanctuary(p.level()) && !Labyrinth.in(p)) rememberOrigin(p);
+        boolean fromOutside = !Labyrinth.inSanctuary(p.level()) && !Labyrinth.in(p);
+        String fromDim = p.level().dimension().location().toString();                                   // compat-maps: read before the teleport
+        if (fromOutside) rememberOrigin(p);
         arrive(p, hub, "travel.arrive",
                 "Floor 0, the Sanctuary. Nothing here wishes you harm. The Spire to the east climbs, the Chasm to the west descends; the gate behind you leads home.");
+        if (fromOutside) com.newuniverse.nusmp.compat.maps.MapShare.gate(p, fromDim, from);             // compat-maps: a clickable waypoint line for the Gateway (once per gate, opt-in, rate limited)
+        com.newuniverse.nusmp.compat.maps.MapShare.hubGates(p);                                         // compat-maps: the Hub's three gates (once each)
         return true;
     }
 
