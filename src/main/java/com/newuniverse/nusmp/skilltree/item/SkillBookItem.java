@@ -49,6 +49,10 @@ public class SkillBookItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         SkillRoute route = RouteRegistry.byBook(SkillItems.bookIdOf(stack));
+        if (route == null) {                                                                  // 1.82.0: a client that has not unlocked the line still names the book (shipped table)
+            BookLook.Entry look = BookLook.byBook(SkillItems.bookIdOf(stack));
+            if (look != null && !look.bookName().isEmpty()) return Component.literal(look.bookName()).withStyle(Style.EMPTY.withColor(look.color()));
+        }
         if (route == null || route.bookName() == null || route.bookName().isEmpty()) return Component.translatableWithFallback("item.nusmp.skill_book", "Skill Book");
         return Component.literal(route.bookName()).withStyle(Style.EMPTY.withColor(route.color() & 0xFFFFFF));
     }
@@ -60,12 +64,25 @@ public class SkillBookItem extends Item {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         String bookId = SkillItems.bookIdOf(stack);
         SkillRoute route = RouteRegistry.byBook(bookId);
-        if (route == null) {
+        BookLook.Entry look = route == null ? BookLook.byBook(bookId) : null;
+        if (route == null && look != null) {                                                  // 1.82.0: the line is not synced to this client but the shipped table knows it
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.opens", "Opens the route: %s",
+                    Component.literal(look.name()).withStyle(Style.EMPTY.withColor(look.color()))).withStyle(ChatFormatting.GRAY));
+            if (!look.franchise().isEmpty()) {
+                tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.franchise", "From: %s",
+                        Component.translatableWithFallback("franchise.nusmp." + look.franchise(), look.franchise())).withStyle(ChatFormatting.DARK_AQUA));
+            }
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.use", "Right-click to read it. The book is used up.").withStyle(ChatFormatting.DARK_GRAY));
+        } else if (route == null) {
             tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.blank", "The pages are blank.").withStyle(ChatFormatting.GRAY));
         } else {
             if (route.bookLore() != null && !route.bookLore().isEmpty()) tooltip.add(Component.literal(route.bookLore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.opens", "Opens the route: %s",
                     Component.literal(route.name()).withStyle(Style.EMPTY.withColor(route.color() & 0xFFFFFF))).withStyle(ChatFormatting.GRAY));
+            if (route.magic() != null && !route.magic().isEmpty()) {
+                tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.franchise", "From: %s",
+                        Component.translatableWithFallback("franchise.nusmp." + route.magic(), route.magic())).withStyle(ChatFormatting.DARK_AQUA));
+            }
             if (route.duplicateSp() > 0) {
                 tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.duplicate", "A copy of a route you already know is worth %s Skill Points.",
                         route.duplicateSp()).withStyle(ChatFormatting.DARK_GRAY));

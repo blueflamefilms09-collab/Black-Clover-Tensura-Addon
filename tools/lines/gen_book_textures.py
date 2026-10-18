@@ -211,7 +211,7 @@ def em_black_clover(d):
     for ang in (0, 90, 180, 270):
         a = math.radians(ang - 45)
         heart(d, 80 + 40 * math.cos(a), 80 + 40 * math.sin(a), 1.7, a + math.pi / 2)
-    brush(d, bezier((80, 80), (88, 110), (100, 132), (118, 150)), 4, 2)                  # the stem
+    brush(d, bezier((80, 84), (80, 112), (72, 130), (86, 154)), 5, 3)                    # the stem, between the two lower leaves
     d.ellipse((72, 72, 88, 88), fill=0)
 
 
