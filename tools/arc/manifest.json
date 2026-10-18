@@ -1416,6 +1416,284 @@
    ],
    "problems": []
   },
+  "charybdis_spawn": {
+   "model": "arc_charybdis_spawn",
+   "spec": "GeoSpec.of(\"arc\", \"charybdis_spawn\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Charybdis Spawn",
+   "build": "huge",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_charybdis_spawn.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_charybdis_spawn.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_glow.png"
+   ],
+   "texture": [
+    512,
+    256
+   ],
+   "cubes": 93,
+   "faces_per_pass": 507,
+   "height_blocks": 3.19,
+   "height_with_hair_and_horns_blocks": 4.46,
+   "bounds_blocks": {
+    "min": [
+     -1.85,
+     -0.81,
+     -0.54
+    ],
+    "max": [
+     1.85,
+     4.46,
+     2.27
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 1.6,
+    "height": 3.19
+   },
+   "arc_look": {
+    "height": 3.19,
+    "walkCycle": 1.63,
+    "runCycle": 2.97,
+    "shadow": 1.3,
+    "growXz": 2.77,
+    "growUp": 1.67,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5",
+    "beak_arms",
+    "tentacle_l0",
+    "tentacle_l1",
+    "tentacle_l2",
+    "tentacle_l3",
+    "tentacle_r0",
+    "tentacle_r1",
+    "tentacle_r2",
+    "tentacle_r3"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "leg_l",
+    "arm_r",
+    "leg_r",
+    "beak_arms",
+    "tentacle_l3",
+    "tentacle_r3"
+   ],
+   "problems": []
+  },
+  "charybdis_spawn_form2": {
+   "model": "arc_charybdis_spawn_form2",
+   "spec": "GeoSpec.of(\"arc\", \"charybdis_spawn_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Charybdis Spawn, Flushed",
+   "build": "huge",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_charybdis_spawn_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_charybdis_spawn_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    256
+   ],
+   "cubes": 93,
+   "faces_per_pass": 507,
+   "height_blocks": 3.19,
+   "height_with_hair_and_horns_blocks": 4.46,
+   "bounds_blocks": {
+    "min": [
+     -1.85,
+     -0.81,
+     -0.54
+    ],
+    "max": [
+     1.85,
+     4.46,
+     2.27
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 1.6,
+    "height": 3.19
+   },
+   "arc_look": {
+    "height": 3.19,
+    "walkCycle": 1.63,
+    "runCycle": 2.97,
+    "shadow": 1.3,
+    "growXz": 2.77,
+    "growUp": 1.67,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5",
+    "beak_arms",
+    "tentacle_l0",
+    "tentacle_l1",
+    "tentacle_l2",
+    "tentacle_l3",
+    "tentacle_r0",
+    "tentacle_r1",
+    "tentacle_r2",
+    "tentacle_r3"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "leg_l",
+    "arm_r",
+    "leg_r",
+    "beak_arms",
+    "tentacle_l3",
+    "tentacle_r3"
+   ],
+   "problems": []
+  },
   "dante_zogratis": {
    "model": "arc_dante_zogratis",
    "spec": "GeoSpec.of(\"arc\", \"dante_zogratis\")",
@@ -3647,6 +3925,245 @@
     "halo",
     "prop_r",
     "pages"
+   ],
+   "problems": []
+  },
+  "goliath": {
+   "model": "arc_goliath",
+   "spec": "GeoSpec.of(\"arc\", \"goliath\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Goliath",
+   "build": "huge",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_goliath.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_goliath.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_goliath.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_glow.png"
+   ],
+   "texture": [
+    512,
+    256
+   ],
+   "cubes": 33,
+   "faces_per_pass": 189,
+   "height_blocks": 6.0,
+   "height_with_hair_and_horns_blocks": 6.0,
+   "bounds_blocks": {
+    "min": [
+     -1.76,
+     0.0,
+     -0.54
+    ],
+    "max": [
+     1.76,
+     6.0,
+     0.5
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 1.6,
+    "height": 6.0
+   },
+   "arc_look": {
+    "height": 6.0,
+    "walkCycle": 3.3,
+    "runCycle": 6.01,
+    "shadow": 1.23,
+    "growXz": 2.26,
+    "growUp": 0.4,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair"
+   ],
+   "glow_bones": [
+    "head"
+   ],
+   "problems": []
+  },
+  "goliath_form2": {
+   "model": "arc_goliath_form2",
+   "spec": "GeoSpec.of(\"arc\", \"goliath_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Goliath, Gates Open",
+   "build": "huge",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_goliath_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_goliath_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    256
+   ],
+   "cubes": 33,
+   "faces_per_pass": 189,
+   "height_blocks": 6.0,
+   "height_with_hair_and_horns_blocks": 6.0,
+   "bounds_blocks": {
+    "min": [
+     -1.76,
+     0.0,
+     -0.54
+    ],
+    "max": [
+     1.76,
+     6.0,
+     0.5
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 1.6,
+    "height": 6.0
+   },
+   "arc_look": {
+    "height": 6.0,
+    "walkCycle": 3.3,
+    "runCycle": 6.01,
+    "shadow": 1.23,
+    "growXz": 2.26,
+    "growUp": 0.4,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r"
    ],
    "problems": []
   },
