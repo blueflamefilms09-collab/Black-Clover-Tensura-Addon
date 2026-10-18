@@ -222,7 +222,11 @@ public final class RelicDef {
     public String cardName() { return cardName; }
     public Grade grade() { return grade; }
     public RelicSlot slot() { return slot; }
-    public boolean needsAttunement() { return attune; }
+    /**
+     * Does this relic need attunement? 1.84.0 (owner: "normal-unique relics don't require attunement"): only relics of {@link AttuneRules#REQUIRED_FROM} (Legend) and above do; a Normal, Special,
+     * Rare or Unique relic works for whoever carries it, even where a definition says {@code .attune()}. The definitions are untouched, so lowering the bar later is one constant.
+     */
+    public boolean needsAttunement() { return AttuneRules.requires(attune, grade); }
     public boolean hasModel3d() { return model3d; }
     public boolean isVessel() { return vessel; }
     public String desc() { return desc; }

@@ -18,6 +18,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
 
+BOW_ANGLE = 135.0     # 1.84.0 (owner: "bows are still facing the wrong way"): a vanilla bow shoots along the sprite diagonal (up and to the right, the way a sword points), so its LIMBS lie on the other diagonal (up-left to down-right) and its belly faces up-right; the mesh +Y axis (tip to tip) must therefore point up-left (135 degrees) and its +X (the grip side, away from the string) up-right. 45 stood the limbs on the wrong diagonal: the bow lay across the hand with its belly down-right.
 BOW_LENGTH = 1.2      # blocks from tip to tip: vanilla's bow sprite spans about 18 pixels along its diagonal (1.15 blocks)
 
 VANILLA_DISPLAY = {
@@ -58,8 +59,8 @@ def main(check):
         lo, hi = y_range(base)
         sc = BOW_LENGTH / (hi - lo)
         mid = 0.5 * (hi - lo) * sc
-        ox, oy = 0.5 - mid * math.cos(math.radians(45)), 0.5 - mid * math.sin(math.radians(45))
-        line = "place %.5f %.5f 45.000 %.6f %s" % (ox, oy, sc, place[5])
+        ox, oy = 0.5 - mid * math.cos(math.radians(BOW_ANGLE)), 0.5 - mid * math.sin(math.radians(BOW_ANGLE))
+        line = "place %.5f %.5f %.3f %.6f %s" % (ox, oy, BOW_ANGLE, sc, place[5])
         own = set(bow_ids())
         stages = [q for q in sorted(glob.glob(os.path.join(ASSETS, "weapon_meshes", bid + "_*.txt")))
                   if not any((os.path.basename(q) == o + ".txt" or os.path.basename(q).startswith(o + "_")) and len(o) > len(bid) for o in own)]   # legendary_bow_curse_* belongs to legendary_bow_curse

@@ -1,5 +1,5 @@
 # state _pull3 f=1.00: ranged_meshes.py (the_reaver); 12 parts
-place 0.07574 0.07574 45.000 0.007500 -80.000
+place 0.92426 0.07574 135.000 0.007500 -80.000
 orient manual
 grip 0.490
 glow FFFFFF 0.14 0.45 1.0

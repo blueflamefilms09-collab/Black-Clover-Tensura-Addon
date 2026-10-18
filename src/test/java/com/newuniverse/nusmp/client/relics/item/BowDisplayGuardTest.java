@@ -77,7 +77,7 @@ class BowDisplayGuardTest {
                     String n = p.getFileName().toString();
                     if (!n.equals(id + ".txt") && !(n.startsWith(id + "_") && n.endsWith(".txt"))) continue;
                     Matcher pl = PLACE.matcher(Files.readString(p));
-                    if (!pl.find() || Math.abs(Double.parseDouble(pl.group(3)) - 45.0) > 1.0) bad.add(n + " is not placed on the sprite diagonal (place angle 45)");
+                    if (!pl.find() || Math.abs(Double.parseDouble(pl.group(3)) - 135.0) > 1.0) bad.add(n + " is not placed like vanilla's bow: limbs on the up-left diagonal, belly up-right (place angle 135, tools/relics/bow_vanilla.py)");
                 }
             }
         }

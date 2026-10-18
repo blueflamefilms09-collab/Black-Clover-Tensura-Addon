@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.84.0] — Relics below Legend need no attunement, the Unbinding Seal, bows held the vanilla way
+
+### NEW
+- **Unbinding Seal** (`nusmp:unbinding_seal`, craftable: 2 amethyst shards, an ender pearl, a gold ingot and paper): hold it in one hand and an attuned relic in the other and use it; the relic is freed from its attunement (everything else on it, tier, sockets, engravings, charges, is untouched), the seal is used up (not in creative). 3D tablet model with its own display transforms.
+
+### CHANGED
+- **Normal, Special, Rare and Unique relics no longer need attunement** (your request: "normal-unique relics don't require attunements"). Only Legend, God and Genesis relics still do (`AttuneRules.REQUIRED_FROM`). The relic definitions are untouched; tooltips and the "needs attunement" prompts follow automatically, and the three-attuned-relics limit now counts only Legend and above.
+- **Bows face the way a vanilla bow faces** (your report: "bows are still facing the wrong way"): the six mesh bows (Divine Mercy, The Dragon's Spirit, The Reaver, Embrasure, Legendary Bow and its curse form, all draw stages) were placed with their limbs along the sprite's main diagonal, so the belly pointed down-right and the bow lay across the hand. A vanilla bow shoots along the main diagonal like a sword points, its limbs lie on the other diagonal and its belly faces up-right; the meshes are now placed at 135 degrees (was 45) about the same middle. `tools/relics/bow_vanilla.py` and `BowDisplayGuardTest` carry the new angle.
+
+### KEPT
+- All attunement data on existing relics, the five-second ritual for Legend and above, the sprite bows (they already used vanilla's model), all display blocks and sizes of 1.72.0.
+
+### Honest notes
+- The bow fix is derived from vanilla's bow geometry and the renderer's pose maths, not seen in game: if a bow still looks wrong, tell me which view (first or third person) and which way it faces.
+
 ## [1.83.0] — The System: you choose where each stat point goes; move and resize the window with the mouse
 
 Your requests: "allow player to pick where each skill point for the dungeons solo leveling system go, allow them to move it around with mouse not key they should also be able to change the size of it as well" and "remove the key moving for the system only keep the toggle to turn on or off to move it".

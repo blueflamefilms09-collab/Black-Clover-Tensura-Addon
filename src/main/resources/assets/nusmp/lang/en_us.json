@@ -11200,5 +11200,11 @@
   "message.nusmp.mega.system.points.edit.done": "DONE",
   "message.nusmp.mega.system.points.edit.stats": "STAT POINTS",
   "message.nusmp.mega.system.points.edit.saved": "System window: place and size saved",
-  "key.nusmp.system_points": "Open the stat point screen"
+  "key.nusmp.system_points": "Open the stat point screen",
+  "item.nusmp.unbinding_seal": "Unbinding Seal",
+  "item.nusmp.unbinding_seal.tip": "Hold it in one hand and an attuned relic in the other, then use it: the relic is freed from its attunement.",
+  "item.nusmp.unbinding_seal.tip2": "Used up. Only Legend grade and above relics need attunement.",
+  "message.nusmp.unbinding_seal.no_relic": "Hold a relic in your other hand.",
+  "message.nusmp.unbinding_seal.not_attuned": "That relic is not attuned to anyone.",
+  "message.nusmp.unbinding_seal.released": "The seal dissolves. %s is no longer attuned to anyone."
 }

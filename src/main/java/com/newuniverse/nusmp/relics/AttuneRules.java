@@ -9,6 +9,12 @@ public final class AttuneRules {
 
     public static final int CAP = 3;
 
+    /** 1.84.0: the lowest grade whose relics need attunement; Normal, Special, Rare and Unique relics never do (owner request). */
+    public static final Grade REQUIRED_FROM = Grade.LEGEND;
+
+    /** Does a relic of this grade, defined with or without {@code .attune()}, need attunement? */
+    public static boolean requires(boolean definedAsAttuned, Grade grade) { return definedAsAttuned && grade != null && grade.atLeast(REQUIRED_FROM); }
+
     /** Ticks of sneaking with the use button held that bind a relic (five seconds). */
     public static final int HOLD_TICKS = 100;
 
@@ -21,6 +27,14 @@ public final class AttuneRules {
             if (mine[i] && used < cap) { out[i] = true; used++; }
         }
         return out;
+    }
+
+    /** What using an Unbinding Seal does, from the facts of the relic in the other hand. */
+    public enum Unbind { NO_RELIC, NOT_ATTUNED, RELEASED }
+
+    public static Unbind unbind(boolean otherHandIsRelic, boolean relicIsAttuned) {
+        if (!otherHandIsRelic) return Unbind.NO_RELIC;
+        return relicIsAttuned ? Unbind.RELEASED : Unbind.NOT_ATTUNED;
     }
 
     /** May one more relic be attuned, given how many attuned relics the player carries? */

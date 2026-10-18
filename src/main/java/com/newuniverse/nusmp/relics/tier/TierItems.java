@@ -26,6 +26,10 @@ public final class TierItems {
     public static final DeferredItem<Item> GENESIS_SEED = ITEMS.register("genesis_seed",
             () -> new CatalystItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant(), "item.nusmp.genesis_seed.tip", ChatFormatting.WHITE));
 
+    /** 1.84.0: frees an attuned relic from its attunement (hold it with the relic in the other hand and use it). */
+    public static final DeferredItem<Item> UNBINDING_SEAL = ITEMS.register("unbinding_seal",
+            () -> new com.newuniverse.nusmp.relics.UnbindingSealItem(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+
     /** A plain item whose only use is the ascension ritual; it explains that in its tooltip and glints. */
     static final class CatalystItem extends Item {
         private final String tipKey;
@@ -47,5 +51,5 @@ public final class TierItems {
     }
 
     /** Creative tab entries. */
-    public static List<Item> all() { return List.of(DEVILS_CORE.get(), GENESIS_SEED.get()); }
+    public static List<Item> all() { return List.of(DEVILS_CORE.get(), GENESIS_SEED.get(), UNBINDING_SEAL.get()); }
 }
