@@ -10,7 +10,6 @@
       "requires": [],
       "mastery": 0,
       "stats": { "attack_damage": 3.0, "attack_speed": -1.2, "movement_speed": 0.02 },
-      "abilityBonus": { "movement_speed": 0.005 },
       "skills": { "use": "fan.flower_wind", "sneak": "fan.wind_dance", "key1": "fan.repel_gust", "key2": "fan.mist_veil" },
       "passives": [ "featherfall", "residue" ],
       "look": "base"

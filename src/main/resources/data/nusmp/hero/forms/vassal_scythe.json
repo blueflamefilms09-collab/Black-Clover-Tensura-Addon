@@ -10,7 +10,6 @@
       "requires": [],
       "mastery": 0,
       "stats": { "attack_damage": 6.0, "attack_speed": -2.4, "reach": 1.0 },
-      "abilityBonus": { "reach": 0.1 },
       "skills": { "use": "scythe.full_moon_army", "sneak": "scythe.wind_slice", "key1": "scythe.flying_circle", "key2": "scythe.reap" },
       "passives": [ "soul_tithe" ],
       "look": "base"

@@ -10,7 +10,6 @@
       "requires": [],
       "mastery": 0,
       "stats": { "attack_damage": 7.0, "attack_speed": -1.8 },
-      "abilityBonus": { "attack_speed": 0.1 },
       "skills": { "use": "katana.crescent_moon", "sneak": "katana.instant_blade", "key1": "katana.counter_stance", "key2": "katana.release_evade" },
       "passives": [ "iai_tempo", "keen_opening" ],
       "look": "base"

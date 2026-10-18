@@ -10,7 +10,6 @@
       "requires": [],
       "mastery": 0,
       "stats": { "attack_damage": 2.0, "attack_speed": -2.4, "luck": 0.5 },
-      "abilityBonus": { "luck": 0.1 },
       "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.paper_burst", "key3": "book.libraria" },
       "passives": [ "chapters" ],
       "look": "base"
