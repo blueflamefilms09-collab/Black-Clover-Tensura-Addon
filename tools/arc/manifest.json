@@ -720,6 +720,131 @@
    ],
    "problems": []
   },
+  "basilisk": {
+   "model": "arc_basilisk",
+   "spec": "GeoSpec.of(\"arc\", \"basilisk\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Basilisk",
+   "build": "small",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_basilisk.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_basilisk.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_basilisk.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_basilisk_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 79,
+   "faces_per_pass": 440,
+   "height_blocks": 1.56,
+   "height_with_hair_and_horns_blocks": 2.02,
+   "bounds_blocks": {
+    "min": [
+     -0.71,
+     -0.28,
+     -0.71
+    ],
+    "max": [
+     0.71,
+     2.02,
+     1.24
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.59,
+    "height": 1.56
+   },
+   "arc_look": {
+    "height": 1.56,
+    "walkCycle": 0.94,
+    "runCycle": 1.64,
+    "shadow": 0.5,
+    "growXz": 1.74,
+    "growUp": 0.86,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    },
+    "sleep": {
+     "length": 3.2,
+     "loop": true
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "arm_r"
+   ],
+   "problems": []
+  },
   "bell_cranel": {
    "model": "arc_bell_cranel",
    "spec": "GeoSpec.of(\"arc\", \"bell_cranel\")",
