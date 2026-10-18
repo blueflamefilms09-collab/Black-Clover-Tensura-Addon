@@ -188,3 +188,11 @@ FTB config parser, the minimap geometry.
 Only type-checked against API stubs (never run): everything that touches Minecraft/NeoForge types (`MapShare`, `MapsCommand`, `MapsCompat`, the client
 helper, the config classes, the hook lines).
 Not known / from memory: every Xaero's, FTB Chunks, JourneyMap behaviour and format named above (each marked in the text).
+
+## 7. FTB Chunks claims are refused in the dungeons (1.90.0)
+Owner brief: "players should not be able to claim chunks in the dungeons with FTB." Until 1.89.0 this mod only WARNED operators (section 6) because it did not write FTB Chunks' `claim_dimension_blacklist`. Since 1.90.0 it refuses the claim itself, with FTB Chunks' own supported hook:
+
+- **How:** `FtbClaimBlock` registers a handler on FTB Chunks' cancellable `ClaimedChunkEvent.BEFORE_CLAIM` and `BEFORE_LOAD` (an Architectury event) when the server is about to start and `ftbchunks` is loaded. For a chunk in a blocked dimension it returns `ClaimResult.customProblem("message.nusmp.maps.ftb_claims_blocked")`, so FTB Chunks refuses the claim in the map screen and in `/ftbchunks claim` and shows "Claiming is not allowed in the dungeons". Unclaiming is never blocked. There is no compile-time dependency: the handler is a reflection `Proxy` of FTB's `Before` interface, and the method names were checked against the FTB Chunks (`1.21.1/main`, 2101.1.22) and Architectury (`1.21`) sources.
+- **Which dimensions:** config `nusmp-compat-maps-server.toml` `[compat.maps]`: `blockFtbClaims` (true) and `ftbClaimBlockedDimensions` (default `nusmp:*`: every dimension of the mod, comma separated, `*` is a wildcard). The decision is the pure `ClaimBlockRules` (`ClaimBlockRulesTest`).
+- **Safety:** any failure inside the handler lets the claim through (FTB Chunks must never break because of this mod); a failure while registering is logged and leaves the operators' warning of section 6 on. `/multiverse compat maps` shows "FTB Chunks claim block: ACTIVE".
+- **Not verified:** nothing has been run with FTB Chunks installed. If a future FTB Chunks renames the event, the registration fails softly and the old warning returns; the fallback is to add `nusmp:*` to FTB Chunks' `claim_dimension_blacklist`.

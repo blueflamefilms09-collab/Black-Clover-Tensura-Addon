@@ -15,6 +15,7 @@ public final class MapsCompat {
 
     public static void init(ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, MapsConfig.SPEC, "nusmp-compat-maps-server.toml");
+        NeoForge.EVENT_BUS.addListener(FtbClaimBlock::onServerAboutToStart);          // 1.90.0: FTB Chunks claims are refused in the dungeons
         NeoForge.EVENT_BUS.addListener(FtbChunksGuard::onStarted);
         NeoForge.EVENT_BUS.addListener(FtbChunksGuard::onLogin);
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> MapShare.resetLimiter());

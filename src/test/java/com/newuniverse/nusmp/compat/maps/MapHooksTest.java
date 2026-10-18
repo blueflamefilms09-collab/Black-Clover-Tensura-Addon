@@ -45,12 +45,15 @@ class MapHooksTest {
 
     @Test
     void noMapModClassIsReferencedAtCompileTime() throws IOException {
-        // the integration is soft: no import of, and no reflection into, a map mod
+        // the integration is soft: no import of, and no reflection into, a map mod. One exception since 1.90.0: FtbClaimBlock hooks FTB Chunks' own cancellable claim events by reflection (it
+        // is the only supported way to refuse a claim, and the mod has no compile-time dependency on FTB Chunks), and nothing else in the package may.
         try (var files = Files.walk(ROOT.resolve("compat/maps"))) {
             for (Path p : files.filter(x -> x.toString().endsWith(".java")).toList()) {
                 String s = Files.readString(p, StandardCharsets.UTF_8);
-                for (String banned : new String[]{"import xaero", "import dev.ftb.mods.ftbchunks", "import journeymap", "Class.forName"})
+                for (String banned : new String[]{"import xaero", "import dev.ftb.mods.ftbchunks", "import journeymap", "Class.forName"}) {
+                    if (banned.equals("Class.forName") && p.getFileName().toString().equals("FtbClaimBlock.java")) continue;
                     assertFalse(s.contains(banned), p.getFileName() + " must stay soft but contains " + banned);
+                }
             }
         }
     }

@@ -33,5 +33,7 @@
   "message.nusmp.maps.status.ftb_fix": " Add to FTB Chunks' world config (%1$s): %2$s",
   "message.nusmp.maps.status.ftb_unknown": " FTB Chunks: its world config (%1$s) was not found, so claims in this mod's dimensions cannot be checked. Make sure it has: %2$s",
   "message.nusmp.maps.status.ftb_absent": " FTB Chunks: not loaded on this side.",
-  "message.nusmp.maps.status.test": " Self-test: /multiverse mega selftest compat.maps. Details: docs/compat/maps.md."
+  "message.nusmp.maps.status.test": " Self-test: /multiverse mega selftest compat.maps. Details: docs/compat/maps.md.",
+  "message.nusmp.maps.status.ftb_block": " FTB Chunks claim block: %1$s (config blockFtbClaims = %2$s, refused in: %3$s).",
+  "message.nusmp.maps.ftb_claims_blocked": "Claiming is not allowed in the dungeons"
 }

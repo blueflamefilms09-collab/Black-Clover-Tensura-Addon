@@ -124,6 +124,9 @@ public final class MapsCommand {
         line(ctx, t("status.share", " Waypoint lines: %1$s (raw Xaero's string %2$s, JourneyMap form %3$s, at most %4$s per player per minute). Players: /multiverse waypoint share on|off|here|gate|return.",
                 cfg ? "on" : "off", MapsConfig.get(MapsConfig.RAW_XAERO_STRING) ? "on" : "off", MapsConfig.get(MapsConfig.SHARE_JOURNEYMAP_FORM) ? "on" : "off", MapsConfig.get(MapsConfig.MAX_LINES_PER_MINUTE)).withStyle(ChatFormatting.GRAY));
         if (FtbChunksGuard.ftbChunksLoaded()) {
+            line(ctx, t("status.ftb_block", " FTB Chunks claim block: %1$s (config blockFtbClaims = %2$s, refused in: %3$s).", FtbClaimBlock.active() ? "ACTIVE" : "not active",
+                    MapsConfig.get(MapsConfig.BLOCK_FTB_CLAIMS) ? "on" : "off", MapsConfig.get(MapsConfig.FTB_BLOCKED_DIMENSIONS))
+                    .withStyle(FtbClaimBlock.active() && MapsConfig.get(MapsConfig.BLOCK_FTB_CLAIMS) ? ChatFormatting.GREEN : ChatFormatting.YELLOW));
             FtbChunksCheck.Result r = FtbChunksGuard.evaluate(src.getServer());
             switch (r.status()) {
                 case COVERED -> line(ctx, t("status.ftb_ok", " FTB Chunks: claims are blocked in this mod's dimensions (%1$s).", r.source()).withStyle(ChatFormatting.GREEN));

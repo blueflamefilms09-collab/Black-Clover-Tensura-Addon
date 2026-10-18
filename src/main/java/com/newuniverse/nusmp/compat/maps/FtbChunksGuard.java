@@ -67,6 +67,7 @@ public final class FtbChunksGuard {
     public static void onStarted(ServerStartedEvent e) {
         try {
             if (!ftbChunksLoaded()) return;
+            if (FtbClaimBlock.active() && MapsConfig.get(MapsConfig.BLOCK_FTB_CLAIMS)) return;      // 1.90.0: this mod refuses the claims itself (FtbClaimBlock), nothing to warn about
             checkedAt = 0L;
             FtbChunksCheck.Result r = evaluate(e.getServer());
             switch (r.status()) {
@@ -84,6 +85,7 @@ public final class FtbChunksGuard {
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
         try {
             if (!(e.getEntity() instanceof ServerPlayer p) || !p.hasPermissions(2) || !MapsConfig.get(MapsConfig.WARN_OPS) || !ftbChunksLoaded()) return;
+            if (FtbClaimBlock.active() && MapsConfig.get(MapsConfig.BLOCK_FTB_CLAIMS)) return;
             FtbChunksCheck.Result r = evaluate(p.getServer());
             if (r.status() != FtbChunksCheck.Status.OPEN) return;
             p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.maps.ftb_warn",

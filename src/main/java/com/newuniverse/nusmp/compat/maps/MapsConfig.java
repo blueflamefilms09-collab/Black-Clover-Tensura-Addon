@@ -9,7 +9,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class MapsConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue SHARE_WAYPOINTS, RAW_XAERO_STRING, SHARE_JOURNEYMAP_FORM, WARN_OPS;
+    public static final ModConfigSpec.BooleanValue SHARE_WAYPOINTS, RAW_XAERO_STRING, SHARE_JOURNEYMAP_FORM, WARN_OPS, BLOCK_FTB_CLAIMS;
+    public static final ModConfigSpec.ConfigValue<String> FTB_BLOCKED_DIMENSIONS;
     public static final ModConfigSpec.IntValue MAX_LINES_PER_MINUTE;
 
     static {
@@ -27,6 +28,10 @@ public final class MapsConfig {
                 .defineInRange("maxLinesPerMinute", 4, 1, 30);
         WARN_OPS = b.comment("Tell operators, once per login, when FTB Chunks is installed and its claim_dimension_blacklist does not cover this mod's dimensions.")
                 .define("warnOps", true);
+        BLOCK_FTB_CLAIMS = b.comment("Players cannot claim or force-load chunks with FTB Chunks in the dimensions listed in ftbClaimBlockedDimensions (the dungeons). Needs FTB Chunks; unclaiming is never blocked.")
+                .define("blockFtbClaims", true);
+        FTB_BLOCKED_DIMENSIONS = b.comment("Comma separated dimension ids where FTB Chunks claims are refused; * is a wildcard. Default: every dimension of this mod (the Mega-Dungeon, the Hub, the Labyrinth, the arenas, the pocket realms).")
+                .define("ftbClaimBlockedDimensions", ClaimBlockRules.DEFAULT_PATTERNS);
         b.pop(2);
         SPEC = b.build();
     }

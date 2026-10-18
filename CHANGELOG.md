@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.90.0] — FTB Chunks claims are refused in the dungeons
+
+Owner brief: "players should not be able to claim chunks in the dungeons with FTB." Details: `docs/compat/maps.md` section 7.
+
+### NEW
+- **Claim block** (`compat/maps/FtbClaimBlock`, `ClaimBlockRules`): when FTB Chunks is installed, claiming and force-loading chunks is refused (in the map screen and in `/ftbchunks claim`, with the message "Claiming is not allowed in the dungeons") in every dimension of this mod: the Mega-Dungeon, the Hub, the Labyrinth, the arenas, the pocket realms. It uses FTB Chunks' own cancellable claim events, hooked by reflection (no compile-time dependency). Config `nusmp-compat-maps-server.toml`: `blockFtbClaims` (true), `ftbClaimBlockedDimensions` (`nusmp:*`). `/multiverse compat maps` shows whether it is active.
+
+### REPLACED
+- Nothing. The operators' warning from 1.87.1/1.88.0 is kept and now shows only when the block could not be registered or is switched off.
+
+### KEPT
+- Unclaiming is never blocked (claims made before this update can still be removed). Everything else.
+
+### Honest notes
+- Nothing has been run with FTB Chunks installed. The event and method names were checked against the FTB Chunks and Architectury sources for 1.21.1, but the hook itself is only unit-tested for its decision; if it fails to register, the log says so and the old warning returns.
+
 ## [1.89.0] — The deeper (or higher) you go, the stronger and smarter the mobs get
 
 Owner brief: "make it so the higher/lower you go in a dungeon the stronger and smarter the mobs will get." Full description: `docs/labyrinth/depth.md`.
