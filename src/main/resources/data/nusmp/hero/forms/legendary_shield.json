@@ -1,0 +1,143 @@
+{
+  "weapon": "legendary_shield",
+  "forms": [
+    {
+      "id": "base", "name": "Small Shield",
+      "desc": "The Legendary Shield in its first shape, a small round shield with a green jewel. It cannot hurt much, but it can stand: raise it to guard, time the raise to parry, and let what it blocks become the strength of a counter.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "armor": 2.0 }, "abilityBonus": {},
+      "skills": { "sneak": "shield.change_attack", "key1": "shield.air_strike", "key2": "shield.second_shield" },
+      "passives": [], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "leaf_shield", "name": "Leaf Shield",
+      "desc": "A shield of living leaves. It mends its wielder while the fight is quiet and gives the party a ring of healing herbs.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "tag": "minecraft:leaves", "count": 48 }, { "item": "minecraft:sweet_berries", "count": 16 } ],
+      "mastery": 80,
+      "stats": { "armor": 2.5, "max_health": 2.0 }, "abilityBonus": { "max_health": 0.5 },
+      "skills": { "sneak": "shield.change_attack", "key1": "shield.herb_mend", "key2": "shield.air_strike", "key3": "shield.second_shield" },
+      "passives": ["herb_regen"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "orange_balloon_shield", "name": "Orange Balloon Shield",
+      "desc": "A light, springy shield. Its wielder lands softly and moves quicker, can throw a comet of glass, and can pull the anger of a crowd.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:slime_ball", "count": 24 }, { "item": "minecraft:orange_dye", "count": 16 }, { "item": "minecraft:string", "count": 16 } ],
+      "mastery": 80,
+      "stats": { "armor": 1.5, "movement_speed": 0.04, "knockback_resistance": 0.1 }, "abilityBonus": { "movement_speed": 0.01 },
+      "skills": { "sneak": "shield.change_attack", "key1": "shield.shooting_star", "key2": "shield.air_strike", "key3": "shield.provoke" },
+      "passives": ["balloon_bounce"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "slime_shield", "name": "Slime Shield",
+      "desc": "A shield of soft gel that takes the sting out of every blow. It binds foes together with chains and draws them into a crowd the party can handle.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:slime_ball", "count": 48 }, { "item": "minecraft:clay_ball", "count": 16 } ],
+      "mastery": 80,
+      "stats": { "armor": 2.0, "max_health": 4.0 }, "abilityBonus": { "max_health": 1.0 },
+      "skills": { "sneak": "shield.change_attack", "key1": "shield.chain", "key2": "shield.provoke", "key3": "shield.second_shield" },
+      "passives": ["gel_absorb"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "egg_shield", "name": "Egg Shield",
+      "desc": "A shield for those who guard others: it covers the party, wards a friend and watches over the wielder's pets, who recover beside it.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:egg", "count": 32 }, { "item": "minecraft:feather", "count": 16 } ],
+      "mastery": 80,
+      "stats": { "armor": 2.0, "max_health": 2.0 }, "abilityBonus": { "max_health": 0.5 },
+      "skills": { "sneak": "shield.cover", "key1": "shield.second_shield", "key2": "shield.herb_mend", "key3": "shield.air_strike" },
+      "passives": ["hatchling_guard"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "zombie_shield", "name": "Zombie Shield",
+      "desc": "A shield of tough, rotten flesh. When the wielder is nearly beaten it holds on once a minute, and it can provoke a crowd, hook a foe and cover the party.",
+      "tier": 2, "parents": ["slime_shield"],
+      "requires": [ { "item": "minecraft:rotten_flesh", "count": 64 }, { "item": "minecraft:bone", "count": 32 } ],
+      "mastery": 140,
+      "stats": { "armor": 3.0, "max_health": 6.0, "knockback_resistance": 0.15 }, "abilityBonus": { "max_health": 1.5, "knockback_resistance": 0.03 },
+      "skills": { "sneak": "shield.change_attack", "key1": "shield.provoke", "key2": "shield.hook", "key3": "shield.cover" },
+      "passives": ["rotting_endurance"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "chimera_viper_shield", "name": "Chimera Viper Shield",
+      "desc": "The shield Naofumi kept for a long time: poisonous fangs answer what the guard stops, a hook drags foes in, and the prison and the Iron Maiden finish what is caught.",
+      "tier": 2, "parents": ["leaf_shield"],
+      "requires": [ { "item": "minecraft:spider_eye", "count": 32 }, { "item": "minecraft:poisonous_potato", "count": 16 }, { "item": "minecraft:fermented_spider_eye", "count": 8 } ],
+      "mastery": 150,
+      "stats": { "armor": 3.0, "armor_toughness": 1.0, "attack_damage": 1.0 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "sneak": "shield.hook", "key1": "shield.prison", "key2": "shield.chain", "key3": "shield.iron_maiden" },
+      "passives": ["venom_fang"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "needle_shield", "name": "Needle Shield",
+      "desc": "A shield bristling with needles. Every blow it stops is answered, and the stored Counter can be fired out all at once.",
+      "tier": 2, "parents": ["egg_shield"],
+      "requires": [ { "item": "minecraft:honeycomb", "count": 24 }, { "item": "minecraft:iron_ingot", "count": 24 } ],
+      "mastery": 140,
+      "stats": { "armor": 3.0, "attack_damage": 1.0 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "sneak": "shield.needle_burst", "key1": "shield.change_attack", "key2": "shield.shooting_star", "key3": "shield.provoke" },
+      "passives": ["needle_counter"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "light_metal_shield", "name": "Light Metal Shield",
+      "desc": "A shield of light magic steel, the wall of the party. Its guard holds half as much again, its parry is more forgiving, and it can cover, ward and raise floating shields.",
+      "tier": 3, "parents": ["zombie_shield", "needle_shield"],
+      "requires": [ { "item": "tensura:low_magisteel_ingot", "count": 16 }, { "item": "minecraft:diamond", "count": 8 }, { "item": "minecraft:iron_ingot", "count": 64 } ],
+      "mastery": 240,
+      "stats": { "armor": 6.0, "armor_toughness": 2.0, "max_health": 8.0, "knockback_resistance": 0.3 }, "abilityBonus": { "armor": 1.0, "armor_toughness": 0.5, "max_health": 2.0 },
+      "skills": { "sneak": "shield.cover", "key1": "shield.air_strike", "key2": "shield.second_shield", "key3": "shield.change_attack" },
+      "passives": ["bulwark"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "soul_eater_shield", "name": "Soul Eater Shield",
+      "desc": "The shield eats the souls of what its wielder kills and spends them as armour for the whole party. Drain cannot touch its wielder, the undead lose their will to fight, and for five seconds it can raise a dome where blows barely reach.",
+      "tier": 4, "parents": ["chimera_viper_shield", "light_metal_shield"],
+      "requires": [ { "item": "minecraft:soul_sand", "count": 64 }, { "item": "minecraft:wither_skeleton_skull", "count": 4 }, { "item": "tensura:daemon_essence", "count": 8 } ],
+      "mastery": 360,
+      "stats": { "armor": 7.0, "armor_toughness": 3.0, "max_health": 10.0, "knockback_resistance": 0.4 }, "abilityBonus": { "armor": 1.5, "armor_toughness": 0.75, "max_health": 2.5 },
+      "skills": { "sneak": "shield.soul_aegis", "key1": "shield.undead_control", "key2": "shield.cover", "key3": "shield.absolute_defence" },
+      "passives": ["soul_eater", "drain_null"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "rage_shield", "name": "Shield of Rage",
+      "desc": "The first shield of the Wrath series, born of fury. It burns its wielder and makes them stronger, and every blow they take feeds their strength.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:blaze_powder", "count": 24 }, { "item": "minecraft:redstone", "count": 32 } ],
+      "mastery": 100,
+      "stats": { "attack_damage": 4.0, "armor": 3.0 }, "abilityBonus": { "attack_damage": 1.0 },
+      "skills": { "sneak": "shield.rage_bash", "key1": "shield.provoke", "key2": "shield.change_attack", "key3": "shield.second_shield" },
+      "passives": ["rage_fury"], "look": "curse", "curse": true, "sin": "wrath", "corruptionPerSecond": 3
+    },
+    {
+      "id": "rage_shield_2", "name": "Shield of Rage II",
+      "desc": "The roar and the frenzy: the shield bellows, shoves foes back and fills its wielder with strength. The price of the curse climbs.",
+      "tier": 2, "parents": ["rage_shield"],
+      "requires": [ { "item": "minecraft:rotten_flesh", "count": 64 }, { "item": "minecraft:bone", "count": 64 }, { "item": "minecraft:ghast_tear", "count": 8 } ],
+      "mastery": 180,
+      "stats": { "attack_damage": 7.0, "armor": 4.0, "movement_speed": 0.04 }, "abilityBonus": { "attack_damage": 1.5 },
+      "skills": { "sneak": "shield.rage_bash", "key1": "shield.rage_roar", "key2": "shield.change_attack", "key3": "shield.hook" },
+      "passives": ["rage_fury"], "look": "curse", "curse": true, "sin": "wrath", "corruptionPerSecond": 4
+    },
+    {
+      "id": "wrath_shield_3", "name": "Shield of Wrath III",
+      "desc": "The shield that drinks blood. It holds a foe in a prison and closes the Iron Maiden on it, and it can pay in its wielder's blood for a trap that crushes whatever is caught.",
+      "tier": 3, "parents": ["rage_shield_2"],
+      "requires": [ { "item": "minecraft:crying_obsidian", "count": 32 }, { "item": "minecraft:ghast_tear", "count": 16 }, { "item": "minecraft:fermented_spider_eye", "count": 32 } ],
+      "mastery": 260,
+      "stats": { "attack_damage": 10.0, "armor": 4.0, "movement_speed": 0.06 }, "abilityBonus": { "attack_damage": 2.0 },
+      "skills": { "sneak": "shield.rage_bash", "key1": "shield.prison", "key2": "shield.iron_maiden", "key3": "shield.blood_sacrifice" },
+      "passives": ["rage_fury"], "look": "curse", "curse": true, "sin": "wrath", "corruptionPerSecond": 6
+    },
+    {
+      "id": "wrath_shield_4", "name": "Shield of Wrath IV",
+      "desc": "The last of the Wrath series. Its wielder can give up 30 percent of their life for Megiddo Burst, a fire that burns everything within nine blocks. It is too dangerous to use lightly.",
+      "tier": 4, "parents": ["wrath_shield_3"],
+      "requires": [ { "item": "minecraft:nether_star", "count": 4 }, { "item": "minecraft:dragon_breath", "count": 16 }, { "item": "minecraft:wither_skeleton_skull", "count": 8 } ],
+      "mastery": 380,
+      "stats": { "attack_damage": 12.0, "armor": 5.0, "movement_speed": 0.08 }, "abilityBonus": { "attack_damage": 2.5 },
+      "skills": { "sneak": "shield.blood_sacrifice", "key1": "shield.prison", "key2": "shield.iron_maiden", "key3": "shield.megiddo" },
+      "passives": ["rage_fury"], "look": "curse", "curse": true, "sin": "wrath", "corruptionPerSecond": 9
+    }
+  ]
+}

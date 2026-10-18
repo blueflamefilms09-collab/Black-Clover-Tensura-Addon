@@ -1,0 +1,143 @@
+{
+  "weapon": "legendary_sword",
+  "forms": [
+    {
+      "id": "base", "name": "Small Sword",
+      "desc": "The Legendary Sword in its first shape, a slim straight blade with a blue jewel in its guard. It is quick: every blow within two seconds of the last builds the Tempo, and a full Tempo turns the next full swing into a Flow strike.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "attack_speed": 0.2 }, "abilityBonus": {},
+      "skills": { "use": "sword.blitz", "sneak": "sword.tempest", "key1": "sword.afterimage" },
+      "passives": [], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "flash_sword", "name": "Flash Sword",
+      "desc": "A blade that catches the light. The first blow after a pause is an opening strike, and the flash blinds what stands in front of it.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:glowstone_dust", "count": 32 }, { "item": "minecraft:quartz", "count": 24 } ],
+      "mastery": 80,
+      "stats": { "attack_damage": 1.0, "attack_speed": 0.3 }, "abilityBonus": { "attack_speed": 0.05 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.flashing", "key1": "sword.afterimage", "key2": "sword.tempest" },
+      "passives": ["quick_draw"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "wind_king_katana", "name": "Heavenly Wind King Katana",
+      "desc": "A blade made with feathers of the wind. Its wielder runs faster as the Tempo builds, lands softly, and sends crescents of wind that whistle as they fly.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:feather", "count": 64 }, { "item": "minecraft:string", "count": 32 } ],
+      "mastery": 80,
+      "stats": { "attack_damage": 1.0, "attack_speed": 0.4, "movement_speed": 0.04 }, "abilityBonus": { "movement_speed": 0.01 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.wind_cutter", "key1": "sword.afterimage", "key2": "sword.tempest" },
+      "passives": ["wind_walker"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "meteor_sword", "name": "Meteor Sword",
+      "desc": "The sword of the shooting star. Every fifth blow calls a star down on the foe, and the blade can rain stars in a ring and cleave from the air.",
+      "tier": 2, "parents": ["base"],
+      "requires": [ { "item": "minecraft:amethyst_shard", "count": 32 }, { "item": "minecraft:iron_ingot", "count": 32 }, { "item": "minecraft:gold_ingot", "count": 16 } ],
+      "mastery": 140,
+      "stats": { "attack_damage": 3.0, "attack_speed": 0.2 }, "abilityBonus": { "attack_damage": 0.5 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.meteor", "key1": "sword.cleave", "key2": "sword.wind_cutter" },
+      "passives": ["star_shower"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "assassin_sword", "name": "Assassin Sword",
+      "desc": "A blade for the back of a foe. Its wielder blinks behind a target and stabs, and a blow from behind bites deeper.",
+      "tier": 2, "parents": ["flash_sword"],
+      "requires": [ { "item": "minecraft:ender_pearl", "count": 16 }, { "item": "minecraft:ink_sac", "count": 16 }, { "item": "minecraft:spider_eye", "count": 16 } ],
+      "mastery": 140,
+      "stats": { "attack_damage": 2.0, "attack_speed": 0.5, "luck": 1.0 }, "abilityBonus": { "attack_speed": 0.1 },
+      "skills": { "use": "sword.assassin", "sneak": "sword.blitz", "key1": "sword.afterimage", "key2": "sword.flashing" },
+      "passives": ["shadow_blade"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "spirit_tortoise_sword", "name": "Spirit Tortoise Sword",
+      "desc": "A heavy, patient blade. Its blows drag at a foe's legs, it makes the weight round a foe grow, and its point can go through armour.",
+      "tier": 2, "parents": ["base"],
+      "requires": [ { "item": "tensura:armorsaurus_scale", "count": 16 }, { "item": "minecraft:prismarine_shard", "count": 32 } ],
+      "mastery": 150,
+      "stats": { "attack_damage": 3.0, "armor": 2.0, "knockback_resistance": 0.1 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.gravity", "key1": "sword.tempest", "key2": "sword.eagle_blade" },
+      "passives": ["gravity_edge"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "tortoise_carapace_sword", "name": "Spirit Tortoise Carapace Sword",
+      "desc": "The sword with the tortoise's shell in it. Once in a while its carapace turns half of a heavy blow aside, and four swords float round its wielder to cut and to guard.",
+      "tier": 3, "parents": ["spirit_tortoise_sword"],
+      "requires": [ { "item": "tensura:armorsaurus_shell", "count": 12 }, { "item": "tensura:giant_ant_carapace", "count": 24 }, { "item": "minecraft:iron_ingot", "count": 32 } ],
+      "mastery": 240,
+      "stats": { "attack_damage": 4.0, "armor": 4.0, "armor_toughness": 1.0 }, "abilityBonus": { "armor": 1.0 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.float_blades", "key1": "sword.gravity", "key2": "sword.tempest", "key3": "sword.cleave" },
+      "passives": ["carapace_guard"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "phoenix_sword", "name": "Phoenix Sword",
+      "desc": "A blade of living flame. Its blows set the foe alight, its wielder does not burn, and the Phoenix Gale Blade sends a storm and a bird of fire.",
+      "tier": 3, "parents": ["meteor_sword"],
+      "requires": [ { "item": "minecraft:blaze_rod", "count": 24 }, { "item": "minecraft:magma_cream", "count": 24 }, { "item": "minecraft:ghast_tear", "count": 6 } ],
+      "mastery": 250,
+      "stats": { "attack_damage": 6.0, "attack_speed": 0.3 }, "abilityBonus": { "attack_damage": 1.0 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.phoenix_gale", "key1": "sword.eagle_blade", "key2": "sword.cleave", "key3": "sword.wind_cutter" },
+      "passives": ["ember_edge"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "hundred_sword", "name": "Hundred Sword",
+      "desc": "The blade that splits into a hundred. Every tenth blow rains a few of them on the foe, and the Hundred Swords technique rains them on a whole circle.",
+      "tier": 4, "parents": ["meteor_sword", "wind_king_katana"],
+      "requires": [ { "item": "minecraft:iron_ingot", "count": 64 }, { "item": "minecraft:diamond", "count": 12 }, { "item": "tensura:mithril_ingot", "count": 8 } ],
+      "mastery": 330,
+      "stats": { "attack_damage": 8.0, "attack_speed": 0.4 }, "abilityBonus": { "attack_damage": 1.5 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.hundred_swords", "key1": "sword.meteor", "key2": "sword.eagle_blade", "key3": "sword.wind_cutter" },
+      "passives": ["hundred_edge"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "thunder_god_sword", "name": "Thunder God Sword",
+      "desc": "The fastest and fiercest of the sword's shapes. Its blows jump to a second foe in a blink of lightning, and the Lightning Hundred Swords cover a whole ring with blades of thunder.",
+      "tier": 5, "parents": ["hundred_sword", "phoenix_sword"],
+      "requires": [ { "item": "minecraft:nether_star", "count": 4 }, { "item": "tensura:high_quality_magic_crystal", "count": 8 }, { "item": "minecraft:lightning_rod", "count": 32 } ],
+      "mastery": 400,
+      "stats": { "attack_damage": 12.0, "attack_speed": 0.6 }, "abilityBonus": { "attack_damage": 2.0, "attack_speed": 0.1 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.lightning_hundred", "key1": "sword.hundred_swords", "key2": "sword.gravity", "key3": "sword.eagle_blade" },
+      "passives": ["thunder_edge"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "sword_of_greed", "name": "Sword of Greed",
+      "desc": "The first sword of the Greed series, born of betrayal. It wants everything: each blow takes a sliver of the foe's magicules, and the Guillotine falls on the spot where a foe stands.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:gold_ingot", "count": 32 }, { "item": "minecraft:emerald", "count": 16 } ],
+      "mastery": 120,
+      "stats": { "attack_damage": 5.0, "attack_speed": 0.3 }, "abilityBonus": { "attack_damage": 1.0 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.guillotine", "key1": "sword.afterimage", "key2": "sword.tempest" },
+      "passives": ["plunder"], "look": "curse", "curse": true, "sin": "greed", "corruptionPerSecond": 3
+    },
+    {
+      "id": "sword_of_greed_3", "name": "Sword of Greed III",
+      "desc": "The Greed series grown full. Gold Rebellion gilds every foe round the wielder, and the next blow on a gilded foe takes more of it.",
+      "tier": 3, "parents": ["sword_of_greed"],
+      "requires": [ { "item": "minecraft:gold_block", "count": 16 }, { "item": "minecraft:diamond", "count": 16 }, { "item": "tensura:gold_coin", "count": 32 } ],
+      "mastery": 270,
+      "stats": { "attack_damage": 9.0, "attack_speed": 0.4 }, "abilityBonus": { "attack_damage": 2.0 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.guillotine", "key1": "sword.gold_rebellion", "key2": "sword.assassin", "key3": "sword.afterimage" },
+      "passives": ["plunder"], "look": "curse", "curse": true, "sin": "greed", "corruptionPerSecond": 5
+    },
+    {
+      "id": "sword_of_gluttony", "name": "Sword of Gluttony",
+      "desc": "The first sword of the Gluttony series. It is always hungry: the Maneater closes a maw on the foes in front and feeds its wielder, and its fangs bite deepest into a foe that is already hurt.",
+      "tier": 2, "parents": ["base"],
+      "requires": [ { "item": "minecraft:cooked_beef", "count": 48 }, { "item": "minecraft:bread", "count": 32 }, { "item": "minecraft:golden_apple", "count": 4 } ],
+      "mastery": 150,
+      "stats": { "attack_damage": 6.0, "attack_speed": 0.2, "max_health": 4.0 }, "abilityBonus": { "attack_damage": 1.0, "max_health": 1.0 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.maneater", "key1": "sword.tempest", "key2": "sword.cleave" },
+      "passives": ["fang_maw"], "look": "curse", "curse": true, "sin": "gluttony", "corruptionPerSecond": 4
+    },
+    {
+      "id": "sword_of_greed_gluttony_3", "name": "Sword of Greed and Gluttony III",
+      "desc": "Both sins in one blade. The ground splits under Strong Decline, the Guillotine and the Maneater both answer to the wielder, and the Insatiable Maw closes over everything within seven blocks.",
+      "tier": 4, "parents": ["sword_of_greed_3", "sword_of_gluttony"],
+      "requires": [ { "item": "minecraft:enchanted_golden_apple", "count": 4 }, { "item": "minecraft:nether_star", "count": 4 }, { "item": "minecraft:wither_skeleton_skull", "count": 8 } ],
+      "mastery": 390,
+      "stats": { "attack_damage": 13.0, "attack_speed": 0.5, "max_health": 6.0 }, "abilityBonus": { "attack_damage": 2.5, "max_health": 1.5 },
+      "skills": { "use": "sword.blitz", "sneak": "sword.maneater", "key1": "sword.strong_decline", "key2": "sword.guillotine", "key3": "sword.insatiable_maw" },
+      "passives": ["plunder", "fang_maw"], "look": "curse", "curse": true, "sin": "gluttony", "corruptionPerSecond": 8
+    }
+  ]
+}
