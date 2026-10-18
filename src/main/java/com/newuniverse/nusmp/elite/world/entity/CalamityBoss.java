@@ -93,7 +93,9 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
     private LivingEntity moveTarget;
     private Vec3 aim = Vec3.ZERO;
     private String lastMove;
-    private long riseTick, nextMoveAt, meleeReadyAt;
+    private long riseTick, nextMoveAt, meleeReadyAt, lastNear;
+    /** A calamity nobody is near for this long (ticks) leaves, so one that was fled from cannot block the director for ever. */
+    public static final long ABANDON_TICKS = 12000L;
     private boolean fightEnded, tookDamage, barPrimed;
     private int barPhase = -1;
     private float baseHealth = -1f;
@@ -286,6 +288,14 @@ public abstract class CalamityBoss extends Monster implements BudgetedBoss {
         }
         refreshBar();
         if (fightEnded || !isAlive()) return;
+        if (lastNear == 0L) lastNear = now;
+        if (now % 40 == 0) {
+            if (sl.getNearestPlayer(getX(), getY(), getZ(), 128.0, true) != null) lastNear = now;
+            else if (now - lastNear > ABANDON_TICKS) {
+                discard();                                                    // abandoned: the manager reports it as a Vanish
+                return;
+            }
+        }
         if (getTarget() != null && !getTarget().isAlive()) setTarget(null);
         LivingEntity target = getTarget();
         stepPhase(sl);

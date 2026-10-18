@@ -244,7 +244,11 @@ public final class CalamityManager {
         d.setDirty();
     }
 
+    /** A boss that was not seen for this long while its chunk is not loaded is dropped from the list of living calamities (it rejoins it when it loads back). */
+    private static final long STALE_TICKS = 72000L;
+
     private static void verifyActive(MinecraftServer s, CalamityData d) {
+        long now = s.overworld().getGameTime();
         for (CalamityData.Active a : new ArrayList<>(d.active)) {
             ResourceLocation rl = ResourceLocation.tryParse(a.dimension);
             ServerLevel level = rl == null ? null : s.getLevel(ResourceKey.create(Registries.DIMENSION, rl));
@@ -259,6 +263,15 @@ public final class CalamityManager {
                 a.y = e.getY();
                 a.z = e.getZ();
                 a.misses = 0;
+                a.seen = now;
+                d.setDirty();
+            } else if (a.seen == 0L) {
+                a.seen = now;
+            } else if (!level.hasChunk(Mth.floor(a.x) >> 4, Mth.floor(a.z) >> 4) && now - a.seen > STALE_TICKS) {
+                d.active.remove(a);
+                d.setDirty();
+                CalamityDef def = WorldData.calamity(a.id);
+                if (def != null) fire(new CalamityEvents.Vanish(def.id(), def.name(), level, new Vec3(a.x, a.y, a.z), "", "stale"));
             } else if (level.hasChunk(Mth.floor(a.x) >> 4, Mth.floor(a.z) >> 4) && ++a.misses >= 2) {
                 d.active.remove(a);                                  // gone without telling us (an operator's /kill of a chunk, a crash)
                 d.setDirty();
@@ -327,7 +340,9 @@ public final class CalamityManager {
     private static void register(CalamityData d, CalamityBoss boss, ServerLevel sl) {
         CalamityData.Active a = d.activeOf(boss.getUUID());
         if (a == null) {
-            d.active.add(new CalamityData.Active(boss.getUUID(), boss.calamityId(), sl.dimension().location().toString(), boss.getX(), boss.getY(), boss.getZ()));
+            CalamityData.Active made = new CalamityData.Active(boss.getUUID(), boss.calamityId(), sl.dimension().location().toString(), boss.getX(), boss.getY(), boss.getZ());
+            made.seen = sl.getServer().overworld().getGameTime();
+            d.active.add(made);
             d.setDirty();
         }
     }

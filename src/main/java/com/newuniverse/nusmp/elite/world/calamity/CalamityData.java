@@ -26,6 +26,8 @@ public final class CalamityData extends SavedData {
         public final String id, dimension;
         public double x, y, z;
         public int misses;
+        /** The game time the boss was last seen alive (a boss in an unloaded chunk is dropped from the list after an hour without being seen). */
+        public long seen;
 
         public Active(UUID boss, String id, String dimension, double x, double y, double z) {
             this.boss = boss;
@@ -102,6 +104,7 @@ public final class CalamityData extends SavedData {
             c.putDouble("x", x.x);
             c.putDouble("y", x.y);
             c.putDouble("z", x.z);
+            c.putLong("seen", x.seen);
             a.add(c);
         }
         tag.put("active", a);
