@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.heroweapon.HeroColors;
 import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.heroweapon.HeroTrigger;
 import com.newuniverse.nusmp.heroweapon.bond.HeroSync;
+import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
 import com.newuniverse.nusmp.heroweapon.forms.FormMastery;
 import com.newuniverse.nusmp.heroweapon.rules.HeroXp;
 import com.newuniverse.nusmp.quests.NusmpEvents;
@@ -82,6 +83,11 @@ public final class HeroUse {
         DispatchRules.Refusal why = DispatchRules.check(summoned, held, true, BOOK.left(id, skill.id(), now), BOOK.lockLeft(id, now), PENDING.containsKey(id));
         if (why != DispatchRules.Refusal.NONE) {
             refuse(player, skill, why, now);
+            return false;
+        }
+        Component cursed = HeroCurse.refuses(player, skill);                  // the curse series' own refusals (Envy's loss, Sloth's lock, an Overrun)
+        if (cursed != null) {
+            say(player, cursed);
             return false;
         }
         HeroPay.Receipt receipt = HeroPay.pay(c, skill.magoiShare());
@@ -165,6 +171,7 @@ public final class HeroUse {
 
     private static void afterCast(ServerPlayer player, HeroSkill skill) {
         SafeCast.tick("hero.mastery", () -> FormMastery.skill(player, skill));
+        SafeCast.tick("hero.curse", () -> HeroCurse.onTechnique(player, skill));       // the generic corruption price of a technique of a curse form
         SafeCast.tick("hero.xp", () -> HeroXp.gain(player, 2));
         NusmpEvents.fire(player, "hero.skill", skill.id());
     }

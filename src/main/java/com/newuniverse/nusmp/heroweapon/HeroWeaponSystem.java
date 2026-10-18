@@ -55,6 +55,7 @@ public final class HeroWeaponSystem {
         List<Item> out = new ArrayList<>();
         for (HeroKind k : HeroKind.values()) out.add(HeroItems.get(k).get());
         out.addAll(GemSystem.creativeItems());
+        out.addAll(CurseSystem.creativeItems());
         return out;
     }
 }
