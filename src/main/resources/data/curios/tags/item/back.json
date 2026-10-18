@@ -163,6 +163,62 @@
     {
       "id": "nusmp:zoltraak_mages_mantle",
       "required": false
+    },
+    {
+      "id": "nusmp:band_of_the_hawk_banner",
+      "required": false
+    },
+    {
+      "id": "nusmp:beldias_pickpocket_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:cid_kagenous_mob_disguise",
+      "required": false
+    },
+    {
+      "id": "nusmp:elrics_red_coat",
+      "required": false
+    },
+    {
+      "id": "nusmp:fishermans_spear_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:lily_barnetts_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:shadows_slime_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:skull_knights_black_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:urek_mazinos_chain_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:black_swordsmans_coat",
+      "required": false
+    },
+    {
+      "id": "nusmp:fairy_dance_wings",
+      "required": false
+    },
+    {
+      "id": "nusmp:guild_leaders_flame_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:heathcliffs_holy_sword_shield_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:ruined_castle_guild_banner",
+      "required": false
     }
   ]
 }

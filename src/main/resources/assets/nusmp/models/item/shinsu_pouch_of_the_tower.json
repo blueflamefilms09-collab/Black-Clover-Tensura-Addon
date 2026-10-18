@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/shinsu_pouch_of_the_tower"
+  }
+}

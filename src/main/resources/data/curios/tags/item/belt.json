@@ -100,6 +100,46 @@
     {
       "id": "nusmp:walking_mushroom_pouch",
       "required": false
+    },
+    {
+      "id": "nusmp:darknesss_armour_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragonslayer_scale_sword_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:eriss_padded_coin_purse",
+      "required": false
+    },
+    {
+      "id": "nusmp:etas_sewing_needle_roll",
+      "required": false
+    },
+    {
+      "id": "nusmp:iriss_royal_sword_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:mastery_violet_sword_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:shinsu_pouch_of_the_tower",
+      "required": false
+    },
+    {
+      "id": "nusmp:wolf_hunters_crossbow_sling",
+      "required": false
+    },
+    {
+      "id": "nusmp:elucidator_style_sheath",
+      "required": false
+    },
+    {
+      "id": "nusmp:lightning_flashs_rapier_sash",
+      "required": false
     }
   ]
 }

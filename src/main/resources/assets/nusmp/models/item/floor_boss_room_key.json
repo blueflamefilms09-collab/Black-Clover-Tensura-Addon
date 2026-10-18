@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/floor_boss_room_key"
+  }
+}

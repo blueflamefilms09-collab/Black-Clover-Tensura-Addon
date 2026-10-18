@@ -107,7 +107,7 @@ public final class Wave40 {
                 .act(Act.of("swarm_king", "Swarm King", ctx -> { Wave31Acts.aoe(ctx, 7.0, 16.0f, "minecraft:wither", "minecraft:slowness", 6, 2); Wave31Acts.allies(ctx, 8.0, "minecraft:speed", 10, 1); }).cooldown(8400).mana(6)));
 
         out.accept(RelicDef.of("stone_statue_pendant", "Stone-Statue Pendant", Grade.SPECIAL, RelicSlot.NECK)
-                .palette(0x8A8A8A, 0xC8C8C8, 0xE8E8E8).look(Look.PENDANT)
+                .palette(0x8A8A90, 0xC0C8D0, 0xE0E8F0).look(Look.PENDANT)
                 .desc("A small stone statue pendant from a trial room. Fits well and stands still very patiently.")
                 .passive(Passive.attr("minecraft:generic.armor", 1.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("minecraft:generic.knockback_resistance", 0.15, Operation.ADD_VALUE))

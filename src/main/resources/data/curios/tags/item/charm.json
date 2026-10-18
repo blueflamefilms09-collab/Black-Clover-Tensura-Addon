@@ -573,6 +573,122 @@
     {
       "id": "nusmp:witchs_ladle_of_stirring",
       "required": false
+    },
+    {
+      "id": "nusmp:axis_cult_holy_symbol",
+      "required": false
+    },
+    {
+      "id": "nusmp:baams_night_wire_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:behelit_egg",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_kings_army_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:floor_guardians_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:gammas_merchant_ledger",
+      "required": false
+    },
+    {
+      "id": "nusmp:kazumas_adventurer_card",
+      "required": false
+    },
+    {
+      "id": "nusmp:lighthouses_guide_lantern",
+      "required": false
+    },
+    {
+      "id": "nusmp:megumins_staff_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:moon_tower_black_sigil",
+      "required": false
+    },
+    {
+      "id": "nusmp:philosophers_stone_shard",
+      "required": false
+    },
+    {
+      "id": "nusmp:pucks_fairy_dust_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:regulars_test_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:sacred_spring_water_flask",
+      "required": false
+    },
+    {
+      "id": "nusmp:state_alchemists_silver_watch",
+      "required": false
+    },
+    {
+      "id": "nusmp:tower_guides_ledger",
+      "required": false
+    },
+    {
+      "id": "nusmp:truths_gate_fragment",
+      "required": false
+    },
+    {
+      "id": "nusmp:zetas_beast_tail_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:administrators_authority_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:adventurers_guild_card_of_akiba",
+      "required": false
+    },
+    {
+      "id": "nusmp:aincrad_floor_clear_medal",
+      "required": false
+    },
+    {
+      "id": "nusmp:asunas_cooking_skill_ladle",
+      "required": false
+    },
+    {
+      "id": "nusmp:crystal_of_corridor",
+      "required": false
+    },
+    {
+      "id": "nusmp:floor_boss_room_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:healers_crystal_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:minoris_healers_staff_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:raid_boss_drop_medal",
+      "required": false
+    },
+    {
+      "id": "nusmp:round_table_council_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:teleport_crystal",
+      "required": false
     }
   ]
 }

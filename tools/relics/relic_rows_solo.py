@@ -42,7 +42,7 @@ ROWS = [
       "Gauntlets of a black insect-king's shell, still a little hungry. They get stronger the more is thrown at them.",
       "a:atk:+2.0 a:armor:+2 s:self_regeneration",
       [("Insect Strike", 60, 3, "aoe:4:10:hit:weakness:4:1+heal:4"), ("Swarm King", 420, 6, "aoe:7:16:wither:slow:6:2+allies:8:speed:10:1")], att=True),
-    R("Stone-Statue Pendant", "NECK", "PENDANT", "SPECIAL", ("#8a8a8a", "#c8c8c8", "#e8e8e8"), "gem",
+    R("Stone-Statue Pendant", "NECK", "PENDANT", "SPECIAL", ("#8a8a90", "#c0c8d0", "#e0e8f0"), "gem",
       "A small stone statue pendant from a trial room. Fits well and stands still very patiently.",
       "a:armor:+1 a:kb:+0.15",
       [("Stand Like Stone", 120, 2, "shield:8:10")]),

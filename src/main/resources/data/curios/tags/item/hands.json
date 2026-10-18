@@ -217,6 +217,70 @@
     {
       "id": "nusmp:ubels_slicing_cord",
       "required": false
+    },
+    {
+      "id": "nusmp:alchemists_transmutation_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:aquas_party_trick_fan",
+      "required": false
+    },
+    {
+      "id": "nusmp:automail_arm_bracer",
+      "required": false
+    },
+    {
+      "id": "nusmp:claires_fire_silk_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:endorsis_shinsu_whip_wrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:flame_alchemists_ignition_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:gutss_cannon_arm",
+      "required": false
+    },
+    {
+      "id": "nusmp:khuns_lighthouse_spear_cord",
+      "required": false
+    },
+    {
+      "id": "nusmp:raks_thick_hammer_mitts",
+      "required": false
+    },
+    {
+      "id": "nusmp:skels_dueling_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:slayers_ring_of_ranking",
+      "required": false
+    },
+    {
+      "id": "nusmp:suspendium_bracelet",
+      "required": false
+    },
+    {
+      "id": "nusmp:thiefs_steal_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:kiritos_dual_wield_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:skill_slot_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:sleeping_knights_pact_ring",
+      "required": false
     }
   ]
 }

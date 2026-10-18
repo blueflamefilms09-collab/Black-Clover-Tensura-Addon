@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.76.0] — 102 more relics: the 300 are done (KonoSuba, The Eminence in Shadow, Tower of God, Fullmetal Alchemist and Berserk, Sword Art Online and Log Horizon)
+
+### NEW
+- **102 relics in five more series** (waves 42 to 46): KonoSuba (19), The Eminence in Shadow (19), Tower of God (18), Fullmetal Alchemist and Berserk (19), Sword Art Online and Log Horizon (27). Each has its own sprite, palette and worn ornament.
+- **Total of the relic request: 298 new relics** in 16 waves (Re:Zero, Made in Abyss, Tomb Raider King, Jujutsu Kaisen, Fate, the rifts, Overlord, Frieren, Delicious in Dungeon, Solo Leveling, Mushoku Tensei and these), all different in sprite, palette and worn look (`RelicUniqueLooksTest`), all passing through the God of Order's ledger from Unique up, and findable in the hidden treasure rooms up to Rare (1.75.0).
+- The names are inspired by the works from my own knowledge of them (I could not look the items up); the rules text is the mod's own. No weapons or consumables yet (they need meshes and hand models).
+
+### KEPT
+- Everything older.
+
 ## [1.75.0] — Relics can be found in the hidden rooms of ordinary floors
 
 Your request: "relics can also be found in hidden rooms in regular floors, not just dungeons". I read it as: the Mega-Dungeon's ordinary (non-boss) floors, whose hidden rooms are the treasure rooms. If you meant something else (new secret-door rooms), say so.

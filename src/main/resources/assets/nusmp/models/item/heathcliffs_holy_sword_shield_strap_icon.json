@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/heathcliffs_holy_sword_shield_strap"
+  }
+}

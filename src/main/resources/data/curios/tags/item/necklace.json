@@ -212,6 +212,50 @@
     {
       "id": "nusmp:wirbels_guard_pendant",
       "required": false
+    },
+    {
+      "id": "nusmp:brand_of_sacrifice",
+      "required": false
+    },
+    {
+      "id": "nusmp:cascas_cavalry_scarf",
+      "required": false
+    },
+    {
+      "id": "nusmp:chomusukes_familiar_collar",
+      "required": false
+    },
+    {
+      "id": "nusmp:cult_of_diablos_sigil",
+      "required": false
+    },
+    {
+      "id": "nusmp:headons_blue_flame_scarf",
+      "required": false
+    },
+    {
+      "id": "nusmp:homunculus_sin_brooch",
+      "required": false
+    },
+    {
+      "id": "nusmp:sherrys_pendulum_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:wizs_lich_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:wolf_hunters_fang",
+      "required": false
+    },
+    {
+      "id": "nusmp:akatsukis_assassin_scarf",
+      "required": false
+    },
+    {
+      "id": "nusmp:death_game_survivors_dog_tag",
+      "required": false
     }
   ]
 }
