@@ -20,7 +20,7 @@ public final class EliteSystem {
 
 
         // ---- skills: aspectual magic, extra/intrinsic/unique/ultimate skills, evolution triggers (elite/skills)
-
+        com.newuniverse.nusmp.elite.skills.EliteSkills.init(modBus, container);
 
 
 

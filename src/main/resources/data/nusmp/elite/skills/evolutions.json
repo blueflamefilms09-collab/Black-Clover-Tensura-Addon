@@ -1,0 +1,61 @@
+{
+  "_comment": "Elite skill evolutions: skill id -> target id -> every requirement must hold. A path with an unknown trigger or no requirements never evolves anybody. Triggers: ability_mastered {skill?}, active_title_evolution {title | titles}, awakening_evolution {kind: any|demon_lord|hero}, ep_gate {min}, forge_crafted_count {count}, forge_quality {min: 1-6 or common..mythical}, has_title {title}, held_title_count {count}, item_consume {item, count} (paid only when everything else passed), kill_evolution {count, filter: any|boss|monster|undead, withSkill}, record_unlocked {record}, reset_count {count}. A data pack may replace this file (same path) or add paths in its own copy; later packs win per (skill, target). The title and record ids below are the names this subsystem expects the records and titles subsystem to define; until it does, those two requirements simply do not pass.",
+
+  "nusmp:crocodile_skin": {
+    "nusmp:basilisk_skin": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "kill_evolution", "params": {"count": 150, "filter": "monster", "withSkill": true}},
+      {"trigger": "ep_gate", "params": {"min": 20000}}
+    ]
+  },
+
+  "nusmp:hephaestus": {
+    "nusmp:hephaestus_ultimate": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "forge_crafted_count", "params": {"count": 50}},
+      {"trigger": "forge_quality", "params": {"min": "epic"}},
+      {"trigger": "item_consume", "params": {"item": "minecraft:netherite_ingot", "count": 4}}
+    ]
+  },
+
+  "nusmp:scavenger": {
+    "nusmp:beelzebuth": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "kill_evolution", "params": {"count": 400, "filter": "any", "withSkill": true}},
+      {"trigger": "item_consume", "params": {"item": "minecraft:rotten_flesh", "count": 64}}
+    ]
+  },
+
+  "nusmp:iron_resolve": {
+    "nusmp:gaia": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "held_title_count", "params": {"count": 3}},
+      {"trigger": "ep_gate", "params": {"min": 30000}}
+    ]
+  },
+
+  "nusmp:ancient_soul": {
+    "nusmp:ouroboros": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "reset_count", "params": {"count": 3}},
+      {"trigger": "awakening_evolution", "params": {"kind": "any"}}
+    ]
+  },
+
+  "nusmp:meditation": {
+    "nusmp:rapheal": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "record_unlocked", "params": {"record": "lore_scholar"}},
+      {"trigger": "active_title_evolution", "params": {"titles": ["sage", "scholar", "lord_of_wisdom"]}}
+    ]
+  },
+
+  "nusmp:void_edge": {
+    "nusmp:void_sovereign": [
+      {"trigger": "ability_mastered"},
+      {"trigger": "has_title", "params": {"title": "void_walker"}},
+      {"trigger": "awakening_evolution", "params": {"kind": "demon_lord"}},
+      {"trigger": "ep_gate", "params": {"min": 100000}}
+    ]
+  }
+}
