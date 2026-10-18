@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.70.0] — 95 new relics from the anime and webtoon worlds, and every relic looks different
+
+First batch of the "about 300 more relics" request: **95 relics in five series**, each with its own sprite, its own palette and its own worn ornament. Names and places come from the works; the rules text is the mod's own, and the item lists come from my own knowledge of the series (the web searches I ran returned no usable item lists), so a few names are "inspired by" rather than exact.
+
+### NEW
+- **Re:Zero (20, wave 31)**: Echidna's Tea Set, Gospel of the Mansion, Puck's Crystal Pendant, Gloves of the Unseen Hand, Oni Maid's Horn Circlet, Sword Saint's Mantle, Shard of the Witch Factor, Pocket Watch of Return, Roswaal's Jester Cloak, Forbidden Library Key, ...
+- **Made in Abyss (21, wave 32)**: the Red / Blue / Moon / Black / White Whistles, Star Compass, Cradle of Desire, Incinerator Arm, Zoaholic Ring, Curse-Repelling Vessel, Veil of the Princess of the Gate, ...
+- **Tomb Raider King (18, wave 33)**: the gods' tomb relics (Odin's All-Seeing Eye, Gungnir's Shadow, Mammon's Vault Ring, Ra's Dawn Crown, Anubis, Thoth, Osiris, Set, Horus) and Hunter gear.
+- **Jujutsu Kaisen (17, wave 34)**: Sukuna's Finger and Sukuna's Twenty Fingers, Limitless Blindfold, Prison Realm Cube, Black Flash Gloves, Binding Vow Seal, Ten Shadows Seal, ...
+- **Fate (19, wave 35)**: Holy Grail Fragment, Command Seal Tattoo, Rule Breaker, Avalon, Gae Bolg, Gate of Babylon Crest, Unlimited Blade Works Brooch, Servant catalysts, ...
+- The unique and higher ones go through the God of Order's one-per-world ledger like the older ones (and the `nusmpGodOfOrder` gamerule and `/relic order unique` list apply to them).
+- Generated from tables (`tools/relics/relic_rows_*.py` -> `gen_relic_waves.py`), so the next batches are cheap to add; no weapons or consumables in this batch (those need their own meshes and hand models, they come later).
+
+### NEW: unique looks
+- Every one of the 95 wears its slot's look **plus an ornament of its own** (`tools/relics/gen_worn_unique.py`: two or three motifs from spikes, gem clusters, rings, circling motes, feather fans, hanging chains, crescents, rune bars, horns and flame tongues, picked and sized by a seed made from the id), a **different sprite** (the icon generator varies each one by its id and bumps until it is new), and a **different palette**.
+- `RelicUniqueLooksTest` fails if two generated relics ever share a sprite, an ornament or a palette.
+
+### KEPT
+- Every older relic, look and model is unchanged (nothing replaced). Not done yet from the same request: hidden relic rooms in ordinary floors, and the other ~200 relics.
+
 ## [1.69.0] — Bosses no longer take random damage outside the dungeons
 
 The owner reported that bosses take random damage when they are spawned outside the dungeons. **I could not reproduce it (nothing here runs a game), so this fixes the likely cause and says so.**

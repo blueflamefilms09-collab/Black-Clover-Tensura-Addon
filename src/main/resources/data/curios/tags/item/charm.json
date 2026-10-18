@@ -353,6 +353,110 @@
     {
       "id": "nusmp:ring_of_the_mimic",
       "required": false
+    },
+    {
+      "id": "nusmp:echidnas_tea_set",
+      "required": false
+    },
+    {
+      "id": "nusmp:gospel_of_the_mansion",
+      "required": false
+    },
+    {
+      "id": "nusmp:pocket_watch_of_return",
+      "required": false
+    },
+    {
+      "id": "nusmp:rogues_insignia",
+      "required": false
+    },
+    {
+      "id": "nusmp:shard_of_the_witch_factor",
+      "required": false
+    },
+    {
+      "id": "nusmp:cartridge_of_the_gate",
+      "required": false
+    },
+    {
+      "id": "nusmp:cradle_of_desire",
+      "required": false
+    },
+    {
+      "id": "nusmp:curse_repelling_vessel",
+      "required": false
+    },
+    {
+      "id": "nusmp:cursed_womb_death_painting",
+      "required": false
+    },
+    {
+      "id": "nusmp:delvers_lantern",
+      "required": false
+    },
+    {
+      "id": "nusmp:gae_bolg_spear_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:holy_grail_fragment",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_license_insignia",
+      "required": false
+    },
+    {
+      "id": "nusmp:noble_phantasm_token",
+      "required": false
+    },
+    {
+      "id": "nusmp:osiriss_reed_scepter_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:prison_realm_cube",
+      "required": false
+    },
+    {
+      "id": "nusmp:reverse_cursed_technique_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:rule_breaker_dagger_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:seal_of_the_sealed_god",
+      "required": false
+    },
+    {
+      "id": "nusmp:servant_summoning_circle_chalk",
+      "required": false
+    },
+    {
+      "id": "nusmp:star_compass",
+      "required": false
+    },
+    {
+      "id": "nusmp:sukunas_finger",
+      "required": false
+    },
+    {
+      "id": "nusmp:sukunas_twenty_fingers",
+      "required": false
+    },
+    {
+      "id": "nusmp:ten_shadows_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:thoths_tablet",
+      "required": false
+    },
+    {
+      "id": "nusmp:unlimited_blade_works_brooch",
+      "required": false
     }
   ]
 }

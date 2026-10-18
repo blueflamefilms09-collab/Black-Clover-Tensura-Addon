@@ -36,6 +36,30 @@
     {
       "id": "nusmp:ring_of_the_mimic",
       "required": false
+    },
+    {
+      "id": "nusmp:murasames_sheath",
+      "required": false
+    },
+    {
+      "id": "nusmp:cursed_spirit_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:excaliburs_scabbard_avalon",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunters_grappling_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:kotomines_black_keys_cord",
+      "required": false
+    },
+    {
+      "id": "nusmp:rikos_satchel",
+      "required": false
     }
   ]
 }

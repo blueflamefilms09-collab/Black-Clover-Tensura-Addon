@@ -71,6 +71,54 @@
     {
       "id": "nusmp:mantle_of_selflessness",
       "required": false
+    },
+    {
+      "id": "nusmp:roswaals_jester_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:sword_saints_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:wind_blessed_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:abyssal_curse_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:archers_red_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:domain_expansion_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:gate_of_babylon_crest",
+      "required": false
+    },
+    {
+      "id": "nusmp:gungnirs_shadow",
+      "required": false
+    },
+    {
+      "id": "nusmp:prushkas_fur_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:rulers_banner_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:sets_storm_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:shroud_of_the_sixth_layer",
+      "required": false
     }
   ]
 }

@@ -105,6 +105,58 @@
     {
       "id": "nusmp:the_infinity_gauntlet",
       "required": false
+    },
+    {
+      "id": "nusmp:gauntlets_of_the_iron_fang",
+      "required": false
+    },
+    {
+      "id": "nusmp:gloves_of_the_unseen_hand",
+      "required": false
+    },
+    {
+      "id": "nusmp:quasi_spirit_bracelet",
+      "required": false
+    },
+    {
+      "id": "nusmp:black_flash_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:command_seal_tattoo",
+      "required": false
+    },
+    {
+      "id": "nusmp:divergent_fist_knuckles",
+      "required": false
+    },
+    {
+      "id": "nusmp:horus_falcon_gauntlets",
+      "required": false
+    },
+    {
+      "id": "nusmp:incinerator_arm",
+      "required": false
+    },
+    {
+      "id": "nusmp:inverted_spear_of_heaven_wrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:mammons_vault_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:playful_cloud_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:servant_contract_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:zoaholic_ring",
+      "required": false
     }
   ]
 }

@@ -100,6 +100,62 @@
     {
       "id": "nusmp:witchers_medallion",
       "required": false
+    },
+    {
+      "id": "nusmp:forbidden_library_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:pucks_crystal_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:anubis_judges_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:binding_vow_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:black_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:blue_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:catalyst_fang_of_the_beast_king",
+      "required": false
+    },
+    {
+      "id": "nusmp:cursed_speech_collar",
+      "required": false
+    },
+    {
+      "id": "nusmp:moon_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:red_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:scarab_heart_amulet",
+      "required": false
+    },
+    {
+      "id": "nusmp:seekers_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:shikigami_whistle",
+      "required": false
+    },
+    {
+      "id": "nusmp:white_whistle",
+      "required": false
     }
   ]
 }

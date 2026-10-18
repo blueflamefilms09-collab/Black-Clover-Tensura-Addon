@@ -21,6 +21,8 @@ import gen_worn_armor  # noqa: E402
 import gen_worn_armor_relics  # noqa: E402
 import gen_worn_head_r4  # noqa: E402
 import gen_worn_modes  # noqa: E402
+import gen_worn_unique  # noqa: E402
+import gen_relic_waves  # noqa: E402
 
 MODEL_CAP = 2600                 # vertices of one model (all its passes' base geometry)
 ENSEMBLE_CAP = 2600              # vertices of everything one relic wears
@@ -29,6 +31,8 @@ MODE_CAP = 3600                  # vertices of everything a transformation overl
 BUILDERS = {}
 for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn_sig, gen_worn_armor, gen_worn_armor_relics, gen_worn_head_r4, gen_worn_modes):          # later modules replace earlier ones of the same name
     BUILDERS.update(mod.MODELS)
+GENERATED_ROWS = gen_relic_waves.all_rows()                  # 1.70.0: the generated relic waves each wear a look plus an ornament of their own (gen_worn_unique.py)
+BUILDERS.update(gen_worn_unique.models_for(GENERATED_ROWS))
 
 
 def catalog():
@@ -168,6 +172,7 @@ def catalog():
                     ("cloak_of_the_moth_rider", "star"), ("godking_crown", "star"), ("greaves_of_the_wind_walker", "spark"), ("lifes_emergency", "ember"),
                     ("amulet_of_the_sea_of_stars", "star"), ("cloak_mimic_tame", "wisp"), ("urn_of_black_pudding", "ember")):
         cat.theme(rid, th)
+    gen_worn_unique.catalog_generated(cat, GENERATED_ROWS)
     gen_worn_armor_relics.catalog_relics(cat)              # the armour relics that only had the model of their look
     gen_worn_armor.catalog_items(cat)                      # the armour items (the robe sets)
     gen_worn_armor.catalog_anime(cat)                      # 1.48.0: the same robe sets as anime cloaks (`anime:<id>` keys, chosen by relicfx.robeAnime)
