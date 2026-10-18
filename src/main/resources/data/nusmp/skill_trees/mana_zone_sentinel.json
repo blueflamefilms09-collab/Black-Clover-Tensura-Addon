@@ -1,0 +1,1051 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Mana Zone Sentinel",
+  "desc": "Spread your mana into the air around you and feel every living thing that moves inside it. You never fight blind: you read the strike before it comes.",
+  "book": "nusmp:mana_zone_sentinel_book",
+  "book_name": "Zone Perception Notes",
+  "book_lore": "Written by a scout who swore she could hear a bowstring drawn three hills away.",
+  "color": "#4FB5C9",
+  "icon": "minecraft:recovery_compass",
+  "class_id": "mana_zone_sentinel",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/mana_zone_sentinel.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "dream",
+  "nodes": [
+    {
+      "id": "zone_spread",
+      "name": "Zone Spread",
+      "desc": "Thin your mana across the area: you move lighter and see further, but your skin is bare.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "zone_contracted",
+      "name": "Zone Contracted",
+      "desc": "Pull the zone tight against your body: steadier guard and a little regeneration, at the cost of speed.",
+      "parents": [
+        {
+          "node": "zone_spread",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "sensing_reach",
+      "name": "Sensing Reach",
+      "desc": "The zone reaches a little further for your strikes.",
+      "parents": [
+        {
+          "node": "zone_spread",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "light_step",
+      "name": "Light Step",
+      "desc": "Reading the ground lets you move faster.",
+      "parents": [
+        {
+          "node": "zone_contracted",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "fortune_reader",
+      "name": "Fortune Reader",
+      "desc": "Sensing trouble early nudges luck your way.",
+      "parents": [
+        {
+          "node": "zone_spread",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "pinpoint_sense",
+      "name": "Pinpoint Sense",
+      "desc": "Lock your zone onto one foe: it glows in your mind and takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "zone_spread",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "zone_step",
+      "name": "Zone Step",
+      "desc": "Slip to where the zone says the gap is: a short teleport forward.",
+      "parents": [
+        {
+          "node": "zone_contracted",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          10.08,
+          11.16,
+          12.24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "pressure_pulse",
+      "name": "Pressure Pulse",
+      "desc": "Push a pulse of mana through a cone ahead that slows everything caught in it.",
+      "parents": [
+        {
+          "node": "pinpoint_sense",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "weakness",
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "sensed_volley",
+      "name": "Sensed Volley",
+      "desc": "Throw a spread of mana darts at the foe you look at, each aimed by the zone.",
+      "parents": [
+        {
+          "node": "zone_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "reading_the_strike",
+      "name": "Reading the Strike",
+      "desc": "For a few seconds a share of the damage you take is thrown back at the attacker.",
+      "parents": [
+        {
+          "node": "pressure_pulse",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_bars"
+    },
+    {
+      "id": "veiled_mana",
+      "name": "Veiled Mana",
+      "desc": "Thin your presence to nothing: creatures around you lose sight of you.",
+      "parents": [
+        {
+          "node": "sensed_volley",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:ink_sac"
+    },
+    {
+      "id": "long_sense_shot",
+      "name": "Long Sense Shot",
+      "desc": "Fire a thin line of focused mana along your sight line, piercing everything.",
+      "parents": [
+        {
+          "node": "reading_the_strike",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:spectral_arrow"
+    },
+    {
+      "id": "dodge_by_sensing",
+      "name": "Dodge by Sensing",
+      "desc": "You may slip a blow completely because you felt it coming.",
+      "parents": [
+        {
+          "node": "pinpoint_sense",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "night_eyes_of_the_zone",
+      "name": "Night Eyes of the Zone",
+      "desc": "At night the zone shows you the dark: you have night vision.",
+      "parents": [
+        {
+          "node": "zone_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "night"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "radar_veil",
+      "name": "Radar Veil",
+      "desc": "Enemies near you glow, shown by your zone.",
+      "parents": [
+        {
+          "node": "pressure_pulse",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "glowing",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glow_ink_sac"
+    },
+    {
+      "id": "weak_point_reading",
+      "name": "Weak Point Reading",
+      "desc": "You see the seams: your blows may strike critically.",
+      "parents": [
+        {
+          "node": "sensed_volley",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "spotting_the_dying",
+      "name": "Spotting the Dying",
+      "desc": "You deal far more damage to foes that are nearly dead.",
+      "parents": [
+        {
+          "node": "reading_the_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "studied_opponents",
+      "name": "Studied Opponents",
+      "desc": "Reading fights teaches you faster: kills give more experience.",
+      "parents": [
+        {
+          "node": "veiled_mana",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "calm_breath",
+      "name": "Calm Breath",
+      "desc": "While you stand still the zone steadies your breathing and you heal slowly.",
+      "parents": [
+        {
+          "node": "long_sense_shot",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "mana_zone_total_domain",
+      "name": "Mana Zone: Total Domain",
+      "desc": "Flood the whole area with your mana and freeze every creature around you in place for a heartbeat longer than a spell should allow.",
+      "parents": [
+        {
+          "node": "long_sense_shot",
+          "level": 3
+        },
+        {
+          "node": "calm_breath",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "targets": [
+          7.0,
+          10.0,
+          13.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "hundred_step_reading",
+      "name": "Hundred-Step Reading",
+      "desc": "Predict every dodge and chase your strike through one foe after another.",
+      "parents": [
+        {
+          "node": "veiled_mana",
+          "level": 3
+        },
+        {
+          "node": "studied_opponents",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "jumps": [
+          5.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          8.0,
+          8.0,
+          9.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:chain"
+    }
+  ]
+}
