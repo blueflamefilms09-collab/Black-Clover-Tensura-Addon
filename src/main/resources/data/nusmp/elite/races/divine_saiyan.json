@@ -1,0 +1,71 @@
+{
+  "_why": "Tier 4, the top of the Saiyan line (DivineSaiyan). Designed numbers. The only race with the Divine state (a short, expensive, once-in-twenty-minutes form).",
+  "line": "saiyan",
+  "tier": 4,
+  "difficulty": "extreme",
+  "alignment": "default",
+  "stats": {
+    "aura_min": 300000, "aura_max": 700000, "magicule_min": 30000, "magicule_max": 60000, "size": 0.0,
+    "max_health": 200, "spiritual_health": 1200, "attack": 16.0, "attack_speed": 0.5, "knockback_resistance": 0.3, "movement_speed": 0.05, "swim_speed": 0.0
+  },
+  "intrinsic_skills": ["tensura:divine_ki_release", "tensura:thought_acceleration", "tensura:ultraspeed_regeneration", "tensura:body_armor"],
+  "resistances": ["tensura:pain_resistance", "tensura:physical_attack_resistance", "tensura:magic_resistance", "tensura:heat_resistance"],
+  "natural_skill": "tensura:divine_ki_release",
+  "traits": ["zenkai"],
+  "evolves_to": "",
+  "transformations": {
+    "boosted": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 300, "cooldown_seconds": 30, "aura_drain": 0.005, "ki_scaled": true, "color": "#FFD84A", "rukh": "light",
+      "entries": [{}],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 0.50, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.20, "op": "mult_base"}
+      ]
+    },
+    "ascended": {
+      "from": ["base", "boosted"], "min_tier": 2, "duration_seconds": 420, "cooldown_seconds": 480, "aura_drain": 0.008, "ki_scaled": true, "color": "#FFE94A", "rukh": "light",
+      "entries": [
+        {"ep_min": 300000, "hp_below": 0.6, "auto": true},
+        {"ep_min": 300000}
+      ],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 1.00, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.35, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 30, "op": "add"},
+        {"attribute": "armor", "amount": 6, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.25, "op": "add"}
+      ]
+    },
+    "great_ape": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 480, "cooldown_seconds": 600, "ends_at_dawn": true, "color": "#4A2A12", "rukh": "dark",
+      "entries": [
+        {"moon": "full_moon", "sky": true, "auto": true},
+        {"item": "minecraft:sea_lantern", "item_count": 1, "consume": true, "sky": true},
+        {"ep_min": 100000, "min_tier": 3}
+      ],
+      "modifiers": [
+        {"attribute": "scale", "amount": 1.0, "op": "mult_base"},
+        {"attribute": "attack_damage", "amount": 1.20, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 60, "op": "add"},
+        {"attribute": "armor", "amount": 8, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.7, "op": "add"},
+        {"attribute": "movement_speed", "amount": -0.05, "op": "mult_base"},
+        {"attribute": "step_height", "amount": 1.0, "op": "add"},
+        {"attribute": "entity_interaction_range", "amount": 1.5, "op": "add"},
+        {"attribute": "block_interaction_range", "amount": 1.5, "op": "add"}
+      ]
+    },
+    "divine": {
+      "from": ["ascended", "boosted"], "min_tier": 4, "duration_seconds": 120, "cooldown_seconds": 1200, "aura_drain": 0.012, "ki_scaled": false, "color": "#FFF6C8", "rukh": "light",
+      "entries": [{"ep_min": 500000}],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 1.50, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.50, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 50, "op": "add"},
+        {"attribute": "armor", "amount": 10, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.4, "op": "add"},
+        {"attribute": "tensura:ability_mastery_gain", "amount": 0.5, "op": "add"}
+      ]
+    }
+  }
+}

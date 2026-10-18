@@ -1,0 +1,62 @@
+{
+  "_why": "Tier 2 of the Saiyan line (MediumSaiyan). Designed numbers. The Ascension opens here, but only out of a rage: low health plus a great EP.",
+  "line": "saiyan",
+  "tier": 2,
+  "difficulty": "intermediate",
+  "alignment": "default",
+  "stats": {
+    "aura_min": 6000, "aura_max": 16000, "magicule_min": 800, "magicule_max": 2200, "size": 0.0,
+    "max_health": 30, "spiritual_health": 80, "attack": 4.0, "attack_speed": 0.2, "knockback_resistance": 0.1, "movement_speed": 0.02, "swim_speed": 0.0
+  },
+  "intrinsic_skills": ["tensura:strengthen_body", "tensura:self_regeneration"],
+  "resistances": ["tensura:pain_resistance", "tensura:physical_attack_resistance"],
+  "natural_skill": "tensura:strengthen_body",
+  "traits": ["zenkai"],
+  "evolves_to": "high_saiyan",
+  "evolution": [
+    {"type": "ep", "min": 30000, "weight": 40},
+    {"type": "any_of", "weight": 25, "rules": [
+      {"type": "kills", "key": "boss", "count": 3},
+      {"type": "kills", "key": "any", "count": 600}
+    ]},
+    {"type": "mastery", "skill": "tensura:strengthen_body", "fraction": 0.5, "weight": 15},
+    {"type": "item", "item": "minecraft:enchanted_golden_apple", "count": 1, "consume": true, "weight": 20}
+  ],
+  "transformations": {
+    "boosted": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 180, "cooldown_seconds": 30, "aura_drain": 0.006, "ki_scaled": true, "color": "#FFD84A", "rukh": "light",
+      "entries": [{}],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 0.30, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.14, "op": "mult_base"}
+      ]
+    },
+    "ascended": {
+      "from": ["base", "boosted"], "min_tier": 2, "duration_seconds": 240, "cooldown_seconds": 600, "aura_drain": 0.010, "ki_scaled": true, "color": "#FFE94A", "rukh": "light",
+      "entries": [{"ep_min": 15000, "hp_below": 0.3, "auto": true}],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 0.60, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.25, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 10, "op": "add"},
+        {"attribute": "armor", "amount": 3, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.15, "op": "add"}
+      ]
+    },
+    "great_ape": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 300, "cooldown_seconds": 600, "ends_at_dawn": true, "color": "#4A2A12", "rukh": "dark",
+      "entries": [{"moon": "full_moon", "sky": true, "auto": true},
+        {"item": "minecraft:sea_lantern", "item_count": 1, "consume": true, "sky": true}],
+      "modifiers": [
+        {"attribute": "scale", "amount": 1.0, "op": "mult_base"},
+        {"attribute": "attack_damage", "amount": 0.80, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 30, "op": "add"},
+        {"attribute": "armor", "amount": 4, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.5, "op": "add"},
+        {"attribute": "movement_speed", "amount": -0.15, "op": "mult_base"},
+        {"attribute": "step_height", "amount": 1.0, "op": "add"},
+        {"attribute": "entity_interaction_range", "amount": 1.5, "op": "add"},
+        {"attribute": "block_interaction_range", "amount": 1.5, "op": "add"}
+      ]
+    }
+  }
+}
