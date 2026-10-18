@@ -23,14 +23,24 @@ public final class SystemState {
     private int failed;
     private QuestProgress quest;
     private boolean hintShown;
+    private int free;
+
+    /** The most unspent points the pool holds (every stat at the hard cap, twice over: far above anything a config allows, so only a damaged save meets it). */
+    public static final int FREE_MAX = 2 * Stat.COUNT * HARD_CAP;
 
     /**
      * The saved form: plain values only. {@code hint} (1.58.0) says the player has been told once how to move the window; the seven-argument constructor is the
-     * form before it existed, so every older caller and every older save reads as "not told yet".
+     * form before it existed, so every older caller and every older save reads as "not told yet". {@code free} (the points-choice update) is the pool of unspent
+     * stat points the player places on the stat screen; the eight-argument constructor is the form before it existed, so every older caller and save reads as an
+     * empty pool. The new field is appended last: the order of {@code points} and of every older field is unchanged.
      */
-    public record Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest, boolean hint) {
+    public record Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest, boolean hint, int free) {
+        public Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest, boolean hint) {
+            this(points, cores, maxFloor, lastKind, done, failed, quest, hint, 0);
+        }
+
         public Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest) {
-            this(points, cores, maxFloor, lastKind, done, failed, quest, false);
+            this(points, cores, maxFloor, lastKind, done, failed, quest, false, 0);
         }
     }
 
@@ -59,6 +69,20 @@ public final class SystemState {
         int after = n >= 0 ? Math.max(before, (int) Math.min(sum, limit)) : (int) Math.max(0L, sum);
         points[s.ordinal()] = after;
         return after - before;
+    }
+
+    // ---------------------------------------------------------------- the free pool
+    /** The unspent stat points: earned by quests (config {@code system.pointMode} = choose) or given by an admin, placed by the player on the stat screen. */
+    public int free() { return free; }
+
+    /** Sets the pool (clamped to 0..{@link #FREE_MAX}). */
+    public void setFree(int value) { free = Math.max(0, Math.min(FREE_MAX, value)); }
+
+    /** Adds to the pool (a negative number takes away); never below 0 nor above {@link #FREE_MAX}. Returns the change made. */
+    public int addFree(int n) {
+        int before = free;
+        setFree((int) Math.max(0L, Math.min((long) FREE_MAX, (long) before + n)));
+        return free - before;
     }
 
     // ---------------------------------------------------------------- counters
@@ -102,13 +126,13 @@ public final class SystemState {
     // ---------------------------------------------------------------- saving
     /** Does this state hold anything worth saving? (An empty one is not written, so players who never entered the Mega-Dungeon add nothing to their file.) */
     public boolean hasContent() {
-        return totalPoints() > 0 || cores > 0 || maxFloor > 0 || done > 0 || failed > 0 || quest != null || hintShown;
+        return totalPoints() > 0 || free > 0 || cores > 0 || maxFloor > 0 || done > 0 || failed > 0 || quest != null || hintShown;
     }
 
     public Data toData() {
         List<Integer> list = new ArrayList<>(Stat.COUNT);
         for (int p : points) list.add(p);
-        return new Data(list, cores, maxFloor, lastKind, done, failed, quest == null ? null : quest.toData(), hintShown);
+        return new Data(list, cores, maxFloor, lastKind, done, failed, quest == null ? null : quest.toData(), hintShown, free);
     }
 
     /** Restores from the saved form; a null, short, long or damaged record gives a valid state. */
@@ -128,6 +152,7 @@ public final class SystemState {
         s.failed = Math.max(0, d.failed());
         s.quest = QuestProgress.of(d.quest());
         s.hintShown = d.hint();
+        s.free = Math.max(0, Math.min(FREE_MAX, d.free()));
         return s;
     }
 }

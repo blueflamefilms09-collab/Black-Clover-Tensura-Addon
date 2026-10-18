@@ -76,8 +76,8 @@ public final class OverlayMath {
     /** Vanilla draws text whose alpha byte is under 4 as fully opaque, so such a colour must not be drawn at all. */
     public static boolean drawable(int argb) { return (argb >>> 24) >= 8; }
 
-    /** A clamp to the configured range of the window's scale. */
-    public static float clampScale(double s) { return (float) Math.max(0.5, Math.min(2.0, Double.isNaN(s) ? 1.0 : s)); }
+    /** A clamp to the configured range of the window's scale: 0.5 to 2.5 (the top was 2.0 before the mouse resize; {@link OverlayDrag#MAX_SCALE}). */
+    public static float clampScale(double s) { return (float) Math.max(0.5, Math.min(2.5, Double.isNaN(s) ? 1.0 : s)); }
 
     // ================================================================ the movable window (1.58.0)
     /**

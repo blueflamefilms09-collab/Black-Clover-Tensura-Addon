@@ -24,10 +24,18 @@ public final class SystemRewards {
         boolean coreAllowed = t == null || t.shadowCore();
         int cap = SystemConfig.get(SystemConfig.MAX_STAT_POINTS);
         long seed = RewardRoller.seed(p.getUUID(), q.floor(), q.id(), s.done());
-        RewardRoller.Reward r = RewardRoller.roll(seed, SystemConfig.get(SystemConfig.STAT_WEIGHT), SystemConfig.get(SystemConfig.SHADOW_CORE_WEIGHT), stats, points, coreAllowed,
-                s.pointsCopy(), cap);
+        RewardRoller.Reward r;
+        if (SystemConfig.pointMode() == PointMode.CHOOSE) {
+            // the player decides: a stat reward is paid into the free pool, as long as the stats still have room under their caps
+            r = RewardRoller.rollChoose(seed, SystemConfig.get(SystemConfig.STAT_WEIGHT), SystemConfig.get(SystemConfig.SHADOW_CORE_WEIGHT), points, coreAllowed,
+                    PointRules.room(s.pointsCopy(), s.free(), cap));
+        } else {
+            r = RewardRoller.roll(seed, SystemConfig.get(SystemConfig.STAT_WEIGHT), SystemConfig.get(SystemConfig.SHADOW_CORE_WEIGHT), stats, points, coreAllowed,
+                    s.pointsCopy(), cap);
+        }
         switch (r.kind()) {
             case STAT -> giveStat(p, s, r.stat(), r.points(), cap);
+            case FREE -> giveFree(p, s, r.points());
             case CORE -> giveCore(p, s);
             case NONE -> { /* every stat the quest pays is at its limit and the quest pays no core */ }
         }
@@ -39,6 +47,14 @@ public final class SystemRewards {
         int added = s.addPoints(stat, points, cap);
         SystemStats.apply(p, s);
         if (added > 0) SystemSync.toast(p, ToastKind.REWARD, SystemText.TOAST_REWARD_STAT, Integer.toString(added), stat.name());
+        SystemSync.request(p);
+        return added;
+    }
+
+    /** Pays points into the free pool (config {@code system.pointMode} = choose), tells the player and syncs. Returns the points actually added. */
+    public static int giveFree(ServerPlayer p, SystemState s, int points) {
+        int added = s.addFree(points);
+        if (added > 0) SystemSync.toast(p, ToastKind.REWARD, PointsText.TOAST_FREE, Integer.toString(added));
         SystemSync.request(p);
         return added;
     }

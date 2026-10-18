@@ -102,7 +102,8 @@ class OverlayMathTest {
     @Test void theScaleIsClampedToItsRange() {
         assertEquals(1.0f, OverlayMath.clampScale(1.0));
         assertEquals(0.5f, OverlayMath.clampScale(0.01));
-        assertEquals(2.0f, OverlayMath.clampScale(9.0));
+        assertEquals(2.5f, OverlayMath.clampScale(9.0), "the top of the range is 2.5 since the mouse resize (it was 2.0)");
+        assertEquals(2.0f, OverlayMath.clampScale(2.0), "the old top is still a valid size");
         assertEquals(1.0f, OverlayMath.clampScale(Double.NaN));
     }
 

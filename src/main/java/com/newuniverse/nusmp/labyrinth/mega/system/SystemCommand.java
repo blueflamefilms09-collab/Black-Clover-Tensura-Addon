@@ -38,7 +38,7 @@ public final class SystemCommand {
         int run(CommandSourceStack src, ServerPlayer target) throws CommandSyntaxException;
     }
 
-    /** The {@code system} node: {@code status | quest | stat | core | minions}. */
+    /** The {@code system} node: {@code status | quest | stat | free | core | minions}. */
     public static LiteralArgumentBuilder<CommandSourceStack> command() {
         return Commands.literal("system").requires(s -> s.hasPermission(2))
                 .then(withPlayer("status", SystemCommand::status))
@@ -58,6 +58,13 @@ public final class SystemCommand {
                                 .then(Commands.argument("n", IntegerArgumentType.integer(-1000, 1000))
                                         .executes(ctx -> giveStat(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "stat"),
                                                 IntegerArgumentType.getInteger(ctx, "n"))))))))
+                .then(Commands.literal("free")
+                        .then(Commands.literal("give").then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("n", IntegerArgumentType.integer(1, SystemState.FREE_MAX))
+                                        .executes(ctx -> changeFree(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "n"))))))
+                        .then(Commands.literal("take").then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("n", IntegerArgumentType.integer(1, SystemState.FREE_MAX))
+                                        .executes(ctx -> changeFree(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), -IntegerArgumentType.getInteger(ctx, "n")))))))
                 .then(Commands.literal("core").then(withPlayer("give", SystemCommand::giveCore)))
                 .then(Commands.literal("minions").then(withPlayer("clear", SystemCommand::clearMinions)));
     }
@@ -105,6 +112,7 @@ public final class SystemCommand {
         else ok(src, SystemMsg.text(SystemText.CMD_STATUS_QUEST, q.id(), q.kind().id(), q.state().name().toLowerCase(Locale.ROOT), q.progress(), q.target(), FloorMap.label(q.floor())));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_STATS, st.points(Stat.STR), st.points(Stat.AGI), st.points(Stat.VIT), st.points(Stat.INT), st.points(Stat.SENSE),
                 SystemConfig.get(SystemConfig.MAX_STAT_POINTS)));
+        ok(src, SystemMsg.text(PointsText.CMD_STATUS_FREE, st.free(), SystemConfig.pointMode().id(), SystemMsg.text(SystemConfig.allowRespec() ? SystemText.CMD_ON : SystemText.CMD_OFF)));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_BUFF, SystemMsg.text(SystemStats.wanted(p) ? SystemText.CMD_ON : SystemText.CMD_DORMANT), SystemStats.dimensionId(p),
                 SystemMsg.text(SystemConfig.buffOnlyInDungeon() ? SystemText.CMD_ON : SystemText.CMD_OFF)));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_PARTY, SystemParty.members(p).size(), SystemMsg.text(SystemConfig.get(SystemConfig.SHARE_PROGRESS) ? SystemText.CMD_ON : SystemText.CMD_OFF),
@@ -149,6 +157,12 @@ public final class SystemCommand {
         SystemStats.apply(p, st);
         SystemSync.request(p);
         return ok(src, SystemMsg.text(SystemText.CMD_STAT_GIVEN, who(p), st.points(stat), stat.name(), changed));
+    }
+
+    /** {@code free give|take}: adds points to (or takes them from) the player's free pool. */
+    private static int changeFree(CommandSourceStack src, ServerPlayer p, int n) {
+        int changed = SystemPoints.changeFree(p, n);
+        return ok(src, SystemMsg.text(PointsText.CMD_FREE_CHANGED, who(p), SystemQuests.state(p).free(), changed));
     }
 
     private static int giveCore(CommandSourceStack src, ServerPlayer p) {

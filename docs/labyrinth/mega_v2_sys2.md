@@ -73,6 +73,11 @@ Nothing here has been run in the game. Section 9 lists what is unverified.
 
 ## 4. The window you can move
 
+> **Superseded in part by `docs/labyrinth/mega_system_points.md`.** On the owner's later order the key-based moving described below was removed: the nudge, reset and corner
+> keys (`system_left`, `_right`, `_up`, `_down`, `_reset`, `_corner`), `SystemEditMode` and `KeyRepeat` no longer exist. The edit key U (and the toggle key Y) remain; U now opens
+> a screen where the window is moved and resized with the mouse only. The client config keys `anchor`, `offsetX`, `offsetY`, `scale` and the pure placement maths are unchanged.
+> The text below is kept as the record of 1.58.0.
+
 ### Keys (Controls, category "Multiverse: System", lang key `key.categories.nusmp.system`)
 
 | Mapping id | Name (English) | Default | Notes |

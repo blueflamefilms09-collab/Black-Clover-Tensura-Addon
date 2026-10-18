@@ -131,29 +131,18 @@ public final class SystemText {
     /** The Controls category of every key of the System (1.58.0): "Multiverse: System". */
     public static final String KEY_CATEGORY = "key.categories.nusmp.system";
     public static final String KEY_EDIT = "key.nusmp.system_edit";
-    public static final String KEY_LEFT = "key.nusmp.system_left";
-    public static final String KEY_RIGHT = "key.nusmp.system_right";
-    public static final String KEY_UP = "key.nusmp.system_up";
-    public static final String KEY_DOWN = "key.nusmp.system_down";
-    public static final String KEY_RESET = "key.nusmp.system_reset";
-    public static final String KEY_CORNER = "key.nusmp.system_corner";
 
     static {
         EN.put(KEY_TOGGLE, "Toggle the System window");
         EN.put(ITEM_NAME, "Shadow Core");
         EN.put(KEY_CATEGORY, "Multiverse: System");
         EN.put(KEY_EDIT, "Toggle edit mode (move the window)");
-        EN.put(KEY_LEFT, "Edit mode: nudge left");
-        EN.put(KEY_RIGHT, "Edit mode: nudge right");
-        EN.put(KEY_UP, "Edit mode: nudge up");
-        EN.put(KEY_DOWN, "Edit mode: nudge down");
-        EN.put(KEY_RESET, "Edit mode: reset position");
-        EN.put(KEY_CORNER, "Edit mode: cycle the corner");
     }
 
     /** The English text of a key, or the key itself when it is not one of ours (never null, so a missing entry shows as the key, not as a crash). */
     public static String english(String key) {
         String s = EN.get(key);
+        if (s == null) s = PointsText.englishOrNull(key);                       // the texts of the stat-point update live in their own map and lang fragment
         return s == null ? String.valueOf(key) : s;
     }
 

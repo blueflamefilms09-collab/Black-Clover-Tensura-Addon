@@ -62,6 +62,7 @@ public final class SystemSelfTests {
         SelfTests.register("system.extract", SystemSelfTests::extract);
         SelfTests.register("system.cover", SystemSelfTests::cover);
         SelfTests.register("system.buff", SystemSelfTests::buff);
+        SelfTests.register("system.points", SystemSelfTests::points);
     }
 
     private static void reset(FakePlayer p) {
@@ -184,16 +185,16 @@ public final class SystemSelfTests {
             if (s.maxFloor() != 1) return fail("the deepest floor should be 1 but is " + s.maxFloor());
             if (!SystemQuests.complete(p) || q1.state() != QuestProgress.State.DONE) return fail("completing the quest did not make it DONE: " + describe(q1));
             if (s.done() != 1) return fail("one quest is done but the counter says " + s.done());
-            boolean paid = s.totalPoints() > 0 || s.cores() > 0;
+            boolean paid = s.totalPoints() > 0 || s.free() > 0 || s.cores() > 0;          // in point mode 'choose' the stat reward lands in the free pool
             if (!paid) return fail("a completed quest paid no stat point and no Shadow Core");
             if (SystemQuests.complete(p)) return fail("a finished quest was completed a second time (it would pay twice)");
-            int paidPoints = s.totalPoints(), paidCores = s.cores();
+            int paidPoints = s.totalPoints() + s.free(), paidCores = s.cores();
 
             MegaDungeon.fireFloorEntered(p, 2, 1);
             QuestProgress q2 = s.quest();
             if (q2 == null || q2 == q1 || !q2.isActive() || q2.floor() != 2) return fail("floor 2 did not start a new ACTIVE quest: " + describe(q2));
             if (q2.kind() == q1.kind() && SystemData.quests().ofKind(q1.kind()).size() < SystemData.quests().size()) return fail("two quests in a row of the same kind " + q1.kind());
-            if (s.totalPoints() != paidPoints || s.cores() != paidCores) return fail("entering floor 2 paid something");
+            if (s.totalPoints() + s.free() != paidPoints || s.cores() != paidCores) return fail("entering floor 2 paid something");
 
             MegaDungeon.fireFloorEntered(p, 3, 2);
             QuestProgress q3 = s.quest();
@@ -207,7 +208,7 @@ public final class SystemSelfTests {
             MegaDungeon.fireFloorEntered(p, 10, 3);
             if (s.quest() != null) return fail("a boss floor (+10) has a quest: " + describe(s.quest()));
             if (s.maxFloor() != 10) return fail("the deepest floor should be 10 but is " + s.maxFloor());
-            return ok("floor 1 ACTIVE, completed (paid " + (s.cores() > 0 ? "a core" : "a stat point") + "), floor 2 a new " + q2.kind() + ", floor 3 left it " + q2.state()
+            return ok("floor 1 ACTIVE, completed (paid " + (s.cores() > 0 ? "a core" : s.free() > 0 ? "a free point" : "a stat point") + "), floor 2 a new " + q2.kind() + ", floor 3 left it " + q2.state()
                     + " and started " + q3.kind() + ", a revisit started nothing, the boss floor +10 has no quest");
         } finally {
             reset(p);
@@ -279,7 +280,7 @@ public final class SystemSelfTests {
             QuestProgress q1 = s.quest();
             if (q1 == null || !q1.isActive() || q1.floor() != -1) return fail("floor -1 (the Abyssal road) did not start an ACTIVE quest on floor -1: " + describe(q1));
             if (!SystemQuests.complete(p) || q1.state() != QuestProgress.State.DONE) return fail("the Abyssal quest could not be completed: " + describe(q1));
-            if (s.totalPoints() <= 0 && s.cores() <= 0) return fail("a completed Abyssal quest paid nothing");
+            if (s.totalPoints() <= 0 && s.free() <= 0 && s.cores() <= 0) return fail("a completed Abyssal quest paid nothing");
             MegaDungeon.fireFloorEntered(p, -2, -1);
             QuestProgress q2 = s.quest();
             if (q2 == null || q2 == q1 || !q2.isActive() || q2.floor() != -2) return fail("floor -2 did not start a new ACTIVE quest: " + describe(q2));
@@ -485,6 +486,87 @@ public final class SystemSelfTests {
             ShadowExtraction.clear();
             reset(p);
         }
+    }
+
+    // ------------------------------------------------------------------------------------------------ the player places the points (stat-point update)
+    private static SelfTests.Result points(MinecraftServer server) {
+        // the three payloads survive the real stream codecs, and a damaged one is bounded
+        SystemPointsNet.Allocate al = new SystemPointsNet.Allocate(Stat.VIT.ordinal(), -7);
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        SystemPointsNet.Allocate.CODEC.encode(buf, al);
+        if (!al.equals(SystemPointsNet.Allocate.CODEC.decode(buf))) return fail("the allocate payload changed in a round trip");
+        buf = new FriendlyByteBuf(Unpooled.buffer());
+        SystemPointsNet.Reset.CODEC.encode(buf, new SystemPointsNet.Reset());
+        if (SystemPointsNet.Reset.CODEC.decode(buf) == null) return fail("the reset payload did not decode");
+        SystemPointsNet.PointsSync ps = new SystemPointsNet.PointsSync(12, 30, true, PointMode.CHOOSE.ordinal(),
+                List.of(new SystemPointsNet.Effect(0, "minecraft:generic.attack_damage", 0, 0.2, 6.0), new SystemPointsNet.Effect(1, "minecraft:generic.movement_speed", 1, 0.01, 0.25)));
+        buf = new FriendlyByteBuf(Unpooled.buffer());
+        SystemPointsNet.PointsSync.CODEC.encode(buf, ps);
+        if (!ps.equals(SystemPointsNet.PointsSync.CODEC.decode(buf))) return fail("the points sync changed in a round trip");
+        if (!SystemConfig.enabled()) return ok("payloads round-trip; the allocation walk was skipped: system.enabled is false in the config");
+        ServerLevel level = SelfTests.mega(server);
+        if (level == null) return fail("no mega dimension");
+        StatTable.Def str = SystemData.stats().def(Stat.STR);
+        if (str == null || str.effects().isEmpty()) return fail("the stat table has no STR row");
+        FakePlayer p = SelfTests.player(level, "system_tester_points", 0.5, 70, 0.5);
+        reset(p);
+        try {
+            SystemState s = SystemQuests.state(p);
+            int cap = SystemConfig.get(SystemConfig.MAX_STAT_POINTS);
+            if (cap < 10) return ok("payloads round-trip; the allocation walk was skipped: system.maxStatPoints is " + cap + " (the walk needs at least 10)");
+            StatTable.Effect eff = str.effects().get(0);
+
+            // a reward in mode 'choose' lands in the pool; the built packet shows the pool and the table
+            if (SystemRewards.giveFree(p, s, 10) != 10 || s.free() != 10) return fail("giveFree(10) left " + s.free() + " in the pool");
+            SystemPointsNet.PointsSync built = SystemPoints.build(p);
+            if (built.free() != 10 || built.cap() != cap || built.effects().isEmpty()) return fail("the built stat-screen packet is wrong: " + built);
+            if (!built.equals(roundTripPoints(built))) return fail("the built stat-screen packet does not survive a round trip");
+
+            // a legal allocation moves points, makes them real at once (the same path the command uses) and conserves the total
+            int moved = SystemPoints.allocate(p, Stat.STR.ordinal(), 3);
+            if (moved != 3 || s.points(Stat.STR) != 3 || s.free() != 7) return fail("allocating 3 to STR gave " + moved + ": STR " + s.points(Stat.STR) + ", pool " + s.free());
+            if (Math.abs(SystemStats.currentAmount(p, Stat.STR, 0) - eff.amount(3)) > 1e-9) return fail("after allocating, the STR modifier is " + SystemStats.currentAmount(p, Stat.STR, 0) + " but 3 points are worth " + eff.amount(3));
+
+            // hostile requests move nothing
+            int total = s.totalPoints() + s.free();
+            int[][] bad = {{-1, 1}, {Stat.COUNT, 1}, {99, 1}, {Stat.STR.ordinal(), 0}, {Stat.STR.ordinal(), 5000}, {Stat.STR.ordinal(), Integer.MAX_VALUE}, {Stat.STR.ordinal(), Integer.MIN_VALUE}};
+            for (int[] b : bad) {
+                if (SystemPoints.allocate(p, b[0], b[1]) != 0) return fail("a hostile request (stat " + b[0] + ", amount " + b[1] + ") moved points");
+            }
+            if (s.totalPoints() + s.free() != total) return fail("a hostile request changed the total of the points");
+
+            // more than the pool holds, and past the cap, are cut down
+            int took = SystemPoints.allocate(p, Stat.AGI.ordinal(), 100);
+            if (took != 7 || s.free() != 0 || s.points(Stat.AGI) != 7) return fail("asking for 100 with 7 in the pool gave " + took + " (pool " + s.free() + ")");
+            s.setFree(500);
+            SystemPoints.allocate(p, Stat.VIT.ordinal(), PointRules.MAX_AMOUNT);
+            if (s.points(Stat.VIT) != Math.min(500, cap)) return fail("VIT after a huge request is " + s.points(Stat.VIT) + ", expected the cap " + cap);
+
+            // taking points back follows system.allowRespec
+            s.setFree(0);
+            SystemStats.apply(p, s);
+            int before = s.points(Stat.STR);
+            int back = SystemPoints.allocate(p, Stat.STR.ordinal(), -2);
+            if (SystemConfig.allowRespec()) {
+                if (back != -2 || s.points(Stat.STR) != before - 2 || s.free() != 2) return fail("removing 2 STR gave " + back + ": STR " + s.points(Stat.STR) + ", pool " + s.free());
+                int moved2 = SystemPoints.reset(p);
+                if (moved2 <= 0 || s.totalPoints() != 0) return fail("reset left " + s.totalPoints() + " placed points");
+                if (SystemStats.currentAmount(p, Stat.STR, 0) != 0.0) return fail("reset left a STR modifier on the player");
+            } else {
+                if (back != 0 || s.points(Stat.STR) != before) return fail("allowRespec is off but a point was taken back");
+                if (SystemPoints.reset(p) != 0) return fail("allowRespec is off but reset moved points");
+            }
+            return ok("payloads round-trip; a pool of 10 -> 3 STR (modifier " + eff.amount(3) + "), 7 AGI, VIT held at the cap " + cap + "; hostile requests moved nothing; respec "
+                    + (SystemConfig.allowRespec() ? "returned the points" : "was refused") + "; mode " + SystemConfig.pointMode().id());
+        } finally {
+            reset(p);
+        }
+    }
+
+    private static SystemPointsNet.PointsSync roundTripPoints(SystemPointsNet.PointsSync p) {
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        SystemPointsNet.PointsSync.CODEC.encode(buf, p);
+        return SystemPointsNet.PointsSync.CODEC.decode(buf);
     }
 
     private static Zombie zombie(ServerLevel level, BlockPos at, double dx) {
