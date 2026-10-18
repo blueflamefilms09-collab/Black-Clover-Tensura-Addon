@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.92.0] — Unique Skill Lines in Tensura's own Ability Selection menu
+
+Owner brief (the two Gemini specs): the Skill Tree must live inside the base Tensura mod's "Ability Selection" menu, not only in a screen of its own. Details and the WHY of every choice: `docs/skilltree/tensura_menu.md`.
+
+### NEW
+- **Stand-in skills** (`skilltree/menu`): one inert Tensura UNIQUE skill per line (`nusmp:line_<id>`, 283 = 275 generated lines + 8 classic routes), registered at start-up (the ManasCore skill registry freezes then). A line the player owns is taught silently as its stand-in, and forgotten when the line is not owned (the server half of the fog of war), so the line appears in Tensura's own left-hand Unique list with its name and icon. The stand-in cannot activate, toggle, tick or be slotted, so it can never double-fire an art.
+- **Nested panel** (`client/skilltree/Tensura*`): when a line's entry is selected in Tensura's Ability Selection screen a panel shows the line's arts, passives and stat bonuses nested under it, with an **Equip** button (the existing single-active-line rule), a Skill Tree button, and Tensura-style **checkboxes** for passives (ticked = "ON", empty = "OFF" tooltip) that send the existing toggle packet. Operators and creative players get an **ADMIN INSPECT** switch that lists all 283 lines; everybody else only sees lines they own.
+- Placement is read at run time (Tensura's own frame and scroll-bar getters), never guessed pixels, with an escape hatch config: `nusmp-tensura-menu-common.toml` (`enabled`, `panelPlacement`, `panelWidth`, `checkboxSkin`, `adminButton`). Self-test `tree.tensura_menu`, 41 new unit tests, 283 line icons.
+
+### REPLACED
+- Nothing. The own Skill Tree, Passives and Arts screens, the Codex button and inspect mode all stay.
+
+### KEPT
+- The route registry, the Hub economy, the cyclic dungeon, 3D skill books, rifts and loot modifiers from the same specs already existed and are untouched.
+
+### Honest notes
+- Nothing has been run in the game, and Tensura's bytecode was not available, only its API signatures. Everything visual is unverified: where the panel docks, how the checkbox looks in Tensura's art, that Tensura lists a learned stand-in Unique skill, that its lists are writable (if not, the integration disables itself and logs once), and what Tensura does with a Unique skill it did not register (limits, toasts, evolution lists). 283 extra registry entries mean server and client must run the same jar.
+
 ## [1.91.0] — Better drops the deeper (or higher) you go, bows held the way vanilla's are, the depth rule reaches Tensura's monsters
 
 ### NEW

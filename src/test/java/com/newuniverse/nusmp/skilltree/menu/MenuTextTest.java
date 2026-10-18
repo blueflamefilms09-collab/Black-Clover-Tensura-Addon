@@ -93,6 +93,6 @@ class MenuTextTest {
         for (String n : new String[]{"TensuraMenuPanel", "TensuraMenuClient", "TensuraCheckbox", "TensuraScreenAccess"})
             assertFalse(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/skilltree/" + n + ".java"), StandardCharsets.UTF_8).contains("Component.translatable(\""), n);
         String lang = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
-        assertFalse(lang.contains("gui.nusmp.tmenu."), "this job does not edit en_us.json; the lead merges tools/tensura_menu/lang_tensura_menu.json");
+        assertTrue(lang.contains("gui.nusmp.tmenu."), "1.92.0: the lead merged tools/tensura_menu/lang_tensura_menu.json into en_us.json");
     }
 }
