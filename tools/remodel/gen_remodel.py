@@ -32,7 +32,7 @@ def remodelled():
     """{id: module} of every character file that declares ENTITIES (the entity ids it draws)."""
     out = {}
     for cid, (path, mod) in D.discover(()).items():
-        if getattr(mod, "ENTITIES", None):
+        if hasattr(mod, "ENTITIES"):          # an empty list is a tier or variant model that an entity draws through another file's entity id
             out[cid] = mod
     return out
 
