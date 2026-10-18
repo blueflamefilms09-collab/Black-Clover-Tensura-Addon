@@ -220,7 +220,7 @@
       },
       "x": 2,
       "y": 2,
-      "icon": "minecraft:scute"
+      "icon": "minecraft:turtle_scute"
     },
     {
       "id": "wingbeat",
@@ -603,7 +603,7 @@
       },
       "x": 8,
       "y": 0,
-      "icon": "minecraft:scute"
+      "icon": "minecraft:turtle_scute"
     },
     {
       "id": "dragon_s_roar",

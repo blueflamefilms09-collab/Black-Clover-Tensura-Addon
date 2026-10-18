@@ -394,7 +394,7 @@ LINES.append(Line(
     ],
     stats=[
         T("Draconic Heart", "Raises your maximum health.", "max_health", 6, "add", "minecraft:dragon_breath"),
-        T("Scale Plating", "Raises your armor.", "armor", 1.5, "add", "minecraft:scute"),
+        T("Scale Plating", "Raises your armor.", "armor", 1.5, "add", "minecraft:turtle_scute"),
         T("Wingbeat", "You are quicker on your feet.", "movement_speed", .04, "mult", "minecraft:feather"),
         T("Talon Strength", "Raises your attack damage.", "attack_damage", 1.1, "add", "minecraft:iron_sword"),
     ],
@@ -407,7 +407,7 @@ LINES.append(Line(
           damage=10, radius=3.4, height=1.1, knockback=1.6),
         A("Wing Gust", "A beat of the wings sends a wave of wind along the ground.", "ground_wave", "minecraft:phantom_membrane", "WIND_SLASH",
           damage=6, length=11, width=3),
-        A("Scale Guard", "Raise a guard of scales: a thick absorption shield.", "shield", "minecraft:scute", "MIRROR_PANE",
+        A("Scale Guard", "Raise a guard of scales: a thick absorption shield.", "shield", "minecraft:turtle_scute", "MIRROR_PANE",
           absorb_hearts=8, seconds=9, resist_amp=1),
         A("Dragon's Roar", "A roar that pins the creatures around you in place.", "stun_ring", "minecraft:goat_horn", "WIND_RING",
           radius=5, seconds=2, targets=6),
@@ -445,7 +445,7 @@ LINES.append(Line(
     ],
     stats=[
         T("Shared Heartbeat", "Raises your maximum health.", "max_health", 4, "add", "minecraft:heart_of_the_sea"),
-        T("Partner's Scales", "Raises your armor.", "armor", 1, "add", "minecraft:scute"),
+        T("Partner's Scales", "Raises your armor.", "armor", 1, "add", "minecraft:turtle_scute"),
         T("Paired Reflexes", "You are quicker on your feet.", "movement_speed", .04, "mult", "minecraft:sugar"),
     ],
     arts=[
@@ -1200,13 +1200,13 @@ LINES.append(Line(
     stances=[
         S("Bloodline Awakened", "Let the blood speak: crushing blows with almost no guard.", "minecraft:redstone_block", "DEVIL_CIRCLE",
           damage_pct=.3, armor=-2, regen=.3),
-        S("Ascended Scales", "Armor of cold scales: a thick guard, but slow to move.", "minecraft:scute", "MIRROR_PANE",
+        S("Ascended Scales", "Armor of cold scales: a thick guard, but slow to move.", "minecraft:turtle_scute", "MIRROR_PANE",
           armor=4, knockback_res=.2, speed_pct=-.05),
     ],
     stats=[
         T("Ancient Blood", "Raises your maximum health.", "max_health", 6, "add", "minecraft:redstone"),
         T("Predator's Claws", "Raises your attack damage.", "attack_damage", 1.3, "add", "minecraft:iron_axe"),
-        T("Cold Scales", "Raises your armor.", "armor", 1, "add", "minecraft:scute"),
+        T("Cold Scales", "Raises your armor.", "armor", 1, "add", "minecraft:turtle_scute"),
     ],
     arts=[
         A("Blood Tithe", "Strike a foe and take back a hefty share of its life.", "drain_bite", "minecraft:redstone", "DEVIL_CIRCLE",
@@ -1228,7 +1228,7 @@ LINES.append(Line(
         P("Sanguine Hunger", "Heal for a share of the damage you deal.", "lifesteal", "minecraft:redstone", pct=.08),
         P("Rotting Claws", "Your blows may wither the foe.", "on_hit_effect", "minecraft:wither_rose", effect="wither", seconds=4, chance=.22),
         P("Blood Feast", "A kill heals you and grants regeneration.", "kill_reward", "minecraft:rotten_flesh", effect="regeneration", heal=4, seconds=5),
-        P("Thorned Scales", "Part of the damage you take is returned to the attacker.", "thorns", "minecraft:scute", pct=.2, rest=20),
+        P("Thorned Scales", "Part of the damage you take is returned to the attacker.", "thorns", "minecraft:turtle_scute", pct=.2, rest=20),
         P("Cornered Predator", "Take less damage when you are low on health.", "reduce_when", "minecraft:iron_chestplate", condition="low_health", pct=.2),
         P("Wounded Fury", "Deal more damage when you are low on health.", "dmg_when", "minecraft:blaze_powder", condition="low_health", bonus=.25),
         P("Blood Oath", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", threshold=.3, seconds=7),

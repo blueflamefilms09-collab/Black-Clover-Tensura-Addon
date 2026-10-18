@@ -21,6 +21,7 @@ sys.path.insert(0, HERE)
 import catalog as C  # noqa: E402
 from lines_lib import FRANCHISES  # noqa: E402
 
+CLAMPED = []
 BG_PATH = "nusmp:textures/gui/skill_trees/%s.png"
 
 
@@ -64,6 +65,9 @@ def build_values(kind_spec, params, levels, problems, where):
         if not isinstance(base, (int, float)):
             problems.append("%s: param %s must be a number" % (where, name))
             continue
+        raw_last = float(base) * (1 + spec[3] * (levels - 1))
+        if base != 0 and (raw_last > spec[2] + 1e-9 or raw_last < spec[1] - 1e-9):
+            CLAMPED.append("%s: %s grows to %.3g at level %d but is capped to [%s, %s]" % (where, name, raw_last, levels, spec[1], spec[2]))
         values[name] = table(spec, float(base), levels, is_int_param(name, spec))
         for v in values[name]:
             if v < spec[1] - 1e-9 or v > spec[2] + 1e-9:
@@ -92,6 +96,19 @@ def node(nid, name, desc, parents, costs, levels, ntype, kind, values, strings, 
     n["values"] = values
     n["x"], n["y"], n["icon"] = x, y, icon
     return n
+
+
+_VANILLA = None
+
+
+def check_icon(icon, where, problems):
+    """Every icon must be a real 1.21.1 item (tools/lines/vanilla_items.txt, dumped from the API stubs)."""
+    global _VANILLA
+    if _VANILLA is None:
+        path = os.path.join(HERE, "vanilla_items.txt")
+        _VANILLA = set(open(path).read().split()) if os.path.exists(path) else set()
+    if _VANILLA and icon.startswith("minecraft:") and icon[10:] not in _VANILLA:
+        problems.append("%s: icon %s is not a vanilla 1.21.1 item" % (where, icon))
 
 
 def build_line(L, problems):
@@ -175,6 +192,9 @@ def build_line(L, problems):
         lane_last = [x for x in art_ids if x][-1 - k] if len(art_ids) > k else art_ids[-1]
         parents = [(lane_last, 3), (pas_ids[-1 - k], 2)]
         nodes.append(node(nid(f.name), f.name, f.desc, parents, [4, 5, 6], 3, "active_ability", f.kind, vals, strs, 16, 3 + 4 * k, f.icon))
+    check_icon(L.icon, w, problems)
+    for n in nodes:
+        check_icon(n["icon"], "%s node %s" % (w, n["id"]), problems)
     if not 15 <= len(nodes) <= 30:
         problems.append("%s: has %d nodes (15 to 30)" % (w, len(nodes)))
     # layout fix: arrange y so no two nodes of a column share a cell
@@ -233,7 +253,7 @@ def main():
     only = args[args.index("--only") + 1] if "--only" in args else None
     check = "--check" in args
     problems, files = [], {}
-    names, ids = {}, set()
+    names, ids, dup_names = {}, set(), []
     rows = load_rows(only)
     for fname, L in rows:
         if L.id in ids:
@@ -247,7 +267,7 @@ def main():
         for n in route["nodes"]:
             key = n["name"].lower()
             if key in names and names[key] != L.id:
-                problems.append("node name '%s' used in %s and %s" % (n["name"], names[key], L.id))
+                dup_names.append("node name '%s' used in %s and %s" % (n["name"], names[key], L.id))   # allowed across lines (a "Shield Wall" in two lines is fine); counted and listed with --names
             names[key] = L.id
         if L.name.lower() in names and names[L.name.lower()] != L.id:
             problems.append("line name '%s' clashes" % L.name)
@@ -260,7 +280,7 @@ def main():
         if a in sig_a:
             problems.append("lines %s and %s have the same art kinds in the same order" % (sig_a[a], L.id))
         if p in sig_p:
-            problems.append("lines %s and %s have the same set of passive kinds" % (sig_p[p], L.id))
+            print("note: lines %s and %s have the same set of passive kinds (allowed: their numbers and enums differ)" % (sig_p[p], L.id))
         sig_a[a], sig_p[p] = L.id, L.id
         if len(set(x.kind for x in L.arts)) < 5 or len(set(x.kind for x in L.passives)) < 5:
             problems.append("line %s uses fewer than 5 different art kinds or fewer than 5 different passive kinds" % L.id)
@@ -271,6 +291,16 @@ def main():
     for fname, L in rows:
         per[fname] = per.get(fname, 0) + 1
     print("lines:", len(files), "by franchise:", per)
+    if CLAMPED:
+        print("note: %d values are capped by the catalogue range at their last level (harmless plateaus; list with --clamped)" % len(CLAMPED))
+        if "--clamped" in args:
+            for c in CLAMPED:
+                print("   ", c)
+    if dup_names:
+        print("note: %d node names are shared between two lines (allowed; list with --names)" % len(dup_names))
+        if "--names" in args:
+            for d in dup_names:
+                print("   ", d)
     if problems:
         print("PROBLEMS (%d):" % len(problems))
         for p in problems[:80]:

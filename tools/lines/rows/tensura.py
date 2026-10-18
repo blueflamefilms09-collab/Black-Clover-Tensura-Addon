@@ -100,7 +100,7 @@ LINES = [
         S("Sealed Dragon Calm", "Hold the storm in: lighter, faster and calmer, with a gentler hand.", "minecraft:iron_bars",
           speed_pct=0.08, regen=0.8, damage_pct=-0.05, vfx="SPIRIT_AURA")],
        [T("Dragon Constitution", "A huge pool of extra hearts.", "max_health", 8, "minecraft:dragon_egg"),
-        T("Scale Plating", "A permanent bonus to armor.", "armor", 2, "minecraft:scute"),
+        T("Scale Plating", "A permanent bonus to armor.", "armor", 2, "minecraft:turtle_scute"),
         T("Dragon's Heft", "A permanent bonus to attack damage.", "attack_damage", 2, "minecraft:netherite_sword"),
         T("Rooted in the Storm", "Hard to knock back.", "knockback_resistance", 0.15, "minecraft:anvil")],
        [A("Storm Breath", "Exhale a beam of storm that pierces through everything in a line.", "ray_shot", "minecraft:dragon_breath", vfx="LIGHTNING_SPEAR", damage=10, range=22, pierce=3),

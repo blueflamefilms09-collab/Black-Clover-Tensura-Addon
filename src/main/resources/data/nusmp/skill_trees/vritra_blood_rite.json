@@ -144,7 +144,7 @@
       },
       "x": 0,
       "y": 2,
-      "icon": "minecraft:scute"
+      "icon": "minecraft:turtle_scute"
     },
     {
       "id": "ancient_blood",
@@ -258,7 +258,7 @@
       },
       "x": 2,
       "y": 4,
-      "icon": "minecraft:scute"
+      "icon": "minecraft:turtle_scute"
     },
     {
       "id": "blood_tithe",
@@ -869,7 +869,7 @@
       },
       "x": 12,
       "y": 2,
-      "icon": "minecraft:scute"
+      "icon": "minecraft:turtle_scute"
     },
     {
       "id": "cornered_predator",

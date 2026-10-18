@@ -176,7 +176,7 @@ LINES.append(Line(
         P("Venomous Claws", "Your claws may poison the foe.", "on_hit_effect", "minecraft:poisonous_potato", effect="poison", seconds=5, chance=0.3),
         P("Bane of Kings", "You deal more damage to bosses.", "dmg_vs", "minecraft:dragon_head", category="boss", bonus=0.25),
         P("Hunt Rush", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:sugar", bonus=0.3),
-        P("Self-Mending Shell", "Your wounds close over time, even out of combat.", "mending", "minecraft:scute", seconds=14),
+        P("Self-Mending Shell", "Your wounds close over time, even out of combat.", "mending", "minecraft:turtle_scute", seconds=14),
         P("Spiked Exoskeleton", "A share of the damage you take is thrown back at attackers.", "thorns", "minecraft:pointed_dripstone", pct=0.2),
         P("Devour the Fallen", "Each kill heals you and sharpens your speed.", "kill_reward", "minecraft:bone_meal", heal=5, effect="speed", seconds=6),
     ],

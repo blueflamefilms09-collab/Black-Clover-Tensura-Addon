@@ -261,7 +261,7 @@ LINES.append(Line(
           radius=4.5, seconds=2, targets=5),
         A("Claw Upper", "A clawed uppercut that launches the foe in front of you.", "uppercut", "minecraft:flint", "WIND_SLASH",
           damage=8, range=3.2, launch=.8),
-        A("Boar's Hide", "Thicken your skin: an absorption shield and added resistance.", "shield", "minecraft:scute", "MIRROR_PANE",
+        A("Boar's Hide", "Thicken your skin: an absorption shield and added resistance.", "shield", "minecraft:turtle_scute", "MIRROR_PANE",
           absorb_hearts=6, seconds=8, resist_amp=1),
         A("Bear Hug", "Seize the creatures around you and drag them in close.", "pull", "minecraft:honeycomb", "EARTH_SPIKES",
           radius=6, strength=1.2, targets=4, damage=5),
