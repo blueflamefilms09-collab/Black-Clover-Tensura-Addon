@@ -1,0 +1,51 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 4,
+  "tier_max": 5,
+  "name": "Acererak, the Devourer of the Tomb",
+  "anime": [
+    "Magi: a dark Djinn of a dungeon"
+  ],
+  "dnd": [
+    "Demilich",
+    "Acererak"
+  ],
+  "forms": [
+    "Demilich",
+    "Devourer",
+    "Eternal Lich"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "magic_drain",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "necrotic_mist",
+    "searing_light"
+  ],
+  "breath": "poison",
+  "anti_magic_aura": true,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

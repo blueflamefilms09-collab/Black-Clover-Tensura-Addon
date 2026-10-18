@@ -1,0 +1,50 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 3,
+  "tier_max": 5,
+  "name": "Demogorgon, Prince of Demons",
+  "anime": [
+    "Tensura: a Demon Lord with two minds"
+  ],
+  "dnd": [
+    "Demogorgon"
+  ],
+  "forms": [
+    "Two-Headed Prince",
+    "Gaze of Madness",
+    "Prince of Demons Unbound"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "eye_rays",
+      "cost": 2
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "necrotic_mist",
+    "anti_magic_field"
+  ],
+  "breath": "fire",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

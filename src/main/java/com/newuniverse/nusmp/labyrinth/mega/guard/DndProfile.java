@@ -15,11 +15,12 @@ import java.util.List;
  * it fuses are listed in {@code anime} and {@code dnd} so that a reader of the file, and the docs, can see the inspiration without guessing.
  */
 public record DndProfile(String id, String side, int tier, int variant, String name, List<String> anime, List<String> dnd, List<String> forms, int resistances, int legendaryPoints,
-                         List<String> legendary, List<Integer> costs, List<String> lair, boolean antiMagicAura, boolean frightfulAura, boolean absorbMagic, boolean mythic, boolean execution) {
+                         List<String> legendary, List<Integer> costs, List<String> lair, boolean antiMagicAura, boolean frightfulAura, boolean absorbMagic, boolean mythic, boolean execution,
+                         boolean famous, int tierMin, int tierMax, String breath, boolean reflective) {
 
     /** The profile of a boss no file describes: three resistances, three points, two actions, one lair action, nothing else. */
     public static final DndProfile DEFAULT = new DndProfile("default", "holy", 1, 0, "Labyrinth Guardian", List.of(), List.of(), List.of("Guardian", "Awakened", "Ascendant"), 3, 3,
-            List.of("tail_sweep", "cantrip"), List.of(1, 1), List.of("tremor"), false, false, false, true, false);
+            List.of("tail_sweep", "cantrip"), List.of(1, 1), List.of("tremor"), false, false, false, true, false, false, 1, 5, "fire", false);
 
     public int cost(int i) { return costs.get(i); }
 
@@ -28,9 +29,22 @@ public record DndProfile(String id, String side, int tier, int variant, String n
 
     /** Reads a file; throws {@link IllegalArgumentException} with a plain sentence when it is wrong. */
     public static DndProfile parse(String id, JsonObject o) {
+        boolean famous = flag(o, "famous");
         String side = str(o, "side");
-        if (!side.equals("holy") && !side.equals("evil")) throw new IllegalArgumentException(id + ": side must be holy or evil, not '" + side + "'");
-        int tier = num(o, "tier", 1, 5), variant = num(o, "variant", 0, 1);
+        if (!side.equals("holy") && !side.equals("evil") && !(famous && side.equals("any"))) throw new IllegalArgumentException(id + ": side must be holy or evil" + (famous ? " or any" : "") + ", not '" + side + "'");
+        int tierMin, tierMax, tier, variant;
+        if (famous) {
+            tierMin = num(o, "tier_min", 1, 5);
+            tierMax = num(o, "tier_max", tierMin, 5);
+            tier = tierMin;
+            variant = 0;
+        } else {
+            tier = num(o, "tier", 1, 5);
+            variant = num(o, "variant", 0, 1);
+            tierMin = tierMax = tier;
+        }
+        String breath = o.has("breath") ? str(o, "breath") : "fire";
+        if (!DndRules.BREATHS.contains(breath)) throw new IllegalArgumentException(id + ": unknown breath '" + breath + "' (known: " + DndRules.BREATHS + ")");
         String name = str(o, "name");
         List<String> forms = strings(o, "forms");
         if (forms.size() != 3) throw new IllegalArgumentException(id + ": forms needs exactly three names (phase 1, phase 2, mythic), not " + forms.size());
@@ -48,7 +62,7 @@ public record DndProfile(String id, String side, int tier, int variant, String n
         for (String l : lair) if (!DndRules.LAIR_IDS.contains(l)) throw new IllegalArgumentException(id + ": unknown lair action '" + l + "' (known: " + DndRules.LAIR_IDS + ")");
         return new DndProfile(id, side, tier, variant, name, strings(o, "anime"), strings(o, "dnd"), forms, DndRules.clampResistances(opt(o, "resistances", 3)),
                 DndRules.points(opt(o, "legendary_points", 3), false), List.copyOf(legendary), List.copyOf(costs), List.copyOf(lair), flag(o, "anti_magic_aura"), flag(o, "frightful_aura"),
-                flag(o, "absorb_magic"), !o.has("mythic") || flag(o, "mythic"), flag(o, "execution"));
+                flag(o, "absorb_magic"), !o.has("mythic") || flag(o, "mythic"), flag(o, "execution"), famous, tierMin, tierMax, breath, flag(o, "reflective"));
     }
 
     private static String str(JsonObject o, String k) {

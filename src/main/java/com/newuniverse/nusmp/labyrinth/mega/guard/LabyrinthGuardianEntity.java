@@ -135,7 +135,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         this.floorLabel = floorLabel;
         this.configured = true;
         stamp();
-        dnd.configure(DndProfiles.forFloor(floorNo));
+        dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
         applyScaling();
     }
 
@@ -373,7 +373,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         phaseTwo = tag.getBoolean("GuardPhaseTwo");
         divisor = GuardianScaling.damageDivisor(GuardConfig.get(GuardConfig.GUARDIAN_BASE_HEALTH), GuardConfig.get(GuardConfig.THREAT_HEALTH_SCALE), threat);
         floorNo = tag.contains("GuardFloorNo") ? tag.getInt("GuardFloorNo") : Math.max(1, threat);
-        dnd.configure(DndProfiles.forFloor(floorNo));
+        dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
         dnd.load(tag);
         stamp();                                                                                   // loading clears and restores the tag list: both keys are written again
     }

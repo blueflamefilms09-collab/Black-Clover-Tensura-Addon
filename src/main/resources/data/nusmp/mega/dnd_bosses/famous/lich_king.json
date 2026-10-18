@@ -1,0 +1,49 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 2,
+  "tier_max": 3,
+  "name": "The Lich King of the Ossuary",
+  "anime": [
+    "Black Clover: a Wizard-King of the dead"
+  ],
+  "dnd": [
+    "Lich"
+  ],
+  "forms": [
+    "Lich",
+    "Arch-Lich",
+    "Undying King"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
+    },
+    {
+      "id": "magic_drain",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "anti_magic_field"
+  ],
+  "breath": "poison",
+  "anti_magic_aura": false,
+  "frightful_aura": false,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}

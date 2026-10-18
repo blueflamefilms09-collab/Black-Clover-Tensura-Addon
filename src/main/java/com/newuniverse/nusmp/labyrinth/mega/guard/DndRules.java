@@ -30,9 +30,11 @@ public final class DndRules {
     /** Share of its health the boss returns to when its mythic trait spends itself. */
     public static final double MYTHIC_RESTORE = 0.5;
     public static final int MAX_RESISTANCES = 5, MAX_POINTS = 5;
+    /** The breath weapons a profile may name. */
+    public static final List<String> BREATHS = List.of("fire", "frost", "lightning", "poison", "acid");
 
     /** The legendary actions the code knows (a profile naming another is refused) with their cost in points. */
-    public static final List<String> LEGENDARY_IDS = List.of("tail_sweep", "blink", "cantrip", "wing_buffet", "frightful_presence", "magic_drain", "counterspell", "life_drain", "haki_pulse", "gravity_crush");
+    public static final List<String> LEGENDARY_IDS = List.of("tail_sweep", "blink", "cantrip", "wing_buffet", "frightful_presence", "magic_drain", "counterspell", "life_drain", "haki_pulse", "gravity_crush", "dragon_breath", "eye_rays", "mind_blast", "death_touch", "vampiric_bite");
     public static final List<String> LAIR_IDS = List.of("tremor", "anti_magic_field", "searing_light", "falling_stars", "necrotic_mist");
 
     /** A saving throw: true when {@code d20 + bonus >= dc}; a natural 20 always saves, a natural 1 never does. */
@@ -62,6 +64,23 @@ public final class DndRules {
     public static String idForFloor(int floor) {
         int index = profileIndex(floor);
         return side(floor) + "_t" + (index / 2 + 1) + (index % 2 == 0 ? "a" : "b");
+    }
+
+    /** The tier (1 to 5) of a floor: five tiers of 200 floors, the last one for everything deeper. */
+    public static int tierOf(int floor) { return Math.min(5, (Math.max(1, Math.abs(floor)) - 1) / 200 + 1); }
+
+    /**
+     * Which famous boss (an index into {@code candidates} famous profiles that fit the floor) a sector gets, or -1 for the ordinary profile of its floor. Deterministic in the floor and the
+     * sector id, so a boss is the same boss after a reload; {@code percent} of the bosses (0 to 100) are famous.
+     */
+    public static int pickFamous(int floor, int sectorId, int percent, int candidates) {
+        if (candidates <= 0 || percent <= 0 || sectorId < 0) return -1;
+        int h = floor * 0x9E3779B1 ^ sectorId * 0x85EBCA6B;
+        h ^= h >>> 15;
+        h *= 0x2C1B3C6D;
+        h ^= h >>> 13;
+        if (Math.floorMod(h, 100) >= Math.min(100, percent)) return -1;
+        return Math.floorMod(h >>> 7, candidates);
     }
 
     public static int clampResistances(int n) { return Math.max(0, Math.min(MAX_RESISTANCES, n)); }

@@ -1,0 +1,45 @@
+{
+  "famous": true,
+  "side": "any",
+  "tier_min": 2,
+  "tier_max": 3,
+  "name": "Beholder, the Sphere of Many Eyes",
+  "anime": [
+    "Black Clover: Anti-Magic cone"
+  ],
+  "dnd": [
+    "Beholder"
+  ],
+  "forms": [
+    "Beholder",
+    "Elder Orb",
+    "Death Tyrant"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "eye_rays",
+      "cost": 2
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "anti_magic_field"
+  ],
+  "breath": "fire",
+  "anti_magic_aura": true,
+  "frightful_aura": false,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}

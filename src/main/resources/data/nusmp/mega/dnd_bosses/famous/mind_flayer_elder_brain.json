@@ -1,0 +1,46 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 2,
+  "tier_max": 4,
+  "name": "Elder Brain of the Illithid Colony",
+  "anime": [
+    "Tensura: a Demon Lord of mind"
+  ],
+  "dnd": [
+    "Elder Brain",
+    "Mind Flayer"
+  ],
+  "forms": [
+    "Elder Brain",
+    "Ulitharid",
+    "Sovereign Mind"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "magic_drain",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "tremor"
+  ],
+  "breath": "poison",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}

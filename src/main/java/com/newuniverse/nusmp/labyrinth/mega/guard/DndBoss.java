@@ -41,7 +41,7 @@ final class DndBoss {
     private record Field(double x, double y, double z, double r, long end, boolean mist) {}
 
     /** A telegraphed blow that lands at {@code at}: a ring of {@code r}, {@code damage} to every survivor inside it. */
-    private record Strike(double x, double y, double z, double r, long at, float damage, boolean light) {}
+    private record Strike(double x, double y, double z, double r, long at, float damage, boolean light, String effect) {}
 
     DndProfile profile = DndProfile.DEFAULT;
     int resistancesLeft = 3, points = 3, phase = 1;
@@ -154,6 +154,10 @@ final class DndBoss {
     float incoming(LabyrinthGuardianEntity g, DamageSource source, float amount) {
         if (!on()) return amount;
         if (execTarget != null) execDamage += amount;
+        if (profile.reflective() && source.is(DamageTypeTags.WITCH_RESISTANT_TO) && source.getEntity() instanceof Player thrower && thrower.isAlive()) {
+            thrower.hurt(g.damageSources().indirectMagic(g, g), amount * 0.2f);                // the Tarrasque's Reflective Carapace: a fifth of a spell goes back
+            amount *= 0.8f;
+        }
         if (profile.absorbMagic()) {
             boolean magical = source.is(DamageTypeTags.WITCH_RESISTANT_TO);
             float[] split = DndRules.absorb(amount, magical);
@@ -207,7 +211,7 @@ final class DndBoss {
                     sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.3f, 0.5f);
                 }
             }
-            case "wing_buffet" -> strikes.add(new Strike(c.x, c.y, c.z, 9.0 * Math.max(1.0, g.getScale() * 0.5), sl.getGameTime() + 24, atk * 0.7f, false));
+            case "wing_buffet" -> strikes.add(new Strike(c.x, c.y, c.z, 9.0 * Math.max(1.0, g.getScale() * 0.5), sl.getGameTime() + 24, atk * 0.7f, false, ""));
             case "frightful_presence" -> {
                 int fails = 0;
                 for (Player p : GuardianTraits.players(sl, g, 24.0)) {
@@ -266,6 +270,74 @@ final class DndBoss {
                 ring(sl, c, 11.0, ParticleTypes.PORTAL);
                 sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_STARE, SoundSource.HOSTILE, 1.4f, 0.4f);
             }
+            case "dragon_breath" -> {                                           // a telegraphed cone-ish blast ahead of it, towards whoever hit it; the breath names the rider effect
+                Vec3 to = attacker.position().subtract(c);
+                Vec3 dir = to.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : new Vec3(to.x, 0, to.z).normalize();
+                Vec3 mid = c.add(dir.scale(6.0));
+                strikes.add(new Strike(mid.x, c.y, mid.z, 5.5, sl.getGameTime() + 30, atk * 0.6f, false, profile.breath()));
+                say(sl, g, "breath", profile.breath());
+            }
+            case "eye_rays" -> {                                                // up to three rays at random players, each answered by a save
+                List<Player> near = GuardianTraits.players(sl, g, 24.0);
+                for (int i = 0; i < 3 && !near.isEmpty(); i++) {
+                    Player p = near.get(sl.random.nextInt(near.size()));
+                    bolt(sl, g, p);
+                    int roll = sl.random.nextInt(20) + 1;
+                    if (DndRules.save(DndRules.DC, roll, DndRules.saveBonus(p.getArmorValue(), p.getAttributeValue(Attributes.LUCK)))) continue;
+                    switch (sl.random.nextInt(4)) {
+                        case 0 -> p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
+                        case 1 -> p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 0));
+                        case 2 -> p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0));       // two seconds at most: the brief's cap on blindness
+                        default -> p.hurt(g.damageSources().indirectMagic(g, g), atk * 0.25f);
+                    }
+                }
+                sl.playSound(null, g.blockPosition(), SoundEvents.GUARDIAN_ATTACK, SoundSource.HOSTILE, 1.4f, 0.7f);
+            }
+            case "mind_blast" -> {                                              // a psychic wave: a save or be dazed
+                int fails = 0;
+                for (Player p : GuardianTraits.players(sl, g, 10.0)) {
+                    int roll = sl.random.nextInt(20) + 1;
+                    if (!DndRules.save(DndRules.DC, roll, DndRules.saveBonus(p.getArmorValue(), p.getAttributeValue(Attributes.LUCK)))) {
+                        p.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0));
+                        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));
+                        fails++;
+                    }
+                }
+                ring(sl, c, 9.0, ParticleTypes.WITCH);
+                sl.playSound(null, g.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 1.4f, 0.8f);
+                say(sl, g, "mind_blast", fails);
+            }
+            case "death_touch" -> {                                             // a marked circle under one player; step out of it
+                List<Player> near = GuardianTraits.players(sl, g, 24.0);
+                if (!near.isEmpty()) {
+                    Player p = near.get(sl.random.nextInt(near.size()));
+                    strikes.add(new Strike(p.getX(), p.getY(), p.getZ(), 1.8, sl.getGameTime() + 30, atk * 0.9f, true, ""));
+                    say(sl, g, "death_touch", p.getName());
+                }
+            }
+            case "vampiric_bite" -> {
+                float dmg = atk * 0.35f;
+                if (attacker.distanceToSqr(g) <= 64.0) {
+                    attacker.hurt(g.damageSources().mobAttack(g), dmg);
+                    g.addShield(dmg * 0.5f);
+                }
+                sl.playSound(null, g.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.HOSTILE, 1.4f, 0.6f);
+            }
+            default -> { }
+        }
+    }
+
+    /** The rider effect of a breath weapon on a player it hit. */
+    private static void applyBreath(Player p, String breath) {
+        switch (breath) {
+            case "fire" -> p.igniteForSeconds(4);
+            case "frost" -> {
+                p.setTicksFrozen(Math.max(p.getTicksFrozen(), 140));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));
+            }
+            case "lightning" -> p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
+            case "poison" -> p.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 0));
+            case "acid" -> p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0));
             default -> { }
         }
     }
@@ -279,11 +351,11 @@ final class DndBoss {
         float atk = (float) g.attackDamage();
         switch (profile.lair().get(lastLair)) {
             case "tremor" -> {
-                strikes.add(new Strike(g.getX(), g.getY(), g.getZ(), 14.0, now + 30, atk * 0.3f, false));
+                strikes.add(new Strike(g.getX(), g.getY(), g.getZ(), 14.0, now + 30, atk * 0.3f, false, ""));
                 say(sl, g, "lair_tremor");
             }
             case "searing_light" -> {
-                strikes.add(new Strike(target.getX(), target.getY(), target.getZ(), 3.5, now + 36, atk * 0.45f, true));
+                strikes.add(new Strike(target.getX(), target.getY(), target.getZ(), 3.5, now + 36, atk * 0.45f, true, ""));
                 say(sl, g, "lair_light");
             }
             case "anti_magic_field" -> {
@@ -293,7 +365,7 @@ final class DndBoss {
             case "falling_stars" -> {
                 for (int i = 0; i < 5; i++) {                                    // five stars round the party, staggered so each has its own warning
                     double a = sl.random.nextDouble() * Math.PI * 2, d = sl.random.nextDouble() * 9.0;
-                    strikes.add(new Strike(target.getX() + Math.cos(a) * d, target.getY(), target.getZ() + Math.sin(a) * d, 2.5, now + 30 + i * 8L, atk * 0.25f, true));
+                    strikes.add(new Strike(target.getX() + Math.cos(a) * d, target.getY(), target.getZ() + Math.sin(a) * d, 2.5, now + 30 + i * 8L, atk * 0.25f, true, ""));
                 }
                 say(sl, g, "lair_stars");
             }
@@ -316,6 +388,7 @@ final class DndBoss {
                 if (dx * dx + dz * dz <= s.r() * s.r()) {
                     p.hurt(s.light() ? g.damageSources().indirectMagic(g, g) : g.damageSources().mobAttack(g), s.damage());
                     if (!s.light()) knock(g, p, 0.9);
+                    applyBreath(p, s.effect());
                 }
             }
             sl.playSound(null, BlockPosAt.of(s), s.light() ? SoundEvents.LIGHTNING_BOLT_THUNDER : SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 1.0f, s.light() ? 1.6f : 0.6f);

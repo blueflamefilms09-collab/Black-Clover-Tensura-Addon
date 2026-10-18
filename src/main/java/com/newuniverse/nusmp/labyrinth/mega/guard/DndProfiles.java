@@ -10,7 +10,9 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +53,34 @@ public final class DndProfiles extends SimpleJsonResourceReloadListener {
     public static DndProfile forFloor(int floor) { return profiles.getOrDefault(idForFloor(floor), DndProfile.DEFAULT); }
 
     public static DndProfile byId(String id) { return profiles.get(id); }
+
+    /** The famous bosses (D&D's well-known villains) that fit a floor: right side (or "any") and the floor's tier inside their range, in id order. */
+    public static List<DndProfile> famousFor(int floor) {
+        int tier = DndRules.tierOf(floor);
+        String side = DndRules.side(floor);
+        List<DndProfile> out = new ArrayList<>();
+        for (DndProfile p : profiles.values()) {
+            if (p.famous() && (p.side().equals("any") || p.side().equals(side)) && tier >= p.tierMin() && tier <= p.tierMax()) out.add(p);
+        }
+        out.sort(java.util.Comparator.comparing(DndProfile::id));
+        return out;
+    }
+
+    /**
+     * The profile of the boss of a sector on a floor: with the server's chance ({@code [guard] famousPercent}) one of the famous bosses that fit the floor, else the ordinary profile. The pick is
+     * a function of the floor and the sector id alone, so the same boss stands there after every reload. A boss with no sector (a test or admin Guardian) is always ordinary.
+     */
+    public static DndProfile forBoss(int floor, int sectorId) {
+        List<DndProfile> famous = famousFor(floor);
+        int pick = DndRules.pickFamous(floor, sectorId, GuardConfig.get(GuardConfig.FAMOUS_PERCENT), famous.size());
+        return pick < 0 ? forFloor(floor) : famous.get(pick);
+    }
+
+    public static int famousCount() {
+        int n = 0;
+        for (DndProfile p : profiles.values()) if (p.famous()) n++;
+        return n;
+    }
 
     public static int count() { return profiles.size(); }
 

@@ -1,0 +1,49 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 2,
+  "tier_max": 3,
+  "name": "Strahd von Zarovich, the Devil of Barovia",
+  "anime": [
+    "Black Clover: a Devil-bound noble"
+  ],
+  "dnd": [
+    "Vampire Lord"
+  ],
+  "forms": [
+    "Vampire Lord",
+    "Mist Sovereign",
+    "Lord of Barovia"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "vampiric_bite",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "tremor"
+  ],
+  "breath": "poison",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}

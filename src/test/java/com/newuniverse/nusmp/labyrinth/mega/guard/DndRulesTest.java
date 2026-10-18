@@ -121,6 +121,53 @@ class DndRulesTest {
     }
 
     @Test
+    void theFamousBossesParseAndCoverEveryTierOfBothSides() throws Exception {
+        Path dir = DIR.resolve("famous");
+        java.util.List<DndProfile> all = new java.util.ArrayList<>();
+        Set<String> names = new HashSet<>();
+        try (java.util.stream.Stream<Path> files = Files.list(dir)) {
+            for (Path p : (Iterable<Path>) files.sorted()::iterator) {
+                String id = "famous/" + p.getFileName().toString().replace(".json", "");
+                DndProfile prof = DndProfile.parse(id, JsonParser.parseString(Files.readString(p)).getAsJsonObject());
+                assertTrue(prof.famous(), id);
+                assertTrue(prof.tierMin() <= prof.tierMax());
+                assertFalse(prof.legendary().isEmpty(), id);
+                assertTrue(names.add(prof.name()), "name used twice: " + prof.name());
+                if (prof.legendary().contains("dragon_breath")) assertTrue(DndRules.BREATHS.contains(prof.breath()));
+                all.add(prof);
+            }
+        }
+        assertTrue(all.size() >= 15, "at least fifteen famous bosses, found " + all.size());
+        for (String side : new String[] {"holy", "evil"}) {
+            for (int tier = 2; tier <= 5; tier++) {
+                int t = tier;
+                assertTrue(all.stream().anyMatch(p -> (p.side().equals("any") || p.side().equals(side)) && t >= p.tierMin() && t <= p.tierMax()), "no famous boss for " + side + " tier " + tier);
+            }
+        }
+        assertTrue(all.stream().anyMatch(DndProfile::reflective), "the Tarrasque's carapace");
+        assertTrue(all.stream().anyMatch(p -> p.execution() && p.antiMagicAura()), "a Vecna");
+    }
+
+    @Test
+    void theFamousPickIsFixedByTheFloorAndTheSectorAndFollowsThePercent() {
+        int famous = 0;
+        for (int sector = 0; sector < 1000; sector++) {
+            int a = DndRules.pickFamous(450, sector, 50, 6), b = DndRules.pickFamous(450, sector, 50, 6);
+            assertEquals(a, b, "the same sector and floor must give the same boss");
+            assertTrue(a >= -1 && a < 6);
+            if (a >= 0) famous++;
+        }
+        assertTrue(famous > 400 && famous < 600, "about half should be famous, were " + famous);
+        assertEquals(-1, DndRules.pickFamous(450, 3, 0, 6));
+        assertEquals(-1, DndRules.pickFamous(450, -1, 100, 6), "a Guardian with no sector is always ordinary");
+        assertEquals(-1, DndRules.pickFamous(450, 3, 100, 0));
+        assertTrue(DndRules.pickFamous(450, 3, 100, 6) >= 0);
+        assertEquals(5, DndRules.tierOf(-5000));
+        assertEquals(1, DndRules.tierOf(10));
+        assertEquals(3, DndRules.tierOf(450));
+    }
+
+    @Test
     void aBadProfileSaysWhatIsWrong() {
         JsonObject o = JsonParser.parseString("{\"side\":\"holy\",\"tier\":1,\"variant\":0,\"name\":\"x\",\"forms\":[\"a\",\"b\",\"c\"],\"legendary_actions\":[{\"id\":\"fireball\",\"cost\":1}]}").getAsJsonObject();
         assertTrue(failure("bad", o).contains("fireball"));

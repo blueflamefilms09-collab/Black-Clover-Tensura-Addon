@@ -1,0 +1,56 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 5,
+  "tier_max": 5,
+  "name": "Vecna, the Whispered One",
+  "anime": [
+    "Black Clover: the Anti-Magic Devil"
+  ],
+  "dnd": [
+    "Vecna",
+    "Archlich"
+  ],
+  "forms": [
+    "Whispered One",
+    "Eye and Hand",
+    "Master of the Spider Throne"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "magic_drain",
+      "cost": 2
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "necrotic_mist",
+    "searing_light",
+    "tremor"
+  ],
+  "breath": "poison",
+  "anti_magic_aura": true,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

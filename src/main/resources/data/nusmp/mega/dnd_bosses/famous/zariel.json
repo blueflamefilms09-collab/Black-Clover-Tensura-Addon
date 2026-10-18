@@ -1,0 +1,51 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 3,
+  "tier_max": 4,
+  "name": "Zariel, Archduchess of Avernus",
+  "anime": [
+    "Black Clover: a Supreme Devil"
+  ],
+  "dnd": [
+    "Zariel",
+    "Pit Fiend"
+  ],
+  "forms": [
+    "Fallen Archangel",
+    "Archduchess",
+    "Hellfire Sovereign"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "searing_light",
+    "falling_stars",
+    "tremor"
+  ],
+  "breath": "fire",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

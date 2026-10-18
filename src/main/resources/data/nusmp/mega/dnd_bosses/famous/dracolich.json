@@ -1,0 +1,49 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 3,
+  "tier_max": 4,
+  "name": "The Dracolich of the Frozen Crypt",
+  "anime": [
+    "Fairy Tail: a dead Dragon"
+  ],
+  "dnd": [
+    "Dracolich"
+  ],
+  "forms": [
+    "Dracolich",
+    "Skeletal Wyrm",
+    "Phylactery Dragon"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
+    },
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "tremor"
+  ],
+  "breath": "frost",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}

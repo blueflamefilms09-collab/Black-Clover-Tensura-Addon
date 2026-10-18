@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.67.0] — D&D's famous bosses in the dungeons
+
+The owner asked for famous D&D bosses in the dungeons. **Nothing has been run in a game client.**
+
+### NEW (nothing replaced)
+- **Seventeen famous bosses** as a second pool of Decennial profiles (`data/nusmp/mega/dnd_bosses/famous/`): Beholder, Elder Brain, Strahd, Lolth, Zariel, Kraken, Demogorgon, Asmodeus, Orcus, Acererak, Tiamat, Vecna, the Tarrasque, Bahamut, the Solar, a Dracolich and a Lich King, each with its signature legendary actions, lair actions, breath weapon, anti-magic aura or Word of Ending, and an anime echo.
+- **How they appear:** a sector boss is one of them with the server's chance (`[guard] famousPercent`, default 50; 0 = only the twenty ordinary bosses), chosen from those that fit the floor's tier and road, fixed by the floor and the sector so it never changes after a reload.
+- **Five new legendary actions:** dragon breath (fire, frost, lightning, poison or acid, telegraphed), eye rays, mind blast, death touch (a marked circle to step out of) and vampiric bite; and the Tarrasque's Reflective Carapace.
+- Tests: `DndRulesTest` (the files, tier coverage of both roads, the stable pick) and the in-game `guard.dnd`. A Guardian with `dnd = false` is unchanged.
+
 ## [1.66.0] — More of the D&D boss kit
 
 The owner said "add more" after the D&D Decennial boss system. **Nothing has been run in a game client.**

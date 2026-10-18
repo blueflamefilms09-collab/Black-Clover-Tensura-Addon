@@ -1,0 +1,50 @@
+{
+  "famous": true,
+  "side": "holy",
+  "tier_min": 4,
+  "tier_max": 5,
+  "name": "Bahamut, the Platinum Dragon",
+  "anime": [
+    "The Beginning After the End: the Dragon King"
+  ],
+  "dnd": [
+    "Bahamut"
+  ],
+  "forms": [
+    "Platinum Dragon",
+    "Lord of the Wind",
+    "Dragon God"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "searing_light",
+    "falling_stars",
+    "tremor"
+  ],
+  "breath": "frost",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

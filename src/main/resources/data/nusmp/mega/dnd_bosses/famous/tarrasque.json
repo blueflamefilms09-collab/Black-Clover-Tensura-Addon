@@ -1,0 +1,49 @@
+{
+  "famous": true,
+  "side": "any",
+  "tier_min": 4,
+  "tier_max": 5,
+  "name": "The Tarrasque, the Last Sleeper",
+  "anime": [
+    "Tensura: a Calamity beast"
+  ],
+  "dnd": [
+    "Tarrasque"
+  ],
+  "forms": [
+    "Tarrasque",
+    "Armoured Calamity",
+    "End of Worlds"
+  ],
+  "resistances": 5,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "wing_buffet",
+      "cost": 2
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 2
+    },
+    {
+      "id": "gravity_crush",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "falling_stars"
+  ],
+  "breath": "fire",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": true,
+  "mythic": true,
+  "execution": false
+}

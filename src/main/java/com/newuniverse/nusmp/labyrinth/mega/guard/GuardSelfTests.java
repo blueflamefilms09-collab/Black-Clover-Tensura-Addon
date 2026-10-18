@@ -750,6 +750,17 @@ final class GuardSelfTests {
         for (int floor : new int[] {1, 150, 450, 650, 950, -1, -250, -450, -750, -1000}) {
             expect(DndProfiles.byId(DndProfiles.idForFloor(floor)) != null, "floor " + floor + " has no profile (" + DndProfiles.idForFloor(floor) + ")");
         }
+        expect(DndProfiles.famousCount() >= 15, "only " + DndProfiles.famousCount() + " famous bosses are loaded (data/nusmp/mega/dnd_bosses/famous)");
+        if (GuardConfig.get(GuardConfig.FAMOUS_PERCENT) == 50) {                              // the default chance: a run of sectors on one floor holds both kinds, and the pick is stable
+            int famous = 0;
+            for (int sector = 0; sector < 80; sector++) {
+                DndProfile a = DndProfiles.forBoss(450, sector), b = DndProfiles.forBoss(450, sector);
+                expect(a == b, "the boss of sector " + sector + " changed between two asks");
+                if (a.famous()) famous++;
+            }
+            expect(famous > 10 && famous < 70, "of 80 sectors " + famous + " have a famous boss (about half expected)");
+        }
+        expect(!DndProfiles.forBoss(450, -1).famous(), "a Guardian with no sector must be the ordinary profile");
         List<Room> arenas = roomsOf(w.sector(), RoomKind.ARENA);
         expect(arenas.size() == 1, "no arena to test in");
         Room arena = arenas.get(0);

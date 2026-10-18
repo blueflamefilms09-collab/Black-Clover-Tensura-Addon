@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class GuardConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, THREAT_HEALTH_SCALE, THREAT_DAMAGE_SCALE, GUARDIAN_SCALE;
-    public static final ModConfigSpec.IntValue APPROACH_RADIUS, REFORGE_MINUTES, ABANDON_SECONDS;
+    public static final ModConfigSpec.IntValue APPROACH_RADIUS, REFORGE_MINUTES, ABANDON_SECONDS, FAMOUS_PERCENT;
     public static final ModConfigSpec.BooleanValue TRAITS, LEASH, DND, EXECUTION;
 
     static {
@@ -39,6 +39,8 @@ public final class GuardConfig {
                 .define("dnd", true);
         EXECUTION = b.comment("The Word of Ending (Power Word Kill) of the deepest Decennial bosses: a player already under 35 % health is named, marked for three seconds and killed unless they heal above the threshold, break sight or the boss is hurt hard enough. false = the word never lands (the mark and the message still appear).")
                 .define("execution", true);
+        FAMOUS_PERCENT = b.comment("Share (0 to 100) of the sector bosses that are one of D&D's famous villains (Tarrasque, Tiamat, Vecna, Beholder, Demogorgon, ...) instead of the floor's ordinary Decennial boss. The pick is fixed by the floor and the sector, so a boss never changes after a reload. 0 = only the ordinary bosses.")
+                .defineInRange("famousPercent", 50, 0, 100);
         ABANDON_SECONDS = b.comment("Seconds without a survival player near the altar before an unfinished fight is abandoned (the Guardian is removed and the altar waits again).")
                 .defineInRange("abandonSeconds", 120, 20, 1800);
         b.pop();

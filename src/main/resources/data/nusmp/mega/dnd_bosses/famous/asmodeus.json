@@ -1,0 +1,50 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 4,
+  "tier_max": 5,
+  "name": "Asmodeus, Lord of the Nine Hells",
+  "anime": [
+    "Black Clover: the Supreme Devil"
+  ],
+  "dnd": [
+    "Asmodeus"
+  ],
+  "forms": [
+    "Lord of Nine Hells",
+    "Hellfire Archdevil",
+    "Contract Absolute"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "searing_light",
+    "falling_stars",
+    "anti_magic_field"
+  ],
+  "breath": "fire",
+  "anti_magic_aura": true,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "reflective": false,
+  "mythic": true,
+  "execution": true
+}

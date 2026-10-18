@@ -1,0 +1,49 @@
+{
+  "famous": true,
+  "side": "evil",
+  "tier_min": 3,
+  "tier_max": 4,
+  "name": "The Kraken of the Black Tide",
+  "anime": [
+    "Tensura: a Calamity-class monster"
+  ],
+  "dnd": [
+    "Kraken"
+  ],
+  "forms": [
+    "Kraken",
+    "Storm Kraken",
+    "Tidebreaker Ascendant"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "gravity_crush",
+      "cost": 2
+    },
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "wing_buffet",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "falling_stars"
+  ],
+  "breath": "lightning",
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "reflective": false,
+  "mythic": true,
+  "execution": false
+}
