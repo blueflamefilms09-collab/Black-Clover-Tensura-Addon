@@ -182,7 +182,4 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
     int nextExpand() { return nextExpand; }
 
     void nextExpand(int at) { nextExpand = at; }
-
-    @Override
-    public AABB getRenderBoundingBox() { return new AABB(worldPosition).inflate(2.5, 0.0, 2.5).expandTowards(0, 3.2, 0); }
 }
