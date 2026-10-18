@@ -54,6 +54,7 @@ public final class ItemsClient {
     private static boolean broken;
 
     public static void init(IEventBus modBus) {
+        BookClient.init(modBus);                                                  // 1.82.0: the 3D book's table, franchise property and cover colour
         modBus.addListener(ItemsClient::registerColors);
         modBus.addListener(ItemsClient::registerLayers);
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ItemsClient::registerProperties));
@@ -68,8 +69,7 @@ public final class ItemsClient {
     }
 
     private static int coverColor(ItemStack stack) {
-        SkillRoute route = RouteRegistry.byBook(SkillItems.bookIdOf(stack));
-        return route == null ? UNKNOWN_COVER : route.color() & 0xFFFFFF;
+        return BookClient.coverColor(stack);                                       // 1.82.0: route colour, else the shipped table's, else grey
     }
 
     /** The property the SP Book's model overrides read: the kind's model value (0.1 to 0.5), 0 for a stack of no known kind. */

@@ -1,0 +1,15 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/skill_book_3d/base"
+  },
+  "base": {
+    "parent": "nusmp:item/skill_book_3d_exiled_heavy_knight"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "nusmp:item/skill_book_2d"
+    }
+  }
+}

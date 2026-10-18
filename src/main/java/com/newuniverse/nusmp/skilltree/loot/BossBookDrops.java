@@ -65,7 +65,7 @@ public final class BossBookDrops {
         if (where == null) return 0;
         Dice d = dice != null ? dice : level.getRandom()::nextDouble;
         LootRules.Victim victim = new LootRules.Victim(true, true, LootRules.Kind.GUARDIAN, where.polarity(), where.floor());
-        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d);
+        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d, killer);
         ItemStack routeBook = ItemStack.EMPTY;
         for (ItemStack stack : stacks) {
             ItemEntity drop = new ItemEntity(level, dead.getX(), dead.getY() + 0.3, dead.getZ(), stack);

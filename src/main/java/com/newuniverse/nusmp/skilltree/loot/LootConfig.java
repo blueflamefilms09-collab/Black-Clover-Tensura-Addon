@@ -15,6 +15,10 @@ public final class LootConfig {
     public static final ModConfigSpec.BooleanValue ENABLED, HOLY_BOSS_DROPS;
     public static final ModConfigSpec.DoubleValue ABYSSAL_BOOK_CHANCE, ABYSSAL_SP_CHANCE, BOSS_BOOK_CHANCE;
     public static final ModConfigSpec.IntValue BOSS_SP_MIN, BOSS_SP_MAX;
+    /** 1.82.0 (unique skill lines): the rift chests' books, the pity rule, and how many redraws the pity rule makes before it scans. */
+    public static final ModConfigSpec.BooleanValue RIFT_BOOKS, PITY;
+    public static final ModConfigSpec.DoubleValue RIFT_BOOK_SCALE;
+    public static final ModConfigSpec.IntValue PITY_REROLLS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -33,6 +37,16 @@ public final class LootConfig {
                 .defineInRange("bossSpMax", 3, 0, LootRules.MAX_BOSS_SP);
         HOLY_BOSS_DROPS = b.comment("Also let the Guardians of the HOLY road's decennial floors drop books. The design says no: Holy floors have their own loot.")
                 .define("holyBossDrops", false);
+        b.pop();
+        b.push("lines");
+        RIFT_BOOKS = b.comment("Skill Books of any line may also appear in the chests of the dimensional rifts' pocket realms (data/nusmp/loot_modifiers/rift_books.json lists the tables and their chances).")
+                .define("riftBooks", true);
+        RIFT_BOOK_SCALE = b.comment("Multiplies every chance of rift_books.json (1.0 = as shipped, 0 = no rift books, 2.0 = twice as likely; a chance never goes above 1).")
+                .defineInRange("riftBookScale", 1.0, 0.0, 10.0);
+        PITY = b.comment("After a route book of a line the player already owns, the player's NEXT route book is always of a line they do not own (unless they own every line).")
+                .define("pity", true);
+        PITY_REROLLS = b.comment("How many times the pity rule redraws by weight before it scans the lines for one the player does not own.")
+                .defineInRange("pityRerolls", 12, 1, 200);
         b.pop();
         SPEC = b.build();
     }
