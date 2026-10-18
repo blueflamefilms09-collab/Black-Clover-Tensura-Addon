@@ -1,0 +1,1107 @@
+{
+  "magic": "tbate",
+  "franchise": "tbate",
+  "name": "Dwarven Forge-Art",
+  "desc": "The stonework and steel of the dwarves. Tempering your body, hurling rivets and forging plates in mid-fight: a heavy, grounded line that rewards digging in.",
+  "book": "nusmp:dwarven_forge_book",
+  "book_name": "Darv Smith's Pocket Anvil",
+  "book_lore": "Tap it twice. If it rings, it holds.",
+  "color": "#A1887F",
+  "icon": "minecraft:smithing_table",
+  "class_id": "dwarven_forge",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/dwarven_forge.png",
+  "book_texture": "nusmp:item/skill_book_3d/tbate",
+  "background_theme": "ruin",
+  "nodes": [
+    {
+      "id": "forgeborn",
+      "name": "Forgeborn",
+      "desc": "Warm from the forge: thick armor and a hard footing, but slow.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:blast_furnace"
+    },
+    {
+      "id": "hammer_fury",
+      "name": "Hammer Fury",
+      "desc": "Swing as if the anvil owed you money: heavier blows, thinner guard.",
+      "parents": [
+        {
+          "node": "forgeborn",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "dwarf_s_constitution",
+      "name": "Dwarf's Constitution",
+      "desc": "Raises your maximum health.",
+      "parents": [
+        {
+          "node": "forgeborn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "anvil_arm",
+      "name": "Anvil Arm",
+      "desc": "Raises your attack damage.",
+      "parents": [
+        {
+          "node": "hammer_fury",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.2,
+          1.5,
+          1.8,
+          2.1,
+          2.4
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "hammered_plate",
+      "name": "Hammered Plate",
+      "desc": "Raises your armor.",
+      "parents": [
+        {
+          "node": "forgeborn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "deep_reach",
+      "name": "Deep Reach",
+      "desc": "Lets you break and place blocks from farther away.",
+      "parents": [
+        {
+          "node": "hammer_fury",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "block_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.6,
+          0.75,
+          0.9,
+          1.05,
+          1.2
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "tempering",
+      "name": "Tempering",
+      "desc": "Harden your body in an instant: strength and resistance for a while.",
+      "parents": [
+        {
+          "node": "forgeborn",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "resistance",
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "hammer_uppercut",
+      "name": "Hammer Uppercut",
+      "desc": "Swing a forged hammer up and launch the foe in front of you.",
+      "parents": [
+        {
+          "node": "hammer_fury",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.4,
+          3.604,
+          3.808,
+          4.012
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "forged_plate",
+      "name": "Forged Plate",
+      "desc": "Beat out a plate in mid-fight: a thick absorption shield.",
+      "parents": [
+        {
+          "node": "tempering",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "seconds": [
+          9.0,
+          10.0,
+          11.0,
+          12.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "hurled_rivets",
+      "name": "Hurled Rivets",
+      "desc": "Fire a handful of heated rivets at the foe you look at.",
+      "parents": [
+        {
+          "node": "hammer_uppercut",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          3.3,
+          4.125,
+          4.95,
+          5.775
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "anvil_line",
+      "name": "Anvil Line",
+      "desc": "Drive a line of stone along the ground in front of you.",
+      "parents": [
+        {
+          "node": "forged_plate",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.5,
+          2.75,
+          3.0,
+          3.25
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "chain_hook",
+      "name": "Chain Hook",
+      "desc": "Fling a forged chain and drag the creatures around you in.",
+      "parents": [
+        {
+          "node": "hurled_rivets",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.1,
+          1.21,
+          1.32,
+          1.43
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "slag_burst",
+      "name": "Slag Burst",
+      "desc": "Molten slag erupts around you.",
+      "parents": [
+        {
+          "node": "anvil_line",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          7.5,
+          9.375,
+          11.25,
+          13.125
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "knockback": [
+          1.5,
+          1.65,
+          1.8,
+          1.95
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "forge_skin",
+      "name": "Forge Skin",
+      "desc": "Take far less fire damage.",
+      "parents": [
+        {
+          "node": "tempering",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "deep_delver",
+      "name": "Deep Delver",
+      "desc": "Take less damage while underground.",
+      "parents": [
+        {
+          "node": "hammer_uppercut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:deepslate_bricks"
+    },
+    {
+      "id": "ore_sense",
+      "name": "Ore Sense",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "forged_plate",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:raw_gold"
+    },
+    {
+      "id": "hearth_mending",
+      "name": "Hearth Mending",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "hurled_rivets",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          14.0,
+          13.0,
+          11.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "hearty_dwarf",
+      "name": "Hearty Dwarf",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "anvil_line",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:cooked_porkchop"
+    },
+    {
+      "id": "hammer_thump",
+      "name": "Hammer Thump",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "chain_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.35,
+          0.4025,
+          0.455,
+          0.5075
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "master_smith",
+      "name": "Master Smith",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "slag_burst",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "mountain_maker",
+      "name": "Mountain Maker",
+      "desc": "Leap high, hammer down: the whole ground flinches.",
+      "parents": [
+        {
+          "node": "slag_burst",
+          "level": 3
+        },
+        {
+          "node": "master_smith",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392
+        ],
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "radius": [
+          8.0,
+          8.8,
+          9
+        ],
+        "knockback": [
+          2.4,
+          2.5,
+          2.5
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.08
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_block"
+    },
+    {
+      "id": "meteoric_anvil",
+      "name": "Meteoric Anvil",
+      "desc": "An anvil the size of a house falls where you look.",
+      "parents": [
+        {
+          "node": "chain_hook",
+          "level": 3
+        },
+        {
+          "node": "hammer_thump",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          34.0,
+          32.0,
+          31.0
+        ],
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    }
+  ]
+}
