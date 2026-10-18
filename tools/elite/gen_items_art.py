@@ -131,7 +131,7 @@ def weapons():
 
 
 # ================================================================ Nightingale armour (midnight blue, moon silver, russet)
-NP = {"D": (14, 16, 42), "n": (36, 46, 104), "N": (24, 30, 74), "L": (78, 100, 170), "s": (216, 224, 242), "S": (150, 162, 196), "r": (172, 112, 70), "R": (216, 162, 110),
+NP = {"D": (14, 16, 42), "n": (46, 60, 130), "N": (30, 38, 92), "L": (96, 120, 200), "s": (216, 224, 242), "S": (150, 162, 196), "r": (172, 112, 70), "R": (216, 162, 110),
       "k": (10, 10, 26), "g": (190, 226, 255), "G": (120, 170, 240)}
 
 HOOD = [
@@ -412,6 +412,179 @@ def keys():
     return out
 
 
+# ================================================================ armour layers (the painted vanilla layers: mobs, armour stands, relicfx.models off) and the model jsons
+def _noise(x, y, salt):
+    from plush_lib import hash2
+    return (hash2(x, y, salt) - 0.5) * 12
+
+
+def _fill(cv, x0, y0, w, h, base, salt=1, k=1.0):
+    for j in range(h):
+        for i in range(w):
+            n = _noise(x0 + i, y0 + j, salt)
+            c = tuple(max(0, min(255, int(base[t] * k + n))) for t in range(3))
+            cv.put(x0 + i, y0 + j, c)
+
+
+def armor_layers():
+    """textures/models/armor/nightingale_layer_1.png (hood, cloak with sleeves, boots), _layer_2.png (leggings and the belt), blank_layer.png (fully transparent, 64x32)."""
+    out = os.path.join(ITEM_TEX, "..", "models", "armor")
+    ensure(out)
+    navy, dark, light, silver, russet = NP["n"], NP["N"], NP["L"], NP["s"], NP["r"]
+    cv = Canvas(64, 32)
+    # head: top (8,0), bottom (16,0), right (0,8), front (8,8), left (16,8), back (24,8); every face 8x8
+    for (x, y) in ((8, 0), (16, 0), (0, 8), (8, 8), (16, 8), (24, 8)):
+        _fill(cv, x, y, 8, 8, navy, 2, 1.1 if (y == 0 and x == 8) else 1.0)
+    for i in range(8):                                                  # a silver hem along the front of the hood and a face opening
+        cv.put(8 + i, 8, silver)
+    for j in range(2, 7):
+        for i in range(1, 7):
+            cv.px[8 + i, 8 + j] = (0, 0, 0, 0)
+    for j in range(3):                                                  # a russet feather on the right side of the hood
+        cv.put(2 + j, 10 + j, NP["R"])
+        cv.put(3 + j, 10 + j, russet)
+    # body: top (20,16,8,4) bottom (28,16,8,4) right (16,20,4,12) front (20,20,8,12) left (28,20,4,12) back (32,20,8,12)
+    _fill(cv, 20, 16, 8, 4, navy, 3, 1.1)
+    _fill(cv, 28, 16, 8, 4, navy, 4, 0.7)
+    _fill(cv, 16, 20, 4, 12, navy, 5)
+    _fill(cv, 20, 20, 8, 12, navy, 6)
+    _fill(cv, 28, 20, 4, 12, navy, 7)
+    _fill(cv, 32, 20, 8, 12, navy, 8)
+    for i in range(8):
+        cv.put(20 + i, 20, silver)
+        cv.put(20 + i, 31, dark)
+    for j in range(4):
+        cv.put(23, 20 + j, silver)
+        cv.put(24, 20 + j, silver)
+    cv.put(23, 23, NP["g"])
+    cv.put(24, 23, NP["g"])
+    for j in range(2, 12):                                              # the cloak's folds
+        for x in (21, 26, 34, 37):
+            cv.put(x, 20 + j, dark)
+    # arms: right arm (40,16): top (44,16,4,4) bottom (48,16,4,4) right (40,20,4,12) front (44,20,4,12) left (48,20,4,12) back (52,20,4,12)
+    _fill(cv, 44, 16, 4, 4, navy, 9, 1.1)
+    _fill(cv, 48, 16, 4, 4, navy, 10, 0.7)
+    for x in (40, 44, 48, 52):
+        _fill(cv, x, 20, 4, 12, navy, 11 + x)
+        for i in range(4):
+            cv.put(x + i, 29, silver)
+            cv.put(x + i, 30, light)
+    # boots: the bottom of each leg (right leg at (0,16): right (0,20) front (4,20) left (8,20) back (12,20), each 4x12): rows 8..11 are the boot
+    for x in (0, 4, 8, 12):
+        _fill(cv, x, 28, 4, 4, navy, 21 + x, 0.9)
+        for i in range(4):
+            cv.put(x + i, 28, silver)
+    _fill(cv, 4, 16, 4, 4, dark, 30)
+    _fill(cv, 8, 16, 4, 4, dark, 31)
+    cv.save(os.path.join(out, "nightingale_layer_1.png"))
+    cv = Canvas(64, 32)                                                 # layer 2: the leggings (legs rows 0..8) and the waist
+    for x in (0, 4, 8, 12):
+        _fill(cv, x, 20, 4, 8, navy, 40 + x)
+        for i in range(4):
+            cv.put(x + i, 20, silver)
+            cv.put(x + i, 27, light)
+    _fill(cv, 4, 16, 4, 4, navy, 50, 1.1)
+    _fill(cv, 8, 16, 4, 4, navy, 51, 0.7)
+    for x, w in ((16, 4), (20, 8), (28, 4), (32, 8)):                 # the belt: the lowest three rows of the body
+        _fill(cv, x, 29, w, 3, navy, 60 + x)
+        for i in range(w):
+            cv.put(x + i, 29, silver)
+    cv.put(23, 30, NP["g"])
+    cv.put(24, 30, NP["g"])
+    cv.save(os.path.join(out, "nightingale_layer_2.png"))
+    Canvas(64, 32).save(os.path.join(out, "blank_layer.png"))
+
+
+DISPLAY_ARMOR = {
+    "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
+    "head": {"rotation": [0, 180, 0], "translation": [0, 13, 7], "scale": [1, 1, 1]},
+    "thirdperson_righthand": {"rotation": [0, 0, 0], "translation": [0, 3, 1], "scale": [0.55, 0.55, 0.55]},
+    "thirdperson_lefthand": {"rotation": [0, 0, 0], "translation": [0, 3, 1], "scale": [0.55, 0.55, 0.55]},
+    "firstperson_righthand": {"rotation": [0, -90, 25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
+    "firstperson_lefthand": {"rotation": [0, 90, -25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
+    "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
+}
+
+
+def jdump(o):
+    import json
+    return json.dumps(o, indent=2) + "\n"
+
+
+def models():
+    """The item model jsons of everything that is not a weapon or a block: armour (builtin/entity + the _icon sprite model, the way the worn-model library wants it), flat items
+    (item/generated), the Chronicle Book (a separate-transforms model: the 3D book in the hand, the flat icon in the inventory)."""
+    from art_lib import ASSETS, write_text
+    m = os.path.join(ASSETS, "models", "item")
+    for i in ("nightingale_hood", "nightingale_cloak", "nightingale_leggings", "nightingale_boots"):
+        write_text(os.path.join(m, i + ".json"), jdump({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + i}, "display": DISPLAY_ARMOR}))
+        write_text(os.path.join(m, i + "_icon.json"), jdump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + i}}))
+    for i in ("potential_catalyst", "health_potion_small", "health_potion_medium", "health_potion_large", "walpurgis_orb", "walpurgis_seal", "common_crate_key", "rare_crate_key", "elite_crate_key"):
+        write_text(os.path.join(m, i + ".json"), jdump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + i}}))
+    write_text(os.path.join(m, "chronicle_book_2d.json"), jdump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/chronicle_book"}}))
+    write_text(os.path.join(m, "chronicle_book.json"), jdump({"loader": "neoforge:separate_transforms", "gui_light": "front", "textures": {"particle": "nusmp:item/chronicle_book_3d"},
+                                                              "base": {"parent": "nusmp:item/chronicle_book_3d"}, "perspectives": {"gui": {"parent": "nusmp:item/chronicle_book_2d"}}}))
+
+
+def chronicle_book():
+    """The 3D Chronicle Book (models/item/chronicle_book_3d.json + textures/item/chronicle_book_3d.png): a teal cover with a gold frame and an hourglass of light, a gold clasp and
+    corners, cream pages, a ribbon. 9 wide, 13 high, 4 thick; the front cover looks south (+z), the spine is on the west (-x), like the Skill Book's model."""
+    import plush_lib
+    from plush_lib import Plush, hexc
+    from art_lib import ASSETS, ensure, write_text
+    teal, tealdark, gold, golddark, page = hexc("1E5470"), hexc("143A4E"), hexc("E2B23E"), hexc("96691C"), hexc("EFE4C4")
+    P = Plush("chronicle_book_3d", teal)
+    back = P.cube("back_board", (9, 13, 1), (3.5, 1.5, 6.0), tealdark, noise=5)
+    front = P.cube("front_board", (9, 13, 1), (3.5, 1.5, 9.0), teal, noise=5)
+    P.cube("spine", (1, 13, 4), (2.5, 1.5, 6.0), tealdark, noise=5)
+    pages = P.cube("pages", (8, 12, 2), (4.0, 2.0, 7.0), page, noise=4)
+    for f in ("east", "north", "south", "up", "down"):
+        rx, ry, rw, rh = pages.rects[f]
+        for j in range(rh):
+            for i in range(rw):
+                if (j if f in ("up", "down") else i) % 2 == 0:
+                    P.put(pages, f, i, j, plush_lib.shade(page, 0.86))
+    P.cube("ribbon", (1, 2, 1), (8.5, -0.5, 7.5), hexc("B02A3A"), noise=2)
+    P.cube("clasp", (2, 3, 1), (11.5, 6.0, 10.0), gold, noise=4)
+    P.cube("gem", (1, 1, 1), (12.0, 7.0, 11.0), hexc("8AD8FF"), noise=0)
+    for k, (x, y) in enumerate(((3.5, 1.5), (11.5, 1.5), (3.5, 12.5), (11.5, 12.5))):
+        P.cube("cap%d" % k, (1, 1, 2), (x, y, 9.0), gold, noise=3)
+    w, h = 9, 13                                                        # the front cover (south face): a gold frame and an hourglass of pale light
+    for i in range(w):
+        P.put(front, "south", i, 0, gold)
+        P.put(front, "south", i, h - 1, gold)
+    for j in range(h):
+        P.put(front, "south", 0, j, gold)
+        P.put(front, "south", w - 1, j, gold)
+    for i in range(2, 7):
+        P.put(front, "south", i, 3, gold)
+        P.put(front, "south", i, 9, gold)
+    glass = hexc("BEEBFF")
+    for y, (x0, x1) in {4: (3, 5), 5: (4, 4), 6: (4, 4), 7: (4, 4), 8: (3, 5)}.items():
+        for x in range(x0, x1 + 1):
+            P.put(front, "south", x, y, glass)
+    P.put(front, "south", 4, 6, hexc("FFF4B0"))
+    for i in range(9):
+        P.put(back, "north", i, 0, golddark)
+        P.put(back, "north", i, 12, golddark)
+    m = P.model_json(display=False)
+    m["textures"] = {"0": "nusmp:item/chronicle_book_3d", "particle": "nusmp:item/chronicle_book_3d"}
+    m.pop("render_type", None)
+    m["display"] = {"thirdperson_righthand": {"rotation": [60, 150, 0], "translation": [0.0, 1.0, 3.0], "scale": [0.5, 0.5, 0.5]},
+                    "thirdperson_lefthand": {"rotation": [60, 150, 0], "translation": [0.0, 1.0, 3.0], "scale": [0.5, 0.5, 0.5]},
+                    "firstperson_righthand": {"rotation": [-15, -15, 15], "translation": [-2.9, 4.3, -1.3], "scale": [0.42, 0.42, 0.42]},
+                    "firstperson_lefthand": {"rotation": [-15, -15, 15], "translation": [-2.9, 4.3, -1.3], "scale": [0.42, 0.42, 0.42]},
+                    "ground": {"rotation": [-90, 0, 0], "translation": [0, 0, 0], "scale": [0.55, 0.55, 0.55]},
+                    "gui": {"rotation": [20, -155, 0], "translation": [0, 0, 0], "scale": [0.62, 0.62, 0.62]},
+                    "head": {"rotation": [0, 180, 0], "translation": [0, 13, 0], "scale": [1, 1, 1]},
+                    "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1.2, 1.2, 1.2]}}
+    write_text(os.path.join(ASSETS, "models", "item", "chronicle_book_3d.json"), jdump(m))
+    tp = os.path.join(ITEM_TEX, "chronicle_book_3d.png")
+    ensure(os.path.dirname(tp))
+    P.tex.im.save(tp, optimize=True)
+    return P
+
+
 def main(argv):
     what = [a for a in argv if not a.startswith("--")] or ["all"]
     made = []
@@ -423,6 +596,10 @@ def main(argv):
         made += consumables()
     if "keys" in what or "all" in what:
         made += keys()
+    if "models" in what or "all" in what:
+        armor_layers()
+        models()
+        chronicle_book()
     if "--sheet" in argv and made:
         ensure(BUILD)
         sheet([im for _, im in made], scale=10, cols=8).save(os.path.join(BUILD, "icons.png"))
