@@ -1,0 +1,1126 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Ranker's Authority",
+  "desc": "You have climbed beyond the floors where ordinary people stop. A Ranker's presence presses on the weak, and a single command can bring a hall to its knees.",
+  "book": "nusmp:tog_ranker_authority_book",
+  "book_name": "Ledger of the Ranker",
+  "book_lore": "The first page lists the floors cleared; the last page lists the debts.",
+  "color": "#FDD835",
+  "icon": "minecraft:golden_helmet",
+  "class_id": "tog_ranker_authority",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tog_ranker_authority.png",
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "background_theme": "tower",
+  "nodes": [
+    {
+      "id": "ranker_s_bearing",
+      "name": "Ranker's Bearing",
+      "desc": "Stand in your full authority: tougher and slightly stronger, but never quick.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:golden_helmet"
+    },
+    {
+      "id": "unleashed_ranker",
+      "name": "Unleashed Ranker",
+      "desc": "Drop the restraint: devastating strikes and crits, but the bearing falls away.",
+      "parents": [
+        {
+          "node": "ranker_s_bearing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "ranker_s_pressure",
+      "name": "Ranker's Pressure",
+      "desc": "Your power is felt in every strike.",
+      "parents": [
+        {
+          "node": "ranker_s_bearing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "veteran_frame",
+      "name": "Veteran Frame",
+      "desc": "Hundreds of floors have hardened your body.",
+      "parents": [
+        {
+          "node": "unleashed_ranker",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "weight_of_titles",
+      "name": "Weight of Titles",
+      "desc": "Your name alone stops blows short.",
+      "parents": [
+        {
+          "node": "ranker_s_bearing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "reach_of_authority",
+      "name": "Reach of Authority",
+      "desc": "Your command carries further than it should.",
+      "parents": [
+        {
+          "node": "unleashed_ranker",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "command_kneel",
+      "name": "Command: Kneel",
+      "desc": "Speak an order of authority and the creatures near you are frozen in place.",
+      "parents": [
+        {
+          "node": "ranker_s_bearing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "judgment_strike",
+      "name": "Judgment Strike",
+      "desc": "Call down a weighted strike on the place you look at.",
+      "parents": [
+        {
+          "node": "unleashed_ranker",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          11.0,
+          13.75,
+          16.5,
+          19.25
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:gold_block"
+    },
+    {
+      "id": "authority_cleave",
+      "name": "Authority Cleave",
+      "desc": "A wide cleave that cuts the cone in front of you in two.",
+      "parents": [
+        {
+          "node": "command_kneel",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          60.0,
+          66.0,
+          72.0,
+          78.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "banner_of_rank",
+      "name": "Banner of Rank",
+      "desc": "Raise your banner: you and the allies near you grow stronger for a while.",
+      "parents": [
+        {
+          "node": "judgment_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "sentence",
+      "name": "Sentence",
+      "desc": "A cold, exact blow aimed at a weakened foe: it hits much harder at low health.",
+      "parents": [
+        {
+          "node": "authority_cleave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.8,
+          0.92,
+          1.04,
+          1.16
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "floor_stride",
+      "name": "Floor Stride",
+      "desc": "Cross the floor in a heartbeat, cutting down everything between you and your destination.",
+      "parents": [
+        {
+          "node": "banner_of_rank",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "rank_plate",
+      "name": "Rank Plate",
+      "desc": "Spread your presence over your body as a thick, golden plate of absorption.",
+      "parents": [
+        {
+          "node": "sentence",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:golden_chestplate"
+    },
+    {
+      "id": "giant_killer",
+      "name": "Giant Killer",
+      "desc": "Rankers fight the Tower's greatest beasts: bonus damage to bosses.",
+      "parents": [
+        {
+          "node": "command_kneel",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "composed_under_fire",
+      "name": "Composed Under Fire",
+      "desc": "While fighting you shrug off part of every blow.",
+      "parents": [
+        {
+          "node": "judgment_strike",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:golden_chestplate"
+    },
+    {
+      "id": "name_carries_weight",
+      "name": "Name Carries Weight",
+      "desc": "Your authority repels others: enemies near you are weakened.",
+      "parents": [
+        {
+          "node": "authority_cleave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "weakness",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "practiced_strike",
+      "name": "Practiced Strike",
+      "desc": "A Ranker's blows are precise: more critical hits.",
+      "parents": [
+        {
+          "node": "banner_of_rank",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:spectral_arrow"
+    },
+    {
+      "id": "climber_s_wisdom",
+      "name": "Climber's Wisdom",
+      "desc": "Floors cleared make you wiser: kills give more experience.",
+      "parents": [
+        {
+          "node": "sentence",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "last_floor_standing",
+      "name": "Last Floor Standing",
+      "desc": "When nearly dead, you stand firm behind a brief shield.",
+      "parents": [
+        {
+          "node": "floor_stride",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "taking_the_spoils",
+      "name": "Taking the Spoils",
+      "desc": "Kills reward you with health and a short surge of strength.",
+      "parents": [
+        {
+          "node": "rank_plate",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "ranker_s_authority",
+      "name": "Ranker's Authority",
+      "desc": "Let the full weight of your rank fall on the room: every foe around you is held for a long moment.",
+      "parents": [
+        {
+          "node": "rank_plate",
+          "level": 3
+        },
+        {
+          "node": "taking_the_spoils",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          10,
+          10,
+          10
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          7.0
+        ],
+        "targets": [
+          12.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.09,
+          0.0972,
+          0.1
+        ],
+        "cooldown": [
+          1900.0,
+          1748.0,
+          1596.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "floor_splitting_blow",
+      "name": "Floor-Splitting Blow",
+      "desc": "Bring your weapon down and split the floor ahead of you in a long, deep crack.",
+      "parents": [
+        {
+          "node": "floor_stride",
+          "level": 3
+        },
+        {
+          "node": "last_floor_standing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "length": [
+          20.0,
+          22.0,
+          24
+        ],
+        "width": [
+          4.0,
+          4.4,
+          4.8
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_axe"
+    }
+  ]
+}

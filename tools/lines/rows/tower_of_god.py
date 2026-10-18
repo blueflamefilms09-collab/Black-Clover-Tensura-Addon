@@ -425,3 +425,325 @@ LINES.append(Line(
         A("Pocket Dimension Fold", "Fold the space around you into your pocket for a moment: everything near you is held in stasis.", "stun_ring", "minecraft:ender_chest", vfx="SPATIAL_RIFT", radius=8, seconds=4, targets=10, cost=0.08, cooldown=1900),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------- 11
+LINES.append(Line(
+    id="tog_guide", name="Guide", franchise=F,
+    desc="A Guide leads a team of climbers up the Tower: finds the route, keeps everyone fast and fed, and knows exactly where the beast is weak.",
+    color="#FFB74D", background="dream", icon="minecraft:compass",
+    book_name="The Guide's Pocket Map", book_lore="Half of it is a map of the Tower, the other half is who was supposed to be on it.",
+    stances=[
+        S("Lead the Way Stance", "Walk at the front and set the pace: quicker and steadier, a little less dangerous.", "minecraft:compass", speed_pct=0.06, regen=0.3, damage_pct=-0.05, vfx="SPIRIT_AURA"),
+        S("Shepherd's Vigil Stance", "Fall back to the rear and watch the group: tougher and regenerating, but slower.", "minecraft:shield", armor=2, regen=0.5, speed_pct=-0.05, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Navigator's Stride", "A Guide never hurries and is never late.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Cool Head", "Nerves of a person who has done this a hundred times.", "max_health", 2, "minecraft:golden_carrot"),
+        T("Knowing Eye", "You see the target a little farther out.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+        T("Lucky Route", "The path you pick tends to be the good one.", "luck", 1, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Chart the Route", "Show your group the way: you and the allies near you gain swiftness.", "buff_aura", "minecraft:map", vfx="SPIRIT_AURA", effect="speed", radius=9, seconds=12),
+        A("Rest Stop", "Call a short halt: you and the allies around you are healed.", "heal_pulse", "minecraft:bread", vfx="SPIRIT_AURA", radius=7, amount=6),
+        A("Point Out the Weakness", "Call out a foe's weak spot: it takes extra damage from everyone while marked.", "mark", "minecraft:spyglass", vfx="MAGIC_CIRCLE", bonus=0.3, range=28),
+        A("Rally Cry", "A short shout that makes you and your allies around you hit harder.", "buff_aura", "minecraft:goat_horn", vfx="SPIRIT_AURA", effect="strength", radius=8, seconds=10),
+        A("Shortcut", "You know a shortcut: step forward a good distance in an instant.", "blink", "minecraft:chorus_fruit", vfx="SPATIAL_RIFT", distance=10),
+        A("Lose the Hunters", "Throw a smoke pot and the creatures near you lose track of you.", "smoke", "minecraft:gunpowder", vfx="ASH_FORMATION", radius=5, seconds=6),
+        A("Draw the Beast Off", "Make yourself the target so the rest of the team can walk away.", "taunt", "minecraft:lead", vfx="DEVIL_CIRCLE", radius=9, targets=5),
+    ],
+    passives=[
+        P("Pathfinder's Aura", "Allies close to you walk a little faster.", "aura", "minecraft:sugar", effect="speed", target="allies", radius=7),
+        P("Lessons of Many Floors", "You gain more experience from each kill.", "xp_bonus", "minecraft:experience_bottle", pct=0.12),
+        P("Easy Pace", "While you crouch and take a breather you slowly heal.", "regen_when", "minecraft:glow_berries", condition="sneaking", per_second=0.5),
+        P("Packed Rations", "You tire slowly on long ascents.", "hunger_saver", "minecraft:cooked_beef", pct=0.2),
+        P("Read the Strike", "You may step out of the way of a blow.", "dodge", "minecraft:feather", chance=0.1),
+        P("First Aid", "Your wounds mend slowly over time.", "mending", "minecraft:honey_bottle", seconds=18, amount=1),
+        P("Sure Footing", "Falling a few floors is routine; less fall damage.", "fall_guard", "minecraft:slime_ball", pct=0.4),
+    ],
+    finishers=[
+        A("Hold the Stairs Together", "Call the whole team around you: you and your allies gain a wall of resistance for a long while.", "buff_aura", "minecraft:beacon", vfx="SPIRIT_AURA", effect="resistance", amp=1, radius=12, seconds=22, cost=0.08, cooldown=1900),
+        A("Exit Route", "The Guide's final trick: step through a hidden door and appear far away.", "blink", "minecraft:ender_eye", vfx="SPATIAL_RIFT", distance=22, cost=0.05, cooldown=1500),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 12
+LINES.append(Line(
+    id="tog_regular_climber", name="Regular", franchise=F,
+    desc="A plain Regular, with no special blood and no special weapon, climbing on stubbornness. You survive what should have killed you and strike when it counts.",
+    color="#A1887F", background="sand", icon="minecraft:leather_boots",
+    book_name="Regular's Survival Notes", book_lore="Scribbled in the margins: it is not about winning, it is about being still standing at the end.",
+    stances=[
+        S("Survivor Stance", "Keep your head down and live: regeneration and some armor, less damage dealt.", "minecraft:leather_chestplate", armor=2, regen=0.6, damage_pct=-0.05, vfx="SPIRIT_AURA"),
+        S("All-In Stance", "Throw everything at it: very strong and a little fast, but you expose yourself completely.", "minecraft:iron_sword", damage_pct=0.2, armor=-3, speed_pct=0.05, vfx="FIRE_BURST"),
+    ],
+    stats=[
+        T("Stubborn Body", "Some people just refuse to fall.", "max_health", 2, "minecraft:bread"),
+        T("Climber's Calves", "Years of stairs make for a good jump.", "jump_strength", 0.06, "minecraft:rabbit_foot", op="mult"),
+        T("Cold Nerves", "You keep a clear head while being hit.", "armor_toughness", 1, "minecraft:iron_ingot"),
+        T("Test Hands", "Quick fingers for every test the Tower throws.", "attack_speed", 0.2, "minecraft:iron_nugget"),
+    ],
+    arts=[
+        A("Desperate Strike", "Hit with everything you have: much stronger the weaker your opponent is.", "execute", "minecraft:iron_sword", vfx="WIND_SLASH", damage=8, bonus=0.8),
+        A("Bandage and Breathe", "Take a moment in the middle of a fight: heal and regenerate.", "heal_self", "minecraft:honeycomb", vfx="SPIRIT_AURA", amount=7),
+        A("Scramble", "Run for it: you gain a burst of speed and a burst of jump height.", "buff_self", "minecraft:rabbit_foot", vfx="WIND_RING", effect="speed", effect2="jump_boost", seconds=12),
+        A("Dirty Uppercut", "Throw a fist at the foe in front of you and launch it into the air.", "uppercut", "minecraft:iron_axe", vfx="WIND_SLASH", damage=7),
+        A("Lucky Bounce", "Throw something at a foe and have it bounce off to the next one.", "chain_hit", "minecraft:snowball", vfx="WIND_SLASH", damage=5, jumps=3),
+        A("Stair Jump", "Spring up and land on the foes below with everything you have.", "leap_slam", "minecraft:leather_boots", vfx="WIND_RING", damage=7, height=0.9),
+        A("Stir Up the Dust", "Kick up a cloud of dust: foes close to you cannot see where you went.", "smoke", "minecraft:sand", vfx="ASH_FORMATION", radius=5, seconds=5),
+    ],
+    passives=[
+        P("Not Dead Yet", "When you are nearly dead, you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("Second Wind", "When wounded you recover health continuously.", "regen_when", "minecraft:golden_apple", condition="low_health", per_second=1.0),
+        P("Scab Over", "Your wounds close slowly all the time.", "mending", "minecraft:honey_bottle", seconds=16, amount=1),
+        P("Back to the Wall", "The closer to death you are, the less you take.", "reduce_when", "minecraft:chainmail_chestplate", condition="low_health", pct=0.15),
+        P("Cornered Rat", "A cornered Regular bites hard: more damage when wounded.", "dmg_when", "minecraft:iron_sword", condition="low_health", bonus=0.25),
+        P("Eat Anything", "You can go a long time between meals.", "hunger_saver", "minecraft:rotten_flesh", pct=0.25),
+        P("Survivor's Spoils", "Every kill restores a little health.", "kill_reward", "minecraft:apple", heal=3, effect="none"),
+        P("School of Hard Floors", "Every foe you beat teaches you something: more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.12),
+    ],
+    finishers=[
+        A("Never Give Up", "Refuse to die: a huge heal and a long regeneration right when you need it.", "heal_self", "minecraft:enchanted_golden_apple", vfx="SPIRIT_AURA", amount=24, regen_seconds=12, cost=0.05, cooldown=1600),
+        A("All or Nothing", "A single, ruinous blow aimed at one foe; it hits far harder the less health that foe has.", "execute", "minecraft:netherite_sword", vfx="FIRE_BURST", damage=26, bonus=2.2, cost=0.06, cooldown=1500),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 13
+LINES.append(Line(
+    id="tog_irregular", name="Irregular", franchise=F,
+    desc="An Irregular enters the Tower through a door that was never opened for anyone, with a power nobody has measured. Wild leaps, sudden surges and a stubborn refusal to be explained.",
+    color="#D32F2F", background="blood", icon="minecraft:nether_star",
+    book_name="Record of an Unlisted Entrant", book_lore="The examiners put a question mark where the entry's rank should be.",
+    stances=[
+        S("Wild Surge Stance", "Let the unknown power run: huge damage and sharper crits, nothing guarding you.", "minecraft:blaze_powder", damage_pct=0.2, crit_chance=0.08, armor=-3, vfx="FIRE_BURST"),
+        S("Eye of the Storm Stance", "Go calm, completely: sturdier, regenerating, but slower to act.", "minecraft:echo_shard", armor=3, regen=0.6, speed_pct=-0.08, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Unmeasured Reserves", "Nobody knows how much you can take.", "max_health", 2, "minecraft:nether_star"),
+        T("Untamed Strength", "A strength that has never been trained and never needs to be.", "attack_damage", 1, "minecraft:blaze_rod"),
+        T("Irregular Fortune", "Chance bends your way, oddly often.", "luck", 1, "minecraft:emerald"),
+        T("Blind Spot of the Tower", "The Tower has no entry for you, and neither does your speed.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+    ],
+    arts=[
+        A("Pit Leap", "Throw yourself into the air and crash down on the foes below.", "leap_slam", "minecraft:mace", vfx="FIRE_BURST", damage=8, height=1.0),
+        A("Unexpected Swing", "A strike nobody can predict: a wide cone ahead of you.", "cone_strike", "minecraft:iron_axe", vfx="WIND_SLASH", damage=7, half_angle=55),
+        A("Impossible Dodge", "Vanish from where you were and appear a few blocks ahead.", "blink", "minecraft:ender_pearl", vfx="SPATIAL_RIFT", distance=9),
+        A("Unbalanced Whirl", "Spin wildly and hit everything around you several times.", "whirlwind", "minecraft:iron_axe", vfx="WIND_TORNADO", damage=3, hits=4),
+        A("Surge of the Unknown", "An unexplained power fills you: you grow stronger and faster for a while.", "buff_self", "minecraft:nether_star", vfx="FIRE_SPIRAL", effect="strength", effect2="speed", seconds=14),
+        A("Hungry Bite", "Sink your teeth into the foe in front of you and drink in some of its life.", "drain_bite", "minecraft:spider_eye", vfx="SHADOW_POOL", damage=7, heal_pct=0.35),
+        A("Fall of the Unlisted", "Call down something that was never in the Tower's records onto the place you look at.", "meteor_drop", "minecraft:crying_obsidian", vfx="DEVIL_CIRCLE", damage=12, radius=4),
+    ],
+    passives=[
+        P("Unpredictable Crit", "Your strikes land critically more often than anyone expects.", "crit", "minecraft:spectral_arrow", chance=0.14, mult=1.8),
+        P("Lashing Out", "Whoever strikes you may be left withered by the unknown power.", "on_hurt_retaliate", "minecraft:wither_rose", effect="wither", chance=0.25),
+        P("Feral Appetite", "Part of every blow you deal returns to you as health.", "lifesteal", "minecraft:redstone", pct=0.06),
+        P("Rising Tempo", "The longer the fight, the more your blows grow in strength.", "momentum", "minecraft:blaze_powder", per_stack=0.04, max_stacks=6),
+        P("No Entry for Death", "At death's door a brief shield saves you.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("No Record of the Blow", "You may avoid a blow as if it had never been thrown.", "dodge", "minecraft:feather", chance=0.1),
+        P("Cornered Surge", "When wounded, the power in you pushes every blow harder.", "dmg_when", "minecraft:iron_sword", condition="low_health", bonus=0.25),
+        P("Unclassified Hide", "The Tower does not know what hurts you, so the blow is lessened: less magic damage.", "resist", "minecraft:amethyst_shard", damage_kind="magic", pct=0.2),
+    ],
+    finishers=[
+        A("Outside the System", "Burst outward with a power that has no name: a vast ring of force that throws every foe around you.", "ring_burst", "minecraft:nether_star", vfx="DEVIL_CIRCLE", damage=24, radius=7, targets=9, knockback=1.8, cost=0.07, cooldown=1800),
+        A("Eruption of the Unmeasured", "Everything you have in a single beam that tears a lane through the foes in front of you.", "ray_shot", "minecraft:end_crystal", vfx="FIRE_SPIRAL", damage=30, range=30, pierce=4, cost=0.06, cooldown=1700),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 14
+LINES.append(Line(
+    id="tog_headon_channel", name="Headon Channeler", franchise=F,
+    desc="A Channeler hangs a Shinsu-conducting Headon crystal on the body and pours charge through it. Arcs of lightning, cannon beams and a crystal that sings when it is full.",
+    color="#FF8A65", background="magma", icon="minecraft:prismarine_crystals",
+    book_name="Manual of the Charged Crystal", book_lore="Do not stand near the owner when the crystal is humming.",
+    stances=[
+        S("Crystal Held Close", "Keep the charge pulled tight to your chest: sturdier and steady, hitting a little softer.", "minecraft:amethyst_shard", armor=2, regen=0.4, damage_pct=-0.03, vfx="LIGHTNING_FIEND"),
+        S("Crystal Unleashed", "Let the crystal run hot: faster and far stronger, but the charge burns your guard away.", "minecraft:prismarine_crystals", damage_pct=0.2, armor=-2, speed_pct=0.04, vfx="LIGHTNING_FIEND"),
+    ],
+    stats=[
+        T("Conductive Veins", "Charge runs through you cleanly and hits harder.", "attack_damage", 1, "minecraft:copper_ingot"),
+        T("Crystal Heart", "The crystal lends the body its resilience.", "max_health", 2, "minecraft:prismarine_shard"),
+        T("Resonant Frame", "Your frame hums and deflects blows.", "armor", 1, "minecraft:iron_chestplate"),
+        T("Charged Step", "A small current in the legs.", "movement_speed", 0.03, "minecraft:redstone", op="mult"),
+    ],
+    arts=[
+        A("Arc Jump", "Release an arc that hits one foe, then jumps through the next ones nearby.", "chain_hit", "minecraft:lightning_rod", vfx="LIGHTNING_FIEND", damage=6, jumps=4),
+        A("Crystal Lance", "Fire a narrow beam of crystal-charged Shinsu through the foes in front of you.", "ray_shot", "minecraft:prismarine_shard", vfx="LIGHTNING_SPEAR", damage=8, range=16, pierce=2),
+        A("Charge Overdrive", "Push more charge through the body: you gain haste and strength for a while.", "buff_self", "minecraft:glowstone_dust", vfx="LIGHTNING_FIEND", effect="haste", effect2="strength", seconds=12),
+        A("Headon Pulse", "Pulse the crystal and throw a ring of charge outward.", "ring_burst", "minecraft:redstone_lamp", vfx="LIGHTNING_FIEND", damage=5, radius=4),
+        A("Discharge Cut", "Vent charge through a thin blade of light: bonus damage against weakened foes.", "execute", "minecraft:iron_sword", vfx="LIGHTNING_SPEAR", damage=8, bonus=0.7),
+        A("Rolling Thunder", "Send a line of crackling charge along the floor ahead of you.", "ground_wave", "minecraft:copper_block", vfx="LIGHTNING_FIEND", damage=6, length=11),
+        A("Grounding Plate", "Hold the charge flat in front of you as a shell that absorbs damage.", "shield", "minecraft:copper_ingot", vfx="LIGHTNING_FIEND", absorb_hearts=4),
+    ],
+    passives=[
+        P("Spark of Insight", "Your charged strikes land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("Static Field", "A weak field around you slows nearby enemies.", "aura", "minecraft:cobweb", effect="slowness", target="enemies", radius=5),
+        P("Building Charge", "The longer you fight, the more charge your blows carry.", "momentum", "minecraft:redstone", per_stack=0.04, max_stacks=6),
+        P("Lightning Rod", "The crystal draws bolts off you: less lightning damage.", "resist", "minecraft:lightning_rod", damage_kind="lightning", pct=0.35),
+        P("Live Wire", "While you are in a fight you deal more damage.", "dmg_when", "minecraft:blaze_rod", condition="in_combat", bonus=0.12),
+        P("Overload Finish", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.25, bonus=0.6),
+        P("Siphoned Charge", "Part of each hit's charge feeds back into your health.", "lifesteal", "minecraft:glowstone_dust", pct=0.05),
+    ],
+    finishers=[
+        A("Headon Overcharge", "Dump the entire charge through the crystal: a giant ring of lightning that hammers everything around you.", "ring_burst", "minecraft:beacon", vfx="LIGHTNING_FIEND", damage=22, radius=6.5, targets=9, knockback=1.6, cost=0.07, cooldown=1800),
+        A("Shatter the Crystal", "Break the Headon and let its stored charge fall as a pillar of lightning where you look.", "meteor_drop", "minecraft:end_crystal", vfx="LIGHTNING_FIEND", damage=30, radius=5, cost=0.09, cooldown=2000),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 15
+LINES.append(Line(
+    id="tog_suspendium_arms", name="Suspendium Arms", franchise=F,
+    desc="Suspendium, the Tower's cold, weightless metal, forged into blades and hammers whose weight changes as you swing them. Heavy where it counts, light where it must be.",
+    color="#B0BEC5", background="iron", icon="minecraft:netherite_ingot",
+    book_name="Smith's Book of Light Metal", book_lore="Every page is a different weight; the binding is a curse word.",
+    stances=[
+        S("Heavy Alloy Stance", "Make the metal heavy: a big boost to damage and some armor, but it slows you down.", "minecraft:netherite_ingot", damage_pct=0.15, speed_pct=-0.1, armor=1, vfx="WEAPON_CONSTRUCTS"),
+        S("Light Alloy Stance", "Make the metal weightless: much faster and crit-prone, a little softer.", "minecraft:iron_nugget", speed_pct=0.1, crit_chance=0.06, damage_pct=-0.05, vfx="WEAPON_CONSTRUCTS"),
+    ],
+    stats=[
+        T("Alloy Wrists", "A smith's wrists hold heavy blades with ease.", "attack_damage", 1, "minecraft:iron_axe"),
+        T("Forgeborn Skin", "Heat has made you tougher.", "armor", 1, "minecraft:iron_chestplate"),
+        T("Anvil Stance", "Your feet stay planted when you are hit.", "knockback_resistance", 0.1, "minecraft:anvil"),
+        T("Tempered Reach", "The long arm of the hammer.", "entity_interaction_range", 0.4, "minecraft:stick"),
+    ],
+    arts=[
+        A("Greatblade Arc", "Swing a Suspendium greatblade in a wide arc and cut every foe in the cone.", "cone_strike", "minecraft:netherite_sword", vfx="WEAPON_CONSTRUCTS", damage=7, half_angle=55),
+        A("Thrown Blades", "Fling a volley of blades from your belt at the foe you are looking at.", "barrage", "minecraft:iron_sword", vfx="WEAPON_CONSTRUCTS", damage=3, shots=6),
+        A("Change the Weight", "Make your own armor heavier: you gain resistance but slow down.", "buff_self", "minecraft:anvil", vfx="WEAPON_CONSTRUCTS", effect="resistance", effect2="slowness", seconds=12),
+        A("Hammer Fall", "Leap and bring a weightless-then-heavy hammer down on the foes below.", "leap_slam", "minecraft:mace", vfx="WEAPON_CONSTRUCTS", damage=8, height=0.9),
+        A("Lightweight Rush", "Make your weapon weightless and dash through the line of foes ahead.", "dash_strike", "minecraft:iron_sword", vfx="WIND_SLASH", damage=6, distance=8),
+        A("Suspended Chains", "Chains of light metal lock the creatures around you in place for a moment.", "stun_ring", "minecraft:chain", vfx="SEAL_CHAINS", radius=4, seconds=2),
+        A("Rising Edge", "Drive the blade upward from below and launch the foe in front of you.", "uppercut", "minecraft:iron_sword", vfx="WIND_SLASH", damage=7),
+    ],
+    passives=[
+        P("Weapon Mastery", "While you hold a sword you deal more damage.", "dmg_when", "minecraft:diamond_sword", condition="holding_sword", bonus=0.15),
+        P("Spiked Plates", "Blows against you are partly returned.", "thorns", "minecraft:iron_bars", pct=0.15),
+        P("Weight Distribution", "While fighting you take less damage.", "reduce_when", "minecraft:iron_chestplate", condition="in_combat", pct=0.1),
+        P("Hammer Shock", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.3),
+        P("Fine Edge", "A well honed edge: critical hits are more likely.", "crit", "minecraft:flint", chance=0.1, mult=1.7),
+        P("Arrow Plating", "Plates turn aside arrows and other missiles.", "resist", "minecraft:iron_ingot", damage_kind="projectile", pct=0.3),
+        P("Last Hammer Blow", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_axe", threshold=0.25, bonus=0.6),
+    ],
+    finishers=[
+        A("Suspendium Colossus", "Raise a storm of giant blades out of thin air and loose them all on the foe you look at.", "barrage", "minecraft:netherite_sword", vfx="WEAPON_CONSTRUCTS", damage=5, shots=12, range=18, cost=0.08, cooldown=1800),
+        A("Anvil of the Tower", "Call a falling anvil of Suspendium onto the place you look at.", "meteor_drop", "minecraft:anvil", vfx="WEAPON_CONSTRUCTS", damage=30, radius=5, cost=0.09, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 16
+LINES.append(Line(
+    id="tog_ranker_authority", name="Ranker's Authority", franchise=F,
+    desc="You have climbed beyond the floors where ordinary people stop. A Ranker's presence presses on the weak, and a single command can bring a hall to its knees.",
+    color="#FDD835", background="tower", icon="minecraft:golden_helmet",
+    book_name="Ledger of the Ranker", book_lore="The first page lists the floors cleared; the last page lists the debts.",
+    stances=[
+        S("Ranker's Bearing", "Stand in your full authority: tougher and slightly stronger, but never quick.", "minecraft:golden_helmet", armor=3, damage_pct=0.05, speed_pct=-0.05, vfx="MAGIC_CIRCLE"),
+        S("Unleashed Ranker", "Drop the restraint: devastating strikes and crits, but the bearing falls away.", "minecraft:netherite_sword", damage_pct=0.2, armor=-2, crit_chance=0.05, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Ranker's Pressure", "Your power is felt in every strike.", "attack_damage", 1, "minecraft:netherite_sword"),
+        T("Veteran Frame", "Hundreds of floors have hardened your body.", "max_health", 2, "minecraft:golden_apple"),
+        T("Weight of Titles", "Your name alone stops blows short.", "armor_toughness", 1, "minecraft:gold_ingot"),
+        T("Reach of Authority", "Your command carries further than it should.", "entity_interaction_range", 0.4, "minecraft:bell"),
+    ],
+    arts=[
+        A("Command: Kneel", "Speak an order of authority and the creatures near you are frozen in place.", "stun_ring", "minecraft:bell", vfx="MAGIC_CIRCLE", radius=4.5, seconds=2),
+        A("Judgment Strike", "Call down a weighted strike on the place you look at.", "meteor_drop", "minecraft:gold_block", vfx="SPATIAL_RIFT", damage=11, radius=3.5),
+        A("Authority Cleave", "A wide cleave that cuts the cone in front of you in two.", "cone_strike", "minecraft:netherite_sword", vfx="WIND_SLASH", damage=7, half_angle=60),
+        A("Banner of Rank", "Raise your banner: you and the allies near you grow stronger for a while.", "buff_aura", "minecraft:white_banner", vfx="SPIRIT_AURA", effect="strength", radius=9, seconds=12),
+        A("Sentence", "A cold, exact blow aimed at a weakened foe: it hits much harder at low health.", "execute", "minecraft:diamond_sword", vfx="MAGIC_CIRCLE", damage=9, bonus=0.8),
+        A("Floor Stride", "Cross the floor in a heartbeat, cutting down everything between you and your destination.", "dash_strike", "minecraft:golden_boots", vfx="WIND_SLASH", damage=6, distance=9),
+        A("Rank Plate", "Spread your presence over your body as a thick, golden plate of absorption.", "shield", "minecraft:golden_chestplate", vfx="MAGIC_CIRCLE", absorb_hearts=5),
+    ],
+    passives=[
+        P("Giant Killer", "Rankers fight the Tower's greatest beasts: bonus damage to bosses.", "dmg_vs", "minecraft:dragon_head", category="boss", bonus=0.2),
+        P("Composed Under Fire", "While fighting you shrug off part of every blow.", "reduce_when", "minecraft:golden_chestplate", condition="in_combat", pct=0.1),
+        P("Name Carries Weight", "Your authority repels others: enemies near you are weakened.", "aura", "minecraft:fermented_spider_eye", effect="weakness", target="enemies", radius=6),
+        P("Practiced Strike", "A Ranker's blows are precise: more critical hits.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("Climber's Wisdom", "Floors cleared make you wiser: kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.15),
+        P("Last Floor Standing", "When nearly dead, you stand firm behind a brief shield.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("Taking the Spoils", "Kills reward you with health and a short surge of strength.", "kill_reward", "minecraft:golden_apple", heal=3, effect="strength", seconds=4),
+    ],
+    finishers=[
+        A("Ranker's Authority", "Let the full weight of your rank fall on the room: every foe around you is held for a long moment.", "stun_ring", "minecraft:nether_star", vfx="MAGIC_CIRCLE", radius=10, seconds=5, targets=12, cost=0.09, cooldown=1900),
+        A("Floor-Splitting Blow", "Bring your weapon down and split the floor ahead of you in a long, deep crack.", "ground_wave", "minecraft:netherite_axe", vfx="EARTH_SPIKES", damage=28, length=20, width=4, knockback=1.6, cost=0.06, cooldown=1700),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 17
+LINES.append(Line(
+    id="tog_faerie", name="Faerie", franchise=F,
+    desc="A Faerie is a small, bright, quick being of the Tower, half dream and half mischief. It drifts, blinks, tangles and lulls, and leaves glitter wherever it goes.",
+    color="#F48FB1", background="dream", icon="minecraft:pink_petals",
+    book_name="A Faerie's Little Book of Tricks", book_lore="Written on a petal and not meant to be read in one sitting.",
+    stances=[
+        S("Drifting Wing Stance", "Float on the wing: much faster, but a single hit will hurt you.", "minecraft:feather", speed_pct=0.1, armor=-2, damage_pct=-0.03, vfx="SPIRIT_AURA"),
+        S("Dew Veil Stance", "Wrap yourself in morning dew: you regenerate and hold firm, but you move slowly.", "minecraft:glow_berries", armor=2, regen=0.6, speed_pct=-0.04, vfx="WATER_RING"),
+    ],
+    stats=[
+        T("Pixie Grace", "You flutter faster than you walk.", "movement_speed", 0.05, "minecraft:feather", op="mult"),
+        T("Dew Heart", "A small bright heart that mends fast.", "max_health", 2, "minecraft:glow_berries"),
+        T("Featherfall", "A Faerie can fall a very long way and not mind.", "safe_fall_distance", 2, "minecraft:phantom_membrane"),
+        T("Bright Fortune", "Wishes land in your hands more often than they should.", "luck", 1, "minecraft:gold_nugget"),
+    ],
+    arts=[
+        A("Fairy Step", "Flit forward in a shower of glitter to a spot a few blocks away.", "blink", "minecraft:pink_petals", vfx="ELF_CIRCLE", distance=9),
+        A("Pollen Cloud", "Puff pollen in a cone: the foes in it feel sick and heavy.", "debuff_cone", "minecraft:spore_blossom", vfx="POISON_BREATH", effect="nausea", effect2="slowness", seconds=6, seconds2=6),
+        A("Wish Mending", "Make a small wish: you and the allies around you are healed.", "heal_pulse", "minecraft:glistering_melon_slice", vfx="ELF_CIRCLE", radius=7, amount=6),
+        A("Glimmer Bolt", "Fire a bright dart of glitter along your line of sight.", "ray_shot", "minecraft:glowstone_dust", vfx="LIGHTNING_SPEAR", damage=6, range=16, pierce=2),
+        A("Dream Veil", "Pull dream-fog over the creatures around you: they lose sight of you.", "smoke", "minecraft:white_dye", vfx="ELF_CIRCLE", radius=5, seconds=6),
+        A("Ring-a-Ring", "A twirl of sparks that jumps from foe to foe in a tangled dance.", "chain_hit", "minecraft:blaze_powder", vfx="ELF_CIRCLE", damage=5, jumps=4),
+        A("Airborne Whim", "Float on a gust: you gain slow falling and a leap for a while.", "buff_self", "minecraft:wind_charge", vfx="WIND_RING", effect="slow_falling", effect2="jump_boost", seconds=14),
+    ],
+    passives=[
+        P("Light as Air", "While you are in the air you move faster.", "self_effect_when", "minecraft:feather", effect="speed", condition="airborne"),
+        P("Sprite's Luck", "You may skip out of the way of a blow.", "dodge", "minecraft:rabbit_foot", chance=0.12),
+        P("Moonlit Mending", "At night your wounds heal on their own.", "regen_when", "minecraft:glow_berries", condition="night", per_second=0.6),
+        P("Faerie Court", "Allies near you feel luckier.", "aura", "minecraft:gold_nugget", effect="luck", target="allies", radius=7),
+        P("Gentle Landing", "You take much less fall damage.", "fall_guard", "minecraft:phantom_membrane", pct=0.5),
+        P("Glitter Blind", "Your blows may leave the foe blinded by glitter.", "on_hit_effect", "minecraft:glowstone_dust", effect="blindness", chance=0.2),
+        P("Petal Mending", "A few petals of care keep mending you.", "mending", "minecraft:pink_petals", seconds=16, amount=1),
+    ],
+    finishers=[
+        A("Midsummer Dream", "Put the whole room to sleep in a flash of dream light: the creatures around you are held in place.", "stun_ring", "minecraft:blue_orchid", vfx="ELF_CIRCLE", radius=8, seconds=4, targets=10, cost=0.08, cooldown=1900),
+        A("Wishing Star", "Call down a bright star onto the spot you are looking at.", "meteor_drop", "minecraft:nether_star", vfx="SPIRIT_AURA", damage=26, radius=5, cost=0.09, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 18
+LINES.append(Line(
+    id="tog_zahard_decree", name="Zahard's Decree", franchise=F,
+    desc="The Tower runs on the King's law, and you carry a scrap of it. Pass sentence on foes, turn blows back by law, and bring a room to order.",
+    color="#CFD8DC", background="stellar", icon="minecraft:beacon",
+    book_name="The Statute Scroll of the Tower", book_lore="Seventeen articles; the eighteenth is erased and everyone knows what it said.",
+    stances=[
+        S("Decree of Order", "Hold the room in lawful stillness: sturdier and steady, but your blows are a little softer.", "minecraft:white_banner", armor=3, regen=0.3, damage_pct=-0.05, vfx="MAGIC_CIRCLE"),
+        S("Decree of Force", "Enforce the law with the blade: far stronger blows, nothing left to protect you.", "minecraft:netherite_sword", damage_pct=0.18, armor=-2, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Royal Constitution", "The King's law keeps you whole.", "max_health", 2, "minecraft:golden_apple"),
+        T("Weight of the Throne", "Blows glance off the one who carries the law.", "armor_toughness", 1, "minecraft:gold_ingot"),
+        T("Reach of the Decree", "Your word carries further than your arm.", "entity_interaction_range", 0.4, "minecraft:bell"),
+        T("Enforcer's Hand", "A hand that has delivered a lot of sentences.", "attack_damage", 1, "minecraft:iron_sword"),
+    ],
+    arts=[
+        A("Edict of Judgment", "Name a foe in the law: it takes extra damage from every blow while the edict holds.", "mark", "minecraft:writable_book", vfx="MAGIC_CIRCLE", bonus=0.3, range=26),
+        A("Law of Return", "For a while part of every blow you take is thrown back at whoever delivered it.", "ward_reflect", "minecraft:shield", vfx="MIRROR_PANE", reflect_pct=0.4),
+        A("Decree: Halt", "Order the creatures around you to stop; they are frozen in place.", "stun_ring", "minecraft:bell", vfx="SEAL_CHAINS", radius=4, seconds=2),
+        A("Decree of Silence", "Speak a ban in a cone: the foes in it grow weak and tired.", "debuff_cone", "minecraft:paper", vfx="SEAL_CHAINS", effect="weakness", effect2="mining_fatigue", seconds=7, seconds2=7),
+        A("Sentence Carried Out", "A clean blow reserved for the already wounded: it deals far more at low health.", "execute", "minecraft:diamond_sword", vfx="MAGIC_CIRCLE", damage=9, bonus=0.8),
+        A("Mandate of Strength", "Grant your allies near you the strength of the law for a while.", "buff_aura", "minecraft:white_banner", vfx="MAGIC_CIRCLE", effect="strength", radius=9, seconds=12),
+        A("Verdict Falls", "A column of white light lands on the spot you look at after a short pause.", "meteor_drop", "minecraft:end_rod", vfx="SPATIAL_RIFT", damage=11, radius=3.5),
+    ],
+    passives=[
+        P("Scales of the Law", "You hit other players harder: the law is stricter between climbers.", "dmg_vs", "minecraft:player_head", category="player", bonus=0.15),
+        P("Swift Justice", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.25, bonus=0.6),
+        P("Pressure of Authority", "Enemies close to you are slowed by the weight of the law.", "aura", "minecraft:cobweb", effect="slowness", target="enemies", radius=5),
+        P("Reciprocity", "Part of each blow against you is returned.", "thorns", "minecraft:iron_bars", pct=0.15),
+        P("Barred from Decay", "You take less wither damage.", "resist", "minecraft:wither_rose", damage_kind="wither", pct=0.3),
+        P("Review of Cases", "Each foe you defeat grants more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.12),
+        P("Presumption of Armor", "In combat the law keeps you from the worst: you take less damage.", "reduce_when", "minecraft:golden_chestplate", condition="in_combat", pct=0.1),
+    ],
+    finishers=[
+        A("Zahard's Judgment", "Call the sentence of the King down on the spot you look at: a heavy pillar of white fire.", "meteor_drop", "minecraft:beacon", vfx="SPATIAL_RIFT", damage=30, radius=5.5, cost=0.09, cooldown=2000),
+        A("Absolute Law", "For a long breath, over half of every blow you take is thrown back on the attacker.", "ward_reflect", "minecraft:totem_of_undying", vfx="MIRROR_PANE", seconds=10, reflect_pct=0.65, cost=0.05, cooldown=1700),
+    ],
+))

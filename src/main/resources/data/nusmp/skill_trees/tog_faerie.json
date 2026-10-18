@@ -1,0 +1,1100 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Faerie",
+  "desc": "A Faerie is a small, bright, quick being of the Tower, half dream and half mischief. It drifts, blinks, tangles and lulls, and leaves glitter wherever it goes.",
+  "book": "nusmp:tog_faerie_book",
+  "book_name": "A Faerie's Little Book of Tricks",
+  "book_lore": "Written on a petal and not meant to be read in one sitting.",
+  "color": "#F48FB1",
+  "icon": "minecraft:pink_petals",
+  "class_id": "tog_faerie",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tog_faerie.png",
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "background_theme": "dream",
+  "nodes": [
+    {
+      "id": "drifting_wing_stance",
+      "name": "Drifting Wing Stance",
+      "desc": "Float on the wing: much faster, but a single hit will hurt you.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.03,
+          -0.036,
+          -0.042
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dew_veil_stance",
+      "name": "Dew Veil Stance",
+      "desc": "Wrap yourself in morning dew: you regenerate and hold firm, but you move slowly.",
+      "parents": [
+        {
+          "node": "drifting_wing_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.04,
+          -0.048,
+          -0.056
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "pixie_grace",
+      "name": "Pixie Grace",
+      "desc": "You flutter faster than you walk.",
+      "parents": [
+        {
+          "node": "drifting_wing_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dew_heart",
+      "name": "Dew Heart",
+      "desc": "A small bright heart that mends fast.",
+      "parents": [
+        {
+          "node": "dew_veil_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "featherfall",
+      "name": "Featherfall",
+      "desc": "A Faerie can fall a very long way and not mind.",
+      "parents": [
+        {
+          "node": "drifting_wing_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "bright_fortune",
+      "name": "Bright Fortune",
+      "desc": "Wishes land in your hands more often than they should.",
+      "parents": [
+        {
+          "node": "dew_veil_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "fairy_step",
+      "name": "Fairy Step",
+      "desc": "Flit forward in a shower of glitter to a spot a few blocks away.",
+      "parents": [
+        {
+          "node": "drifting_wing_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          10.08,
+          11.16,
+          12.24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "pollen_cloud",
+      "name": "Pollen Cloud",
+      "desc": "Puff pollen in a cone: the foes in it feel sick and heavy.",
+      "parents": [
+        {
+          "node": "dew_veil_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "nausea",
+        "effect2": "slowness",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:spore_blossom"
+    },
+    {
+      "id": "wish_mending",
+      "name": "Wish Mending",
+      "desc": "Make a small wish: you and the allies around you are healed.",
+      "parents": [
+        {
+          "node": "fairy_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "glimmer_bolt",
+      "name": "Glimmer Bolt",
+      "desc": "Fire a bright dart of glitter along your line of sight.",
+      "parents": [
+        {
+          "node": "pollen_cloud",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "dream_veil",
+      "name": "Dream Veil",
+      "desc": "Pull dream-fog over the creatures around you: they lose sight of you.",
+      "parents": [
+        {
+          "node": "wish_mending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:white_dye"
+    },
+    {
+      "id": "ring_a_ring",
+      "name": "Ring-a-Ring",
+      "desc": "A twirl of sparks that jumps from foe to foe in a tangled dance.",
+      "parents": [
+        {
+          "node": "glimmer_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "airborne_whim",
+      "name": "Airborne Whim",
+      "desc": "Float on a gust: you gain slow falling and a leap for a while.",
+      "parents": [
+        {
+          "node": "dream_veil",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "slow_falling",
+        "effect2": "jump_boost",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "light_as_air",
+      "name": "Light as Air",
+      "desc": "While you are in the air you move faster.",
+      "parents": [
+        {
+          "node": "fairy_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "airborne"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "sprite_s_luck",
+      "name": "Sprite's Luck",
+      "desc": "You may skip out of the way of a blow.",
+      "parents": [
+        {
+          "node": "pollen_cloud",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "moonlit_mending",
+      "name": "Moonlit Mending",
+      "desc": "At night your wounds heal on their own.",
+      "parents": [
+        {
+          "node": "wish_mending",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "night"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "faerie_court",
+      "name": "Faerie Court",
+      "desc": "Allies near you feel luckier.",
+      "parents": [
+        {
+          "node": "glimmer_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "luck",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "gentle_landing",
+      "name": "Gentle Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "dream_veil",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "glitter_blind",
+      "name": "Glitter Blind",
+      "desc": "Your blows may leave the foe blinded by glitter.",
+      "parents": [
+        {
+          "node": "ring_a_ring",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "blindness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "petal_mending",
+      "name": "Petal Mending",
+      "desc": "A few petals of care keep mending you.",
+      "parents": [
+        {
+          "node": "airborne_whim",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          16.0,
+          14.0,
+          13.0,
+          11.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "midsummer_dream",
+      "name": "Midsummer Dream",
+      "desc": "Put the whole room to sleep in a flash of dream light: the creatures around you are held in place.",
+      "parents": [
+        {
+          "node": "airborne_whim",
+          "level": 3
+        },
+        {
+          "node": "petal_mending",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1900.0,
+          1748.0,
+          1596.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:blue_orchid"
+    },
+    {
+      "id": "wishing_star",
+      "name": "Wishing Star",
+      "desc": "Call down a bright star onto the spot you are looking at.",
+      "parents": [
+        {
+          "node": "ring_a_ring",
+          "level": 3
+        },
+        {
+          "node": "glitter_blind",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.09,
+          0.0972,
+          0.1
+        ],
+        "cooldown": [
+          1900.0,
+          1748.0,
+          1596.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    }
+  ]
+}
