@@ -4,50 +4,58 @@
    "anim": "slim__none-grimoire__auto-auto-auto",
    "glow": 14987619,
    "height": 1.94,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "cellar_ghoul": {
    "anim": "lanky__none-none__auto-auto-auto",
    "glow": 12091492,
    "height": 2.31,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "dawn_squire": {
    "anim": "average__sword-shield__auto-auto-auto",
    "glow": 10537193,
    "height": 2.0,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "greenwood_archer": {
    "anim": "slim__none-bow__auto-auto-auto",
    "glow": 11384987,
    "height": 1.94,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "gutter_imp": {
    "anim": "small__dagger-none__auto-auto-auto",
    "glow": 14795380,
    "height": 1.5,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "hearth_sprite": {
    "anim": "child__wand-none__auto-auto-auto",
    "glow": 16762944,
    "height": 1.41,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "hollow_squire": {
    "anim": "average__sword-shield__auto-auto-auto",
    "glow": 12091492,
    "height": 2.0,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   },
   "tunnel_kobold": {
    "anim": "small__dagger-none__auto-auto-auto",
    "glow": 9211541,
    "height": 1.5,
-   "size": 1.0
+   "size": 1.0,
+   "tier": 1
   }
  },
- "why": "what the client needs to draw a foundry mob: anim = its shared animation class, glow = glow colour 0xRRGGBB, size = model scale, height = model height in blocks"
+ "why": "what the client needs to draw a foundry mob: anim = its shared animation class, glow = glow colour 0xRRGGBB, size = model scale, height = model height in blocks, tier = 1..5 (the glow burns brighter deeper down)"
 }

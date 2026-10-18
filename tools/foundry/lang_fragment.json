@@ -1,0 +1,14 @@
+{
+  "_why": "Lang keys of the Mob Foundry for the lead to merge into assets/nusmp/lang/en_us.json (the foundry code uses translatableWithFallback, so the game works without them; these only make the English text editable and translatable).",
+  "message.nusmp.mega.foundry.cmd.empty": "The foundry roster is empty (no data loaded).",
+  "message.nusmp.mega.foundry.cmd.road": "%s: %s mobs,%s",
+  "message.nusmp.mega.foundry.cmd.tier": "%s tier %s: %s mobs",
+  "message.nusmp.mega.foundry.cmd.row": "%s (%s): %s, %s, %s [%s]",
+  "message.nusmp.mega.foundry.cmd.nosuch": "There is no foundry mob '%s'.",
+  "message.nusmp.mega.foundry.cmd.nocreate": "The mob could not be created.",
+  "message.nusmp.mega.foundry.cmd.spawned": "Spawned %s (tier %s, %s road) at %s.",
+  "message.nusmp.mega.foundry.cmd.count": "Foundry: %s mobs (%s holy, %s abyssal), %s sources, %s abilities, %s archetypes; %s alive now; weight %s%%, enabled %s.",
+  "message.nusmp.mega.foundry.cmd.verify.ok": "The foundry roster keeps its promises: 200 + 200 mobs, 40 per tier, sources and abilities all there.",
+  "message.nusmp.mega.foundry.cmd.verify.bad": "%s",
+  "message.nusmp.mega.foundry.cmd.verify.count": "%s problems (the first %s shown)."
+}

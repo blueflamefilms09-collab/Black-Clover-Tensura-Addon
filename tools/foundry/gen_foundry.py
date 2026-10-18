@@ -114,12 +114,12 @@ def build_all(rows, only, assets, data_dir, jobs, measure):
         f = facts.get(r["id"])
         if f:
             write_json(os.path.join(data_dir, r["id"] + ".json"), mob_json(r, f))
-    index = {"why": "what the client needs to draw a foundry mob: anim = its shared animation class, glow = glow colour 0xRRGGBB, size = model scale, height = model height in blocks",
+    index = {"why": "what the client needs to draw a foundry mob: anim = its shared animation class, glow = glow colour 0xRRGGBB, size = model scale, height = model height in blocks, tier = 1..5 (the glow burns brighter deeper down)",
              "mobs": {}}
     for r in rows:
         f = facts.get(r["id"])
         if f:
-            index["mobs"][r["id"]] = {"anim": f["cls"], "glow": int(f["glow"].lstrip("#"), 16), "size": r["size"], "height": f["height"]}
+            index["mobs"][r["id"]] = {"anim": f["cls"], "glow": int(f["glow"].lstrip("#"), 16), "size": r["size"], "height": f["height"], "tier": r["tier"]}
     write_json(os.path.join(assets, "foundry", "index.json"), index)
     return facts, classes, csizes
 

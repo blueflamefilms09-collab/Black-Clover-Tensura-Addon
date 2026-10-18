@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryEncounters;
 import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -285,6 +286,8 @@ public final class EncounterDirector {
                     factionOf.put(c.id(), used);
                 }
             }
+            EncounterRoll.Pick fp = FoundryEncounters.pick(sector.polarity, sector.theme.id(), v.floor(), spec.kind() == EncounterTable.Kind.FACTION ? factionOf.getOrDefault(pick == null ? "" : pick.entity(), nativeFaction) : null, rnd);   // Mob Foundry: sometimes a foundry mob of this floor's tier and road instead
+            if (fp != null) { pick = fp; factionOf.put(fp.entity(), FoundryEncounters.factionOf(fp.entity())); }
             picks.add(pick);
             if (pick != null) costOf.put(pick.entity(), pick.cost());
         }
@@ -299,10 +302,11 @@ public final class EncounterDirector {
         int at = 0;
         spawning:
         for (EncounterRoll.Planned pl : plan) {
-            EntityType<?> type = Bestiary.type(pl.entity());
+            EntityType<?> type = Bestiary.type(FoundryEncounters.baseId(pl.entity()));
             if (type == null) continue;
             for (int i = 0; i < pl.count(); i++) {
                 SpawnPicker.Cell cell = cells.get(at++ % cells.size());
+                FoundryEncounters.expect(pl.entity(), v.floor());
                 Mob m = EncounterSpawner.spawn(level, type, new BlockPos(cell.x(), cell.y(), cell.z()), rules, threat, factionOf.getOrDefault(pl.entity(), entry.faction()), entry.id(), rnd);
                 if (m != null) {
                     made.add(m);
