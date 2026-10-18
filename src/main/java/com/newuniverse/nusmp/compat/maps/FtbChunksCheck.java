@@ -98,6 +98,13 @@ public final class FtbChunksCheck {
         return new Result(open.isEmpty() ? Status.COVERED : Status.OPEN, open, source);
     }
 
+    /** The line an operator should have in FTB Chunks' config to block claims in these dimensions (exact ids, the form the check is surest of). */
+    public static String suggestion(List<String> dimensions) {
+        StringBuilder b = new StringBuilder(BLACKLIST_KEY).append(": [");
+        for (int i = 0; i < dimensions.size(); i++) b.append(i == 0 ? " " : ", ").append('"').append(dimensions.get(i)).append('"');
+        return b.append(" ]").toString();
+    }
+
     // ---------------------------------------------------------------- files (soft)
     /** The places FTB Chunks' world config may be, most specific first. */
     public static List<Path> candidates(Path worldDir, Path gameDir) {

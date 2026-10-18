@@ -159,6 +159,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compat.maps.MapsClientConfig.SPEC, "nusmp-compat-maps-client.toml");      // compat-maps: minimap size / avoidance
             // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.ElementalSpiritRenderer::register);        // 0.102: the Black Clover Spirit Lords' true bodies
@@ -211,6 +212,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.guard.GuardConfig.SPEC, "nusmp-labyrinth-mega-guard-server.toml");   // 1.54.0: the Labyrinth Guardian, the Mana Core, the sector Gatekeeper
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.hub.HubConfig.SPEC, "nusmp-labyrinth-mega-hub-server.toml");   // 1.55.0: Floor 0, the Sanctuary Hub
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.rift.RiftConfig.SPEC, "nusmp-labyrinth-mega-rift-server.toml");   // 1.72.0: dimensional rifts, pocket realms, the waypoint
+        com.newuniverse.nusmp.compat.maps.MapsCompat.init(modContainer);                                                              // compat-maps: Xaero's / FTB Chunks / JourneyMap compatibility (docs/compat/maps.md), soft
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsConfig.SPEC, "nusmp-labyrinth-mega-mechanics-server.toml");   // the dungeon mechanics library
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryConfig.SPEC, "nusmp-labyrinth-mega-foundry-server.toml");   // the Mob Foundry: 400 custom dungeon mobs
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.macro.MacroConfig.SPEC, "nusmp-labyrinth-mega-macro-server.toml");   // 1.55.0: the Hub terrain generator

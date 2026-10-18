@@ -21,7 +21,8 @@ public final class CompatCommand {
         return Commands.literal("compat")
                 .then(Commands.literal("book").executes(ctx -> book(ctx, false))
                         .then(Commands.literal("written").executes(ctx -> book(ctx, true))))          // 1.34.0: the old vanilla written book, kept as the fallback
-                .then(Commands.literal("status").executes(CompatCommand::status));
+                .then(Commands.literal("status").executes(CompatCommand::status))
+                .then(com.newuniverse.nusmp.compat.maps.MapsCommand.compatMapsNode());                  // compat-maps: /multiverse compat maps (op)
     }
 
     private static int book(CommandContext<CommandSourceStack> ctx, boolean written) {

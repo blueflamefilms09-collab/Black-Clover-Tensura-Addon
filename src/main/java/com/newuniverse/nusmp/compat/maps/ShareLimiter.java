@@ -21,6 +21,8 @@ public final class ShareLimiter {
         this.windowTicks = Math.max(1L, windowTicks);
     }
 
+    public int max() { return max; }
+
     /** Takes a slot for {@code who} at game time {@code now}; false (and nothing taken) when the window is full. A clock that went backwards (another world) clears that player's history. */
     public synchronized boolean tryAcquire(UUID who, long now) {
         Deque<Long> q = sent.computeIfAbsent(who, k -> new ArrayDeque<>());

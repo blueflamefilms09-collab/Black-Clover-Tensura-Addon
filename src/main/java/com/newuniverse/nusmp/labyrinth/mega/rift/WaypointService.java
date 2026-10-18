@@ -130,6 +130,7 @@ public final class WaypointService {
         }
         if (!cool(p, CRYSTAL_UNTIL, RiftConfig.get(RiftConfig.CRYSTAL_COOLDOWN))) return false;
         if (!save(p)) say(p, "crystal.last", "You are not standing steady enough to mark this place; the last mark stands.", ChatFormatting.GRAY);
+        else com.newuniverse.nusmp.compat.maps.MapShare.returnWaypoint(p, get(p));                       // compat-maps: a clickable waypoint line for the saved place (opt-in, rate limited)
         if (!HubTravel.enabled() || !HubTravel.available(p.getServer())) {
             say(p, "crystal.nohub", "Floor 0 does not answer here.", ChatFormatting.GRAY);
             return false;
