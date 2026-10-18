@@ -1077,6 +1077,121 @@
    ],
    "problems": []
   },
+  "black_market_witch": {
+   "model": "arc_black_market_witch",
+   "spec": "GeoSpec.of(\"arc\", \"black_market_witch\")",
+   "form": 1,
+   "role": "npc",
+   "name": "Old Witch",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_black_market_witch.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_black_market_witch.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_black_market_witch.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_black_market_witch_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 82,
+   "faces_per_pass": 441,
+   "height_blocks": 1.72,
+   "height_with_hair_and_horns_blocks": 2.84,
+   "bounds_blocks": {
+    "min": [
+     -0.55,
+     0.0,
+     -0.57
+    ],
+    "max": [
+     0.54,
+     2.84,
+     0.44
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.72
+   },
+   "arc_look": {
+    "height": 1.72,
+    "walkCycle": 0.7,
+    "runCycle": 1.29,
+    "shadow": 0.39,
+    "growXz": 1.07,
+    "growUp": 1.52,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "hat",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "head",
+    "prop_r"
+   ],
+   "problems": []
+  },
   "charlotte_roselei": {
    "model": "arc_charlotte_roselei",
    "spec": "GeoSpec.of(\"arc\", \"charlotte_roselei\")",

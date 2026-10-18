@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_black_market_witch.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_black_market_witch.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_black_market_witch": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "black_market_witch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_black_market_witch"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

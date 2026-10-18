@@ -5834,5 +5834,7 @@
   "item.nusmp.vassal_instrument": "Vassal Musical Instrument",
   "item.nusmp.vassal_harpoon": "Vassal Harpoon",
   "item.nusmp.vassal_sewing_set": "Vassal Sewing Set",
-  "item.nusmp.vassal_chain": "Vassal Chain"
+  "item.nusmp.vassal_chain": "Vassal Chain",
+  "advancement.nusmp.arc.met_black_market_witch.title": "Met: Old Witch",
+  "advancement.nusmp.arc.met_black_market_witch.desc": "Speak with Old Witch. Saga: Allies."
 }

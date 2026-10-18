@@ -92,7 +92,9 @@ public final class SkillTreeCommand {
                                 .executes(ctx -> respecSelf(ctx, ResourceLocationArgument.getId(ctx, "route").toString()))))
                 .then(Commands.literal("reload").requires(SkillTreeCommand::admin).executes(SkillTreeCommand::reload))
                 .then(Commands.literal("routes").requires(SkillTreeCommand::admin).executes(SkillTreeCommand::routes));
-        // the shop's "gold <player> add|set <n>" node goes here once the shop builder's ShopCommands exists: tree.then(com.newuniverse.nusmp.skilltree.shop.ShopCommands.node());
+        // the Black Market: "gold <player> [add|set <n>]" and "shop status|stock|restock" (permission 2, the shop builder's own nodes)
+        tree.then(com.newuniverse.nusmp.skilltree.shop.ShopCommands.node());
+        tree.then(com.newuniverse.nusmp.skilltree.shop.ShopCommands.shopNode());
         return tree;
     }
 

@@ -65,3 +65,4 @@ gauche_adlai|Gauche Adlai|allies|npc
 grey|Grey|allies|npc
 secre_swallowtail|Secre Swallowtail|allies|npc
 nacht_faust|Nacht Faust|allies|npc
+black_market_witch|Old Witch|allies|npc
