@@ -14,6 +14,7 @@ public final class EliteSystem {
 
     public static void init(IEventBus modBus, ModContainer container) {
         // ---- hub: Tensura-coin economy, Hub NPCs, quests, Dungeon Map (elite/hub)
+        com.newuniverse.nusmp.elite.hub.HubRegistry.init(modBus, container);
 
 
 
