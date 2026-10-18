@@ -352,8 +352,8 @@ def _hsv_rgb(h, s, v):
 SPECS = [("astral_edge", astral_edge), ("void_edge", void_edge), ("fenrir_sword", fenrir_sword),
          ("runic_sword_renewed", runic(1)), ("runic_sword_ancient", runic(2)), ("runic_sword_mythical", runic(3))]
 
-# the size in real life (metres, the whole weapon) and where it is held (a share of its length from the butt); see the REAL / GRIP tables of gen_weapon_models
-g.REAL.update({"astral_edge": 1.25, "void_edge": 1.35, "fenrir_sword": 1.85, "runic_sword_renewed": 1.15, "runic_sword_ancient": 1.3, "runic_sword_mythical": 1.55})
+# the apparent length in blocks (the whole weapon, inside its class range of weapon_classes.json, like the older longswords and greatswords) and where it is held (a share of its length from the butt); see the REAL / GRIP tables of gen_weapon_models
+g.REAL.update({"astral_edge": 1.55, "void_edge": 1.6, "fenrir_sword": 2.45, "runic_sword_renewed": 1.45, "runic_sword_ancient": 1.55, "runic_sword_mythical": 2.3})
 g.GRIP.update({"astral_edge": 0.25, "void_edge": 0.24, "fenrir_sword": 0.22, "runic_sword_renewed": 0.27, "runic_sword_ancient": 0.26, "runic_sword_mythical": 0.24})
 
 CLASSES = {"astral_edge": "longsword", "void_edge": "longsword", "fenrir_sword": "greatsword", "runic_sword_renewed": "longsword", "runic_sword_ancient": "longsword",

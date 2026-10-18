@@ -33,16 +33,16 @@
     {
       "id": "astral_edge",
       "action": "preset",
-      "length_blocks": 1.471,
-      "first_person_scale": 0.68,
+      "length_blocks": 1.824,
+      "first_person_scale": 0.576,
       "first_person_translation_px": [
         1.13,
-        3.01,
-        0.94
+        2.49,
+        0.77
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0,
+      "ground_scale": 0.438,
+      "fixed_scale": 0.822,
       "rewritten": true
     },
     {
@@ -477,16 +477,16 @@
     {
       "id": "fenrir_sword",
       "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.483,
+      "length_blocks": 2.882,
+      "first_person_scale": 0.365,
       "first_person_translation_px": [
         1.13,
-        1.83,
-        0.56
+        1.16,
+        0.34
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689,
+      "ground_scale": 0.277,
+      "fixed_scale": 0.52,
       "rewritten": true
     },
     {
@@ -1125,27 +1125,12 @@
     {
       "id": "runic_sword_ancient",
       "action": "preset",
-      "length_blocks": 1.529,
-      "first_person_scale": 0.677,
-      "first_person_translation_px": [
-        1.13,
-        3.13,
-        0.99
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
-    },
-    {
-      "id": "runic_sword_mythical",
-      "action": "preset",
       "length_blocks": 1.824,
-      "first_person_scale": 0.553,
+      "first_person_scale": 0.568,
       "first_person_translation_px": [
         1.13,
-        2.31,
-        0.77
+        2.58,
+        0.81
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.438,
@@ -1153,9 +1138,34 @@
       "rewritten": true
     },
     {
+      "id": "runic_sword_mythical",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.373,
+      "first_person_translation_px": [
+        1.13,
+        1.37,
+        0.44
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554,
+      "rewritten": true
+    },
+    {
       "id": "runic_sword_renewed",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 1.706,
+      "first_person_scale": 0.607,
+      "first_person_translation_px": [
+        1.13,
+        2.82,
+        0.89
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.468,
+      "fixed_scale": 0.879,
+      "rewritten": true
     },
     {
       "id": "scepter_of_the_double_moon",
@@ -1822,16 +1832,16 @@
     {
       "id": "void_edge",
       "action": "preset",
-      "length_blocks": 1.588,
-      "first_person_scale": 0.661,
+      "length_blocks": 1.882,
+      "first_person_scale": 0.558,
       "first_person_translation_px": [
         1.13,
-        2.88,
-        0.92
+        2.34,
+        0.74
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0,
+      "ground_scale": 0.424,
+      "fixed_scale": 0.796,
       "rewritten": true
     },
     {
