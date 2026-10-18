@@ -1317,6 +1317,128 @@
    ],
    "problems": []
   },
+  "blood_beast": {
+   "model": "arc_blood_beast",
+   "spec": "GeoSpec.of(\"arc\", \"blood_beast\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Blood Beast",
+   "build": "small",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_blood_beast.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_blood_beast.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_blood_beast.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_blood_beast_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 100,
+   "faces_per_pass": 509,
+   "height_blocks": 1.5,
+   "height_with_hair_and_horns_blocks": 1.84,
+   "bounds_blocks": {
+    "min": [
+     -0.58,
+     -0.4,
+     -0.63
+    ],
+    "max": [
+     0.64,
+     1.84,
+     0.76
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.52,
+    "height": 1.5
+   },
+   "arc_look": {
+    "height": 1.5,
+    "walkCycle": 0.88,
+    "runCycle": 1.54,
+    "shadow": 0.45,
+    "growXz": 1.26,
+    "growUp": 0.74,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "ear_l",
+    "ear_r",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5"
+   ],
+   "glow_bones": [
+    "body",
+    "head"
+   ],
+   "problems": []
+  },
   "charlotte_roselei": {
    "model": "arc_charlotte_roselei",
    "spec": "GeoSpec.of(\"arc\", \"charlotte_roselei\")",
@@ -1817,6 +1939,243 @@
     "tentacle_l3",
     "tentacle_r3"
    ],
+   "problems": []
+  },
+  "cotton_sheep": {
+   "model": "arc_cotton_sheep",
+   "spec": "GeoSpec.of(\"arc\", \"cotton_sheep\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Cotton Sheep",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_sheep.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_sheep.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 74,
+   "faces_per_pass": 356,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.15,
+   "bounds_blocks": {
+    "min": [
+     -0.67,
+     0.0,
+     -0.61
+    ],
+    "max": [
+     0.67,
+     2.15,
+     0.49
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.81,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.47,
+    "growXz": 1.17,
+    "growUp": 0.64,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "horns",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5"
+   ],
+   "glow_bones": [],
+   "problems": []
+  },
+  "cotton_sheep_cook": {
+   "model": "arc_cotton_sheep_cook",
+   "spec": "GeoSpec.of(\"arc\", \"cotton_sheep_cook\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Cotton Sheep Cook",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_sheep_cook.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_sheep_cook.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_cook.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_cook_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 84,
+   "faces_per_pass": 414,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.15,
+   "bounds_blocks": {
+    "min": [
+     -0.69,
+     0.0,
+     -0.61
+    ],
+    "max": [
+     0.67,
+     2.15,
+     0.49
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.81,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.48,
+    "growXz": 1.19,
+    "growUp": 0.64,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "horns",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5",
+    "prop_r"
+   ],
+   "glow_bones": [],
    "problems": []
   },
   "dante_zogratis": {
@@ -2867,6 +3226,120 @@
     "hair_back",
     "ear_l",
     "ear_r",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5"
+   ],
+   "glow_bones": [
+    "head"
+   ],
+   "problems": []
+  },
+  "dungeon_slime": {
+   "model": "arc_dungeon_slime",
+   "spec": "GeoSpec.of(\"arc\", \"dungeon_slime\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Dungeon Slime",
+   "build": "child",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_dungeon_slime.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_dungeon_slime.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_slime.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_slime_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 28,
+   "faces_per_pass": 160,
+   "height_blocks": 1.41,
+   "height_with_hair_and_horns_blocks": 1.73,
+   "bounds_blocks": {
+    "min": [
+     -0.42,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.42,
+     1.73,
+     0.57
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.59,
+    "height": 1.41
+   },
+   "arc_look": {
+    "height": 1.41,
+    "walkCycle": 0.75,
+    "runCycle": 1.29,
+    "shadow": 0.35,
+    "growXz": 1.07,
+    "growUp": 0.72,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
     "tail1",
     "tail2",
     "tail3",
