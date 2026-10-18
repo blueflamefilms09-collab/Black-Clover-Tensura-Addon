@@ -82,7 +82,7 @@ public final class FoundrySelfTests {
                 if (m.style() != a.style()) return SelfTests.Result.fail(a.id() + ": the mob's style is " + m.style() + ", the archetype says " + a.style());
                 Set<FoundryArchetype.Style> have = EnumSet.noneOf(FoundryArchetype.Style.class);
                 boolean ability = false;
-                for (WrappedGoal g : m.goalSelector.getAvailableGoals()) {
+                for (WrappedGoal g : m.goals()) {
                     FoundryArchetype.Style st = FoundryGoals.styleOf(g.getGoal());
                     if (st != null) have.add(st);
                     if (g.getGoal() instanceof FoundryGoals.AbilityGoal) ability = true;

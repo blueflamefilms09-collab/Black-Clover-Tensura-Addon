@@ -50,7 +50,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
     private FoundryDef def;
     private int defVersion = -1;
     private String defId = "";
-    private FoundryBrain brain = new FoundryBrain(java.util.List.of(), 30);
+    private FoundryBrain mind = new FoundryBrain(java.util.List.of(), 30);
     private int floor;
     private UUID owner;
     /** Timers of the abilities in progress (server side only). */
@@ -110,7 +110,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
         return d == null ? Polarity.HOLY : d.road();
     }
 
-    public FoundryBrain brain() { return brain; }
+    public FoundryBrain brain() { return mind; }
 
     /** The faction id of this mob (one of the eleven of the contract), or null for a blank mob. */
     public String faction() {
@@ -141,8 +141,8 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
         base(Attributes.SCALE, FoundryScaling.scaleAttribute(d.height(), d.size()));
         base(Attributes.KNOCKBACK_RESISTANCE, a.armor() >= 1.5 ? 0.6 : a.armor() >= 1.0 ? 0.2 : 0.0);
         this.xpReward = 4 + 6 * d.tier();
-        brain = new FoundryBrain(FoundryData.abilitiesOf(d), a.abilityEvery());
-        brain.reset(tickCount);
+        mind = new FoundryBrain(FoundryData.abilitiesOf(d), a.abilityEvery());
+        mind.reset(tickCount);
         if (heal) setHealth(getMaxHealth());
         refreshDimensions();
     }
@@ -240,6 +240,9 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
     }
 
     // ================================================================ AI
+    /** The goals of this mob (the self-test reads them; the selector itself is a protected field of {@code Mob}). */
+    public java.util.Set<net.minecraft.world.entity.ai.goal.WrappedGoal> goals() { return goalSelector.getAvailableGoals(); }
+
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));

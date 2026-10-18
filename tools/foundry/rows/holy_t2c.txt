@@ -1,1 +1,2 @@
+# Why: holy road, tier 2, warbands and courts (floors 201-400): centaurs, satyrs, griffons, the pixie court, class heroes. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Moonwell Naiad Duelist | aquatic | slim | aqua silver ink | Fate | skin=pearl ears=fin hair=long/silver face=smirk/aqua top=dress/knee/-/-/moon armor=bracers+gorget/chain boots=boots/knee gloves=gloves prop=sword cape=cape/long glow=moonlight | skirmisher | lunge ice_bind

@@ -1,3 +1,4 @@
+# Why: abyssal road, tier 1, the gutters (floors -1..-200): imps, ghouls, hollow squires, cultists, goblin raiders, slimes. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Gutter Imp | demon | small | crimson soot gold | D&D: imp | skin=red horns=small tail=devil wings=bat/ember hair=bald face=sinister/amber top=bare legs=shorts boots=bare prop=dagger | skirmisher | shadow_dash conjure_imps
 Cellar Ghoul | undead | lanky | bone mud rust | D&D: ghoul | skin=undead hair=shaggy/ash face=mad/lumen/cracks+veins top=tunic/knee/-/runes ragged sleeves=torn legs=baggy boots=bare gloves=wraps | assassin | vampiric_bite lunge
 Hollow Squire | undead | average | iron soot rust | Berserk | skin=undead mask=skull top=tabard/knee/chain armor=pauldrons+helm/chain cape=tattered prop=sword off=shield | tank | shield_bash bulwark

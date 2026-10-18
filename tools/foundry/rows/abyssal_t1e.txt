@@ -1,3 +1,4 @@
+# Why: abyssal road, tier 1, the gutters (floors -1..-200): imps, ghouls, hollow squires, cultists, goblin raiders, slimes. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Kitchen Knife Poltergeist | undead | small | silver ink crimson | Spirited Away | skin=ashen mask=half/silver hair=bald top=tunic/thigh/-/checks legs=shorts boots=shoes gloves=gloves prop=dagger off=dagger | assassin | shadow_step lunge
 Sinkhole Frog Cultist | aquatic | small | swamp lime mud | D&D: bullywug | skin=green ears=fin hair=bald face=cheerful/lime top=tunic/knee/leather legs=bare boots=bare prop=trident | skirmisher | pounce acid_spit
 Black Wool Shepherd Dog | beast | slim | charcoal wine bone | Berserk | skin=ashen ears=wolf tail=wolf/charcoal hair=spiky_back/charcoal face=sinister/crimson top=coat/thigh/-/-/skull neck=fur legs=trousers boots=boots/calf prop=sword | skirmisher | lunge call_wolves

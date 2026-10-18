@@ -1,3 +1,4 @@
+# Why: holy road, tier 1, the Dawn Marches (floors 1-200): squires, sprites, beastfolk of the sunlit wilds, apprentices. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Tunnel Kobold | beast | small | rust sand iron | D&D: kobold | skin=red ears=pointed horns=small tail=lizard hair=crop/ember face=grin/amber top=vest/-/leather legs=shorts boots=bare prop=dagger | skirmisher | dash swarm_call
 Hearth Sprite | elemental | child | flame honey ember | Fairy Tail | skin=fair ears=elf wings=fairy hair=twin_tails/flame face=cheerful/amber top=dress/thigh legs=shorts boots=shoes prop=wand glow=sunfire | caster | fire_bolt mending_light
 Dawn Squire | construct | average | white gold sky | Black Clover | skin=light hair=short/wheat face=stern/azure top=tabard/knee/plate armor=pauldrons+gorget cape=cape prop=sword off=shield | tank | shield_bash shield_wall

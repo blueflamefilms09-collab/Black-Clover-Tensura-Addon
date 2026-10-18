@@ -1,3 +1,4 @@
+# Why: abyssal road, tier 1, the gutters (floors -1..-200): imps, ghouls, hollow squires, cultists, goblin raiders, slimes. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Gnoll Pup Raider | beast | average | rust tan bone | D&D: gnoll | skin=tan ears=wolf tail=wolf/rust hair=wild_mane/umber face=mad/amber/fang_marks top=vest/-/leather/stripes legs=baggy boots=bare gloves=wraps prop=spear | skirmisher | pounce call_wolves
 Orc Whelp Slasher | goblin | broad | olive brown bone | D&D: orc | skin=green horns=small/bone hair=mohawk/ink face=angry/amber/war_paint top=bare armor=pauldrons/leather legs=chaps boots=bare prop=axe | brute | cleave enrage
 Drowned Dockhand | undead | broad | teal mud bone | Konosuba | skin=undead ears=fin hair=shaggy/teal face=dead/aqua top=vest/-/-/stripes legs=trousers boots=boots/calf gloves=wraps prop=hammer | brute | ground_slam miasma

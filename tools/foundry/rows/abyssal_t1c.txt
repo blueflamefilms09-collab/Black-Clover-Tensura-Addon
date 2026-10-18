@@ -1,3 +1,4 @@
+# Why: abyssal road, tier 1, the gutters (floors -1..-200): imps, ghouls, hollow squires, cultists, goblin raiders, slimes. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Cap and Cloak Myconid Preacher | slime | lanky | wine cream umber | D&D: myconid | skin=pale hair=afro/wine face=calm/lemon top=robe/floor/-/dots acc=flower+satchel boots=bare prop=staff | support | miasma regrowth
 Skull Lantern Penitent | undead | lanky | soot charcoal amber | Dark Souls | skin=undead mask=skull/ash hair=hood/soot top=robe/ankle/-/-/skull cape=tattered/ragged boots=bare prop=orb pglow glow=hellfire | caster | fire_bolt dread_gaze
 Cursed Spirit Grunt | demon | child | smoke gloom crimson | Jujutsu Kaisen | skin=grey hair=bald face=mad/crimson/cracks top=bare ears=pointed horns=small/ash tail=devil/smoke legs=bare boots=bare gloves=wraps | assassin | shadow_dash vampiric_bite

@@ -1,3 +1,4 @@
+# Why: abyssal road, tier 3, the deep halls (floors -401..-600): trolls, wraiths, mind flayers, devils, banshees, ghoul kings. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
 Stone Chain Ogre Magus | ogre | huge | slate iron violet | D&D: ogre mage | skin=blue horns=small/bone hair=wild_mane/ink face=smirk/violet top=robe/knee/-/runes/eye neck=necklace gloves=wraps boots=bare prop=staff size=1.4 | caster | chain_pull thunder_clap
 Crawling Maw Gibbering Horde | slime | child | ash magenta bone | D&D: gibbering mouther | skin=grey hair=bald face=mad/crimson top=bare legs=shorts boots=bare gloves=wraps | assassin | acid_spit vampiric_bite
 Siren of the Drowned Choir | aquatic | slim | teal wine pearl | Frieren | skin=pale ears=fin hair=long_wavy/teal face=calm/aqua lashes top=dress/floor/-/-/moon acc=tiara boots=bare prop=wand | caster | soul_siphon ice_bind
