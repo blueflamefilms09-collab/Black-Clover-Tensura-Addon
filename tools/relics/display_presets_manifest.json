@@ -31,6 +31,21 @@
       "length_blocks": 0.686
     },
     {
+      "id": "astral_edge",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.01,
+        0.94
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0,
+      "rewritten": true
+    },
+    {
       "id": "astralaria",
       "action": "preset",
       "length_blocks": 2.071,
@@ -458,6 +473,21 @@
       "id": "eschaton",
       "action": "keep",
       "length_blocks": 1.353
+    },
+    {
+      "id": "fenrir_sword",
+      "action": "preset",
+      "length_blocks": 2.176,
+      "first_person_scale": 0.483,
+      "first_person_translation_px": [
+        1.13,
+        1.83,
+        0.56
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.367,
+      "fixed_scale": 0.689,
+      "rewritten": true
     },
     {
       "id": "flamecutter",
@@ -1091,6 +1121,41 @@
       "tip_out_of_view": false,
       "ground_scale": 0.386,
       "fixed_scale": 0.724
+    },
+    {
+      "id": "runic_sword_ancient",
+      "action": "preset",
+      "length_blocks": 1.529,
+      "first_person_scale": 0.677,
+      "first_person_translation_px": [
+        1.13,
+        3.13,
+        0.99
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0,
+      "rewritten": true
+    },
+    {
+      "id": "runic_sword_mythical",
+      "action": "preset",
+      "length_blocks": 1.824,
+      "first_person_scale": 0.553,
+      "first_person_translation_px": [
+        1.13,
+        2.31,
+        0.77
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.438,
+      "fixed_scale": 0.822,
+      "rewritten": true
+    },
+    {
+      "id": "runic_sword_renewed",
+      "action": "keep",
+      "length_blocks": 1.353
     },
     {
       "id": "scepter_of_the_double_moon",
@@ -1753,6 +1818,21 @@
       "tip_out_of_view": false,
       "ground_scale": 0.5,
       "fixed_scale": 1.0
+    },
+    {
+      "id": "void_edge",
+      "action": "preset",
+      "length_blocks": 1.588,
+      "first_person_scale": 0.661,
+      "first_person_translation_px": [
+        1.13,
+        2.88,
+        0.92
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0,
+      "rewritten": true
     },
     {
       "id": "wand_o_wisp",
