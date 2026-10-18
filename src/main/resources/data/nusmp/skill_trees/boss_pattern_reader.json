@@ -1,0 +1,1070 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Boss Pattern Reader",
+  "desc": "Every boss repeats itself. Mark the pattern, step out of the telegraphed hit, and strike during the opening. Takes patience, rewards the thorough.",
+  "book": "nusmp:boss_pattern_reader_book",
+  "book_name": "Strategy Guide of the Third Phase",
+  "book_lore": "On the fourth attempt he stopped dying.",
+  "color": "#2980B9",
+  "icon": "minecraft:spyglass",
+  "class_id": "boss_pattern_reader",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/boss_pattern_reader.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "stellar",
+  "nodes": [
+    {
+      "id": "observation_stance",
+      "name": "Observation Stance",
+      "desc": "Watch and wait: sturdier and more likely to crit, but you swing slowly.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "opening_stance",
+      "name": "Opening Stance",
+      "desc": "Commit to the opening: more damage and speed, less armor.",
+      "parents": [
+        {
+          "node": "observation_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "telegraph_vision",
+      "name": "Telegraph Vision",
+      "desc": "A hair longer reach on openings.",
+      "parents": [
+        {
+          "node": "observation_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "phase_two_stamina",
+      "name": "Phase Two Stamina",
+      "desc": "More hearts for the long fight.",
+      "parents": [
+        {
+          "node": "opening_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "dodge_roll_legs",
+      "name": "Dodge-Roll Legs",
+      "desc": "Faster steps to stay clear of the telegraph.",
+      "parents": [
+        {
+          "node": "observation_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "weak_point_tag",
+      "name": "Weak Point Tag",
+      "desc": "Tag the boss's weak point: it takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "observation_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:target"
+    },
+    {
+      "id": "telegraph_sidestep",
+      "name": "Telegraph Sidestep",
+      "desc": "A short teleport out of the boss's attack line.",
+      "parents": [
+        {
+          "node": "opening_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "pattern_breaker",
+      "name": "Pattern Breaker",
+      "desc": "Throw the foes in front off their rhythm: they are slowed and weakened.",
+      "parents": [
+        {
+          "node": "weak_point_tag",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "weakness",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "window_shot",
+      "name": "Window Shot",
+      "desc": "A piercing beam fired into the opening between attacks.",
+      "parents": [
+        {
+          "node": "telegraph_sidestep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "bait_and_reflect",
+      "name": "Bait and Reflect",
+      "desc": "For a few seconds, part of any blow taken is flung back at the boss.",
+      "parents": [
+        {
+          "node": "pattern_breaker",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "phase_break_wave",
+      "name": "Phase Break Wave",
+      "desc": "A ground wave that cracks the floor under the boss's feet.",
+      "parents": [
+        {
+          "node": "window_shot",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:cracked_stone_bricks"
+    },
+    {
+      "id": "punish_leap",
+      "name": "Punish Leap",
+      "desc": "Leap on a stunned foe and hammer the ground around it.",
+      "parents": [
+        {
+          "node": "bait_and_reflect",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "boss_slayer_insight",
+      "name": "Boss Slayer Insight",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "weak_point_tag",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "timing_instincts",
+      "name": "Timing Instincts",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "telegraph_sidestep",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "weak_spot_crits",
+      "name": "Weak Spot Crits",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "pattern_breaker",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "final_phase_execution",
+      "name": "Final Phase Execution",
+      "desc": "Much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "window_shot",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "blast_mitigation",
+      "name": "Blast Mitigation",
+      "desc": "You take less damage from explosions.",
+      "parents": [
+        {
+          "node": "bait_and_reflect",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "learning_curve",
+      "name": "Learning Curve",
+      "desc": "Consecutive blows build momentum until you stop.",
+      "parents": [
+        {
+          "node": "phase_break_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "phase_shift_reprieve",
+      "name": "Phase Shift Reprieve",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "punish_leap",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "perfect_run_strike",
+      "name": "Perfect Run Strike",
+      "desc": "The run you never failed: a single devastating strike on a marked foe.",
+      "parents": [
+        {
+          "node": "punish_leap",
+          "level": 3
+        },
+        {
+          "node": "phase_shift_reprieve",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92
+        ],
+        "bonus": [
+          1.5,
+          1.725,
+          1.95
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "enrage_timer_meteor",
+      "name": "Enrage Timer Meteor",
+      "desc": "Call the meteor you saved for the last phase: it lands where you look.",
+      "parents": [
+        {
+          "node": "phase_break_wave",
+          "level": 3
+        },
+        {
+          "node": "learning_curve",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:magma_block"
+    }
+  ]
+}

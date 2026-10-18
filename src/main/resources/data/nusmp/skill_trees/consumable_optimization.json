@@ -1,0 +1,1057 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Consumable Optimization",
+  "desc": "Potions are not a panic button but a resource: pre-buff, time the heal, share the surplus. A knight with a full belt is a knight who does not fall.",
+  "book": "nusmp:consumable_optimization_book",
+  "book_name": "Belt Inventory of the Prepared",
+  "book_lore": "Seventeen potions, and not one of them drunk too late.",
+  "color": "#16A085",
+  "icon": "minecraft:brewing_stand",
+  "class_id": "consumable_optimization",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/consumable_optimization.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "pre_buff_routine",
+      "name": "Pre-Buff Routine",
+      "desc": "Everything quaffed before the fight: stronger regeneration and a little armor, a touch slower.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          -0.03,
+          -0.036,
+          -0.042
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.5,
+          1.8,
+          2.1
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "emergency_dose",
+      "name": "Emergency Dose",
+      "desc": "Ready to go in a pinch: faster and sharper, with the buffer thin.",
+      "parents": [
+        {
+          "node": "pre_buff_routine",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:splash_potion"
+    },
+    {
+      "id": "belt_pouch",
+      "name": "Belt Pouch",
+      "desc": "A few extra hearts from a well-stocked belt.",
+      "parents": [
+        {
+          "node": "pre_buff_routine",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:leather"
+    },
+    {
+      "id": "steady_hands",
+      "name": "Steady Hands",
+      "desc": "Slightly faster swings.",
+      "parents": [
+        {
+          "node": "emergency_dose",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "alchemist_s_luck",
+      "name": "Alchemist's Luck",
+      "desc": "A small bonus to luck.",
+      "parents": [
+        {
+          "node": "pre_buff_routine",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "timed_heal",
+      "name": "Timed Heal",
+      "desc": "Down a perfectly timed potion: an immediate heal and a slow regeneration.",
+      "parents": [
+        {
+          "node": "pre_buff_routine",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "amount": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "regen_seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "poison_flask",
+      "name": "Poison Flask",
+      "desc": "Hurl a flask of noxious fumes in a cone: foes in front are poisoned and weakened.",
+      "parents": [
+        {
+          "node": "emergency_dose",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "poison",
+        "effect2": "weakness",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "strength_brew",
+      "name": "Strength Brew",
+      "desc": "Drink the strength brew with a swig of speed.",
+      "parents": [
+        {
+          "node": "timed_heal",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          18.0,
+          21.0,
+          23.0,
+          26.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "healing_splash",
+      "name": "Healing Splash",
+      "desc": "Splash a healing potion on yourself and your allies around you.",
+      "parents": [
+        {
+          "node": "poison_flask",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:splash_potion"
+    },
+    {
+      "id": "vampire_draught",
+      "name": "Vampire Draught",
+      "desc": "A hungry sip: strike a foe in front of you and heal from the blow.",
+      "parents": [
+        {
+          "node": "strength_brew",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.4,
+          0.448,
+          0.496,
+          0.544
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "group_buff_round",
+      "name": "Group Buff Round",
+      "desc": "Pass the flask around: you and your allies gain regeneration.",
+      "parents": [
+        {
+          "node": "healing_splash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "absorption_tonic",
+      "name": "Absorption Tonic",
+      "desc": "Drink an absorption tonic: a shield of golden hearts.",
+      "parents": [
+        {
+          "node": "vampire_draught",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "belt_maintenance",
+      "name": "Belt Maintenance",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "timed_heal",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "dry_spell_recovery",
+      "name": "Dry Spell Recovery",
+      "desc": "You heal while it rains.",
+      "parents": [
+        {
+          "node": "poison_flask",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "raining"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "ration_management",
+      "name": "Ration Management",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "strength_brew",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "hydrated",
+      "name": "Hydrated",
+      "desc": "You have regeneration while in water.",
+      "parents": [
+        {
+          "node": "healing_splash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "regeneration",
+        "condition": "in_water"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "magic_resistance_elixir",
+      "name": "Magic Resistance Elixir",
+      "desc": "Magic hurts you less.",
+      "parents": [
+        {
+          "node": "vampire_draught",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:dragon_breath"
+    },
+    {
+      "id": "salvage_rations",
+      "name": "Salvage Rations",
+      "desc": "A kill heals you and may refill your regeneration.",
+      "parents": [
+        {
+          "node": "group_buff_round",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "regeneration"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "shared_flask_aura",
+      "name": "Shared Flask Aura",
+      "desc": "Allies close to you regenerate.",
+      "parents": [
+        {
+          "node": "absorption_tonic",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "elixir_overflow",
+      "name": "Elixir Overflow",
+      "desc": "Burst the flask over the whole party: a big heal for you and everyone close.",
+      "parents": [
+        {
+          "node": "absorption_tonic",
+          "level": 3
+        },
+        {
+          "node": "shared_flask_aura",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14
+        ],
+        "amount": [
+          24.0,
+          30,
+          30
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "mass_buff_banquet",
+      "name": "Mass Buff Banquet",
+      "desc": "A feast of effects: you and your allies gain absorption for a long while.",
+      "parents": [
+        {
+          "node": "group_buff_round",
+          "level": 3
+        },
+        {
+          "node": "salvage_rations",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "absorption",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "seconds": [
+          22.0,
+          25.0,
+          29.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:cake"
+    }
+  ]
+}

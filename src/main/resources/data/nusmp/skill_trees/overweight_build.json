@@ -1,0 +1,1102 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Overweight Build",
+  "desc": "Wear more armor than the game was ever meant to let you carry. You are slow, you cannot be moved, and what hits you pays for it.",
+  "book": "nusmp:overweight_build_book",
+  "book_name": "Inventory of the Immovable",
+  "book_lore": "The encumbrance bar was red. He kept buying plate.",
+  "color": "#5D6D7E",
+  "icon": "minecraft:netherite_chestplate",
+  "class_id": "overweight_build",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/overweight_build.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "iron",
+  "nodes": [
+    {
+      "id": "overencumbered_fortress",
+      "name": "Overencumbered Fortress",
+      "desc": "Every plate on at once: huge armor and knockback resistance, much slower and a little weaker in offense.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          10.0,
+          12.5,
+          15.0
+        ],
+        "speed_pct": [
+          -0.25,
+          -0.3,
+          -0.35
+        ],
+        "knockback_res": [
+          0.8,
+          0.96,
+          1.0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:netherite_chestplate"
+    },
+    {
+      "id": "loosened_straps",
+      "name": "Loosened Straps",
+      "desc": "Unbuckle a few plates: lighter and quicker, with the weight bonus gone.",
+      "parents": [
+        {
+          "node": "overencumbered_fortress",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "dead_weight_plates",
+      "name": "Dead Weight Plates",
+      "desc": "A permanent bonus to armor.",
+      "parents": [
+        {
+          "node": "overencumbered_fortress",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_ingot"
+    },
+    {
+      "id": "plate_toughness",
+      "name": "Plate Toughness",
+      "desc": "Better armor toughness against heavy hits.",
+      "parents": [
+        {
+          "node": "loosened_straps",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:netherite_scrap"
+    },
+    {
+      "id": "anchor_frame",
+      "name": "Anchor Frame",
+      "desc": "You are very hard to knock back.",
+      "parents": [
+        {
+          "node": "overencumbered_fortress",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.15,
+          0.1875,
+          0.225,
+          0.2625,
+          0.3
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "big_boned_constitution",
+      "name": "Big-Boned Constitution",
+      "desc": "More hearts to carry the weight.",
+      "parents": [
+        {
+          "node": "loosened_straps",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:cooked_porkchop"
+    },
+    {
+      "id": "plate_wall",
+      "name": "Plate Wall",
+      "desc": "Plant yourself behind a thick barrier of absorption hearts.",
+      "parents": [
+        {
+          "node": "overencumbered_fortress",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "falling_fortress",
+      "name": "Falling Fortress",
+      "desc": "Leap and crash down with all your weight on the foes below.",
+      "parents": [
+        {
+          "node": "loosened_straps",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.6,
+          0.648,
+          0.696,
+          0.744
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "weight_of_judgment",
+      "name": "Weight of Judgment",
+      "desc": "Slam down so hard that every creature close to you freezes for an instant.",
+      "parents": [
+        {
+          "node": "plate_wall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:netherite_block"
+    },
+    {
+      "id": "shield_drag",
+      "name": "Shield Drag",
+      "desc": "Haul your shield along the ground and send a shock-wave forward.",
+      "parents": [
+        {
+          "node": "falling_fortress",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "lift_and_toss",
+      "name": "Lift-and-Toss",
+      "desc": "Heave the nearest foe upward off the floor.",
+      "parents": [
+        {
+          "node": "weight_of_judgment",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "heavy_breathing",
+      "name": "Heavy Breathing",
+      "desc": "Catch your breath, mend, and regenerate slowly.",
+      "parents": [
+        {
+          "node": "shield_drag",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "regen_seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "weight_lock",
+      "name": "Weight Lock",
+      "desc": "Gird yourself: resistance for a good while, and a glowing outline.",
+      "parents": [
+        {
+          "node": "lift_and_toss",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "resistance",
+        "effect2": "glowing",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          16.0,
+          18.0,
+          21.0,
+          23.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "dead_weight_dampening",
+      "name": "Dead Weight Dampening",
+      "desc": "You take less damage at full health.",
+      "parents": [
+        {
+          "node": "plate_wall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "projectile_deflection",
+      "name": "Projectile Deflection",
+      "desc": "Arrows and bolts hurt much less.",
+      "parents": [
+        {
+          "node": "falling_fortress",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "projectile"
+      },
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "flame_proof_plating",
+      "name": "Flame-Proof Plating",
+      "desc": "Fire hurts less.",
+      "parents": [
+        {
+          "node": "weight_of_judgment",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "return_spikes",
+      "name": "Return Spikes",
+      "desc": "Part of every blow is thrown back at whoever struck you.",
+      "parents": [
+        {
+          "node": "shield_drag",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "meditation_in_plate",
+      "name": "Meditation in Plate",
+      "desc": "You heal while sneaking.",
+      "parents": [
+        {
+          "node": "lift_and_toss",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "bulldozer",
+      "name": "Bulldozer",
+      "desc": "Your hits may shove foes back.",
+      "parents": [
+        {
+          "node": "heavy_breathing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "not_going_down",
+      "name": "Not Going Down",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "weight_lock",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "immovable_object",
+      "name": "Immovable Object",
+      "desc": "Become a brick wall: a vast absorption shield and a resistance surge.",
+      "parents": [
+        {
+          "node": "weight_lock",
+          "level": 3
+        },
+        {
+          "node": "not_going_down",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          14.0,
+          18.0,
+          20.0
+        ],
+        "seconds": [
+          14.0,
+          15.0,
+          17.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_block"
+    },
+    {
+      "id": "meteoric_landing",
+      "name": "Meteoric Landing",
+      "desc": "Leap high and fall like a meteor, shaking the ground in a wide circle.",
+      "parents": [
+        {
+          "node": "heavy_breathing",
+          "level": 3
+        },
+        {
+          "node": "bulldozer",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812
+        ],
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:obsidian"
+    }
+  ]
+}

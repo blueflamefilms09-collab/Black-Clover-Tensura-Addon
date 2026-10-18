@@ -1,0 +1,1102 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Damage Rotation Priority",
+  "desc": "A perfectly practiced opener, then a loop of attacks in the exact order that does the most damage. Interrupt him and the rotation stops; leave him alone and the numbers climb.",
+  "book": "nusmp:damage_rotation_book",
+  "book_name": "Priority List of the Rotation",
+  "book_lore": "Skill one, skill three, skill two, repeat. Do not miss.",
+  "color": "#E74C3C",
+  "icon": "minecraft:blaze_rod",
+  "class_id": "damage_rotation",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/damage_rotation.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "magma",
+  "nodes": [
+    {
+      "id": "opener_burst",
+      "name": "Opener Burst",
+      "desc": "Pour everything into the first few seconds: big damage, a little speed, but the guard is down.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "sustained_rotation",
+      "name": "Sustained Rotation",
+      "desc": "Smooth, repeatable damage: crit chance and speed, with a modest damage bonus.",
+      "parents": [
+        {
+          "node": "opener_burst",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "rotation_tempo",
+      "name": "Rotation Tempo",
+      "desc": "Swing noticeably faster.",
+      "parents": [
+        {
+          "node": "opener_burst",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.07,
+          0.0875,
+          0.105,
+          0.1225,
+          0.14
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "skill_priority_power",
+      "name": "Skill Priority Power",
+      "desc": "A permanent bonus to attack damage.",
+      "parents": [
+        {
+          "node": "sustained_rotation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "cooldown_footwork",
+      "name": "Cooldown Footwork",
+      "desc": "Move faster between casts.",
+      "parents": [
+        {
+          "node": "opener_burst",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "opener_crescent",
+      "name": "Opener Crescent",
+      "desc": "The first move in the loop: a wide cone of cutting wind.",
+      "parents": [
+        {
+          "node": "opener_burst",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "chain_combo_link",
+      "name": "Chain Combo Link",
+      "desc": "The second link: a blow that jumps from foe to foe.",
+      "parents": [
+        {
+          "node": "sustained_rotation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "launcher_skill",
+      "name": "Launcher Skill",
+      "desc": "The third link: launch the foe in front of you into the air.",
+      "parents": [
+        {
+          "node": "opener_crescent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "filler_volley",
+      "name": "Filler Volley",
+      "desc": "A fast volley at the target when the big skills are on cooldown.",
+      "parents": [
+        {
+          "node": "chain_combo_link",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:bow"
+    },
+    {
+      "id": "gap_closer",
+      "name": "Gap-Closer",
+      "desc": "Dash to the target without breaking the rotation.",
+      "parents": [
+        {
+          "node": "launcher_skill",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "execute_phase",
+      "name": "Execute Phase",
+      "desc": "Low-health priority: it hits much harder the weaker the target.",
+      "parents": [
+        {
+          "node": "filler_volley",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.7,
+          0.805,
+          0.91,
+          1.015
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "spin_to_win_window",
+      "name": "Spin-To-Win Window",
+      "desc": "The long cooldown window: spin and strike every foe around you.",
+      "parents": [
+        {
+          "node": "gap_closer",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "stacking_momentum",
+      "name": "Stacking Momentum",
+      "desc": "Consecutive blows build up strength.",
+      "parents": [
+        {
+          "node": "opener_crescent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          7.0,
+          9.0,
+          11.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "rotation_combo",
+      "name": "Rotation Combo",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "chain_combo_link",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.7,
+          0.84,
+          0.98,
+          1.12
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "crit_rating",
+      "name": "Crit Rating",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "launcher_skill",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.16,
+          0.192,
+          0.224,
+          0.256
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "fight_active_bonus",
+      "name": "Fight-Active Bonus",
+      "desc": "More damage while in combat.",
+      "parents": [
+        {
+          "node": "filler_volley",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "weakness_applied",
+      "name": "Weakness Applied",
+      "desc": "Your blows may weaken the foe.",
+      "parents": [
+        {
+          "node": "gap_closer",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "weakness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "lifesteal_rating",
+      "name": "Lifesteal Rating",
+      "desc": "Heal for a share of the damage you deal.",
+      "parents": [
+        {
+          "node": "execute_phase",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "burn_phase_bonus",
+      "name": "Burn Phase Bonus",
+      "desc": "Much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "spin_to_win_window",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "cooldown_reset_barrage",
+      "name": "Cooldown Reset Barrage",
+      "desc": "Everything at once: a huge volley of shots into the target.",
+      "parents": [
+        {
+          "node": "spin_to_win_window",
+          "level": 3
+        },
+        {
+          "node": "burn_phase_bonus",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5
+        ],
+        "shots": [
+          12.0,
+          16.0,
+          16.0
+        ],
+        "range": [
+          20.0,
+          21.6,
+          23.2
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:crossbow"
+    },
+    {
+      "id": "perfect_loop_slash",
+      "name": "Perfect Loop Slash",
+      "desc": "The loop complete: a giant cone slash that clears the whole front.",
+      "parents": [
+        {
+          "node": "execute_phase",
+          "level": 3
+        },
+        {
+          "node": "lifesteal_rating",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          7.0,
+          7.56,
+          8
+        ],
+        "half_angle": [
+          65.0,
+          71.5,
+          78.0
+        ],
+        "targets": [
+          10.0,
+          12.0,
+          12.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_sword"
+    }
+  ]
+}
