@@ -11103,5 +11103,17 @@
   "nusmp.skill.hk_howl_of_ruin": "Howl of Ruin",
   "nusmp.skill.hk_howl_of_ruin.description": "Weaken, slow and drive back the hostile creatures around you. (Skill Tree: Smoldering Fang of Insanity.)",
   "nusmp.skill.hk_fang_of_insanity": "Fang of Insanity",
-  "nusmp.skill.hk_fang_of_insanity.description": "Secret Art. Leap at the nearest foe and bite it hard: it withers, you heal for a share of the bite, and the effort leaves you weak. (Skill Tree: Smoldering Fang of Insanity.)"
+  "nusmp.skill.hk_fang_of_insanity.description": "Secret Art. Leap at the nearest foe and bite it hard: it withers, you heal for a share of the bite, and the effort leaves you weak. (Skill Tree: Smoldering Fang of Insanity.)",
+  "tooltip.nusmp.skill_book.franchise": "From: %s",
+  "franchise.nusmp.exiled_heavy_knight": "The Exiled Heavy Knight",
+  "franchise.nusmp.tensura": "That Time I Got Reincarnated as a Slime",
+  "franchise.nusmp.black_clover": "Black Clover",
+  "franchise.nusmp.magi": "Magi: The Labyrinth of Magic",
+  "franchise.nusmp.solo_leveling": "Solo Leveling",
+  "franchise.nusmp.danmachi": "DanMachi",
+  "franchise.nusmp.fairy_tail": "Fairy Tail",
+  "franchise.nusmp.tbate": "The Beginning After the End",
+  "franchise.nusmp.tower_of_god": "Tower of God",
+  "franchise.nusmp.god_of_high_school": "The God of High School",
+  "franchise.nusmp.omniscient_readers_viewpoint": "Omniscient Reader's Viewpoint"
 }

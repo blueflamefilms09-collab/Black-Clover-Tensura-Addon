@@ -15,12 +15,544 @@
  ],
  "prop_steps": 20,
  "lines": {
+  "abyssal_black_flame": {
+   "book": "nusmp:abyssal_black_flame_book",
+   "name": "Abyssal Black Flame",
+   "book_name": "Grimoire of the Black Flame Dragon",
+   "color": "#6B2FA0",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "aether_bow": {
+   "book": "nusmp:aether_bow_book",
+   "name": "Aether Bow Mastery",
+   "book_name": "Quiver Without Bottom",
+   "color": "#8BC34A",
+   "franchise": "tbate"
+  },
+  "aether_destruction": {
+   "book": "nusmp:aether_destruction_book",
+   "name": "Aether Arts: Destruction",
+   "book_name": "Aether Scroll of Ruin",
+   "color": "#AD1457",
+   "franchise": "tbate"
+  },
+  "aether_step": {
+   "book": "nusmp:aether_step_book",
+   "name": "Aether Step",
+   "book_name": "Treatise on Stepping Between",
+   "color": "#7C4DFF",
+   "franchise": "tbate"
+  },
+  "aevum_hourglass": {
+   "book": "nusmp:aevum_hourglass_book",
+   "name": "Aevum: Hourglass of Ages",
+   "book_name": "The Aevum Hourglass",
+   "color": "#FFB300",
+   "franchise": "tbate"
+  },
+  "aggro_manipulation": {
+   "book": "nusmp:aggro_manipulation_book",
+   "name": "Threat Table Mastery",
+   "book_name": "Ledger of the Held Line",
+   "color": "#B03A2E",
+   "franchise": "exiled_heavy_knight"
+  },
+  "airiel_wind_maiden": {
+   "book": "nusmp:airiel_wind_maiden_book",
+   "name": "Airiel: Wind Maiden",
+   "book_name": "Gale Armor Treatise",
+   "color": "#F3E07A",
+   "franchise": "danmachi"
+  },
+  "amazon_berserker": {
+   "book": "nusmp:amazon_berserker_book",
+   "name": "Amazon Berserker",
+   "book_name": "War Songs of the Amazon Tribe",
+   "color": "#E0453A",
+   "franchise": "danmachi"
+  },
+  "animation_cancel": {
+   "book": "nusmp:animation_cancel_book",
+   "name": "Animation Cancel Technique",
+   "book_name": "Frame Data of the Skipped Heartbeat",
+   "color": "#1ABC9C",
+   "franchise": "exiled_heavy_knight"
+  },
+  "anti_magic_blade_dancer": {
+   "book": "nusmp:anti_magic_blade_dancer_book",
+   "name": "Anti-Magic Blade Dancer",
+   "book_name": "Black Blade Primer",
+   "color": "#2C2C34",
+   "franchise": "black_clover"
+  },
+  "arc_of_time": {
+   "book": "nusmp:arc_of_time_book",
+   "name": "Arc of Time",
+   "book_name": "Hourglass of the Lost Arc",
+   "color": "#7E57C2",
+   "franchise": "fairy_tail"
+  },
+  "argonaut_charge": {
+   "book": "nusmp:argonaut_charge_book",
+   "name": "Argonaut",
+   "book_name": "The Charge of the Hero",
+   "color": "#4AA3FF",
+   "franchise": "danmachi"
+  },
+  "asura_ascension": {
+   "book": "nusmp:asura_ascension_book",
+   "name": "Asura Ascension",
+   "book_name": "Hymn of Epheotus",
+   "color": "#FFD700",
+   "franchise": "tbate"
+  },
   "basic_swordsmanship": {
    "book": "nusmp:basic_swordsmanship_book",
    "name": "Basic Swordsmanship",
    "book_name": "Basic Swordsmanship",
    "color": "#C9D2E0",
    "franchise": "exiled_heavy_knight"
+  },
+  "beast_arm_takeover": {
+   "book": "nusmp:beast_arm_takeover_book",
+   "name": "Take-Over: Beast Arm",
+   "book_name": "Real Man's Take-Over Manual",
+   "color": "#6D4C41",
+   "franchise": "fairy_tail"
+  },
+  "beast_communion": {
+   "book": "nusmp:beast_communion_book",
+   "name": "Beast Communion",
+   "book_name": "Whisper Book of the Beast Child",
+   "color": "#9CCC65",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "beast_monarch": {
+   "book": "nusmp:beast_monarch_book",
+   "name": "Monarch of Beasts",
+   "book_name": "The Alpha's Almanac",
+   "color": "#C8863A",
+   "franchise": "solo_leveling"
+  },
+  "beast_will": {
+   "book": "nusmp:beast_will_book",
+   "name": "Beast Will",
+   "book_name": "Primal Will Codex",
+   "color": "#8E0000",
+   "franchise": "tbate"
+  },
+  "beastkin_lord_carrion": {
+   "book": "nusmp:beastkin_lord_carrion_book",
+   "name": "Carrion's Beast Transformation",
+   "book_name": "Hunt Songs of the Beast Lord",
+   "color": "#A04000",
+   "franchise": "tensura"
+  },
+  "bell_firebolt": {
+   "book": "nusmp:bell_firebolt_book",
+   "name": "Bell's Firebolt",
+   "book_name": "Firebolt: A Rookie's Grimoire",
+   "color": "#FF4D2E",
+   "franchise": "danmachi"
+  },
+  "beru_ant_king": {
+   "book": "nusmp:beru_ant_king_book",
+   "name": "Beru, the Ant King",
+   "book_name": "Chronicle of the Chitin Throne",
+   "color": "#2F6B3A",
+   "franchise": "solo_leveling"
+  },
+  "beta_tester_insight": {
+   "book": "nusmp:beta_tester_insight_book",
+   "name": "Beta Tester's Insight",
+   "book_name": "Patch Notes of the Old Version",
+   "color": "#9B59B6",
+   "franchise": "exiled_heavy_knight"
+  },
+  "black_bulls_vanguard": {
+   "book": "nusmp:black_bulls_vanguard_book",
+   "name": "Black Bulls Vanguard",
+   "book_name": "Hideout Brawl Handbook",
+   "color": "#3A3340",
+   "franchise": "black_clover"
+  },
+  "black_heavenly_demon_sword": {
+   "book": "nusmp:black_heavenly_demon_sword_book",
+   "name": "Black Heavenly Demon Sword",
+   "book_name": "Manual of the Black Heavenly Edge",
+   "color": "#B3202A",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "bloodlust_pressure": {
+   "book": "nusmp:bloodlust_pressure_book",
+   "name": "Bloodlust",
+   "book_name": "Primer on Killing Intent",
+   "color": "#C1272D",
+   "franchise": "solo_leveling"
+  },
+  "blue_rose_cavalier": {
+   "book": "nusmp:blue_rose_cavalier_book",
+   "name": "Blue Rose Cavalier",
+   "book_name": "Blue Rose Chivalry",
+   "color": "#3E6FD1",
+   "franchise": "black_clover"
+  },
+  "boar_warrior_might": {
+   "book": "nusmp:boar_warrior_might_book",
+   "name": "Boar Warrior's Might",
+   "book_name": "Chronicle of the Unbeaten Warrior",
+   "color": "#6B4A2B",
+   "franchise": "danmachi"
+  },
+  "bonded_beast": {
+   "book": "nusmp:bonded_beast_book",
+   "name": "Bonded Beast: Sylv's Wing",
+   "book_name": "The Bond Journal",
+   "color": "#4DD0E1",
+   "franchise": "tbate"
+  },
+  "bookmark": {
+   "book": "nusmp:bookmark_book",
+   "name": "Bookmark",
+   "book_name": "Ribbon-Bound Tome",
+   "color": "#C0504D",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "borg_barrier_adept": {
+   "book": "nusmp:borg_barrier_adept_book",
+   "name": "Borg Barrier Adept",
+   "book_name": "Treatise on the Borg",
+   "color": "#7FD1C6",
+   "franchise": "magi"
+  },
+  "boss_pattern_reader": {
+   "book": "nusmp:boss_pattern_reader_book",
+   "name": "Boss Pattern Reader",
+   "book_name": "Strategy Guide of the Third Phase",
+   "color": "#2980B9",
+   "franchise": "exiled_heavy_knight"
+  },
+  "braver_command": {
+   "book": "nusmp:braver_command_book",
+   "name": "Braver's Command",
+   "book_name": "Tactics of the Brave Captain",
+   "color": "#E2C25A",
+   "franchise": "danmachi"
+  },
+  "breaking_the_sky_sword": {
+   "book": "nusmp:breaking_the_sky_sword_book",
+   "name": "Breaking the Sky Sword",
+   "book_name": "Treatise on the Parted Heavens",
+   "color": "#6EC6FF",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "card_magic": {
+   "book": "nusmp:card_magic_book",
+   "name": "Card Magic",
+   "book_name": "Fortune Deck of the Tavern Queen",
+   "color": "#E91E63",
+   "franchise": "fairy_tail"
+  },
+  "cauldron_witch_alchemist": {
+   "book": "nusmp:cauldron_witch_alchemist_book",
+   "name": "Cauldron Witch Alchemist",
+   "book_name": "Witch's Recipe Folio",
+   "color": "#2E8B6A",
+   "franchise": "black_clover"
+  },
+  "celestial_spirit_magic": {
+   "book": "nusmp:celestial_spirit_magic_book",
+   "name": "Celestial Spirit Magic",
+   "book_name": "Keyring of the Twelve Gates",
+   "color": "#F1C40F",
+   "franchise": "fairy_tail"
+  },
+  "character_list": {
+   "book": "nusmp:character_list_book",
+   "name": "Character List",
+   "book_name": "Dramatis Personae",
+   "color": "#E0B24A",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "cheese_strategy": {
+   "book": "nusmp:cheese_strategy_book",
+   "name": "Cheese Strategy",
+   "book_name": "Notes on the Unfair Corner",
+   "color": "#27AE60",
+   "franchise": "exiled_heavy_knight"
+  },
+  "cinder_ella": {
+   "book": "nusmp:cinder_ella_book",
+   "name": "Cinder Ella",
+   "book_name": "Twelve Strokes of a Bell",
+   "color": "#D8B4FF",
+   "franchise": "danmachi"
+  },
+  "constellation_patronage": {
+   "book": "nusmp:constellation_patronage_book",
+   "name": "Constellation's Patronage",
+   "book_name": "Ledger of Sponsorships",
+   "color": "#FFD95A",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "consumable_optimization": {
+   "book": "nusmp:consumable_optimization_book",
+   "name": "Consumable Optimization",
+   "book_name": "Belt Inventory of the Prepared",
+   "color": "#16A085",
+   "franchise": "exiled_heavy_knight"
+  },
+  "coral_peacock_trickster": {
+   "book": "nusmp:coral_peacock_trickster_book",
+   "name": "Coral Peacock Trickster",
+   "book_name": "Coral Peacock Masquerade",
+   "color": "#E0659A",
+   "franchise": "black_clover"
+  },
+  "core_refinement": {
+   "book": "nusmp:core_refinement_book",
+   "name": "Mana Core Refinement",
+   "book_name": "Core Refinement Primer",
+   "color": "#FBC02D",
+   "franchise": "tbate"
+  },
+  "crash_magic": {
+   "book": "nusmp:crash_magic_book",
+   "name": "Crash Magic",
+   "book_name": "Breaker's Field Manual",
+   "color": "#FF6F00",
+   "franchise": "fairy_tail"
+  },
+  "crimson_lion_blazeguard": {
+   "book": "nusmp:crimson_lion_blazeguard_book",
+   "name": "Crimson Lion Blazeguard",
+   "book_name": "Pride of the Crimson Lion",
+   "color": "#D6402A",
+   "franchise": "black_clover"
+  },
+  "crimson_sovereign": {
+   "book": "nusmp:crimson_sovereign_book",
+   "name": "Crimson Sovereign's Pressure",
+   "book_name": "Court Manual of the Crimson Throne",
+   "color": "#C0392B",
+   "franchise": "tensura"
+  },
+  "crozzo_magic_sword": {
+   "book": "nusmp:crozzo_magic_sword_book",
+   "name": "Crozzo's Magic Sword",
+   "book_name": "Forging Notes on a Sword That Burns Out",
+   "color": "#D9421C",
+   "franchise": "danmachi"
+  },
+  "cursed_equipment_mastery": {
+   "book": "nusmp:cursed_equipment_mastery_book",
+   "name": "Cursed Equipment Mastery",
+   "book_name": "Appraisal of the Cursed Armory",
+   "color": "#641E16",
+   "franchise": "exiled_heavy_knight"
+  },
+  "damage_rotation": {
+   "book": "nusmp:damage_rotation_book",
+   "name": "Damage Rotation Priority",
+   "book_name": "Priority List of the Rotation",
+   "color": "#E74C3C",
+   "franchise": "exiled_heavy_knight"
+  },
+  "dark_ecriture": {
+   "book": "nusmp:dark_ecriture_book",
+   "name": "Dark Écriture: Rune Magic",
+   "book_name": "Runebook of the Dark Hand",
+   "color": "#00897B",
+   "franchise": "fairy_tail"
+  },
+  "dark_rukh_fallen_magi": {
+   "book": "nusmp:dark_rukh_fallen_magi_book",
+   "name": "Dark Rukh Fallen Magi",
+   "book_name": "Hymns of the Black Flock",
+   "color": "#4A1F6B",
+   "franchise": "magi"
+  },
+  "dark_triad_hexer": {
+   "book": "nusmp:dark_triad_hexer_book",
+   "name": "Dark Triad Hexer",
+   "book_name": "Whispers of the Triad",
+   "color": "#5B2A86",
+   "franchise": "black_clover"
+  },
+  "debuff_stack_doctrine": {
+   "book": "nusmp:debuff_stack_doctrine_book",
+   "name": "Debuff Stack Doctrine",
+   "book_name": "Almanac of the Cumulative Curse",
+   "color": "#6B8E23",
+   "franchise": "exiled_heavy_knight"
+  },
+  "demon_king_of_salvation": {
+   "book": "nusmp:demon_king_of_salvation_book",
+   "name": "Demon King of Salvation",
+   "book_name": "Testament of the Masked Protector",
+   "color": "#4A4E69",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "devil_union_vessel": {
+   "book": "nusmp:devil_union_vessel_book",
+   "name": "Devil Union Vessel",
+   "book_name": "Vessel's Pact Ledger",
+   "color": "#8A1C3B",
+   "franchise": "black_clover"
+  },
+  "diamond_crystal_bulwark": {
+   "book": "nusmp:diamond_crystal_bulwark_book",
+   "name": "Diamond Crystal Bulwark",
+   "book_name": "Crystal Garrison Manual",
+   "color": "#7FB7E6",
+   "franchise": "black_clover"
+  },
+  "dian_cecht_healer": {
+   "book": "nusmp:dian_cecht_healer_book",
+   "name": "Dian Cecht Healer",
+   "book_name": "The Orario Infirmary Ledger",
+   "color": "#7AE0B0",
+   "franchise": "danmachi"
+  },
+  "djinn_mirage": {
+   "book": "nusmp:djinn_mirage_book",
+   "name": "Djinn's Mirage",
+   "book_name": "Lamp-Keeper's Whisper Book",
+   "color": "#FFCA28",
+   "franchise": "tbate"
+  },
+  "dokkaebi_bundle": {
+   "book": "nusmp:dokkaebi_bundle_book",
+   "name": "Dokkaebi Bundle",
+   "book_name": "Catalogue of the Goblin Market",
+   "color": "#4CAF50",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "double_dungeon_survivor": {
+   "book": "nusmp:double_dungeon_survivor_book",
+   "name": "Double Dungeon Survivor",
+   "book_name": "Account of the Room That Doesn't Let You Out",
+   "color": "#A89A7A",
+   "franchise": "solo_leveling"
+  },
+  "dragon_nova_milim": {
+   "book": "nusmp:dragon_nova_milim_book",
+   "name": "Dragon Nova of the Destroyer",
+   "book_name": "Diary of the Destroyer",
+   "color": "#E91E8C",
+   "franchise": "tensura"
+  },
+  "dragon_will": {
+   "book": "nusmp:dragon_will_book",
+   "name": "Indrath's Dragon Will",
+   "book_name": "Scale of the Great Dragon",
+   "color": "#FFA000",
+   "franchise": "tbate"
+  },
+  "dryad_world_tree": {
+   "book": "nusmp:dryad_world_tree_book",
+   "name": "Treyni's World Tree Blessing",
+   "book_name": "Rings of the Elder Tree",
+   "color": "#27AE60",
+   "franchise": "tensura"
+  },
+  "dungeon_conqueror_captain": {
+   "book": "nusmp:dungeon_conqueror_captain_book",
+   "name": "Dungeon Conqueror Captain",
+   "book_name": "Captain's Dungeon Charts",
+   "color": "#1FA8A0",
+   "franchise": "magi"
+  },
+  "dungeon_supporter": {
+   "book": "nusmp:dungeon_supporter_book",
+   "name": "Supporter's Pack",
+   "book_name": "The Supporter's Packing List",
+   "color": "#A98C5A",
+   "franchise": "danmachi"
+  },
+  "dwarf_guardian": {
+   "book": "nusmp:dwarf_guardian_book",
+   "name": "Dwarf Guardian",
+   "book_name": "The Guardian's Tankard Log",
+   "color": "#8A6B3A",
+   "franchise": "danmachi"
+  },
+  "dwarven_forge": {
+   "book": "nusmp:dwarven_forge_book",
+   "name": "Dwarven Forge-Art",
+   "book_name": "Darv Smith's Pocket Anvil",
+   "color": "#A1887F",
+   "franchise": "tbate"
+  },
+  "elemental_resist_meta": {
+   "book": "nusmp:elemental_resist_meta_book",
+   "name": "Elemental Resist Meta",
+   "book_name": "Codex of Matched Elements",
+   "color": "#5DADE2",
+   "franchise": "exiled_heavy_knight"
+  },
+  "elenoir_wind_weaver": {
+   "book": "nusmp:elenoir_wind_weaver_book",
+   "name": "Elenoir Wind-Weaver",
+   "book_name": "Leaf-Song Codex of Elenoir",
+   "color": "#66BB6A",
+   "franchise": "tbate"
+  },
+  "elven_rite_bearer": {
+   "book": "nusmp:elven_rite_bearer_book",
+   "name": "Elven Rite Bearer",
+   "book_name": "Rite of the Remembered Grove",
+   "color": "#9AD87A",
+   "franchise": "black_clover"
+  },
+  "ember_flame_art": {
+   "book": "nusmp:ember_flame_art_book",
+   "name": "Elemental Art: Ember Flame",
+   "book_name": "Ember Primer of the Fire Mage",
+   "color": "#FF5722",
+   "franchise": "tbate"
+  },
+  "end_demon_awakening": {
+   "book": "nusmp:end_demon_awakening_book",
+   "name": "E.N.D. Demon Awakening",
+   "book_name": "Book of the Etherias Demon",
+   "color": "#B71C1C",
+   "franchise": "fairy_tail"
+  },
+  "endure_ability": {
+   "book": "nusmp:endure_ability_book",
+   "name": "Developmental Ability: Endure",
+   "book_name": "Treatise on Not Falling Down",
+   "color": "#6F8F9F",
+   "franchise": "danmachi"
+  },
+  "exceed_aera": {
+   "book": "nusmp:exceed_aera_book",
+   "name": "Exceed: Aera & Prophecy",
+   "book_name": "Winged Companion's Notebook",
+   "color": "#80DEEA",
+   "franchise": "fairy_tail"
+  },
+  "extreme_magic_adept": {
+   "book": "nusmp:extreme_magic_adept_book",
+   "name": "Extreme Magic Adept",
+   "book_name": "On Extreme Magic",
+   "color": "#FF9A3C",
+   "franchise": "magi"
+  },
+  "fairy_law": {
+   "book": "nusmp:fairy_law_book",
+   "name": "Fairy Law",
+   "book_name": "Charter of the First Master",
+   "color": "#FFD54F",
+   "franchise": "fairy_tail"
+  },
+  "fanalis_brawler": {
+   "book": "nusmp:fanalis_brawler_book",
+   "name": "Fanalis Brawler",
+   "book_name": "Warrior's Body Journal",
+   "color": "#C87F3A",
+   "franchise": "magi"
   },
   "fire_dragon_slayer": {
    "book": "nusmp:fire_dragon_slayer_book",
@@ -29,12 +561,502 @@
    "color": "#E8541C",
    "franchise": "fairy_tail"
   },
+  "flame_djinn_swordsman": {
+   "book": "nusmp:flame_djinn_swordsman_book",
+   "name": "Flame Djinn Swordsman",
+   "book_name": "Equip of the Burning Sword",
+   "color": "#E8602C",
+   "franchise": "magi"
+  },
+  "flame_spirit_ifrit": {
+   "book": "nusmp:flame_spirit_ifrit_book",
+   "name": "Ifrit's Flame Mantle",
+   "book_name": "Pact with the Flame Spirit",
+   "color": "#E67E22",
+   "franchise": "tensura"
+  },
+  "flute_magi_prodigy": {
+   "book": "nusmp:flute_magi_prodigy_book",
+   "name": "Flute Magi Prodigy",
+   "book_name": "Tune of the Great Wellspring",
+   "color": "#6FC5FF",
+   "franchise": "magi"
+  },
+  "fog_troupe_bandit": {
+   "book": "nusmp:fog_troupe_bandit_book",
+   "name": "Fog Troupe Bandit",
+   "book_name": "Night-Rooftop Roster",
+   "color": "#6E6E7E",
+   "franchise": "magi"
+  },
+  "fourth_wall": {
+   "book": "nusmp:fourth_wall_book",
+   "name": "Fourth Wall",
+   "book_name": "Codex of the Unseen Barrier",
+   "color": "#9AB6D4",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "freya_charm": {
+   "book": "nusmp:freya_charm_book",
+   "name": "Charm of the Goddess",
+   "book_name": "Silver Hair and Silver Eyes",
+   "color": "#E56BD6",
+   "franchise": "danmachi"
+  },
+  "frost_djinn_blade": {
+   "book": "nusmp:frost_djinn_blade_book",
+   "name": "Frost Djinn Blade",
+   "book_name": "Equip of Winter's Edge",
+   "color": "#8FD3F4",
+   "franchise": "magi"
+  },
+  "frost_monarch": {
+   "book": "nusmp:frost_monarch_book",
+   "name": "Monarch of Frost",
+   "book_name": "Annals of the Endless Winter",
+   "color": "#8FD8FF",
+   "franchise": "solo_leveling"
+  },
+  "goh_apollo_charyeok": {
+   "book": "nusmp:goh_apollo_charyeok_book",
+   "name": "Apollo's Charyeok",
+   "book_name": "Hymnal of the Sun Chariot",
+   "color": "#FFCA28",
+   "franchise": "god_of_high_school"
+  },
+  "goh_ares_charyeok": {
+   "book": "nusmp:goh_ares_charyeok_book",
+   "name": "Ares's Charyeok",
+   "book_name": "Field Manual of the Red Banner",
+   "color": "#C62828",
+   "franchise": "god_of_high_school"
+  },
+  "goh_artemis_charyeok": {
+   "book": "nusmp:goh_artemis_charyeok_book",
+   "name": "Artemis's Charyeok",
+   "book_name": "Huntress's Quarry Book",
+   "color": "#C5E1A5",
+   "franchise": "god_of_high_school"
+  },
+  "goh_athena_charyeok": {
+   "book": "nusmp:goh_athena_charyeok_book",
+   "name": "Athena's Charyeok",
+   "book_name": "Owl-Scribe's Strategy Codex",
+   "color": "#B0BEC5",
+   "franchise": "god_of_high_school"
+  },
+  "goh_capoeira": {
+   "book": "nusmp:goh_capoeira_book",
+   "name": "Capoeira Ginga",
+   "book_name": "Songbook of the Roda",
+   "color": "#43A047",
+   "franchise": "god_of_high_school"
+  },
+  "goh_charyeok_vessel": {
+   "book": "nusmp:goh_charyeok_vessel_book",
+   "name": "Charyeok Vessel",
+   "book_name": "Contract of the Borrowed Hour",
+   "color": "#7C4DFF",
+   "franchise": "god_of_high_school"
+  },
+  "goh_hades_charyeok": {
+   "book": "nusmp:goh_hades_charyeok_book",
+   "name": "Hades's Charyeok",
+   "book_name": "Ledger of the Quiet Halls",
+   "color": "#5E35B1",
+   "franchise": "god_of_high_school"
+  },
+  "goh_hapkido": {
+   "book": "nusmp:goh_hapkido_book",
+   "name": "Hapkido Redirect",
+   "book_name": "The Soft Way Folio",
+   "color": "#AB47BC",
+   "franchise": "god_of_high_school"
+  },
+  "goh_hephaestus_charyeok": {
+   "book": "nusmp:goh_hephaestus_charyeok_book",
+   "name": "Hephaestus's Charyeok",
+   "book_name": "The Divine Smith's Apprentice Book",
+   "color": "#FF6F00",
+   "franchise": "god_of_high_school"
+  },
+  "goh_heracles_labors": {
+   "book": "nusmp:goh_heracles_labors_book",
+   "name": "Heracles's Labors",
+   "book_name": "The Twelve Labors, Abridged",
+   "color": "#D84315",
+   "franchise": "god_of_high_school"
+  },
+  "goh_hermes_charyeok": {
+   "book": "nusmp:goh_hermes_charyeok_book",
+   "name": "Hermes's Charyeok",
+   "book_name": "Winged Courier's Waybill",
+   "color": "#80DEEA",
+   "franchise": "god_of_high_school"
+  },
+  "goh_judo": {
+   "book": "nusmp:goh_judo_book",
+   "name": "Judo Throw",
+   "book_name": "Kodokan Kitbag Notes",
+   "color": "#1E88E5",
+   "franchise": "god_of_high_school"
+  },
+  "goh_jumeok_fist": {
+   "book": "nusmp:goh_jumeok_fist_book",
+   "name": "Jumeok Fist",
+   "book_name": "Knuckle Wraps of the Street",
+   "color": "#E65100",
+   "franchise": "god_of_high_school"
+  },
+  "goh_kendo": {
+   "book": "nusmp:goh_kendo_book",
+   "name": "Kendo Way of the Sword",
+   "book_name": "Shinai Primer",
+   "color": "#B71C1C",
+   "franchise": "god_of_high_school"
+  },
+  "goh_ki_cultivation": {
+   "book": "nusmp:goh_ki_cultivation_book",
+   "name": "Ki Cultivation",
+   "book_name": "Breath Manual",
+   "color": "#00E5FF",
+   "franchise": "god_of_high_school"
+  },
+  "goh_mighty_style": {
+   "book": "nusmp:goh_mighty_style_book",
+   "name": "Mighty Style",
+   "book_name": "Mighty Weights Chart",
+   "color": "#6D4C41",
+   "franchise": "god_of_high_school"
+  },
+  "goh_monkey_king": {
+   "book": "nusmp:goh_monkey_king_book",
+   "name": "Monkey King's Charyeok",
+   "book_name": "The Great Sage's Stolen Peaches",
+   "color": "#FFC107",
+   "franchise": "god_of_high_school"
+  },
+  "goh_muay_thai": {
+   "book": "nusmp:goh_muay_thai_book",
+   "name": "Muay Thai Clinch",
+   "book_name": "The Eight Limbs Ledger",
+   "color": "#F9A825",
+   "franchise": "god_of_high_school"
+  },
+  "goh_nyuh_weapon_forms": {
+   "book": "nusmp:goh_nyuh_weapon_forms_book",
+   "name": "Nyuh Weapon Forms",
+   "book_name": "Catalogue of Forms",
+   "color": "#26C6DA",
+   "franchise": "god_of_high_school"
+  },
+  "goh_pankration_grappler": {
+   "book": "nusmp:goh_pankration_grappler_book",
+   "name": "Pankration Grappler",
+   "book_name": "Sand-Pit Grappler's Record",
+   "color": "#8E24AA",
+   "franchise": "god_of_high_school"
+  },
+  "goh_poseidon": {
+   "book": "nusmp:goh_poseidon_book",
+   "name": "Poseidon's Charyeok",
+   "book_name": "Tide-Book of the Deep",
+   "color": "#1565C0",
+   "franchise": "god_of_high_school"
+  },
+  "goh_taekwondo": {
+   "book": "nusmp:goh_taekwondo_book",
+   "name": "Taekwondo Kicker",
+   "book_name": "Kyorugi Handbook",
+   "color": "#EF5350",
+   "franchise": "god_of_high_school"
+  },
+  "goh_tiger_crane_kungfu": {
+   "book": "nusmp:goh_tiger_crane_kungfu_book",
+   "name": "Tiger and Crane Kung Fu",
+   "book_name": "Scroll of Tiger and Crane",
+   "color": "#FFA000",
+   "franchise": "god_of_high_school"
+  },
+  "goh_tournament_contender": {
+   "book": "nusmp:goh_tournament_contender_book",
+   "name": "Tournament Contender",
+   "book_name": "Bracket Program Notes",
+   "color": "#FF5722",
+   "franchise": "god_of_high_school"
+  },
+  "goh_zeus_charyeok": {
+   "book": "nusmp:goh_zeus_charyeok_book",
+   "name": "Zeus's Charyeok",
+   "book_name": "Thunder Ledger of the Sky King",
+   "color": "#FFEB3B",
+   "franchise": "god_of_high_school"
+  },
+  "golden_dawn_prodigy": {
+   "book": "nusmp:golden_dawn_prodigy_book",
+   "name": "Golden Dawn Prodigy",
+   "book_name": "Dawn Academy Compendium",
+   "color": "#E5B93C",
+   "franchise": "black_clover"
+  },
+  "goldsmith_radiance": {
+   "book": "nusmp:goldsmith_radiance_book",
+   "name": "Goldsmith Radiance",
+   "book_name": "Goldsmith Family Blade-Book",
+   "color": "#FFEE58",
+   "franchise": "tbate"
+  },
+  "goliath_colossal_fist": {
+   "book": "nusmp:goliath_colossal_fist_book",
+   "name": "Goliath, the Colossal Fist",
+   "book_name": "Biography of a Walking Earthquake",
+   "color": "#D98C1F",
+   "franchise": "solo_leveling"
+  },
+  "gravity_change": {
+   "book": "nusmp:gravity_change_book",
+   "name": "Gravity Change",
+   "book_name": "Weightless Primer",
+   "color": "#5C6BC0",
+   "franchise": "fairy_tail"
+  },
+  "great_sage_analysis": {
+   "book": "nusmp:great_sage_analysis_book",
+   "name": "Great Sage of Thought Acceleration",
+   "book_name": "Records of the Voice in the Mind",
+   "color": "#2E86C1",
+   "franchise": "tensura"
+  },
+  "greatsword_doctrine": {
+   "book": "nusmp:greatsword_doctrine_book",
+   "name": "Greatsword Doctrine",
+   "book_name": "Treatise on the Committed Swing",
+   "color": "#7F8C8D",
+   "franchise": "exiled_heavy_knight"
+  },
+  "green_mantis_ambusher": {
+   "book": "nusmp:green_mantis_ambusher_book",
+   "name": "Green Mantis Ambusher",
+   "book_name": "Mantis Canopy Guide",
+   "color": "#5FA84A",
+   "franchise": "black_clover"
+  },
+  "grimoire_page_scholar": {
+   "book": "nusmp:grimoire_page_scholar_book",
+   "name": "Grimoire Page Scholar",
+   "book_name": "Annotated Grimoire Margins",
+   "color": "#C9A96E",
+   "franchise": "black_clover"
+  },
+  "grinding_protocol": {
+   "book": "nusmp:grinding_protocol_book",
+   "name": "Grinding Protocol",
+   "book_name": "Route Notes of the Endless Clearing",
+   "color": "#E67E22",
+   "franchise": "exiled_heavy_knight"
+  },
+  "guardian_absolute_defense": {
+   "book": "nusmp:guardian_absolute_defense_book",
+   "name": "Uriel's Absolute Defense",
+   "book_name": "Oath of the Lord of Guardian",
+   "color": "#D4AC0D",
+   "franchise": "tensura"
+  },
+  "hakurou_blade_way": {
+   "book": "nusmp:hakurou_blade_way_book",
+   "name": "Hakurou's Way of the Blade",
+   "book_name": "Lessons of the Old Swordsman",
+   "color": "#D5D8DC",
+   "franchise": "tensura"
+  },
+  "heart_kingdom_lifebinder": {
+   "book": "nusmp:heart_kingdom_lifebinder_book",
+   "name": "Heart Kingdom Lifebinder",
+   "book_name": "Lifebinder's Garden Journal",
+   "color": "#E8789C",
+   "franchise": "black_clover"
+  },
+  "heavenly_fire_god_slayer": {
+   "book": "nusmp:heavenly_fire_god_slayer_book",
+   "name": "Heavenly Fire God Slayer",
+   "book_name": "Tome of the Black Pyre",
+   "color": "#212121",
+   "franchise": "fairy_tail"
+  },
+  "heewon_righteous_knight": {
+   "book": "nusmp:heewon_righteous_knight_book",
+   "name": "Heewon's Righteous Blade",
+   "book_name": "Oath-Book of the Righteous Knight",
+   "color": "#E8D27A",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "hellflare_flame_lord": {
+   "book": "nusmp:hellflare_flame_lord_book",
+   "name": "Hellflare Flame Lord",
+   "book_name": "Orders of the Black Flame",
+   "color": "#CB4335",
+   "franchise": "tensura"
+  },
+  "hephaistos_forge": {
+   "book": "nusmp:hephaistos_forge_book",
+   "name": "Hephaistos Forge-Master",
+   "book_name": "The Apprentice Smith's Catalogue",
+   "color": "#C97A2B",
+   "franchise": "danmachi"
+  },
+  "hestia_falna": {
+   "book": "nusmp:hestia_falna_book",
+   "name": "Falna: Hestia's Blessing",
+   "book_name": "Hestia Familia Status Scroll",
+   "color": "#FF8A3D",
+   "franchise": "danmachi"
+  },
+  "hestia_knife": {
+   "book": "nusmp:hestia_knife_book",
+   "name": "Hestia Knife",
+   "book_name": "The Knife That Grows",
+   "color": "#2E3A8C",
+   "franchise": "danmachi"
+  },
+  "hidden_class_berserker": {
+   "book": "nusmp:hidden_class_berserker_book",
+   "name": "Hidden Class: Berserker Knight",
+   "book_name": "Scroll of the Unlisted Class",
+   "color": "#922B21",
+   "franchise": "exiled_heavy_knight"
+  },
+  "hinata_moonlit_blade": {
+   "book": "nusmp:hinata_moonlit_blade_book",
+   "name": "Hinata's Moonlit Blade",
+   "book_name": "Manual of the Moonlit Sword",
+   "color": "#F7DC6F",
+   "franchise": "tensura"
+  },
+  "hoarfrost_art": {
+   "book": "nusmp:hoarfrost_art_book",
+   "name": "Elemental Art: Hoarfrost",
+   "book_name": "Rimecaller's Primer",
+   "color": "#81D4FA",
+   "franchise": "tbate"
+  },
+  "household_vessel_wielder": {
+   "book": "nusmp:household_vessel_wielder_book",
+   "name": "Household Vessel Wielder",
+   "book_name": "Housekeeper's Vessel Folio",
+   "color": "#C8A15A",
+   "franchise": "magi"
+  },
+  "hunter_ability": {
+   "book": "nusmp:hunter_ability_book",
+   "name": "Developmental Ability: Hunter",
+   "book_name": "Hunter's Ledger of Kills",
+   "color": "#B8472D",
+   "franchise": "danmachi"
+  },
+  "hunter_healer": {
+   "book": "nusmp:hunter_healer_book",
+   "name": "Hunter-Class Healer",
+   "book_name": "Field Guide for Raid Healers",
+   "color": "#7AE3A3",
+   "franchise": "solo_leveling"
+  },
+  "hunter_mage": {
+   "book": "nusmp:hunter_mage_book",
+   "name": "Hunter-Class Mage",
+   "book_name": "Spellbook of the Gate Mage",
+   "color": "#4A7DFF",
+   "franchise": "solo_leveling"
+  },
+  "hunter_ranger": {
+   "book": "nusmp:hunter_ranger_book",
+   "name": "Hunter-Class Ranger",
+   "book_name": "Ranger's Guide to Boss Rooms",
+   "color": "#3FAE6A",
+   "franchise": "solo_leveling"
+  },
+  "hunter_sword_dance": {
+   "book": "nusmp:hunter_sword_dance_book",
+   "name": "Hunter Sword Dance",
+   "book_name": "The Still-Water Sword Manual",
+   "color": "#5AC8E6",
+   "franchise": "solo_leveling"
+  },
   "ice_make": {
    "book": "nusmp:ice_make_book",
    "name": "Ice-Make",
    "book_name": "Chisel of Silent Winters",
    "color": "#BDEFFF",
    "franchise": "fairy_tail"
+  },
+  "igris_blood_red": {
+   "book": "nusmp:igris_blood_red_book",
+   "name": "Igris, the Blood-Red Knight",
+   "book_name": "Oath of the Crimson Cape",
+   "color": "#B3122B",
+   "franchise": "solo_leveling"
+  },
+  "imperial_fan_dancer": {
+   "book": "nusmp:imperial_fan_dancer_book",
+   "name": "Imperial Fan Dancer",
+   "book_name": "Court Dance of Many Fans",
+   "color": "#F08AB5",
+   "franchise": "magi"
+  },
+  "invincibility_frames": {
+   "book": "nusmp:invincibility_frames_book",
+   "name": "I-Frame Dodge Mastery",
+   "book_name": "Primer on the Invulnerable Heartbeat",
+   "color": "#BDC3C7",
+   "franchise": "exiled_heavy_knight"
+  },
+  "iron_body_monarch": {
+   "book": "nusmp:iron_body_monarch_book",
+   "name": "Monarch of the Iron Body",
+   "book_name": "Treatise on the Unarmored Mountain",
+   "color": "#8D97A6",
+   "franchise": "solo_leveling"
+  },
+  "iron_dragon_slayer": {
+   "book": "nusmp:iron_dragon_slayer_book",
+   "name": "Iron Dragon Slayer",
+   "book_name": "Scrap-Eater's Scale Book",
+   "color": "#78909C",
+   "franchise": "fairy_tail"
+  },
+  "iron_shadow_guard": {
+   "book": "nusmp:iron_shadow_guard_book",
+   "name": "Iron, the Shadow Vanguard",
+   "book_name": "Ledger of the Black Wall",
+   "color": "#4D5663",
+   "franchise": "solo_leveling"
+  },
+  "jihye_twin_blades": {
+   "book": "nusmp:jihye_twin_blades_book",
+   "name": "Twin Blades of Lee Jihye",
+   "book_name": "Pocket Diary of a Dual Swordswoman",
+   "color": "#F5A25D",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "kamish_wrath": {
+   "book": "nusmp:kamish_wrath_book",
+   "name": "Kamish's Wrath",
+   "book_name": "Scale and Ember",
+   "color": "#FF5A1F",
+   "franchise": "solo_leveling"
+  },
+  "kasaka_venom_fang": {
+   "book": "nusmp:kasaka_venom_fang_book",
+   "name": "Kasaka's Venom Fang",
+   "book_name": "Notes on the Serpent's Tooth",
+   "color": "#6FC93A",
+   "franchise": "solo_leveling"
+  },
+  "labyrinth_maker_ramiris": {
+   "book": "nusmp:labyrinth_maker_ramiris_book",
+   "name": "Ramiris's Labyrinth Maker",
+   "book_name": "Floor Plan of the Fairy Queen",
+   "color": "#F1948A",
+   "franchise": "tensura"
   },
   "lady_luck": {
    "book": "nusmp:lady_luck_book",
@@ -43,12 +1065,180 @@
    "color": "#F2C94C",
    "franchise": "exiled_heavy_knight"
   },
+  "lance_bulwark": {
+   "book": "nusmp:lance_bulwark_book",
+   "name": "Lance Bulwark",
+   "book_name": "Bulwark Handbook",
+   "color": "#607D8B",
+   "franchise": "tbate"
+  },
+  "lance_shadowblade": {
+   "book": "nusmp:lance_shadowblade_book",
+   "name": "Lance Shadowblade",
+   "book_name": "Shadowblade's Quiet Book",
+   "color": "#424242",
+   "franchise": "tbate"
+  },
+  "lance_vanguard": {
+   "book": "nusmp:lance_vanguard_book",
+   "name": "Lance Vanguard",
+   "book_name": "Vanguard Field Orders",
+   "color": "#3949AB",
+   "franchise": "tbate"
+  },
+  "legionary_phalanx_shield": {
+   "book": "nusmp:legionary_phalanx_shield_book",
+   "name": "Legionary Phalanx Shield",
+   "book_name": "Legion Drill Manual",
+   "color": "#B03A3A",
+   "franchise": "magi"
+  },
+  "liaris_freese": {
+   "book": "nusmp:liaris_freese_book",
+   "name": "Liaris Freese",
+   "book_name": "Notes on a Rapidly Growing Wish",
+   "color": "#FFD24A",
+   "franchise": "danmachi"
+  },
   "lightning_dragon_slayer": {
    "book": "nusmp:lightning_dragon_slayer_book",
    "name": "Lightning Dragon Slayer",
    "book_name": "Scale of Crackling Sovereignty",
    "color": "#F5D63B",
    "franchise": "fairy_tail"
+  },
+  "little_rookie": {
+   "book": "nusmp:little_rookie_book",
+   "name": "Little Rookie's Courage",
+   "book_name": "The Rookie's First Big Monster",
+   "color": "#7FD7FF",
+   "franchise": "danmachi"
+  },
+  "loot_duplication_glitch": {
+   "book": "nusmp:loot_duplication_glitch_book",
+   "name": "Loot Duplication Glitch",
+   "book_name": "Ledger of the Doubled Drop",
+   "color": "#F4D03F",
+   "franchise": "exiled_heavy_knight"
+  },
+  "luminous_wind": {
+   "book": "nusmp:luminous_wind_book",
+   "name": "Luminous Wind",
+   "book_name": "Hooded Notes of the Quiet Elf",
+   "color": "#6FD6A8",
+   "franchise": "danmachi"
+  },
+  "magic_broom_aerialist": {
+   "book": "nusmp:magic_broom_aerialist_book",
+   "name": "Magic Broom Aerialist",
+   "book_name": "Broom Rider's Flight Log",
+   "color": "#6FB7E8",
+   "franchise": "black_clover"
+  },
+  "magic_carpet_rider": {
+   "book": "nusmp:magic_carpet_rider_book",
+   "name": "Magic Carpet Rider",
+   "book_name": "Weaver's Flight Notes",
+   "color": "#B05FD1",
+   "franchise": "magi"
+  },
+  "magic_knight_duelist": {
+   "book": "nusmp:magic_knight_duelist_book",
+   "name": "Magic Knight Duelist",
+   "book_name": "Duelist's Exam Primer",
+   "color": "#C04B4B",
+   "franchise": "black_clover"
+  },
+  "magic_tool_artificer": {
+   "book": "nusmp:magic_tool_artificer_book",
+   "name": "Magic Tool Artificer",
+   "book_name": "Artificer's Satchel Handbook",
+   "color": "#B0773A",
+   "franchise": "black_clover"
+  },
+  "magnostadt_staff_wizard": {
+   "book": "nusmp:magnostadt_staff_wizard_book",
+   "name": "Magnostadt Staff Wizard",
+   "book_name": "Magnostadt Formula Book",
+   "color": "#5AA0E0",
+   "franchise": "magi"
+  },
+  "magoi_siphoner": {
+   "book": "nusmp:magoi_siphoner_book",
+   "name": "Magoi Siphoner",
+   "book_name": "On the Taking of Magoi",
+   "color": "#5B6BD6",
+   "franchise": "magi"
+  },
+  "mana_beast_hunter": {
+   "book": "nusmp:mana_beast_hunter_book",
+   "name": "Mana Beast Hunter",
+   "book_name": "Adventurer's Hunt Journal",
+   "color": "#6D4C41",
+   "franchise": "tbate"
+  },
+  "mana_rotation": {
+   "book": "nusmp:mana_rotation_book",
+   "name": "Mana Rotation",
+   "book_name": "Rotation Drills",
+   "color": "#26C6DA",
+   "franchise": "tbate"
+  },
+  "mana_skin_brawler": {
+   "book": "nusmp:mana_skin_brawler_book",
+   "name": "Mana Skin Brawler",
+   "book_name": "Mana Skin Primer",
+   "color": "#C8553D",
+   "franchise": "black_clover"
+  },
+  "mana_zone_sentinel": {
+   "book": "nusmp:mana_zone_sentinel_book",
+   "name": "Mana Zone Sentinel",
+   "book_name": "Zone Perception Notes",
+   "color": "#4FB5C9",
+   "franchise": "black_clover"
+  },
+  "metal_vessel_conqueror": {
+   "book": "nusmp:metal_vessel_conqueror_book",
+   "name": "Metal Vessel Conqueror",
+   "book_name": "Dungeon Capture Ledger",
+   "color": "#D4AF37",
+   "franchise": "magi"
+  },
+  "min_max_build": {
+   "book": "nusmp:min_max_build_book",
+   "name": "Min-Max Build Theory",
+   "book_name": "Spreadsheet of the Optimal Allocation",
+   "color": "#8E44AD",
+   "franchise": "exiled_heavy_knight"
+  },
+  "monarchs_domain": {
+   "book": "nusmp:monarchs_domain_book",
+   "name": "Monarch's Domain",
+   "book_name": "Edict of the Sovereign Ground",
+   "color": "#7D63FF",
+   "franchise": "solo_leveling"
+  },
+  "monster_tamer": {
+   "book": "nusmp:monster_tamer_book",
+   "name": "Tamer's Bond",
+   "book_name": "A Tamer's Bestiary",
+   "color": "#5C9E5A",
+   "franchise": "danmachi"
+  },
+  "multi_vessel_warlord": {
+   "book": "nusmp:multi_vessel_warlord_book",
+   "name": "Multi-Vessel Warlord",
+   "book_name": "Warlord's Campaign Atlas",
+   "color": "#A02C2C",
+   "franchise": "magi"
+  },
+  "new_game_plus_memory": {
+   "book": "nusmp:new_game_plus_memory_book",
+   "name": "New Game Plus Memory",
+   "book_name": "Save File of the Second Playthrough",
+   "color": "#85C1E9",
+   "franchise": "exiled_heavy_knight"
   },
   "oath_of_the_heavy_armor": {
    "book": "nusmp:heavy_armor_book",
@@ -57,6 +1247,307 @@
    "color": "#8E9AAF",
    "franchise": "exiled_heavy_knight"
   },
+  "ogre_lord_might": {
+   "book": "nusmp:ogre_lord_might_book",
+   "name": "Ogre Lord's Might",
+   "book_name": "Chronicle of the Ogre Lord",
+   "color": "#B9770E",
+   "franchise": "tensura"
+  },
+  "omniscient_viewpoint": {
+   "book": "nusmp:omniscient_viewpoint_book",
+   "name": "Omniscient Reader's Viewpoint",
+   "book_name": "Tome of the Only Reader",
+   "color": "#4AA3FF",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "orc_lord_famine": {
+   "book": "nusmp:orc_lord_famine_book",
+   "name": "Orc Lord's Famine",
+   "book_name": "Hunger Songs of the Orc Disaster",
+   "color": "#7D6608",
+   "franchise": "tensura"
+  },
+  "overweight_build": {
+   "book": "nusmp:overweight_build_book",
+   "name": "Overweight Build",
+   "book_name": "Inventory of the Immovable",
+   "color": "#5D6D7E",
+   "franchise": "exiled_heavy_knight"
+  },
+  "party_support_rotation": {
+   "book": "nusmp:party_support_rotation_book",
+   "name": "Party Support Rotation",
+   "book_name": "Rotation Sheet of the Support Role",
+   "color": "#58D68D",
+   "franchise": "exiled_heavy_knight"
+  },
+  "perfect_parry_timing": {
+   "book": "nusmp:perfect_parry_timing_book",
+   "name": "Perfect Parry Timing",
+   "book_name": "Manual of the Narrow Window",
+   "color": "#F1C40F",
+   "franchise": "exiled_heavy_knight"
+  },
+  "plague_monarch": {
+   "book": "nusmp:plague_monarch_book",
+   "name": "Monarch of Plagues",
+   "book_name": "Almanac of Blight and Buzzing",
+   "color": "#98B62A",
+   "franchise": "solo_leveling"
+  },
+  "poison_dragon_slayer": {
+   "book": "nusmp:poison_dragon_slayer_book",
+   "name": "Poison Dragon Slayer",
+   "book_name": "Venom Scroll of the Serpent Dragon",
+   "color": "#6A1B9A",
+   "franchise": "fairy_tail"
+  },
+  "predator_gluttony": {
+   "book": "nusmp:predator_gluttony_book",
+   "name": "Predator of the Hungering Slime",
+   "book_name": "Codex of the Devoured",
+   "color": "#4A235A",
+   "franchise": "tensura"
+  },
+  "primordial_black_diablo": {
+   "book": "nusmp:primordial_black_diablo_book",
+   "name": "Primordial Black Court",
+   "book_name": "Whispers of the Black Court",
+   "color": "#1C2833",
+   "franchise": "tensura"
+  },
+  "primordial_red_destruction": {
+   "book": "nusmp:primordial_red_destruction_book",
+   "name": "Primordial Red's Destruction",
+   "book_name": "Ruin Ledger of the Primordial Red",
+   "color": "#E74C3C",
+   "franchise": "tensura"
+  },
+  "prisoner_golden_headband": {
+   "book": "nusmp:prisoner_golden_headband_book",
+   "name": "Prisoner of the Golden Headband",
+   "book_name": "Chronicle of the Bound Monkey",
+   "color": "#F2B134",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "probability_stories": {
+   "book": "nusmp:probability_stories_book",
+   "name": "Probability Stories",
+   "book_name": "Almanac of Improbable Odds",
+   "color": "#B388FF",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "puppet_master_clayman": {
+   "book": "nusmp:puppet_master_clayman_book",
+   "name": "Clayman's Puppet Strings",
+   "book_name": "Score for the Marionette Theatre",
+   "color": "#A569BD",
+   "franchise": "tensura"
+  },
+  "purple_orca_tidecaller": {
+   "book": "nusmp:purple_orca_tidecaller_book",
+   "name": "Purple Orca Tidecaller",
+   "book_name": "Orca Ship's Shanties",
+   "color": "#7A4FB5",
+   "franchise": "black_clover"
+  },
+  "quicksilver_rush": {
+   "book": "nusmp:quicksilver_rush_book",
+   "name": "Quicksilver",
+   "book_name": "Quicksilver Field Notes",
+   "color": "#5DE0FF",
+   "franchise": "solo_leveling"
+  },
+  "raid_captain_command": {
+   "book": "nusmp:raid_captain_command_book",
+   "name": "Raid Captain's Command",
+   "book_name": "Orders of the Raid Captain",
+   "color": "#E0B43A",
+   "franchise": "solo_leveling"
+  },
+  "rea_laevateinn": {
+   "book": "nusmp:rea_laevateinn_book",
+   "name": "Rea Laevateinn",
+   "book_name": "Long Chant of the Flame Sword",
+   "color": "#FF6A2A",
+   "franchise": "danmachi"
+  },
+  "realmheart_physique": {
+   "book": "nusmp:realmheart_physique_book",
+   "name": "Realmheart Physique",
+   "book_name": "Realmheart Manual",
+   "color": "#00ACC1",
+   "franchise": "tbate"
+  },
+  "regressor_hundred_lives": {
+   "book": "nusmp:regressor_hundred_lives_book",
+   "name": "Regressor's Hundred Lives",
+   "book_name": "Chronicle of Returned Years",
+   "color": "#8E7CC3",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "requip_gunslinger": {
+   "book": "nusmp:requip_gunslinger_book",
+   "name": "Requip: Gunslinger",
+   "book_name": "Dead-Eye Almanac",
+   "color": "#A1887F",
+   "franchise": "fairy_tail"
+  },
+  "requip_titania": {
+   "book": "nusmp:requip_titania_book",
+   "name": "Requip: Titania's Armory",
+   "book_name": "Armory Ledger of the Knight",
+   "color": "#C0392B",
+   "franchise": "fairy_tail"
+  },
+  "rukh_caller_priest": {
+   "book": "nusmp:rukh_caller_priest_book",
+   "name": "Rukh Caller Priest",
+   "book_name": "Songs of the White Rukh",
+   "color": "#F6F1C7",
+   "franchise": "magi"
+  },
+  "rulers_authority": {
+   "book": "nusmp:rulers_authority_book",
+   "name": "Ruler's Authority",
+   "book_name": "Compendium of the Unseen Hand",
+   "color": "#9FB6FF",
+   "franchise": "solo_leveling"
+  },
+  "sangah_war_room": {
+   "book": "nusmp:sangah_war_room_book",
+   "name": "Yoo Sangah's War Room",
+   "book_name": "Operations Binder of the Company",
+   "color": "#4F86C6",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "satan_soul": {
+   "book": "nusmp:satan_soul_book",
+   "name": "Take-Over: Satan Soul",
+   "book_name": "Demon's Take-Over Primer",
+   "color": "#7B1FA2",
+   "franchise": "fairy_tail"
+  },
+  "save_point_anchor": {
+   "book": "nusmp:save_point_anchor_book",
+   "name": "Save Point Anchor",
+   "book_name": "Chronicle of the Last Save",
+   "color": "#F5B041",
+   "franchise": "exiled_heavy_knight"
+  },
+  "scenario_clearer": {
+   "book": "nusmp:scenario_clearer_book",
+   "name": "Scenario Clearer",
+   "book_name": "Scenario Clearance Handbook",
+   "color": "#E4572E",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "scythe_reaper": {
+   "book": "nusmp:scythe_reaper_book",
+   "name": "Scythe's Reaping Style",
+   "book_name": "Reaper's Harvest Manual",
+   "color": "#4A148C",
+   "franchise": "tbate"
+  },
+  "sea_of_stories": {
+   "book": "nusmp:sea_of_stories_book",
+   "name": "Sea of Stories",
+   "book_name": "Atlas of the Narrative Deep",
+   "color": "#2E86AB",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "secretive_plotter": {
+   "book": "nusmp:secretive_plotter_book",
+   "name": "Secretive Plotter",
+   "book_name": "Notebook of the Hidden Hand",
+   "color": "#7E57C2",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "seith_totems": {
+   "book": "nusmp:seith_totems_book",
+   "name": "Seith Magic: Soul Totems",
+   "book_name": "Puppeteer's Soul Ledger",
+   "color": "#FF9800",
+   "franchise": "fairy_tail"
+  },
+  "sequence_break_route": {
+   "book": "nusmp:sequence_break_route_book",
+   "name": "Sequence Break Route",
+   "book_name": "Route Map of the Skipped Chapter",
+   "color": "#00ACC1",
+   "franchise": "exiled_heavy_knight"
+  },
+  "seven_seas_swordmaster": {
+   "book": "nusmp:seven_seas_swordmaster_book",
+   "name": "Seven Seas Swordmaster",
+   "book_name": "Swordsmanship of the Seven Seas",
+   "color": "#2F6FB0",
+   "franchise": "magi"
+  },
+  "shadow_djinn_assassin": {
+   "book": "nusmp:shadow_djinn_assassin_book",
+   "name": "Shadow Djinn Assassin",
+   "book_name": "Equip of the Quiet Hour",
+   "color": "#2F2B45",
+   "franchise": "magi"
+  },
+  "shadow_dragon_slayer": {
+   "book": "nusmp:shadow_dragon_slayer_book",
+   "name": "Shadow Dragon Slayer",
+   "book_name": "Primer of the Shadowed Fang",
+   "color": "#37474F",
+   "franchise": "fairy_tail"
+  },
+  "shadow_exchange": {
+   "book": "nusmp:shadow_exchange_book",
+   "name": "Shadow Exchange",
+   "book_name": "Treatise of Swapped Places",
+   "color": "#3B2F9E",
+   "franchise": "solo_leveling"
+  },
+  "shadow_extraction": {
+   "book": "nusmp:shadow_extraction_book",
+   "name": "Arise: Shadow Extraction",
+   "book_name": "Grimoire of the Fallen Shades",
+   "color": "#6A3DE8",
+   "franchise": "solo_leveling"
+  },
+  "shadow_ninja_souei": {
+   "book": "nusmp:shadow_ninja_souei_book",
+   "name": "Souei's Shadow Step",
+   "book_name": "Reports of the Silent Corps",
+   "color": "#212F3D",
+   "franchise": "tensura"
+  },
+  "shield_throw_art": {
+   "book": "nusmp:shield_throw_art_book",
+   "name": "Shield Throw Art",
+   "book_name": "Training Pamphlet of the Returning Disc",
+   "color": "#3498DB",
+   "franchise": "exiled_heavy_knight"
+  },
+  "shuna_holy_weaving": {
+   "book": "nusmp:shuna_holy_weaving_book",
+   "name": "Shuna's Holy Weaving",
+   "book_name": "Pattern Book of the Princess's Loom",
+   "color": "#F5B7B1",
+   "franchise": "tensura"
+  },
+  "siege_calculation": {
+   "book": "nusmp:siege_calculation_book",
+   "name": "Siege Calculation",
+   "book_name": "Ballistics Table of the Patient Battery",
+   "color": "#D4AC0D",
+   "franchise": "exiled_heavy_knight"
+  },
+  "silver_eagle_marksman": {
+   "book": "nusmp:silver_eagle_marksman_book",
+   "name": "Silver Eagle Marksman",
+   "book_name": "Silver Eagle Field Notes",
+   "color": "#B8C4D6",
+   "franchise": "black_clover"
+  },
   "sky_dragon_slayer": {
    "book": "nusmp:sky_dragon_slayer_book",
    "name": "Sky Dragon Slayer",
@@ -64,12 +1555,446 @@
    "color": "#6EC3F7",
    "franchise": "fairy_tail"
   },
+  "slime_body_shapeshift": {
+   "book": "nusmp:slime_body_shapeshift_book",
+   "name": "Slime Body Shapeshift",
+   "book_name": "Notes on the Shapeless Body",
+   "color": "#5DADE2",
+   "franchise": "tensura"
+  },
   "smoldering_fang_of_insanity": {
    "book": "nusmp:smoldering_fang_book",
    "name": "Smoldering Fang of Insanity",
    "book_name": "Smoldering Fang of Insanity",
    "color": "#B3341F",
    "franchise": "exiled_heavy_knight"
+  },
+  "solid_script": {
+   "book": "nusmp:solid_script_book",
+   "name": "Solid Script Magic",
+   "book_name": "Inkwell Folio of the Script",
+   "color": "#1976D2",
+   "franchise": "fairy_tail"
+  },
+  "solomon_wisdom_sage": {
+   "book": "nusmp:solomon_wisdom_sage_book",
+   "name": "Solomon's Wisdom Sage",
+   "book_name": "Teachings of the First King",
+   "color": "#FFF2A8",
+   "franchise": "magi"
+  },
+  "spade_beastblood_hunter": {
+   "book": "nusmp:spade_beastblood_hunter_book",
+   "name": "Spade Beastblood Hunter",
+   "book_name": "Beastblood Hunting Log",
+   "color": "#8C5A3C",
+   "franchise": "black_clover"
+  },
+  "spatial_manipulation": {
+   "book": "nusmp:spatial_manipulation_book",
+   "name": "Spatial Manipulation",
+   "book_name": "Treatise on Folded Space",
+   "color": "#1ABC9C",
+   "franchise": "tensura"
+  },
+  "spirit_dive_rider": {
+   "book": "nusmp:spirit_dive_rider_book",
+   "name": "Spirit Dive Rider",
+   "book_name": "Four Spirits Codex",
+   "color": "#58C4A8",
+   "franchise": "black_clover"
+  },
+  "stealth_skill": {
+   "book": "nusmp:stealth_skill_book",
+   "name": "Skill: Stealth",
+   "book_name": "Manual of the Silent Gate",
+   "color": "#33415C",
+   "franchise": "solo_leveling"
+  },
+  "steel_bulwark": {
+   "book": "nusmp:steel_bulwark_book",
+   "name": "Hyunsung's Steel Bulwark",
+   "book_name": "Manual of the Steel Body",
+   "color": "#8A9BA8",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "stigma_bearer": {
+   "book": "nusmp:stigma_bearer_book",
+   "name": "Stigma Bearer",
+   "book_name": "Ledger of the Branded",
+   "color": "#D1495B",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "stone_djinn_bulwark": {
+   "book": "nusmp:stone_djinn_bulwark_book",
+   "name": "Stone Djinn Bulwark",
+   "book_name": "Equip of the Mountain's Heart",
+   "color": "#8A7A5E",
+   "franchise": "magi"
+  },
+  "storm_dragon_veldora": {
+   "book": "nusmp:storm_dragon_veldora_book",
+   "name": "Storm Dragon Veldora's Might",
+   "book_name": "Roar of the Sealed Dragon",
+   "color": "#7D3C98",
+   "franchise": "tensura"
+  },
+  "storm_wolf_ranga": {
+   "book": "nusmp:storm_wolf_ranga_book",
+   "name": "Ranga, the Storm Wolf",
+   "book_name": "Pack Song of the Storm Wolf",
+   "color": "#34495E",
+   "franchise": "tensura"
+  },
+  "storyteller": {
+   "book": "nusmp:storyteller_book",
+   "name": "Storyteller",
+   "book_name": "Volume of a Thousand Tellings",
+   "color": "#F29BD3",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "sword_saint_style": {
+   "book": "nusmp:sword_saint_style_book",
+   "name": "Sword Saint's Style",
+   "book_name": "Edge and Breath",
+   "color": "#CFD8DC",
+   "franchise": "tbate"
+  },
+  "system_daily_quest": {
+   "book": "nusmp:system_daily_quest_book",
+   "name": "The System: Daily Quest",
+   "book_name": "The Player's Handbook (System Edition)",
+   "color": "#38C8FF",
+   "franchise": "solo_leveling"
+  },
+  "takemikazuchi_bushi": {
+   "book": "nusmp:takemikazuchi_bushi_book",
+   "name": "Takemikazuchi Bushi",
+   "book_name": "Dojo Scroll of the Thunder God",
+   "color": "#D94B4B",
+   "franchise": "danmachi"
+  },
+  "telekinesis_mind_hand": {
+   "book": "nusmp:telekinesis_mind_hand_book",
+   "name": "Telekinesis: The Mind's Hand",
+   "book_name": "Treatise on the Unseen Hand",
+   "color": "#00BCD4",
+   "franchise": "fairy_tail"
+  },
+  "temple_delver": {
+   "book": "nusmp:temple_delver_book",
+   "name": "Temple Delver",
+   "book_name": "Temple Delver's Map Case",
+   "color": "#C9A03A",
+   "franchise": "black_clover"
+  },
+  "thunder_art": {
+   "book": "nusmp:thunder_art_book",
+   "name": "Elemental Art: Thunderbolt",
+   "book_name": "Static Primer",
+   "color": "#FFEB3B",
+   "franchise": "tbate"
+  },
+  "thunder_djinn_duelist": {
+   "book": "nusmp:thunder_djinn_duelist_book",
+   "name": "Thunder Djinn Duelist",
+   "book_name": "Equip of the Quick Flash",
+   "color": "#F0D33C",
+   "franchise": "magi"
+  },
+  "tide_djinn_dancer": {
+   "book": "nusmp:tide_djinn_dancer_book",
+   "name": "Tide Djinn Dancer",
+   "book_name": "Equip of the Rolling Tide",
+   "color": "#46A7D9",
+   "franchise": "magi"
+  },
+  "titan_magic": {
+   "book": "nusmp:titan_magic_book",
+   "name": "Titan Magic",
+   "book_name": "Guildmaster's Giant Grimoire",
+   "color": "#FF7043",
+   "franchise": "fairy_tail"
+  },
+  "tog_agnis_ice": {
+   "book": "nusmp:tog_agnis_ice_book",
+   "name": "Agnis Ice Crystals",
+   "book_name": "Crystal Primer of the Cold Line",
+   "color": "#81D4FA",
+   "franchise": "tower_of_god"
+  },
+  "tog_beast_tamer": {
+   "book": "nusmp:tog_beast_tamer_book",
+   "name": "Floor Beast Rider",
+   "book_name": "A Rider's Bestiary",
+   "color": "#8BC34A",
+   "franchise": "tower_of_god"
+  },
+  "tog_black_march": {
+   "book": "nusmp:tog_black_march_book",
+   "name": "Black March",
+   "book_name": "Black March: A Sword's Diary",
+   "color": "#37474F",
+   "franchise": "tower_of_god"
+  },
+  "tog_faerie": {
+   "book": "nusmp:tog_faerie_book",
+   "name": "Faerie",
+   "book_name": "A Faerie's Little Book of Tricks",
+   "color": "#F48FB1",
+   "franchise": "tower_of_god"
+  },
+  "tog_fisherman": {
+   "book": "nusmp:tog_fisherman_book",
+   "name": "Fisherman",
+   "book_name": "The Angler's Ledger of the Tower",
+   "color": "#26A69A",
+   "franchise": "tower_of_god"
+  },
+  "tog_floor_guard": {
+   "book": "nusmp:tog_floor_guard_book",
+   "name": "Floor Guard",
+   "book_name": "Orders of the Staircase",
+   "color": "#8D6E63",
+   "franchise": "tower_of_god"
+  },
+  "tog_fug_assassin": {
+   "book": "nusmp:tog_fug_assassin_book",
+   "name": "FUG Hunter",
+   "book_name": "Hunter's Contract Ledger",
+   "color": "#880E4F",
+   "franchise": "tower_of_god"
+  },
+  "tog_guide": {
+   "book": "nusmp:tog_guide_book",
+   "name": "Guide",
+   "book_name": "The Guide's Pocket Map",
+   "color": "#FFB74D",
+   "franchise": "tower_of_god"
+  },
+  "tog_headon_channel": {
+   "book": "nusmp:tog_headon_channel_book",
+   "name": "Headon Channeler",
+   "book_name": "Manual of the Charged Crystal",
+   "color": "#FF8A65",
+   "franchise": "tower_of_god"
+  },
+  "tog_inventory": {
+   "book": "nusmp:tog_inventory_book",
+   "name": "Inventory",
+   "book_name": "Catalogue of a Folded Pocket",
+   "color": "#AB47BC",
+   "franchise": "tower_of_god"
+  },
+  "tog_irregular": {
+   "book": "nusmp:tog_irregular_book",
+   "name": "Irregular",
+   "book_name": "Record of an Unlisted Entrant",
+   "color": "#D32F2F",
+   "franchise": "tower_of_god"
+  },
+  "tog_jahad_royal": {
+   "book": "nusmp:tog_jahad_royal_book",
+   "name": "Royal Blood of Jahad",
+   "book_name": "Primer of the Royal House",
+   "color": "#AD1457",
+   "franchise": "tower_of_god"
+  },
+  "tog_light_bearer": {
+   "book": "nusmp:tog_light_bearer_book",
+   "name": "Light Bearer",
+   "book_name": "Lamp-Lighter's Handbook",
+   "color": "#FFD54F",
+   "franchise": "tower_of_god"
+  },
+  "tog_lighthouse_keeper": {
+   "book": "nusmp:tog_lighthouse_keeper_book",
+   "name": "Lighthouse Keeper",
+   "book_name": "The Keeper's Night Log",
+   "color": "#FFF176",
+   "franchise": "tower_of_god"
+  },
+  "tog_ranker_authority": {
+   "book": "nusmp:tog_ranker_authority_book",
+   "name": "Ranker's Authority",
+   "book_name": "Ledger of the Ranker",
+   "color": "#FDD835",
+   "franchise": "tower_of_god"
+  },
+  "tog_regular_climber": {
+   "book": "nusmp:tog_regular_climber_book",
+   "name": "Regular",
+   "book_name": "Regular's Survival Notes",
+   "color": "#A1887F",
+   "franchise": "tower_of_god"
+  },
+  "tog_reverse_flow_control": {
+   "book": "nusmp:tog_reverse_flow_control_book",
+   "name": "Reverse Flow Control",
+   "book_name": "Notes on Reverse Flow",
+   "color": "#7E57C2",
+   "franchise": "tower_of_god"
+  },
+  "tog_scout": {
+   "book": "nusmp:tog_scout_book",
+   "name": "Scout",
+   "book_name": "A Scout's Field Notes",
+   "color": "#66BB6A",
+   "franchise": "tower_of_god"
+  },
+  "tog_shinsu_reinforcement": {
+   "book": "nusmp:tog_shinsu_reinforcement_book",
+   "name": "Shinsu Reinforcement",
+   "book_name": "Treatise on the Reinforced Body",
+   "color": "#90A4AE",
+   "franchise": "tower_of_god"
+  },
+  "tog_shinsu_shooting": {
+   "book": "nusmp:tog_shinsu_shooting_book",
+   "name": "Shinsu Shooting",
+   "book_name": "Primer of Shinsu Shooting",
+   "color": "#4FC3F7",
+   "franchise": "tower_of_god"
+  },
+  "tog_spear_bearer": {
+   "book": "nusmp:tog_spear_bearer_book",
+   "name": "Spear Bearer",
+   "book_name": "Forty Lessons on the Spear",
+   "color": "#FF7043",
+   "franchise": "tower_of_god"
+  },
+  "tog_suspendium_arms": {
+   "book": "nusmp:tog_suspendium_arms_book",
+   "name": "Suspendium Arms",
+   "book_name": "Smith's Book of Light Metal",
+   "color": "#B0BEC5",
+   "franchise": "tower_of_god"
+  },
+  "tog_wave_controller": {
+   "book": "nusmp:tog_wave_controller_book",
+   "name": "Wave Controller",
+   "book_name": "Waveform Manual",
+   "color": "#29B6F6",
+   "franchise": "tower_of_god"
+  },
+  "tog_wolhaiguk_moon": {
+   "book": "nusmp:tog_wolhaiguk_moon_book",
+   "name": "Wolhaiguk Moon Arts",
+   "book_name": "Tide-Tables of the Pale Moon",
+   "color": "#B3E5FC",
+   "franchise": "tower_of_god"
+  },
+  "tog_zahard_decree": {
+   "book": "nusmp:tog_zahard_decree_book",
+   "name": "Zahard's Decree",
+   "book_name": "The Statute Scroll of the Tower",
+   "color": "#CFD8DC",
+   "franchise": "tower_of_god"
+  },
+  "tundra_harpoon_hunter": {
+   "book": "nusmp:tundra_harpoon_hunter_book",
+   "name": "Tundra Harpoon Hunter",
+   "book_name": "Northern Hunting Lore",
+   "color": "#B5D8E8",
+   "franchise": "magi"
+  },
+  "tyrant_dark_mirror": {
+   "book": "nusmp:tyrant_dark_mirror_book",
+   "name": "Tyrant's Dark Mirror",
+   "book_name": "Folio of Reflected Pages",
+   "color": "#6A5ACD",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "vampire_queen_night": {
+   "book": "nusmp:vampire_queen_night_book",
+   "name": "Vampire Queen of the Night",
+   "book_name": "Night Court of the Vampire Queen",
+   "color": "#884EA0",
+   "franchise": "tensura"
+  },
+  "velzard_frost_dragon": {
+   "book": "nusmp:velzard_frost_dragon_book",
+   "name": "Velzard's Frost Dragon",
+   "book_name": "Winter Annals of the Ice Dragon",
+   "color": "#85C1E9",
+   "franchise": "tensura"
+  },
+  "vritra_blood_rite": {
+   "book": "nusmp:vritra_blood_rite_book",
+   "name": "Vritra Blood Rite",
+   "book_name": "Rite of the Crimson Line",
+   "color": "#880E4F",
+   "franchise": "tbate"
+  },
+  "wall_clip_glitch": {
+   "book": "nusmp:wall_clip_glitch_book",
+   "name": "Wall-Clip Glitch",
+   "book_name": "Out-of-Bounds Atlas",
+   "color": "#6C3483",
+   "franchise": "exiled_heavy_knight"
+  },
+  "water_body": {
+   "book": "nusmp:water_body_book",
+   "name": "Water Magic: Water Body",
+   "book_name": "Rain Woman's Tidal Journal",
+   "color": "#29B6F6",
+   "franchise": "fairy_tail"
+  },
+  "way_of_the_wind": {
+   "book": "nusmp:way_of_the_wind_book",
+   "name": "Way of the Wind",
+   "book_name": "Scroll of the Passing Breeze",
+   "color": "#7FD6A8",
+   "franchise": "omniscient_readers_viewpoint"
+  },
+  "werewolf_gale_kick": {
+   "book": "nusmp:werewolf_gale_kick_book",
+   "name": "Werewolf's Gale Kick",
+   "book_name": "Kicker's Notes on Flosvirt",
+   "color": "#8C9BB0",
+   "franchise": "danmachi"
+  },
+  "white_dragon_slayer": {
+   "book": "nusmp:white_dragon_slayer_book",
+   "name": "White Dragon Slayer",
+   "book_name": "Radiant Scale Codex",
+   "color": "#FFF8E1",
+   "franchise": "fairy_tail"
+  },
+  "white_flame_sovereign": {
+   "book": "nusmp:white_flame_sovereign_book",
+   "name": "Sovereign of White Flames",
+   "book_name": "Canticle of the Pale Pyre",
+   "color": "#FFF1C9",
+   "franchise": "solo_leveling"
+  },
+  "wizard_king_sovereign": {
+   "book": "nusmp:wizard_king_sovereign_book",
+   "name": "Wizard King Sovereign",
+   "book_name": "Sovereign's Standing Orders",
+   "color": "#D8D3EE",
+   "franchise": "black_clover"
+  },
+  "wizard_saint_rock_magic": {
+   "book": "nusmp:wizard_saint_rock_magic_book",
+   "name": "Wizard Saint's Rock Magic",
+   "book_name": "Stone Volume of the Wizard Saint",
+   "color": "#8D6E63",
+   "franchise": "fairy_tail"
+  },
+  "wood_make": {
+   "book": "nusmp:wood_make_book",
+   "name": "Wood-Make",
+   "book_name": "Sapling Sketchbook of the Maker",
+   "color": "#388E3C",
+   "franchise": "fairy_tail"
+  },
+  "wynn_fimbulvetr": {
+   "book": "nusmp:wynn_fimbulvetr_book",
+   "name": "Wynn Fimbulvetr",
+   "book_name": "Verses of the Great Winter",
+   "color": "#9FE3FF",
+   "franchise": "danmachi"
   }
  }
 }
