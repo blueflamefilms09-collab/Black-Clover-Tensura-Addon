@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "leap_slam",
+  "enrage"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "ogre",
+ "glow": "#ae756b",
+ "height": 3.09,
+ "id": "stone_pillar_wrestler",
+ "name": "Stone Pillar Wrestler",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Record of Ragnarok",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "blink"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "bellflower_maid_golem",
+ "name": "Bellflower Maid Golem",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Re:Zero",
+ "tier": 1
+}

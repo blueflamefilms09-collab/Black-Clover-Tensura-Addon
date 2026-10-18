@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "mending_light"
+ ],
+ "animation": "slim__trident-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#75b1d3",
+ "height": 1.94,
+ "id": "morning_dew_naiad",
+ "name": "Morning Dew Naiad",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 1
+}

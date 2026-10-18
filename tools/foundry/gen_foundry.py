@@ -242,6 +242,17 @@ def main(argv):
     if problems:
         print("%d guard problems (showing at most 60); nothing was written" % len(problems))
         return 1
+    errs = []
+    for r in rows:                                               # every row through the kit's own validation first: all the typos at once, not one per run
+        try:
+            FK.kit().normalize(FK.build_spec(r), r["id"])
+        except Exception as e:
+            errs.append("%s: %s" % (r["name"], e))
+    for e in errs[:80]:
+        print("KIT", e)
+    if errs:
+        print("%d rows the art kit refuses; nothing was written" % len(errs))
+        return 1
     print("guard ok: %d mobs" % len(rows))
     if "--verify" in flags:
         for line in G.report(rows):

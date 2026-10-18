@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "stoneskin"
+ ],
+ "animation": "small__none-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "construct",
+ "glow": "#e1dbc8",
+ "height": 1.5,
+ "id": "cobblestone_gargoyle_pup",
+ "name": "Cobblestone Gargoyle Pup",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: gargoyle",
+ "tier": 1
+}

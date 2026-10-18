@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "conjure_imps",
+  "ward_allies"
+ ],
+ "animation": "child__none-grimoire__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 1.41,
+ "id": "quill_archivist",
+ "name": "Quill Archivist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dungeon Meshi",
+ "tier": 1
+}

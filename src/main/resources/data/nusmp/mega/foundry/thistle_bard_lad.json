@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "mending_light"
+ ],
+ "animation": "average__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#f2ecde",
+ "height": 2.0,
+ "id": "thistle_bard_lad",
+ "name": "Thistle Bard Lad",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: bard",
+ "tier": 1
+}

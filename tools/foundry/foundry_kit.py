@@ -334,9 +334,47 @@ def _round(o, nd=1):
     return o
 
 
+def _thin_track(track, tol):
+    """Ramer-Douglas-Peucker over the keys of one track {"0.00": [x, y, z], ...}: a key that a straight line between its neighbours misses by less than `tol` goes (the kit
+    thins at 0.12 degrees; a mob shown at game size does not need that, and the jar shrinks by about 45 percent). The first and last key always stay, so a loop still closes."""
+    ks = sorted((float(t), v) for t, v in track.items())
+    n = len(ks)
+    if n < 3:
+        return track
+    keep = {0, n - 1}
+    stack = [(0, n - 1)]
+    while stack:
+        a, b = stack.pop()
+        if b - a < 2:
+            continue
+        t0, v0 = ks[a]
+        t1, v1 = ks[b]
+        best, bi = -1.0, -1
+        for i in range(a + 1, b):
+            u = (ks[i][0] - t0) / (t1 - t0) if t1 > t0 else 0.0
+            err = max(abs(ks[i][1][k] - (v0[k] * (1 - u) + v1[k] * u)) for k in range(3))
+            if err > best:
+                best, bi = err, i
+        if best > tol:
+            keep.add(bi)
+            stack += [(a, bi), (bi, b)]
+    return {"%.2f" % ks[i][0]: ks[i][1] for i in sorted(keep)}
+
+
+def thin(clips, rot=0.5, pos=0.15, scale=0.01):
+    """The clips with every track thinned (see _thin_track)."""
+    out = {}
+    for cn, c in clips.items():
+        bones = {}
+        for b, tr in c["bones"].items():
+            bones[b] = {kind: _thin_track(v, {"rotation": rot, "position": pos, "scale": scale}[kind]) for kind, v in tr.items()}
+        out[cn] = dict(c, bones=bones)
+    return out
+
+
 def save_class_anim(R, cls, assets=ASSETS):
     clips = R.A.clips
-    data = {"format_version": "1.8.0", "animations": {k: _round(v) for k, v in clips.items() if k != "transform"}}
+    data = {"format_version": "1.8.0", "animations": thin({k: _round(v) for k, v in clips.items() if k != "transform"})}
     os.makedirs(os.path.join(assets, "animations", "entity"), exist_ok=True)
     p = os.path.join(assets, "animations", "entity", "foundry_anim_%s.animation.json" % cls)
     with open(p, "w") as f:

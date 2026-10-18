@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_wall",
+  "cleave"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "insect",
+ "glow": "#f7f7fa",
+ "height": 2.0,
+ "id": "gilded_beetle_knight",
+ "name": "Gilded Beetle Knight",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 1
+}

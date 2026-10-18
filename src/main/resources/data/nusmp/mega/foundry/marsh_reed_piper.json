@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "root",
+  "regrowth"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#d8c8a0",
+ "height": 1.94,
+ "id": "marsh_reed_piper",
+ "name": "Marsh Reed Piper",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Princess Mononoke",
+ "tier": 1
+}

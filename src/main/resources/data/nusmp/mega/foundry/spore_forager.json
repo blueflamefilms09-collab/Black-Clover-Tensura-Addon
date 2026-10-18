@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "acid_spit"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#8ca275",
+ "height": 1.5,
+ "id": "spore_forager",
+ "name": "Spore Forager",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dungeon Meshi",
+ "tier": 1
+}

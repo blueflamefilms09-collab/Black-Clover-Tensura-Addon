@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "shield_bash"
+ ],
+ "animation": "average__spear-none__auto-auto-guard",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#c2ad75",
+ "height": 2.0,
+ "id": "tin_footman",
+ "name": "Tin Footman",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fullmetal Alchemist",
+ "tier": 1
+}

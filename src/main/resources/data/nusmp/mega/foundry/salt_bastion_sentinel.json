@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "bulwark",
+  "shield_bash"
+ ],
+ "animation": "huge__hammer-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#f7f7fa",
+ "height": 3.09,
+ "id": "salt_bastion_sentinel",
+ "name": "Salt Bastion Sentinel",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 1
+}

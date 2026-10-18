@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "root",
+  "fire_bolt"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e4b163",
+ "height": 1.94,
+ "id": "hedge_witch_apprentice",
+ "name": "Hedge Witch Apprentice",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: druid",
+ "tier": 1
+}

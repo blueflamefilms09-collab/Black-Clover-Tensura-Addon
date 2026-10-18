@@ -30,6 +30,9 @@ COLORS = {
     "void": "#2a1a44", "abyss": "#1a2038", "gloom": "#2a2a3a", "night": "#14183a", "soot": "#2a2624", "mire": "#2a3428", "tar": "#181818", "leather": "#7a5434",
     "walnut": "#4a3422", "umber": "#5a3a22", "chestnut": "#7a4a2a", "mahogany": "#4a2418", "rosewood": "#6a3a3a", "mud": "#5a4a30", "dust": "#9a8a70",
     "coal": "#22201e", "ebony": "#16121a", "oxblood": "#4a0e14",
+    # plain names (the skin tone names are also colours here; as a skin they still mean the kit's own tone ramps)
+    "red": "#b82020", "brown": "#6a4a2a", "green": "#3a8a3a", "blue": "#2a5ac0", "purple": "#7a3a9a", "orange": "#e07a20", "yellow": "#e8d030", "black": "#18181c",
+    "gray": "#808088", "dark": "#2c2420", "light": "#e8d8c0",
     # glows
     "lumen": "#fff0b0", "aether": "#a0e8ff", "spirit": "#b8ffe0", "hellfire": "#ff5a1a", "voidlight": "#b060ff", "venom": "#98ff40", "bloodlight": "#ff3050",
     "moonlight": "#c8d8ff", "sunfire": "#ffc840",

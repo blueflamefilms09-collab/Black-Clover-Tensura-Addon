@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "dash"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#adcd74",
+ "height": 1.94,
+ "id": "clover_page",
+ "name": "Clover Page",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Black Clover",
+ "tier": 1
+}

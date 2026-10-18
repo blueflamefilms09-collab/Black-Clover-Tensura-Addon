@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "troll_blood"
+ ],
+ "animation": "small__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "ogre",
+ "glow": "#cd9575",
+ "height": 1.5,
+ "id": "cairn_dwarf_miner",
+ "name": "Cairn Dwarf Miner",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: dwarf",
+ "tier": 1
+}

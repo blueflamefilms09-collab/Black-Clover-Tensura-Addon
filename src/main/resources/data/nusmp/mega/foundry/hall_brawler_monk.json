@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "dash"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#efcd6e",
+ "height": 2.09,
+ "id": "hall_brawler_monk",
+ "name": "Hall Brawler Monk",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fairy Tail",
+ "tier": 1
+}
