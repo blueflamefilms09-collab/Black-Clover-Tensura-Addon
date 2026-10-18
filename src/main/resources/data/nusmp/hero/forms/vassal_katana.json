@@ -1,0 +1,93 @@
+{
+  "weapon": "vassal_katana",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Beginner's Katana",
+      "desc": "A slender katana that has just chosen you. It cuts in long thin lines, draws in one breath like iaido, and parries or dodges a blow when you read it.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "attack_damage": 7.0, "attack_speed": -1.8 },
+      "abilityBonus": { "attack_speed": 0.1 },
+      "skills": { "use": "katana.crescent_moon", "sneak": "katana.instant_blade", "key1": "katana.counter_stance", "key2": "katana.release_evade" },
+      "passives": [ "iai_tempo", "keen_opening" ],
+      "look": "base"
+    },
+    {
+      "id": "white_tiger_katana",
+      "name": "White Tiger Katana",
+      "desc": "Quick and pale: faster swings and a lighter step, the Double Sword with its phantom second blade, and the Triple Thrust.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:iron_ingot", "count": 32 },
+        { "item": "minecraft:quartz", "count": 24 },
+        { "item": "minecraft:leather", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 7.0, "attack_speed": -1.2, "movement_speed": 0.04 },
+      "abilityBonus": { "movement_speed": 0.01, "attack_speed": 0.1 },
+      "skills": { "use": "katana.crescent_moon", "sneak": "katana.instant_blade", "key1": "katana.double_sword", "key2": "katana.release_evade", "key3": "katana.triple_thrust" },
+      "passives": [ "iai_tempo", "keen_opening" ],
+      "look": "base"
+    },
+    {
+      "id": "soul_eater_katana",
+      "name": "Soul Eater Katana",
+      "desc": "A blade that cuts through to the spirit: the Soul Slice drains a foe's magicules, the parry is quicker to answer with a Riposte, and the Stardust Blade flurries on one foe.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:soul_sand", "count": 32 },
+        { "item": "minecraft:bone", "count": 32 },
+        { "item": "minecraft:iron_ingot", "count": 24 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 8.0, "attack_speed": -1.8, "armor_toughness": 1.0, "max_health": 2.0 },
+      "abilityBonus": { "max_health": 0.5, "armor_toughness": 0.25 },
+      "skills": { "use": "katana.crescent_moon", "sneak": "katana.counter_stance", "key1": "katana.soul_slice", "key2": "katana.release_evade", "key3": "katana.stardust_blade" },
+      "passives": [ "iai_tempo", "riposte" ],
+      "look": "base"
+    },
+    {
+      "id": "siderite_katana",
+      "name": "Siderite Katana",
+      "desc": "Folded from star-iron: the Stardust Blade, the Triple Thrust and the Double Sword together, with a longer reach and a harder edge.",
+      "tier": 2,
+      "parents": [ "white_tiger_katana" ],
+      "requires": [
+        { "item": "minecraft:diamond", "count": 12 },
+        { "item": "minecraft:amethyst_shard", "count": 24 },
+        { "item": "minecraft:iron_block", "count": 16 },
+        { "item": "tensura:low_magisteel_ingot", "count": 8 }
+      ],
+      "mastery": 200,
+      "stats": { "attack_damage": 10.0, "attack_speed": -1.4, "movement_speed": 0.04, "reach": 0.5 },
+      "abilityBonus": { "reach": 0.1, "attack_speed": 0.1 },
+      "skills": { "use": "katana.crescent_moon", "sneak": "katana.instant_blade", "key1": "katana.stardust_blade", "key2": "katana.triple_thrust", "key3": "katana.double_sword" },
+      "passives": [ "iai_tempo", "keen_opening" ],
+      "look": "base"
+    },
+    {
+      "id": "sakura_stone_katana",
+      "name": "Sakura Stone of Destiny Katana",
+      "desc": "The katana in full bloom: it holds every lesson of the others and can dance the Kagura Dance of Sakura, three formations that grow with the tempo you have built.",
+      "tier": 3,
+      "parents": [ "siderite_katana", "soul_eater_katana" ],
+      "requires": [
+        { "item": "minecraft:cherry_leaves", "count": 64 },
+        { "item": "minecraft:pink_petals", "count": 32 },
+        { "item": "minecraft:cherry_log", "count": 48 },
+        { "item": "tensura:mithril_ingot", "count": 8 }
+      ],
+      "mastery": 320,
+      "stats": { "attack_damage": 12.0, "attack_speed": -1.2, "movement_speed": 0.06, "luck": 1.0, "max_health": 4.0 },
+      "abilityBonus": { "luck": 0.5, "movement_speed": 0.01 },
+      "skills": { "use": "katana.crescent_moon", "sneak": "katana.instant_blade", "key1": "katana.counter_stance", "key2": "katana.stardust_blade", "key3": "katana.sakura_dance" },
+      "passives": [ "iai_tempo", "keen_opening", "riposte" ],
+      "look": "base"
+    }
+  ]
+}
