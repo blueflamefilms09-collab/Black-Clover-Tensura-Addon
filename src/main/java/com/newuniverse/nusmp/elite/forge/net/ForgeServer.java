@@ -131,7 +131,14 @@ public final class ForgeServer {
         ForgeRecipeDef d = l.def();
         if (ForgeConfig.enforceTier() && !t.canForge(d.tier())) return new Begun(null, "nusmp.eforge.msg.tier");
         UUID user = ForgeSessions.userAt(p.level(), pos);
-        if (user != null && !user.equals(p.getUUID())) return new Begun(null, "nusmp.eforge.msg.in_use");
+        if (user != null && !user.equals(p.getUUID())) {
+            // a session whose player left (offline, another level, walked away) must not block the station until it times out
+            ServerPlayer other = p.getServer() == null ? null : p.getServer().getPlayerList().getPlayer(user);
+            double far = ForgeConfig.stationRange() + 6.0;
+            boolean abandoned = other == null || other.level() != p.level() || other.distanceToSqr(pos.getCenter()) > far * far;
+            if (!abandoned) return new Begun(null, "nusmp.eforge.msg.in_use");
+            ForgeSessions.drop(user);
+        }
         List<Inventories.Row> rows = new ArrayList<>();
         for (ForgeRecipeDef.Stack s : d.inputs()) {
             Item it = Inventories.item(s.item());
