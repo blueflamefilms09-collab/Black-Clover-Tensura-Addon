@@ -14,7 +14,7 @@ public final class GuardConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, THREAT_HEALTH_SCALE, THREAT_DAMAGE_SCALE, GUARDIAN_SCALE;
     public static final ModConfigSpec.IntValue APPROACH_RADIUS, REFORGE_MINUTES, ABANDON_SECONDS;
-    public static final ModConfigSpec.BooleanValue TRAITS, LEASH;
+    public static final ModConfigSpec.BooleanValue TRAITS, LEASH, DND, EXECUTION;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -35,6 +35,10 @@ public final class GuardConfig {
                 .define("traits", true);
         LEASH = b.comment("The Guardian cannot be led out of its hall: a Guardian that strays more than a few blocks beyond the walls is carried back to its altar.")
                 .define("leash", true);
+        DND = b.comment("The D&D layer of the Decennial bosses (1.65.0): legendary resistances, legendary actions, lair actions, a mythic second life, the anti-magic aura, magic absorption and frightful presence, from the profile of the boss's floor (data/<ns>/mega/dnd_bosses). false = the Guardian is as it was in 1.64.")
+                .define("dnd", true);
+        EXECUTION = b.comment("The Word of Ending (Power Word Kill) of the deepest Decennial bosses: a player already under 35 % health is named, marked for three seconds and killed unless they heal above the threshold, break sight or the boss is hurt hard enough. false = the word never lands (the mark and the message still appear).")
+                .define("execution", true);
         ABANDON_SECONDS = b.comment("Seconds without a survival player near the altar before an unfinished fight is abandoned (the Guardian is removed and the altar waits again).")
                 .defineInRange("abandonSeconds", 120, 20, 1800);
         b.pop();

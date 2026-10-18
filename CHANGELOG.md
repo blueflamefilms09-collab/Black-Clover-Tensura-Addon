@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.65.0] — The D&D Decennial boss system
+
+The owner asked for the multi-phase Decennial boss system of the Mega-Dungeon spec: D&D lethality (legendary actions, lair actions, legendary resistances, mythic phase-shifting, Power Word Kill, anti-magic fields) fused with anime spectacle (Acnologia-style magic absorption, True Dragon pressure, the Anti-Magic Devil). **Nothing has been run in a game client**; the numbers are first guesses. Docs: `docs/labyrinth/dnd_boss.md`.
+
+### NEW — a layer on the Labyrinth Guardian (`labyrinth/mega/guard/Dnd*.java`)
+- **Not a second boss:** the Guardian already carries scaling, the theme trait, the leash, the damage budget and the Mana Core / Gatekeeper chain, so the layer is one `DndBoss` object per Guardian that the entity calls from its tick, hurt, death and save.
+- **Rules:** Legendary Resistance (2 to 5 charges, effects turned away through `MobEffectEvent.Applicable`), Legendary Actions (3 to 5 points per 6 s round, spent in reaction to a player's blow), Lair Actions (tremor, searing light, anti-magic field, each telegraphed), three phases with a **Mythic Trait** (the first death is cancelled once; `/kill` and the void still end it), an anti-magic aura, magic absorption into a shield, frightful presence (a d20 save against DC 15) and the **Word of Ending** (only in the mythic form of tier 3+ bosses: names a player under 35 % health, marks them for 3 s, kills them unless they heal, break sight or interrupt the boss).
+- **Data:** twenty profiles (`data/nusmp/mega/dnd_bosses/`, ten Holy and ten Evil, five tiers of two) that name the anime and the D&D creature each boss fuses, loaded by a reload listener so a datapack can retune or add one. The floor picks the profile; the boss bar shows its name and form.
+- **Config:** `[guard] dnd` (false = the 1.64 Guardian) and `execution`.
+- **Tests:** `DndRulesTest` (rules, the twenty files) and the in-game self-test `guard.dnd`.
+- **Kept:** the Guardian's traits, scaling, leash, budget, altar, Mana Core and Gatekeeper are unchanged; a Guardian made with `dnd = false` behaves as in 1.64.
+
 ## [1.64.0] — Seven new functional rooms for the Mega-Dungeon (Dungeon Keeper style)
 
 The owner sent the Mega-Dungeon spec again with two room-idea references (the Dungeon Keeper room list and a dungeon-room-ideas article; the sites could not be opened from the build session, so the rooms follow the Dungeon Keeper catalogue as remembered) and chose "new functional room types". The dungeon already had the barracks, cells, torture chamber, crypts, libraries, alchemy labs, forges, kitchen and shrines; what was missing is added next to them, **nothing replaced or removed**.

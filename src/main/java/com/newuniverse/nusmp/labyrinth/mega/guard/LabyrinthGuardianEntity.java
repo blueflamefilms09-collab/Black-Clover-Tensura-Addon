@@ -64,6 +64,9 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
 
     private final BossBudget dpsBudget = new BossBudget();
     private final GuardianTraits.State traits = new GuardianTraits.State();
+    /** 1.65.0: the D&D layer (legendary resistances and actions, lair actions, phases, mythic trait) of the boss of this floor. */
+    private final DndBoss dnd = new DndBoss();
+    private int floorNo = 1;
     private int sectorId = -1, threat = 1;
     private RegionTheme theme = RegionTheme.GRAVITY;
     private Trait trait = Trait.GRAVITY;
@@ -111,13 +114,17 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
 
     /** Makes this the boss of {@code sector} (null: a plain threat-1 test Guardian), calling from {@code anchor} (the altar, or null) and rescales it. */
     public void configure(Sector sector, BlockPos anchor) {
+        floorNo = sector == null ? 1 : sector.lastFloor();
         configure(sector == null ? -1 : sector.id, sector == null ? 1 : com.newuniverse.nusmp.labyrinth.mega.FloorMap.threat(sector.lastFloor()),   // 1.55.0: the decennial boss stands on the sector's LAST floor, so it is as tough as that floor's monsters and then some
                  sector == null ? RegionTheme.GRAVITY : sector.theme, anchor,
                 sector == null ? null : FloorMap.label(sector.lastFloor()));
     }
 
     /** Sets which sector's boss this is (a bare id, for tests) and rescales it; the boss bar then names no floor. */
-    public void configure(int sectorId, int threat, RegionTheme theme, BlockPos anchor) { configure(sectorId, threat, theme, anchor, null); }
+    public void configure(int sectorId, int threat, RegionTheme theme, BlockPos anchor) {
+        floorNo = Math.max(1, threat);
+        configure(sectorId, threat, theme, anchor, null);
+    }
 
     private void configure(int sectorId, int threat, RegionTheme theme, BlockPos anchor, String floorLabel) {
         this.sectorId = sectorId;
@@ -128,6 +135,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         this.floorLabel = floorLabel;
         this.configured = true;
         stamp();
+        dnd.configure(DndProfiles.forFloor(floorNo));
         applyScaling();
     }
 
@@ -153,6 +161,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         put(Attributes.SCALE, GuardianScaling.scale(GuardConfig.get(GuardConfig.GUARDIAN_SCALE), threat));
         if (trait == Trait.GRAVITY) put(Attributes.KNOCKBACK_RESISTANCE, 1.0);
         if (trait == Trait.BLOOD) put(Attributes.MAX_ABSORPTION, hp * GuardianScaling.spec(Trait.BLOOD, true).count() / 100.0);
+        if (dnd.profile.absorbMagic()) put(Attributes.MAX_ABSORPTION, Math.max(getAttributeValue(Attributes.MAX_ABSORPTION), hp * 0.1));      // room for the shield that eaten magic becomes
         dpsBudget.bypass(() -> setHealth((float) hp));                                      // a fresh boss starts full; that is not a heal
         Component themeName = Component.translatable("message.nusmp.mega.mgd.theme." + theme.id());
         setCustomName(floorLabel == null ? Component.translatable("entity.nusmp.labyrinth_guardian.bar", themeName)
@@ -160,6 +169,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         setCustomNameVisible(false);
         refreshDimensions();
         traits.restart(level().getGameTime(), 80);
+        refreshDndName(dnd.profile, dnd.phase);
     }
 
     private void put(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, double value) {
@@ -218,6 +228,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
             if (!phaseTwo && GuardianScaling.phaseTwo(getHealth(), getMaxHealth())) enterPhaseTwo(sl);
             if (GuardConfig.get(GuardConfig.LEASH) && tickCount % 20 == 0) leash(sl);
             if (traitsOn()) GuardianTraits.tick(this, sl, traits, trait, phaseTwo);
+            dnd.tick(this, sl);
         } catch (RuntimeException e) {
             GuardLog.failed("guardian tick", e);                                           // an entity that throws in its tick would crash the server: the fight goes on without the extras
         }
@@ -284,13 +295,17 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     @Override
     public boolean hurt(DamageSource source, float amount) {
         float effective = divisor > 1.0 ? (float) (amount / divisor) : amount;                   // health the attribute cannot hold is paid as divided damage
-        return dpsBudget.hurt(this, source, effective, x -> super.hurt(source, x));
+        effective = dnd.incoming(this, source, effective);                                         // 1.65.0: magic eaten, the Word of Ending's concentration
+        boolean hit = dpsBudget.hurt(this, source, effective, x -> super.hurt(source, x));
+        if (hit && level() instanceof ServerLevel sl && isAlive()) dnd.reacted(this, sl, source);  // a legendary action between the party's turns
+        return hit;
     }
 
     // ---------------------------------------------------------------- death: report it, drop nothing
     @Override
     public void die(DamageSource source) {
         super.die(source);
+        if (isAlive()) return;                                                                      // 1.65.0: the Mythic Trait cancelled the death (DndEvents): nothing to report
         try {
             if (anchor != null && level() instanceof ServerLevel sl && sl.isLoaded(anchor) && sl.getBlockEntity(anchor) instanceof GuardianAltarBlockEntity altar) {
                 altar.onBossDied(getUUID());
@@ -308,6 +323,29 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean hitByPlayer) {}
 
+    // ---------------------------------------------------------------- 1.65.0: the D&D layer
+    /** The name over the boss bar: the profile's name and the form of the phase it is in, then the floor. Nothing changes while the profile is the default one. */
+    void refreshDndName(DndProfile profile, int phase) {
+        if (profile == DndProfile.DEFAULT || !GuardConfig.get(GuardConfig.DND)) return;
+        setCustomName(Component.literal(profile.name() + " \u2014 " + profile.form(phase) + (floorLabel == null ? "" : " (Floor " + floorLabel + ")")));
+    }
+
+    /** Health put back without it counting as a heal (the budget lets it through). */
+    void restoreHealth(float health) { dpsBudget.bypass(() -> setHealth(health)); }
+
+    /** A shield of eaten magic: absorption up to the attribute's room. */
+    void addShield(float amount) { setAbsorptionAmount((float) Math.min(getAbsorptionAmount() + amount, Math.max(0.0, getAttributeValue(Attributes.MAX_ABSORPTION)))); }
+
+    /** The death is about to happen: true when the Mythic Trait spends itself instead (the caller cancels the death). */
+    boolean dndMythic(ServerLevel sl) { return dnd.tryMythic(this, sl); }
+
+    /** A harmful effect is about to land on it: true when a Legendary Resistance turns it away. */
+    boolean dndResist(ServerLevel sl, String effectId) { return dnd.resist(this, sl, effectId); }
+
+    DndBoss dnd() { return dnd; }
+
+    public int floorNo() { return floorNo; }
+
     // ---------------------------------------------------------------- save
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -318,6 +356,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         if (floorLabel != null) tag.putString("GuardFloor", floorLabel);
         if (anchor != null) tag.putLong("GuardAnchor", anchor.asLong());
         tag.putBoolean("GuardPhaseTwo", phaseTwo);
+        tag.putInt("GuardFloorNo", floorNo);
+        dnd.save(tag);
     }
 
     @Override
@@ -332,6 +372,9 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         anchor = tag.contains("GuardAnchor") ? BlockPos.of(tag.getLong("GuardAnchor")) : null;
         phaseTwo = tag.getBoolean("GuardPhaseTwo");
         divisor = GuardianScaling.damageDivisor(GuardConfig.get(GuardConfig.GUARDIAN_BASE_HEALTH), GuardConfig.get(GuardConfig.THREAT_HEALTH_SCALE), threat);
+        floorNo = tag.contains("GuardFloorNo") ? tag.getInt("GuardFloorNo") : Math.max(1, threat);
+        dnd.configure(DndProfiles.forFloor(floorNo));
+        dnd.load(tag);
         stamp();                                                                                   // loading clears and restores the tag list: both keys are written again
     }
 }

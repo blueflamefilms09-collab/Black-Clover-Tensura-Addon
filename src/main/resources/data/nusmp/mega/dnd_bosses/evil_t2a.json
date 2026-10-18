@@ -1,0 +1,47 @@
+{
+  "side": "evil",
+  "tier": 2,
+  "variant": 0,
+  "name": "Blood-Iron Oubliette Warden",
+  "anime": [
+    "The Exiled Heavy Knight: a Calamity monster"
+  ],
+  "dnd": [
+    "Pit Fiend",
+    "Iron Golem"
+  ],
+  "forms": [
+    "Oubliette Warden",
+    "Blood-Iron Tyrant",
+    "Calamity Warden"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "wing_buffet",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "searing_light"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false
+}

@@ -1,0 +1,42 @@
+{
+  "side": "evil",
+  "tier": 1,
+  "variant": 0,
+  "name": "Umbral Catacomb Lich-Djinn",
+  "anime": [
+    "Magi: a dark Djinn"
+  ],
+  "dnd": [
+    "Acererak",
+    "Lich"
+  ],
+  "forms": [
+    "Catacomb Lich",
+    "Umbral Djinn",
+    "Phylactery Unbound"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false
+}

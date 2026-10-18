@@ -98,6 +98,7 @@ final class GuardSelfTests {
         SelfTests.register("guard.core", strict(GuardSelfTests::core));
         SelfTests.register("guard.gatekeeper", strict(GuardSelfTests::gatekeeper));
         SelfTests.register("guard.idempotent", strict(GuardSelfTests::idempotent));
+        SelfTests.register("guard.dnd", strict(GuardSelfTests::dnd));
     }
 
     /** Runs a test with {@link GuardLog#strict} on: the guards round the server-loop entry points rethrow, so a swallowed error fails the test. */
@@ -734,5 +735,108 @@ final class GuardSelfTests {
             expect(r.spy.asked.size() == want, "a repeated unseal asked for expansion again (" + r.spy.asked + ")");
             return Result.ok("three clicks (open door, re-closed door) and a direct unseal asked the Expander " + r.spy.asked.size() + " time(s) in all, the same as the first click alone");
         }
+    }
+
+    // ================================================================ 1.65.0: the D&D layer
+    /**
+     * guard.dnd: the profiles are loaded and every floor has one; then, against a stand-in person and Guardians made for three different floors, the layer does what it says: a Legendary
+     * Resistance turns a harmful effect away and runs out, a blow from a person is answered by a legendary action that costs points, magic is part eaten into a shield, the Mythic Trait
+     * cancels the first death and not the second (nor /kill), and in the last form the Word of Ending names a person under the threshold and marks them.
+     */
+    private static Result dnd(MinecraftServer server) {
+        World w = world(server);
+        ServerLevel level = w.level();
+        expect(DndProfiles.count() >= 20, "only " + DndProfiles.count() + " boss profiles are loaded (data/nusmp/mega/dnd_bosses holds twenty)");
+        for (int floor : new int[] {1, 150, 450, 650, 950, -1, -250, -450, -750, -1000}) {
+            expect(DndProfiles.byId(DndProfiles.idForFloor(floor)) != null, "floor " + floor + " has no profile (" + DndProfiles.idForFloor(floor) + ")");
+        }
+        List<Room> arenas = roomsOf(w.sector(), RoomKind.ARENA);
+        expect(arenas.size() == 1, "no arena to test in");
+        Room arena = arenas.get(0);
+        for (int cx = arena.box.minX() >> 4; cx <= arena.box.maxX() >> 4; cx++) for (int cz = arena.box.minZ() >> 4; cz <= arena.box.maxZ() >> 4; cz++) level.getChunk(cx, cz);
+        int[] lane = findLane(level, arena, 10);
+        expect(lane != null, "no clear 3 x 10 strip of floor in the arena");
+        Dummy person = new Dummy(level, "guard_dnd_tester");
+        GuardianTraits.testPlayers = List.of(person);
+        List<String> done = new ArrayList<>();
+        List<LabyrinthGuardianEntity> made = new ArrayList<>();
+        try {
+            // ---- legendary resistance, the effect path and the counter; legendary action; the death of an ordinary profile
+            LabyrinthGuardianEntity g = dndGuardian(level, lane, 450, RegionTheme.GRAVITY, made);
+            DndProfile prof = g.dnd().profile;
+            expect(prof.id().equals("holy_t3a"), "floor 450 should give holy_t3a, not " + prof.id());
+            int charges = g.dnd().resistancesLeft();
+            expect(charges == prof.resistances(), "resistances " + charges + " are not the profile's " + prof.resistances());
+            g.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 1));
+            expect(!g.hasEffect(MobEffects.POISON), "a Legendary Resistance did not turn poison away");
+            expect(g.dnd().resistancesLeft() == charges - 1, "the resistance was not spent: " + g.dnd().resistancesLeft());
+            for (int i = 0; i < 12; i++) g.dndResist(level, "minecraft:test_" + i);
+            expect(g.dnd().resistancesLeft() == 0, "the resistances did not run out: " + g.dnd().resistancesLeft());
+            g.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
+            expect(g.hasEffect(MobEffects.WEAKNESS), "with no resistance left, weakness must land");
+            done.add("resistance");
+
+            g.dnd().configure(prof);
+            int pointsBefore = g.dnd().points;
+            person.setPos(g.getX() + lane[3] * 3.0, lane[1], g.getZ() + lane[4] * 3.0);
+            g.invulnerableTime = 0;
+            g.hurt(level.damageSources().playerAttack(person), 2f);
+            expect(g.dnd().points < pointsBefore, "a blow from a person was not answered by a legendary action (points " + g.dnd().points + " of " + pointsBefore + ")");
+            done.add("legendary action");
+
+            // ---- the Mythic Trait: the first death is cancelled, the second (and /kill) is not
+            g.restoreHealth(0f);
+            g.die(level.damageSources().magic());
+            expect(g.isAlive() && g.getHealth() >= g.getMaxHealth() * 0.45f, "the Mythic Trait did not bring the Guardian back (health " + g.getHealth() + " of " + g.getMaxHealth() + ")");
+            expect(g.dnd().phase() == 3 && g.dnd().mythicUsed, "the Guardian is not in its mythic phase");
+            g.restoreHealth(0f);
+            g.die(level.damageSources().magic());
+            expect(!g.isAlive(), "the second death was cancelled too");
+            done.add("mythic");
+
+            // ---- /kill ends a boss that still has its Mythic Trait
+            LabyrinthGuardianEntity k = dndGuardian(level, lane, 450, RegionTheme.GRAVITY, made);
+            k.restoreHealth(0f);
+            k.die(level.damageSources().genericKill());
+            expect(!k.isAlive() && !k.dnd().mythicUsed, "/kill must end a boss without spending its Mythic Trait");
+            done.add("/kill");
+
+            // ---- the Word of Ending, in the last form, names a person under the threshold
+            LabyrinthGuardianEntity x = dndGuardian(level, lane, 450, RegionTheme.GRAVITY, made);
+            x.dnd().mythicUsed = true;
+            x.dnd().phase = 3;
+            person.setPos(x.getX() + lane[3] * 4.0, lane[1], x.getZ() + lane[4] * 4.0);
+            person.setHealth(person.getMaxHealth() * 0.2f);
+            x.dnd().tick(x, level);
+            expect(person.getUUID().equals(x.dnd().executionTarget()), "the Word of Ending did not name a person at 20 % health");
+            expect(person.hasEffect(MobEffects.GLOWING), "the named person is not marked");
+            clear(person);
+            person.setHealth(person.getMaxHealth());
+            done.add("word of ending");
+
+            // ---- magic is part eaten into a shield
+            LabyrinthGuardianEntity m = dndGuardian(level, lane, 350, RegionTheme.GRAVITY, made);
+            expect(m.dnd().profile.absorbMagic(), "floor 350 (" + m.dnd().profile.id() + ") should absorb magic");
+            m.invulnerableTime = 0;
+            m.hurt(level.damageSources().magic(), 40f);
+            expect(m.getAbsorptionAmount() > 0f, "a magical blow did not become a shield");
+            done.add("absorption");
+        } finally {
+            GuardianTraits.testPlayers = null;
+            for (LabyrinthGuardianEntity e : made) e.discard();
+            clear(person);
+        }
+        return Result.ok(DndProfiles.count() + " profiles; " + String.join(", ", done) + " held against a person");
+    }
+
+    private static LabyrinthGuardianEntity dndGuardian(ServerLevel level, int[] lane, int floor, RegionTheme theme, List<LabyrinthGuardianEntity> made) {
+        LabyrinthGuardianEntity g = LabyrinthGuardianEntity.create(level, new BlockPos(lane[0], lane[1], lane[2]), null, null);
+        expect(g != null, "no Guardian made");
+        g.configure(-1, floor, theme, null);
+        g.moveTo(lane[0] + 0.5, lane[1], lane[2] + 0.5, 0f, 0f);
+        expect(level.addFreshEntity(g), "the Guardian was refused by the level");
+        made.add(g);
+        for (int i = 0; i < 3; i++) g.tick();
+        return g;
     }
 }

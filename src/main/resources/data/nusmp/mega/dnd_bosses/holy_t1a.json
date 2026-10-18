@@ -1,0 +1,42 @@
+{
+  "side": "holy",
+  "tier": 1,
+  "variant": 0,
+  "name": "Seraph-Djinn of the Blessed Earth",
+  "anime": [
+    "Magi: a Djinn of a dungeon"
+  ],
+  "dnd": [
+    "Deva",
+    "Treant"
+  ],
+  "forms": [
+    "Seraph Djinn",
+    "Unbound Vessel",
+    "Metal Vessel Ascendant"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false
+}

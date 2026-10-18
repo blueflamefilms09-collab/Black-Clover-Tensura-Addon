@@ -1,0 +1,56 @@
+{
+  "side": "holy",
+  "tier": 5,
+  "variant": 1,
+  "name": "Sovereign of the Throne of Primeval Light",
+  "anime": [
+    "Magi: Solomon's Alma Torran"
+  ],
+  "dnd": [
+    "Solar",
+    "Tiamat"
+  ],
+  "forms": [
+    "Light Sovereign",
+    "Primeval Dragon",
+    "Throne of First Light"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "wing_buffet",
+      "cost": 2
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    },
+    {
+      "id": "magic_drain",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "searing_light",
+    "anti_magic_field"
+  ],
+  "anti_magic_aura": true,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "mythic": true,
+  "execution": true
+}

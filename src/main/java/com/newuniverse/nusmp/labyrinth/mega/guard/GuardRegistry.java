@@ -72,6 +72,7 @@ public final class GuardRegistry {
 
     public static void register(IEventBus gameBus) {
         gameBus.addListener(GuardRegistry::onEntityJoin);
+        DndEvents.register(gameBus);                                                       // 1.65.0: the D&D layer's listeners
     }
 
     public static void attributes(EntityAttributeCreationEvent e) {

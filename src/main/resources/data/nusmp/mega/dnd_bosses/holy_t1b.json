@@ -1,0 +1,42 @@
+{
+  "side": "holy",
+  "tier": 1,
+  "variant": 1,
+  "name": "The Dawnlit Aviary Wyrm",
+  "anime": [
+    "The Beginning After the End: a Dragon King"
+  ],
+  "dnd": [
+    "Gold Dragon",
+    "Roc"
+  ],
+  "forms": [
+    "Dawn Wyrm",
+    "Aviary Sovereign",
+    "Mythic Sunwing"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false
+}
