@@ -1,0 +1,1108 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Goliath, the Colossal Fist",
+  "desc": "The strongest Fighter on the continent: wading in, throwing boulders, stamping the ground flat and hitting like a falling building. Inspired by the nation-level Fighter class of the story.",
+  "book": "nusmp:goliath_colossal_fist_book",
+  "book_name": "Biography of a Walking Earthquake",
+  "book_lore": "Subtlety is for people who cannot lift the building.",
+  "color": "#D98C1F",
+  "icon": "minecraft:mace",
+  "class_id": "goliath_colossal_fist",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/goliath_colossal_fist.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "wrecking_posture",
+      "name": "Wrecking Posture",
+      "desc": "Squared up and swinging: huge damage, moderate speed loss.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "titan_s_guard",
+      "name": "Titan's Guard",
+      "desc": "Hands up, feet planted: sturdy and hard to knock back, with lighter blows.",
+      "parents": [
+        {
+          "node": "wrecking_posture",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "colossal_strength",
+      "name": "Colossal Strength",
+      "desc": "Fists like sledges.",
+      "parents": [
+        {
+          "node": "wrecking_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_pickaxe"
+    },
+    {
+      "id": "bulk_of_a_giant",
+      "name": "Bulk of a Giant",
+      "desc": "Immense vitality.",
+      "parents": [
+        {
+          "node": "titan_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "heavy_footing",
+      "name": "Heavy Footing",
+      "desc": "Hard to push around.",
+      "parents": [
+        {
+          "node": "wrecking_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.12,
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "wrecker_s_reach",
+      "name": "Wrecker's Reach",
+      "desc": "Long arms of a giant.",
+      "parents": [
+        {
+          "node": "titan_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "colossus_footfall",
+      "name": "Colossus Footfall",
+      "desc": "Stomp and send a crack of force down the ground ahead.",
+      "parents": [
+        {
+          "node": "wrecking_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "titan_s_pounce",
+      "name": "Titan's Pounce",
+      "desc": "Spring with surprising speed and land on the enemy cluster.",
+      "parents": [
+        {
+          "node": "titan_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "haymaker",
+      "name": "Haymaker",
+      "desc": "A single huge swing that hits much harder against a wounded foe.",
+      "parents": [
+        {
+          "node": "colossus_footfall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.9,
+          1.035,
+          1.17,
+          1.305
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "seismic_clap",
+      "name": "Seismic Clap",
+      "desc": "A thunder-clap of hands that freezes the nearby creatures in place.",
+      "parents": [
+        {
+          "node": "titan_s_pounce",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "overcharge_muscle",
+      "name": "Overcharge Muscle",
+      "desc": "Flex until the shirt gives: Strength and Haste for a while.",
+      "parents": [
+        {
+          "node": "haymaker",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "haste",
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "seconds": [
+          16.0,
+          18.0,
+          21.0,
+          23.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "boulder_barrage",
+      "name": "Boulder Barrage",
+      "desc": "Rip up stone and throw it, again and again, at the foe you look at.",
+      "parents": [
+        {
+          "node": "seismic_clap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          5.0,
+          7.0,
+          8.0,
+          10.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "come_at_me",
+      "name": "Come At Me",
+      "desc": "A bellow that draws every hostile nearby to you.",
+      "parents": [
+        {
+          "node": "overcharge_muscle",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "boss_breaker",
+      "name": "Boss-Breaker",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "colossus_footfall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "shoulder_check",
+      "name": "Shoulder-Check",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "titan_s_pounce",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.7,
+          0.805,
+          0.91,
+          1.015
+        ],
+        "chance": [
+          0.4,
+          0.46,
+          0.52,
+          0.58
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "massive_frame",
+      "name": "Massive Frame",
+      "desc": "At full health you take much less damage.",
+      "parents": [
+        {
+          "node": "haymaker",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "bruiser_s_crit",
+      "name": "Bruiser's Crit",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "seismic_clap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "blood_of_the_strong",
+      "name": "Blood of the Strong",
+      "desc": "Your blows heal you.",
+      "parents": [
+        {
+          "node": "overcharge_muscle",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.07,
+          0.084,
+          0.098,
+          0.112
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "not_done_yet",
+      "name": "Not Done Yet",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "boulder_barrage",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "spoils_of_a_giant",
+      "name": "Spoils of a Giant",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "come_at_me",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "ground_zero",
+      "name": "Ground Zero",
+      "desc": "Slam the earth and flatten everything near you.",
+      "parents": [
+        {
+          "node": "come_at_me",
+          "level": 3
+        },
+        {
+          "node": "spoils_of_a_giant",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "targets": [
+          9.0,
+          13.0,
+          16.0
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "breaker_of_walls",
+      "name": "Breaker of Walls",
+      "desc": "Run through the line, one fist to every face along the road.",
+      "parents": [
+        {
+          "node": "boulder_barrage",
+          "level": 3
+        },
+        {
+          "node": "not_done_yet",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_block"
+    }
+  ]
+}

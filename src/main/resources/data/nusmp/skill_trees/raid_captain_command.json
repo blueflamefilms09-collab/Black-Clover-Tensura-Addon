@@ -1,0 +1,1112 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Raid Captain's Command",
+  "desc": "Lead the clear: call targets, draw the boss's eye, rally the party and strike where the plan says to. A support line built on marks, taunts and auras.",
+  "book": "nusmp:raid_captain_command_book",
+  "book_name": "Orders of the Raid Captain",
+  "book_lore": "The plan survives until first contact. The captain does not.",
+  "color": "#E0B43A",
+  "icon": "minecraft:goat_horn",
+  "class_id": "raid_captain_command",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/raid_captain_command.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "commander_s_post",
+      "name": "Commander's Post",
+      "desc": "Hold the middle of the formation: armored and steady, hitting less.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "point_of_the_spear",
+      "name": "Point of the Spear",
+      "desc": "Charge at the head of the party: faster and stronger, with less armor.",
+      "parents": [
+        {
+          "node": "commander_s_post",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.18,
+          0.216,
+          0.252
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "veteran_s_vigor",
+      "name": "Veteran's Vigor",
+      "desc": "More maximum health.",
+      "parents": [
+        {
+          "node": "commander_s_post",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "captain_s_plate",
+      "name": "Captain's Plate",
+      "desc": "Better armor.",
+      "parents": [
+        {
+          "node": "point_of_the_spear",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "voice_that_carries",
+      "name": "Voice That Carries",
+      "desc": "Your orders reach farther.",
+      "parents": [
+        {
+          "node": "commander_s_post",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "calm_in_the_chaos",
+      "name": "Calm in the Chaos",
+      "desc": "Sturdy under pressure.",
+      "parents": [
+        {
+          "node": "point_of_the_spear",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:diamond_chestplate"
+    },
+    {
+      "id": "focus_fire",
+      "name": "Focus Fire",
+      "desc": "Call a target; everyone's blows on it hurt more for a while.",
+      "parents": [
+        {
+          "node": "commander_s_post",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "battle_cry",
+      "name": "Battle Cry",
+      "desc": "A shout that gives you and your allies Strength.",
+      "parents": [
+        {
+          "node": "point_of_the_spear",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "draw_aggro",
+      "name": "Draw Aggro",
+      "desc": "Bait the boss: hostile creatures nearby turn on you.",
+      "parents": [
+        {
+          "node": "focus_fire",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:red_banner"
+    },
+    {
+      "id": "coordinated_strike",
+      "name": "Coordinated Strike",
+      "desc": "A command-blow that jumps from target to target along the line.",
+      "parents": [
+        {
+          "node": "battle_cry",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "flush_them_out",
+      "name": "Flush Them Out",
+      "desc": "A hooked pull that drags nearby creatures into the killing zone.",
+      "parents": [
+        {
+          "node": "draw_aggro",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "captain_s_cleave",
+      "name": "Captain's Cleave",
+      "desc": "A cone-shaped sword cut for the creatures in front of you.",
+      "parents": [
+        {
+          "node": "coordinated_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "field_triage",
+      "name": "Field Triage",
+      "desc": "Heal yourself and the allies near you.",
+      "parents": [
+        {
+          "node": "flush_them_out",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "inspiring_presence",
+      "name": "Inspiring Presence",
+      "desc": "Allies near you take less damage: Resistance.",
+      "parents": [
+        {
+          "node": "focus_fire",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "resistance",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "boss_analysis",
+      "name": "Boss Analysis",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "battle_cry",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "shared_spoils",
+      "name": "Shared Spoils",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "draw_aggro",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "hold_the_line",
+      "name": "Hold the Line",
+      "desc": "In the thick of a fight you take less damage.",
+      "parents": [
+        {
+          "node": "coordinated_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "loot_split",
+      "name": "Loot Split",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "flush_them_out",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "drilled_combination",
+      "name": "Drilled Combination",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "captain_s_cleave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "captain_goes_last",
+      "name": "Captain Goes Last",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "field_triage",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "all_out_assault",
+      "name": "All-Out Assault",
+      "desc": "The order everyone has waited for: you and your allies gain a long, strong surge of Strength.",
+      "parents": [
+        {
+          "node": "field_triage",
+          "level": 3
+        },
+        {
+          "node": "captain_goes_last",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          14.0,
+          15.4,
+          16
+        ],
+        "seconds": [
+          25.0,
+          29.0,
+          32.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "combined_arms_barrage",
+      "name": "Combined Arms Barrage",
+      "desc": "Call the whole party's long-range fire onto the spot you look at.",
+      "parents": [
+        {
+          "node": "captain_s_cleave",
+          "level": 3
+        },
+        {
+          "node": "drilled_combination",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "range": [
+          28.0,
+          30.24,
+          32.48
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:tnt"
+    }
+  ]
+}
