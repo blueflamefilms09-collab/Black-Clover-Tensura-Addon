@@ -34,7 +34,8 @@ from lines_lib import FRANCHISES  # noqa: E402
 
 TEX_DIR = os.path.join(ASSETS, "textures", "item", "skill_book_3d")
 MODEL_DIR = os.path.join(ASSETS, "models", "item")
-FRANCHISE_ORDER = list(FRANCHISES.keys())            # the order IS the value of the item property nusmp:franchise (index + 1) / PROP_STEPS: new franchises are only ever appended
+FRANCHISE_ORDER = list(FRANCHISES.keys())          # the order IS the value of the item property nusmp:franchise (index + 1) / PROP_STEPS: new franchises are only ever appended
+assert len(FRANCHISE_ORDER) + 1 <= 20, "the item property (index + 1) / 20 must stay at or below 1: raise PROP_STEPS in gen_book_textures.py and gen_book_index.py before adding the 20th franchise"
 PROP_STEPS = 20.0
 # the 1.62.0 model of the Skill Book, kept as skill_book_2d.json (its text must stay what it was)
 OLD_MODEL = {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/skill_book", "layer1": "nusmp:item/skill_book_cover"}}
@@ -413,7 +414,9 @@ def write_png(path, img, check, problems):
 
 
 def separate(body_model, gui_model, gui_light="front"):
-    return {"loader": "neoforge:separate_transforms", "gui_light": gui_light, "base": {"parent": body_model}, "perspectives": {"gui": {"parent": gui_model}}}
+    # the top-level "particle" texture: the baked model's particle sprite (broken-item and eating particles) is looked up in the wrapper, not in the nested models
+    return {"loader": "neoforge:separate_transforms", "gui_light": gui_light, "textures": {"particle": "nusmp:item/skill_book_3d/base"},
+            "base": {"parent": body_model}, "perspectives": {"gui": {"parent": gui_model}}}
 
 
 def main():

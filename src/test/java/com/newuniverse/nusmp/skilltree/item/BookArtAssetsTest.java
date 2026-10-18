@@ -57,6 +57,7 @@ class BookArtAssetsTest {
         assertEquals("neoforge:separate_transforms", top.get("loader").getAsString());
         assertEquals("front", top.get("gui_light").getAsString(), "the flat inventory sprite must be lit from the front or it goes dark");
         assertEquals("nusmp:item/skill_book_3d", top.getAsJsonObject("base").get("parent").getAsString());
+        assertEquals("nusmp:item/skill_book_3d/base", top.getAsJsonObject("textures").get("particle").getAsString(), "the wrapper needs its own particle texture");
         JsonObject perspectives = top.getAsJsonObject("perspectives");
         assertEquals(1, perspectives.size(), "only the GUI differs from the body");
         assertEquals("nusmp:item/skill_book_2d", perspectives.getAsJsonObject("gui").get("parent").getAsString());
