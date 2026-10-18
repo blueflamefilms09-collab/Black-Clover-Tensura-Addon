@@ -371,14 +371,14 @@ def diag_place(mesh, item_id, hold):
 # the Magebane Shield's (held on the forearm, face out, with its raised "blocking" model); the bow has its own, solved with tools/relics/weapon_sheet.py's hand
 # chain so that it is held upright with its belly forward like an archer's, not lying flat like the wave 23 bows: the item cube's centre is the hand, the grip
 # is at the cube's centre, the display turns the cube so that the mesh's +y is up, its +x (the belly) is forward and its +z (the face) is outward.
-BOW_DISPLAY = {
-    "thirdperson_righthand": {"rotation": [75, 90, 0], "translation": [0.0, 1.0, 0.0], "scale": [0.85, 0.85, 0.85]},
-    "thirdperson_lefthand": {"rotation": [75, -90, 0], "translation": [0.0, 1.0, 0.0], "scale": [0.85, 0.85, 0.85]},
-    "firstperson_righthand": {"rotation": [0, 115, -20], "translation": [1.13, -0.4, -0.2], "scale": [0.6, 0.6, 0.6]},
-    "firstperson_lefthand": {"rotation": [0, -115, 20], "translation": [1.13, -0.4, -0.2], "scale": [0.6, 0.6, 0.6]},
-    "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.35, 0.35, 0.35]},
+BOW_DISPLAY = {   # 1.63.0: vanilla's own Bow display (the 1.62.0 hand-solved [75, 90, 0] stood the bow up in front of the player: owner's screenshot 81); tools/relics/bow_vanilla.py also places the meshes on the sprite diagonal
+    "thirdperson_righthand": {"rotation": [-80, 260, -40], "translation": [-1, -2, 2.5], "scale": [0.9, 0.9, 0.9]},
+    "thirdperson_lefthand": {"rotation": [-80, -280, 40], "translation": [-1, -2, 2.5], "scale": [0.9, 0.9, 0.9]},
+    "firstperson_righthand": {"rotation": [0, -90, 25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
+    "firstperson_lefthand": {"rotation": [0, 90, -25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
+    "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
     "head": {"rotation": [0, 180, 0], "translation": [0, 13, 7], "scale": [1, 1, 1]},
-    "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [0.6, 0.6, 0.6]},
+    "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
     "gui": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
 }
 
@@ -411,7 +411,7 @@ def write_item_models(item_id):
     import display_presets as dp
     mesh = dp.read_mesh(os.path.join(MESH_DIR, item_id + ".txt"))
     plan = dp.plan_for(item_id, model, mesh)
-    if item_id != "legendary_bow":                                       # the bow's first-person pose is hand-solved above; the others follow the rule
+    if item_id != "legendary_bow":                                       # 1.63.0: the bow is vanilla's (BOW_DISPLAY above); the others follow the rule
         dump(item_id, dp.apply_plan(model, plan))
     return plan
 

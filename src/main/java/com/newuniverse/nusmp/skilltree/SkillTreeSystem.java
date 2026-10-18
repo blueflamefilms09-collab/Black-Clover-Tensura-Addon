@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.skilltree.ft.FireDragonSkills;
 import com.newuniverse.nusmp.skilltree.ft.IceMakeSkills;
 import com.newuniverse.nusmp.skilltree.ft.LightningDragonSkills;
 import com.newuniverse.nusmp.skilltree.ft.SkyDragonSkills;
+import com.newuniverse.nusmp.skilltree.hk.HeavyKnightSkills;
 import com.newuniverse.nusmp.skilltree.item.ItemsSystem;
 import com.newuniverse.nusmp.skilltree.shop.ShopSystem;
 import com.newuniverse.nusmp.skilltree.state.SkillTreeAttachments;
@@ -35,6 +36,7 @@ public final class SkillTreeSystem {
         LightningDragonSkills.SKILLS.register(modBus);
         SkyDragonSkills.SKILLS.register(modBus);
         IceMakeSkills.SKILLS.register(modBus);
+        HeavyKnightSkills.SKILLS.register(modBus);                  // 1.63.0: the Exiled Heavy Knight routes (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck)
         TreeCore.init(modBus, modContainer);
         ItemsSystem.init(modBus, modContainer);
         ShopSystem.init(modBus, modContainer);

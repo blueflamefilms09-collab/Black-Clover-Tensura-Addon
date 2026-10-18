@@ -1,0 +1,301 @@
+{
+  "magic": "exiled_heavy_knight",
+  "name": "Oath of the Heavy Armor",
+  "desc": "The tank's road of The Exiled Heavy Knight: stand in front, draw every blade onto yourself and outlast it. Taunts, a wall of resistance, a shield that bites back, and plate that turns the hits aside. Works only while it is your equipped route.",
+  "book": "nusmp:heavy_armor_book",
+  "book_name": "Oath of the Heavy Armor",
+  "book_lore": "A dented, iron-bound codex. Its first page reads: 'Whoever is struck first, strikes last.'",
+  "color": "#8E9AAF",
+  "icon": "minecraft:iron_chestplate",
+  "class_id": "heavy_armor",
+  "duplicate_sp": 3,
+  "loot_weight": 2,
+  "nodes": [
+    {
+      "id": "provoke",
+      "name": "Provoke",
+      "desc": "Roar a challenge: hostile creatures near you turn on you, and you steel yourself with a short Resistance. They keep to you until something else hurts them more.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "skill": "nusmp:hk_provoke",
+      "values": {
+        "radius": [
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "targets": [
+          4,
+          5,
+          6,
+          8,
+          10
+        ],
+        "resist_seconds": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "cost": [
+          0.02,
+          0.02,
+          0.02,
+          0.025,
+          0.025
+        ],
+        "cooldown": [
+          200,
+          190,
+          180,
+          170,
+          160
+        ]
+      },
+      "x": 0,
+      "y": 4,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "iron_hide",
+      "name": "Iron Hide",
+      "desc": "Heavy plate that you have worn for years: while this route is equipped you gain Armor and resist being knocked about.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "passives": [
+        "hk_iron_hide"
+      ],
+      "values": {
+        "armor": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "knockback_resist": [
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      "x": 0,
+      "y": 6,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "shield_wall",
+      "name": "Shield Wall",
+      "desc": "Plant yourself: strong Resistance and a layer of Absorption for a few seconds, longer than you can keep up for ever.",
+      "parents": [
+        {
+          "node": "provoke",
+          "level": 1
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "max_level": 4,
+      "skill": "nusmp:hk_shield_wall",
+      "values": {
+        "seconds": [
+          6,
+          7,
+          8,
+          10
+        ],
+        "resist_amp": [
+          1,
+          1,
+          2,
+          2
+        ],
+        "absorb_hearts": [
+          4,
+          6,
+          8,
+          10
+        ],
+        "cost": [
+          0.03,
+          0.03,
+          0.035,
+          0.04
+        ],
+        "cooldown": [
+          500,
+          480,
+          460,
+          440
+        ]
+      },
+      "x": 2,
+      "y": 3,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "bulwark",
+      "name": "Bulwark",
+      "desc": "Blows that land while you hold a raised shield are cut down by this share.",
+      "parents": [
+        {
+          "node": "iron_hide",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "passives": [
+        "hk_bulwark"
+      ],
+      "values": {
+        "reduction": [
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "desc": "Slam the shield into everyone in front: they are hurt, shoved back and slowed.",
+      "parents": [
+        {
+          "node": "shield_wall",
+          "level": 1
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3
+      ],
+      "max_level": 3,
+      "skill": "nusmp:hk_shield_bash",
+      "values": {
+        "damage": [
+          5,
+          7,
+          9
+        ],
+        "range": [
+          3,
+          3.5,
+          4
+        ],
+        "half_angle": [
+          35,
+          40,
+          45
+        ],
+        "knockback": [
+          0.9,
+          1.2,
+          1.5
+        ],
+        "slow_seconds": [
+          2,
+          3,
+          4
+        ],
+        "targets": [
+          4,
+          6,
+          8
+        ],
+        "cost": [
+          0.02,
+          0.025,
+          0.03
+        ],
+        "cooldown": [
+          120,
+          110,
+          100
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "unyielding",
+      "name": "Unyielding",
+      "desc": "When a blow leaves you under a third of your health, the oath answers: Absorption and Resistance at once, then it rests.",
+      "parents": [
+        {
+          "node": "bulwark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3
+      ],
+      "max_level": 3,
+      "passives": [
+        "hk_unyielding"
+      ],
+      "values": {
+        "absorb_hearts": [
+          4,
+          6,
+          8
+        ],
+        "seconds": [
+          5,
+          6,
+          8
+        ],
+        "rest": [
+          2400,
+          2000,
+          1600
+        ]
+      },
+      "x": 4,
+      "y": 6,
+      "icon": "minecraft:totem_of_undying"
+    }
+  ]
+}

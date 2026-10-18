@@ -337,17 +337,8 @@
     },
     {
       "id": "divine_mercy",
-      "action": "preset",
-      "length_blocks": 2.582,
-      "first_person_scale": 0.58,
-      "first_person_translation_px": [
-        1.13,
-        5.05,
-        -2.64
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.309,
-      "fixed_scale": 0.58
+      "action": "skip_manual",
+      "length_blocks": 2.582
     },
     {
       "id": "doom_hammer",
@@ -455,17 +446,8 @@
     },
     {
       "id": "embrasure",
-      "action": "preset",
-      "length_blocks": 2.582,
-      "first_person_scale": 0.58,
-      "first_person_translation_px": [
-        1.13,
-        5.49,
-        -1.7
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.309,
-      "fixed_scale": 0.58
+      "action": "skip_manual",
+      "length_blocks": 2.582
     },
     {
       "id": "encircled_blade",
@@ -1381,17 +1363,8 @@
     },
     {
       "id": "the_dragons_spirit",
-      "action": "preset",
-      "length_blocks": 2.582,
-      "first_person_scale": 0.58,
-      "first_person_translation_px": [
-        1.13,
-        5.37,
-        -1.96
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.309,
-      "fixed_scale": 0.58
+      "action": "skip_manual",
+      "length_blocks": 2.582
     },
     {
       "id": "the_dragons_truth",
@@ -1456,17 +1429,8 @@
     },
     {
       "id": "the_reaver",
-      "action": "preset",
-      "length_blocks": 2.582,
-      "first_person_scale": 0.58,
-      "first_person_translation_px": [
-        1.13,
-        5.98,
-        -0.64
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.309,
-      "fixed_scale": 0.58
+      "action": "skip_manual",
+      "length_blocks": 2.582
     },
     {
       "id": "the_stabshroom",
@@ -1694,8 +1658,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.409,
-      "fixed_scale": 0.768,
-      "rewritten": true
+      "fixed_scale": 0.768
     },
     {
       "id": "vassal_mirror",
@@ -1728,8 +1691,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.289,
-      "fixed_scale": 0.542,
-      "rewritten": true
+      "fixed_scale": 0.542
     },
     {
       "id": "vassal_sewing_set",

@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * changes, not in a skill. The Updraft changes how much a fall hurts, and the game decides that in one event ({@code LivingFallEvent}, which carries a damage multiplier made for exactly
  * this), so the passive scales that multiplier by what the node level leaves and never touches health itself; the Armor Aura needs a heartbeat, and the game bus's per-player tick event
  * is the cheapest one (the handler leaves at once unless this player's tick count is on its beat, every two seconds, and only then looks the node up). Both are guarded by
- * {@code SkillTreeApi.isNodeActive}, the tree's single question "does this player own the route and the node", which is what makes the passives obey the same gate as the
+ * {@code SkillTreeApi.canCast} (1.63.0: it was {@code isNodeActive}, which ignored the equipped route), the tree's single question "does this player own the route, the node and have the route equipped", which is what makes the passives obey the same gate as the
  * techniques: refund the node and the passive is gone on the next beat, with nothing to clean up. The aura refreshes a five-second resistance on every ally in its circle each two
  * seconds, so the effect never lapses while friends stand near and ends within five seconds of leaving; it is ambient and without particles. The listeners are registered once from the route's
  * register class; the work is in two small package methods so the self-test can run exactly what the events run.
@@ -46,7 +46,7 @@ public final class SkyPassives {
 
     /** The Updraft: multiplies the damage of the fall in {@code e} by what the node level leaves of it. Returns the factor applied (1 when the player has no Updraft). */
     static float cushion(ServerPlayer p, LivingFallEvent e) {
-        if (!SkillTreeApi.isNodeActive(p, SkyRoute.ID, SkyRoute.CUSHION)) return 1f;
+        if (!SkillTreeApi.canCast(p, SkyRoute.ID, SkyRoute.CUSHION)) return 1f;
         int level = SkillTreeApi.nodeLevel(p, SkyRoute.ID, SkyRoute.CUSHION);
         float factor = SkyNumbers.fallMultiplier(RouteRegistry.value(SkyRoute.ID, SkyRoute.CUSHION, "fall_reduction", level, SkyNumbers.fallback(SkyRoute.CUSHION, "fall_reduction")));
         e.setDamageMultiplier(e.getDamageMultiplier() * factor);
@@ -55,7 +55,7 @@ public final class SkyPassives {
 
     /** One pulse of the Armor Aura: gives Resistance to the player and every ally in the circle. Returns how many creatures it covered (0 when the player has no aura). */
     static int aura(ServerPlayer p) {
-        if (!SkillTreeApi.isNodeActive(p, SkyRoute.ID, SkyRoute.AURA)) return 0;
+        if (!SkillTreeApi.canCast(p, SkyRoute.ID, SkyRoute.AURA)) return 0;
         int level = SkillTreeApi.nodeLevel(p, SkyRoute.ID, SkyRoute.AURA);
         double radius = RouteRegistry.value(SkyRoute.ID, SkyRoute.AURA, "radius", level, SkyNumbers.fallback(SkyRoute.AURA, "radius"));
         int covered = 0;

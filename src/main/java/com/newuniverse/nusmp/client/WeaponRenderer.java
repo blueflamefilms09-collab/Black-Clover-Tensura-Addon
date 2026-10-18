@@ -128,6 +128,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             public net.minecraft.client.model.HumanoidModel.ArmPose getArmPose(net.minecraft.world.entity.LivingEntity holder, net.minecraft.world.InteractionHand hand, ItemStack stack) {
                 if (stack.getItem() instanceof net.minecraft.world.item.CrossbowItem && !holder.swinging && net.minecraft.world.item.CrossbowItem.isCharged(stack))
                     return net.minecraft.client.model.HumanoidModel.ArmPose.CROSSBOW_HOLD;
+                // 1.63.0: a drawn bow of the mod (class bow) is held in vanilla's bow pose whatever its use animation is (a relic bow answers NONE), so the arm is never left mis-posed
+                if (holder.isUsingItem() && holder.getUseItem() == stack && "bow".equals(classes().className(BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath())))
+                    return net.minecraft.client.model.HumanoidModel.ArmPose.BOW_AND_ARROW;
                 return null;
             }
         };

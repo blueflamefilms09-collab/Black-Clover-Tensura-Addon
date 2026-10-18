@@ -1,0 +1,248 @@
+{
+  "magic": "exiled_heavy_knight",
+  "name": "Lady Luck",
+  "desc": "The gambler's road of The Exiled Heavy Knight: a passive Luck stat, a cat that bats a killing blow aside, strikes that crit when they should not, and a coin that is not always fair. Works only while it is your equipped route.",
+  "book": "nusmp:lady_luck_book",
+  "book_name": "Lady Luck",
+  "book_lore": "The pages are a deck of worn cards. Anyone who reads it feels they are being watched, kindly, by a cat.",
+  "color": "#F2C94C",
+  "icon": "minecraft:rabbit_foot",
+  "class_id": "lady_luck",
+  "duplicate_sp": 4,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "fortunes_favor",
+      "name": "Fortune's Favor",
+      "desc": "The world leans your way: while this route is equipped you have extra Luck (better loot from chests, fishing and loot tables that care about it).",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "passives": [
+        "hk_fortunes_favor"
+      ],
+      "values": {
+        "luck": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "x": 0,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "cats_paw",
+      "name": "Cat's Paw",
+      "desc": "A cat you cannot see bats a blow out of the air: a chance to take no damage from one hit, then it needs a rest. Your Luck makes the chance better.",
+      "parents": [
+        {
+          "node": "fortunes_favor",
+          "level": 1
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        2,
+        3
+      ],
+      "max_level": 3,
+      "passives": [
+        "hk_cats_paw"
+      ],
+      "values": {
+        "chance": [
+          0.1,
+          0.15,
+          0.2
+        ],
+        "luck_bonus": [
+          0.01,
+          0.015,
+          0.02
+        ],
+        "rest": [
+          600,
+          500,
+          400
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:cat_spawn_egg"
+    },
+    {
+      "id": "lucky_strike",
+      "name": "Lucky Strike",
+      "desc": "Your blows sometimes find the gap: a chance of a critical hit for half again the damage.",
+      "parents": [
+        {
+          "node": "fortunes_favor",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "passives": [
+        "hk_lucky_strike"
+      ],
+      "values": {
+        "chance": [
+          0.05,
+          0.1,
+          0.15,
+          0.2
+        ],
+        "luck_bonus": [
+          0.01,
+          0.01,
+          0.015,
+          0.02
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "gamblers_coin",
+      "name": "Gambler's Coin",
+      "desc": "Flip a coin. Heads gives you Luck, Speed and Regeneration for a while; tails gives you a little Regeneration and the lesson. Luck tilts the coin.",
+      "parents": [
+        {
+          "node": "cats_paw",
+          "level": 1
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3
+      ],
+      "max_level": 3,
+      "skill": "nusmp:hk_gamblers_coin",
+      "values": {
+        "seconds": [
+          12,
+          16,
+          20
+        ],
+        "heads_chance": [
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.015,
+          0.02,
+          0.02
+        ],
+        "cooldown": [
+          600,
+          560,
+          520
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "treasure_nose",
+      "name": "Treasure Nose",
+      "desc": "What you slay sometimes leaves more behind: a chance that one drop of a kill is doubled.",
+      "parents": [
+        {
+          "node": "lucky_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3
+      ],
+      "max_level": 3,
+      "passives": [
+        "hk_treasure_nose"
+      ],
+      "values": {
+        "chance": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "x": 4,
+      "y": 6,
+      "icon": "minecraft:emerald"
+    },
+    {
+      "id": "jackpot",
+      "name": "Jackpot",
+      "desc": "The Secret Art of the road: pull the lever and the world pays out. A handful of emeralds and a spray of experience; Luck makes the pot deeper. It takes a long time to wind up again.",
+      "parents": [
+        {
+          "node": "gamblers_coin",
+          "level": 2
+        },
+        {
+          "node": "treasure_nose",
+          "level": 1
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "skill": "nusmp:hk_jackpot",
+      "values": {
+        "emeralds": [
+          2,
+          3,
+          5
+        ],
+        "xp": [
+          30,
+          50,
+          80
+        ],
+        "cost": [
+          0.04,
+          0.05,
+          0.06
+        ],
+        "cooldown": [
+          3600,
+          3300,
+          3000
+        ]
+      },
+      "x": 6,
+      "y": 4,
+      "icon": "minecraft:emerald_block"
+    }
+  ]
+}

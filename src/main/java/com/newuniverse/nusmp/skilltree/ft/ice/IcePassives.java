@@ -16,7 +16,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * the game decides the thing it changes, not in a skill. FREEZING damage is decided in the game's incoming-damage event, which can be cancelled before the health is touched, so the passive cancels
  * damage of the freeze type for the owner there (and every second wipes the frost that powder snow builds up on the body, so even the slow and the blue screen go); the second half, from level 2, is
  * the thorns of cold: whoever strikes the owner in melee is chilled for a moment, decided in the same event because that is where the attacker is known, rate-limited by a rest of a few
- * seconds kept in the owner's own saved data (no static state) so a swarm cannot turn it into a permanent freeze. Both halves are guarded by {@code SkillTreeApi.isNodeActive}, the tree's single question "does this player
+ * seconds kept in the owner's own saved data (no static state) so a swarm cannot turn it into a permanent freeze. Both halves are guarded by {@code SkillTreeApi.canCast} (the equipped route counts, 1.63.0), the tree's single question "does this player
  * own the route and the node", which is what makes the passive obey the same gate as the techniques: refund the node and it is gone at once, with nothing to clean up. The listeners are registered once from the
  * route's register class; the work is in three small package methods so the self-test can run exactly what the events run.
  */
@@ -47,17 +47,17 @@ public final class IcePassives {
     }
 
     private static void onPlayerTick(PlayerTickEvent.Post e) {
-        if (e.getEntity() instanceof ServerPlayer p && p.tickCount % 20 == 3 && p.getTicksFrozen() > 0 && SkillTreeApi.isNodeActive(p, IceRoute.ID, IceRoute.FROST_BODY)) p.setTicksFrozen(0);
+        if (e.getEntity() instanceof ServerPlayer p && p.tickCount % 20 == 3 && p.getTicksFrozen() > 0 && SkillTreeApi.canCast(p, IceRoute.ID, IceRoute.FROST_BODY)) p.setTicksFrozen(0);
     }
 
     /** Does Ur's Lesson cancel this damage for this player (freezing damage, for a player who owns the node)? */
     static boolean cancelsFreeze(ServerPlayer p, DamageSource source) {
-        return source.is(DamageTypes.FREEZE) && SkillTreeApi.isNodeActive(p, IceRoute.ID, IceRoute.FROST_BODY);
+        return source.is(DamageTypes.FREEZE) && SkillTreeApi.canCast(p, IceRoute.ID, IceRoute.FROST_BODY);
     }
 
     /** The thorns of cold: chills {@code attacker}, who struck {@code p} in melee. True when it did (level 2 or more, and the rest is over). */
     static boolean thorns(ServerPlayer p, LivingEntity attacker) {
-        if (attacker == p || !SkillTreeApi.isNodeActive(p, IceRoute.ID, IceRoute.FROST_BODY)) return false;
+        if (attacker == p || !SkillTreeApi.canCast(p, IceRoute.ID, IceRoute.FROST_BODY)) return false;
         int level = SkillTreeApi.nodeLevel(p, IceRoute.ID, IceRoute.FROST_BODY);
         double seconds = value("chill_seconds", level);
         if (level < 2 || seconds <= 0) return false;
