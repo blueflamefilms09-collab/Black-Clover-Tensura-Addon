@@ -53,6 +53,7 @@ public final class Messages {
     static void entered(ServerPlayer p, Instance in) {
         MutableComponent line = text("enter", "Mechanic: %s", name(in.def)).withStyle(ChatFormatting.GOLD);
         if (!in.def.counter().none()) line = line.append(Component.literal("  ")).append(hint(in.def.counter().kind()).withStyle(ChatFormatting.GRAY));
+        else if (in.def.trigger().kind().equals("interact")) line = line.append(Component.literal("  ")).append(text("hint.altar", "Something here answers a hand laid on it.").withStyle(ChatFormatting.GRAY));
         p.displayClientMessage(line, true);
     }
 

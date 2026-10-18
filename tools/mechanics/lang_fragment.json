@@ -7,6 +7,7 @@
  "message.nusmp.mega.mech.need_hp": "You are too weak to pay in blood.",
  "message.nusmp.mega.mech.key_taken": "You take the key. Carry it to the other pedestal.",
  "message.nusmp.mega.mech.key": "Key of the mechanism",
+ "message.nusmp.mega.mech.hint.altar": "Something here answers a hand laid on it.",
  "message.nusmp.mega.mech.shielded": "The foe is shielded.",
  "message.nusmp.mega.mech.downed": "You are down! A friend must kneel beside you.",
  "message.nusmp.mega.mech.revived": "You are back on your feet.",

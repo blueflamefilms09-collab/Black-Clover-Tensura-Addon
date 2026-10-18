@@ -109,11 +109,16 @@ public final class MechanicsDirector {
         if (now % SCAN_EVERY == 0 && !players.isEmpty()) scan(level, players);
         if (ACTIVE.isEmpty()) return;
         for (Instance in : new ArrayList<>(ACTIVE.values())) {
-            List<ServerPlayer> inside = playersIn(in, players);
-            in.update(inside, now);
-            boolean over = in.state == Instance.State.ENDED || (inside.isEmpty() && now - in.lastEmpty > GRACE_TICKS && !in.admin)
-                    || (in.def.scope() == Scope.BOSS && in.sector != null && in.sector.state != Sector.State.ACTIVE);
-            if (over) end(in);
+            try {
+                List<ServerPlayer> inside = playersIn(in, players);
+                in.update(inside, now);
+                boolean over = in.state == Instance.State.ENDED || (inside.isEmpty() && now - in.lastEmpty > GRACE_TICKS && !in.admin)
+                        || (in.def.scope() == Scope.BOSS && in.sector != null && in.sector.state != Sector.State.ACTIVE) || in.errors > 40;
+                if (over) end(in);
+            } catch (RuntimeException ex) {                                      // one broken mechanic must not stop the others, nor flood the log every tick
+                LOG.warn("[nusmp] mechanic {} failed and was ended: {}", in.def.id(), ex.toString());
+                end(in);
+            }
         }
         if (now % 40 == 0) {
             MechanicsData d = MechanicsData.get(server);
