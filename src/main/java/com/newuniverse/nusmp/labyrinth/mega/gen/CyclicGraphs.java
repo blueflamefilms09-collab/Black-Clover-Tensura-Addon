@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.labyrinth.mega.cyclic.RoomCategory;
 import com.newuniverse.nusmp.labyrinth.mega.cyclic.RoomGraph;
 import com.newuniverse.nusmp.labyrinth.mega.cyclic.Roles;
 
-import java.util.List;
 
 /**
  * Why: the cyclic layer ({@code mega.cyclic}) judges a plain {@link RoomGraph}; the generator holds a {@link Result} of placed pieces. This is the one place where
@@ -44,12 +43,6 @@ public final class CyclicGraphs {
         if (total > 0) for (int i = 0; i < s.length; i++) s[i] = counts[i] / total;
         return s;
     }
-
-    /** Is this kind one of the circulation kinds a hallway room is drawn from? */
-    static boolean hallwayKind(RoomKind k) { return k == RoomKind.CORRIDOR || k == RoomKind.LINK; }
-
-    /** For tests: the room graph's edges as a plain list of pairs. */
-    public static List<int[]> edges(Result r) { return r.edges(); }
 
     /** Is this piece a one-module corridor or link with two doorways, both joined to a room (a hallway cell, or a corridor that happens to be one)? */
     public static boolean throughHallway(Result r, Placed p) {

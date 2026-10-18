@@ -308,6 +308,7 @@ class CyclicLayerTest {
         assertTrue(st.cycleAfter > st.cycleBefore + 0.1 * n, "the share of rooms on a cycle rises");
         assertTrue(st.loopsAfter > st.loopsBefore, "more independent loops");
         assertTrue(st.deadAfterPrune / n <= cfg.deadEndTarget() + 0.01, "on average the dead-end ratio is at the target");
+        assertTrue(st.atTargetWithPrune >= n * 0.85, "at least 85 % of the dungeons are at the target after the pruner: " + st.atTargetWithPrune + " of " + st.runs);
     }
 
     @Test
