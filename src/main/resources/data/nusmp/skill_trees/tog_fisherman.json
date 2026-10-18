@@ -1,0 +1,1189 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Fisherman",
+  "desc": "The Fisherman Position casts glowing Shinsu lines and hooks to catch prey twice its size. You hook, mark and reel in whatever swims too close.",
+  "book": "nusmp:tog_fisherman_book",
+  "book_name": "The Angler's Ledger of the Tower",
+  "book_lore": "Every hook in it is tied to a name and a number of lost sleeves.",
+  "color": "#26A69A",
+  "icon": "minecraft:fishing_rod",
+  "class_id": "tog_fisherman",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tog_fisherman.png",
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "patient_angler_stance",
+      "name": "Patient Angler Stance",
+      "desc": "Wait for the bite: calm, slow, and hard to knock off your feet while you regain strength.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:fishing_rod"
+    },
+    {
+      "id": "hooked_hunter_stance",
+      "name": "Hooked Hunter Stance",
+      "desc": "Stop waiting and strike: sharper and critical, but you leave your guard open.",
+      "parents": [
+        {
+          "node": "patient_angler_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:tripwire_hook"
+    },
+    {
+      "id": "angler_s_reach",
+      "name": "Angler's Reach",
+      "desc": "Your Shinsu line carries your hands further.",
+      "parents": [
+        {
+          "node": "patient_angler_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "line_tension",
+      "name": "Line Tension",
+      "desc": "A tight line means a heavier blow.",
+      "parents": [
+        {
+          "node": "hooked_hunter_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "steady_hands",
+      "name": "Steady Hands",
+      "desc": "Hooking and reeling in comes quicker.",
+      "parents": [
+        {
+          "node": "patient_angler_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:cod"
+    },
+    {
+      "id": "deep_lungs",
+      "name": "Deep Lungs",
+      "desc": "A Fisherman who falls in the sea will come back up.",
+      "parents": [
+        {
+          "node": "hooked_hunter_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:pufferfish"
+    },
+    {
+      "id": "cast_the_hook",
+      "name": "Cast the Hook",
+      "desc": "Throw a Shinsu hook at a foe far away and mark it: it takes extra damage while hooked.",
+      "parents": [
+        {
+          "node": "patient_angler_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:tripwire_hook"
+    },
+    {
+      "id": "reel_in",
+      "name": "Reel In",
+      "desc": "Haul the creatures around you toward yourself on glowing lines and bruise them on arrival.",
+      "parents": [
+        {
+          "node": "hooked_hunter_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "strength": [
+          1.1,
+          1.21,
+          1.32,
+          1.43
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:fishing_rod"
+    },
+    {
+      "id": "bait_cloud",
+      "name": "Bait Cloud",
+      "desc": "Scatter shining bait in a cone: the foes in it start to glow and slow down.",
+      "parents": [
+        {
+          "node": "cast_the_hook",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "glowing",
+        "effect2": "slowness",
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:glow_ink_sac"
+    },
+    {
+      "id": "harpoon_rush",
+      "name": "Harpoon Rush",
+      "desc": "Lunge forward along a taut line and spear everything in your way.",
+      "parents": [
+        {
+          "node": "reel_in",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "distance": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "shinsu_net",
+      "name": "Shinsu Net",
+      "desc": "Cast a net of glowing line that freezes the creatures near you in place.",
+      "parents": [
+        {
+          "node": "bait_cloud",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "barbed_lines",
+      "name": "Barbed Lines",
+      "desc": "Whip a barbed line that snags a foe and then leaps from enemy to enemy.",
+      "parents": [
+        {
+          "node": "harpoon_rush",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "floating_lures",
+      "name": "Floating Lures",
+      "desc": "Send a spray of glowing lures darting at the foe you are looking at.",
+      "parents": [
+        {
+          "node": "shinsu_net",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:salmon"
+    },
+    {
+      "id": "piranha_bite",
+      "name": "Piranha Bite",
+      "desc": "Strike a foe like a school of piranhas and heal from the bite.",
+      "parents": [
+        {
+          "node": "barbed_lines",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:tropical_fish"
+    },
+    {
+      "id": "good_catch",
+      "name": "Good Catch",
+      "desc": "Whatever you fell may drop an extra stack of its loot.",
+      "parents": [
+        {
+          "node": "cast_the_hook",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:salmon"
+    },
+    {
+      "id": "deep_water_predator",
+      "name": "Deep Water Predator",
+      "desc": "You hit sea and monster prey harder.",
+      "parents": [
+        {
+          "node": "reel_in",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "monster"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "born_on_the_water",
+      "name": "Born on the Water",
+      "desc": "While you stand in water you move much faster.",
+      "parents": [
+        {
+          "node": "bait_cloud",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "in_water"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "salt_recovery",
+      "name": "Salt Recovery",
+      "desc": "In water your wounds close slowly.",
+      "parents": [
+        {
+          "node": "harpoon_rush",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_water"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:kelp"
+    },
+    {
+      "id": "bait_and_wait",
+      "name": "Bait and Wait",
+      "desc": "A Fisherman learns to go long without a meal.",
+      "parents": [
+        {
+          "node": "shinsu_net",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:cooked_cod"
+    },
+    {
+      "id": "hook_in_the_flesh",
+      "name": "Hook in the Flesh",
+      "desc": "Your blows leave a hook behind that may weaken the foe.",
+      "parents": [
+        {
+          "node": "barbed_lines",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "weakness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "fresh_haul",
+      "name": "Fresh Haul",
+      "desc": "Every kill is a catch: it heals you a little.",
+      "parents": [
+        {
+          "node": "floating_lures",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "none"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:cooked_salmon"
+    },
+    {
+      "id": "the_great_catch",
+      "name": "The Great Catch",
+      "desc": "Hook a single foe with a huge Shinsu line and pull the entire weight of the sea down on it, ending weak enemies outright.",
+      "parents": [
+        {
+          "node": "piranha_bite",
+          "level": 3
+        },
+        {
+          "node": "fresh_haul",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92
+        ],
+        "bonus": [
+          1.6,
+          1.84,
+          2.08
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:fishing_rod"
+    },
+    {
+      "id": "leviathan_tide",
+      "name": "Leviathan Tide",
+      "desc": "Call a huge sea beast of Shinsu down from above onto the place you look at.",
+      "parents": [
+        {
+          "node": "floating_lures",
+          "level": 3
+        },
+        {
+          "node": "hook_in_the_flesh",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1900.0,
+          1748.0,
+          1596.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:heart_of_the_sea"
+    }
+  ]
+}

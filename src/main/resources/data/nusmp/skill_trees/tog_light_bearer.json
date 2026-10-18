@@ -1,0 +1,1109 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Light Bearer",
+  "desc": "The Light Bearer carries a lamp of Shinsu through the dark floors: light that guides allies, mends them and burns the foes who fear it.",
+  "book": "nusmp:tog_light_bearer_book",
+  "book_name": "Lamp-Lighter's Handbook",
+  "book_lore": "Wick trimmed, oil of Shinsu, one match; do not blink.",
+  "color": "#FFD54F",
+  "icon": "minecraft:lantern",
+  "class_id": "tog_light_bearer",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tog_light_bearer.png",
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "background_theme": "holy",
+  "nodes": [
+    {
+      "id": "beacon_posture",
+      "name": "Beacon Posture",
+      "desc": "Plant yourself like a lamp post: you regenerate steadily and stand a little firmer, but move slower.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "dawnglare_posture",
+      "name": "Dawnglare Posture",
+      "desc": "Turn the lamp into a lance of light: sharper strikes, but nothing shields you.",
+      "parents": [
+        {
+          "node": "beacon_posture",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "lantern_heart",
+      "name": "Lantern Heart",
+      "desc": "A warm light inside you keeps more life burning.",
+      "parents": [
+        {
+          "node": "beacon_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:glowstone"
+    },
+    {
+      "id": "fortune_of_the_lit_path",
+      "name": "Fortune of the Lit Path",
+      "desc": "Where you walk the light is kinder.",
+      "parents": [
+        {
+          "node": "dawnglare_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "bright_step",
+      "name": "Bright Step",
+      "desc": "You walk lightly along your own light.",
+      "parents": [
+        {
+          "node": "beacon_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "burning_wick",
+      "name": "Burning Wick",
+      "desc": "Light hits as hard as a blade.",
+      "parents": [
+        {
+          "node": "dawnglare_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:torch"
+    },
+    {
+      "id": "lamp_blessing",
+      "name": "Lamp Blessing",
+      "desc": "Raise your lamp: you and your allies near you start to regenerate in the glow.",
+      "parents": [
+        {
+          "node": "beacon_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "healing_glow",
+      "name": "Healing Glow",
+      "desc": "A warm pulse of light that heals you and the allies around you.",
+      "parents": [
+        {
+          "node": "dawnglare_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "blinding_flash",
+      "name": "Blinding Flash",
+      "desc": "Flare the lamp in a cone: everything caught in it is blinded and lit up for others to see.",
+      "parents": [
+        {
+          "node": "lamp_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "blindness",
+        "effect2": "glowing",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "lance_of_light",
+      "name": "Lance of Light",
+      "desc": "Fire a narrow beam of light down your line of sight that pierces the first foes.",
+      "parents": [
+        {
+          "node": "healing_glow",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "path_illumination",
+      "name": "Path Illumination",
+      "desc": "Light the way ahead: you gain swiftness and keen eyes for a while.",
+      "parents": [
+        {
+          "node": "blinding_flash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "night_vision",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "prism_barrier",
+      "name": "Prism Barrier",
+      "desc": "A shell of refracted light surrounds you and absorbs damage.",
+      "parents": [
+        {
+          "node": "lance_of_light",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "daybreak_burst",
+      "name": "Daybreak Burst",
+      "desc": "A ring of white light that hits everything around you and pushes it away.",
+      "parents": [
+        {
+          "node": "path_illumination",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "glow_of_company",
+      "name": "Glow of Company",
+      "desc": "Allies near you slowly regenerate in your light.",
+      "parents": [
+        {
+          "node": "lamp_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "daylight_mending",
+      "name": "Daylight Mending",
+      "desc": "In the day your wounds close by themselves.",
+      "parents": [
+        {
+          "node": "healing_glow",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "lamp_eyes",
+      "name": "Lamp Eyes",
+      "desc": "At night you see in the dark.",
+      "parents": [
+        {
+          "node": "blinding_flash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "night"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "wick_mending",
+      "name": "Wick Mending",
+      "desc": "Light keeps repairing you even after the battle.",
+      "parents": [
+        {
+          "node": "lance_of_light",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          18.0,
+          16.0,
+          14.0,
+          13.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "anathema_of_the_dead",
+      "name": "Anathema of the Dead",
+      "desc": "The undead flinch from your light and take much more damage.",
+      "parents": [
+        {
+          "node": "path_illumination",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "undead"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "lit_victory",
+      "name": "Lit Victory",
+      "desc": "Each kill returns a little life and a short burst of speed.",
+      "parents": [
+        {
+          "node": "prism_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "warding_glow",
+      "name": "Warding Glow",
+      "desc": "The light dulls magical attacks against you.",
+      "parents": [
+        {
+          "node": "daybreak_burst",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "beacon_of_the_tower",
+      "name": "Beacon of the Tower",
+      "desc": "Raise the lamp high: a vast wave of light heals you and every ally around you.",
+      "parents": [
+        {
+          "node": "daybreak_burst",
+          "level": 3
+        },
+        {
+          "node": "warding_glow",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14
+        ],
+        "amount": [
+          18.0,
+          22.5,
+          27.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1700.0,
+          1598.0,
+          1496.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "dawnbreak_lance",
+      "name": "Dawnbreak Lance",
+      "desc": "The lamp becomes a spear of white fire and rips through a long line of foes.",
+      "parents": [
+        {
+          "node": "prism_barrier",
+          "level": 3
+        },
+        {
+          "node": "lit_victory",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:end_rod"
+    }
+  ]
+}
