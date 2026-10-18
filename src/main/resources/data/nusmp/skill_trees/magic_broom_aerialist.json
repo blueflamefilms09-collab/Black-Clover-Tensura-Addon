@@ -1,0 +1,1090 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Magic Broom Aerialist",
+  "desc": "The sky is your battlefield: ride a broom, dive from above and never let your feet settle. Fast, hard to catch and best at the moment of landing.",
+  "book": "nusmp:magic_broom_aerialist_book",
+  "book_name": "Broom Rider's Flight Log",
+  "book_lore": "A log of hard landings and one very good tip for leaning into a turn.",
+  "color": "#6FB7E8",
+  "icon": "minecraft:wind_charge",
+  "class_id": "magic_broom_aerialist",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/magic_broom_aerialist.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "storm",
+  "nodes": [
+    {
+      "id": "tailwind",
+      "name": "Tailwind",
+      "desc": "Ride the wind: much faster, but you hit softer and the guard is down.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dive_posture",
+      "name": "Dive Posture",
+      "desc": "Tuck your wings: crits and heavier hits for a quick pass, a slower cruise.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "lightweight_frame",
+      "name": "Lightweight Frame",
+      "desc": "Hollow-boned and quick.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "spring_legs",
+      "name": "Spring Legs",
+      "desc": "Jump higher off the saddle.",
+      "parents": [
+        {
+          "node": "dive_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "broom_handling",
+      "name": "Broom Handling",
+      "desc": "Steady hands on the shaft.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "soft_landings",
+      "name": "Soft Landings",
+      "desc": "Fall distance counts for less.",
+      "parents": [
+        {
+          "node": "dive_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "broom_dive",
+      "name": "Broom Dive",
+      "desc": "Drop out of the sky and rush forward, cutting everything in your path.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "updraft_kick",
+      "name": "Updraft Kick",
+      "desc": "A kick that throws the foe in front of you up on the wind.",
+      "parents": [
+        {
+          "node": "dive_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:breeze_rod"
+    },
+    {
+      "id": "loop_the_loop",
+      "name": "Loop-the-Loop",
+      "desc": "Spin through a loop, hitting everything around you several times.",
+      "parents": [
+        {
+          "node": "broom_dive",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:firework_rocket"
+    },
+    {
+      "id": "take_off",
+      "name": "Take Off",
+      "desc": "Mount up: speed and a high jump for a while.",
+      "parents": [
+        {
+          "node": "updraft_kick",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "jump_boost",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "skyhop",
+      "name": "Skyhop",
+      "desc": "Twist in the air and appear a short way forward.",
+      "parents": [
+        {
+          "node": "loop_the_loop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "gale_darts",
+      "name": "Gale Darts",
+      "desc": "Loose a spread of wind darts at the foe you look at.",
+      "parents": [
+        {
+          "node": "take_off",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "gale_lance",
+      "name": "Gale Lance",
+      "desc": "A piercing line of wind along your sight line.",
+      "parents": [
+        {
+          "node": "skyhop",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "dive_bomber",
+      "name": "Dive Bomber",
+      "desc": "You deal more damage while airborne.",
+      "parents": [
+        {
+          "node": "broom_dive",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "cushioned_landing",
+      "name": "Cushioned Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "updraft_kick",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "feather_drift",
+      "name": "Feather Drift",
+      "desc": "While you are airborne you float gently down.",
+      "parents": [
+        {
+          "node": "loop_the_loop",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "slow_falling",
+        "condition": "airborne"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "slipstream",
+      "name": "Slipstream",
+      "desc": "You hit harder while sprinting.",
+      "parents": [
+        {
+          "node": "take_off",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "building_gale",
+      "name": "Building Gale",
+      "desc": "Blows in a row grow stronger until you stop fighting.",
+      "parents": [
+        {
+          "node": "skyhop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "hard_to_catch",
+      "name": "Hard to Catch",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "gale_darts",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "buffeting_strikes",
+      "name": "Buffeting Strikes",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "gale_lance",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "tempest_ascent",
+      "name": "Tempest Ascent",
+      "desc": "Corkscrew upward in a tornado, shredding everything around you again and again.",
+      "parents": [
+        {
+          "node": "gale_lance",
+          "level": 3
+        },
+        {
+          "node": "buffeting_strikes",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "radius": [
+          5.0,
+          5.4,
+          5.8
+        ],
+        "hits": [
+          7.0,
+          9.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "sky_lance_descent",
+      "name": "Sky Lance Descent",
+      "desc": "Rise high and drive down on the foes below like a falling spear.",
+      "parents": [
+        {
+          "node": "gale_darts",
+          "level": 3
+        },
+        {
+          "node": "hard_to_catch",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392
+        ],
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "radius": [
+          5.5,
+          6.05,
+          6.6
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:breeze_rod"
+    }
+  ]
+}

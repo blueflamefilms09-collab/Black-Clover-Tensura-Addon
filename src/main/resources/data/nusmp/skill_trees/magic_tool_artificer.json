@@ -1,0 +1,1067 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Magic Tool Artificer",
+  "desc": "Why cast when you can build? Carry a satchel of spring-loaded gadgets, rune-etched plates and a deployable decoy, and win by preparation instead of power.",
+  "book": "nusmp:magic_tool_artificer_book",
+  "book_name": "Artificer's Satchel Handbook",
+  "book_lore": "A greasy workbook of blueprints, with a corner burned off where the experiment went wrong.",
+  "color": "#B0773A",
+  "icon": "minecraft:smithing_table",
+  "class_id": "magic_tool_artificer",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/magic_tool_artificer.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "workshop_mode",
+      "name": "Workshop Mode",
+      "desc": "Plates deployed, cogs oiled: sturdy and steady, but slow to move.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "overclock",
+      "name": "Overclock",
+      "desc": "Run everything hot: stronger and faster, with the plating loose.",
+      "parents": [
+        {
+          "node": "workshop_mode",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "reinforced_frame",
+      "name": "Reinforced Frame",
+      "desc": "A sturdier mage inside the gear.",
+      "parents": [
+        {
+          "node": "workshop_mode",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "tool_belt",
+      "name": "Tool Belt",
+      "desc": "Everything within hand's reach.",
+      "parents": [
+        {
+          "node": "overclock",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "rune_plating",
+      "name": "Rune Plating",
+      "desc": "Etched plates catch the strikes.",
+      "parents": [
+        {
+          "node": "workshop_mode",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "plating_deploy",
+      "name": "Plating Deploy",
+      "desc": "Snap out a field plate of rune-etched steel that soaks up damage.",
+      "parents": [
+        {
+          "node": "workshop_mode",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "spring_bolt_rack",
+      "name": "Spring-Bolt Rack",
+      "desc": "A rack of spring-loaded bolts fires a volley at the foe you look at.",
+      "parents": [
+        {
+          "node": "overclock",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:crossbow"
+    },
+    {
+      "id": "decoy_golem",
+      "name": "Decoy Golem",
+      "desc": "Plant a clanking decoy that draws hostile creatures onto itself... and you.",
+      "parents": [
+        {
+          "node": "plating_deploy",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:armor_stand"
+    },
+    {
+      "id": "magnet_hook",
+      "name": "Magnet Hook",
+      "desc": "Fire a grapple that drags the creatures around you toward you.",
+      "parents": [
+        {
+          "node": "spring_bolt_rack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "overcharge_pop",
+      "name": "Overcharge Pop",
+      "desc": "Overload a battery: a ring of sparks blasts out around you.",
+      "parents": [
+        {
+          "node": "decoy_golem",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:redstone_block"
+    },
+    {
+      "id": "rail_cart_shot",
+      "name": "Rail Cart Shot",
+      "desc": "A rail-launched slug that tears down a line in front of you.",
+      "parents": [
+        {
+          "node": "magnet_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:rail"
+    },
+    {
+      "id": "haste_gauntlet",
+      "name": "Haste Gauntlet",
+      "desc": "Strap on the gauntlet: you gain haste and strength for a while.",
+      "parents": [
+        {
+          "node": "overcharge_pop",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "haste",
+        "effect2": "strength",
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "scavenger_s_eye",
+      "name": "Scavenger's Eye",
+      "desc": "A kill may drop an extra stack of its loot.",
+      "parents": [
+        {
+          "node": "plating_deploy",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "blast_plating",
+      "name": "Blast Plating",
+      "desc": "Explosions hardly hurt you.",
+      "parents": [
+        {
+          "node": "spring_bolt_rack",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "spring_loaded_joints",
+      "name": "Spring-Loaded Joints",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "decoy_golem",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "calibrated_aim",
+      "name": "Calibrated Aim",
+      "desc": "Your shots may strike critically.",
+      "parents": [
+        {
+          "node": "magnet_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "self_repair",
+      "name": "Self-Repair",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "overcharge_pop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "hot_swapping",
+      "name": "Hot-Swapping",
+      "desc": "You hit harder while sprinting.",
+      "parents": [
+        {
+          "node": "rail_cart_shot",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "lab_learning",
+      "name": "Lab Learning",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "haste_gauntlet",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "arsenal_unleashed",
+      "name": "Arsenal Unleashed",
+      "desc": "Open every compartment at once: a huge volley of bolts, blades and sparks at the foe you look at.",
+      "parents": [
+        {
+          "node": "haste_gauntlet",
+          "level": 3
+        },
+        {
+          "node": "lab_learning",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:crossbow"
+    },
+    {
+      "id": "siege_lance",
+      "name": "Siege Lance",
+      "desc": "Assemble a siege lance in the blink of an eye and fire it along your sight line.",
+      "parents": [
+        {
+          "node": "rail_cart_shot",
+          "level": 3
+        },
+        {
+          "node": "hot_swapping",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          38.0,
+          47.5,
+          57.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:iron_block"
+    }
+  ]
+}

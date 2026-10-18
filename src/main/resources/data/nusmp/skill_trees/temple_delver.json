@@ -1,0 +1,1063 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Temple Delver",
+  "desc": "A dungeon crawler of the sunken temples: you read the walls, swipe the treasure and walk away before the ceiling does. Luck, loot and a very small body count.",
+  "book": "nusmp:temple_delver_book",
+  "book_name": "Temple Delver's Map Case",
+  "book_lore": "A weatherproof case of rubbings, floor plans and grease-pencil notes about which tiles lie.",
+  "color": "#C9A03A",
+  "icon": "minecraft:trial_key",
+  "class_id": "temple_delver",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/temple_delver.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "ruin",
+  "nodes": [
+    {
+      "id": "light_foot",
+      "name": "Light Foot",
+      "desc": "Step lightly through the dark: quick, lucky, with no armor to speak of.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "cautious_crawl",
+      "name": "Cautious Crawl",
+      "desc": "Test every tile: a steadier guard and a little healing at your own pace.",
+      "parents": [
+        {
+          "node": "light_foot",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "delver_s_grit",
+      "name": "Delver's Grit",
+      "desc": "Survive another trap.",
+      "parents": [
+        {
+          "node": "light_foot",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:cooked_chicken"
+    },
+    {
+      "id": "pickpocket_s_luck",
+      "name": "Pickpocket's Luck",
+      "desc": "A knack for finding the loot.",
+      "parents": [
+        {
+          "node": "cautious_crawl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "nimble_fingers",
+      "name": "Nimble Fingers",
+      "desc": "A quick hand.",
+      "parents": [
+        {
+          "node": "light_foot",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "crawling_pace",
+      "name": "Crawling Pace",
+      "desc": "Swift on stone.",
+      "parents": [
+        {
+          "node": "cautious_crawl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "spot_the_trap",
+      "name": "Spot the Trap",
+      "desc": "Scan ahead: one target is marked, and takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "light_foot",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "back_alley_stab",
+      "name": "Back-Alley Stab",
+      "desc": "A fast blow that hits much harder the weaker the foe is.",
+      "parents": [
+        {
+          "node": "cautious_crawl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "grapple_skip",
+      "name": "Grapple Skip",
+      "desc": "Fire a grapple and zip a short way forward.",
+      "parents": [
+        {
+          "node": "spot_the_trap",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fishing_rod"
+    },
+    {
+      "id": "torch_snuff",
+      "name": "Torch Snuff",
+      "desc": "Snuff out every light: creatures around you are blinded while you slip away.",
+      "parents": [
+        {
+          "node": "back_alley_stab",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:soul_torch"
+    },
+    {
+      "id": "pitfall_kick",
+      "name": "Pitfall Kick",
+      "desc": "A hard upward kick that launches the foe in front of you.",
+      "parents": [
+        {
+          "node": "grapple_skip",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "trail_rations",
+      "name": "Trail Rations",
+      "desc": "A hasty bite of rations: heal and regenerate for a while.",
+      "parents": [
+        {
+          "node": "torch_snuff",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "delver_s_cheer",
+      "name": "Delver's Cheer",
+      "desc": "Shout the delver's cheer: you and the allies around you move faster.",
+      "parents": [
+        {
+          "node": "pitfall_kick",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lantern"
+    },
+    {
+      "id": "treasure_hunter",
+      "name": "Treasure Hunter",
+      "desc": "A kill may drop an extra stack of its loot.",
+      "parents": [
+        {
+          "node": "spot_the_trap",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "hard_won_lessons",
+      "name": "Hard-Won Lessons",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "back_alley_stab",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "dark_adapted",
+      "name": "Dark Adapted",
+      "desc": "Underground you see in the dark: night vision.",
+      "parents": [
+        {
+          "node": "grapple_skip",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "underground"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "roll_with_it",
+      "name": "Roll With It",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "torch_snuff",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "sidestep",
+      "name": "Sidestep",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "pitfall_kick",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "loot_and_scoot",
+      "name": "Loot and Scoot",
+      "desc": "A kill heals you and speeds you up for a moment.",
+      "parents": [
+        {
+          "node": "trail_rations",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "cave_fighter",
+      "name": "Cave Fighter",
+      "desc": "You deal more damage while underground.",
+      "parents": [
+        {
+          "node": "delver_s_cheer",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "grand_heist_dash",
+      "name": "Grand Heist Dash",
+      "desc": "Vault toward the biggest prize on the field and cut down everything in the way.",
+      "parents": [
+        {
+          "node": "delver_s_cheer",
+          "level": 3
+        },
+        {
+          "node": "cave_fighter",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "targets": [
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:ender_chest"
+    },
+    {
+      "id": "collapse_the_ceiling",
+      "name": "Collapse the Ceiling",
+      "desc": "Pull the lever: the roof comes down on the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "trail_rations",
+          "level": 3
+        },
+        {
+          "node": "loot_and_scoot",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "delay": [
+          26.0,
+          25.0,
+          23.0
+        ],
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:cracked_stone_bricks"
+    }
+  ]
+}

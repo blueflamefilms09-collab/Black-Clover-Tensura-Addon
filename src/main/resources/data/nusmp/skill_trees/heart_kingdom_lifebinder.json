@@ -1,0 +1,1115 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Heart Kingdom Lifebinder",
+  "desc": "A gentle gardener-healer of the heart-shaped kingdom: wounds close under your hands, vines hold the enemy, and the people you stand beside simply refuse to fall.",
+  "book": "nusmp:heart_kingdom_lifebinder_book",
+  "book_name": "Lifebinder's Garden Journal",
+  "book_lore": "Pressed petals with healing notes in a looping hand and a recipe for tea.",
+  "color": "#E8789C",
+  "icon": "minecraft:rose_bush",
+  "class_id": "heart_kingdom_lifebinder",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/heart_kingdom_lifebinder.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "holy",
+  "nodes": [
+    {
+      "id": "blooming_presence",
+      "name": "Blooming Presence",
+      "desc": "Stand among your allies and flower: strong regeneration for you, but you barely fight.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.2,
+          -0.24,
+          -0.28
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:rose_bush"
+    },
+    {
+      "id": "thorned_garden",
+      "name": "Thorned Garden",
+      "desc": "Let the briars out: sharper blows, steadier feet, a thinner pool of mending.",
+      "parents": [
+        {
+          "node": "blooming_presence",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "green_thumb_vigor",
+      "name": "Green Thumb Vigor",
+      "desc": "Tending life keeps you alive.",
+      "parents": [
+        {
+          "node": "blooming_presence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "bramble_skin",
+      "name": "Bramble Skin",
+      "desc": "Bark-tough skin.",
+      "parents": [
+        {
+          "node": "thorned_garden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:oak_log"
+    },
+    {
+      "id": "gentle_reach",
+      "name": "Gentle Reach",
+      "desc": "A hand that reaches a little further.",
+      "parents": [
+        {
+          "node": "blooming_presence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:rose_bush"
+    },
+    {
+      "id": "fortune_of_the_garden",
+      "name": "Fortune of the Garden",
+      "desc": "Things grow well around you.",
+      "parents": [
+        {
+          "node": "thorned_garden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:bone_meal"
+    },
+    {
+      "id": "petal_pulse",
+      "name": "Petal Pulse",
+      "desc": "A warm pulse of petals that heals you and your allies around you.",
+      "parents": [
+        {
+          "node": "blooming_presence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "tender_mending",
+      "name": "Tender Mending",
+      "desc": "Lay a hand on yourself: heal and regenerate for a while.",
+      "parents": [
+        {
+          "node": "thorned_garden",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "greenhouse_blessing",
+      "name": "Greenhouse Blessing",
+      "desc": "A circle of warm green light: you and your allies regenerate.",
+      "parents": [
+        {
+          "node": "petal_pulse",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:flowering_azalea"
+    },
+    {
+      "id": "briar_cocoon",
+      "name": "Briar Cocoon",
+      "desc": "Wrap yourself in a living cocoon of briars that soaks up damage.",
+      "parents": [
+        {
+          "node": "tender_mending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:vine"
+    },
+    {
+      "id": "creeping_vines",
+      "name": "Creeping Vines",
+      "desc": "A cone of vines snares the foes in front of you and slows them.",
+      "parents": [
+        {
+          "node": "greenhouse_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "mining_fatigue",
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:vine"
+    },
+    {
+      "id": "thorn_row",
+      "name": "Thorn Row",
+      "desc": "A line of thorns tears up from the ground ahead of you.",
+      "parents": [
+        {
+          "node": "briar_cocoon",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "cherished_mark",
+      "name": "Cherished Mark",
+      "desc": "Mark an enemy so your allies know where to strike: it takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "creeping_vines",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:peony"
+    },
+    {
+      "id": "warm_sunshine",
+      "name": "Warm Sunshine",
+      "desc": "During the day you slowly heal.",
+      "parents": [
+        {
+          "node": "petal_pulse",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "gentle_mend",
+      "name": "Gentle Mend",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "tender_mending",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "garden_aura",
+      "name": "Garden Aura",
+      "desc": "Allies near you regenerate a little.",
+      "parents": [
+        {
+          "node": "greenhouse_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:flowering_azalea"
+    },
+    {
+      "id": "calm_meditation",
+      "name": "Calm Meditation",
+      "desc": "While you sneak a calm shell of absorption surrounds you.",
+      "parents": [
+        {
+          "node": "briar_cocoon",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "absorption",
+        "condition": "sneaking"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:lily_of_the_valley"
+    },
+    {
+      "id": "last_petal",
+      "name": "Last Petal",
+      "desc": "When you are nearly dead you are shielded for a few seconds.",
+      "parents": [
+        {
+          "node": "creeping_vines",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "rain_bloom",
+      "name": "Rain Bloom",
+      "desc": "You take less damage when it rains.",
+      "parents": [
+        {
+          "node": "thorn_row",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "raining"
+      },
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "nourishing_harvest",
+      "name": "Nourishing Harvest",
+      "desc": "A kill heals you and makes you regenerate.",
+      "parents": [
+        {
+          "node": "cherished_mark",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "regeneration"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "garden_of_rebirth",
+      "name": "Garden of Rebirth",
+      "desc": "A whole garden blooms around you: a vast healing wave to everyone near you.",
+      "parents": [
+        {
+          "node": "cherished_mark",
+          "level": 3
+        },
+        {
+          "node": "nourishing_harvest",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0
+        ],
+        "amount": [
+          18.0,
+          22.5,
+          27.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1300.0,
+          1222.0,
+          1144.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "briar_tide",
+      "name": "Briar Tide",
+      "desc": "A tide of thorns surges across the ground ahead, tearing everything it passes.",
+      "parents": [
+        {
+          "node": "thorn_row",
+          "level": 3
+        },
+        {
+          "node": "rain_bloom",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "length": [
+          18.0,
+          19.8,
+          21.6
+        ],
+        "width": [
+          4.0,
+          4.4,
+          4.8
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:wither_rose"
+    }
+  ]
+}
