@@ -1,0 +1,1121 @@
+{
+  "magic": "tbate",
+  "franchise": "tbate",
+  "name": "Elenoir Wind-Weaver",
+  "desc": "Elf wind magic: blades of air, a gale to lift friends, a step that skips the ground. A fast, elegant caster who never quite stays where the foe thinks she is.",
+  "book": "nusmp:elenoir_wind_weaver_book",
+  "book_name": "Leaf-Song Codex of Elenoir",
+  "book_lore": "The forest hums. Learn the tune.",
+  "color": "#66BB6A",
+  "icon": "minecraft:feather",
+  "class_id": "elenoir_wind_weaver",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/elenoir_wind_weaver.png",
+  "book_texture": "nusmp:item/skill_book_3d/tbate",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "gale_dancer",
+      "name": "Gale Dancer",
+      "desc": "Dance with the wind: much faster and light on your feet, but a thin guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "elven_guard",
+      "name": "Elven Guard",
+      "desc": "Stand with the grove behind you: a firmer guard and gentle recovery.",
+      "parents": [
+        {
+          "node": "gale_dancer",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "elven_grace",
+      "name": "Elven Grace",
+      "desc": "You are quicker on your feet.",
+      "parents": [
+        {
+          "node": "gale_dancer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "leaf_heart",
+      "name": "Leaf Heart",
+      "desc": "Raises your maximum health.",
+      "parents": [
+        {
+          "node": "elven_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:oak_sapling"
+    },
+    {
+      "id": "spring_in_the_step",
+      "name": "Spring in the Step",
+      "desc": "Raises your jump strength.",
+      "parents": [
+        {
+          "node": "gale_dancer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.12,
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "sharp_gale",
+      "name": "Sharp Gale",
+      "desc": "Raises your attack damage.",
+      "parents": [
+        {
+          "node": "elven_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.9,
+          1.125,
+          1.35,
+          1.575,
+          1.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "cutting_gale",
+      "name": "Cutting Gale",
+      "desc": "A thin blade of wind races along the ground in front of you.",
+      "parents": [
+        {
+          "node": "gale_dancer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "wind_dance",
+      "name": "Wind Dance",
+      "desc": "Spin in a swirl of blades, hitting everything around you.",
+      "parents": [
+        {
+          "node": "elven_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.2,
+          4.0,
+          4.8,
+          5.6
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "gale_step",
+      "name": "Gale Step",
+      "desc": "Slip into a gust and step out several blocks ahead.",
+      "parents": [
+        {
+          "node": "cutting_gale",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.32,
+          13.64,
+          14.96
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:chorus_fruit"
+    },
+    {
+      "id": "tailwind_blessing",
+      "name": "Tailwind Blessing",
+      "desc": "A fresh wind carries you and your allies: faster for a while.",
+      "parents": [
+        {
+          "node": "wind_dance",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "smothering_gust",
+      "name": "Smothering Gust",
+      "desc": "A heavy wind drives into a cone of foes: they stumble and slow.",
+      "parents": [
+        {
+          "node": "gale_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "nausea",
+        "effect2": "slowness",
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "range": [
+          6.0,
+          6.48,
+          6.96,
+          7.44
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "updraft_hook",
+      "name": "Updraft Hook",
+      "desc": "A hook of wind pulls the creatures around you in.",
+      "parents": [
+        {
+          "node": "tailwind_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:fishing_rod"
+    },
+    {
+      "id": "zephyr_crash",
+      "name": "Zephyr Crash",
+      "desc": "Rise on the wind, then crash down on the foes below.",
+      "parents": [
+        {
+          "node": "smothering_gust",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.1,
+          1.188,
+          1.276,
+          1.364
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.2,
+          3.52,
+          3.84,
+          4.16
+        ],
+        "knockback": [
+          1.4,
+          1.54,
+          1.68,
+          1.82
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "leaf_dodge",
+      "name": "Leaf Dodge",
+      "desc": "A chance to dodge a blow entirely.",
+      "parents": [
+        {
+          "node": "cutting_gale",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.13,
+          0.156,
+          0.182,
+          0.208
+        ],
+        "rest": [
+          90.0,
+          81.0,
+          72.0,
+          63.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "treetop_landing",
+      "name": "Treetop Landing",
+      "desc": "Take much less fall damage.",
+      "parents": [
+        {
+          "node": "wind_dance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "windrunner",
+      "name": "Windrunner",
+      "desc": "Deal more damage while sprinting.",
+      "parents": [
+        {
+          "node": "gale_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "dayspring_mend",
+      "name": "Dayspring Mend",
+      "desc": "Heal while it is daytime.",
+      "parents": [
+        {
+          "node": "tailwind_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "springing_aura",
+      "name": "Springing Aura",
+      "desc": "Allies around you jump higher.",
+      "parents": [
+        {
+          "node": "smothering_gust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "jump_boost",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "keen_edge",
+      "name": "Keen Edge",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "updraft_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.13,
+          0.156,
+          0.182,
+          0.208
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "forest_patience",
+      "name": "Forest Patience",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "zephyr_crash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          15.0,
+          14.0,
+          12.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:apple"
+    },
+    {
+      "id": "elenoir_s_hurricane",
+      "name": "Elenoir's Hurricane",
+      "desc": "A hurricane of blades whirls about you and everything near.",
+      "parents": [
+        {
+          "node": "zephyr_crash",
+          "level": 3
+        },
+        {
+          "node": "forest_patience",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "radius": [
+          5.5,
+          5.94,
+          6.38
+        ],
+        "hits": [
+          9.0,
+          12.0,
+          12.0
+        ],
+        "interval": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "sky_splitting_gale",
+      "name": "Sky-Splitting Gale",
+      "desc": "A great gale cuts a lane across the field.",
+      "parents": [
+        {
+          "node": "updraft_hook",
+          "level": 3
+        },
+        {
+          "node": "keen_edge",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "length": [
+          22.0,
+          24,
+          24
+        ],
+        "width": [
+          5.0,
+          5.5,
+          6
+        ],
+        "knockback": [
+          1.8,
+          1.98,
+          2
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:elytra"
+    }
+  ]
+}
