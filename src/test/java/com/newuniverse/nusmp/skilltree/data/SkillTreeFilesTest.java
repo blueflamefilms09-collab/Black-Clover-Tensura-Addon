@@ -35,15 +35,17 @@ class SkillTreeFilesTest {
             namespaces = s.filter(Files::isDirectory).sorted().toList();
         }
         for (Path ns : namespaces) {
-            Path dir = ns.resolve("skill_trees");
-            if (!Files.isDirectory(dir)) continue;
-            List<Path> files;
-            try (Stream<Path> s = Files.list(dir)) {
-                files = s.filter(p -> p.getFileName().toString().endsWith(".json")).sorted().toList();
-            }
-            for (Path f : files) {
-                String name = f.getFileName().toString();
-                out.put(ns.getFileName() + ":" + name.substring(0, name.length() - 5), JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)));
+            for (String folder : new String[]{"skill_trees", "unique_skills"}) {            // 1.82.0: unique_skills is an alias folder of skill_trees (RouteLoader.ALIAS_DIRECTORY)
+                Path dir = ns.resolve(folder);
+                if (!Files.isDirectory(dir)) continue;
+                List<Path> files;
+                try (Stream<Path> s = Files.list(dir)) {
+                    files = s.filter(p -> p.getFileName().toString().endsWith(".json")).sorted().toList();
+                }
+                for (Path f : files) {
+                    String name = f.getFileName().toString();
+                    out.putIfAbsent(ns.getFileName() + ":" + name.substring(0, name.length() - 5), JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)));
+                }
             }
         }
         return out;
@@ -63,17 +65,17 @@ class SkillTreeFilesTest {
     @Test
     void theShippedRoutesTogetherObeyTheCrossFileRules() throws IOException {
         Map<String, JsonElement> files = shipped();
-        RouteIndex idx = RouteIndex.build(files, List.of());
+        RouteIndex idx = RouteIndex.build(files, List.of(), RouteIndex.Caps.REGISTRY);                 // 1.82.0: the registry's caps (283 lines), not one payload's
         List<String> bad = new ArrayList<>();
         for (RouteIndex.Entry e : idx.report()) if (!e.clean()) bad.add(e.id() + ": " + String.join(" | ", e.problems()));
         assertTrue(bad.isEmpty(), "shipped routes the registry would refuse or trim: " + String.join("; ", bad));
         assertEquals(files.size(), idx.all().size(), "every shipped file becomes a route (an empty folder is 0 of 0)");
-        assertTrue(idx.bytes() <= RouteWire.MAX_TOTAL_BYTES);
+        assertTrue(idx.bytes() <= RouteIndex.Caps.REGISTRY.maxTotalBytes());
     }
 
     @Test
     void theBooksAndClassesOfTheShippedRoutesAreDistinctEvenAcrossNamespaces() throws IOException {
-        RouteIndex idx = RouteIndex.build(shipped(), List.of());
+        RouteIndex idx = RouteIndex.build(shipped(), List.of(), RouteIndex.Caps.REGISTRY);
         List<String> books = new ArrayList<>(), classes = new ArrayList<>();
         for (SkillRoute r : idx.all()) {
             assertTrue(!books.contains(r.book()), "book " + r.book() + " is used twice");

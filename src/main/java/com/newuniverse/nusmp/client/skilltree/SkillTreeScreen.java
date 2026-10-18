@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.skilltree;
 
 import com.newuniverse.nusmp.client.skilltree.layout.ClickTracker;
+import com.newuniverse.nusmp.client.skilltree.layout.LineVisibility;
 import com.newuniverse.nusmp.client.skilltree.layout.NodeState;
 import com.newuniverse.nusmp.client.skilltree.layout.PurchaseGate;
 import com.newuniverse.nusmp.client.skilltree.layout.Rect;
@@ -17,6 +18,7 @@ import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillNode;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.line.LineText;
 import com.newuniverse.nusmp.skilltree.rules.TreeRules;
 import com.newuniverse.nusmp.skilltree.rules.TreeRules.ClassVerdict;
 import com.newuniverse.nusmp.skilltree.rules.TreeRules.NodeStatus;
@@ -64,6 +66,8 @@ public class SkillTreeScreen extends Screen {
         VIEWS.clear();
         LAST_NODE.clear();
         ItemIcons.clear();
+        TreeBackground.clear();
+        InspectMode.reset();
     }
 
     private static final long NOTICE_MS = 3500;
@@ -72,6 +76,17 @@ public class SkillTreeScreen extends Screen {
     private final Screen parent;
     private ScreenLayout lay;
     private ThemedButton closeBtn, activeBtn, buyBtn;
+    // 1.82.0: the Passives button, the admin inspect toggle, and what the library cache was built from
+    private ThemedButton passivesBtn, inspectBtn;
+    private int headerLeft;
+    private boolean inspecting, inspectView;
+    private List<SkillRoute> cacheSrc;
+    private int cacheSig = Integer.MIN_VALUE;
+    private boolean cacheInspect;
+    private List<SkillRoute> cacheRoutes = List.of();
+    private List<RouteGrouping.Group> cacheGroups = List.of();
+    private long inspectAskedAt;
+    private String inspectAskedRoute = "";
 
     private final RouteList list = new RouteList();
     private final DetailPanel detail = new DetailPanel();
@@ -117,6 +132,15 @@ public class SkillTreeScreen extends Screen {
         // Close is added last: a keyboard player's first Tab (and the initial focus) must not land on the button that leaves the screen
         buyBtn = addRenderableWidget(button(lay.buyButton, SkillTreeLang.tr(SkillTreeLang.BUY), b -> buySelected()));
         activeBtn = addRenderableWidget(button(lay.setActiveButton, SkillTreeLang.tr(SkillTreeLang.SET_ACTIVE), b -> setActive()));
+        Component passivesLabel = LineText.tr(LineText.PASSIVES_BUTTON), inspectLabel = LineText.tr(LineText.INSPECT_TOGGLE);
+        int pw = Math.max(48, font.width(passivesLabel) + 12), iw = font.width("[x] ") + font.width(inspectLabel) + 12;
+        Rect pr = new Rect(lay.closeButton.x() - 4 - pw, lay.closeButton.y(), pw, lay.closeButton.h());
+        Rect ir = new Rect(pr.x() - 4 - iw, pr.y(), iw, pr.h());
+        passivesBtn = addRenderableWidget(button(pr, passivesLabel, b -> minecraft.setScreen(new PassivesScreen(this))));
+        passivesBtn.setTooltip(net.minecraft.client.gui.components.Tooltip.create(LineText.tr(LineText.PASSIVES_BUTTON_TIP)));
+        inspectBtn = addRenderableWidget(button(ir, inspectLabel, b -> InspectMode.toggle()));
+        inspectBtn.setTooltip(net.minecraft.client.gui.components.Tooltip.create(LineText.tr(LineText.INSPECT_TOGGLE_TIP)));
+        inspectBtn.visible = false;
         closeBtn = addRenderableWidget(button(lay.closeButton, SkillTreeLang.tr(SkillTreeLang.CLOSE), b -> onClose()));
         buyBtn.visible = false;                                          // shown by the first frame's refresh, once it knows whether a node is selected
         activeBtn.visible = false;
@@ -139,21 +163,23 @@ public class SkillTreeScreen extends Screen {
         now = UiTheme.now();
         nowMs = System.nanoTime() / 1_000_000L;
         player = mc.player == null ? null : new PlayerTreeState(SkillTreeApi.of(mc.player));       // a live view of the synced tree: nothing is copied, every frame reads the newest
-        List<SkillRoute> all = RouteRegistry.all();
-        routes = all == null ? List.of() : all;
-        list.build(RouteGrouping.group(routes), font, lay.routeList.w());
+        inspecting = player != null && InspectMode.active(mc.player);
+        routes = visibleRoutes(player, inspecting);                      // 1.82.0: only the lines the player owns (all of them in inspect mode), cached
+        list.build(cacheGroups, font, lay.routeList.w());
         if (player == null || routes.isEmpty()) {                        // nothing to show: the registry has not arrived (or there are no trees)
-            sel = null; shape = null; view = null; states = new NodeState[0]; selNode = -1; hoverNode = -1; unlocked = false; sp = 0;
+            sel = null; shape = null; view = null; states = new NodeState[0]; selNode = -1; hoverNode = -1; unlocked = false; inspectView = false; sp = 0;
             syncButtons();
             return;
         }
         sp = player.sp();
         SkillRoute chosen = RouteRegistry.byId(routeId);
-        if (chosen == null) chosen = defaultRoute(routes, player);
+        if (chosen == null || !LineVisibility.canOpen(chosen, player, inspecting)) chosen = defaultRoute(routes, player);
         routeId = chosen.id();
         sel = chosen;
         if (!sel.id().equals(beganRoute)) beginRoute();
         unlocked = player.hasRoute(sel.id());
+        inspectView = inspecting && !unlocked;
+        if (inspectView && !LineVisibility.isFullTree(sel)) askServerForTree(sel.id());
         shape = shapes.get(sel.id());
         if (shape == null || shape.route != sel) {                       // a new copy of the route arrived: lay it out again
             shape = RouteShape.of(sel);
@@ -170,7 +196,7 @@ public class SkillTreeScreen extends Screen {
             states[i] = NodeState.of(player, sel, node);
             if (node.id().equals(selNodeId)) selNode = i;
         }
-        if (!unlocked) selNode = -1;                                     // nodes of a sealed route cannot be selected
+        if (!unlocked && !inspectView) selNode = -1;                     // nodes of a sealed route cannot be selected (an administrator inspecting may read them)
         detectChanges();
         boolean overChip = lay.zoomOut.contains(mx, my) || lay.zoomIn.contains(mx, my) || lay.zoomFit.contains(mx, my);
         hoverNode = overChip ? -1 : NodeCanvas.nodeAt(mx, my, lay.canvas, view, shape.layout);
@@ -246,9 +272,40 @@ public class SkillTreeScreen extends Screen {
         noticeUntil = nowMs + NOTICE_MS;
     }
 
+    /**
+     * 1.82.0: the lines the library lists, cached. The list (and its grouping into families) is rebuilt only when the registry's route list, the set of owned lines or the inspect switch changed, not every
+     * frame: with 283 lines a per-frame filter and group would be the biggest cost of the screen.
+     */
+    private List<SkillRoute> visibleRoutes(TreeState p, boolean inspect) {
+        List<SkillRoute> src = RouteRegistry.all();
+        if (src == null) src = List.of();
+        int sig = p == null ? 0 : LineVisibility.ownedSignature(p.routes());
+        if (src != cacheSrc || sig != cacheSig || inspect != cacheInspect) {
+            cacheSrc = src;
+            cacheSig = sig;
+            cacheInspect = inspect;
+            cacheRoutes = p == null ? List.of() : LineVisibility.visible(src, p, inspect);
+            cacheGroups = RouteGrouping.group(cacheRoutes);
+        }
+        return cacheRoutes;
+    }
+
+    /** An administrator opened a line the client only knows by its card: ask the server for the tree (again after two seconds if it has not come). */
+    private void askServerForTree(String id) {
+        if (id.equals(inspectAskedRoute) && nowMs - inspectAskedAt < 2000) return;
+        inspectAskedRoute = id;
+        inspectAskedAt = nowMs;
+        TreeActions.inspect(id);
+    }
+
     // ------------------------------------------------------------------ the buttons
     private void syncButtons() {
         closeBtn.visible = true;
+        boolean admin = Minecraft.getInstance().player != null && InspectMode.available(Minecraft.getInstance().player);
+        passivesBtn.visible = true;
+        inspectBtn.visible = admin;
+        if (admin) inspectBtn.setMessage(Component.literal((inspecting ? "[x] " : "[ ] ") + LineText.tr(LineText.INSPECT_TOGGLE).getString()));
+        headerLeft = admin ? inspectBtn.getX() : passivesBtn.getX();
         boolean classButton = sel != null && unlocked && !sel.classId().isEmpty();
         activeBtn.visible = classButton;
         if (classButton) {
@@ -443,7 +500,7 @@ public class SkillTreeScreen extends Screen {
             TreeSkin.panel(g, lay.panel, accent, 0.9f);
         }
         TreeSkin.well(g, lay.routes, UiTheme.CYAN & 0xFFFFFF);
-        if (sel != null && view != null) NodeCanvas.drawBackground(g, lay.canvas, sel.color() & 0xFFFFFF, unlocked, view, now);
+        if (sel != null && view != null) NodeCanvas.drawBackground(g, lay.canvas, sel.color() & 0xFFFFFF, unlocked, view, now, sel);
         else TreeSkin.well(g, lay.canvas, UiTheme.CYAN & 0xFFFFFF);
         TreeSkin.well(g, lay.detail, accent);
     }
@@ -460,7 +517,8 @@ public class SkillTreeScreen extends Screen {
             drawStrip(g, font);
             NodeCanvas.draw(g, font, new NodeCanvas.Frame(lay.canvas, shape, view, states, sel.color() & 0xFFFFFF, unlocked, selNode, hoverNode, now));
             NodeCanvas.drawChips(g, font, lay, mx, my);
-            detail.update(font, lay.detailText.w(), new DetailPanel.Subject(sel, selNode >= 0 ? sel.nodes().get(selNode) : null, selNode >= 0 ? states[selNode] : null, player));
+            if (!LineVisibility.isFullTree(sel)) g.drawCenteredString(font, LineText.tr(LineText.INSPECT_LOADING), lay.canvas.x() + lay.canvas.w() / 2, lay.canvas.y() + lay.canvas.h() / 2, TreeSkin.dim());
+            detail.update(font, lay.detailText.w(), new DetailPanel.Subject(sel, selNode >= 0 ? sel.nodes().get(selNode) : null, selNode >= 0 ? states[selNode] : null, player, inspectView));
             detail.draw(g, font, lay.detailText, unlocked ? sel.color() & 0xFFFFFF : TreeSkin.SEALED & 0xFFFFFF);
         } else {
             drawNoRoutes(g, font);
@@ -477,7 +535,7 @@ public class SkillTreeScreen extends Screen {
         int titleEnd = h.x() + 4 + font.width(title);
         String spText = SkillTreeLang.str(SkillTreeLang.SP, sp);
         int spW = font.width(spText) + 11;
-        int spX = lay.closeButton.x() - 10 - spW;
+        int spX = headerLeft - 10 - spW;
         TreeSkin.gem(g, spX, h.y() + 6, UiMath.mix(UiTheme.CYAN, UiTheme.WHITE, 0.15f));
         g.drawString(font, spText, spX + 11, h.y() + 6, sp > 0 ? TreeSkin.text() : TreeSkin.dim(), false);
         int cx = titleEnd + 14, room = spX - 10 - cx;
@@ -492,6 +550,11 @@ public class SkillTreeScreen extends Screen {
     private void drawStrip(GuiGraphics g, Font font) {
         Rect s = lay.strip;
         int y = s.y() + (s.h() - 8) / 2;
+        if (inspectView) {                                               // 1.82.0: an administrator reading a line they do not own
+            TreeSkin.padlock(g, s.x() + 5, s.y() + (s.h() - 9) / 2, TreeSkin.opaque(sel.color()));
+            g.drawString(font, fit(font, LineText.tr(LineText.INSPECT_BANNER).getString(), lay.zoomOut.x() - 6 - (s.x() + 17)), s.x() + 17, y, TreeSkin.gold(), false);
+            return;
+        }
         if (!unlocked) {                                                 // a sealed route: the padlock and what it needs
             TreeSkin.padlock(g, s.x() + 5, s.y() + (s.h() - 9) / 2, TreeSkin.opaque(TreeSkin.SEALED));
             String text = SkillTreeLang.str(SkillTreeLang.REQUIRES, sel.bookName());
@@ -509,7 +572,8 @@ public class SkillTreeScreen extends Screen {
         Rect c = lay.canvas;
         int cx = c.x() + c.w() / 2, y = c.y() + c.h() / 2 - 18;
         g.drawCenteredString(font, SkillTreeLang.str(SkillTreeLang.NO_ROUTES), cx, y, TreeSkin.gold());
-        for (FormattedCharSequence line : font.split(SkillTreeLang.tr(SkillTreeLang.NO_ROUTES_HINT), Math.max(40, c.w() - 20))) {
+        net.minecraft.network.chat.Component hint = RouteRegistry.all().isEmpty() ? SkillTreeLang.tr(SkillTreeLang.NO_ROUTES_HINT) : LineText.tr(LineText.LIBRARY_EMPTY);
+        for (FormattedCharSequence line : font.split(hint, Math.max(40, c.w() - 20))) {
             y += font.lineHeight + 2;
             g.drawCenteredString(font, line, cx, y + 6, TreeSkin.dim());
         }
@@ -578,7 +642,7 @@ public class SkillTreeScreen extends Screen {
 
     private Rect spRect(Font font) {
         int spW = font.width(SkillTreeLang.str(SkillTreeLang.SP, sp)) + 11;
-        return new Rect(lay.closeButton.x() - 10 - spW - 2, lay.header.y(), spW + 4, lay.header.h());
+        return new Rect(headerLeft - 10 - spW - 2, lay.header.y(), spW + 4, lay.header.h());
     }
 
     private static List<FormattedCharSequence> lines(Font font, int w, Component c) { return font.split(c, w); }

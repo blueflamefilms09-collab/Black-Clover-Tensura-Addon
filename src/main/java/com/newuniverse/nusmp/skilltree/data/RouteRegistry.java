@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skilltree.data;
 
+import com.newuniverse.nusmp.skilltree.line.LineCard;
+
 import java.util.List;
 
 /**
@@ -71,8 +73,56 @@ public final class RouteRegistry {
 
     // ---------------------------------------------------------------- the client side
     /** Client thread: the routes the server sent replace the client copy as a whole. */
-    public static void setClient(List<SkillRoute> routes) { client = RouteIndex.of(routes == null ? List.of() : routes); }
+    public static void setClient(List<SkillRoute> routes) {
+        clientFull = routes == null ? List.of() : List.copyOf(routes);
+        rebuildClient();
+    }
 
     /** The client left its world: forget the copy of that server's routes. */
-    public static void clearClient() { client = RouteIndex.EMPTY; }
+    public static void clearClient() {
+        clientFull = List.of();
+        clientCards = List.of();
+        client = RouteIndex.EMPTY;
+    }
+
+    // ---------------------------------------------------------------- 1.82.0: what a client holds (the lines it owns in full, a node-less stub of every other line)
+    private static volatile List<SkillRoute> clientFull = List.of();
+    private static volatile List<LineCard> clientCards = List.of();
+
+    /**
+     * Client thread: routes that arrive AFTER the first chunk of a sync, or that an administrator asked to inspect, are added to the client copy (a route with the same id is replaced). Why a
+     * merge and not another {@link #setClient}: with 283 lines a player's owned routes may not fit one payload, and an inspected line must not wipe the lines the player owns.
+     */
+    public static void addClient(List<SkillRoute> routes) {
+        if (routes == null || routes.isEmpty()) return;
+        java.util.Map<String, SkillRoute> merged = new java.util.LinkedHashMap<>();
+        for (SkillRoute r : clientFull) merged.put(r.id(), r);
+        for (SkillRoute r : routes) merged.put(r.id(), r);
+        clientFull = List.copyOf(merged.values());
+        rebuildClient();
+    }
+
+    /**
+     * Client thread: the cards of every registered line. Each becomes a node-less stub route so that the code that names a Skill Book, lists the Black Market or fills the creative tab, which asks
+     * this registry by id and by book, works for lines the player does not own; a line the player owns (or inspected) is the full route, never the stub.
+     */
+    public static void setClientCards(List<LineCard> cards) {
+        clientCards = cards == null ? List.of() : List.copyOf(cards);
+        rebuildClient();
+    }
+
+    private static void rebuildClient() {
+        java.util.Map<String, SkillRoute> all = new java.util.LinkedHashMap<>();
+        for (SkillRoute r : clientFull) all.put(r.id(), r);
+        for (LineCard c : clientCards) all.computeIfAbsent(c.id(), k -> c.toStub());
+        java.util.List<SkillRoute> list = new java.util.ArrayList<>(all.values());
+        list.sort(java.util.Comparator.comparing(SkillRoute::id));
+        client = RouteIndex.of(list);
+    }
+
+    /**
+     * One card per registered line, in id order: computed from the server snapshot while a server runs in this JVM, else the cards the server sent. Contains every line (the cards carry no
+     * nodes), so the Passives panel, the inspect list and the books can name a line; whether a player may SEE a line in the library is decided by ownership, not by this list.
+     */
+    public static List<LineCard> cards() { return serverLoaded ? server.cards() : clientCards; }
 }

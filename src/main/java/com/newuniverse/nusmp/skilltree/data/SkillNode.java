@@ -22,9 +22,51 @@ import java.util.Map;
  * @param x         column on the tree canvas (grid units, 0 at the left)
  * @param y         row on the tree canvas (grid units, 0 at the top)
  * @param icon      an item id used as the node's icon ({@code minecraft:blaze_powder}), or an empty string for the route's icon
+ * @param type      1.82.0 (Unique Skill Lines): {@code active_ability}, {@code passive_toggle} or {@code attribute_modifier}; an empty string for a node written before the field existed (see {@link #nodeType})
+ * @param kind      the effect kind of the catalogue ({@code cone_strike}, {@code lifesteal}, {@code stance}, {@code attr}, ...) the line engine runs for this node, or an empty string for a classic node
+ * @param params    the string (enum) parameters of the kind ({@code vfx}, {@code effect}, {@code condition}, ...); the numbers are in {@code values}
  */
 public record SkillNode(String id, String name, String desc, List<Parent> parents, int cost, List<Integer> costs, int maxLevel, String skill, List<String> passives,
-                        Map<String, List<Double>> values, int x, int y, String icon) {
+                        Map<String, List<Double>> values, int x, int y, String icon, String type, String kind, Map<String, String> params) {
+
+    public static final String TYPE_ACTIVE = "active_ability", TYPE_PASSIVE = "passive_toggle", TYPE_ATTR = "attribute_modifier";
+
+    /** What a node is to the engine. */
+    public enum NodeType { ACTIVE, PASSIVE, ATTR, PLAIN }
+
+    /**
+     * Why: the 13-argument form of the record before 1.82.0 (no type, no kind, no params). Every old call site keeps compiling and means exactly what it meant: a classic node whose ability is a
+     * registered ManasCore skill or a hand-written passive. Add the new, keep the old.
+     */
+    public SkillNode(String id, String name, String desc, List<Parent> parents, int cost, List<Integer> costs, int maxLevel, String skill, List<String> passives,
+                     Map<String, List<Double>> values, int x, int y, String icon) {
+        this(id, name, desc, parents, cost, costs, maxLevel, skill, passives, values, x, y, icon, "", "", Map.of());
+    }
+
+    /**
+     * The node's type. The explicit {@code type} wins; an old node without it is inferred (has a {@code skill} -> active, has {@code passives} -> passive), as the contract says; anything
+     * else is {@link NodeType#PLAIN} (a node that only unlocks other nodes).
+     */
+    public NodeType nodeType() {
+        if (TYPE_ACTIVE.equals(type)) return NodeType.ACTIVE;
+        if (TYPE_PASSIVE.equals(type)) return NodeType.PASSIVE;
+        if (TYPE_ATTR.equals(type)) return NodeType.ATTR;
+        if (grantsSkill()) return NodeType.ACTIVE;
+        if (passives != null && !passives.isEmpty()) return NodeType.PASSIVE;
+        return NodeType.PLAIN;
+    }
+
+    /** True when the line engine runs this node (it has a catalogue kind). */
+    public boolean isLineNode() { return kind != null && !kind.isEmpty(); }
+
+    /** True for a node that gets a switch in the Passives panel: a line node of type passive_toggle or attribute_modifier. */
+    public boolean hasToggle() { return isLineNode() && (TYPE_PASSIVE.equals(type) || TYPE_ATTR.equals(type)); }
+
+    /** An enum parameter of the node ({@code vfx}, {@code effect}, ...), or {@code fallback} when it has none. */
+    public String param(String key, String fallback) {
+        String v = params == null ? null : params.get(key);
+        return v == null || v.isEmpty() ? fallback : v;
+    }
 
     /** A prerequisite: node {@code node} of the same route must be at least at {@code level}. */
     public record Parent(String node, int level) {}

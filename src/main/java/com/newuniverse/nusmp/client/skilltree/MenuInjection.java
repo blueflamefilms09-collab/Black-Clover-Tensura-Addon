@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.client.skilltree.layout.ButtonPlacement;
 import com.newuniverse.nusmp.client.skilltree.layout.ButtonPlacement.Menu;
 import com.newuniverse.nusmp.client.skilltree.layout.Rect;
 import com.newuniverse.nusmp.client.ui.CodexScreen;
+import com.newuniverse.nusmp.skilltree.line.LineText;
 import com.newuniverse.nusmp.client.ui.theme.ThemedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -41,7 +42,7 @@ final class MenuInjection {
     private MenuInjection() {}
 
     /** The button of the open host screen and the function that adds a widget to that screen (the event's own, so the screen's lists stay consistent). */
-    private record Active(Screen screen, ThemedButton button, Consumer<GuiEventListener> add) {}
+    private record Active(Screen screen, ThemedButton button, ThemedButton passives, Consumer<GuiEventListener> add) {}
 
     private static Active active;
     private static boolean warned;
@@ -65,12 +66,15 @@ final class MenuInjection {
     private static void onRender(ScreenEvent.Render.Pre event) {
         try {
             Active a = active;
-            if (a == null || a.screen() != event.getScreen() || a.screen().children().contains(a.button())) return;
-            Menu menu = menuOf(a.screen());                                  // the event did not run after the last rebuild: put the button back where the menu wants it
+            if (a == null || a.screen() != event.getScreen() || (a.screen().children().contains(a.button()) && a.screen().children().contains(a.passives()))) return;
+            Menu menu = menuOf(a.screen());                                  // the event did not run after the last rebuild: put the buttons back where the menu wants them
             if (menu == null) return;
-            Rect r = place(menu, a.screen(), new ArrayList<>(a.screen().children()));
+            Rect r = place(menu, a.screen(), new ArrayList<>(a.screen().children()), SkillTreeLang.tr(SkillTreeLang.BUTTON), null);
             a.button().setPosition(r.x(), r.y());
-            a.add().accept(a.button());
+            if (!a.screen().children().contains(a.button())) a.add().accept(a.button());
+            Rect r2 = place(menu, a.screen(), new ArrayList<>(a.screen().children()), LineText.tr(LineText.PASSIVES_BUTTON), r);
+            a.passives().setPosition(r2.x(), r2.y());
+            if (!a.screen().children().contains(a.passives())) a.add().accept(a.passives());
         } catch (RuntimeException e) {
             warn(e);
         }
@@ -95,21 +99,31 @@ final class MenuInjection {
         Screen screen = event.getScreen();
         Menu menu = menuOf(screen);
         if (menu == null) return;
-        if (active != null && active.screen() == screen) event.removeListener(active.button());      // the event fires again after a rebuild: never two buttons
+        if (active != null && active.screen() == screen) {                                            // the event fires again after a rebuild: never two buttons
+            event.removeListener(active.button());
+            event.removeListener(active.passives());
+        }
         Component label = SkillTreeLang.tr(SkillTreeLang.BUTTON);
-        Rect r = place(menu, screen, new ArrayList<>(event.getListenersList()));
+        Rect r = place(menu, screen, new ArrayList<>(event.getListenersList()), label, null);
         ThemedButton button = new ThemedButton(r.x(), r.y(), r.w(), r.h(), label, b -> Minecraft.getInstance().setScreen(new SkillTreeScreen(screen)));
         button.setTooltip(Tooltip.create(SkillTreeLang.tr(SkillTreeLang.BUTTON_TIP)));
         event.addListener(button);
-        active = new Active(screen, button, event::addListener);
+        // 1.82.0: the Passives panel of the Unique Skill Lines, a second button placed by the same rules, clear of the first
+        Component label2 = LineText.tr(LineText.PASSIVES_BUTTON);
+        Rect r2 = place(menu, screen, new ArrayList<>(event.getListenersList()), label2, r);
+        ThemedButton passives = new ThemedButton(r2.x(), r2.y(), r2.w(), r2.h(), label2, b -> Minecraft.getInstance().setScreen(new PassivesScreen(screen)));
+        passives.setTooltip(Tooltip.create(LineText.tr(LineText.PASSIVES_BUTTON_TIP)));
+        event.addListener(passives);
+        active = new Active(screen, button, passives, event::addListener);
     }
 
     /** Where the button goes in {@code screen}, given the widgets the screen has now (every visible widget is kept clear of). */
-    private static Rect place(Menu menu, Screen screen, List<GuiEventListener> children) {
+    private static Rect place(Menu menu, Screen screen, List<GuiEventListener> children, Component label, Rect alsoClearOf) {
         List<Rect> occupied = new ArrayList<>();
         for (GuiEventListener l : children) {
-            if (l instanceof AbstractWidget w && w.visible && !(active != null && w == active.button())) occupied.add(new Rect(w.getX(), w.getY(), w.getWidth(), w.getHeight()));
+            if (l instanceof AbstractWidget w && w.visible && !(active != null && (w == active.button() || w == active.passives()))) occupied.add(new Rect(w.getX(), w.getY(), w.getWidth(), w.getHeight()));
         }
-        return ButtonPlacement.place(menu, screen.width, screen.height, Minecraft.getInstance().font.width(SkillTreeLang.tr(SkillTreeLang.BUTTON)), occupied);
+        if (alsoClearOf != null) occupied.add(alsoClearOf);
+        return ButtonPlacement.place(menu, screen.width, screen.height, Minecraft.getInstance().font.width(label), occupied);
     }
 }

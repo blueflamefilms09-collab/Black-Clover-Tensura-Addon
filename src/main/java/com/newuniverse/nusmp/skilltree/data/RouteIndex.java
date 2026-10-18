@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skilltree.data;
 
 import com.google.gson.JsonElement;
+import com.newuniverse.nusmp.skilltree.line.LineCard;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,19 @@ public final class RouteIndex {
         public boolean clean() { return loaded && problems.isEmpty(); }
     }
 
+    /**
+     * Why: 1.82.0 brought 275 generated lines, which is far more than one sync payload can carry, but a SERVER holds them all in memory and sends each player only the lines they own (in chunks that do
+     * respect the payload limits, see {@link RouteWire#chunks}). So the caps of the registry and the caps of a payload are two different numbers: {@link #CLASSIC} is the old pair (64 routes, 900,000 bytes, what
+     * one payload held when the whole registry was sent at once) and is what {@link #build(Map, Collection)} still uses, so every older test and caller means what it meant; {@link #REGISTRY} is what the
+     * reload listener uses now. The per-route cap ({@link RouteWire#MAX_ROUTE_BYTES}) is unchanged because one route must always fit one payload.
+     */
+    public record Caps(int maxRoutes, long maxTotalBytes) {
+        public static final Caps CLASSIC = new Caps(RouteWire.MAX_ROUTES, RouteWire.MAX_TOTAL_BYTES);
+        public static final Caps REGISTRY = new Caps(1024, 64_000_000L);
+    }
+
     private final List<SkillRoute> routes;
+    private final List<LineCard> cards;
     private final List<Entry> report;
     private final int bytes;
     private final Map<String, SkillRoute> byId = new HashMap<>(), byBook = new HashMap<>(), byClass = new HashMap<>();
@@ -40,6 +53,9 @@ public final class RouteIndex {
     private RouteIndex(List<SkillRoute> routes, List<Entry> report, int bytes) {
         this.routes = Collections.unmodifiableList(new ArrayList<>(routes));
         this.report = Collections.unmodifiableList(new ArrayList<>(report));
+        List<LineCard> sum = new ArrayList<>(routes.size());
+        for (SkillRoute r : routes) sum.add(LineCard.of(r));
+        this.cards = Collections.unmodifiableList(sum);
         this.bytes = bytes;
         for (SkillRoute r : routes) {
             byId.putIfAbsent(r.id(), r);
@@ -52,6 +68,9 @@ public final class RouteIndex {
     // ---------------------------------------------------------------- lookups
     /** Every route, in id order. */
     public List<SkillRoute> all() { return routes; }
+
+    /** One card per route, in id order (identity and look, never the nodes): what is sent to every client, see {@link LineCard}. */
+    public List<LineCard> cards() { return cards; }
 
     public SkillRoute byId(String routeId) { return routeId == null ? null : byId.get(routeId); }
 
@@ -95,7 +114,10 @@ public final class RouteIndex {
      * Builds the snapshot from the parsed JSON files of a reload. {@code files} maps {@code <namespace>:<file name>} to the file's JSON; {@code unreadable} lists ids of files that exist but
      * could not be parsed as JSON at all (they are reported, not loaded). Files are taken in id order, so which of two clashing routes survives never depends on the order the game happened to list them.
      */
-    public static RouteIndex build(Map<String, JsonElement> files, Collection<String> unreadable) {
+    public static RouteIndex build(Map<String, JsonElement> files, Collection<String> unreadable) { return build(files, unreadable, Caps.CLASSIC); }
+
+    /** The same with the caps of the registry given (the loader passes {@link Caps#REGISTRY}). A file that makes the reader throw is reported and skipped; it never stops the others. */
+    public static RouteIndex build(Map<String, JsonElement> files, Collection<String> unreadable, Caps caps) {
         TreeSet<String> ids = new TreeSet<>(files.keySet());
         if (unreadable != null) ids.addAll(unreadable);
         List<SkillRoute> accepted = new ArrayList<>();
@@ -108,7 +130,13 @@ public final class RouteIndex {
                 report.add(new Entry(id, false, 0, List.of("the file is not valid JSON (the server log has the parse error)"), List.of()));
                 continue;
             }
-            RouteSchema.Parsed parsed = RouteSchema.parse(id, json);
+            RouteSchema.Parsed parsed;
+            try {
+                parsed = RouteSchema.parse(id, json);
+            } catch (RuntimeException e) {                                       // parse() promises not to throw; this is the belt to its braces: one bad line never breaks the others
+                report.add(new Entry(id, false, 0, List.of("could not be read: " + e), List.of()));
+                continue;
+            }
             List<String> problems = new ArrayList<>(parsed.problems());
             SkillRoute route = parsed.route();
             int size = 0;
@@ -119,9 +147,9 @@ public final class RouteIndex {
                 } catch (IllegalArgumentException tooLong) {
                     refusal = "cannot be sent to players: " + tooLong.getMessage();
                 }
-                if (refusal == null && accepted.size() >= RouteWire.MAX_ROUTES) refusal = "more than " + RouteWire.MAX_ROUTES + " routes are installed, this one is not loaded";
+                if (refusal == null && accepted.size() >= caps.maxRoutes()) refusal = "more than " + caps.maxRoutes() + " routes are installed, this one is not loaded";
                 if (refusal == null && size > RouteWire.MAX_ROUTE_BYTES) refusal = "is too big to send to players: " + size + " bytes, the limit is " + RouteWire.MAX_ROUTE_BYTES;
-                if (refusal == null && total + size > RouteWire.MAX_TOTAL_BYTES) refusal = "would make all routes together " + (total + size) + " bytes, the limit is " + RouteWire.MAX_TOTAL_BYTES;
+                if (refusal == null && total + (long) size > caps.maxTotalBytes()) refusal = "would make all routes together " + (total + (long) size) + " bytes, the limit is " + caps.maxTotalBytes();
                 if (refusal == null && books.containsKey(route.book())) refusal = "its book '" + route.book() + "' is already the book of route '" + books.get(route.book()) + "'";
                 if (refusal == null && classes.containsKey(route.classId())) refusal = "its class_id '" + route.classId() + "' is already used by route '" + classes.get(route.classId()) + "'";
                 if (refusal == null) {

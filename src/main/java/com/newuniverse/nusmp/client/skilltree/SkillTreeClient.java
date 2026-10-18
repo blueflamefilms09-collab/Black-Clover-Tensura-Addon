@@ -18,6 +18,7 @@ public final class SkillTreeClient {
         ItemsClient.init(modBus);
         ShopClient.init(modBus);
         MenuInjection.init();
+        ArtsBarClient.init(modBus);                                      // 1.82.0: the Arts bar, its keys and the Passives key of the Unique Skill Lines
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             SkillTreeScreen.forget();
             MenuInjection.forget();

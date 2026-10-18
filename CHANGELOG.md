@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.82.0] — 275 Unique Skill Lines, 3D skill books, passive toggles, tree backgrounds, fog of war
+
+The owner's brief ("275+ unique skill lines, 3D books, Tensura-style passive toggles, thematic tree backgrounds, visibility lock, one active line") is an extension of the 1.62.0 Skill Tree engine; the dungeon half of the same brief (rifts, waypoint, WFC rooms, tier mobs, the D&D boss, the Mana Core) already existed (see `docs/skilltree/lines.md`).
+
+### NEW
+- **275 new skill lines in 11 franchises, 25 each** (The Exiled Heavy Knight, Tensura, Black Clover, Magi, Solo Leveling, DanMachi, Fairy Tail, TBATE, Tower of God, The God of High School, Omniscient Reader's Viewpoint), each of 19 to 24 nodes in a branching tree: 2 stances, 3 to 4 stat nodes, 6 to 8 active arts, 6 to 8 passives and 2 finishers. With the 8 hand-built routes that is **283 lines**. Written from `tools/lines/rows/<franchise>.py` by `tools/lines/gen_lines.py` (validated: kinds, ranges, icons are real 1.21.1 items, art-order variety).
+- **Effect runtime** (`skilltree/line/`): one executor for each of 26 active kinds, 25 passive kinds, the stance and attribute nodes (`tools/lines/catalog.py`); a line is data, no per-node Java. Arts are cast from an **Arts bar** (keys `[` `]` `\`), cooldown and magicule cost per node; the single-equipped-line rule applies.
+- **Tensura-style Passive Toggle panel** (key `;`, a button next to the Skill Tree button in the Black Clover menu): every bought passive or attribute node adds a switch (default ON), scrollable, stored in the player's skill-tree data; passives run only if the line is equipped AND the switch is on.
+- **Visibility lock**: a player sees only the lines they own; operators (`hasPermissions(2)`) and creative players get an **ADMIN INSPECT MODE** toggle that lists every line (read-only for unowned ones, re-checked on the server).
+- **283 thematic tree backgrounds** (15 themes: magma, void, stellar, forest, ocean, storm, ruin, blood, holy, frost, tower, city, dream, sand, iron; `tools/lines/gen_backgrounds.py`).
+- **3D Skill Book** (`models/item/skill_book_3d.json`: boards, spine, pages, ribbon, corner caps, clasp; full display transforms), one cover per franchise (11), tinted by the line's colour. Lines the client does not know show their name and colour from `assets/nusmp/skill_books.json`.
+- **Book loot**: books of any line from Abyssal mobs (existing modifier), Decennial Guardians (existing) and the new secret rift vault chests (`nusmp:rift_books`), cached weight table (no list per drop), pity rule (the next book is a line you do not own yet).
+- Schema fields `franchise`, `gui_background`, `book_texture`, `background_theme`, node `type`/`kind`/`params`; routes also load from `data/<ns>/unique_skills/`.
+
+### REPLACED
+- The registered `skill_book.json` model is now a `separate_transforms` wrapper (3D in hand and on the ground); the old 2D model is kept as `skill_book_2d.json` and is still the inventory icon.
+- Server route limit: 1024 routes / 64 MB (was 64); the client receives only the lines it owns plus name cards.
+
+### KEPT
+- Every old route (Fire/Lightning/Sky Dragon Slayer, Ice-Make, the four Heavy Knight routes), the old book item and sprite, the Black Market, SP, and all saved unlocks.
+
+### Honest notes
+- Nothing has been run in game. The Arts bar, the toggle panel, the 3D book transforms and the `separate_transforms` loader are only type-checked and unit-tested.
+- The 275 lines share about 50 effect kinds; what differs is names, numbers, enums, stances and combinations, not hand-coded mechanics. There is no summon, burn or freeze kind yet.
+- The Exiled Heavy Knight lines are game-system archetypes invented in the spirit of the story, not canon skill names; some TBATE, Tower of God and God of High School lines are invented.
+- All book and tree art is generated; the display angles of the book are my own reading of the pose maths.
+
 ## [1.81.0] — Smoldering Fang of Insanity is its own skill route (not the Fire Dragon Slayer's)
 
 ### NEW

@@ -18,9 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * care when the route record gains fields. The registry is static state: every test clears the client copy at the end.
  */
 class RouteTableTest {
+    /** zero-padded so that the registry (which keeps routes in id order) and the list index agree */
+    private static String pad(int i) { return String.format("%04d", i); }
+
     private static SkillRoute route(int i, int weight) {
-        String json = "{\"name\":\"Line " + i + "\",\"book\":\"nusmp:rt" + i + "_book\",\"class_id\":\"rt" + i + "\",\"color\":\"#112233\",\"loot_weight\":" + weight + ",\"nodes\":[{\"id\":\"a\"}]}";
-        SkillRoute r = RouteSchema.parse("nusmp:rt" + i, json).route();
+        String json = "{\"name\":\"Line " + i + "\",\"book\":\"nusmp:rt" + pad(i) + "_book\",\"class_id\":\"rt" + pad(i) + "\",\"color\":\"#112233\",\"loot_weight\":" + weight + ",\"nodes\":[{\"id\":\"a\"}]}";
+        SkillRoute r = RouteSchema.parse("nusmp:rt" + pad(i), json).route();
         assertNotNull(r, "the test route must parse");
         assertEquals(weight, r.lootWeight());
         return r;

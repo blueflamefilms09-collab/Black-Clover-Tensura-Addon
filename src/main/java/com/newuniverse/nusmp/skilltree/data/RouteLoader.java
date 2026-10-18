@@ -32,6 +32,11 @@ import java.util.Set;
 public final class RouteLoader extends SimpleJsonResourceReloadListener {
     /** The folder under {@code data/<namespace>/}. */
     public static final String DIRECTORY = "skill_trees";
+    /**
+     * 1.82.0: {@code data/<namespace>/unique_skills/*.json} is an ALIAS folder of {@link #DIRECTORY}: the same files, the same route ids ({@code <namespace>:<file name>}), the same schema. The Unique
+     * Skill Lines are authored under that name (the owner's word for them) and a pack author may use either folder. If a route id exists in both, the {@code skill_trees} file wins and the clash is logged.
+     */
+    public static final String ALIAS_DIRECTORY = "unique_skills";
 
     private static final Logger LOG = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().create();
@@ -43,7 +48,8 @@ public final class RouteLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected Map<ResourceLocation, JsonElement> prepare(ResourceManager manager, ProfilerFiller profiler) {
-        Map<ResourceLocation, JsonElement> parsed = super.prepare(manager, profiler);
+        Map<ResourceLocation, JsonElement> parsed = new HashMap<>(super.prepare(manager, profiler));
+        scanAlias(manager, parsed);
         unreadable = findUnreadable(manager, parsed.keySet());
         return parsed;
     }
@@ -60,14 +66,28 @@ public final class RouteLoader extends SimpleJsonResourceReloadListener {
     public static RouteIndex reloadNow(ResourceManager manager) {
         Map<ResourceLocation, JsonElement> files = new HashMap<>();
         scanDirectory(manager, DIRECTORY, GSON, files);
+        scanAlias(manager, files);
         return build(files, findUnreadable(manager, files.keySet()));
+    }
+
+    /** Adds the files of the alias folder to {@code files}; an id that is already there (from {@code skill_trees}) is kept and the clash is logged. */
+    private static void scanAlias(ResourceManager manager, Map<ResourceLocation, JsonElement> files) {
+        try {
+            Map<ResourceLocation, JsonElement> alias = new HashMap<>();
+            scanDirectory(manager, ALIAS_DIRECTORY, GSON, alias);
+            for (Map.Entry<ResourceLocation, JsonElement> e : alias.entrySet()) {
+                if (files.putIfAbsent(e.getKey(), e.getValue()) != null) LOG.warn("[nusmp] skill tree {} exists in both {} and {}; the {} file is used", e.getKey(), DIRECTORY, ALIAS_DIRECTORY, DIRECTORY);
+            }
+        } catch (RuntimeException ex) {
+            LOG.warn("[nusmp] skill trees: could not read the {} folder", ALIAS_DIRECTORY, ex);
+        }
     }
 
     private static RouteIndex build(Map<ResourceLocation, JsonElement> files, Collection<String> unreadable) {
         try {
             Map<String, JsonElement> byId = new HashMap<>();
             for (Map.Entry<ResourceLocation, JsonElement> e : files.entrySet()) byId.put(e.getKey().toString(), e.getValue());
-            RouteIndex index = RouteIndex.build(byId, unreadable);
+            RouteIndex index = RouteIndex.build(byId, unreadable, RouteIndex.Caps.REGISTRY);
             RouteRegistry.publish(index);
             LOG.info("[nusmp] skill trees: {} route(s) loaded from {} file(s), {} file(s) with problems, {} bytes to sync", index.all().size(), index.report().size(), index.problemFiles(), index.bytes());
             for (RouteIndex.Entry e : index.report()) {
@@ -85,13 +105,15 @@ public final class RouteLoader extends SimpleJsonResourceReloadListener {
     private static List<String> findUnreadable(ResourceManager manager, Set<ResourceLocation> parsed) {
         try {
             List<String> out = new ArrayList<>();
-            Map<ResourceLocation, Resource> listed = manager.listResources(DIRECTORY, rl -> rl.getPath().endsWith(".json"));
-            for (ResourceLocation rl : listed.keySet()) {
-                String path = rl.getPath();
-                if (path.length() <= DIRECTORY.length() + 6) continue;
-                String name = path.substring(DIRECTORY.length() + 1, path.length() - ".json".length());
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), name);
-                if (!parsed.contains(id)) out.add(id.toString());
+            for (String dir : new String[]{DIRECTORY, ALIAS_DIRECTORY}) {
+                Map<ResourceLocation, Resource> listed = manager.listResources(dir, rl -> rl.getPath().endsWith(".json"));
+                for (ResourceLocation rl : listed.keySet()) {
+                    String path = rl.getPath();
+                    if (path.length() <= dir.length() + 6) continue;
+                    String name = path.substring(dir.length() + 1, path.length() - ".json".length());
+                    ResourceLocation id = ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), name);
+                    if (!parsed.contains(id) && !out.contains(id.toString())) out.add(id.toString());
+                }
             }
             Collections.sort(out);
             return Collections.unmodifiableList(out);

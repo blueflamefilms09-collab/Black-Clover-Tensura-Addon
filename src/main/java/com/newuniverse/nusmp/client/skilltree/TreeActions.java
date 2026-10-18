@@ -29,6 +29,21 @@ final class TreeActions {
         send(new SetClassPayload(classId));
     }
 
+    /** 1.82.0: asks the server to switch the passive {@code nodeId} of {@code routeId} on or off. The server checks ownership and that the node is bought and has a switch. */
+    static void toggle(String routeId, String nodeId, boolean on) {
+        send(new com.newuniverse.nusmp.skilltree.line.LinePayloads.TogglePassive(routeId, nodeId, on));
+    }
+
+    /** 1.82.0: asks the server to use the art {@code nodeId} of the equipped line {@code routeId}. */
+    static void cast(String routeId, String nodeId) {
+        send(new com.newuniverse.nusmp.skilltree.line.LinePayloads.CastArt(routeId, nodeId));
+    }
+
+    /** 1.82.0: an administrator asks the server for the full tree of the line {@code routeId} (an empty id asks for the cards of every line again). The server ignores anyone else. */
+    static void inspect(String routeId) {
+        send(new com.newuniverse.nusmp.skilltree.line.LinePayloads.Inspect(routeId));
+    }
+
     private static void send(CustomPacketPayload payload) {
         try {
             PacketDistributor.sendToServer(payload);

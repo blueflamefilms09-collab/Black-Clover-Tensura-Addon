@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.newuniverse.nusmp.skilltree.line.LineCatalog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,15 @@ public final class RouteSchema {
     public static final int MAX_NODES = 40, MAX_PARENTS = 6, MAX_LEVEL = 10, MAX_COST = 50, MAX_PASSIVES = 8, MAX_VALUE_KEYS = 16;
     /** The canvas grid: columns 0..12, rows 0..9. */
     public static final int MAX_X = 12, MAX_Y = 9;
+    /**
+     * 1.82.0: the wider canvas grid of an EXTENDED route (one that names a {@code franchise}, i.e. a generated Unique Skill Line): the generator lays a line out in five columns of up to 16 cells
+     * with stacked rows, which does not fit the classic 12 by 9. A classic route keeps its old limits exactly, so its tests and its files mean what they always meant.
+     */
+    public static final int MAX_LINE_X = 20, MAX_LINE_Y = 18;
+    /** 1.82.0: the string parameters of a node (at most this many, each value at most {@link #LEN_PARAM} characters). */
+    public static final int MAX_PARAMS = 8, LEN_PARAM = 40;
+    /** 1.82.0: a texture path such as {@code nusmp:textures/gui/skill_trees/<line id>.png} is longer than a resource id of the old fields. */
+    public static final int LEN_PATH = 128;
     public static final int MAX_DUPLICATE_SP = 100, MAX_LOOT_WEIGHT = 1000;
     /** A value in a {@code values} table: finite and within this magnitude (a damage, a range, a duration, a share: nothing needs more). */
     public static final double MAX_VALUE = 1.0e9;
@@ -53,8 +63,12 @@ public final class RouteSchema {
     private static final Pattern PATH = Pattern.compile("[a-z0-9_./-]+");
     private static final Pattern COLOR = Pattern.compile("#[0-9a-fA-F]{6}");
 
-    private static final Set<String> ROUTE_FIELDS = Set.of("magic", "name", "desc", "book", "book_name", "book_lore", "color", "icon", "class_id", "duplicate_sp", "loot_weight", "nodes");
-    private static final Set<String> NODE_FIELDS = Set.of("id", "name", "desc", "parents", "cost", "costs", "max_level", "skill", "passives", "values", "x", "y", "icon");
+    private static final Set<String> ROUTE_FIELDS = Set.of("magic", "name", "desc", "book", "book_name", "book_lore", "color", "icon", "class_id", "duplicate_sp", "loot_weight", "nodes",
+            "franchise", "gui_background", "book_texture", "background_theme");
+    private static final Set<String> NODE_FIELDS = Set.of("id", "name", "desc", "parents", "cost", "costs", "max_level", "skill", "passives", "values", "x", "y", "icon",
+            "type", "kind", "params");
+    private static final Set<String> NODE_TYPES = Set.of(SkillNode.TYPE_ACTIVE, SkillNode.TYPE_PASSIVE, SkillNode.TYPE_ATTR);
+    private static final Pattern PARAM_VALUE = Pattern.compile("[A-Za-z0-9_]+");
 
     /**
      * Why: a file can be wrong in many places at once and the author should hear about all of them in one pass, so reading returns a result with three parts instead of throwing at the first
@@ -74,8 +88,11 @@ public final class RouteSchema {
     public static boolean validSnake(String s) { return s != null && !s.isEmpty() && SNAKE.matcher(s).matches(); }
 
     /** {@code namespace:path} in lower case with the characters a resource location allows, at most {@value #LEN_RESOURCE} characters. */
-    public static boolean validResource(String s) {
-        if (s == null || s.length() > LEN_RESOURCE) return false;
+    public static boolean validResource(String s) { return validResource(s, LEN_RESOURCE); }
+
+    /** Like {@link #validResource(String)} with another length limit (a texture path is longer than an item id). */
+    public static boolean validResource(String s, int maxLen) {
+        if (s == null || s.length() > maxLen) return false;
         int colon = s.indexOf(':');
         if (colon <= 0 || colon != s.lastIndexOf(':') || colon == s.length() - 1) return false;
         return NAMESPACE.matcher(s.substring(0, colon)).matches() && PATH.matcher(s.substring(colon + 1)).matches();
@@ -147,19 +164,31 @@ public final class RouteSchema {
         unknownFields(o, ROUTE_FIELDS, "route", warnings);
 
         Reader r = new Reader(o, problems);
+        r.warnings = warnings;
+        String franchise = r.snake("franchise", "", LEN_KEY);
+        boolean extended = !franchise.isEmpty();                                     // a generated Unique Skill Line: the wider grid, forgiving long texts, strict effect catalogue
         String magic = r.snake("magic", "other", LEN_KEY);
         String name = r.requiredText("name", LEN_NAME);
-        String desc = r.text("desc", "", LEN_ROUTE_DESC);
+        String desc = r.text("desc", "", LEN_ROUTE_DESC, extended);
         String book = r.requiredResource("book");
         String bookName = r.text("book_name", name.length() + 11 <= LEN_NAME ? name + " Skill Book" : name, LEN_NAME);
-        String bookLore = r.text("book_lore", "", LEN_LORE);
+        String bookLore = r.text("book_lore", "", LEN_LORE, extended);
         int color = r.color("color");
         String icon = r.resource("icon", "minecraft:book");
         String classId = r.requiredSnake("class_id", LEN_ID);
         int duplicateSp = r.integer("duplicate_sp", 3, 0, MAX_DUPLICATE_SP);
         int lootWeight = r.integer("loot_weight", 1, 0, MAX_LOOT_WEIGHT);
+        String guiBackground = r.pathResource("gui_background");
+        String bookTexture = r.pathResource("book_texture");
+        String backgroundTheme = r.snake("background_theme", "", LEN_KEY);
+        if (extended) {
+            LineCatalog cat = LineCatalog.get();
+            if (cat.loaded() && !cat.franchises().containsKey(franchise)) warnings.add("franchise: '" + shorten(franchise) + "' is not a franchise of the catalogue (the line loads anyway)");
+            if (cat.loaded() && !backgroundTheme.isEmpty() && !cat.backgrounds().contains(backgroundTheme)) warnings.add("background_theme: '" + shorten(backgroundTheme) + "' is not a theme of the catalogue (the plain background is used)");
+        }
 
         List<SkillNode> nodes = new ArrayList<>();
+        Ctx ctx = new Ctx(problems, warnings, extended);
         JsonElement ne = o.get("nodes");
         if (ne == null || ne.isJsonNull()) {
             problems.add("nodes: is required");
@@ -170,20 +199,25 @@ public final class RouteSchema {
         } else if (ne.getAsJsonArray().size() > MAX_NODES) {
             problems.add("nodes: " + ne.getAsJsonArray().size() + " nodes, the limit is " + MAX_NODES);
         } else {
-            nodes = readNodes(ne.getAsJsonArray(), problems, warnings);
+            nodes = readNodes(ne.getAsJsonArray(), ctx);
             if (nodes.isEmpty()) problems.add("nodes: no node could be loaded");
             else if (nodes.stream().noneMatch(SkillNode::isRoot)) problems.add("nodes: no root node (a node without parents) could be loaded, so nothing in the route could ever be bought");
+        }
+        if (extended && ctx.catalogProblems > 0) {                                   // a line with a node outside the catalogue is refused as a whole: half a line would be a different line
+            problems.add("this line is skipped: " + ctx.catalogProblems + " node(s) break the effect catalogue (tools/lines/catalog.json), see the lines above");
+            return new Parsed(null, problems, warnings);
         }
 
         boolean routeBroken = r.errors > 0 || nodes.isEmpty() || nodes.stream().noneMatch(SkillNode::isRoot);
         if (routeBroken) return new Parsed(null, problems, warnings);
-        SkillRoute route = new SkillRoute(routeId, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, List.copyOf(nodes));
+        SkillRoute route = new SkillRoute(routeId, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, List.copyOf(nodes),
+                franchise, guiBackground, bookTexture, backgroundTheme);
         return new Parsed(route, problems, warnings);
     }
 
     // ---------------------------------------------------------------- nodes
-    private static List<SkillNode> readNodes(JsonArray arr, List<String> problems, List<String> warnings) {
-        Ctx c = new Ctx(problems, warnings);
+    private static List<SkillNode> readNodes(JsonArray arr, Ctx c) {
+        List<String> warnings = c.warnings;
         for (JsonElement e : arr) {                                                   // every id that appears anywhere, so "comes later" can be told from "does not exist"
             if (e != null && e.isJsonObject() && e.getAsJsonObject().get("id") instanceof JsonPrimitive p && p.isString()) c.allIds.add(p.getAsString());
         }
@@ -209,10 +243,13 @@ public final class RouteSchema {
         final Set<String> seen = new HashSet<>();                          // ids met so far (to catch a repeated id)
         final Set<String> rejected = new HashSet<>();                      // ids of nodes skipped because of their own problems
         final Map<String, String> skillOwner = new HashMap<>();            // skill id -> the node that grants it
+        final boolean extended;                                            // 1.82.0: a generated line (wider grid, soft texts, strict catalogue)
+        int catalogProblems;                                               // 1.82.0: nodes refused for breaking the effect catalogue
 
-        Ctx(List<String> problems, List<String> warnings) {
+        Ctx(List<String> problems, List<String> warnings, boolean extended) {
             this.problems = problems;
             this.warnings = warnings;
+            this.extended = extended;
         }
     }
 
@@ -238,9 +275,10 @@ public final class RouteSchema {
 
         List<String> own = new ArrayList<>();
         Reader r = new Reader(o, own);
+        r.warnings = c.warnings;
         String name = r.text("name", titleCase(id), LEN_NAME);
         if (name.isBlank()) name = titleCase(id);
-        String desc = r.text("desc", "", LEN_NODE_DESC);
+        String desc = r.text("desc", "", LEN_NODE_DESC, c.extended);
         int cost = r.integer("cost", 1, 1, MAX_COST);
         int maxLevel = r.integer("max_level", 1, 1, MAX_LEVEL);
         List<Integer> costs = readCosts(o, maxLevel, cost, own, c.warnings, label);
@@ -248,9 +286,23 @@ public final class RouteSchema {
         String icon = r.optionalResource("icon");
         List<String> passives = readPassives(o, own);
         Map<String, List<Double>> values = readValues(o, maxLevel, own, c.warnings, label);
-        int x = r.integer("x", 0, 0, MAX_X);
-        int y = r.integer("y", 0, 0, MAX_Y);
+        int x = r.integer("x", 0, 0, c.extended ? MAX_LINE_X : MAX_X);
+        int y = r.integer("y", 0, 0, c.extended ? MAX_LINE_Y : MAX_Y);
         List<SkillNode.Parent> parents = readParents(o, own);
+        // 1.82.0: the effect of a line node (type, kind, string parameters), checked against the catalogue
+        int ownBefore = own.size();
+        String type = r.text("type", "", LEN_KEY);
+        if (!type.isEmpty() && !NODE_TYPES.contains(type)) {
+            own.add("type: must be one of active_ability, passive_toggle, attribute_modifier, got '" + shorten(type) + "'");
+            type = "";
+        }
+        String kind = r.snake("kind", "", LEN_KEY);
+        Map<String, String> params = readParams(o, own);
+        if (!kind.isEmpty() || (c.extended && !type.isEmpty())) {
+            String resolved = checkEffect(type, kind, params, values, own, c.warnings, label, c.extended);
+            if (resolved != null) type = resolved;
+        }
+        boolean catalogBroken = own.size() > ownBefore;
 
         for (SkillNode.Parent p : parents) {
             SkillNode pn = c.accepted.get(p.node());
@@ -269,10 +321,94 @@ public final class RouteSchema {
         if (!own.isEmpty()) {
             for (String p : own) c.problems.add(label + ": " + p);
             c.rejected.add(id);
+            if (catalogBroken) c.catalogProblems++;
             return null;
         }
         if (!skill.isEmpty()) c.skillOwner.put(skill, id);
-        return new SkillNode(id, name, desc, List.copyOf(parents), cost, List.copyOf(costs), maxLevel, skill, List.copyOf(passives), values, x, y, icon);
+        return new SkillNode(id, name, desc, List.copyOf(parents), cost, List.copyOf(costs), maxLevel, skill, List.copyOf(passives), values, x, y, icon, type, kind, params);
+    }
+
+    /**
+     * Why: the catalogue is the contract between the generator and the engine, so a node that names a kind the engine has no executor for, an enum value it cannot read, or a number outside the
+     * range the balance rules allow must be refused with a sentence, not loaded and silently do nothing (or worse, do something absurd). Returns the node type the kind implies (so a node that gives
+     * only a kind gets its type), or null when it could not be told. Problems are added to {@code own}; oddities (a missing enum, a table the kind does not have) to {@code warnings}.
+     */
+    private static String checkEffect(String type, String kind, Map<String, String> params, Map<String, List<Double>> values, List<String> own, List<String> warnings, String label, boolean extended) {
+        LineCatalog cat = LineCatalog.get();
+        if (kind.isEmpty()) {
+            if (extended) own.add("kind: a line node that has a type needs a kind of the effect catalogue");
+            return null;
+        }
+        if (!cat.loaded()) {
+            warnings.add(label + ": the effect catalogue could not be read, so the kind '" + shorten(kind) + "' was not checked");
+            return null;
+        }
+        LineCatalog.Kind k;
+        if (type.isEmpty()) {
+            k = cat.anyKind(kind);
+            if (k == null) {
+                own.add("kind: '" + shorten(kind) + "' is not a kind of the effect catalogue");
+                return null;
+            }
+            type = LineCatalog.typeOf(k.group());
+        } else {
+            k = cat.kindForType(type, kind);
+            if (k == null) {
+                LineCatalog.Kind other = cat.anyKind(kind);
+                own.add("kind: '" + shorten(kind) + "' " + (other == null ? "is not a kind of the effect catalogue" : "is a " + LineCatalog.typeOf(other.group()) + " kind, not a " + type + " kind"));
+                return null;
+            }
+        }
+        for (Map.Entry<String, List<String>> en : k.enums().entrySet()) {
+            String v = params.get(en.getKey());
+            if (v == null) warnings.add(label + ": params." + en.getKey() + " is missing for kind '" + kind + "' (the first allowed value is used)");
+            else if (!en.getValue().contains(v)) own.add("params." + en.getKey() + ": '" + shorten(v) + "' is not allowed for kind '" + kind + "'");
+        }
+        for (String key : params.keySet()) if (!k.enums().containsKey(key)) warnings.add(label + ": params." + key + " is not a parameter of kind '" + kind + "' (ignored)");
+        for (Map.Entry<String, List<Double>> en : values.entrySet()) {
+            LineCatalog.Num num = k.nums().get(en.getKey());
+            if (num == null) {
+                warnings.add(label + ": values." + en.getKey() + " is not a number of kind '" + kind + "' (ignored)");
+                continue;
+            }
+            for (int i = 0; i < en.getValue().size(); i++) {
+                double d = en.getValue().get(i);
+                if (!num.accepts(d)) {
+                    own.add("values." + en.getKey() + "[" + i + "]: " + trim(d) + " is outside [" + trim(num.min()) + ", " + trim(num.max()) + "] for kind '" + kind + "'");
+                    break;
+                }
+            }
+        }
+        return type;
+    }
+
+    private static String trim(double d) { return d == Math.rint(d) && Math.abs(d) < 1e9 ? Long.toString((long) d) : Double.toString(d); }
+
+    private static Map<String, String> readParams(JsonObject o, List<String> own) {
+        JsonElement e = o.get("params");
+        if (e == null || e.isJsonNull()) return Map.of();
+        if (!e.isJsonObject()) {
+            own.add("params: must be an object of text values");
+            return Map.of();
+        }
+        JsonObject po = e.getAsJsonObject();
+        if (po.size() > MAX_PARAMS) {
+            own.add("params: " + po.size() + " entries, the limit is " + MAX_PARAMS);
+            return Map.of();
+        }
+        Map<String, String> out = new LinkedHashMap<>();
+        for (Map.Entry<String, JsonElement> en : po.entrySet()) {
+            String key = en.getKey();
+            JsonElement v = en.getValue();
+            if (!validSnake(key) || key.length() > LEN_KEY) {
+                own.add("params." + shorten(key) + ": the name must be lower-case snake text of at most " + LEN_KEY + " characters");
+            } else if (v == null || !v.isJsonPrimitive() || !v.getAsJsonPrimitive().isString() || v.getAsString().length() > LEN_PARAM || !PARAM_VALUE.matcher(v.getAsString()).matches()) {
+                own.add("params." + key + ": must be text of letters, digits and _ (at most " + LEN_PARAM + " characters)");
+            } else {
+                out.put(key, v.getAsString());
+            }
+        }
+        return Collections.unmodifiableMap(out);
     }
 
     private static List<Integer> readCosts(JsonObject o, int maxLevel, int cost, List<String> own, List<String> warnings, String label) {
@@ -424,6 +560,7 @@ public final class RouteSchema {
     private static final class Reader {
         final JsonObject o;
         final List<String> sink;
+        List<String> warnings;
         int errors;
 
         Reader(JsonObject o, List<String> sink) {
@@ -457,6 +594,32 @@ public final class RouteSchema {
             if (!has(k)) return dflt;
             String s = string(k, max);
             return s == null ? dflt : s;
+        }
+
+        /**
+         * 1.82.0: like {@link #text(String, String, int)}, but with {@code soft} a text that is too long is CUT to the limit (with "...") and a warning is filed, instead of refusing the
+         * whole route: 275 generated lines are written by many hands, and a description that is a few characters over must not take a line away from the players.
+         */
+        String text(String k, String dflt, int max, boolean soft) {
+            if (!soft || !has(k)) return text(k, dflt, max);
+            JsonElement e = o.get(k);
+            if (!e.isJsonPrimitive() || !e.getAsJsonPrimitive().isString()) return text(k, dflt, max);
+            String s = e.getAsString();
+            if (s.length() <= max) return s;
+            if (warnings != null) warnings.add(k + ": is " + s.length() + " characters long, cut to " + max);
+            return s.substring(0, Math.max(0, max - 3)) + "...";
+        }
+
+        /** An optional texture path such as {@code nusmp:textures/gui/skill_trees/x.png}: a lower-case resource location of up to {@link #LEN_PATH} characters, or empty. */
+        String pathResource(String k) {
+            if (!has(k)) return "";
+            String s = string(k, LEN_PATH);
+            if (s == null || s.isEmpty()) return "";
+            if (!validResource(s, LEN_PATH)) {
+                err(k, "must be a lower-case resource location like \"namespace:path\", got '" + shorten(s) + "'");
+                return "";
+            }
+            return s;
         }
 
         String requiredText(String k, int max) {

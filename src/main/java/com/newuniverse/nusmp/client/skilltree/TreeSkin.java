@@ -81,6 +81,16 @@ final class TreeSkin {
         g.renderOutline(r.x(), r.y(), r.w(), r.h(), active ? opaque(rgb) : CLASSIC_BORDER);
     }
 
+    /** {@link #chip(GuiGraphics, Rect, boolean, boolean, int)} without a {@code Rect}, for a list that draws a dozen rows every frame and must not allocate one for each. */
+    static void chip(GuiGraphics g, int x, int y, int w, int h, boolean active, boolean hovered, int rgb) {
+        if (anime()) {
+            UiPanel.chip(g, x, y, w, h, active, hovered, rgb);
+            return;
+        }
+        g.fill(x, y, x + w, y + h, active ? 0xFF2A2A3C : hovered ? 0xFF1E1E2C : 0xFF14141C);
+        g.renderOutline(x, y, w, h, active ? opaque(rgb) : CLASSIC_BORDER);
+    }
+
     static void scrollbar(GuiGraphics g, int x, int y, int h, int pos, int bar) {
         if (anime()) {
             CodexSkin.scrollbar(g, x, y, h, pos, bar);

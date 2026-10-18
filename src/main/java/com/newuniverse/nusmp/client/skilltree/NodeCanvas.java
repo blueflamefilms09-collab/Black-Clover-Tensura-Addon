@@ -100,9 +100,13 @@ final class NodeCanvas {
 
     // ------------------------------------------------------------------ drawing: the background
     /** The canvas well, a faint magic circle in the route's colour and a dotted grid that moves with the pan. Drawn before the widgets. */
-    static void drawBackground(GuiGraphics g, Rect vp, int rgb, boolean unlocked, View v, float now) {
+    static void drawBackground(GuiGraphics g, Rect vp, int rgb, boolean unlocked, View v, float now) { drawBackground(g, vp, rgb, unlocked, v, now, null); }
+
+    /** 1.82.0: the same with the route, whose picture (if it has one) is drawn over the well and under the circle, the dots and the nodes. */
+    static void drawBackground(GuiGraphics g, Rect vp, int rgb, boolean unlocked, View v, float now, com.newuniverse.nusmp.skilltree.data.SkillRoute route) {
         int accent = unlocked ? rgb : (TreeSkin.SEALED & 0xFFFFFF);
         TreeSkin.well(g, vp, accent);
+        if (route != null) TreeBackground.draw(g, vp, route, v.panX, v.panY, unlocked);
         if (!TreeSkin.anime()) return;
         g.enableScissor(vp.x() + 1, vp.y() + 1, vp.right() - 1, vp.bottom() - 1);
         MagicCircle.draw(g, vp.x() + vp.w() / 2f, vp.y() + vp.h() / 2f, Math.min(vp.w(), vp.h()) * 0.62f, now, accent, unlocked ? 0.12f : 0.06f, MagicCircle.CALM, 1f);

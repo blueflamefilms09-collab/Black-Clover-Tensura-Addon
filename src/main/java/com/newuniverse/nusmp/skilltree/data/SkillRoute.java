@@ -21,9 +21,26 @@ import java.util.List;
  * @param duplicateSp the SP a second copy of the book is worth when the route is already unlocked
  * @param lootWeight  the weight of this route's book among the routes in a dungeon drop (1 is common; a higher number is more common; 0 never drops)
  * @param nodes       the nodes, parents before children
+ * @param franchise   1.82.0 (Unique Skill Lines): the franchise key of a generated line ({@code tensura}, {@code solo_leveling}, ...), or an empty string for a classic route. A route with a franchise
+ *                    is an "extended" route: it may use the wider canvas grid and its nodes carry a {@code kind} from the effect catalogue
+ * @param guiBackground the texture drawn behind the tree canvas ({@code nusmp:textures/gui/skill_trees/<id>.png}), or an empty string for the classic look
+ * @param bookTexture the item texture of the route's 3D book cover ({@code nusmp:item/skill_book_3d/<franchise>}), or an empty string
+ * @param backgroundTheme the theme of the generated background ({@code magma}, {@code void}, ...), used for the fallback colour when the texture is missing, or an empty string
  */
 public record SkillRoute(String id, String magic, String name, String desc, String book, String bookName, String bookLore, int color, String icon, String classId,
-                         int duplicateSp, int lootWeight, List<SkillNode> nodes) {
+                         int duplicateSp, int lootWeight, List<SkillNode> nodes, String franchise, String guiBackground, String bookTexture, String backgroundTheme) {
+
+    /**
+     * Why: the 13-argument form of the record before 1.82.0. Every old call site (the loader, the tests, the hand-built routes) keeps compiling and means exactly what it meant: a classic route
+     * with none of the line fields. Add the new, keep the old.
+     */
+    public SkillRoute(String id, String magic, String name, String desc, String book, String bookName, String bookLore, int color, String icon, String classId,
+                      int duplicateSp, int lootWeight, List<SkillNode> nodes) {
+        this(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, nodes, "", "", "", "");
+    }
+
+    /** True for a generated Unique Skill Line (it names a franchise); false for a classic route. */
+    public boolean isLine() { return franchise != null && !franchise.isEmpty(); }
 
     /** The node with this id, or null. */
     public SkillNode node(String nodeId) {

@@ -27,6 +27,7 @@ public final class TreeCore {
         modContainer.registerConfig(ModConfig.Type.SERVER, TreeConfig.SPEC, "nusmp-skilltree-server.toml");
         modBus.addListener(TreeNet::registerPayloads);
         TreeEvents.register();
+        com.newuniverse.nusmp.skilltree.line.LineSystem.init(modBus);                                 // 1.82.0: the Unique Skill Lines engine (arts, passives, stances, toggles, visibility)
         TreeSelfTests.register();                                     // keys tree.core.*, expected by the server smoke test (prefix "tree")
         if (FMLEnvironment.dist == Dist.CLIENT) TreeCoreClient.init(modBus);
     }
