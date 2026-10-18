@@ -24,3 +24,5 @@ Two uploads of the owner: (1) a brief for a Tensura-coin economy, Hub NPCs and q
 * Cross-system reads go through `elite/api/EliteHooks.java` (late-bound, safe defaults). Never import another subsystem's classes.
 * Data-driven where it makes sense (JSON under `data/nusmp/elite/<area>/`), with pure Minecraft-free rule classes and JUnit tests, an in-game self-test registered like the other `SelfTests` (key prefix `elite.<area>.`), a doc `docs/elite/<area>.md` (the WHY), a lang fragment `tools/elite/<area>_lang.json` (do not edit `en_us.json`), no version/CHANGELOG/README edits, no push.
 * Owner rules: weapons carry Tensura engravings (`item/WeaponEngravings.java`) and are real 3D models (`tools/gen_weapon_models.py`, `client/WeaponRenderer.java`); only Light/Dark Rukh particles from abilities; never touch the Time Magic VFX; keep old things, add new; commit often.
+
+(1.86.0 pending: nations merged, not yet released.)
