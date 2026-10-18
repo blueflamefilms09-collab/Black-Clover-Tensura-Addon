@@ -1,0 +1,1072 @@
+{
+  "magic": "tbate",
+  "franchise": "tbate",
+  "name": "Djinn's Mirage",
+  "desc": "A heat-haze magic invented in the spirit of the desert peoples: false images, whispers, and sand that slips away. The foe attacks what is not there.",
+  "book": "nusmp:djinn_mirage_book",
+  "book_name": "Lamp-Keeper's Whisper Book",
+  "book_lore": "What you see is what the desert wants you to see.",
+  "color": "#FFCA28",
+  "icon": "minecraft:glass_bottle",
+  "class_id": "djinn_mirage",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/djinn_mirage.png",
+  "book_texture": "nusmp:item/skill_book_3d/tbate",
+  "background_theme": "dream",
+  "nodes": [
+    {
+      "id": "mirage_shroud",
+      "name": "Mirage Shroud",
+      "desc": "Drift in the haze: faster and evasive, but fragile.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "desert_sovereign",
+      "name": "Desert Sovereign",
+      "desc": "Hold the sands in order: stronger blows and a firmer guard.",
+      "parents": [
+        {
+          "node": "mirage_shroud",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:gold_block"
+    },
+    {
+      "id": "spirit_vessel",
+      "name": "Spirit Vessel",
+      "desc": "Raises your maximum health.",
+      "parents": [
+        {
+          "node": "mirage_shroud",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "sand_light_step",
+      "name": "Sand-Light Step",
+      "desc": "You are quicker on your feet.",
+      "parents": [
+        {
+          "node": "desert_sovereign",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:sand"
+    },
+    {
+      "id": "whispered_edge",
+      "name": "Whispered Edge",
+      "desc": "Raises your attack damage.",
+      "parents": [
+        {
+          "node": "mirage_shroud",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.9,
+          1.125,
+          1.35,
+          1.575,
+          1.8
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "mirage_step",
+      "name": "Mirage Step",
+      "desc": "Dissolve into haze and reform several blocks ahead.",
+      "parents": [
+        {
+          "node": "mirage_shroud",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.32,
+          13.64,
+          14.96
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "whisper_of_madness",
+      "name": "Whisper of Madness",
+      "desc": "A whisper that sickens and dims a cone of foes.",
+      "parents": [
+        {
+          "node": "desert_sovereign",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "nausea",
+        "effect2": "darkness",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          6.0,
+          6.48,
+          6.96,
+          7.44
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "false_self",
+      "name": "False Self",
+      "desc": "A mirror image takes the blow: part of the damage you take is returned to the attacker.",
+      "parents": [
+        {
+          "node": "mirage_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          7.0,
+          8.0,
+          8.0,
+          9.0
+        ],
+        "reflect_pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:glass_pane"
+    },
+    {
+      "id": "sun_spear",
+      "name": "Sun Spear",
+      "desc": "A shimmering lance of heat through everything along your gaze.",
+      "parents": [
+        {
+          "node": "whisper_of_madness",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "heat_haze",
+      "name": "Heat Haze",
+      "desc": "Thick haze hides you from the creatures around you.",
+      "parents": [
+        {
+          "node": "false_self",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "radius": [
+          5.5,
+          6.05,
+          6.6,
+          7.15
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:sand"
+    },
+    {
+      "id": "sand_cyclone",
+      "name": "Sand Cyclone",
+      "desc": "A small cyclone of sand scours everything around you.",
+      "parents": [
+        {
+          "node": "sun_spear",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.3,
+          4.125,
+          4.95,
+          5.775
+        ],
+        "radius": [
+          3.6,
+          3.888,
+          4.176,
+          4.464
+        ],
+        "hits": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:sandstone"
+    },
+    {
+      "id": "oasis_blessing",
+      "name": "Oasis Blessing",
+      "desc": "A cool breeze: you and your allies hasten for a while.",
+      "parents": [
+        {
+          "node": "heat_haze",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "haze_dodge",
+      "name": "Haze Dodge",
+      "desc": "A good chance to dodge a blow entirely.",
+      "parents": [
+        {
+          "node": "mirage_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ],
+        "rest": [
+          90.0,
+          81.0,
+          72.0,
+          63.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dizzying_touch",
+      "name": "Dizzying Touch",
+      "desc": "Your blows may leave the foe nauseous.",
+      "parents": [
+        {
+          "node": "whisper_of_madness",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "nausea"
+      },
+      "values": {
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "noon_magic",
+      "name": "Noon Magic",
+      "desc": "Deal more damage during the day.",
+      "parents": [
+        {
+          "node": "false_self",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "dimming_presence",
+      "name": "Dimming Presence",
+      "desc": "Enemies around you lose sight of the world.",
+      "parents": [
+        {
+          "node": "sun_spear",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "blindness",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:ink_sac"
+    },
+    {
+      "id": "lucky_glance",
+      "name": "Lucky Glance",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "heat_haze",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.13,
+          0.156,
+          0.182,
+          0.208
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "dry_throat",
+      "name": "Dry Throat",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "sand_cyclone",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:dried_kelp"
+    },
+    {
+      "id": "smoke_away",
+      "name": "Smoke Away",
+      "desc": "A kill heals you and hides you for a moment.",
+      "parents": [
+        {
+          "node": "oasis_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "invisibility"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "sandstorm_of_a_thousand_faces",
+      "name": "Sandstorm of a Thousand Faces",
+      "desc": "A storm of sand and false faces bursts out from you.",
+      "parents": [
+        {
+          "node": "oasis_blessing",
+          "level": 3
+        },
+        {
+          "node": "smoke_away",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          14.0,
+          16.0,
+          16.0
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.08
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:sandstone"
+    },
+    {
+      "id": "mirage_prison",
+      "name": "Mirage Prison",
+      "desc": "Every creature around you is lost in the haze, unable to move.",
+      "parents": [
+        {
+          "node": "sand_cyclone",
+          "level": 3
+        },
+        {
+          "node": "dry_throat",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "targets": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:glass"
+    }
+  ]
+}
