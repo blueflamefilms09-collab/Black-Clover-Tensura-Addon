@@ -1,0 +1,93 @@
+{
+  "weapon": "vassal_scythe",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Beginner's Scythe",
+      "desc": "A long-hafted scythe that has just chosen you. Its reach is its strength: wide circles, a thrown disc, a pushing gust and the Soul Reap that finishes the weak.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "attack_damage": 6.0, "attack_speed": -2.4, "reach": 1.0 },
+      "abilityBonus": { "reach": 0.1 },
+      "skills": { "use": "scythe.full_moon_army", "sneak": "scythe.wind_slice", "key1": "scythe.flying_circle", "key2": "scythe.reap" },
+      "passives": [ "soul_tithe" ],
+      "look": "base"
+    },
+    {
+      "id": "small_scythe",
+      "name": "Small Scythe",
+      "desc": "The scythe folded down to a handy size: quicker swings, a lighter step, the Deadly Dance of four swings in a row and a floating second scythe at your side.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:iron_ingot", "count": 24 },
+        { "item": "minecraft:leather", "count": 16 },
+        { "item": "minecraft:string", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 5.0, "attack_speed": -1.4, "movement_speed": 0.04 },
+      "abilityBonus": { "movement_speed": 0.01, "attack_speed": 0.1 },
+      "skills": { "use": "scythe.deadly_dance", "sneak": "scythe.full_moon_army", "key1": "scythe.wind_slice", "key2": "scythe.flying_circle", "key3": "scythe.floating_scythe" },
+      "passives": [ "soul_tithe" ],
+      "look": "base"
+    },
+    {
+      "id": "demon_elephant_scythe",
+      "name": "Demon Elephant Scythe",
+      "desc": "Tusk-white and heavy: slow, hard swings, a thick hide of armour and the Protection Break, a chop whose damage grows with the foe's armour.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:bone", "count": 32 },
+        { "item": "minecraft:leather", "count": 24 },
+        { "item": "minecraft:iron_ingot", "count": 32 }
+      ],
+      "mastery": 120,
+      "stats": { "attack_damage": 9.0, "attack_speed": -3.0, "armor": 3.0, "knockback_resistance": 0.3, "reach": 1.5 },
+      "abilityBonus": { "armor": 0.5, "knockback_resistance": 0.05 },
+      "skills": { "use": "scythe.full_moon_army", "sneak": "scythe.protection_break", "key1": "scythe.reap", "key2": "scythe.wind_slice" },
+      "passives": [ "soul_tithe" ],
+      "look": "base"
+    },
+    {
+      "id": "demon_dragon_scythe",
+      "name": "Demon Dragon Scythe",
+      "desc": "Forged from dragon's breath and blaze: the scythe holds fourteen souls and can spend them in the Soul Harvest, a reaping circle that cuts everything near you.",
+      "tier": 2,
+      "parents": [ "demon_elephant_scythe" ],
+      "requires": [
+        { "item": "minecraft:dragon_breath", "count": 4 },
+        { "item": "minecraft:blaze_rod", "count": 24 },
+        { "item": "minecraft:crying_obsidian", "count": 16 },
+        { "item": "tensura:mithril_ingot", "count": 6 }
+      ],
+      "mastery": 240,
+      "stats": { "attack_damage": 11.0, "attack_speed": -2.6, "armor": 2.0, "max_health": 4.0, "reach": 1.5 },
+      "abilityBonus": { "max_health": 1.0, "armor": 0.25 },
+      "skills": { "use": "scythe.full_moon_army", "sneak": "scythe.reap", "key1": "scythe.protection_break", "key2": "scythe.floating_scythe", "key3": "scythe.soul_harvest" },
+      "passives": [ "soul_tithe", "dragon_soul" ],
+      "look": "base"
+    },
+    {
+      "id": "scythe_zero",
+      "name": "Scythe 0",
+      "desc": "The scythe steeped in a strange poison: its Scythe 0 cut deals no damage but severs a foe's blessings, and every blow it lands strips one.",
+      "tier": 2,
+      "parents": [ "small_scythe" ],
+      "requires": [
+        { "item": "minecraft:fermented_spider_eye", "count": 24 },
+        { "item": "minecraft:pufferfish", "count": 12 },
+        { "item": "minecraft:poisonous_potato", "count": 16 },
+        { "item": "tensura:low_magisteel_ingot", "count": 6 }
+      ],
+      "mastery": 220,
+      "stats": { "attack_damage": 7.0, "attack_speed": -1.8, "movement_speed": 0.04, "armor_toughness": 1.0, "reach": 1.0 },
+      "abilityBonus": { "armor_toughness": 0.25, "movement_speed": 0.01 },
+      "skills": { "use": "scythe.full_moon_army", "sneak": "scythe.scythe_zero", "key1": "scythe.reap", "key2": "scythe.wind_slice", "key3": "scythe.flying_circle" },
+      "passives": [ "soul_tithe", "null_edge" ],
+      "look": "base"
+    }
+  ]
+}

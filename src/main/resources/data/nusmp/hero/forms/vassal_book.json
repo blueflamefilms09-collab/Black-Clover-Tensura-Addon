@@ -1,0 +1,93 @@
+{
+  "weapon": "vassal_book",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Beginner's Book",
+      "desc": "A heavy spellbook that has just chosen you. Read its pages in order: a bird of flame and a rain of needles, a wall of paper and a verse that mends. Read them all and Libraria opens.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "attack_damage": 2.0, "attack_speed": -2.4, "luck": 0.5 },
+      "abilityBonus": { "luck": 0.1 },
+      "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.paper_burst", "key3": "book.libraria" },
+      "passives": [ "chapters" ],
+      "look": "base"
+    },
+    {
+      "id": "pipe_book",
+      "name": "Pipe Book",
+      "desc": "Its pages close like a cage: the support chapter gains the Binding page, and the Constriction can be cast at will to root a foe and drop needles through the False Ceiling.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:paper", "count": 32 },
+        { "item": "minecraft:leather", "count": 16 },
+        { "item": "minecraft:iron_ingot", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 2.0, "attack_speed": -2.4, "armor": 1.0, "knockback_resistance": 0.1 },
+      "abilityBonus": { "armor": 0.25, "knockback_resistance": 0.02 },
+      "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.constriction", "key3": "book.libraria" },
+      "passives": [ "chapters", "deck_cage" ],
+      "look": "base"
+    },
+    {
+      "id": "animal_needle_book",
+      "name": "Animal Needle Book",
+      "desc": "Its pages sharpen into feathers and needles: the offence chapter gains the Feather Volley, and the Life Force Burst wraps a foe and bursts the life trapped in it.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:paper", "count": 32 },
+        { "item": "minecraft:feather", "count": 24 },
+        { "item": "minecraft:iron_nugget", "count": 32 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 3.0, "attack_speed": -2.0, "movement_speed": 0.02 },
+      "abilityBonus": { "movement_speed": 0.005, "attack_speed": 0.1 },
+      "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.life_force_burst", "key3": "book.libraria" },
+      "passives": [ "chapters", "deck_feathers" ],
+      "look": "base"
+    },
+    {
+      "id": "revised_edition",
+      "name": "Revised Edition",
+      "desc": "The book rewritten from a rarer copy: both chapters hold all six pages, and every page and burst is a quarter stronger.",
+      "tier": 2,
+      "parents": [ "pipe_book", "animal_needle_book" ],
+      "requires": [
+        { "item": "minecraft:book", "count": 32 },
+        { "item": "minecraft:ink_sac", "count": 32 },
+        { "item": "minecraft:glow_ink_sac", "count": 16 },
+        { "item": "minecraft:lapis_lazuli", "count": 32 }
+      ],
+      "mastery": 200,
+      "stats": { "attack_damage": 3.0, "attack_speed": -2.2, "armor": 2.0, "max_health": 4.0, "luck": 1.0 },
+      "abilityBonus": { "max_health": 1.0, "luck": 0.25 },
+      "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.paper_burst", "key3": "book.libraria" },
+      "passives": [ "chapters", "deck_cage", "deck_feathers", "revised_edition" ],
+      "look": "base"
+    },
+    {
+      "id": "library_tome",
+      "name": "Library Tome",
+      "desc": "A whole library bound in one book: Libraria falls in ten volleys and opens when all but one page is read, and the Life Force Burst is a quarter stronger.",
+      "tier": 3,
+      "parents": [ "revised_edition" ],
+      "requires": [
+        { "item": "minecraft:bookshelf", "count": 16 },
+        { "item": "minecraft:enchanted_book", "count": 8 },
+        { "item": "minecraft:lectern", "count": 4 },
+        { "item": "tensura:medium_quality_magic_crystal", "count": 8 }
+      ],
+      "mastery": 320,
+      "stats": { "attack_damage": 4.0, "attack_speed": -2.2, "armor": 3.0, "armor_toughness": 1.0, "max_health": 8.0, "luck": 2.0 },
+      "abilityBonus": { "max_health": 2.0, "armor_toughness": 0.25, "luck": 0.5 },
+      "skills": { "use": "book.read_composition", "sneak": "book.read_verse", "key1": "book.turn_page", "key2": "book.life_force_burst", "key3": "book.libraria" },
+      "passives": [ "chapters", "deck_cage", "deck_feathers", "revised_edition", "grand_library" ],
+      "look": "base"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "weapon": "vassal_fan",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Beginner's Fan",
+      "desc": "A black-iron war fan that has just chosen you. It cuts the air in wide arcs, pushes foes away and carries you on a gliding step.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "attack_damage": 3.0, "attack_speed": -1.2, "movement_speed": 0.02 },
+      "abilityBonus": { "movement_speed": 0.005 },
+      "skills": { "use": "fan.flower_wind", "sneak": "fan.wind_dance", "key1": "fan.repel_gust", "key2": "fan.mist_veil" },
+      "passives": [ "featherfall", "residue" ],
+      "look": "base"
+    },
+    {
+      "id": "white_tiger_fan",
+      "name": "White Tiger Fan",
+      "desc": "The fan sharpened with feathers and iron into a tiger's quickness: faster swings, a longer glide, the crescent Moon Break and the armour-cracking Tortoise Shell Cracker.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:feather", "count": 32 },
+        { "item": "minecraft:iron_ingot", "count": 24 },
+        { "item": "minecraft:white_wool", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 4.0, "attack_speed": -0.8, "movement_speed": 0.05 },
+      "abilityBonus": { "movement_speed": 0.01, "attack_speed": 0.1 },
+      "skills": { "use": "fan.flower_wind", "sneak": "fan.moon_break", "key1": "fan.wind_dance", "key2": "fan.tortoise_shell_cracker", "key3": "fan.repel_gust" },
+      "passives": [ "featherfall", "residue", "tiger_pounce" ],
+      "look": "base"
+    },
+    {
+      "id": "keystone_fan",
+      "name": "Keystone Fan",
+      "desc": "A fan braced like a keystone: it holds its ground, draws foes in with the Gale Pull, veils you in mist and blesses your friends with the Snow Plum.",
+      "tier": 1,
+      "parents": [ "base" ],
+      "requires": [
+        { "item": "minecraft:stone_bricks", "count": 32 },
+        { "item": "minecraft:copper_ingot", "count": 24 },
+        { "item": "minecraft:amethyst_shard", "count": 12 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 3.0, "attack_speed": -1.4, "armor": 2.0, "knockback_resistance": 0.15 },
+      "abilityBonus": { "armor": 0.5, "knockback_resistance": 0.03 },
+      "skills": { "use": "fan.flower_wind", "sneak": "fan.gale_pull", "key1": "fan.repel_gust", "key2": "fan.mist_veil", "key3": "fan.snow_plum" },
+      "passives": [ "featherfall", "residue", "keystone_ward" ],
+      "look": "base"
+    },
+    {
+      "id": "demon_dragon_fan",
+      "name": "Demon Dragon Fan",
+      "desc": "Forged from dragon-hot material: at full residue its sweep surges, and it can raise the red petal tornado, Reverse Snow Moon Flower.",
+      "tier": 2,
+      "parents": [ "white_tiger_fan" ],
+      "requires": [
+        { "item": "minecraft:phantom_membrane", "count": 24 },
+        { "item": "minecraft:blaze_rod", "count": 16 },
+        { "item": "minecraft:breeze_rod", "count": 12 },
+        { "item": "tensura:low_magisteel_ingot", "count": 8 }
+      ],
+      "mastery": 220,
+      "stats": { "attack_damage": 6.0, "attack_speed": -1.0, "movement_speed": 0.06, "max_health": 4.0 },
+      "abilityBonus": { "max_health": 1.0, "movement_speed": 0.01 },
+      "skills": { "use": "fan.flower_wind", "sneak": "fan.moon_break", "key1": "fan.tortoise_shell_cracker", "key2": "fan.wind_dance", "key3": "fan.reverse_snow_moon_flower" },
+      "passives": [ "featherfall", "residue", "tiger_pounce", "dragon_surge" ],
+      "look": "base"
+    },
+    {
+      "id": "wave_sealing_sword",
+      "name": "Wave Sealing Sword",
+      "desc": "The Keystone Fan reforged as a sealing sword: the gust and the pull reach farther, the veil shields you from arrows and the blade is sturdier.",
+      "tier": 2,
+      "parents": [ "keystone_fan" ],
+      "requires": [
+        { "item": "minecraft:prismarine_shard", "count": 48 },
+        { "item": "minecraft:prismarine_crystals", "count": 16 },
+        { "item": "minecraft:amethyst_shard", "count": 32 },
+        { "item": "tensura:low_magisteel_ingot", "count": 8 }
+      ],
+      "mastery": 220,
+      "stats": { "attack_damage": 5.0, "attack_speed": -1.2, "armor": 3.0, "armor_toughness": 1.0, "knockback_resistance": 0.25 },
+      "abilityBonus": { "armor": 0.75, "armor_toughness": 0.25 },
+      "skills": { "use": "fan.flower_wind", "sneak": "fan.gale_pull", "key1": "fan.snow_plum", "key2": "fan.mist_veil", "key3": "fan.repel_gust" },
+      "passives": [ "featherfall", "residue", "keystone_ward", "sealing_tide" ],
+      "look": "base"
+    }
+  ]
+}
