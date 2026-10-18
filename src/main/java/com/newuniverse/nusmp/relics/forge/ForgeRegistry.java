@@ -30,7 +30,7 @@ public final class ForgeRegistry {
 
     /** The table. Iron-hard so it takes a pickaxe, and it lights a little: its rune glows. */
     public static final DeferredBlock<RelicForgeBlock> RELIC_FORGE = BLOCKS.register("relic_forge", () -> new RelicForgeBlock(
-            BlockBehaviour.Properties.of().strength(3.5f, 12.0f).requiresCorrectToolForDrops().sound(SoundType.ANVIL).lightLevel(s -> 7)));
+            BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(3.5f, 12.0f).requiresCorrectToolForDrops().sound(SoundType.ANVIL).lightLevel(s -> 7)));
 
     public static final DeferredItem<BlockItem> RELIC_FORGE_ITEM = NUItems.ITEMS.register("relic_forge",
             () -> new BlockItem(RELIC_FORGE.get(), new Item.Properties()));

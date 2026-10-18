@@ -1,0 +1,34 @@
+{
+  "_note": "Map colour of every custom block of the mod (id without the namespace -> a net.minecraft.world.level.material.MapColor constant). Read by MapBlockColourGuardTest, which compares it with the registration sources. Map mods and vanilla maps colour a block by this (or by its texture); MapColor.NONE makes a block see-through on a vanilla map. When a block is added (for example under elite/), add its row here AND give it mapColor(...) at the registration. Documented in docs/compat/maps.md section 2.",
+  "whitelist": {
+    "_note": "ids that may be registered WITHOUT a mapColor on purpose (glass-like or invisible blocks), each with a reason. Empty today: even the invisible dimensional_rift has a colour."
+  },
+  "blocks": {
+    "arena_return_sigil": "COLOR_LIGHT_BLUE",
+    "relic_forge": "METAL",
+    "soul_forge": "COLOR_PURPLE",
+    "grimoire_altar": "COLOR_GREEN",
+    "underworld_matter": "COLOR_PURPLE",
+    "labyrinth_gate": "COLOR_BLUE",
+    "labyrinth_exit": "GOLD",
+    "relic_pedestal": "COLOR_BLACK",
+    "labyrinth_bricks": "DEEPSLATE",
+    "labyrinth_tiles": "DEEPSLATE",
+    "labyrinth_pillar": "DEEPSLATE",
+    "labyrinth_glyph": "DEEPSLATE",
+    "labyrinth_lantern": "DEEPSLATE",
+    "magicule_vein": "DEEPSLATE",
+    "gatekeeper_door": "COLOR_BLACK",
+    "peak_altar": "COLOR_PURPLE",
+    "guardian_altar": "COLOR_CYAN",
+    "dimensional_rift": "COLOR_PURPLE",
+    "sealed_archway": "COLOR_BLACK",
+    "magic_barrier": "DIAMOND",
+    "ward_rune": "DEEPSLATE",
+    "spawn_glyph": "COLOR_PURPLE",
+    "pitfall_tile": "DEEPSLATE",
+    "snuffer_glyph": "COLOR_BLACK",
+    "sigil_plate": "COLOR_PURPLE",
+    "riddle_stone": "COLOR_BLACK"
+  }
+}

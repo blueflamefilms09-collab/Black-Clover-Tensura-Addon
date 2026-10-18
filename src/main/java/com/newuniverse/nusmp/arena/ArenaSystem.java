@@ -27,7 +27,7 @@ public final class ArenaSystem {
 
     /** {@code nusmp:arena_return_sigil}: right click sends you home. Unbreakable, lit, no drops. */
     public static final DeferredBlock<ReturnSigilBlock> RETURN_SIGIL = BLOCKS.register("arena_return_sigil", () -> new ReturnSigilBlock(
-            BlockBehaviour.Properties.of().strength(-1.0f, 3600000.0f).noLootTable().sound(SoundType.AMETHYST).lightLevel(s -> 12)));
+            BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.COLOR_LIGHT_BLUE).strength(-1.0f, 3600000.0f).noLootTable().sound(SoundType.AMETHYST).lightLevel(s -> 12)));
 
     public static final DeferredItem<BlockItem> RETURN_SIGIL_ITEM = NUItems.ITEMS.register("arena_return_sigil",
             () -> new BlockItem(RETURN_SIGIL.get(), new Item.Properties().rarity(Rarity.EPIC)));
