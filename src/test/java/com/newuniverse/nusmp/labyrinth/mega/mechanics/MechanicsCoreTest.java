@@ -12,6 +12,7 @@ import java.util.SplittableRandom;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -141,7 +142,7 @@ class MechanicsCoreTest {
             assertNotNull(e, g);
             assertTrue(e.tier() <= 1 || MobGroups.groups().get(g).stream().allMatch(x -> x.tier() > 1), g + " picked above the tier");
         }
-        assertEquals(null, MobGroups.pick("no_such_group", 3, rng, x -> true));
+        assertNull(MobGroups.pick("no_such_group", 3, rng, x -> true));
         List<String> problems = new java.util.ArrayList<>();
         Map<String, List<MobGroups.Entry>> m = MobGroups.parse("{\"a\":[{\"id\":\"minecraft:zombie\",\"tier\":2},{\"x\":1}],\"_why\":\"x\"}", problems);
         assertEquals(1, m.get("a").size());

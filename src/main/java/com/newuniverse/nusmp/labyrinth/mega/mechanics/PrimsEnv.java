@@ -128,14 +128,17 @@ final class PrimsEnv {
         }, r -> { }));
         m.put("blast", Prims.once(r -> {
             double rad = r.num("radius");
-            for (LivingEntity t : r.targets("players")) {
-                if (t.distanceToSqr(r.inst.anchor.getX() + 0.5, r.inst.anchor.getY() + 0.5, r.inst.anchor.getZ() + 0.5) > rad * rad) continue;
-                PrimUtil.hurt(r.level(), t, r.hard("dmg"), "magic");
-                Vec3 dir = PrimUtil.flat(t, r.inst.anchor.getX() + 0.5, r.inst.anchor.getZ() + 0.5, r.inst.rng);
-                PrimUtil.push(t, dir.x * r.num("power"), 0.4, dir.z * r.num("power"));
+            Set<UUID> hit = new HashSet<>();
+            for (BlockPos c : r.centres("auto")) {                  // a floor-wide mechanic blasts at each player, the others at their anchor
+                for (LivingEntity t : r.targets("players")) {
+                    if (t.distanceToSqr(c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5) > rad * rad || !hit.add(t.getUUID())) continue;
+                    PrimUtil.hurt(r.level(), t, r.hard("dmg"), "magic");
+                    Vec3 dir = PrimUtil.flat(t, c.getX() + 0.5, c.getZ() + 0.5, r.inst.rng);
+                    PrimUtil.push(t, dir.x * r.num("power"), 0.4, dir.z * r.num("power"));
+                }
+                Rukh.at(r.inst, c, "auto", "burst", 12);
+                r.level().playSound(null, c, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 0.8f, 1.1f);
             }
-            Rukh.burst(r.inst, "auto", "burst", 12);
-            r.level().playSound(null, r.inst.anchor, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 0.8f, 1.1f);
         }));
         m.put("wind", Prims.timed(r -> r.ticks("secs"), r -> { }, r -> {
             double p = r.num("power");

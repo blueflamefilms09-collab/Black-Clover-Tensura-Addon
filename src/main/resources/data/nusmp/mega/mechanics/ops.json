@@ -1,4 +1,5 @@
 {
+ "_why": "Why: the vocabulary of the dungeon mechanics library: every effect primitive, trigger and counter with its arguments, ranges, defaults and the exclusive channels it occupies; generated from tools/mechanics/tables/ops.py by gen_mechanics.py. The Java OpCatalog validates every mechanic against it.",
  "version": 1,
  "total": 1000,
  "counts": {
