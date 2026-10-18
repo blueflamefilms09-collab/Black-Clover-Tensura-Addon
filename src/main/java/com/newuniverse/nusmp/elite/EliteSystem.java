@@ -49,7 +49,7 @@ public final class EliteSystem {
 
 
         // ---- nations: nations, economy, contracts, reputation, wars, alliances (elite/nations)
-
+        com.newuniverse.nusmp.elite.nations.NationsRegistry.init(modBus, container);
 
 
 
