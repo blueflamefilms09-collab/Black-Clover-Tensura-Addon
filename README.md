@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-1.61.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.62.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
