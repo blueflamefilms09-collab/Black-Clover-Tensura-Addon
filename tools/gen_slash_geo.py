@@ -5,7 +5,7 @@
 Armour (Space.PLAYER, drawn by client/aura/SlashAura.java through SpatialArmourKit and EquipAnimation):
   helm   (head)   a Ripper's cowl: a serrated mouth guard of spikes (the eyes stay free), three swept blade fins on the crown, blade ears
   chest  (body)   slat plates three rows deep with diagonal slash scars glowing green, a bandolier strap with a gem, a ragged skirt of downward blades
-  arm_r / arm_l   a spiked angular pauldron, a vambrace, a gauntlet, and the FOREARM BLADE: a long curved green-edged blade on the outside of the forearm running past the hand
+  arm_r / arm_l   a spiked angular pauldron, a vambrace, a gauntlet, and the FOREARM BLADE: a long green-edged serrated blade on the outside of the forearm running past the hand (down to 2 px above the soles)
   leg_r / leg_l   a greave with a back fin, a knee spike, a boot with a toe blade
   back   (body)   the Death Scythe slung across the back (a long shaft and a great curved blade with a glowing edge), torn cape tatters, six blade shards orbiting; clip idle
   halo   (head)   a saw-ring of blades standing behind the head, turning; clip idle
@@ -102,9 +102,9 @@ def arm(side, tag):
     c("root", (o(-8.6, 5), 12, -2.5), (5, 2, 5), "steel", inflate=0.4)                        # gauntlet
     # the forearm blade: a long blade on the outside of the arm from the elbow past the hand, curving out at the tip
     bx = o(-10.6, 1.6)
-    A.blade("root", (bx, -6, -1.6), 26, 3, 1, "blade", axis="+y", layers=9, taper=0.5, share="fb" + tag)
-    c("root", (bx + (0.2 if side > 0 else 0.2), -6, -1.2), (1, 26, 1), "edge", inflate=0.0, share="fbe" + tag)
-    A.spike("root", (side * 10.2, -7, 0), "-y", 3, 1.6, "edge", layers=2, share="tip" + tag)
+    A.blade("root", (bx, 2, -1.6), 18, 3, 1, "blade", axis="+y", layers=7, taper=0.5, share="fb" + tag)
+    c("root", (bx + 0.2, 2, -1.2), (1, 18, 1), "edge", inflate=0.0, share="fbe" + tag)
+    A.spike("root", (side * 10.2, 2, 0), "-y", 3, 1.6, "edge", layers=2, share="tip" + tag)
     for k in range(4):                                                                        # serrations on the blade's inner edge
         c("root", (bx + (1.6 if side > 0 else -1.0), 2 + k * 5, -0.8), (1, 2, 1), "blade", share="se%d" % (k % 2))
     return A.save()
