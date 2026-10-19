@@ -1,7 +1,7 @@
 {
   "magic": "exiled_heavy_knight",
   "name": "Lady Luck",
-  "desc": "The gambler's road of The Exiled Heavy Knight: a passive Luck stat, a cat that bats a killing blow aside, strikes that crit when they should not, and a coin that is not always fair. Works only while it is your equipped route.",
+  "desc": "The gambler's skill of The Exiled Heavy Knight: a passive Luck stat, a cat that bats a killing blow aside, strikes that crit when they should not, and a coin that is not always fair.",
   "book": "nusmp:lady_luck_book",
   "book_name": "Lady Luck",
   "book_lore": "The pages are a deck of worn cards. Anyone who reads it feels they are being watched, kindly, by a cat.",
@@ -14,7 +14,7 @@
     {
       "id": "fortunes_favor",
       "name": "Fortune's Favor",
-      "desc": "The world leans your way: while this route is equipped you have extra Luck (better loot from chests, fishing and loot tables that care about it).",
+      "desc": "The world leans your way: while the skill is switched on you have extra Luck (better loot from chests, fishing and loot tables that care about it).",
       "parents": [],
       "cost": 1,
       "costs": [

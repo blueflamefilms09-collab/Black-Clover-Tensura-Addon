@@ -28,7 +28,7 @@ class RouteRegistryTest {
     }
 
     private static List<SkillRoute> clientRoutes() {
-        SkillRoute r = RouteSchema.parse("nusmp:ice_make", "{\"name\":\"Ice Make\",\"book\":\"nusmp:ice_book\",\"class_id\":\"ice_make\",\"color\":\"#66CCFF\",\"nodes\":[{\"id\":\"static_ice\"}]}").route();
+        SkillRoute r = RouteSchema.parse("nusmp:frost_knight", "{\"name\":\"Frost Knight\",\"book\":\"nusmp:ice_book\",\"class_id\":\"frost_knight\",\"color\":\"#66CCFF\",\"nodes\":[{\"id\":\"static_ice\"}]}").route();
         assertNotNull(r);
         return List.of(r);
     }
@@ -43,9 +43,9 @@ class RouteRegistryTest {
         reset();
         assertTrue(RouteRegistry.all().isEmpty());
         assertNull(RouteRegistry.byId(RouteSchemaTest.ID));
-        assertNull(RouteRegistry.byBook("nusmp:fire_dragon_slayer_book"));
-        assertNull(RouteRegistry.byClass("fire_dragon_slayer"));
-        assertNull(RouteRegistry.bySkill("nusmp:ft_fire_dragons_roar"));
+        assertNull(RouteRegistry.byBook("nusmp:ember_knight_book"));
+        assertNull(RouteRegistry.byClass("ember_knight"));
+        assertNull(RouteRegistry.bySkill("nusmp:test_roar"));
         assertNull(RouteRegistry.node(RouteSchemaTest.ID, "roar"));
         assertTrue(RouteRegistry.report().isEmpty());
     }
@@ -55,17 +55,17 @@ class RouteRegistryTest {
         reset();
         try {
             RouteRegistry.setClient(clientRoutes());
-            assertEquals(List.of("nusmp:ice_make"), RouteRegistry.all().stream().map(SkillRoute::id).toList(), "a client on a remote server sees what the server sent");
+            assertEquals(List.of("nusmp:frost_knight"), RouteRegistry.all().stream().map(SkillRoute::id).toList(), "a client on a remote server sees what the server sent");
 
             RouteIndex server = serverSet();
             RouteRegistry.publish(server);
             assertSame(server, RouteRegistry.snapshot(), "once a server runs in this JVM its set is the one in force, even though a client copy exists");
             assertEquals(List.of(RouteSchemaTest.ID), RouteRegistry.all().stream().map(SkillRoute::id).toList());
-            assertNotNull(RouteRegistry.byBook("nusmp:fire_dragon_slayer_book"));
-            assertNull(RouteRegistry.byId("nusmp:ice_make"), "the client copy is hidden while the server's set is in force");
+            assertNotNull(RouteRegistry.byBook("nusmp:ember_knight_book"));
+            assertNull(RouteRegistry.byId("nusmp:frost_knight"), "the client copy is hidden while the server's set is in force");
 
             RouteRegistry.clear();
-            assertEquals(List.of("nusmp:ice_make"), RouteRegistry.all().stream().map(SkillRoute::id).toList(), "after the server stops the client copy is what is left");
+            assertEquals(List.of("nusmp:frost_knight"), RouteRegistry.all().stream().map(SkillRoute::id).toList(), "after the server stops the client copy is what is left");
             RouteRegistry.clearClient();
             assertTrue(RouteRegistry.all().isEmpty(), "and after leaving the world, nothing");
         } finally {

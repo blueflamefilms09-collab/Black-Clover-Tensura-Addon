@@ -11,9 +11,7 @@
   "class_id": "magic_broom_aerialist",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/magic_broom_aerialist.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "tailwind",

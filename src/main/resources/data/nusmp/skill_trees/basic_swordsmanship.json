@@ -1,7 +1,7 @@
 {
   "magic": "exiled_heavy_knight",
   "name": "Basic Swordsmanship",
-  "desc": "The first road every sword-bearer walks, in the same series: a plain, honest blade skill. Strikes, steps, a crescent cut and the habit of answering a blow with a better one. Works only while it is your equipped route.",
+  "desc": "The first skill every sword-bearer learns, in the same series: a plain, honest blade skill. Strikes, steps, a crescent cut and the habit of answering a blow with a better one.",
   "book": "nusmp:basic_swordsmanship_book",
   "book_name": "Basic Swordsmanship",
   "book_lore": "A thin practice manual, thumbed soft. Nothing in it is a secret; all of it is true.",

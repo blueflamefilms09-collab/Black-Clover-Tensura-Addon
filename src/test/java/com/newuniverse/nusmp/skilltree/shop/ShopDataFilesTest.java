@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: the two files the game ships ({@code stock.json}, {@code prices.json}) ARE the owner's economy, so they are tested as the specification they implement: they load with
- * no problem at all, the flagship sits where the owner put it (the Fire Dragon Slayer book in the top third of 2 to 3 million), the primers carry the owner's bands, the price
+ * no problem at all, the flagship sits where the owner put it (the Ember Knight book in the top third of 2 to 3 million), the primers carry the owner's bands, the price
  * table has the owner's defaults, bulk selling never reaches a valuable, and every {@code nusmp:} item the witch buys really is registered by the mod (read from the source,
  * because the item classes import the game and cannot be loaded here).
  */
@@ -48,7 +48,7 @@ class ShopDataFilesTest {
     void theFlagshipIsTheFangInTheTopThirdOfTwoToThreeMillion() throws IOException {
         StockEntry fang = stock().get("fang_of_smoldering_insanity");
         assertNotNull(fang);
-        assertEquals("nusmp:smoldering_fang_of_insanity", fang.route());      // 1.81.0: the Fang is its own route, not the Fire Dragon Slayer
+        assertEquals("nusmp:smoldering_fang_of_insanity", fang.route());      // 1.81.0: the Fang is its own route, not the Ember Knight
         assertEquals(StockEntry.Kind.ROUTE_BOOK, fang.kind());
         assertEquals(2_000_000L, fang.priceMin());
         assertEquals(3_000_000L, fang.priceMax());
@@ -70,31 +70,9 @@ class ShopDataFilesTest {
     }
 
     @Test
-    void thePrimersCarryTheOwnersBandsAndStock() throws IOException {
-        Map<String, StockEntry> s = stock();
-        long[][] bands = {{120_000, 180_000}, {250_000, 350_000}, {600_000, 800_000}, {300_000, 450_000}};
-        String[] kinds = {"beginner_archery", "elemental_primer", "magic_booster", "jack_in_the_box"};
-        String[] ids = {"beginner_archery_primer", "elemental_primer", "magic_booster", "jack_in_the_box"};
-        for (int i = 0; i < ids.length; i++) {
-            StockEntry e = s.get(ids[i]);
-            assertNotNull(e, ids[i]);
-            assertEquals(StockEntry.Kind.SP_BOOK, e.kind());
-            assertEquals(kinds[i], e.spKind());
-            assertEquals(bands[i][0], e.priceMin(), ids[i]);
-            assertEquals(bands[i][1], e.priceMax(), ids[i]);
-            assertEquals(3, e.stockMin(), ids[i]);
-            assertEquals(5, e.stockMax(), ids[i]);
-        }
-    }
-
-    @Test
-    void aRouteBookIsAlwaysDearerThanAnyPrimer() throws IOException {
-        long dearestPrimer = 0, cheapestBook = Long.MAX_VALUE;
-        for (StockEntry e : stock().values()) {
-            if (e.kind() == StockEntry.Kind.SP_BOOK) dearestPrimer = Math.max(dearestPrimer, e.priceMax());
-            else cheapestBook = Math.min(cheapestBook, e.priceMin());
-        }
-        assertTrue(cheapestBook > dearestPrimer, "books " + cheapestBook + " vs primers " + dearestPrimer);
+    void theSkillPointPrimersAreGoneFromTheShelf() throws IOException {
+        for (StockEntry e : stock().values()) assertTrue(e.kind() != StockEntry.Kind.SP_BOOK, e.id() + ": the SP Books were removed with the Skill Points");
+        assertEquals(2, stock().size(), "the flagship and the all-books line");
     }
 
     @Test

@@ -11,9 +11,7 @@
   "class_id": "beta_tester_insight",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/beta_tester_insight.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "tower",
   "nodes": [
     {
       "id": "old_patch_stance",

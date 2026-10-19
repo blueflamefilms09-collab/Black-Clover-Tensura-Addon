@@ -11,9 +11,7 @@
   "class_id": "anti_magic_blade_dancer",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/anti_magic_blade_dancer.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "void",
   "nodes": [
     {
       "id": "cut_magic_stance",

@@ -1,17 +1,17 @@
 package com.newuniverse.nusmp.skilltree.hk;
 
 import com.newuniverse.nusmp.NUSMP;
-import com.newuniverse.nusmp.skilltree.ft.kit.FtClock;
+import com.newuniverse.nusmp.skilltree.kit.KitClock;
 import io.github.manasmods.manascore.skill.api.ManasSkill;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Why: the ManasCore skills of the four Heavy Knight routes (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck, Smoldering Fang of Insanity). A skill can only be added before the ManasCore skill registry freezes, so this
- * register is attached to the mod bus by {@code SkillTreeSystem.init} like the Fairy Tail registers; each skill is registered under the id its route file names in the node's {@code skill} field
- * ({@code hk_provoke} for {@code nusmp:hk_provoke}), spelled once in {@link HkRoute}. The static initializer wires the route family's runtime (the shared tree clock, the passives and the self-test) the first time
- * the class is used, so the family needs no integration line beyond the register: delete the three JSON files, this register and the {@code hk} package and nothing else changes.
+ * Why: the technique classes of the four Heavy Knight books, registered as ManasCore skills (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck, Smoldering Fang of Insanity). A skill can only be added before the ManasCore skill registry freezes, so this
+ * register is attached to the mod bus by {@code SkillBookSystem.init}; each skill is registered under the id its route file names in the node's {@code skill} field
+ * ({@code hk_provoke} for {@code nusmp:hk_provoke}), spelled once in {@link HkRoute}. The static initializer wires the route family's runtime (the shared effect clock and the passives) the first time
+ * the class is used, so the family needs no integration line beyond the register. Since 1.96.0 these skills are never learned: the four books' unique skills run them as modes.
  */
 public final class HeavyKnightSkills {
     private HeavyKnightSkills() {}
@@ -38,9 +38,8 @@ public final class HeavyKnightSkills {
     public static synchronized void init() {
         if (wired) return;
         wired = true;
-        FtClock.init();
+        KitClock.init();
         HkPassives.init();
-        HkSelfTests.register();
     }
 
     static {

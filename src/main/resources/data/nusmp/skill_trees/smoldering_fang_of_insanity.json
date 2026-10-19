@@ -1,7 +1,7 @@
 {
   "magic": "exiled_heavy_knight",
   "name": "Smoldering Fang of Insanity",
-  "desc": "A cursed fang of The Exiled Heavy Knight, nothing to do with dragons or their fire: a berserker's road of withering bites, ash that chokes whoever strikes you, a howl that breaks the nerve of a crowd and a fit of insanity that trades your guard for strength. Works only while it is your equipped route.",
+  "desc": "A cursed fang of The Exiled Heavy Knight, nothing to do with dragons or their fire: a berserker's skill of withering bites, ash that chokes whoever strikes you, a howl that breaks the nerve of a crowd and a fit of insanity that trades your guard for strength.",
   "book": "nusmp:smoldering_fang_book",
   "book_name": "Smoldering Fang of Insanity",
   "book_lore": "A cracked yellow fang bound into a charred cover. The pages smell of smoke, and the margins are written by someone who stopped being afraid.",
@@ -151,7 +151,7 @@
     {
       "id": "insanity",
       "name": "Fit of Insanity",
-      "desc": "Let the madness take you: for a while you are stronger and faster, but you no longer guard yourself, and every blow you take hurts more. Works only while it is your equipped route.",
+      "desc": "Let the madness take you: for a while you are stronger and faster, but you no longer guard yourself, and every blow you take hurts more.",
       "parents": [
         {
           "node": "rabid_fangs",

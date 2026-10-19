@@ -11,9 +11,7 @@
   "class_id": "wizard_king_sovereign",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/wizard_king_sovereign.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "tower",
   "nodes": [
     {
       "id": "sovereign_poise",

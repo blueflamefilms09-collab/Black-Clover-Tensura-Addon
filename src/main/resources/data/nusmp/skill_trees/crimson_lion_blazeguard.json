@@ -11,9 +11,7 @@
   "class_id": "crimson_lion_blazeguard",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/crimson_lion_blazeguard.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "magma",
   "nodes": [
     {
       "id": "lion_s_pride",

@@ -17,14 +17,14 @@ import java.util.TreeSet;
  * the server thread, the client thread and a reload thread can all read the same object without a lock, and a reload just replaces the reference. Building it is also where the rules that need
  * ALL the files live (two routes may not share a book or a class id or a skill, the number and the total size of the routes are capped so the sync packet always fits, see {@link RouteWire}): a
  * route that breaks one of them is the one that loses, the LATER one in id order, deterministically, with a sentence saying who it clashed with. The report of every file (loaded or not, its
- * problems and warnings) travels with the snapshot, which is what {@code /multiverse tree routes} prints and what the self-test {@code tree.core.routes} asserts on. Pure (Gson and the records
+ * problems and warnings) travels with the snapshot, which is what {@code /multiverse skillbook routes} prints and what the self-test {@code tree.core.routes} asserts on. Pure (Gson and the records
  * only), so all of it is unit-tested.
  */
 public final class RouteIndex {
     public static final RouteIndex EMPTY = new RouteIndex(List.of(), List.of(), 0);
 
     /**
-     * Why: a server owner needs to see, per file, whether it loaded and exactly why not, without reading a log; this is that line of the report ({@code /multiverse tree routes}, the self-test).
+     * Why: a server owner needs to see, per file, whether it loaded and exactly why not, without reading a log; this is that line of the report ({@code /multiverse skillbook routes}, the self-test).
      * It records loaded or not, how many nodes, and every problem and warning found in the file.
      */
     public record Entry(String id, boolean loaded, int nodes, List<String> problems, List<String> warnings) {

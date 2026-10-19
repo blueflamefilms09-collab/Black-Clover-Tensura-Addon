@@ -8,7 +8,7 @@ package com.newuniverse.nusmp.skilltree.shop;
  *
  * @param id         the line's id, lower-case snake; it is the key of the purchases counted against this line, so renaming it forgets what was bought this period
  * @param kind       a Skill Book that opens a route, or an SP Book that gives Skill Points
- * @param route      the route id of a single route book ({@code nusmp:fire_dragon_slayer}), or empty
+ * @param route      the route id of a single route book ({@code nusmp:lady_luck}), or empty
  * @param allRoutes  true for the line that stocks one book for EVERY route of the registry that has no line of its own, so a new magic added by a datapack is on sale with no edit here
  * @param spKind     the kind of an SP Book ({@code magic_booster}), or empty
  * @param priceMin   the cheapest the line may be rolled at, in gold

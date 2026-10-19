@@ -97,8 +97,8 @@ class BannerTimelineTest {
 
     @Test
     void aRouteTheClientDoesNotKnowStillGetsAReadableName() {
-        assertEquals("Fire Dragon Slayer", BannerTimeline.fallbackName("nusmp:fire_dragon_slayer"));
-        assertEquals("Ice Make", BannerTimeline.fallbackName("ice_make"));
+        assertEquals("Ember Knight", BannerTimeline.fallbackName("nusmp:ember_knight"));
+        assertEquals("Frost Knight", BannerTimeline.fallbackName("frost_knight"));
         assertEquals("Sky Dragon", BannerTimeline.fallbackName("pack:sky/dragon"));
         assertEquals("", BannerTimeline.fallbackName(""));
         assertEquals("", BannerTimeline.fallbackName(null));

@@ -11,9 +11,7 @@
   "class_id": "sangah_war_room",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/sangah_war_room.png",
   "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "command_post",

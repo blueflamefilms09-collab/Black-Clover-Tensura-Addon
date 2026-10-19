@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.skilltree.line;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skilltree.ability.AbilityKit;
-import com.newuniverse.nusmp.skilltree.ft.sky.SkyAllies;
+import com.newuniverse.nusmp.skilltree.kit.KitAllies;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -225,7 +225,7 @@ public final class ActiveExecutors {
         double radius = c.num("radius");
         int ticks = Math.max(20, c.whole("seconds") * 20);
         int given = 0;
-        for (LivingEntity e : SkyAllies.around(c.p, c.p.position(), radius)) {
+        for (LivingEntity e : KitAllies.around(c.p, c.p.position(), radius)) {
             if (given++ >= MAX_TARGETS) break;
             LineLookups.give(e, c.str("effect", ""), ticks, c.whole("amp"), true);
         }
@@ -246,7 +246,7 @@ public final class ActiveExecutors {
     private static void healPulse(ActiveCtx c) {
         double radius = c.num("radius");
         int healed = 0;
-        for (LivingEntity e : SkyAllies.around(c.p, c.p.position(), radius)) {
+        for (LivingEntity e : KitAllies.around(c.p, c.p.position(), radius)) {
             if (healed++ >= MAX_TARGETS) break;
             AbilityKit.heal(e, (float) c.num("amount"));
         }

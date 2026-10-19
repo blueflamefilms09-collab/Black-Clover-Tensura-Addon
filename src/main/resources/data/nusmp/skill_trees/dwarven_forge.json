@@ -11,9 +11,7 @@
   "class_id": "dwarven_forge",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/dwarven_forge.png",
   "book_texture": "nusmp:item/skill_book_3d/tbate",
-  "background_theme": "ruin",
   "nodes": [
     {
       "id": "forgeborn",

@@ -11,9 +11,7 @@
   "class_id": "greatsword_doctrine",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/greatsword_doctrine.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "overhead_commitment",

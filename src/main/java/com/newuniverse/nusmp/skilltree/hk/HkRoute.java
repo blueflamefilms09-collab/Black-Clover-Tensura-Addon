@@ -27,7 +27,7 @@ public final class HkRoute {
     // Lady Luck
     public static final String FORTUNES_FAVOR = "fortunes_favor", CATS_PAW = "cats_paw", LUCKY_STRIKE = "lucky_strike", GAMBLERS_COIN = "gamblers_coin", TREASURE_NOSE = "treasure_nose", JACKPOT = "jackpot";
 
-    // Smoldering Fang of Insanity (its own route: a berserker's fang, nothing to do with the Fire Dragon Slayer)
+    // Smoldering Fang of Insanity (a berserker's fang, a book of its own)
     public static final String EMBER_BITE = "ember_bite", RABID_FANGS = "rabid_fangs", ASH_SKIN = "ash_skin", INSANITY = "insanity", HOWL_OF_RUIN = "howl_of_ruin", FANG_OF_INSANITY = "fang_of_insanity";
 
     /** The ManasCore skill ids (registry path under {@code nusmp}). */

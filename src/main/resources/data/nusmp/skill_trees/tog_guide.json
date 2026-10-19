@@ -11,9 +11,7 @@
   "class_id": "tog_guide",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/tog_guide.png",
   "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
-  "background_theme": "dream",
   "nodes": [
     {
       "id": "lead_the_way_stance",

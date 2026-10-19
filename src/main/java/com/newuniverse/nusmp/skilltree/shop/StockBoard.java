@@ -44,7 +44,7 @@ public final class StockBoard {
         List<Slot> out = new ArrayList<>();
         for (StockEntry e : entries) {
             if (e.kind() == StockEntry.Kind.SP_BOOK) {
-                add(out, e.id(), e, e.spKind());
+                continue;                                                       // 1.96.0: the SP Books are gone with the Skill Points; an old stock line for one makes no slot
             } else if (e.allRoutes()) {
                 for (String r : routeIds) if (!named.contains(r)) add(out, e.id() + "@" + r, e, r);
             } else if (routeIds.contains(e.route())) {

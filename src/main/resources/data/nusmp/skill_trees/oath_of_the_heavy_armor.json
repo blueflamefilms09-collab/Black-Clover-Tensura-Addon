@@ -1,7 +1,7 @@
 {
   "magic": "exiled_heavy_knight",
   "name": "Oath of the Heavy Armor",
-  "desc": "The tank's road of The Exiled Heavy Knight: stand in front, draw every blade onto yourself and outlast it. Taunts, a wall of resistance, a shield that bites back, and plate that turns the hits aside. Works only while it is your equipped route.",
+  "desc": "The tank's skill of The Exiled Heavy Knight: stand in front, draw every blade onto yourself and outlast it. Taunts, a wall of resistance, a shield that bites back, and plate that turns the hits aside.",
   "book": "nusmp:heavy_armor_book",
   "book_name": "Oath of the Heavy Armor",
   "book_lore": "A dented, iron-bound codex. Its first page reads: 'Whoever is struck first, strikes last.'",
@@ -70,7 +70,7 @@
     {
       "id": "iron_hide",
       "name": "Iron Hide",
-      "desc": "Heavy plate that you have worn for years: while this route is equipped you gain Armor and resist being knocked about.",
+      "desc": "Heavy plate that you have worn for years: while the skill is switched on you gain Armor and resist being knocked about.",
       "parents": [],
       "cost": 1,
       "costs": [

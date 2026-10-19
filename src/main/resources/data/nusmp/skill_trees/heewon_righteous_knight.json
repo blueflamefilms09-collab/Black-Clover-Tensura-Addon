@@ -11,9 +11,7 @@
   "class_id": "heewon_righteous_knight",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/heewon_righteous_knight.png",
   "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
-  "background_theme": "holy",
   "nodes": [
     {
       "id": "oath_of_guard",

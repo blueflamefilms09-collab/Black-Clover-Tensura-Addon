@@ -11,9 +11,7 @@
   "class_id": "velzard_frost_dragon",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/velzard_frost_dragon.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "frost",
   "nodes": [
     {
       "id": "frostbound_dragon",

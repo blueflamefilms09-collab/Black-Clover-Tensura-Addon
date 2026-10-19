@@ -11,9 +11,7 @@
   "class_id": "overweight_build",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/overweight_build.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "iron",
   "nodes": [
     {
       "id": "overencumbered_fortress",

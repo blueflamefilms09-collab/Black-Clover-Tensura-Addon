@@ -11,9 +11,7 @@
   "class_id": "dryad_world_tree",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/dryad_world_tree.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "forest",
   "nodes": [
     {
       "id": "rooted_guardian",

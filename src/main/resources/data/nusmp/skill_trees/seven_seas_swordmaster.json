@@ -11,9 +11,7 @@
   "class_id": "seven_seas_swordmaster",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/seven_seas_swordmaster.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "open_duel",

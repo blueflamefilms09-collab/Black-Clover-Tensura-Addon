@@ -11,9 +11,7 @@
   "class_id": "stealth_skill",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/stealth_skill.png",
   "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "veiled_presence",

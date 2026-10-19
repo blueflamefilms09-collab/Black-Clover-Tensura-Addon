@@ -22,30 +22,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * wrong reason (the unchanged base is asserted clean first, which is the negative control of the whole class).
  */
 class RouteSchemaTest {
-    static final String ID = "nusmp:fire_dragon_slayer";
+    static final String ID = "nusmp:ember_knight";
 
     /** The owner's example (design.md section 2), completed to four nodes: a root, a branch, a second branch and a Secret Art that needs two. */
     static final String GOOD = """
             {
-              "magic": "fairy_tail",
-              "name": "Fire Dragon Slayer",
+              "magic": "black_clover",
+              "name": "Ember Knight",
               "desc": "The lost magic that teaches a mage to eat flame and to breathe it back.",
-              "book": "nusmp:fire_dragon_slayer_book",
+              "book": "nusmp:ember_knight_book",
               "book_name": "Fang of Smoldering Insanity",
               "book_lore": "A dusty tome sought by every mage who was told his class was not enough.",
               "color": "#E8541C",
               "icon": "minecraft:blaze_powder",
-              "class_id": "fire_dragon_slayer",
+              "class_id": "ember_knight",
               "duplicate_sp": 3,
               "loot_weight": 1,
               "nodes": [
-                { "id": "iron_fist", "name": "Fire Dragon's Iron Fist", "desc": "A burning punch.", "parents": [], "cost": 1, "max_level": 5,
-                  "skill": "nusmp:ft_fire_dragons_iron_fist", "passives": [], "values": { "damage": [6, 7, 8, 9, 11], "burn_seconds": [3, 3, 4, 4, 5] }, "x": 0, "y": 4, "icon": "minecraft:blaze_rod" },
-                { "id": "roar", "name": "Fire Dragon's Roar", "parents": [ { "node": "iron_fist", "level": 3 } ], "cost": 2, "costs": [2, 3, 4], "max_level": 3,
-                  "skill": "nusmp:ft_fire_dragons_roar", "values": { "damage": [10, 13, 16], "range": [9, 11, 13] }, "x": 2, "y": 3 },
+                { "id": "iron_fist", "name": "Ember Knight's Iron Fist", "desc": "A burning punch.", "parents": [], "cost": 1, "max_level": 5,
+                  "skill": "nusmp:test_fist", "passives": [], "values": { "damage": [6, 7, 8, 9, 11], "burn_seconds": [3, 3, 4, 4, 5] }, "x": 0, "y": 4, "icon": "minecraft:blaze_rod" },
+                { "id": "roar", "name": "Ember Knight's Roar", "parents": [ { "node": "iron_fist", "level": 3 } ], "cost": 2, "costs": [2, 3, 4], "max_level": 3,
+                  "skill": "nusmp:test_roar", "values": { "damage": [10, 13, 16], "range": [9, 11, 13] }, "x": 2, "y": 3 },
                 { "id": "appetite", "name": "Flame Appetite", "parents": ["iron_fist"], "cost": 2, "max_level": 3, "passives": ["eat_fire"], "x": 2, "y": 5 },
                 { "id": "crimson_lotus", "name": "Crimson Lotus: Exploding Flame Blade", "parents": [ { "node": "roar", "level": 2 }, "appetite" ], "cost": 6, "max_level": 1,
-                  "skill": "nusmp:ft_crimson_lotus", "values": { "damage": 24 }, "x": 4, "y": 4 }
+                  "skill": "nusmp:test_lotus", "values": { "damage": 24 }, "x": 4, "y": 4 }
               ]
             }
             """;
@@ -85,13 +85,13 @@ class RouteSchemaTest {
         assertTrue(p.warnings().isEmpty(), "warnings: " + all(p.warnings()));
         SkillRoute r = p.route();
         assertEquals(ID, r.id());
-        assertEquals("fairy_tail", r.magic());
-        assertEquals("Fire Dragon Slayer", r.name());
-        assertEquals("nusmp:fire_dragon_slayer_book", r.book());
+        assertEquals("black_clover", r.magic());
+        assertEquals("Ember Knight", r.name());
+        assertEquals("nusmp:ember_knight_book", r.book());
         assertEquals("Fang of Smoldering Insanity", r.bookName());
         assertEquals(0xE8541C, r.color());
         assertEquals("minecraft:blaze_powder", r.icon());
-        assertEquals("fire_dragon_slayer", r.classId());
+        assertEquals("ember_knight", r.classId());
         assertEquals(3, r.duplicateSp());
         assertEquals(1, r.lootWeight());
         assertEquals(4, r.nodes().size());
@@ -100,7 +100,7 @@ class RouteSchemaTest {
         SkillNode fist = r.node("iron_fist");
         assertEquals(5, fist.maxLevel());
         assertEquals(List.of(6.0, 7.0, 8.0, 9.0, 11.0), fist.values().get("damage"));
-        assertEquals("nusmp:ft_fire_dragons_iron_fist", fist.skill());
+        assertEquals("nusmp:test_fist", fist.skill());
         assertEquals("minecraft:blaze_rod", fist.icon());
         assertEquals(0, fist.x());
         assertEquals(4, fist.y());
@@ -226,8 +226,8 @@ class RouteSchemaTest {
             assertNull(p.route(), bad);
             assertTrue(all(p.problems()).contains("route id"), bad + ": " + all(p.problems()));
         }
-        assertTrue(RouteSchema.validRouteId("nusmp:fire_dragon_slayer"));
-        assertTrue(RouteSchema.validRouteId("my-pack.v2:ice_make"));
+        assertTrue(RouteSchema.validRouteId("nusmp:ember_knight"));
+        assertTrue(RouteSchema.validRouteId("my-pack.v2:frost_knight"));
         assertFalse(RouteSchema.validRouteId(null));
     }
 
@@ -260,7 +260,7 @@ class RouteSchemaTest {
 
     @Test
     void theClassIdMustBeLowerCaseSnake() {
-        for (String bad : new String[]{"Fire Dragon", "1fire", "fire-dragon", "FIRE", "_x"}) {
+        for (String bad : new String[]{"Ember Knight", "1fire", "fire-dragon", "FIRE", "_x"}) {
             JsonObject o = base();
             o.addProperty("class_id", bad);
             refused(o, "class_id: ");
@@ -432,7 +432,7 @@ class RouteSchemaTest {
             nodeSkipped(o, "roar", "skill: ");
         }
         JsonObject same = base();
-        node(same, "crimson_lotus").addProperty("skill", "nusmp:ft_fire_dragons_roar");
+        node(same, "crimson_lotus").addProperty("skill", "nusmp:test_roar");
         nodeSkipped(same, "crimson_lotus", "already granted by node 'roar'");
         JsonObject none = base();
         node(none, "roar").addProperty("skill", "");

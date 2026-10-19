@@ -45,12 +45,13 @@ class HkRouteFilesTest {
     }
 
     @Test
-    void theSmolderingFangIsItsOwnRouteAndNotTheFireDragonSlayers() throws Exception {
-        JsonObject fang = read("smoldering_fang_of_insanity"), fire = read("fire_dragon_slayer");
+    void theSmolderingFangIsItsOwnBookAndNoOtherBookCarriesItsName() throws Exception {
+        JsonObject fang = read("smoldering_fang_of_insanity");
         assertEquals("Smoldering Fang of Insanity", fang.get("book_name").getAsString());
-        assertTrue(!fire.get("book_name").getAsString().toLowerCase().contains("smoldering"), "the Fire Dragon Slayer must not carry the Fang's name");
-        assertTrue(!fang.get("magic").getAsString().equals(fire.get("magic").getAsString()), "different magic families");
-        assertTrue(!fang.get("class_id").getAsString().equals(fire.get("class_id").getAsString()), "different classes");
+        for (String[] r : ROUTES) {
+            if (r[0].equals("smoldering_fang_of_insanity")) continue;
+            assertTrue(!read(r[0]).get("book_name").getAsString().toLowerCase().contains("smoldering"), r[0] + " must not carry the Fang's name");
+        }
         for (JsonElement el : fang.getAsJsonArray("nodes")) {
             JsonObject n = el.getAsJsonObject();
             if (n.has("skill")) assertTrue(n.get("skill").getAsString().startsWith("nusmp:hk_"), "a Fang technique is a Heavy Knight technique: " + n.get("skill").getAsString());

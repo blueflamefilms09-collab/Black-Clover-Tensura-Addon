@@ -24,7 +24,7 @@ import java.util.Set;
  * {@code SimpleJsonResourceReloadListener} already does the part that is easy to get wrong (it lists {@code data/<namespace>/skill_trees/*.json} across every datapack in priority order, so a
  * datapack can replace any file, and turns each into a JSON tree off the main thread), and the tree is small, validated in one place and indexed for lookups, so a custom listener is lighter
  * than a datapack registry (which would add a codec, a dynamic-registry sync and freeze rules for no gain). This class only adds what the report needs: files that exist but are not valid JSON
- * are dropped by the game with a log line, so they are listed here too (by comparing the files found with the files parsed) and show up in {@code /multiverse tree routes}. The pure
+ * are dropped by the game with a log line, so they are listed here too (by comparing the files found with the files parsed) and show up in {@code /multiverse skillbook routes}. The pure
  * {@link RouteIndex} builds the immutable snapshot (validation, cross-file rules, size caps) on the main thread in {@link #apply}, and {@link RouteRegistry#publish} swaps it in with one
  * write; if anything unexpected is thrown the previous routes stay in force. Registered through {@code AddReloadListenerEvent} by {@code TreeEvents}; the route id is
  * {@code <namespace>:<file name>} because that is the id the game gives the JSON file.
@@ -60,7 +60,7 @@ public final class RouteLoader extends SimpleJsonResourceReloadListener {
     }
 
     /**
-     * Re-reads the routes from the datapacks that are loaded now and puts them in force, without a full {@code /reload} (what {@code /multiverse tree reload} runs). Returns the new snapshot.
+     * Re-reads the routes from the datapacks that are loaded now and puts them in force, without a full {@code /reload} (what {@code /multiverse skillbook reload} runs). Returns the new snapshot.
      * Server thread.
      */
     public static RouteIndex reloadNow(ResourceManager manager) {

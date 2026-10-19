@@ -135,7 +135,7 @@ public final class StockSchema {
             }
             if (r != null) {
                 if (!ROUTE.matcher(r).matches()) {
-                    problems.add(where + ": \"route\" must be a lower-case resource location like nusmp:fire_dragon_slayer, skipped");
+                    problems.add(where + ": \"route\" must be a lower-case resource location like nusmp:lady_luck, skipped");
                     return null;
                 }
                 route = r;

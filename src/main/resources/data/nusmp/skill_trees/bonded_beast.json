@@ -11,9 +11,7 @@
   "class_id": "bonded_beast",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/bonded_beast.png",
   "book_texture": "nusmp:item/skill_book_3d/tbate",
-  "background_theme": "forest",
   "nodes": [
     {
       "id": "bond_link",

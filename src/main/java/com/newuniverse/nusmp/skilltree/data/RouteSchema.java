@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * is wrong with it, all at once, instead of stopping at the first mistake or (worse) loading half a tree without saying so. A Mojang {@code Codec} gives one machine-style error for the whole
  * file and no partial result, which is the opposite of the owner's rule here: a bad ROUTE is skipped while the other routes still load, and a bad NODE is skipped together with the nodes that need
  * it while the rest of the tree still works (a typo in an advanced node must not take a whole magic away from the players). So this is a hand-written, pure reader over Gson's tree (no Minecraft
- * type, so it is unit-tested without a game), it applies the defaults of the design, validates every rule of {@code docs/skilltree/design.md} section 2, and returns the route plus a list of
+ * type, so it is unit-tested without a game), it applies the defaults of the design, validates every rule of {@code docs/skillbooks_unique.md} section 2, and returns the route plus a list of
  * readable problems (errors: something was skipped) and warnings (oddities that still load, such as a misspelt field name that was ignored). The same numeric limits are used by the wire format
  * ({@link RouteWire}), so a route that passes here always fits in a packet. Whether a node's {@code skill} id exists in the ManasCore registry cannot be known here (the registry is a game
  * object); the in-game self-test {@code tree.core.routes} checks it.

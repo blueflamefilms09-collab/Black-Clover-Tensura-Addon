@@ -11,9 +11,7 @@
   "class_id": "raid_captain_command",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/raid_captain_command.png",
   "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "commander_s_post",

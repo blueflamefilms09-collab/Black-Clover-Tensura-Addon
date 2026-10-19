@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.skilltree.hk;
 
 import com.mojang.logging.LogUtils;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
+import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -29,15 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: eleven nodes of the Heavy Knight routes are not buttons but things that are simply true of the player while the route is EQUIPPED, and the owner's rule is exact: "if the active route is not
- * this route, return" - an unequipped route gives zero benefit. So every passive starts with ONE question, {@link #level}, which is the tree's own cast gate ({@code SkillTreeApi.canCast}: the
- * engine is on, the route is unlocked, the node is bought AND the route's class is the player's active class), and a node of an unequipped route answers 0, so its passive is not applied at all and
- * nothing has to be cleaned up when the player switches class. The passives live where the game decides the thing they change: the damage event decides what a blow does (the Cat's Paw cancels it, the
- * Bulwark and the Unyielding shape what the wearer takes, the Lucky Strike and the Riposte shape what the wielder deals), the drops event decides what a kill leaves (the Treasure Nose), and the
- * attribute modifiers (armor, knockback resistance, sword damage, Luck) are TRANSIENT modifiers kept in step with the gate by a light tick every half second: transient so they are never saved (a world
- * saved while the route was equipped carries nothing to leak into a world where it is not), and removed on the first beat after the route is unequipped. All numbers come from the route files by node
- * level, with the shipped level-1 values as fallback. Every handler is wrapped so an exception never reaches the server loop; the per-player rests are game ticks kept in the player's own persistent data (no
- * static state). The listeners are registered once from the route register; the logic is in public static methods so the in-game self-test runs exactly what the events run.
+ * Why: eleven nodes of the Heavy Knight books are not buttons but things that are simply true of the player while the book's unique skill is OWNED and SWITCHED ON, and the owner's rule is exact: a skill that is
+ * off, or not owned, gives zero benefit. So every passive starts with ONE question, {@link #level}, which asks {@code UniqueBooks.passiveLevel} (the skill is in the player's list, its Tensura toggle is on, and
+ * the level comes from the skill's mastery), and a node of a skill that is off answers 0, so its passive is not applied at all and nothing has to be cleaned up when the player switches it. The passives live where
+ * the game decides the thing they change: the damage event decides what a blow does (the Cat's Paw cancels it, the Bulwark and the Unyielding shape what the wearer takes, the Lucky Strike and the Riposte shape what
+ * the wielder deals), the drops event decides what a kill leaves (the Treasure Nose), and the attribute modifiers (armor, knockback resistance, sword damage, Luck) are TRANSIENT modifiers kept in step with the gate by a
+ * light tick every half second: transient so they are never saved (a world saved while the skill was on carries nothing to leak into a world where it is not), and removed on the first beat after the skill is switched
+ * off. All numbers come from the route files by node level, with the shipped level-1 values as fallback. Every handler is wrapped so an exception never reaches the server loop; the per-player rests are game ticks
+ * kept in the player's own persistent data (no static state). The listeners are registered once from the route register; the logic is in public static methods so the in-game self-test runs exactly what the events
+ * run.
  */
 public final class HkPassives {
     private HkPassives() {}
@@ -59,9 +59,9 @@ public final class HkPassives {
         NeoForge.EVENT_BUS.addListener(HkPassives::onPlayerTick);
     }
 
-    /** The level of a node when it counts for this player right now, else 0 (not unlocked, not bought, or the route is not the equipped one). */
+    /** The level of a node when it counts for this player right now, else 0 (the player does not own the book's unique skill, or has switched it off). */
     public static int level(ServerPlayer p, String route, String node) {
-        return SkillTreeApi.canCast(p, route, node) ? Math.max(1, SkillTreeApi.nodeLevel(p, route, node)) : 0;
+        return UniqueBooks.passiveLevel(p, route, node);
     }
 
     private static double num(String route, String node, String key, int lv) { return RouteRegistry.value(route, node, key, lv, HkRoute.fallback(node, key)); }
@@ -77,7 +77,7 @@ public final class HkPassives {
             new Mod(Attributes.ATTACK_DAMAGE, HkRoute.SWORD, HkRoute.SWORD_MASTERY, "damage_bonus", id("sword_mastery")),
             new Mod(Attributes.LUCK, HkRoute.LUCK, HkRoute.FORTUNES_FAVOR, "luck", id("fortunes_favor")));
 
-    /** The ids of the transient modifiers of the Heavy Knight passives (the tests check that none stays on a player whose route is not equipped). */
+    /** The ids of the transient modifiers of the Heavy Knight passives (the tests check that none stays on a player whose skill is off). */
     public static List<ResourceLocation> modifierIds() {
         List<ResourceLocation> out = new ArrayList<>();
         for (Mod m : MODS) out.add(m.id());

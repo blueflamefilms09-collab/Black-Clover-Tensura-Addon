@@ -11,9 +11,7 @@
   "class_id": "flame_djinn_swordsman",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/flame_djinn_swordsman.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "magma",
   "nodes": [
     {
       "id": "flame_equip_blade",

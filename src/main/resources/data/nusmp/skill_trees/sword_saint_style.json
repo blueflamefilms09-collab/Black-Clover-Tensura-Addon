@@ -11,9 +11,7 @@
   "class_id": "sword_saint_style",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/sword_saint_style.png",
   "book_texture": "nusmp:item/skill_book_3d/tbate",
-  "background_theme": "iron",
   "nodes": [
     {
       "id": "still_water_stance",

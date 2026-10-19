@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
  * the node's tables at its level, with the catalogue's base value when the file left it out; hit through the balance law; draw the node's effect). Bundling them in one object means an executor is
  * a method of pure intent, "damage {@code num("damage")} to everyone in a cone", and the rules that apply to every art (numbers from the data, damage through {@code AbilityKit.hit} so the balance law
  * caps it, effects only from the allowed set) are in this one class rather than in 26 copies. It is created per cast, holds no state beyond the cast, and keeps no reference after the cast ends
- * (delayed parts capture the pieces they need, and re-check that the caster is still there with {@code FtClock.present}).
+ * (delayed parts capture the pieces they need, and re-check that the caster is still there with {@code KitClock.present}).
  */
 public final class ActiveCtx {
     public final ServerPlayer p;

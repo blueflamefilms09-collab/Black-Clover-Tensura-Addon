@@ -15,11 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Why: the books are drawn and declared by resource files that no Java compiler checks, and a wrong file shows in game as the purple-and-black missing texture, a cover that
- * does not take the route's colour, or an SP Book that always shows the wrong sprite; a loot modifier whose JSON is missing or not listed simply never drops anything and
+ * does not take the book's colour; a loot modifier whose JSON is missing or not listed simply never drops anything and
  * says nothing. This test reads the files (no game needed) and fails when: a sprite is missing or not 16 by 16 pixels; the two layers of the Skill Book overlap or leave a
- * hole (the cover is the part the client tints, so it must hold only greys, or the tint would shift the colours, and it must not sit under the gem or the fittings); an SP
- * sprite is empty; the Skill Book model does not name both layers in the order the tint index relies on (layer 1 is the cover); the SP Book model does not carry exactly one
- * override per kind, in the order of the kind table, with the threshold half a step below the kind's model value and the kind's own model behind it; or the loot modifier's
+ * hole (the cover is the part the client tints, so it must hold only greys, or the tint would shift the colours, and it must not sit under the gem or the fittings); the
+ * legacy SP sprite is empty; the Skill Book model does not name both layers in the order the tint index relies on (layer 1 is the cover); the legacy SP Book model is not the plain sprite; or the loot modifier's
  * definition, its type id and its place in the global list are wrong (the two older entries must still be there: add the new, keep the old).
  */
 class ItemsAssetsTest {
@@ -80,12 +79,8 @@ class ItemsAssetsTest {
     }
 
     @Test
-    void everySpSpriteExistsAndIsNotEmpty() throws Exception {
+    void theLegacySpSpriteStillExistsAndIsNotEmpty() throws Exception {
         assertTrue(opaque(sprite("sp_book")) > 60);
-        for (SpKind k : SpKind.values()) {
-            int n = opaque(sprite("sp_book_" + k.id()));
-            assertTrue(n > 60 && n < 230, k.id() + ": " + n + " opaque pixels");
-        }
     }
 
     @Test
@@ -98,23 +93,10 @@ class ItemsAssetsTest {
     }
 
     @Test
-    void theSpBookModelHasOneOverridePerKindInTableOrder() throws Exception {
+    void theLegacySpBookModelIsThePlainSprite() throws Exception {
         JsonObject model = json(ASSETS + "models/item/sp_book.json");
         assertEquals("nusmp:item/sp_book", model.getAsJsonObject("textures").get("layer0").getAsString());
-        JsonArray overrides = model.getAsJsonArray("overrides");
-        SpKind[] kinds = SpKind.values();
-        assertEquals(kinds.length, overrides.size(), "one override per kind");
-        double previous = 0;
-        for (int i = 0; i < kinds.length; i++) {
-            JsonObject o = overrides.get(i).getAsJsonObject();
-            double threshold = o.getAsJsonObject("predicate").get("nusmp:sp_kind").getAsDouble();
-            assertEquals(kinds[i].modelValue() - 0.05, threshold, 1e-6, "threshold of " + kinds[i].id());
-            assertTrue(threshold > previous, "thresholds ascend (the last matching override wins)");
-            previous = threshold;
-            assertEquals("nusmp:item/sp_book_" + kinds[i].id(), o.get("model").getAsString());
-            JsonObject kindModel = json(ASSETS + "models/item/sp_book_" + kinds[i].id() + ".json");
-            assertEquals("nusmp:item/sp_book_" + kinds[i].id(), kindModel.getAsJsonObject("textures").get("layer0").getAsString());
-        }
+        assertFalse(model.has("overrides"), "the primer kinds are gone, so there is nothing to override");
     }
 
     @Test

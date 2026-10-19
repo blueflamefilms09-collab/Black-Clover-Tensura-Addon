@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.skilltree.item;
 
 import com.mojang.logging.LogUtils;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import com.newuniverse.nusmp.vfx.VfxPayload;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -46,25 +45,25 @@ public final class UnlockFx {
     private static final List<Pending> PENDING = new ArrayList<>();
 
     /** The listener the skill-tree API calls after every unlock: plays the show for {@code announce}, nothing otherwise. */
-    public static void play(ServerPlayer player, SkillRoute route, boolean announce) {
-        if (!announce || player == null || route == null) return;
+    public static void play(ServerPlayer player, String routeId, int rgb, boolean announce) {
+        if (!announce || player == null || routeId == null) return;
         try {
-            stageOne(player, route);
+            stageOne(player, routeId, rgb);
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] the route-unlocked show failed (the route is unlocked all the same)", e);
+            LOG.warn("[nusmp] the skill-learned show failed (the skill is learned all the same)", e);
         }
     }
 
-    private static void stageOne(ServerPlayer player, SkillRoute route) {
+    private static void stageOne(ServerPlayer player, String routeId, int rgb) {
         ServerLevel level = player.serverLevel();
-        int argb = 0xFF000000 | (route.color() & 0xFFFFFF);
+        int argb = 0xFF000000 | (rgb & 0xFFFFFF);
         Vec3 feet = player.position();
         MinecraftServer server = level.getServer();
         if (server != null) PENDING.add(new Pending(server.getTickCount() + UnlockTiming.BURST_TICK, player.getUUID(), argb));     // first: the payoff comes even if a build effect fails
         try {
-            PacketDistributor.sendToPlayer(player, new RouteUnlockedPayload(route.id()));                                          // second: the banner is the part the reader cannot miss
+            PacketDistributor.sendToPlayer(player, new RouteUnlockedPayload(routeId));                                             // second: the banner is the part the reader cannot miss
         } catch (RuntimeException | LinkageError e) {
-            LOG.debug("[nusmp] could not send the route-unlocked packet (a stand-in player has no connection)", e);
+            LOG.debug("[nusmp] could not send the skill-learned packet (a stand-in player has no connection)", e);
         }
         sound(level, feet, SoundEvents.BOOK_PAGE_TURN, 1.0f, 0.9f);
         sound(level, feet, SoundEvents.ENCHANTMENT_TABLE_USE, 1.2f, 0.8f);
@@ -73,7 +72,6 @@ public final class UnlockFx {
         fx(level, VfxShape.MANA_CHARGE, feet.add(0, 0.95, 0), feet.add(0, 1.95, 0), argb, UnlockTiming.BURST_TICK, 1.2f, player.getId());
     }
 
-    /** Drains the second stages that are due. */
     public static void onServerTick(ServerTickEvent.Post event) {
         if (PENDING.isEmpty()) return;
         MinecraftServer server = event.getServer();

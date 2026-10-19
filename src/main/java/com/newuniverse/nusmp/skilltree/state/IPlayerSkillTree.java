@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * Why: the owner asked for an {@code IPlayerSkillTree} "capability" holding four things: the routes a player has unlocked, their Skill Points, the levels of the nodes they bought, and
- * their active Fairy Tail class. In NeoForge 21.1 the thing that stores such per-player data is a DATA ATTACHMENT (a Forge-style capability is for exposing behaviour such as an inventory
+ * their active line (all of that is legacy since 1.96.0: it is only read once, to move the owner's lines into unique skills, and the Black Market's gold still lives in the extra record). In NeoForge 21.1 the thing that stores such per-player data is a DATA ATTACHMENT (a Forge-style capability is for exposing behaviour such as an inventory
  * or an energy store from a block or item, and is not saved or copied on death by itself), so this interface is the contract of that data and {@link PlayerSkillTree} is its implementation;
  * everything else (the rules, the packets, the screen, the abilities, the shop) talks to the interface, never to a map. A separate record of the systems' own state lives in
  * {@link #extra}, so a system such as the shop can save its numbers without changing this interface. Deliberately NOTHING in here knows about the Black Clover grimoire: the two systems
@@ -48,7 +48,7 @@ public interface IPlayerSkillTree {
     /** Forgets every node of a route (a respec); returns the number of nodes cleared. */
     int clearRoute(String routeId);
 
-    /** The id of the class the player is now ({@code fire_dragon_slayer}), or an empty string. */
+    /** The id of the class the player is now ({@code heavy_armor}), or an empty string. */
     String activeClass();
 
     void setActiveClass(String classId);

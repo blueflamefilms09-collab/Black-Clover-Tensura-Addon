@@ -57,20 +57,20 @@ class RouteIndexTest {
     @Test
     void theLookupsFindARouteByIdBookClassAndSkill() {
         RouteIndex idx = RouteIndex.build(files(
-                "nusmp:ice_make", small("Ice Make", "nusmp:ice_make_book", "ice_make", "nusmp:ft_ice_lance"),
-                "nusmp:fire_dragon_slayer", JsonParser.parseString(RouteSchemaTest.GOOD)), List.of());
+                "nusmp:frost_knight", small("Frost Knight", "nusmp:frost_knight_book", "frost_knight", "nusmp:test_lance"),
+                "nusmp:ember_knight", JsonParser.parseString(RouteSchemaTest.GOOD)), List.of());
         assertEquals(2, idx.all().size());
-        assertEquals("nusmp:fire_dragon_slayer", idx.all().get(0).id(), "routes come in id order, not insertion order");
-        assertEquals("nusmp:ice_make", idx.all().get(1).id());
-        assertNotNull(idx.byId("nusmp:ice_make"));
-        assertEquals("nusmp:ice_make", idx.byBook("nusmp:ice_make_book").id());
-        assertEquals("nusmp:fire_dragon_slayer", idx.byClass("fire_dragon_slayer").id());
-        String[] hit = idx.bySkill("nusmp:ft_fire_dragons_roar");
+        assertEquals("nusmp:ember_knight", idx.all().get(0).id(), "routes come in id order, not insertion order");
+        assertEquals("nusmp:frost_knight", idx.all().get(1).id());
+        assertNotNull(idx.byId("nusmp:frost_knight"));
+        assertEquals("nusmp:frost_knight", idx.byBook("nusmp:frost_knight_book").id());
+        assertEquals("nusmp:ember_knight", idx.byClass("ember_knight").id());
+        String[] hit = idx.bySkill("nusmp:test_roar");
         assertNotNull(hit);
-        assertEquals("nusmp:fire_dragon_slayer", hit[0]);
+        assertEquals("nusmp:ember_knight", hit[0]);
         assertEquals("roar", hit[1]);
         hit[0] = "tampered";
-        assertEquals("nusmp:fire_dragon_slayer", idx.bySkill("nusmp:ft_fire_dragons_roar")[0], "the snapshot hands out copies, so a caller cannot change it");
+        assertEquals("nusmp:ember_knight", idx.bySkill("nusmp:test_roar")[0], "the snapshot hands out copies, so a caller cannot change it");
         assertNull(idx.byId("nusmp:nothing"));
         assertNull(idx.byBook("nusmp:nothing"));
         assertNull(idx.byClass("nothing"));
@@ -120,14 +120,14 @@ class RouteIndexTest {
         assertTrue(String.join("|", entry(classes, "nusmp:b_route").problems()).contains("class_id 'same_class' is already used by route 'nusmp:a_route'"));
 
         RouteIndex skills = RouteIndex.build(files(
-                "nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:ft_shared"),
-                "nusmp:b_route", small("B", "nusmp:b_book", "beta", "nusmp:ft_shared")), List.of());
+                "nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:test_shared"),
+                "nusmp:b_route", small("B", "nusmp:b_book", "beta", "nusmp:test_shared")), List.of());
         assertEquals(1, skills.all().size());
-        assertTrue(String.join("|", entry(skills, "nusmp:b_route").problems()).contains("grants 'nusmp:ft_shared', which route 'nusmp:a_route' already grants"));
+        assertTrue(String.join("|", entry(skills, "nusmp:b_route").problems()).contains("grants 'nusmp:test_shared', which route 'nusmp:a_route' already grants"));
 
         RouteIndex fine = RouteIndex.build(files(
-                "nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:ft_one"),
-                "nusmp:b_route", small("B", "nusmp:b_book", "beta", "nusmp:ft_two")), List.of());
+                "nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:test_one"),
+                "nusmp:b_route", small("B", "nusmp:b_book", "beta", "nusmp:test_two")), List.of());
         assertEquals(2, fine.all().size(), "the control: distinct books, classes and skills all load");
     }
 
@@ -136,9 +136,9 @@ class RouteIndexTest {
         JsonObject o = JsonParser.parseString(RouteSchemaTest.GOOD).getAsJsonObject();
         o.getAsJsonArray("nodes").get(1).getAsJsonObject().addProperty("cost", 0);       // roar is bad; the lotus needs it
         o.addProperty("maxLevel", 3);                                                    // and an unknown field
-        RouteIndex idx = RouteIndex.build(files("nusmp:fire_dragon_slayer", o), List.of());
+        RouteIndex idx = RouteIndex.build(files("nusmp:ember_knight", o), List.of());
         assertEquals(1, idx.all().size());
-        RouteIndex.Entry e = entry(idx, "nusmp:fire_dragon_slayer");
+        RouteIndex.Entry e = entry(idx, "nusmp:ember_knight");
         assertTrue(e.loaded());
         assertFalse(e.clean());
         assertEquals(2, e.nodes(), "iron_fist and appetite are left");
@@ -238,13 +238,13 @@ class RouteIndexTest {
     // ------------------------------------------------------------------ the client's copy
     @Test
     void theClientCopyKeepsTheServersRoutesAndDropsDuplicatesFirstWins() {
-        SkillRoute a = RouteSchema.parse("nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:ft_one")).route();
-        SkillRoute dup = RouteSchema.parse("nusmp:b_route", small("B", "nusmp:a_book", "alpha", "nusmp:ft_one")).route();
+        SkillRoute a = RouteSchema.parse("nusmp:a_route", small("A", "nusmp:a_book", "alpha", "nusmp:test_one")).route();
+        SkillRoute dup = RouteSchema.parse("nusmp:b_route", small("B", "nusmp:a_book", "alpha", "nusmp:test_one")).route();
         RouteIndex idx = RouteIndex.of(List.of(a, dup));
         assertEquals(2, idx.all().size(), "the list is shown as the server sent it");
         assertSame(a, idx.byBook("nusmp:a_book"), "but a lookup by book finds the first");
         assertSame(a, idx.byClass("alpha"));
-        assertEquals("nusmp:a_route", idx.bySkill("nusmp:ft_one")[0]);
+        assertEquals("nusmp:a_route", idx.bySkill("nusmp:test_one")[0]);
         assertEquals(0, idx.problemFiles());
         assertEquals(2, idx.report().size());
         assertNotEquals(a, dup);
@@ -252,10 +252,10 @@ class RouteIndexTest {
 
     @Test
     void theIdsOfTheRoutesAreTheNamespaceAndTheFileName() {
-        RouteIndex idx = RouteIndex.build(files("othermod:ice_make", small("Ice", "othermod:ice_book", "ice", null), "nusmp:ice_make", small("Ice", "nusmp:ice_book", "ice2", null)), List.of());
-        assertEquals(List.of("nusmp:ice_make", "othermod:ice_make"), idx.all().stream().map(SkillRoute::id).toList(), "the same file name in two namespaces are two routes");
+        RouteIndex idx = RouteIndex.build(files("othermod:frost_knight", small("Ice", "othermod:ice_book", "ice", null), "nusmp:frost_knight", small("Ice", "nusmp:ice_book", "ice2", null)), List.of());
+        assertEquals(List.of("nusmp:frost_knight", "othermod:frost_knight"), idx.all().stream().map(SkillRoute::id).toList(), "the same file name in two namespaces are two routes");
         List<String> ids = new ArrayList<>();
         for (RouteIndex.Entry e : idx.report()) ids.add(e.id());
-        assertEquals(List.of("nusmp:ice_make", "othermod:ice_make"), ids);
+        assertEquals(List.of("nusmp:frost_knight", "othermod:frost_knight"), ids);
     }
 }

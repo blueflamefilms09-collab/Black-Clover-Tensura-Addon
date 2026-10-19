@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BookLookTest {
     private static final String SAMPLE = """
-            {"franchises": ["exiled_heavy_knight", "tensura", "fairy_tail"], "prop_steps": 20,
+            {"franchises": ["exiled_heavy_knight", "tensura", "black_clover"], "prop_steps": 20,
              "lines": {
-               "fire_dragon_slayer": {"book": "nusmp:fire_dragon_slayer_book", "name": "Fire Dragon Slayer", "book_name": "Heart of the Fire Dragon", "color": "#E8541C", "franchise": "fairy_tail"},
+               "ember_knight": {"book": "nusmp:ember_knight_book", "name": "Ember Knight", "book_name": "Heart of the Ember Knight", "color": "#E8541C", "franchise": "black_clover"},
                "oath_of_the_heavy_armor": {"book": "nusmp:heavy_armor_book", "name": "Oath of the Heavy Armor", "book_name": "Oath of the Heavy Armor", "color": "#8E9AAF", "franchise": "exiled_heavy_knight"},
                "no_franchise": {"book": "nusmp:no_franchise_book", "name": "Plain", "color": "#102030", "franchise": ""}
              }}""";
@@ -43,7 +43,7 @@ class BookLookTest {
         BookLook.Index idx = sample();
         assertEquals(1 / 20f, idx.franchiseValue("exiled_heavy_knight"), 1e-6);
         assertEquals(2 / 20f, idx.franchiseValue("tensura"), 1e-6);
-        assertEquals(3 / 20f, idx.franchiseValue("fairy_tail"), 1e-6);
+        assertEquals(3 / 20f, idx.franchiseValue("black_clover"), 1e-6);
         assertEquals(0f, idx.franchiseValue("unknown"));
         assertEquals(0f, idx.franchiseValue(""));
         assertEquals(0f, idx.franchiseValue(null));
@@ -73,8 +73,8 @@ class BookLookTest {
     @Test
     void theColourComesFromTheRouteThenTheTableThenTheFallback() {
         BookLook.set(sample());
-        assertEquals(0x112233, BookLook.colorOf("nusmp:fire_dragon_slayer_book", 0x112233, 0x8A8A9A), "the client's own route wins");
-        assertEquals(0xE8541C, BookLook.colorOf("nusmp:fire_dragon_slayer_book", -1, 0x8A8A9A), "no route on the client: the shipped table");
+        assertEquals(0x112233, BookLook.colorOf("nusmp:ember_knight_book", 0x112233, 0x8A8A9A), "the client's own route wins");
+        assertEquals(0xE8541C, BookLook.colorOf("nusmp:ember_knight_book", -1, 0x8A8A9A), "no route on the client: the shipped table");
         assertEquals(0x8A8A9A, BookLook.colorOf("nusmp:nothing_book", -1, 0x8A8A9A), "neither: the fall-back");
         assertEquals(0xABCDEF, BookLook.colorOf("x", 0x01ABCDEF, 0), "a route colour with stray high bits is cut to RGB");
     }
@@ -82,7 +82,7 @@ class BookLookTest {
     @Test
     void theFranchiseOfAKnownRouteIsTheFallbackWhenTheTableHasNoEntry() {
         BookLook.set(sample());
-        assertEquals(3 / 20f, BookLook.franchiseValue("nusmp:fire_dragon_slayer_book", null), 1e-6);
+        assertEquals(3 / 20f, BookLook.franchiseValue("nusmp:ember_knight_book", null), 1e-6);
         assertEquals(2 / 20f, BookLook.franchiseValue("nusmp:a_datapack_book", "tensura"), 1e-6, "a datapack line of a known franchise takes the franchise's cover");
         assertEquals(2 / 20f, BookLook.franchiseValue("nusmp:no_franchise_book", "tensura"), 1e-6, "an entry with no franchise defers to the route's");
         assertEquals(0f, BookLook.franchiseValue("nusmp:a_datapack_book", null));

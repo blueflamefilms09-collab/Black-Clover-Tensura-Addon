@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.arc.ArcEntities;
 import com.newuniverse.nusmp.arc.ArcNpcEntity;
 import com.newuniverse.nusmp.dungeon.DungeonFood;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import net.minecraft.server.MinecraftServer;
@@ -19,10 +18,10 @@ import java.util.Map;
 
 /**
  * Why: nothing of the shop can be played by its author, so the CI server smoke test runs two checks in the real game ({@code /multiverse mega selftest}, keys
- * {@code tree.shop.*}). {@code tree.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
+ * {@code skillbook.shop.*}). {@code skillbook.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
  * every {@code minecraft:} and {@code nusmp:} item the witch buys exists, the shelf built from the REAL route registry is deterministic, changes with the restock period, offers
  * every route its line promises, and every offer can be turned into a real item stack (a wrong factory name or an unknown SP kind shows here), and the flagship sits in the top
- * third of its band. {@code tree.shop.buy} proves the DEAL: a stand-in player and a real witch entity, a purchase refused when poor, when far, when the price moved and when the
+ * third of its band. {@code skillbook.shop.buy} proves the DEAL: a stand-in player and a real witch entity, a purchase refused when poor, when far, when the price moved and when the
  * offer is unknown (each leaving gold, stock and inventory untouched), a real purchase that moves exactly the right gold, stock and item, a sold-out refusal, and a sale, a bulk
  * sale and the refusal of a bulk sale of a valuable. Both pass with an empty route registry (and say so); the deal test passes with a message when the shop or the Skill Tree is switched off
  * in the config (a closed shop would refuse every step, which proves nothing), and ignores a daily purchase limit; both put the world back as they found it.
@@ -33,8 +32,8 @@ public final class ShopSelfTests {
     private static final String PLAYER = "shop_tester";
 
     public static void register() {
-        SelfTests.register("tree.shop.stock", ShopSelfTests::stock);
-        SelfTests.register("tree.shop.buy", ShopSelfTests::buy);
+        SelfTests.register("skillbook.shop.stock", ShopSelfTests::stock);
+        SelfTests.register("skillbook.shop.buy", ShopSelfTests::buy);
     }
 
     private static SelfTests.Result ok(String detail) { return SelfTests.Result.ok(detail); }
@@ -83,7 +82,7 @@ public final class ShopSelfTests {
         }
         if (!bad.isEmpty()) return fail(String.join(" | ", bad));
         return ok(MarketData.stock().size() + " shelf lines and " + MarketData.prices().size() + " prices load clean (" + foreign + " foreign item(s)), "
-                + (RouteRegistry.all().isEmpty() ? "the route registry is empty (only SP books can be on the shelf), " : RouteRegistry.all().size() + " routes on the shelf, ")
+                + (RouteRegistry.all().isEmpty() ? "the route registry is empty (nothing can be on the shelf), " : RouteRegistry.all().size() + " routes on the shelf, ")
                 + shelf.size() + " offers now, every one can be made; " + flagship);
     }
 
@@ -101,7 +100,6 @@ public final class ShopSelfTests {
     // ================================================================ the deal
     private static SelfTests.Result buy(MinecraftServer server) {
         if (!ShopConfig.enabled()) return ok("skipped: the Black Market is switched off in the config (nusmp-skilltree-shop-server.toml, enabled)");
-        if (!SkillTreeApi.isEnabled()) return ok("skipped: the Skill Tree is switched off in the config, so the shop is closed with it");
         ServerLevel level = server.overworld();
         FakePlayer fp = SelfTests.standIn(level, PLAYER, 0.5, 100, 0.5);
         ArcNpcEntity witch = ArcEntities.NPC.get().create(level);

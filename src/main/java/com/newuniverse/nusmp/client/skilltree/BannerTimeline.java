@@ -77,7 +77,7 @@ public final class BannerTimeline {
 
     /**
      * A readable name for a route the client has no copy of yet (the packet arrived before the registry sync, which should not happen but must not show a blank banner):
-     * the path of the id with underscores turned into spaces and each word capitalised, so {@code nusmp:fire_dragon_slayer} reads "Fire Dragon Slayer".
+     * the path of the id with underscores turned into spaces and each word capitalised, so {@code nusmp:lady_luck} reads "Fire Dragon Slayer".
      */
     public static String fallbackName(String routeId) {
         if (routeId == null || routeId.isEmpty()) return "";

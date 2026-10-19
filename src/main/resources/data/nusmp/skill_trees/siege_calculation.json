@@ -11,9 +11,7 @@
   "class_id": "siege_calculation",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/siege_calculation.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "sand",
   "nodes": [
     {
       "id": "entrenched_battery",

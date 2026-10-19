@@ -11,9 +11,7 @@
   "class_id": "household_vessel_wielder",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/household_vessel_wielder.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "borrowed_power",

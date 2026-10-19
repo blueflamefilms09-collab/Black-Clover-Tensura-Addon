@@ -78,7 +78,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");   // 1.61.0: the Eye of the Midnight Sun bosses
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.sds.SdsaConfig.SPEC, "nusmp-arc-sdsa-server.toml");   // 1.61.0: the Seven Deadly Sins, part 1 (Meliodas, Escanor, Ban)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.danmachi.DanMachiConfig.SPEC, "nusmp-danmachi-server.toml");   // 1.61.0: DanMachi: the Dungeon Level of the monsters
-        com.newuniverse.nusmp.skilltree.SkillTreeSystem.init(modEventBus, modContainer);                                    // 1.62.0: the Skill Book & Skill Tree engine (Fairy Tail magic and later anime magics): routes, SP, books, the Black Market (registers its own attachment, items, skills and configs)
+        com.newuniverse.nusmp.skilltree.SkillBookSystem.init(modEventBus, modContainer);                                    // 1.96.0: the Skill Books: one unique skill per book (the Skill Tree, SP and the Fairy Tail magics were removed), the loot, the Black Market (registers its own attachment, items, skills and configs)
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         com.newuniverse.nusmp.elite.EliteSystem.init(modEventBus, modContainer);                                           // 1.83.0: the EliteTensuraAddon systems and the Hub economy (docs/elite/plan.md)
@@ -124,7 +124,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            com.newuniverse.nusmp.client.skilltree.SkillTreeClient.init(modEventBus);                                       // 1.62.0: the Skill Tree screen and its button in the Four Kingdoms / Status menus
+            com.newuniverse.nusmp.client.skilltree.SkillBookClient.init(modEventBus);                                       // 1.96.0: the Skill Book cover, tooltip and banner, the Black Market screen
             com.newuniverse.nusmp.client.heroweapon.HeroClient.init(modEventBus);                                           // 1.62.0: hero weapon keys, HUD, forms book, curse screen
             com.newuniverse.nusmp.client.arc.ArcClient.init(modEventBus);                                                   // 1.58.0: renderers of the arc characters, spawn egg colours
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);

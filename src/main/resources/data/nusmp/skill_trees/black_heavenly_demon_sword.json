@@ -11,9 +11,7 @@
   "class_id": "black_heavenly_demon_sword",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/black_heavenly_demon_sword.png",
   "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
-  "background_theme": "blood",
   "nodes": [
     {
       "id": "demon_s_stance",

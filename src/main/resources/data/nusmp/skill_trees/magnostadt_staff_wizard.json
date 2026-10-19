@@ -11,9 +11,7 @@
   "class_id": "magnostadt_staff_wizard",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/magnostadt_staff_wizard.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "tower",
   "nodes": [
     {
       "id": "steady_casting",

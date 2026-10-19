@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: every Fairy Tail ability needs the same small set of things (foes in a ring, a line or a cone; a hit through the balance law; a heal; a cost in magicules; an effect; a sound; a line on
+ * Why: every line ability needs the same small set of things (foes in a ring, a line or a cone; a hit through the balance law; a heal; a cost in magicules; an effect; a sound; a line on
  * the action bar), and the owner's balance rules (the damage cap, the heal cap, one hard-control lock) only hold if they are written once. These are static helpers over the mod's own APIs
  * ({@link BalanceLaw}, {@link VfxSpawn}, the Tensura magicule pool), with no state, so a tree ability is a few lines of intent. They deliberately do NOT use anything of the Black Clover
  * grimoire (no mastery pages, no grimoire mana): the tree system's cost is the Tensura magicule pool and its power is the node level, which is the isolation the owner asked for.

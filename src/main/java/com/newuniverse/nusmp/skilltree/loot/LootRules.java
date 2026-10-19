@@ -12,7 +12,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Polarity;
  * the death listener for the Guardian that does not, the self-test, the unit test) asks {@link #decide} the same question with the same facts and gets the same
  * answer. The facts are a {@link Victim} (where, what, killed by whom: all read from the live game by the glue code and passed in as plain values, so this class
  * needs no server) and the {@link Chances} (the server's config); the answer is a {@link Plan}: whether a route book is added and how many SP Books. It decides only
- * WHETHER; which route and which kinds are picked by {@link RoutePick} and {@link com.newuniverse.nusmp.skilltree.item.SpKind#pickDrop}, so the odds of the
+ * WHETHER; which route and which kinds are picked by {@link RoutePick} and the SP Book kinds (gone in 1.96.0), so the odds of the
  * drop and the shape of the drop can be tuned and tested apart. The order of the dice draws (route book first, then the SP Books) is part of the contract because
  * the unit tests replay scripted dice.
  *

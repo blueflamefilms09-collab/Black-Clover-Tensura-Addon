@@ -2,37 +2,5 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "nusmp:item/sp_book"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "nusmp:sp_kind": 0.05
-      },
-      "model": "nusmp:item/sp_book_beginner_archery"
-    },
-    {
-      "predicate": {
-        "nusmp:sp_kind": 0.15
-      },
-      "model": "nusmp:item/sp_book_elemental_primer"
-    },
-    {
-      "predicate": {
-        "nusmp:sp_kind": 0.25
-      },
-      "model": "nusmp:item/sp_book_magic_booster"
-    },
-    {
-      "predicate": {
-        "nusmp:sp_kind": 0.35
-      },
-      "model": "nusmp:item/sp_book_jack_in_the_box"
-    },
-    {
-      "predicate": {
-        "nusmp:sp_kind": 0.45
-      },
-      "model": "nusmp:item/sp_book_greater_primer"
-    }
-  ]
+  }
 }

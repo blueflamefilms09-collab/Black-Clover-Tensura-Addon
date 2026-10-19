@@ -3,8 +3,8 @@ package com.newuniverse.nusmp.skilltree.shop;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
-import com.newuniverse.nusmp.skilltree.item.SPBookItem;
 import com.newuniverse.nusmp.skilltree.item.SkillBookItem;
+import com.newuniverse.nusmp.skilltree.unique.LineIndex;
 import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 
@@ -35,10 +35,10 @@ public final class ShopGoods {
             ItemStack made;
             if (kind == StockEntry.Kind.ROUTE_BOOK) {
                 SkillRoute route = RouteRegistry.byId(ref);
-                if (route == null) return ItemStack.EMPTY;
+                if (route == null || !LineIndex.known(route.id())) return ItemStack.EMPTY;
                 made = SkillBookItem.stack(route.book());
             } else {
-                made = SPBookItem.stack(ref);
+                made = ItemStack.EMPTY;                                         // the SP Books are gone with the Skill Points: an old stock line for one sells nothing
             }
             return made == null ? ItemStack.EMPTY : made;
         } catch (RuntimeException e) {
@@ -50,7 +50,7 @@ public final class ShopGoods {
     /** The ids of the routes that exist right now, in registry order. */
     public static List<String> routeIds() {
         List<String> out = new ArrayList<>();
-        for (SkillRoute r : RouteRegistry.all()) out.add(r.id());
+        for (SkillRoute r : RouteRegistry.all()) if (LineIndex.known(r.id())) out.add(r.id());
         return out;
     }
 }

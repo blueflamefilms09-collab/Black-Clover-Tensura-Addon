@@ -11,9 +11,7 @@
   "class_id": "legionary_phalanx_shield",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/legionary_phalanx_shield.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "iron",
   "nodes": [
     {
       "id": "shield_wall",

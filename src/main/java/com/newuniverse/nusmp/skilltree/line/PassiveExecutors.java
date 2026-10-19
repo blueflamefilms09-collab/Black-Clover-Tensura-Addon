@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.skilltree.line;
 
 import com.newuniverse.nusmp.skilltree.ability.AbilityKit;
-import com.newuniverse.nusmp.skilltree.ft.sky.SkyAllies;
+import com.newuniverse.nusmp.skilltree.kit.KitAllies;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -226,7 +226,7 @@ public final class PassiveExecutors {
                 LineLookups.give(e, effect, ticks, amp, false);
             }
         } else {
-            for (LivingEntity e : SkyAllies.around(c.p, c.p.position(), radius)) {
+            for (LivingEntity e : KitAllies.around(c.p, c.p.position(), radius)) {
                 if (n++ >= 12) break;
                 LineLookups.give(e, effect, ticks, amp, false);
             }

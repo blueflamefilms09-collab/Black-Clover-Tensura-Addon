@@ -11,9 +11,7 @@
   "class_id": "tog_inventory",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/tog_inventory.png",
   "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
-  "background_theme": "stellar",
   "nodes": [
     {
       "id": "open_pocket_stance",

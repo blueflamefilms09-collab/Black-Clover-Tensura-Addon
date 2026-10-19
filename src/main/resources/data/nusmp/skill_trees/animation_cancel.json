@@ -11,9 +11,7 @@
   "class_id": "animation_cancel",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/animation_cancel.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "frame_skip_stance",

@@ -11,9 +11,7 @@
   "class_id": "wall_clip_glitch",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/wall_clip_glitch.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "void",
   "nodes": [
     {
       "id": "clipped_inside_posture",

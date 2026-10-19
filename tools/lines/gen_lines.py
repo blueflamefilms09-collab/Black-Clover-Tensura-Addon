@@ -22,7 +22,6 @@ import catalog as C  # noqa: E402
 from lines_lib import FRANCHISES  # noqa: E402
 
 CLAMPED = []
-BG_PATH = "nusmp:textures/gui/skill_trees/%s.png"
 
 
 def slug(s):
@@ -209,8 +208,8 @@ def build_line(L, problems):
         "magic": L.franchise, "franchise": L.franchise, "name": L.name, "desc": L.desc,
         "book": "nusmp:%s_book" % L.id, "book_name": L.book_name, "book_lore": L.book_lore,
         "color": L.color.upper(), "icon": L.icon, "class_id": L.id, "duplicate_sp": 3, "loot_weight": L.loot_weight,
-        "gui_background": BG_PATH % L.id, "book_texture": "nusmp:item/skill_book_3d/%s" % L.franchise,
-        "background_theme": L.background, "nodes": nodes,
+        "book_texture": "nusmp:item/skill_book_3d/%s" % L.franchise,
+        "nodes": nodes,
     }
     return route
 

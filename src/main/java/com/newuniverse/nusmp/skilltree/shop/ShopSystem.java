@@ -10,11 +10,11 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 /**
  * Why: the Black Market is several small parts (the price and stock data and their reload listener, the config, the five packets, the one-action-per-tick gate, the self-tests)
- * that must be started together, once, from the single line that {@code SkillTreeSystem} owns, and each of them has a lifecycle that is easy to get wrong: the data must be
+ * that must be started together, once, from the single line that {@code SkillBookSystem} owns, and each of them has a lifecycle that is easy to get wrong: the data must be
  * re-read on every {@code /reload} (so it is a reload listener, not a read at startup), the snapshots and the gate must be emptied when the server stops (so a second world in the
  * same game session starts clean), and a player's gate entry must go when they log out. This class is exactly that wiring and nothing else: it registers the config file
  * {@code nusmp-skilltree-shop-server.toml} itself (so there is no separate {@code registerConfig} line anywhere), the payloads on the mod bus (the NeoForge 21.1 way; there is no
- * {@code SimpleChannel}), the listeners on the game bus, and the self-tests {@code tree.shop.*}. Safe to call twice.
+ * {@code SimpleChannel}), the listeners on the game bus, and the self-tests {@code skillbook.shop.*}. Safe to call twice.
  */
 public final class ShopSystem {
     private ShopSystem() {}

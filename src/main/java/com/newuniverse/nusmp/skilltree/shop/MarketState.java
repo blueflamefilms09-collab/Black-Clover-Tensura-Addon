@@ -54,7 +54,7 @@ public final class MarketState extends SavedData {
     /** The restock period the purchases below belong to (-1 before the first visit). */
     public long period() { return period; }
 
-    /** The operator's restock counter (see {@code /multiverse tree shop restock}). */
+    /** The operator's restock counter (see {@code /multiverse skillbook shop restock}). */
     public int epoch() { return epoch; }
 
     /** Moves to the restock period {@code now}; a new period forgets the purchases of the old one. Returns true when the shelf was restocked. */

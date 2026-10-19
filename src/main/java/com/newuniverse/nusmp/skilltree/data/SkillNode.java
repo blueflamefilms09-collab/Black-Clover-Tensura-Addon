@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: a node is the smallest thing a player can buy in a skill tree, and it has to be pure data so that a new magic (a Fairy Tail one today, any anime tomorrow) is a
+ * Why: a node is the smallest thing a player can buy in a skill tree, and it has to be pure data so that a new magic (any anime magic) is a
  * JSON file and not a Java class. It carries exactly what the owner listed (an id, the prerequisite nodes, the SP cost, the maximum level, the ability it grants) plus
  * what the screen and the abilities need: the texts, a position on the tree canvas, an icon, and a table of per-level numbers ({@code values}) that the granted ability reads, so
  * balancing an ability is editing a datapack and not rebuilding the mod. Immutable and free of Minecraft types so the rules can be unit-tested without a server.
  *
- * @param id        unique within its route, lower-case snake ({@code fire_dragons_roar})
+ * @param id        unique within its route, lower-case snake ({@code provoke})
  * @param name      display name
  * @param desc      one or two sentences for the tooltip
  * @param parents   nodes that must already be at a level before this one can be bought (all of them); empty for a root node
  * @param cost      SP price of one level (the price of level n is {@link #costOf} )
  * @param costs     optional price per level (index 0 is level 1); when shorter than the maximum level the last entry repeats; empty means every level costs {@code cost}
  * @param maxLevel  how many times the node can be bought (at least 1)
- * @param skill     the id of the ManasCore skill this node grants as soon as it reaches level 1 ({@code nusmp:ft_fire_dragons_roar}), or an empty string for none
+ * @param skill     the id of the ManasCore skill this node grants as soon as it reaches level 1 ({@code nusmp:hk_provoke}), or an empty string for none
  * @param passives  ids of passive effects the node switches on while its level is at least 1 (implemented by the route's content code)
  * @param values    named tables of numbers by level (index 0 is level 1), for example {@code damage: [6, 8, 10]}; the ability reads them through {@link #value}
  * @param x         column on the tree canvas (grid units, 0 at the left)

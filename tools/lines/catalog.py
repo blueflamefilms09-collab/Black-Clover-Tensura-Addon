@@ -3,7 +3,7 @@
 WHY: 275+ lines of 15 to 30 nodes each cannot be 5,000 hand-written Java classes. Every node of a generated line names one KIND from this catalogue and gives
 numbers for it; the engine (skilltree/line/ in Java) has ONE executor per kind and the generator (gen_lines.py) writes the per-level tables. So a line is data,
 a new line costs no code, and what makes lines different is the kinds they combine, their numbers, their elements and their names. The Java side is pinned to this file by a test:
-every kind here must have an executor and every executor must be listed here (see docs/skilltree/lines.md).
+every kind here must have an executor and every executor must be listed here (see docs/skillbooks_unique.md).
 
 Param spec:  name: (base, min, max, grow)   numeric; level n value = base * (1 + grow * (n-1)), clamped to [min, max], rounded sensibly.
 Enum spec:   name: [allowed strings]        string; the same at every level (goes to the node's "params" map).

@@ -53,29 +53,23 @@
       "predicate": {
         "nusmp:franchise": 0.325
       },
-      "model": "nusmp:item/skill_book_st_fairy_tail"
+      "model": "nusmp:item/skill_book_st_tbate"
     },
     {
       "predicate": {
         "nusmp:franchise": 0.375
       },
-      "model": "nusmp:item/skill_book_st_tbate"
+      "model": "nusmp:item/skill_book_st_tower_of_god"
     },
     {
       "predicate": {
         "nusmp:franchise": 0.425
       },
-      "model": "nusmp:item/skill_book_st_tower_of_god"
-    },
-    {
-      "predicate": {
-        "nusmp:franchise": 0.475
-      },
       "model": "nusmp:item/skill_book_st_god_of_high_school"
     },
     {
       "predicate": {
-        "nusmp:franchise": 0.525
+        "nusmp:franchise": 0.475
       },
       "model": "nusmp:item/skill_book_st_omniscient_readers_viewpoint"
     }

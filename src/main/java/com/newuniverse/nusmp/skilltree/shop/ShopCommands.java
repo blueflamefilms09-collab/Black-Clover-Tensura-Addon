@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Why: gold has no other source in this version besides the witch buying goods, and the owner and the testers need to hand it out, take it back, see the shelf and force a new
- * restock without playing for hours; a server owner needs to see why the shop is empty. Two nodes hang under {@code /multiverse tree} (the lead adds one line for each):
+ * restock without playing for hours; a server owner needs to see why the shop is empty. Two nodes hang under {@code /multiverse skillbook} (the lead adds one line for each):
  * {@link #node()} is {@code gold <player> [add|set <amount>]} and {@link #shopNode()} is {@code shop status|stock|restock}. Both require permission level 2, like every
  * administrative command of the skill tree, because they create value out of nothing. Every change goes through {@link MarketGold} (so {@link GoldLedger}'s rules apply: never
  * negative, never above the cap) and the player's client is re-synced, so the number on an open screen is not a lie.
