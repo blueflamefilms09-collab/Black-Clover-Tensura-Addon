@@ -1,0 +1,10 @@
+{
+ "vortex_funnel_view": {"kind": "geo", "model": "vortex_funnel", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 10, 20], "tile": [300, 420]},
+ "vortex_aura_armour": {"kind": "aura", "attr": "Vortex", "aura": "VORTEX", "style": 0, "total": 120, "ages": [3, 9, 16, 40, 80, 108], "tile": [300, 420],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/AirSetKit.java",
+                   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"]},
+ "vortex_prop_core": {"kind": "prop", "attr": "Vortex", "propKind": "VORTEX_1", "param": 0, "scale": 1.0, "maxLife": 160, "pos": [0, 1.2, 0], "ages": [3, 8, 30, 90, 155], "tile": [300, 340],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"]},
+ "vortex_prop_funnel": {"kind": "prop", "attr": "Vortex", "propKind": "VORTEX_1", "param": 1, "scale": 1.0, "maxLife": 160, "pos": [0, 0, 0], "ages": [3, 8, 30, 90, 155], "tile": [300, 420],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"]}
+}
