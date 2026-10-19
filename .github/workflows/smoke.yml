@@ -34,7 +34,7 @@ jobs:
           # through the environment, never pasted into the script text: a commit message is free text
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           # the systems of this build that must each have registered self-tests (edit this list when a system is added)
-          SMOKE_EXPECT: "core,safe,enc,eco,guard,theme,floors,hub,macro,system,flow,gear,stairs,arc,avatar,party,arcworld,hero,tree,mech,foundry,gen,elite.hub,compat.maps,djinn.core_rebuild,magic.shakudo_rebuild,magic.earth_family_rebuild,magic.song_rebuild,magic.water_rebuild,magic.tree_rebuild,rift"
+          SMOKE_EXPECT: "core,safe,enc,eco,guard,theme,floors,hub,macro,system,lock,flow,gear,stairs,arc,avatar,party,arcworld,hero,tree,mech,foundry,gen,elite.hub,compat.maps,djinn.core_rebuild,magic.shakudo_rebuild,magic.earth_family_rebuild,magic.song_rebuild,magic.water_rebuild,magic.tree_rebuild,rift"
         run: |
           chmod +x gradlew
           # [strict] in the commit message: a missing pool, structure or command is a failure (use it on the integrated build)

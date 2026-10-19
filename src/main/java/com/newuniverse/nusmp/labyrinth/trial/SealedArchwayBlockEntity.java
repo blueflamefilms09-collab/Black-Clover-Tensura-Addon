@@ -56,7 +56,7 @@ import java.util.UUID;
  * crosses a one-block doorway between two ten-tick checks. CLEARED is permanent and saved. Everything that is only arithmetic lives in {@link TrialMath}
  * and {@link TrialState}, which are tested without a level.
  */
-public final class SealedArchwayBlockEntity extends BlockEntity {
+public final class SealedArchwayBlockEntity extends BlockEntity implements com.newuniverse.nusmp.labyrinth.mega.lock.Lockable {
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
     /** Markers are rescanned at most every ten seconds while a player stands inside an idle box: the piece is static, but an admin may edit it. */
     private static final int RESCAN_TICKS = 200;
@@ -100,6 +100,10 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
     private long lastPlayerTick;
     /** Has a player been seen standing in a rune column since the last IDLE? Only a chamber with runes needs it to activate. */
     private boolean armed;
+    /** 1.94.0 (escape rules): the game tick the trial sealed the doorways (0 = not known, e.g. a chamber saved before the rules; its clock then starts when it is first seen sealed). */
+    private long activatedTick;
+    /** 1.94.0: how many of its mobs the last count found alive (the escape rules' "hostiles"). */
+    private int lastAlive;
     // ---------------------------------------------------------------- the marker scan (not saved: found again after a reload)
     private List<BlockPos> runes, glyphs;
     private long scanTick = Long.MIN_VALUE;
@@ -154,6 +158,62 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         } else if (step.action() != TrialState.Action.NONE || state == TrialState.ACTIVE) {
             setChanged();                                                           // the tracked mobs and barrier cells changed
         }
+        if (state == TrialState.ACTIVE) {                                           // 1.94.0: a sealed chamber is in the escape book while it is closed (timers, release rune, /dungeon release)
+            lastAlive = alive;
+            if (activatedTick == 0L) activatedTick = now;
+            if (com.newuniverse.nusmp.labyrinth.mega.lock.LockConfig.get(com.newuniverse.nusmp.labyrinth.mega.lock.LockConfig.TRIAL_RULES)) {
+                com.newuniverse.nusmp.labyrinth.mega.lock.LockBook.keep(this, now);
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- 1.94.0: the escape rules (labyrinth/mega/lock): a sealed chamber always has a way out
+    @Override public String lockKey() { return "trial:" + worldPosition.asLong(); }
+
+    @Override public com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Kind lockKind() { return com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Kind.TRIAL; }
+
+    @Override public String lockName() { return "the trial chamber"; }
+
+    @Override public ServerLevel lockLevel() { return getLevel() instanceof ServerLevel sl ? sl : null; }
+
+    @Override
+    public net.minecraft.world.phys.Vec3 runePos() {
+        ServerLevel sl = lockLevel();
+        if (sl == null) return net.minecraft.world.phys.Vec3.atBottomCenterOf(worldPosition);
+        List<BlockPos> spots = fallbackSpots(sl, worldPosition, box());
+        return net.minecraft.world.phys.Vec3.atBottomCenterOf(spots.get(0).above());
+    }
+
+    @Override
+    public List<ServerPlayer> prisoners() {
+        ServerLevel sl = lockLevel();
+        return sl == null ? List.of() : playersInside(sl, box(), false);
+    }
+
+    @Override
+    public com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Facts facts(long now) {
+        long sealed = activatedTick == 0L ? 0L : Math.max(0L, now - activatedTick);
+        return new com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Facts(com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Kind.TRIAL, sealed, prisoners().size(),
+                Math.max(0L, now - lastPlayerTick), lastAlive, 0L, false, true);
+    }
+
+    /** The chamber keeps its own reset time as the "nobody inside" time, so the escape rules never open a trial sooner than the template says. */
+    @Override
+    public com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Config config(com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Config base) {
+        return new com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Config(resetSeconds(), base.runeAfterSeconds(), base.idleRuneSeconds(), base.rescueMinutes(),
+                base.maxSealSeconds(), base.bossMaxSeconds(), base.unsolvableSeconds());
+    }
+
+    /** Opens the chamber the way an abandoned trial opens: the mobs that can be reached are removed, the barriers fall, the trial goes back to IDLE for the next party. */
+    @Override
+    public void open(ServerPlayer by, com.newuniverse.nusmp.labyrinth.mega.lock.EscapeRules.Why why) {
+        ServerLevel sl = lockLevel();
+        if (sl == null || state != TrialState.ACTIVE) return;
+        reset(sl, worldPosition);
+        state = TrialState.IDLE;
+        activatedTick = 0L;
+        setPhase(sl, worldPosition, SealedArchwayBlock.Phase.of(state));
+        setChanged();
     }
 
     // ---------------------------------------------------------------- who is inside
@@ -235,6 +295,8 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         Component msg = Component.translatable(MSG_SEALED).withStyle(ChatFormatting.AQUA);
         for (ServerPlayer p : inside) p.displayClientMessage(msg, false);
         lastPlayerTick = now;
+        activatedTick = now;
+        lastAlive = spawned.size();
         if (spawned.isEmpty()) LOG.warn("[nusmp] Sealed Archway at {} activated but spawned nothing (mob list: {} entries): it will clear at once", pos, mobs.size());
     }
 
@@ -305,6 +367,8 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         dropBarriers(level);
         spawned.clear();
         armed = false;
+        activatedTick = 0L;
+        com.newuniverse.nusmp.labyrinth.mega.lock.LockBook.drop(level, lockKey());
         level.playSound(null, pos, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0f, 1.0f);
         level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 40, 1.5, 1.0, 1.5, 0.05);
         Component msg = Component.translatable(MSG_FADES).withStyle(ChatFormatting.GRAY);
@@ -320,6 +384,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         spawned.clear();
         armed = false;
         dropBarriers(level);
+        com.newuniverse.nusmp.labyrinth.mega.lock.LockBook.drop(level, lockKey());
         level.playSound(null, pos, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 0.6f, 0.7f);
     }
 
@@ -389,6 +454,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         tag.putLongArray("barriers", b);
         tag.putLong("lastPlayerTick", lastPlayerTick);
         tag.putBoolean("armed", armed);
+        tag.putLong("activatedTick", activatedTick);
     }
 
     /** Reads a full save, a template's tag (settings only) or a client update tag (state only): every key is optional. */
@@ -428,6 +494,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity {
         }
         if (tag.contains("lastPlayerTick", Tag.TAG_ANY_NUMERIC)) lastPlayerTick = tag.getLong("lastPlayerTick");
         if (tag.contains("armed", Tag.TAG_ANY_NUMERIC)) armed = tag.getBoolean("armed");
+        if (tag.contains("activatedTick", Tag.TAG_ANY_NUMERIC)) activatedTick = tag.getLong("activatedTick");
     }
 
     /** What a client gets: the state and how many mobs are still tracked (for a renderer or a HUD; the face itself is the block state). */

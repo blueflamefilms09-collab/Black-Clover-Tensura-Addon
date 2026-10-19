@@ -337,6 +337,48 @@ public final class Instance {
         return out;
     }
 
+    // ---------------------------------------------------------------- 1.94.0, the escape rules (labyrinth/mega/lock): the questions "does this lock people in" asks
+    /**
+     * Does this mechanic bar the doorways or cage the party, and is that barrier standing now? True only while it is ARMED (a beaten or ended mechanic has already put
+     * its blocks back) and while a journal of a {@code seal_doors} or {@code cage} effect still holds blocks. This is the fact the escape engine ({@code LockBook}) asks every
+     * second to find the mechanics that lock people in.
+     */
+    public boolean sealsPlayers() {
+        if (state != State.ARMED) return false;
+        boolean sealing = false;
+        for (MechanicDef.Effect e : def.effects()) if (e.op().equals("seal_doors") || e.op().equals("cage")) sealing = true;
+        if (!sealing) return false;
+        for (String n : new String[] {"doors", "cage"}) {
+            Journal j = named.get(n);
+            if (j != null && !j.isEmpty()) return true;
+        }
+        for (Run r : running) {
+            if (r.journalOrNull() != null && !r.journalOrNull().isEmpty() && (r.eff.op().equals("seal_doors") || r.eff.op().equals("cage"))) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Does a room, zone or boss mechanic stand obstacles it placed ({@code place} with no end time) in the dungeon? They are not a seal, but they can wall a doorway, so the
+     * escape engine tracks them softly (no message, no rune) and lets the longest-time rule retire them. A floor-wide mechanic is never one: it is meant to last the floor.
+     */
+    public boolean holdsObstacles() {
+        if (state != State.ARMED || def.scope() == Scope.FLOOR) return false;
+        boolean place = false;
+        for (MechanicDef.Effect e : def.effects()) if (e.op().equals("place")) place = true;
+        if (!place) return false;
+        for (Journal j : kept) if (!j.isEmpty()) return true;
+        return false;
+    }
+
+    /** How many different players the counter needs at once: the plates of a {@code split_plates} puzzle, else one. */
+    public int playersNeeded() {
+        return "split_plates".equals(def.counter().kind()) ? (int) Math.max(1.0, Counters.num(this, "n")) : 1;
+    }
+
+    /** Where a player was first seen inside this mechanic's area (where they came in), or null. */
+    public BlockPos entryOf(UUID id) { return entry.get(id); }
+
     // ---------------------------------------------------------------- monsters
     /** The live monsters this instance may act on: its own and the dungeon's in the area (near the players for a floor-wide mechanic). */
     public List<Mob> mobsInArea() {

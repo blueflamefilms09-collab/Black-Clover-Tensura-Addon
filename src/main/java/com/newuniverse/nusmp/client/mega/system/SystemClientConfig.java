@@ -12,9 +12,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class SystemClientConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, SHOW_STATS, TOASTS, CENTER_X, CENTER_Y;
+    public static final ModConfigSpec.BooleanValue ENABLED, SHOW_STATS, TOASTS, CENTER_X, CENTER_Y, FLOOR_CARD;
     public static final ModConfigSpec.DoubleValue SCALE, ALPHA;
-    public static final ModConfigSpec.IntValue ANCHOR, OFFSET_X, OFFSET_Y;
+    public static final ModConfigSpec.IntValue ANCHOR, OFFSET_X, OFFSET_Y, FLOOR_CARD_SECONDS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -41,6 +41,11 @@ public final class SystemClientConfig {
                 .define("showStats", true);
         TOASTS = b.comment("Show the pop-up lines that slide in from the left (quest arrived, quest complete, rewards, floor reached, extraction ready).")
                 .define("toasts", true);
+        FLOOR_CARD = b.comment("1.94.0: show the floor report on every arrival: the System window that says which floor this is and which way it goes, the theme of the floor and the mechanics in effect "
+                        + "(what each does and how to beat it). false = it is not shown by itself; the floor report key (Controls > Multiverse: System) and /dungeon floor still show it.")
+                .define("floorCard", true);
+        FLOOR_CARD_SECONDS = b.comment("1.94.0: how many seconds the floor report stays on screen after an arrival (a report you asked for stays longer, a mid-floor update shorter).")
+                .defineInRange("floorCardSeconds", 14, 3, 60);
         b.pop();
         SPEC = b.build();
     }
@@ -52,6 +57,14 @@ public final class SystemClientConfig {
     public static boolean showStats() { return bool(SHOW_STATS, true); }
 
     public static boolean toasts() { return bool(TOASTS, true); }
+
+    /** 1.94.0: is the floor report shown by itself on an arrival? */
+    public static boolean floorCard() { return bool(FLOOR_CARD, true); }
+
+    /** 1.94.0: seconds the floor report stays up after an arrival (3..60). */
+    public static int floorCardSeconds() {
+        try { return Math.max(3, Math.min(60, FLOOR_CARD_SECONDS.get())); } catch (IllegalStateException notLoaded) { return 14; }
+    }
 
     /** The window scale, clamped to 0.5..2.0. */
     public static float scale() {

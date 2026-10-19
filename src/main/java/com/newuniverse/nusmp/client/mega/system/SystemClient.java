@@ -59,6 +59,7 @@ public final class SystemClient {
             ClientSystem.clear();
             ClientPoints.clear();
         });
+        FloorCardClient.init(modBus);                                                  // 1.94.0: the floor report window and its key (theme, mechanics, depth)
     }
 
     private static void tick() {

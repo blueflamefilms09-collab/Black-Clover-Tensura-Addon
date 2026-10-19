@@ -83,6 +83,9 @@ public final class MechanicsDirector {
 
     static String key(Sector s, Planner.Slot slot) { return s.id + ":" + slot.roomId() + ":" + slot.def().id(); }
 
+    /** The key of a planned slot, for the System's floor report and the escape rules (the same text the Director uses to track the instance). */
+    public static String keyOf(Sector s, Planner.Slot slot) { return key(s, slot); }
+
     // ---------------------------------------------------------------- the tick
     public static void onServerTick(ServerTickEvent.Post e) {
         try {
@@ -232,6 +235,24 @@ public final class MechanicsDirector {
             LOG.warn("[nusmp] mechanic {} did not end cleanly: {}", in.def.id(), e.toString());
         }
         ACTIVE.remove(in.key);
+    }
+
+    /**
+     * Opens a mechanic that locked people in without paying its reward (the escape rules: a seal that timed out, a rune that was used, a rescue): the instance is ended, which
+     * restores every block from its journals and removes its monsters, props and flags, and it is remembered as done so it cannot re-arm and shut the next party in. An
+     * admin-applied instance is only ended (it was never part of the plan).
+     */
+    public static void retire(Instance in) {
+        if (in == null) return;
+        boolean admin = in.admin;
+        end(in);
+        if (!admin) {
+            try {
+                MechanicsData.get(in.level.getServer()).markSolved(in.key);
+            } catch (RuntimeException e) {
+                LOG.warn("[nusmp] mechanic {} could not be remembered as released: {}", in.def.id(), e.toString());
+            }
+        }
     }
 
     /** Ends every live instance (switch off, admin clear, server stop). */
