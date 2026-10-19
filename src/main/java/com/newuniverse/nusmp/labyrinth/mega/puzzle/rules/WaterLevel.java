@@ -38,21 +38,23 @@ public final class WaterLevel extends PuzzleBase {
 
     @Override protected void init() {
         cap = null;
-        int lo = 6 + 2 * p.lvl(), hi = 14 + 5 * p.lvl(), found = 0;
-        for (int attempt = 0; attempt < 400 && cap == null; attempt++) {
+        int target = 6 + 2 * p.lvl(), found = 0, bestGap = Integer.MAX_VALUE;
+        for (int attempt = 0; attempt < 200; attempt++) {
             int[] c = new int[n];
             boolean dup = false;
-            for (int i = 0; i < n; i++) { c[i] = 3 + rng.nextInt(7); for (int j = 0; j < i; j++) dup |= c[j] == c[i]; }
+            for (int i = 0; i < n; i++) { c[i] = 3 + rng.nextInt(5); for (int j = 0; j < i; j++) dup |= c[j] == c[i]; }
             if (dup) continue;
-            int g = 1 + rng.nextInt(8);
+            int g = 1 + rng.nextInt(6);
             boolean isCap = false;
             for (int v : c) isCap |= v == g;
             if (isCap) continue;
             int d = depth(c, g);
-            if (d >= lo && d <= hi) { cap = c; goal = g; found = d; }
+            if (d < 5 || d > 30) continue;
+            int gap = Math.abs(d - target);
+            if (gap < bestGap) { bestGap = gap; cap = c; goal = g; found = d; }
         }
         if (cap == null) {
-            cap = n == 2 ? new int[] {3, 5} : new int[] {3, 5, 8};
+            cap = n == 2 ? new int[] {3, 5} : new int[] {3, 5, 7};
             goal = 4;
             found = depth(cap, goal);
         }

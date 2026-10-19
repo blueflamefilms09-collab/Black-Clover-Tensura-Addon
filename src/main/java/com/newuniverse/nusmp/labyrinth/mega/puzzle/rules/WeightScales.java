@@ -30,7 +30,7 @@ public final class WeightScales extends PuzzleBase {
     @Override protected void init() {
         w = null;
         for (int attempt = 0; attempt < 400 && w == null; attempt++) {
-            int[] pool = iota(8);
+            int[] pool = iota(7);
             shuffle(pool, rng);
             int[] cand = new int[n];
             int total = 0;

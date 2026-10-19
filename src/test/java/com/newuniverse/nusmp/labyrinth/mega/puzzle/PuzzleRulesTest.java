@@ -55,7 +55,7 @@ class PuzzleRulesTest {
                     Layout.Group g = lay.groupOf(c);
                     assertNotNull(g, id + " cell " + c);
                     assertTrue(Palettes.size(g.palette()) > 0, id + ": no palette " + g.palette());
-                    assertTrue(r.height(c) >= 1 && r.height(c) <= 9, id + " height " + r.height(c));
+                    assertTrue(r.height(c) >= 1 && r.height(c) <= 7, id + " height " + r.height(c));
                     for (int l = 0; l < r.height(c); l++) {
                         int f = r.face(c, l);
                         assertTrue(f >= 0 && f < Palettes.size(g.palette()), id + " cell " + c + " face " + f + " of " + g.palette());
