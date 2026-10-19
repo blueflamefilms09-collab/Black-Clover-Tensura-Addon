@@ -906,6 +906,11 @@
       "profile": "greatsword",
       "source": "item"
     },
+    "tidebreaker_chakram": {
+      "class": "handaxe",
+      "profile": "handaxe",
+      "source": "relic"
+    },
     "time_bender_dadao": {
       "class": "dadao",
       "profile": "dadao",
@@ -1054,11 +1059,6 @@
     "wavebreaker": {
       "class": "longsword",
       "profile": "longsword",
-      "source": "relic"
-    },
-    "wavebreaker_chakram": {
-      "class": "handaxe",
-      "profile": "handaxe",
       "source": "relic"
     },
     "weapon_of_resurgence": {

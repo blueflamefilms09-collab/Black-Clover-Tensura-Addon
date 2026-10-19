@@ -662,9 +662,6 @@
   "fairy_heart_gauntlets": {
    "class": "dagger"
   },
-  "wavebreaker_chakram": {
-   "class": "handaxe"
-  },
   "noon_cleaver": {
    "class": "greataxe"
   },
@@ -736,6 +733,9 @@
   },
   "sword_of_the_first_dawn": {
    "class": "longsword"
+  },
+  "tidebreaker_chakram": {
+   "class": "handaxe"
   }
  },
  "_excluded_was": {

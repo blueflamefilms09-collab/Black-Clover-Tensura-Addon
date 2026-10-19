@@ -95,9 +95,9 @@ def build_fairy_heart_gauntlets():
     finish("fairy_heart_gauntlets", m, atlas, "dagger", glow=("FFFFFF", 0.16, 0.45, 1.0))
 
 
-def build_wavebreaker_chakram():
-    """Wavebreaker Chakram: a large ring of blue steel with a rolling wave-crest edge of curled teeth, a bright inner rim, a crossbar grip and a leather-wrapped handle."""
-    m = new_mesh("wavebreaker_chakram")
+def build_tidebreaker_chakram():
+    """Tidebreaker Chakram: a large ring of blue steel with a rolling wave-crest edge of curled teeth, a bright inner rim, a crossbar grip and a leather-wrapped handle."""
+    m = new_mesh("tidebreaker_chakram")
     R, CY = 32.0, 52.0
     ring_blade(m, "ring", "steel", 0.0, CY, R, 4.6, 0.8, n=36, bevel=0.55, base=(54, 134, 214))
     ring_blade(m, "inner_rim", "silver", 0.0, CY, R - 4.2, 0.9, 1.0, n=36, bevel=0.3, base=(226, 244, 255), glow=True)
@@ -128,7 +128,7 @@ def build_wavebreaker_chakram():
         put_glow(pc, np.clip(band - 0.55, 0, 1) * 0.9, (110, 210, 255), 0.7, 0.5)
     paint(atlas, ring, waves)
     glow_parts(atlas, m, ["inner_rim", "wave_gem"], (130, 230, 255), 0.95, 0.55)
-    finish("wavebreaker_chakram", m, atlas, "handaxe", glow=("FFFFFF", 0.15, 0.45, 1.0))
+    finish("tidebreaker_chakram", m, atlas, "handaxe", glow=("FFFFFF", 0.15, 0.45, 1.0))
 
 
 def build_noon_cleaver():

@@ -1828,6 +1828,20 @@
       "fixed_scale": 0.505
     },
     {
+      "id": "tidebreaker_chakram",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.599,
+      "first_person_translation_px": [
+        1.13,
+        2.67,
+        0.74
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "time_bender_dadao",
       "action": "preset",
       "length_blocks": 2.4,
@@ -2182,20 +2196,6 @@
       "tip_out_of_view": false,
       "ground_scale": 0.414,
       "fixed_scale": 0.777
-    },
-    {
-      "id": "wavebreaker_chakram",
-      "action": "preset",
-      "length_blocks": 1.471,
-      "first_person_scale": 0.599,
-      "first_person_translation_px": [
-        1.13,
-        2.67,
-        0.74
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
     },
     {
       "id": "weapon_of_resurgence",

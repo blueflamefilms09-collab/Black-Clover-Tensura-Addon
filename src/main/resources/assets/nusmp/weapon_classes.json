@@ -408,7 +408,6 @@
   "silver_eagles_galewing_bow": "bow",
   "starlight_whip": "whip",
   "fairy_heart_gauntlets": "dagger",
-  "wavebreaker_chakram": "handaxe",
   "noon_cleaver": "greataxe",
   "calamity_scythe": "scythe",
   "staff_of_the_magi": "staff",
@@ -432,6 +431,7 @@
   "cardinal_halo_chakram": "handaxe",
   "magic_emperors_black_halberd": "glaive",
   "starsplitter_hammer": "hammer",
-  "sword_of_the_first_dawn": "longsword"
+  "sword_of_the_first_dawn": "longsword",
+  "tidebreaker_chakram": "handaxe"
  }
 }

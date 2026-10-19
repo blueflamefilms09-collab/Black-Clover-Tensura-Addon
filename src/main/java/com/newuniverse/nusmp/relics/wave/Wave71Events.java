@@ -26,6 +26,7 @@ final class Wave71Events {
     static void register() { NeoForge.EVENT_BUS.addListener(Wave71Events::onIncoming); }
 
     static void onIncoming(LivingIncomingDamageEvent e) {
+        if (Wave71Acts.running()) return;                                              // the blows of an act are the act's own: no passive on top
         LivingEntity victim = e.getEntity();
         if (victim.level().isClientSide()) return;
         DamageSource src = e.getSource();

@@ -31,11 +31,22 @@ final class Wave71Acts {
 
     static final int MAX_HITS = 12;
 
+    /** True while an act of this wave runs: the blows it deals are the act's own, so the weapon's passive (a bonus on the swing) does not stack on them. Server thread only. */
+    private static boolean running;
+
+    static boolean running() { return running; }
+
     /** Runs the body under the shared guard, once per use. */
     private static ActBody guard(String key, ActBody body) {
         return ctx -> {
             if (ctx.player() == null || !ctx.player().isAlive()) return;
-            SafeCast.tick("relic.w71." + key, () -> body.run(ctx));
+            boolean before = running;
+            running = true;
+            try {
+                SafeCast.tick("relic.w71." + key, () -> body.run(ctx));
+            } finally {
+                running = before;
+            }
         };
     }
 

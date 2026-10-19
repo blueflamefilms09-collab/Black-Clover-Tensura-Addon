@@ -210,7 +210,6 @@
     "silver_eagles_galewing_bow": "sky_citadel",
     "starlight_whip": "astral",
     "fairy_heart_gauntlets": "celestial_court",
-    "wavebreaker_chakram": "sunken_temple",
     "noon_cleaver": "mountain_monastery",
     "calamity_scythe": "necropolis",
     "staff_of_the_magi": "cursed_archive",
@@ -234,6 +233,7 @@
     "cardinal_halo_chakram": "radiant",
     "magic_emperors_black_halberd": "spatial",
     "starsplitter_hammer": "gravity",
-    "sword_of_the_first_dawn": "holy_church"
+    "sword_of_the_first_dawn": "holy_church",
+    "tidebreaker_chakram": "sunken_temple"
   }
 }

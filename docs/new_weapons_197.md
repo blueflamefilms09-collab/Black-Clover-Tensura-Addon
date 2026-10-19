@@ -20,7 +20,7 @@ Damage is the owner's table (`relics/GradeDamage`: normal 20-30, special 35-55, 
 | `silver_eagles_galewing_bow` | Silver Eagle's Galewing Bow (Black Clover) | bow (bow) | 152.5 / 1.3 | 60% more damage against a foe in the air | Gale Volley (sneak + use, 30 s, 3%); Eagle Dive (the worn-relic key, 60 s, 4%) | swift, barrier_piercing, elemental_boost | sky_citadel |
 | `starlight_whip` | Starlight Whip (Fairy Tail) | whip (whip) | 139 / 1.5 | 40% more damage at night | Star Lash (use, 15 s, 2%); Constellation Bind (sneak + use, 75 s, 4%) | swift, magic_weapon, enervation | astral |
 | `fairy_heart_gauntlets` | Fairy Heart Gauntlets (Fairy Tail) | pair of gauntlets (dagger) | 155 / 1.8 | 10% more damage on every blow; 5% of the damage comes back to you as life | Fairy Smash (use, 18 s, 3%); Friends' Rally (sneak + use, 2 min, 5%) | crushing, vitality, sturdy | celestial_court |
-| `wavebreaker_chakram` | Wavebreaker Chakram (The Rising of the Shield Hero) | chakram (handaxe) | 148 / 1.8 | 50% more damage against a foe in water or rain | Spinning Cut (use, 20 s, 3%); Tidal Return (sneak + use, 70 s, 4%) | severance, elemental_boost, swift | sunken_temple |
+| `tidebreaker_chakram` | Tidebreaker Chakram (The Rising of the Shield Hero) | chakram (handaxe) | 148 / 1.8 | 50% more damage against a foe in water or rain | Spinning Cut (use, 20 s, 3%); Tidal Return (sneak + use, 70 s, 4%) | severance, elemental_boost, swift | sunken_temple |
 | `noon_cleaver` | Noon Cleaver (The Seven Deadly Sins) | great axe (greataxe) | 170.5 / 0.9 | 50% more damage while you are at full health | Zenith Cleave (use, 27 s, 4%); Sunrise Wall (sneak + use, 90 s, 5%) | crushing, severance, vigor | mountain_monastery |
 | `calamity_scythe` | Calamity Scythe (That Time I Got Reincarnated as a Slime) | scythe (scythe) | 170.5 / 1.1 | 40% more damage against a foe under 30% of its health; 5% of the damage comes back to you as life | Soul Reap (use, 30 s, 4%); Lord's Decree (sneak + use, 2 min, 6%) | soul_eater, ruination, enervation | necropolis |
 
@@ -68,7 +68,7 @@ Damage is the owner's table (`relics/GradeDamage`: normal 20-30, special 35-55, 
 * **Silver Eagle's Galewing Bow** (`silver_eagles_galewing_bow`): A recurve bow whose limbs are spread silver feathers over a green glass core, with a blue wind-gem grip.
 * **Starlight Whip** (`starlight_whip`): A long coiled whip of braided silver-violet light with a gold key handle and a star at the tip.
 * **Fairy Heart Gauntlets** (`fairy_heart_gauntlets`): A pair of broad red-and-gold gauntlets with a heart crest on each back and winged knuckle guards.
-* **Wavebreaker Chakram** (`wavebreaker_chakram`): A large ring blade of blue steel with a rolling-wave edge pattern, a white inner rim and a leather hand-loop.
+* **Tidebreaker Chakram** (`tidebreaker_chakram`): A large ring blade of blue steel with a rolling-wave edge pattern, a white inner rim and a leather hand-loop.
 * **Noon Cleaver** (`noon_cleaver`): A great two-bladed golden axe with a sun disc on each head, a dark-wood haft and gold-bound grip.
 * **Calamity Scythe** (`calamity_scythe`): A tall black pole with a huge violet crescent blade, bone-white skull ferrules and a glowing soul crystal.
 * **Staff of the Magi** (`staff_of_the_magi`): A tall twisted violet staff ringed in gold with a floating crystal at the head and arcane runes down the shaft.

@@ -55,7 +55,7 @@ def damage(e):
 def kind_label(e):
     if e["id"] in ("fairy_heart_gauntlets", "fairy_glitter_gauntlets"):
         return "pair of gauntlets"
-    if e["id"] == "wavebreaker_chakram" or e["id"] == "cardinal_halo_chakram":
+    if e["id"] == "tidebreaker_chakram" or e["id"] == "cardinal_halo_chakram":
         return "chakram"
     if e["id"].endswith("fangs"):
         return "pair of fang-daggers"

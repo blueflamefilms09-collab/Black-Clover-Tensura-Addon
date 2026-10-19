@@ -2,7 +2,7 @@
   "parent": "minecraft:builtin/entity",
   "gui_light": "front",
   "textures": {
-    "particle": "nusmp:item/wavebreaker_chakram"
+    "particle": "nusmp:item/tidebreaker_chakram"
   },
   "display": {
     "thirdperson_righthand": {

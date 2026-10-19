@@ -32,7 +32,7 @@ public final class Wave71 {
     static final double DMG_SILVER_EAGLES_GALEWING_BOW = GradeDamage.damage("legend", "bow");
     static final double DMG_STARLIGHT_WHIP = GradeDamage.damage("legend", "whip");
     static final double DMG_FAIRY_HEART_GAUNTLETS = GradeDamage.damage("legend", "club");
-    static final double DMG_WAVEBREAKER_CHAKRAM = GradeDamage.damage("legend", "handaxe");
+    static final double DMG_TIDEBREAKER_CHAKRAM = GradeDamage.damage("legend", "handaxe");
     static final double DMG_NOON_CLEAVER = GradeDamage.damage("legend", "greataxe");
     static final double DMG_CALAMITY_SCYTHE = GradeDamage.damage("legend", "scythe");
     static final double DMG_STAFF_OF_THE_MAGI = GradeDamage.damage("god", "staff");
@@ -63,7 +63,7 @@ public final class Wave71 {
             "vorpal_sword", "holy_avenger", "luck_blade",
             "frostbrand", "dragon_slayer", "sunsword",
             "crimson_lions_flame_lance", "silver_eagles_galewing_bow", "starlight_whip",
-            "fairy_heart_gauntlets", "wavebreaker_chakram", "noon_cleaver",
+            "fairy_heart_gauntlets", "tidebreaker_chakram", "noon_cleaver",
             "calamity_scythe", "staff_of_the_magi", "hammer_of_thunderbolts",
             "kusanagi_the_grass_cutter", "gungnir_the_unerring", "leviathans_crown_trident",
             "wizard_kings_vow", "wand_of_the_wisdom_king", "dragon_force_twin_fangs",
@@ -197,16 +197,16 @@ public final class Wave71 {
                 .melee(DMG_FAIRY_HEART_GAUNTLETS, 1.8)
                 .engrave("crushing", "vitality", "sturdy"));
 
-        // ---------------------------------------------------------------- Wavebreaker Chakram (Legend, The Rising of the Shield Hero)
-        out.accept(RelicDef.of("wavebreaker_chakram", "Wavebreaker Chakram", Grade.LEGEND, RelicSlot.MAIN_HAND).attune().vessel().model3d()
+        // ---------------------------------------------------------------- Tidebreaker Chakram (Legend, The Rising of the Shield Hero)
+        out.accept(RelicDef.of("tidebreaker_chakram", "Tidebreaker Chakram", Grade.LEGEND, RelicSlot.MAIN_HAND).attune().vessel().model3d()
                 .look(Look.AXE).palette(0x3A8AD8, 0xE8F4FF, 0x7AD8FF)
                 .desc("A ring of blue steel with a wave-crest edge, the throwing weapon of those who hunt in the Waves. It strikes wet foes harder. 50% more damage against a foe in water or rain. Use: Spinning Cut and Tidal Return.")
-                .passive(Passive.flag("w71_wavebreaker_chakram"))
+                .passive(Passive.flag("w71_tidebreaker_chakram"))
                 .passive(Passive.attr("neoforge:swim_speed", 0.3, Operation.ADD_MULTIPLIED_BASE))
                 .passive(Passive.skill("tensura:water_breathing"))
-                .act(Act.of("spinning_cut", "Spinning Cut", Wave71Acts.chain(4, 12.0, (float) (DMG_WAVEBREAKER_CHAKRAM * 0.6), "minecraft:player_attack", VfxShape.WATER_JAVELIN)).cooldown(400).mana(3))
-                .act(Act.of("tidal_return", "Tidal Return", Wave71Acts.nova(8.0, (float) (DMG_WAVEBREAKER_CHAKRAM * 0.6), "minecraft:drown", "minecraft:slowness", 4, 1, 1.5, VfxShape.WATER_BURST)).cooldown(1400).mana(4).needsSneak())
-                .melee(DMG_WAVEBREAKER_CHAKRAM, 1.8)
+                .act(Act.of("spinning_cut", "Spinning Cut", Wave71Acts.chain(4, 12.0, (float) (DMG_TIDEBREAKER_CHAKRAM * 0.6), "minecraft:player_attack", VfxShape.WATER_JAVELIN)).cooldown(400).mana(3))
+                .act(Act.of("tidal_return", "Tidal Return", Wave71Acts.nova(8.0, (float) (DMG_TIDEBREAKER_CHAKRAM * 0.6), "minecraft:drown", "minecraft:slowness", 4, 1, 1.5, VfxShape.WATER_BURST)).cooldown(1400).mana(4).needsSneak())
+                .melee(DMG_TIDEBREAKER_CHAKRAM, 1.8)
                 .engrave("severance", "elemental_boost", "swift"));
 
         // ---------------------------------------------------------------- Noon Cleaver (Legend, The Seven Deadly Sins)

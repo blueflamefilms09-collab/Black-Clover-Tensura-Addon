@@ -20,7 +20,7 @@ final class Wave71Passives {
             Map.entry("silver_eagles_galewing_bow", Wave71Rules.Rule.of(Wave71Rules.Cond.FLYING_FOE, 0.6)),
             Map.entry("starlight_whip", Wave71Rules.Rule.of(Wave71Rules.Cond.NIGHT, 0.4)),
             Map.entry("fairy_heart_gauntlets", Wave71Rules.Rule.of(Wave71Rules.Cond.ALWAYS, 0.1).steal(0.05)),
-            Map.entry("wavebreaker_chakram", Wave71Rules.Rule.of(Wave71Rules.Cond.WET_FOE, 0.5)),
+            Map.entry("tidebreaker_chakram", Wave71Rules.Rule.of(Wave71Rules.Cond.WET_FOE, 0.5)),
             Map.entry("noon_cleaver", Wave71Rules.Rule.of(Wave71Rules.Cond.FULL_HP_SELF, 0.5)),
             Map.entry("calamity_scythe", Wave71Rules.Rule.of(Wave71Rules.Cond.LOW_HP_FOE, 0.4).steal(0.05)),
             Map.entry("staff_of_the_magi", Wave71Rules.Rule.of(Wave71Rules.Cond.ALWAYS, 0.2)),
