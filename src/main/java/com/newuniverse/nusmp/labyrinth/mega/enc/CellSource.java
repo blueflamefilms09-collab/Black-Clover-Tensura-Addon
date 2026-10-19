@@ -25,7 +25,22 @@ final class CellSource {
     private static final int ENOUGH = 8;
     private static final int PER_ROOM = 3;
 
-    /** Candidate cells of the sector within {@code reach} blocks (horizontally) of the point. */
+    /**
+     * 1.94.0: the sector as plain numbers (room boxes with their kinds, spawn markers, doorways) for {@link SpawnSearch}; the candidates are now chosen from this, so the
+     * whole choice is testable without a game. Reads only saved data, like the rest of this class.
+     */
+    static SpawnLayout layoutOf(Sector sector) {
+        List<SpawnLayout.RoomBox> rooms = new ArrayList<>(sector.rooms.size());
+        for (Room r : sector.rooms) rooms.add(new SpawnLayout.RoomBox(r.id, r.kind, r.box.minX(), r.box.minY(), r.box.minZ(), r.box.maxX(), r.box.maxY(), r.box.maxZ()));
+        List<SpawnLayout.Spot> spots = new ArrayList<>();
+        for (Marker m : sector.markers) {
+            if (m.kind() != MarkerKind.SPAWN) continue;
+            spots.add(new SpawnLayout.Spot(m.pos().getX(), m.pos().getY(), m.pos().getZ(), m.intArg("weight", 1)));
+        }
+        return new SpawnLayout(rooms, spots, sector.edges);
+    }
+
+    /** Candidate cells of the sector within {@code reach} blocks (horizontally) of the point. The 1.54.0 search, kept as it was; {@link SpawnSearch} is what the Director uses now. */
     static List<SpawnPicker.Cell> candidates(Sector sector, double cx, double cz, double reach, Random r) {
         List<SpawnPicker.Cell> out = new ArrayList<>();
         double r2 = reach * reach;

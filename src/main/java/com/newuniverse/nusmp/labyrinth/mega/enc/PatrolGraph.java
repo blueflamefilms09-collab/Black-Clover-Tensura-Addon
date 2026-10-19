@@ -106,6 +106,37 @@ public final class PatrolGraph {
         return cands.get(cands.size() - 1);
     }
 
+    /**
+     * 1.94.0: the shortest way along the doorways from one room to another, both included, walking only through rooms that may be entered (the start itself may be
+     * a forbidden room: a monster that was put at its door has to be able to leave). The hunters of the Dungeon Master follow it room by room, because a straight
+     * walk to a player forty blocks away through a maze is a path the navigation does not find. Empty when either node is unknown or no way exists.
+     */
+    public List<Integer> route(int from, int to) {
+        if (!nodes.containsKey(from) || !nodes.containsKey(to)) return List.of();
+        if (from == to) return List.of(from);
+        Map<Integer, Integer> before = new HashMap<>();
+        java.util.ArrayDeque<Integer> queue = new java.util.ArrayDeque<>();
+        before.put(from, from);
+        queue.add(from);
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            List<Integer> next = neighbours.get(cur);
+            if (next == null) continue;
+            for (int n : next) {
+                if (before.containsKey(n) || (!nodes.get(n).allowed() && n != to)) continue;
+                before.put(n, cur);
+                if (n == to) {
+                    java.util.LinkedList<Integer> path = new java.util.LinkedList<>();
+                    for (int at = to; at != from; at = before.get(at)) path.addFirst(at);
+                    path.addFirst(from);
+                    return new ArrayList<>(path);
+                }
+                queue.add(n);
+            }
+        }
+        return List.of();
+    }
+
     /** The allowed node nearest to a point in the horizontal plane, or -1 when there is none. */
     public int nearest(double x, double z) {
         int best = -1;

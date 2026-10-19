@@ -17,6 +17,7 @@ public final class MegaCommands {
     public static LiteralArgumentBuilder<CommandSourceStack> node() {
         LiteralArgumentBuilder<CommandSourceStack> mega = com.newuniverse.nusmp.labyrinth.mega.gen.MegaCommand.build();
         mega.then(com.newuniverse.nusmp.labyrinth.mega.enc.EncCommand.command());            // dm: the Dungeon Master (status, roll, spawn, wanderer, clear)
+        mega.then(com.newuniverse.nusmp.labyrinth.mega.enc.EncCommand.encAlias());            // enc: the same tree under a second name (/multiverse mega enc why, /multiverse mega enc force)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.eco.EcoRegistry.command());           // faction: factions, turf wars, the economy
         mega.then(com.newuniverse.nusmp.labyrinth.mega.safe.SafeRegistry.command());         // rest: short and long rests, anchors
         mega.then(com.newuniverse.nusmp.labyrinth.mega.guard.GuardCommand.command());        // core: the Mana Core and the Guardian
