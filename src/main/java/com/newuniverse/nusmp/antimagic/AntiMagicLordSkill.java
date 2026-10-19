@@ -22,10 +22,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
- * Anti-Magic Spirit Lord (Unique). No mana: you run on Anti-Magic Power (AMP), gathered by
- * absorbing magic that hits you, by demon-sword hits and slowly over time.
+ * Anti-Magic Spirit Lord (Unique). Legacy skill: the Lord is a state of the Anti-Magic grimoire now (book.AntiMagicBook) and this skill is
+ * only folded into it ({@link AntiMagic#migrate}). 1.94.0: it runs on Tensura Aura like the grimoire does; Anti-Magic Power (AMP),
+ * gathered by absorbing magic that hits you, by demon-sword hits and slowly over time, is kept as a stat only.
  * Passive physique: +15% attack damage, knockback resistance, 30% less magic damage, half fall damage.
- * Toggle - Black Form (needs 100 AMP, or mastery): magic can't hurt you, +25% damage, speed; drains AMP.
+ * Toggle - Black Form (costs Aura to start and every second): magic can't hurt you, +25% damage, speed.
  * Grants the Demon-Slayer sword; mastering it grants Demon-Dweller and Demon-Destroyer.
  */
 public class AntiMagicLordSkill extends Skill {
@@ -78,9 +79,8 @@ public class AntiMagicLordSkill extends Skill {
     @Override
     public void onToggleOn(ManasSkillInstance i, LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return;
-        if (AntiMagic.amp(i) < 100 && !i.isMastered(e)) {
+        if (!AntiMagicAura.pay(p, AntiMagicCosts.FORM_START, "hold Black Form")) {
             i.setToggled(false);
-            p.displayClientMessage(Component.literal("Not enough Anti-Magic Power (" + AntiMagic.amp(i) + "/100).").withStyle(ChatFormatting.RED), true);
             return;
         }
         p.displayClientMessage(Component.literal("Black Form.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD), true);
@@ -100,25 +100,22 @@ public class AntiMagicLordSkill extends Skill {
         if (!(e instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
         modifier(p, Attributes.ATTACK_DAMAGE, PHYS_DMG, 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, true);
         modifier(p, Attributes.KNOCKBACK_RESISTANCE, PHYS_KB, 0.3, AttributeModifier.Operation.ADD_VALUE, true);
-        if (!i.isToggled()) { AntiMagic.setAmp(i, AntiMagic.amp(i) + 5); return; }
-        int amp = AntiMagic.amp(i) - 25;
-        if (amp <= 0) {
-            AntiMagic.setAmp(i, 0);
+        if (!i.isToggled()) { AntiMagic.setAmp(i, AntiMagic.amp(i) + 5); return; }       // the AMP stat gathers while the form rests
+        if (!AntiMagicAura.drain(p, AntiMagicCosts.FORM_DRAIN)) {
             i.setToggled(false);
             modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, false);
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
-            p.displayClientMessage(Component.literal("Your Anti-Magic runs dry. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.literal("Your aura gives out. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
             com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON);
             return;
         }
-        AntiMagic.setAmp(i, amp);
         if (com.newuniverse.nusmp.blackclover.ModeArmor.active(p) == com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON
                 || com.newuniverse.nusmp.blackclover.ModeArmor.active(p) == com.newuniverse.nusmp.blackclover.ModeArmor.Mode.NONE)
             com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON, 45);
         modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, true);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 1, false, false));
         if (p.tickCount % 60 == 0) VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), 0xFF1A1018, 62, 1.4f);
-        p.displayClientMessage(Component.literal("Black Form - AMP " + amp + "/" + AntiMagic.MAX_AMP).withStyle(ChatFormatting.DARK_GRAY), true);
+        p.displayClientMessage(Component.literal("Black Form - Aura " + Math.round(AntiMagicAura.share(p) * 100) + "%").withStyle(ChatFormatting.DARK_GRAY), true);
     }
 
     /** Black Form: magic simply does not reach you (and feeds your AMP). */

@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.book;
 
 import com.newuniverse.nusmp.antimagic.AntiMagic;
+import com.newuniverse.nusmp.antimagic.AntiMagicAura;
+import com.newuniverse.nusmp.antimagic.AntiMagicCosts;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.ModeArmor;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
@@ -33,36 +35,61 @@ import java.util.List;
  * ability; it is now a progression state of this grimoire (the owner's fix), and old Spirit Lords are folded in on their next login
  * (their Anti-Magic Power and awakening carry over, the separate skill is removed).
  * <ul>
- *   <li><b>From the start:</b> the Demon-Slayer Sword (Genesis-grade, see item.DemonSlayerSwordItem); Anti-Magic Power (AMP) gathers
- *       from magic that hits you, demon-sword hits and slowly over time (stored on this grimoire).</li>
+ *   <li><b>From the start:</b> the Demon-Slayer Sword (Genesis-grade, see item.DemonSlayerSwordItem); Anti-Magic Power (AMP), now only a
+ *       stat, gathers from magic that hits you, demon-sword hits and slowly over time (stored on this grimoire).</li>
  *   <li><b>Mastered - the Anti-Magic Lord awakens</b> (or an admin's {@code /multiverse grimoire awaken_anti}): physique (+15% attack,
  *       knockback resistance, 30% less magic damage, absorbed as AMP, half fall damage), Demon-Dweller, Demon-Destroyer and
  *       Demon-Slasher, and the Black Asta page becomes the sustained Black Form toggle (no magic reaches you, +25% damage, speed;
- *       drains 25 AMP a second).</li>
+ *       drains 1.5% of your max Aura a second).</li>
  * </ul>
  * Page ids and order are those of the old Anti-Magic book, so unlocks and mastery carry over. No magicule costs.
+ * <p><b>1.94.0: Anti-Magic runs on Tensura Aura, not on the AMP bar.</b> Every page costs a fraction of the max Aura
+ * ({@link AntiMagicCosts}, paid through {@link EnergyBridge#aura}: magicules when the Aura is short, free in creative), the
+ * Black Form toggle costs Aura to start and Aura every second, and it ends cleanly (with a message) when the Aura runs out.
+ * AMP is only an accumulated stat now: it still gathers and is still stored, but it pays and gates nothing.</p>
  */
 public class AntiMagicBook extends ElementBook {
-    static final String K_LORD = "Lord", K_FORM = "BlackForm";
+    static final String K_LORD = "Lord", K_FORM = "BlackForm", K_VERSION = "AuraVer";
     private static final ResourceLocation PHYS_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_physique");
     private static final ResourceLocation PHYS_KB = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_knockback");
     private static final ResourceLocation FORM_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "black_form");
 
     public AntiMagicBook() {
         super(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80, CanonSpells::blackSlash)
+                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80,
+                        paid("demon_slayer_slash", "loose the Black Slash", CanonSpells::blackSlash))
                         .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
-                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160, CanonSpells::blackDivider)
+                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160,
+                        paid("black_divider", "swing the Black Divider", CanonSpells::blackDivider))
                         .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
-                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 300, CanonSpells::blackMeteorite),
-                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300, CanonSpells::blackHurricane),
+                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 300,
+                        paid("black_meteorite", "charge with Black Meteorite", CanonSpells::blackMeteorite)),
+                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300,
+                        paid("black_hurricane", "spin the Black Hurricane", CanonSpells::blackHurricane)),
                 new BookPage("black_form", "Black Asta", "Black Asta", 0, 0, 0, AntiMagicBook::blackForm),
-                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160, CanonSpells::bullThrust)
+                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160,
+                        paid("bull_thrust", "charge with Bull Thrust", CanonSpells::bullThrust))
                         .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
-                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240, CanonSpells::infiniteSlash)
+                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240,
+                        paid("infinite_slash", "cut the Infinite Slash", CanonSpells::infiniteSlash))
                         .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.KATANAS),
-                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900, CanonSpells::infiniteSlashEquinox)
+                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900,
+                        paid("infinite_slash_equinox", "cut the Infinite Slash Equinox", CanonSpells::infiniteSlashEquinox))
                         .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.KATANAS)));
+    }
+
+    /**
+     * 1.94.0: a page that pays Aura. The price comes from {@link AntiMagicCosts#page}; it is taken before the spell and given back if
+     * the spell then reports that nothing happened (so a page that fizzles, for example "No room to strike", costs nothing).
+     */
+    public static BookPage.Cast paid(String pageId, String what, BookPage.Cast inner) {
+        return (book, inst, p, mode) -> {
+            double[] before = AntiMagicAura.snapshot(p);
+            if (!AntiMagicAura.pay(p, AntiMagicCosts.page(pageId), what)) return false;
+            if (inner.cast(book, inst, p, mode)) return true;
+            AntiMagicAura.refund(p, before);
+            return false;
+        };
     }
 
     public static boolean isLord(ManasSkillInstance i) { return i.getOrCreateTag().getBoolean(K_LORD); }
@@ -114,20 +141,19 @@ public class AntiMagicBook extends ElementBook {
 
     // ---------------------------------------------------------------- Black Asta / Black Form
     /**
-     * Black Asta. Before the Lord awakens: the timed form (30 s, three times a day). Once awakened: Black Form, a toggle held by
-     * Anti-Magic Power (needs 100 AMP to start; recast to end).
+     * Black Asta. Before the Lord awakens: the timed form (30 s, three times a day), paid in Aura. Once awakened: Black Form, a toggle
+     * paid in Aura (a start price, then a price every second); recast to end it. No Anti-Magic Power is needed any more.
      */
     static boolean blackForm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         if (!isLord(i)) {
-            if (!CanonSpells.blackAsta(b, i, p, mode)) return false;
+            double[] before = AntiMagicAura.snapshot(p);
+            if (!AntiMagicAura.pay(p, AntiMagicCosts.page("black_form"), "take Black Asta")) return false;
+            if (!CanonSpells.blackAsta(b, i, p, mode)) { AntiMagicAura.refund(p, before); return false; }
             i.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds((int) (1200 * com.newuniverse.nusmp.NUGameRules.spellCooldown(p.level()))), mode);
             return true;
         }
         if (inBlackForm(i)) { setForm(p, i, false); return true; }
-        if (AntiMagic.amp(i) < 100 && !i.isMastered(p)) {
-            fail(p, "Not enough Anti-Magic Power (" + AntiMagic.amp(i) + "/100).");
-            return false;
-        }
+        if (!AntiMagicAura.pay(p, AntiMagicCosts.FORM_START, "hold Black Form")) return false;
         setForm(p, i, true);
         return true;
     }
@@ -163,27 +189,50 @@ public class AntiMagicBook extends ElementBook {
     @Override
     protected void tickBook(ManasSkillInstance i, ServerPlayer p) {
         super.tickBook(i, p);
+        migrate(i, false);
         boolean lord = isLord(i);
         physique(p, lord);
+        upkeepForm(i, p, lord);
+    }
+
+    /**
+     * 1.94.0: stored Anti-Magic data from before the Aura change (a Lord with AMP, perhaps in Black Form) keeps everything it had; only
+     * the data version is stamped. See {@link AntiMagicCosts#migrate}. {@code legacySkill} is true when an old Lord skill is folded in.
+     */
+    public static void migrate(ManasSkillInstance i, boolean legacySkill) {
+        var tag = i.getOrCreateTag();
+        if (tag.getInt(K_VERSION) >= AntiMagicCosts.DATA_VERSION && !legacySkill) return;
+        var out = AntiMagicCosts.migrate(new AntiMagicCosts.Stored(tag.getBoolean(K_LORD), tag.getBoolean(K_FORM), tag.getInt("AMP"), tag.getInt(K_VERSION)), legacySkill);
+        tag.putBoolean(K_LORD, out.lord());
+        tag.putBoolean(K_FORM, out.form());
+        tag.putInt("AMP", out.amp());
+        tag.putInt(K_VERSION, out.version());
+        i.markDirty();
+    }
+
+    /**
+     * The once-a-second upkeep of Black Form, paid in Aura. Resting (no form, or a form without the Lord): AMP gathers slowly as a stat.
+     * In the form: one second of Aura is drained; when it cannot be paid the form ends cleanly with a message (and the old brief
+     * Weakness of an emptied form). Returns true while the form is held after this second.
+     */
+    static boolean upkeepForm(ManasSkillInstance i, ServerPlayer p, boolean lord) {
         if (!inBlackForm(i) || !lord) {
             if (inBlackForm(i)) setForm(p, i, false);
-            AntiMagic.setAmp(i, AntiMagic.amp(i) + 5);                       // AMP gathers slowly while the form rests
-            return;
+            AntiMagic.setAmp(i, AntiMagic.amp(i) + 5);                       // the AMP stat gathers slowly while the form rests
+            return false;
         }
-        int amp = AntiMagic.amp(i) - 25;
-        if (amp <= 0) {
-            AntiMagic.setAmp(i, 0);
+        if (!AntiMagicAura.drain(p, AntiMagicCosts.FORM_DRAIN)) {
             setForm(p, i, false);
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
-            p.displayClientMessage(Component.literal("Your Anti-Magic runs dry. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
-            return;
+            p.displayClientMessage(Component.literal("Your aura gives out. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
+            return false;
         }
-        AntiMagic.setAmp(i, amp);
         if (ModeArmor.active(p) == ModeArmor.Mode.DEMON || ModeArmor.active(p) == ModeArmor.Mode.NONE) ModeArmor.start(p, ModeArmor.Mode.DEMON, 45);
         modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0.25, true);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 1, false, false));
         if (p.tickCount % 60 < 20) VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), 0xFF1A1018, 62, 1.4f);
-        p.displayClientMessage(Component.literal("Black Form - AMP " + amp + "/" + AntiMagic.MAX_AMP).withStyle(ChatFormatting.DARK_GRAY), true);
+        p.displayClientMessage(Component.literal("Black Form - Aura " + Math.round(AntiMagicAura.share(p) * 100) + "%").withStyle(ChatFormatting.DARK_GRAY), true);
+        return true;
     }
 
     /** Black Form: magic does not reach you at all (it feeds your AMP). */

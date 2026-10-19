@@ -10,7 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import java.util.Optional;
 
 /**
- * Anti-Magic Power (AMP) helpers. 0.48: the Anti-Magic Spirit Lord is a state of the Anti-Magic grimoire (book.AntiMagicBook), so
+ * Anti-Magic Power (AMP) helpers. 1.94.0: AMP is NOT a resource any more: abilities cost Tensura Aura (see {@link AntiMagicCosts}). AMP is
+ * kept as an accumulated stat (it still gathers from magic that hits you and from demon-sword hits, and is still stored and synced), so
+ * saves and the accessors below stay as they were, but nothing spends it and nothing is gated by it. 0.48: the Anti-Magic Spirit Lord is a state of the Anti-Magic grimoire (book.AntiMagicBook), so
  * AMP lives on that grimoire's skill instance. Players who still have the old separate Lord skill are folded in by {@link #migrate}.
  */
 public final class AntiMagic {
@@ -63,6 +65,7 @@ public final class AntiMagic {
         setAmp(b.get(), Math.max(amp(b.get()), amp(old.get())));
         boolean form = old.get().isToggled();
         com.newuniverse.nusmp.book.AntiMagicBook.awaken(p, b.get(), false);
+        com.newuniverse.nusmp.book.AntiMagicBook.migrate(b.get(), true);                 // 1.94.0: stamp the Aura-economy data version
         skills.forgetSkill(NUSkills.ANTI_MAGIC_LORD.getId());
         if (form) com.newuniverse.nusmp.book.AntiMagicBook.setForm(p, b.get(), true);
         p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Your Anti-Magic Spirit Lord has merged into your Anti-Magic grimoire: "

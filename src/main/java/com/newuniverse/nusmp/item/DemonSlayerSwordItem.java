@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.item;
 
 import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.antimagic.AntiMagic;
+import com.newuniverse.nusmp.antimagic.AntiMagicAura;
+import com.newuniverse.nusmp.antimagic.AntiMagicCosts;
 import com.newuniverse.nusmp.antimagic.NihilityZone;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
@@ -70,7 +72,8 @@ import java.util.UUID;
  *   <li><b>Infinite durability</b> (unbreakable; old damage mends).</li>
  *   <li><b>Conceptual Nullification Field</b> (15 blocks, while held, checked every second): foes' Ultimate skills are interfered
  *       with (forced cooldown, toggles may misfire off), their magicules bleed away (1% of max a second, from the current pool),
- *       and stopped time can't hold the wielder or allies.</li>
+ *       and stopped time can't hold the wielder or allies. 1.94.0: the field runs on Aura (0.3% of the max a second, only while
+ *       something is in its reach) and goes quiet while the Aura cannot pay.</li>
  *   <li><b>Black Meteorite — Void Severance</b> (sneak + right-click): locks on to the strongest energy signature ahead (100
  *       blocks), crosses the gap as an anti-magic meteor cutting through whatever is on the way, severs the target twice and
  *       leaves a Nihility zone ({@link NihilityZone}) that shatters barriers. Costs 80% of max aura (stamina); 2 minutes at the
@@ -90,7 +93,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
     public static final double FIELD = 15, LOCK_RANGE = 100, ZONE_RADIUS = 12;
     private static final int GROWTH_TICKS = 160;
     static final int METEOR_COOLDOWN = 2400, ZONE_TICKS = 200, CUT_TICKS = 1200;
-    static final String K_METEOR = "nusmp_black_meteorite_ready", K_JAM_TOLD = "nusmp_field_jam_told";
+    static final String K_METEOR = "nusmp_black_meteorite_ready", K_JAM_TOLD = "nusmp_field_jam_told", K_FIELD_TOLD = "nusmp_field_aura_told";
 
     /** How charged each player's last swing was (taken before vanilla resets it), for the severance. Server thread only. */
     private static final Map<UUID, Float> CHARGE = new HashMap<>();
@@ -214,25 +217,46 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         if (range != null) range.removeModifier(BLADE_GROWTH);
     }
 
-    /** Conceptual Nullification Field, once a second while held. */
+    /**
+     * Conceptual Nullification Field, once a second while held. 1.94.0: it runs on Aura. A second of it costs
+     * {@link AntiMagicCosts#FIELD_DRAIN} of the max Aura, but only a second in which there is something in its reach to nullify (a foe,
+     * or a spell flying at you); an idle sword costs nothing. When the Aura cannot pay, the field goes quiet for that second (the
+     * wielder is told, at most every 10 s) and wakes again when the Aura is back. Time-stop immunity stays free.
+     */
     static void field(ServerPlayer p, ItemStack stack) {
         ServerLevel level = p.serverLevel();
         long now = level.getGameTime();
         TimeStop.immune(p, 40);
-        for (Projectile projectile : level.getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(4),
-                x -> x.getOwner() != p && (x.getOwner() == null || !p.isAlliedTo(x.getOwner())))) {
+        List<Projectile> shots = level.getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(4),
+                x -> x.getOwner() != p && (x.getOwner() == null || !p.isAlliedTo(x.getOwner())));
+        List<LivingEntity> near = level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(FIELD),
+                x -> x != p && x.isAlive() && !x.isSpectator() && x.distanceToSqr(p) <= FIELD * FIELD);
+        double strongest = 0;
+        boolean engaged = !shots.isEmpty();
+        for (LivingEntity e : near) {
+            strongest = Math.max(strongest, Nullification.maxEP(e));
+            if (!e.isAlliedTo(p) && !(e instanceof Player o && o.isCreative())) engaged = true;
+        }
+        boolean live = true;
+        if (engaged && !AntiMagicAura.drain(p, AntiMagicCosts.FIELD_DRAIN)) {
+            live = false;
+            if (now >= p.getPersistentData().getLong(K_FIELD_TOLD)) {
+                p.getPersistentData().putLong(K_FIELD_TOLD, now + 200);
+                p.displayClientMessage(Component.literal(AntiMagicCosts.notEnough("hold the Demon-Slayer's field")).withStyle(ChatFormatting.RED), true);
+            }
+        }
+        boolean jamTurn = (now / 20) % 2 == 0;
+        for (Projectile projectile : shots) {
+            if (!live) break;
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.1));
             projectile.setOwner(p);
             projectile.hurtMarked = true;
         }
-        double strongest = 0;
-        boolean jamTurn = (now / 20) % 2 == 0;
-        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(FIELD),
-                x -> x != p && x.isAlive() && !x.isSpectator() && x.distanceToSqr(p) <= FIELD * FIELD)) {
-            strongest = Math.max(strongest, Nullification.maxEP(e));
+        for (LivingEntity e : near) {
             if (e.isAlliedTo(p)) { TimeStop.immune(e, 40); continue; }
+            if (!live) continue;
             if (e instanceof Player o && o.isCreative()) continue;
-            if (Nullification.bleed(e, 0.01) > 0) AntiMagic.addAmp(p, 1);
+            if (Nullification.bleed(e, 0.01) > 0) AntiMagic.addAmp(p, 1);               // the AMP stat
             if (jamTurn && Nullification.interfere(e, 3, 0.35f, 0.2f) > 0 && e instanceof ServerPlayer sp
                     && now >= sp.getPersistentData().getLong(K_JAM_TOLD)) {
                 sp.getPersistentData().putLong(K_JAM_TOLD, now + 100);
@@ -402,7 +426,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         tip.add(Component.literal("  Locks on to the strongest energy signature ahead (100 blocks), crosses the gap as an anti-magic meteor and severs it twice. Leaves a Nihility zone that shatters barriers and jams every skill inside.").withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("  Costs 80% of your aura. Cooldown: " + Math.round(METEOR_COOLDOWN * NUGameRules.cooldownShown() / 0.6 / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
         tip.add(Component.literal("Conceptual Severance: full swings cut EP-scaled true damage through armour, enchantments and hit cooldowns").withStyle(ChatFormatting.DARK_RED));
-        tip.add(Component.literal("Conceptual Nullification Field (15 blocks): Ultimate skills jam, magicules bleed away, stopped time can't hold you").withStyle(ChatFormatting.DARK_RED));
+        tip.add(Component.literal("Conceptual Nullification Field (15 blocks): Ultimate skills jam, magicules bleed away, stopped time can't hold you. Runs on aura: 0.3% of your max aura a second while a foe or a spell is in reach").withStyle(ChatFormatting.DARK_RED));
         tip.add(Component.literal("Black Divider grows the blade for 8 s (Anti-Magic users: +1.5 block reach)").withStyle(ChatFormatting.DARK_RED));
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         int res = d == null ? 0 : d.copyTag().getInt("Resonance");

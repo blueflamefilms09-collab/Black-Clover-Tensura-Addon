@@ -100,7 +100,7 @@ public class MultiverseStatusScreen extends Screen {
                 "Energy " + sp.getInt("Energy") + "%", sp.getBoolean("Incarnated") ? "Incarnated: " + sp.getString("Name") : "Not incarnated"), false));
         else out.add(new Block("Spirit Lord", List.of("No spirit bond"), false));
         CompoundTag a = s.getCompound("Anti");
-        if (a.contains("Mode")) out.add(new Block("Anti-Magic", List.of(a.getString("Mode"), "AMP " + a.getInt("AMP")), false));
+        if (a.contains("Mode")) out.add(new Block("Anti-Magic", List.of(a.getString("Mode"), a.contains("Aura") ? "Aura " + a.getInt("Aura") + "%" : "Runs on Tensura Aura"), false));   // 1.94.0: Aura, not the AMP bar
         else out.add(new Block("Anti-Magic", List.of("-"), false));
         CompoundTag c = s.getCompound("Ceremony");
         List<String> cl = new ArrayList<>();
