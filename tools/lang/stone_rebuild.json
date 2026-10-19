@@ -1,0 +1,10 @@
+{
+ "nusmp.skill.book_stone.description": "The grimoire of Stone Magic: dressed, cut and carved stone. Its pages throw stone, push slabs out of the ground, raise walls and a Stone Sentinel, seal casting with a shockwave and forge the masonry armour over you. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_stone.attribute_bolt": "A bolt of cut stone: it bursts on the first foe or wall and slows everything it hits.",
+ "nusmp.page.book_stone.attribute_cut": "Stone slabs are pushed out of the ground one after another along your line of sight, hitting and slowing what stands on them.",
+ "nusmp.page.book_stone.attribute_field": "A field of rising slabs laid at the aimed point: it hurts everything inside every moment and holds it back.",
+ "nusmp.page.book_stone.attribute_domain": "A shockwave of stone round you: a great burst that hurls back everything near and, when the control lock is free, seals its casting for a few seconds (Magic Jamming). Forges the masonry armour for a few seconds.",
+ "nusmp.page.book_stone.attribute_guard": "Masonry armour: dressed stone blocks forge over your body piece by piece for nine seconds, with Resistance II, thorns and a share of your aura spent; runed tablets float behind you. It shatters out when it ends.",
+ "nusmp.page.book_stone.stone_sentinel": "A Stone Sentinel rises at your side: a knight of masonry with a tower shield that turns projectiles back and a block hammer that smashes the nearest foe.",
+ "nusmp.page.book_stone.stone_wall": "A wall of stone bricks, six wide and four high, raised in front of you for ten seconds."
+}

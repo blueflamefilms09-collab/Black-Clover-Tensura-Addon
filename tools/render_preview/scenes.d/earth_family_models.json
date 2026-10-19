@@ -1,0 +1,474 @@
+{
+ "efm_earth_golem_idle": {
+  "kind": "geo",
+  "model": "earth_golem",
+  "anim": "idle",
+  "glow": "FFD2E65A",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_rock_titan_idle": {
+  "kind": "geo",
+  "model": "rock_titan",
+  "anim": "idle",
+  "glow": "FFFF9640",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_stone_sentinel_idle": {
+  "kind": "geo",
+  "model": "stone_sentinel",
+  "anim": "idle",
+  "glow": "FF96E6FF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_sandstone_sphinx_idle": {
+  "kind": "geo",
+  "model": "sandstone_sphinx",
+  "anim": "idle",
+  "glow": "FFFFE08C",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_red_ochre_totem_idle": {
+  "kind": "geo",
+  "model": "red_ochre_totem",
+  "anim": "idle",
+  "glow": "FFFF7840",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_mineral_spire_idle": {
+  "kind": "geo",
+  "model": "mineral_spire",
+  "anim": "idle",
+  "glow": "FF78DCFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_sandstone_cage_idle": {
+  "kind": "geo",
+  "model": "sandstone_cage",
+  "anim": "idle",
+  "glow": "FFFFE08C",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v0",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   },
+   {
+    "name": "v150",
+    "yaw": 150,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_earth_golem_attack": {
+  "kind": "geo",
+  "model": "earth_golem",
+  "anim": "attack",
+  "glow": "FFD2E65A",
+  "ages": [
+   0,
+   8,
+   13,
+   18,
+   26
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_earth_golem_walk": {
+  "kind": "geo",
+  "model": "earth_golem",
+  "anim": "walk",
+  "glow": "FFD2E65A",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_rock_titan_attack": {
+  "kind": "geo",
+  "model": "rock_titan",
+  "anim": "attack",
+  "glow": "FFFF9640",
+  "ages": [
+   0,
+   8,
+   13,
+   18,
+   26
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_stone_sentinel_attack": {
+  "kind": "geo",
+  "model": "stone_sentinel",
+  "anim": "attack",
+  "glow": "FF96E6FF",
+  "ages": [
+   0,
+   10,
+   15,
+   19,
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_sandstone_sphinx_attack": {
+  "kind": "geo",
+  "model": "sandstone_sphinx",
+  "anim": "attack",
+  "glow": "FFFFE08C",
+  "ages": [
+   0,
+   8,
+   12,
+   18
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_sandstone_cage_form": {
+  "kind": "geo",
+  "model": "sandstone_cage",
+  "anim": "form",
+  "glow": "FFFFE08C",
+  "ages": [
+   0,
+   10,
+   16,
+   21
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_red_ochre_totem_attack": {
+  "kind": "geo",
+  "model": "red_ochre_totem",
+  "anim": "attack",
+  "glow": "FFFF7840",
+  "ages": [
+   0,
+   6,
+   10,
+   16
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_mineral_spire_grow": {
+  "kind": "geo",
+  "model": "mineral_spire",
+  "anim": "grow",
+  "glow": "FF78DCFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12,
+   17
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_rock_boulder_idle": {
+  "kind": "geo",
+  "model": "rock_boulder",
+  "anim": "idle",
+  "glow": "FFFF9640",
+  "ages": [
+   0
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ },
+ "efm_mineral_lance_idle": {
+  "kind": "geo",
+  "model": "mineral_lance",
+  "anim": "idle",
+  "glow": "FF78DCFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "views": [
+   {
+    "name": "v40",
+    "yaw": 40,
+    "pitch": 10
+   }
+  ]
+ }
+}

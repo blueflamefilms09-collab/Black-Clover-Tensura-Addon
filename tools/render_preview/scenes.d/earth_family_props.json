@@ -1,0 +1,277 @@
+{
+ "efp_golem": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 0,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   2,
+   6,
+   12,
+   40,
+   80,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_titan": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 1,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   2,
+   6,
+   12,
+   40,
+   80,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_sentinel": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 2,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   2,
+   12,
+   40,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_sphinx": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 3,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   2,
+   12,
+   40,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_cage": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 4,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   1,
+   6,
+   10,
+   20,
+   60,
+   85,
+   95
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_totem": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 5,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   2,
+   12,
+   40,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_spire": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 6,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   1,
+   5,
+   9,
+   14,
+   40,
+   92
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_boulder": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 7,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   10,
+   30
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ },
+ "efp_lance": {
+  "kind": "prop",
+  "attr": "Earth",
+  "propKind": "EARTH_CONSTRUCT",
+  "param": 8,
+  "scale": 1.0,
+  "maxLife": 100,
+  "ages": [
+   10,
+   30
+  ],
+  "tile": [
+   340,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 14
+   }
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.stone_gauntlet_l",
+    "texture_width": 64,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        3.2,
+        8.0,
+        -3.8
+       ],
+       "size": [
+        6.2,
+        5.0,
+        7.6
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        3.0,
+        11.8,
+        -3.9
+       ],
+       "size": [
+        6.6,
+        1.4,
+        7.8
+       ],
+       "uv": [
+        31,
+        0
+       ]
+      },
+      {
+       "origin": [
+        7.4,
+        6.2,
+        -4.6
+       ],
+       "size": [
+        1.6,
+        1.8,
+        1.6
+       ],
+       "uv": [
+        0,
+        14
+       ]
+      },
+      {
+       "origin": [
+        5.6,
+        6.2,
+        -4.6
+       ],
+       "size": [
+        1.6,
+        1.8,
+        1.6
+       ],
+       "uv": [
+        9,
+        14
+       ]
+      },
+      {
+       "origin": [
+        3.8000000000000003,
+        6.2,
+        -4.6
+       ],
+       "size": [
+        1.6,
+        1.8,
+        1.6
+       ],
+       "uv": [
+        18,
+        14
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

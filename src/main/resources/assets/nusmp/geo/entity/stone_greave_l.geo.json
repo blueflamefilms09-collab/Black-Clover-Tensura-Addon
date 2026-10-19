@@ -1,0 +1,82 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.stone_greave_l",
+    "texture_width": 64,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -0.20000000000000018,
+        1.8,
+        -3.1
+       ],
+       "size": [
+        5.0,
+        7.6,
+        6.0
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -0.2999999999999998,
+        9.2,
+        -3.9
+       ],
+       "size": [
+        5.2,
+        2.6,
+        2.6
+       ],
+       "uv": [
+        0,
+        15
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -0.20000000000000018,
+        0.0,
+        -4.4
+       ],
+       "size": [
+        5.2,
+        2.2,
+        7.6
+       ],
+       "uv": [
+        23,
+        0
+       ],
+       "inflate": 0.1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

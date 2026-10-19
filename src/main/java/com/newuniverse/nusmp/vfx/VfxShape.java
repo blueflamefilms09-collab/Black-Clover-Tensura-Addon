@@ -256,7 +256,12 @@ public enum VfxShape {
     CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
     CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
     BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
-    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer
+    // 1.93.0: the earth family (Sandstone, Rock, Red Ochre, Stone, Earth, Mineral): one layer (EarthFamilyLayer), the magic is read from the colour (vfx.EarthFxStyle)
+    EARTHFAM_CAST,        // a charge at 'from' and a thrown body (chunks, grains, shards, pigment) flying to 'to'; power = size
+    EARTHFAM_ZONE,        // a ground sigil with a rising rim and the magic's debris, radius = power
+    EARTHFAM_BURST;       // an impact: flash, ring, the magic's debris flying out, a lingering afterglow; power = scale
+    //     // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

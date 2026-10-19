@@ -1,0 +1,10 @@
+{
+ "nusmp.skill.book_red_ochre.description": "The grimoire of Red Ochre Magic: iron-red pigment and fired clay. Its pages paint foes so they weaken and glow, raise painted totems, daub your own body with War Paint and forge the clay armour over you. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_red_ochre.attribute_bolt": "A bolt of red pigment: it bursts on the first foe or wall and saps the strength of everything it splashes.",
+ "nusmp.page.book_red_ochre.attribute_cut": "A single brush stroke of ochre along your line of sight: it hurts what it crosses, weakens it and leaves it glowing, easy to see.",
+ "nusmp.page.book_red_ochre.attribute_field": "A pool of pigment laid at the aimed point: everything inside is hurt, weakened and slowed while it stands there.",
+ "nusmp.page.book_red_ochre.attribute_domain": "A burst of war paint round you: everything near is hurt, marked to glow and weakened, and the clay armour forges for a few seconds.",
+ "nusmp.page.book_red_ochre.attribute_guard": "Clay armour: smooth fired clay with painted bands forges over your body piece by piece for nine seconds, with Resistance, thorns and a share of your aura spent; a sun disc turns behind you. It shatters out when it ends.",
+ "nusmp.page.book_red_ochre.ochre_totem": "A painted totem rises where you aim (two at most): every moment it spits a bolt of pigment at the nearest foe, weakening and marking it. It stands solid and can be broken.",
+ "nusmp.page.book_red_ochre.war_paint": "War Paint - your body is daubed in ochre for twelve seconds: your blows hit harder, you run faster, the clay armour forges, and every foe near you is marked to glow."
+}

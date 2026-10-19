@@ -52,5 +52,6 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        EarthPropPainter.register();         // 1.93.0: Earth / Rock / Stone / Sandstone / Red Ochre / Mineral constructs
     }
 }

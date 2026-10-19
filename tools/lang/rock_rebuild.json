@@ -1,0 +1,10 @@
+{
+ "nusmp.skill.book_rock.description": "The grimoire of Rock Magic: raw, jagged crag and boulder. Its pages throw boulders, break the ground into crags, drop rock on a field, call the Boulder Titan and wrap you in boulder armour. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_rock.attribute_bolt": "Rock Bolt - a boulder is torn loose and thrown along your line of sight; it arcs a little, bursts on the first foe or block and hurts everything round the burst.",
+ "nusmp.page.book_rock.attribute_cut": "Crags erupt one after another along your line of sight, hitting and lifting what stands on them.",
+ "nusmp.page.book_rock.attribute_field": "A rockfall laid at the aimed point: stones keep dropping on everything inside, slowing and shoving it.",
+ "nusmp.page.book_rock.attribute_domain": "A quake round you: a great burst that hurls back and weakens everything near, and forges the boulder armour for a few seconds.",
+ "nusmp.page.book_rock.attribute_guard": "Boulder armour: heavy rock gathers over your body piece by piece for nine seconds, with Resistance II, thorns and a share of your aura spent; rocks orbit you. It shatters out when it ends.",
+ "nusmp.page.book_rock.boulder_titan": "The Boulder Titan - a hunched crag giant rises at your side with a shock where it stands. It stomps the nearest foe, and now and then roars: everything close is thrown back and weakened (hard control, shared lock).",
+ "nusmp.page.book_rock.boulder_barrage": "Three boulders thrown in a fan; each bursts where it lands."
+}
