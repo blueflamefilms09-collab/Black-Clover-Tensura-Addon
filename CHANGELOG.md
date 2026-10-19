@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.94.0] — Dungeon overhaul: 29 new puzzles, encounters fixed, rifts fixed, the System names the floor, no more lock-ins, Create traps, true-to-D&D bosses, player-model humanoids with new hair, Anti-Magic on Aura
+
+Owner brief: "remake all models to use the player model, fix the hair, fix direct encounters, way more types of puzzles, fix the abyssal bosses like the lich to look like a D&D lich, fix the hidden dungeon rifts, Create compatibility for the traps, the System should tell the floor's theme and mechanic, remove the random being locked in a room or add a way out, anti-magic should use aura". Per-part docs: `docs/labyrinth/puzzles_v2.md`, `encounters_fix.md`, `rifts_fix.md`, `system_floor_info.md`, `abyssal_bosses.md`, `docs/compat/create.md`, `docs/playermodel.md`, `docs/antimagic_aura.md`.
+
+### NEW
+- **29 new puzzle types** (`labyrinth/mega/puzzle`): plate sequences, mirror beams, Simon levers, memory tiles, lights-out, sliding tiles, riddles with clickable answers, water levels, pipes, a number lock, constellations, mimic chests, pendulums, sentries, escorts and more. Each is solvable by one player, deterministic from a seed, restores its room block for block, never seals anyone in (a lectern gives up, and every puzzle winds down by itself) and pays through the trial loot table. Chosen by theme, depth and road from `data/nusmp/mega/puzzles/weights.json`; two new gallery rooms. Admin: `/multiverse mega puzzle ...`.
+- **The System names the floor** (`mega/system/FloorInfo`, `FloorCard`): on arrival it shows the floor number and direction, the theme (name, description, road, danger), the floor mechanics with how to beat them, the depth effect on monsters and the boss floor. Re-show with the period key, `/dungeon floor` or `/multiverse mega system floor`.
+- **Ways out of every lock** (`mega/lock`): sealing mechanics and trial chambers show a release rune after a timeout and open on their own; boss arenas always show an exit rune; `/dungeon unstuck` takes a player or party to the last safe room; a flood-fill check in the generator guarantees every room reaches the stairs.
+- **Create compatibility** (`compat/create`): with Create installed the dungeon gets six trap families (saw run, press, drill wall, treadmill, pour, sequence) with levers to disarm; no compile dependency, a wrong id falls back to a vanilla stand-in, Create contraptions are refused inside the dungeon. Config `nusmp-labyrinth-create-compat-server.toml`.
+- **22 true-to-D&D boss looks** for the Labyrinth Guardian (lich, Acererak, Vecna, Strahd, Zariel, Asmodeus, Orcus, Lich King, Solar, Demogorgon, Beholder, Elder Brain, Kraken, Tiamat, Bahamut, Dracolich, Tarrasque, Lolth, quasit, vrock, hezrou, balor), three phases each, humanoids as player-model skins with extras.
+- **Player-model kit** (`client/playermodel`): story, arc, Zogratis, avatar and NPC humanoids now use the vanilla player model (slim/wide arms, armour layers, extras for horns, wings, crowns, props). **New hair system**: 23 styles, layered with a front fringe, swaying and bouncing with movement, hidden under helmets.
+- Admin tools: `/multiverse mega dm why|force` (why no encounter fired), `/multiverse mega rift ...`.
+
+### REPLACED
+- Encounters: single-ring spawn search, one shared placement budget and straight-line hunting are replaced by a place ladder, per-monster budgets and room-by-room hunting; a pity timer makes quiet dark parties meet monsters.
+- Hidden-dungeon rifts: 12 bugs fixed (exit loop, unguarded tick, barred vault, shortcut aiming at unbuilt floors and more).
+- Anti-Magic abilities now cost Tensura Aura instead of the custom Anti-Magic Power bar; AMP stays as a harmless stat so saves keep working.
+- Humanoid models: the old custom humanoid models and avatar hair layers are replaced by the player-model kit (old assets stay in the repo).
+
+### KEPT
+- Every existing puzzle, trial, seal and mechanic, the Floor Warden look for ordinary guardians, creature models, all older tests.
+
+### Honest notes
+- Nothing has been run in the game. Every Create block id is from memory of Create 6.x. The dungeon humanoids (living armor, floor warden, Goliath, the Foundry mobs) are converted in the next release.
+
 ## [1.93.0] — The magic rebuild (41 magics), the custom (merged) magic removed, 24 new Djinn, an animated Djinn panel, the vessel-overlay fix
 
 Owner brief: "remove the custom magic, rebuild the magics (list), based on the Black Clover anime: custom summon models, models, render layer temp armor (the same equip animation the Djinn full equip has), vfx and mechanics; buff Djinn, add 24 custom Djinn, make the active Djinn GUI look different per Djinn and animated; fix the weapon-as-vessel bug". Per-magic detail, with its own NEW / REPLACED / KEPT table: `docs/attributes/<key>_rebuild.md`; shared brief: `docs/rebuild/magic_rebuild_brief.md`.
