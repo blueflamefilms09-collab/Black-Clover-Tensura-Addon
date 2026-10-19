@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
  *   4 haze                        additive, full bright 1.08 x body             last body pass: the sheen of running water
  *   5 ripples, stream, droplets   additive / translucent feet, round the body   ripple rings on the ground, two streams winding up the body, drops falling off the hands
  * </pre>
- * Styles: 0 = the Valkyrie Dress / the usual cast; 1 = the sea-dragon form (a deeper blue tint on the plates).
+ * Styles: 0 = the usual cast; 1 = the Valkyrie Dress (the plates take a deeper blue tint, the glow is a notch brighter and pearl-white).
  */
 public final class WaterAura {
     private WaterAura() {}
@@ -63,7 +63,8 @@ public final class WaterAura {
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.17f) + 0.08f * Mth.sin(age * 0.53f);
         float forge = WaterAuraRig.forge(c, 0f);
         WaterAuraRig.shell(c, AuraRender.translucent(SHELL), 1.04f, 1.025f, 1.04f, AuraRender.alpha(0xFFFFFFFF, 0.55f * forge), false, true);
-        WaterAuraRig.draw(c, SET, GLOW, 0.75f * pulse + 0.3f);
+        boolean valk = c.style() == 1;
+        WaterAuraRig.draw(c, SET, valk ? PALE : GLOW, 0.75f * pulse + (valk ? 0.5f : 0.3f), valk ? 0xA8C8FF : 0xFFFFFF);
         WaterAuraRig.shell(c, AuraRender.additive(HAZE), 1.08f + 0.012f * Mth.sin(age * 0.13f), 1.05f, 1.08f + 0.012f * Mth.sin(age * 0.13f), AuraRender.alpha(0xFF7CD8FF, 0.16f * pulse * forge), true, true);
         extras(c, forge, pulse);
     }
