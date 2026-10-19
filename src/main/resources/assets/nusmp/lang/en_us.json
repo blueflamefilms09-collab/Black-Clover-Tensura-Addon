@@ -12751,5 +12751,6 @@
   "tooltip.nusmp.celestial.sceptre": "Starlight Mend: heals you and your allies within 8 blocks (30 s cooldown).",
   "tooltip.nusmp.celestial.sceptre2": "Left to the one who bested the Celestial Spirit King.",
   "tooltip.nusmp.celestial.slot": "Carry it, or wear it in the Celestial Key slot, to call the spirit with Celestial Spirit Magic.",
-  "tooltip.nusmp.celestial.unbound": "No contract. Hold use to seal one (sneak + use breaks it)."
+  "tooltip.nusmp.celestial.unbound": "No contract. Hold use to seal one (sneak + use breaks it).",
+  "dimension.nusmp.spirit_world": "The Spirit World"
 }
