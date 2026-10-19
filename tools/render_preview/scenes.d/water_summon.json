@@ -1,0 +1,10 @@
+{
+ "water_sea_dragon_swim": {
+  "kind": "geo", "model": "water_sea_dragon", "space": "PROP", "layer": "TRANSLUCENT", "glow": "FF5CE6FF", "anim": "swim", "ages": [0, 8, 16], "tile": [520, 340],
+  "views": [{"name": "side", "yaw": 90, "pitch": 8}, {"name": "3/4", "yaw": 35, "pitch": 20}]
+ },
+ "water_javelin_fly": {
+  "kind": "geo", "model": "water_javelin", "space": "PROP", "layer": "TRANSLUCENT", "glow": "FF5CE6FF", "anim": "fly", "ages": [0, 4], "tile": [520, 300],
+  "views": [{"name": "side", "yaw": 90, "pitch": 8}, {"name": "3/4", "yaw": 35, "pitch": 20}]
+ }
+}

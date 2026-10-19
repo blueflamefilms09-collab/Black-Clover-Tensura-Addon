@@ -52,5 +52,9 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        WaterPropPainter.register();             // 1.93.0: Water / Dark / Lightning / Flame summons
+        DarkPropPainter.register();
+        LightningPropPainter.register();
+        FlamePropPainter.register();
     }
 }

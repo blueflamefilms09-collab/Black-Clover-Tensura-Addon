@@ -1,0 +1,10 @@
+{
+ "lightning_thunderbird_fly": {
+  "kind": "geo", "model": "lightning_thunderbird", "space": "PROP", "layer": "CUTOUT", "glow": "FF6AB4FF", "anim": "fly", "ages": [0, 3, 6], "tile": [440, 340],
+  "views": [{"name": "front", "yaw": 0, "pitch": 10}, {"name": "side 3/4", "yaw": 60, "pitch": 14}]
+ },
+ "lightning_lance_fly": {
+  "kind": "geo", "model": "lightning_lance", "space": "PROP", "layer": "CUTOUT", "glow": "FF6AB4FF", "anim": "fly", "ages": [0, 3], "tile": [520, 300],
+  "views": [{"name": "side", "yaw": 90, "pitch": 8}, {"name": "3/4", "yaw": 35, "pitch": 20}]
+ }
+}

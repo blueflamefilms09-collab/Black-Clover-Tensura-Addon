@@ -97,5 +97,14 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0 (Water / Dark / Lightning / Flame rebuild): the sea dragon and the javelin; the black blade / crescent and the black moon / hole; the thunderbird and the lance; the flame lion and the phoenix (prop.WaterProps ... client.prop.WaterPropPainter ...) */
+    WATER_1,
+    WATER_2,
+    DARK_1,
+    DARK_2,
+    LIGHTNING_1,
+    LIGHTNING_2,
+    FLAME_1,
+    FLAME_2
 }

@@ -52,5 +52,9 @@ final class PropRegistry {
         SandProps.init();
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
+        WaterProps.init();                       // 1.93.0: Water / Dark / Lightning / Flame summons
+        DarkProps.init();
+        LightningProps.init();
+        FlameProps.init();
     }
 }

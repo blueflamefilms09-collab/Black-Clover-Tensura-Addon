@@ -505,3 +505,50 @@ def tail_chain(p, a, mats, n, seg_len, start, w0, taper=0.3, droop=1.5, tilt=14.
         z += seg_len - 0.2
         y -= droop
     return y, z, parent
+
+
+def bird(p, a, body, wing, tail_mat, beak, eye, crest, wing_len=22.0, tail_len=26.0, cy=22.0, flap=0.8, feathers=6, crest_n=3):
+    """A bird for the PROP space (front on -z, centred about height cy): body, neck, head with a beak and a crest, wings of `feathers` flat feathers each that flap about the
+    body's long axis, a fan of tail feathers and two talons. Clips: 'fly' (flapping, `flap` s per beat) and 'idle' (a slow glide). `wing` / `tail_mat` are the feather materials."""
+    a.clip("fly", length=flap, loop=True)
+    a.clip("idle", length=flap * 3.0, loop=True)
+    p.box("root", (-3.2, cy - 3.2, -5.0), (6.4, 6.4, 13.0), body)                       # the body
+    p.box("root", (-2.0, cy - 2.0, 8.0), (4.0, 3.6, 4.0), body)                         # the rump
+    p.bone("head", (0, cy + 2.5, -5.0))
+    p.box("head", (-1.8, cy - 0.5, -8.0), (3.6, 5.0, 3.6), body)                       # the neck
+    p.box("head", (-2.2, cy + 3.8, -11.0), (4.4, 4.2, 5.6), body)                      # the head
+    p.box("head", (-0.9, cy + 4.6, -14.6), (1.8, 1.6, 3.8), beak)                      # the beak
+    p.box("head", (-0.6, cy + 3.8, -14.0), (1.2, 0.9, 2.8), beak)
+    for sx in (0, 1):
+        mbox(p, "head", sx, (-2.45, cy + 6.0, -10.6), (0.6, 1.1, 1.4), eye)           # the eyes
+    for k in range(crest_n):                                                           # the crest, swept back
+        p.box("head", (-0.5, cy + 8.0, -9.6 + k * 1.7), (1.0, 3.6 - k * 0.5, 1.2), crest, rot=(24 + k * 10, 0, 0), pivot=(0, cy + 8.0, -9.6 + k * 1.7))
+    sine_rot(a, "fly", "head", flap, 0, 4.0, phase=0.25)
+    sine_rot(a, "idle", "head", flap * 3.0, 0, 3.0)
+    for sx in (0, 1):
+        sg = 1.0 if sx else -1.0
+        P = (sg * 3.0, cy + 1.2, -1.0)
+        w = "wing%d" % sx
+        p.bone(w, P)
+        # the arm of the wing, then the feathers fanned from the arm: front ones short, the long ones trailing
+        p.box(w, (P[0] - (10.0 if sx == 0 else 0.0), P[1] - 0.7, P[2] - 1.0), (10.0, 1.4, 2.4), body)
+        for i in range(feathers):
+            f = "w%df%d" % (sx, i)
+            L = wing_len * (0.55 + 0.45 * math.sin((i + 1) / float(feathers + 0.5) * math.pi * 0.9))
+            p.bone(f, P, parent=w, rotation=(0, sg * (-8 - 4 * i), 0))
+            z0 = P[2] - 1.0 + i * 2.3
+            o = (P[0] - L, P[1] - 0.3, z0) if sx == 0 else (P[0], P[1] - 0.3, z0)
+            p.box(f, o, (L, 0.6, 3.4), wing)
+            sine_rot(a, "fly", f, flap, 2, sg * 8.0, phase=-0.12 - i * 0.025)
+        a.rot("fly", w, {0.0: (0, 0, sg * 38), flap / 2: (0, 0, -sg * 34), flap: (0, 0, sg * 38)})
+        sine_rot(a, "idle", w, flap * 3.0, 2, sg * 6.0)
+    p.bone("tail", (0, cy, 11.0))
+    for i in range(5):
+        ang = (i - 2) * 11.0
+        L = tail_len * (1.0 - 0.14 * abs(i - 2))
+        p.box("tail", (-0.9, cy - 0.3, 11.0), (1.8, 0.6, L), tail_mat, rot=(0, ang, 0), pivot=(0, cy, 11.0))
+    sine_rot(a, "fly", "tail", flap, 0, 5.0, phase=0.3)
+    sine_rot(a, "idle", "tail", flap * 3.0, 1, 5.0)
+    for sx in (0, 1):
+        mbox(p, "root", sx, (-2.4, cy - 7.0, -1.0), (1.0, 4.2, 1.0), beak)             # the talons
+        mbox(p, "root", sx, (-3.0, cy - 7.4, -2.6), (2.2, 0.9, 2.4), beak)
