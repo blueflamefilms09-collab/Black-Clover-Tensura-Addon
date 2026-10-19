@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.95.0] — Fairy Tail skills, GUI size options, worn relics on the player model
+
+### NEW
+- **Eight Fairy Tail skills** (`fairytail`): Fire Dragon Slayer (Unique, evolves to the Ultimate Fire Dragon King with Dragon Force, Lightning Flame Dragon Mode and Fire Dragon King's Mode), Ice-Make, Sky Dragon Slayer, Lightning Dragon Slayer, Iron Dragon Slayer, Crash and Water Magic. Spells are modes opened by mastery; ten forms wear a render-layer armour that forges in with the Djinn equip animation. One skill book teaches a skill directly (`/multiverse fairytail give|learn|list`; 12 percent pool in the dungeon relic vault). `docs/fairy_tail_skills.md`.
+- **GUI size options** (`client/ui/GuiScale`): global and per-GUI scale for 19 screens and 10 HUD elements, a GUI Size screen (button in the status screen, key F8, Mods > Config), fit-to-window. Config `nusmp-gui-client.toml`. `docs/gui_scale.md`.
+- **Worn relics on the player model**: the player-model kit now draws relics on its humanoids; relic and slot pairs without a catalog entry fall back to the slot's default look; mod items worn in Curios with no model draw a floating charm. `docs/relic_worn_fix.md`.
+
+### REPLACED
+- Nothing.
+
+### KEPT
+- Everything else. The skill tree removal, Erza's Requip, celestial keys, Elsdocia, the grade damage ranges and the dungeon-humanoid player models are not in this release.
+
+### Honest notes
+- Nothing has been run in the game; balance numbers are first-pass guesses. The Curios slots necklace, back, belt, hands and charm must come from Curios itself.
+
 ## [1.94.0] — Dungeon overhaul: 29 new puzzles, encounters fixed, rifts fixed, the System names the floor, no more lock-ins, Create traps, true-to-D&D bosses, player-model humanoids with new hair, Anti-Magic on Aura
 
 Owner brief: "remake all models to use the player model, fix the hair, fix direct encounters, way more types of puzzles, fix the abyssal bosses like the lich to look like a D&D lich, fix the hidden dungeon rifts, Create compatibility for the traps, the System should tell the floor's theme and mechanic, remove the random being locked in a room or add a way out, anti-magic should use aura". Per-part docs: `docs/labyrinth/puzzles_v2.md`, `encounters_fix.md`, `rifts_fix.md`, `system_floor_info.md`, `abyssal_bosses.md`, `docs/compat/create.md`, `docs/playermodel.md`, `docs/antimagic_aura.md`.
