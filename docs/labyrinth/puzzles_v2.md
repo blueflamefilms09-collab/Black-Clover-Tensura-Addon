@@ -44,8 +44,9 @@ from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/p
 * **Sigil puzzle** (`labyrinth/trap`, `f1_traps.md`): four `nusmp:sigil_plate` (colour 0 to 3, a click not a step), a `nusmp:riddle_stone` that reads out the order, the `kind=puzzle` door; `PuzzleState`
   keeps order, progress and the wrong-order lock. Rooms: the Spire's `puzzle_room`, Mega `puzzle/sigil_hall_a`, `sigil_hall_b` and seven themed rooms (`crystal_geode_resonance_hall`,
   `cursed_archive_card_catalogue`, `drowned_crypt_tide_gate`, `holy_church_confessional`, `feywild_grove_fairy_ring`, `infernal_foundry_contract_hall`, `sunken_temple_tidal_gate`).
-* **Pitfall field** (`PitfallTileBlock`, pit room, Mega `trap/pit_hall_a`, `pit_hall_b`, themed trap rooms) and **snuffer glyph** (`SnufferGlyphBlock`, `trap/dark_room`): trap rooms, a hidden safe route
-  fixed per template and a darkness that snuffs torches.
+* **Pitfall field** (`PitfallTileBlock`, the Spire's pit room, Mega `trap/pit_hall_a`, `pit_hall_b` and the themed trap rooms `cursed_archive_burning_stacks`, `fungal_underdark_chasm_ledges`,
+  `haunted_manor_attic`, `necropolis_grave_pits`, `sky_citadel_cloud_chasm`) and **snuffer glyph** (`SnufferGlyphBlock`, `trap/dark_room`): trap rooms with a hidden safe route fixed per template and a
+  darkness that snuffs torches.
 * **The mechanics library's puzzle category** (`mega/mechanics`, `mechanics.md`): 20 bases / 125 variants (`colour_order`, `mirror_demon_pattern`, `chain_spell_pillars`, `scales_of_balance`,
   `lever_gallery`, `tsuzumi_rooms`, `return_by_death_memory`, `courier_of_the_pot`, `sunlight_relay`, `sphinx_riddle`, `true_path`, `trick_tower_pairs`, `majority_door`, `rune_lock`,
   `equivalent_exchange`, `door_of_teeth`, `test_of_position`, `zodiac_gates`, `weeping_statues`, `tarokka_spread`) on 20 counter kinds (`sequence`, `mirror`, `pillars_sync`, `lever`, `carry`,
@@ -110,6 +111,13 @@ weights.json --PuzzleWeights--> PuzzlePlanner.plan(floor, rooms, theme, road, de
   action a line reminds the party that the lectern gives the hint.
 
 ## 3. The 29 new puzzles
+
+The owner's suggested families, and where each is: pressure-plate sequences `plate_sequence` (and `escort_spirit`, `pit_jump`) - rotating-pillar alignment `rotating_pillars` - mirror and beam routing `beam_mirrors` -
+weight balance `weight_scales` - lever and switch permutations with sound cues `simon_levers` - memory tiles `memory_tiles` - colour matching `colour_mix` - tile-flip grids `lights_out` - sliding blocks
+`sliding_block` - rune copy `rune_copy` - riddle doors with chat buttons `riddle_door` and with item offering `riddle_offering` - sundial / time of day `sundial` - water-level control `water_level` -
+lighting torches in an order `torch_order` - gravity flip `gravity_maze` - shadow-cast pattern `shadow_cast` - music and melodies `melody_notes` - pipe connecting `pipe_connect` - key and lock with carried
+items `key_and_lock` - escort a spirit `escort_spirit` - stealth and line-of-sight sentries `sentry_stealth` - plate-and-pit jumping `pit_jump` - pendulum timing `pendulum_crossing` - number lock from clues
+scattered in a room `number_lock` - constellation connect-the-stars `constellation` - mimic chests `mimic_chests` - elemental affinity pedestals `elemental_mix` - chain reaction `chain_reaction`.
 
 Cells are shown for one delver at tier 1 / a full party at tier 5 (`StatsDump`-style sweep of 30 boards). "Costs" is what a mistake costs.
 
