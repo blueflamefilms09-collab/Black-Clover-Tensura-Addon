@@ -1,0 +1,13 @@
+{
+  "nusmp.skill.book_tree.description": "A grimoire of heartwood and living trunks. Its pages throw splinters, burst roots out of the ground, raise groves and a great tree, grow a bark armour over you, call a treant, and wall you in with oak. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_tree.attribute_bolt": "Tree Magic: Splinter Shot - a sharpened shaft of wood that pierces everything on its line and slows it.",
+  "nusmp.page.book_tree.attribute_cut": "Tree Magic: Root Lance - lances of root burst out of the ground in a line in front of you, one after another: each cuts, throws up and roots whoever stands on it.",
+  "nusmp.page.book_tree.attribute_field": "Tree Magic: Grove - a grove grows at the aimed point for 8 seconds: foes in it are cut and held by roots, friends in it mend. Size scales with your EP.",
+  "nusmp.page.book_tree.attribute_domain": "Tree Magic: Great Tree Rising - a great trunk rises under everything round the aimed point: heavy damage, thrown up, then held by its roots for a while.",
+  "nusmp.page.book_tree.attribute_guard": "Tree Magic: Bark Armor - the Heartwood armour grows over you for 10 seconds (it forges in piece by piece and shatters off at the end): blows are softened and whoever strikes you is pricked and rooted.",
+  "nusmp.page.book_tree.heartwood_guardian": "Tree Magic: Heartwood Guardian - a treant of heartwood rises beside you for 20 seconds, follows you and slams the nearest foe. It can be hit.",
+  "nusmp.page.book_tree.seedling_volley": "Tree Magic: Seedling Volley - five seeds that sprout into rooting thorns where they land.",
+  "nusmp.page.book_tree.timber_wall": "Tree Magic: Timber Wall - a wall of oak trunks rises in front of you; foes in front of it are thrown back.",
+  "nusmp.page.book_tree.verdant_canopy": "Tree Magic: Verdant Canopy - a canopy spreads over you for 10 seconds: friends beneath it mend and regenerate, foes are slowed.",
+  "nusmp.page.book_tree.heartwood_fist": "Tree Magic: Heartwood Charge - you charge forward with a fist of heartwood, hitting everything on the way and throwing it back."
+}

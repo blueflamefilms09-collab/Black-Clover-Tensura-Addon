@@ -23,7 +23,7 @@ public final class VineAura {
 
     private static final String K = "vine";
     private static final Piece[] SET = {
-            piece(K, "helm", Part.HEAD, 0, 0f, 16f, 0f, GLOWS | HIDE_1P),
+            piece(K, "helm", Part.HEAD, 0, 0f, 16f, 0f, HIDE_1P),
             piece(K, "crown", Part.HEAD, 12, 0f, 22f, 0f, GLOWS | HIDE_1P | DETAIL),
             piece(K, "chest", Part.BODY, 2, 0f, 14f, -4f, GLOWS),
             piece(K, "back", Part.BODY, 4, 0f, 18f, 8f, 0),
@@ -33,7 +33,7 @@ public final class VineAura {
             piece(K, "bracer_l", Part.L_ARM, 8, 2f, 16f, 0f, 0),
             piece(K, "greave_r", Part.R_LEG, 9, 0f, 14f, 0f, 0),
             piece(K, "greave_l", Part.L_LEG, 11, 0f, 14f, 0f, 0),
-            piece(K, "aux", Part.BODY, 12, 0f, 14f, 0f, GLOWS | DETAIL),
+            piece(K, "aux", Part.BODY, 12, 0f, 14f, 0f, DETAIL),
     };
     private static final Style STYLE = new Style(0xB6FF5A, 0.9f, 0.14f, false);
     private static ResourceLocation skin, skinGlow;

@@ -65,14 +65,14 @@ def build_helm():
     A.bone("root", pivot=(0, 24, 0))
     A.bone("head", "root", (0, 24, 0))
     A.cube("head", (-5, 29, -5), (10, 1, 10), "stem", inflate=0.1)                  # the green band
-    for k in range(9):                                                               # the ring of leaves
-        a = k * 40.0
+    for k in range(7):                                                               # the ring of leaves
+        a = k * (360.0 / 7)
         x, z = 5.4 * math.cos(math.radians(a)), 5.4 * math.sin(math.radians(a))
         A.leaf("head", (x, 31, z), (3, 3), "leaf" if k % 2 == 0 else "leaf_dark", rot=(-25, 90 - a, 0), share="hl%d" % (k % 2))
-    for k, (x, z, ph) in enumerate(((0, -5.8, 0), (-4.3, -3.6, 20), (4.3, -3.6, 40), (-5.8, 1.5, 10), (5.8, 1.5, 30))):
+    for k, (x, z, ph) in enumerate(((0, -5.8, 0), (-4.6, -3.2, 20), (4.6, -3.2, 40))):
         a = math.degrees(math.atan2(z, x))
         A.bone("fl%d" % k, "head", (x, 30.5, z), rotation=(0, 90 - a - 90 if False else 0, 0))
-        blossom(A, "fl%d" % k, (x, 31.2, z), 5, 1.9, (2, 3), "petal" if k % 2 == 0 else "petal_w", 1, "z", share="hb%d" % (k % 2), phase=ph)
+        blossom(A, "fl%d" % k, (x, 31.2, z), 4, 1.9, (2, 3), "petal" if k % 2 == 0 else "petal_w", 1, "z", share="hb%d" % (k % 2), phase=ph)
     A.bone("rib", "head", (0, 30, 3))
     for sg in (-1, 1):
         n = "r" if sg < 0 else "l"
@@ -199,36 +199,32 @@ def build_back():
     A.anim.clip("idle", length=4.0, loop=True)
     for sg in (-1, 1):
         n = "r" if sg < 0 else "l"
-        for tier, (hy, scale, rzbase, ry) in enumerate(((22, 1.0, 28, 40), (18, 0.65, -10, 55))):
+        # two tiers of broad petals fanned out from a hinge on the shoulder blade: the upper tier up and out, the lower one out and down, both swept back
+        for tier, (hy, ths, ln0, sweep) in enumerate(((22, (12, 30, 48, 66, 82), 15, 22), (18, (-14, 2, 18, 34), 11, 32))):
             nm = "w%s%d" % (n, tier)
-            A.bone(nm, "torso", (sg * 1.5, hy, 3.4), rotation=(0, sg * -ry, sg * rzbase))
-            petals = 5
-            for k in range(petals):
-                th = -10 + k * 22.0
-                ln = int((9 + 4 * math.sin(k / (petals - 1.0) * math.pi)) * scale + 2)
-                x, y = 1.5 + sg * 0, 0
-                tipx = (sg * 1.5) + sg * (4 + ln * 0.5) * math.cos(math.radians(th))
-                tipy = hy + (4 + ln * 0.5) * math.sin(math.radians(th))
-                A.cube(nm, (sg * 1.5 + sg * 3 - (0 if sg > 0 else int(ln)), hy - 1.5, 3), (int(ln), 3, 1), "petal" if (k + tier) % 2 == 0 else "petal_w",
-                       rot=(0, 0, sg * th), pivot=(sg * 1.5, hy, 3.4), share="wp%d%d%d" % (tier, k, 0))
-            A.cube(nm, (sg * 1.5 + sg * 2 - 1, hy - 1, 3), (2, 2, 2), "heart", share="wh%d" % tier)
-        A.anim.rot("idle", "w%s0" % n, sway(4.0, 10.0, 0.0, axis=1, base=(0, sg * -40, sg * 28)))
-        A.anim.rot("idle", "w%s1" % n, sway(4.0, 8.0, 0.2, axis=1, base=(0, sg * -55, sg * -10)))
+            A.bone(nm, "torso", (sg * 1.5, hy, 3.4), rotation=(0, -sg * sweep, 0))
+            for k, th in enumerate(ths):
+                ln = int(ln0 - abs(k - (len(ths) - 1) / 2.0) * 1.5)
+                x0 = 3.5 if sg > 0 else -3.5 - ln
+                A.cube(nm, (x0, hy - 2, 3), (ln, 4, 1), "petal" if (k + tier) % 2 == 0 else "petal_w",
+                       rot=(0, 0, sg * th), pivot=(sg * 1.5, hy, 3.4), share="wp%d%d" % (tier, k))
+            A.cube(nm, (sg * 1.5 + sg * 1 - 1, hy - 1, 3), (2, 2, 2), "heart", share="wh%d" % tier)
+            A.anim.rot("idle", nm, sway(4.0, 9.0 - 3 * tier, 0.15 * tier, axis=1, base=(0, -sg * sweep, 0)))
     return A.save()
 
 
 def build_aux():
     A = new("aux", 64, 64, 82)
     A.bone("root", pivot=(0, 24, 0))
-    for k in range(6):
-        y = 10 + k * 2.8
-        A.bone("o%d" % k, "root", (0, y, 0), rotation=(0, k * 60, 0))
+    for k in range(4):
+        y = 10 + k * 3.6
+        A.bone("o%d" % k, "root", (0, y, 0), rotation=(0, k * 90, 0))
         A.bone("f%d" % k, "o%d" % k, (10 + (k % 2) * 2, y, 0))
-        blossom(A, "f%d" % k, (10.5 + (k % 2) * 2, y, 0), 5, 1.5, (2, 2), "petal" if k % 2 == 0 else "petal_w", 1, "z", share="ab%d" % (k % 2), phase=k * 13.0)
+        blossom(A, "f%d" % k, (10.5 + (k % 2) * 2, y, 0), 4, 1.5, (2, 2), "petal" if k % 2 == 0 else "petal_w", 1, "z", share="ab%d" % (k % 2), phase=k * 13.0)
     A.anim.clip("idle", length=6.0, loop=True)
-    for k in range(6):
+    for k in range(4):
         d = 1 if k % 2 == 0 else -1
-        A.anim.rot("idle", "o%d" % k, {round(6.0 * i / 4, 2): (0, k * 60 + 90 * i * d, 0) for i in range(5)})
+        A.anim.rot("idle", "o%d" % k, {round(6.0 * i / 4, 2): (0, k * 90 + 90 * i * d, 0) for i in range(5)})
     return A.save()
 
 

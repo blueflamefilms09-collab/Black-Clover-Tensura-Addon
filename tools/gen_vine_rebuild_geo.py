@@ -79,7 +79,7 @@ def build_crown():
         a = k * 60.0
         x, z = 6.2 * math.cos(math.radians(a)), 6.2 * math.sin(math.radians(a))
         A.bone("t%d" % k, "ring", (x, 36.5, z), rotation=lean(x, z, 32))
-        A.spike("t%d" % k, (x, 36.5, z), "+y", 6, 2, "thorn", layers=3, share="ct")
+        A.spike("t%d" % k, (x, 36.5, z), "+y", 6, 2, "thorn", layers=2, share="ct")
         a2 = math.radians(a + 30)
         A.cube("ring", (5.6 * math.cos(a2) - 1, 36.8, 5.6 * math.sin(a2) - 1), (2, 2, 2), "bud", share="cb")
         A.cube("ring", (6.2 * math.cos(a2) - 0.5, 36.2, 6.2 * math.sin(a2) - 0.5), (1, 1, 1), "vine", share="cv")
@@ -145,7 +145,7 @@ def build_bracer(sg):
     for k, y in enumerate((12, 14.5, 17)):                                           # three spiral wraps, each turned a little
         s((3.5, y, -2.5), (5, 2, 5), "vine", inflate=0.3, rot=(0, 18 * (k - 1), 0), share="bw")
     s((3.6, 18.6, -2.5), (5, 1, 5), "vine_dark", inflate=0.35, share="bx")
-    for k, y in enumerate((13, 15, 17)):
+    for k, y in enumerate((13, 16)):
         thorn_at(A, "arm", (sg * 8.7, y, 0), "+x" if sg > 0 else "-x", 2, 2, "bt")
     s((3.5, 9.5, -2.5), (5, 2, 5), "vine_dark", inflate=0.3, share="bg")             # the knuckle wrap
     A.anim.clip("idle", length=3.0, loop=True)
@@ -186,7 +186,7 @@ def build_back():
         sgx = 1 if base[0] > 0 else -1
         segs = [int(6 * sc), int(6 * sc), int(5 * sc), int(5 * sc), int(4 * sc)]
         w = A.limb("wh" + tag, "torso", base, tilt, segs, 3, 1, "vine", curl=(20, 0, -sgx * 4), share="wp" + tag)
-        for j in (0, 2):
+        for j in (0,):
             thorn_at(A, w[j], (base[0] + 2.2 * sgx, A.tips[w[j]][1] - 2, base[2]), "+x" if sgx > 0 else "-x", 2, 2, "wt" + tag + str(j))
         A.cube(w[4], (A.tips[w[4]][0] - 1, A.tips[w[4]][1], A.tips[w[4]][2] - 1), (2, 2, 2), "bud", share="wb")
         A.leaf(w[3], (A.tips[w[3]][0] + sgx * 2, A.tips[w[3]][1] - 2, A.tips[w[3]][2]), (3, 4), "leaf", rot=(0, 0, -sgx * 25), share="wl")

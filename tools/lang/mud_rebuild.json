@@ -1,0 +1,13 @@
+{
+  "nusmp.skill.book_mud.description": "A grimoire of mud. Its pages throw heavy globs, send a wave of mud, turn the ground to a pit, burst a bog open, wrap you in a mud armour, and call a golem, spouts and walls. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_mud.attribute_bolt": "Mud Magic: Mud Ball - a heavy glob of mud that bursts on the first foe and slows it.",
+  "nusmp.page.book_mud.attribute_cut": "Mud Magic: Mud Wave - a wave of mud along a line: it cuts everything on it, throws it back and slows it.",
+  "nusmp.page.book_mud.attribute_field": "Mud Magic: Mud Pit - the ground at the aimed point turns to a pit for 8 seconds: foes sink in it, are slowed hard and weakened. Size scales with your EP.",
+  "nusmp.page.book_mud.attribute_domain": "Mud Magic: Bog Domain - the ground round the aimed point erupts: heavy damage, thrown back, then mired for a long time.",
+  "nusmp.page.book_mud.attribute_guard": "Mud Magic: Mud Armor - the Bogplate armour drops onto you for 10 seconds, clod by clod: blows are softened by a third and whoever strikes you is slowed.",
+  "nusmp.page.book_mud.mud_golem": "Mud Magic: Mud Golem - a golem of mud rises beside you for 20 seconds, follows you and pounds the nearest foe. It can be hit.",
+  "nusmp.page.book_mud.mud_spout": "Mud Magic: Mud Spout - spouts of mud burst under up to four foes near the aimed point: damage and thrown up.",
+  "nusmp.page.book_mud.mud_wall": "Mud Magic: Mud Wall - a wall of packed mud rises in front of you; foes in front of it are thrown back.",
+  "nusmp.page.book_mud.mud_shackle": "Mud Magic: Mud Shackle - mud closes round one foe's legs (hard control, shares the 12 second control lock).",
+  "nusmp.page.book_mud.mud_barrage": "Mud Magic: Mud Barrage - for 3 seconds globs of mud rain on the aimed point."
+}

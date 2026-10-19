@@ -151,27 +151,27 @@ public final class TreeKit {
         LivingEntity att = source.getEntity() instanceof LivingEntity a && a != owner && !a.isAlliedTo(owner) && !source.is(DamageTypes.THORNS) ? a : null;
         switch (magic) {
             case TREE -> {
-                amount.set(hit * 0.85f);
+                amount.set(hit * TreeRules.softening("TREE"));
                 if (att != null) { att.hurt(owner.damageSources().thorns(owner), Math.min(6f, 1.5f + hit * 0.3f)); root(att, 30, 1); }
             }
             case VINE -> {
-                amount.set(hit * 0.9f);
+                amount.set(hit * TreeRules.softening("VINE"));
                 if (att != null) { att.hurt(owner.damageSources().thorns(owner), Math.min(4f, 1f + hit * 0.2f)); root(att, 40, 2); wound(att, 60, 0, 0.004); }
             }
             case PLANT -> {
-                amount.set(hit * 0.88f);
+                amount.set(hit * TreeRules.softening("PLANT"));
                 BalanceLaw.heal(owner, Math.min(2f, 0.5f + hit * 0.15f));
             }
             case POISON_PLANT -> {
-                amount.set(hit * 0.92f);
+                amount.set(hit * TreeRules.softening("POISON_PLANT"));
                 if (att != null) { att.hurt(owner.damageSources().thorns(owner), 1.5f); wound(att, 100, 1, 0.006); }
             }
             case MUD -> {
-                amount.set(hit * 0.7f);
+                amount.set(hit * TreeRules.softening("MUD"));
                 if (att != null) att.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
             }
             case MUCUS -> {
-                amount.set(hit * 0.65f);
+                amount.set(hit * TreeRules.softening("MUCUS"));
                 BalanceLaw.heal(owner, Math.min(4f, hit * 0.2f));
                 if (att != null) { EnergyBridge.drain(att, owner, 0.01); att.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1)); }
             }

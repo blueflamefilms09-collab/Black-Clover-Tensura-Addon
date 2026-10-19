@@ -24,16 +24,16 @@ public final class PoisonPlantAura {
     private static final String K = "poison_plant";
     private static final Piece[] SET = {
             piece(K, "helm", Part.HEAD, 0, 0f, -10f, 10f, GLOWS | HIDE_1P),
-            piece(K, "crown", Part.HEAD, 12, 0f, -16f, 0f, GLOWS | HIDE_1P | DETAIL),
+            piece(K, "crown", Part.HEAD, 12, 0f, -16f, 0f, HIDE_1P | DETAIL),
             piece(K, "chest", Part.BODY, 2, 0f, 0f, -14f, GLOWS),
-            piece(K, "back", Part.BODY, 4, 0f, 6f, 16f, GLOWS),
+            piece(K, "back", Part.BODY, 4, 0f, 6f, 16f, 0),
             piece(K, "pauld_r", Part.R_ARM, 3, -16f, -2f, 0f, 0),
             piece(K, "pauld_l", Part.L_ARM, 5, 16f, -2f, 0f, 0),
             piece(K, "bracer_r", Part.R_ARM, 6, -14f, 0f, -6f, 0),
             piece(K, "bracer_l", Part.L_ARM, 8, 14f, 0f, -6f, 0),
             piece(K, "greave_r", Part.R_LEG, 9, -10f, 8f, -4f, 0),
             piece(K, "greave_l", Part.L_LEG, 11, 10f, 8f, -4f, 0),
-            piece(K, "aux", Part.BODY, 12, 0f, 8f, 0f, GLOWS | DETAIL),
+            piece(K, "aux", Part.BODY, 12, 0f, 8f, 0f, DETAIL),
     };
     private static final Style STYLE = new Style(0xB8FF30, 0.9f, 0.16f, false);
     private static ResourceLocation skin, skinGlow;

@@ -42,6 +42,7 @@ public final class TreePropPainter {
         return Mth.clamp(life / in, 0f, 1f) * Mth.clamp((max - life) / out, 0f, 1f);
     }
 
+    /** The same bits as book.TreeRules.phaseOf / sinceOf (written inline: the render preview only compiles the files named after a magic). */
     public static int phase(MagicPropEntity e) { return (e.param() >> 8) & 3; }
 
     /** The ticks since the current action began, with the partial tick (0 when idle). */

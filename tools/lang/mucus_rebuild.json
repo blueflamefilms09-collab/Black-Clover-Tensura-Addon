@@ -1,0 +1,13 @@
+{
+  "nusmp.skill.book_mucus.description": "A grimoire of mucus that smothers and entraps, soaks up blows and drinks the magic of whoever it holds. Its pages shoot blobs, lash tendrils, spread sticky fields, engulf everything near you, wrap you in a gel armour, and call a construct, walls and bubbles. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_mucus.attribute_bolt": "Mucus Magic: Mucus Shot - a blob of mucus that bursts on the first foe, slows it and takes a little of its magicule.",
+  "nusmp.page.book_mucus.attribute_cut": "Mucus Magic: Mucus Tendril - a tendril lashes along a line: it cuts, slows and drags everything on it toward you.",
+  "nusmp.page.book_mucus.attribute_field": "Mucus Magic: Sticky Field - a field of mucus at the aimed point for 8 seconds: foes in it are slowed hard and their magicules are absorbed. Size scales with your EP.",
+  "nusmp.page.book_mucus.attribute_domain": "Mucus Magic: Engulfing Tide - a tide of mucus engulfs everything round you: damage, slowed, silenced and drained.",
+  "nusmp.page.book_mucus.attribute_guard": "Mucus Magic: Mucus Armor - the Gelplate armour spreads over you for 10 seconds like slime: blows are soaked (a third less), feed you a little, and drain the magicules of whoever strikes you.",
+  "nusmp.page.book_mucus.mucus_construct": "Mucus Magic: Mucus Construct - a mound of mucus beside you for 15 seconds swallows every projectile near it and engulfs foes. It can be hit.",
+  "nusmp.page.book_mucus.smother": "Mucus Magic: Smother - mucus closes over one foe (hard control, shares the 12 second control lock): slowed, silenced, blinded and drained.",
+  "nusmp.page.book_mucus.absorption_wall": "Mucus Magic: Absorption Wall - a wall of mucus that dissolves what is shot at it and drains the magicules of foes beyond it.",
+  "nusmp.page.book_mucus.sticky_trail": "Mucus Magic: Sticky Trail - you leave a trail of mucus for 6 seconds that slows whoever steps in it.",
+  "nusmp.page.book_mucus.mucus_burst": "Mucus Magic: Bubble Burst - bubbles of mucus drift to the aimed point and burst one after another: damage and slowed."
+}

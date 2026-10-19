@@ -26,14 +26,14 @@ public final class PlantAura {
             piece(K, "helm", Part.HEAD, 0, 2f, -16f, 0f, HIDE_1P),
             piece(K, "crown", Part.HEAD, 12, 0f, -22f, 0f, GLOWS | HIDE_1P | DETAIL),
             piece(K, "chest", Part.BODY, 2, 0f, -12f, -6f, GLOWS),
-            piece(K, "back", Part.BODY, 4, 0f, -8f, 14f, GLOWS),
+            piece(K, "back", Part.BODY, 4, 0f, -8f, 14f, 0),
             piece(K, "pauld_r", Part.R_ARM, 3, -8f, -14f, 0f, 0),
             piece(K, "pauld_l", Part.L_ARM, 5, 8f, -14f, 0f, 0),
             piece(K, "bracer_r", Part.R_ARM, 6, -6f, -10f, -4f, 0),
             piece(K, "bracer_l", Part.L_ARM, 8, 6f, -10f, -4f, 0),
             piece(K, "greave_r", Part.R_LEG, 9, -4f, -12f, -2f, 0),
             piece(K, "greave_l", Part.L_LEG, 11, 4f, -12f, -2f, 0),
-            piece(K, "aux", Part.BODY, 12, 0f, -10f, 0f, GLOWS | DETAIL),
+            piece(K, "aux", Part.BODY, 12, 0f, -10f, 0f, DETAIL),
     };
     private static final Style STYLE = new Style(0xFFE690, 0.8f, 0.12f, false);
     private static ResourceLocation skin, skinGlow;

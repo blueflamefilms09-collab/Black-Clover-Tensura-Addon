@@ -38,6 +38,7 @@ public final class TreeProps {
                 TreeKit.unbind(e);
             }
         });
+        com.newuniverse.nusmp.book.TreeSelfTests.register();          // the CI server smoke test runs magic.tree_rebuild_*
         VineProps.init();
         PlantProps.init();
         PoisonPlantProps.init();
@@ -59,7 +60,7 @@ public final class TreeProps {
 
     /** Writes the animation phase (bits 8-9) and the ticks since that action began (bits 10-15, 0 to 63) of the param, keeping the variant: the painter plays the clip at that time. */
     public static void phase(MagicPropEntity e, int phase, int since) {
-        int v = (e.param() & VARIANT) | ((phase & 3) << 8) | ((Math.max(0, Math.min(63, since))) << 10);
+        int v = com.newuniverse.nusmp.book.TreeRules.pack(e.param() & VARIANT, phase, since);
         if (v != e.param()) e.setParam(v);
     }
 
