@@ -171,6 +171,43 @@ public final class WornLibrary {
         return e.orElse(null);
     }
 
+    /** The model of the last resort: a small floating charm. Used for a worn thing whose own models cannot be loaded, so nothing is ever invisible. */
+    private static final String FALLBACK_MODEL = "charm_orbit";
+
+    /** The generic floating charm for a relic with no loadable worn model, tinted with its palette; null only when even the generic model cannot be loaded. Built once. */
+    public static Ensemble fallbackCharm(RelicDef def) {
+        if (def == null) return null;
+        Optional<Ensemble> e = ITEM_CACHE.get("FB:" + def.id());
+        if (e == null) {
+            WornMesh m = WornModels.mesh(FALLBACK_MODEL);
+            Ensemble made = null;
+            if (m != null) {
+                FxTheme theme = FxTheme.fromGlow(def.paletteGlow());
+                made = new Ensemble(def, List.of(new Resolved(m, m.anchor, false)), theme);
+            }
+            e = Optional.ofNullable(made);
+            ITEM_CACHE.put("FB:" + def.id(), e);
+        }
+        return e.orElse(null);
+    }
+
+    /** The same for a Curios-worn item of the mod that is not a relic and has no catalog entry (palette from its name). */
+    public static Ensemble fallbackCharm(String path) {
+        if (path == null) return null;
+        Optional<Ensemble> e = ITEM_CACHE.get("FBP:" + path);
+        if (e == null) {
+            WornMesh m = WornModels.mesh(FALLBACK_MODEL);
+            Ensemble made = null;
+            if (m != null) {
+                int[] pal = ArmorLooks.palette(path);
+                made = new Ensemble(null, path, "CHARM", false, pal, 2, List.of(new Resolved(m, m.anchor, false)), FxTheme.fromGlow(pal[2]));
+            }
+            e = Optional.ofNullable(made);
+            ITEM_CACHE.put("FBP:" + path, e);
+        }
+        return e.orElse(null);
+    }
+
     private static Ensemble buildKey(String key, String slotKey, ArmorLooks.Slot slot, boolean exact) {
         WornCatalog cat = WornModels.catalog();
         List<WornCatalog.Piece> wanted = cat.itemPieces(key);

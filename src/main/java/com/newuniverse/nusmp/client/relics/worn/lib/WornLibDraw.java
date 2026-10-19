@@ -76,7 +76,7 @@ public final class WornLibDraw {
         return p;
     }
 
-    private static ModelPart part(PlayerModel<AbstractClientPlayer> m, WornAnchor a) {
+    private static ModelPart part(PlayerModel<?> m, WornAnchor a) {
         return switch (a) {
             case HEAD -> m.head;
             case BODY -> m.body;
@@ -93,7 +93,7 @@ public final class WornLibDraw {
      * @param distSq distance from the camera to the wearer, squared
      * @param limb   the wearer's stride, 0 standing .. 1 running
      */
-    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<AbstractClientPlayer> model,
+    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model,
                             boolean crouching, double distSq, float age, float limb, FxQuality q) {
         int n = Math.min(sets.size(), MAX_SETS);
         if (n == 0) return;

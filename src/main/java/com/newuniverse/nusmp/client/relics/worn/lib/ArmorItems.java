@@ -89,6 +89,7 @@ public final class ArmorItems {
                 ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
                 if (!"nusmp".equals(id.getNamespace())) continue;
                 WornLibrary.Ensemble e = WornLibrary.ofCurio(id.getPath());
+                if (e == null && !isWeapon(item)) e = WornLibrary.fallbackCharm(id.getPath());       // a worn item with no model of its own: a small floating charm, never nothing
                 if (e != null) sets.add(e);
             }
             c = new CurioCache(now, List.copyOf(sets));
@@ -96,6 +97,12 @@ public final class ArmorItems {
             CURIOS.put(p.getId(), c);
         }
         for (int i = 0; i < c.sets().size(); i++) out.add(c.sets().get(i));
+    }
+
+    /** Weapons worn in a Curios slot keep their sheath / held look and get no floating charm. */
+    private static boolean isWeapon(Item item) {
+        return item instanceof net.minecraft.world.item.TieredItem || item instanceof net.minecraft.world.item.ProjectileWeaponItem
+                || item instanceof net.minecraft.world.item.ShieldItem || item instanceof net.minecraft.world.item.TridentItem;
     }
 
     /**
