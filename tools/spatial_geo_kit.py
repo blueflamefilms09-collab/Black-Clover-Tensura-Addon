@@ -136,11 +136,13 @@ class Atlas:
         for k in range(layers):
             f = k / float(layers)
             w = max(1, int(round(width * (1.0 - taper * f))))
+            wa = 2 if a == 1 else 1                      # the broad side of a blade: y for a blade along x or z, z for a blade along y
             o = [origin[0], origin[1], origin[2]]
-            s = [thick, w, thick]
+            s = [thick, thick, thick]
+            s[wa] = w
             s[a] = seg
             o[a] = origin[a] + (k * seg if sign > 0 else -(k + 1) * seg)
-            o[1] = origin[1] + (width - w) / 2.0
+            o[wa] = origin[wa] + (width - w) / 2.0
             r = (curve * k, 0, 0) if curve else None
             self.cube(bone, tuple(o), tuple(s), material, rot=r, inflate=inflate, share=(share + str(k)) if share else None)
 

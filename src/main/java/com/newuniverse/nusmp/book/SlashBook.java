@@ -41,10 +41,11 @@ public class SlashBook extends GrimoireBook {
     static final String K_ADAPT = "nusmp_slash_adapt", K_BLADES = "nusmp_slash_blades_until";
 
     private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
-            BookPage.starter("slash_wave", "Slash Wave", SlashBook::slashWave),
+            // 1.93.0 rebuild: every page forges the Ripper's set on the caster for five seconds (the forearm blades page for its whole 20 s); ids and order are unchanged
+            BookPage.starter("slash_wave", "Slash Wave", SpatialArmourCast.armoured(SlashBook::slashWave, com.newuniverse.nusmp.aura.Aura.SLASH, 0)),
             BookPage.mid("forearm_blades", "Forearm Blades", SlashBook::forearmBlades).withCooldown(400),
-            BookPage.mid("ripper_dash", "Ripper Dash", SlashBook::ripperDash).withCooldown(100),
-            BookPage.signature("death_scythe", "Death Scythe", SlashBook::deathScythe).withCooldown(900)), com.newuniverse.nusmp.book.ext.SlashExt.pages());
+            BookPage.mid("ripper_dash", "Ripper Dash", SpatialArmourCast.armoured(SlashBook::ripperDash, com.newuniverse.nusmp.aura.Aura.SLASH, 0)).withCooldown(100),
+            BookPage.signature("death_scythe", "Death Scythe", SpatialArmourCast.armoured(SlashBook::deathScythe, com.newuniverse.nusmp.aura.Aura.SLASH, 1)).withCooldown(900)), com.newuniverse.nusmp.book.ext.SlashExt.pages());
 
     public SlashBook() { super(MagicType.SLASH, GREEN); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -80,7 +81,7 @@ public class SlashBook extends GrimoireBook {
     static boolean slashWave(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 eye = p.getEyePosition(), dir = p.getViewVector(1f);
         var hit = p.level().clip(new ClipContext(eye, eye.add(dir.scale(24)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
-        b.vfx(p, VfxShape.SLASH_WAVE, eye.add(0, -0.2, 0), hit.getLocation(), 12, 1.1f * EnergyBridge.scale(p));
+        b.vfx(p, VfxShape.SLASH_FX1, eye.add(0, -0.2, 0), hit.getLocation(), 12, 1.1f * EnergyBridge.scale(p));      // 1.93.0: the rebuilt cut (SlashRipFxLayer)
         MagicProps.spawn(p.serverLevel(), PropKind.SLASH_1, eye.add(dir.scale(0.8)), p.getYRot(),
                 0.9f * EnergyBridge.scale(p), 10, 0, p);
         SpellRuntime.bolt(p, eye, dir.scale(2.4), 1.2, 10, true, null, (bolt, t) -> cut(b, i, p, t, mode, 8f), null);
@@ -93,7 +94,8 @@ public class SlashBook extends GrimoireBook {
         if (!EnergyBridge.aura(p, 0.02, 6)) { fail(p, "Not enough aura to hold the blades."); return false; }
         ServerLevel level = p.serverLevel();
         p.getPersistentData().putLong(K_BLADES, level.getGameTime() + 400);
-        VfxSpawn.sendFollowing(level, VfxShape.SLASH_BLADES, p, p.position(), GREEN, 400, 1f + 0.2f * EnergyBridge.scale(p));
+        SpatialArmourCast.on(p, com.newuniverse.nusmp.aura.Aura.SLASH, 400, 0);                                   // 1.93.0: the forearm blades are part of the Ripper's armour (they replace the old SLASH_BLADES effect)
+        VfxSpawn.send(level, VfxShape.SLASH_FX3, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), GREEN, 20, 0.9f);
         SpellRuntime.zone(level, 400, 20, age -> {                                    // the blades are held with aura
             if (age == 0 || p.getPersistentData().getLong(K_BLADES) <= level.getGameTime()) return;
             if (!EnergyBridge.aura(p, 0.01, 2)) {
@@ -111,7 +113,7 @@ public class SlashBook extends GrimoireBook {
         if (p.getPersistentData().getLong(K_BLADES) <= p.level().getGameTime() || e.getSource().is(net.minecraft.tags.DamageTypeTags.IS_PROJECTILE)) return;
         LivingEntity t = e.getEntity();
         e.setAmount(adapt(p, t, e.getAmount() + 5f * EnergyBridge.scale(p)));
-        VfxSpawn.send(p.serverLevel(), VfxShape.SLASH_WAVE, p.getEyePosition(), t.getBoundingBox().getCenter(), GREEN, 8, 0.6f);
+        VfxSpawn.send(p.serverLevel(), VfxShape.SLASH_FX3, t.getBoundingBox().getCenter(), t.getBoundingBox().getCenter().add(p.getViewVector(1f)), GREEN, 14, 0.55f);
     }
 
     /** Ripper Dash: a burst of speed that carries you 10 blocks through your foes, cutting each one. Draws Aura. */
@@ -121,7 +123,8 @@ public class SlashBook extends GrimoireBook {
         var hit = p.level().clip(new ClipContext(p.getEyePosition(), p.getEyePosition().add(look.scale(10)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
         Vec3 to = hit.getLocation().subtract(look.scale(0.7)).subtract(0, p.getEyeHeight(), 0);
         for (LivingEntity t : along(p, from.add(0, 1, 0), to.add(0, 1, 0), 1.3)) cut(b, i, p, t, mode, 7f);
-        b.vfx(p, VfxShape.SLASH_WAVE, from.add(0, 1, 0), to.add(0, 1, 0), 10, 1.4f);
+        b.vfx(p, VfxShape.SLASH_FX1, from.add(0, 1, 0), to.add(0, 1, 0), 10, 1.4f);
+        SlashWorks.afterimages(p, from, to);                                                                       // 1.93.0: the dash leaves glass afterimages (SLASH_1, param 1)
         p.teleportTo(to.x, to.y, to.z);
         p.fallDistance = 0;
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1f, 0.8f);
@@ -132,7 +135,8 @@ public class SlashBook extends GrimoireBook {
     static boolean deathScythe(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         float r = 7 * GrimoireBook.size(i, p) * (0.9f + 0.1f * EnergyBridge.power(p));
         b.castCircle(p, 1.6f);
-        b.vfx(p, VfxShape.SLASH_SCYTHE, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), 18, r);
+        b.vfx(p, VfxShape.SLASH_FX2, p.position(), p.position().add(0, 1, 0), 22, r);                               // 1.93.0: the rebuilt sweep field
+        SpellRuntime.later(p.serverLevel(), 12, () -> b.vfx(p, VfxShape.SLASH_FX3, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), 18, r / 3f));
         MagicProps.spawn(p.serverLevel(), PropKind.SLASH_2, p.position().add(0, 0.8, 0), p.getYRot(),
                 Math.max(1.0f, Math.min(3.0f, r / 4f)), 18, 0, p);
         SpellRuntime.later(p.serverLevel(), 5, () -> {

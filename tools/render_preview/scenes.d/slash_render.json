@@ -1,0 +1,14 @@
+{
+ "slash_crescent_idle": {
+  "kind": "geo", "model": "slash_crescent", "anim": "idle", "glow": "FFD2FFE0", "ages": [0, 20], "tile": [420, 380],
+  "views": [{"name": "above 3/4", "yaw": 30, "pitch": 30, "target": [0, 1.0, -0.5], "dist": 6.5}, {"name": "front", "yaw": 0, "pitch": 8, "target": [0, 1.0, -0.5], "dist": 6.5}]
+ },
+ "slash_scythe_idle": {
+  "kind": "geo", "model": "slash_scythe", "anim": "idle", "glow": "FFD2FFE0", "ages": [0, 20], "tile": [420, 460],
+  "views": [{"name": "side 3/4", "yaw": 50, "pitch": 14, "target": [0, 1.8, -1.0], "dist": 8.5}, {"name": "above", "yaw": 20, "pitch": 55, "target": [0, 1.5, -1.0], "dist": 8.5}]
+ },
+ "slash_ghost_idle": {
+  "kind": "geo", "model": "slash_ghost", "anim": "idle", "glow": "FFD2FFE0", "ages": [0], "tile": [420, 460],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 12, "target": [0, 1.0, 0], "dist": 5.5}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0], "dist": 5.5}]
+ }
+}
