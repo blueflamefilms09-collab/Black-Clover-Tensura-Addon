@@ -23,11 +23,11 @@ class SkillRouteTest {
     }
 
     private static SkillRoute route() {
-        SkillNode fist = node("iron_fist", List.of(), 1, List.of(), 3, "nusmp:ft_fire_dragons_iron_fist", Map.of("damage", List.of(6.0, 8.0, 10.0)));
-        SkillNode roar = node("roar", List.of(new Parent("iron_fist", 2)), 2, List.of(2, 3, 5), 3, "nusmp:ft_fire_dragons_roar", Map.of());
+        SkillNode fist = node("iron_fist", List.of(), 1, List.of(), 3, "nusmp:test_fist", Map.of("damage", List.of(6.0, 8.0, 10.0)));
+        SkillNode roar = node("roar", List.of(new Parent("iron_fist", 2)), 2, List.of(2, 3, 5), 3, "nusmp:test_roar", Map.of());
         SkillNode appetite = node("appetite", List.of(new Parent("iron_fist", 1)), 1, List.of(), 1, "", Map.of());
-        return new SkillRoute("nusmp:fire_dragon_slayer", "fairy_tail", "Fire Dragon Slayer", "", "nusmp:fire_dragon_slayer_book", "Fang of Smoldering Insanity", "", 0xE8541C, "minecraft:blaze_powder",
-                "fire_dragon_slayer", 3, 1, List.of(fist, roar, appetite));
+        return new SkillRoute("nusmp:ember_knight", "black_clover", "Ember Knight", "", "nusmp:ember_knight_book", "Fang of Smoldering Insanity", "", 0xE8541C, "minecraft:blaze_powder",
+                "ember_knight", 3, 1, List.of(fist, roar, appetite));
     }
 
     @Test
@@ -58,12 +58,12 @@ class SkillRouteTest {
         SkillRoute r = route();
         assertNotNull(r.node("roar"));
         assertNull(r.node("nothing"));
-        assertEquals("nusmp:ft_fire_dragons_roar", r.node("roar").skill());
-        assertEquals(r.node("roar"), r.bySkill("nusmp:ft_fire_dragons_roar"));
+        assertEquals("nusmp:test_roar", r.node("roar").skill());
+        assertEquals(r.node("roar"), r.bySkill("nusmp:test_roar"));
         assertNull(r.bySkill("nusmp:nothing"));
         assertTrue(!r.node("appetite").grantsSkill());
         assertEquals(1, r.roots().size());
         assertEquals("iron_fist", r.roots().get(0).id());
-        assertEquals("nusmp:fire_dragon_slayer#roar", SkillRoute.key(r.id(), "roar"));
+        assertEquals("nusmp:ember_knight#roar", SkillRoute.key(r.id(), "roar"));
     }
 }

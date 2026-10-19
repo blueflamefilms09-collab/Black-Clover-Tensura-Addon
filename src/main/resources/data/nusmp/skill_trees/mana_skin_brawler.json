@@ -11,9 +11,7 @@
   "class_id": "mana_skin_brawler",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/mana_skin_brawler.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "iron",
   "nodes": [
     {
       "id": "mana_skin_wrap",

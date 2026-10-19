@@ -11,9 +11,7 @@
   "class_id": "character_list",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/character_list.png",
   "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "character_vanguard",

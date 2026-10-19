@@ -5,16 +5,13 @@ import com.google.gson.JsonParser;
 import com.newuniverse.nusmp.skilltree.data.RouteSchema;
 import com.newuniverse.nusmp.skilltree.data.SkillNode;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
-import com.newuniverse.nusmp.skilltree.rules.SimpleTreeState;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.BiPredicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,9 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: parts C and the rule of part B in one place. The switches ({@link PassiveToggles}) must default ON, load tolerantly and be cleared with their route; the gate ({@link LineGate}) is the ONE
- * place that decides whether a passive, an attribute bonus, an art or a stance may act, so every combination of (owns the line, is equipped, node bought, switch on/off, node type) is tried here and only
- * the allowed one answers a level.
+ * Why: the legacy switches ({@link PassiveToggles}, still read from old saves) must default ON, load tolerantly and be cleared with their route; the gate ({@link LineGate}) is the ONE place that decides
+ * whether a passive, an attribute bonus or an art may act, so every combination of (skill on/off, mastery, node type) is tried here and only the allowed one answers a level.
  */
 class ToggleAndGateTest {
     private static SkillRoute fixture() throws Exception {
@@ -101,53 +97,32 @@ class ToggleAndGateTest {
     }
 
     @Test
-    void aPassiveActsOnlyWhenTheLineIsEquippedTheNodeIsBoughtAndTheSwitchIsOn() throws Exception {
+    void aPassiveActsOnlyWhenItsSkillIsSwitchedOn() throws Exception {
         SkillRoute r = fixture();
         SkillNode passive = first(r, SkillNode.NodeType.PASSIVE);
-        Map<String, Boolean> sw = new HashMap<>();
-        BiPredicate<String, String> on = (route, node) -> sw.getOrDefault(route + "#" + node, true);
-
-        SimpleTreeState s = new SimpleTreeState();
-        assertEquals(0, LineGate.passiveLevel(s, on, r, passive), "not owned");
-        s.unlock(r.id());
-        s.setLevel(r.id(), passive.id(), 2);
-        assertEquals(0, LineGate.passiveLevel(s, on, r, passive), "owned and bought, but no line is equipped");
-        s.withClass("something_else", 0);
-        assertEquals(0, LineGate.passiveLevel(s, on, r, passive), "another line is equipped");
-        s.withClass(r.classId(), 0);
-        assertEquals(2, LineGate.passiveLevel(s, on, r, passive), "equipped, bought, switch on (by default)");
-        sw.put(r.id() + "#" + passive.id(), false);
-        assertEquals(0, LineGate.passiveLevel(s, on, r, passive), "the switch is off");
-        sw.put(r.id() + "#" + passive.id(), true);
-        s.setLevel(r.id(), passive.id(), 0);
-        assertEquals(0, LineGate.passiveLevel(s, on, r, passive), "not bought");
+        assertEquals(0, LineGate.passiveLevel(false, passive, 0.0), "the skill is off");
+        assertEquals(1, LineGate.passiveLevel(true, passive, 0.0), "on, no mastery: level 1");
+        assertEquals(passive.maxLevel(), LineGate.passiveLevel(true, passive, 1.0), "on, fully mastered: the node's top level");
+        assertEquals(0, LineGate.passiveLevel(true, null, 0.5), "no node, no level");
     }
 
     @Test
     void anAttributeBonusFollowsTheSameGateAndAnArtIsNeverAPassive() throws Exception {
         SkillRoute r = fixture();
         SkillNode attr = first(r, SkillNode.NodeType.ATTR), art = first(r, SkillNode.NodeType.ACTIVE);
-        SimpleTreeState s = new SimpleTreeState().unlock(r.id()).withClass(r.classId(), 0);
-        s.setLevel(r.id(), attr.id(), 1);
-        s.setLevel(r.id(), art.id(), 1);
-        BiPredicate<String, String> on = (a, b) -> true;
-        assertEquals(1, LineGate.passiveLevel(s, on, r, attr));
-        assertEquals(0, LineGate.passiveLevel(s, on, r, art), "an art has no switch, so the passive gate never lets it through");
-        assertEquals(1, LineGate.activeLevel(s, r, art));
-        assertEquals(0, LineGate.activeLevel(s, r, attr), "an attribute bonus is not an art");
-        s.withClass("other", 0);
-        assertEquals(0, LineGate.activeLevel(s, r, art), "an art of an unequipped line cannot be cast");
-        assertEquals(0, LineGate.passiveLevel(s, on, r, attr));
+        assertEquals(1, LineGate.passiveLevel(true, attr, 0.0));
+        assertEquals(0, LineGate.passiveLevel(true, art, 0.5), "an art has no switch, so the passive gate never lets it through");
+        assertEquals(1, LineGate.activeLevel(art, 0.0));
+        assertEquals(0, LineGate.activeLevel(attr, 0.5), "an attribute bonus is not an art");
+        assertEquals(0, LineGate.passiveLevel(false, attr, 1.0), "a switched-off skill gives no stat bonus");
     }
 
     @Test
     void everyNodeOfTheFixtureLineIsSortedIntoExactlyOneGate() throws Exception {
         SkillRoute r = fixture();
-        SimpleTreeState s = new SimpleTreeState().unlock(r.id()).withClass(r.classId(), 0);
-        for (SkillNode n : r.nodes()) s.setLevel(r.id(), n.id(), 1);
         int passive = 0, active = 0;
         for (SkillNode n : r.nodes()) {
-            boolean p = LineGate.passiveLevel(s, (a, b) -> true, r, n) > 0, a = LineGate.activeLevel(s, r, n) > 0;
+            boolean p = LineGate.passiveLevel(true, n, 0.0) > 0, a = LineGate.activeLevel(n, 0.0) > 0;
             assertTrue(p ^ a, n.id() + " (" + n.kind() + ") must pass exactly one gate");
             if (p) passive++;
             else active++;

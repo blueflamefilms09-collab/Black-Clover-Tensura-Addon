@@ -11,9 +11,7 @@
   "class_id": "hunter_ability",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/hunter_ability.png",
   "book_texture": "nusmp:item/skill_book_3d/danmachi",
-  "background_theme": "ruin",
   "nodes": [
     {
       "id": "stalker_s_stance",

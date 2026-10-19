@@ -17,7 +17,7 @@ class StockSchemaTest {
         return "{\"entries\":[" + String.join(",", entries) + "]}";
     }
 
-    private static final String GOOD_ROUTE = "{\"id\":\"fang\",\"kind\":\"route_book\",\"route\":\"nusmp:fire_dragon_slayer\",\"price_min\":2000000,\"price_max\":3000000,\"band_low\":0.6667,\"stock\":1,\"weight\":100,\"flagship\":true}";
+    private static final String GOOD_ROUTE = "{\"id\":\"fang\",\"kind\":\"route_book\",\"route\":\"nusmp:ember_knight\",\"price_min\":2000000,\"price_max\":3000000,\"band_low\":0.6667,\"stock\":1,\"weight\":100,\"flagship\":true}";
     private static final String GOOD_SP = "{\"id\":\"archery\",\"kind\":\"sp_book\",\"sp_kind\":\"beginner_archery\",\"price_min\":120000,\"price_max\":180000,\"stock\":[3,5]}";
 
     private static boolean mentions(List<String> problems, String word) {
@@ -33,7 +33,7 @@ class StockSchemaTest {
         StockEntry fang = p.entries().get(0);
         assertEquals("fang", fang.id());
         assertEquals(StockEntry.Kind.ROUTE_BOOK, fang.kind());
-        assertEquals("nusmp:fire_dragon_slayer", fang.route());
+        assertEquals("nusmp:ember_knight", fang.route());
         assertFalse(fang.allRoutes());
         assertEquals(2_000_000L, fang.priceMin());
         assertEquals(3_000_000L, fang.priceMax());
@@ -118,7 +118,7 @@ class StockSchemaTest {
         assertEquals(1, p.entries().size());
         assertTrue(mentions(p.problems(), "used by an earlier line"));
 
-        String sameRoute = "{\"id\":\"fang2\",\"kind\":\"route_book\",\"route\":\"nusmp:fire_dragon_slayer\",\"price_min\":1,\"price_max\":2}";
+        String sameRoute = "{\"id\":\"fang2\",\"kind\":\"route_book\",\"route\":\"nusmp:ember_knight\",\"price_min\":1,\"price_max\":2}";
         p = StockSchema.parse(file(GOOD_ROUTE, sameRoute));
         assertEquals(1, p.entries().size());
         assertTrue(mentions(p.problems(), "already has a line"));

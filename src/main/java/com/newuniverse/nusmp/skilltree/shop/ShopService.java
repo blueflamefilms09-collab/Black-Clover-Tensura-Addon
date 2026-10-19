@@ -9,7 +9,6 @@ import com.newuniverse.nusmp.arc.dialogue.DialogueLine;
 import com.newuniverse.nusmp.arc.dialogue.DialogueLoader;
 import com.newuniverse.nusmp.arc.story.ArcStory;
 import com.newuniverse.nusmp.quests.NusmpEvents;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -75,7 +74,7 @@ public final class ShopService {
      * both do nothing, so a book bought for millions would be a book that cannot be read; the shop stays closed instead of taking gold for it.
      */
     private static boolean mayTrade(ServerPlayer p) {
-        return ShopConfig.enabled() && SkillTreeApi.isEnabled() && p.isAlive() && !p.isSpectator();
+        return ShopConfig.enabled() && p.isAlive() && !p.isSpectator();
     }
 
     // ================================================================ the shelf
@@ -254,13 +253,12 @@ public final class ShopService {
         }
     }
 
-    /** Tells the player's client that the tree (which holds the gold) changed. A failed send is logged and never undoes a deal that has already happened. */
+    /**
+     * Kept as the single place a deal calls after the gold changed. Since 1.96.0 the purse is read from the snapshot the shop sends with every reply ({@link ShopSnapshot}), so there is no
+     * separate record to push to the client any more and nothing to do here.
+     */
     static void syncTree(ServerPlayer p) {
-        try {
-            SkillTreeApi.resync(p);
-        } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: could not sync the tree of {}: {}", p.getGameProfile().getName(), e.toString());
-        }
+        // the gold travels in the shop snapshot; the old Skill Tree record that carried it to the client is gone
     }
 
     // ================================================================ noises

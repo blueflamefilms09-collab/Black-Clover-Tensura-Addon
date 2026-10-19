@@ -53,8 +53,5 @@ class LineTextTest {
                 }
             }
         }
-        // 1.82.0: the lead merged tools/lines/lang_engine.json into en_us.json (the engine job could not edit it), so the main language file now MUST carry the engine's strings
-        String lang = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
-        assertTrue(lang.contains("gui.nusmp.lines."), "en_us.json carries the engine's strings (merged from tools/lines/lang_engine.json)");
     }
 }

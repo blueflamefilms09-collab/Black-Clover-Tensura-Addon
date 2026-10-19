@@ -4,7 +4,7 @@ Shared by gen_book_textures.py (which draws the textures and writes the model fi
 atlas the generator paints and the picture the previewer shows can never disagree about where a face looks in the texture.
 
 The book stands upright in model space (16 units = one block): the FRONT cover looks SOUTH (+Z, like the front of an item sprite), the spine is on the WEST (-X) edge, the fore-edge
-(pages) on the EAST. 9 wide, 13 high, 4 thick. See docs/skilltree/lines_book_art.md for the reasons behind every number.
+(pages) on the EAST. 9 wide, 13 high, 4 thick. See docs/skillbooks_unique.md for the reasons behind every number.
 """
 
 # --------------------------------------------------------------------------- the texture layout
@@ -126,7 +126,7 @@ def base_model(cover_texture):
 
 # --------------------------------------------------------------------------- the display transforms (Blockbench style: rotation degrees, translation in 1/16 block, scale)
 # Left-hand entries have the SAME numbers as the right-hand ones on purpose: ItemTransform.apply negates tx, ry and rz of a left-hand context by itself, so equal numbers
-# give the mirrored pose (cover turned outward on both sides). Tuned with preview_book.py; the reasons are in docs/skilltree/lines_book_art.md section 3.
+# give the mirrored pose (cover turned outward on both sides). Tuned with preview_book.py; the reasons are in docs/skillbooks_unique.md.
 _TP = {"rotation": [60, 150, 0], "translation": [0.0, 1.0, 3.0], "scale": [0.5, 0.5, 0.5]}
 _FP = {"rotation": [-15, -15, 15], "translation": [-2.9, 4.3, -1.3], "scale": [0.42, 0.42, 0.42]}
 DISPLAY = {

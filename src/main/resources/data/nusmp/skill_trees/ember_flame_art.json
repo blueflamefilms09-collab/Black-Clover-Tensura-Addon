@@ -11,9 +11,7 @@
   "class_id": "ember_flame_art",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/ember_flame_art.png",
   "book_texture": "nusmp:item/skill_book_3d/tbate",
-  "background_theme": "magma",
   "nodes": [
     {
       "id": "kindled",

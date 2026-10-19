@@ -11,9 +11,7 @@
   "class_id": "storm_wolf_ranga",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/storm_wolf_ranga.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "lone_hunter_stance",

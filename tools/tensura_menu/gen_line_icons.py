@@ -68,9 +68,6 @@ def glyph(d, kind, c, dark):
         poly(d, [(11, 20), (21, 20), (21, 22), (11, 22)], c)
     elif kind == "danmachi":                                # a falna star
         poly(d, star(cx, cy, 9, 3.6, 5), c)
-    elif kind == "fairy_tail":                              # a guild mark: a tail and a ring
-        d.ellipse([9 * SS, 9 * SS, 23 * SS, 23 * SS], outline=c, width=2 * SS)
-        d.line([(20 * SS, 12 * SS), (25 * SS, 7 * SS)], fill=c, width=2 * SS)
     elif kind == "tbate":                                   # a crown
         poly(d, [(8, 22), (8, 11), (12, 16), (16, 9), (20, 16), (24, 11), (24, 22)], c)
     elif kind == "tower_of_god":                            # a tower

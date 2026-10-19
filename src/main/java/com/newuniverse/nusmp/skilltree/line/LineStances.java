@@ -1,10 +1,9 @@
 package com.newuniverse.nusmp.skilltree.line;
 
-import com.newuniverse.nusmp.skilltree.PlayerTreeState;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillNode;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,8 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * Why: a stance is the one kind of node that is neither a one-shot art nor a passive: the player takes it up, it changes how they fight until they drop it or take another, and the owner's rule is
  * "one at a time, upkeep-free". So the state is a single string in the player's own data (the key of the stance that is on), choosing a stance is a cast (cooldown, an optional small price), and its
  * numbers act in two ways: armour, speed and knockback resistance as TRANSIENT attribute modifiers (never saved, so a world saved mid-stance carries nothing to leak out of it), and the damage bonus,
- * the critical chance and the regeneration read by the damage events and the beat. The modifiers are kept in step with the gate by {@link #sync} every half second: a stance of a line that is not
- * the equipped one, or of a node the player no longer has, is dropped on the first beat, so unequipping a line cleans up after itself with no special case. One stance's modifiers use fixed ids, which
+ * the critical chance and the regeneration read by the damage events and the beat. The modifiers are kept in step with the gate by {@link #sync} every half second: a stance of a skill the player no longer owns is dropped on the first beat, so losing a skill cleans up after itself with no special case. One stance's modifiers use fixed ids, which
  * is safe exactly because only one stance can be on.
  */
 public final class LineStances {
@@ -34,7 +32,7 @@ public final class LineStances {
     /** The ids of the modifiers a stance uses (the tests and the cleanup know them). */
     public static java.util.List<ResourceLocation> modifierIds() { return java.util.List.of(ARMOR_ID, SPEED_ID, KB_ID); }
 
-    /** The stance that is on and allowed to act right now (its line is equipped, the node is bought), or null. */
+    /** The stance that is on and allowed to act right now (the player owns its unique skill), or null. */
     public static View current(ServerPlayer p) {
         String key = LineState.stance(p);
         if (key.isEmpty()) return null;
@@ -43,7 +41,9 @@ public final class LineStances {
         SkillRoute route = RouteRegistry.byId(key.substring(0, hash));
         SkillNode node = route == null ? null : route.node(key.substring(hash + 1));
         if (node == null || !"stance".equals(node.kind())) return null;
-        int lv = LineGate.activeLevel(new PlayerTreeState(SkillTreeApi.of(p)), route, node);
+        UniqueBooks.Owned owned = UniqueBooks.ownedOf(p, route.id());
+        if (owned == null) return null;
+        int lv = LineGate.activeLevel(node, owned.fraction());
         if (lv < 1) return null;
         return new View(key, route, node, lv, node.value("damage_pct", lv, 0), node.value("armor", lv, 0), node.value("speed_pct", lv, 0), node.value("knockback_res", lv, 0),
                 node.value("regen", lv, 0), node.value("crit_chance", lv, 0));

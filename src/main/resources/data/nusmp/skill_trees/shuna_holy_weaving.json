@@ -11,9 +11,7 @@
   "class_id": "shuna_holy_weaving",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/shuna_holy_weaving.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "dream",
   "nodes": [
     {
       "id": "priestess_prayer",

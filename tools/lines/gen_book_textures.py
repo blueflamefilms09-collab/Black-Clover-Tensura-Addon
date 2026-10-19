@@ -239,14 +239,6 @@ def em_danmachi(d):
     poly(d, [(60, 146), (80, 158), (100, 146), (100, 150), (80, 160), (60, 150)])         # a chevron: the way down
 
 
-def em_fairy_tail(d):
-    d.ellipse((18, 22, 78, 82), fill=255)                                                 # the head
-    d.ellipse((36, 40, 60, 64), fill=0)
-    brush(d, bezier((60, 76), (140, 64), (160, 110), (112, 140)), 20, 4)                 # the tail
-    poly(d, [(96, 152), (128, 150), (126, 120)])
-    star(d, 124, 34, 22, 8, 4, -math.pi / 2)
-
-
 def em_tbate(d):
     poly(d, [(48, 22), (112, 22), (112, 30), (48, 30)])                                   # the hourglass
     poly(d, [(48, 138), (112, 138), (112, 130), (48, 130)])
@@ -297,12 +289,12 @@ def em_generic(d):
 
 
 EMBLEMS = {"exiled_heavy_knight": em_exiled_heavy_knight, "tensura": em_tensura, "black_clover": em_black_clover, "magi": em_magi, "solo_leveling": em_solo_leveling,
-           "danmachi": em_danmachi, "fairy_tail": em_fairy_tail, "tbate": em_tbate, "tower_of_god": em_tower_of_god, "god_of_high_school": em_god_of_high_school,
+           "danmachi": em_danmachi, "tbate": em_tbate, "tower_of_god": em_tower_of_god, "god_of_high_school": em_god_of_high_school,
            "omniscient_readers_viewpoint": em_omniscient_readers_viewpoint, "generic": em_generic}
 # per franchise: how coarse the leather is, how deep the frame bites (the cover's character without a colour cast: the colour comes from the line)
 CHARACTER = {"exiled_heavy_knight": dict(grain=9, frame="plain", seed=1), "tensura": dict(grain=3, frame="round", seed=2), "black_clover": dict(grain=7, frame="leaf", seed=3),
              "magi": dict(grain=4, frame="star", seed=4), "solo_leveling": dict(grain=5, frame="plain", seed=5), "danmachi": dict(grain=6, frame="round", seed=6),
-             "fairy_tail": dict(grain=5, frame="star", seed=7), "tbate": dict(grain=8, frame="leaf", seed=8), "tower_of_god": dict(grain=4, frame="plain", seed=9),
+             "tbate": dict(grain=8, frame="leaf", seed=8), "tower_of_god": dict(grain=4, frame="plain", seed=9),
              "god_of_high_school": dict(grain=7, frame="round", seed=10), "omniscient_readers_viewpoint": dict(grain=3, frame="star", seed=11), "generic": dict(grain=5, frame="plain", seed=0)}
 
 

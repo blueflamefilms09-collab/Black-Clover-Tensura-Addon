@@ -1,12 +1,9 @@
 package com.newuniverse.nusmp.skilltree.line;
 
-import com.newuniverse.nusmp.skilltree.PlayerTreeState;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
-import com.newuniverse.nusmp.skilltree.TreeConfig;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillNode;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
-import com.newuniverse.nusmp.skilltree.state.IPlayerSkillTree;
+import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,9 +17,8 @@ import java.util.WeakHashMap;
 
 /**
  * Why: this is the ONE place a passive or an attribute bonus is allowed to act. Every event that can matter (a blow dealt, a blow taken, a kill, experience, drops, the half-second beat) asks
- * {@link #active} for the nodes of the player's equipped line that count right now, and that function asks {@link LineGate#passiveLevel} for each: line equipped, node bought, switch on. An
- * executor ({@link PassiveExecutors}, {@link LineAttrs}) is therefore only ever called for a node that is allowed to act, and nothing else in the engine reaches a passive: the owner's rule "passives
- * of an unequipped line do nothing, a switched-off passive does nothing" cannot be forgotten by one of the 51 kinds, because none of them checks it. A line that is not equipped costs one lookup and
+ * {@link #active} for the nodes of the player's owned unique skills that count right now, and that function asks {@link LineGate#passiveLevel} for each: skill owned and switched on, level from its mastery. An
+ * executor ({@link PassiveExecutors}, {@link LineAttrs}) is therefore only ever called for a node that is allowed to act, and nothing else in the engine reaches a passive: the owner's rule "a passive of a skill that is switched off does nothing" cannot be forgotten by one of the 51 kinds, because none of them checks it. A player with no book costs one lookup and
  * an empty list. Which nodes of a route are passives is the same for every player, so it is worked out once per route record (a weak cache, dropped with the route on a reload) and not per event. Every
  * entry point is guarded by the caller ({@code LineEvents}) so a fault in one executor is logged and never reaches the server loop.
  */
@@ -43,28 +39,25 @@ public final class LinePassives {
         });
     }
 
-    /** The line the player has equipped, or null (the route of their active class, when they own it). */
-    public static SkillRoute equippedRoute(ServerPlayer p) {
-        IPlayerSkillTree tree = SkillTreeApi.of(p);
-        String cls = tree.activeClass();
-        if (cls.isEmpty()) return null;
-        SkillRoute r = RouteRegistry.byClass(cls);
-        return r != null && r.isLine() && LineGate.equipped(new PlayerTreeState(tree), r) ? r : null;
-    }
+    /** The passive and stat nodes of a route (the self-test and the tooltips ask which lines have any). */
+    public static List<SkillNode> toggleNodesOf(SkillRoute route) { return toggleNodes(route); }
 
-    /** THE gate: the passive and attribute nodes of the equipped line that are bought and switched on, with their levels. Empty when the engine is off, nothing is equipped or nothing counts. */
+    /** THE gate: the passive and attribute nodes of every owned unique skill that is switched on, with the level the skill's mastery gives them. Empty when the player owns none or all are off. */
     public static List<ActiveNode> active(ServerPlayer p) {
-        if (!TreeConfig.enabled()) return List.of();
-        SkillRoute route = equippedRoute(p);
-        if (route == null) return List.of();
-        IPlayerSkillTree tree = SkillTreeApi.of(p);
-        PlayerTreeState state = new PlayerTreeState(tree);
+        List<UniqueBooks.Owned> owned = UniqueBooks.ownedLines(p);
+        if (owned.isEmpty()) return List.of();
         List<ActiveNode> out = null;
-        for (SkillNode n : toggleNodes(route)) {
-            int lv = LineGate.passiveLevel(state, tree::isPassiveEnabled, route, n);
-            if (lv < 1) continue;
-            if (out == null) out = new ArrayList<>(8);
-            out.add(new ActiveNode(route, n, lv));
+        for (UniqueBooks.Owned o : owned) {
+            if (!o.on()) continue;
+            SkillRoute route = RouteRegistry.byId(o.skill().routeId());
+            if (route == null || !route.isLine()) continue;
+            double frac = o.fraction();
+            for (SkillNode n : toggleNodes(route)) {
+                int lv = LineGate.passiveLevel(true, n, frac);
+                if (lv < 1) continue;
+                if (out == null) out = new ArrayList<>(8);
+                out.add(new ActiveNode(route, n, lv));
+            }
         }
         return out == null ? List.of() : out;
     }

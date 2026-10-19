@@ -11,9 +11,7 @@
   "class_id": "new_game_plus_memory",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/new_game_plus_memory.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "stellar",
   "nodes": [
     {
       "id": "second_playthrough_stance",

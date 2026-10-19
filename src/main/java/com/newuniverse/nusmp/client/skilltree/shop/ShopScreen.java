@@ -6,8 +6,8 @@ import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
 import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
-import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.unique.LineIndex;
+import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import com.newuniverse.nusmp.skilltree.shop.BuyPayload;
 import com.newuniverse.nusmp.skilltree.shop.GoldFormat;
 import com.newuniverse.nusmp.skilltree.shop.SellAllPayload;
@@ -356,8 +356,8 @@ public final class ShopScreen extends Screen {
 
     private int nameColor(ShopSnapshot.Offer o) {
         if (o.kind() == StockEntry.Kind.ROUTE_BOOK.ordinal()) {
-            SkillRoute r = RouteRegistry.byId(o.ref());
-            if (r != null) return 0xFF000000 | ShopColors.lift(r.color());                    // the route's own colour, lifted so it reads on the dark glass
+            LineIndex.Line l = UniqueSkills.line(o.ref());
+            if (l != null) return 0xFF000000 | ShopColors.lift(l.color());                    // the book's own colour, lifted so it reads on the dark glass
         }
         return o.flagship() ? ShopPainter.AMBER : ShopPainter.PAPER;
     }

@@ -1,7 +1,9 @@
 package com.newuniverse.nusmp.skilltree.item;
 
-import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.unique.LegacyIds;
+import com.newuniverse.nusmp.skilltree.unique.LineIndex;
+import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
+import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -17,15 +19,13 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 /**
- * Why: this is the item of the owner's mechanic "a specific Skill Book permanently unlocks that whole Skill Tree route". It is ONE item for every route: the data
- * component {@code nusmp:skill_book_id} names the book and the route whose {@code book} field is that id is the one it opens, because items cannot be registered by a
- * datapack but routes can, so a new magic (a JSON file) must not need a new Java class or a new item. Everything a player sees comes from the route, looked up in the
- * {@code RouteRegistry} (the server's loaded copy, or the copy the server synced to the client): the name is the route's {@code book_name}, the cover tint its colour,
- * the lore its {@code book_lore}; a stack whose route is unknown (a datapack was removed, or the copy has not arrived yet) is named plainly "Skill Book" and reads as
- * blank pages, never a crash. Reading is decided on the SERVER only ({@link #use} hands over to {@link BookUse}); the client just plays the arm swing, because the
- * server is the only one allowed to touch the player's tree (the rule of the whole skill-tree design: the server decides, the client shows). The item glints like
- * an enchanted book so a stack of knowledge is never mistaken for a plain item. {@link #stack} is the factory the creative tab, the dungeon drops and the Black Market
- * all use, so a book is built the same way everywhere.
+ * Why: this is the item of the owner's mechanic "reading a Skill Book teaches the UNIQUE skill of that book". It is ONE item for every book: the data component {@code nusmp:skill_book_id} names the book
+ * ({@code nusmp:lady_luck_book}), and the unique skill registered for that book ({@link UniqueSkills}) is the one it teaches. Everything a player sees comes from the jar's own table of books
+ * ({@link LineIndex}): the name is the book's name, the cover tint its colour, the lore its lore, so a book looks right on both sides and in any chest, with no data pack and no server round trip. A stack whose
+ * book is unknown (a book id from a removed pack) reads as blank pages, never a crash; a stack of a REMOVED magic (an old stack a world still holds) says so and is swapped for a book the reader does not own
+ * when read. Reading is decided on the SERVER only ({@link #use} hands over to {@link BookUse}); the client just plays the arm swing, because the server is the only one allowed to touch the player's skills. The
+ * item glints like an enchanted book so a stack of knowledge is never mistaken for a plain item. {@link #stack} is the factory the creative tab, the dungeon drops and the Black Market all use, so a book is built the
+ * same way everywhere.
  */
 public class SkillBookItem extends Item {
     public SkillBookItem(Properties properties) {
@@ -33,8 +33,8 @@ public class SkillBookItem extends Item {
     }
 
     /**
-     * A Skill Book for the book id of a route ({@code nusmp:fire_dragon_slayer_book}). An empty or null id gives an empty stack (there is no such thing as a book of
-     * nothing); an id no route lists still gives a stack, which reads as blank pages, so a datapack that is removed later does not delete players' items.
+     * A Skill Book for a book id ({@code nusmp:lady_luck_book}). An empty or null id gives an empty stack (there is no such thing as a book of nothing); an id no book lists still gives a stack, which reads as blank pages,
+     * so a removed pack does not delete players' items.
      */
     public static ItemStack stack(String bookId) {
         if (bookId == null || bookId.isEmpty()) return ItemStack.EMPTY;
@@ -43,18 +43,16 @@ public class SkillBookItem extends Item {
         return s;
     }
 
-    /** A Skill Book for a route (its {@code book} id). */
-    public static ItemStack stackFor(SkillRoute route) { return route == null ? ItemStack.EMPTY : stack(route.book()); }
+    /** A Skill Book for a line of the table. */
+    public static ItemStack stackFor(LineIndex.Line line) { return line == null ? ItemStack.EMPTY : stack(line.book()); }
 
     @Override
     public Component getName(ItemStack stack) {
-        SkillRoute route = RouteRegistry.byBook(SkillItems.bookIdOf(stack));
-        if (route == null) {                                                                  // 1.82.0: a client that has not unlocked the line still names the book (shipped table)
-            BookLook.Entry look = BookLook.byBook(SkillItems.bookIdOf(stack));
-            if (look != null && !look.bookName().isEmpty()) return Component.literal(look.bookName()).withStyle(Style.EMPTY.withColor(look.color()));
-        }
-        if (route == null || route.bookName() == null || route.bookName().isEmpty()) return Component.translatableWithFallback("item.nusmp.skill_book", "Skill Book");
-        return Component.literal(route.bookName()).withStyle(Style.EMPTY.withColor(route.color() & 0xFFFFFF));
+        String bookId = SkillItems.bookIdOf(stack);
+        LineIndex.Line line = UniqueSkills.lineOfBook(bookId);
+        if (line != null && !line.bookName().isEmpty()) return Component.literal(line.bookName()).withStyle(Style.EMPTY.withColor(line.color()));
+        if (LegacyIds.isRemovedBook(bookId)) return Component.translatableWithFallback("item.nusmp.skill_book.faded", "Faded Skill Book").withStyle(ChatFormatting.DARK_GRAY);
+        return Component.translatableWithFallback("item.nusmp.skill_book", "Skill Book");
     }
 
     @Override
@@ -63,33 +61,28 @@ public class SkillBookItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         String bookId = SkillItems.bookIdOf(stack);
-        SkillRoute route = RouteRegistry.byBook(bookId);
-        BookLook.Entry look = route == null ? BookLook.byBook(bookId) : null;
-        if (route == null && look != null) {                                                  // 1.82.0: the line is not synced to this client but the shipped table knows it
-            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.opens", "Opens the route: %s",
-                    Component.literal(look.name()).withStyle(Style.EMPTY.withColor(look.color()))).withStyle(ChatFormatting.GRAY));
-            if (!look.franchise().isEmpty()) {
+        LineIndex.Line line = UniqueSkills.lineOfBook(bookId);
+        if (line != null) {
+            if (!line.lore().isEmpty()) tooltip.add(Component.literal(line.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.teaches", "Teaches the unique skill: %s",
+                    Component.literal(line.name()).withStyle(Style.EMPTY.withColor(line.color()))).withStyle(ChatFormatting.GRAY));
+            if (!line.franchise().isEmpty()) {
                 tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.franchise", "From: %s",
-                        Component.translatableWithFallback("franchise.nusmp." + look.franchise(), look.franchise())).withStyle(ChatFormatting.DARK_AQUA));
+                        Component.translatableWithFallback("franchise.nusmp." + line.franchise(), line.franchise())).withStyle(ChatFormatting.DARK_AQUA));
             }
             tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.use", "Right-click to read it. The book is used up.").withStyle(ChatFormatting.DARK_GRAY));
-        } else if (route == null) {
-            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.blank", "The pages are blank.").withStyle(ChatFormatting.GRAY));
+        } else if (LegacyIds.isRemovedBook(bookId)) {
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.removed", "The magic in this book was removed. Right-click to swap it for another book.").withStyle(ChatFormatting.GRAY));
         } else {
-            if (route.bookLore() != null && !route.bookLore().isEmpty()) tooltip.add(Component.literal(route.bookLore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.opens", "Opens the route: %s",
-                    Component.literal(route.name()).withStyle(Style.EMPTY.withColor(route.color() & 0xFFFFFF))).withStyle(ChatFormatting.GRAY));
-            if (route.magic() != null && !route.magic().isEmpty()) {
-                tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.franchise", "From: %s",
-                        Component.translatableWithFallback("franchise.nusmp." + route.magic(), route.magic())).withStyle(ChatFormatting.DARK_AQUA));
-            }
-            if (route.duplicateSp() > 0) {
-                tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.duplicate", "A copy of a route you already know is worth %s Skill Points.",
-                        route.duplicateSp()).withStyle(ChatFormatting.DARK_GRAY));
-            }
-            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.use", "Right-click to read it. The book is used up.").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.blank", "The pages are blank.").withStyle(ChatFormatting.GRAY));
         }
         if (flag.isAdvanced() && !bookId.isEmpty()) tooltip.add(Component.literal(bookId).withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    /** True when the (client or server) player already owns the skill of this stack's book; the tooltip handler of the client uses it. */
+    public static boolean ownedBy(Player player, ItemStack stack) {
+        LineIndex.Line line = UniqueSkills.lineOfBook(SkillItems.bookIdOf(stack));
+        return line != null && UniqueBooks.owns(player, line.bare());
     }
 
     @Override

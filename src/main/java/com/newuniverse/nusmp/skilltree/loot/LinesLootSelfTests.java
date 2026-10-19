@@ -3,12 +3,11 @@ package com.newuniverse.nusmp.skilltree.loot;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.rift.RiftRules;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import com.newuniverse.nusmp.skilltree.item.SkillBookItem;
 import com.newuniverse.nusmp.skilltree.item.SkillItems;
-import com.newuniverse.nusmp.skilltree.state.IPlayerSkillTree;
+import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -34,7 +33,7 @@ import java.util.Random;
 
 /**
  * Why: the unique-lines loot is WIRING again (a loot modifier type, a JSON, a line in the global list, a cache keyed by the registry, a memory per player) and wiring is what a unit test
- * cannot see. {@code tree.lines.loot}, run by the CI server smoke test with a stand-in player, drives the real things: the type {@code nusmp:rift_books} is registered; the weight table is
+ * cannot see. {@code skillbook.loot}, run by the CI server smoke test with a stand-in player, drives the real things: the type {@code nusmp:rift_books} is registered; the weight table is
  * built once per registry version and a thousand draws do not rebuild it and pick only lines of positive weight; the rift modifier's entry point adds one route book for a listed table
  * inside a pocket cell and NOTHING for an unlisted table, a position outside the pockets, the Overworld, a scale of 0 or a chance of 0; a made-up CHEST table carrying the real relic-vault id
  * is rolled through the whole loot pipeline (so the codec, the JSON and the global list are exercised) and must give books in a pocket cell and none outside it; and the pity rule
@@ -45,7 +44,7 @@ public final class LinesLootSelfTests {
 
     private static final ResourceLocation RELIC_VAULT = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/dungeon_relic_vault");
 
-    public static void register() { SelfTests.register("tree.lines.loot", LinesLootSelfTests::loot); }
+    public static void register() { SelfTests.register("skillbook.loot", LinesLootSelfTests::loot); }
 
     private static SelfTests.Result fail(String d) { return SelfTests.Result.fail(d); }
 
@@ -126,25 +125,28 @@ public final class LinesLootSelfTests {
                     break;
                 }
             }
-            IPlayerSkillTree tree = SkillTreeApi.of(opener);
-            boolean had = tree.hasRoute(owned.id());
+            boolean had = UniqueBooks.owns(opener, owned.id());
             try {
-                tree.addRoute(owned.id());
-                BookPity.GLOBAL.forget(opener.getUUID());
-                boolean previousOwned = false;
-                int twice = 0, ownedDraws = 0;
-                for (int i = 0; i < 400; i++) {
-                    ItemStack book = LootDrops.routeBook(dice, opener);
-                    SkillRoute got = RouteRegistry.byBook(SkillItems.bookIdOf(book));
-                    boolean isOwned = got != null && tree.hasRoute(got.id());
-                    if (isOwned) ownedDraws++;
-                    if (isOwned && previousOwned) twice++;
-                    previousOwned = isOwned;
+                UniqueBooks.Grant given = UniqueBooks.grant(opener, owned.id(), false);
+                if (given != UniqueBooks.Grant.GRANTED && given != UniqueBooks.Grant.ALREADY) {
+                    said.append("pity not driven (the stand-in player has no skill list); ");
+                } else {
+                    BookPity.GLOBAL.forget(opener.getUUID());
+                    boolean previousOwned = false;
+                    int twice = 0, ownedDraws = 0;
+                    for (int i = 0; i < 400; i++) {
+                        ItemStack book = LootDrops.routeBook(dice, opener);
+                        SkillRoute got = RouteRegistry.byBook(SkillItems.bookIdOf(book));
+                        boolean isOwned = got != null && UniqueBooks.owns(opener, got.id());
+                        if (isOwned) ownedDraws++;
+                        if (isOwned && previousOwned) twice++;
+                        previousOwned = isOwned;
+                    }
+                    if (twice != 0) return fail("the pity rule handed an owned book " + twice + " times right after an owned book");
+                    said.append("pity: ").append(ownedDraws).append(" owned of 400, never two in a row; ");
                 }
-                if (twice != 0) return fail("the pity rule handed an owned line " + twice + " times right after an owned line");
-                said.append("pity: ").append(ownedDraws).append(" owned of 400, never two in a row; ");
             } finally {
-                if (!had) tree.removeRoute(owned.id());
+                if (!had) UniqueBooks.forget(opener, owned.id());
                 BookPity.GLOBAL.forget(opener.getUUID());
             }
         } else {

@@ -56,10 +56,10 @@ public final class RouteRegistry {
     }
 
     // ---------------------------------------------------------------- the server side
-    /** The report of the last load: one entry per file, with its problems and warnings (what {@code /multiverse tree routes} prints). */
+    /** The report of the last load: one entry per file, with its problems and warnings (what {@code /multiverse skillbook routes} prints). */
     public static List<RouteIndex.Entry> report() { return snapshot().report(); }
 
-    /** Server thread: puts a freshly built set in force, atomically. Called by the reload listener and by {@code /multiverse tree reload}. */
+    /** Server thread: puts a freshly built set in force, atomically. Called by the reload listener and by {@code /multiverse skillbook reload}. */
     public static void publish(RouteIndex index) {
         server = index == null ? RouteIndex.EMPTY : index;
         serverLoaded = true;

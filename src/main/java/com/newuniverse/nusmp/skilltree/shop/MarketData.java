@@ -22,7 +22,7 @@ import java.util.Optional;
  * replace it with a datapack and {@code /reload}, with no rebuild. A single-file-per-kind listener is enough here: each file is one small table, the top-most data pack wins by
  * the normal resource rule, and the validation is the pure {@link StockSchema} and {@link PriceTable} readers. The result is two immutable snapshots held in volatile statics
  * (a cache of immutable data, replaced whole on a reload and cleared when the server stops), so the packet handlers read them without a lock and never see a half-loaded table.
- * A file that is missing or broken leaves the previous snapshot empty rather than throwing: the witch then has an empty shelf and buys nothing, and {@code /multiverse tree
+ * A file that is missing or broken leaves the previous snapshot empty rather than throwing: the witch then has an empty shelf and buys nothing, and {@code /multiverse skillbook
  * shop status} prints every problem. Rows that name an item the game does not know (an addon that is not installed) are dropped here, where the item registry can be asked.
  */
 public final class MarketData implements ResourceManagerReloadListener {

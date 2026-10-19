@@ -11,9 +11,7 @@
   "class_id": "shadow_ninja_souei",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/shadow_ninja_souei.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "void",
   "nodes": [
     {
       "id": "shadow_assassin_stance",

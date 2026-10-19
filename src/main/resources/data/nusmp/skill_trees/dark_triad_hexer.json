@@ -11,9 +11,7 @@
   "class_id": "dark_triad_hexer",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/dark_triad_hexer.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "void",
   "nodes": [
     {
       "id": "cursed_calm",

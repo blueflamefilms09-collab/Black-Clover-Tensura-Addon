@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sprites and item models of the Skill Tree's two books (docs/skilltree/items.md).
+Sprites and item models of the Skill Tree's two books (docs/skillbooks_unique.md).
 
 WHY a script and not hand-drawn files: the Skill Book is ONE item for every route, so its look is a pair of 16x16 layers instead of a texture per route:
 layer0 is the book (pages, binding, gold fittings, gem) and layer1 is the cover in neutral greys. The client multiplies layer1 by the route's own colour
@@ -347,17 +347,7 @@ def models():
         "parent": "minecraft:item/generated",
         "textures": {"layer0": "nusmp:item/skill_book", "layer1": "nusmp:item/skill_book_cover"},
     }
-    overrides = []
-    for i, kind in enumerate(KINDS):
-        threshold = round((i + 1) / 10.0 - 0.05, 2)
-        overrides.append({"predicate": {"nusmp:sp_kind": threshold}, "model": "nusmp:item/sp_book_" + kind})
-    out["sp_book"] = {
-        "parent": "minecraft:item/generated",
-        "textures": {"layer0": "nusmp:item/sp_book"},
-        "overrides": overrides,
-    }
-    for kind in KINDS:
-        out["sp_book_" + kind] = {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/sp_book_" + kind}}
+    out["sp_book"] = {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/sp_book"}}
     return out
 
 
@@ -404,25 +394,17 @@ def main():
     base, cover = skill_book()
     base.save(os.path.join(textures, "skill_book.png"))
     cover.save(os.path.join(textures, "skill_book_cover.png"))
-    sprites = {
-        "sp_book": sp_default(),
-        "sp_book_beginner_archery": archery(),
-        "sp_book_elemental_primer": elemental(),
-        "sp_book_magic_booster": booster(),
-        "sp_book_jack_in_the_box": jack_in_the_box(),
-        "sp_book_greater_primer": greater(),
-    }
+    sprites = {"sp_book": sp_default()}               # 1.96.0: the SP Books are gone; only the plain sprite stays, for an old stack that is turned into a Skill Book on use
     for name, canvas in sprites.items():
         canvas.save(os.path.join(textures, name + ".png"))
     for name, obj in models().items():
         write_json(os.path.join(RES, "models", "item", name + ".json"), obj)
     if "--preview" in sys.argv:
         folder = sys.argv[sys.argv.index("--preview") + 1]
-        # the four shipped routes (fire, lightning, ice, sky) and the grey of a route the client does not know
+        # four sample line colours and the grey of a route the client does not know
         colours = [(0xE8, 0x54, 0x1C), (0xF5, 0xD6, 0x3B), (0xBD, 0xEF, 0xFF), (0x6E, 0xC3, 0xF7), (0x8A, 0x8A, 0x9A)]
         row = [tinted(base, cover, c) for c in colours] + [base.img, cover.img]
         sheet(row, 24, os.path.join(folder, "skill_book_tints.png"), 7)
-        sheet([sprites[n].img for n in sprites], 24, os.path.join(folder, "sp_books.png"), 6)
     print("wrote", len(sprites) + 2, "textures and", len(models()), "models")
 
 

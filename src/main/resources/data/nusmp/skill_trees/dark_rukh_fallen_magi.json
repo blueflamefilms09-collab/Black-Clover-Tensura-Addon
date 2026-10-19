@@ -11,9 +11,7 @@
   "class_id": "dark_rukh_fallen_magi",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/dark_rukh_fallen_magi.png",
   "book_texture": "nusmp:item/skill_book_3d/magi",
-  "background_theme": "blood",
   "nodes": [
     {
       "id": "depraved_surge",

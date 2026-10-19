@@ -23,6 +23,10 @@ class StockBoardTest {
         return new StockEntry(id, StockEntry.Kind.ROUTE_BOOK, route, all, "", 2_000_000, 3_000_000, 0.0, 1, 1, 100, false);
     }
 
+    private static StockEntry weighted(String id, String route, int weight) {
+        return new StockEntry(id, StockEntry.Kind.ROUTE_BOOK, route, false, "", 2_000_000, 3_000_000, 0.0, 3, 5, weight, false);
+    }
+
     private static StockEntry sp(String id, String kind, int weight) {
         return new StockEntry(id, StockEntry.Kind.SP_BOOK, "", false, kind, 100_000, 200_000, 0.0, 3, 5, weight, false);
     }
@@ -35,20 +39,19 @@ class StockBoardTest {
 
     @Test
     void theAllRoutesLineSkipsTheRoutesThatHaveALineOfTheirOwn() {
-        List<StockEntry> entries = List.of(route("fang", "nusmp:fire_dragon_slayer", false), route("books", "", true), sp("archery", "beginner_archery", 100));
-        List<String> routes = List.of("nusmp:fire_dragon_slayer", "nusmp:lightning_dragon_slayer", "nusmp:ice_make");
+        List<StockEntry> entries = List.of(route("fang", "nusmp:smoldering_fang_of_insanity", false), route("books", "", true), sp("archery", "beginner_archery", 100));
+        List<String> routes = List.of("nusmp:smoldering_fang_of_insanity", "nusmp:lady_luck", "nusmp:basic_swordsmanship");
         List<StockBoard.Slot> slots = StockBoard.slots(entries, routes);
-        assertEquals(List.of("fang", "books@nusmp:lightning_dragon_slayer", "books@nusmp:ice_make", "archery"), ids(slots));
-        assertEquals("nusmp:fire_dragon_slayer", slots.get(0).ref());
-        assertEquals("nusmp:ice_make", slots.get(2).ref());
-        assertEquals("beginner_archery", slots.get(3).ref());
+        assertEquals(List.of("fang", "books@nusmp:lady_luck", "books@nusmp:basic_swordsmanship"), ids(slots), "an old SP line makes no slot any more (1.96.0)");
+        assertEquals("nusmp:smoldering_fang_of_insanity", slots.get(0).ref());
+        assertEquals("nusmp:basic_swordsmanship", slots.get(2).ref());
     }
 
     @Test
     void aLineForARouteThatDoesNotExistMakesNoSlot() {
-        List<StockEntry> entries = List.of(route("fang", "nusmp:fire_dragon_slayer", false), route("books", "", true));
-        assertEquals(List.of("books@nusmp:ice_make"), ids(StockBoard.slots(entries, List.of("nusmp:ice_make"))), "the missing flagship route is not stocked, nor taken from the all-routes line");
-        assertTrue(StockBoard.slots(entries, List.of()).isEmpty(), "with no routes only SP lines can stock the shelf");
+        List<StockEntry> entries = List.of(route("fang", "nusmp:smoldering_fang_of_insanity", false), route("books", "", true));
+        assertEquals(List.of("books@nusmp:lady_luck"), ids(StockBoard.slots(entries, List.of("nusmp:lady_luck"))), "the missing flagship route is not stocked, nor taken from the all-routes line");
+        assertTrue(StockBoard.slots(entries, List.of()).isEmpty(), "with no routes nothing can stock the shelf");
     }
 
     @Test
@@ -70,14 +73,14 @@ class StockBoardTest {
 
     @Test
     void buildAppliesTheRollTheWeightAndThePurchases() {
-        List<StockEntry> entries = List.of(sp("archery", "beginner_archery", 100), sp("ghost", "ghost_kind", 0), route("fang", "nusmp:fire_dragon_slayer", false));
-        List<StockBoard.Slot> slots = StockBoard.slots(entries, List.of("nusmp:fire_dragon_slayer"));
+        List<StockEntry> entries = List.of(weighted("archery", "nusmp:basic_swordsmanship", 100), weighted("ghost", "nusmp:oath_of_the_heavy_armor", 0), route("fang", "nusmp:smoldering_fang_of_insanity", false));
+        List<StockBoard.Slot> slots = StockBoard.slots(entries, List.of("nusmp:basic_swordsmanship", "nusmp:oath_of_the_heavy_armor", "nusmp:smoldering_fang_of_insanity"));
         List<StockBoard.Offer> shelf = StockBoard.build(SEED, 5, 0, slots, id -> 0);
         assertEquals(2, shelf.size(), "the weight-0 line is not on the shelf");
         assertNull(StockBoard.find(shelf, "ghost"));
         StockBoard.Offer a = StockBoard.find(shelf, "archery");
         assertNotNull(a);
-        assertEquals(StockEntry.Kind.SP_BOOK, a.kind());
+        assertEquals(StockEntry.Kind.ROUTE_BOOK, a.kind());
         assertTrue(a.total() >= 3 && a.total() <= 5);
         assertEquals(a.total(), a.left());
 

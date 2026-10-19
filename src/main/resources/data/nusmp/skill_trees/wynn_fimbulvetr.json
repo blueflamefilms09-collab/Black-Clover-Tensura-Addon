@@ -11,9 +11,7 @@
   "class_id": "wynn_fimbulvetr",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/wynn_fimbulvetr.png",
   "book_texture": "nusmp:item/skill_book_3d/danmachi",
-  "background_theme": "frost",
   "nodes": [
     {
       "id": "winter_chant",

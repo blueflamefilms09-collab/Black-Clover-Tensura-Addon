@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Why: the route files the mod ships are written by hand by other builders, and a typo in one of them would otherwise only show up as a log line when a server starts. This test runs the REAL
  * schema and the cross-file rules over every shipped file ({@code data/<namespace>/skill_trees/*.json} in the resources) at BUILD time, so a route with a problem, a clashing book or class, a
  * skill granted twice, or a route too big for the sync packet fails the build instead of a player's session. It asserts on problems, not on warnings (a warning is an oddity that still
- * loads). With no file shipped yet (the folder is missing or empty) it passes and says so, which is the state of this branch before the Fairy Tail routes are merged.
+ * loads). With no file shipped yet (the folder is missing or empty) it passes and says so, which is the state of this branch before the Black Clover routes are merged.
  */
 class SkillTreeFilesTest {
     private static final Path DATA = Path.of("src/main/resources/data");

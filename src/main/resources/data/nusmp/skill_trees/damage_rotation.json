@@ -11,9 +11,7 @@
   "class_id": "damage_rotation",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/damage_rotation.png",
   "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
-  "background_theme": "magma",
   "nodes": [
     {
       "id": "opener_burst",

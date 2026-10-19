@@ -11,9 +11,7 @@
   "class_id": "primordial_black_diablo",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/primordial_black_diablo.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "dream",
   "nodes": [
     {
       "id": "butler_s_poise",

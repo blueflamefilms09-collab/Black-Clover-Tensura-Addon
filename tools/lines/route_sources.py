@@ -1,4 +1,4 @@
-"""Where the list of lines comes from, for the asset generators (gen_book_index.py, gen_backgrounds.py).
+"""Where the list of lines comes from, for the asset generators (gen_book_index.py).
 
 Two sources, merged by line id:
   1. the route files the game loads: src/main/resources/data/nusmp/skill_trees/*.json (the 8 hand-built routes, and every generated line once gen_lines.py has written it);
@@ -18,8 +18,7 @@ ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "skill_
 sys.path.insert(0, HERE)
 
 # the hand-built routes have no background theme in their json: this table gives them one (franchise / element of the route)
-HAND_THEMES = {"fire_dragon_slayer": "magma", "lightning_dragon_slayer": "storm", "sky_dragon_slayer": "stellar", "ice_make": "frost",
-               "oath_of_the_heavy_armor": "iron", "basic_swordsmanship": "ruin", "lady_luck": "city", "smoldering_fang_of_insanity": "magma"}
+HAND_THEMES = {"oath_of_the_heavy_armor": "iron", "basic_swordsmanship": "ruin", "lady_luck": "city", "smoldering_fang_of_insanity": "magma"}
 
 
 def _hex(c):
@@ -50,6 +49,16 @@ def load_rows(rows_dir=None):
     return out
 
 
+def is_art(n):
+    """The nodes that become the modes of the unique skill, in file order: an art or stance of a generated line, or a classic node that grants a skill."""
+    return n.get("type") == "active_ability" or (not n.get("kind") and bool(n.get("skill")))
+
+
+def is_passive(n):
+    """The nodes that are applied while the skill is owned and switched on: passives and stat bonuses."""
+    return n.get("type") in ("passive_toggle", "attribute_modifier") or (not n.get("kind") and not n.get("skill") and bool(n.get("passives")))
+
+
 def collect(rows_dir=None, routes_dir=None, with_rows=True):
     """-> dict id -> {id, name, book, book_name, color '#RRGGBB', franchise, theme, source}."""
     out = {}
@@ -59,7 +68,10 @@ def collect(rows_dir=None, routes_dir=None, with_rows=True):
             d = json.load(f)
         out[rid] = {"id": rid, "name": d.get("name", rid), "book": d.get("book", "nusmp:%s_book" % rid), "book_name": d.get("book_name", d.get("name", rid)),
                     "color": _hex(d.get("color", "#FFFFFF")), "franchise": d.get("franchise") or d.get("magic") or "",
-                    "theme": d.get("background_theme") or HAND_THEMES.get(rid, ""), "source": "json"}
+                    "theme": d.get("background_theme") or HAND_THEMES.get(rid, ""), "source": "json",
+                    "desc": d.get("desc", ""), "book_lore": d.get("book_lore", ""),
+                    "arts": [n.get("name", n.get("id", "")) for n in d.get("nodes", []) if is_art(n)],
+                    "passives": [n.get("name", n.get("id", "")) for n in d.get("nodes", []) if is_passive(n)]}
     if with_rows:
         for _fname, L in load_rows(rows_dir):
             if L.id in out:

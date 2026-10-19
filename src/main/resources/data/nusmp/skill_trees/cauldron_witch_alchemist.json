@@ -11,9 +11,7 @@
   "class_id": "cauldron_witch_alchemist",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/cauldron_witch_alchemist.png",
   "book_texture": "nusmp:item/skill_book_3d/black_clover",
-  "background_theme": "forest",
   "nodes": [
     {
       "id": "steady_simmer",

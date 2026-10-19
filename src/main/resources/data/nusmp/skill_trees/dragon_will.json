@@ -11,9 +11,7 @@
   "class_id": "dragon_will",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/dragon_will.png",
   "book_texture": "nusmp:item/skill_book_3d/tbate",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "dragon_s_pride",

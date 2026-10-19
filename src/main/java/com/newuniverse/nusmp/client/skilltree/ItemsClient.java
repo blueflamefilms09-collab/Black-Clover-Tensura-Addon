@@ -2,24 +2,20 @@ package com.newuniverse.nusmp.client.skilltree;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.NUSMP;
-import com.newuniverse.nusmp.skilltree.SkillTreeApi;
-import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.unique.LineIndex;
+import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import com.newuniverse.nusmp.skilltree.item.SkillBookItem;
 import com.newuniverse.nusmp.skilltree.item.SkillItems;
-import com.newuniverse.nusmp.skilltree.item.SpKind;
 import com.newuniverse.nusmp.skilltree.item.UnlockTiming;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -36,7 +32,7 @@ import org.slf4j.Logger;
  * {@code RegisterGuiLayersEvent} (NeoForge 1.21's replacement of the old overlay interface, as the System window does) that draws, over the world and above everything else,
  * a flash in the route's colour, the words in large letters slamming in and settling, a line that draws itself, and the route's name below, for three seconds. The timing is
  * the pure {@link BannerTimeline}, counted from {@link UnlockTiming#BURST_TICK} ticks after the packet, because the server's circle bursts then; the packet itself is
- * only the route id ({@code RouteUnlockedPayload}), so the name and colour come from the client's own synced registry. The banner is skipped while a screen is open or the
+ * only the route id ({@code RouteUnlockedPayload}), so the name and colour come from the shipped table of books ({@code skill_books.json}). The banner is skipped while a screen is open or the
  * GUI is hidden (a layer is not hidden by the game in those cases), and a draw that throws switches the banner off with one log line instead of one per frame. This class is
  * client only: it is started from {@code SkillTreeClient.init}, and the packet handler reaches it by name inside a lambda, so a dedicated server never loads it.
  */
@@ -57,7 +53,6 @@ public final class ItemsClient {
         BookClient.init(modBus);                                                  // 1.82.0: the 3D book's table, franchise property and cover colour
         modBus.addListener(ItemsClient::registerColors);
         modBus.addListener(ItemsClient::registerLayers);
-        modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ItemsClient::registerProperties));
         NeoForge.EVENT_BUS.addListener(ItemsClient::onTooltip);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> startedAt = -1L);
     }
@@ -73,20 +68,11 @@ public final class ItemsClient {
     }
 
     /** The property the SP Book's model overrides read: the kind's model value (0.1 to 0.5), 0 for a stack of no known kind. */
-    private static void registerProperties() {
-        ItemProperties.register(SkillItems.SP_BOOK.get(), ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "sp_kind"), (stack, level, entity, seed) -> {
-            SpKind kind = SpKind.byId(SkillItems.spKindOf(stack));
-            return kind == null ? 0f : kind.modelValue();
-        });
-    }
-
-    /** Adds "You already know this route." under a Skill Book whose route the local player has. */
     private static void onTooltip(ItemTooltipEvent e) {
         ItemStack stack = e.getItemStack();
         if (!(stack.getItem() instanceof SkillBookItem) || e.getEntity() == null) return;
-        SkillRoute route = RouteRegistry.byBook(SkillItems.bookIdOf(stack));
-        if (route != null && SkillTreeApi.hasRoute(e.getEntity(), route.id())) {
-            e.getToolTip().add(Component.translatableWithFallback("tooltip.nusmp.skill_book.known", "You already know this route.").withStyle(ChatFormatting.GREEN));
+        if (SkillBookItem.ownedBy(e.getEntity(), stack)) {
+            e.getToolTip().add(Component.translatableWithFallback("tooltip.nusmp.skill_book.owned", "You already know this skill.").withStyle(ChatFormatting.GREEN));
         }
     }
 
@@ -95,9 +81,9 @@ public final class ItemsClient {
     public static void onRouteUnlocked(String routeId) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
-        SkillRoute route = RouteRegistry.byId(routeId);
-        bannerName = route != null ? route.name() : BannerTimeline.fallbackName(routeId);
-        bannerColor = route != null ? route.color() & 0xFFFFFF : 0xFFFFFF;
+        LineIndex.Line line = UniqueSkills.line(routeId);
+        bannerName = line != null ? line.name() : BannerTimeline.fallbackName(routeId);
+        bannerColor = line != null ? line.color() & 0xFFFFFF : 0xFFFFFF;
         startedAt = mc.level.getGameTime();
         broken = false;
     }
@@ -139,7 +125,7 @@ public final class ItemsClient {
         int mid = cy + 4;                                            // the words (title above the line, name below it) sit a little below cy, so the band is centred on them
         g.fillGradient(0, mid - half, w, mid, clear, dark);
         g.fillGradient(0, mid, w, mid + half, dark, clear);
-        Component title = Component.translatableWithFallback("title.nusmp.tree.items.route_unlocked", "ROUTE UNLOCKED");
+        Component title = Component.translatableWithFallback("title.nusmp.skillbook.learned", "UNIQUE SKILL ACQUIRED");
         Component name = Component.literal(bannerName);
         float base = Math.min(3.0f, w * 0.6f / Math.max(1, font.width(title)));
         drawScaled(g, font, title, cx, cy - 12, base * BannerTimeline.scale(age), BannerTimeline.argb(BannerTimeline.lighten(rgb, 0.35f), alpha));

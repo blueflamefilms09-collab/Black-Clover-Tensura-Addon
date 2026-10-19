@@ -11,9 +11,7 @@
   "class_id": "puppet_master_clayman",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/puppet_master_clayman.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "city",
   "nodes": [
     {
       "id": "marionette_master",

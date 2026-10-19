@@ -1,8 +1,8 @@
 package com.newuniverse.nusmp.skilltree.hk;
 
 import com.newuniverse.nusmp.skilltree.ability.AbilityKit;
-import com.newuniverse.nusmp.skilltree.ft.kit.FtTreeSkill;
-import com.newuniverse.nusmp.skilltree.ft.kit.FtWorld;
+import com.newuniverse.nusmp.skilltree.kit.TechniqueSkill;
+import com.newuniverse.nusmp.skilltree.kit.KitWorld;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.server.level.ServerLevel;
@@ -22,9 +22,8 @@ import java.util.List;
 
 /**
  * Why: the twelve techniques of the four Heavy Knight routes are small and share one shape (read my numbers from the route file at my node level, pay my share of the magicules, do one clear thing,
- * start the cooldown of my table), so they are nested classes of one file on top of {@link FtTreeSkill}, which already owns the gate of the whole engine (the route must be unlocked, the node bought AND,
- * by the single-active-route rule, the route must be the equipped one) and the bookkeeping after a cast. A technique therefore writes only {@code cast}; whatever the player has not equipped
- * simply cannot be cast. Each does what its name says with ordinary game rules and no particle spam: the Provoke turns hostile creatures onto the caster with the creature's own target field (the
+ * start the cooldown of my table), so they are nested classes of one file on top of {@link TechniqueSkill}. A technique writes only {@code cast}; since 1.96.0 it is run as a MODE of the book's unique skill
+ * ({@code UniqueBooks.useArt} calls {@code castDirect}), which decides the level, the cooldown and the awakening from its mastery. Each does what its name says with ordinary game rules and no particle spam: the Provoke turns hostile creatures onto the caster with the creature's own target field (the
  * same thing a hit does) and steels the caster; the Shield Wall is the stock Resistance and Absorption effects, shorter than the cooldown so it can never be kept up for ever; the Shield Bash, Power
  * Strike and Crescent Cut hit through the balance law ({@code AbilityKit.hit}, so the damage caps hold); the Swift Step is a short dash with a breath of Resistance; the Gambler's Coin and the Jackpot are
  * the Lady Luck gamble, where the caster's Luck attribute tilts the odds (so the passive Luck of the route matters to its own techniques) and nothing worse than a missed buff can happen.
@@ -32,7 +31,7 @@ import java.util.List;
 public final class HkTechniques {
     private HkTechniques() {}
 
-    abstract static class Base extends FtTreeSkill {
+    abstract static class Base extends TechniqueSkill {
         Base(String route, String node, String texture) { super(route, node, texture, HkRoute::fallback); }
 
         final ServerLevel lvl(ServerPlayer p) { return p.serverLevel(); }
@@ -47,7 +46,7 @@ public final class HkTechniques {
             double radius = num("radius", lv);
             int cap = whole("targets", lv), ticks = Math.max(20, whole("resist_seconds", lv) * 20);
             if (!pay(p, lv)) return false;
-            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.around(p, p.position(), radius)), p.position(), cap);
+            List<LivingEntity> foes = KitWorld.nearest(KitWorld.hostile(p, AbilityKit.around(p, p.position(), radius)), p.position(), cap);
             for (LivingEntity foe : foes) if (foe instanceof Mob m) m.setTarget(p);
             p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, true, false, true));
             AbilityKit.fx(lvl(p), VfxShape.WIND_RING, p.position(), p.position(), HkRoute.STEEL, 30, (float) Math.min(2.0, radius / 6.0));
@@ -81,10 +80,10 @@ public final class HkTechniques {
             int cap = whole("targets", lv), slow = Math.max(20, whole("slow_seconds", lv) * 20);
             float raw = (float) num("damage", lv);
             if (!pay(p, lv)) return false;
-            double mastery = FtWorld.masteryFrac(instance);
-            for (LivingEntity foe : FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, range, half)), p.getEyePosition(), cap)) {
+            double mastery = KitWorld.masteryFrac(instance);
+            for (LivingEntity foe : KitWorld.nearest(KitWorld.hostile(p, AbilityKit.cone(p, range, half)), p.getEyePosition(), cap)) {
                 AbilityKit.hit(p, foe, raw, mastery);
-                FtWorld.shove(foe, p, push);
+                KitWorld.shove(foe, p, push);
                 foe.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slow, 1, false, true, true));
             }
             Vec3 at = p.getEyePosition().add(p.getViewVector(1f).scale(1.2));
@@ -102,16 +101,16 @@ public final class HkTechniques {
         protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
             double reach = num("reach", lv), push = num("knockback", lv);
             float raw = (float) num("damage", lv);
-            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, reach, 25)), p.getEyePosition(), 1);
+            List<LivingEntity> foes = KitWorld.nearest(KitWorld.hostile(p, AbilityKit.cone(p, reach, 25)), p.getEyePosition(), 1);
             if (foes.isEmpty()) {
                 AbilityKit.say(p, "No foe in reach.");
                 return false;
             }
             if (!pay(p, lv)) return false;
             LivingEntity foe = foes.get(0);
-            AbilityKit.hit(p, foe, raw, FtWorld.masteryFrac(instance));
-            FtWorld.shove(foe, p, push);
-            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), FtWorld.center(foe), HkRoute.BLADE, 10, 0.9f);
+            AbilityKit.hit(p, foe, raw, KitWorld.masteryFrac(instance));
+            KitWorld.shove(foe, p, push);
+            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), KitWorld.center(foe), HkRoute.BLADE, 10, 0.9f);
             AbilityKit.sound(p, SoundEvents.PLAYER_ATTACK_STRONG, 1.0f, 0.9f);
             return true;
         }
@@ -125,7 +124,7 @@ public final class HkTechniques {
             double distance = num("distance", lv);
             int resist = Math.max(10, whole("resist_ticks", lv));
             if (!pay(p, lv)) return false;
-            Vec3 dir = FtWorld.flatLook(p);
+            Vec3 dir = KitWorld.flatLook(p);
             double speed = distance * 0.27;                       // the ground's friction eats most of a velocity: this carries about {@code distance} blocks
             p.setDeltaMovement(dir.x * speed, 0.12, dir.z * speed);
             p.hurtMarked = true;
@@ -147,10 +146,10 @@ public final class HkTechniques {
             int cap = whole("targets", lv);
             float raw = (float) num("damage", lv);
             if (!pay(p, lv)) return false;
-            double mastery = FtWorld.masteryFrac(instance);
-            for (LivingEntity foe : FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, range, half)), p.getEyePosition(), cap)) {
+            double mastery = KitWorld.masteryFrac(instance);
+            for (LivingEntity foe : KitWorld.nearest(KitWorld.hostile(p, AbilityKit.cone(p, range, half)), p.getEyePosition(), cap)) {
                 AbilityKit.hit(p, foe, raw, mastery);
-                FtWorld.shove(foe, p, push);
+                KitWorld.shove(foe, p, push);
             }
             Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
             AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, eye.add(look.scale(0.5)), eye.add(look.scale(range)), HkRoute.BLADE, 14, 1.4f);
@@ -210,17 +209,17 @@ public final class HkTechniques {
         protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
             double range = num("range", lv);
             float raw = (float) num("damage", lv);
-            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, range, 30)), p.getEyePosition(), 1);
+            List<LivingEntity> foes = KitWorld.nearest(KitWorld.hostile(p, AbilityKit.cone(p, range, 30)), p.getEyePosition(), 1);
             if (foes.isEmpty()) {
                 AbilityKit.say(p, "No foe in reach.");
                 return false;
             }
             if (!pay(p, lv)) return false;
             LivingEntity foe = foes.get(0);
-            AbilityKit.hit(p, foe, raw, FtWorld.masteryFrac(instance));
+            AbilityKit.hit(p, foe, raw, KitWorld.masteryFrac(instance));
             foe.addEffect(new MobEffectInstance(MobEffects.WITHER, Math.max(20, whole("wither_seconds", lv) * 20), 0, false, true, true));
             AbilityKit.heal(p, (float) (raw * num("life_steal", lv)));
-            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), FtWorld.center(foe), HkRoute.EMBER, 10, 0.8f);
+            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), KitWorld.center(foe), HkRoute.EMBER, 10, 0.8f);
             AbilityKit.sound(p, SoundEvents.WOLF_GROWL, 0.9f, 1.2f);
             return true;
         }
@@ -251,10 +250,10 @@ public final class HkTechniques {
             double radius = num("radius", lv), push = num("knockback", lv);
             int cap = whole("targets", lv), weak = Math.max(20, whole("weak_seconds", lv) * 20), slow = Math.max(20, whole("slow_seconds", lv) * 20);
             if (!pay(p, lv)) return false;
-            for (LivingEntity foe : FtWorld.nearest(FtWorld.hostile(p, AbilityKit.around(p, p.position(), radius)), p.position(), cap)) {
+            for (LivingEntity foe : KitWorld.nearest(KitWorld.hostile(p, AbilityKit.around(p, p.position(), radius)), p.position(), cap)) {
                 foe.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weak, 1, false, true, true));
                 foe.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slow, 1, false, true, true));
-                FtWorld.shove(foe, p, push);
+                KitWorld.shove(foe, p, push);
             }
             AbilityKit.fx(lvl(p), VfxShape.WIND_RING, p.position(), p.position(), HkRoute.ASH, 30, (float) Math.min(2.2, radius / 5.0));
             AbilityKit.sound(p, SoundEvents.WOLF_HOWL, 1.0f, 0.5f);
@@ -269,24 +268,24 @@ public final class HkTechniques {
         protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
             double reach = num("reach", lv);
             float raw = (float) num("damage", lv);
-            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, reach, 35)), p.getEyePosition(), 1);
+            List<LivingEntity> foes = KitWorld.nearest(KitWorld.hostile(p, AbilityKit.cone(p, reach, 35)), p.getEyePosition(), 1);
             if (foes.isEmpty()) {
                 AbilityKit.say(p, "No foe in reach.");
                 return false;
             }
             if (!pay(p, lv)) return false;
             LivingEntity foe = foes.get(0);
-            Vec3 toward = FtWorld.center(foe).subtract(p.position());
+            Vec3 toward = KitWorld.center(foe).subtract(p.position());
             Vec3 dir = new Vec3(toward.x, 0, toward.z).normalize();
             p.setDeltaMovement(dir.x * 1.1, 0.25, dir.z * 1.1);                    // the leap that closes the distance
             p.hurtMarked = true;
             p.fallDistance = 0f;
-            AbilityKit.hit(p, foe, raw, FtWorld.masteryFrac(instance));
+            AbilityKit.hit(p, foe, raw, KitWorld.masteryFrac(instance));
             foe.addEffect(new MobEffectInstance(MobEffects.WITHER, Math.max(20, whole("wither_seconds", lv) * 20), 1, false, true, true));
             AbilityKit.heal(p, (float) (raw * num("heal_pct", lv)));
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Math.max(20, whole("exhaust_seconds", lv) * 20), 0, true, false, true));
-            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), FtWorld.center(foe), HkRoute.EMBER, 16, 1.6f);
-            AbilityKit.fx(lvl(p), VfxShape.SPIRIT_AURA, FtWorld.center(foe), FtWorld.center(foe).add(0, 0.8, 0), HkRoute.ASH, 40, 1.2f);
+            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), KitWorld.center(foe), HkRoute.EMBER, 16, 1.6f);
+            AbilityKit.fx(lvl(p), VfxShape.SPIRIT_AURA, KitWorld.center(foe), KitWorld.center(foe).add(0, 0.8, 0), HkRoute.ASH, 40, 1.2f);
             AbilityKit.sound(p, SoundEvents.WOLF_GROWL, 1.0f, 0.6f);
             return true;
         }

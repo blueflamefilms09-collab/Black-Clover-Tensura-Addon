@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Why: a Skill Book must look right and say what it opens on a client that does NOT know the route. The server syncs a client only the lines its player owns
- * (docs/skilltree/lines.md, scale rule), so a book found in a chest, dropped by a boss or bought for a line the player has not unlocked yet has no route in the client's
+ * (docs/skillbooks_unique.md, scale rule), so a book found in a chest, dropped by a boss or bought for a line the player has not unlocked yet has no route in the client's
  * registry, and the old code then showed a grey cover and "The pages are blank". The assets therefore ship {@code assets/nusmp/skill_books.json}, a table generated from the same
  * route files and rows as the routes themselves ({@code tools/lines/gen_book_index.py}): book id -> line id, line name, book name, colour, franchise. This class is that table,
  * parsed once per resource reload into immutable maps, read lock-free (one volatile reference) by the item's name and tooltip, the cover tint and the model's franchise property.
@@ -56,10 +56,10 @@ public final class BookLook {
 
         public int steps() { return steps; }
 
-        /** The entry of a book id ({@code nusmp:fire_dragon_slayer_book}), or null. */
+        /** The entry of a book id ({@code nusmp:lady_luck_book}), or null. */
         public Entry byBook(String bookId) { return bookId == null ? null : byBook.get(bookId); }
 
-        /** The entry of a line id ({@code fire_dragon_slayer} or {@code nusmp:fire_dragon_slayer}), or null. */
+        /** The entry of a line id ({@code lady_luck} or {@code nusmp:lady_luck}), or null. */
         public Entry byLine(String lineId) {
             if (lineId == null) return null;
             Entry e = byLine.get(lineId);

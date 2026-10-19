@@ -11,9 +11,7 @@
   "class_id": "tog_spear_bearer",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/tog_spear_bearer.png",
   "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
-  "background_theme": "storm",
   "nodes": [
     {
       "id": "spear_thrust_stance",

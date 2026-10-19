@@ -11,9 +11,7 @@
   "class_id": "vampire_queen_night",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/vampire_queen_night.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "dream",
   "nodes": [
     {
       "id": "queen_of_the_night",

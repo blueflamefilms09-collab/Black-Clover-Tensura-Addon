@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.NUSMP;
-import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import com.newuniverse.nusmp.skilltree.item.BookLook;
 import com.newuniverse.nusmp.skilltree.item.SkillItems;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -57,15 +55,13 @@ public final class BookClient {
     private static void registerProperty() {
         ItemProperties.register(SkillItems.SKILL_BOOK.get(), ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "franchise"), (stack, level, entity, seed) -> {
             String bookId = SkillItems.bookIdOf(stack);
-            SkillRoute route = RouteRegistry.byBook(bookId);
-            return BookLook.franchiseValue(bookId, route == null ? null : route.magic());
+            return BookLook.franchiseValue(bookId, null);
         });
     }
 
     /** The cover tint of a Skill Book stack (0xRRGGBB): the route's colour, else the shipped table's, else grey. */
     public static int coverColor(ItemStack stack) {
         String bookId = SkillItems.bookIdOf(stack);
-        SkillRoute route = RouteRegistry.byBook(bookId);
-        return BookLook.colorOf(bookId, route == null ? -1 : route.color(), UNKNOWN_COVER);
+        return BookLook.colorOf(bookId, -1, UNKNOWN_COVER);
     }
 }
