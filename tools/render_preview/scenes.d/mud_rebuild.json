@@ -1,4 +1,8 @@
 {
  "mud_aura_armour": {"kind": "aura", "attr": "Mud", "aura": "MUD", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
- "mud_aura_big": {"kind": "aura", "attr": "Mud", "aura": "MUD", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]}
+ "mud_aura_big": {"kind": "aura", "attr": "Mud", "aura": "MUD", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "mud_geo_golem": {"kind": "geo", "model": "mud_golem", "anim": "slam", "glow": "FFFFFFFF", "ages": [0, 8, 11, 14, 20], "tile": [300, 380], "views": [{"name": "front 3/4", "yaw": 28, "pitch": 12, "target": [0, 2.0, 0], "dist": 10}]},
+ "mud_geo_spout": {"kind": "geo", "model": "mud_spout", "anim": "erupt", "glow": "FFFFFFFF", "ages": [0, 4, 9, 14], "tile": [300, 340], "views": [{"name": "front 3/4", "yaw": 25, "pitch": 14, "target": [0, 1.6, 0], "dist": 9}]},
+ "mud_prop_golem": {"kind": "prop", "attr": "Mud", "propKind": "MUD_1", "param": 0, "scale": 1.0, "maxLife": 400, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 22, 60], "tile": [300, 380]},
+ "mud_prop_spout": {"kind": "prop", "attr": "Mud", "propKind": "MUD_1", "param": 1, "scale": 1.0, "maxLife": 30, "pos": [0, 0, 0], "figure": false, "ages": [2, 8, 12, 20], "tile": [300, 340]}
 }

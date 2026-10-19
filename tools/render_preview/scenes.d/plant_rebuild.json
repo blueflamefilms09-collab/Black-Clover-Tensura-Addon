@@ -1,4 +1,8 @@
 {
  "plant_aura_armour": {"kind": "aura", "attr": "Plant", "aura": "PLANT", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
- "plant_aura_big": {"kind": "aura", "attr": "Plant", "aura": "PLANT", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]}
+ "plant_aura_big": {"kind": "aura", "attr": "Plant", "aura": "PLANT", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "plant_geo_familiar": {"kind": "geo", "model": "plant_familiar", "anim": "heal", "glow": "FFFFFFFF", "ages": [0, 6, 12, 18], "tile": [300, 300], "views": [{"name": "front 3/4", "yaw": 25, "pitch": 10, "target": [0, 0.8, 0], "dist": 4.5}]},
+ "plant_geo_bloom": {"kind": "geo", "model": "plant_bloom", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 30], "tile": [320, 340], "views": [{"name": "front 3/4", "yaw": 25, "pitch": 16, "target": [0, 1.5, 0], "dist": 8}]},
+ "plant_prop_familiar": {"kind": "prop", "attr": "Plant", "propKind": "PLANT_1", "param": 0, "scale": 1.0, "maxLife": 600, "pos": [0, 1.7, 0], "figure": false, "ages": [4, 20, 80], "tile": [300, 320]},
+ "plant_prop_bloom": {"kind": "prop", "attr": "Plant", "propKind": "PLANT_1", "param": 1, "scale": 1.0, "maxLife": 170, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 60], "tile": [300, 340]}
 }

@@ -52,5 +52,11 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        TreePropPainter.register();          // 1.93.0 nature-magic rebuild: the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
+        VinePropPainter.register();
+        PlantPropPainter.register();
+        PoisonPlantPropPainter.register();
+        MudPropPainter.register();
+        MucusPropPainter.register();
     }
 }

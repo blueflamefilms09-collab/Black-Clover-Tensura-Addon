@@ -1,5 +1,9 @@
 {
  "tree_geo_set": {"kind": "geo", "model": "tree_back", "space": "PLAYER", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 30], "tile": [300, 420]},
+ "tree_geo_guardian": {"kind": "geo", "model": "tree_guardian", "anim": "slam", "glow": "FFFFFFFF", "ages": [0, 8, 11, 14, 20], "tile": [300, 380], "views": [{"name": "front 3/4", "yaw": 28, "pitch": 12, "target": [0, 2.2, 0], "dist": 9.5}]},
  "tree_aura_armour": {"kind": "aura", "attr": "Tree", "aura": "TREE", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
- "tree_aura_big": {"kind": "aura", "attr": "Tree", "aura": "TREE", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]}
+ "tree_aura_big": {"kind": "aura", "attr": "Tree", "aura": "TREE", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "tree_prop_guardian": {"kind": "prop", "attr": "Tree", "propKind": "TREE_1", "param": 0, "scale": 1.0, "maxLife": 400, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 22, 60, 120], "tile": [300, 380]},
+ "tree_prop_guardian_slam": {"kind": "prop", "attr": "Tree", "propKind": "TREE_1", "param": 14592, "scale": 1.0, "maxLife": 400, "pos": [0, 0, 0], "figure": false, "ages": [60, 62], "tile": [300, 380]},
+ "tree_prop_lance": {"kind": "prop", "attr": "Tree", "propKind": "TREE_1", "param": 1, "scale": 1.0, "maxLife": 30, "pos": [0, 0, 0], "figure": false, "ages": [2, 6, 12, 22], "tile": [260, 340]}
 }

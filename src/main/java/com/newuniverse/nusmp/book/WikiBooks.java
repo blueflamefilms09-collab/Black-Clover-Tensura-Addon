@@ -32,6 +32,7 @@ public final class WikiBooks {
 
     public static GrimoireBook attribute(MagicType magic) {
         if (!isNewAttribute(magic)) throw new IllegalArgumentException("Not a newly added wiki attribute: " + magic);
+        if (TreeRebuild.handles(magic)) return TreeRebuild.book(magic);      // 1.93.0: Tree, Vine, Poison Plant, Mud and Mucus Magic were rebuilt (same first five page ids, new pages appended)
         String name = magic.displayName.replace(" Magic", "");
         var rider = rider(magic);
         return new ElementBook(magic, color(magic), TensuraDamageTypes.MAGIC_GENERIC, List.of(
