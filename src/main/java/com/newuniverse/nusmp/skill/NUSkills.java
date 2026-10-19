@@ -246,5 +246,8 @@ public final class NUSkills {
     public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.profile.RetiredMagic.RetiredBook>> MERGED_BOOKS =
             com.newuniverse.nusmp.core.magic.profile.RetiredMagic.registerAll(SKILLS);
 
+    /** Celestial Spirit Magic (Lucy Heartfilia): a Unique skill learned from its own book (celestial.CelestialSkillBookItem). Registered after the retired books so the order of the older entries is unchanged. */
+    public static final DeferredHolder<ManasSkill, CelestialSpiritMagicSkill> CELESTIAL_SPIRIT_MAGIC = SKILLS.register("celestial_spirit_magic", CelestialSpiritMagicSkill::new);
+
     private NUSkills() {}
 }

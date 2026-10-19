@@ -48,6 +48,7 @@ public final class NUCreativeTab {
                 for (net.minecraft.world.item.ItemStack st : com.newuniverse.nusmp.skilltree.SkillBookSystem.creativeItems()) output.accept(st);     // 1.96.0: one Skill Book per unique skill
                 for (net.minecraft.world.item.Item hw : com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.creativeItems()) output.accept(hw);   // 1.62.0: the 21 hero weapons and the Calling Gems
                 for (net.minecraft.world.item.ItemStack ft : com.newuniverse.nusmp.fairytail.FairyTailSystem.creativeItems()) output.accept(ft);   // Fairy Tail skill books
+                for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Spirit Magic: the keys, the book, the sceptre
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
