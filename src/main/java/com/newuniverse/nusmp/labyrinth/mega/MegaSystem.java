@@ -33,6 +33,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.init(modBus);         // 1.72.0 dimensional rifts, pocket realms and the waypoint
         com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.init(modBus); // the dungeon mechanics library: 1000 data-defined floor, room, hazard, combat, risk, boss, traversal and party mechanics
         com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryRegistry.init(modBus);   // the Mob Foundry: 400 custom dungeon mobs, one entity type (docs/labyrinth/foundry.md)
+        com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.init(modBus);     // 1.94.0 the puzzle rooms: 29 server-authoritative puzzles chosen by theme and depth (docs/labyrinth/puzzles_v2.md)
         var bus = NeoForge.EVENT_BUS;
         com.newuniverse.nusmp.labyrinth.mega.gen.MegaGenRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
@@ -53,5 +54,6 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.register(bus);
     }
 }

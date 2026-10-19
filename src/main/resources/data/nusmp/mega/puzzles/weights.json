@@ -1,0 +1,678 @@
+{
+  "_why": "The weights of the Mega-Dungeon puzzle rooms (labyrinth/mega/puzzle/PuzzlePlanner). A room that could hold a puzzle rolls roomChance[kind]; if it wins, ONE entry is drawn among the new puzzles (types) and the old ones (legacy[kind] is the weight kept for the library's puzzle mechanics: drawing it leaves the room to them). A puzzle's weight is weight x road factor x likeBoost if the theme has a flavour tag it likes (x dislikeCut for one it dislikes) x rooms[kind] x repeatDecay^(copies on the floor) x familyDecay^(puzzles of its family on the floor), and 0 outside its tiers (1 = floors 1-200 ... 5 = floors 801-1000). A datapack may replace this file; keys starting with _ are comments.",
+  "enabled": true,
+  "maxPerFloor": 3,
+  "minSpan": 13,
+  "bypassSeconds": 420,
+  "repeatDecay": 0.3,
+  "familyDecay": 0.6,
+  "likeBoost": 2.5,
+  "dislikeCut": 0.4,
+  "roomChance": {
+    "puzzle": 1.0,
+    "hall": 0.1,
+    "treasure": 0.1,
+    "set": 0.08,
+    "cavern": 0.05
+  },
+  "legacy": {
+    "puzzle": 30,
+    "hall": 0,
+    "treasure": 0,
+    "set": 0,
+    "cavern": 0
+  },
+  "openRooms": [
+    "mega/puzzle/gallery"
+  ],
+  "themeTags": {
+    "abyss": [
+      "shadow",
+      "mind"
+    ],
+    "astral": [
+      "mind",
+      "arcane"
+    ],
+    "blood": [
+      "blood",
+      "grave"
+    ],
+    "celestial_court": [
+      "holy",
+      "sky"
+    ],
+    "crystal_geode": [
+      "crystal",
+      "arcane"
+    ],
+    "cursed_archive": [
+      "arcane",
+      "shadow"
+    ],
+    "drowned_crypt": [
+      "water",
+      "grave"
+    ],
+    "dwarven_forgehold": [
+      "machine",
+      "fire"
+    ],
+    "feywild_grove": [
+      "nature",
+      "arcane"
+    ],
+    "flame": [
+      "fire"
+    ],
+    "frost": [
+      "frost"
+    ],
+    "fungal_underdark": [
+      "nature",
+      "shadow"
+    ],
+    "gravity": [
+      "mind",
+      "machine"
+    ],
+    "haunted_manor": [
+      "grave",
+      "shadow"
+    ],
+    "holy_church": [
+      "holy"
+    ],
+    "infernal_foundry": [
+      "fire",
+      "machine"
+    ],
+    "mountain_monastery": [
+      "sky",
+      "holy"
+    ],
+    "necropolis": [
+      "grave"
+    ],
+    "radiant": [
+      "holy",
+      "crystal"
+    ],
+    "shadow": [
+      "shadow"
+    ],
+    "sky_citadel": [
+      "sky",
+      "machine"
+    ],
+    "spatial": [
+      "mind",
+      "arcane"
+    ],
+    "spider_warrens": [
+      "nature",
+      "shadow"
+    ],
+    "storm": [
+      "sky"
+    ],
+    "sunken_temple": [
+      "water",
+      "holy"
+    ],
+    "vampire_castle": [
+      "blood",
+      "shadow"
+    ],
+    "verdant": [
+      "nature"
+    ]
+  },
+  "types": {
+    "plate_sequence": {
+      "weight": 12,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "grave",
+        "machine"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "puzzle": 1.2
+      }
+    },
+    "rotating_pillars": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "sky",
+        "mind"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "beam_mirrors": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "crystal",
+        "holy",
+        "arcane"
+      ],
+      "dislikes": [
+        "shadow"
+      ],
+      "rooms": {
+        "puzzle": 1.3
+      }
+    },
+    "weight_scales": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "fire"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "simon_levers": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "arcane",
+        "sky"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "memory_tiles": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "mind",
+        "shadow"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "puzzle": 1.2
+      }
+    },
+    "colour_mix": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "nature",
+        "arcane"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "lights_out": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "crystal",
+        "machine"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "sliding_block": {
+      "weight": 8,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "mind"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "rune_copy": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "arcane",
+        "holy"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "riddle_door": {
+      "weight": 11,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "holy",
+        "arcane",
+        "grave"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "set": 1.4
+      }
+    },
+    "riddle_offering": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "grave",
+        "holy",
+        "blood"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "treasure": 1.4
+      }
+    },
+    "sundial": {
+      "weight": 8,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "sky",
+        "holy",
+        "mind"
+      ],
+      "dislikes": [
+        "grave"
+      ],
+      "rooms": {}
+    },
+    "water_level": {
+      "weight": 8,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "water"
+      ],
+      "dislikes": [
+        "fire"
+      ],
+      "rooms": {}
+    },
+    "torch_order": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "fire",
+        "grave"
+      ],
+      "dislikes": [
+        "water"
+      ],
+      "rooms": {}
+    },
+    "gravity_maze": {
+      "weight": 8,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "mind",
+        "sky"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "shadow_cast": {
+      "weight": 8,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "shadow",
+        "crystal"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "melody_notes": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "sky",
+        "holy",
+        "nature"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "pipe_connect": {
+      "weight": 8,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "water"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "key_and_lock": {
+      "weight": 10,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "grave"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "treasure": 1.5
+      }
+    },
+    "escort_spirit": {
+      "weight": 8,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "grave",
+        "nature",
+        "shadow"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "cavern": 1.5,
+        "hall": 1.2
+      }
+    },
+    "sentry_stealth": {
+      "weight": 8,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "shadow",
+        "machine",
+        "blood"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "hall": 1.3,
+        "set": 1.3
+      }
+    },
+    "pendulum_crossing": {
+      "weight": 7,
+      "tiers": [
+        3,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "blood",
+        "grave"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "hall": 1.3,
+        "set": 1.3
+      }
+    },
+    "pit_jump": {
+      "weight": 8,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "fire",
+        "nature"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "cavern": 1.6,
+        "hall": 1.2
+      }
+    },
+    "number_lock": {
+      "weight": 8,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "arcane"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "set": 1.3
+      }
+    },
+    "constellation": {
+      "weight": 7,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "sky",
+        "mind",
+        "arcane"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "set": 1.4,
+        "cavern": 1.3
+      }
+    },
+    "mimic_chests": {
+      "weight": 9,
+      "tiers": [
+        1,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "shadow",
+        "grave",
+        "blood"
+      ],
+      "dislikes": [],
+      "rooms": {
+        "treasure": 1.8
+      }
+    },
+    "elemental_mix": {
+      "weight": 7,
+      "tiers": [
+        2,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "nature",
+        "arcane",
+        "fire",
+        "water"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    },
+    "chain_reaction": {
+      "weight": 7,
+      "tiers": [
+        3,
+        5
+      ],
+      "road": {
+        "holy": 1.0,
+        "abyssal": 1.0
+      },
+      "likes": [
+        "machine",
+        "fire",
+        "crystal"
+      ],
+      "dislikes": [],
+      "rooms": {}
+    }
+  }
+}
