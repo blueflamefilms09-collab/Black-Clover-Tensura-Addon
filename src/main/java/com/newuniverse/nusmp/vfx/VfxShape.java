@@ -256,7 +256,20 @@ public enum VfxShape {
     CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
     CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
     BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
-    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,
+    // 1.93.0 (Water / Dark / Lightning / Flame rebuild): CAST = a travelling effect from 'from' to 'to', ZONE = a field at 'from' (power = radius), BURST = an impact at 'from' (client.layer.WaterFxLayer ...)
+    WATERFX_CAST,
+    WATERFX_ZONE,
+    WATERFX_BURST,
+    DARKFX_CAST,
+    DARKFX_ZONE,
+    DARKFX_BURST,
+    LIGHTNINGFX_CAST,
+    LIGHTNINGFX_ZONE,
+    LIGHTNINGFX_BURST,
+    FLAMEFX_CAST,
+    FLAMEFX_ZONE,
+    FLAMEFX_BURST;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
