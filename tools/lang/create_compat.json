@@ -1,0 +1,16 @@
+{
+  "message.nusmp.create.hint": "Gears grind behind the walls. A lever on the wall would stop them.",
+  "message.nusmp.create.status.head": "Create compatibility: Create is %s, the master switch is %s.",
+  "message.nusmp.create.status.absent": "Nothing in the dungeon is changed: it is as it is without Create.",
+  "message.nusmp.create.status.parts": "Parts found in Create: %s of %s%s",
+  "message.nusmp.create.status.sites": "Traps: %s planned, %s built, %s dropped; %s awake near players.",
+  "message.nusmp.create.status.guard": "Contraption guard: %s.",
+  "message.nusmp.create.plan.done": "Planned %s trap(s) in sectors that had none. They are built when someone comes near.",
+  "message.nusmp.create.player_only": "Only a player has a place to build at.",
+  "message.nusmp.create.arm.family": "Unknown family. Try saw_run, press, drill_wall, treadmill, pour or sequence.",
+  "message.nusmp.create.arm.dimension": "Stand in the Mega-Dungeon, in a corridor, to build a trap.",
+  "message.nusmp.create.arm.done": "Built a %s trap (%s trigger) at %s, running %s.",
+  "message.nusmp.create.arm.failed": "No place within 24 blocks took a %s trap: %s",
+  "message.nusmp.create.fire.none": "No built trap within 24 blocks.",
+  "message.nusmp.create.fire.done": "Set off %s at %s (%s)."
+}
