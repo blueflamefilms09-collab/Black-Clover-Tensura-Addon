@@ -1,0 +1,22 @@
+{
+ "gravity_prop_orb": {
+  "kind": "prop", "attr": "Gravity", "propKind": "GRAVITY_1", "param": 0, "scale": 1.2, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/GravitySwordParam.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [4, 20, 60, 114], "tile": [360, 380], "views": [{"name": "front", "yaw": 10, "pitch": 10}, {"name": "side 3/4", "yaw": 55, "pitch": 20}]
+ },
+ "gravity_prop_orb_flying": {
+  "kind": "prop", "attr": "Gravity", "propKind": "GRAVITY_1", "param": 1, "scale": 1.2, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/GravitySwordParam.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [30], "tile": [360, 380], "views": [{"name": "side", "yaw": 90, "pitch": 8}]
+ },
+ "gravity_prop_sword": {
+  "kind": "prop", "attr": "Gravity", "propKind": "GRAVITY_2", "param": 0, "scale": 1.2, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/GravitySwordParam.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [6, 20, 50], "tile": [420, 380], "views": [{"name": "side", "yaw": 90, "pitch": 8}, {"name": "front 3/4", "yaw": 30, "pitch": 20}]
+ },
+ "gravity_prop_sword_launched": {
+  "kind": "prop", "attr": "Gravity", "propKind": "GRAVITY_2", "param": 2, "scale": 1.2, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/GravitySwordParam.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [30], "tile": [420, 380], "views": [{"name": "side", "yaw": 90, "pitch": 8}]
+ }
+}

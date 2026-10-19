@@ -69,5 +69,8 @@ final class PropRegistry {
         VortexProps.init();
         WingProps.init();
         SnowProps.init();
+        SpatialProps.init();                 // 1.93.0 magic rebuild
+        MirrorProps.init();
+        PermeationProps.init();
     }
 }

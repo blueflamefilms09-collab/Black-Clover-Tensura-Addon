@@ -30,14 +30,22 @@ import java.util.List;
 
 /** Spatial Magic (Finral / Langris). */
 public class SpatialBook extends GrimoireBook {
+    /** 1.93.0 rebuild: every page forges the Gate Garb on the caster for five seconds (signature pages: style 1). Ids, order and mastery bits are unchanged; new pages are appended. */
+    private static BookPage.Cast armoured(BookPage.Cast c, int style) { return SpatialArmourCast.armoured(c, com.newuniverse.nusmp.aura.Aura.SPATIAL, style); }
+
     private final List<BookPage> pages = List.of(
-            BookPage.starter("domination", "Sacred Mana Domination", SpatialBook::domination),
-            BookPage.mid("fallen_angel_gate", "Fallen Angel Gate", SpatialBook::gate).withCooldown(0),
-            BookPage.zone("space_cut", "Spatial Cut", TensuraShots.shot(TensuraShots.Shot.SPACE_CUT, 12, 2.2f, 0.5f, 0)),
+            BookPage.starter("domination", "Sacred Mana Domination", armoured(SpatialBook::domination, 0)),
+            BookPage.mid("fallen_angel_gate", "Fallen Angel Gate", armoured(SpatialBook::gate, 0)).withCooldown(0),
+            BookPage.zone("space_cut", "Spatial Cut", armoured(SpatialWorks.spaceCut(), 0)),
             // 0.34: wiki spells, appended
-            BookPage.zone("unopening_red_room", "Unopening Red Room", WikiSpells::redRoom),
-            BookPage.mid("myriad_black", "Myriad Black", WikiSpells::myriadBlack),
-            BookPage.signature("door_of_fate", "Door of Fate", WikiSpells::doorOfFate).withCooldown(2400));
+            BookPage.zone("unopening_red_room", "Unopening Red Room", armoured(SpatialWorks::redRoom, 1)),
+            BookPage.mid("myriad_black", "Myriad Black", armoured(SpatialWorks::myriadBlack, 0)),
+            BookPage.signature("door_of_fate", "Door of Fate", armoured(SpatialWorks::doorOfFate, 1)).withCooldown(2400),
+            // 1.93.0 magic rebuild, appended
+            BookPage.mid("dimensional_armour", "Dimensional Armour", SpatialWorks::dimensionalArmour).withCooldown(600),
+            BookPage.mid("gate_strike", "Gate Strike", armoured(SpatialWorks::gateStrike, 0)),
+            BookPage.mid("gate_swap", "Gate Swap", armoured(SpatialWorks::gateSwap, 0)).withCooldown(200),
+            BookPage.signature("dimension_collapse", "Dimension Collapse", armoured(SpatialWorks::dimensionCollapse, 1)));
 
     public SpatialBook() { super(MagicType.SPATIAL, 0xFFB088FF); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -103,6 +111,7 @@ public class SpatialBook extends GrimoireBook {
     /** One gate's visual: the same payload {@code b.vfx} sends, but with the pair's shared seed (the client links gates by it). */
     private static void gateVisual(GrimoireBook b, ServerPlayer p, Vec3 at, long pairSeed) {
         VfxSpawn.send(p.serverLevel(), new VfxPayload(VfxShape.SPACE_PORTAL.ordinal(), at, p.position(), b.color, 400, 1f, -1, pairSeed));
+        SpatialWorks.gateProp(p.serverLevel(), at, p.position(), 400, 1f, p);                  // 1.93.0: the gate's frame model
     }
 
     private static void hop(ServerLevel level, Vec3 from, Vec3 to) { hop(level, from, Double.NaN, to, Double.NaN); }

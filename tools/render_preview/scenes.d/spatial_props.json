@@ -1,0 +1,20 @@
+{
+ "spatial_prop_gate": {
+  "kind": "prop", "attr": "Spatial", "propKind": "SPATIAL_1", "param": 0, "scale": 1.0, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [4, 14, 50, 112], "tile": [360, 420],
+  "views": [{"name": "front", "yaw": 10, "pitch": 8}, {"name": "side 3/4", "yaw": 55, "pitch": 14}]
+ },
+ "spatial_prop_rift": {
+  "kind": "prop", "attr": "Spatial", "propKind": "SPATIAL_2", "param": 0, "scale": 1.0, "maxLife": 80,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [4, 10, 40, 74], "tile": [320, 420],
+  "views": [{"name": "front", "yaw": 10, "pitch": 8}, {"name": "side 3/4", "yaw": 55, "pitch": 14}]
+ },
+ "spatial_prop_collapse": {
+  "kind": "prop", "attr": "Spatial", "propKind": "SPATIAL_2", "param": 1, "scale": 1.0, "maxLife": 80,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [20, 50], "tile": [360, 460],
+  "views": [{"name": "front", "yaw": 10, "pitch": 8}]
+ }
+}

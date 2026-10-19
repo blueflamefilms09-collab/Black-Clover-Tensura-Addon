@@ -69,5 +69,8 @@ final class PropPainterRegistry {
         VortexPropPainter.register();
         WingPropPainter.register();
         SnowPropPainter.register();
+        SpatialPropPainter.register();       // 1.93.0 magic rebuild
+        MirrorPropPainter.register();
+        PermeationPropPainter.register();
     }
 }

@@ -1,0 +1,11 @@
+{
+ "_comment": "Spatial Magic preview scenes (SpatialFxLayer, 1.93.0). FX1 rift cut, FX2 sigil field with a wall of rifts, FX3 fold-shut burst.",
+ "spatial_cast": {"layer": "SpatialFxLayer", "shape": "SPATIAL_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 10], "power": 1.2, "duration": 16,
+  "cam": [4.5, 2.0, 5.5], "target": [0, 1.4, 5.5], "ages": [2, 5, 8, 11, 14], "figures": [[0, 0, 0, 1.8]]},
+ "spatial_cast_big": {"layer": "SpatialFxLayer", "shape": "SPATIAL_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 12], "power": 2.4, "duration": 16,
+  "cam": [6, 2.5, 6], "target": [0, 1.4, 6], "ages": [3, 7, 10, 13, 15], "figures": [[0, 0, 0, 1.8]]},
+ "spatial_zone": {"layer": "SpatialFxLayer", "shape": "SPATIAL_FX2", "from": [0, 0, 0], "to": [0, 1, 0], "power": 5.0, "duration": 80,
+  "cam": [7, 5, 7], "target": [0, 1, 0], "ages": [4, 12, 30, 52, 74], "figures": [[0, 0, 0, 1.8]]},
+ "spatial_burst": {"layer": "SpatialFxLayer", "shape": "SPATIAL_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 1], "power": 1.6, "duration": 28,
+  "cam": [4, 2.4, 4.5], "target": [0, 1.1, 0], "ages": [2, 5, 9, 15, 24], "figures": [[2.2, 0, 0, 1.8]]}
+}

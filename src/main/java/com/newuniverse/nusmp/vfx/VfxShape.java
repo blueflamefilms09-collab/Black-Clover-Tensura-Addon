@@ -281,7 +281,12 @@ public enum VfxShape {
     WING_FX1, WING_FX2, WING_FX3,
     VORTEX_FX1, VORTEX_FX2, VORTEX_FX3,
     AIR_FX1, AIR_FX2, AIR_FX3,
-    ASH_FX1, ASH_FX2, ASH_FX3;
+    ASH_FX1, ASH_FX2, ASH_FX3,
+    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0 magic rebuild: the own effects of Spatial, Mirror and Permeation Magic (Gravity and Slash already had their FX1..3 slots); cast / field / burst by the shape protocol of the authoring guide
+    SPATIAL_FX1, SPATIAL_FX2, SPATIAL_FX3,
+    MIRROR_FX1, MIRROR_FX2, MIRROR_FX3,
+    PERMEATION_FX1, PERMEATION_FX2, PERMEATION_FX3;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

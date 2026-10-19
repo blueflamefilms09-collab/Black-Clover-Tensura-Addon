@@ -23,6 +23,7 @@ public final class ExclusiveExt {
             case SPIKE -> com.newuniverse.nusmp.book.SpikeSpells.pages();
             case NAIL -> com.newuniverse.nusmp.book.NailSpells.pages();
             case HAIR -> com.newuniverse.nusmp.book.HairSpells.pages();
+            case PERMEATION -> PermeationExt.pages();            // 1.93.0 magic rebuild
             default -> List.of();
         };
     }

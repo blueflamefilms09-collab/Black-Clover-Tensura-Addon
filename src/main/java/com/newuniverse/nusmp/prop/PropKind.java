@@ -129,5 +129,12 @@ public enum PropKind {
     WING_1,
     VORTEX_1,
     AIR_1,
-    ASH_1
+    ASH_1,
+    /** 1.93.0 magic rebuild: Spatial (gate frame, rift), Mirror (standing mirror, double) and Permeation (phase echo, phase door) summon models */
+    SPATIAL_1,
+    SPATIAL_2,
+    MIRROR_1,
+    MIRROR_2,
+    PERMEATION_1,
+    PERMEATION_2
 }

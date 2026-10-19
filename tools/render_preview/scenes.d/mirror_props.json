@@ -1,0 +1,22 @@
+{
+ "mirror_prop_oval": {
+  "kind": "prop", "attr": "Mirror", "propKind": "MIRROR_1", "param": 0, "scale": 1.3, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [3, 8, 40, 114], "tile": [330, 400], "views": [{"name": "front", "yaw": 10, "pitch": 6}, {"name": "side 3/4", "yaw": 55, "pitch": 14}]
+ },
+ "mirror_prop_arch": {
+  "kind": "prop", "attr": "Mirror", "propKind": "MIRROR_1", "param": 2, "scale": 1.3, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [40], "tile": [330, 400], "views": [{"name": "front", "yaw": 10, "pitch": 6}]
+ },
+ "mirror_prop_diamond": {
+  "kind": "prop", "attr": "Mirror", "propKind": "MIRROR_1", "param": 3, "scale": 1.3, "maxLife": 120,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [40], "tile": [330, 400], "views": [{"name": "front", "yaw": 10, "pitch": 6}]
+ },
+ "mirror_prop_blade": {
+  "kind": "prop", "attr": "Mirror", "propKind": "MIRROR_2", "param": 0, "scale": 1.5, "maxLife": 20,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [2, 8, 14], "tile": [380, 340], "views": [{"name": "side", "yaw": 90, "pitch": 10}, {"name": "front 3/4", "yaw": 30, "pitch": 22}]
+ }
+}

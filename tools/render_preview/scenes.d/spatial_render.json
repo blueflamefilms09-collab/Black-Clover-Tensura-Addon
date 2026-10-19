@@ -1,0 +1,26 @@
+{
+ "spatial_gate_idle": {
+  "kind": "geo",
+  "model": "spatial_gate",
+  "anim": "idle",
+  "glow": "FFE6DCFF",
+  "ages": [0, 40],
+  "tile": [380, 380],
+  "views": [
+   {"name": "front", "yaw": 10, "pitch": 6, "target": [0, 1.5, 0], "dist": 6.5},
+   {"name": "side 3/4", "yaw": 60, "pitch": 12, "target": [0, 1.5, 0], "dist": 6.5}
+  ]
+ },
+ "spatial_rift_idle": {
+  "kind": "geo",
+  "model": "spatial_rift",
+  "anim": "idle",
+  "glow": "FFE6DCFF",
+  "ages": [0, 30],
+  "tile": [300, 420],
+  "views": [
+   {"name": "front", "yaw": 10, "pitch": 6, "target": [0, 1.5, 0], "dist": 6.5},
+   {"name": "side 3/4", "yaw": 60, "pitch": 12, "target": [0, 1.5, 0], "dist": 6.5}
+  ]
+ }
+}

@@ -27,14 +27,15 @@ import java.util.List;
 /** Gravity Magic (Dante). Singularity is a forbidden ritual, not a page. */
 public class GravityBook extends GrimoireBook {
     private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
-            BookPage.starter("heavy_infighting", "Heavy Infighting", GravityBook::infighting),
-            BookPage.signature("demon_king", "Presence of the Demon King", GravityBook::presence),
-            BookPage.mid("gravity_sphere", "Gravity Sphere", TensuraShots.shot(TensuraShots.Shot.GRAVITY_SPHERE, 11, 1.2f, 0.2f, 0)),
+            // 1.93.0 rebuild: every page forges the Demon King's regalia on the caster for five seconds; ids, order and mastery bits are unchanged
+            BookPage.starter("heavy_infighting", "Heavy Infighting", GravityWorks.armoured(GravityWorks.infighting(), 0)),
+            BookPage.signature("demon_king", "Presence of the Demon King", GravityWorks.armoured(GravityWorks.presence(), 1)),
+            BookPage.mid("gravity_sphere", "Gravity Sphere", GravityWorks.armoured(GravityWorks::sphere, 0)),
             // 0.49 (appended)
-            BookPage.zone("gravity_well", "Gravity Well", ElementBook.field(3, 5, 100, 10, true, VfxShape.SPATIAL_RIFT,
-                    ElementBook.all(ElementBook.lift(-0.6), ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 30, 3))))),
-            BookPage.mid("crushing_weight", "Crushing Weight", ElementBook.nova(12, 6, true, VfxShape.EARTH_SPIKES,
-                    ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 80, 4))))), com.newuniverse.nusmp.book.ext.GravityExt.pages());
+            BookPage.zone("gravity_well", "Gravity Well", GravityWorks.armoured(GravityWorks.well(ElementBook.field(3, 5, 100, 10, true, VfxShape.SPATIAL_RIFT,
+                    ElementBook.all(ElementBook.lift(-0.6), ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 30, 3))))), 0)),
+            BookPage.mid("crushing_weight", "Crushing Weight", GravityWorks.armoured(GravityWorks.crush(ElementBook.nova(12, 6, true, VfxShape.EARTH_SPIKES,
+                    ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 80, 4)))), 0))), com.newuniverse.nusmp.book.ext.GravityExt.pages());
 
     public GravityBook() { super(MagicType.GRAVITY, 0xFF7A3CC8); }
     @Override protected List<BookPage> familyPages() { return pages; }

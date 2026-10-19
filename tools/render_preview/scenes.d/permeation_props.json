@@ -1,0 +1,12 @@
+{
+ "permeation_prop_echo": {
+  "kind": "prop", "attr": "Permeation", "propKind": "PERMEATION_1", "param": 0, "scale": 1.0, "maxLife": 40,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [3, 10, 22], "tile": [340, 400], "views": [{"name": "front 3/4", "yaw": 30, "pitch": 10}, {"name": "side", "yaw": 90, "pitch": 6}]
+ },
+ "permeation_prop_door": {
+  "kind": "prop", "attr": "Permeation", "propKind": "PERMEATION_2", "param": 0, "scale": 1.1, "maxLife": 70,
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "ages": [4, 12, 40, 66], "tile": [340, 420], "views": [{"name": "front", "yaw": 10, "pitch": 6}, {"name": "side 3/4", "yaw": 55, "pitch": 14}]
+ }
+}

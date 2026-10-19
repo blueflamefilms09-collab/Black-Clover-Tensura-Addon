@@ -70,5 +70,9 @@ public enum Aura {
     WING,
     VORTEX,
     AIR,
-    ASH
+    ASH,
+    /** 1.93.0 magic rebuild: the temporary armour of Spatial, Mirror and Permeation Magic (client.aura.SpatialAura / MirrorAura / PermeationAura) */
+    SPATIAL,
+    MIRROR,
+    PERMEATION
 }

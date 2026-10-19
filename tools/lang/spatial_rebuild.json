@@ -1,0 +1,8 @@
+{
+  "nusmp.page.book_spatial.dimensional_armour": "Dimensional Armour - for 20 s the Gate Garb wraps you: a pearl and void set with gate rings on the shoulders, hips and knees, a gate wheel behind your back. A blow aimed at you may fall through a gate and miss (15 to 35 percent by EP); the rest are cut by a fifth.",
+  "nusmp.page.book_spatial.gate_strike": "Gate Strike - a rift opens behind the foe you look at and the cut comes out of it: 14 x EP scale spatial damage that ignores 40 percent of their armour, and a short slow.",
+  "nusmp.page.book_spatial.gate_swap": "Gate Swap - two gates open and you trade places with the foe or ally you look at (20 blocks). A foe is slowed; a boss is too heavy for a gate and is only shaken.",
+  "nusmp.page.book_spatial.dimension_collapse": "Dimension Collapse - space folds in on the aimed point. For two seconds everything within 6 blocks (scaled by the grimoire and EP) is dragged in, then the fold shuts for 22 x EP scale spatial damage. Bosses are pulled a third as hard and their damage is capped.",
+  "nusmp.spatial.fell_through": "The blow falls through a gate.",
+  "nusmp.spatial.too_heavy": "It is too heavy for a gate: it is only shaken."
+}

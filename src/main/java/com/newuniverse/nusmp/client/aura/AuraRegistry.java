@@ -67,5 +67,8 @@ final class AuraRegistry {
         VortexAura.register();
         WingAura.register();
         SnowAura.register();
+        SpatialAura.register();              // 1.93.0 magic rebuild (Spatial, Gravity, Permeation, Mirror, Slash): the new armours
+        MirrorAura.register();
+        PermeationAura.register();
     }
 }

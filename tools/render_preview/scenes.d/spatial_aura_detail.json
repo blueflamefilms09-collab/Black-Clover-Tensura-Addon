@@ -1,0 +1,13 @@
+{
+ "spatial_aura_detail": {
+  "kind": "aura",
+  "attr": "Spatial",
+  "aura": "SPATIAL",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "total": 100,
+  "style": 0,
+  "ages": [40],
+  "tile": [560, 780],
+  "views": [{"name": "front", "yaw": 15, "pitch": 8}, {"name": "side", "yaw": 90, "pitch": 6}, {"name": "back", "yaw": 195, "pitch": 10}]
+ }
+}

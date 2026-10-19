@@ -30,18 +30,21 @@ import java.util.List;
  * meteor storm, everything scaled by the caster's EP. Page ids from 0.34 are kept; new pages are appended.
  */
 public class MirrorBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
-            BookPage.starter("reflect_refrain", "Reflect Refrain", MirrorWorks::reflectRefrain),
-            BookPage.signature("real_double", "Real Double", MirrorWorks::realDouble).withCooldown(600),
+    /** 1.93.0 rebuild: every page forges the Glass Garb on the caster for five seconds (heavy pages: style 1); ids, order and mastery bits are unchanged, new pages are appended. */
+    private static BookPage.Cast armoured(BookPage.Cast c, int style) { return MirrorRebuild.armoured(c, style); }
+
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
+            BookPage.starter("reflect_refrain", "Reflect Refrain", armoured(MirrorWorks::reflectRefrain, 0)),
+            BookPage.signature("real_double", "Real Double", armoured(MirrorWorks::realDouble, 1)).withCooldown(600),
             // 0.34: wiki spells, appended (0.42: rebuilt)
-            BookPage.mid("reflect_ray", "Reflect Ray", MirrorWorks::reflectRay),
-            BookPage.zone("large_reflect_ray", "Large Reflect Ray", WikiSpells::largeReflectRay),
-            BookPage.signature("full_reflection", "Full Reflection", MirrorWorks::fullReflection),
+            BookPage.mid("reflect_ray", "Reflect Ray", armoured(MirrorWorks::reflectRay, 0)),
+            BookPage.zone("large_reflect_ray", "Large Reflect Ray", armoured(WikiSpells::largeReflectRay, 1)),
+            BookPage.signature("full_reflection", "Full Reflection", armoured(MirrorWorks::fullReflection, 1)),
             // 0.42: appended
-            BookPage.mid("mirror_array", "Mirror Array", MirrorWorks::mirrorArray).withCooldown(900),
-            BookPage.mid("mirror_step", "Mirror Step", MirrorWorks::mirrorStep).withCooldown(100),
-            BookPage.zone("mirrors_slash", "Mirrors Slash", MirrorWorks::mirrorsSlash),
-            BookPage.signature("mirrors_meteorite", "Mirrors Meteorite", MirrorWorks::mirrorsMeteorite).withCooldown(900));
+            BookPage.mid("mirror_array", "Mirror Array", armoured(MirrorWorks::mirrorArray, 0)).withCooldown(900),
+            BookPage.mid("mirror_step", "Mirror Step", armoured(MirrorWorks::mirrorStep, 0)).withCooldown(100),
+            BookPage.zone("mirrors_slash", "Mirrors Slash", armoured(MirrorWorks::mirrorsSlash, 0)),
+            BookPage.signature("mirrors_meteorite", "Mirrors Meteorite", armoured(MirrorWorks::mirrorsMeteorite, 1)).withCooldown(900)), MirrorRebuild.pages());
 
     public MirrorBook() { super(MagicType.MIRROR, 0xFFDDEEFF); }
     @Override protected List<BookPage> familyPages() { return pages; }
