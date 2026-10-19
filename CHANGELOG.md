@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.97.0] — Elsdocia the Genesis sword, grade damage ranges, Celestial Spirit Magic and the Spirit King
+
+### NEW
+- **Elsdocia is a Genesis grade weapon with no attunement**: base damage 400, +25 for every new Grand Magic rank owner it is passed to, and it can never be passed back to its last owner. The engraving "Legacy of the Wizard Kings" now gives it one new magic ability per Black Clover magic type among its owners (shift-use cycles, use casts; the tooltip counts "N of 105 magics"). `/multiverse relic elsdocia reset|owner|lineage`. `docs/elsdocia_legacy.md`.
+- **Celestial Spirit Magic** (`celestial`, left out of the 1.96.0 notes though it was in that jar): a Unique skill with 31 modes; 12 Gold Zodiac keys, 4 silver keys and the Spirit King's gate key as real 3D items (inventory, off hand or a new Curios slot); contract ritual; the 16 spirits; Star Dress forms; with all 12 gold keys the Celestial Gate lets you challenge the Spirit King in his own dimension, earn his recognition or summon him. `/multiverse celestial give|bind|reset|king|gate|info`. `docs/celestial_keys.md`.
+
+### REPLACED
+- **Weapon damage follows the grade table**, scaled by Tensura weapon type: normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, Genesis 260-350 (`relics/GradeDamage`). Every relic, hero, Requip, Djinn and Black Clover weapon was moved into its grade's range; tier ascension and the aura bonus stay inside the effective grade's range. Grades assigned by the builder: Holy weapons Legend, Seven Star Unique, Vassal Rare, Requip Unique (Nakagami Legend), Djinn light Legend and dark God. `docs/grade_damage.md`.
+
+### KEPT
+- Hero form bonuses and Djinn bonds still stack on top of the new base; skill and boss damage are unchanged.
+
+### Honest notes
+- Nothing has been run in the game. The new legend, god and Genesis weapons and the dungeon-humanoid player models are not in this release.
+
 ## [1.96.0] — Erza's Requip: The Knight; skill books now teach Unique skills; the Skill Tree is removed
 
 ### NEW
