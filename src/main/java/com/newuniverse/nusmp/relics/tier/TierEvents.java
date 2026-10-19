@@ -26,6 +26,15 @@ public final class TierEvents {
 
     public static void register(IEventBus gameBus) { gameBus.addListener(TierEvents::onAttributes); }
 
+    /** 1.97.0: the damage modifier after the tier lands inside the EFFECTIVE grade's range, at the same place the base damage had in its own range. */
+    static double raisedDamageModifier(ItemStack stack, RelicDef def, double v, int steps) {
+        if (com.newuniverse.nusmp.relics.GradeDamage.exemptId(def.id())) return TierRules.scaledDamageModifier(v, steps);
+        int base = def.grade().ordinal();
+        int eff = Tiers.effectiveGrade(stack, def).ordinal();
+        double total = com.newuniverse.nusmp.relics.GradeDamage.raised(base, eff, v + 1.0, com.newuniverse.nusmp.relics.GradeDamageItems.weaponTypeOf(def));
+        return Math.max(v, total - 1.0);
+    }
+
     static void onAttributes(ItemAttributeModifierEvent e) {
         ItemStack stack = e.getItemStack();
         Integer raw = stack.get(TierComponents.TIER.get());
@@ -40,7 +49,7 @@ public final class TierEvents {
             if (m.operation() != AttributeModifier.Operation.ADD_VALUE) continue;
             Holder<Attribute> a = en.attribute();
             double v = m.amount(), nv = v;
-            if (a.value() == Attributes.ATTACK_DAMAGE.value()) nv = TierRules.scaledDamageModifier(v, steps);
+            if (a.value() == Attributes.ATTACK_DAMAGE.value()) nv = raisedDamageModifier(stack, def, v, steps);
             else if (a.value() == Attributes.ATTACK_SPEED.value()) nv = TierRules.scaledSpeedModifier(v, steps);
             else if (a.value() == Attributes.ARMOR.value()) nv = TierRules.scaledArmor(v, steps);
             else if (a.value() == Attributes.ARMOR_TOUGHNESS.value()) nv = TierRules.scaledToughness(v, steps);

@@ -35,7 +35,10 @@ public final class GradeDamage {
             Map.entry("lance", 0.55), Map.entry("mace", 0.65), Map.entry("axe", 0.65), Map.entry("battleaxe", 0.70), Map.entry("crescent", 0.70),
             Map.entry("hammer", 0.75), Map.entry("glaive", 0.80), Map.entry("halberd", 0.85), Map.entry("dadao", 0.85), Map.entry("scythe", 0.90),
             Map.entry("greataxe", 0.90), Map.entry("greathammer", 1.00), Map.entry("greatsword", 1.00),
-            Map.entry("item", 0.50), Map.entry("handitem", 0.50));
+            Map.entry("item", 0.50), Map.entry("handitem", 0.50),
+            // the Djinn weapon kinds that are not class names
+            Map.entry("horn", 0.45), Map.entry("claws", 0.05), Map.entry("claymore", 1.00), Map.entry("harpoon", 0.55), Map.entry("daggers", 0.00),
+            Map.entry("anchor", 0.95), Map.entry("fans", 0.25), Map.entry("pincers", 0.30));
 
     /** The grade's ordinal 0..6 (normal, special, rare, unique, legend, god, genesis); "common" is normal; any case. Unknown names give normal. */
     public static int ordinal(String grade) {

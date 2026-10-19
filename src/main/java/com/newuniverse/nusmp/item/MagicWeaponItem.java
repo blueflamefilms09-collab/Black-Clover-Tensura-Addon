@@ -109,7 +109,9 @@ public class MagicWeaponItem extends SwordItem {
 
     /** Sword attributes; the Rimeheart also roots its wielder a little (knockback resistance while held). */
     private static net.minecraft.world.item.component.ItemAttributeModifiers attributes(Kind kind) {
-        var a = SwordItem.createAttributes(kind.tier, kind.damage, kind.speed);
+        // 1.97.0: the base damage is the grade range of the weapon type (relics/GradeDamage via WeaponGrades); Elsdocia is not listed and keeps its own number
+        float dmg = (float) (com.newuniverse.nusmp.relics.WeaponGrades.damageOr(kind.name(), kind.damage + 1.0 + kind.tier.getAttackDamageBonus()) - 1.0 - kind.tier.getAttackDamageBonus());
+        var a = SwordItem.createAttributes(kind.tier, dmg, kind.speed);
         if (kind == Kind.RIMEHEART)
             a = a.withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE,
                     new net.minecraft.world.entity.ai.attributes.AttributeModifier(RIMEHEART_STANCE, 0.25,

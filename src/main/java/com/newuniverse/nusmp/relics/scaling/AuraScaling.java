@@ -56,6 +56,16 @@ public final class AuraScaling {
         return new Aura(dmg, ignore);
     }
 
+    /**
+     * 1.97.0: the same, but the aura may not carry the hit beyond the top of the effective grade's damage range (a hit that already was above it,
+     * from a crit or an enchantment, is left as it is).
+     */
+    public static float apply(float original, double damageMult, float limit, double gradeMax) {
+        float scaled = apply(original, damageMult, limit);
+        if (gradeMax > 0) scaled = Math.min(scaled, (float) Math.max(original, gradeMax));
+        return Math.max(original, scaled);
+    }
+
     /** The armour reduction that is left after ignoring a share of it (the factor the reduction is multiplied by). */
     public static float armourKeep(double ignore) { return (float) (1.0 - Math.max(0.0, Math.min(1.0, ignore))); }
 

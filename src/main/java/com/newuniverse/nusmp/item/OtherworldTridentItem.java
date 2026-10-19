@@ -44,7 +44,7 @@ public class OtherworldTridentItem extends SwordItem {
     public OtherworldTridentItem() {
         super(Tiers.NETHERITE, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()
                 .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
-                .attributes(SwordItem.createAttributes(Tiers.NETHERITE, 14, -2.6f)));
+                .attributes(SwordItem.createAttributes(Tiers.NETHERITE, (float) (com.newuniverse.nusmp.relics.WeaponGrades.damageOr("otherworld_trident", 19.0) - 5.0), -2.6f)));
     }
 
     /** A trident bound to this player for 60 s. */

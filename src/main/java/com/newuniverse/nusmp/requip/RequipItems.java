@@ -36,7 +36,7 @@ public final class RequipItems {
         WEAPON_STATS.put("purgatory_mace", new Object[]{12.0, -3.2f, "Purgatory Armor: a mace that hurts the one who swings it."});
         for (Map.Entry<String, Object[]> e : WEAPON_STATS.entrySet()) {
             Object[] v = e.getValue();
-            WEAPONS.put(e.getKey(), REGISTER.register(e.getKey(), () -> new RequipWeaponItem((Double) v[0], (Float) v[1], Rarity.EPIC, (String) v[2])));
+            WEAPONS.put(e.getKey(), REGISTER.register(e.getKey(), () -> new RequipWeaponItem(com.newuniverse.nusmp.relics.WeaponGrades.damageOr(e.getKey(), (Double) v[0] + 5.0) - 5.0, (Float) v[1], Rarity.EPIC, (String) v[2])));
         }
     }
 
