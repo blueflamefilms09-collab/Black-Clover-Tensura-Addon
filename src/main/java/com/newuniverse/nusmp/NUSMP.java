@@ -153,6 +153,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ui.theme.UiThemeOptions.SPEC, "nusmp-ui-client.toml");
+            com.newuniverse.nusmp.client.ui.GuiScale.init(modEventBus, modContainer);                                         // GUI Size: nusmp-gui-client.toml, key, config screen, screen and HUD hooks
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.SPEC, "nusmp-relicfx-client.toml");     // 1.30.0: relic effects quality
             com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
