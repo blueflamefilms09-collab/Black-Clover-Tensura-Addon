@@ -25,6 +25,11 @@ public final class EarthFxStyle {
 
     public static int dark(int style) { return 0xFF000000 | DARK[Math.floorMod(style, DARK.length)]; }
 
+    /** The style number each magic hands to {@code PlayerAuras.set(p, Aura.WIKI, ticks, style)}: its WikiStyles index (Earth, which is not a wiki magic, gets 100). */
+    private static final int[] ARMOUR = {12, 11, 10, 26, 100, 3};
+
+    public static int armourStyle(int style) { return ARMOUR[Math.floorMod(style, ARMOUR.length)]; }
+
     public static int style(String enumName) {
         if (enumName == null) return -1;
         return switch (enumName) {

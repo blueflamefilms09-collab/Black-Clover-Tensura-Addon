@@ -33,13 +33,36 @@ public class EarthBook extends GrimoireBook {
             BookPage.mid("boulder_shot", "Boulder Shot", TensuraShots.shot(TensuraShots.Shot.BOULDER_SHOT, 12, 1.4f, 1.4f, 0)),
             // 0.31: wiki spells, appended
             BookPage.mid("witch_hunter_claws", "Witch Hunter Claws", EarthBook::claws),
-            BookPage.signature("rampaging_mother_earth", "Rampaging Mother Earth", EarthBook::rampage).withCooldown(600));
+            BookPage.signature("rampaging_mother_earth", "Rampaging Mother Earth", EarthBook::rampage).withCooldown(600),
+            // 1.93.0 rebuild: appended pages (the six above keep their ids, order and mastery bits)
+            BookPage.mid("earth_golem", "Clay Guardian", EarthKit.guardian(com.newuniverse.nusmp.prop.EarthConstruct.GOLEM, 500, 1)),
+            BookPage.mid("earth_armor", "Gnome Plate", EarthKit.guard(200, 1, 3f, 0.06)),
+            BookPage.zone("sinkhole", "Swallowing Ground", EarthFamilyArts::sinkhole));
 
     public EarthBook() { super(MagicType.EARTH, 0xFFB08850); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.EARTH_ELEMENTAL; }
     @Override public Element spiritElement() { return Element.EARTH; }
     @Override public String spiritName() { return "Gnome"; }
+
+    /** 1.93.0: the Gnome Plate armour's Empower bonus and thorns (the same tags as the element books). */
+    @Override
+    public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target, net.minecraft.world.damagesource.DamageSource source,
+                                  io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        var tag = i.getOrCreateTag();
+        if (source.getDirectEntity() == owner && owner.level().getGameTime() < tag.getLong("EmpowerUntil"))
+            amount.set(amount.get() + BalanceLaw.damage(target, tag.getFloat("EmpowerBonus"), masteryFrac(i)));
+        return true;
+    }
+
+    @Override
+    public boolean onTakenDamage(ManasSkillInstance i, LivingEntity owner, net.minecraft.world.damagesource.DamageSource source,
+                                 io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        super.onTakenDamage(i, owner, source, amount);
+        if (owner.level().getGameTime() < i.getOrCreateTag().getLong("ThornsUntil") && source.getEntity() instanceof LivingEntity att && att != owner
+                && !source.is(net.minecraft.world.damagesource.DamageTypes.THORNS)) att.hurt(owner.damageSources().thorns(owner), 2f);
+        return true;
+    }
 
     static Vec3 flatDir(ServerPlayer p) { return p.getViewVector(1f).multiply(1, 0, 1).normalize(); }
 
@@ -97,6 +120,7 @@ public class EarthBook extends GrimoireBook {
         double r = 2.2 * s;
         b.castCircle(p, 1f);
         com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.EARTH_CLAWS, c, c.add(0, 1, 0), 0, 36, (float) r);
+        EarthKit.fx(b, p.serverLevel(), VfxShape.EARTHFAM_ZONE, c, c.add(0, 1, 0), 36, (float) r);          // 1.93.0: the claws stand on the earth-family sigil
         SpellRuntime.later(p.serverLevel(), 9, () -> {
             boolean root = BalanceLaw.beginControl(p);
             for (LivingEntity t : around(p, c, r)) {
@@ -117,6 +141,8 @@ public class EarthBook extends GrimoireBook {
         Vec3 end = a.add(dir.scale(len));
         b.castCircle(p, 1.4f);
         com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.EARTH_RAMPAGE, a, end, 0, 40, 1.2f);
+        EarthKit.fx(b, p.serverLevel(), VfxShape.EARTHFAM_BURST, a, a.add(0, 1, 0), 28, 1.4f);       // 1.93.0: the Gnome Plate forges for the cast, the earth-family burst under it
+        EarthKit.flash(b, p);
         for (LivingEntity t : along(p, a.add(0, 0.5, 0), end.add(0, 0.5, 0), 2.2)) {
             double f = Math.min(1, t.position().distanceTo(a) / len);
             int delay = (int) Math.round(24 * (1 - Math.cbrt(1 - f)));      // when the wave front (ease-out) reaches it

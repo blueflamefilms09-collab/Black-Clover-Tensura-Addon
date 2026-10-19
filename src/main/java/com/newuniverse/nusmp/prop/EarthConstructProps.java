@@ -48,7 +48,10 @@ public final class EarthConstructProps {
     private EarthConstructProps() {}
 
     /** Called once by PropRegistry. */
-    public static void init() { MagicProps.register(PropKind.EARTH_CONSTRUCT, new Behavior()); }
+    public static void init() {
+        MagicProps.register(PropKind.EARTH_CONSTRUCT, new Behavior());
+        EarthFamilySelfTests.register();
+    }
 
     /** Spawns a construct of a type; the caller has set nothing else. */
     public static MagicPropEntity spawn(ServerLevel sl, int type, Vec3 at, float yaw, float scale, int life, LivingEntity owner) {
