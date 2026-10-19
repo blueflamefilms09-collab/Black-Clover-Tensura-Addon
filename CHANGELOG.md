@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.98.0] — 35 new Legend, God and Genesis weapons
+
+### NEW
+- **13 Legend, 12 God and 10 Genesis grade weapons** (`relics/wave/Wave71`), each a full relic with its own 3D mesh, skin, glow skin, 16x16 sprite, Better Combat file (melee), 2 acts (Legend) or 3 acts (God, Genesis), a passive and Tensura engravings; base damage from the grade table of 1.97.0, by weapon type.
+  - Legend: Vorpal Sword, Holy Avenger, Luck Blade, Frostbrand, Dragon Slayer, Sunsword, Crimson Lion's Flame Lance, Silver Eagle's Galewing Bow, Starlight Whip, Fairy Heart Gauntlets, Tidebreaker Chakram, Noon Cleaver, Calamity Scythe.
+  - God: Staff of the Magi, Hammer of Thunderbolts, Kusanagi the Grass-Cutter, Gungnir the Unerring, Leviathan's Crown Trident, Wizard King's Vow, Wand of the Wisdom King, Dragon Force Twin Fangs, Calamity Wave Aegis, Hellblaze the Demon Sin, Minotaur King's Labrys, Dawnpiercer Crossbow.
+  - Genesis: Blackrazor, Gae Bolg Heartseeker, Starforged Aeon Bow, Primordial Hearth Blade, Void Origin Katana, Fairy Glitter Gauntlets, Cardinal Halo Chakram, Magic Emperor's Black Halberd, Starsplitter Hammer, Sword of the First Dawn.
+  They drop by grade from the existing relic pools (vault tables, labyrinth pedestal, Crucible). `docs/new_weapons_197.md`.
+
+### REPLACED / KEPT
+- Nothing replaced; every older weapon is untouched.
+
+### Honest notes
+- Nothing has been run in the game; the models were previewed only in the software rasteriser and the 16x16 sprites are auto-rendered from the meshes. The dungeon humanoids on the player model are still not in a release.
+
 ## [1.97.0] — Elsdocia the Genesis sword, grade damage ranges, Celestial Spirit Magic and the Spirit King
 
 ### NEW
