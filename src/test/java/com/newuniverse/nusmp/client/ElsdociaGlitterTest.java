@@ -44,4 +44,12 @@ class ElsdociaGlitterTest {
         assertTrue(ElsdociaGlitter.budgetLeft(ElsdociaGlitter.MAX_PER_TICK - 1));
         assertFalse(ElsdociaGlitter.budgetLeft(ElsdociaGlitter.MAX_PER_TICK));
     }
+
+    @Test
+    void everySoulHasAMoteColourAndUnknownOnesAreWhite() {
+        for (String soul : new String[]{"FLAME", "WATER", "WIND", "EARTH", "LIGHT", "DARKNESS", "SPACE", "TIME", "BATTLE", "FANTASY"})
+            assertTrue(ElsdociaGlitter.moteColour(soul) != 0xFFFFFF, soul);
+        assertEquals(0xFFFFFF, ElsdociaGlitter.moteColour("EMPTY"));
+        assertEquals(0xFFFFFF, ElsdociaGlitter.moteColour(null));
+    }
 }

@@ -32,4 +32,22 @@ public final class ElsdociaGlitter {
     public static boolean budgetLeft(int spent) {
         return spent < MAX_PER_TICK;
     }
+
+    /** The tint (0xRRGGBB) of a learned ability's mote, by the soul type of its magic; white for an unknown soul. */
+    public static int moteColour(String soulType) {
+        if (soulType == null) return 0xFFFFFF;
+        return switch (soulType) {
+            case "FLAME" -> 0xFF7A33;
+            case "WATER" -> 0x4DA6FF;
+            case "WIND" -> 0xA6FFD9;
+            case "EARTH" -> 0xB8864B;
+            case "LIGHT" -> 0xFFF2A0;
+            case "DARKNESS" -> 0x8A4DCC;
+            case "SPACE" -> 0xC9A0FF;
+            case "TIME" -> 0xFFD966;
+            case "BATTLE" -> 0xFF5555;
+            case "FANTASY" -> 0xFF99DD;
+            default -> 0xFFFFFF;
+        };
+    }
 }

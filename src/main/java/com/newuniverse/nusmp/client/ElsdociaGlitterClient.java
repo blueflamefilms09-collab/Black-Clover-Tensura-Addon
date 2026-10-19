@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.client;
 
+import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.item.ElsdociaComponents;
+import com.newuniverse.nusmp.item.ElsdociaRules;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -35,6 +38,7 @@ public final class ElsdociaGlitterClient {
             if (!ElsdociaGlitter.budgetLeft(spent)) return;
             if (!(p.getMainHandItem().getItem() instanceof MagicWeaponItem w) || w.kind != MagicWeaponItem.Kind.ELSDOCIA) continue;
             var r = p.getRandom();
+            moteRing(mc, p, r.nextFloat());                                                       // 1.97.0: a small mote per learned ability
             int n = ElsdociaGlitter.count(p.distanceToSqr(mc.player), r.nextFloat());
             if (n == 0) continue;
             double yaw = Math.toRadians(p.yBodyRot);
@@ -50,5 +54,24 @@ public final class ElsdociaGlitterClient {
                 mc.level.addParticle(spark ? ParticleTypes.END_ROD : (r.nextBoolean() ? ICE : WHITE), at.x, at.y, at.z, 0, spark ? 0.01 : -0.005, 0);
             }
         }
+    }
+
+    /**
+     * 1.97.0: one mote per learned magic (at most {@link ElsdociaRules#MAX_MOTES}) circling the blade, tinted by that magic's soul; each mote spawns on a
+     * roll, so a holder spends at most one particle per tick on motes. Reads the synced lineage component, no packets.
+     */
+    private static void moteRing(Minecraft mc, Player p, float roll) {
+        var lineage = ElsdociaComponents.get(p.getMainHandItem());
+        int learned = Math.min(lineage.learned().size(), ElsdociaRules.MAX_MOTES);
+        if (learned == 0 || roll > 0.35f || p.distanceToSqr(mc.player) > 24 * 24) return;
+        int k = (int) (p.getRandom().nextFloat() * learned) % learned;
+        var m = MagicType.lookup(lineage.learned().get(k));
+        int rgb = m == null ? 0xFFFFFF : ElsdociaGlitter.moteColour(m.soulType);
+        double yaw = Math.toRadians(p.yBodyRot), ang = (mc.level.getGameTime() * 0.12) + k * (Math.PI * 2 / learned);
+        double r = 0.32 + 0.05 * Math.sin(ang * 2);
+        Vec3 look = p.getLookAngle();
+        Vec3 hand = new Vec3(p.getX() - Math.cos(yaw) * 0.36 + look.x * 0.2, p.getY() + 1.25 + 0.35 * Math.sin(ang * 0.7), p.getZ() - Math.sin(yaw) * 0.36 + look.z * 0.2);
+        Vec3 at = hand.add(Math.cos(ang) * r, 0, Math.sin(ang) * r);
+        mc.level.addParticle(new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.8f), at.x, at.y, at.z, 0, 0.002, 0);
     }
 }

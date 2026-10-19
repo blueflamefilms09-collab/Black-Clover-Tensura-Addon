@@ -227,6 +227,13 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
             }
         }
+        if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && com.newuniverse.nusmp.item.ElsdociaRules.isLegacyException(stack)) {   // 1.97.0: Elsdocia's Genesis halo: a wider, fainter copy of the glow that breathes against the main pulse
+            pose.pushPose();
+            pose.scale(1.08f, 1f, 1.08f);
+            int ha = Math.max(20, VariantRules.emissiveAlpha(time + 15f) / 2);
+            emit(pose.last(), buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], ha << 24 | (mesh.glowRgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
+            pose.popPose();
+        }
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
             emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
         pose.popPose();

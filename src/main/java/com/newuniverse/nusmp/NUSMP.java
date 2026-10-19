@@ -91,6 +91,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.charter.CharterConfig.SPEC, "nusmp-charter-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.budget.BossBudgetConfig.SPEC, "nusmp-boss-budget-server.toml");      // 1.30.0: boss damage per second cap
         com.newuniverse.nusmp.relics.RelicSystem.registerContent(modEventBus);                                                     // runs RelicCatalog.init: every relic into NUItems.ITEMS
+        com.newuniverse.nusmp.item.ElsdociaEvents.registerContent(modEventBus);                                                   // 1.97.0: Elsdocia's lineage component
         com.newuniverse.nusmp.dungeon.sentient.SentientItems.init();                                                     // 1.22.0: the twelve synthesis materials
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.init();                                                                  // 1.23.0: the floor arenas and their bosses
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.ENTITIES.register(modEventBus);
@@ -250,6 +251,7 @@ public class NUSMP {
         // 1.25.0: Mod Boss Global Buff Engine, Charter Grimoires + first-kill lock, boss bar sync, holder flags
         com.newuniverse.nusmp.core.magic.profile.MagicAuditEvents.register(NeoForge.EVENT_BUS);                             // the magic framework's startup audit; forgets the retired merged-magic skills at login (1.93.0: the merge generator was removed)
         com.newuniverse.nusmp.relics.tier.TierSystem.registerGame(NeoForge.EVENT_BUS);                                      // 1.30.0
+        com.newuniverse.nusmp.item.ElsdociaEvents.registerGame(NeoForge.EVENT_BUS);                                       // 1.97.0: Elsdocia's damage, owners, no way back
         com.newuniverse.nusmp.relics.scaling.ScalingSystem.registerGame(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.socket.SocketEngine.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.socket.SocketLoot.register(NeoForge.EVENT_BUS);
