@@ -168,13 +168,34 @@ def armour(sk, P, phase):
                 cv.rect(0, 9, cv.w, 3, shade(a, 0.65))
 
 
+def scalp(sk, P):
+    """For the player-model kit, which draws the hair itself (its own styles, tinted, with springs): the skin only has the scalp under the hair, in the hair colour."""
+    h = P.get("hair")
+    if not h:
+        return
+    hm = fur(h, shade(h, 1.4))
+    sk.paint("head", hm, ("top", "back"))
+    for f in ("right", "left"):
+        cv = sk.face("head", f)
+        hm(cv)
+        cv.rect(0, 4, cv.w, cv.h - 4, P["skin"])
+        cv.rect(2, 3, 2, 2, shade(P["skin"], 0.55))
+    fr = sk.face("head", "front")
+    fr.rect(0, 0, 8, 1, h)
+    fr.rect(0, 1, 1, 2, h)
+    fr.rect(7, 1, 1, 2, h)
+
+
 def make_skin(P, phase, slim=False, extra=None):
     sk = Skin(slim=slim, seed=lib.seed_of(P["id"], phase))
     face(sk, P, phase)
     coat(sk, P, phase)
     if P.get("armor"):
         armour(sk, P, phase)
-    hair(sk, P, phase)
+    if P.get("kit_hair"):
+        scalp(sk, P)
+    else:
+        hair(sk, P, phase)
     if extra:
         extra(sk, P, phase)
     sk.opaque_base()

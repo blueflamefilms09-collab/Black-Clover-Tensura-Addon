@@ -41,5 +41,6 @@
   "absorb_magic": false,
   "reflective": false,
   "mythic": true,
-  "execution": false
+  "execution": false,
+  "look": "beholder"
 }

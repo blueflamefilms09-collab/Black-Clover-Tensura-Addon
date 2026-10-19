@@ -42,5 +42,6 @@
   "frightful_aura": true,
   "absorb_magic": false,
   "mythic": true,
-  "execution": false
+  "execution": false,
+  "look": "lich"
 }

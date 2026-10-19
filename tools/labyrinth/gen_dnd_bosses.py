@@ -37,7 +37,16 @@ LEG = [("tail_sweep", 1), ("cantrip", 1), ("blink", 1), ("wing_buffet", 2), ("fr
 LAIR = ["tremor", "searing_light", "anti_magic_field"]
 # 1.66.0: more of the kit, by side: the Holy road snaps spells back and rains stars; the Evil road drains life and breathes a necrotic mist; the dragons add a haki pulse, the deep ones a gravity crush
 
+# 1.94.0: the ordinary profiles that name an abyssal look (docs/labyrinth/abyssal_bosses.md): the Lich-Djinn of the first evil tier is a lich. The others keep the look they had.
+LOOKS = {("evil", 1, 0): "lich"}
+
 def build(row):
+    out = _build(row)
+    look = LOOKS.get((row[0], row[1], row[2]))
+    if look: out["look"] = look
+    return out
+
+def _build(row):
     side, tier, variant, name, anime, dnd, forms, flags = row
     n_leg = min(len(LEG), 2 + tier)
     legendary = [{"id": i, "cost": c} for i, c in LEG[:n_leg]]

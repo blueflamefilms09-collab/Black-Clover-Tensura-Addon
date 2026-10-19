@@ -8,7 +8,7 @@ from lib import (Humanoid, AnimRig, over, on, shade, bone, cloth, metal, plate, 
 import humans
 import look_lich as L
 
-LOOK = dict(id="zariel", name="Zariel", kind="humanoid", slim=True, height=2.0, glow="#ff7a20", boost=1.0, shadow=0.5, dust=False,
+LOOK = dict(id="zariel", name="Zariel", kind="humanoid", slim=True, height=2.0, glow="#ff7a20", boost=1.0, shadow=0.5, dust=False, hair="long", hair_color="#241014", hold_r=-0.42,
             captions=["", "Zariel's wings catch fire and the plate begins to glow.", "The Archduchess of Avernus unfolds a second pair of wings; her halo closes into a ring of fire."])
 
 P = dict(id="zariel", skin="#d9a884", eye="#ffc040", eye_glow="#ffc040", hair="#241014", hair_style="long", mouth="line", brow="#2a1414", coat="#3a1a1c", trim="#c8602a", shirt="#2a1416",
@@ -77,6 +77,7 @@ def build(phase):
     sk = humans.make_skin(dict(P, eye_big=0), phase, slim=True)
     # the plate turns molten in phase 3: the seams are brighter and wider
     c = Humanoid("zariel", phase, sk)
+    c.kit_skin = humans.make_skin(dict(P, eye_big=0, kit_hair=True), phase, slim=True)
     feather = feathers("#2a1214", "#7a2010", "#ff5a10")
     span = (30, 38, 40)[phase - 1]
     wings = feather_wing(c, "body", "x_wing_r", (-3.5, 21.0, 3.0), -1, span, feather, feathers("#3a1618", "#a03010", "#ff7a20"), rows=5, height=span * 0.95)

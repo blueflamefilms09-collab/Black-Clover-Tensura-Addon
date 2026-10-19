@@ -8,7 +8,7 @@ from lib import (Humanoid, AnimRig, over, on, shade, bone, cloth, metal, plate, 
 import humans
 import look_lich as L
 
-LOOK = dict(id="orcus", name="Orcus", kind="humanoid", slim=False, height=2.1, glow="#78ff60", boost=1.1, shadow=0.8, dust=False,
+LOOK = dict(id="orcus", name="Orcus", kind="humanoid", slim=False, height=2.1, glow="#78ff60", boost=1.1, shadow=0.8, dust=False, hold_r=-0.42,
             captions=["", "The gut of Orcus splits and soul fire shows in the wound.", "Ribs break out of the demon prince; a crowd of souls rises with him."])
 
 P = dict(id="orcus", skin="#7c8268", veins="#3a4a2a", eye="#78ff60", eye_glow="#78ff60", eye_solid=True, hair=None, mouth="grin", mouth_color="#1a1a10", brow="#2a2a1a",

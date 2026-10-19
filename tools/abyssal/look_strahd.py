@@ -8,7 +8,7 @@ from lib import (Humanoid, AnimRig, over, on, shade, bone, cloth, metal, emissiv
 import humans
 import look_lich as L
 
-LOOK = dict(id="strahd", name="Strahd", kind="humanoid", slim=False, height=2.0, glow="#ff3030", boost=1.0, shadow=0.5, dust=False,
+LOOK = dict(id="strahd", name="Strahd", kind="humanoid", slim=False, height=2.0, glow="#ff3030", boost=1.0, shadow=0.5, dust=False, hair="slick", hair_color="#0e0a10",
             captions=["", "Strahd tears his cape open: leathery wings, and the bats come down from the rafters.", "The Devil of Barovia is the swarm. His eyes burn and the floor runs with red mist."])
 
 P = dict(id="strahd", skin="#d9ccd0", eye="#ff3030", eye_glow="#ff3030", hair="#0e0a10", hair_style="slick", mouth="fangs", brow="#201418", coat="#2a0f18", trim="#c8a040", shirt="#e6dcd4",
@@ -79,6 +79,7 @@ def build(phase):
     pp = dict(P, eye_big=1 if phase >= 2 else 0)
     sk = humans.make_skin(pp, phase)
     c = Humanoid("strahd", phase, sk)
+    c.kit_skin = humans.make_skin(dict(pp, kit_hair=True), phase)
     c.note_extra("collar", "body", stand_collar(c, P, phase))
     c.note_extra("cape", "body", cape(c, P, phase))
     wings = []

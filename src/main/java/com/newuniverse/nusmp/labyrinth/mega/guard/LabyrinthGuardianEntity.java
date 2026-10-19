@@ -13,6 +13,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -62,6 +65,15 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     /** Half the width of the arena footprint (45 blocks) and the slack beyond its walls before the leash pulls. */
     private static final double HALL_HALF = 22.0, LEASH_SLACK = 3.0;
 
+    /**
+     * 1.94.0: what the renderer needs to draw the boss as the creature it is (docs/labyrinth/abyssal_bosses.md): the id of its abyssal look ("" = the look the Guardian always had), the phase it is in (1 to 3:
+     * the model it wears), and the game time and kind (1 a move, 2 a change of phase) of its last cast, which the cast clip plays. Written on the server only; synced like any entity data.
+     */
+    private static final EntityDataAccessor<String> LOOK = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Integer> LOOK_PHASE = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> CAST_AT = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Integer> CAST_KIND = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
+
     private final BossBudget dpsBudget = new BossBudget();
     private final GuardianTraits.State traits = new GuardianTraits.State();
     /** 1.65.0: the D&D layer (legendary resistances and actions, lair actions, phases, mythic trait) of the boss of this floor. */
@@ -94,6 +106,41 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     /** The Warden's attributes plus the two a scaled, shielded Guardian reads. */
     public static AttributeSupplier.Builder guardianAttributes() {
         return FloorWardenEntity.attributes().add(Attributes.SCALE, 1.0).add(Attributes.MAX_ABSORPTION, 0.0);
+    }
+
+    // ---------------------------------------------------------------- 1.94.0: the look
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(LOOK, "");
+        builder.define(LOOK_PHASE, 1);
+        builder.define(CAST_AT, -1000L);
+        builder.define(CAST_KIND, 0);
+    }
+
+    /** The id of the abyssal look it wears ("" = the look the Guardian always had); read on the client by the renderer. */
+    public String lookId() { return entityData.get(LOOK); }
+
+    /** The phase of the look, 1 to 3. */
+    public int lookPhase() { return Math.max(1, Math.min(3, entityData.get(LOOK_PHASE))); }
+
+    /** The game time of its last cast and its kind (0 none, 1 a move, 2 a change of phase). */
+    public long castAt() { return entityData.get(CAST_AT); }
+
+    public int castKind() { return entityData.get(CAST_KIND); }
+
+    /** Server: it has just cast (a legendary action, a lair action, a change of phase): the cast clip plays for a second on every client. */
+    void noteCast(int kind) {
+        if (level().isClientSide) return;
+        entityData.set(CAST_AT, level().getGameTime());
+        entityData.set(CAST_KIND, kind);
+    }
+
+    /** Puts the look its profile (or its demon sector) gives it, and its phase, into the synced data. Called whenever the profile is set. */
+    void syncLook() {
+        DndProfile p = dnd.profile;
+        entityData.set(LOOK, GuardConfig.get(GuardConfig.DND) ? AbyssalLooks.resolve(p.look(), theme.id(), p.side(), p.tier()) : "");
+        entityData.set(LOOK_PHASE, dnd.phase());
     }
 
     // ---------------------------------------------------------------- creation
@@ -145,6 +192,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         this.configured = true;
         stamp();
         dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
+        syncLook();
         applyScaling();
     }
 
@@ -335,8 +383,30 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     // ---------------------------------------------------------------- 1.65.0: the D&D layer
     /** The name over the boss bar: the profile's name and the form of the phase it is in, then the floor. Nothing changes while the profile is the default one. */
     void refreshDndName(DndProfile profile, int phase) {
+        phaseLook(phase);
         if (profile == DndProfile.DEFAULT || !GuardConfig.get(GuardConfig.DND)) return;
         setCustomName(Component.literal(profile.name() + " \u2014 " + profile.form(phase) + (floorLabel == null ? "" : " (Floor " + floorLabel + ")")));
+    }
+
+    /**
+     * 1.94.0: the look moves to the model of the phase it has reached. A step UP (the boss gets its second form, or its mythic third) is announced above the hotbar with the caption of that phase of its
+     * look (the lich's phylactery cracks ...) and plays the cast clip once.
+     */
+    private void phaseLook(int phase) {
+        if (level().isClientSide) return;
+        int before = entityData.get(LOOK_PHASE), now = Math.max(1, Math.min(3, phase));
+        if (now == before) return;
+        entityData.set(LOOK_PHASE, now);
+        String look = lookId();
+        if (now > before && !look.isEmpty() && level() instanceof ServerLevel sl) {
+            noteCast(2);
+            AbyssalLooks.Look l = AbyssalLooks.get(look);
+            String caption = l == null ? "" : l.phase(now).caption();
+            if (!caption.isEmpty()) {
+                Component line = Component.translatableWithFallback("message.nusmp.mega.dnd.look." + look + ".p" + now, caption).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC);
+                for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) p.displayClientMessage(line, true);
+            }
+        }
     }
 
     /** Health put back without it counting as a heal (the budget lets it through). */
@@ -384,6 +454,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         floorNo = tag.contains("GuardFloorNo") ? tag.getInt("GuardFloorNo") : Math.max(1, threat);
         dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
         dnd.load(tag);
-        stamp();                                                                                   // loading clears and restores the tag list: both keys are written again
+        syncLook();                                                                                // 1.94.0: the look and the phase it was saved in
+        stamp();                                                                                // loading clears and restores the tag list: both keys are written again
     }
 }

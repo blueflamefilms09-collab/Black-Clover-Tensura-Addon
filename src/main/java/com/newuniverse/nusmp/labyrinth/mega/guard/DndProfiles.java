@@ -84,6 +84,13 @@ public final class DndProfiles extends SimpleJsonResourceReloadListener {
 
     public static int count() { return profiles.size(); }
 
+    /** 1.94.0: every loaded profile, in id order (the look checks walk them). */
+    public static List<DndProfile> all() {
+        List<DndProfile> out = new ArrayList<>(profiles.values());
+        out.sort(java.util.Comparator.comparing(DndProfile::id));
+        return out;
+    }
+
     /** Test seam: replaces the loaded profiles. */
     static void set(Map<String, DndProfile> map) { profiles = Map.copyOf(map); }
 }

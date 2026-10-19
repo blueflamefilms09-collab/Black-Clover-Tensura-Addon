@@ -7,7 +7,7 @@ from lib import (Humanoid, AnimRig, over, on, shade, bone, cloth, metal, plate, 
 import humans
 import look_lich as L
 
-LOOK = dict(id="solar", name="Solar", kind="humanoid", slim=False, height=2.1, glow="#ffe890", boost=1.05, shadow=0.55, dust=False,
+LOOK = dict(id="solar", name="Solar", kind="humanoid", slim=False, height=2.1, glow="#ffe890", boost=1.05, shadow=0.55, dust=False, hair="long", hair_color="#f4ecc8", hold_l=-0.42,
             captions=["", "A second pair of wings unfolds behind the Solar and the sunburst turns.", "Six wings, a full halo and a bow drawn to the ear: the Solar judges the hall."])
 
 P = dict(id="solar", skin="#e8c878", eye="#fff4c0", eye_glow="#fff4c0", eye_solid=True, hair="#f4ecc8", hair_style="long", mouth="line", brow="#c8a860", coat="#f0ead8", trim="#d8a830",
@@ -57,6 +57,7 @@ def bow(c, P, phase):
 def build(phase):
     sk = humans.make_skin(P, phase)
     c = Humanoid("solar", phase, sk)
+    c.kit_skin = humans.make_skin(dict(P, kit_hair=True), phase)
     f1, f2 = feathers("#f0ead8", "#d8a830", "#ffe890"), feathers("#e0d4b0", "#e8c860", "#fff4c0")
     span = (30, 34, 36)[phase - 1]
     wings = feather_wing(c, "body", "x_wing_r", (-3.5, 22.0, 3.0), -1, span, f1, f2, rows=5, height=span * 0.9)

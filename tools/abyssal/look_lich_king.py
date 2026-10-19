@@ -8,7 +8,7 @@ import undead
 import humans
 import look_lich as L
 
-LOOK = dict(id="lich_king", name="Lich King", kind="humanoid", slim=False, height=2.2, glow="#6ad8ff", boost=1.1, shadow=0.7, dust=True, undead=True,
+LOOK = dict(id="lich_king", name="Lich King", kind="humanoid", slim=False, height=2.2, glow="#6ad8ff", boost=1.1, shadow=0.7, dust=True, undead=True, hold_r=-0.42,
             captions=["", "Ice crystals break through the Lich King's armour and the runeblade sings.", "The Frozen Throne answers: a ring of runes opens under the Lich King."])
 
 P = dict(id="lich_king", bone="#c8d4dc", dark="#0a1018", robe="#2a3040", trim="#6ad8ff", eye="#6ad8ff", eye2="#a0f0ff", soul="#6ad8ff", rune="#6ad8ff", gem="#6ad8ff",

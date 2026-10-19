@@ -19,8 +19,8 @@
     {
      "model": "lich_p1",
      "caption": "",
-     "skin": "abyssal/skin_lich_p1",
-     "extras_model": "lich_extras_p1",
+     "skin": "playermodel/abyssal_lich_p1",
+     "extras_model": "pmx_abyssal_lich_p1",
      "extras": [
       {
        "id": "skirt",
@@ -85,8 +85,8 @@
     {
      "model": "lich_p2",
      "caption": "The phylactery cracks, and soul fire pours out of the lich's sockets.",
-     "skin": "abyssal/skin_lich_p2",
-     "extras_model": "lich_extras_p2",
+     "skin": "playermodel/abyssal_lich_p2",
+     "extras_model": "pmx_abyssal_lich_p2",
      "extras": [
       {
        "id": "skirt",
@@ -155,8 +155,8 @@
     {
      "model": "lich_p3",
      "caption": "The phylactery breaks. The lich burns with everything it has bound.",
-     "skin": "abyssal/skin_lich_p3",
-     "extras_model": "lich_extras_p3",
+     "skin": "playermodel/abyssal_lich_p3",
+     "extras_model": "pmx_abyssal_lich_p3",
      "extras": [
       {
        "id": "skirt",
@@ -239,7 +239,11 @@
    "cubes": 106,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "",
+    "hair_color": "",
+    "hold_r": 0.0,
+    "hold_l": 0.0
    }
   },
   "acererak": {
@@ -260,8 +264,8 @@
     {
      "model": "acererak_p1",
      "caption": "",
-     "skin": "abyssal/skin_acererak_p1",
-     "extras_model": "acererak_extras_p1",
+     "skin": "playermodel/abyssal_acererak_p1",
+     "extras_model": "pmx_abyssal_acererak_p1",
      "extras": [
       {
        "id": "skirt",
@@ -343,8 +347,8 @@
     {
      "model": "acererak_p2",
      "caption": "Acererak's gems blaze, and the skulls of the Devoured begin to circle him faster.",
-     "skin": "abyssal/skin_acererak_p2",
-     "extras_model": "acererak_extras_p2",
+     "skin": "playermodel/abyssal_acererak_p2",
+     "extras_model": "pmx_abyssal_acererak_p2",
      "extras": [
       {
        "id": "skirt",
@@ -432,8 +436,8 @@
     {
      "model": "acererak_p3",
      "caption": "The Eternal Lich rises: every gem in his crown is a soul, and all of them scream.",
-     "skin": "abyssal/skin_acererak_p3",
-     "extras_model": "acererak_extras_p3",
+     "skin": "playermodel/abyssal_acererak_p3",
+     "extras_model": "pmx_abyssal_acererak_p3",
      "extras": [
       {
        "id": "skirt",
@@ -537,7 +541,11 @@
    "cubes": 128,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "",
+    "hair_color": "",
+    "hold_r": 0.0,
+    "hold_l": 0.0
    }
   },
   "vecna": {
@@ -558,8 +566,8 @@
     {
      "model": "vecna_p1",
      "caption": "",
-     "skin": "abyssal/skin_vecna_p1",
-     "extras_model": "vecna_extras_p1",
+     "skin": "playermodel/abyssal_vecna_p1",
+     "extras_model": "pmx_abyssal_vecna_p1",
      "extras": [
       {
        "id": "skirt",
@@ -616,6 +624,11 @@
        ]
       },
       {
+       "id": "stump_cap",
+       "anchor": "arm_l",
+       "bones": []
+      },
+      {
        "id": "shoulder_spikes",
        "anchor": "body",
        "bones": []
@@ -625,8 +638,8 @@
     {
      "model": "vecna_p2",
      "caption": "The Hand of Vecna ignites and the Eye opens: he sees everyone in the hall.",
-     "skin": "abyssal/skin_vecna_p2",
-     "extras_model": "vecna_extras_p2",
+     "skin": "playermodel/abyssal_vecna_p2",
+     "extras_model": "pmx_abyssal_vecna_p2",
      "extras": [
       {
        "id": "skirt",
@@ -691,6 +704,11 @@
        ]
       },
       {
+       "id": "stump_cap",
+       "anchor": "arm_l",
+       "bones": []
+      },
+      {
        "id": "shoulder_spikes",
        "anchor": "body",
        "bones": []
@@ -700,8 +718,8 @@
     {
      "model": "vecna_p3",
      "caption": "Vecna is whole again. The Hand burns, the Eye is wide open, and the web closes.",
-     "skin": "abyssal/skin_vecna_p3",
-     "extras_model": "vecna_extras_p3",
+     "skin": "playermodel/abyssal_vecna_p3",
+     "extras_model": "pmx_abyssal_vecna_p3",
      "extras": [
       {
        "id": "skirt",
@@ -771,6 +789,11 @@
        ]
       },
       {
+       "id": "stump_cap",
+       "anchor": "arm_l",
+       "bones": []
+      },
+      {
        "id": "shoulder_spikes",
        "anchor": "body",
        "bones": []
@@ -783,7 +806,7 @@
     0.9,
     1.0
    ],
-   "cubes": 73,
+   "cubes": 74,
    "humanoid": {
     "slim": false,
     "part_scale": {
@@ -792,7 +815,11 @@
       0.62,
       1.0
      ]
-    }
+    },
+    "hair": "",
+    "hair_color": "",
+    "hold_r": 0.0,
+    "hold_l": 0.0
    }
   },
   "strahd": {
@@ -813,8 +840,8 @@
     {
      "model": "strahd_p1",
      "caption": "",
-     "skin": "abyssal/skin_strahd_p1",
-     "extras_model": "strahd_extras_p1",
+     "skin": "playermodel/abyssal_strahd_p1",
+     "extras_model": "pmx_abyssal_strahd_p1",
      "extras": [
       {
        "id": "collar",
@@ -871,8 +898,8 @@
     {
      "model": "strahd_p2",
      "caption": "Strahd tears his cape open: leathery wings, and the bats come down from the rafters.",
-     "skin": "abyssal/skin_strahd_p2",
-     "extras_model": "strahd_extras_p2",
+     "skin": "playermodel/abyssal_strahd_p2",
+     "extras_model": "pmx_abyssal_strahd_p2",
      "extras": [
       {
        "id": "collar",
@@ -946,8 +973,8 @@
     {
      "model": "strahd_p3",
      "caption": "The Devil of Barovia is the swarm. His eyes burn and the floor runs with red mist.",
-     "skin": "abyssal/skin_strahd_p3",
-     "extras_model": "strahd_extras_p3",
+     "skin": "playermodel/abyssal_strahd_p3",
+     "extras_model": "pmx_abyssal_strahd_p3",
      "extras": [
       {
        "id": "collar",
@@ -1047,7 +1074,11 @@
    "cubes": 106,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "slick",
+    "hair_color": "#0e0a10",
+    "hold_r": 0.0,
+    "hold_l": 0.0
    }
   },
   "zariel": {
@@ -1068,8 +1099,8 @@
     {
      "model": "zariel_p1",
      "caption": "",
-     "skin": "abyssal/skin_zariel_p1",
-     "extras_model": "zariel_extras_p1",
+     "skin": "playermodel/abyssal_zariel_p1",
+     "extras_model": "pmx_abyssal_zariel_p1",
      "extras": [
       {
        "id": "wings",
@@ -1118,8 +1149,8 @@
     {
      "model": "zariel_p2",
      "caption": "Zariel's wings catch fire and the plate begins to glow.",
-     "skin": "abyssal/skin_zariel_p2",
-     "extras_model": "zariel_extras_p2",
+     "skin": "playermodel/abyssal_zariel_p2",
+     "extras_model": "pmx_abyssal_zariel_p2",
      "extras": [
       {
        "id": "wings",
@@ -1170,8 +1201,8 @@
     {
      "model": "zariel_p3",
      "caption": "The Archduchess of Avernus unfolds a second pair of wings; her halo closes into a ring of fire.",
-     "skin": "abyssal/skin_zariel_p3",
-     "extras_model": "zariel_extras_p3",
+     "skin": "playermodel/abyssal_zariel_p3",
+     "extras_model": "pmx_abyssal_zariel_p3",
      "extras": [
       {
        "id": "wings",
@@ -1234,7 +1265,11 @@
    "cubes": 78,
    "humanoid": {
     "slim": true,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "long",
+    "hair_color": "#241014",
+    "hold_r": -0.42,
+    "hold_l": 0.0
    }
   },
   "asmodeus": {
@@ -1255,8 +1290,8 @@
     {
      "model": "asmodeus_p1",
      "caption": "",
-     "skin": "abyssal/skin_asmodeus_p1",
-     "extras_model": "asmodeus_extras_p1",
+     "skin": "playermodel/abyssal_asmodeus_p1",
+     "extras_model": "pmx_abyssal_asmodeus_p1",
      "extras": [
       {
        "id": "horn_crown",
@@ -1319,8 +1354,8 @@
     {
      "model": "asmodeus_p2",
      "caption": "Asmodeus spreads his wings and the hall fills with the heat of the Nine Hells.",
-     "skin": "abyssal/skin_asmodeus_p2",
-     "extras_model": "asmodeus_extras_p2",
+     "skin": "playermodel/abyssal_asmodeus_p2",
+     "extras_model": "pmx_abyssal_asmodeus_p2",
      "extras": [
       {
        "id": "horn_crown",
@@ -1393,8 +1428,8 @@
     {
      "model": "asmodeus_p3",
      "caption": "The wings burn along every vein, the horns grow tall, and a ring of hellfire opens behind the Archdevil.",
-     "skin": "abyssal/skin_asmodeus_p3",
-     "extras_model": "asmodeus_extras_p3",
+     "skin": "playermodel/abyssal_asmodeus_p3",
+     "extras_model": "pmx_abyssal_asmodeus_p3",
      "extras": [
       {
        "id": "horn_crown",
@@ -1482,7 +1517,11 @@
    "cubes": 126,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "",
+    "hair_color": "",
+    "hold_r": -0.42,
+    "hold_l": 0.0
    }
   },
   "orcus": {
@@ -1503,8 +1542,8 @@
     {
      "model": "orcus_p1",
      "caption": "",
-     "skin": "abyssal/skin_orcus_p1",
-     "extras_model": "orcus_extras_p1",
+     "skin": "playermodel/abyssal_orcus_p1",
+     "extras_model": "pmx_abyssal_orcus_p1",
      "extras": [
       {
        "id": "belly",
@@ -1577,8 +1616,8 @@
     {
      "model": "orcus_p2",
      "caption": "The gut of Orcus splits and soul fire shows in the wound.",
-     "skin": "abyssal/skin_orcus_p2",
-     "extras_model": "orcus_extras_p2",
+     "skin": "playermodel/abyssal_orcus_p2",
+     "extras_model": "pmx_abyssal_orcus_p2",
      "extras": [
       {
        "id": "belly",
@@ -1656,8 +1695,8 @@
     {
      "model": "orcus_p3",
      "caption": "Ribs break out of the demon prince; a crowd of souls rises with him.",
-     "skin": "abyssal/skin_orcus_p3",
-     "extras_model": "orcus_extras_p3",
+     "skin": "playermodel/abyssal_orcus_p3",
+     "extras_model": "pmx_abyssal_orcus_p3",
      "extras": [
       {
        "id": "belly",
@@ -1745,7 +1784,11 @@
    "cubes": 107,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "",
+    "hair_color": "",
+    "hold_r": -0.42,
+    "hold_l": 0.0
    }
   },
   "lich_king": {
@@ -1766,8 +1809,8 @@
     {
      "model": "lich_king_p1",
      "caption": "",
-     "skin": "abyssal/skin_lich_king_p1",
-     "extras_model": "lich_king_extras_p1",
+     "skin": "playermodel/abyssal_lich_king_p1",
+     "extras_model": "pmx_abyssal_lich_king_p1",
      "extras": [
       {
        "id": "horned_helm",
@@ -1819,8 +1862,8 @@
     {
      "model": "lich_king_p2",
      "caption": "Ice crystals break through the Lich King's armour and the runeblade sings.",
-     "skin": "abyssal/skin_lich_king_p2",
-     "extras_model": "lich_king_extras_p2",
+     "skin": "playermodel/abyssal_lich_king_p2",
+     "extras_model": "pmx_abyssal_lich_king_p2",
      "extras": [
       {
        "id": "horned_helm",
@@ -1876,8 +1919,8 @@
     {
      "model": "lich_king_p3",
      "caption": "The Frozen Throne answers: a ring of runes opens under the Lich King.",
-     "skin": "abyssal/skin_lich_king_p3",
-     "extras_model": "lich_king_extras_p3",
+     "skin": "playermodel/abyssal_lich_king_p3",
+     "extras_model": "pmx_abyssal_lich_king_p3",
      "extras": [
       {
        "id": "horned_helm",
@@ -1948,7 +1991,11 @@
    "cubes": 89,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "",
+    "hair_color": "",
+    "hold_r": -0.42,
+    "hold_l": 0.0
    }
   },
   "solar": {
@@ -1969,8 +2016,8 @@
     {
      "model": "solar_p1",
      "caption": "",
-     "skin": "abyssal/skin_solar_p1",
-     "extras_model": "solar_extras_p1",
+     "skin": "playermodel/abyssal_solar_p1",
+     "extras_model": "pmx_abyssal_solar_p1",
      "extras": [
       {
        "id": "wings",
@@ -2022,8 +2069,8 @@
     {
      "model": "solar_p2",
      "caption": "A second pair of wings unfolds behind the Solar and the sunburst turns.",
-     "skin": "abyssal/skin_solar_p2",
-     "extras_model": "solar_extras_p2",
+     "skin": "playermodel/abyssal_solar_p2",
+     "extras_model": "pmx_abyssal_solar_p2",
      "extras": [
       {
        "id": "wings",
@@ -2082,8 +2129,8 @@
     {
      "model": "solar_p3",
      "caption": "Six wings, a full halo and a bow drawn to the ear: the Solar judges the hall.",
-     "skin": "abyssal/skin_solar_p3",
-     "extras_model": "solar_extras_p3",
+     "skin": "playermodel/abyssal_solar_p3",
+     "extras_model": "pmx_abyssal_solar_p3",
      "extras": [
       {
        "id": "wings",
@@ -2155,8 +2202,47 @@
    "cubes": 114,
    "humanoid": {
     "slim": false,
-    "part_scale": {}
+    "part_scale": {},
+    "hair": "long",
+    "hair_color": "#f4ecc8",
+    "hold_r": 0.0,
+    "hold_l": -0.42
    }
+  },
+  "demogorgon": {
+   "name": "Demogorgon",
+   "kind": "geo",
+   "height": 3.6,
+   "walk_cycle": 2.0,
+   "run_cycle": 3.4,
+   "shadow": 1.3,
+   "grow_xz": 4.42,
+   "grow_up": 1.51,
+   "boost": 0.9,
+   "glow": "#ffa030",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "demogorgon",
+   "phases": [
+    {
+     "model": "demogorgon_p1",
+     "caption": ""
+    },
+    {
+     "model": "demogorgon_p2",
+     "caption": "Both of Demogorgon's heads open their eyes and the barbs on his tentacles light up."
+    },
+    {
+     "model": "demogorgon_p3",
+     "caption": "The Prince of Demons crowns both heads in horns and the air round him whirls dark purple."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 152
   },
   "beholder": {
    "name": "Beholder",
@@ -2262,6 +2348,359 @@
     1.0
    ],
    "cubes": 250
+  },
+  "tiamat": {
+   "name": "Tiamat",
+   "kind": "geo",
+   "height": 3.5,
+   "walk_cycle": 2.1,
+   "run_cycle": 3.6,
+   "shadow": 1.6,
+   "grow_xz": 6.31,
+   "grow_up": 0.66,
+   "boost": 0.9,
+   "glow": "#ff6a3a",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "tiamat",
+   "phases": [
+    {
+     "model": "tiamat_p1",
+     "caption": ""
+    },
+    {
+     "model": "tiamat_p2",
+     "caption": "All five mouths of Tiamat fill with their own breath."
+    },
+    {
+     "model": "tiamat_p3",
+     "caption": "Tiamat's wings spread to their full span and the five colours circle her necks."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 340
+  },
+  "bahamut": {
+   "name": "Bahamut",
+   "kind": "geo",
+   "height": 3.2,
+   "walk_cycle": 2.1,
+   "run_cycle": 3.6,
+   "shadow": 1.3,
+   "grow_xz": 6.22,
+   "grow_up": 1.84,
+   "boost": 0.9,
+   "glow": "#6ad8ff",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "bahamut",
+   "phases": [
+    {
+     "model": "bahamut_p1",
+     "caption": ""
+    },
+    {
+     "model": "bahamut_p2",
+     "caption": "Bahamut's eyes blaze and a halo of platinum light opens behind him."
+    },
+    {
+     "model": "bahamut_p3",
+     "caption": "The Platinum Dragon spreads his wings: a corona of light fills the hall."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 165
+  },
+  "dracolich": {
+   "name": "Dracolich",
+   "kind": "geo",
+   "height": 3.2,
+   "walk_cycle": 2.1,
+   "run_cycle": 3.6,
+   "shadow": 1.2,
+   "grow_xz": 6.22,
+   "grow_up": 0.66,
+   "boost": 0.9,
+   "glow": "#7affd8",
+   "dust": true,
+   "lift": 0.0,
+   "animation": "dracolich",
+   "phases": [
+    {
+     "model": "dracolich_p1",
+     "caption": ""
+    },
+    {
+     "model": "dracolich_p2",
+     "caption": "Soul fire swells in the Dracolich's ribs and its skull ignites."
+    },
+    {
+     "model": "dracolich_p3",
+     "caption": "The phylactery rises over its back, and the dead dragon burns white."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 176
+  },
+  "tarrasque": {
+   "name": "Tarrasque",
+   "kind": "geo",
+   "height": 3.0,
+   "walk_cycle": 2.3,
+   "run_cycle": 3.8,
+   "shadow": 1.7,
+   "grow_xz": 5.92,
+   "grow_up": 0.94,
+   "boost": 0.85,
+   "glow": "#ff5a20",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "tarrasque",
+   "phases": [
+    {
+     "model": "tarrasque_p1",
+     "caption": ""
+    },
+    {
+     "model": "tarrasque_p2",
+     "caption": "The carapace of the Tarrasque begins to shimmer: spells will come back."
+    },
+    {
+     "model": "tarrasque_p3",
+     "caption": "The mirror-carapace blazes. Nothing that is cast at the Tarrasque stays cast."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 146
+  },
+  "lolth": {
+   "name": "Lolth",
+   "kind": "geo",
+   "height": 3.0,
+   "walk_cycle": 2.0,
+   "run_cycle": 3.4,
+   "shadow": 1.4,
+   "grow_xz": 2.59,
+   "grow_up": 2.1,
+   "boost": 0.95,
+   "glow": "#ff2030",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "lolth",
+   "phases": [
+    {
+     "model": "lolth_p1",
+     "caption": ""
+    },
+    {
+     "model": "lolth_p2",
+     "caption": "Four more legs rise behind Lolth like a crown of black blades."
+    },
+    {
+     "model": "lolth_p3",
+     "caption": "A second pair of arms, eight burning eyes and a blazing hourglass: the Spider Queen is whole."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 150
+  },
+  "quasit": {
+   "name": "Quasit",
+   "kind": "geo",
+   "height": 1.1,
+   "walk_cycle": 0.8,
+   "run_cycle": 1.4,
+   "shadow": 0.45,
+   "grow_xz": 2.08,
+   "grow_up": 0.67,
+   "boost": 0.8,
+   "glow": "#ff8a20",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "quasit",
+   "phases": [
+    {
+     "model": "quasit_p1",
+     "caption": ""
+    },
+    {
+     "model": "quasit_p2",
+     "caption": "The Quasit's wings unfurl and its tail ignites."
+    },
+    {
+     "model": "quasit_p3",
+     "caption": "A ring of fire circles the Quasit as its horns and claws lengthen."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 82
+  },
+  "vrock": {
+   "name": "Vrock",
+   "kind": "geo",
+   "height": 2.3,
+   "walk_cycle": 1.6,
+   "run_cycle": 2.8,
+   "shadow": 0.9,
+   "grow_xz": 3.75,
+   "grow_up": 0.66,
+   "boost": 1.0,
+   "glow": "#ff4040",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "vrock",
+   "phases": [
+    {
+     "model": "vrock_p1",
+     "caption": ""
+    },
+    {
+     "model": "vrock_p2",
+     "caption": "Spores rise from the Vrock's wings."
+    },
+    {
+     "model": "vrock_p3",
+     "caption": "Violet fire runs along the Vrock's wings and its eyes swell."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 58
+  },
+  "hezrou": {
+   "name": "Hezrou",
+   "kind": "geo",
+   "height": 2.3,
+   "walk_cycle": 1.5,
+   "run_cycle": 2.6,
+   "shadow": 1.0,
+   "grow_xz": 1.95,
+   "grow_up": 0.66,
+   "boost": 1.0,
+   "glow": "#b8e030",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "hezrou",
+   "phases": [
+    {
+     "model": "hezrou_p1",
+     "caption": ""
+    },
+    {
+     "model": "hezrou_p2",
+     "caption": "The spines of the Hezrou glow and acid drips from its jaw."
+    },
+    {
+     "model": "hezrou_p3",
+     "caption": "The Hezrou swells: eyes huge, crest raised, the stench so thick the air turns green."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 84
+  },
+  "balor": {
+   "name": "Balor",
+   "kind": "geo",
+   "height": 3.6,
+   "walk_cycle": 2.2,
+   "run_cycle": 3.8,
+   "shadow": 1.3,
+   "grow_xz": 5.63,
+   "grow_up": 1.39,
+   "boost": 0.9,
+   "glow": "#ff7a20",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "balor",
+   "phases": [
+    {
+     "model": "balor_p1",
+     "caption": ""
+    },
+    {
+     "model": "balor_p2",
+     "caption": "The cracks in the Balor's skin open and its wings catch fire along the veins."
+    },
+    {
+     "model": "balor_p3",
+     "caption": "The Balor is ablaze from horn to hoof."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 103
+  }
+ },
+ "theme_defaults": {
+  "abyss": {
+   "evil": [
+    "quasit",
+    "vrock",
+    "hezrou",
+    "balor",
+    "balor"
+   ]
+  },
+  "blood": {
+   "evil": [
+    "quasit",
+    "vrock",
+    "hezrou",
+    "balor",
+    "balor"
+   ]
+  },
+  "flame": {
+   "evil": [
+    "quasit",
+    "vrock",
+    "hezrou",
+    "balor",
+    "balor"
+   ]
+  },
+  "infernal_foundry": {
+   "evil": [
+    "quasit",
+    "vrock",
+    "hezrou",
+    "balor",
+    "balor"
+   ]
   }
  }
 }

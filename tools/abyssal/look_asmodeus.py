@@ -8,7 +8,7 @@ from lib import (Humanoid, AnimRig, over, on, shade, bone, cloth, metal, plate, 
 import humans
 import look_lich as L
 
-LOOK = dict(id="asmodeus", name="Asmodeus", kind="humanoid", slim=False, height=2.1, glow="#ffb030", boost=1.05, shadow=0.6, dust=False,
+LOOK = dict(id="asmodeus", name="Asmodeus", kind="humanoid", slim=False, height=2.1, glow="#ffb030", boost=1.05, shadow=0.6, dust=False, hold_r=-0.42,
             captions=["", "Asmodeus spreads his wings and the hall fills with the heat of the Nine Hells.", "The wings burn along every vein, the horns grow tall, and a ring of hellfire opens behind the Archdevil."])
 
 P = dict(id="asmodeus", skin="#b02a24", veins="#5a1010", eye="#ffc830", eye_glow="#ffc830", eye_solid=True, hair=None, mouth="grin", mouth_color="#2a0808", brow="#2a0a0a",

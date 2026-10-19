@@ -30,10 +30,16 @@ REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 ASSETS = lib.ROOT
 SCENES = os.path.join(REPO, "tools", "render_preview", "scenes.d")
 TABLE = os.path.join(ASSETS, "abyssal", "looks.json")
+KIT_TABLE = os.path.join(ASSETS, "playermodel", "looks_abyssal.json")     # the humanoids, in the format of the player-model kit (assets/nusmp/playermodel/looks.json)
+LANG = os.path.join(REPO, "tools", "lang", "abyssal_bosses.json")        # a flat fragment of the lang keys (the lead merges it into en_us.json): look names and the caption of each phase change
 ORDER = ["lich", "acererak", "vecna", "strahd", "zariel", "asmodeus", "orcus", "lich_king", "solar",
          "demogorgon", "beholder", "elder_brain", "kraken", "tiamat", "bahamut", "dracolich", "tarrasque", "lolth",
          "quasit", "vrock", "hezrou", "balor"]
 CLIPS = ["idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "death"]
+# an evil boss of a sector whose profile names no look wears the demon of its tier on the sectors where the demon faction rules (data/nusmp/mega/factions/demon.json weights abyss, blood, flame and
+# infernal_foundry at 5, the highest): the Abyssal road's own bosses, as the Abyss encounter tables' demons are its mobs
+_DEMONS = ["quasit", "vrock", "hezrou", "balor", "balor"]
+THEME_DEFAULTS = {t: {"evil": _DEMONS} for t in ("abyss", "blood", "flame", "infernal_foundry")}
 
 
 def bounds(model_id):
@@ -96,6 +102,27 @@ def check(model_ids, anim_id):
     return problems
 
 
+def check_extras(xname):
+    """An extras file of the player-model kit: roots are x_<part>, a texture and glow of the sheet's size, and its own animation file."""
+    from PIL import Image
+    probs = []
+    g = json.load(open(os.path.join(ASSETS, "geo", "entity", xname + ".geo.json")))["minecraft:geometry"][0]
+    names = {b["name"] for b in g["bones"]}
+    for b in g["bones"]:
+        if not b.get("parent") and b["name"] not in ("x_head", "x_body", "x_arm_r", "x_arm_l", "x_leg_r", "x_leg_l"):
+            probs.append("%s: root bone %s is not x_<part>" % (xname, b["name"]))
+        if b.get("parent") and b["parent"] not in names:
+            probs.append("%s: bone %s has the missing parent %s" % (xname, b["name"], b["parent"]))
+    tw, th = g["description"]["texture_width"], g["description"]["texture_height"]
+    for suffix in (".png", "_glow.png"):
+        p = os.path.join(ASSETS, "textures", "entity", xname + suffix)
+        if not os.path.exists(p) or Image.open(p).size != (tw, th):
+            probs.append("%s%s missing or not %dx%d" % (xname, suffix, tw, th))
+    if not os.path.exists(os.path.join(ASSETS, "animations", "entity", xname + ".animation.json")):
+        probs.append(xname + " has no animation file")
+    return probs
+
+
 def scenes_for(look, models, tall):
     """Preview scenes: front and 3/4, back and side, the face, then a strip per clip (phase 1), then the three phases next to each other."""
     sc = {}
@@ -126,7 +153,7 @@ def scenes_for(look, models, tall):
 
 def build(look_id, mod):
     L = dict(mod.LOOK)
-    models, phases, extras_cubes, known = [], [], 0, set()
+    models, phases, extras_cubes, known, extra_files = [], [], 0, set(), []
     humanoid = L["kind"] == "humanoid"
     for phase in (1, 2, 3):
         c = mod.build(phase)
@@ -134,18 +161,23 @@ def build(look_id, mod):
         c.save(img, glow)
         entry = {"model": c.name, "caption": L.get("captions", ["", "", ""])[phase - 1]}
         if humanoid:
-            c.skin.save_skin("skin_%s_p%d" % (look_id, phase))
-            extras_cubes = c.save_extras(img, glow, "%s_extras_p%d" % (look_id, phase))
-            entry["skin"] = "abyssal/skin_%s_p%d" % (look_id, phase)
-            entry["extras_model"] = "%s_extras_p%d" % (look_id, phase)
+            kid = "abyssal_%s_p%d" % (look_id, phase)                            # the id of this phase in the player-model kit's table (looks_abyssal.json)
+            getattr(c, "kit_skin", c.skin).save_skin(kid)                       # textures/entity/playermodel/<kid>.png + _glow
+            xname = "pmx_" + kid                                                # the extras: geo/entity/pmx_<kid>, roots x_head x_body x_arm_r x_arm_l
+            extras_cubes, xbones = c.save_extras(img, glow, xname)
+            extra_files.append((xname, set(xbones)))
+            entry["skin"] = "playermodel/" + kid
+            entry["extras_model"] = xname
             entry["extras"] = c.extras
         models.append(c.name)
         known |= set(c.m.bones)
         phases.append(entry)
     mod.RIG.write(look_id, only=known)
+    for xname, xbones in extra_files:                                           # the extras' own clips: only the tracks of the bones the extras file has
+        mod.RIG.write(look_id, only=xbones, filename=xname)
     lo, hi, n = bounds("abyssal_" + models[-1])
     height = L["height"]
-    check_problems = check(["abyssal_" + m for m in models + ([p["extras_model"] for p in phases] if humanoid else [])], look_id)
+    check_problems = check(["abyssal_" + m for m in models], look_id) + [pr for p in phases if humanoid for pr in check_extras(p["extras_model"])]
     grow_xz = round(max(abs(lo[0]), abs(hi[0]), abs(lo[2]), abs(hi[2])) * 1.2 + 0.3, 2)
     grow_up = round(max(0.3, hi[1] - height) * 1.2 + 0.3, 2)
     row = {"name": L["name"], "kind": L["kind"], "height": height, "walk_cycle": L.get("walk_cycle", 1.3 if humanoid else 2.0), "run_cycle": L.get("run_cycle", 2.3 if humanoid else 3.4),
@@ -153,7 +185,8 @@ def build(look_id, mod):
            "dust": bool(L.get("dust", False)), "lift": L.get("lift", 0.0), "animation": look_id, "phases": phases,
            "glow_level": L.get("glow_level", [0.75, 0.9, 1.0]), "cubes": n}
     if humanoid:
-        row["humanoid"] = {"slim": bool(L.get("slim", False)), "part_scale": L.get("part_scale", {})}
+        row["humanoid"] = {"slim": bool(L.get("slim", False)), "part_scale": L.get("part_scale", {}), "hair": L.get("hair", ""), "hair_color": L.get("hair_color", ""),
+                           "hold_r": L.get("hold_r", 0.0), "hold_l": L.get("hold_l", 0.0)}
     scenes = scenes_for(look_id, models, hi[1])
     with open(os.path.join(SCENES, "abyssal_%s.json" % look_id), "w") as f:
         json.dump(scenes, f, indent=1)
@@ -191,7 +224,40 @@ def main(argv):
             bad = 1
     order = {k: i for i, k in enumerate(ORDER)}
     table["looks"] = {k: table["looks"][k] for k in sorted(table["looks"], key=lambda k: order.get(k, 99))}
+    table["theme_defaults"] = THEME_DEFAULTS
+    kit = {"version": 1, "note": "generated by tools/abyssal/gen_abyssal.py: the humanoid abyssal bosses in the format of playermodel/looks.json (skin, slim, glow, hair, scale, extras, arm hold); do not edit by hand", "looks": {}}
+    for k, row in table["looks"].items():
+        if row["kind"] != "humanoid":
+            continue
+        h = row["humanoid"]
+        for i, ph in enumerate(row["phases"], start=1):
+            kid = "abyssal_%s_p%d" % (k, i)
+            e = {"skin": kid, "slim": bool(h["slim"]), "scale": round(row["height"] / 1.875, 4)}
+            if h.get("hold_r"):
+                e["hold_r"] = h["hold_r"]
+            if h.get("hold_l"):
+                e["hold_l"] = h["hold_l"]
+            e["glow"] = True
+            if h.get("hair"):
+                e["hair"] = h["hair"]
+                e["hair_color"] = h["hair_color"]
+            e["extras"] = [{"model": ph["extras_model"], "texture": ph["extras_model"], "glow": True}]
+            kit["looks"][kid] = e
     if "--check" not in argv:
+        lang = {}
+        for k, row in table["looks"].items():
+            lang["entity.nusmp.abyssal." + k] = row["name"]
+            for i, ph in enumerate(row["phases"], start=1):
+                if ph.get("caption"):
+                    lang["message.nusmp.mega.dnd.look.%s.p%d" % (k, i)] = ph["caption"]
+        os.makedirs(os.path.dirname(LANG), exist_ok=True)
+        with open(LANG, "w") as f:
+            json.dump(lang, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        os.makedirs(os.path.dirname(KIT_TABLE), exist_ok=True)
+        with open(KIT_TABLE, "w") as f:
+            json.dump(kit, f, indent=1)
+            f.write("\n")
         os.makedirs(os.path.dirname(TABLE), exist_ok=True)
         with open(TABLE, "w") as f:
             json.dump(table, f, indent=1)

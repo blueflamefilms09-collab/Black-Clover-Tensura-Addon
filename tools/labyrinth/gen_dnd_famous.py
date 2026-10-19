@@ -50,7 +50,18 @@ F = [
   [("cantrip", 1), ("counterspell", 1), ("life_drain", 1), ("magic_drain", 2)], ["necrotic_mist", "anti_magic_field"], "M", "poison", 3, 3),
 ]
 
+# 1.94.0: the abyssal look each famous boss wears (tools/abyssal/look_<look>.py, docs/labyrinth/abyssal_bosses.md); the profile's `look` field names it
+LOOKS = {"beholder": "beholder", "mind_flayer_elder_brain": "elder_brain", "strahd": "strahd", "lolth": "lolth", "zariel": "zariel", "kraken": "kraken", "demogorgon": "demogorgon",
+         "asmodeus": "asmodeus", "orcus": "orcus", "acererak": "acererak", "tiamat": "tiamat", "vecna": "vecna", "tarrasque": "tarrasque", "bahamut": "bahamut", "solar": "solar",
+         "dracolich": "dracolich", "lich_king": "lich_king"}
+
 def build(r):
+    (fid, name, side, (lo, hi), dnd, anime, forms, leg, lair, flags, breath, resist, pts) = r
+    out = _build(r)
+    if fid in LOOKS: out["look"] = LOOKS[fid]
+    return out
+
+def _build(r):
     (fid, name, side, (lo, hi), dnd, anime, forms, leg, lair, flags, breath, resist, pts) = r
     return {"famous": True, "side": side, "tier_min": lo, "tier_max": hi, "name": name, "anime": anime, "dnd": dnd, "forms": forms,
             "resistances": resist, "legendary_points": pts,

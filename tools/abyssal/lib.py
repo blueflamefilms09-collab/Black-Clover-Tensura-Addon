@@ -661,10 +661,11 @@ class Skin:
                 cv.img[m] = (8, 6, 10, 255)
 
     def save_skin(self, name):
+        """The skin where the player-model kit reads it: textures/entity/playermodel/<name>.png and <name>_glow.png."""
         from PIL import Image
-        os.makedirs(os.path.join(ROOT, "textures", "entity", "abyssal"), exist_ok=True)
-        Image.fromarray(self.img, "RGBA").save(os.path.join(ROOT, "textures", "entity", "abyssal", name + ".png"), optimize=True)
-        Image.fromarray(self.glow, "RGBA").save(os.path.join(ROOT, "textures", "entity", "abyssal", name + "_glow.png"), optimize=True)
+        os.makedirs(os.path.join(ROOT, "textures", "entity", "playermodel"), exist_ok=True)
+        Image.fromarray(self.img, "RGBA").save(os.path.join(ROOT, "textures", "entity", "playermodel", name + ".png"), optimize=True)
+        Image.fromarray(self.glow, "RGBA").save(os.path.join(ROOT, "textures", "entity", "playermodel", name + "_glow.png"), optimize=True)
 
 
 class Humanoid(Creature):
@@ -707,26 +708,45 @@ class Humanoid(Creature):
     def finish(self, **kw):
         return super().finish(reserved=(64, 64), skin=(self.skin.img, self.skin.glow))
 
+    PIVOTS = {"head": (0, 24, 0), "body": (0, 24, 0), "arm_r": (-5, 22, 0), "arm_l": (5, 22, 0), "leg_r": (-1.9, 12, 0), "leg_l": (1.9, 12, 0)}
+
     def save_extras(self, img, glow, name):
-        """The EXTRAS alone: the same bones (anchors) and cubes without the skin boxes, the atlas with the skin corner blanked, written as abyssal_<look>_extras_p<n>."""
+        """The EXTRAS alone, in the player-model kit's format (docs/playermodel.md): a GeoLite file whose ROOT bones are named x_head, x_body, x_arm_r, x_arm_l, x_leg_r, x_leg_l (each drawn under that part of
+        the player model, with the file's absolute humanoid coordinates), every extra a child of the root of the part it hangs on (the bones of my composite whose parent is `root` or `body` go under
+        x_body), and the cubes that sit straight on a part (pauldrons, spikes) in that root's own cubes. The atlas is the composite's with the skin corner blanked. Written as <name> (geo/entity,
+        textures/entity). Returns (cube count, the names of every bone of the file)."""
         from PIL import Image
         m = self.m
+        remap = {"root": "x_body", "body": "x_body", "head": "x_head", "arm_r": "x_arm_r", "arm_l": "x_arm_l", "leg_r": "x_leg_r", "leg_l": "x_leg_l"}
+        roots = {}
         bones = []
         for n in m.order:
-            b = dict(m.bones[n])
-            b["cubes"] = [c for c in b["cubes"] if id(c) not in self.skin_ids]
-            bones.append(b)
+            b = m.bones[n]
+            cubes = [c for c in b["cubes"] if id(c) not in self.skin_ids]
+            if n in remap:                                               # a part of the player body: only its extra cubes survive, on the root of its anchor
+                if cubes:
+                    r = roots.setdefault(remap[n], {"name": remap[n], "pivot": list(self.PIVOTS["body" if remap[n] == "x_body" else remap[n][2:]]), "cubes": []})
+                    r["cubes"] += cubes
+                continue
+            nb = dict(b)
+            nb["cubes"] = cubes
+            par = b.get("parent")
+            nb["parent"] = remap.get(par, par)
+            if par in remap:
+                roots.setdefault(remap[par], {"name": remap[par], "pivot": list(self.PIVOTS["body" if remap[par] == "x_body" else remap[par][2:]]), "cubes": []})
+            bones.append(nb)
+        out = list(roots.values()) + bones
         geo = {"format_version": "1.12.0", "minecraft:geometry": [{
-            "description": {"identifier": "geometry." + KEY + "_" + name, "texture_width": m.tex_w, "texture_height": m.tex_h,
-                            "visible_bounds_width": 4, "visible_bounds_height": 4, "visible_bounds_offset": [0, 1, 0]}, "bones": bones}]}
-        with open(os.path.join(ROOT, "geo", "entity", KEY + "_" + name + ".geo.json"), "w") as f:
+            "description": {"identifier": "geometry." + name, "texture_width": m.tex_w, "texture_height": m.tex_h, "visible_bounds_width": 4, "visible_bounds_height": 4, "visible_bounds_offset": [0, 1, 0]},
+            "bones": out}]}
+        with open(os.path.join(ROOT, "geo", "entity", name + ".geo.json"), "w") as f:
             json.dump(_round(geo), f, separators=(",", ":"))
         i2, g2 = img.copy(), glow.copy()
         i2[:64, :64] = 0
         g2[:64, :64] = 0
-        Image.fromarray(i2, "RGBA").save(os.path.join(ROOT, "textures", "entity", KEY + "_" + name + ".png"), optimize=True)
-        Image.fromarray(g2, "RGBA").save(os.path.join(ROOT, "textures", "entity", KEY + "_" + name + "_glow.png"), optimize=True)
-        return sum(len(b["cubes"]) for b in bones)
+        Image.fromarray(i2, "RGBA").save(os.path.join(ROOT, "textures", "entity", name + ".png"), optimize=True)
+        Image.fromarray(g2, "RGBA").save(os.path.join(ROOT, "textures", "entity", name + "_glow.png"), optimize=True)
+        return sum(len(b["cubes"]) for b in out), [b["name"] for b in out]
 
 
 # ------------------------------------------------------------------------------------------------ animation
@@ -789,7 +809,7 @@ class AnimRig:
                     v[axis] += val
         return out
 
-    def write(self, anim_name, clips=None, only=None):
+    def write(self, anim_name, clips=None, only=None, filename=None):
         """Writes abyssal_<anim_name>.animation.json. `only` = the bone names that exist in at least one phase: tracks for any other bone are dropped (a look's motion function may name bones that only a later phase has)."""
         a = geo_builder.Anim()
         for clip in (clips or CLIP_LENGTH):
@@ -816,7 +836,7 @@ class AnimRig:
                         continue
                     setter(clip, b, frames)
         os.makedirs(os.path.join(ROOT, "animations", "entity"), exist_ok=True)
-        path = os.path.join(ROOT, "animations", "entity", KEY + "_" + anim_name + ".animation.json")
+        path = os.path.join(ROOT, "animations", "entity", (filename or KEY + "_" + anim_name) + ".animation.json")
         with open(path, "w") as f:
             json.dump(a.data(), f, separators=(",", ":"))
         return a
@@ -902,6 +922,8 @@ def spike(c, bone, base, h, w, paint, rot=(0, 0, 0), n=3, taper=0.55, k=1):
 def humanoid_motion(extra=None, stride=26, arm_swing=20, hover=0.0, lean=0.0, slouch=0.0, cast_arms=(-150, -150), attack_hand="r", legs_still=False, bob=0.5):
     """The poses of the player-shaped body for every clip, plus an optional extra(clip, t, L) that adds to them (a look's own gestures). Angles in degrees, file frame (see rotpt):
     +x swings a hanging limb forward, +z swings it towards +x."""
+    ca = (abs(cast_arms[0]), abs(cast_arms[1]))                                    # +x raises an arm forward and up: a cast always lifts the arms
+
     def motion(clip, t, L):
         P = {}
 
@@ -940,16 +962,16 @@ def humanoid_motion(extra=None, stride=26, arm_swing=20, hover=0.0, lean=0.0, sl
             put("root", "pos", (0, hover, -1.5 * max(0.0, dip) / 14.0))
         elif clip == "cast":
             s = 0.5 + 0.5 * math.sin(ph)
-            put("arm_r", "rot", (cast_arms[0] * 0.55 - 8 * s, 0, -14))
-            put("arm_l", "rot", (cast_arms[1] * 0.55 - 8 * s, 0, 14))
+            put("arm_r", "rot", (ca[0] * 0.55 - 8 * s, 0, -14))
+            put("arm_l", "rot", (ca[1] * 0.55 - 8 * s, 0, 14))
             put("head", "rot", (-10 + 3 * s, 0, 0))
             put("body", "rot", (-4, 0, 0))
             put("root", "pos", (0, hover + 0.8 * s, 0))
         elif clip == "cast_big":
             k = t / L
             up = keys(k, [(0.0, 0.0), (0.35, 1.0), (0.8, 1.15), (0.9, -0.1), (1.0, 0.0)])
-            put("arm_r", "rot", (cast_arms[0] * up, 0, -22 * up))
-            put("arm_l", "rot", (cast_arms[1] * up, 0, 22 * up))
+            put("arm_r", "rot", (ca[0] * up, 0, -22 * up))
+            put("arm_l", "rot", (ca[1] * up, 0, 22 * up))
             put("head", "rot", (-22 * up, 0, 0))
             put("body", "rot", (-12 * up, 0, 0))
             put("root", "pos", (0, hover + 3.0 * max(0.0, up), 0))
