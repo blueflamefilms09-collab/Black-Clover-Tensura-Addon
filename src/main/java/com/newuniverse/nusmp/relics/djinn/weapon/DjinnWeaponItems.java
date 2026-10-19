@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The 24 Djinn weapon items ({@code djinn_weapon_baal} ... {@code djinn_weapon_vassago} and the same with {@code _dark}), registered with the mod's
+ * The Djinn weapon items, two per {@link Djinn} row (72 for the 36 Djinn of 1.93.0: {@code djinn_weapon_baal} ... {@code djinn_weapon_murmur} and the same with {@code _dark}), registered with the mod's
  * other items. {@link #init()} must run before the item register is put on the mod bus; {@code DjinnItems.init()} calls it, so the call the mod
  * constructor already makes is enough. The temporary weapons are not in the survival creative tab by default: {@link #creativeStacks()} is the list for
  * the admin tab.
@@ -33,7 +33,7 @@ public final class DjinnWeaponItems {
 
     public static Item item(Djinn d, boolean dark) { return (dark ? DARK : LIGHT).get(d).get(); }
 
-    /** All 24, light then dark, in roster order: for the client registrations. */
+    /** All of them (72), light then dark, in roster order: for the client registrations. */
     public static List<DeferredItem<Item>> all() {
         List<DeferredItem<Item>> out = new ArrayList<>();
         for (Djinn d : Djinn.values()) {
@@ -46,7 +46,7 @@ public final class DjinnWeaponItems {
     /** A bare weapon of a Djinn; it is adopted as an admin weapon by whoever holds it ({@link DjinnWeaponService#vet}). */
     public static ItemStack bare(Djinn d, boolean dark) { return new ItemStack(item(d, dark)); }
 
-    /** The 24 bare stacks for the creative tab (admin only): light then dark, in roster order. */
+    /** The 72 bare stacks for the creative tab (admin only): light then dark, in roster order. */
     public static List<ItemStack> creativeStacks() {
         List<ItemStack> out = new ArrayList<>();
         for (Djinn d : Djinn.values()) {

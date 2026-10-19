@@ -60,11 +60,14 @@ public final class VesselAccess {
         return out;
     }
 
-    /** The equipped stack whose binding has this serial (and a Djinn), or EMPTY: the vessel is on the player. */
+    /**
+     * The equipped stack whose binding has this serial (and a Djinn), or EMPTY: the vessel is on the player. A vessel that is a weapon and sits under
+     * the Djinn weapon (the weapon overlays it in the same slot, {@link com.newuniverse.nusmp.relics.djinn.weapon.VesselOverlay}) counts as on the body.
+     */
     public static ItemStack findBound(Player p, UUID serial) {
         if (serial == null) return ItemStack.EMPTY;
         for (ItemStack s : equipped(p)) if (serial.equals(serial(s)) && boundDjinn(s) != null) return s;
-        return ItemStack.EMPTY;
+        return com.newuniverse.nusmp.relics.djinn.weapon.VesselOverlay.read(p, serial);
     }
 
     /** Takes the binding off every stack of the player's with this serial (inventory, armour, off-hand, equipped Curios). Returns how many. */
@@ -76,6 +79,7 @@ public final class VesselAccess {
         for (List<ItemStack> list : List.of(inv.items, inv.armor, inv.offhand))
             for (ItemStack s : list) if (hit.test(s)) { strip(s); n[0]++; }
         for (ItemStack s : Relics.equipped(p)) if (hit.test(s)) { strip(s); n[0]++; }
+        n[0] += com.newuniverse.nusmp.relics.djinn.weapon.VesselOverlay.strip(p, serial);                           // a vessel under the Djinn weapon is in the loan record, not in a slot
         return n[0];
     }
 

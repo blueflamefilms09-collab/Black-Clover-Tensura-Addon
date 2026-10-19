@@ -1,0 +1,2602 @@
+[
+ {
+  "ordinal": 0,
+  "id": "baal",
+  "name": "Baal",
+  "title": "Lord of Thunder",
+  "affinity": "Lightning",
+  "color": "0x3C8CFF",
+  "glow": "0xBFE4FF",
+  "form": "Thunder-Lord Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "BLADE",
+   "tail": "WHIP",
+   "halo": "SPOKES",
+   "ears": true
+  },
+  "trait": {
+   "special": "CHAIN",
+   "effect": "minecraft:slowness",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Every blow arcs to a second foe."
+  },
+  "extreme": {
+   "name": "Baal Bolg: Judgement of Thunder",
+   "shape": "BOLTS",
+   "radius": 15.0,
+   "damage": 30.0,
+   "effect": "minecraft:slowness",
+   "ticks": 90,
+   "amp": 2,
+   "blurb": "Nine bolts fall in a ring around you, one after another, each marked on the ground first."
+  },
+  "weapon": {
+   "kind": "lance",
+   "damage": 10.0,
+   "speed": 1.4,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "thunder_throw",
+     "cost": 0.03,
+     "cooldown": 108,
+     "power": 10.5,
+     "range": 22.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "judgement_step",
+     "cost": 0.05,
+     "cooldown": 234,
+     "power": 12.5,
+     "range": 9.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "barrier_piercing 1",
+    "swift 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 1,
+  "id": "amon",
+  "name": "Amon",
+  "title": "Sovereign of Flame",
+  "affinity": "Heat",
+  "color": "0xFF5A14",
+  "glow": "0xFFD27A",
+  "form": "Flame-Sovereign Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "FIRE",
+   "tail": "FLAME",
+   "halo": "RING",
+   "ears": false
+  },
+  "trait": {
+   "special": "MELT",
+   "effect": "minecraft:weakness",
+   "ticks": 90,
+   "amp": 0,
+   "frac": 0.35,
+   "cap": 8.0,
+   "blurb": "Your blade melts guard: foes burn and lose Resistance."
+  },
+  "extreme": {
+   "name": "Amon Salos: Crown of the Sun",
+   "shape": "NOVA",
+   "radius": 13.0,
+   "damage": 32.0,
+   "effect": "nusmp:burn",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "A sun blooms over you and bursts outward in one white-hot wave."
+  },
+  "weapon": {
+   "kind": "greatsword",
+   "damage": 13.0,
+   "speed": 1.0,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "sun_cleave",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 12.5,
+     "range": 6.5,
+     "shape": "hand-written"
+    },
+    {
+     "key": "ember_wall",
+     "cost": 0.05,
+     "cooldown": 250,
+     "power": 9.0,
+     "range": 7.5,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "severance 2",
+    "sturdy 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 2,
+  "id": "vinea",
+  "name": "Vinea",
+  "title": "Queen of the Deep",
+  "affinity": "Water",
+  "color": "0x2D9CDB",
+  "glow": "0xB5F0FF",
+  "form": "Tide-Queen Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "VEIL",
+   "tail": "TENDRIL",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "FREEZE",
+   "effect": "minecraft:slowness",
+   "ticks": 90,
+   "amp": 2,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Cold water clings: foes slow to a crawl."
+  },
+  "extreme": {
+   "name": "Vinea Zalg: The Drowning Sea",
+   "shape": "WAVE",
+   "radius": 16.0,
+   "damage": 25.0,
+   "effect": "minecraft:slowness",
+   "ticks": 120,
+   "amp": 2,
+   "blurb": "A wall of sea rolls out from you, shoving everything before it."
+  },
+  "weapon": {
+   "kind": "trident",
+   "damage": 10.0,
+   "speed": 1.5,
+   "reach": 0.8,
+   "acts": [
+    {
+     "key": "tide_spear",
+     "cost": 0.025,
+     "cooldown": 90,
+     "power": 9.0,
+     "range": 12.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "frost_surge",
+     "cost": 0.05,
+     "cooldown": 234,
+     "power": 10.5,
+     "range": 7.5,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "magic_weapon 1",
+    "magic_protection 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 3,
+  "id": "focalor",
+  "name": "Focalor",
+  "title": "Warden of Gales",
+  "affinity": "Wind",
+  "color": "0x62D6A0",
+  "glow": "0xE6FFF1",
+  "form": "Gale-Warden Maso",
+  "look": {
+   "horns": "SPIKE",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "PUSH",
+   "effect": "",
+   "ticks": 0,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Each blow throws the foe back on a gust."
+  },
+  "extreme": {
+   "name": "Focalor Zaleph: Seven-Wind Cyclone",
+   "shape": "VORTEX",
+   "radius": 15.0,
+   "damage": 23.0,
+   "effect": "minecraft:nausea",
+   "ticks": 150,
+   "amp": 0,
+   "blurb": "A cyclone gathers round you, drags foes in and flings them skyward."
+  },
+  "weapon": {
+   "kind": "glaive",
+   "damage": 9.0,
+   "speed": 1.6,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "cyclone_sweep",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 9.0,
+     "range": 5.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "updraft_leap",
+     "cost": 0.04,
+     "cooldown": 200,
+     "power": 7.0,
+     "range": 5.5,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "swift 2",
+    "elemental_boost 1",
+    "magic_weapon 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 4,
+  "id": "zagan",
+  "name": "Zagan",
+  "title": "Keeper of Life",
+  "affinity": "Life",
+  "color": "0x58C75A",
+  "glow": "0xE4FFB8",
+  "form": "Verdant Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "FEATHER",
+   "tail": "TENDRIL",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "LIFESTEAL",
+   "effect": "",
+   "ticks": 0,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "A share of every blow flows back into you."
+  },
+  "extreme": {
+   "name": "Zagan Genesis: Bloom of Life",
+   "shape": "HEAL_FIELD",
+   "radius": 14.0,
+   "damage": 18.0,
+   "effect": "minecraft:weakness",
+   "ticks": 150,
+   "amp": 0,
+   "blurb": "A garden opens round you: allies are healed, foes are drained."
+  },
+  "weapon": {
+   "kind": "staff",
+   "damage": 7.0,
+   "speed": 1.6,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "bloom_heal",
+     "cost": 0.04,
+     "cooldown": 162,
+     "power": 7.0,
+     "range": 10.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "thorn_snare",
+     "cost": 0.04,
+     "cooldown": 216,
+     "power": 8.0,
+     "range": 13.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "vitality 2",
+    "restoration 1",
+    "elemental_boost 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 5,
+  "id": "zepar",
+  "name": "Zepar",
+  "title": "Breaker of Giants",
+  "affinity": "Strength",
+  "color": "0xD43A3A",
+  "glow": "0xFFB9A0",
+  "form": "Titan Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "MEMBRANE",
+   "tail": "BLADE",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "CRUSH",
+   "effect": "minecraft:weakness",
+   "ticks": 90,
+   "amp": 0,
+   "frac": 0.35,
+   "cap": 8.0,
+   "blurb": "Heavy blows: the more armour, the harder they land."
+  },
+  "extreme": {
+   "name": "Zepar Fang: Titan's Fall",
+   "shape": "NOVA",
+   "radius": 11.0,
+   "damage": 34.0,
+   "effect": "minecraft:slowness",
+   "ticks": 60,
+   "amp": 3,
+   "blurb": "You leap, and come down with the weight of a giant."
+  },
+  "weapon": {
+   "kind": "axe",
+   "damage": 14.0,
+   "speed": 0.9,
+   "reach": 0.3,
+   "acts": [
+    {
+     "key": "titan_slam",
+     "cost": 0.04,
+     "cooldown": 144,
+     "power": 13.5,
+     "range": 6.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "rock_breaker",
+     "cost": 0.04,
+     "cooldown": 216,
+     "power": 13.5,
+     "range": 5.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "crushing 3",
+    "sturdy 2",
+    "severance 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 6,
+  "id": "furfur",
+  "name": "Furfur",
+  "title": "Voice of Ruin",
+  "affinity": "Sound",
+  "color": "0xB77BFF",
+  "glow": "0xF1DDFF",
+  "form": "Resonant Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "VEIL",
+   "tail": "TENDRIL",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "DEAFEN",
+   "effect": "minecraft:nausea",
+   "ticks": 90,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Blows ring in the skull: foes are silenced and dizzied."
+  },
+  "extreme": {
+   "name": "Furfur Requiem: Chord of Ruin",
+   "shape": "NOVA",
+   "radius": 17.0,
+   "damage": 23.0,
+   "effect": "minecraft:nausea",
+   "ticks": 180,
+   "amp": 0,
+   "blurb": "Three rising chords roll out and shake everything in earshot."
+  },
+  "weapon": {
+   "kind": "horn",
+   "damage": 8.0,
+   "speed": 1.2,
+   "reach": 0.3,
+   "acts": [
+    {
+     "key": "resonance_wave",
+     "cost": 0.03,
+     "cooldown": 108,
+     "power": 8.0,
+     "range": 10.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "dissonance",
+     "cost": 0.045,
+     "cooldown": 234,
+     "power": 7.0,
+     "range": 7.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "magic_interference 2",
+    "elemental_boost 1",
+    "enervation 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 7,
+  "id": "marchosias",
+  "name": "Marchosias",
+  "title": "Hunter of Embers",
+  "affinity": "Heat",
+  "color": "0xE23A22",
+  "glow": "0xFFA878",
+  "form": "Ember-Wolf Maso",
+  "look": {
+   "horns": "SPIKE",
+   "wings": "MEMBRANE",
+   "tail": "FLAME",
+   "halo": "NONE",
+   "ears": true
+  },
+  "trait": {
+   "special": "BRAND",
+   "effect": "minecraft:glowing",
+   "ticks": 150,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Foes are branded: set alight and lit up for the hunt."
+  },
+  "extreme": {
+   "name": "Marchosias Hunt: Emberfang Run",
+   "shape": "BEAM",
+   "radius": 22.0,
+   "damage": 36.0,
+   "effect": "nusmp:burn",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "You become a streak of fire and run a straight line through everything in it."
+  },
+  "weapon": {
+   "kind": "claws",
+   "damage": 8.5,
+   "speed": 2.4,
+   "reach": 0.0,
+   "acts": [
+    {
+     "key": "ember_rush",
+     "cost": 0.03,
+     "cooldown": 108,
+     "power": 9.0,
+     "range": 9.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "brand",
+     "cost": 0.035,
+     "cooldown": 180,
+     "power": 6.0,
+     "range": 15.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "swift 2",
+    "energy_steal 1",
+    "severance 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 8,
+  "id": "sitri",
+  "name": "Sitri",
+  "title": "Dawn's Radiance",
+  "affinity": "Light",
+  "color": "0xFFE070",
+  "glow": "0xFFFFFF",
+  "form": "Radiant Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "FEATHER",
+   "tail": "NONE",
+   "halo": "RING",
+   "ears": false
+  },
+  "trait": {
+   "special": "SMITE",
+   "effect": "minecraft:glowing",
+   "ticks": 100,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Light bites: twice as hard against the undead."
+  },
+  "extreme": {
+   "name": "Sitri Dawn: Radiance of First Light",
+   "shape": "NOVA",
+   "radius": 14.0,
+   "damage": 27.0,
+   "effect": "minecraft:blindness",
+   "ticks": 100,
+   "amp": 0,
+   "blurb": "The sky whitens and a second dawn breaks over you."
+  },
+  "weapon": {
+   "kind": "bow",
+   "damage": 7.0,
+   "speed": 1.8,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "dawn_arrow",
+     "cost": 0.025,
+     "cooldown": 54,
+     "power": 11.5,
+     "range": 35.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "radiant_burst",
+     "cost": 0.05,
+     "cooldown": 234,
+     "power": 9.0,
+     "range": 7.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "holy_weapon 2",
+    "elemental_boost 2",
+    "barrier_piercing 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 9,
+  "id": "bifron",
+  "name": "Bifron",
+  "title": "Stormfang",
+  "affinity": "Lightning",
+  "color": "0x7B4DFF",
+  "glow": "0xD2C2FF",
+  "form": "Stormfang Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "BLADE",
+   "tail": "BLADE",
+   "halo": "SPOKES",
+   "ears": false
+  },
+  "trait": {
+   "special": "PARALYZE",
+   "effect": "minecraft:slowness",
+   "ticks": 30,
+   "amp": 3,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "A held breath of stillness after each blow."
+  },
+  "extreme": {
+   "name": "Bifron Skyfall: Pillars of Storm",
+   "shape": "COLUMNS",
+   "radius": 14.0,
+   "damage": 27.0,
+   "effect": "minecraft:slowness",
+   "ticks": 60,
+   "amp": 1,
+   "blurb": "Eight pillars of storm light rise from the ground, each marked before it strikes."
+  },
+  "weapon": {
+   "kind": "glaive",
+   "damage": 10.0,
+   "speed": 1.5,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "chain_lightning",
+     "cost": 0.03,
+     "cooldown": 108,
+     "power": 9.0,
+     "range": 13.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "storm_pillars",
+     "cost": 0.05,
+     "cooldown": 234,
+     "power": 11.5,
+     "range": 15.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "barrier_piercing 1",
+    "swift 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 10,
+  "id": "paimon",
+  "name": "Paimon",
+  "title": "Sovereign of the Sky",
+  "affinity": "Wind",
+  "color": "0x4FC3D6",
+  "glow": "0xDFFAFF",
+  "form": "Sky-Sovereign Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "SLICE",
+   "effect": "minecraft:wither",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Wind-thin cuts that keep bleeding."
+  },
+  "extreme": {
+   "name": "Paimon Tempest: Heavenly Gale",
+   "shape": "VORTEX",
+   "radius": 15.0,
+   "damage": 25.0,
+   "effect": "",
+   "ticks": 0,
+   "amp": 0,
+   "blurb": "The sky itself closes round you and spins everything near into the air."
+  },
+  "weapon": {
+   "kind": "glaive",
+   "damage": 10.0,
+   "speed": 1.5,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "crescent_wind",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 9.0,
+     "range": 11.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "heavenly_dash",
+     "cost": 0.04,
+     "cooldown": 200,
+     "power": 10.5,
+     "range": 10.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "swift 2",
+    "severance 2",
+    "elemental_boost 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 11,
+  "id": "vassago",
+  "name": "Vassago",
+  "title": "Lord of the Abyss",
+  "affinity": "Water",
+  "color": "0x2F55D8",
+  "glow": "0xB8CCFF",
+  "form": "Abyssal Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "MEMBRANE",
+   "tail": "TENDRIL",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "DROWN",
+   "effect": "minecraft:slowness",
+   "ticks": 90,
+   "amp": 1,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Foes choke on the deep: their breath is taken."
+  },
+  "extreme": {
+   "name": "Vassago Maelstrom: Abyssal Tide",
+   "shape": "VORTEX",
+   "radius": 16.0,
+   "damage": 27.0,
+   "effect": "minecraft:slowness",
+   "ticks": 120,
+   "amp": 2,
+   "blurb": "A black whirlpool opens at your feet and drags the world towards it."
+  },
+  "weapon": {
+   "kind": "scythe",
+   "damage": 11.0,
+   "speed": 1.1,
+   "reach": 0.8,
+   "acts": [
+    {
+     "key": "abyssal_reap",
+     "cost": 0.035,
+     "cooldown": 126,
+     "power": 10.5,
+     "range": 6.0,
+     "shape": "hand-written"
+    },
+    {
+     "key": "drowning_pull",
+     "cost": 0.045,
+     "cooldown": 234,
+     "power": 7.0,
+     "range": 10.0,
+     "shape": "hand-written"
+    }
+   ],
+   "engravings": [
+    "soul_eater 1",
+    "energy_steal 1",
+    "enervation 2",
+    "severance 1"
+   ],
+   "names": null
+  },
+  "new_in_1_93_0": false
+ },
+ {
+  "ordinal": 12,
+  "id": "bael",
+  "name": "Bael",
+  "title": "King of the First Throne",
+  "affinity": "Strength",
+  "color": "0xC9A227",
+  "glow": "0xFFF0A0",
+  "form": "First-Throne Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "BLADE",
+   "tail": "NONE",
+   "halo": "SPOKES",
+   "ears": false
+  },
+  "trait": {
+   "special": "KNEEL",
+   "effect": "minecraft:slowness",
+   "ticks": 90,
+   "amp": 2,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "A king's blow: the foe is driven to its knees and pinned."
+  },
+  "extreme": {
+   "name": "Bael Thronus: Edict of the First King",
+   "shape": "QUAKE",
+   "radius": 15.0,
+   "damage": 30.0,
+   "effect": "minecraft:slowness",
+   "ticks": 100,
+   "amp": 3,
+   "blurb": "Three shockwaves roll out from your throne, each one lifting and crushing everything it passes."
+  },
+  "weapon": {
+   "kind": "claymore",
+   "damage": 12.0,
+   "speed": 1.0,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "royal_decree",
+     "cost": 0.03,
+     "cooldown": 110,
+     "power": 11.0,
+     "range": 6.5,
+     "shape": "CONE",
+     "name": "Royal Decree",
+     "desc": "A cone of royal command in front of you: foes are hurt, slowed and driven to their knees."
+    },
+    {
+     "key": "throne_quake",
+     "cost": 0.05,
+     "cooldown": 270,
+     "power": 10.0,
+     "range": 6.5,
+     "shape": "NOVA",
+     "name": "Throne Quake",
+     "desc": "The ground heaves round you: foes are hurt, thrown up, weakened and slowed."
+    }
+   ],
+   "engravings": [
+    "crushing 2",
+    "severance 2",
+    "sturdy 2",
+    "vitality 1"
+   ],
+   "names": {
+    "light": "Bael's Crown Claymore",
+    "dark": "Bael's Black Crown Claymore"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 13,
+  "id": "agares",
+  "name": "Agares",
+  "title": "Rider of Crocodile Tides",
+  "affinity": "Water",
+  "color": "0x1FA37A",
+  "glow": "0xB8FFE0",
+  "form": "Tide-Rider Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "VEIL",
+   "tail": "BLADE",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "DRAG",
+   "effect": "minecraft:slowness",
+   "ticks": 80,
+   "amp": 1,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Tide-jaws: each blow drags the foe in towards you."
+  },
+  "extreme": {
+   "name": "Agares Maw: Jaws of the Rising Tide",
+   "shape": "CONE",
+   "radius": 17.0,
+   "damage": 30.0,
+   "effect": "minecraft:slowness",
+   "ticks": 100,
+   "amp": 1,
+   "blurb": "A wall of water shaped like a crocodile's jaws rears in front of you and snaps shut."
+  },
+  "weapon": {
+   "kind": "harpoon",
+   "damage": 9.5,
+   "speed": 1.3,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "tidal_lunge",
+     "cost": 0.03,
+     "cooldown": 120,
+     "power": 9.5,
+     "range": 8.0,
+     "shape": "DASH",
+     "name": "Tidal Lunge",
+     "desc": "Lunges forward on a rushing tide: foes in the path are hurt, shoved and slowed."
+    },
+    {
+     "key": "undertow",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 7.5,
+     "range": 8.0,
+     "shape": "PULL",
+     "name": "Undertow",
+     "desc": "A pulling current drags every foe near you in and holds them, hurt and slowed."
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "swift 1",
+    "magic_weapon 1"
+   ],
+   "names": {
+    "light": "Agares' Riptide Harpoon",
+    "dark": "Agares' Drowned Harpoon"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 14,
+  "id": "valefor",
+  "name": "Valefor",
+  "title": "Thief of Storm-Hearts",
+  "affinity": "Lightning",
+  "color": "0x5A3DB5",
+  "glow": "0xE0D2FF",
+  "form": "Stormthief Maso",
+  "look": {
+   "horns": "SPIKE",
+   "wings": "BLADE",
+   "tail": "WHIP",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "PLUNDER",
+   "effect": "minecraft:weakness",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "A thief's blow strips the foe's boons and lends you their speed."
+  },
+  "extreme": {
+   "name": "Valefor Larceny: Storm-Heart Heist",
+   "shape": "RAIN",
+   "radius": 14.0,
+   "damage": 24.0,
+   "effect": "minecraft:weakness",
+   "ticks": 120,
+   "amp": 1,
+   "blurb": "Fourteen stolen sparks of storm fall one after another, each marked on the ground first."
+  },
+  "weapon": {
+   "kind": "daggers",
+   "damage": 7.0,
+   "speed": 2.2,
+   "reach": 0.0,
+   "acts": [
+    {
+     "key": "spark_snatch",
+     "cost": 0.028,
+     "cooldown": 90,
+     "power": 8.0,
+     "range": 12.0,
+     "shape": "CHAIN",
+     "name": "Spark Snatch",
+     "desc": "Lightning snatches at the nearest foe and hops on to more, weakening each."
+    },
+    {
+     "key": "storm_heist",
+     "cost": 0.04,
+     "cooldown": 220,
+     "power": 9.0,
+     "range": 10.0,
+     "shape": "DASH",
+     "name": "Storm Heist",
+     "desc": "A dash in a flash of lightning: foes in the path are hurt and slowed, and you are left quick."
+    }
+   ],
+   "engravings": [
+    "swift 2",
+    "energy_steal 1",
+    "elemental_boost 1",
+    "barrier_piercing 1"
+   ],
+   "names": {
+    "light": "Valefor's Stormheart Daggers",
+    "dark": "Valefor's Black Stormheart Daggers"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 15,
+  "id": "barbatos",
+  "name": "Barbatos",
+  "title": "Hunter of the Wild Green",
+  "affinity": "Life",
+  "color": "0x2E7D32",
+  "glow": "0xCFFFB0",
+  "form": "Green-Hunter Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "VEIL",
+   "tail": "WHIP",
+   "halo": "NONE",
+   "ears": true
+  },
+  "trait": {
+   "special": "HUNT",
+   "effect": "minecraft:glowing",
+   "ticks": 150,
+   "amp": 0,
+   "frac": 0.28,
+   "cap": 7.0,
+   "blurb": "The hunter's mark: wounded prey (below half health) takes half again as much."
+  },
+  "extreme": {
+   "name": "Barbatos Venatio: The Wild Hunt",
+   "shape": "COLUMNS",
+   "radius": 15.0,
+   "damage": 26.0,
+   "effect": "minecraft:poison",
+   "ticks": 120,
+   "amp": 1,
+   "blurb": "Eight pillars of living thorn burst out of the ground, each marked before it strikes."
+  },
+  "weapon": {
+   "kind": "bow",
+   "damage": 6.5,
+   "speed": 1.7,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "wild_arrow",
+     "cost": 0.025,
+     "cooldown": 60,
+     "power": 10.0,
+     "range": 30.0,
+     "shape": "BEAM",
+     "name": "Wild Arrow",
+     "desc": "A shaft of green light along your gaze strikes the first two foes and poisons them."
+    },
+    {
+     "key": "green_ambush",
+     "cost": 0.045,
+     "cooldown": 250,
+     "power": 8.0,
+     "range": 14.0,
+     "shape": "PILLARS",
+     "name": "Green Ambush",
+     "desc": "Marks up to three foes (else ahead): thorned roots burst up a moment later, pinning and poisoning."
+    }
+   ],
+   "engravings": [
+    "swift 1",
+    "elemental_boost 2",
+    "vitality 1",
+    "magic_weapon 1"
+   ],
+   "names": {
+    "light": "Barbatos' Greenwood Bow",
+    "dark": "Barbatos' Withered Greenwood Bow"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 16,
+  "id": "gusion",
+  "name": "Gusion",
+  "title": "Seer of the Tide Mirror",
+  "affinity": "Water",
+  "color": "0x3D7EAA",
+  "glow": "0xD6F2FF",
+  "form": "Mirror-Seer Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "VEIL",
+   "tail": "NONE",
+   "halo": "RUNES",
+   "ears": false
+  },
+  "trait": {
+   "special": "FORESIGHT",
+   "effect": "minecraft:glowing",
+   "ticks": 120,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "A glimpse ahead: the foe is revealed and you take less from the next blow."
+  },
+  "extreme": {
+   "name": "Gusion Speculum: Verdict of the Tide Mirror",
+   "shape": "CROSS",
+   "radius": 18.0,
+   "damage": 28.0,
+   "effect": "minecraft:glowing",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "Four lances of mirrored water cut out from you in a cross."
+  },
+  "weapon": {
+   "kind": "rapier",
+   "damage": 8.0,
+   "speed": 1.7,
+   "reach": 0.8,
+   "acts": [
+    {
+     "key": "mirror_thrust",
+     "cost": 0.028,
+     "cooldown": 90,
+     "power": 9.0,
+     "range": 10.0,
+     "shape": "BEAM",
+     "name": "Mirror Thrust",
+     "desc": "A thrust of mirrored water along your gaze hits up to three foes and reveals them."
+    },
+    {
+     "key": "tide_mirror",
+     "cost": 0.04,
+     "cooldown": 240,
+     "power": 7.0,
+     "range": 6.0,
+     "shape": "SHIELD",
+     "name": "Tide Mirror",
+     "desc": "A mirror of water closes round you: Resistance and Absorption for you, and the foes near you are hurt and pushed back."
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "magic_protection 2",
+    "swift 1"
+   ],
+   "names": {
+    "light": "Gusion's Mirrorwater Rapier",
+    "dark": "Gusion's Black Mirrorwater Rapier"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 17,
+  "id": "vepar",
+  "name": "Vepar",
+  "title": "Mermaid Sovereign of Wrecks",
+  "affinity": "Water",
+  "color": "0x00A6B8",
+  "glow": "0xBFFCFF",
+  "form": "Wreck-Mermaid Maso",
+  "look": {
+   "horns": "NONE",
+   "wings": "VEIL",
+   "tail": "TENDRIL",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "WRECK",
+   "effect": "tensura:fragility",
+   "ticks": 150,
+   "amp": 0,
+   "frac": 0.28,
+   "cap": 7.0,
+   "blurb": "Wrecker's blow: the foe's armour is cracked and worn down."
+  },
+  "extreme": {
+   "name": "Vepar Naufragium: Wrecker's Surge",
+   "shape": "WAVE",
+   "radius": 17.0,
+   "damage": 26.0,
+   "effect": "tensura:fragility",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "A surge of splintered hulls and cold black water rolls out from you."
+  },
+  "weapon": {
+   "kind": "anchor",
+   "damage": 12.0,
+   "speed": 0.9,
+   "reach": 0.3,
+   "acts": [
+    {
+     "key": "anchor_drop",
+     "cost": 0.035,
+     "cooldown": 130,
+     "power": 11.0,
+     "range": 5.0,
+     "shape": "NOVA",
+     "name": "Anchor Drop",
+     "desc": "Brings the anchor down: a shock round you hurts foes, throws them up and cracks their guard."
+    },
+    {
+     "key": "shipwreck",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 8.0,
+     "range": 8.0,
+     "shape": "WALL",
+     "name": "Shipwreck",
+     "desc": "A wall of wrecked tide: foes in a broad band ahead are hurt, shoved back and slowed."
+    }
+   ],
+   "engravings": [
+    "crushing 2",
+    "sturdy 2",
+    "elemental_boost 1",
+    "severance 1"
+   ],
+   "names": {
+    "light": "Vepar's Wreckwater Anchor",
+    "dark": "Vepar's Black Wreckwater Anchor"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 18,
+  "id": "shax",
+  "name": "Shax",
+  "title": "Silencer of the Dove",
+  "affinity": "Sound",
+  "color": "0x8E8EA8",
+  "glow": "0xF0F0FF",
+  "form": "Dove-Silence Maso",
+  "look": {
+   "horns": "NONE",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "HUSH",
+   "effect": "minecraft:slowness",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.22,
+   "cap": 6.0,
+   "blurb": "A dove's hush: the foe is silenced, slowed and forgets whom it was fighting."
+  },
+  "extreme": {
+   "name": "Shax Silentium: Hush of the White Dove",
+   "shape": "NOVA",
+   "radius": 16.0,
+   "damage": 22.0,
+   "effect": "minecraft:slowness",
+   "ticks": 120,
+   "amp": 2,
+   "blurb": "A white silence spreads from you in one soundless wave."
+  },
+  "weapon": {
+   "kind": "fans",
+   "damage": 6.5,
+   "speed": 2.0,
+   "reach": 0.0,
+   "acts": [
+    {
+     "key": "wing_hush",
+     "cost": 0.028,
+     "cooldown": 90,
+     "power": 7.5,
+     "range": 7.0,
+     "shape": "CONE",
+     "name": "Wing Hush",
+     "desc": "A cone of white feathers: foes are hurt, silenced and thrown back."
+    },
+    {
+     "key": "muted_flurry",
+     "cost": 0.045,
+     "cooldown": 250,
+     "power": 7.0,
+     "range": 6.0,
+     "shape": "NOVA",
+     "name": "Muted Flurry",
+     "desc": "A silent storm of feathers round you: foes near you are hurt, silenced and dizzied."
+    }
+   ],
+   "engravings": [
+    "magic_interference 2",
+    "swift 2",
+    "enervation 1"
+   ],
+   "names": {
+    "light": "Shax's Dove-Feather Fans",
+    "dark": "Shax's Black Dove-Feather Fans"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 19,
+  "id": "buer",
+  "name": "Buer",
+  "title": "Healer of the Wheel",
+  "affinity": "Life",
+  "color": "0x9CCC3B",
+  "glow": "0xF4FFC0",
+  "form": "Wheel-Healer Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "FEATHER",
+   "tail": "NONE",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "MEND",
+   "effect": "minecraft:weakness",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.22,
+   "cap": 6.0,
+   "blurb": "Each blow mends you and the allies beside you."
+  },
+  "extreme": {
+   "name": "Buer Rota: The Wheel of Mending",
+   "shape": "HEAL_FIELD",
+   "radius": 14.0,
+   "damage": 17.0,
+   "effect": "minecraft:weakness",
+   "ticks": 120,
+   "amp": 0,
+   "blurb": "A turning wheel of green light heals your allies and drains your foes."
+  },
+  "weapon": {
+   "kind": "staff",
+   "damage": 6.0,
+   "speed": 1.5,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "wheel_mend",
+     "cost": 0.04,
+     "cooldown": 170,
+     "power": 7.0,
+     "range": 9.0,
+     "shape": "HEAL",
+     "name": "Wheel Mend",
+     "desc": "A turning wheel of light: you and your allies near you are healed, foes are hurt and weakened."
+    },
+    {
+     "key": "cleansing_spokes",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 8.0,
+     "range": 11.0,
+     "shape": "HEAL",
+     "name": "Cleansing Spokes",
+     "desc": "Spokes of green light cleanse every ailment from you and your allies and heal them, while the foes in reach are hurt and slowed."
+    }
+   ],
+   "engravings": [
+    "restoration 2",
+    "vitality 2",
+    "elemental_boost 1"
+   ],
+   "names": {
+    "light": "Buer's Wheel Staff",
+    "dark": "Buer's Black Wheel Staff"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 20,
+  "id": "andrealphus",
+  "name": "Andrealphus",
+  "title": "Peacock of the Stars",
+  "affinity": "Light",
+  "color": "0x2F6FDB",
+  "glow": "0xBFE3FF",
+  "form": "Star-Peacock Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "SPOKES",
+   "ears": true
+  },
+  "trait": {
+   "special": "DAZZLE",
+   "effect": "minecraft:blindness",
+   "ticks": 50,
+   "amp": 0,
+   "frac": 0.28,
+   "cap": 7.0,
+   "blurb": "A starburst: the foe is blinded and the foes round it are lit up."
+  },
+  "extreme": {
+   "name": "Andrealphus Pavo: Fall of a Hundred Stars",
+   "shape": "RAIN",
+   "radius": 16.0,
+   "damage": 27.0,
+   "effect": "minecraft:blindness",
+   "ticks": 80,
+   "amp": 0,
+   "blurb": "Stars fall around you one after another, each marked on the ground first."
+  },
+  "weapon": {
+   "kind": "lance",
+   "damage": 8.5,
+   "speed": 1.4,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "star_spear",
+     "cost": 0.028,
+     "cooldown": 70,
+     "power": 9.5,
+     "range": 26.0,
+     "shape": "BEAM",
+     "name": "Star Spear",
+     "desc": "A needle of starlight along your gaze strikes the first two foes and dazzles them."
+    },
+    {
+     "key": "peacock_fan",
+     "cost": 0.045,
+     "cooldown": 250,
+     "power": 8.5,
+     "range": 8.0,
+     "shape": "CONE",
+     "name": "Peacock Fan",
+     "desc": "A fan of a hundred eyes opens before you: foes are hurt, blinded and lit up."
+    }
+   ],
+   "engravings": [
+    "holy_weapon 1",
+    "elemental_boost 2",
+    "barrier_piercing 1",
+    "magic_weapon 1"
+   ],
+   "names": {
+    "light": "Andrealphus' Starfall Lance",
+    "dark": "Andrealphus' Black Starfall Lance"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 21,
+  "id": "kimaris",
+  "name": "Kimaris",
+  "title": "Rider of the Dark Steed",
+  "affinity": "Strength",
+  "color": "0x3A2A3F",
+  "glow": "0xFF6A8A",
+  "form": "Dark-Rider Maso",
+  "look": {
+   "horns": "SPIKE",
+   "wings": "MEMBRANE",
+   "tail": "WHIP",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "TRAMPLE",
+   "effect": "minecraft:slowness",
+   "ticks": 40,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 8.0,
+   "blurb": "Momentum: the faster you run, the harder the blow lands."
+  },
+  "extreme": {
+   "name": "Kimaris Equus: Charge of the Dark Steed",
+   "shape": "BEAM",
+   "radius": 22.0,
+   "damage": 35.0,
+   "effect": "minecraft:slowness",
+   "ticks": 60,
+   "amp": 1,
+   "blurb": "You ride a straight line of black fire through everything in front of you."
+  },
+  "weapon": {
+   "kind": "lance",
+   "damage": 10.5,
+   "speed": 1.2,
+   "reach": 1.2,
+   "acts": [
+    {
+     "key": "charge_lance",
+     "cost": 0.035,
+     "cooldown": 130,
+     "power": 11.0,
+     "range": 10.0,
+     "shape": "DASH",
+     "name": "Charge Lance",
+     "desc": "A mounted charge: you dash forward, and every foe in the path is hurt and flung aside."
+    },
+    {
+     "key": "dark_gallop",
+     "cost": 0.048,
+     "cooldown": 250,
+     "power": 12.0,
+     "range": 13.0,
+     "shape": "DASH",
+     "name": "Dark Gallop",
+     "desc": "A long gallop that tramples everything in its way and leaves you fast."
+    }
+   ],
+   "engravings": [
+    "crushing 2",
+    "swift 2",
+    "severance 1",
+    "sturdy 1"
+   ],
+   "names": {
+    "light": "Kimaris' Dark Steed Lance",
+    "dark": "Kimaris' Black Steed Lance"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 22,
+  "id": "amdusias",
+  "name": "Amdusias",
+  "title": "Maestro of the Unicorn Horn",
+  "affinity": "Sound",
+  "color": "0xD58AF0",
+  "glow": "0xFFE3FF",
+  "form": "Unicorn-Maestro Maso",
+  "look": {
+   "horns": "SPIKE",
+   "wings": "FEATHER",
+   "tail": "TENDRIL",
+   "halo": "RUNES",
+   "ears": false
+  },
+  "trait": {
+   "special": "SHOCKWAVE",
+   "effect": "minecraft:nausea",
+   "ticks": 80,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "The note rings outward: foes round the target are shoved back."
+  },
+  "extreme": {
+   "name": "Amdusias Concerto: The Unicorn's Last Chord",
+   "shape": "CROSS",
+   "radius": 17.0,
+   "damage": 26.0,
+   "effect": "minecraft:nausea",
+   "ticks": 120,
+   "amp": 0,
+   "blurb": "Four notes ring out from you in a cross and meet in the air."
+  },
+  "weapon": {
+   "kind": "rapier",
+   "damage": 7.5,
+   "speed": 1.5,
+   "reach": 0.6,
+   "acts": [
+    {
+     "key": "horn_note",
+     "cost": 0.028,
+     "cooldown": 80,
+     "power": 8.0,
+     "range": 16.0,
+     "shape": "BEAM",
+     "name": "Horn Note",
+     "desc": "A single piercing note along your gaze hits up to three foes and dizzies them."
+    },
+    {
+     "key": "grand_chord",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 8.0,
+     "range": 7.5,
+     "shape": "NOVA",
+     "name": "Grand Chord",
+     "desc": "A grand chord rings outward: foes near you are hurt, shoved far back and silenced."
+    }
+   ],
+   "engravings": [
+    "magic_interference 1",
+    "elemental_boost 2",
+    "swift 1",
+    "enervation 1"
+   ],
+   "names": {
+    "light": "Amdusias' Alicorn Rapier",
+    "dark": "Amdusias' Black Alicorn Rapier"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 23,
+  "id": "belial",
+  "name": "Belial",
+  "title": "Lord of Hollow Thrones",
+  "affinity": "Heat",
+  "color": "0x7A0F2E",
+  "glow": "0xFF7096",
+  "form": "Hollow-Lord Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "FIRE",
+   "tail": "FLAME",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "CINDER",
+   "effect": "nusmp:burn",
+   "ticks": 140,
+   "amp": 0,
+   "frac": 0.3,
+   "cap": 7.5,
+   "blurb": "Cinders spread: the fire leaps to foes near the target."
+  },
+  "extreme": {
+   "name": "Belial Inanis: Fall of the Hollow Throne",
+   "shape": "IMPLODE",
+   "radius": 14.0,
+   "damage": 32.0,
+   "effect": "nusmp:burn",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "The air is dragged in towards you, and a moment later the hollow collapses in fire."
+  },
+  "weapon": {
+   "kind": "greatsword",
+   "damage": 12.5,
+   "speed": 0.95,
+   "reach": 0.4,
+   "acts": [
+    {
+     "key": "hollow_cleave",
+     "cost": 0.032,
+     "cooldown": 120,
+     "power": 11.5,
+     "range": 6.5,
+     "shape": "CONE",
+     "name": "Hollow Cleave",
+     "desc": "A hollow cleaving arc: foes are hurt, set alight and weakened."
+    },
+    {
+     "key": "throne_ash",
+     "cost": 0.048,
+     "cooldown": 270,
+     "power": 9.0,
+     "range": 6.5,
+     "shape": "NOVA",
+     "name": "Throne Ash",
+     "desc": "A burst of black ash: foes near you are hurt, burned and blinded."
+    }
+   ],
+   "engravings": [
+    "severance 2",
+    "elemental_boost 2",
+    "soul_eater 1",
+    "enervation 1"
+   ],
+   "names": {
+    "light": "Belial's Hollow Throne Blade",
+    "dark": "Belial's Black Hollow Throne Blade"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 24,
+  "id": "decarabia",
+  "name": "Decarabia",
+  "title": "Star Crab of the Deep",
+  "affinity": "Light",
+  "color": "0xE0B45A",
+  "glow": "0xFFF4C8",
+  "form": "Star-Crab Maso",
+  "look": {
+   "horns": "NONE",
+   "wings": "MEMBRANE",
+   "tail": "BLADE",
+   "halo": "SPOKES",
+   "ears": true
+  },
+  "trait": {
+   "special": "SHELL",
+   "effect": "minecraft:slowness",
+   "ticks": 50,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Star-shell: every blow adds a little Absorption (to three hearts)."
+  },
+  "extreme": {
+   "name": "Decarabia Astra: Star-Shell Nova",
+   "shape": "NOVA",
+   "radius": 14.0,
+   "damage": 26.0,
+   "effect": "minecraft:slowness",
+   "ticks": 100,
+   "amp": 1,
+   "blurb": "A star ripens in a shell of light round you, then bursts."
+  },
+  "weapon": {
+   "kind": "pincers",
+   "damage": 7.5,
+   "speed": 1.6,
+   "reach": 0.2,
+   "acts": [
+    {
+     "key": "pincer_snap",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 10.0,
+     "range": 5.0,
+     "shape": "CONE",
+     "name": "Pincer Snap",
+     "desc": "The pincers snap shut on foes right ahead: they are hurt and held fast."
+    },
+    {
+     "key": "star_shell",
+     "cost": 0.04,
+     "cooldown": 240,
+     "power": 6.0,
+     "range": 6.0,
+     "shape": "SHIELD",
+     "name": "Star Shell",
+     "desc": "A shell of stars closes round you: a great deal of Absorption and Resistance for you, and the foes near you are hurt and dazzled."
+    }
+   ],
+   "engravings": [
+    "sturdy 2",
+    "holy_coat 1",
+    "elemental_boost 2",
+    "magic_protection 1"
+   ],
+   "names": {
+    "light": "Decarabia's Star-Shell Pincers",
+    "dark": "Decarabia's Black Star-Shell Pincers"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 25,
+  "id": "seere",
+  "name": "Seere",
+  "title": "Swift Wind Prince",
+  "affinity": "Wind",
+  "color": "0xE8E8C0",
+  "glow": "0xFFFFFF",
+  "form": "Wind-Prince Maso",
+  "look": {
+   "horns": "NONE",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "SPOKES",
+   "ears": true
+  },
+  "trait": {
+   "special": "QUICKEN",
+   "effect": "",
+   "ticks": 0,
+   "amp": 0,
+   "frac": 0.28,
+   "cap": 7.0,
+   "blurb": "Each blow quickens you: Speed II for two seconds."
+  },
+  "extreme": {
+   "name": "Seere Celer: Passage of the Swift Wind",
+   "shape": "BEAM",
+   "radius": 24.0,
+   "damage": 28.0,
+   "effect": "minecraft:slowness",
+   "ticks": 40,
+   "amp": 0,
+   "blurb": "You become the wind and pass in one breath through everything in a long line."
+  },
+  "weapon": {
+   "kind": "sabre",
+   "damage": 7.0,
+   "speed": 2.0,
+   "reach": 0.4,
+   "acts": [
+    {
+     "key": "swift_slash",
+     "cost": 0.026,
+     "cooldown": 70,
+     "power": 8.0,
+     "range": 7.0,
+     "shape": "DASH",
+     "name": "Swift Slash",
+     "desc": "A flash of a dash that cuts everything in its path and leaves you quick."
+    },
+    {
+     "key": "gale_step",
+     "cost": 0.04,
+     "cooldown": 200,
+     "power": 8.5,
+     "range": 12.0,
+     "shape": "DASH",
+     "name": "Gale Step",
+     "desc": "A long step on the wind that cuts every foe on its way and leaves you moving fast."
+    }
+   ],
+   "engravings": [
+    "swift 3",
+    "elemental_boost 1",
+    "severance 1"
+   ],
+   "names": {
+    "light": "Seere's Swift Wind Sabre",
+    "dark": "Seere's Black Wind Sabre"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 26,
+  "id": "dantalion",
+  "name": "Dantalion",
+  "title": "Many-Faced Scholar",
+  "affinity": "Light",
+  "color": "0xC0A0FF",
+  "glow": "0xF2E8FF",
+  "form": "Many-Face Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "VEIL",
+   "tail": "NONE",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "BEGUILE",
+   "effect": "minecraft:nausea",
+   "ticks": 100,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Many faces: a confused creature turns on its nearest neighbour."
+  },
+  "extreme": {
+   "name": "Dantalion Facies: Lecture of a Thousand Faces",
+   "shape": "COLUMNS",
+   "radius": 14.0,
+   "damage": 25.0,
+   "effect": "minecraft:nausea",
+   "ticks": 140,
+   "amp": 0,
+   "blurb": "Eight pillars of pale light rise, each with a face in it, each marked before it speaks."
+  },
+  "weapon": {
+   "kind": "staff",
+   "damage": 6.0,
+   "speed": 1.6,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "forbidden_page",
+     "cost": 0.028,
+     "cooldown": 90,
+     "power": 8.0,
+     "range": 14.0,
+     "shape": "BEAM",
+     "name": "Forbidden Page",
+     "desc": "A page of forbidden script flies along your gaze, striking the first two foes with dizziness and weakness."
+    },
+    {
+     "key": "many_faces",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 8.0,
+     "range": 14.0,
+     "shape": "PILLARS",
+     "name": "Many Faces",
+     "desc": "Marks up to three foes (else ahead): a face of light looks up from each place a moment later, hurting and confusing."
+    }
+   ],
+   "engravings": [
+    "magic_interference 2",
+    "magic_weapon 1",
+    "elemental_boost 1",
+    "magic_capacity 1"
+   ],
+   "names": {
+    "light": "Dantalion's Scholar Staff",
+    "dark": "Dantalion's Black Scholar Staff"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 27,
+  "id": "andromalius",
+  "name": "Andromalius",
+  "title": "Seeker of Hidden Things",
+  "affinity": "Lightning",
+  "color": "0x2B2B6B",
+  "glow": "0x9CA8FF",
+  "form": "Hidden-Seeker Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "BLADE",
+   "tail": "TENDRIL",
+   "halo": "RUNES",
+   "ears": false
+  },
+  "trait": {
+   "special": "REVEAL",
+   "effect": "minecraft:glowing",
+   "ticks": 150,
+   "amp": 0,
+   "frac": 0.27,
+   "cap": 7.0,
+   "blurb": "Hidden things are found: invisibility is stripped, and the hidden take half again."
+  },
+  "extreme": {
+   "name": "Andromalius Inquisitio: Thunder Finds the Hidden",
+   "shape": "BOLTS",
+   "radius": 16.0,
+   "damage": 26.0,
+   "effect": "minecraft:glowing",
+   "ticks": 160,
+   "amp": 0,
+   "blurb": "Nine bolts fall in a ring around you, one after another, each marked on the ground first."
+  },
+  "weapon": {
+   "kind": "spear",
+   "damage": 9.0,
+   "speed": 1.5,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "seeker_bolt",
+     "cost": 0.028,
+     "cooldown": 80,
+     "power": 9.0,
+     "range": 24.0,
+     "shape": "BEAM",
+     "name": "Seeker Bolt",
+     "desc": "A bolt that finds what hides: it strikes up to three foes along your gaze, who are lit up."
+    },
+    {
+     "key": "unveil",
+     "cost": 0.042,
+     "cooldown": 240,
+     "power": 7.5,
+     "range": 9.0,
+     "shape": "NOVA",
+     "name": "Unveil",
+     "desc": "A flash of storm light over the area: foes near you are hurt, lit up and stripped of invisibility."
+    }
+   ],
+   "engravings": [
+    "barrier_piercing 2",
+    "elemental_boost 2",
+    "swift 1",
+    "magic_interference 1"
+   ],
+   "names": {
+    "light": "Andromalius' Seeker Spear",
+    "dark": "Andromalius' Black Seeker Spear"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 28,
+  "id": "glasya_labolas",
+  "name": "Glasya-Labolas",
+  "title": "Hound of Slaughter",
+  "affinity": "Strength",
+  "color": "0xA00000",
+  "glow": "0xFF9090",
+  "form": "Slaughter-Hound Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "MEMBRANE",
+   "tail": "WHIP",
+   "halo": "NONE",
+   "ears": false
+  },
+  "trait": {
+   "special": "BLOODLUST",
+   "effect": "minecraft:wither",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 7.0,
+   "blurb": "Slaughter: each blow in a row bites harder, up to forty percent more."
+  },
+  "extreme": {
+   "name": "Glasya-Labolas Cruor: The Slaughter Howl",
+   "shape": "CONE",
+   "radius": 15.0,
+   "damage": 34.0,
+   "effect": "minecraft:weakness",
+   "ticks": 100,
+   "amp": 1,
+   "blurb": "A howl and a rush of claws tear through a wide fan in front of you."
+  },
+  "weapon": {
+   "kind": "claws",
+   "damage": 8.0,
+   "speed": 2.2,
+   "reach": 0.0,
+   "acts": [
+    {
+     "key": "savage_rend",
+     "cost": 0.028,
+     "cooldown": 80,
+     "power": 9.0,
+     "range": 4.5,
+     "shape": "CONE",
+     "name": "Savage Rend",
+     "desc": "Savage claws: foes right ahead are hurt and bleed."
+    },
+    {
+     "key": "bloodhound_rush",
+     "cost": 0.042,
+     "cooldown": 220,
+     "power": 10.0,
+     "range": 9.0,
+     "shape": "DASH",
+     "name": "Bloodhound Rush",
+     "desc": "A hound's rush: foes in the path are hurt and bleed, and a share comes back to you as health."
+    }
+   ],
+   "engravings": [
+    "severance 2",
+    "energy_steal 1",
+    "swift 2",
+    "crushing 1"
+   ],
+   "names": {
+    "light": "Glasya-Labolas' Slaughter Fangs",
+    "dark": "Glasya-Labolas' Black Slaughter Fangs"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 29,
+  "id": "haagenti",
+  "name": "Haagenti",
+  "title": "Alchemist of the Winged Bull",
+  "affinity": "Strength",
+  "color": "0xB87333",
+  "glow": "0xFFD9A0",
+  "form": "Winged-Bull Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "FEATHER",
+   "tail": "WHIP",
+   "halo": "NONE",
+   "ears": true
+  },
+  "trait": {
+   "special": "TRANSMUTE",
+   "effect": "",
+   "ticks": 0,
+   "amp": 0,
+   "frac": 0.27,
+   "cap": 7.0,
+   "blurb": "Alchemy: the blow turns to a random boon for you and a random bane for the foe."
+  },
+  "extreme": {
+   "name": "Haagenti Opus: The Great Work",
+   "shape": "VORTEX",
+   "radius": 15.0,
+   "damage": 25.0,
+   "effect": "minecraft:poison",
+   "ticks": 100,
+   "amp": 1,
+   "blurb": "A cauldron of gold-bronze wind turns round you and throws everything in it into the air."
+  },
+  "weapon": {
+   "kind": "cleaver",
+   "damage": 11.5,
+   "speed": 1.1,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "bull_gore",
+     "cost": 0.034,
+     "cooldown": 120,
+     "power": 11.0,
+     "range": 7.0,
+     "shape": "DASH",
+     "name": "Bull Gore",
+     "desc": "A gore: you charge a few blocks, hurting and flinging the foes in the path."
+    },
+    {
+     "key": "great_work",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 8.0,
+     "range": 6.5,
+     "shape": "NOVA",
+     "name": "Great Work",
+     "desc": "The Great Work: a burst round you hurts, poisons and weakens foes, and mends you with regeneration."
+    }
+   ],
+   "engravings": [
+    "crushing 2",
+    "sturdy 1",
+    "vitality 1",
+    "elemental_boost 1"
+   ],
+   "names": {
+    "light": "Haagenti's Bull Cleaver",
+    "dark": "Haagenti's Black Bull Cleaver"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 30,
+  "id": "crocell",
+  "name": "Crocell",
+  "title": "Frost Sage",
+  "affinity": "Water",
+  "color": "0x9ADCF0",
+  "glow": "0xFFFFFF",
+  "form": "Frost-Sage Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "VEIL",
+   "tail": "NONE",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "RIME",
+   "effect": "minecraft:slowness",
+   "ticks": 100,
+   "amp": 1,
+   "frac": 0.22,
+   "cap": 6.0,
+   "blurb": "Rime spreads: cold clings to every foe near the target."
+  },
+  "extreme": {
+   "name": "Crocell Glacies: The Sage's Frozen Tide",
+   "shape": "WAVE",
+   "radius": 16.0,
+   "damage": 24.0,
+   "effect": "minecraft:slowness",
+   "ticks": 140,
+   "amp": 3,
+   "blurb": "A tide of ice-water rolls out from you and freezes where it stops."
+  },
+  "weapon": {
+   "kind": "staff",
+   "damage": 6.5,
+   "speed": 1.5,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "frost_bolt",
+     "cost": 0.026,
+     "cooldown": 70,
+     "power": 8.0,
+     "range": 20.0,
+     "shape": "BEAM",
+     "name": "Frost Bolt",
+     "desc": "A bolt of cold along your gaze strikes the first two foes, freezing and slowing them."
+    },
+    {
+     "key": "rime_field",
+     "cost": 0.045,
+     "cooldown": 260,
+     "power": 7.5,
+     "range": 7.5,
+     "shape": "NOVA",
+     "name": "Rime Field",
+     "desc": "A field of rime spreads round you: foes near you are hurt, frozen and slowed."
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "lethargy 1",
+    "magic_weapon 1",
+    "magic_protection 1"
+   ],
+   "names": {
+    "light": "Crocell's Frost Sage Staff",
+    "dark": "Crocell's Black Frost Staff"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 31,
+  "id": "furcas",
+  "name": "Furcas",
+  "title": "Old Knight of the Ice Wind",
+  "affinity": "Wind",
+  "color": "0xAAB7C8",
+  "glow": "0xFFFFFF",
+  "form": "Ice-Wind Maso",
+  "look": {
+   "horns": "STAG",
+   "wings": "BLADE",
+   "tail": "NONE",
+   "halo": "RING",
+   "ears": false
+  },
+  "trait": {
+   "special": "ICEWIND",
+   "effect": "minecraft:slowness",
+   "ticks": 70,
+   "amp": 1,
+   "frac": 0.27,
+   "cap": 7.0,
+   "blurb": "An ice wind throws the foe back and chills it."
+  },
+  "extreme": {
+   "name": "Furcas Boreas: Charge of the Ice Wind",
+   "shape": "CONE",
+   "radius": 18.0,
+   "damage": 29.0,
+   "effect": "minecraft:slowness",
+   "ticks": 120,
+   "amp": 2,
+   "blurb": "A knight's charge on an ice wind sweeps a wide fan in front of you."
+  },
+  "weapon": {
+   "kind": "halberd",
+   "damage": 10.0,
+   "speed": 1.2,
+   "reach": 1.0,
+   "acts": [
+    {
+     "key": "ice_wind_sweep",
+     "cost": 0.032,
+     "cooldown": 120,
+     "power": 9.5,
+     "range": 6.5,
+     "shape": "CONE",
+     "name": "Ice-Wind Sweep",
+     "desc": "A sweeping ice wind: a broad cone of foes is hurt, frozen and thrown back."
+    },
+    {
+     "key": "knights_gale",
+     "cost": 0.045,
+     "cooldown": 240,
+     "power": 10.0,
+     "range": 9.0,
+     "shape": "DASH",
+     "name": "Knight's Gale",
+     "desc": "A knight's charge on an ice wind: foes in the path are hurt, chilled and flung aside."
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "stagnation 1",
+    "sturdy 1",
+    "swift 1"
+   ],
+   "names": {
+    "light": "Furcas' Ice-Wind Halberd",
+    "dark": "Furcas' Black Ice-Wind Halberd"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 32,
+  "id": "balam",
+  "name": "Balam",
+  "title": "Three-Headed Prophet",
+  "affinity": "Heat",
+  "color": "0xD1622A",
+  "glow": "0xFFE0A0",
+  "form": "Three-Head Maso",
+  "look": {
+   "horns": "RAM",
+   "wings": "FIRE",
+   "tail": "WHIP",
+   "halo": "SPOKES",
+   "ears": true
+  },
+  "trait": {
+   "special": "TRIPLE",
+   "effect": "nusmp:burn",
+   "ticks": 100,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "Three heads, three bites: two foes near the target take a share too."
+  },
+  "extreme": {
+   "name": "Balam Trias: Prophecy of Three Flames",
+   "shape": "COLUMNS",
+   "radius": 15.0,
+   "damage": 28.0,
+   "effect": "nusmp:burn",
+   "ticks": 140,
+   "amp": 0,
+   "blurb": "Eight pillars of foretold flame rise from the ground, each marked before it strikes."
+  },
+  "weapon": {
+   "kind": "trident",
+   "damage": 9.0,
+   "speed": 1.4,
+   "reach": 0.8,
+   "acts": [
+    {
+     "key": "triple_flame",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 9.0,
+     "range": 11.0,
+     "shape": "CHAIN",
+     "name": "Triple Flame",
+     "desc": "Three tongues of flame leap from foe to foe, setting each alight."
+    },
+    {
+     "key": "prophecy",
+     "cost": 0.048,
+     "cooldown": 260,
+     "power": 10.0,
+     "range": 14.0,
+     "shape": "PILLARS",
+     "name": "Prophecy",
+     "desc": "Foretells three places (on your foes, else ahead): fire falls on each a moment later."
+    }
+   ],
+   "engravings": [
+    "elemental_boost 2",
+    "severance 1",
+    "swift 1",
+    "magic_weapon 1"
+   ],
+   "names": {
+    "light": "Balam's Triple-Flame Trident",
+    "dark": "Balam's Black Triple-Flame Trident"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 33,
+  "id": "alloces",
+  "name": "Alloces",
+  "title": "Lion-Eyed Knight",
+  "affinity": "Heat",
+  "color": "0xE8892B",
+  "glow": "0xFFF0B0",
+  "form": "Lion-Eye Maso",
+  "look": {
+   "horns": "CROWN",
+   "wings": "FIRE",
+   "tail": "WHIP",
+   "halo": "RING",
+   "ears": true
+  },
+  "trait": {
+   "special": "ROAR",
+   "effect": "minecraft:weakness",
+   "ticks": 80,
+   "amp": 0,
+   "frac": 0.27,
+   "cap": 7.0,
+   "blurb": "The lion's roar weakens every foe near you."
+  },
+  "extreme": {
+   "name": "Alloces Leonis: The Lion's Judgement",
+   "shape": "NOVA",
+   "radius": 15.0,
+   "damage": 27.0,
+   "effect": "minecraft:weakness",
+   "ticks": 120,
+   "amp": 1,
+   "blurb": "A golden roar breaks over everything near you."
+  },
+  "weapon": {
+   "kind": "longsword",
+   "damage": 10.0,
+   "speed": 1.3,
+   "reach": 0.6,
+   "acts": [
+    {
+     "key": "lion_slash",
+     "cost": 0.03,
+     "cooldown": 100,
+     "power": 10.5,
+     "range": 6.0,
+     "shape": "CONE",
+     "name": "Lion Slash",
+     "desc": "Three clean claw-strokes of fire: foes in the cone are hurt and burn."
+    },
+    {
+     "key": "lions_roar",
+     "cost": 0.045,
+     "cooldown": 250,
+     "power": 7.0,
+     "range": 8.5,
+     "shape": "NOVA",
+     "name": "Lion's Roar",
+     "desc": "A lion's roar: foes near you are hurt, weakened and filled with fear."
+    }
+   ],
+   "engravings": [
+    "severance 2",
+    "elemental_boost 2",
+    "sturdy 1",
+    "swift 1"
+   ],
+   "names": {
+    "light": "Alloces' Lion-Eye Longsword",
+    "dark": "Alloces' Black Lion-Eye Longsword"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 34,
+  "id": "camio",
+  "name": "Camio",
+  "title": "Songbird of the Crows",
+  "affinity": "Sound",
+  "color": "0x2A3340",
+  "glow": "0xA0C8FF",
+  "form": "Crow-Song Maso",
+  "look": {
+   "horns": "NONE",
+   "wings": "FEATHER",
+   "tail": "BLADE",
+   "halo": "RUNES",
+   "ears": true
+  },
+  "trait": {
+   "special": "CARRION",
+   "effect": "minecraft:poison",
+   "ticks": 60,
+   "amp": 0,
+   "frac": 0.25,
+   "cap": 6.5,
+   "blurb": "The crows pick at the weak: a foe with any ailment takes half again as much."
+  },
+  "extreme": {
+   "name": "Camio Corvus: A Murder of Crows",
+   "shape": "RAIN",
+   "radius": 15.0,
+   "damage": 24.0,
+   "effect": "tensura:fear",
+   "ticks": 100,
+   "amp": 0,
+   "blurb": "Crows dive around you one after another, each marked on the ground first."
+  },
+  "weapon": {
+   "kind": "staff",
+   "damage": 6.5,
+   "speed": 1.7,
+   "reach": 0.5,
+   "acts": [
+    {
+     "key": "crow_flock",
+     "cost": 0.028,
+     "cooldown": 80,
+     "power": 7.5,
+     "range": 12.0,
+     "shape": "CHAIN",
+     "name": "Crow Flock",
+     "desc": "A flock of crows streams from foe to foe, a little weaker at each peck."
+    },
+    {
+     "key": "murder_of_crows",
+     "cost": 0.045,
+     "cooldown": 250,
+     "power": 8.5,
+     "range": 14.0,
+     "shape": "PILLARS",
+     "name": "Murder of Crows",
+     "desc": "Marks up to three foes (else ahead): a murder of crows dives on each a moment later, filling them with fear."
+    }
+   ],
+   "engravings": [
+    "magic_interference 1",
+    "swift 2",
+    "elemental_boost 1",
+    "soul_eater 1"
+   ],
+   "names": {
+    "light": "Camio's Raven Quill Staff",
+    "dark": "Camio's Black Raven Quill Staff"
+   }
+  },
+  "new_in_1_93_0": true
+ },
+ {
+  "ordinal": 35,
+  "id": "murmur",
+  "name": "Murmur",
+  "title": "Death Drummer",
+  "affinity": "Sound",
+  "color": "0x6B3FA0",
+  "glow": "0xE8C8FF",
+  "form": "Death-Drum Maso",
+  "look": {
+   "horns": "CRESCENT",
+   "wings": "MEMBRANE",
+   "tail": "TENDRIL",
+   "halo": "SPOKES",
+   "ears": false
+  },
+  "trait": {
+   "special": "DRUMBEAT",
+   "effect": "minecraft:slowness",
+   "ticks": 40,
+   "amp": 0,
+   "frac": 0.22,
+   "cap": 7.0,
+   "blurb": "Every third blow is a drumbeat: twice the rider and a shove."
+  },
+  "extreme": {
+   "name": "Murmur Tympanum: The Death Drum",
+   "shape": "QUAKE",
+   "radius": 17.0,
+   "damage": 28.0,
+   "effect": "minecraft:nausea",
+   "ticks": 140,
+   "amp": 0,
+   "blurb": "Three drumbeats roll out of the ground, each one a wider ring of ruin."
+  },
+  "weapon": {
+   "kind": "mace",
+   "damage": 11.0,
+   "speed": 1.1,
+   "reach": 0.3,
+   "acts": [
+    {
+     "key": "death_drum",
+     "cost": 0.034,
+     "cooldown": 120,
+     "power": 9.5,
+     "range": 5.5,
+     "shape": "NOVA",
+     "name": "Death Drum",
+     "desc": "A drumbeat you feel in your bones: foes round you are hurt, dizzied and thrown back."
+    },
+    {
+     "key": "funeral_march",
+     "cost": 0.047,
+     "cooldown": 270,
+     "power": 8.5,
+     "range": 9.0,
+     "shape": "PULL",
+     "name": "Funeral March",
+     "desc": "A slow funeral march: foes near you are drawn in, hurt, slowed and afraid."
+    }
+   ],
+   "engravings": [
+    "soul_eater 1",
+    "enervation 2",
+    "magic_interference 1",
+    "crushing 1"
+   ],
+   "names": {
+    "light": "Murmur's Death Drum Mace",
+    "dark": "Murmur's Black Death Drum Mace"
+   }
+  },
+  "new_in_1_93_0": true
+ }
+]

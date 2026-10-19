@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The twelve Djinn Seals ({@code djinn_seal_baal} ... {@code djinn_seal_vassago}), registered with the mod's other items. The art is
- * tools/relics/gen_djinn_art.py's. Call {@link #init()} from the mod constructor before the item register is put on the mod bus.
+ * The Djinn Seals ({@code djinn_seal_baal} ... {@code djinn_seal_vassago}, then the twenty-four of 1.93.0 up to {@code djinn_seal_murmur}: one per {@link Djinn}
+ * row, registered by the enum), registered with the mod's other items. The art is tools/relics/gen_djinn_art.py's; a Seal with no model yet draws as the
+ * missing-model cube and nothing else is affected. Call {@link #init()} from the mod constructor before the item register is put on the mod bus.
  */
 public final class DjinnItems {
     private DjinnItems() {}
@@ -29,7 +30,7 @@ public final class DjinnItems {
     private static final DeferredItem<Item> DARK_SHARD = NUItems.ITEMS.register("dark_rukh_shard",
             () -> new com.newuniverse.nusmp.relics.djinn.dark.DarkRukhShardItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
 
-    public static void init() { com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponItems.init(); }       // the 24 Djinn weapons register in the same item register, before it goes on the bus
+    public static void init() { com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponItems.init(); }       // the 72 Djinn weapons register in the same item register, before it goes on the bus
 
     public static Item seal(Djinn d) { return SEALS.get(d).get(); }
 
@@ -50,6 +51,6 @@ public final class DjinnItems {
     /** The Dark Rukh Shard as a creative-tab entry (the lead adds it next to the Seals). */
     public static DeferredItem<Item> darkShardEntry() { return DARK_SHARD; }
 
-    /** All twelve, in roster order: for the creative tab. */
+    /** All thirty-six, in roster order: for the creative tab. */
     public static List<DeferredItem<Item>> allSeals() { return new ArrayList<>(SEALS.values()); }
 }

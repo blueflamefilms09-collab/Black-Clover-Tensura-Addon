@@ -39,12 +39,16 @@ public final class DjinnWeaponService {
     /** The 36 main slots, the offhand, four armour pieces and the cursor: the places the loan reads. */
     static final int SLOTS = 42;
 
-    private static final WeaponLoan.Ops<ItemStack> OPS = new WeaponLoan.Ops<>() {
-        @Override public ItemStack empty() { return ItemStack.EMPTY; }
-        @Override public boolean isEmpty(ItemStack t) { return t.isEmpty(); }
-        @Override public boolean isWeapon(ItemStack t) { return DjinnTemp.isLoanWeapon(t); }
-        @Override public boolean same(ItemStack a, ItemStack b) { return ItemStack.matches(a, b); }
-    };
+    /** The loan's view of an item. {@code d} and {@code serial} are the owner's Djinn and vessel serial (null for a household member, who has no vessel): their vessel is overlaid, never displaced. */
+    private static WeaponLoan.Ops<ItemStack> ops(Djinn d, java.util.UUID serial) {
+        return new WeaponLoan.Ops<>() {
+            @Override public ItemStack empty() { return ItemStack.EMPTY; }
+            @Override public boolean isEmpty(ItemStack t) { return t.isEmpty(); }
+            @Override public boolean isWeapon(ItemStack t) { return DjinnTemp.isLoanWeapon(t); }
+            @Override public boolean same(ItemStack a, ItemStack b) { return ItemStack.matches(a, b); }
+            @Override public boolean overlays(ItemStack t) { return VesselOverlay.isVesselOf(t, d, serial); }
+        };
+    }
 
     /** The player's inventory as the loan's flat slots. */
     private static final class InvSlots implements WeaponLoan.Slots<ItemStack> {
@@ -77,7 +81,7 @@ public final class DjinnWeaponService {
 
     // ================================================================ the loan record
     private static WeaponLoan<ItemStack> load(ServerPlayer p, DjinnState s) {
-        WeaponLoan<ItemStack> loan = new WeaponLoan<>(OPS);
+        WeaponLoan<ItemStack> loan = new WeaponLoan<>(ops(s.djinn(), s.serial()));
         if (!s.hasLoan()) return loan;
         CompoundTag c = s.loan();
         List<ItemStack> stash = new ArrayList<>();
@@ -88,12 +92,13 @@ public final class DjinnWeaponService {
         }
         int moved = c.contains("moved") ? c.getInt("moved") : -1;
         ItemStack movedItem = moved >= 0 ? ItemStack.parseOptional(p.registryAccess(), c.getCompound("movedItem")) : ItemStack.EMPTY;
-        loan.load(c.contains("home") ? c.getInt("home") : -1, moved, movedItem.isEmpty() ? null : movedItem, stash);
+        ItemStack overlaid = VesselOverlay.readFrom(c, p.registryAccess());                           // the vessel the weapon sits over (it is in no slot)
+        loan.load(c.contains("home") ? c.getInt("home") : -1, moved, movedItem.isEmpty() ? null : movedItem, stash, overlaid.isEmpty() ? null : overlaid);
         return loan;
     }
 
     private static void save(ServerPlayer p, DjinnState s, WeaponLoan<ItemStack> loan) {
-        if (!loan.active() && loan.stash().isEmpty()) {
+        if (!loan.active() && loan.stash().isEmpty() && loan.overlaid() == null) {
             s.clearLoan();
             return;
         }
@@ -103,6 +108,7 @@ public final class DjinnWeaponService {
             c.putInt("moved", loan.moved());
             c.put("movedItem", loan.movedItem().saveOptional(p.registryAccess()));
         }
+        VesselOverlay.write(c, loan.overlaid(), p.registryAccess());
         ListTag l = new ListTag();
         for (ItemStack st : loan.stash()) l.add(st.saveOptional(p.registryAccess()));
         c.put("stash", l);
@@ -148,7 +154,7 @@ public final class DjinnWeaponService {
     public static void release(ServerPlayer p) {
         DjinnState s = DjinnState.of(p);
         WeaponLoan<ItemStack> loan = load(p, s);
-        boolean had = loan.active() || !loan.stash().isEmpty();
+        boolean had = loan.active() || !loan.stash().isEmpty() || loan.overlaid() != null;
         List<ItemStack> over = loan.release(new InvSlots(p));
         s.clearLoan();
         DjinnWeaponActs.endEquip(p.getUUID());

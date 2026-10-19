@@ -796,6 +796,7 @@ public final class DjinnEngine {
         if (reg != null && reg.hasModifier(VESSEL_REGEN)) reg.removeModifier(VESSEL_REGEN);
         RUNS.remove(p.getUUID());
         PendingInvites.forget(p.getUUID());
+        DjinnMagic.STREAKS.forget(p.getUUID());
     }
 
     /** Dimension change: the same player object lives on, but the client must be told again. */
@@ -809,6 +810,7 @@ public final class DjinnEngine {
     public static void onServerStopping() {
         RUNS.clear();
         PendingInvites.clear();
+        DjinnMagic.STREAKS.clear();
     }
 
     /** Every Djinn-state clock a status command may show: {@code [phase, trust, assimilationTenths, lockLeft, cooldownLeft]}. */

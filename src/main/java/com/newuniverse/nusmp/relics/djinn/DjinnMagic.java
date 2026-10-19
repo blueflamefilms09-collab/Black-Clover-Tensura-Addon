@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
 import com.newuniverse.nusmp.relics.djinn.dark.DarkRules;
+import com.newuniverse.nusmp.relics.djinn.weapon.WeaponGeo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -46,6 +47,9 @@ final class DjinnMagic {
     /** Set while a Half Equip's own side effects hurt someone, so they cannot trigger another bonus. */
     private static boolean inBonus;
 
+    /** Blows in a row per bearer (Bloodlust, Drumbeat); forgotten on logout and when the server stops. */
+    static final BlowStreak STREAKS = new BlowStreak();
+
     // ================================================================ Half Equip
     /** The bearer's melee blow: the Djinn adds elemental damage and its special. */
     static void onOutgoing(LivingIncomingDamageEvent e) {
@@ -58,18 +62,20 @@ final class DjinnMagic {
         if (d == null || s.phase() < DjinnPhaseRules.HALF) return;
         Djinn.Trait t = d.trait();
         float amount = e.getAmount();
-        boolean dark = DarkDjinn.active(s);                                                         // the black rukh: +35% of the rider, its cap x1.5 (6 -> 9)
+        boolean dark = DarkDjinn.active(s);                                                         // the black rukh: +35% of the rider, its cap x1.5 (a mob's rider; a player's stays at the 6-point clamp)
         double frac = DarkRules.riderFrac(t.bonusFrac(), dark), cap = DarkRules.riderCap(t.bonusCap(), dark);
-        boolean undead = target.getType().is(EntityTypeTags.UNDEAD);
-        if (t.special() == Djinn.Special.SMITE && undead) { frac *= 2; cap *= 2; }
-        if (t.special() == Djinn.Special.CRUSH) frac *= 1.0 + Math.min(20.0, target.getArmorValue()) / 20.0;
-        float bonus = (float) Math.min(amount * frac, cap);
-        if (target instanceof Player) bonus = Math.min(bonus, 6f);
+        int streak = t.special() == Djinn.Special.BLOODLUST || t.special() == Djinn.Special.DRUMBEAT ? STREAKS.hit(p.getUUID(), p.level().getGameTime()) : 0;
+        TraitRules.Facts facts = new TraitRules.Facts(target.getType().is(EntityTypeTags.UNDEAD), target.getArmorValue(),
+                target.getHealth() / Math.max(1.0f, target.getMaxHealth()), target.isInvisible(), DjinnTraits.ailments(target),
+                Math.max(Math.hypot(p.getX() - p.xo, p.getZ() - p.zo), p.getDeltaMovement().horizontalDistance()), streak);       // a player's speed: this tick's step, or the motion the server knows
+        frac *= TraitRules.fracFactor(t.special(), facts);                                          // Smite, Crush, Hunt, Trample, Reveal, Carrion, Bloodlust, Drumbeat read the blow
+        cap *= TraitRules.capFactor(t.special(), facts);
+        float bonus = TraitRules.rider(amount, frac, cap, target instanceof Player);               // the 6-point clamp on players is TraitRules.PLAYER_RIDER_CAP
         if (bonus <= 0f) return;
         e.setAmount(amount + bonus);
         inBonus = true;
         try {
-            special(p, d, t, target, amount + bonus, bonus);
+            special(p, d, t, target, amount + bonus, bonus, streak);
         } finally {
             inBonus = false;
         }
@@ -79,7 +85,7 @@ final class DjinnMagic {
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), at.x, at.y, at.z, 4, 0.25, 0.3, 0.25, 0.02);
     }
 
-    private static void special(ServerPlayer p, Djinn d, Djinn.Trait t, LivingEntity target, float total, float bonus) {
+    private static void special(ServerPlayer p, Djinn d, Djinn.Trait t, LivingEntity target, float total, float bonus, int streak) {
         int ticks = t.effectTicks();
         if (ticks > 0 && !t.effectId().isEmpty()) {
             boolean hard = t.effectAmp() >= 2 || t.special() == Djinn.Special.PARALYZE;
@@ -88,29 +94,29 @@ final class DjinnMagic {
         switch (t.special()) {
             case CHAIN -> {
                 LivingEntity next = null;
-                double best = 16.0;
-                for (LivingEntity o : DjinnTargets.foesNear(p, target.position(), 4.0)) {
+                double best = 25.0;
+                for (LivingEntity o : DjinnTargets.foesNear(p, target.position(), 5.0)) {
                     double dd = o.distanceToSqr(target);
                     if (o != target && dd < best) { best = dd; next = o; }
                 }
                 if (next != null) {
-                    next.hurt(p.damageSources().indirectMagic(p, p), Math.max(1f, next instanceof Player ? Math.min(bonus, 6f) : bonus));      // the 6-point player cap holds for the chained hit too (a dark rider reaches 9)
+                    next.hurt(p.damageSources().indirectMagic(p, p), Math.max(1f, next instanceof Player ? Math.min(bonus, TraitRules.PLAYER_RIDER_CAP) : bonus));      // the 6-point player cap holds for the chained hit too (a mob's dark rider reaches more)
                     DjinnFx.line(p.serverLevel(), target.position().add(0, 1, 0), next.position().add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10);
                 }
             }
             case MELT -> {
-                target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 100));
+                target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 140));
                 target.removeEffect(MobEffects.DAMAGE_RESISTANCE);
                 target.removeEffect(MobEffects.ABSORPTION);
             }
-            case FREEZE -> target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze() + 20, target.getTicksFrozen() + 40));
+            case FREEZE -> target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze() + 40, target.getTicksFrozen() + 60));
             case PUSH -> push(target, p.position(), 0.9, 0.15);
-            case LIFESTEAL -> BalanceLaw.heal(p, total * 0.25f);
-            case DEAFEN -> EnergyBridge.effect(target, "silence", 60, 0);
-            case BRAND -> target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 80));
-            case DROWN -> target.setAirSupply(Math.max(-20, target.getAirSupply() - 90));
+            case LIFESTEAL -> BalanceLaw.heal(p, total * 0.30f);
+            case DEAFEN -> EnergyBridge.effect(target, "silence", 90, 0);
+            case BRAND -> target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 120));
+            case DROWN -> target.setAirSupply(Math.max(-20, target.getAirSupply() - 120));
             case CRUSH -> push(target, p.position(), 0.5, 0.1);
-            default -> { }
+            default -> DjinnTraits.apply(p, t.special(), target, bonus, streak);                    // the twenty-four specials of 1.93.0
         }
     }
 
@@ -159,7 +165,7 @@ final class DjinnMagic {
 
     // ================================================================ Extreme Magic
     /** How many strikes an Extreme Magic makes, four ticks apart. */
-    static int steps(Djinn.Shape shape) { return shape == Djinn.Shape.BOLTS ? 9 : 1; }
+    static int steps(Djinn.Shape shape) { return shape.steps(); }
 
     /** The marked points of a bolt or column spell (empty for the others): fixed when the cast begins so the telegraph shows exactly where they fall. */
     static List<Vec3> points(Djinn d, Vec3 centre, Vec3 dir, RandomSource rng) {
@@ -175,6 +181,13 @@ final class DjinnMagic {
             double start = rng.nextDouble() * Math.PI * 2;
             for (int i = 0; i < 8; i++) {
                 double a = start + i * Math.PI / 4, r = x.radius() * (i % 2 == 0 ? 0.55 : 0.8);
+                out.add(centre.add(Math.cos(a) * r, 0, Math.sin(a) * r));
+            }
+        } else if (x.shape() == Djinn.Shape.RAIN) {
+            int n = Djinn.Shape.RAIN.steps();                                   // the golden-angle spiral again, out from the caster so the rain sweeps outward
+            double golden = Math.PI * (3.0 - Math.sqrt(5.0)), start = rng.nextDouble() * Math.PI * 2;
+            for (int i = 0; i < n; i++) {
+                double r = 2.5 + (x.radius() - 3.5) * Math.sqrt((i + 0.5) / n), a = start + i * golden;
                 out.add(centre.add(Math.cos(a) * r, 0, Math.sin(a) * r));
             }
         }
@@ -209,6 +222,24 @@ final class DjinnMagic {
                     }
             }
             case HEAL_FIELD -> DjinnFx.ring(l, c, R * 0.5, 0xA8FF9A, 24, 0.3);
+            case RAIN -> { for (Vec3 pt : r.points) DjinnFx.ring(l, pt, 1.8, prog > 0.6 ? d.glow() : d.color(), 8, 0.15); }
+            case CONE -> {
+                for (int side = -1; side <= 1; side += 2) {
+                    double[] v = WeaponGeo.turn(r.dir.x, r.dir.z, side * CONE_HALF_ANGLE);
+                    DjinnFx.line(l, c.add(0, 0.2, 0), c.add(v[0] * R, 0.2, v[1] * R), DjinnFx.dust(prog > 0.6 ? d.glow() : d.color(), 1.2f), 28);
+                }
+                for (int i = 0; i <= 12; i++) {
+                    double[] v = WeaponGeo.turn(r.dir.x, r.dir.z, -CONE_HALF_ANGLE + 2 * CONE_HALF_ANGLE * i / 12.0);
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), c.x + v[0] * R, c.y + 0.2, c.z + v[1] * R, 1, 0, 0, 0, 0);
+                }
+            }
+            case QUAKE -> { for (int k = 1; k < 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 2 ? d.glow() : d.color(), (int) (R * 2.5 * k), 0.15); }
+            case CROSS -> {
+                Vec3 side = new Vec3(-r.dir.z, 0, r.dir.x);
+                for (Vec3 axis : new Vec3[]{r.dir, r.dir.scale(-1), side, side.scale(-1)})
+                    DjinnFx.line(l, c.add(0, 0.2, 0), c.add(axis.scale(R)).add(0, 0.2, 0), DjinnFx.dust(prog > 0.6 ? d.glow() : d.color(), 1.3f), 24);
+            }
+            case IMPLODE -> DjinnFx.ring(l, c, Math.max(1.0, R * (1.0 - prog) + 1.0), d.glow(), 28, 0.3);
             default -> { }
         }
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.8, 0.4, 0.03);
@@ -227,6 +258,11 @@ final class DjinnMagic {
             case VORTEX -> vortex(p, r);
             case BEAM -> beam(p, r);
             case HEAL_FIELD -> healField(p, r);
+            case RAIN -> { if (step < r.points.size()) drop(p, r, r.points.get(step)); }
+            case CONE -> cone(p, r);
+            case QUAKE -> quake(p, r, step);
+            case CROSS -> cross(p, r);
+            case IMPLODE -> implode(p, r, step);
             default -> burst(p, r, 0.9, 0.35, false);
         }
         if (step == 0) removeRoot(p);
@@ -348,13 +384,133 @@ final class DjinnMagic {
         Vec3 c = r.centre;
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) hit(p, r, t, 1.0, 1);
         for (ServerPlayer a : DjinnTargets.alliesNear(p, R)) {
-            BalanceLaw.heal(a, 6f);
-            a.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1, true, false));
+            BalanceLaw.heal(a, 8f);
+            a.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 140, 1, true, false));
             com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, a.getX(), a.getY() + 1, a.getZ(), 12, 0.4, 0.6, 0.4, 0.05);
         }
         for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 3 * k), 0.25 * k);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 90, R * 0.4, 0.9, R * 0.4, 0.05);
         sound(l, p.blockPosition(), SoundEvents.TOTEM_USE, 1.6f, 1.2f);
+    }
+
+    // ---------------------------------------------------------------- the shapes added in 1.93.0
+    /** The half angle (degrees) of the Cone shape: a fan of 110 degrees in front of the caster. */
+    static final double CONE_HALF_ANGLE = 55.0;
+    /** The half width of a Cross arm and the Quake's band count. */
+    private static final double ARM = 2.2;
+
+    /** Pulls a living thing towards {@code to} (horizontally): the strength is bounded by 0.25 of its distance so it never overshoots the caster. */
+    static void pull(LivingEntity t, Vec3 to, double strength, double up) {
+        Vec3 in = to.subtract(t.position()).multiply(1, 0, 1);
+        double len = in.length();
+        if (len < 1.0E-4) return;
+        double s = Mth.clamp(Math.min(strength, len * 0.25), 0.0, 2.0);
+        t.setDeltaMovement(t.getDeltaMovement().add(in.normalize().scale(s)).add(0, Mth.clamp(up, 0.0, 1.0), 0));
+        t.hurtMarked = true;
+    }
+
+    /** One drop of a Rain: foes within 2.6 of the mark take half the damage (a target is hit twice at most, so a whole casting is the row's damage once). */
+    private static void drop(ServerPlayer p, DjinnEngine.Run r, Vec3 at) {
+        ServerLevel l = p.serverLevel();
+        Djinn d = r.djinn;
+        for (LivingEntity t : DjinnTargets.foesNear(p, at, 2.6)) hit(p, r, t, 0.5, 2);
+        DjinnFx.column(l, at.x, at.y, at.y + 12, at.z, DjinnFx.particle(d.affinity()), 24);
+        DjinnFx.column(l, at.x, at.y, at.y + 10, at.z, DjinnFx.dust(d.glow(), 1.5f), 18);
+        DjinnFx.ring(l, at, 2.6, d.glow(), 16, 0.2);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+        sound(l, BlockPos.containing(at), SoundEvents.WARDEN_SONIC_BOOM, 0.7f, 1.7f);
+    }
+
+    /** A fan of power in front of the caster: foes within the reach and 55 degrees of the cast's direction, weaker at the edge, shoved forward. */
+    private static void cone(ServerPlayer p, DjinnEngine.Run r) {
+        ServerLevel l = p.serverLevel();
+        Djinn d = r.djinn;
+        double R = d.extreme().radius();
+        Vec3 c = r.centre, dir = r.dir;
+        for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
+            if (!WeaponGeo.inCone(c.x, c.z, dir.x, dir.z, t.getX(), t.getZ(), R, CONE_HALF_ANGLE)) continue;
+            double dist = Math.sqrt(t.distanceToSqr(c.x, c.y, c.z));
+            if (hit(p, r, t, 1.0 - 0.3 * Math.min(1.0, dist / R), 1)) push(t, c, 1.0 - 0.3 * dist / R, 0.35);
+        }
+        for (int k = 1; k <= 3; k++)
+            for (int i = 0; i <= 14; i++) {
+                double[] v = WeaponGeo.turn(dir.x, dir.z, -CONE_HALF_ANGLE + 2 * CONE_HALF_ANGLE * i / 14.0);
+                double rr = R * k / 3.0;
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, k == 3 ? com.newuniverse.nusmp.relics.Fx.align(d.glow()) : com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()),
+                        c.x + v[0] * rr, c.y + 0.4 + 0.3 * k, c.z + v[1] * rr, 2, 0.15, 0.15, 0.15, 0.04);
+            }
+        DjinnFx.line(l, c.add(0, 1.0, 0), c.add(dir.scale(R)).add(0, 1.0, 0), DjinnFx.dust(d.glow(), 2.0f), 40);
+        sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 2.5f, 0.8f);
+        sound(l, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, 2.0f, 0.5f);
+    }
+
+    /** One wave of a Quake (step 0..2): the foes in that third of the reach are hurt and thrown up. The outer waves come four ticks after the inner. */
+    private static void quake(ServerPlayer p, DjinnEngine.Run r, int step) {
+        ServerLevel l = p.serverLevel();
+        Djinn d = r.djinn;
+        double R = d.extreme().radius(), inner = R * step / 3.0, outer = R * (step + 1) / 3.0;
+        Vec3 c = r.centre;
+        for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
+            double dist = Math.sqrt((t.getX() - c.x) * (t.getX() - c.x) + (t.getZ() - c.z) * (t.getZ() - c.z));
+            boolean in = dist >= inner && (dist < outer || (step == 2 && dist <= outer));
+            if (in && hit(p, r, t, 1.0, 1)) push(t, c, 0.3, 0.8);
+        }
+        DjinnFx.ring(l, c, outer, d.glow(), (int) (outer * 5), 0.3);
+        DjinnFx.ring(l, c, Math.max(1.0, outer - 1.0), d.color(), (int) (outer * 4), 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.5, c.z, 50, outer * 0.4, 0.5, outer * 0.4, 0.25);
+        sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 2.0f, 0.5f + 0.2f * step);
+        sound(l, p.blockPosition(), SoundEvents.IRON_GOLEM_ATTACK, 1.6f, 0.5f);
+    }
+
+    /** Four arms of power from the caster (forward, back, left, right), each 4.4 wide and the reach long. */
+    private static void cross(ServerPlayer p, DjinnEngine.Run r) {
+        ServerLevel l = p.serverLevel();
+        Djinn d = r.djinn;
+        double R = d.extreme().radius();
+        Vec3 c = r.centre, dir = r.dir, side = new Vec3(-dir.z, 0, dir.x);
+        for (LivingEntity t : DjinnTargets.foesNear(p, c, R + 2.0)) {
+            Vec3 rel = t.position().subtract(c);
+            double a = rel.x * dir.x + rel.z * dir.z, b = rel.x * side.x + rel.z * side.z;
+            boolean in = (Math.abs(b) <= ARM && Math.abs(a) <= R) || (Math.abs(a) <= ARM && Math.abs(b) <= R);
+            if (in && hit(p, r, t, 1.0, 1)) push(t, c, 0.8, 0.3);
+        }
+        for (Vec3 axis : new Vec3[]{dir, dir.scale(-1), side, side.scale(-1)}) {
+            Vec3 end = c.add(axis.scale(R));
+            DjinnFx.line(l, c.add(0, 1.0, 0), end.add(0, 1.0, 0), DjinnFx.particle(d.affinity()), 40);
+            DjinnFx.line(l, c.add(0, 1.0, 0), end.add(0, 1.0, 0), DjinnFx.dust(d.glow(), 2.0f), 40);
+            DjinnFx.line(l, c.add(0, 0.3, 0), end.add(0, 0.3, 0), DjinnFx.dust(d.color(), 1.6f), 30);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, end.x, end.y + 1, end.z, 1, 0, 0, 0, 0);
+        }
+        DjinnFx.ring(l, c, 3.0, d.glow(), 24, 0.3);
+        sound(l, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, 2.0f, 0.9f);
+        sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 2.0f, 1.0f);
+    }
+
+    /** Step 0 drags every foe in the reach towards the caster (no damage); step 1, four ticks later, collapses the hollow: hurt, harder near the middle. */
+    private static void implode(ServerPlayer p, DjinnEngine.Run r, int step) {
+        ServerLevel l = p.serverLevel();
+        Djinn d = r.djinn;
+        double R = d.extreme().radius();
+        Vec3 c = r.centre;
+        if (step == 0) {
+            for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) pull(t, c, 1.3, 0.25);
+            for (int arm = 0; arm < 4; arm++)
+                for (int i = 0; i < 10; i++) {
+                    double rr = R * (1.0 - i / 11.0), a = arm * Math.PI / 2 + i * 0.5;
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.4 + i * 0.2, c.z + Math.sin(a) * rr, 1, 0.1, 0.1, 0.1, 0.02);
+                }
+            DjinnFx.ring(l, c, R, d.color(), (int) (R * 4), 0.3);
+            sound(l, p.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, 2.0f, 0.8f);
+            return;
+        }
+        for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
+            double dist = Math.sqrt(t.distanceToSqr(c.x, c.y, c.z));
+            if (hit(p, r, t, 1.3 - 0.6 * Math.min(1.0, dist / R), 1)) push(t, c, 1.0 - 0.4 * dist / R, 0.5);
+        }
+        for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 4 * k / 2.0), 0.25 * k);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 2, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.2);
+        sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 3.0f, 0.6f);
     }
 
     /** A bolt-shaped decoration for the cast's first moment: the caster flares. */

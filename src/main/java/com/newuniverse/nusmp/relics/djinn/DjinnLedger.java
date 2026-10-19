@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * The world's book of Djinn (SavedData "nusmp_djinn_ledger", in the overworld's data storage like the spirit slots): for each of the twelve, is it
+ * The world's book of Djinn (SavedData "nusmp_djinn_ledger", in the overworld's data storage like the spirit slots): for each of the thirty-six (a world saved with twelve reads the other twenty-four as asleep), is it
  * still asleep in the Dungeon (SLEEPING), does a Seal exist in the world (SEALED: where it was last put, when it was last seen), or does a
  * player hold it (BOUND: who, which vessel serial, which two allies share it). It enforces the owner's rule that one of each exists and one
  * player possesses a given Djinn, and keeps which floor bosses have already paid their Seal. A Seal that nobody has seen for
