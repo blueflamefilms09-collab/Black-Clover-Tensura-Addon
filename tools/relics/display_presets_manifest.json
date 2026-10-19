@@ -92,6 +92,20 @@
       "length_blocks": 1.271
     },
     {
+      "id": "blackrazor",
+      "action": "preset",
+      "length_blocks": 3.118,
+      "first_person_scale": 0.313,
+      "first_person_translation_px": [
+        1.13,
+        2.36,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.256,
+      "fixed_scale": 0.481
+    },
+    {
       "id": "bloodbound_katana",
       "action": "preset",
       "length_blocks": 1.835,
@@ -153,6 +167,39 @@
       "id": "caesars_gladius",
       "action": "keep",
       "length_blocks": 1.318
+    },
+    {
+      "id": "calamity_scythe",
+      "action": "preset",
+      "length_blocks": 2.765,
+      "first_person_scale": 0.439,
+      "first_person_translation_px": [
+        1.13,
+        3.12,
+        0.97
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.289,
+      "fixed_scale": 0.542
+    },
+    {
+      "id": "calamity_wave_aegis",
+      "action": "skip_manual",
+      "length_blocks": 1.84
+    },
+    {
+      "id": "cardinal_halo_chakram",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.59,
+      "first_person_translation_px": [
+        1.13,
+        2.62,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "catstaff",
@@ -231,6 +278,20 @@
       "fixed_scale": 0.817
     },
     {
+      "id": "crimson_lions_flame_lance",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        2.26,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
+    },
+    {
       "id": "crossbow_of_swift_death",
       "action": "keep",
       "length_blocks": 1.326
@@ -244,6 +305,11 @@
       "id": "dagger_of_betrayal",
       "action": "keep",
       "length_blocks": 0.647
+    },
+    {
+      "id": "dawnpiercer_crossbow",
+      "action": "keep",
+      "length_blocks": 1.277
     },
     {
       "id": "dead_blade",
@@ -355,6 +421,25 @@
       "fixed_scale": 0.708
     },
     {
+      "id": "dragon_force_twin_fangs",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
+      "id": "dragon_slayer",
+      "action": "preset",
+      "length_blocks": 3.118,
+      "first_person_scale": 0.313,
+      "first_person_translation_px": [
+        1.13,
+        2.36,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.256,
+      "fixed_scale": 0.481
+    },
+    {
       "id": "dragon_tooth_blade_red",
       "action": "preset",
       "length_blocks": 1.835,
@@ -460,6 +545,16 @@
       "length_blocks": 1.353
     },
     {
+      "id": "fairy_glitter_gauntlets",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
+      "id": "fairy_heart_gauntlets",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
       "id": "flamecutter",
       "action": "preset",
       "length_blocks": 1.835,
@@ -479,6 +574,20 @@
       "length_blocks": 1.091
     },
     {
+      "id": "frostbrand",
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.645,
+      "first_person_translation_px": [
+        1.13,
+        2.86,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "frostfang",
       "action": "preset",
       "length_blocks": 2.071,
@@ -491,6 +600,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.386,
       "fixed_scale": 0.724
+    },
+    {
+      "id": "gae_bolg_heartseeker",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.256,
+      "first_person_translation_px": [
+        1.13,
+        2.23,
+        0.7
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "gamblers_grimoire_page",
@@ -527,6 +650,34 @@
       "length_blocks": 1.091
     },
     {
+      "id": "gungnir_the_unerring",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.261,
+      "first_person_translation_px": [
+        1.13,
+        2.28,
+        0.72
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
+    },
+    {
+      "id": "hammer_of_thunderbolts",
+      "action": "preset",
+      "length_blocks": 1.882,
+      "first_person_scale": 0.523,
+      "first_person_translation_px": [
+        1.13,
+        2.76,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.425,
+      "fixed_scale": 0.796
+    },
+    {
       "id": "hand_of_providence",
       "action": "keep",
       "length_blocks": 0.588
@@ -546,6 +697,20 @@
       "fixed_scale": 0.505
     },
     {
+      "id": "hellblaze_the_demon_sin",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "heros_shield",
       "action": "preset",
       "length_blocks": 1.855,
@@ -558,6 +723,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.431,
       "fixed_scale": 0.808
+    },
+    {
+      "id": "holy_avenger",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
     },
     {
       "id": "humbling_longsword",
@@ -668,6 +847,20 @@
       "fixed_scale": 0.505
     },
     {
+      "id": "kusanagi_the_grass_cutter",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.542,
+      "first_person_translation_px": [
+        1.13,
+        2.91,
+        0.85
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "last_word",
       "action": "keep",
       "length_blocks": 1.318
@@ -723,6 +916,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.5,
       "fixed_scale": 1.0
+    },
+    {
+      "id": "leviathans_crown_trident",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        2.26,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "lich_wand",
@@ -786,6 +993,20 @@
       "fixed_scale": 0.817
     },
     {
+      "id": "luck_blade",
+      "action": "preset",
+      "length_blocks": 1.412,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.0,
+        0.84
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "magebane_longsword",
       "action": "preset",
       "length_blocks": 1.835,
@@ -803,6 +1024,20 @@
       "id": "magebane_shield",
       "action": "keep",
       "length_blocks": 0.891
+    },
+    {
+      "id": "magic_emperors_black_halberd",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.281,
+      "first_person_translation_px": [
+        1.13,
+        2.48,
+        0.79
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "magic_tool_spear",
@@ -853,6 +1088,20 @@
       "length_blocks": 1.235
     },
     {
+      "id": "minotaur_kings_labrys",
+      "action": "preset",
+      "length_blocks": 2.176,
+      "first_person_scale": 0.455,
+      "first_person_translation_px": [
+        1.13,
+        2.65,
+        0.79
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.367,
+      "fixed_scale": 0.689
+    },
+    {
       "id": "mjolnir",
       "action": "preset",
       "length_blocks": 1.765,
@@ -884,6 +1133,20 @@
       "id": "needler",
       "action": "keep",
       "length_blocks": 1.271
+    },
+    {
+      "id": "noon_cleaver",
+      "action": "preset",
+      "length_blocks": 3.235,
+      "first_person_scale": 0.302,
+      "first_person_translation_px": [
+        1.13,
+        2.34,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.247,
+      "fixed_scale": 0.463
     },
     {
       "id": "null_blade",
@@ -978,6 +1241,11 @@
       "id": "primal_chaos",
       "action": "keep",
       "length_blocks": 1.294
+    },
+    {
+      "id": "primordial_hearth_blade",
+      "action": "keep",
+      "length_blocks": 0.706
     },
     {
       "id": "prism_blade",
@@ -1164,6 +1432,11 @@
       "length_blocks": 1.318
     },
     {
+      "id": "silver_eagles_galewing_bow",
+      "action": "skip_manual",
+      "length_blocks": 1.2
+    },
+    {
       "id": "silver_wind_mountain_glaive",
       "action": "preset",
       "length_blocks": 3.671,
@@ -1282,6 +1555,53 @@
       "fixed_scale": 0.554
     },
     {
+      "id": "staff_of_the_magi",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.358,
+      "first_person_translation_px": [
+        1.13,
+        2.42,
+        0.74
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
+      "id": "starforged_aeon_bow",
+      "action": "skip_manual",
+      "length_blocks": 1.2
+    },
+    {
+      "id": "starlight_whip",
+      "action": "preset",
+      "length_blocks": 2.353,
+      "first_person_scale": 0.416,
+      "first_person_translation_px": [
+        1.13,
+        2.55,
+        0.77
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.34,
+      "fixed_scale": 0.637
+    },
+    {
+      "id": "starsplitter_hammer",
+      "action": "preset",
+      "length_blocks": 1.882,
+      "first_person_scale": 0.519,
+      "first_person_translation_px": [
+        1.13,
+        2.74,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.424,
+      "fixed_scale": 0.796
+    },
+    {
       "id": "stegosaurus_greatsword",
       "action": "preset",
       "length_blocks": 2.965,
@@ -1324,6 +1644,20 @@
       "fixed_scale": 0.408
     },
     {
+      "id": "sunsword",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "superlunary_staff",
       "action": "preset",
       "length_blocks": 2.706,
@@ -1341,6 +1675,20 @@
       "id": "sword_crystal",
       "action": "keep",
       "length_blocks": 1.318
+    },
+    {
+      "id": "sword_of_the_first_dawn",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
     },
     {
       "id": "the_bifrost",
@@ -1755,6 +2103,34 @@
       "fixed_scale": 1.0
     },
     {
+      "id": "void_origin_katana",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.531,
+      "first_person_translation_px": [
+        1.13,
+        2.84,
+        0.83
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
+      "id": "vorpal_sword",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.515,
+      "first_person_translation_px": [
+        1.13,
+        2.74,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "wand_o_wisp",
       "action": "keep",
       "length_blocks": 1.176
@@ -1768,6 +2144,11 @@
       "id": "wand_of_spider_summoning",
       "action": "keep",
       "length_blocks": 1.235
+    },
+    {
+      "id": "wand_of_the_wisdom_king",
+      "action": "keep",
+      "length_blocks": 1.176
     },
     {
       "id": "warlute",
@@ -1801,6 +2182,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.414,
       "fixed_scale": 0.777
+    },
+    {
+      "id": "wavebreaker_chakram",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.599,
+      "first_person_translation_px": [
+        1.13,
+        2.67,
+        0.74
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "weapon_of_resurgence",
@@ -1881,6 +2276,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.295,
       "fixed_scale": 0.554
+    },
+    {
+      "id": "wizard_kings_vow",
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.03,
+        0.85
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "written_consent",

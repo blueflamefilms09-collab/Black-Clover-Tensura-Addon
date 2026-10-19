@@ -291,6 +291,91 @@ def write_lang():
         f.write("\n")
 
 
+def write_doc():
+    L = []
+    L.append("# New weapons of 1.97.0: 13 Legend, 12 God and 10 Genesis grade weapons (wave 71)\n")
+    L.append("Owner request: \"add more weapons to the legend, God, and Genesis grade\". 35 weapons were added over many weapon types and many worlds (Dungeons and Dragons artifacts, "
+             "Black Clover, Tensura, Fairy Tail, The Rising of the Shield Hero, The Seven Deadly Sins, DanMachi, old myths), each a full relic of the Relics of Many Worlds "
+             "(`docs/relic_format.md`). **Everything here is NEW: no existing weapon, model, skill, act or id was removed or changed** (CLAUDE.md rules 2 and 5; section 7 lists the "
+             "additions to shared files). The table and the generators are the source: edit `tools/relics/new197_roster.py` and rerun the tools, not the generated files.\n")
+    L.append("## 1. The weapons\n")
+    L.append("Damage is the owner's table (`relics/GradeDamage`: normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, genesis 260-350), the place "
+             "inside the range chosen by the weapon type. Speed is attacks a second. A weapon's acts are the first (use, or sneak + use for a bow), the second (sneak + use; "
+             "the worn-relic key for a bow) and the third (the worn-relic key). Cost is a share of the magicules (then aura, as every relic pays).\n")
+    for g in ("LEGEND", "GOD", "GENESIS"):
+        rows = [e for e in ROSTER if e["grade"] == g]
+        lo, hi = RANGES[g]
+        L.append("### %s grade (%d weapons, damage %d-%d)\n" % (GRADE_NAME[g], len(rows), lo, hi))
+        L.append("| id | name | type (class) | damage / speed | passive | acts | Tensura engravings | road |")
+        L.append("|---|---|---|---|---|---|---|---|")
+        for e in rows:
+            acts = "; ".join("%s (%s, %s, %d%%%s)" % (a["name"], act_trigger(e, i), span(a["cd"]), a["mana"], (", %d/day" % a["day"]) if a["day"] else "") for i, a in enumerate(e["acts"]))
+            L.append("| `%s` | %s (%s) | %s (%s) | %g / %g | %s | %s | %s | %s |" % (e["id"], e["name"], e["src"], kind_label(e), e["cls"], damage(e), e["speed"], passive_text(e), acts,
+                                                                           ", ".join(x.replace("@", " L") for x in e["engr"]), e["theme"]))
+        L.append("")
+    L.append("## 2. What each weapon looks like (3D model in hand, built by `tools/relics/new197_*.py`)\n")
+    for e in ROSTER:
+        L.append("* **%s** (`%s`): %s" % (e["name"], e["id"], e["doc"]))
+    L.append("")
+    L.append("Every weapon is a real baked mesh (8 to 17 named parts, 700 to 3200 quads) with a painted skin and a second additive glow skin; the Genesis weapons that carry a void part "
+             "(Blackrazor, the Void Origin Katana, the Magic Emperor's Black Halberd, the Starsplitter Hammer) draw the dimensional void of the Genesis Demon-Slayer through the metal. "
+             "The inventory icon is a new 16 x 16 sprite rendered from the finished mesh (outline, half-strength glow). The two bows and the crossbow have their draw states "
+             "(`_pull1..3`, `_charged`); the bows lie on vanilla's diagonal with vanilla's display (`bow_vanilla.py`); the shield is placed and held like the Aegis of the Abyss. "
+             "Previews: `docs/previews/new197/` (`sprites.png`, `models_LEGEND.png`, `models_GOD.png`, `models_GENESIS.png`, `held_view_sample.png`).\n")
+    L.append("## 3. How the abilities work\n")
+    L.append("Each act is one SHAPE of `Wave71Acts` (a cone cleave, a piercing line, a nova, a blink strike, an execution, a chain, a ward, a rally, a drain, a pull, a volley, a rush, a "
+             "storm, a brand, a self buff). Every body runs inside `SafeCast.tick` (a fault is logged once, never thrown into the server tick), takes its foes only from `Fx.foesAround` "
+             "and `Wave20Util` (hostile creatures, never allies, pets, summons, creative or spectator players), deals every blow through `Fx.damage` / `Fx.damageHeavy` "
+             "(`BalanceLaw`: EP scaling, the cap on players, the shortened effect on bosses), clamps every radius, count and duration, and draws its effect with one of the mod's "
+             "`VfxShape`s plus Rukh particles. An act's damage is a multiple of the weapon's own base damage (`DMG_<ID> * k`), so it follows the owner's table. Costs and "
+             "cooldowns are the engine's (`Act.cooldown`, `.mana`, `.usesPerDay`, tiers and attunement as for every relic).\n")
+    L.append("The passive of each weapon is one `Wave71Rules.Rule` (`Wave71Passives`, applied by `Wave71Events` on the blow being dealt, melee for a melee weapon and the loosed arrow or "
+             "bolt for a bow or crossbow): a damage bonus under a condition (a foe low on health, an undead or fiend, a dragon, a flier, a wet foe, daylight, night, a full-health or "
+             "wounded wielder, a boss, sneaking, falling, a big foe), an optional chance, a status on the foe, life stolen (capped) and a burn. The standing passives (attributes, "
+             "resistances, lent Tensura skills) are the ordinary `Passive` kinds.\n")
+    L.append("## 4. Registration, loot and Better Combat\n")
+    L.append("* Registered by `relics/wave/Wave71` (found by `WaveRegistry`, which scans waves 8 to 80): the item, the creative tab entry, `/multiverse relic give <id>`, the tooltip, the "
+             "Curios and attunement rules, the Djinn vessel flag, the forge and the sockets are the core's, as for every relic.\n"
+             "* Loot is by grade through the existing relic pools, so the new weapons enter every source that rolls their grade: the `nusmp:relic` entries of the vault tables "
+             "(`chests/dungeon_relic_vault`, `chests/labyrinth_pedestal`: Legend to God at weight 3 / 15, God to Genesis at 1 / 4), the Crucible of Choice of the Mega-Dungeon "
+             "(unique to genesis offers) and the God of Order's ledger (one of each in a world). Each weapon is also placed on a dungeon road in `data/nusmp/mega/relic_themes.json` "
+             "(the theme column), so taking it in a Crucible leads to a fitting next region.\n"
+             "* Better Combat: a file in `data/nusmp/weapon_attributes/<id>.json` for every melee weapon (31; the two bows, the crossbow and the shield have none, as every ranged "
+             "weapon and shield), made by `python3 -B tools/bettercombat/inventory.py` and `gen_attributes.py`; the gauntlets are class `dagger` (their size and swing) with the damage "
+             "of a club.\n"
+             "* Size classes: a row for every id in `assets/nusmp/weapon_classes.json` and `tools/relics/weapon_classes.json`; the first-person display of the long weapons is the "
+             "oversize rule (`new197_presets.py`).\n")
+    L.append("## 5. Tests\n")
+    L.append("JUnit (all pure, run without the game): `relics/wave/Wave71DefsTest` (counts, unique ids, 3D, engravings from the Tensura list, 2 or 3 acts, damage inside the grade's range, "
+             "ranged marks, the lang fragment), `Wave71RulesTest` (the rule arithmetic and the table of 35 rules), `Wave71AssetsTest` (mesh, skins, 16 x 16 sprite, models, draw states, "
+             "class rows, Better Combat files, dungeon roads); the existing `WeaponMeshesTest`, `BowDisplayGuardTest`, `WeaponClassesTest`, `WeaponAttributesTest`, "
+             "`RelicHandCoverageTest`, `RelicRenderCoverageTest` and `RelicThemesDataTest` pass with the new weapons. The in-game self-test `relic.new197` (registered by "
+             "`Wave71.hooks`, run by the CI server smoke test) checks the registry (grades, 3D, engravings, acts, passive rules, damage range, the files in the jar).\n")
+    L.append("## 6. Tools\n")
+    L.append("```\npython3 -B tools/relics/new197_gen.py        # Wave71.java, Wave71Passives.java, tools/lang/new_weapons_197.json, class rows, dungeon roads, this page's table\n"
+             "python3 -B tools/relics/new197_build.py      # all 35 meshes, skins, sprites, item models, then bow_vanilla.py and new197_presets.py\n"
+             "python3 -B tools/relics/new197_audit.py      # the size / orientation audit of the 35\n"
+             "python3 -B tools/relics/new197_sheet.py out.png   # the sprites; --meshes out.png [id | grade:GOD]  the models\n"
+             "python3 -B tools/bettercombat/inventory.py && python3 -B tools/bettercombat/gen_attributes.py\n"
+             "python3 -B tools/item_preview/preview_weapons.py vorpal_sword blackrazor   # the held view, build/item_preview/weapons.png\n```\n")
+    L.append("## 7. Edits to files that already existed (all additions)\n")
+    L.append("* `assets/nusmp/weapon_classes.json`, `tools/relics/weapon_classes.json`: 35 class rows appended.\n"
+             "* `data/nusmp/mega/relic_themes.json`: 35 dungeon-road rows appended.\n"
+             "* `tools/bettercombat/manifest.json`: the 31 melee weapons added (regenerated by the tool).\n"
+             "* `tools/relics/display_presets_manifest.json`: the rows of the 26 long weapons added.\n"
+             "* New: `relics/GradeDamage.java` (a STAND-IN with exactly `range(String)` and `damage(String, String)`; replace it with the full damage-table class when that is merged), "
+             "`relics/wave/Wave71*.java`, three test classes, `tools/lang/new_weapons_197.json`, 31 Better Combat files, the assets, `tools/relics/new197_*.py`, this page and the previews.\n"
+             "* Not touched, as asked: the version, the changelog, the README, `en_us.json` (the lead merges `tools/lang/new_weapons_197.json`), the Time Magic VFX.\n")
+    L.append("## 8. What could not be verified\n")
+    L.append("Nothing can be run in a game here: the models, skins, sprites, glow and void layers, the draw states, the held pose and size of each weapon, the particle and VFX shapes of "
+             "the acts, the act numbers against a real boss (the balance law scales them), the passive hooks and the loot rolls are all unseen in the game. The previews are a "
+             "software rasteriser, a re-implementation of the renderer (the void is shown as a crimson star field). The Java was type-checked against the API stubs (no real "
+             "compile) and the JUnit tests ran in a shim without Minecraft. The Better Combat files use the presets of the class (the swings are the parent's own). "
+             "The two bows and the crossbow follow the proven pipeline but their draw poses are unseen.\n")
+    with open(os.path.join(ROOT, "docs", "new_weapons_197.md"), "w", newline="\n") as f:
+        f.write("\n".join(L))
+
+
 def write_classes():
     pa = os.path.join(RES, "assets", "nusmp", "weapon_classes.json")
     pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
@@ -324,6 +409,7 @@ def main():
     write_lang()
     write_classes()
     write_themes()
+    write_doc()
     print("wrote Wave71.java, Wave71Passives.java, tools/lang/new_weapons_197.json, the class rows and the theme rows for %d weapons" % len(ROSTER))
 
 

@@ -372,7 +372,7 @@ def render_icon(m, atlas, out_png, angle, boost=1.0, widen=True):
     """Renders the finished mesh as a 16 x 16 pixel-art sprite: the weapon turned by (angle - 90) degrees as `place` turns it, seen from +z, the skin and the glow
     layer, one dark outline pixel round the shape, a little saturation. The void layer is drawn as a dark crimson."""
     quads = _quads_rotated(m, atlas, angle - 90.0, widen)
-    glow = (int(m.glow_cfg[0], 16), m.glow_cfg[1], m.glow_cfg[2], m.glow_cfg[3]) if m.glow_cfg else (0xFFFFFF, 0.12, 0.4, 1.0)
+    glow = (int(m.glow_cfg[0], 16), m.glow_cfg[1], m.glow_cfg[2], m.glow_cfg[3] * 0.5) if m.glow_cfg else (0xFFFFFF, 0.12, 0.4, 0.5)       # the sprite shows the glow at half strength (full strength washes a 16 px icon out)
     pts = np.concatenate([q[1] for q in quads if q[0] == 0])
     lo, hi = pts.min(axis=0), pts.max(axis=0)
     ext = float(max(hi[0] - lo[0], hi[1] - lo[1], 1e-6))

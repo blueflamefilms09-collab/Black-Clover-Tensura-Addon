@@ -16,7 +16,7 @@ def meshes(out, only):
     """Small profile + three-quarter renders of the shipped meshes, 6 to a row."""
     import numpy as np
     import preview_mesh as pm
-    ids = [e["id"] for e in ROSTER if not only or e["id"] in only]
+    ids = [e["id"] for e in ROSTER if not only or e["id"] in only or ("grade:" + e["grade"]) in only]
     ids = [i for i in ids if os.path.exists(os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_meshes", i + ".txt"))]
     tiles = []
     tmp = out + ".part.png"
@@ -43,7 +43,7 @@ def meshes(out, only):
 
 
 def main(out, only):
-    ids = [e["id"] for e in ROSTER if not only or e["id"] in only]
+    ids = [e["id"] for e in ROSTER if not only or e["id"] in only or ("grade:" + e["grade"]) in only]
     ids = [i for i in ids if os.path.exists(os.path.join(ICONS, i + ".png"))]
     cols = 9
     cell = 16 * 8 + 10

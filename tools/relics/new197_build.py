@@ -40,6 +40,11 @@ def main(only):
         fn()
         n += 1
     print("built", n)
+    # the two post steps of the pipeline: the bows lie on vanilla's diagonal (bow_vanilla.py), the long weapons get their first-person display (new197_presets.py)
+    import subprocess
+    subprocess.run([sys.executable, "-B", os.path.join(HERE, "bow_vanilla.py")], check=False)
+    import new197_presets
+    new197_presets.main(False)
 
 
 if __name__ == "__main__":
