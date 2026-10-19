@@ -43,8 +43,6 @@ public final class GuiScaleRegistry {
         screen("four_kingdoms", "client.multiverse.FourKingdomsScreen", 340, 236, "Four Kingdoms menu");
         screen("codex", "client.ui.CodexScreen", 480, 300, "Codex");
         screen("compat_codex", "client.compat.CompatCodexScreen", 480, 300, "Compat codex");
-        screen("skill_tree", "client.skilltree.SkillTreeScreen", 0, 0, "Skill tree");
-        screen("passives", "client.skilltree.PassivesScreen", 0, 0, "Passives");
         screen("skill_shop", "client.skilltree.shop.ShopScreen", 0, 0, "Skill shop");
         screen("weapon_book", "client.heroweapon.forms.WeaponBookScreen", 0, 0, "Weapon forms book");
         screen("avatar_action", "client.avatar.AvatarActionScreen", 230, 190, "Avatar actions");

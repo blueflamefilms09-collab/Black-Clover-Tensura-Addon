@@ -88,6 +88,7 @@ class UniqueBooksFilesTest {
             Path root = DATA.resolve(dir);
             if (!Files.exists(root)) continue;
             for (Path p : jsonUnder(root)) {
+                if (p.getFileName().toString().equals("fairy_tail_skill_book.json")) continue;   // 1.95.0: the loot of the standalone Fairy Tail skills (fairytail package), not of the removed skill-book lines
                 List<String> h = hits(p, removedTokens());
                 if (!h.isEmpty()) bad.add(DATA.relativize(p) + " names " + h);
             }

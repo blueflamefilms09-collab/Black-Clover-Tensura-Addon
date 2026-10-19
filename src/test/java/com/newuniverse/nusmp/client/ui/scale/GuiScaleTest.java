@@ -103,12 +103,12 @@ class GuiScaleTest {
         Map<String, Object> raw = new HashMap<>();
         raw.put("codex", "1.5");
         raw.put("boss_bar", 0.1);
-        raw.put("skill_tree", "rubbish");
+        raw.put("hub_quest", "rubbish");
         raw.put("not_a_gui", 3.0);
         Map<String, Double> parsed = GuiScaleRegistry.parseOverrides(raw);
         assertEquals(1.5, parsed.get("codex"), EPS);
         assertEquals(0.5, parsed.get("boss_bar"), EPS);
-        assertEquals(0.0, parsed.get("skill_tree"), EPS);
+        assertEquals(0.0, parsed.get("hub_quest"), EPS);
         assertEquals(0.0, parsed.get("hub_shop"), EPS);
         assertFalse(parsed.containsKey("not_a_gui"));
         assertEquals(GuiScaleRegistry.all().size(), parsed.size());
