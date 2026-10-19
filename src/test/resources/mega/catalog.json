@@ -775,11 +775,11 @@
     },
     {
      "template": "nusmp:mega/puzzle/gallery_a",
-     "weight": 6
+     "weight": 11
     },
     {
      "template": "nusmp:mega/puzzle/gallery_b",
-     "weight": 6
+     "weight": 11
     },
     {
      "template": "nusmp:mega/puzzle/holy_church_confessional",
@@ -791,11 +791,11 @@
     },
     {
      "template": "nusmp:mega/puzzle/sigil_hall_a",
-     "weight": 4
+     "weight": 9
     },
     {
      "template": "nusmp:mega/puzzle/sigil_hall_b",
-     "weight": 4
+     "weight": 9
     },
     {
      "template": "nusmp:mega/puzzle/sunken_temple_tidal_gate",

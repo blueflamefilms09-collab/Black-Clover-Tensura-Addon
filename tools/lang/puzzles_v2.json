@@ -122,7 +122,7 @@
   "message.nusmp.mega.puzzle.pendulum_crossing.spotted": "The blade caught you: back to the start row.",
   "message.nusmp.mega.puzzle.pipe_connect.hint": "Right-click a pipe tile to turn it. Join the golden inlet to the drain on the far side; wet pipes show where the water goes.",
   "message.nusmp.mega.puzzle.pipe_connect.name": "The Pipe Floor",
-  "message.nusmp.mega.puzzle.pit_jump.hint": "The row of colours on the wall names the safe colour of each row, near to far. Step only on tiles of that colour; any other gives way.",
+  "message.nusmp.mega.puzzle.pit_jump.hint": "The column of colours beside the field names the safe colour of each row. Step only on tiles of that colour, from one end of the field to the other; any other tile gives way.",
   "message.nusmp.mega.puzzle.pit_jump.name": "The Coloured Floor",
   "message.nusmp.mega.puzzle.pit_jump.pit": "The tile gives way.",
   "message.nusmp.mega.puzzle.plate_sequence.hint": "Read the coloured tiles on the wall side, then step on the plates of the same colours in that order. A wrong plate puts the lights out.",

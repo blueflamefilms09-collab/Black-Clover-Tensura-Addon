@@ -10,10 +10,10 @@
   "dislikeCut": 0.4,
   "roomChance": {
     "puzzle": 1.0,
-    "hall": 0.1,
+    "hall": 0.16,
     "treasure": 0.1,
-    "set": 0.08,
-    "cavern": 0.05
+    "set": 0.2,
+    "cavern": 0.1
   },
   "legacy": {
     "puzzle": 30,

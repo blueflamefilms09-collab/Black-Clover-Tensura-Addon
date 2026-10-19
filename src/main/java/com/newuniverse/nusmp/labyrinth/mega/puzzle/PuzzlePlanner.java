@@ -12,7 +12,7 @@ import java.util.SplittableRandom;
 /**
  * Why: this is "the room generator chooses among the old and the new puzzles by theme and depth": a pure, seeded function from a floor (its rooms, theme, road and depth) and the weights file to
  * the list of rooms that get one of the NEW puzzles and which. The same sector seed always gives the same plan, so it needs no saved state and the tests can replay it. For each room that could
- * hold a puzzle (big enough, of a kind the file gives a chance, not already busy with a library mechanic that seals or sets a puzzle, not a Spire sigil room whose own puzzle is built into its
+ * hold a puzzle (big enough, of a kind the file gives a chance, not already busy with a library mechanic of another category that seals or floods the room, not a Spire sigil room whose own puzzle is built into its
  * blocks) it rolls the kind's chance, then draws among the new puzzles AND a "legacy" entry whose weight is the share the old puzzles keep; drawing the legacy entry leaves the room alone, so
  * the old content (the library's puzzle mechanics) is exactly as frequent as the file says. Puzzles are drawn by {@link PuzzleWeights#weightOf}: tier, road, theme flavour, room kind and a
  * decay for puzzles already on the floor so a floor does not repeat itself. A room whose template carries a PUZZLE marker always gets a puzzle (the marker may even name it). Pure.
@@ -22,7 +22,7 @@ public final class PuzzlePlanner {
 
     /**
      * One room as the planner sees it. {@code kind} is the folder name of its room kind, {@code template} its template id, {@code span} the smaller side of its box in blocks,
-     * {@code eligible} false for safe rooms, arenas and the like, {@code busy} true when the mechanics library planned a sealing or puzzle mechanic there, {@code marker} true when the template
+     * {@code eligible} false for safe rooms, arenas and the like, {@code busy} true when the mechanics library planned a mechanic of another category there that seals, cages, floods or crushes the room, {@code marker} true when the template
      * carries a PUZZLE marker and {@code forced} the puzzle id that marker names (empty for any).
      */
     public record RoomInfo(int id, String kind, String template, int span, boolean eligible, boolean busy, boolean marker, String forced) {}

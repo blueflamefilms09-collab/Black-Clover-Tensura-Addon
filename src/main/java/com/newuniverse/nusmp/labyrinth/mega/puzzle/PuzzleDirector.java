@@ -36,7 +36,7 @@ import java.util.Set;
  * the puzzle exists (a {@link PuzzleInstance} with a stage found in the real room), ticks every live puzzle each tick with the players inside it, and ends it when it is solved and has been
  * admired, when nobody has been inside for ten seconds, when it winds down by itself, when an admin clears it, when the switch in the weights file is turned off or when the server stops;
  * ending always restores every block. The plan is {@link PuzzlePlanner}'s pure answer to the sector's rooms, theme, road and depth under the weights file; this class only turns the sector
- * into the planner's input (a room is "busy" when the mechanics library planned a sealing or puzzle mechanic there; a room whose template carries a PUZZLE marker is a marker room) and the
+ * into the planner's input (a room is "busy" when the mechanics library planned a sealing mechanic of another category there; a room whose template carries a PUZZLE marker is a marker room) and the
  * plan into live puzzles. It never re-arms a solved puzzle ({@code MechanicsData}, key {@code puzzle:...}), never acts in a safe room, the Hub or a rift pocket, and a puzzle that cannot be
  * placed is retried after a minute, never forced.
  */
@@ -69,8 +69,12 @@ public final class PuzzleDirector {
         return k == RoomKind.HALL || k == RoomKind.SET_PIECE || k == RoomKind.CAVERN || k == RoomKind.TRIAL || k == RoomKind.TRAP || k == RoomKind.PUZZLE || k == RoomKind.TREASURE;
     }
 
+    /**
+     * Does a planned library mechanic of ANOTHER category seal, cage, flood or crush a room? The library's own puzzle mechanics are not "busy": whether the old puzzle or a new one gets
+     * the room is the planner's draw (the weights file), and a drawn new puzzle suppresses the library puzzle mechanic of that room ({@link #claims}).
+     */
     private static boolean sealing(MechanicDef d) {
-        if (d.category() == MechCategory.PUZZLE) return true;
+        if (d.category() == MechCategory.PUZZLE) return false;
         for (MechanicDef.Effect e : d.effects()) {
             String op = e.op();
             if (op.equals("seal_doors") || op.equals("cage") || op.equals("flood") || op.equals("ceiling")) return true;

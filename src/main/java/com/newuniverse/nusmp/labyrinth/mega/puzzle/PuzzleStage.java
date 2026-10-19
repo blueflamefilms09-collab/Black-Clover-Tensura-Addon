@@ -103,7 +103,7 @@ final class PuzzleStage {
     static PuzzleStage plan(ServerLevel level, PuzzleRule rule, BlockPos anchor, Room room, long seed) {
         Layout lay = rule.layout();
         int fy = anchor.getY() - 1;
-        for (boolean alongX : new boolean[] {false, true}) {
+        for (boolean alongX : lay.sideBySide() ? new boolean[] {true, false} : new boolean[] {false, true}) {
             PuzzleGeometry.Arrangement arr = PuzzleGeometry.arrange(lay, seed, alongX);
             for (int[] sh : shifts()) {
                 PuzzleStage st = tryPlace(level, rule, lay, arr, anchor.getX() + sh[0], anchor.getZ() + sh[1], fy, room);

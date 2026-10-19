@@ -70,7 +70,7 @@ public final class PuzzleText {
         p("pendulum_crossing.name", "The Swinging Blades");
         p("pendulum_crossing.hint", "Cross the lanes to the far row. A blade sweeps each lane: red is where it is, amber where it goes next. Step where it is not.");
         p("pit_jump.name", "The Coloured Floor");
-        p("pit_jump.hint", "The row of colours on the wall names the safe colour of each row, near to far. Step only on tiles of that colour; any other gives way.");
+        p("pit_jump.hint", "The column of colours beside the field names the safe colour of each row. Step only on tiles of that colour, from one end of the field to the other; any other tile gives way.");
         p("number_lock.name", "The Code Lock");
         p("number_lock.hint", "Right-click the plaques scattered about the room: each states a fact about the code. Set the dials (crouch to turn back) and touch the lock stone.");
         p("constellation.name", "The Star Thread");

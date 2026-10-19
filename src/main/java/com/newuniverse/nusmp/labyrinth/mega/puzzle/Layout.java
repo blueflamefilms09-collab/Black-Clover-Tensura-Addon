@@ -10,7 +10,10 @@ import java.util.List;
  * anchor, checks that every cell stands on a free floor and, if the room cannot hold the layout, simply does not arm the puzzle (a puzzle that cannot be placed never blocks a room).
  * Cell numbers run through the groups in order, which is how a rule names a cell. Pure.
  */
-public record Layout(List<Group> groups) {
+public record Layout(List<Group> groups, boolean sideBySide) {
+    /** The usual layout: groups stacked along the room's depth. */
+    public Layout(List<Group> groups) { this(groups, false); }
+
     public enum Role { PILLAR, PLATE, DISPLAY, CHEST }
 
     public enum Shape { ROW, GRID, RING, SCATTER, POINTS }
@@ -51,6 +54,9 @@ public record Layout(List<Group> groups) {
     }
 
     public static Layout of(Group... g) { return new Layout(List.of(g)); }
+
+    /** A layout whose groups stand side by side along the width, so that rows of one group line up with rows of the next (a legend beside a field). */
+    public static Layout sideBySide(Group... g) { return new Layout(List.of(g), true); }
 
     public int total() {
         int n = 0;
