@@ -90,5 +90,7 @@ public enum Aura {
     PLANT,
     POISON_PLANT,
     MUD,
-    MUCUS
+    MUCUS,
+    /** Fairy Tail skills: the temporary armour of the timed forms (Dragon Force, Ice Devil's Rage, Iron Dragon Scales ...); the style is the form index (fairytail.FtForms), drawn by client.aura.FairyTailAura */
+    FAIRY_TAIL
 }

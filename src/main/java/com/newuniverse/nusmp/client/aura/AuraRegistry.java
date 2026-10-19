@@ -83,5 +83,6 @@ final class AuraRegistry {
         PoisonPlantAura.register();
         MudAura.register();
         MucusAura.register();
+        FairyTailAura.register();            // Fairy Tail skills: the armour of the timed forms
     }
 }
