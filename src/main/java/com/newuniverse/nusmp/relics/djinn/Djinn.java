@@ -111,7 +111,7 @@ public enum Djinn {
             new Trait(Special.MEND, "minecraft:weakness", 60, 0, 0.22, 6.0, "Each blow mends you and the allies beside you."),
             new Extreme("Buer Rota: The Wheel of Mending", Shape.HEAL_FIELD, 14.0, 17.0, "minecraft:weakness", 120, 0,
                     "A turning wheel of green light heals your allies and drains your foes.")),
-    ANDREALPHUS("Andrealphus", "Peacock of the Stars", Affinity.LIGHT, 0x2F6FDB, 0xBFE3FF, "Star-Peacock Maso",
+    ANDREALPHUS("Andrealphus", "Peacock of the Stars", Affinity.LIGHT, 0x2F6FDB, 0xA8D4FF, "Star-Peacock Maso",
             new Look(Look.Horns.CROWN, Look.Wings.FEATHER, Look.Tail.WHIP, Look.Halo.SPOKES, true),
             new Trait(Special.DAZZLE, "minecraft:blindness", 50, 0, 0.28, 7.0, "A starburst: the foe is blinded and the foes round it are lit up."),
             new Extreme("Andrealphus Pavo: Fall of a Hundred Stars", Shape.RAIN, 16.0, 27.0, "minecraft:blindness", 80, 0,

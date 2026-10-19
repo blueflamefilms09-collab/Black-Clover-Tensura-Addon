@@ -16,7 +16,7 @@ ROWS = [
     ("VEPAR", "Vepar", "Mermaid Sovereign of Wrecks", "WATER", 0x00A6B8, 0xBFFCFF),
     ("SHAX", "Shax", "Silencer of the Dove", "SOUND", 0x8E8EA8, 0xF0F0FF),
     ("BUER", "Buer", "Healer of the Wheel", "LIFE", 0x9CCC3B, 0xF4FFC0),
-    ("ANDREALPHUS", "Andrealphus", "Peacock of the Stars", "LIGHT", 0x2F6FDB, 0xBFE3FF),
+    ("ANDREALPHUS", "Andrealphus", "Peacock of the Stars", "LIGHT", 0x2F6FDB, 0xA8D4FF),
     ("KIMARIS", "Kimaris", "Rider of the Dark Steed", "STRENGTH", 0x3A2A3F, 0xFF6A8A),
     ("AMDUSIAS", "Amdusias", "Maestro of the Unicorn Horn", "SOUND", 0xD58AF0, 0xFFE3FF),
     ("BELIAL", "Belial", "Lord of Hollow Thrones", "HEAT", 0x7A0F2E, 0xFF7096),

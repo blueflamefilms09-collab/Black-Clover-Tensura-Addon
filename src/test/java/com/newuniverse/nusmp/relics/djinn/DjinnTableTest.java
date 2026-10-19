@@ -44,7 +44,7 @@ class DjinnTableTest {
                 {"Vepar", "Mermaid Sovereign of Wrecks", Affinity.WATER, 0x00A6B8, 0xBFFCFF},
                 {"Shax", "Silencer of the Dove", Affinity.SOUND, 0x8E8EA8, 0xF0F0FF},
                 {"Buer", "Healer of the Wheel", Affinity.LIFE, 0x9CCC3B, 0xF4FFC0},
-                {"Andrealphus", "Peacock of the Stars", Affinity.LIGHT, 0x2F6FDB, 0xBFE3FF},
+                {"Andrealphus", "Peacock of the Stars", Affinity.LIGHT, 0x2F6FDB, 0xA8D4FF},
                 {"Kimaris", "Rider of the Dark Steed", Affinity.STRENGTH, 0x3A2A3F, 0xFF6A8A},
                 {"Amdusias", "Maestro of the Unicorn Horn", Affinity.SOUND, 0xD58AF0, 0xFFE3FF},
                 {"Belial", "Lord of Hollow Thrones", Affinity.HEAT, 0x7A0F2E, 0xFF7096},
