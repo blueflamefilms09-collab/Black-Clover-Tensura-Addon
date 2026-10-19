@@ -212,6 +212,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.hub.HubConfig.SPEC, "nusmp-labyrinth-mega-hub-server.toml");   // 1.55.0: Floor 0, the Sanctuary Hub
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.rift.RiftConfig.SPEC, "nusmp-labyrinth-mega-rift-server.toml");   // 1.72.0: dimensional rifts, pocket realms, the waypoint
         com.newuniverse.nusmp.compat.maps.MapsCompat.init(modContainer);                                                              // compat-maps: Xaero's / FTB Chunks / JourneyMap compatibility (docs/compat/maps.md), soft
+        com.newuniverse.nusmp.compat.create.CreateCompat.init(modContainer);                                                          // compat-create: Create machinery in the Mega-Dungeon's traps (docs/compat/create.md), soft, inert without Create
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsConfig.SPEC, "nusmp-labyrinth-mega-mechanics-server.toml");   // the dungeon mechanics library
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryConfig.SPEC, "nusmp-labyrinth-mega-foundry-server.toml");   // the Mob Foundry: 400 custom dungeon mobs
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.macro.MacroConfig.SPEC, "nusmp-labyrinth-mega-macro-server.toml");   // 1.55.0: the Hub terrain generator
