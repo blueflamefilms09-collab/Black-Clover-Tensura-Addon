@@ -1,0 +1,8 @@
+{
+ "nusmp.skill.book_scale.description": "A grimoire of Scale: the overlapping scales of fish, lizards and dragons. Beside the bolt, line, field, domain and guard it holds a volley of scales, a serpent, a shield, a suit of scale mail that forges itself on you piece by piece, and the Shedding Tide. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_scale.scale_volley": "Scale Volley: throw five scales in a fan. Each hurts the first foe it meets (damage scales with EP) and weakens it.",
+ "nusmp.page.book_scale.scale_serpent": "Scale Serpent: call a wyrm of scales that follows you, slithers to the nearest foe and bites it (Weakness, Slowness) for about 25 seconds. A mighty caster calls two.",
+ "nusmp.page.book_scale.scale_shield": "Scale Shield: a kite shield of scales hovers in front of you for about 15 seconds and turns every projectile that flies at you back at its sender.",
+ "nusmp.page.book_scale.scale_mail": "Scale Mail: a suit of teal scales forges itself on you for 20 seconds: a quarter of every blow is softened and a fifth more against projectiles, Resistance II.",
+ "nusmp.page.book_scale.scale_tide": "Shedding Tide: shed your scales in a wave that hurts everything within six blocks and throws it back; you slough every harmful effect and heal a sixth of your health."
+}

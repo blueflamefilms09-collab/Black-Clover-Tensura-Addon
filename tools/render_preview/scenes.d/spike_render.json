@@ -1,0 +1,207 @@
+{
+ "spike_armor_rest": {
+  "kind": "geo",
+  "model": "spike_armor",
+  "anim": "idle",
+  "glow": "FFCFEFFF",
+  "ages": [
+   0,
+   20
+  ],
+  "tile": [
+   440,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 10
+   }
+  ],
+  "space": "PLAYER",
+  "layer": "CUTOUT"
+ },
+ "spike_pillar_idle": {
+  "kind": "geo",
+  "model": "spike_pillar",
+  "anim": "idle",
+  "glow": "FFCFEFFF",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "spike_urchin_idle": {
+  "kind": "geo",
+  "model": "spike_urchin",
+  "anim": "idle",
+  "glow": "FFCFEFFF",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "spike_aura": {
+  "kind": "aura",
+  "attr": "Spike",
+  "aura": "SPIKE",
+  "style": 0,
+  "total": 60,
+  "ages": [
+   3,
+   8,
+   14,
+   30,
+   44,
+   52,
+   57
+  ],
+  "tile": [
+   330,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "spike_aura_run": {
+  "kind": "aura",
+  "attr": "Spike",
+  "aura": "SPIKE",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   40,
+   43,
+   46,
+   49
+  ],
+  "limbSwingAmount": 1.0,
+  "limbSwing": [
+   0.0,
+   1.2,
+   2.4,
+   3.6
+  ],
+  "tile": [
+   330,
+   500
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "spike_prop_1": {
+  "kind": "prop",
+  "attr": "Spike",
+  "propKind": "SPIKE_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 1.0,
+  "maxLife": 60,
+  "ages": [
+   2,
+   6,
+   12,
+   30,
+   52
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ },
+ "spike_prop_2": {
+  "kind": "prop",
+  "attr": "Spike",
+  "propKind": "SPIKE_2",
+  "param": 0,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   2,
+   6,
+   14,
+   30,
+   292
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ }
+}

@@ -1,0 +1,8 @@
+{
+ "nusmp.skill.book_hair.description": "A grimoire of Hair: hair grown, hardened, wound and thrown. Beside the bolt, line, field, domain and guard it holds a lash, a binding, a cocoon, a woven suit that forges itself on you piece by piece, and the Mane of a Hundred Strands. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_hair.hair_lash": "Hair Lash: a tendril rises under the foe in your crosshair, lashes it (damage scales with EP) and holds it for a moment.",
+ "nusmp.page.book_hair.hair_bind": "Hair Bind: the same tendril kept for four seconds: the foe is held in place (shortened for bosses). Uses the shared control lock.",
+ "nusmp.page.book_hair.hair_cocoon": "Hair Cocoon: an egg of woven hair closes round you for about seven seconds: absorption hearts, projectiles stopped, 1.5 hit points a second, and a burst of healing when it opens.",
+ "nusmp.page.book_hair.hair_weave": "Hair Weave: a suit woven of hair forges itself on you for 20 seconds: a fifth of every blow is softened, attackers are bound by strands, and it mends you every two seconds.",
+ "nusmp.page.book_hair.hair_mane": "Mane of a Hundred Strands: for five seconds a tendril lashes each of the three nearest foes within seven blocks every second and some of their magicules flow to you."
+}

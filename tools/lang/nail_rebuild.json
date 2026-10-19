@@ -1,0 +1,8 @@
+{
+ "nusmp.skill.book_nail.description": "A grimoire of Nail: nails driven through things and fingernails grown into claws. Beside the bolt, line, field, domain and guard it holds a barrage, a hammer, a suit of studded armour that forges itself on you piece by piece, a pinning of the feet, and the Nail Storm. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_nail.nail_barrage": "Nail Barrage: three giant nails (five for a mighty caster) fly at your crosshair, pin what they hit (damage scales with EP, Slowness III) and stay driven in walls.",
+ "nusmp.page.book_nail.nail_driver": "Nail Driver: a spectral hammer comes down on the foe under your crosshair and pins it to the ground for about two seconds (shortened for bosses). Uses the shared control lock.",
+ "nusmp.page.book_nail.nail_mail": "Nail Mail: dark studded iron with a wheel of nails on the back forges itself on you for 20 seconds: a quarter of every blow is softened, attackers are pricked and slowed, Resistance II.",
+ "nusmp.page.book_nail.nail_pin": "Pinning Nails: three nails are driven into the ground round the foe under your crosshair: it cannot run or jump for about three seconds (shortened for bosses). Uses the shared control lock.",
+ "nusmp.page.book_nail.nail_storm": "Nail Storm: for four seconds nails fall in a six block ring round your crosshair, each hurting and slowing what stands where it lands."
+}

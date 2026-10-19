@@ -1,0 +1,55 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 10.0,
+   "bones": {
+    "wheel": {
+     "rotation": {
+      "0.00": [
+       0,
+       0,
+       0
+      ],
+      "5.00": [
+       0,
+       0,
+       180
+      ],
+      "10.00": [
+       0,
+       0,
+       360
+      ]
+     }
+    }
+   }
+  },
+  "move": {
+   "loop": true,
+   "animation_length": 4.0,
+   "bones": {
+    "wheel": {
+     "rotation": {
+      "0.00": [
+       0,
+       0,
+       0
+      ],
+      "2.00": [
+       0,
+       0,
+       180
+      ],
+      "4.00": [
+       0,
+       0,
+       360
+      ]
+     }
+    }
+   }
+  }
+ }
+}

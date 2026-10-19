@@ -1,0 +1,8 @@
+{
+ "nusmp.skill.book_shakudo.description": "A grimoire of Shakudo, the black-purple alloy with fine gold inlay. Beside the bolt, line, field, domain and guard it holds a gilded lance, a golem, a bulwark, a suit of plate armour that forges itself on you piece by piece, and a colossus. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_shakudo.shakudo_lance": "Gilded Inlay Lance: thrust a lance of inlaid alloy 14 blocks ahead. It pierces everything on its line (damage scales with EP), staggers it and slows it.",
+ "nusmp.page.book_shakudo.shakudo_golem": "Shakudo Golem: raise a 2.3 block alloy golem that follows you and brings both fists down on the nearest foe for about 25 seconds (longer and bigger with EP). One at a time.",
+ "nusmp.page.book_shakudo.shakudo_bulwark": "Shakudo Bulwark: raise a solid slab of alloy three blocks ahead. It blocks the way and destroys every projectile that flies at it for about 10 seconds, unless it is broken first.",
+ "nusmp.page.book_shakudo.shakudo_plate_armor": "Shakudo Plate Armor: a suit of black alloy with gold inlay forges itself on you for 20 seconds: a third of every blow is softened, melee attackers are staggered and cut, Resistance II.",
+ "nusmp.page.book_shakudo.shakudo_colossus": "Shakudo Colossus: a golem 1.7 times the size with a heavier fist stands at your side for about 20 seconds (longer with EP). Two minutes to recover."
+}

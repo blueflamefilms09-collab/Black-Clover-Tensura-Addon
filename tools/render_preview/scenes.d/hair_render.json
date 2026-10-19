@@ -1,0 +1,207 @@
+{
+ "hair_armor_rest": {
+  "kind": "geo",
+  "model": "hair_armor",
+  "anim": "idle",
+  "glow": "FFFFB0D0",
+  "ages": [
+   0,
+   20
+  ],
+  "tile": [
+   440,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 10
+   }
+  ],
+  "space": "PLAYER",
+  "layer": "CUTOUT"
+ },
+ "hair_tendril_idle": {
+  "kind": "geo",
+  "model": "hair_tendril",
+  "anim": "idle",
+  "glow": "FFFFB0D0",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "hair_cocoon_idle": {
+  "kind": "geo",
+  "model": "hair_cocoon",
+  "anim": "idle",
+  "glow": "FFFFB0D0",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "hair_aura": {
+  "kind": "aura",
+  "attr": "Hair",
+  "aura": "HAIR",
+  "style": 0,
+  "total": 60,
+  "ages": [
+   3,
+   8,
+   14,
+   30,
+   44,
+   52,
+   57
+  ],
+  "tile": [
+   330,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "hair_aura_run": {
+  "kind": "aura",
+  "attr": "Hair",
+  "aura": "HAIR",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   40,
+   43,
+   46,
+   49
+  ],
+  "limbSwingAmount": 1.0,
+  "limbSwing": [
+   0.0,
+   1.2,
+   2.4,
+   3.6
+  ],
+  "tile": [
+   330,
+   500
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "hair_prop_1": {
+  "kind": "prop",
+  "attr": "Hair",
+  "propKind": "HAIR_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 1.0,
+  "maxLife": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   30,
+   112
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ },
+ "hair_prop_2": {
+  "kind": "prop",
+  "attr": "Hair",
+  "propKind": "HAIR_2",
+  "param": 0,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 200,
+  "ages": [
+   2,
+   6,
+   14,
+   30,
+   192
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ }
+}

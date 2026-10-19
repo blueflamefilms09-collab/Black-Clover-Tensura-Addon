@@ -1,0 +1,8 @@
+{
+ "nusmp.skill.book_spike.description": "A grimoire of Spike: spikes thrust out of the ground and thrown from the body. Beside the bolt, line, field, domain and guard it holds an eruption, a wall, an urchin, a suit of spiked armour that forges itself on you piece by piece, and the Impaling Field. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_spike.spike_eruption": "Spike Eruption: six spike pillars erupt in a line ahead of you, one after the other. Each impales what stands on it (damage scales with EP) and slows it.",
+ "nusmp.page.book_spike.spike_wall": "Spike Wall: seven spike pillars stand across your way for about 8 seconds and keep pricking whatever stays on them.",
+ "nusmp.page.book_spike.spike_urchin": "Spike Urchin: a spiked ball homes in on the foe under your crosshair and bursts in a three block ring, throwing its spikes (damage scales with EP, Slowness).",
+ "nusmp.page.book_spike.spike_armor": "Spike Armor: gun-metal plate bristling with spikes forges itself on you for 20 seconds: a fifth of every blow is softened and attackers are cut for half of what they dealt.",
+ "nusmp.page.book_spike.spike_impaling_field": "Impaling Field: for five seconds a spike pillar erupts every half second under each of the three nearest foes within seven blocks."
+}
