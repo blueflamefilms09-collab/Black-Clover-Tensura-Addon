@@ -28,6 +28,7 @@ public final class RelicSystem {
         RelicEngine.register(gameBus);
         RelicLoot.register(gameBus);
         RelicCatalog.hooks();
+        GradeDamageSelfTests.register();                        // the self-test relic.grade_damage (every relic weapon's damage is inside its grade range)
         RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
     }
 }

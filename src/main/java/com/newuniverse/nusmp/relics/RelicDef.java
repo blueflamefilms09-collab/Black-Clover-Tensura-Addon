@@ -271,6 +271,15 @@ public final class RelicDef {
     /** Total attack damage of a weapon (the tooltip figure, the player's 1 included). */
     public double meleeDamage() { return Double.isNaN(damage) ? 3.0 + grade.tier() : Math.max(1.0, damage); }
 
+    /**
+     * 1.97.0: the base attack damage a weapon really carries: the grade's range (relics/GradeDamage) at the place of its weapon type. The number a wave
+     * wrote into {@link #melee} ({@link #meleeDamage()}) is only the authored one. Elsdocia keeps its own number (the one exception).
+     */
+    public double baseDamage() {
+        if (GradeDamage.exemptId(id)) return meleeDamage();
+        return GradeDamage.damage(grade.ordinal(), GradeDamageItems.weaponTypeOf(this));
+    }
+
     /** Attacks per second of a weapon. */
     public double meleeSpeed() { return 4.0 + meleeSpeedModifier(); }
 

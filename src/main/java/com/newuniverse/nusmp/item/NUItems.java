@@ -92,9 +92,9 @@ public final class NUItems {
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SWORD = ITEMS.register("magic_tool_sword",
-            () -> new MagicToolSword(Tiers.IRON, new Item.Properties().attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
+            () -> new MagicToolSword(Tiers.IRON, new Item.Properties().attributes(SwordItem.createAttributes(Tiers.IRON, (float) (com.newuniverse.nusmp.relics.WeaponGrades.damageOr("magic_tool_sword", 6.0) - 3.0), -2.4f))));
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SPEAR = ITEMS.register("magic_tool_spear",
-            () -> new MagicToolSword(Tiers.IRON, new Item.Properties().attributes(SwordItem.createAttributes(Tiers.IRON, 4, -2.9f))));
+            () -> new MagicToolSword(Tiers.IRON, new Item.Properties().attributes(SwordItem.createAttributes(Tiers.IRON, (float) (com.newuniverse.nusmp.relics.WeaponGrades.damageOr("magic_tool_spear", 7.0) - 3.0), -2.9f))));
     public static final DeferredItem<MagicToolBow> MAGIC_TOOL_BOW = ITEMS.register("magic_tool_bow",
             () -> new MagicToolBow(new Item.Properties().durability(500)));
 

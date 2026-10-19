@@ -53,7 +53,7 @@ public class HeroWeaponItem extends Item {
     public static Properties props(HeroKind kind) {
         HeroBaseStats.Row row = HeroBaseStats.of(kind);
         ItemAttributeModifiers.Builder mods = ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"), row.damageModifier(),
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"), com.newuniverse.nusmp.relics.WeaponGrades.damageOr(kind.itemId(), row.damage()) - HeroBaseStats.PLAYER_BASE_DAMAGE,
                         AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_speed"), row.speedModifier(),
                         AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);

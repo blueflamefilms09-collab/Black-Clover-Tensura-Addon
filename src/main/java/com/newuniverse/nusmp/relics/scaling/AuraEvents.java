@@ -46,7 +46,9 @@ public final class AuraEvents {
         if (a.none()) return;
         float original = e.getAmount();
         float limit = target instanceof Player ? BalanceLaw.cap(target, Float.MAX_VALUE) : 0f;       // a player target keeps the per-hit cap of the balance law
-        float scaled = AuraScaling.apply(original, a.damageMult(), limit);
+        int effOrdinal = com.newuniverse.nusmp.relics.tier.Tiers.effectiveGrade(main, def).ordinal();
+        double gradeMax = com.newuniverse.nusmp.relics.GradeDamage.exemptId(def.id()) ? 0.0 : com.newuniverse.nusmp.relics.GradeDamage.range(effOrdinal)[1];
+        float scaled = AuraScaling.apply(original, a.damageMult(), limit, gradeMax);
         if (scaled != original) e.setAmount(scaled);
         if (a.armourIgnore() > 0) {
             float keep = AuraScaling.armourKeep(a.armourIgnore());
