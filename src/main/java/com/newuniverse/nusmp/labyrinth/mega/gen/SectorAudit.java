@@ -115,6 +115,7 @@ public final class SectorAudit {
         }
         int unreachable = unreachable(r);
         if (unreachable > 0) out.add(unreachable + " room(s) cannot be reached from the Landing");
+        out.addAll(StairReach.problems(r));                                        // 1.94.0: the explicit rule of the escape work, every placed room has a walk to the stairs (a closed pocket would lock a player in)
 
         if (!strict) return out;
 

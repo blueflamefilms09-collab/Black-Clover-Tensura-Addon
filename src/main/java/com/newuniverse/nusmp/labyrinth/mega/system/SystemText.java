@@ -143,6 +143,8 @@ public final class SystemText {
     public static String english(String key) {
         String s = EN.get(key);
         if (s == null) s = PointsText.englishOrNull(key);                       // the texts of the stat-point update live in their own map and lang fragment
+        if (s == null) s = FloorInfoText.englishOrNull(key);                    // the floor report's texts (theme, mechanics, depth) live in their own map and lang fragment
+        if (s == null) s = com.newuniverse.nusmp.labyrinth.mega.lock.LockText.englishOrNull(key);   // so do the texts of the escape rules (rune, rescue, unstuck)
         return s == null ? String.valueOf(key) : s;
     }
 

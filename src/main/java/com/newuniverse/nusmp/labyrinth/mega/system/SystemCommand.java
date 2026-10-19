@@ -42,6 +42,7 @@ public final class SystemCommand {
     public static LiteralArgumentBuilder<CommandSourceStack> command() {
         return Commands.literal("system").requires(s -> s.hasPermission(2))
                 .then(withPlayer("status", SystemCommand::status))
+                .then(withPlayer("floor", SystemCommand::floorReport))
                 .then(Commands.literal("quest")
                         .then(withPlayer("roll", (src, p) -> roll(src, p, null)))
                         .then(withPlayer("complete", SystemCommand::complete))
@@ -119,6 +120,18 @@ public final class SystemCommand {
                 SystemConfig.get(SystemConfig.SHARE_RADIUS)));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_COUNTERS, st.done(), st.failed(), st.cores(), ShadowMinions.countOf(p.getUUID()), SystemConfig.get(SystemConfig.MAX_MINIONS),
                 ShadowExtraction.pending(p) == null ? 0 : 1));
+        return 1;
+    }
+
+    // ================================================================ 1.94.0: the floor report
+    /** {@code floor [player]}: builds the floor report (theme, mechanics, depth) for the place the player stands on, sends it to their window and prints it to the operator. */
+    private static int floorReport(CommandSourceStack src, ServerPlayer p) {
+        int floor = FloorInfo.floorOf(p);
+        if (floor == 0) return error(src, SystemMsg.text(FloorInfoText.CMD_NOT_HERE));
+        FloorCard card = FloorInfo.build(p, floor, 0, FloorInfoRules.Reason.REQUEST);
+        FloorInfo.show(p, floor, 0, FloorInfoRules.Reason.REQUEST);
+        ok(src, SystemMsg.text(FloorInfoText.CMD_SENT, who(p)));
+        for (FloorCardLines.Line l : FloorCardLines.compose(card, FloorInfo.serverTr(), "", false)) ok(src, Component.literal(l.text()));
         return 1;
     }
 

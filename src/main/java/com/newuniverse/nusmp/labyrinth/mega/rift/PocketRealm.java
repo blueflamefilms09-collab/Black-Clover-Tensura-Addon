@@ -184,6 +184,9 @@ public final class PocketRealm extends SavedData {
         return p;
     }
 
+    /** 1.94.0 (escape rules): the exit as a public entry for {@code /dungeon unstuck}, so a player in a pocket realm is taken out through the same door as the exit rift. */
+    public static void leaveForRescue(ServerLevel level, ServerPlayer p) { leave(level, p); }
+
     /** The exit: back to where the player came from; if that is gone, their waypoint; if that is gone too, Floor 0. */
     static void leave(ServerLevel level, ServerPlayer p) {
         MinecraftServer server = p.getServer();
