@@ -18,6 +18,11 @@ public final class ExclusiveExt {
             case SOUL -> SoulExt.pages();
             case SOUL_CORPSE -> SoulCorpseExt.pages();
             case SONG -> SongExt.pages();
+            case SHAKUDO -> com.newuniverse.nusmp.book.ShakudoSpells.pages();      // 1.93.0: the rebuilt wiki magics (docs/attributes/<key>_rebuild.md)
+            case SCALE -> com.newuniverse.nusmp.book.ScaleSpells.pages();
+            case SPIKE -> com.newuniverse.nusmp.book.SpikeSpells.pages();
+            case NAIL -> com.newuniverse.nusmp.book.NailSpells.pages();
+            case HAIR -> com.newuniverse.nusmp.book.HairSpells.pages();
             default -> List.of();
         };
     }
