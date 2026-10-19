@@ -48,6 +48,7 @@ final class DjinnAmbient {
         // The Magi Rukh gathering: while the Djinn is worn a flock keeps converging on the player, light for a light Djinn, dark for the dark state.
         if (level.getGameTime() % 10 == 0) RukhClientFx.gather(level, p, dark ? Alignment.DARK : Alignment.LIGHT, phaseGather(s.phase()));
         if (dark) spawn(level, rnd, p, DjinnLook.RUKH_KEY, DjinnLook.spawnCount(DjinnLook.RUKH_RATE, share, rnd.nextFloat()), DjinnLook.anchorAt(Anchor.WINGS, s.phase()), 0x120818, true);
+        DjinnRoster36Fx.emitPalette(level, p, d, s, dark);                               // 1.93.0: the dust of the 24 newer Djinn, in their own colours
     }
 
     private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, String key, int count, Anchor anchor, int rgb, boolean dark) {

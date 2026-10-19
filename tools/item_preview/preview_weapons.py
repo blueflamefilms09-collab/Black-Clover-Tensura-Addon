@@ -35,6 +35,10 @@ def load(item_id):
         elif v[0] == "q":
             pts = np.array([float(x) for x in v[2:22]]).reshape(4, 5)
             quads.append((int(v[1]), pts, np.array([float(x) for x in v[22:25]])))
+        elif v[0] == "qn":                                                  # 1.93.0: per-vertex normals (the Djinn weapons): x y z u v nx ny nz a vertex
+            arr = np.array([float(x) for x in v[2:34]]).reshape(4, 8)
+            nn = arr[:, 5:8].sum(axis=0)
+            quads.append((int(v[1]), arr[:, :5].copy(), nn / (np.linalg.norm(nn) or 1.0)))
     ox, oy, ang, sc, ymin = place
     a = math.radians(ang - 90)
     R = np.array([[math.cos(a), -math.sin(a), 0], [math.sin(a), math.cos(a), 0], [0, 0, 1]])

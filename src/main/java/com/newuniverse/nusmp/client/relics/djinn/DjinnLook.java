@@ -103,7 +103,11 @@ public final class DjinnLook {
     };
     private static final Style FALLBACK = new Style(1.0f, 5, 0.0f, 0.0f, 0.0f, 0.8f, 1.0f);
 
-    public static Style style(int ordinal) { return ordinal >= 0 && ordinal < STYLES.length ? STYLES[ordinal] : FALLBACK; }
+    public static Style style(int ordinal) {
+        if (ordinal >= 0 && ordinal < STYLES.length) return STYLES[ordinal];
+        Style s = ordinal >= STYLES.length ? DjinnRoster36.styleOf(ordinal) : null;         // 1.93.0: the 24 Djinn after Vassago, keyed by name
+        return s != null ? s : FALLBACK;
+    }
 
     /** The halo of a dark Djinn always spins (its ring of thorns), at least this fast. */
     public static float haloSpin(Style st, boolean dark) { return dark ? Math.max(1.2f, st.haloSpin()) : st.haloSpin(); }
@@ -134,7 +138,11 @@ public final class DjinnLook {
     };
     private static final Ambient FALLBACK_AMBIENT = new Ambient("mote", 6, "mote", 0, Anchor.BODY);
 
-    public static Ambient ambient(int ordinal) { return ordinal >= 0 && ordinal < AMBIENT.length ? AMBIENT[ordinal] : FALLBACK_AMBIENT; }
+    public static Ambient ambient(int ordinal) {
+        if (ordinal >= 0 && ordinal < AMBIENT.length) return AMBIENT[ordinal];
+        Ambient a = ordinal >= AMBIENT.length ? DjinnRoster36.ambientOf(ordinal) : null;   // 1.93.0: the 24 Djinn after Vassago, keyed by name
+        return a != null ? a : FALLBACK_AMBIENT;
+    }
 
     /** The black rukh a Dark Djinn streams off its wings (particles a second), on top of its own ambient. */
     public static final String RUKH_KEY = "rukh";
