@@ -92,5 +92,7 @@ public enum Aura {
     MUD,
     MUCUS,
     /** Fairy Tail skills: the temporary armour of the timed forms (Dragon Force, Ice Devil's Rage, Iron Dragon Scales ...); the style is the form index (fairytail.FtForms), drawn by client.aura.FairyTailAura */
-    FAIRY_TAIL
+    FAIRY_TAIL,
+    /** Requip: The Knight (Erza Scarlet): the armour render layer; the style is the worn armour's ordinal in requip.Armour (client.aura.ErzaAura, pieces forged in by EquipAnimation) */
+    ERZA
 }

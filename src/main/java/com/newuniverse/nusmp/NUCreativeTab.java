@@ -26,6 +26,7 @@ public final class NUCreativeTab {
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.ANTI_MAGIC, Devil.LIEBE));
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
+                for (net.minecraft.world.item.Item ri : com.newuniverse.nusmp.requip.RequipItems.creative()) output.accept(ri);                                   // Requip: The Knight: Titania's Requip and the six armour weapons
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.spawnEggs()) output.accept(egg.get());                                 // 1.23.0
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisEntities.spawnEggs()) output.accept(egg.get());
                 for (net.minecraft.world.item.Item ci : com.newuniverse.nusmp.charter.CharterItems.all()) output.accept(ci);                   // 1.25.0: Charter Grimoires

@@ -96,7 +96,14 @@ public final class WeaponEngravings {
             Map.entry("vassal_staff", List.of(e("magic_weapon", 1), e("swift", 1), e("magic_interference", 1))),   // a casting focus; accelerated casting is its signature; Magic Prism and Float Mirror bend others' magic
             Map.entry("vassal_gauntlet", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 1))),   // fists that break defences (Turtle Crush, Conflagration Fist); the quaking shock and palm go through guards; the gauntlet is armour too (Iron Guard)
             Map.entry("vassal_projectile", List.of(e("swift", 2), e("severance", 1), e("magic_weapon", 1))),   // speed of throw; knives, kunai and chakrams cut clean; the base form is a blade conjured through the gem
-            Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))));   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
+            Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))),   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
+            // Requip: The Knight (requip.RequipItems): the weapons the armours put in the hand
+            Map.entry("flame_empress_blade", List.of(e("elemental_boost", 2), e("severance", 1), e("barrier_piercing", 1))),   // Flame Empress: a blade of living flame that cuts clean and burns through wards
+            Map.entry("lightning_empress_halberd", List.of(e("elemental_boost", 2), e("swift", 2), e("crushing", 1))),   // Lightning Empress: thunder in the head, a quick long weapon that hits hard
+            Map.entry("sea_empress_trident", List.of(e("elemental_boost", 2), e("barrier_piercing", 1), e("magic_weapon", 1))),   // Sea Empress: the deep's trident, a magic weapon that goes through wards
+            Map.entry("black_wing_blade", List.of(e("swift", 2), e("severance", 2), e("enervation", 1))),   // Black Wing: a fast shadow-edged blade that cuts clean and saps
+            Map.entry("nakagami_edge", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 3), e("magic_interference", 2), e("magicule_absorption", 1))),   // Nakagami: parts spells and wards, jams casting, drinks the magic it cuts
+            Map.entry("purgatory_mace", List.of(e("crushing", 3), e("sturdy", 2), e("elemental_boost", 1), e("severance", 1))));   // Purgatory: a hell-forged mace that breaks what it strikes
 
     static final String FLAG = "NUEngraved";
 

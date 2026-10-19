@@ -84,5 +84,6 @@ final class AuraRegistry {
         MudAura.register();
         MucusAura.register();
         FairyTailAura.register();            // Fairy Tail skills: the armour of the timed forms
+        ErzaAura.register();                 // Requip: The Knight (the fourteen armours, one set each, forged in by EquipAnimation)
     }
 }
