@@ -52,5 +52,10 @@ final class PropRegistry {
         SandProps.init();
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
+        ShakudoProps.init();                 // 1.93.0: the rebuilt wiki magics
+        ScaleProps.init();
+        SpikeProps.init();
+        NailProps.init();
+        HairProps.init();
     }
 }

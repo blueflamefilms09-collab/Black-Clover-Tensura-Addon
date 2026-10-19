@@ -52,5 +52,10 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        ShakudoPropPainter.register();       // 1.93.0: the rebuilt wiki magics
+        ScalePropPainter.register();
+        SpikePropPainter.register();
+        NailPropPainter.register();
+        HairPropPainter.register();
     }
 }

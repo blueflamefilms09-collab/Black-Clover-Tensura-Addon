@@ -51,5 +51,11 @@ public enum Aura {
     /** 1.27.0: the merged-magic armour; RETIRED in 1.93.0 (no painter is registered for it any more; the constant stays so the ordinals after it never move) */
     MERGED,
     /** 1.27.0: the temporary armour / aura of the 30 wiki magics; the style is the magic's WikiStyles index (client.aura.WikiAura) */
-    WIKI
+    WIKI,
+    /** 1.93.0: the rebuilt temporary armour of Shakudo, Scale, Spike, Nail and Hair Magic (client.aura.<Name>Aura, pieces drawn by ShakudoPieceKit) */
+    SHAKUDO,
+    SCALE,
+    SPIKE,
+    NAIL,
+    HAIR
 }

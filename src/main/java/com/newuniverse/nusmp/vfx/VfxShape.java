@@ -256,7 +256,13 @@ public enum VfxShape {
     CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
     CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
     BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
-    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer
+    // 1.93.0: the rebuilt wiki magics, three effects each (the meaning of from / to / power is in each <Name>Layer's javadoc): FX1 cast, FX2 zone, FX3 impact
+    SHAKUDO_FX1, SHAKUDO_FX2, SHAKUDO_FX3,
+    SCALE_FX1, SCALE_FX2, SCALE_FX3,
+    SPIKE_FX1, SPIKE_FX2, SPIKE_FX3,
+    NAIL_FX1, NAIL_FX2, NAIL_FX3,
+    HAIR_FX1, HAIR_FX2, HAIR_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
