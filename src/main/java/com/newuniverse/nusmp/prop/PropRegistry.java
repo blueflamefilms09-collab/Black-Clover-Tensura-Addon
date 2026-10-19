@@ -58,5 +58,10 @@ final class PropRegistry {
         SpikeProps.init();
         NailProps.init();
         HairProps.init();
+        SongRebuildProps.init();                 // 1.93.0: Song, Sound, Soul, Soul Corpse and Memory
+        SoundRebuildProps.init();
+        SoulRebuildProps.init();
+        SoulCorpseRebuildProps.init();
+        MemoryRebuildProps.init();
     }
 }

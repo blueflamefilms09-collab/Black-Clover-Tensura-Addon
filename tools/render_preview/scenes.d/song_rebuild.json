@@ -1,0 +1,276 @@
+{
+ "song_armour_set": {
+  "kind": "aura",
+  "attr": "Song",
+  "aura": "SONG",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   4,
+   10,
+   16,
+   40,
+   80,
+   108
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 12
+   }
+  ]
+ },
+ "song_armour_big": {
+  "kind": "aura",
+  "attr": "Song",
+  "aura": "SONG",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ],
+  "tile": [
+   640,
+   860
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   },
+   {
+    "name": "back",
+    "yaw": 170,
+    "pitch": 8,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   }
+  ]
+ },
+ "song_note_idle": {
+  "kind": "geo",
+  "model": "song_note",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.5
+   }
+  ]
+ },
+ "song_prop_note": {
+  "kind": "prop",
+  "attr": "SongRebuild",
+  "propKind": "SONG_1",
+  "param": 0,
+  "scale": 0.9,
+  "maxLife": 30,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   2,
+   8,
+   16
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ },
+ "song_prop_metronome": {
+  "kind": "prop",
+  "attr": "SongRebuild",
+  "propKind": "SONG_1",
+  "param": 1,
+  "scale": 1.0,
+  "maxLife": 200,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   4,
+   12,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ },
+ "song_prop_choir": {
+  "kind": "prop",
+  "attr": "SongRebuild",
+  "propKind": "SONG_2",
+  "param": 0,
+  "scale": 0.9,
+  "maxLife": 200,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   4,
+   12,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ },
+ "song_prop_choir_sing": {
+  "kind": "prop",
+  "attr": "SongRebuild",
+  "propKind": "SONG_2",
+  "param": 256,
+  "scale": 0.9,
+  "maxLife": 200,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   4,
+   12,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ }
+}

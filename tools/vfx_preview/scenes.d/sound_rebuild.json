@@ -1,0 +1,129 @@
+{
+ "_comment": "Sound Magic rebuild preview scenes (SoundFxLayer): FX1 cast, FX2 zone, FX3 impact. Powers are what the game draws (the manager multiplies FX1 and FX3 payload power by 3, FX2 by 1.5).",
+ "sound_cast": {
+  "layer": "SoundFxLayer",
+  "shape": "SOUND_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   7
+  ],
+  "power": 3.0,
+  "duration": 16,
+  "cam": [
+   2.2,
+   1.7,
+   3.0
+  ],
+  "target": [
+   0,
+   1.4,
+   3.2
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sound_zone": {
+  "layer": "SoundFxLayer",
+  "shape": "SOUND_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 7.5,
+  "duration": 80,
+  "cam": [
+   6,
+   4,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   30,
+   50,
+   70,
+   76
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sound_impact": {
+  "layer": "SoundFxLayer",
+  "shape": "SOUND_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.0,
+  "duration": 30,
+  "cam": [
+   4.5,
+   2.8,
+   4.5
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   26,
+   29
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

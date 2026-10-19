@@ -110,5 +110,17 @@ public enum PropKind {
     NAIL_1,
     NAIL_2,
     HAIR_1,
-    HAIR_2
+    HAIR_2,
+    /** 1.93.0 magic rebuild: SONG_1 = note bolt (param 0) / metronome (param 1), SONG_2 = choir spirit; SOUND_1 = speaker stack, SOUND_2 = tuning-fork bolt; SOUL_1 = soul wisp, SOUL_2 = soul-flame orb;
+     *  SOUL_CORPSE_1 = marionette, SOUL_CORPSE_2 = grasping hands; MEMORY_1 = memory echo, MEMORY_2 = recollection orb (see prop.<Name>RebuildProps) */
+    SONG_1,
+    SONG_2,
+    SOUND_1,
+    SOUND_2,
+    SOUL_1,
+    SOUL_2,
+    SOUL_CORPSE_1,
+    SOUL_CORPSE_2,
+    MEMORY_1,
+    MEMORY_2
 }

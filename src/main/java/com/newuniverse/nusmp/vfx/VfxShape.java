@@ -267,7 +267,13 @@ public enum VfxShape {
     SCALE_FX1, SCALE_FX2, SCALE_FX3,
     SPIKE_FX1, SPIKE_FX2, SPIKE_FX3,
     NAIL_FX1, NAIL_FX2, NAIL_FX3,
-    HAIR_FX1, HAIR_FX2, HAIR_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    HAIR_FX1, HAIR_FX2, HAIR_FX3,      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0 magic rebuild (Song, Sound, Soul, Soul Corpse, Memory): FX1 = cast / projectile, FX2 = zone / field, FX3 = impact / signature (the shape protocol of docs/attribute_authoring_guide.md section 4)
+    SONG_FX1, SONG_FX2, SONG_FX3,
+    SOUND_FX1, SOUND_FX2, SOUND_FX3,
+    SOUL_FX1, SOUL_FX2, SOUL_FX3,
+    SOUL_CORPSE_FX1, SOUL_CORPSE_FX2, SOUL_CORPSE_FX3,
+    MEMORY_FX1, MEMORY_FX2, MEMORY_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

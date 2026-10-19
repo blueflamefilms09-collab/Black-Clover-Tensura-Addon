@@ -57,5 +57,11 @@ public enum Aura {
     SCALE,
     SPIKE,
     NAIL,
-    HAIR
+    HAIR,
+    /** 1.93.0 magic rebuild: the temporary armour of Song, Sound, Soul, Soul Corpse and Memory Magic (client.aura.<Name>Aura, drawn by SongArmourKit) */
+    SONG,
+    SOUND,
+    SOUL,
+    SOUL_CORPSE,
+    MEMORY
 }

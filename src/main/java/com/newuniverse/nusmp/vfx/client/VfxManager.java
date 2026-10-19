@@ -199,6 +199,11 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SpikeLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.NailLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.HairLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SongFxLayer());          // 1.93.0: the rebuilt Song, Sound, Soul, Soul Corpse and Memory effects (FX1 cast, FX2 zone, FX3 impact)
+        register(new com.newuniverse.nusmp.vfx.client.layer.SoundFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SoulFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SoulCorpseFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.MemoryFxLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

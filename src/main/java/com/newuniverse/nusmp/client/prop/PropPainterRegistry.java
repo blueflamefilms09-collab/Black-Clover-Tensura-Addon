@@ -58,5 +58,10 @@ final class PropPainterRegistry {
         SpikePropPainter.register();
         NailPropPainter.register();
         HairPropPainter.register();
+        SongRebuildPropPainter.register();       // 1.93.0: Song, Sound, Soul, Soul Corpse and Memory
+        SoundRebuildPropPainter.register();
+        SoulRebuildPropPainter.register();
+        SoulCorpseRebuildPropPainter.register();
+        MemoryRebuildPropPainter.register();
     }
 }

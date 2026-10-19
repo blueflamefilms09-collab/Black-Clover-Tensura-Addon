@@ -1,0 +1,266 @@
+{
+ "soul_armour_big": {
+  "kind": "aura",
+  "attr": "Soul",
+  "aura": "SOUL",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/SongArmourKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ],
+  "tile": [
+   520,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   },
+   {
+    "name": "back",
+    "yaw": 170,
+    "pitch": 8,
+    "dist": 3.6,
+    "target": [
+     0,
+     1.0,
+     0
+    ]
+   }
+  ]
+ },
+ "soul_armour_set": {
+  "kind": "aura",
+  "attr": "Soul",
+  "aura": "SOUL",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   4,
+   10,
+   16,
+   40,
+   80,
+   108
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/SongArmourKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 12
+   }
+  ]
+ },
+ "soul_wisp": {
+  "kind": "geo",
+  "model": "soul_wisp",
+  "anim": "idle",
+  "layer": "TRANSLUCENT",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20
+  ],
+  "tile": [
+   320,
+   460
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0
+    ],
+    "dist": 5.5
+   }
+  ]
+ },
+ "soul_orb": {
+  "kind": "geo",
+  "model": "soul_orb",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6
+  ],
+  "tile": [
+   320,
+   380
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 150,
+    "pitch": 8,
+    "target": [
+     0,
+     0.7,
+     0.5
+    ],
+    "dist": 4.5
+   }
+  ]
+ },
+ "soul_prop_wisp": {
+  "kind": "prop",
+  "attr": "SoulRebuild",
+  "propKind": "SOUL_1",
+  "param": 0,
+  "scale": 0.7,
+  "maxLife": 300,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   4,
+   12,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ },
+ "soul_prop_wisp_attack": {
+  "kind": "prop",
+  "attr": "SoulRebuild",
+  "propKind": "SOUL_1",
+  "param": 256,
+  "scale": 0.7,
+  "maxLife": 300,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   4,
+   12,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ },
+ "soul_prop_orb": {
+  "kind": "prop",
+  "attr": "SoulRebuild",
+  "propKind": "SOUL_2",
+  "param": 0,
+  "scale": 0.9,
+  "maxLife": 30,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "figure": true,
+  "ages": [
+   2,
+   8,
+   16
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"
+  ]
+ }
+}

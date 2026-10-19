@@ -1,0 +1,12 @@
+{
+  "nusmp.skill.book_memory.description": "A grimoire of Memory: a moment kept and shown again. Every cast puts the Reel Vestments on you for five seconds, blows come back as echoes, foes forget what they hunted and you can step back to where you were. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_memory.attribute_bolt": "Recollection Bolt: an orb that bursts on the first foe or wall it meets. Sixteen ticks later the same blow lands again as an echo.",
+  "nusmp.page.book_memory.attribute_cut": "Replay Line: a line drawn straight ahead through every foe on it, and the same line replayed ten ticks later.",
+  "nusmp.page.book_memory.attribute_field": "Forgetting Field: a field laid at the aimed point for six seconds. Foes inside are hurt, blinded briefly and forget what they hunted; allies inside shake off a harmful effect and heal a little.",
+  "nusmp.page.book_memory.attribute_domain": "Flashback Domain: a burst around you that hurts and blinds every foe near, and replays itself a second later for a second blow.",
+  "nusmp.page.book_memory.attribute_guard": "Memory Veil: Night Vision, a melee bonus and thorns for nine seconds, and the next hit you take within eight seconds is forgotten (a boss's hit is only cut). The Reel Vestments last as long.",
+  "nusmp.page.book_memory.memory_echo": "Echo: an afterimage of you for fifteen seconds. It blinks beside the nearest foe every second and a half, strikes, and replays the blow a moment later.",
+  "nusmp.page.book_memory.memory_forget": "Forget: the foe in your sights forgets you. A mob's target is cleared again and again for six seconds and it is slowed; a player is weakened and blinded. Uses the shared control lock.",
+  "nusmp.page.book_memory.memory_recall": "Recall: back to where and how you were three to seven seconds ago: your place, your health if it was higher, and harmful effects are shaken off. Needs a remembered moment at least three seconds old in the same dimension.",
+  "nusmp.page.book_memory.memory_archive": "Archive: every foe within sixteen blocks (up to eight) is archived for six seconds. Everything that hurts it is written down, and at the end sixty percent of it is replayed on the foe, capped by its health."
+}

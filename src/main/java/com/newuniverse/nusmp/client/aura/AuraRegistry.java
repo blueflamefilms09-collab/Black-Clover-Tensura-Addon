@@ -56,5 +56,10 @@ final class AuraRegistry {
         SpikeAura.register();
         NailAura.register();
         HairAura.register();
+        SongAura.register();                 // 1.93.0: the rebuilt Song, Sound, Soul, Soul Corpse and Memory armours
+        SoundAura.register();
+        SoulAura.register();
+        SoulCorpseAura.register();
+        MemoryAura.register();
     }
 }

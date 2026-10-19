@@ -1,0 +1,12 @@
+{
+  "nusmp.skill.book_song.description": "A grimoire of Song: notes, staff lines, choirs and brass. Every cast puts the Concert Regalia on you for five seconds, the pages call flying notes, a choir of singing spirits and a metronome, and the singing modes of the older pages keep their place. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_song.attribute_bolt": "Staccato Bolt: three short note bolts, four ticks apart. Each is a flying note that bursts on the first foe or wall it meets and weakens what it hits. Damage scales with your EP.",
+  "nusmp.page.book_song.attribute_cut": "Glissando: a staff of five lines drawn straight ahead through every foe on a long line, slowing them. Damage scales with your EP.",
+  "nusmp.page.book_song.attribute_field": "Choir Field: a field laid at the aimed point for five seconds with three choir spirits standing in it. Every second foes inside are hurt and slowed, and allies are healed a little.",
+  "nusmp.page.book_song.attribute_domain": "Grand Concerto: a great burst of music around you that hurts and throws back every foe near and wraps your allies in Absorption.",
+  "nusmp.page.book_song.attribute_guard": "Aria Armour: Regeneration, a melee bonus and thorns for nine seconds, and the Concert Regalia for as long.",
+  "nusmp.page.book_song.song_choir": "Choir of Spirits: three singing spirits circle you for twenty seconds. Every second and a half each sings a verse that heals allies near it and hurts the nearest foe.",
+  "nusmp.page.book_song.song_metronome": "Metronome: a brass metronome planted where you aim for ten seconds. Allies within six blocks of its beat are hastened and foes are slowed.",
+  "nusmp.page.book_song.song_harmony": "Harmony: up to four allied players within twelve blocks share Resistance, Speed and Regeneration for ten seconds.",
+  "nusmp.page.book_song.song_finale": "Grand Finale: everything the song has built is released at once. Every foe within fourteen blocks takes a heavy blow and spiritual damage, allies are healed a quarter of their health (never bosses), and the choir sings its loudest verse."
+}

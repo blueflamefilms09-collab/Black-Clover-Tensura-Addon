@@ -1,0 +1,12 @@
+{
+  "nusmp.skill.book_soul.description": "A grimoire of Soul: pale soul fire and hollow-eyed spirits, the soul as something that can be struck, drained and harvested. Every cast puts the Spirit Raiment on you for five seconds, and every page pairs a blow to the body with Spiritual Damage. Lucius's Paladin pages keep their place. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_soul.attribute_bolt": "Soul Flame Bolt: an orb of soul fire that bursts on the first foe or wall it meets, hurts the body and the soul, and drains a little of the foe's magicules to you.",
+  "nusmp.page.book_soul.attribute_cut": "Soul Sever: a line drawn straight ahead through every foe on it, hurting body and soul and draining their magicules to you.",
+  "nusmp.page.book_soul.attribute_field": "Soul Vortex: a field laid at the aimed point for five seconds. Every second foes inside take body and spiritual damage, are slowed and have magicules drained to you.",
+  "nusmp.page.book_soul.attribute_domain": "Soul Release: a great burst of souls around you. Foes take body and spiritual damage and are weakened; allies are healed a tenth of their health.",
+  "nusmp.page.book_soul.attribute_guard": "Spirit Mantle: Absorption, Regeneration, a melee bonus and thorns for nine seconds, and the Spirit Raiment for as long.",
+  "nusmp.page.book_soul.soul_wisps": "Soul Wisps: three soul spirits circle you for twenty seconds and lunge at any foe within ten blocks, biting for body and spiritual damage.",
+  "nusmp.page.book_soul.soul_bind": "Soul Bind: the foe in your sights is struck three times a second apart for body and spiritual damage, weakened and made to glow, and you recover health with each pulse.",
+  "nusmp.page.book_soul.soul_harvest": "Soul Harvest: for ten seconds every foe that dies within sixteen blocks returns a share of your magicules and health (the first six souls).",
+  "nusmp.page.book_soul.soul_ascension": "Soul Ascension: three wisps rise round you and detonate after two seconds, hurting body and soul every foe near each of them, and you recover a share of your health."
+}

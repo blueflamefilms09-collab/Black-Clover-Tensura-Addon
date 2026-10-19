@@ -1,0 +1,12 @@
+{
+  "nusmp.skill.book_sound.description": "A grimoire of Sound: vibration made visible. Every cast puts the Resonance Plate on you for five seconds, sonic hits leave resonance marks that stack, and speaker stacks, tuning forks and silence do the rest. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_sound.attribute_bolt": "Sonic Bolt: a tuning-fork bolt that bursts on the first foe or wall it meets, marks what it hits with resonance and briefly jams its Ultimate skills. Wind damage scaling with your EP.",
+  "nusmp.page.book_sound.attribute_cut": "Sound Wave: a waveform line drawn straight ahead through every foe, pushing them back and leaving a resonance mark.",
+  "nusmp.page.book_sound.attribute_field": "Resonance Field: a field laid at the aimed point for five seconds with two speaker stacks flanking it. Every second foes inside are hurt, slowed and marked, and magic barriers inside it shatter.",
+  "nusmp.page.book_sound.attribute_domain": "Sonic Boom: a burst around you that hurts and throws back every foe near, jams their Ultimate skills for a few seconds and marks them with resonance.",
+  "nusmp.page.book_sound.attribute_guard": "Echo Plate: Speed, a melee bonus and thorns for nine seconds, and the Resonance Plate for as long.",
+  "nusmp.page.book_sound.sound_speaker": "Speaker Stack: two speaker stacks are planted at your sides for fifteen seconds. Each sends a sonic pulse at the nearest foe every second and a half and briefly jams its Ultimate skills.",
+  "nusmp.page.book_sound.sound_silence": "Silence: Magic Jamming over a wide circle. Every active skill of every foe in it is put on a cooldown (bosses for a shorter time) and a Silence effect is laid on them. No damage.",
+  "nusmp.page.book_sound.sound_resonance": "Resonant Shatter: rings every resonance mark within range at once. Each foe takes damage per stack of marks (up to five) and the barriers round it shatter.",
+  "nusmp.page.book_sound.sound_boom": "Mach Step: a dash that hits everything on the way and marks it with resonance, leaving a shock ring where you started."
+}

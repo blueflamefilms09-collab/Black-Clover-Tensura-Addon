@@ -1,0 +1,211 @@
+{
+ "_comment": "Song Magic rebuild preview scenes (SongFxLayer): FX1 Staccato cast, FX2 Choir Field, FX3 Finale, plus the older SONG_NOTES and SONG_RING. Run the scenes together so every layer class is built. Powers are what the game draws: the manager multiplies FX1 and FX3 payload power by 3 and FX2 by 1.5.",
+ "song_cast": {
+  "layer": "SongFxLayer",
+  "shape": "SONG_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   7
+  ],
+  "power": 3.0,
+  "duration": 16,
+  "cam": [
+   2.2,
+   1.7,
+   3.0
+  ],
+  "target": [
+   0,
+   1.4,
+   3.2
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "song_zone": {
+  "layer": "SongFxLayer",
+  "shape": "SONG_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 7.5,
+  "duration": 80,
+  "cam": [
+   6,
+   4,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   30,
+   50,
+   70,
+   76
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "song_finale": {
+  "layer": "SongFxLayer",
+  "shape": "SONG_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.0,
+  "duration": 40,
+  "cam": [
+   4.5,
+   2.8,
+   4.5
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   30,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "song_notes": {
+  "layer": "SongNotesLayer",
+  "shape": "SONG_NOTES",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   0
+  ],
+  "power": 1.2,
+  "duration": 40,
+  "cam": [
+   4,
+   2.5,
+   4.5
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   6,
+   12,
+   20,
+   28,
+   34
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "song_ring": {
+  "layer": "SongRingLayer",
+  "shape": "SONG_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 7.0,
+  "duration": 24,
+  "cam": [
+   6,
+   5,
+   6
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   10,
+   16,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}
