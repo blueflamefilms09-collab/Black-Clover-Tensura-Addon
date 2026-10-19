@@ -81,6 +81,7 @@ public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<
             addLayer(new HairLayer<>(this));
             addLayer(new ExtrasLayer<>(this));
             addLayer(new KitCapeLayer<>(this));
+            addLayer(new KitRelicLayer<>(this));                                                          // the relics the entity wears (Curios, armour relics, a mob's pack)
             addLayer(new GlowLayer<>(this));
             body.layers(this, ctx);
         }

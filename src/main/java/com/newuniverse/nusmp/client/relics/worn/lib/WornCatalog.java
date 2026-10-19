@@ -111,7 +111,35 @@ public final class WornCatalog {
         List<Piece> p = relics.get(relicId);
         if (p != null) return p;
         p = looks.get(key(slot, look));
+        if (p == null) p = looks.get(key(slot, defaultLook(slot)));      // 1.94.x: a slot/look pair the generator has no entry for wears the default look of its slot, never nothing
         return p == null ? List.of() : p;
+    }
+
+    /** The look a slot falls back to when its relic names a look the catalog has no entry for (mirrors {@code Look.defaultFor}); "" for a slot that is not worn. */
+    public static String defaultLook(String slot) {
+        if (slot == null) return "";
+        return switch (slot.toUpperCase(Locale.ROOT)) {
+            case "HEAD" -> "CIRCLET";
+            case "CHEST" -> "PLATE";
+            case "NECK" -> "AMULET";
+            case "BACK" -> "CLOAK";
+            case "BELT" -> "BELT";
+            case "HANDS" -> "GAUNTLETS";
+            case "CHARM" -> "CHARM";
+            case "FEET" -> "BOOTS";
+            default -> "";
+        };
+    }
+
+    /** How a relic is worn according to the catalog: its own entry, the entry of its slot and look, the default look of its slot, or nothing at all. */
+    public enum Source { SIGNATURE, LOOK, DEFAULT_LOOK, NONE }
+
+    /** Where the models of this relic come from (see {@link #piecesFor}). */
+    public Source sourceOf(String relicId, String slot, String look) {
+        if (relics.containsKey(relicId)) return Source.SIGNATURE;
+        if (looks.containsKey(key(slot, look))) return Source.LOOK;
+        if (looks.containsKey(key(slot, defaultLook(slot)))) return Source.DEFAULT_LOOK;
+        return Source.NONE;
     }
 
     /** The pieces an armour item (or mode) wears, by its registry path; empty if the catalog has no entry for it. */

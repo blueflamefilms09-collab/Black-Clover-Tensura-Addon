@@ -28,5 +28,6 @@ public final class RelicSystem {
         RelicEngine.register(gameBus);
         RelicLoot.register(gameBus);
         RelicCatalog.hooks();
+        RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
     }
 }
