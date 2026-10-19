@@ -136,5 +136,10 @@ public enum PropKind {
     MIRROR_1,
     MIRROR_2,
     PERMEATION_1,
-    PERMEATION_2
+    PERMEATION_2,
+    /** 1.93.0 magic rebuild (appended): Transmutation (iron spike, sentinel, alchemic blade), Modification (tendril, test subject, needle), Mercury (cage), Recombination (the Black Bull, the drill) */
+    TRANSMUTATION_1, TRANSMUTATION_2, TRANSMUTATION_3,
+    MODIFICATION_1, MODIFICATION_2, MODIFICATION_3,
+    MERCURY_3,
+    RECOMBINATION_3, RECOMBINATION_4
 }

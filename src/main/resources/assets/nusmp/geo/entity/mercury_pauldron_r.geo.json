@@ -1,0 +1,178 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.mercury_pauldron_r",
+    "texture_width": 128,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      22,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -10.4,
+        21.2,
+        -3.8
+       ],
+       "size": [
+        5.4,
+        1.6,
+        7.6
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        10
+       ],
+       "pivot": [
+        -5.5,
+        22,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -10.0,
+        22.6,
+        -3.6
+       ],
+       "size": [
+        5.0,
+        1.5,
+        7.2
+       ],
+       "uv": [
+        29,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        18
+       ],
+       "pivot": [
+        -5.5,
+        22,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -9.2,
+        23.9,
+        -3.3
+       ],
+       "size": [
+        4.4,
+        1.4,
+        6.6
+       ],
+       "uv": [
+        56,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        28
+       ],
+       "pivot": [
+        -5.5,
+        22,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -7.8,
+        25.1,
+        -2.8
+       ],
+       "size": [
+        3.4,
+        1.2,
+        5.6
+       ],
+       "uv": [
+        81,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        40
+       ],
+       "pivot": [
+        -5.5,
+        22,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "drop",
+     "pivot": [
+      -9.0,
+      21.0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -9.9,
+        19.0,
+        -0.9
+       ],
+       "size": [
+        1.8,
+        2.4,
+        1.8
+       ],
+       "uv": [
+        102,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -9.5,
+        18.2,
+        -0.5
+       ],
+       "size": [
+        1.0,
+        1.0,
+        1.0
+       ],
+       "uv": [
+        111,
+        0
+       ]
+      }
+     ],
+     "parent": "root"
+    }
+   ]
+  }
+ ]
+}

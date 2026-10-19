@@ -70,5 +70,8 @@ final class AuraRegistry {
         SpatialAura.register();              // 1.93.0 magic rebuild (Spatial, Gravity, Permeation, Mirror, Slash): the new armours
         MirrorAura.register();
         PermeationAura.register();
+        TransmutationAura.register();        // 1.93.0 magic rebuild
+        RecombinationAura.register();
+        ModificationAura.register();
     }
 }

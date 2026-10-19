@@ -74,5 +74,9 @@ public enum Aura {
     /** 1.93.0 magic rebuild: the temporary armour of Spatial, Mirror and Permeation Magic (client.aura.SpatialAura / MirrorAura / PermeationAura) */
     SPATIAL,
     MIRROR,
-    PERMEATION
+    PERMEATION,
+    /** 1.93.0 magic rebuild: the temporary armours of Transmutation, Recombination and Modification (Mercury uses MERCURY above) */
+    TRANSMUTATION,
+    RECOMBINATION,
+    MODIFICATION
 }

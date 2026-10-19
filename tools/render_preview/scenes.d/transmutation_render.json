@@ -1,0 +1,270 @@
+{
+ "_comment": "Transmutation Magic (1.93.0 rebuild). The aura scenes draw the real TransmutationAura (needs EquipAnimation in the class list: the geo scene must be in the same call). Run: python3 -B tools/render_preview/preview.py transmutation_sentinel_idle transmutation_armour_forge transmutation_armour_full transmutation_armour_shatter transmutation_spike_rise transmutation_blade_idle",
+ "transmutation_sentinel_idle": {
+  "kind": "geo",
+  "model": "transmutation_sentinel",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   520,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 16
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 12
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "transmutation_sentinel_strike": {
+  "kind": "geo",
+  "model": "transmutation_sentinel",
+  "anim": "strike",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   10,
+   14,
+   18,
+   24
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": -90,
+    "pitch": 8
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "transmutation_spike_rise": {
+  "kind": "geo",
+  "model": "transmutation_spike",
+  "anim": "rise",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6,
+   9
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 18
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "transmutation_blade_idle": {
+  "kind": "geo",
+  "model": "transmutation_blade",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 50,
+    "pitch": 14
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "transmutation_armour_forge": {
+  "kind": "aura",
+  "attr": "Transmutation",
+  "aura": "TRANSMUTATION",
+  "total": 120,
+  "ages": [
+   1,
+   4,
+   8,
+   12,
+   16
+  ],
+  "style": 0,
+  "tile": [
+   330,
+   470
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 10
+   }
+  ]
+ },
+ "transmutation_armour_full": {
+  "kind": "aura",
+  "attr": "Transmutation",
+  "aura": "TRANSMUTATION",
+  "total": 120,
+  "ages": [
+   40,
+   70
+  ],
+  "style": 0,
+  "tile": [
+   330,
+   470
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 10
+   }
+  ]
+ },
+ "transmutation_armour_short": {
+  "kind": "aura",
+  "attr": "Transmutation",
+  "aura": "TRANSMUTATION",
+  "total": 100,
+  "ages": [
+   40
+  ],
+  "style": 1,
+  "tile": [
+   330,
+   470
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 10
+   }
+  ]
+ },
+ "transmutation_armour_shatter": {
+  "kind": "aura",
+  "attr": "Transmutation",
+  "aura": "TRANSMUTATION",
+  "total": 120,
+  "ages": [
+   101,
+   105,
+   109,
+   113,
+   117
+  ],
+  "style": 0,
+  "tile": [
+   330,
+   470
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 10
+   }
+  ]
+ }
+}

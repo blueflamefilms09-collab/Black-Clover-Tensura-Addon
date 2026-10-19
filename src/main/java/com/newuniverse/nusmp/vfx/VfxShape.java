@@ -286,7 +286,12 @@ public enum VfxShape {
     // 1.93.0 magic rebuild: the own effects of Spatial, Mirror and Permeation Magic (Gravity and Slash already had their FX1..3 slots); cast / field / burst by the shape protocol of the authoring guide
     SPATIAL_FX1, SPATIAL_FX2, SPATIAL_FX3,
     MIRROR_FX1, MIRROR_FX2, MIRROR_FX3,
-    PERMEATION_FX1, PERMEATION_FX2, PERMEATION_FX3;
+    PERMEATION_FX1, PERMEATION_FX2, PERMEATION_FX3,
+    BUTOH_AFTERIMAGE,
+    // 1.93.0 magic rebuild (appended): the own effect triples of Transmutation, Recombination and Modification (Mercury's MERCURY_FX1..3 exist above)
+    TRANSMUTATION_FX1, TRANSMUTATION_FX2, TRANSMUTATION_FX3,
+    RECOMBINATION_FX1, RECOMBINATION_FX2, RECOMBINATION_FX3,
+    MODIFICATION_FX1, MODIFICATION_FX2, MODIFICATION_FX3;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

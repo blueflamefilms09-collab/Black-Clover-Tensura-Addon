@@ -214,6 +214,9 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SpatialFxLayer());           // 1.93.0 magic rebuild: Spatial, Mirror and Permeation own effects
         register(new com.newuniverse.nusmp.vfx.client.layer.MirrorFxLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.PermeationFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.TransmutationLayer());     // 1.93.0 magic rebuild
+        register(new com.newuniverse.nusmp.vfx.client.layer.RecombinationLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.ModificationLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

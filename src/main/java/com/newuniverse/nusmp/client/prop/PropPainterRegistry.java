@@ -72,5 +72,7 @@ final class PropPainterRegistry {
         SpatialPropPainter.register();       // 1.93.0 magic rebuild
         MirrorPropPainter.register();
         PermeationPropPainter.register();
+        TransmutationPropPainter.register(); // 1.93.0 magic rebuild
+        ModificationPropPainter.register();
     }
 }

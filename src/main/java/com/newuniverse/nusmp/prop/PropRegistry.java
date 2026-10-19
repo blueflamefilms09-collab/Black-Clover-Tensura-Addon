@@ -72,5 +72,7 @@ final class PropRegistry {
         SpatialProps.init();                 // 1.93.0 magic rebuild
         MirrorProps.init();
         PermeationProps.init();
+        TransmutationProps.init();           // 1.93.0 magic rebuild
+        ModificationProps.init();
     }
 }

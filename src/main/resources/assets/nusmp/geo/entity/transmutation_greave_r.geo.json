@@ -1,0 +1,143 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.transmutation_greave_r",
+    "texture_width": 96,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4.6,
+        2.4,
+        -2.9
+       ],
+       "size": [
+        5.2,
+        6.0,
+        5.8
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -4.8,
+        7.9,
+        -3.2
+       ],
+       "size": [
+        5.6,
+        1.0,
+        6.4
+       ],
+       "uv": [
+        54,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -4.2,
+        8.4,
+        -3.7
+       ],
+       "size": [
+        4.4,
+        3.0,
+        1.3
+       ],
+       "uv": [
+        81,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -2.9,
+        8.9,
+        -4.6
+       ],
+       "size": [
+        1.8,
+        1.8,
+        1.0
+       ],
+       "uv": [
+        15,
+        13
+       ]
+      },
+      {
+       "origin": [
+        -4.9,
+        0.0,
+        -4.6
+       ],
+       "size": [
+        5.8,
+        2.4,
+        7.6
+       ],
+       "uv": [
+        25,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -4.4,
+        0.0,
+        -5.6
+       ],
+       "size": [
+        4.8,
+        1.6,
+        1.4
+       ],
+       "uv": [
+        0,
+        13
+       ]
+      },
+      {
+       "origin": [
+        -4.8,
+        2.0,
+        -4.0
+       ],
+       "size": [
+        5.6,
+        0.6,
+        1.0
+       ],
+       "uv": [
+        22,
+        13
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
