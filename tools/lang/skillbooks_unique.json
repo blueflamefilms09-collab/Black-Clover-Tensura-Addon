@@ -530,6 +530,7 @@
   "message.nusmp.skillbook.replaced": "The old pages crumble and a new book takes their place: %s.",
   "message.nusmp.skillbook.nothing_left": "You already know every skill a book could teach. The book stays closed.",
   "message.nusmp.skillbook.failed": "The book would not open. (A server error was logged.)",
+  "message.nusmp.skillbook.guardian_book": "The Guardian lets go of a Skill Book: %s!",
   "message.nusmp.skillbook.migrated": "The Skill Tree is gone: the %s skill line(s) you owned are now unique skills in your Ability Selection.",
   "title.nusmp.skillbook.learned": "UNIQUE SKILL ACQUIRED",
   "msg.nusmp.unique.no_data": "This skill's data is not loaded on the server.",

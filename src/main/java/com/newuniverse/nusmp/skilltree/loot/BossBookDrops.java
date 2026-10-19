@@ -77,10 +77,8 @@ public final class BossBookDrops {
             }
             event.getDrops().add(drop);
         }
-        if (!stacks.isEmpty()) {
-            MutableComponent line = routeBook.isEmpty()
-                    ? Component.translatableWithFallback("message.nusmp.tree.items.guardian_sp", "The Guardian lets go of %s SP Book(s).", stacks.size())
-                    : Component.translatableWithFallback("message.nusmp.tree.items.guardian_book", "The Guardian lets go of a Skill Book: %s!", routeBook.getHoverName());
+        if (!routeBook.isEmpty()) {
+            MutableComponent line = Component.translatableWithFallback("message.nusmp.skillbook.guardian_book", "The Guardian lets go of a Skill Book: %s!", routeBook.getHoverName());
             try {
                 killer.sendSystemMessage(line.withStyle(ChatFormatting.GOLD));
             } catch (RuntimeException ignored) {
