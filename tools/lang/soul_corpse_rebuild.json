@@ -1,0 +1,11 @@
+{
+  "nusmp.skill.book_soul_corpse.description": "A grimoire of Soul Corpse: a puppeteer's craft of threads, stitched marionettes and hands out of the grave. Every cast puts the Marionette Shell on you for five seconds. Rades's pages (Reanimation, the named puppets, True Soul Corpse Magic) keep their place. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_soul_corpse.attribute_bolt": "Marionette Thread: a coffin nail on a thread that bursts on the first foe or wall it meets, slows and weakens what it hits and pulls it a little toward you.",
+  "nusmp.page.book_soul_corpse.attribute_cut": "Puppet Strings: threads drawn straight ahead through every foe on a long line. Each is hurt, slowed and pulled toward you.",
+  "nusmp.page.book_soul_corpse.attribute_field": "Grave Field: a field laid at the aimed point for six seconds in which five hands rise from the ground and close on foes within reach, hurting and slowing them.",
+  "nusmp.page.book_soul_corpse.attribute_domain": "Necropolis: a great burst of grave-cold around you that hurts and withers every foe near, and two marionettes rise to fight for ten seconds.",
+  "nusmp.page.book_soul_corpse.attribute_guard": "Corpse Plate: Resistance, Absorption, a melee bonus and thorns for nine seconds, and the Marionette Shell for as long.",
+  "nusmp.page.book_soul_corpse.corpse_marionette": "Marionette: a stitched puppet fights for you for twenty-five seconds. It walks to the nearest foe and strikes every second. At most four puppets of yours stand at a time.",
+  "nusmp.page.book_soul_corpse.corpse_swap": "Corpse Swap: a decoy puppet takes your place and you step six blocks back. Mobs that hunted you lose their target, and the decoy bursts after three seconds.",
+  "nusmp.page.book_soul_corpse.corpse_legion": "Corpse Legion: four marionettes rise round you for twenty seconds and the hands of the grave close under every foe near you."
+}
