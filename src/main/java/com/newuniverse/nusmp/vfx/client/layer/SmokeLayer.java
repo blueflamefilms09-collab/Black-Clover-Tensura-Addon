@@ -79,7 +79,7 @@ public class SmokeLayer extends AbstractVfxLayer {
     // ------------------------------------------------------------------------------------------------ FX1: Smoke Bullet
     private void cast(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick), p = inst.progress(ctx.partialTick);
-        float P = Math.max(0.5f, inst.power) * 1.5f;
+        float P = Math.min(3.2f, Math.max(0.5f, inst.power)) * 1.5f;
         long seed = inst.seed;
         Vector3f f = ctx.rel(inst.from(ctx)), to = ctx.rel(inst.to(ctx));
         Vector3f dir = new Vector3f(to).sub(f);
@@ -193,7 +193,7 @@ public class SmokeLayer extends AbstractVfxLayer {
     // ------------------------------------------------------------------------------------------------ FX3: impact / vanish
     private void burst(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick), p = inst.progress(ctx.partialTick);
-        float P = Math.max(0.5f, inst.power) * 1.4f;
+        float P = Math.min(3.2f, Math.max(0.5f, inst.power)) * 1.4f;
         long seed = inst.seed;
         Vector3f c = ctx.rel(inst.from(ctx));
         int dark = tint(inst, DARK), mid = tint(inst, MID), light = tint(inst, LIGHT);

@@ -1,0 +1,163 @@
+{
+ "ash_soldier_view": {
+  "kind": "geo",
+  "model": "ash_soldier",
+  "space": "PROP",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   15,
+   30
+  ],
+  "tile": [
+   300,
+   360
+  ]
+ },
+ "ash_back_view": {
+  "kind": "geo",
+  "model": "ash_back",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   340,
+   420
+  ]
+ },
+ "ash_aura_armour": {
+  "kind": "aura",
+  "attr": "Ash",
+  "aura": "ASH",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   3,
+   9,
+   16,
+   40,
+   80,
+   108
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/RebuildSetKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java",
+   "../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"
+  ]
+ },
+ "ash_prop_soldier": {
+  "kind": "prop",
+  "attr": "Ash",
+  "propKind": "ASH_1",
+  "param": 0,
+  "scale": 1.0,
+  "maxLife": 300,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   40,
+   120,
+   292
+  ],
+  "tile": [
+   300,
+   380
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/RebuildSetKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java",
+   "../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"
+  ]
+ },
+ "ash_prop_trap": {
+  "kind": "prop",
+  "attr": "Ash",
+  "propKind": "ASH_1",
+  "param": 1,
+  "scale": 1.0,
+  "maxLife": 600,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   12,
+   60,
+   300
+  ],
+  "tile": [
+   320,
+   340
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/RebuildSetKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java",
+   "../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"
+  ]
+ },
+ "ash_prop_sprung": {
+  "kind": "prop",
+  "attr": "Ash",
+  "propKind": "ASH_1",
+  "param": 258,
+  "scale": 1.0,
+  "maxLife": 30,
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   28
+  ],
+  "tile": [
+   320,
+   340
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/aura/RebuildSetKit.java",
+   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java",
+   "../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"
+  ]
+ },
+ "ash_trap_view": {
+  "kind": "geo",
+  "model": "ash_trap",
+  "space": "PROP",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   15,
+   30
+  ],
+  "tile": [
+   320,
+   340
+  ]
+ }
+}

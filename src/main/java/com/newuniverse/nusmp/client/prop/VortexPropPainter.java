@@ -64,7 +64,7 @@ public final class VortexPropPainter {
         } else {
             ground(pose, buffers, 2.6f * s * a, -age * 6f, fade | 0x59B8C9);
             pose.pushPose();
-            float sc = s * 0.34f * (0.4f + 0.6f * a);
+            float sc = s * 1.5f * (0.4f + 0.6f * a);
             pose.scale(sc, sc * (0.5f + 0.5f * a), sc);
             GeoDraw.paint(pose, buffers, FUNNEL, "idle", age / 20f, GeoDraw.Space.PROP, solid ? GeoDraw.Layer.CUTOUT : GeoDraw.Layer.TRANSLUCENT, light,
                     solid ? 0xFFFFFFFF : AuraRender.alpha(0xFFFFFFFF, a), AuraRender.alpha(0xFFB4FFFF, 0.7f * a));

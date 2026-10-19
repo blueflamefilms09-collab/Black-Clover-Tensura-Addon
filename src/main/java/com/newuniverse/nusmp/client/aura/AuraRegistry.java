@@ -51,6 +51,7 @@ final class AuraRegistry {
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
         SmokeAura.register();                // 1.93.0: the rebuilt armour sets of Smoke, Snow, Wing, Vortex, Air and Ash Magic
+        AshAura.register();
         AirAura.register();
         VortexAura.register();
         WingAura.register();

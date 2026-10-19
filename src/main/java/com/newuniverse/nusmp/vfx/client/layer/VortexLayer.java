@@ -75,7 +75,7 @@ public class VortexLayer extends AbstractVfxLayer {
     // ------------------------------------------------------------------------------------------------ FX1
     private void cast(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick), p = inst.progress(ctx.partialTick);
-        float P = Math.max(0.5f, inst.power) * 1.2f;
+        float P = Math.min(3.2f, Math.max(0.5f, inst.power)) * 1.2f;
         long seed = inst.seed;
         Vector3f f = ctx.rel(inst.from(ctx)), to = ctx.rel(inst.to(ctx));
         Vector3f dir = new Vector3f(to).sub(f);
@@ -181,7 +181,7 @@ public class VortexLayer extends AbstractVfxLayer {
     // ------------------------------------------------------------------------------------------------ FX3
     private void burst(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick), p = inst.progress(ctx.partialTick);
-        float P = Math.max(0.5f, inst.power) * 1.2f;
+        float P = Math.min(3.2f, Math.max(0.5f, inst.power)) * 1.2f;
         long seed = inst.seed;
         Vector3f c = ctx.rel(inst.from(ctx));
         int teal = VfxVertexBuffer.lerpColor(inst.color | 0xFF000000, TEAL, 0.5f);

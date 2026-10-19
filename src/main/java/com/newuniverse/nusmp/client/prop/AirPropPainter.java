@@ -57,7 +57,7 @@ public final class AirPropPainter {
             if (left < 6f) flatRing(pose, buffers, 0.08f, 4.5f * (1f - left / 6f), (Mth.clamp((int) (left / 6f * 0.7f * 255f), 0, 255) << 24) | 0xE6FFFF);
             pose.pushPose();
             pose.translate(0f, -0.1f, 0f);
-            float sc = s * 0.7f * (1f + 1.5f * swell * 0.5f);
+            float sc = s * 1.15f * (1f + 1.5f * swell * 0.5f);
             pose.scale(sc, sc, sc);
             pose.translate(0f, -0.4f, 0f);
             GeoDraw.paint(pose, buffers, ORB, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT, light, AuraRender.alpha(0xFFFFFFFF, 0.9f * a),
