@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
@@ -27,16 +28,22 @@ import java.util.List;
 /** Dark Magic (Yami). */
 public class DarkBook extends GrimoireBook {
     // 0.28: rebuilt after the wiki (Yami Sukehiro); page ids kept so unlocks and mastery carry over, new spells appended
+    // 1.93.0 (the Dark rebuild): the nine pages keep their ids, order, names and cost tiers and are re-implemented in DarkArts (numbers kept, new bodies and VFX, the Dark armour for 5 s per cast);
+    // three pages are appended. CanonSpells and the old static methods below stay.
     private final List<BookPage> pages = List.of(
-            BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", CanonSpells::avidyaSlash),
-            BookPage.zone("black_hole", "Black Hole", CanonSpells::blackHole),
-            BookPage.signature("dimension_slash", "Dark Cloaked Dimension Slash", CanonSpells::dimensionSlash).withCooldown(300),
-            BookPage.mid("death_thrust", "Death Thrust", CanonSpells::deathThrust),
-            BookPage.mid("black_blade", "Dark Cloaked Black Blade", CanonSpells::blackBlade).withCooldown(900),
-            BookPage.mid("avidya_wild_slash", "Dark Cloaked Avidya Wild Slash", CanonSpells::avidyaWildSlash),
-            BookPage.zone("black_moon", "Dark Cloaked Black Moon", CanonSpells::blackMoon).withCooldown(900),
-            BookPage.mid("iai_slash", "Dark Cloaked Iai Slash", CanonSpells::iaiSlash),
-            BookPage.signature("dimension_slash_equinox", "Dark Cloaked Dimension Slash: Equinox", CanonSpells::dimensionSlashEquinox));
+            WaterArmour.wrap(BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", DarkArts::avidyaSlash), Aura.DARK),
+            WaterArmour.wrap(BookPage.zone("black_hole", "Black Hole", DarkArts::blackHole), Aura.DARK),
+            WaterArmour.wrap(BookPage.signature("dimension_slash", "Dark Cloaked Dimension Slash", DarkArts::dimensionSlash).withCooldown(300), Aura.DARK),
+            WaterArmour.wrap(BookPage.mid("death_thrust", "Death Thrust", DarkArts::deathThrust), Aura.DARK),
+            BookPage.mid("black_blade", "Dark Cloaked Black Blade", DarkArts::blackBlade).withCooldown(900),
+            WaterArmour.wrap(BookPage.mid("avidya_wild_slash", "Dark Cloaked Avidya Wild Slash", DarkArts::avidyaWildSlash), Aura.DARK),
+            BookPage.zone("black_moon", "Dark Cloaked Black Moon", DarkArts::blackMoon).withCooldown(900),
+            WaterArmour.wrap(BookPage.mid("iai_slash", "Dark Cloaked Iai Slash", DarkArts::iaiSlash), Aura.DARK),
+            BookPage.signature("dimension_slash_equinox", "Dark Cloaked Dimension Slash: Equinox", DarkArts::dimensionSlashEquinox),
+            // 1.93.0: appended
+            BookPage.mid("dark_cloak", "Dark Cloaked Guard", DarkArts::darkCloak).withCooldown(900),
+            BookPage.zone("shadow_embrace", "Dark Cloaked Shadow Embrace", DarkArts::shadowEmbrace).withCooldown(600),
+            BookPage.signature("black_hole_collapse", "Black Hole Collapse", DarkArts::blackHoleCollapse).withCooldown(1200));
 
     public DarkBook() { super(MagicType.DARK, 0xFF5B3A8A); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -78,6 +85,14 @@ public class DarkBook extends GrimoireBook {
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.WIND_SLASH, a, end, 18, 1.6f);
         b.vfx(p, VfxShape.DARK_BLACK_HOLE, end, end.add(0, 1, 0), 20, 1.4f);
+        return true;
+    }
+
+    /** 1.93.0: Dark Cloaked Guard turns 12 percent of the damage the caster deals into healing while it lasts (DarkArts.lifesteal). */
+    @Override
+    public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target, net.minecraft.world.damagesource.DamageSource source,
+                                  io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        if (owner instanceof ServerPlayer p && source.getDirectEntity() == owner) DarkArts.lifesteal(i, p, amount.get());
         return true;
     }
 }

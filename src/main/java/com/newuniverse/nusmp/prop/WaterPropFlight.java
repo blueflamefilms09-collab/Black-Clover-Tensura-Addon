@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.prop;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
@@ -19,40 +18,24 @@ import net.minecraft.world.phys.Vec3;
  * The low four bits of the param are the painter's variant ({@link #variant}); bits 8 to 17 are an optional stop tick ({@link #stopAfter}: the prop stands still from that tick on).
  */
 public final class WaterPropFlight implements MagicProps.Behavior {
-    public static final int FOLLOW = 16, BOB = 32, HOLD = 64;
+    public static final int FOLLOW = WaterPropMath.FOLLOW, BOB = WaterPropMath.BOB, HOLD = WaterPropMath.HOLD;
     public static final WaterPropFlight INSTANCE = new WaterPropFlight();
 
     private WaterPropFlight() {}
 
-    public static int variant(int param) { return param & 15; }
+    public static int variant(int param) { return WaterPropMath.variant(param); }
 
     /** The param bits that say 'stop moving after n ticks' (n up to 1023), to be OR-ed into a param. */
-    public static int stopAfter(int ticks) { return (Math.max(0, Math.min(1023, ticks)) << 8); }
+    public static int stopAfter(int ticks) { return WaterPropMath.stopAfter(ticks); }
 
     /** The height of the model's centre above its feet, in blocks (at scale 1): where the spell's point has to be inside the model. */
-    public static float centre(PropKind k, int param) {
-        int v = variant(param);
-        return switch (k) {
-            case WATER_1 -> 1.125f;
-            case WATER_2 -> 1.0f;
-            case DARK_1 -> 1.0f;
-            case DARK_2 -> v == 0 ? 1.5f : 1.25f;
-            case LIGHTNING_1 -> 1.375f;
-            case LIGHTNING_2 -> 1.0f;
-            case FLAME_1 -> 0.0f;
-            case FLAME_2 -> 1.375f;
-            default -> 0f;
-        };
-    }
+    public static float centre(PropKind k, int param) { return WaterPropMath.centre(k.name(), param); }
 
     /** Yaw (degrees, the game's convention: 0 = +z) of a horizontal direction. */
-    public static float yawOf(Vec3 d) { return (float) (Mth.atan2(-d.x, d.z) * 57.29577951308232); }
+    public static float yawOf(Vec3 d) { return WaterPropMath.yawOf(d.x, d.z); }
 
     /** Pitch (degrees, positive = looking down) of a direction. */
-    public static float pitchOf(Vec3 d) {
-        double h = Math.sqrt(d.x * d.x + d.z * d.z);
-        return (float) (-Mth.atan2(d.y, h) * 57.29577951308232);
-    }
+    public static float pitchOf(Vec3 d) { return WaterPropMath.pitchOf(d.x, d.y, d.z); }
 
     /**
      * Spawns a prop whose model centre starts at {@code at}, facing {@code dir}, moving by {@code vel} per tick (zero = it holds). Returns null when the entity could not be made.
@@ -85,7 +68,7 @@ public final class WaterPropFlight implements MagicProps.Behavior {
             e.setXRot(o.getXRot());
             return;
         }
-        int stop = (p >> 8) & 1023;
+        int stop = WaterPropMath.stopTick(p);
         if (stop > 0 && e.life() >= stop) return;
         Vec3 v = e.getDeltaMovement();
         if (v.lengthSqr() < 1e-8) return;

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
@@ -26,18 +27,24 @@ import java.util.List;
 
 /** Fire Magic. Salamander spirit. */
 public class FireBook extends GrimoireBook {
+    // 1.93.0 (the Flame rebuild, after the Vermillion family): the eight pages that existed keep their ids, order, names and cost tiers; the two shots stay Tensura shots, the rest are re-implemented in
+    // FlameArts (numbers kept; the lion and the phoenix are models, the VFX are the new FLAMEFX_* shapes, every cast puts the Flame armour on for 5 s); three pages are appended. The old methods below stay.
     private final List<BookPage> pages = List.of(
-            BookPage.starter("exploding_fireball", "Exploding Fireball", TensuraShots.shot(TensuraShots.Shot.FIRE_BALL, 10, 1.6f, 0.6f, 80)),
-            BookPage.mid("sol_linea", "Sol Linea", TensuraShots.shot(TensuraShots.Shot.FIRE_LANCE, 14, 2.4f, 0.8f, 100)),
-            BookPage.zone("calderos", "Calderos", FireBook::calderos),
+            WaterArmour.wrap(BookPage.starter("exploding_fireball", "Exploding Fireball", TensuraShots.shot(TensuraShots.Shot.FIRE_BALL, 10, 1.6f, 0.6f, 80)), Aura.FLAME),
+            WaterArmour.wrap(BookPage.mid("sol_linea", "Sol Linea", TensuraShots.shot(TensuraShots.Shot.FIRE_LANCE, 14, 2.4f, 0.8f, 100)), Aura.FLAME),
+            WaterArmour.wrap(BookPage.zone("calderos", "Calderos", FlameArts::calderos), Aura.FLAME),
             // appended last so the existing pages keep their mode numbers and unlock bits
-            BookPage.signature("leo_rugiens", "Leo Rugiens", FireBook::leoRugiens).withCooldown(600),
+            WaterArmour.wrap(BookPage.signature("leo_rugiens", "Leo Rugiens", FlameArts::leoRugiens).withCooldown(600), Aura.FLAME),
             // 0.31: wiki spells, appended
-            BookPage.mid("spiral_flame", "Spiral Flame", FireBook::spiralFlame),
-            BookPage.zone("wild_bursting_flame", "Wild Bursting Flame", FireBook::wildBurst),
-            BookPage.signature("ignis_columna", "Ignis Columna", FireBook::ignisColumna).withCooldown(600),
+            WaterArmour.wrap(BookPage.mid("spiral_flame", "Spiral Flame", FlameArts::spiralFlame), Aura.FLAME),
+            WaterArmour.wrap(BookPage.zone("wild_bursting_flame", "Wild Bursting Flame", FlameArts::wildBurst), Aura.FLAME),
+            WaterArmour.wrap(BookPage.signature("ignis_columna", "Ignis Columna", FlameArts::ignisColumna).withCooldown(600), Aura.FLAME),
             // 0.34: Mereoleona Vermillion's character spell
-            BookPage.signature("calidos_brachium", "Calidos Brachium", WikiSpells::calidosBrachium).withCooldown(600));
+            WaterArmour.wrap(BookPage.signature("calidos_brachium", "Calidos Brachium", FlameArts::calidosBrachium).withCooldown(600), Aura.FLAME),
+            // 1.93.0: appended
+            WaterArmour.wrap(BookPage.signature("crimson_lion_king", "Crimson Lion King", FlameArts::crimsonLionKing).withCooldown(900), Aura.FLAME),
+            BookPage.mid("flame_armour", "Flame Armour", FlameArts::flameArmour).withCooldown(900),
+            WaterArmour.wrap(BookPage.zone("phoenix_flare", "Phoenix Flare", FlameArts::phoenixFlare).withCooldown(600), Aura.FLAME));
 
     public FireBook() { super(MagicType.FLAME, 0xFFFF6A1E); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -177,6 +184,14 @@ public class FireBook extends GrimoireBook {
                 t.hurtMarked = true;
             }
         });
+        return true;
+    }
+
+    /** 1.93.0: while the Flame armour is worn every blow of the caster sets its target alight and adds 4 damage (FlameArts.armourBlow). */
+    @Override
+    public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target, net.minecraft.world.damagesource.DamageSource source,
+                                  io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        if (owner instanceof ServerPlayer p && source.getDirectEntity() == owner) FlameArts.armourBlow(this, i, p, target, amount);
         return true;
     }
 }

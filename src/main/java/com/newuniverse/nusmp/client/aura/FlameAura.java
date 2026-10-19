@@ -29,7 +29,7 @@ import net.minecraft.util.Mth;
 public final class FlameAura {
     private FlameAura() {}
 
-    private static final ResourceLocation SHELL = AuraRender.tex("aura/flame_shell"), SHELL_GLOW = AuraRender.tex("aura/flame_shell_glow"), HEAT = AuraRender.tex("aura/flame_heat");
+    private static final ResourceLocation SHELL = AuraRender.tex("aura/flame_shell"), SHELL_GLOW = AuraRender.tex("aura/flame_shell_glow"), HEAT = AuraRender.tex("aura/flame_haze");
     private static final ResourceLocation RING = AuraRender.tex("particle/flamefx_ring"), EMBER = AuraRender.tex("particle/flamefx_ember"),
             TONGUE = AuraRender.tex("particle/flamefx_tongue"), LION = AuraRender.tex("particle/flamefx_lion");
     private static final int FB = PropDraw.FULL_BRIGHT, GLOW = 0xFF8A2A, HOT = 0xFFD070, FLAME_BODY = 0xFF5A14, FLAME_CORE = 0xFFA838;

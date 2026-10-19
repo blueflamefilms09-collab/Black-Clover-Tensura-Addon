@@ -16,6 +16,7 @@ public final class WaterProps {
     public static void init() {
         MagicProps.register(PropKind.WATER_1, WaterPropFlight.INSTANCE);
         MagicProps.register(PropKind.WATER_2, WaterPropFlight.INSTANCE);
+        WaterRebuildSelfTests.register();                 // the CI server smoke test runs magic.water_rebuild / dark_rebuild / lightning_rebuild / flame_rebuild
     }
 
     /** The Sea Dragon flying from 'from' to 'to' in 'flight' ticks (it lives a little longer so it can fade). */

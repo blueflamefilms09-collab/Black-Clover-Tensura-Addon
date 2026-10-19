@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
@@ -26,17 +27,22 @@ import java.util.List;
 
 /** Lightning Magic. */
 public class LightningBook extends GrimoireBook {
+    // 1.93.0 (the Lightning rebuild, after Luck Voltia): the eight pages that existed keep their ids, order, names and cost tiers and are re-implemented in LightningArts (numbers kept; the
+    // thunderbird and the lance are models, the VFX are the new LIGHTNINGFX_* shapes, every cast puts the Lightning armour on for 5 s, the Fiend pages for 30 s); three pages are appended.
     private final List<BookPage> pages = List.of(
-            BookPage.starter("chain", "Chain Lightning", LightningBook::chain),
-            BookPage.mid("thunder_boots", "Thunder God's Boots", LightningBook::boots),
-            BookPage.zone("thunder_lance", "Thunder Lance", TensuraShots.shot(TensuraShots.Shot.THUNDER_LANCE, 13, 2.4f, 0.6f, 0)),
+            WaterArmour.wrap(BookPage.starter("chain", "Chain Lightning", LightningArts::chain), Aura.LIGHTNING),
+            WaterArmour.wrap(BookPage.mid("thunder_boots", "Thunder God's Boots", LightningArts::boots), Aura.LIGHTNING),
+            WaterArmour.wrap(BookPage.zone("thunder_lance", "Thunder Lance", LightningArts::thunderLance), Aura.LIGHTNING),
             // 0.34: wiki spells, appended
-            BookPage.mid("thunder_fiend", "Thunder Fiend", WikiSpells::thunderFiend).withCooldown(900),
-            BookPage.mid("pulsaranta", "Pulsaranta", WikiSpells::pulsaranta),
-            BookPage.signature("rising_salim", "God of Lightning Rising Salim", WikiSpells::risingSalim),
-            BookPage.zone("thunderbird_cavalry", "Thunderbird Cavalry: Sky-Splitting Magic Bow Armament",
-                    ElementBook.volley(5, 8, 2.2, true, VfxShape.LIGHTNING_SPEAR, ElementBook.NONE)),
-            BookPage.signature("black_lightning_battle_fiend", "Black Lightning Battle Fiend", WikiSpells::blackLightningFiend).withCooldown(1200));
+            BookPage.mid("thunder_fiend", "Thunder Fiend", LightningArts::thunderFiend).withCooldown(900),
+            WaterArmour.wrap(BookPage.mid("pulsaranta", "Pulsaranta", LightningArts::pulsaranta), Aura.LIGHTNING),
+            WaterArmour.wrap(BookPage.signature("rising_salim", "God of Lightning Rising Salim", LightningArts::risingSalim), Aura.LIGHTNING),
+            WaterArmour.wrap(BookPage.zone("thunderbird_cavalry", "Thunderbird Cavalry: Sky-Splitting Magic Bow Armament", LightningArts::thunderbirdCavalry), Aura.LIGHTNING),
+            BookPage.signature("black_lightning_battle_fiend", "Black Lightning Battle Fiend", LightningArts::blackLightningFiend).withCooldown(1200),
+            // 1.93.0: appended
+            BookPage.mid("raging_lightning", "Raging Lightning", LightningArts::ragingLightning).withCooldown(900),
+            WaterArmour.wrap(BookPage.zone("thunder_drum", "Raijin's Thunder Drums", LightningArts::thunderDrum).withCooldown(600), Aura.LIGHTNING),
+            WaterArmour.wrap(BookPage.mid("lightning_surge", "Lightning Surge", LightningArts::lightningSurge).withCooldown(200), Aura.LIGHTNING));
 
     public LightningBook() { super(MagicType.LIGHTNING, 0xFFFFE14A); }
     @Override protected List<BookPage> familyPages() { return pages; }

@@ -209,7 +209,7 @@ def backdrop():
 def shells():
     # the body overlays of the armour: a dark ember skin with glowing cracks (solid-ish translucent), and a heat haze (additive)
     shell_texture("flame_shell", Mat("crystal", "3A1210", dark="170605", light="FF9A38", glow="FF6A1C", glow_amount=1.0, cells=14, seamonly=True, alpha=235, seed=21))
-    shell_texture("flame_heat", Mat("flame", "FF8A26", dark="D0300C", light="FFE680", glow="FFB040", glow_amount=1.0, alpha=255, seed=22))
+    shell_texture("flame_haze", Mat("flame", "FF8A26", dark="D0300C", light="FFE680", glow="FFB040", glow_amount=1.0, alpha=255, seed=22))
 
 
 def main():
