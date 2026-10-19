@@ -110,6 +110,20 @@ class GeoAssetsTest {
                 continue;
             }
             File geo = new File(GEO, stem(f) + ".geo.json");
+            if (!geo.isFile() && stem(f).startsWith("abyssal_")) {
+                // The abyssal boss looks share one clip file between their three phase models ("abyssal_<look>_p1..p3"): each animated bone must exist in at least one of them.
+                Set<String> phaseBones = new HashSet<>();
+                for (int p = 1; p <= 3; p++) {
+                    File ph = new File(GEO, stem(f) + "_p" + p + ".geo.json");
+                    if (ph.isFile()) phaseBones.addAll(GeoModelData.parse(ph.getName(), json(ph)).bones.keySet());
+                }
+                assertFalse(phaseBones.isEmpty(), f.getName() + ": no phase model " + stem(f) + "_p1.geo.json");
+                GeoAnim shared = GeoAnim.parse(json(f));
+                for (String name : shared.names())
+                    for (String bone : shared.clip(name).bones.keySet())
+                        assertTrue(phaseBones.contains(bone), f.getName() + ": animation " + name + " moves the unknown bone " + bone);
+                continue;
+            }
             assertTrue(geo.isFile(), f.getName() + ": no model " + geo.getName());
             Set<String> bones = new HashSet<>(GeoModelData.parse(geo.getName(), json(geo)).bones.keySet());
             GeoAnim a = GeoAnim.parse(json(f));
