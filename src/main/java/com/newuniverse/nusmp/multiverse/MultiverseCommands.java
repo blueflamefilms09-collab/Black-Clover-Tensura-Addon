@@ -211,6 +211,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.compat.CompatCommand.node());                                    // 1.33.0: compat book|status
         root.then(com.newuniverse.nusmp.compat.maps.MapsCommand.waypointNode());                       // compat-maps: waypoint share on|off|here|gate|return
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
+        root.then(com.newuniverse.nusmp.fairytail.FairyTailCommand.node());                                    // Fairy Tail skills: fairytail give|learn|list
         root.then(com.newuniverse.nusmp.skilltree.SkillTreeCommand.node());                                    // 1.62.0: tree show|sp|route|node|class|reset|reload|routes
         root.then(com.newuniverse.nusmp.heroweapon.HeroCommand.node());                                         // 1.62.0: hero status|summon|dismiss|bind|release|form|curse|gem
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story

@@ -46,6 +46,7 @@ public final class NUCreativeTab {
                 for (var ai : com.newuniverse.nusmp.arc.world.ArcWorldItems.creativeItems()) output.accept(ai.get());            // 1.61.0: the Chronicle Sigil
                 for (net.minecraft.world.item.ItemStack st : com.newuniverse.nusmp.skilltree.SkillTreeSystem.creativeItems()) output.accept(st);     // 1.62.0: the Skill Books and SP Books
                 for (net.minecraft.world.item.Item hw : com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.creativeItems()) output.accept(hw);   // 1.62.0: the 21 hero weapons and the Calling Gems
+                for (net.minecraft.world.item.ItemStack ft : com.newuniverse.nusmp.fairytail.FairyTailSystem.creativeItems()) output.accept(ft);   // Fairy Tail skill books
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
