@@ -16,7 +16,18 @@ import java.util.List;
  */
 public record DndProfile(String id, String side, int tier, int variant, String name, List<String> anime, List<String> dnd, List<String> forms, int resistances, int legendaryPoints,
                          List<String> legendary, List<Integer> costs, List<String> lair, boolean antiMagicAura, boolean frightfulAura, boolean absorbMagic, boolean mythic, boolean execution,
-                         boolean famous, int tierMin, int tierMax, String breath, boolean reflective) {
+                         boolean famous, int tierMin, int tierMax, String breath, boolean reflective, String look) {
+
+    /**
+     * 1.94.0: the profile as it was before it had a look: the same facts and no {@code look} (the empty string: the Guardian keeps the look it always had, or the theme's default for an evil boss of an
+     * Abyss sector, see {@link AbyssalLooks#resolve}). Kept so every existing caller and every file without a {@code look} field works unchanged.
+     */
+    public DndProfile(String id, String side, int tier, int variant, String name, List<String> anime, List<String> dnd, List<String> forms, int resistances, int legendaryPoints,
+                      List<String> legendary, List<Integer> costs, List<String> lair, boolean antiMagicAura, boolean frightfulAura, boolean absorbMagic, boolean mythic, boolean execution,
+                      boolean famous, int tierMin, int tierMax, String breath, boolean reflective) {
+        this(id, side, tier, variant, name, anime, dnd, forms, resistances, legendaryPoints, legendary, costs, lair, antiMagicAura, frightfulAura, absorbMagic, mythic, execution, famous, tierMin, tierMax,
+                breath, reflective, "");
+    }
 
     /** The profile of a boss no file describes: three resistances, three points, two actions, one lair action, nothing else. */
     public static final DndProfile DEFAULT = new DndProfile("default", "holy", 1, 0, "Labyrinth Guardian", List.of(), List.of(), List.of("Guardian", "Awakened", "Ascendant"), 3, 3,
@@ -62,7 +73,15 @@ public record DndProfile(String id, String side, int tier, int variant, String n
         for (String l : lair) if (!DndRules.LAIR_IDS.contains(l)) throw new IllegalArgumentException(id + ": unknown lair action '" + l + "' (known: " + DndRules.LAIR_IDS + ")");
         return new DndProfile(id, side, tier, variant, name, strings(o, "anime"), strings(o, "dnd"), forms, DndRules.clampResistances(opt(o, "resistances", 3)),
                 DndRules.points(opt(o, "legendary_points", 3), false), List.copyOf(legendary), List.copyOf(costs), List.copyOf(lair), flag(o, "anti_magic_aura"), flag(o, "frightful_aura"),
-                flag(o, "absorb_magic"), !o.has("mythic") || flag(o, "mythic"), flag(o, "execution"), famous, tierMin, tierMax, breath, flag(o, "reflective"));
+                flag(o, "absorb_magic"), !o.has("mythic") || flag(o, "mythic"), flag(o, "execution"), famous, tierMin, tierMax, breath, flag(o, "reflective"), look(id, o));
+    }
+
+    /** 1.94.0: the optional {@code look} of a profile, the id of an abyssal look (docs/labyrinth/abyssal_bosses.md): lower-case words, digits and underscores, or absent. */
+    private static String look(String id, JsonObject o) {
+        if (!o.has("look")) return "";
+        String v = str(o, "look");
+        if (!v.matches("[a-z][a-z0-9_]{0,31}")) throw new IllegalArgumentException(id + ": look '" + v + "' is not a look id (lower-case letters, digits and underscores)");
+        return v;
     }
 
     private static String str(JsonObject o, String k) {

@@ -185,6 +185,7 @@ final class DndBoss {
     }
 
     private void legendary(String id, LabyrinthGuardianEntity g, ServerLevel sl, Player attacker) {
+        g.noteCast(1);                                                              // 1.94.0: the look plays its cast clip
         float atk = (float) g.attackDamage();
         Vec3 c = g.position();
         switch (id) {
@@ -346,6 +347,7 @@ final class DndBoss {
     private void lair(LabyrinthGuardianEntity g, ServerLevel sl, List<Player> players, long now) {
         nextLairAt = now + DndRules.LAIR_TICKS;
         if (profile.lair().isEmpty()) return;
+        g.noteCast(1);                                                         // 1.94.0: the look plays its cast clip
         lastLair = (lastLair + 1) % profile.lair().size();                     // never the same one twice in a row (a list of one repeats, which is all it can do)
         Player target = players.get(sl.random.nextInt(players.size()));
         float atk = (float) g.attackDamage();

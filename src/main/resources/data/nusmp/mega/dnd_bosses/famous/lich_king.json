@@ -45,5 +45,6 @@
   "absorb_magic": true,
   "reflective": false,
   "mythic": true,
-  "execution": false
+  "execution": false,
+  "look": "lich_king"
 }

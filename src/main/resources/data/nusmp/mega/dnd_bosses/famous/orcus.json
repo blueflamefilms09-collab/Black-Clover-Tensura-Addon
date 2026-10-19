@@ -47,5 +47,6 @@
   "absorb_magic": false,
   "reflective": false,
   "mythic": true,
-  "execution": true
+  "execution": true,
+  "look": "orcus"
 }

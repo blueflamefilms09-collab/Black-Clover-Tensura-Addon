@@ -99,6 +99,7 @@ final class GuardSelfTests {
         SelfTests.register("guard.gatekeeper", strict(GuardSelfTests::gatekeeper));
         SelfTests.register("guard.idempotent", strict(GuardSelfTests::idempotent));
         SelfTests.register("guard.dnd", strict(GuardSelfTests::dnd));
+        SelfTests.register("guard.abyssal_looks", strict(AbyssalSelfTests::looks));       // 1.94.0: every boss wears the creature it is
     }
 
     /** Runs a test with {@link GuardLog#strict} on: the guards round the server-loop entry points rethrow, so a swallowed error fails the test. */

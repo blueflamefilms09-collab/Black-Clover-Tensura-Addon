@@ -52,5 +52,6 @@
   "absorb_magic": true,
   "reflective": false,
   "mythic": true,
-  "execution": true
+  "execution": true,
+  "look": "vecna"
 }

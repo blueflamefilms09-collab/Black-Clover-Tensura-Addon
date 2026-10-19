@@ -110,7 +110,9 @@ public final class RemodelRenderers {
             case "dungeon_direwolf" -> mob(e, type, "dungeon_direwolf", KitMobRenderer.Size.fit(1.3f), new KitProbes.Sleeper<DungeonCreature>("dungeon_direwolf"));
             case "basilisk" -> mob(e, type, "basilisk", KitMobRenderer.Size.fit(1.15f), new KitProbes.Sleeper<DungeonCreature>("basilisk"));
             case "dungeon_slime" -> mob(e, type, "dungeon_slime", KitMobRenderer.Size.fit(1.3f), KitProbes.SLIME);
-            case "living_armor", "floor_warden", "labyrinth_guardian" -> mob(e, type, id.equals("living_armor") ? "living_armor" : "floor_warden", KitMobRenderer.Size.fit(), KitProbes.ARMOUR);
+            case "living_armor", "floor_warden" -> mob(e, type, id.equals("living_armor") ? "living_armor" : "floor_warden", KitMobRenderer.Size.fit(), KitProbes.ARMOUR);
+            // 1.94.0: the Guardian wears the look its profile names (the lich, the beholder, the five-headed dragon ...); a Guardian with no look is still the Floor Warden's body (AbyssalRenderer extends KitMobRenderer)
+            case "labyrinth_guardian" -> RemodelRenderers.<com.newuniverse.nusmp.dungeon.LivingArmorEntity>put(e, type, AbyssalRenderer::new);
             case "spirit_lord" -> mob(e, type, "spirit_salamander", KitMobRenderer.Size.fit(), KitProbes.SPIRIT_LORD);
             case "elemental_spirit_lord" -> mob(e, type, "spirit_salamander", KitMobRenderer.Size.fit(), KitProbes.ELEMENTAL);
             case "wind_spirit_lord" -> mob(e, type, "spirit_sylph", KitMobRenderer.Size.fit(), KitProbes.WIND);

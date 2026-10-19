@@ -1,0 +1,834 @@
+{
+ "abyssal_zariel_p1_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p1_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p1_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   }
+  ]
+ },
+ "abyssal_zariel_p2_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p2.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p2.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p2_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p2.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p2.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p2_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p2.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p2.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   }
+  ]
+ },
+ "abyssal_zariel_p3_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p3.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p3.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p3_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p3.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p3.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   560
+  ],
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 7.578
+   }
+  ]
+ },
+ "abyssal_zariel_p3_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p3.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p3.png",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.667,
+     0
+    ],
+    "dist": 3.006
+   }
+  ]
+ },
+ "abyssal_zariel_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "idle",
+  "ages": [
+   0,
+   16,
+   32,
+   48
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "walk",
+  "ages": [
+   0,
+   5.5,
+   11,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "run",
+  "ages": [
+   0,
+   3.1,
+   6.2,
+   9.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "attack",
+  "ages": [
+   0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "cast",
+  "ages": [
+   0,
+   6,
+   12,
+   18
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "cast_big",
+  "ages": [
+   0,
+   9.6,
+   19.2,
+   28.8,
+   38.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "hurt",
+  "ages": [
+   0,
+   1.8,
+   3.6,
+   5.4,
+   7.2
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "death",
+  "ages": [
+   0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_p1_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p1.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p1.png",
+  "anim": "cast",
+  "ages": [
+   0,
+   8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_p2_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p2.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p2.png",
+  "anim": "cast",
+  "ages": [
+   0,
+   8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ },
+ "abyssal_zariel_p3_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "animations": "animations/entity/abyssal_zariel.animation.json",
+  "model": "geo/entity/abyssal_zariel_p3.geo.json",
+  "texture": "textures/entity/abyssal_zariel_p3.png",
+  "anim": "cast",
+  "ages": [
+   0,
+   8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.516,
+     0
+    ],
+    "dist": 8.715
+   }
+  ]
+ }
+}
