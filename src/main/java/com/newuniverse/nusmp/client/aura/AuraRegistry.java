@@ -50,5 +50,10 @@ final class AuraRegistry {
         CompassAura.register();
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
+        SongAura.register();                 // 1.93.0: the rebuilt Song, Sound, Soul, Soul Corpse and Memory armours
+        SoundAura.register();
+        SoulAura.register();
+        SoulCorpseAura.register();
+        MemoryAura.register();
     }
 }

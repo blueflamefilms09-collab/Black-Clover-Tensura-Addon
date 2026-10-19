@@ -52,5 +52,10 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        SongRebuildPropPainter.register();       // 1.93.0: Song, Sound, Soul, Soul Corpse and Memory
+        SoundRebuildPropPainter.register();
+        SoulRebuildPropPainter.register();
+        SoulCorpseRebuildPropPainter.register();
+        MemoryRebuildPropPainter.register();
     }
 }

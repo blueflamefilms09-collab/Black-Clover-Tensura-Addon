@@ -52,5 +52,10 @@ final class PropRegistry {
         SandProps.init();
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
+        SongRebuildProps.init();                 // 1.93.0: Song, Sound, Soul, Soul Corpse and Memory
+        SoundRebuildProps.init();
+        SoulRebuildProps.init();
+        SoulCorpseRebuildProps.init();
+        MemoryRebuildProps.init();
     }
 }

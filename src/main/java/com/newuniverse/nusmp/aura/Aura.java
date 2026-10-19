@@ -51,5 +51,11 @@ public enum Aura {
     /** 1.27.0: the merged-magic armour; RETIRED in 1.93.0 (no painter is registered for it any more; the constant stays so the ordinals after it never move) */
     MERGED,
     /** 1.27.0: the temporary armour / aura of the 30 wiki magics; the style is the magic's WikiStyles index (client.aura.WikiAura) */
-    WIKI
+    WIKI,
+    /** 1.93.0 magic rebuild: the temporary armour of Song, Sound, Soul, Soul Corpse and Memory Magic (client.aura.<Name>Aura, drawn by SongArmourKit) */
+    SONG,
+    SOUND,
+    SOUL,
+    SOUL_CORPSE,
+    MEMORY
 }

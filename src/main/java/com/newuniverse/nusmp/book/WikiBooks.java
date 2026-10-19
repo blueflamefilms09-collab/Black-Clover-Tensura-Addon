@@ -32,6 +32,8 @@ public final class WikiBooks {
 
     public static GrimoireBook attribute(MagicType magic) {
         if (!isNewAttribute(magic)) throw new IllegalArgumentException("Not a newly added wiki attribute: " + magic);
+        GrimoireBook rebuilt = SongRebuild.book(magic);        // 1.93.0: Song, Sound, Soul, Soul Corpse and Memory have their own books (same page ids and order)
+        if (rebuilt != null) return rebuilt;
         String name = magic.displayName.replace(" Magic", "");
         var rider = rider(magic);
         return new ElementBook(magic, color(magic), TensuraDamageTypes.MAGIC_GENERIC, List.of(

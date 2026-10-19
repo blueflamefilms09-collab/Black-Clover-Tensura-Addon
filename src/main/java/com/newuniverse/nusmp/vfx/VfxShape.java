@@ -256,7 +256,13 @@ public enum VfxShape {
     CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
     CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
     BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
-    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer
+    // 1.93.0 magic rebuild (Song, Sound, Soul, Soul Corpse, Memory): FX1 = cast / projectile, FX2 = zone / field, FX3 = impact / signature (the shape protocol of docs/attribute_authoring_guide.md section 4)
+    SONG_FX1, SONG_FX2, SONG_FX3,
+    SOUND_FX1, SOUND_FX2, SOUND_FX3,
+    SOUL_FX1, SOUL_FX2, SOUL_FX3,
+    SOUL_CORPSE_FX1, SOUL_CORPSE_FX2, SOUL_CORPSE_FX3,
+    MEMORY_FX1, MEMORY_FX2, MEMORY_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
