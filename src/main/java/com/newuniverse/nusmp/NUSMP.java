@@ -82,6 +82,7 @@ public class NUSMP {
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         com.newuniverse.nusmp.elite.EliteSystem.init(modEventBus, modContainer);                                           // 1.83.0: the EliteTensuraAddon systems and the Hub economy (docs/elite/plan.md)
+        com.newuniverse.nusmp.requip.RequipSystem.init(modEventBus);                                                       // Requip: The Knight (Erza Scarlet's Ultimate skill, the book Titania's Requip, six weapons, the self-test skill.erza_requip)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);

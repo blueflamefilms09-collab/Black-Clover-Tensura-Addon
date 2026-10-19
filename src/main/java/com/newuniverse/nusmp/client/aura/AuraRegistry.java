@@ -83,5 +83,6 @@ final class AuraRegistry {
         PoisonPlantAura.register();
         MudAura.register();
         MucusAura.register();
+        ErzaAura.register();                 // Requip: The Knight (the fourteen armours, one set each, forged in by EquipAnimation)
     }
 }

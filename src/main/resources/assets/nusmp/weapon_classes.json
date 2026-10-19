@@ -372,6 +372,12 @@
   "vassal_harpoon": "staff",
   "vassal_chain": "whip",
   "vassal_instrument": "wand",
-  "vassal_sewing_set": "rapier"
+  "vassal_sewing_set": "rapier",
+  "flame_empress_blade": "longsword",
+  "lightning_empress_halberd": "glaive",
+  "sea_empress_trident": "trident",
+  "black_wing_blade": "longsword",
+  "nakagami_edge": "longsword",
+  "purgatory_mace": "mace"
  }
 }

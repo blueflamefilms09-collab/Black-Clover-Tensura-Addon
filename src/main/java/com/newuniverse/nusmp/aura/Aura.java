@@ -90,5 +90,7 @@ public enum Aura {
     PLANT,
     POISON_PLANT,
     MUD,
-    MUCUS
+    MUCUS,
+    /** Requip: The Knight (Erza Scarlet): the armour render layer; the style is the worn armour's ordinal in requip.Armour (client.aura.ErzaAura, pieces forged in by EquipAnimation) */
+    ERZA
 }
