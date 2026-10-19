@@ -1,0 +1,5859 @@
+{
+ "version": 1,
+ "sheet": 64,
+ "styles": {
+  "bald": {
+   "texture": "hair/bald",
+   "boxes": [],
+   "chains": []
+  },
+  "short": {
+   "texture": "hair/short",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "slick": {
+   "texture": "hair/slick",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": []
+  },
+  "curtains": {
+   "texture": "hair/curtains",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringeR",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringeL",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "swept": {
+   "texture": "hair/swept",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -1.0,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        6.4,
+        2.8,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.1,
+     "root": [
+      3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        3.8,
+        0.8
+       ],
+       "inflate": 0.26,
+       "uv": [
+        14,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "messy": {
+   "texture": "hair/messy",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.75,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "tuft0",
+     "part": "head",
+     "from": [
+      -3.75,
+      -11.6,
+      -4.15
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      16.971,
+      0,
+      -16.971
+     ],
+     "pivot": [
+      -3.0,
+      -8.2,
+      -3.4
+     ]
+    },
+    {
+     "name": "tuft1",
+     "part": "head",
+     "from": [
+      -0.75,
+      -11.0,
+      -4.65
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      32.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.2,
+      -3.9
+     ]
+    },
+    {
+     "name": "tuft2",
+     "part": "head",
+     "from": [
+      2.25,
+      -11.6,
+      -4.05
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      28.284,
+      0,
+      28.284
+     ],
+     "pivot": [
+      3.0,
+      -8.2,
+      -3.3
+     ]
+    },
+    {
+     "name": "tuft3",
+     "part": "head",
+     "from": [
+      -4.35,
+      -11.0,
+      -0.75
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      -24.0
+     ],
+     "pivot": [
+      -3.6,
+      -8.2,
+      0.0
+     ]
+    },
+    {
+     "name": "tuft4",
+     "part": "head",
+     "from": [
+      2.95,
+      -11.6,
+      -0.35
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      32.0
+     ],
+     "pivot": [
+      3.7,
+      -8.2,
+      0.4
+     ]
+    },
+    {
+     "name": "tuft5",
+     "part": "head",
+     "from": [
+      -2.75,
+      -11.0,
+      2.55
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      -28.284,
+      0,
+      -28.284
+     ],
+     "pivot": [
+      -2.0,
+      -8.2,
+      3.3
+     ]
+    },
+    {
+     "name": "tuft6",
+     "part": "head",
+     "from": [
+      0.85,
+      -11.6,
+      2.85
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      -16.971,
+      0,
+      16.971
+     ],
+     "pivot": [
+      1.6,
+      -8.2,
+      3.6
+     ]
+    },
+    {
+     "name": "tuft7",
+     "part": "head",
+     "from": [
+      -0.75,
+      -11.0,
+      -1.15
+     ],
+     "size": [
+      1.5,
+      3.6,
+      1.5
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.2,
+      -0.4
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        8,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        14,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        20,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        26,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "spiky": {
+   "texture": "hair/spiky",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "spike0a",
+     "part": "head",
+     "from": [
+      -4.0,
+      -10.4,
+      -4.0
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      25.456,
+      0,
+      -25.456
+     ],
+     "pivot": [
+      -2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike0b",
+     "part": "head",
+     "from": [
+      -3.4,
+      -12.8,
+      -3.4
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      25.456,
+      0,
+      -25.456
+     ],
+     "pivot": [
+      -2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike1a",
+     "part": "head",
+     "from": [
+      -1.4,
+      -10.4,
+      -4.4
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      41.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      -3.0
+     ]
+    },
+    {
+     "name": "spike1b",
+     "part": "head",
+     "from": [
+      -0.8,
+      -13.5,
+      -3.8
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      41.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      -3.0
+     ]
+    },
+    {
+     "name": "spike2a",
+     "part": "head",
+     "from": [
+      1.2,
+      -10.4,
+      -4.0
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      32.527,
+      0,
+      32.527
+     ],
+     "pivot": [
+      2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike2b",
+     "part": "head",
+     "from": [
+      1.8,
+      -14.2,
+      -3.4
+     ],
+     "size": [
+      1.6,
+      3.8,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      4
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      32.527,
+      0,
+      32.527
+     ],
+     "pivot": [
+      2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike3a",
+     "part": "head",
+     "from": [
+      -4.4,
+      -10.4,
+      -1.2
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      -36.0
+     ],
+     "pivot": [
+      -3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike3b",
+     "part": "head",
+     "from": [
+      -3.8,
+      -12.8,
+      -0.6
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      -36.0
+     ],
+     "pivot": [
+      -3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike4a",
+     "part": "head",
+     "from": [
+      1.6,
+      -10.4,
+      -1.2
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      41.0
+     ],
+     "pivot": [
+      3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike4b",
+     "part": "head",
+     "from": [
+      2.2,
+      -13.5,
+      -0.6
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      41.0
+     ],
+     "pivot": [
+      3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike5a",
+     "part": "head",
+     "from": [
+      -3.8,
+      -10.4,
+      1.4
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -32.527,
+      0,
+      -32.527
+     ],
+     "pivot": [
+      -2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike5b",
+     "part": "head",
+     "from": [
+      -3.2,
+      -14.2,
+      2.0
+     ],
+     "size": [
+      1.6,
+      3.8,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      4
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      -32.527,
+      0,
+      -32.527
+     ],
+     "pivot": [
+      -2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike6a",
+     "part": "head",
+     "from": [
+      -1.4,
+      -10.4,
+      1.7
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -36.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      3.1
+     ]
+    },
+    {
+     "name": "spike6b",
+     "part": "head",
+     "from": [
+      -0.8,
+      -12.8,
+      2.3
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      -36.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      3.1
+     ]
+    },
+    {
+     "name": "spike7a",
+     "part": "head",
+     "from": [
+      1.0,
+      -10.4,
+      1.4
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -28.991,
+      0,
+      28.991
+     ],
+     "pivot": [
+      2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike7b",
+     "part": "head",
+     "from": [
+      1.6,
+      -13.5,
+      2.0
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -28.991,
+      0,
+      28.991
+     ],
+     "pivot": [
+      2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike8a",
+     "part": "head",
+     "from": [
+      -1.4,
+      -10.4,
+      -1.4
+     ],
+     "size": [
+      2.8,
+      2.4,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      0.0
+     ]
+    },
+    {
+     "name": "spike8b",
+     "part": "head",
+     "from": [
+      -0.8,
+      -14.2,
+      -0.8
+     ],
+     "size": [
+      1.6,
+      3.8,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      4
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      0.0
+     ]
+    }
+   ],
+   "chains": []
+  },
+  "spiky_long": {
+   "texture": "hair/spiky_long",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "spike0a",
+     "part": "head",
+     "from": [
+      -4.0,
+      -10.2,
+      -4.0
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      3.383,
+      0,
+      -33.831
+     ],
+     "pivot": [
+      -2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike0b",
+     "part": "head",
+     "from": [
+      -3.4,
+      -12.6,
+      -3.4
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      3.383,
+      0,
+      -33.831
+     ],
+     "pivot": [
+      -2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike1a",
+     "part": "head",
+     "from": [
+      -1.4,
+      -10.2,
+      -4.4
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      39.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      -3.0
+     ]
+    },
+    {
+     "name": "spike1b",
+     "part": "head",
+     "from": [
+      -0.8,
+      -13.3,
+      -3.8
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      39.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      -3.0
+     ]
+    },
+    {
+     "name": "spike2a",
+     "part": "head",
+     "from": [
+      1.2,
+      -10.2,
+      -4.0
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      4.378,
+      0,
+      43.782
+     ],
+     "pivot": [
+      2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike2b",
+     "part": "head",
+     "from": [
+      1.8,
+      -14.0,
+      -3.4
+     ],
+     "size": [
+      1.6,
+      3.8,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      4
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      4.378,
+      0,
+      43.782
+     ],
+     "pivot": [
+      2.6,
+      -8.0,
+      -2.6
+     ]
+    },
+    {
+     "name": "spike3a",
+     "part": "head",
+     "from": [
+      -4.4,
+      -10.2,
+      -1.2
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -22.745,
+      0,
+      -25.272
+     ],
+     "pivot": [
+      -3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike3b",
+     "part": "head",
+     "from": [
+      -3.8,
+      -12.6,
+      -0.6
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      -22.745,
+      0,
+      -25.272
+     ],
+     "pivot": [
+      -3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike4a",
+     "part": "head",
+     "from": [
+      1.6,
+      -10.2,
+      -1.2
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -26.09,
+      0,
+      28.988
+     ],
+     "pivot": [
+      3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike4b",
+     "part": "head",
+     "from": [
+      2.2,
+      -13.3,
+      -0.6
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -26.09,
+      0,
+      28.988
+     ],
+     "pivot": [
+      3.0,
+      -8.0,
+      0.2
+     ]
+    },
+    {
+     "name": "spike5a",
+     "part": "head",
+     "from": [
+      -3.8,
+      -10.2,
+      1.4
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -38.936,
+      0,
+      -20.493
+     ],
+     "pivot": [
+      -2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike5b",
+     "part": "head",
+     "from": [
+      -3.2,
+      -14.0,
+      2.0
+     ],
+     "size": [
+      1.6,
+      3.8,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      4
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      2
+     ],
+     "rot": [
+      -38.936,
+      0,
+      -20.493
+     ],
+     "pivot": [
+      -2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike6a",
+     "part": "head",
+     "from": [
+      -1.4,
+      -10.2,
+      1.7
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -34.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      3.1
+     ]
+    },
+    {
+     "name": "spike6b",
+     "part": "head",
+     "from": [
+      -0.8,
+      -12.6,
+      2.3
+     ],
+     "size": [
+      1.6,
+      2.4,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      2,
+      2
+     ],
+     "rot": [
+      -34.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -8.0,
+      3.1
+     ]
+    },
+    {
+     "name": "spike7a",
+     "part": "head",
+     "from": [
+      1.0,
+      -10.2,
+      1.4
+     ],
+     "size": [
+      2.8,
+      2.2,
+      2.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      2,
+      3
+     ],
+     "rot": [
+      -34.512,
+      0,
+      18.164
+     ],
+     "pivot": [
+      2.4,
+      -8.0,
+      2.8
+     ]
+    },
+    {
+     "name": "spike7b",
+     "part": "head",
+     "from": [
+      1.6,
+      -13.3,
+      2.0
+     ],
+     "size": [
+      1.6,
+      3.1,
+      1.6
+     ],
+     "inflate": 0.05,
+     "uv": [
+      20,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -34.512,
+      0,
+      18.164
+     ],
+     "pivot": [
+      2.4,
+      -8.0,
+      2.8
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "back",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.2,
+     "root": [
+      0.0,
+      -2.0,
+      3.7
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        5.0,
+        4.0,
+        1.6
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        10
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        4.6,
+        4.5,
+        1.6
+       ],
+       "inflate": 0.22,
+       "uv": [
+        14,
+        10
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        3.6,
+        4.5,
+        1.4
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        5
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "mohawk": {
+   "texture": "hair/mohawk",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.62,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": -1,
+     "helm": "hide"
+    },
+    {
+     "name": "ridge0",
+     "part": "head",
+     "from": [
+      -1.15,
+      -12.2,
+      -4.6
+     ],
+     "size": [
+      2.3,
+      4.0,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      1
+     ]
+    },
+    {
+     "name": "ridge1",
+     "part": "head",
+     "from": [
+      -1.15,
+      -13.9,
+      -3.35
+     ],
+     "size": [
+      2.3,
+      5.7,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      6,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      6,
+      1
+     ]
+    },
+    {
+     "name": "ridge2",
+     "part": "head",
+     "from": [
+      -1.15,
+      -13.8,
+      -2.1
+     ],
+     "size": [
+      2.3,
+      5.6,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      6,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      6,
+      1
+     ]
+    },
+    {
+     "name": "ridge3",
+     "part": "head",
+     "from": [
+      -1.15,
+      -15.5,
+      -0.85
+     ],
+     "size": [
+      2.3,
+      7.3,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      7,
+      1
+     ]
+    },
+    {
+     "name": "ridge4",
+     "part": "head",
+     "from": [
+      -1.15,
+      -13.8,
+      0.4
+     ],
+     "size": [
+      2.3,
+      5.6,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      6,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      6,
+      1
+     ]
+    },
+    {
+     "name": "ridge5",
+     "part": "head",
+     "from": [
+      -1.15,
+      -13.9,
+      1.65
+     ],
+     "size": [
+      2.3,
+      5.7,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      6,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      6,
+      1
+     ]
+    },
+    {
+     "name": "ridge6",
+     "part": "head",
+     "from": [
+      -1.15,
+      -12.2,
+      2.9
+     ],
+     "size": [
+      2.3,
+      4.0,
+      1.4
+     ],
+     "inflate": 0.12,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      4,
+      1
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "nape",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.5,
+     "root": [
+      0.0,
+      -3.0,
+      3.8
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.4,
+        3.0,
+        1.2
+       ],
+       "inflate": 0.15,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "head",
+       "size": [
+        2.2,
+        2.5,
+        1.2
+       ],
+       "inflate": 0.15,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "bob": {
+   "texture": "hair/bob",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.72,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      0.0,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.4,
+        2.8,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "bobB",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.0,
+     "root": [
+      0.0,
+      -2.8,
+      3.7
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.0,
+        3.4,
+        1.4
+       ],
+       "inflate": 0.3,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "bobL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 1.0,
+     "root": [
+      4.55,
+      -3.4,
+      0.5
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.4,
+        3.6,
+        5.6
+       ],
+       "inflate": 0.1,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "bobR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 2.0,
+     "root": [
+      -4.55,
+      -3.4,
+      0.5
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.4,
+        3.6,
+        5.6
+       ],
+       "inflate": 0.1,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "long": {
+   "texture": "hair/long",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.72,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringeR",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringeL",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "back",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.0,
+     "root": [
+      0.0,
+      -2.0,
+      3.65
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.0,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        10,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.4,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.24,
+       "uv": [
+        0,
+        6
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.2,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        12
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        7.4,
+        4.0,
+        1.5
+       ],
+       "inflate": 0.2,
+       "uv": [
+        20,
+        16
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.8,
+     "root": [
+      4.55,
+      -5.2,
+      -2.9
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.3,
+        5.2,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        20,
+        6
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.3,
+        4.4,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        26,
+        6
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 2.2,
+     "root": [
+      -4.55,
+      -5.2,
+      -2.9
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.3,
+        5.2,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        20,
+        6
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.3,
+        4.4,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        26,
+        6
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "layered": {
+   "texture": "hair/layered",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.72,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "back",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.0,
+     "root": [
+      0.0,
+      -2.0,
+      3.65
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.0,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.4,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.24,
+       "uv": [
+        0,
+        10
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.2,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        16
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "back2",
+     "tuning": "head",
+     "params": "default",
+     "phase": 1.1,
+     "root": [
+      0.0,
+      -3.0,
+      4.35
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        6.0,
+        4.0,
+        1.3
+       ],
+       "inflate": 0.3,
+       "uv": [
+        20,
+        16
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        6.2,
+        4.0,
+        1.3
+       ],
+       "inflate": 0.32,
+       "uv": [
+        34,
+        16
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.8,
+     "root": [
+      4.55,
+      -5.4,
+      -2.9
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.3,
+        5.2,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.3,
+        3.6,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        20,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 2.2,
+     "root": [
+      -4.55,
+      -5.4,
+      -2.9
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.3,
+        5.2,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.3,
+        3.6,
+        1.5
+       ],
+       "inflate": 0.12,
+       "uv": [
+        20,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "hime": {
+   "texture": "hair/hime",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.72,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      0.0,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.4,
+        2.8,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "back",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.0,
+     "root": [
+      0.0,
+      -2.0,
+      3.65
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        8.0,
+        4.5,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.4,
+        5.0,
+        1.7
+       ],
+       "inflate": 0.24,
+       "uv": [
+        0,
+        10
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.4,
+        5.0,
+        1.7
+       ],
+       "inflate": 0.22,
+       "uv": [
+        20,
+        16
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.0,
+        4.0,
+        1.5
+       ],
+       "inflate": 0.2,
+       "uv": [
+        40,
+        16
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "cheekL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.6,
+     "root": [
+      4.6,
+      -4.4,
+      -2.7
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        5.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        20,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.8,
+        4.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        20,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "cheekR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 2.4,
+     "root": [
+      -4.6,
+      -4.4,
+      -2.7
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        5.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        20,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.8,
+        4.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        20,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "ponytail": {
+   "texture": "hair/ponytail",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "tie",
+     "part": "head",
+     "from": [
+      -1.5,
+      -5.6,
+      4.1
+     ],
+     "size": [
+      3.0,
+      1.2,
+      2.4
+     ],
+     "inflate": 0.15,
+     "uv": [
+      0,
+      4
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      1,
+      2
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "tail",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.0,
+     "root": [
+      0.0,
+      -5.0,
+      5.2
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.6,
+        4.2,
+        2.6
+       ],
+       "inflate": 0.15,
+       "uv": [
+        10,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        3.12,
+        4.2,
+        2.444
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        0,
+        7
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.64,
+        4.2,
+        2.288
+       ],
+       "inflate": 0.15,
+       "uv": [
+        10,
+        11
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.16,
+        4.2,
+        2.132
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "high_ponytail": {
+   "texture": "hair/high_ponytail",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "tie",
+     "part": "head",
+     "from": [
+      -1.6,
+      -9.4,
+      2.2
+     ],
+     "size": [
+      3.2,
+      1.4,
+      2.6
+     ],
+     "inflate": 0.15,
+     "uv": [
+      10,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      1,
+      3
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringeR",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringeL",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "tail",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.3,
+     "root": [
+      0.0,
+      -9.2,
+      3.5
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.4,
+        4.4,
+        2.6
+       ],
+       "inflate": 0.15,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "head",
+       "size": [
+        2.89,
+        4.4,
+        2.425
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        22,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.38,
+        4.4,
+        2.249
+       ],
+       "inflate": 0.15,
+       "uv": [
+        12,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.87,
+        4.4,
+        2.074
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        20,
+        6
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "twin_tails": {
+   "texture": "hair/twin_tails",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "tieL",
+     "part": "head",
+     "from": [
+      3.6,
+      -7.2,
+      2.0
+     ],
+     "size": [
+      2.0,
+      1.2,
+      2.4
+     ],
+     "inflate": 0.15,
+     "uv": [
+      10,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      1,
+      2
+     ]
+    },
+    {
+     "name": "tieR",
+     "part": "head",
+     "from": [
+      -5.6,
+      -7.2,
+      2.0
+     ],
+     "size": [
+      2.0,
+      1.2,
+      2.4
+     ],
+     "inflate": 0.15,
+     "uv": [
+      10,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      1,
+      2
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringeR",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringeL",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      2.15,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        4.2,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "tailL",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.0,
+     "root": [
+      4.9,
+      -6.6,
+      3.4
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.0,
+        4.4,
+        2.6
+       ],
+       "inflate": 0.15,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "head",
+       "size": [
+        2.55,
+        4.4,
+        2.425
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.1,
+        4.4,
+        2.249
+       ],
+       "inflate": 0.15,
+       "uv": [
+        10,
+        3
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.65,
+        4.4,
+        2.074
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        18,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "tailR",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 2.0,
+     "root": [
+      -4.9,
+      -6.6,
+      3.4
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.0,
+        4.4,
+        2.6
+       ],
+       "inflate": 0.15,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "head",
+       "size": [
+        2.55,
+        4.4,
+        2.425
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.1,
+        4.4,
+        2.249
+       ],
+       "inflate": 0.15,
+       "uv": [
+        10,
+        3
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.65,
+        4.4,
+        2.074
+       ],
+       "inflate": 0.16999999999999998,
+       "uv": [
+        18,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "drills": {
+   "texture": "hair/drills",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "drillL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.0,
+     "root": [
+      5.0,
+      -6.4,
+      2.0
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.4,
+        3.6,
+        3.4
+       ],
+       "inflate": 0.1,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 1
+      },
+      {
+       "part": "head",
+       "size": [
+        3.2,
+        3.6,
+        3.2
+       ],
+       "inflate": 0.14,
+       "uv": [
+        12,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.8,
+        3.6,
+        2.8
+       ],
+       "inflate": 0.1,
+       "uv": [
+        0,
+        11
+       ],
+       "tone": 1
+      },
+      {
+       "part": "body",
+       "size": [
+        2.2,
+        3.6,
+        2.2
+       ],
+       "inflate": 0.14,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "drillR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 1.7,
+     "root": [
+      -5.0,
+      -6.4,
+      2.0
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.4,
+        3.6,
+        3.4
+       ],
+       "inflate": 0.1,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 1
+      },
+      {
+       "part": "head",
+       "size": [
+        3.2,
+        3.6,
+        3.2
+       ],
+       "inflate": 0.14,
+       "uv": [
+        12,
+        4
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.8,
+        3.6,
+        2.8
+       ],
+       "inflate": 0.1,
+       "uv": [
+        0,
+        11
+       ],
+       "tone": 1
+      },
+      {
+       "part": "body",
+       "size": [
+        2.2,
+        3.6,
+        2.2
+       ],
+       "inflate": 0.14,
+       "uv": [
+        24,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "braid": {
+   "texture": "hair/braid",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.2,
+     "root": [
+      -1.0,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        6.4,
+        2.8,
+        0.8
+       ],
+       "inflate": 0.22,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.1,
+     "root": [
+      3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        3.8,
+        0.8
+       ],
+       "inflate": 0.26,
+       "uv": [
+        14,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "braid",
+     "tuning": "head",
+     "params": "heavy",
+     "phase": 0.2,
+     "root": [
+      0.0,
+      -3.0,
+      4.3
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        3.2,
+        4.2,
+        2.6
+       ],
+       "inflate": 0.12,
+       "uv": [
+        20,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        3.0,
+        4.2,
+        2.6
+       ],
+       "inflate": 0.14,
+       "uv": [
+        0,
+        4
+       ],
+       "tone": 1
+      },
+      {
+       "part": "body",
+       "size": [
+        3.0,
+        4.2,
+        2.4
+       ],
+       "inflate": 0.12,
+       "uv": [
+        12,
+        7
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        2.4,
+        4.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        22,
+        7
+       ],
+       "tone": 1
+      }
+     ]
+    }
+   ]
+  },
+  "bun": {
+   "texture": "hair/bun",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "bun",
+     "part": "head",
+     "from": [
+      -2.2,
+      -11.2,
+      0.6
+     ],
+     "size": [
+      4.4,
+      3.2,
+      4.0
+     ],
+     "inflate": 0.3,
+     "uv": [
+      0,
+      4
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      4,
+      3,
+      4
+     ]
+    },
+    {
+     "name": "knot",
+     "part": "head",
+     "from": [
+      -2.6,
+      -8.9,
+      0.2
+     ],
+     "size": [
+      5.2,
+      1.0,
+      4.8
+     ],
+     "inflate": 0.1,
+     "uv": [
+      0,
+      11
+     ],
+     "tone": -1,
+     "helm": "hide",
+     "uvsize": [
+      5,
+      1,
+      5
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "pompadour": {
+   "texture": "hair/pompadour",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "quiff",
+     "part": "head",
+     "from": [
+      -4.2,
+      -11.0,
+      -5.0
+     ],
+     "size": [
+      8.4,
+      3.6,
+      4.4
+     ],
+     "inflate": 0.25,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      8,
+      4,
+      4
+     ],
+     "rot": [
+      -8,
+      0,
+      0
+     ],
+     "pivot": [
+      0,
+      -8.0,
+      -1.0
+     ]
+    },
+    {
+     "name": "quiff_top",
+     "part": "head",
+     "from": [
+      -3.6,
+      -11.8,
+      -4.0
+     ],
+     "size": [
+      7.2,
+      1.2,
+      3.2
+     ],
+     "inflate": 0.2,
+     "uv": [
+      0,
+      8
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      7,
+      1,
+      3
+     ],
+     "rot": [
+      -8,
+      0,
+      0
+     ],
+     "pivot": [
+      0,
+      -8.0,
+      -1.0
+     ]
+    }
+   ],
+   "chains": []
+  },
+  "ahoge": {
+   "texture": "hair/ahoge",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.7,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "stalk",
+     "part": "head",
+     "from": [
+      -0.6,
+      -11.4,
+      -1.6
+     ],
+     "size": [
+      1.2,
+      3.4,
+      1.2
+     ],
+     "inflate": 0.05,
+     "uv": [
+      24,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      1,
+      3,
+      1
+     ],
+     "rot": [
+      0,
+      0,
+      16
+     ],
+     "pivot": [
+      0,
+      -8.0,
+      -1.0
+     ]
+    },
+    {
+     "name": "hook",
+     "part": "head",
+     "from": [
+      1.2,
+      -13.4,
+      -1.6
+     ],
+     "size": [
+      1.2,
+      2.2,
+      1.2
+     ],
+     "inflate": 0.05,
+     "uv": [
+      28,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      1,
+      2,
+      1
+     ],
+     "rot": [
+      0,
+      0,
+      52
+     ],
+     "pivot": [
+      0.6,
+      -11.0,
+      -1.0
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "fringe0",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.0,
+     "root": [
+      -3.2,
+      -8.3,
+      -4.75
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.6,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe1",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.7,
+     "root": [
+      -1.1,
+      -8.3,
+      -4.77
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.4,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        6,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe2",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 1.4,
+     "root": [
+      1.1,
+      -8.3,
+      -4.79
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        2.4,
+        0.8
+       ],
+       "inflate": 0.2,
+       "uv": [
+        12,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "fringe3",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 2.0999999999999996,
+     "root": [
+      3.1,
+      -8.3,
+      -4.81
+     ],
+     "helm": "hide",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        2.0,
+        3.2,
+        0.8
+       ],
+       "inflate": 0.23,
+       "uv": [
+        18,
+        0
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "mane": {
+   "texture": "hair/mane",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 0.76,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    },
+    {
+     "name": "lock0a",
+     "part": "head",
+     "from": [
+      -4.7,
+      -11.0,
+      -4.1
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      28.284,
+      0,
+      -28.284
+     ],
+     "pivot": [
+      -3.4,
+      -7.6,
+      -2.8
+     ]
+    },
+    {
+     "name": "lock0b",
+     "part": "head",
+     "from": [
+      -4.3,
+      -14.0,
+      -3.7
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      28.284,
+      0,
+      -28.284
+     ],
+     "pivot": [
+      -3.4,
+      -7.6,
+      -2.8
+     ]
+    },
+    {
+     "name": "lock1a",
+     "part": "head",
+     "from": [
+      -1.3,
+      -11.0,
+      -4.9
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      44.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -7.6,
+      -3.6
+     ]
+    },
+    {
+     "name": "lock1b",
+     "part": "head",
+     "from": [
+      -0.9,
+      -14.0,
+      -4.5
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      44.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -7.6,
+      -3.6
+     ]
+    },
+    {
+     "name": "lock2a",
+     "part": "head",
+     "from": [
+      2.1,
+      -11.0,
+      -4.1
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      28.284,
+      0,
+      28.284
+     ],
+     "pivot": [
+      3.4,
+      -7.6,
+      -2.8
+     ]
+    },
+    {
+     "name": "lock2b",
+     "part": "head",
+     "from": [
+      2.5,
+      -14.0,
+      -3.7
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      28.284,
+      0,
+      28.284
+     ],
+     "pivot": [
+      3.4,
+      -7.6,
+      -2.8
+     ]
+    },
+    {
+     "name": "lock3a",
+     "part": "head",
+     "from": [
+      -5.5,
+      -11.0,
+      -0.9
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      -48.0
+     ],
+     "pivot": [
+      -4.2,
+      -7.6,
+      0.4
+     ]
+    },
+    {
+     "name": "lock3b",
+     "part": "head",
+     "from": [
+      -5.1,
+      -14.0,
+      -0.5
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      -48.0
+     ],
+     "pivot": [
+      -4.2,
+      -7.6,
+      0.4
+     ]
+    },
+    {
+     "name": "lock4a",
+     "part": "head",
+     "from": [
+      2.9,
+      -11.0,
+      -0.9
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      48.0
+     ],
+     "pivot": [
+      4.2,
+      -7.6,
+      0.4
+     ]
+    },
+    {
+     "name": "lock4b",
+     "part": "head",
+     "from": [
+      3.3,
+      -14.0,
+      -0.5
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      48.0
+     ],
+     "pivot": [
+      4.2,
+      -7.6,
+      0.4
+     ]
+    },
+    {
+     "name": "lock5a",
+     "part": "head",
+     "from": [
+      -4.7,
+      -11.0,
+      1.9
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      -32.527,
+      0,
+      -32.527
+     ],
+     "pivot": [
+      -3.4,
+      -7.6,
+      3.2
+     ]
+    },
+    {
+     "name": "lock5b",
+     "part": "head",
+     "from": [
+      -4.3,
+      -14.0,
+      2.3
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -32.527,
+      0,
+      -32.527
+     ],
+     "pivot": [
+      -3.4,
+      -7.6,
+      3.2
+     ]
+    },
+    {
+     "name": "lock6a",
+     "part": "head",
+     "from": [
+      -1.3,
+      -11.0,
+      2.5
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      -50.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -7.6,
+      3.8
+     ]
+    },
+    {
+     "name": "lock6b",
+     "part": "head",
+     "from": [
+      -0.9,
+      -14.0,
+      2.9
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -50.0,
+      0,
+      0.0
+     ],
+     "pivot": [
+      0.0,
+      -7.6,
+      3.8
+     ]
+    },
+    {
+     "name": "lock7a",
+     "part": "head",
+     "from": [
+      2.1,
+      -11.0,
+      1.9
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      -32.527,
+      0,
+      32.527
+     ],
+     "pivot": [
+      3.4,
+      -7.6,
+      3.2
+     ]
+    },
+    {
+     "name": "lock7b",
+     "part": "head",
+     "from": [
+      2.5,
+      -14.0,
+      2.3
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      -32.527,
+      0,
+      32.527
+     ],
+     "pivot": [
+      3.4,
+      -7.6,
+      3.2
+     ]
+    },
+    {
+     "name": "lock8a",
+     "part": "head",
+     "from": [
+      -2.9,
+      -11.0,
+      -1.5
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      -26.0
+     ],
+     "pivot": [
+      -1.6,
+      -7.6,
+      -0.2
+     ]
+    },
+    {
+     "name": "lock8b",
+     "part": "head",
+     "from": [
+      -2.5,
+      -14.0,
+      -1.1
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      -26.0
+     ],
+     "pivot": [
+      -1.6,
+      -7.6,
+      -0.2
+     ]
+    },
+    {
+     "name": "lock9a",
+     "part": "head",
+     "from": [
+      0.3,
+      -11.0,
+      -1.7
+     ],
+     "size": [
+      2.6,
+      3.4,
+      2.6
+     ],
+     "inflate": 0.14,
+     "uv": [
+      0,
+      0
+     ],
+     "tone": 1,
+     "helm": "hide",
+     "uvsize": [
+      3,
+      3,
+      3
+     ],
+     "rot": [
+      0.0,
+      0,
+      24.0
+     ],
+     "pivot": [
+      1.6,
+      -7.6,
+      -0.4
+     ]
+    },
+    {
+     "name": "lock9b",
+     "part": "head",
+     "from": [
+      0.7,
+      -14.0,
+      -1.3
+     ],
+     "size": [
+      1.8,
+      3.4,
+      1.8
+     ],
+     "inflate": 0.08,
+     "uv": [
+      12,
+      0
+     ],
+     "tone": 2,
+     "helm": "hide",
+     "uvsize": [
+      2,
+      3,
+      2
+     ],
+     "rot": [
+      0.0,
+      0,
+      24.0
+     ],
+     "pivot": [
+      1.6,
+      -7.6,
+      -0.4
+     ]
+    }
+   ],
+   "chains": [
+    {
+     "name": "mantle",
+     "tuning": "stiff",
+     "params": "stiff",
+     "phase": 0.3,
+     "root": [
+      0.0,
+      -2.0,
+      3.8
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        9.4,
+        5.0,
+        2.4
+       ],
+       "inflate": 0.3,
+       "uv": [
+        0,
+        6
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        10.0,
+        5.0,
+        2.6
+       ],
+       "inflate": 0.3,
+       "uv": [
+        0,
+        13
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        8.8,
+        5.0,
+        2.2
+       ],
+       "inflate": 0.3,
+       "uv": [
+        26,
+        16
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontL",
+     "tuning": "head",
+     "params": "default",
+     "phase": 0.8,
+     "root": [
+      4.7,
+      -5.0,
+      -2.2
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        5.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        22,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.8,
+        3.8,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        22,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    },
+    {
+     "name": "frontR",
+     "tuning": "head",
+     "params": "default",
+     "phase": 2.2,
+     "root": [
+      -4.7,
+      -5.0,
+      -2.2
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        1.8,
+        5.0,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        22,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        1.8,
+        3.8,
+        2.0
+       ],
+       "inflate": 0.14,
+       "uv": [
+        22,
+        7
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  },
+  "hood": {
+   "texture": "hair/hood",
+   "boxes": [
+    {
+     "name": "cap",
+     "part": "head",
+     "from": [
+      -4,
+      -8,
+      -4
+     ],
+     "size": [
+      8,
+      8,
+      8
+     ],
+     "inflate": 1.15,
+     "uv": [
+      32,
+      0
+     ],
+     "tone": 0,
+     "helm": "hide"
+    }
+   ],
+   "chains": [
+    {
+     "name": "drape",
+     "tuning": "stiff",
+     "params": "default",
+     "phase": 0.2,
+     "root": [
+      0.0,
+      -1.0,
+      3.9
+     ],
+     "helm": "tail",
+     "segments": [
+      {
+       "part": "head",
+       "size": [
+        9.6,
+        5.0,
+        3.0
+       ],
+       "inflate": 0.5,
+       "uv": [
+        0,
+        0
+       ],
+       "tone": 0
+      },
+      {
+       "part": "body",
+       "size": [
+        10.4,
+        5.0,
+        3.2
+       ],
+       "inflate": 0.5,
+       "uv": [
+        0,
+        8
+       ],
+       "tone": 0
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "note": "generated by tools/playermodel/gen_hair.py; do not edit by hand"
+}

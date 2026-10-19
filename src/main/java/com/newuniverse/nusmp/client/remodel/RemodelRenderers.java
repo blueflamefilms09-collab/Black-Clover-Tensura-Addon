@@ -30,6 +30,14 @@ public final class RemodelRenderers {
         modBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, RemodelRenderers::register);
     }
 
+    /**
+     * 1.94.0: the art-kit renderer of the painted construct's hound and giant. The player-model kit draws the knight (a person) and asks this one for the other two kinds, so the entity type keeps
+     * one renderer that is right for all three.
+     */
+    public static net.minecraft.client.renderer.entity.EntityRenderer<com.newuniverse.nusmp.entity.PaintedConstructEntity> paintedOther(EntityRendererProvider.Context ctx) {
+        return new KitMobRenderer<com.newuniverse.nusmp.entity.PaintedConstructEntity>(ctx, "painted_beast", KitMobRenderer.Size.fit(1.15f), KitProbes.PAINTED);
+    }
+
     public static void register(EntityRenderersEvent.RegisterRenderers e) {
         for (RemodelTable.Entry en : RemodelTable.ENTRIES) {
             EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, en.entityId())).orElse(null);

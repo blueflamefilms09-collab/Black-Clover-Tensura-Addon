@@ -51,6 +51,17 @@ public final class GeoModelData {
 
     public static GeoModelData empty(String id) { return new GeoModelData(id, 16, 16); }
 
+    /**
+     * 1.94.0 (player-model kit): a view of this model that draws only the root bones {@code keep} accepts. The bones and cubes are shared, not copied, so a model whose roots are drawn with
+     * different parts of a body (client/playermodel's extras: {@code x_head}, {@code x_body}, {@code x_arm_r} ...) is parsed once and drawn as several views.
+     */
+    public GeoModelData view(java.util.function.Predicate<Bone> keep) {
+        GeoModelData v = new GeoModelData(id, texW, texH);
+        v.bones.putAll(bones);
+        for (Bone b : roots) if (keep.test(b)) v.roots.add(b);
+        return v;
+    }
+
     public int cubeCount() {
         int n = 0;
         for (Bone b : bones.values()) n += b.cubes.size();

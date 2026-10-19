@@ -1,0 +1,224 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.pmx_finral_roulacase",
+    "texture_width": 512,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "x_body",
+     "pivot": [
+      0.0,
+      24.0,
+      0.0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "cape",
+     "parent": "x_body",
+     "pivot": [
+      0.0,
+      23.5812,
+      2.4084
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.4555,
+        16.7864,
+        2.4084
+       ],
+       "size": [
+        16.7539,
+        6.8063,
+        1.0471
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          198,
+          0
+         ],
+         "uv_size": [
+          32,
+          13
+         ]
+        },
+        "south": {
+         "uv": [
+          231,
+          0
+         ],
+         "uv_size": [
+          32,
+          13
+         ]
+        },
+        "west": {
+         "uv": [
+          277,
+          0
+         ],
+         "uv_size": [
+          2,
+          13
+         ]
+        },
+        "east": {
+         "uv": [
+          280,
+          0
+         ],
+         "uv_size": [
+          2,
+          13
+         ]
+        },
+        "up": {
+         "uv": [
+          340,
+          42
+         ],
+         "uv_size": [
+          32,
+          2
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "name": "cape_low",
+     "parent": "cape",
+     "pivot": [
+      0.0,
+      16.7864,
+      2.4084
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.9791,
+        12.634,
+        2.5654
+       ],
+       "size": [
+        17.801,
+        4.1885,
+        1.0471
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          439,
+          0
+         ],
+         "uv_size": [
+          34,
+          8
+         ]
+        },
+        "south": {
+         "uv": [
+          474,
+          0
+         ],
+         "uv_size": [
+          34,
+          8
+         ]
+        },
+        "west": {
+         "uv": [
+          99,
+          33
+         ],
+         "uv_size": [
+          2,
+          8
+         ]
+        },
+        "east": {
+         "uv": [
+          102,
+          33
+         ],
+         "uv_size": [
+          2,
+          8
+         ]
+        }
+       }
+      },
+      {
+       "origin": [
+        -9.712,
+        8.4817,
+        2.8272
+       ],
+       "size": [
+        19.3717,
+        4.1885,
+        1.0471
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          363,
+          0
+         ],
+         "uv_size": [
+          37,
+          8
+         ]
+        },
+        "south": {
+         "uv": [
+          401,
+          0
+         ],
+         "uv_size": [
+          37,
+          8
+         ]
+        },
+        "west": {
+         "uv": [
+          105,
+          33
+         ],
+         "uv_size": [
+          2,
+          8
+         ]
+        },
+        "east": {
+         "uv": [
+          108,
+          33
+         ],
+         "uv_size": [
+          2,
+          8
+         ]
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

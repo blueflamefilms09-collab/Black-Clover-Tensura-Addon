@@ -29,6 +29,8 @@ final class AvatarPreview {
     private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/avatar/eyes_glow.png");
     private static PlayerModel<LivingEntity> model;
     private static EntityModelSet baked;
+    /** The preview's hair keeps its own springs (no entity moves it: it sways on the clock). */
+    private static final com.newuniverse.nusmp.client.playermodel.HairState HAIR = com.newuniverse.nusmp.client.playermodel.HairState.create();
 
     private static PlayerModel<LivingEntity> model() {
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
@@ -58,6 +60,7 @@ final class AvatarPreview {
         int light = PropDraw.FULL_BRIGHT;
         ResourceLocation skin = AvatarSkinCache.skin(look, raceId);
         m.renderToBuffer(pose, bs.getBuffer(RenderType.entityCutoutNoCull(skin)), light, OverlayTexture.NO_OVERLAY, -1);
+        AvatarParts.drawHair(pose, bs, light, m, look, HAIR, age, false);
         AvatarParts.draw(pose, bs, light, m, look, age / 20f, 1f, 0.5f + 0.5f * Mth.sin(age * 0.11f));
         m.renderToBuffer(pose, bs.getBuffer(AuraRender.additive(EYES)), light, OverlayTexture.NO_OVERLAY, 0xFF000000 | (look.eyeRgb() & 0xFFFFFF));
         bs.endBatch();

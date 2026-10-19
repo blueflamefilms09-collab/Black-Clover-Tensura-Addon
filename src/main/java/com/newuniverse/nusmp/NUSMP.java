@@ -119,6 +119,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.book.RougeCat::register);                             // 0.49: Rouge on her summoner's head
         modEventBus.addListener(com.newuniverse.nusmp.aura.PlayerAuraPayload::register);                     // 0.53: player render layers
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
+        com.newuniverse.nusmp.client.playermodel.PlayerModelSelfTests.register();                            // 1.94.0: self-test render.playermodel (data only, runs on the dedicated server)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
@@ -193,6 +194,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::layers);                    // 0.49: Rouge's cat model
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
             com.newuniverse.nusmp.client.remodel.RemodelRenderers.init(modEventBus);                       // the art-kit renderers of every remodelled mob (lowest priority: they replace the old renderers above, which stay as legacy)
+            com.newuniverse.nusmp.client.playermodel.PlayerModelRegistry.init(modEventBus);                  // 1.94.0: the player-model kit: every person of the arcs, the Zogratis family, the Avatars and the Hub on the vanilla player model (registered after the remodel's, so it is the last renderer of those types)
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
