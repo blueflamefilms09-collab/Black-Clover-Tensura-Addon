@@ -52,5 +52,7 @@ final class PropPainterRegistry {
         SandPropPainter.register();
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
+        TransmutationPropPainter.register(); // 1.93.0 magic rebuild
+        ModificationPropPainter.register();
     }
 }

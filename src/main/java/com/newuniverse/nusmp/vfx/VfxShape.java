@@ -256,7 +256,11 @@ public enum VfxShape {
     CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
     CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
     BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
-    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,
+    // 1.93.0 magic rebuild (appended): the own effect triples of Transmutation, Recombination and Modification (Mercury's MERCURY_FX1..3 exist above)
+    TRANSMUTATION_FX1, TRANSMUTATION_FX2, TRANSMUTATION_FX3,
+    RECOMBINATION_FX1, RECOMBINATION_FX2, RECOMBINATION_FX3,
+    MODIFICATION_FX1, MODIFICATION_FX2, MODIFICATION_FX3;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

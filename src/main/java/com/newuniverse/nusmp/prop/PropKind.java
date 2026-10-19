@@ -97,5 +97,10 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0 magic rebuild (appended): Transmutation (iron spike, sentinel, alchemic blade), Modification (tendril, test subject, needle), Mercury (cage), Recombination (the Black Bull, the drill) */
+    TRANSMUTATION_1, TRANSMUTATION_2, TRANSMUTATION_3,
+    MODIFICATION_1, MODIFICATION_2, MODIFICATION_3,
+    MERCURY_3,
+    RECOMBINATION_3, RECOMBINATION_4
 }

@@ -51,5 +51,9 @@ public enum Aura {
     /** 1.27.0: the merged-magic armour; RETIRED in 1.93.0 (no painter is registered for it any more; the constant stays so the ordinals after it never move) */
     MERGED,
     /** 1.27.0: the temporary armour / aura of the 30 wiki magics; the style is the magic's WikiStyles index (client.aura.WikiAura) */
-    WIKI
+    WIKI,
+    /** 1.93.0 magic rebuild: the temporary armours of Transmutation, Recombination and Modification (Mercury uses MERCURY above) */
+    TRANSMUTATION,
+    RECOMBINATION,
+    MODIFICATION
 }

@@ -32,6 +32,7 @@ public final class WikiBooks {
 
     public static GrimoireBook attribute(MagicType magic) {
         if (!isNewAttribute(magic)) throw new IllegalArgumentException("Not a newly added wiki attribute: " + magic);
+        if (magic == MagicType.MODIFICATION) return ModificationBook.create();      // 1.93.0 magic rebuild: Modification has its own pages (the five generic ids and their order are kept)
         String name = magic.displayName.replace(" Magic", "");
         var rider = rider(magic);
         return new ElementBook(magic, color(magic), TensuraDamageTypes.MAGIC_GENERIC, List.of(
@@ -116,17 +117,19 @@ public final class WikiBooks {
 
     public static GrimoireBook transmutation() {
         return new ElementBook(MagicType.TRANSMUTATION, 0xFF7AF0D8, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                starter("iron_spikes", "Transmutation: Iron Spikes", WikiSpells::ironSpikes),
-                mid("magic_convert", "Magic Convert", WikiSpells::magicConvert),
-                zone("quagmire", "Transmutation: Quagmire", WikiSpells::quagmire),
-                signature("grand_transmutation", "Grand Transmutation", WikiSpells::grandTransmutation)));
+                // 1.93.0 magic rebuild: the four pages keep their ids and order, their casts are TransmutationArts' (the old WikiSpells versions stay in the code); four pages are appended
+                starter(TransmutationRules.IRON_SPIKES, "Transmutation: Iron Spikes", TransmutationArts::ironSpikes),
+                mid(TransmutationRules.MAGIC_CONVERT, "Magic Convert", TransmutationArts::magicConvert),
+                zone(TransmutationRules.QUAGMIRE, "Transmutation: Quagmire", TransmutationArts::quagmire),
+                signature(TransmutationRules.GRAND, "Grand Transmutation", TransmutationArts::grandTransmutation))).plus(com.newuniverse.nusmp.book.ext.TransmutationExt.pages());
     }
 
     public static GrimoireBook recombination() {
         return new ElementBook(MagicType.RECOMBINATION, 0xFFFF9A3C, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                starter("mana_corkscrew", "Mana Corkscrew", WikiSpells::manaCorkscrew),
-                mid("bulwark", "Recombination: Bulwark", WikiSpells::bulwark),
-                zone("room_swap", "Recombination: Room Swap", WikiSpells::roomSwap),
-                signature("raging_black_bull", "The Raging Black Bull", WikiSpells::ragingBlackBull).withCooldown(2400)));
+                // 1.93.0 magic rebuild: the four pages keep their ids and order, their casts are RecombinationArts' (the old WikiSpells versions stay in the code); four pages are appended
+                starter(RecombinationRules.CORKSCREW, "Mana Corkscrew", RecombinationArts::manaCorkscrew),
+                mid(RecombinationRules.BULWARK, "Recombination: Bulwark", RecombinationArts::bulwark),
+                zone(RecombinationRules.ROOM_SWAP, "Recombination: Room Swap", RecombinationArts::roomSwap),
+                signature(RecombinationRules.BLACK_BULL, "The Raging Black Bull", RecombinationArts::ragingBlackBull).withCooldown(2400))).plus(com.newuniverse.nusmp.book.ext.RecombinationExt.pages());
     }
 }
