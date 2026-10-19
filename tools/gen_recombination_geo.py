@@ -223,7 +223,7 @@ def halo():
     for k in range(6):                                           # six loose planks circling the head, each tilted a little
         a = 2 * math.pi * k / 6
         x, z = 6.0 * math.cos(a), 6.0 * math.sin(a)
-        sh.cube("spin", (x - 1.6, 35.4 + (k % 2) * 1.2, z - 0.4), (3.2, 0.6, 0.8), mat="oak" if k % 2 else "oak_dark", deco=("plank",), rot=(0, -math.degrees(a), 0), pv=(x, 35.7, z))
+        sh.cube("spin", (x - 1.6, 35.4 + (k % 2) * 1.2, z - 0.4), (3.2, 0.6, 0.8), mat="oak" if k % 2 else "oak_dark", deco=("plank",), rot=(0, -math.degrees(a) + 90, 0), pv=(x, 35.7, z))
     sh.cube("spin", (-0.6, 36.4, -0.6), (1.2, 1.2, 1.2), mat="lamp", deco=("core",))
     a = Anim()
     wave(a, "idle", "spin", 9.0, 18, y=lambda p: 360 * p)

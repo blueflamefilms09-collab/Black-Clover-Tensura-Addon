@@ -28,7 +28,7 @@ def ring(sh, bone, cy, r, n, h, t, mat="alch_brass", seed_deco=("seam",), **opt)
     for k in range(n):
         a = 2 * math.pi * k / n
         cx, cz = r * math.cos(a), r * math.sin(a)
-        sh.cube(bone, (cx - chord / 2, cy, cz - t / 2), (chord, h, t), mat=mat, rot=(0, SGN * -math.degrees(a) + 90 * 0, 0), pv=(cx, cy, cz), deco=seed_deco, **opt)
+        sh.cube(bone, (cx - chord / 2, cy, cz - t / 2), (chord, h, t), mat=mat, rot=(0, SGN * -math.degrees(a) + 90, 0), pv=(cx, cy, cz), deco=seed_deco, **opt)
 
 
 def pauldrons():

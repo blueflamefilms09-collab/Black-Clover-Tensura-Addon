@@ -1,0 +1,11 @@
+{
+  "nusmp.skill.book_recombination.description": "Henry Legolant's attribute: the magic house is taken apart and put back together at your call - walls, swapped rooms, a drill of mana, and the Raging Black Bull, a house with legs, horns and cannons. Cast it and the house is worn as armour: a roof-tile cap, a door on your chest, the house itself on your back with smoke rising. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_recombination.mana_corkscrew": "Mana Corkscrew - a drill of compressed mana spirals out and bores through a line, pushing back everything it hits. Damage scales with your EP.",
+  "nusmp.page.book_recombination.bulwark": "Recombination: Bulwark - the magic house folds a ring of walls round you for ten seconds, with a room standing at each corner, and you gain Absorption.",
+  "nusmp.page.book_recombination.room_swap": "Recombination: Room Swap - two rooms change places: you and the target swap positions, a room rises at each place and the target is slowed for a second.",
+  "nusmp.page.book_recombination.raging_black_bull": "The Raging Black Bull - the magic house rebuilds itself into a bull that follows you, rams the nearest foe and fires its cannons for a minute. It grows with your EP. (Henry Legolant's grimoire only.)",
+  "nusmp.page.book_recombination.house_armour": "House Armour - the magic house worn as armour for twenty seconds: eleven pieces forge in on your body, the house stands on your back, and a quarter of every blow (more with EP, at most 38 percent) is taken off. Resistance I.",
+  "nusmp.page.book_recombination.room_rebuild": "Recombination: Room Rebuild - as the house mends itself, you and your allies within seven blocks are healed and regenerate; a room rises at your side.",
+  "nusmp.page.book_recombination.ultra_giant_bull": "Ultra Giant Bull - the Compound spell: your Raging Black Bull grows one and a half times, fires four cannons at a time and rams harder for twenty seconds. The Bull must already stand.",
+  "nusmp.page.book_recombination.plank_snare": "Recombination: Plank Snare - boards close round a foe and hold it for three seconds, then it takes a blow. Hard control: shares the twelve-second lock, a boss is held for a quarter as long."
+}

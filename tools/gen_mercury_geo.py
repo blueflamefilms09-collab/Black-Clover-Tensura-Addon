@@ -326,7 +326,7 @@ def cage():
     for k in range(8):
         a = 2 * math.pi * (k + 0.5) / 8
         x, z = R * math.cos(a) * 0.96, R * math.sin(a) * 0.96
-        sh.cube("top", (x - 9.4 / 2, 0.0, z - 1.0), (9.4, 1.4, 2.0), mat="chrome_dark", rot=(0, -math.degrees(a) + 90, 0), pv=(x, 0.7, z))
+        sh.cube("top", (x - 9.4 / 2, 43.4, z - 1.0), (9.4, 1.4, 2.0), mat="chrome_dark", rot=(0, -math.degrees(a) + 90, 0), pv=(x, 44.1, z))
     for k in range(4):                                           # four silver shield plates between the bars
         a = 2 * math.pi * (k + 0.5) / 4
         x, z = R * 0.98 * math.cos(a), R * 0.98 * math.sin(a)
