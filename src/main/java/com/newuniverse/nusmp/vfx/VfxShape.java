@@ -274,7 +274,6 @@ public enum VfxShape {
     SOUL_FX1, SOUL_FX2, SOUL_FX3,
     SOUL_CORPSE_FX1, SOUL_CORPSE_FX2, SOUL_CORPSE_FX3,
     MEMORY_FX1, MEMORY_FX2, MEMORY_FX3,      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
-    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
     // 1.93.0 rebuild: Smoke, Snow, Wing, Vortex, Air and Ash Magic (<NAME>_FX1 cast / projectile, _FX2 zone (power = radius, drawn 1.5x), _FX3 impact; layers vfx/client/layer/<Name>Layer)
     SMOKE_FX1, SMOKE_FX2, SMOKE_FX3,
     SNOW_FX1, SNOW_FX2, SNOW_FX3,
@@ -282,12 +281,10 @@ public enum VfxShape {
     VORTEX_FX1, VORTEX_FX2, VORTEX_FX3,
     AIR_FX1, AIR_FX2, AIR_FX3,
     ASH_FX1, ASH_FX2, ASH_FX3,
-    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
     // 1.93.0 magic rebuild: the own effects of Spatial, Mirror and Permeation Magic (Gravity and Slash already had their FX1..3 slots); cast / field / burst by the shape protocol of the authoring guide
     SPATIAL_FX1, SPATIAL_FX2, SPATIAL_FX3,
     MIRROR_FX1, MIRROR_FX2, MIRROR_FX3,
     PERMEATION_FX1, PERMEATION_FX2, PERMEATION_FX3,
-    BUTOH_AFTERIMAGE,
     // 1.93.0 magic rebuild (appended): the own effect triples of Transmutation, Recombination and Modification (Mercury's MERCURY_FX1..3 exist above)
     TRANSMUTATION_FX1, TRANSMUTATION_FX2, TRANSMUTATION_FX3,
     RECOMBINATION_FX1, RECOMBINATION_FX2, RECOMBINATION_FX3,
