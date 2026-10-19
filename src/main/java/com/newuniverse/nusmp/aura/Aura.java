@@ -83,5 +83,12 @@ public enum Aura {
     WATER,
     DARK,
     LIGHTNING,
-    FLAME
+    FLAME,
+    /** 1.93.0 nature-magic rebuild: the temporary armours of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic (client.aura.TreeAura and its siblings) */
+    TREE,
+    VINE,
+    PLANT,
+    POISON_PLANT,
+    MUD,
+    MUCUS
 }

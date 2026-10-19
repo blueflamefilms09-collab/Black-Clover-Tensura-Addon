@@ -221,6 +221,13 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.DarkFxLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.LightningFxLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.FlameFxLayer());
+        // 1.93.0 nature-magic rebuild: Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
+        register(new com.newuniverse.nusmp.vfx.client.layer.TreeLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.VineLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.PlantLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.PoisonPlantLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.MudLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.MucusLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

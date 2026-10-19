@@ -37,6 +37,7 @@ public final class WikiBooks {
         if (rebuilt == null) rebuilt = AirBook.rebuilt(magic);                   // 1.93.0: Smoke, Snow, Wing, Vortex and Air have their own rebuilt books
         if (rebuilt != null) return rebuilt;
         if (magic == MagicType.MODIFICATION) return ModificationBook.create();      // 1.93.0 magic rebuild: Modification has its own pages (the five generic ids and their order are kept)
+        if (TreeRebuild.handles(magic)) return TreeRebuild.book(magic);      // 1.93.0: Tree, Vine, Poison Plant, Mud and Mucus Magic were rebuilt (same first five page ids, new pages appended)
         String name = magic.displayName.replace(" Magic", "");
         var rider = rider(magic);
         return new ElementBook(magic, color(magic), TensuraDamageTypes.MAGIC_GENERIC, List.of(

@@ -1,0 +1,8 @@
+{
+ "poison_plant_aura_armour": {"kind": "aura", "attr": "PoisonPlant", "aura": "POISON_PLANT", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
+ "poison_plant_aura_big": {"kind": "aura", "attr": "PoisonPlant", "aura": "POISON_PLANT", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "poison_plant_geo_bloom": {"kind": "geo", "model": "poison_plant_bloom", "anim": "open", "glow": "FFFFFFFF", "ages": [0, 6, 10, 20], "tile": [300, 320], "views": [{"name": "front 3/4", "yaw": 25, "pitch": 14, "target": [0, 1.2, 0], "dist": 6.5}]},
+ "poison_plant_geo_maw": {"kind": "geo", "model": "poison_plant_maw", "anim": "snap", "glow": "FFFFFFFF", "ages": [0, 4, 6, 8, 14], "tile": [300, 320], "views": [{"name": "side", "yaw": 70, "pitch": 12, "target": [0, 1.2, 0], "dist": 6.5}]},
+ "poison_plant_prop_bloom": {"kind": "prop", "attr": "PoisonPlant", "propKind": "POISON_PLANT_1", "param": 256, "scale": 1.0, "maxLife": 180, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 60], "tile": [300, 340]},
+ "poison_plant_prop_maw": {"kind": "prop", "attr": "PoisonPlant", "propKind": "POISON_PLANT_1", "param": 1, "scale": 1.0, "maxLife": 240, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 60], "tile": [300, 340]}
+}

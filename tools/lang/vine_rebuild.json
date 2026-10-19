@@ -1,0 +1,13 @@
+{
+  "nusmp.skill.book_vine.description": "A grimoire of living vines, thorns and tendrils. Its pages fling thorns, crack a vine whip, tangle a thicket, whirl every vine in reach inward, grow a thorned armour over you, and call a serpent and walls of vine. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_vine.attribute_bolt": "Vine Magic: Thorn Dart - a thorn flung on a vine: it pierces everything on its line and pricks with poison.",
+  "nusmp.page.book_vine.attribute_cut": "Vine Magic: Vine Whip - a whip of vine along a line: it cuts everything on it and hauls it toward you.",
+  "nusmp.page.book_vine.attribute_field": "Vine Magic: Thicket - a thicket at the aimed point for 8 seconds: foes are tangled, pricked and drained of a little magicule. Size scales with your EP.",
+  "nusmp.page.book_vine.attribute_domain": "Vine Magic: Verdant Maelstrom - every vine round the aimed point whirls inward: foes are dragged to the middle, cut and held.",
+  "nusmp.page.book_vine.attribute_guard": "Vine Magic: Thorn Mantle - the Thornbine armour grows over you for 10 seconds, vines climbing the body piece by piece: blows are softened and whoever strikes you is rooted and pricked.",
+  "nusmp.page.book_vine.vine_serpent": "Vine Magic: Vine Serpent - a serpent of vine hunts the nearest foe for 15 seconds, biting, rooting and poisoning. It can be hit.",
+  "nusmp.page.book_vine.vine_wall": "Vine Magic: Thicket Wall - a wall of living vines rises in front of you; thorns tear whoever leans on it.",
+  "nusmp.page.book_vine.vine_swing": "Vine Magic: Vine Swing - a vine thrown at the aimed point hauls you there; foes at the landing are caught.",
+  "nusmp.page.book_vine.strangling_bloom": "Vine Magic: Strangling Bloom - vines bind one foe (hard control, shares the 12 second control lock): they tighten and feed on its magicules.",
+  "nusmp.page.book_vine.lash_barrage": "Vine Magic: Lash Barrage - for 3 seconds whips of vine lash at up to three foes at a time."
+}

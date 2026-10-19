@@ -1,0 +1,8 @@
+{
+ "mucus_aura_armour": {"kind": "aura", "attr": "Mucus", "aura": "MUCUS", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
+ "mucus_aura_big": {"kind": "aura", "attr": "Mucus", "aura": "MUCUS", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "mucus_geo_construct": {"kind": "geo", "model": "mucus_construct", "anim": "absorb", "glow": "FFFFFFFF", "texture": "nusmp:textures/entity/mucus_construct.png", "ages": [0, 7, 12, 20], "tile": [300, 340], "views": [{"name": "front 3/4", "yaw": 25, "pitch": 12, "target": [0, 1.2, 0], "dist": 7}]},
+ "mucus_geo_tendril": {"kind": "geo", "model": "mucus_tendril", "anim": "strike", "glow": "FFFFFFFF", "ages": [0, 5, 8, 14], "tile": [260, 340], "views": [{"name": "side", "yaw": 70, "pitch": 10, "target": [0, 1.4, 0], "dist": 7}]},
+ "mucus_prop_construct": {"kind": "prop", "attr": "Mucus", "propKind": "MUCUS_1", "param": 256, "scale": 1.0, "maxLife": 300, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 30, 60], "tile": [300, 340]},
+ "mucus_prop_tendril": {"kind": "prop", "attr": "Mucus", "propKind": "MUCUS_1", "param": 1, "scale": 1.0, "maxLife": 20, "pos": [0, 0, 0], "figure": false, "ages": [2, 6, 10, 16], "tile": [300, 340]}
+}

@@ -78,5 +78,6 @@ final class PropRegistry {
         DarkProps.init();
         LightningProps.init();
         FlameProps.init();
+        TreeProps.init();                    // 1.93.0 nature-magic rebuild: starts the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
     }
 }

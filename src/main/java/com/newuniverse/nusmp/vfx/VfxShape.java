@@ -301,7 +301,27 @@ public enum VfxShape {
     LIGHTNINGFX_BURST,
     FLAMEFX_CAST,
     FLAMEFX_ZONE,
-    FLAMEFX_BURST;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    FLAMEFX_BURST,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0 nature-magic rebuild (vfx.client.layer.TreeLayer, VineLayer, PlantLayer, PoisonPlantLayer, MudLayer, MucusLayer): the shape protocol of the attribute guide for each magic.
+    // FX1 = cast / projectile (from = origin, to = target, power = size), FX2 = zone (from = centre on the ground, power = RADIUS), FX3 = impact / signature (from = centre, to = direction hint, power = scale)
+    TREE_FX1,
+    TREE_FX2,
+    TREE_FX3,
+    VINE_FX1,
+    VINE_FX2,
+    VINE_FX3,
+    PLANT_FX1,
+    PLANT_FX2,
+    PLANT_FX3,
+    POISON_PLANT_FX1,
+    POISON_PLANT_FX2,
+    POISON_PLANT_FX3,
+    MUD_FX1,
+    MUD_FX2,
+    MUD_FX3,
+    MUCUS_FX1,
+    MUCUS_FX2,
+    MUCUS_FX3;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

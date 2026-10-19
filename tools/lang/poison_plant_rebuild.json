@@ -1,0 +1,13 @@
+{
+  "nusmp.skill.book_poison_plant.description": "A grimoire of toxic plants. Its vines skewer and tunnel through the ground, its blooms breathe clouds of poison gas, its traps snap shut, and its antidote undoes it all. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_poison_plant.attribute_bolt": "Poison Plant Magic: Venom Thorn - a hooked thorn that pierces and poisons.",
+  "nusmp.page.book_poison_plant.attribute_cut": "Poison Plant Magic: Burrowing Venom Vine - a vine tunnels along the ground and erupts under everything on a line: damage, thrown up, poisoned.",
+  "nusmp.page.book_poison_plant.attribute_field": "Poison Plant Magic: Miasma Bloom - a bloom opens at the aimed point and breathes a cloud of poison gas for 9 seconds: damage, poison, blindness.",
+  "nusmp.page.book_poison_plant.attribute_domain": "Poison Plant Magic: Toxic Garden - three blooms and two trap maws spring up round you with a heavy poison zone for 10 seconds.",
+  "nusmp.page.book_poison_plant.attribute_guard": "Poison Plant Magic: Venomflora Armor - the Venomflora armour lunges onto you for 10 seconds: blows are softened and whoever strikes you is poisoned.",
+  "nusmp.page.book_poison_plant.trap_maw": "Poison Plant Magic: Trap Maw - a carnivorous trap that snaps on the first foe to come near, again every 2.5 seconds, for 12 seconds: damage, strong poison, rooted.",
+  "nusmp.page.book_poison_plant.spore_burst": "Poison Plant Magic: Spore Burst - a cone of spores: foes are blinded, made sick and poisoned.",
+  "nusmp.page.book_poison_plant.antivenom_graft": "Poison Plant Magic: Antivenom Graft - you graft an antidote on yourself and friends near you: harmful effects are cleansed and a little health returns.",
+  "nusmp.page.book_poison_plant.pitcher_swallow": "Poison Plant Magic: Pitcher Swallow - a pitcher plant swallows one foe (hard control, shares the 12 second control lock): it is held, digested and drained.",
+  "nusmp.page.book_poison_plant.thorn_volley": "Poison Plant Magic: Toxic Thorn Volley - five homing venom thorns."
+}

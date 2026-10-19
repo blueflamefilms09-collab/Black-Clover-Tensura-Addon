@@ -1,0 +1,282 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.poison_plant_pauld_r",
+    "texture_width": 64,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "arm",
+     "pivot": [
+      -5,
+      22,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -9.5,
+        23,
+        -3
+       ],
+       "size": [
+        6,
+        4,
+        6
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 0.3
+      },
+      {
+       "origin": [
+        -8.5,
+        27,
+        -2
+       ],
+       "size": [
+        4,
+        2,
+        4
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -7.5,
+        27.4,
+        -1
+       ],
+       "size": [
+        2,
+        2,
+        2
+       ],
+       "uv": [
+        40,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "jaw",
+     "pivot": [
+      -6.5,
+      27,
+      0
+     ],
+     "cubes": [],
+     "parent": "arm"
+    },
+    {
+     "name": "thr0_0",
+     "pivot": [
+      -7.5,
+      25.5,
+      -2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.5,
+        25.5,
+        -3.2
+       ],
+       "size": [
+        2,
+        3,
+        2
+       ],
+       "uv": [
+        48,
+        0
+       ]
+      }
+     ],
+     "parent": "arm",
+     "rotation": [
+      0,
+      0,
+      30
+     ]
+    },
+    {
+     "name": "thr0_1",
+     "pivot": [
+      -7.5,
+      28.5,
+      -2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.0,
+        28.5,
+        -2.7
+       ],
+       "size": [
+        1,
+        3,
+        1
+       ],
+       "uv": [
+        56,
+        0
+       ]
+      }
+     ],
+     "parent": "thr0_0",
+     "rotation": [
+      0,
+      0,
+      -38
+     ]
+    },
+    {
+     "name": "thr1_0",
+     "pivot": [
+      -7.9,
+      25.5,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.9,
+        25.5,
+        -1.0
+       ],
+       "size": [
+        2,
+        3,
+        2
+       ],
+       "uv": [
+        0,
+        10
+       ]
+      }
+     ],
+     "parent": "arm",
+     "rotation": [
+      0,
+      0,
+      42
+     ]
+    },
+    {
+     "name": "thr1_1",
+     "pivot": [
+      -7.9,
+      28.5,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.4,
+        28.5,
+        -0.5
+       ],
+       "size": [
+        1,
+        3,
+        1
+       ],
+       "uv": [
+        8,
+        10
+       ]
+      }
+     ],
+     "parent": "thr1_0",
+     "rotation": [
+      0,
+      0,
+      -38
+     ]
+    },
+    {
+     "name": "thr2_0",
+     "pivot": [
+      -8.3,
+      25.5,
+      2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -9.3,
+        25.5,
+        1.2000000000000002
+       ],
+       "size": [
+        2,
+        3,
+        2
+       ],
+       "uv": [
+        12,
+        10
+       ]
+      }
+     ],
+     "parent": "arm",
+     "rotation": [
+      0,
+      0,
+      54
+     ]
+    },
+    {
+     "name": "thr2_1",
+     "pivot": [
+      -8.3,
+      28.5,
+      2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.8,
+        28.5,
+        1.7000000000000002
+       ],
+       "size": [
+        1,
+        3,
+        1
+       ],
+       "uv": [
+        20,
+        10
+       ]
+      }
+     ],
+     "parent": "thr2_0",
+     "rotation": [
+      0,
+      0,
+      -38
+     ]
+    }
+   ]
+  }
+ ]
+}

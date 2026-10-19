@@ -1,0 +1,5 @@
+{
+ "plant_geo_back": {"kind": "geo", "model": "plant_back", "space": "PLAYER", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 30], "tile": [380, 420], "views": [{"name": "back", "yaw": 180, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}, {"name": "front", "yaw": 0, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}]},
+ "vine_geo_back": {"kind": "geo", "model": "vine_back", "space": "PLAYER", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 30], "tile": [380, 420], "views": [{"name": "back", "yaw": 180, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}, {"name": "side", "yaw": 90, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}]},
+ "poison_plant_geo_back": {"kind": "geo", "model": "poison_plant_back", "space": "PLAYER", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 30], "tile": [380, 420], "views": [{"name": "back", "yaw": 180, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}, {"name": "side", "yaw": 90, "pitch": 8, "target": [0, 1.0, 0], "dist": 5.5}]}
+}

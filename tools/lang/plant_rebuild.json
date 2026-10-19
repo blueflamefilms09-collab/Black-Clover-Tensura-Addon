@@ -1,0 +1,11 @@
+{
+  "nusmp.skill.book_plant.description": "A grimoire that blooms when nobody is looking. It guides healing like a flower guidepost, opens a dream world of a hundred flowers where friends mend and foes stumble, and calls blooms, a flower sprite, an ivy wall, a petal storm and a blossom armour. Summon your grimoire, select a page, and press the skill key to cast.",
+  "nusmp.page.book_plant.guidepost": "Flowers bloom along a path from you to the one you look at (or to yourself) and their light mends what it touches: 20 percent of the maximum health.",
+  "nusmp.page.book_plant.hundred_flowers": "A dream world of a hundred flowers opens round you for 8 seconds: friends rest in it and mend; enemies are tangled and cut by thorns.",
+  "nusmp.page.book_plant.seed_bloom": "Plant Magic: Seed Bloom - a seed that blossoms where it lands: foes are hurt and slowed, friends in the blast heal.",
+  "nusmp.page.book_plant.healing_bloom": "Plant Magic: Healing Bloom - a great bloom grows at the aimed point and heals everyone friendly near it for about 8 seconds, slowing foes.",
+  "nusmp.page.book_plant.flower_sprite": "Plant Magic: Flower Sprite - a flower sprite circles you for 30 seconds: it mends the most hurt friend and spits petals at foes. It can be hit.",
+  "nusmp.page.book_plant.ivy_barrier": "Plant Magic: Ivy Barrier - a wall of flowering leaves that dissolves everything shot at it.",
+  "nusmp.page.book_plant.blossom_dress": "Plant Magic: Blossom Dress - the Blossom armour drifts onto you for 10 seconds, petal by petal: blows are softened, each one mends you a little, and you regenerate.",
+  "nusmp.page.book_plant.petal_storm": "Plant Magic: Petal Storm - for 8 seconds a storm of petals circles you: foes are cut and slowed, friends mend."
+}

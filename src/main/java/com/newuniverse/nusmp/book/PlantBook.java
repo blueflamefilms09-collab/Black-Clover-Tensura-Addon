@@ -1,68 +1,61 @@
 package com.newuniverse.nusmp.book;
 
-import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
-import com.newuniverse.nusmp.blackclover.TimeStop;
 import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
+import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.tensura.ability.magic.Element;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-/** Plant Magic. */
+/**
+ * Plant Magic (1.93.0 rebuild; first release 0.3x). The first four pages keep their ids, order and mastery bits (guidepost, hundred_flowers, yggdrasil, briar_prison: the last two are the borrowed
+ * captain spells and are untouched); guidepost and hundred_flowers are remade ({@link PlantArts}) with the magic's own effects, and six pages are appended:
+ * seed_bloom, healing_bloom, flower_sprite, ivy_barrier, blossom_dress (the Blossom armour, Aura.PLANT) and petal_storm. The book also answers the generic casting circle and impact with the
+ * magic's own shapes (PLANT_FX2 / PLANT_FX3) and runs the passive of the armour.
+ */
 public class PlantBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
-            BookPage.mid("guidepost", "Magic Flower Guidepost", PlantBook::guidepost),
-            BookPage.signature("hundred_flowers", "Dream World of a Hundred Flowers", PlantBook::dreamWorld),
+            BookPage.mid("guidepost", "Magic Flower Guidepost", PlantArts::guidepost),
+            BookPage.signature("hundred_flowers", "Dream World of a Hundred Flowers", PlantArts::dreamWorld),
             // 0.34: captains' character spells (William Vangeance, Charlotte Roselei)
             BookPage.signature("yggdrasil", "World Tree Magic: Yggdrasil", WikiSpells::yggdrasil).withCooldown(1200),
-            BookPage.zone("briar_prison", "Briar Magic: Briar Prison", WikiSpells::briarPrison));
+            BookPage.zone("briar_prison", "Briar Magic: Briar Prison", WikiSpells::briarPrison),
+            // 1.93.0: appended
+            BookPage.starter("seed_bloom", "Plant Magic: Seed Bloom", PlantArts::seedBloom),
+            BookPage.mid("healing_bloom", "Plant Magic: Healing Bloom", PlantArts::healingBloom),
+            BookPage.signature("flower_sprite", "Plant Magic: Flower Sprite", PlantArts::sprite).withCooldown(1000).withAnim("signature"),
+            BookPage.mid("ivy_barrier", "Plant Magic: Ivy Barrier", PlantArts::ivy),
+            BookPage.mid("blossom_dress", "Plant Magic: Blossom Dress", PlantArts::dress).withCooldown(300),
+            BookPage.zone("petal_storm", "Plant Magic: Petal Storm", PlantArts::storm));
 
     public PlantBook() { super(MagicType.PLANT, 0xFF6CFF7A); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
-    /** A heal beam on the player you look at (or yourself): 20% max health, healing decay applies. */
-    static boolean guidepost(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        LivingEntity t = target(p, 16);
-        LivingEntity heal = t instanceof Player ? t : p;   // look at a player to heal them, otherwise yourself
-        BalanceLaw.heal(heal, heal.getMaxHealth() * 0.2f);
-        b.castCircle(p, 0.6f);
-        b.vfx(p, VfxShape.THREAD_LINE, p.getEyePosition(), heal.getBoundingBox().getCenter(), 14, 0.8f);
-        b.vfx(p, VfxShape.ELF_CIRCLE, heal.position(), heal.position().add(0, 1, 0), 24, 0.6f);
-        return true;
+    /** The cast circle: a small version of the magic's own ground sigil under the caster. */
+    @Override
+    public void castCircle(ServerPlayer p, float power) {
+        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.PLANT_FX2, p, p.position().add(0, 0.05, 0), color, 22, 1.1f * Math.max(0.6f, Math.min(1.6f, power)));
     }
 
-    /** A 6-block field for 8 s: you and nearby players heal, enemies are slowed and cut by thorns. */
-    static boolean dreamWorld(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        Vec3 c = p.position();
-        b.castCircle(p, 1.2f);
-        b.vfx(p, VfxShape.ELF_CIRCLE, c, c.add(0, 1, 0), 160, 6 / 1.6f);
-        SpellRuntime.zone(p.serverLevel(), 160, 20, age -> {
-            for (Player ally : p.serverLevel().getEntitiesOfClass(Player.class, new AABB(c, c).inflate(6))) {
-                if (ally == p || ally.isAlliedTo(p)) BalanceLaw.heal(ally, 2f);
-            }
-            for (LivingEntity t : around(p, c, 6)) {
-                if (t instanceof Player pl && pl.isAlliedTo(p)) continue;
-                b.hurt(i, p, t, mode, 2f);
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 1));
-            }
-        });
+    @Override
+    public void impact(ServerPlayer p, Vec3 at, float power) {
+        VfxSpawn.send(p.serverLevel(), VfxShape.PLANT_FX3, at, at.add(0, 1, 0), color, 22, Math.max(0.3f, Math.min(1.2f, power)));
+    }
+
+    /** The Blossom armour: while it runs the blows are softened and each one mends the wearer a little. */
+    @Override
+    public boolean onTakenDamage(ManasSkillInstance i, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
+        super.onTakenDamage(i, owner, source, amount);
+        TreeKit.armourPassive(MagicType.PLANT, i, owner, source, amount);
         return true;
     }
 }

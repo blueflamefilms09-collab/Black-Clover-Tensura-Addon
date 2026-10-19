@@ -78,5 +78,11 @@ final class PropPainterRegistry {
         DarkPropPainter.register();
         LightningPropPainter.register();
         FlamePropPainter.register();
+        TreePropPainter.register();          // 1.93.0 nature-magic rebuild: the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
+        VinePropPainter.register();
+        PlantPropPainter.register();
+        PoisonPlantPropPainter.register();
+        MudPropPainter.register();
+        MucusPropPainter.register();
     }
 }

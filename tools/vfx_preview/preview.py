@@ -93,7 +93,7 @@ def build(layers):
         bl = patched_blend(f.read())
     with open(os.path.join(pkg, "client", "VfxBlend.java"), "w", encoding="utf-8") as f:
         f.write(bl)
-    for layer in sorted(set(layers) | {"ElementFx"} | ({"ArcaneSpellLayer"} if {"ArcaneSpellLayer2", "DreamPaintLayer", "MirrorLayer", "PaintStudioLayer", "SlashCompassMercuryLayer", "LightTreeLayer", "DiceLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())
+    for layer in sorted(set(layers) | {"ElementFx"} | ({"TreeFx"} if {"TreeLayer", "VineLayer", "PlantLayer", "PoisonPlantLayer", "MudLayer", "MucusLayer"} & set(layers) else set()) | ({"ArcaneSpellLayer"} if {"ArcaneSpellLayer2", "DreamPaintLayer", "MirrorLayer", "PaintStudioLayer", "SlashCompassMercuryLayer", "LightTreeLayer", "DiceLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())
                         | ({"DreamPaintLayer"} if {"PaintStudioLayer", "LightTreeLayer", "DiceLayer", "SlashCompassMercuryLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())):     # shared helpers used by the element layers
         shutil.copy(os.path.join(VFX, "client", "layer", layer.split(".")[-1] + ".java"), os.path.join(pkg, "client", "layer"))
     # 0.53: an attribute's helper classes (<Name>*.java next to <Name>Layer.java) travel with its layer

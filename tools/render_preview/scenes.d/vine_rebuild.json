@@ -1,0 +1,9 @@
+{
+ "vine_aura_armour": {"kind": "aura", "attr": "Vine", "aura": "VINE", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
+ "vine_aura_big": {"kind": "aura", "attr": "Vine", "aura": "VINE", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]},
+ "vine_geo_serpent": {"kind": "geo", "model": "vine_serpent", "anim": "strike", "glow": "FFFFFFFF", "ages": [0, 5, 8, 12, 16], "tile": [300, 300], "views": [{"name": "side", "yaw": 70, "pitch": 14, "target": [0, 0.5, -1.2], "dist": 7.5}]},
+ "vine_geo_whip": {"kind": "geo", "model": "vine_whip", "anim": "lash", "glow": "FFFFFFFF", "ages": [0, 5, 8, 12], "tile": [260, 340], "views": [{"name": "side", "yaw": 90, "pitch": 8, "target": [0, 1.6, 0], "dist": 8}]},
+ "vine_geo_wall": {"kind": "geo", "model": "vine_wall", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 40], "tile": [420, 340], "views": [{"name": "front 3/4", "yaw": 20, "pitch": 10, "target": [0, 1.2, 0], "dist": 8}]},
+ "vine_prop_serpent": {"kind": "prop", "attr": "Vine", "propKind": "VINE_1", "param": 0, "scale": 1.0, "maxLife": 300, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 30, 100], "tile": [300, 320]},
+ "vine_prop_wall": {"kind": "prop", "attr": "Vine", "propKind": "VINE_1", "param": 2, "scale": 1.0, "maxLife": 200, "pos": [0, 0, 0], "figure": false, "ages": [4, 12, 60], "tile": [300, 320]}
+}
