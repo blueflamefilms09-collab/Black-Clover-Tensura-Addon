@@ -39,6 +39,8 @@ public class MultiverseStatusScreen extends Screen {
     @Override
     protected void init() {
         addRenderableWidget(new ThemedButton(width / 2 - 40, height - 26, 80, 18, Component.literal("Back"), b -> onClose()));
+        addRenderableWidget(new ThemedButton(8, height - 26, 88, 18, Component.translatableWithFallback("nusmp.gui_scale.button", "GUI Size"),
+                b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.GuiSizeScreen(this, null))));
         addRenderableWidget(new ThemedButton(width - 96, height - 26, 88, 18, Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open()));
     }
 

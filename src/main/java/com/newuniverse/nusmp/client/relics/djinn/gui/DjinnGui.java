@@ -85,6 +85,14 @@ public final class DjinnGui {
         st.time = (gt % 1_000_000L) + partial;
         GuiLayout.Anchor anchor = DjinnGuiConfig.anchor();
         CANVAS.set(g, mc.font);
-        PAINTER.paint(CANVAS, theme(d, st.dark), st, GuiLayout.originX(anchor, g.guiWidth()), GuiLayout.originY(anchor, g.guiHeight()));
+        int ox = GuiLayout.originX(anchor, g.guiWidth()), oy = GuiLayout.originY(anchor, g.guiHeight());
+        // GUI Size: the panel grows from the bottom edge of where the anchor option put it (centre, left or right), so the anchor and its place are kept
+        float fx = anchor == GuiLayout.Anchor.BOTTOM_LEFT ? 0f : anchor == GuiLayout.Anchor.BOTTOM_RIGHT ? 1f : 0.5f;
+        boolean sized = com.newuniverse.nusmp.client.ui.GuiScale.begin(g, "djinn_panel", ox + GuiLayout.W * fx, oy + GuiLayout.H);
+        try {
+            PAINTER.paint(CANVAS, theme(d, st.dark), st, ox, oy);
+        } finally {
+            if (sized) g.pose().popPose();
+        }
     }
 }

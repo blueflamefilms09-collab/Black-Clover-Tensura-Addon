@@ -49,7 +49,7 @@ public final class HeroHud {
         for (String s : slots) if (!s.isEmpty()) rows++;
         int h = PAD + HEADER + BAR + (out ? ROW + rows * ROW : ROW) + (repelled ? ROW : 0) + PAD;
 
-        float scale = HeroClientConfig.scale();
+        float scale = HeroClientConfig.scale() * com.newuniverse.nusmp.client.ui.GuiScale.hud("hero_hud");     // GUI Size: grows from the bottom-left corner of the panel
         g.pose().pushPose();
         g.pose().translate(HeroClientConfig.x(), g.guiHeight() - HeroClientConfig.y(), 0.0);
         g.pose().scale(scale, scale, 1.0f);

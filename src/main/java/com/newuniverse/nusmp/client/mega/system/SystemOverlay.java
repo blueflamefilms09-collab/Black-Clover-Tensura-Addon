@@ -58,7 +58,7 @@ public final class SystemOverlay {
         if (!live && !toasts) return;
         boolean pushed = false;
         try {
-            float scale = SystemClientConfig.scale();
+            float scale = SystemClientConfig.scale() * com.newuniverse.nusmp.client.ui.GuiScale.hud("system_hud");     // GUI Size: the window keeps its place and own size, times the player's GUI size
             g.pose().pushPose();
             pushed = true;
             g.pose().scale(scale, scale, 1.0f);

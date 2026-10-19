@@ -50,7 +50,13 @@ public final class ModBossBarOverlay {
         }
         if (events.isEmpty()) return;                                         // nothing to draw: vanilla's layer has nothing either
         try {
-            draw(event.getGuiGraphics(), mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false));
+            GuiGraphics gg = event.getGuiGraphics();
+            boolean sized = com.newuniverse.nusmp.client.ui.GuiScale.begin(gg, "boss_bar", gg.guiWidth() / 2f, 0f);     // GUI Size: grows from the top centre
+            try {
+                draw(gg, mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false));
+            } finally {
+                if (sized) gg.pose().popPose();
+            }
             event.setCanceled(true);
         } catch (RuntimeException e) {
             failed = true;                                                    // draw nothing of ours again; whatever was half drawn stays for this frame
