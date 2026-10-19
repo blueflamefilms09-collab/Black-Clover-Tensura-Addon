@@ -217,6 +217,10 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.TransmutationLayer());     // 1.93.0 magic rebuild
         register(new com.newuniverse.nusmp.vfx.client.layer.RecombinationLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.ModificationLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.WaterFxLayer());           // 1.93.0: the Water / Dark / Lightning / Flame rebuild
+        register(new com.newuniverse.nusmp.vfx.client.layer.DarkFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.LightningFxLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.FlameFxLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

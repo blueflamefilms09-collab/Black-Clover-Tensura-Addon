@@ -141,5 +141,14 @@ public enum PropKind {
     TRANSMUTATION_1, TRANSMUTATION_2, TRANSMUTATION_3,
     MODIFICATION_1, MODIFICATION_2, MODIFICATION_3,
     MERCURY_3,
-    RECOMBINATION_3, RECOMBINATION_4
+    RECOMBINATION_3, RECOMBINATION_4,
+    /** 1.93.0 (Water / Dark / Lightning / Flame rebuild): the sea dragon and the javelin; the black blade / crescent and the black moon / hole; the thunderbird and the lance; the flame lion and the phoenix (prop.WaterProps ... client.prop.WaterPropPainter ...) */
+    WATER_1,
+    WATER_2,
+    DARK_1,
+    DARK_2,
+    LIGHTNING_1,
+    LIGHTNING_2,
+    FLAME_1,
+    FLAME_2
 }

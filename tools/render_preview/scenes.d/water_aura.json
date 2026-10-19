@@ -1,0 +1,20 @@
+{
+ "water_aura_full": {
+  "kind": "aura", "attr": "Water", "total": 100, "ages": [50],
+  "tile": [520, 640],
+  "views": [{"name": "front", "yaw": 12, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 3.6}, {"name": "back 3/4", "yaw": 160, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 3.6}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.3], "dist": 3.8}]
+ },
+ "water_aura_forge": {
+  "kind": "aura", "attr": "Water", "total": 100, "ages": [2, 6, 10, 16, 22, 84, 92, 98],
+  "tile": [240, 330],
+  "views": [{"name": "front 3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.1], "dist": 3.8}]
+ },
+ "water_aura_slim_crouch": {
+  "kind": "aura", "attr": "Water", "total": 100, "ages": [50], "skin": "alex", "crouch": true, "limbSwingAmount": 0.8, "limbSwing": [1.0],
+  "tile": [380, 520],
+  "views": [{"name": "front 3/4", "yaw": 35, "pitch": 10, "target": [0, 0.9, 0.1], "dist": 3.4}]
+ },
+ "water_piece_view": {
+  "kind": "geo", "model": "water_arm_wing_r", "space": "PLAYER", "layer": "TRANSLUCENT", "glow": "FF5CE6FF", "anim": "idle", "ages": [0, 15], "tile": [300, 420]
+ }
+}

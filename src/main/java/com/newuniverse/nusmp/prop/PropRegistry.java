@@ -74,5 +74,9 @@ final class PropRegistry {
         PermeationProps.init();
         TransmutationProps.init();           // 1.93.0 magic rebuild
         ModificationProps.init();
+        WaterProps.init();                       // 1.93.0: Water / Dark / Lightning / Flame summons
+        DarkProps.init();
+        LightningProps.init();
+        FlameProps.init();
     }
 }

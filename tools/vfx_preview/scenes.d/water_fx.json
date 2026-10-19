@@ -1,0 +1,6 @@
+{
+ "_comment": "Water Magic rebuild (WaterFxLayer): the cast stream, the sea-sigil zone, the burst. Power is the real size.",
+ "water_fx_cast": {"layer": "WaterFxLayer", "shape": "WATERFX_CAST", "from": [0, 1.2, 0], "to": [0, 1.2, 9], "power": 1.0, "duration": 24, "cam": [-4.5, 2.2, 3.5], "target": [0, 1.2, 4.5], "ages": [2, 5, 9, 14, 19, 22], "figures": [[0, 0, -0.6, 1.8]], "sky": [0.3, 0.34, 0.44]},
+ "water_fx_zone": {"layer": "WaterFxLayer", "shape": "WATERFX_ZONE", "from": [0, 0, 6], "to": [0, 1, 6], "power": 4.0, "duration": 80, "cam": [-6.0, 4.0, -1.0], "target": [0, 0.8, 6], "ages": [3, 8, 16, 40, 66, 76], "figures": [[0, 0, 0, 1.8], [3, 0, 6, 1.8]], "sky": [0.3, 0.34, 0.44]},
+ "water_fx_burst": {"layer": "WaterFxLayer", "shape": "WATERFX_BURST", "from": [0, 0, 6], "to": [0, 1, 6], "power": 1.4, "duration": 28, "cam": [-5.0, 2.6, 0.0], "target": [0, 1.0, 6], "ages": [1, 3, 6, 10, 16, 24], "figures": [[0, 0, 0, 1.8]], "sky": [0.3, 0.34, 0.44]}
+}

@@ -288,7 +288,20 @@ public enum VfxShape {
     // 1.93.0 magic rebuild (appended): the own effect triples of Transmutation, Recombination and Modification (Mercury's MERCURY_FX1..3 exist above)
     TRANSMUTATION_FX1, TRANSMUTATION_FX2, TRANSMUTATION_FX3,
     RECOMBINATION_FX1, RECOMBINATION_FX2, RECOMBINATION_FX3,
-    MODIFICATION_FX1, MODIFICATION_FX2, MODIFICATION_FX3;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    MODIFICATION_FX1, MODIFICATION_FX2, MODIFICATION_FX3,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0 (Water / Dark / Lightning / Flame rebuild): CAST = a travelling effect from 'from' to 'to', ZONE = a field at 'from' (power = radius), BURST = an impact at 'from' (client.layer.WaterFxLayer ...)
+    WATERFX_CAST,
+    WATERFX_ZONE,
+    WATERFX_BURST,
+    DARKFX_CAST,
+    DARKFX_ZONE,
+    DARKFX_BURST,
+    LIGHTNINGFX_CAST,
+    LIGHTNINGFX_ZONE,
+    LIGHTNINGFX_BURST,
+    FLAMEFX_CAST,
+    FLAMEFX_ZONE,
+    FLAMEFX_BURST;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

@@ -74,5 +74,9 @@ final class PropPainterRegistry {
         PermeationPropPainter.register();
         TransmutationPropPainter.register(); // 1.93.0 magic rebuild
         ModificationPropPainter.register();
+        WaterPropPainter.register();             // 1.93.0: Water / Dark / Lightning / Flame summons
+        DarkPropPainter.register();
+        LightningPropPainter.register();
+        FlamePropPainter.register();
     }
 }

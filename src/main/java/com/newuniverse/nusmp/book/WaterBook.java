@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
@@ -26,14 +27,21 @@ import java.util.List;
 
 /** Water Magic. Undine spirit. */
 public class WaterBook extends GrimoireBook {
+    // 1.93.0 (the Water rebuild, after Noelle Silva): the six pages that existed keep their ids, order, names and cost tiers and are re-implemented in WaterArts (the sea dragon is a model, the
+    // javelin and the lance are models, the VFX are the new WATERFX_* shapes, every cast puts the Water armour on for 5 s); four pages are appended. The old static spell methods below stay.
     private final List<BookPage> pages = List.of(
-            BookPage.starter("waterball", "Sea Dragon's Waterball", TensuraShots.shot(TensuraShots.Shot.WATER_BALL, 9, 1.4f, 1.2f, 0)),
-            BookPage.signature("roar", "Sea Dragon's Roar", WaterBook::roar),
-            BookPage.zone("cradle", "Sea Dragon's Cradle", WaterBook::cradle),
+            WaterArmour.wrap(BookPage.starter("waterball", "Sea Dragon's Waterball", TensuraShots.shot(TensuraShots.Shot.WATER_BALL, 9, 1.4f, 1.2f, 0)), Aura.WATER),
+            WaterArmour.wrap(BookPage.signature("roar", "Sea Dragon's Roar", WaterArts::roar), Aura.WATER),
+            WaterArmour.wrap(BookPage.zone("cradle", "Sea Dragon's Cradle", WaterArts::cradle), Aura.WATER),
             // 0.31: wiki spells, appended
-            BookPage.mid("aqua_javelin", "Aqua Javelin", WaterBook::aquaJavelin),
-            BookPage.zone("sea_dragons_nest", "Sea Dragon's Nest", WaterBook::nest).withCooldown(600),
-            BookPage.signature("valkyrie_dress", "Valkyrie Dress", WaterBook::valkyrieDress).withCooldown(1200));
+            WaterArmour.wrap(BookPage.mid("aqua_javelin", "Aqua Javelin", WaterArts::aquaJavelin), Aura.WATER),
+            WaterArmour.wrap(BookPage.zone("sea_dragons_nest", "Sea Dragon's Nest", WaterArts::nest).withCooldown(600), Aura.WATER),
+            BookPage.signature("valkyrie_dress", "Valkyrie Dress", WaterArts::valkyrieDress).withCooldown(1200),
+            // 1.93.0: appended
+            WaterArmour.wrap(BookPage.signature("sea_dragons_wrath", "Sea Dragon's Wrath", WaterArts::wrath).withCooldown(900), Aura.WATER),
+            WaterArmour.wrap(BookPage.mid("tide_lance", "Valkyrie Tide Lance", WaterArts::tideLance).withCooldown(300), Aura.WATER),
+            BookPage.mid("scale_mail", "Sea Dragon's Scale Mail", WaterArts::scaleMail).withCooldown(900),
+            WaterArmour.wrap(BookPage.zone("torrent", "Sea Dragon's Torrent", WaterArts::torrent).withCooldown(400), Aura.WATER));
 
     public WaterBook() { super(MagicType.WATER, 0xFF4FA8FF); }
     @Override protected List<BookPage> familyPages() { return pages; }

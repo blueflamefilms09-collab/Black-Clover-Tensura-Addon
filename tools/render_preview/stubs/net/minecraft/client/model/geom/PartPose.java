@@ -1,9 +1,11 @@
 package net.minecraft.client.model.geom;
 
-/** Preview stub of PartPose: the pivot position and rotation of a model part. Like the real 1.21.1 class its fields are public (aura painters read rest.x / .y / .z). */
-public class PartPose {
+/**
+ * Preview stub of PartPose: the pivot position and rotation of a model part. Like the game's class it has PUBLIC FIELDS (x, y, z, xRot, yRot, zRot);
+ * the accessor methods x() ... are kept for the stubs that were written against the record form.
+ */
+public final class PartPose {
     public static final PartPose ZERO = offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-
     public final float x, y, z, xRot, yRot, zRot;
 
     private PartPose(float x, float y, float z, float xRot, float yRot, float zRot) {

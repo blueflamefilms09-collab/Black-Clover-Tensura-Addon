@@ -78,5 +78,10 @@ public enum Aura {
     /** 1.93.0 magic rebuild: the temporary armours of Transmutation, Recombination and Modification (Mercury uses MERCURY above) */
     TRANSMUTATION,
     RECOMBINATION,
-    MODIFICATION
+    MODIFICATION,
+    /** 1.93.0: the rebuilt temporary armours of Water, Dark, Lightning and Flame Magic (client.aura.WaterAura / DarkAura / LightningAura / FlameAura, pieces forged by EquipAnimation) */
+    WATER,
+    DARK,
+    LIGHTNING,
+    FLAME
 }

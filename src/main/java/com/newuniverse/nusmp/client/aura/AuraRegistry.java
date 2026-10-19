@@ -73,5 +73,9 @@ final class AuraRegistry {
         TransmutationAura.register();        // 1.93.0 magic rebuild
         RecombinationAura.register();
         ModificationAura.register();
+        WaterAura.register();                // 1.93.0: the Water / Dark / Lightning / Flame armours
+        DarkAura.register();
+        LightningAura.register();
+        FlameAura.register();
     }
 }

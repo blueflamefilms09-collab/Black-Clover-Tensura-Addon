@@ -1,0 +1,55 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "fly": {
+   "loop": true,
+   "animation_length": 0.7,
+   "bones": {
+    "rings": {
+     "rotation": {
+      "0.00": [
+       0,
+       0,
+       0
+      ],
+      "0.35": [
+       0,
+       0,
+       180
+      ],
+      "0.70": [
+       0,
+       0,
+       360
+      ]
+     }
+    }
+   }
+  },
+  "idle": {
+   "loop": true,
+   "animation_length": 1.4,
+   "bones": {
+    "rings": {
+     "rotation": {
+      "0.00": [
+       0,
+       0,
+       0
+      ],
+      "0.70": [
+       0,
+       0,
+       180
+      ],
+      "1.40": [
+       0,
+       0,
+       360
+      ]
+     }
+    }
+   }
+  }
+ }
+}

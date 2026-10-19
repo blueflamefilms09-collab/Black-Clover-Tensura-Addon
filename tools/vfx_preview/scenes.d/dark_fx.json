@@ -1,0 +1,6 @@
+{
+ "_comment": "Dark Magic rebuild (DarkFxLayer): the cut, the black hole zone, the black moon burst. Power is the real size.",
+ "dark_fx_cast": {"layer": "DarkFxLayer", "shape": "DARKFX_CAST", "from": [0, 1.2, 0], "to": [0, 1.2, 9], "power": 1.0, "duration": 20, "cam": [-4.5, 2.2, 3.5], "target": [0, 1.2, 4.5], "ages": [2, 5, 8, 11, 15, 18], "figures": [[0, 0, -0.6, 1.8]], "sky": [0.5, 0.55, 0.66]},
+ "dark_fx_zone": {"layer": "DarkFxLayer", "shape": "DARKFX_ZONE", "from": [0, 0, 6], "to": [0, 1, 6], "power": 4.0, "duration": 80, "cam": [-6.0, 4.0, -1.0], "target": [0, 0.8, 6], "ages": [3, 8, 16, 40, 66, 76], "figures": [[0, 0, 0, 1.8], [3, 0, 6, 1.8]], "sky": [0.5, 0.55, 0.66]},
+ "dark_fx_burst": {"layer": "DarkFxLayer", "shape": "DARKFX_BURST", "from": [0, 0, 6], "to": [0, 1, 6], "power": 1.4, "duration": 30, "cam": [-5.0, 2.6, 0.0], "target": [0, 1.4, 6], "ages": [1, 4, 8, 14, 20, 27], "figures": [[0, 0, 0, 1.8]], "sky": [0.5, 0.55, 0.66]}
+}
