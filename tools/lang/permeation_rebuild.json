@@ -1,0 +1,7 @@
+{
+  "nusmp.page.book_permeation.phase_step": "Phase Step - for 3 s you are out of step with the world: blows and shots pass through you (a spell takes half), you run faster, and a phase echo of you stays where you were.",
+  "nusmp.page.book_permeation.phase_through": "Phase Through - step through the wall in front of you (up to 3 blocks away) to the first free space behind it within 8 blocks, through two phase doors. It fails when there is no wall or no room on the other side.",
+  "nusmp.page.book_permeation.permeating_strike": "Permeating Strike - a blow that goes through armour and barriers: 15 x EP scale, 90 percent of the armour ignored, the barriers within 3 blocks cut down.",
+  "nusmp.page.book_permeation.ghost_zone": "Ghost Zone - for 8 s everything within 5 blocks (scaled by the grimoire) is outside the world's rules: you and your allies take 40 percent less from everything, foes there are slowed.",
+  "nusmp.page.book_permeation.attribute_guard": "A guard of Permeation: the magic wraps you in the Phase Shroud, a see-through set of rings and lattice, and grants its protective effect for a few seconds."
+}

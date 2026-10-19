@@ -54,5 +54,6 @@ final class PropPainterRegistry {
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
         SpatialPropPainter.register();       // 1.93.0 magic rebuild
         MirrorPropPainter.register();
+        PermeationPropPainter.register();
     }
 }

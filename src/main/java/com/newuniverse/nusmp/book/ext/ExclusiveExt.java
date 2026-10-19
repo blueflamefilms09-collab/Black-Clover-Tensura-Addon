@@ -18,6 +18,7 @@ public final class ExclusiveExt {
             case SOUL -> SoulExt.pages();
             case SOUL_CORPSE -> SoulCorpseExt.pages();
             case SONG -> SongExt.pages();
+            case PERMEATION -> PermeationExt.pages();            // 1.93.0 magic rebuild
             default -> List.of();
         };
     }

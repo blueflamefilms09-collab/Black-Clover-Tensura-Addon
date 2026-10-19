@@ -1,0 +1,14 @@
+{
+ "permeation_aura_armour": {
+  "kind": "aura", "attr": "Permeation", "aura": "PERMEATION",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "total": 100, "style": 0, "ages": [4, 9, 16, 40, 76, 90], "tile": [260, 380],
+  "views": [{"name": "front 3/4", "yaw": 28, "pitch": 10}, {"name": "back 3/4", "yaw": 205, "pitch": 12}]
+ },
+ "permeation_aura_detail": {
+  "kind": "aura", "attr": "Permeation", "aura": "PERMEATION",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "total": 100, "style": 1, "skin": "alex", "ages": [40], "limbSwing": 1.2, "limbSwingAmount": 0.7, "tile": [560, 780],
+  "views": [{"name": "front", "yaw": 15, "pitch": 8}, {"name": "side", "yaw": 90, "pitch": 6}, {"name": "back", "yaw": 195, "pitch": 10}]
+ }
+}

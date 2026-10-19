@@ -1,0 +1,10 @@
+{
+ "permeation_echo_idle": {
+  "kind": "geo", "model": "permeation_echo", "anim": "idle", "glow": "FFDFFBFF", "ages": [0, 20], "tile": [360, 440],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 10, "target": [0, 1.0, 0], "dist": 5.5}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0], "dist": 5.5}]
+ },
+ "permeation_door_idle": {
+  "kind": "geo", "model": "permeation_door", "anim": "idle", "glow": "FFDFFBFF", "ages": [0, 20], "tile": [360, 440],
+  "views": [{"name": "front", "yaw": 10, "pitch": 6, "target": [0, 1.5, 0], "dist": 6.0}, {"name": "side 3/4", "yaw": 58, "pitch": 12, "target": [0, 1.5, 0], "dist": 6.0}]
+ }
+}
