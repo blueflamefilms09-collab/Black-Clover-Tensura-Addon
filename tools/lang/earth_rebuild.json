@@ -1,0 +1,6 @@
+{
+ "nusmp.skill.book_earth.description": "A heavy grimoire that smells of rain on stone. It raises spikes and walls, splits the ground beneath your enemies, wakes a Clay Guardian, swallows a foe in a sinkhole and forges the Gnome Plate over you - and Gnome stirs for those an Earth Spirit Lord has claimed. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_earth.earth_golem": "A Clay Guardian - a colossus of mud and grass - rises at your side for about twenty-five seconds. It slams the nearest foe with both fists, lifting and slowing everything near the blow.",
+ "nusmp.page.book_earth.earth_armor": "The Gnome Plate: packed soil with grass and roots forges over your body piece by piece for ten seconds, with Resistance, thorns and a share of your aura spent; a seed-core turns behind you in rings of clods. It shatters out when it ends.",
+ "nusmp.page.book_earth.sinkhole": "Swallowing Ground - the earth opens under your target and everything round it: they are crushed and held fast, then the ground closes again with a second blow (hard control, shared lock; bosses are held for less)."
+}

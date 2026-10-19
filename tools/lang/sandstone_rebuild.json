@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_sandstone.description": "The grimoire of Sandstone Magic: layered stone that turns to sand and sets hard again. Its pages throw grit that blinds, raise slabs, hold a foe inside the Variable Hardness Prison and forge the Dune Plate over you. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_sandstone.attribute_bolt": "A bolt of packed sand: it bursts on the first foe or wall, throws everything near it back a step and fills its eyes with grit.",
+ "nusmp.page.book_sandstone.attribute_cut": "Slabs of sandstone break the ground one after another along your line of sight; each hits and slows what stands on it.",
+ "nusmp.page.book_sandstone.attribute_field": "A field of shifting sand laid at the aimed point: it hurts everything inside every moment, drags at its feet and stings its eyes.",
+ "nusmp.page.book_sandstone.attribute_domain": "A sandstorm round you: a great burst that throws back, blinds and hurts everything near, and forges the Dune Plate for a few seconds.",
+ "nusmp.page.book_sandstone.attribute_guard": "The Dune Plate: stacked slabs of sandstone forge over your body piece by piece for nine seconds, with Resistance, thorns and a share of your aura spent. They shatter out when it ends.",
+ "nusmp.page.book_sandstone.sandstone_prison": "Variable Hardness Prison - a large block of sandstone leaves the grimoire, dissolves into sand and reforms around the target, then hardens and leaves it to suffocate: it is held inside and crushed for a few seconds. Hard control (shared lock; bosses are held for less).",
+ "nusmp.page.book_sandstone.sandstone_slabs": "A wall of sandstone slabs, five wide and three high, raised in front of you for eight seconds.",
+ "nusmp.page.book_sandstone.sandstone_sphinx": "A guardian of layered sandstone, a sphinx, rises at your side for about twenty-five seconds: it pounces on the nearest foe from several blocks away and claws sand into its eyes."
+}

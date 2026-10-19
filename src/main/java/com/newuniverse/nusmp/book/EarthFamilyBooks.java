@@ -53,7 +53,7 @@ public final class EarthFamilyBooks {
                     mid("attribute_cut", n + " Manifestation", eruption(8, 11f, 0.6, 1.3, knock(0.3))),
                     zone("attribute_field", n + " Field", field(6, 5, 80, 14, true, all(slow(40, 1), knock(0.25)))),
                     signature("attribute_domain", n + " Domain", nova(17, 7, false, 12, all(knock(1.0), weaken(80, 1)), true)).withCooldown(900),
-                    mid("attribute_guard", n + " Guard", guard(180, 2, 4f, 0.06)),
+                    mid("attribute_guard", n + " Guard", guard(180, 1, 4f, 0.06)),
                     signature("boulder_titan", "Boulder Titan", EarthFamilyArts::titan).withCooldown(900),
                     mid("boulder_barrage", "Boulder Barrage", thrown(EarthConstruct.BOULDER, 3, 34, 1.35, 0.75f, 50)));
             case RED_OCHRE -> List.of(
@@ -69,7 +69,7 @@ public final class EarthFamilyBooks {
                     mid("attribute_cut", n + " Manifestation", eruption(8, 10f, 0.4, 1.3, slow(40, 1))),
                     zone("attribute_field", n + " Field", field(5, 4.5, 80, 16, true, slow(40, 2))),
                     signature("attribute_domain", n + " Domain", (b, i, p, m) -> nova(16, 6.5, false, 12, BalanceLaw.beginControl(p) ? all(knock(1.0), jam(60)) : knock(1.0), true).cast(b, i, p, m)).withCooldown(900),   // the dressed stone seals casting (Magic Jamming) when the control lock is free
-                    mid("attribute_guard", n + " Guard", guard(180, 2, 3f, 0.06)),
+                    mid("attribute_guard", n + " Guard", guard(180, 1, 3f, 0.06)),
                     mid("stone_sentinel", "Stone Sentinel", guardian(EarthConstruct.SENTINEL, 500, 1)),
                     mid("stone_wall", "Stone Wall", wall(Blocks.STONE_BRICKS.defaultBlockState(), 6, 4, 200)));
             default -> List.of(                                                                           // MINERAL

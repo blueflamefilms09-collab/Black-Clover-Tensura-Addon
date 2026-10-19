@@ -1,0 +1,10 @@
+{
+ "nusmp.skill.book_mineral.description": "The grimoire of Mineral Magic: ore and crystal grown out of the rock. Its pages throw crystal lances that pierce, grow spires and a crystal garden, resonate and drain a foe's magicules and forge the crystal armour over you. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_mineral.attribute_bolt": "Mineral Bolt - a lance of crystal flies along your line of sight, piercing every foe on its line once and slowing them, and bursts where it ends.",
+ "nusmp.page.book_mineral.attribute_cut": "A row of crystal erupts along your line of sight, cutting everything it crosses.",
+ "nusmp.page.book_mineral.attribute_field": "A crystal garden: three spires grow round the aimed point for about ten seconds, each pulsing shards that hurt and slow everything near it.",
+ "nusmp.page.book_mineral.attribute_domain": "A resonance round you: a great burst of crystal that hurts everything near and, when the control lock is free, drains a share of each foe's magicules into yours (Energy Drain). Forges the crystal armour for a few seconds.",
+ "nusmp.page.book_mineral.attribute_guard": "Crystal armour: ore matrix with crystal clusters forges over your body piece by piece for nine seconds, with Resistance, thorns and a share of your aura spent; a fan of crystal opens behind you. It shatters out when it ends.",
+ "nusmp.page.book_mineral.mineral_spire": "A crystal spire grows where you aim (two at most): it pulses shards every moment, hurting and slowing everything close. It stands solid and can be broken.",
+ "nusmp.page.book_mineral.lance_volley": "Five crystal lances thrown in a fan; each pierces the foes on its line."
+}
