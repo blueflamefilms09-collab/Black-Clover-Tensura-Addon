@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.93.0] — The magic rebuild (41 magics), the custom (merged) magic removed, 24 new Djinn, an animated Djinn panel, the vessel-overlay fix
+
+Owner brief: "remove the custom magic, rebuild the magics (list), based on the Black Clover anime: custom summon models, models, render layer temp armor (the same equip animation the Djinn full equip has), vfx and mechanics; buff Djinn, add 24 custom Djinn, make the active Djinn GUI look different per Djinn and animated; fix the weapon-as-vessel bug". Per-magic detail, with its own NEW / REPLACED / KEPT table: `docs/attributes/<key>_rebuild.md`; shared brief: `docs/rebuild/magic_rebuild_brief.md`.
+
+### NEW
+- **Shared equip animation** (`client/aura/EquipAnimation`): the Djinn full-equip assembly (pieces anchored on their model part, staggered 0 to 12 ticks, flying in from their own side, fading and growing 85 to 100 percent over 8 ticks, shattering over the last 18) as one helper. Every rebuilt armour below uses it.
+- **41 rebuilt magics**, each with: a real set of temporary-armour pieces (geo models with an emissive glow pass, slim-arm fit, first-person head hiding, level of detail), custom summon / construct models with animation (drawn through the prop system, no new entity types), three new VFX effects (`<NAME>_FX1..3`, or the family's own shapes) with generated sprites, canon-style mechanics through the balance law and the control gate, appended pages and self-tests:
+  - Earth family: Sandstone, Rock, Red Ochre, Stone, Earth, Mineral (one armour kit, nine constructs, e.g. the Variable Hardness Prison cage).
+  - Metal / body: Shakudo, Scale, Spike, Nail, Hair (golem, serpent, spike pillar, nail bolt, hair cocoon ...).
+  - Nature: Tree, Vine, Plant, Poison Plant, Mud, Mucus (13 constructs).
+  - Sound / soul: Song, Sound, Soul, Soul Corpse, Memory.
+  - Air / weather: Smoke, Snow, Wing, Vortex, Air, Ash.
+  - Space / force: Spatial, Gravity, Permeation, Mirror (the Real Doubles wear the glass garb too), Slash.
+  - Elements: Water (Valkyrie Dress, Sea Dragon), Dark, Lightning (Raging Lightning, thunderbird), Flame (Crimson Lion, phoenix).
+  - Transformation: Transmutation, Recombination (the Black Bull), Modification, Mercury (Silver Eagle).
+- **24 new Djinn** (36 in all, appended after Vassago): Bael, Agares, Valefor, Barbatos, Gusion, Vepar, Shax, Buer, Andrealphus, Kimaris, Amdusias, Belial, Decarabia, Seere, Dantalion, Andromalius, Glasya-Labolas, Haagenti, Crocell, Furcas, Balam, Alloces, Camio, Murmur. Each has its own Half Equip special, Extreme Magic (five new shapes: rain, cone, quake, cross, implode), full-equip pieces (light and dark), seal, two weapons (light and dark twin, 48 new acts) with Tensura engravings, particles. `docs/djinn_roster_36.md`, `docs/djinn_roster_36_art.md`.
+- **Animated active-Djinn panel** (`client/relics/djinn/gui`): themed per affinity and per Djinn (frame, palette, medallion built from the Djinn's look, phase reveal, full-equip state, summon intro), data-driven so every Djinn gets one. Config `nusmp-djinn-gui-client.toml` (`style`, `anchor`). `docs/djinn_gui.md`.
+
+### REPLACED
+- The armour, effects and spell code of the 41 listed magics (the owner asked for the remake). Page ids, order and mastery bits are kept; new pages are appended after the family pages, which moves the universal pages (Devil Union, Summon Grimoire ...) up. The generic page texts in `en_us.json` were replaced by the fragments' texts.
+- The merge generator ("custom magic": two attributes with no magic of their own used to be fused into one generated grimoire) is removed: two attributes now stay two separate grimoire skills. The 64 skill ids `nusmp:merged_00..63` stay registered as inert placeholders (old worlds load) and are forgotten at login.
+- Djinn: the 12 existing Djinn are buffed (Half Equip share and cap up, effects about 1.5 times longer, Extreme Magic +1 to 2 reach and +12 to 15 percent damage, weapon acts stronger); the old bar of the active panel stays as the `CLASSIC` style.
+
+### FIXED
+- Djinn weapon over a weapon vessel: the Djinn weapon displaced the vessel to another slot, the Equip lost its vessel and ended. The weapon now overlays the vessel in place; the vessel is kept whole (enchantments, components) and comes back exactly on end, death, logout, dimension change and creative (`VesselOverlay`, `WeaponLoan`).
+
+### KEPT
+- Time Magic and its VFX, every other magic, all older Djinn art, the classic Djinn bar.
+
+### Honest notes
+- Nothing has been run in the game. The Black Clover wiki was unreachable for every builder, so canon comes from the repo's wiki copies and memory; only some spells are 1:1 canon and each doc says which. All visuals are checked only in the software previews, and the heavy armours (6000 to 12000 vertices with glow passes) may need trimming.
+
 ## [1.92.0] — Unique Skill Lines in Tensura's own Ability Selection menu
 
 Owner brief (the two Gemini specs): the Skill Tree must live inside the base Tensura mod's "Ability Selection" menu, not only in a screen of its own. Details and the WHY of every choice: `docs/skilltree/tensura_menu.md`.
