@@ -51,7 +51,12 @@ public enum MarkerKind {
      * player has room). Walking onto the pad takes the player to the linked floor; which floor is decided by the generator from the sector (the stairwell
      * template does not know whether it is the arrival or the forward one). args: dir = {@code up} when the stairs climb, {@code down} when they drop.
      */
-    STAIR_EXIT;
+    STAIR_EXIT,
+    /**
+     * 1.94.0: the middle of a puzzle room, in the standing cell where the puzzle should be laid out (the puzzle rooms, {@code labyrinth/mega/puzzle}). A room whose template carries one always
+     * holds a puzzle of the new kind; args: {@code type} = a puzzle id to force (any when absent, chosen by the weights file). Appended last, as every enum entry of the contract is.
+     */
+    PUZZLE;
 
     /** The id as written after {@code nusmp:} in a metadata string ({@code guardian_spawn}). */
     public String id() { return name().toLowerCase(Locale.ROOT); }

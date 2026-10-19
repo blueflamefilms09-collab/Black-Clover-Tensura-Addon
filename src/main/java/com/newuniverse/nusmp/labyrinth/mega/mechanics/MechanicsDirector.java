@@ -158,6 +158,7 @@ public final class MechanicsDirector {
                 if (ACTIVE.containsKey(k) || data.isSolved(k)) continue;
                 if (slot.roomId() >= 0 && (here == null || here.id != slot.roomId())) continue;
                 if (slot.def().scope() == Scope.BOSS && s.state != Sector.State.ACTIVE) continue;
+                if (slot.roomId() >= 0 && slot.def().category() == MechCategory.PUZZLE && com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleDirector.claims(s, slot.roomId())) continue;   // 1.94.0: the room holds one of the new puzzles instead
                 try {
                     Instance in = build(level, s, slot, here, p, k);
                     if (in != null) start(in);

@@ -35,6 +35,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryRegistry.init(modBus);   // the Mob Foundry: 400 custom dungeon mobs, one entity type (docs/labyrinth/foundry.md)
         com.newuniverse.nusmp.labyrinth.mega.system.FloorInfoRegistry.init(modBus);  // 1.94.0: the System's floor report (theme, mechanics, depth) on every arrival, /dungeon floor
         com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.init(modBus);         // 1.94.0: the escape rules (timers, release rune, /dungeon unstuck) so nobody is locked in a room
+        com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.init(modBus);     // 1.94.0 the puzzle rooms: 29 server-authoritative puzzles chosen by theme and depth (docs/labyrinth/puzzles_v2.md)
         var bus = NeoForge.EVENT_BUS;
         com.newuniverse.nusmp.labyrinth.mega.gen.MegaGenRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
@@ -57,5 +58,6 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.system.FloorInfoRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.register(bus);
     }
 }
