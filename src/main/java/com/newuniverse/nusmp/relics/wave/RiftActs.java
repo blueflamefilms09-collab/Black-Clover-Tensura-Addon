@@ -42,7 +42,7 @@ public final class RiftActs {
         ServerPlayer p = c.player();
         BlockPos best = null;
         double bd = 96.0 * 96.0;
-        for (BlockPos r : RiftService.openRifts()) {
+        for (BlockPos r : RiftService.openRifts(p.level())) {              // 1.94.0: the rifts of the player's own dimension (the Hub's portals share coordinates with the floors)
             double d = r.distSqr(p.blockPosition());
             if (d < bd) {
                 bd = d;

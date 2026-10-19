@@ -57,6 +57,9 @@ public final class SystemText {
     public static final String TOAST_REWARD_RECHARGE = put("toast.reward_recharge", "REWARD: SHADOW CORE RECHARGED");
     public static final String TOAST_FLOOR_REACHED = put("toast.floor_reached", "FLOOR %1$s REACHED");
     public static final String TOAST_EXTRACTION_READY = put("toast.extraction_ready", "EXTRACTION READY");
+    /** 1.94.0: a dimensional rift opened near the player / the vault of a hidden realm was opened (the pop-ups of the rifts, labyrinth/mega/rift). */
+    public static final String TOAST_RIFT_NEAR = put("toast.rift_near", "A RIFT HAS OPENED NEARBY");
+    public static final String TOAST_RIFT_CLEARED = put("toast.rift_cleared", "HIDDEN REALM CLEARED: THE VAULT IS OPEN");
     public static final String TOAST_EXTRACTED = put("toast.extracted", "SHADOW EXTRACTED: %1$s");
     public static final String TOAST_CORE_SPENT = put("toast.core_spent", "THE SHADOW CORE CRUMBLES");
     public static final String TOAST_MINION_LOST = put("toast.minion_lost", "A SHADOW HAS FALLEN: %1$s");
