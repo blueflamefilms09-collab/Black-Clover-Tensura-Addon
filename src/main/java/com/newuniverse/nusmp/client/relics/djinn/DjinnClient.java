@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import com.newuniverse.nusmp.relics.djinn.DjinnComponents;
 import com.newuniverse.nusmp.relics.djinn.VesselAccess;
+import com.newuniverse.nusmp.client.relics.djinn.gui.DjinnGui;
+import com.newuniverse.nusmp.client.relics.djinn.gui.DjinnGuiConfig;
 import net.minecraft.ChatFormatting;
 import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
@@ -20,6 +22,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -36,6 +41,7 @@ public final class DjinnClient {
     private DjinnClient() {}
 
     public static void init(IEventBus modBus) {
+        registerGuiConfig();
         DjinnWeaponClient.init(modBus);                                                  // 1.34.0: the 24 temporary Djinn weapons drawn in 3D
         modBus.addListener(DjinnKeys::register);
         modBus.addListener(DjinnClient::addLayers);
@@ -48,7 +54,17 @@ public final class DjinnClient {
         NeoForge.EVENT_BUS.addListener(DjinnFirstPerson::onRenderArm);
         NeoForge.EVENT_BUS.addListener(DjinnFirstPerson::onRenderHand);
         NeoForge.EVENT_BUS.addListener(DjinnClient::onTooltip);
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { DjinnClientState.clear(); DjinnAmbient.clear(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { DjinnClientState.clear(); DjinnAmbient.clear(); DjinnGui.clear(); });
+    }
+
+    /** The client options of the active Djinn panel (style NEW or CLASSIC, anchor): nusmp-djinn-gui-client.toml. */
+    private static void registerGuiConfig() {
+        try {
+            ModContainer container = ModLoadingContext.get().getActiveContainer();
+            if (container != null) container.registerConfig(ModConfig.Type.CLIENT, DjinnGuiConfig.SPEC, "nusmp-djinn-gui-client.toml");
+        } catch (RuntimeException | LinkageError e) {
+            // the options are a convenience: the panel falls back to its defaults (style NEW, bottom centre)
+        }
     }
 
     private static void addLayers(EntityRenderersEvent.AddLayers event) {

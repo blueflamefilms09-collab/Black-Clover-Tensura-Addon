@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.client.relics.djinn;
 
 import com.newuniverse.nusmp.client.relics.djinn.DjinnClientState.Snap;
+import com.newuniverse.nusmp.client.relics.djinn.gui.DjinnGui;
+import com.newuniverse.nusmp.client.relics.djinn.gui.DjinnGuiConfig;
+import com.newuniverse.nusmp.client.relics.djinn.gui.GuiStyle;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import com.newuniverse.nusmp.relics.djinn.DjinnPhaseRules;
 import net.minecraft.client.DeltaTracker;
@@ -29,7 +32,7 @@ public final class DjinnScreenFx {
         if (mc.player == null || mc.options.hideGui || mc.level == null) return;
         Snap s = DjinnClientState.local();
         Djinn d = s.djinn();
-        if (d == null) return;
+        if (d == null) { DjinnGui.hide(); return; }
         long gt = mc.level.getGameTime();
         float partial = delta.getGameTimeDeltaPartialTick(false);
         float now = gt + partial;
@@ -52,9 +55,19 @@ public final class DjinnScreenFx {
             }
         }
         if (pulse > 0.01f) g.fill(0, 0, w, h, ((int) (110 * pulse) << 24) | 0xFFFFFF);
-        // ---- the bar
+        // ---- the panel: the themed, animated one (client config style NEW, the default), or the classic bar below (style CLASSIC)
         boolean show = s.phase() > 0 || s.lockNow(gt) > 0 || s.cooldownNow(gt) > 0 || now - s.since() < 60;
-        if (!show) return;
+        if (!show) { DjinnGui.hide(); return; }
+        if (DjinnGuiConfig.style() == GuiStyle.NEW) { DjinnGui.render(g, mc, s, d, gt, partial); return; }
+        DjinnGui.hide();
+        classicBar(g, mc, s, d, gt, now);
+    }
+
+    /** The original small bar above the hotbar, kept unchanged as the CLASSIC style: four phase pips, Magoi, assimilation, trust and the timers as text. */
+    private static void classicBar(GuiGraphics g, Minecraft mc, Snap s, Djinn d, long gt, float now) {
+        int w = g.guiWidth(), h = g.guiHeight();
+        int rgb = d.glow() & 0xFFFFFF;
+        boolean dark = s.dark();
         int bw = 118, x = w / 2 - bw / 2, y = h - 66;
         g.fill(x - 3, y - 12, x + bw + 3, y + 21, 0x99080810);
         g.fill(x - 3, y - 12, x + bw + 3, y - 11, 0xFF000000 | (dark ? DjinnLook.GOLD : d.color() & 0xFFFFFF));
