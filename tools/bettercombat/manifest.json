@@ -26,6 +26,11 @@
       "profile": "longsword",
       "source": "table"
     },
+    "blackrazor": {
+      "class": "greatsword",
+      "profile": "greatsword",
+      "source": "relic"
+    },
     "bloodbound_katana": {
       "class": "katana",
       "profile": "katana",
@@ -56,6 +61,16 @@
       "profile": "shortsword",
       "source": "relic"
     },
+    "calamity_scythe": {
+      "class": "scythe",
+      "profile": "scythe",
+      "source": "relic"
+    },
+    "cardinal_halo_chakram": {
+      "class": "handaxe",
+      "profile": "handaxe",
+      "source": "relic"
+    },
     "catstaff": {
       "class": "staff",
       "profile": "staff",
@@ -74,6 +89,11 @@
     "corpse_eater": {
       "class": "katana",
       "profile": "katana",
+      "source": "relic"
+    },
+    "crimson_lions_flame_lance": {
+      "class": "spear",
+      "profile": "spear",
       "source": "relic"
     },
     "cyclone_rapier": {
@@ -321,6 +341,16 @@
       "profile": "hammer",
       "source": "item"
     },
+    "dragon_force_twin_fangs": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
+    "dragon_slayer": {
+      "class": "greatsword",
+      "profile": "greatsword",
+      "source": "relic"
+    },
     "dragon_tooth_blade_red": {
       "class": "katana",
       "profile": "katana",
@@ -376,6 +406,16 @@
       "profile": "rapier",
       "source": "relic"
     },
+    "fairy_glitter_gauntlets": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
+    "fairy_heart_gauntlets": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
     "flame_empress_blade": {
       "class": "longsword",
       "profile": "longsword",
@@ -386,9 +426,19 @@
       "profile": "longsword",
       "source": "relic"
     },
+    "frostbrand": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
     "frostfang": {
       "class": "battleaxe",
       "profile": "battleaxe",
+      "source": "relic"
+    },
+    "gae_bolg_heartseeker": {
+      "class": "spear",
+      "profile": "spear",
       "source": "relic"
     },
     "giant_jawblade": {
@@ -396,9 +446,29 @@
       "profile": "greatsword",
       "source": "relic"
     },
+    "gungnir_the_unerring": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "relic"
+    },
+    "hammer_of_thunderbolts": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "heart_of_the_flame": {
       "class": "greatsword",
       "profile": "greatsword",
+      "source": "relic"
+    },
+    "hellblaze_the_demon_sin": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
+    "holy_avenger": {
+      "class": "longsword",
+      "profile": "longsword",
       "source": "relic"
     },
     "humbling_longsword": {
@@ -441,6 +511,11 @@
       "profile": "greatsword",
       "source": "relic"
     },
+    "kusanagi_the_grass_cutter": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
+    },
     "last_word": {
       "class": "shortsword",
       "profile": "shortsword",
@@ -459,6 +534,11 @@
     "leviathan_axe": {
       "class": "handaxe",
       "profile": "handaxe",
+      "source": "relic"
+    },
+    "leviathans_crown_trident": {
+      "class": "trident",
+      "profile": "trident",
       "source": "relic"
     },
     "lich_wand": {
@@ -491,10 +571,20 @@
       "profile": "longsword",
       "source": "relic"
     },
+    "luck_blade": {
+      "class": "shortsword",
+      "profile": "shortsword",
+      "source": "relic"
+    },
     "magebane_longsword": {
       "class": "longsword",
       "profile": "longsword",
       "source": "item"
+    },
+    "magic_emperors_black_halberd": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
     },
     "magic_tool_spear": {
       "class": "spear",
@@ -516,6 +606,11 @@
       "profile": "katana",
       "source": "item"
     },
+    "minotaur_kings_labrys": {
+      "class": "battleaxe",
+      "profile": "battleaxe",
+      "source": "relic"
+    },
     "mjolnir": {
       "class": "hammer",
       "profile": "hammer",
@@ -530,6 +625,11 @@
       "class": "longsword",
       "profile": "longsword",
       "source": "table"
+    },
+    "noon_cleaver": {
+      "class": "greataxe",
+      "profile": "greataxe",
+      "source": "relic"
     },
     "null_blade": {
       "class": "greatsword",
@@ -569,6 +669,11 @@
     "primal_chaos": {
       "class": "rapier",
       "profile": "rapier",
+      "source": "relic"
+    },
+    "primordial_hearth_blade": {
+      "class": "dagger",
+      "profile": "dagger",
       "source": "relic"
     },
     "prism_blade": {
@@ -706,6 +811,21 @@
       "profile": "staff",
       "source": "relic"
     },
+    "staff_of_the_magi": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "starlight_whip": {
+      "class": "whip",
+      "profile": "whip",
+      "source": "relic"
+    },
+    "starsplitter_hammer": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "stegosaurus_greatsword": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -721,6 +841,11 @@
       "profile": "glaive",
       "source": "relic"
     },
+    "sunsword": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
     "superlunary_staff": {
       "class": "staff",
       "profile": "staff",
@@ -729,6 +854,11 @@
     "sword_crystal": {
       "class": "shortsword",
       "profile": "shortsword",
+      "source": "relic"
+    },
+    "sword_of_the_first_dawn": {
+      "class": "longsword",
+      "profile": "longsword",
       "source": "relic"
     },
     "the_bifrost": {
@@ -775,6 +905,11 @@
       "class": "greatsword",
       "profile": "greatsword",
       "source": "item"
+    },
+    "tidebreaker_chakram": {
+      "class": "handaxe",
+      "profile": "handaxe",
+      "source": "relic"
     },
     "time_bender_dadao": {
       "class": "dadao",
@@ -886,6 +1021,16 @@
       "profile": "coilwhip",
       "source": "relic"
     },
+    "void_origin_katana": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
+    },
+    "vorpal_sword": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
     "wand_o_wisp": {
       "class": "wand",
       "profile": "wand",
@@ -897,6 +1042,11 @@
       "source": "relic"
     },
     "wand_of_spider_summoning": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
+    "wand_of_the_wisdom_king": {
       "class": "wand",
       "profile": "wand",
       "source": "relic"
@@ -945,6 +1095,11 @@
       "class": "staff",
       "profile": "staff",
       "source": "relic"
+    },
+    "wizard_kings_vow": {
+      "class": "rapier",
+      "profile": "rapier",
+      "source": "relic"
     }
   },
   "excluded": {
@@ -957,6 +1112,7 @@
     "bolt_thrower": "ranged (crossbow): Better Combat only handles melee",
     "bond_thread": "hand item / charm / book / key: not a weapon",
     "book_of_mispells": "hand item / charm / book / key: not a weapon",
+    "calamity_wave_aegis": "shield: no swing",
     "cancer_key": "hand item / charm / book / key: not a weapon",
     "capricorn_key": "hand item / charm / book / key: not a weapon",
     "celestial_spirit_magic_book": "hand item / charm / book / key: not a weapon",
@@ -966,6 +1122,7 @@
     "communication_magic_device": "hand item / charm / book / key: not a weapon",
     "crossbow_of_swift_death": "ranged (crossbow): Better Combat only handles melee",
     "crux_key": "hand item / charm / book / key: not a weapon",
+    "dawnpiercer_crossbow": "ranged (crossbow): Better Combat only handles melee",
     "devil_bound_sheath": "hand item / charm / book / key: not a weapon",
     "devil_contract": "hand item / charm / book / key: not a weapon",
     "devil_contract_book": "hand item / charm / book / key: not a weapon",
@@ -1002,9 +1159,11 @@
     "sagittarius_key": "hand item / charm / book / key: not a weapon",
     "scorpio_key": "hand item / charm / book / key: not a weapon",
     "shroud_of_margins": "hand item / charm / book / key: not a weapon",
+    "silver_eagles_galewing_bow": "ranged (bow): Better Combat only handles melee",
     "spirit_charm": "hand item / charm / book / key: not a weapon",
     "spirit_king_gate_key": "hand item / charm / book / key: not a weapon",
     "spirit_king_sceptre": "hand item / charm / book / key: not a weapon",
+    "starforged_aeon_bow": "ranged (bow): Better Combat only handles melee",
     "taurus_key": "hand item / charm / book / key: not a weapon",
     "the_dragons_spirit": "ranged (bow): Better Combat only handles melee",
     "the_dragons_truth": "hand item / charm / book / key: not a weapon",

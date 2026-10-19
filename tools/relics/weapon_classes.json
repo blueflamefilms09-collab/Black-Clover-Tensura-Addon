@@ -631,7 +631,112 @@
   "nikora_key": "handitem",
   "spirit_king_gate_key": "handitem",
   "celestial_spirit_magic_book": "handitem",
-  "spirit_king_sceptre": "handitem"
+  "spirit_king_sceptre": "handitem",
+  "vorpal_sword": {
+   "class": "longsword"
+  },
+  "holy_avenger": {
+   "class": "longsword"
+  },
+  "luck_blade": {
+   "class": "shortsword"
+  },
+  "frostbrand": {
+   "class": "sabre"
+  },
+  "dragon_slayer": {
+   "class": "greatsword"
+  },
+  "sunsword": {
+   "class": "longsword"
+  },
+  "crimson_lions_flame_lance": {
+   "class": "spear"
+  },
+  "silver_eagles_galewing_bow": {
+   "class": "bow"
+  },
+  "starlight_whip": {
+   "class": "whip"
+  },
+  "fairy_heart_gauntlets": {
+   "class": "dagger"
+  },
+  "noon_cleaver": {
+   "class": "greataxe"
+  },
+  "calamity_scythe": {
+   "class": "scythe"
+  },
+  "staff_of_the_magi": {
+   "class": "staff"
+  },
+  "hammer_of_thunderbolts": {
+   "class": "hammer"
+  },
+  "kusanagi_the_grass_cutter": {
+   "class": "katana"
+  },
+  "gungnir_the_unerring": {
+   "class": "spear"
+  },
+  "leviathans_crown_trident": {
+   "class": "trident"
+  },
+  "wizard_kings_vow": {
+   "class": "rapier"
+  },
+  "wand_of_the_wisdom_king": {
+   "class": "wand"
+  },
+  "dragon_force_twin_fangs": {
+   "class": "dagger"
+  },
+  "calamity_wave_aegis": {
+   "class": "shield"
+  },
+  "hellblaze_the_demon_sin": {
+   "class": "longsword"
+  },
+  "minotaur_kings_labrys": {
+   "class": "battleaxe"
+  },
+  "dawnpiercer_crossbow": {
+   "class": "crossbow"
+  },
+  "blackrazor": {
+   "class": "greatsword"
+  },
+  "gae_bolg_heartseeker": {
+   "class": "spear"
+  },
+  "starforged_aeon_bow": {
+   "class": "bow"
+  },
+  "primordial_hearth_blade": {
+   "class": "dagger"
+  },
+  "void_origin_katana": {
+   "class": "katana"
+  },
+  "fairy_glitter_gauntlets": {
+   "class": "dagger"
+  },
+  "cardinal_halo_chakram": {
+   "class": "handaxe"
+  },
+  "magic_emperors_black_halberd": {
+   "class": "glaive"
+  },
+  "starsplitter_hammer": {
+   "class": "hammer"
+  },
+  "sword_of_the_first_dawn": {
+   "class": "longsword"
+  },
+  "tidebreaker_chakram": {
+   "class": "handaxe"
+  }
  },
  "_excluded_was": {
   "elsdocia": "rebuilt by the Elsdocia agent",

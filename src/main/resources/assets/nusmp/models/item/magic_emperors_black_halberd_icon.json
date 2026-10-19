@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "nusmp:item/magic_emperors_black_halberd"
+  }
+}
