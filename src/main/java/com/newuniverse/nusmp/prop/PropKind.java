@@ -157,5 +157,8 @@ public enum PropKind {
     PLANT_1,
     POISON_PLANT_1,
     MUD_1,
-    MUCUS_1
+    MUCUS_1,
+    /** Celestial Spirit Magic (celestial.CelestialProps): a zodiac or silver spirit stepping out of its circle (param: key ordinal | phase << 8 | ticks since the cast << 16); and the Gate / the Spirit King's summon (param 0 gate, 1 king) */
+    CELESTIAL_1,
+    CELESTIAL_2
 }

@@ -105,6 +105,7 @@ public class NUSMP {
         com.newuniverse.nusmp.particle.rukh.RukhParticles.init(modEventBus);                                               // 1.36.0: Dark and Light Rukh particle types
         com.newuniverse.nusmp.relics.forge.ForgeRegistry.init(modEventBus);                                                // 1.40.0: the Relic Forge (block item on NUItems.ITEMS: before its register)
         com.newuniverse.nusmp.labyrinth.LabyrinthSystem.init(modEventBus);                                                  // 1.35.0: the Labyrinth (blocks, gate, trials, seals, vault, processors; block items go on NUItems.ITEMS so this runs before its register)
+        com.newuniverse.nusmp.celestial.CelestialSystem.init(modEventBus);                                                 // Celestial Spirit Magic: keys, the Spirit King, the Gate (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
@@ -188,6 +189,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);
             com.newuniverse.nusmp.client.aura.PlayerAuraClient.init(modEventBus);                             // 0.53: player render layers
             modEventBus.addListener(com.newuniverse.nusmp.client.prop.MagicPropRenderer::register);           // 0.53: props
+            modEventBus.addListener(com.newuniverse.nusmp.client.celestial.CelestialClient::register);          // the Spirit King's renderer
             com.newuniverse.nusmp.client.geo.GeoModels.init(modEventBus);                                      // 0.53: geo.json models re-read on a resource reload
             com.newuniverse.nusmp.client.SwordDrawClient.init();                                              // 0.52: the draw animation
             com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D

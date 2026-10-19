@@ -78,6 +78,7 @@ final class PropRegistry {
         DarkProps.init();
         LightningProps.init();
         FlameProps.init();
+        com.newuniverse.nusmp.celestial.CelestialProps.init();       // Celestial Spirit Magic: the spirits, the Gate and the Spirit King's summon
         TreeProps.init();                    // 1.93.0 nature-magic rebuild: starts the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
     }
 }

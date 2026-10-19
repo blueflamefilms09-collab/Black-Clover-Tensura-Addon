@@ -372,6 +372,25 @@
   "vassal_harpoon": "staff",
   "vassal_chain": "whip",
   "vassal_instrument": "wand",
-  "vassal_sewing_set": "rapier"
+  "vassal_sewing_set": "rapier",
+  "aquarius_key": "handitem",
+  "taurus_key": "handitem",
+  "leo_key": "handitem",
+  "virgo_key": "handitem",
+  "sagittarius_key": "handitem",
+  "gemini_key": "handitem",
+  "cancer_key": "handitem",
+  "scorpio_key": "handitem",
+  "capricorn_key": "handitem",
+  "pisces_key": "handitem",
+  "aries_key": "handitem",
+  "libra_key": "handitem",
+  "horologium_key": "handitem",
+  "crux_key": "handitem",
+  "lyra_key": "handitem",
+  "nikora_key": "handitem",
+  "spirit_king_gate_key": "handitem",
+  "celestial_spirit_magic_book": "handitem",
+  "spirit_king_sceptre": "handitem"
  }
 }

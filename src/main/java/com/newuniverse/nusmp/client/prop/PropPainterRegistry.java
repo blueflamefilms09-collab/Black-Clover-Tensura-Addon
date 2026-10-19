@@ -84,5 +84,6 @@ final class PropPainterRegistry {
         PoisonPlantPropPainter.register();
         MudPropPainter.register();
         MucusPropPainter.register();
+        CelestialPropPainter.register();     // Celestial Spirit Magic: the spirits, the Gate and the Spirit King's summon
     }
 }
