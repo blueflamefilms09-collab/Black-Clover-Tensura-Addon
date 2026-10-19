@@ -1,0 +1,207 @@
+{
+ "nail_armor_rest": {
+  "kind": "geo",
+  "model": "nail_armor",
+  "anim": "idle",
+  "glow": "FFFFA050",
+  "ages": [
+   0,
+   20
+  ],
+  "tile": [
+   440,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 10
+   }
+  ],
+  "space": "PLAYER",
+  "layer": "CUTOUT"
+ },
+ "nail_bolt_idle": {
+  "kind": "geo",
+  "model": "nail_bolt",
+  "anim": "idle",
+  "glow": "FFFFA050",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "nail_hammer_idle": {
+  "kind": "geo",
+  "model": "nail_hammer",
+  "anim": "idle",
+  "glow": "FFFFA050",
+  "ages": [
+   0,
+   12,
+   24
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "fov": 40
+   }
+  ],
+  "space": "PROP",
+  "layer": "CUTOUT"
+ },
+ "nail_aura": {
+  "kind": "aura",
+  "attr": "Nail",
+  "aura": "NAIL",
+  "style": 0,
+  "total": 60,
+  "ages": [
+   3,
+   8,
+   14,
+   30,
+   44,
+   52,
+   57
+  ],
+  "tile": [
+   330,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "nail_aura_run": {
+  "kind": "aura",
+  "attr": "Nail",
+  "aura": "NAIL",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   40,
+   43,
+   46,
+   49
+  ],
+  "limbSwingAmount": 1.0,
+  "limbSwing": [
+   0.0,
+   1.2,
+   2.4,
+   3.6
+  ],
+  "tile": [
+   330,
+   500
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "nail_prop_1": {
+  "kind": "prop",
+  "attr": "Nail",
+  "propKind": "NAIL_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 1.0,
+  "maxLife": 200,
+  "ages": [
+   2,
+   6,
+   12,
+   30,
+   192
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ },
+ "nail_prop_2": {
+  "kind": "prop",
+  "attr": "Nail",
+  "propKind": "NAIL_2",
+  "param": 0,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 70,
+  "ages": [
+   2,
+   6,
+   14,
+   30,
+   62
+  ],
+  "tile": [
+   330,
+   420
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 14
+   }
+  ]
+ }
+}

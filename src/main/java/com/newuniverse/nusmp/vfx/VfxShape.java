@@ -260,8 +260,14 @@ public enum VfxShape {
     // 1.93.0: the earth family (Sandstone, Rock, Red Ochre, Stone, Earth, Mineral): one layer (EarthFamilyLayer), the magic is read from the colour (vfx.EarthFxStyle)
     EARTHFAM_CAST,        // a charge at 'from' and a thrown body (chunks, grains, shards, pigment) flying to 'to'; power = size
     EARTHFAM_ZONE,        // a ground sigil with a rising rim and the magic's debris, radius = power
-    EARTHFAM_BURST;       // an impact: flash, ring, the magic's debris flying out, a lingering afterglow; power = scale
+    EARTHFAM_BURST,       // an impact: flash, ring, the magic's debris flying out, a lingering afterglow; power = scale
     //     // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0: the rebuilt wiki magics, three effects each (the meaning of from / to / power is in each <Name>Layer's javadoc): FX1 cast, FX2 zone, FX3 impact
+    SHAKUDO_FX1, SHAKUDO_FX2, SHAKUDO_FX3,
+    SCALE_FX1, SCALE_FX2, SCALE_FX3,
+    SPIKE_FX1, SPIKE_FX2, SPIKE_FX3,
+    NAIL_FX1, NAIL_FX2, NAIL_FX3,
+    HAIR_FX1, HAIR_FX2, HAIR_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

@@ -194,6 +194,11 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SongNotesLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.SongRingLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.CorpseLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.ShakudoLayer());             // 1.93.0: the rebuilt wiki magics
+        register(new com.newuniverse.nusmp.vfx.client.layer.ScaleLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SpikeLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.NailLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.HairLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

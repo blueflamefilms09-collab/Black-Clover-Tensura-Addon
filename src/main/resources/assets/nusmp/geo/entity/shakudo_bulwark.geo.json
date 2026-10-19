@@ -1,0 +1,196 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.shakudo_bulwark",
+    "texture_width": 128,
+    "texture_height": 128,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "slab",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -12,
+        2,
+        -2
+       ],
+       "size": [
+        24,
+        40,
+        4
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -14,
+        0,
+        -3
+       ],
+       "size": [
+        28,
+        3,
+        6
+       ],
+       "uv": [
+        56,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -14,
+        42,
+        -3
+       ],
+       "size": [
+        28,
+        3,
+        6
+       ],
+       "uv": [
+        0,
+        44
+       ]
+      },
+      {
+       "origin": [
+        -13,
+        3,
+        -2.6
+       ],
+       "size": [
+        2,
+        40,
+        1
+       ],
+       "uv": [
+        68,
+        44
+       ]
+      },
+      {
+       "origin": [
+        11,
+        3,
+        -2.6
+       ],
+       "size": [
+        2,
+        40,
+        1
+       ],
+       "uv": [
+        74,
+        44
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "seal",
+     "pivot": [
+      0,
+      24,
+      -3
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -5,
+        19,
+        -2.9
+       ],
+       "size": [
+        10,
+        10,
+        1
+       ],
+       "uv": [
+        80,
+        44
+       ]
+      },
+      {
+       "origin": [
+        -3,
+        21,
+        -3.4
+       ],
+       "size": [
+        6,
+        6,
+        1
+       ],
+       "uv": [
+        102,
+        44
+       ]
+      },
+      {
+       "origin": [
+        -1,
+        29.5,
+        -3.2
+       ],
+       "size": [
+        2,
+        5,
+        1
+       ],
+       "uv": [
+        116,
+        44
+       ]
+      },
+      {
+       "origin": [
+        -1,
+        13.5,
+        -3.2
+       ],
+       "size": [
+        2,
+        5,
+        1
+       ],
+       "uv": [
+        122,
+        44
+       ]
+      }
+     ],
+     "parent": "root"
+    }
+   ]
+  }
+ ]
+}

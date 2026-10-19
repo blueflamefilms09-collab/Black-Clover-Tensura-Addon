@@ -1,0 +1,196 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.nail_hammer",
+    "texture_width": 128,
+    "texture_height": 128,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "haft",
+     "pivot": [
+      0,
+      4,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -1.5,
+        0,
+        -1.5
+       ],
+       "size": [
+        3,
+        44,
+        3
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -2,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        5,
+        4
+       ],
+       "uv": [
+        12,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -2,
+        22,
+        -2
+       ],
+       "size": [
+        4,
+        2,
+        4
+       ],
+       "uv": [
+        28,
+        0
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "head",
+     "pivot": [
+      0,
+      44,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -10,
+        42,
+        -6
+       ],
+       "size": [
+        20,
+        10,
+        12
+       ],
+       "uv": [
+        44,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -11,
+        41,
+        -7
+       ],
+       "size": [
+        3,
+        12,
+        14
+       ],
+       "uv": [
+        0,
+        47
+       ]
+      },
+      {
+       "origin": [
+        8,
+        41,
+        -7
+       ],
+       "size": [
+        3,
+        12,
+        14
+       ],
+       "uv": [
+        34,
+        47
+       ]
+      },
+      {
+       "origin": [
+        -9,
+        52,
+        -5
+       ],
+       "size": [
+        18,
+        1,
+        10
+       ],
+       "uv": [
+        68,
+        47
+       ]
+      },
+      {
+       "origin": [
+        -12,
+        43,
+        -3
+       ],
+       "size": [
+        1,
+        8,
+        6
+       ],
+       "uv": [
+        0,
+        73
+       ]
+      },
+      {
+       "origin": [
+        11,
+        43,
+        -3
+       ],
+       "size": [
+        1,
+        8,
+        6
+       ],
+       "uv": [
+        14,
+        73
+       ]
+      }
+     ],
+     "parent": "haft"
+    }
+   ]
+  }
+ ]
+}

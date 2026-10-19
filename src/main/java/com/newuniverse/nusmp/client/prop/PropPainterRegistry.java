@@ -53,5 +53,10 @@ final class PropPainterRegistry {
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
         EarthPropPainter.register();         // 1.93.0: Earth / Rock / Stone / Sandstone / Red Ochre / Mineral constructs
+        ShakudoPropPainter.register();       // 1.93.0: the rebuilt wiki magics
+        ScalePropPainter.register();
+        SpikePropPainter.register();
+        NailPropPainter.register();
+        HairPropPainter.register();
     }
 }

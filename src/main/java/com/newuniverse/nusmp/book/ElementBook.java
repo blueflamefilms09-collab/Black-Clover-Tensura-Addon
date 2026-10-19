@@ -51,6 +51,7 @@ public class ElementBook extends GrimoireBook {
     public void vfx(ServerPlayer player, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
         VfxShape identity = switch (magic) {
             case STAR -> VfxShape.STAR_MAGIC;
+            case SHAKUDO, SCALE, SPIKE, NAIL, HAIR -> ShakudoKit.shape(magic, shape);          // 1.93.0: the five rebuilt wiki magics draw their own effects
             case SAND -> VfxShape.SAND_MAGIC;
             case MIST -> VfxShape.MIST_MAGIC;
             case BONE -> switch (shape) {
@@ -253,9 +254,9 @@ public class ElementBook extends GrimoireBook {
             if (thorns) tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
             for (Supplier<MobEffectInstance> e : effects) p.addEffect(e.get());
             if (b.magic == MagicType.BONE) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.BONE, ticks);
-            if (WikiBooks.isNewAttribute(b.magic)) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.WIKI, ticks, Math.max(0, com.newuniverse.nusmp.vfx.WikiStyles.styleOf(b.magic.name())));      // 1.27.0: the wiki magics' temporary armour
+            if (WikiBooks.isNewAttribute(b.magic) && !ShakudoKit.armour(p, b.magic, ticks)) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.WIKI, ticks, Math.max(0, com.newuniverse.nusmp.vfx.WikiStyles.styleOf(b.magic.name())));      // 1.27.0: the wiki magics' temporary armour
             b.castCircle(p, 1f);
-            VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, shape == VfxShape.WIKI_MAGIC_FIELD ? 0.45f : 1f);   // 0.92: a body-sized aura (the wiki field layer reads power as radius / 3)
+            VfxSpawn.sendFollowing(p.serverLevel(), ShakudoKit.mine(b.magic) ? ShakudoKit.fx(b.magic, 3) : shape, p, p.position().add(0, 1, 0), b.color, ticks, shape == VfxShape.WIKI_MAGIC_FIELD ? (ShakudoKit.mine(b.magic) ? 0.9f : 0.45f) : 1f);   // 0.92: a body-sized aura (the wiki field layer reads power as radius / 3)
             return true;
         };
     }

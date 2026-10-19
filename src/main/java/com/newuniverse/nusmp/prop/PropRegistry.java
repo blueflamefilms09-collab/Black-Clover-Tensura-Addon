@@ -53,5 +53,10 @@ final class PropRegistry {
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
         EarthConstructProps.init();          // 1.93.0: Earth / Rock / Stone / Sandstone / Red Ochre / Mineral constructs
+        ShakudoProps.init();                 // 1.93.0: the rebuilt wiki magics
+        ScaleProps.init();
+        SpikeProps.init();
+        NailProps.init();
+        HairProps.init();
     }
 }

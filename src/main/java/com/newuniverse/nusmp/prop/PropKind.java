@@ -99,5 +99,16 @@ public enum PropKind {
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
     SHADOW_PACK_1,
     /** 1.93.0: the constructs of Earth, Rock, Stone, Sandstone, Red Ochre and Mineral magic: golems, a sentinel, a sphinx, the prison cage, a totem, a crystal spire, thrown boulders and lances; the variant is {@link EarthConstruct#type} of the param (server: prop.EarthConstructProps, painter: client.prop.EarthPropPainter). */
-    EARTH_CONSTRUCT
+    EARTH_CONSTRUCT,
+    /** 1.93.0: the constructs of Shakudo (golem, bulwark), Scale (serpent, shield), Spike (pillar, urchin), Nail (bolt, hammer) and Hair Magic (tendril, cocoon) */
+    SHAKUDO_1,
+    SHAKUDO_2,
+    SCALE_1,
+    SCALE_2,
+    SPIKE_1,
+    SPIKE_2,
+    NAIL_1,
+    NAIL_2,
+    HAIR_1,
+    HAIR_2
 }
