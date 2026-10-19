@@ -181,7 +181,7 @@ class WaterRebuildTest {
 
     // ---------------------------------------------------------------- the shared enums only grew at the end
     private static List<String> enumTail(File f, String after, int n) throws Exception {
-        String src = read(f).replaceAll("//[^\\n]*", "").replaceAll("/\\*.*?\\*/", "");
+        String src = read(f).replaceAll("//[^\\n]*", "").replaceAll("(?s)/\\*.*?\\*/", "");
         String body = src.substring(src.indexOf(after));
         Matcher m = Pattern.compile("\\b([A-Z][A-Z0-9_]+)\\b").matcher(body.substring(0, body.indexOf(';') > 0 && body.indexOf(';') < body.indexOf('}') ? body.indexOf(';') : body.indexOf('}')));
         List<String> out = new ArrayList<>();
@@ -189,15 +189,23 @@ class WaterRebuildTest {
         return out;
     }
 
+    /** The names appear in this order inside the enum, after the anchor (other builders' constants may sit between them). */
+    private static void assertInOrder(List<String> expected, List<String> tail) {
+        int at = 0;
+        for (String e : expected) {
+            int i = tail.subList(at, tail.size()).indexOf(e);
+            assertTrue(i >= 0, e + " missing or out of order after " + (at > 0 ? tail.get(at - 1) : "the anchor"));
+            at += i + 1;
+        }
+    }
+
     @Test
     void theEnumsOnlyGrewAtTheEnd() throws Exception {
-        List<String> aura = enumTail(new File(JAVA, "aura/Aura.java"), "WIKI", 5);
-        assertEquals(List.of("WIKI", "WATER", "DARK", "LIGHTNING", "FLAME"), aura);
-        List<String> props = enumTail(new File(JAVA, "prop/PropKind.java"), "SHADOW_PACK_1", 9);
-        assertEquals(List.of("SHADOW_PACK_1", "WATER_1", "WATER_2", "DARK_1", "DARK_2", "LIGHTNING_1", "LIGHTNING_2", "FLAME_1", "FLAME_2"), props);
-        List<String> shapes = enumTail(new File(JAVA, "vfx/VfxShape.java"), "BUTOH_AFTERIMAGE", 13);
-        assertEquals(List.of("BUTOH_AFTERIMAGE", "WATERFX_CAST", "WATERFX_ZONE", "WATERFX_BURST", "DARKFX_CAST", "DARKFX_ZONE", "DARKFX_BURST", "LIGHTNINGFX_CAST", "LIGHTNINGFX_ZONE", "LIGHTNINGFX_BURST",
-                "FLAMEFX_CAST", "FLAMEFX_ZONE", "FLAMEFX_BURST"), shapes.subList(0, 13));
+        assertInOrder(List.of("WATER", "DARK", "LIGHTNING", "FLAME"), enumTail(new File(JAVA, "aura/Aura.java"), "WIKI", 500));
+        assertInOrder(List.of("WATER_1", "WATER_2", "DARK_1", "DARK_2", "LIGHTNING_1", "LIGHTNING_2", "FLAME_1", "FLAME_2"),
+                enumTail(new File(JAVA, "prop/PropKind.java"), "SHADOW_PACK_1", 500));
+        assertInOrder(List.of("WATERFX_CAST", "WATERFX_ZONE", "WATERFX_BURST", "DARKFX_CAST", "DARKFX_ZONE", "DARKFX_BURST", "LIGHTNINGFX_CAST", "LIGHTNINGFX_ZONE", "LIGHTNINGFX_BURST",
+                "FLAMEFX_CAST", "FLAMEFX_ZONE", "FLAMEFX_BURST"), enumTail(new File(JAVA, "vfx/VfxShape.java"), "BUTOH_AFTERIMAGE", 500));
     }
 
     // ---------------------------------------------------------------- the lang fragments

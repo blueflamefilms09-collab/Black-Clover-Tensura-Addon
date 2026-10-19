@@ -75,7 +75,8 @@ class AlignmentDataTest {
             + "demon_ice_soul demon_ice_strike demon_ice_wall demon_ice_wave demon_ice_winter demon_ice_zero demon_king demon_light_strike demon_porcupine_stingers "
             + "demon_slayer_slash demon_water_strike devil_dive devil_union evil_eye fallen_angel_gate heavens_shadow_second_sight hellfire_wave myriad_black shadow_bind "
             + "shadow_realm shadow_step shadow_travel summon_demon_destroyer summon_demon_dweller undying_curse veil_of_black_light divine_punishment light_prison "
-            + "light_shaft_of_divine_punishment light_speed light_step light_sword_of_judgment purging_light").split(" ")));
+            + "light_shaft_of_divine_punishment light_speed light_step light_sword_of_judgment purging_light"
+            + " black_hole_collapse cursed_ash dark_cloak evil_gods_pressure_craft shadow_embrace").split(" ")));
 
     /** A page declaration in the sources: {@code starter("id", ...)}, {@code BookPage.mid("id", ...)}, {@code new BookPage("id", ...)} and the other tiers. */
     private static final Pattern PAGE = Pattern.compile("(?<![A-Za-z0-9_])(?:BookPage\\.)?(?:starter|mid|zone|signature|daily)\\(\\s*\"([a-z0-9_]+)\"|new BookPage\\(\\s*\"([a-z0-9_]+)\"");

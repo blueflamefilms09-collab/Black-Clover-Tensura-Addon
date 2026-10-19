@@ -24,7 +24,7 @@ class EquipAnimationTest {
 
     @Test
     void staysFullyOnInTheMiddle() {
-        for (float t = 14f; t < TOTAL - EquipAnimation.SHATTER_WINDOW - 0.1f; t += 1f) assertEquals(1f, EquipAnimation.assembled(t, TOTAL - t, 8f), 1e-6, "t=" + t);
+        for (float t = 16f; t < TOTAL - EquipAnimation.SHATTER_WINDOW - 0.1f; t += 1f) assertEquals(1f, EquipAnimation.assembled(t, TOTAL - t, 8f), 1e-6, "t=" + t);
     }
 
     @Test

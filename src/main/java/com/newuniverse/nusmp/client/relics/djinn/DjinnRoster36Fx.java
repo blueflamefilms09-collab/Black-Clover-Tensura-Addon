@@ -1,14 +1,14 @@
 package com.newuniverse.nusmp.client.relics.djinn;
 
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnClientState.Snap;
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Anchor;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnRoster36.Dust;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.util.RandomSource;
-import org.joml.Vector3f;
 
 /**
  * The dust of the 24 Djinn added after Vassago: a coloured particle (the Djinn's glow fading into its body colour; a Dark Djinn's saturated colour fading
@@ -78,10 +78,8 @@ final class DjinnRoster36Fx {
             }
             vx += (rnd.nextDouble() - 0.5) * jitter;
             vz += (rnd.nextDouble() - 0.5) * jitter;
-            float size = 0.7f + rnd.nextFloat() * 0.5f + (dust.motion() == DjinnRoster36.Motion.HEAVY ? 0.3f : 0f);
-            level.addParticle(new DustColorTransitionOptions(rgb(c[0]), rgb(c[1]), size), p.getX() + ox, y, p.getZ() + oz, vx, vy, vz);
+            RukhClientFx.spray(level, dark ? Alignment.DARK : Alignment.LIGHT, p.getX() + ox, y, p.getZ() + oz, 1, vx, vy, vz, 1.0);   // the Rukh purge: a Rukh, not a vanilla dust
         }
     }
 
-    private static Vector3f rgb(int c) { return new Vector3f(((c >> 16) & 255) / 255f, ((c >> 8) & 255) / 255f, (c & 255) / 255f); }
 }
