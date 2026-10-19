@@ -112,6 +112,7 @@ public final class MultiverseSync {
         AntiMagic.lord(p).ifPresent(i -> {
             a.putString("Mode", MultiverseProfile.ANTI_MODES[MultiverseProfile.antiMode(p)]);
             a.putInt("AMP", AntiMagic.amp(i));
+            a.putInt("Aura", (int) Math.round(com.newuniverse.nusmp.antimagic.AntiMagicAura.share(p) * 100));   // 1.94.0: the resource is Tensura Aura (AMP stays in the data as a stat)
         });
         t.put("Anti", a);
         // ceremony
