@@ -37,6 +37,14 @@ public final class NoiseEvents {
     private static final Map<UUID, NoiseMeter> METERS = new HashMap<>();
     private static final IdentityHashMap<Holder<GameEvent>, NoiseKind> KINDS = new IdentityHashMap<>();
     private static boolean warned;
+    /** 1.94.0: how many game events reached the handler in the Mega-Dungeon, and how many times a player's meter was fed (for {@code why}: 0 seen means the listener is not wired). */
+    private static long seen, heard;
+
+    /** Game events the noise handler has been given in the Mega-Dungeon since the server started. */
+    static long eventsSeen() { return seen; }
+
+    /** Times a player's noise meter was fed since the server started. */
+    static long eventsHeard() { return heard; }
 
     /** The loud events of the last seconds, for the wandering bosses. */
     static final BurstRing BURSTS = new BurstRing(48);
@@ -46,6 +54,7 @@ public final class NoiseEvents {
         try {
             Level level = e.getLevel();
             if (level.isClientSide() || !(level instanceof ServerLevel sl) || !Labyrinth.inMega(sl)) return;
+            seen++;
             handle(sl, e.getVanillaEvent(), e.getCause(), e.getEventPosition(), sl.players(), sl.getGameTime());
         } catch (Throwable t) {
             warn(t);
@@ -91,7 +100,10 @@ public final class NoiseEvents {
             if (p.isSpectator() || !p.isAlive()) continue;
             double dx = p.getX() - x, dy = p.getY() - y, dz = p.getZ() - z;
             double f = NoiseMeter.falloff(Math.sqrt(dx * dx + dy * dy + dz * dz), earshot);
-            if (f > 0.0) METERS.computeIfAbsent(p.getUUID(), k -> new NoiseMeter()).add(amount * f, now, decay);
+            if (f > 0.0) {
+                METERS.computeIfAbsent(p.getUUID(), k -> new NoiseMeter()).add(amount * f, now, decay);
+                heard++;
+            }
         }
         if (kind.burst()) BURSTS.add(x, y, z, amount, now);
     }

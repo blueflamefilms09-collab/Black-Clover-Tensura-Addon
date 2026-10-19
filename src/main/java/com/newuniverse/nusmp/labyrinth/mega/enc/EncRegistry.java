@@ -19,6 +19,7 @@ public final class EncRegistry {
     public static void init(IEventBus modBus) {
         EncSelfTests.register();
         DepthSelfTests.register();                                                    // 1.89.0: the depth rule (stronger and smarter mobs the further from the Hub)
+        EncFixSelfTests.register();                                                   // 1.94.0: enc.trigger (the Director meets a party within a bounded time) and enc.spawn (the monsters stand where they should)
     }
 
     public static void register(IEventBus gameBus) {

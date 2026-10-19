@@ -26,9 +26,18 @@ public final class EncounterRoll {
         public static final Caps DEFAULT = new Caps(5, 4, 2);
     }
 
-    /** The five modifiers of one roll. */
-    public record Mods(int threat, int noise, int light, int party, int table) {
-        public int total() { return threat + noise + light + party + table; }
+    /**
+     * The modifiers of one roll. {@code tension} (1.94.0) is the pity timer of {@link Tension}: it grows with every quiet pass of a party and is spent when an
+     * encounter spawns, so a party in the dark on the first floor (a total of minus three, which only a natural 20 can lift to the DC) is still met.
+     */
+    public record Mods(int threat, int noise, int light, int party, int table, int tension) {
+        /** The five modifiers of 1.54.0 (no tension): kept so every older caller and test reads as before. */
+        public Mods(int threat, int noise, int light, int party, int table) { this(threat, noise, light, party, table, 0); }
+
+        public int total() { return threat + noise + light + party + table + tension; }
+
+        /** The same modifiers with this tension. */
+        public Mods withTension(int t) { return new Mods(threat, noise, light, party, table, t); }
     }
 
     /** What the dice said: the natural number, the modifiers, the total against the DC, the band, and whether luck changed it. */
@@ -69,6 +78,19 @@ public final class EncounterRoll {
         }
         return new Result(natural, mods, total, dc, margin, band, false, escalated);
     }
+
+    /**
+     * 1.94.0: the exact odds of one roll. Index by {@link Band#ordinal()}: the chance, over the twenty faces of the die, of each band (a natural 1 is always quiet,
+     * a natural 20 is one band worse). The sum is 1. This is what {@code /multiverse mega dm why} prints and what the tests use to prove that trouble is reachable.
+     */
+    public static double[] distribution(Mods mods, int dc) {
+        double[] out = new double[Band.values().length];
+        for (int n = 1; n <= 20; n++) out[resolve(n, mods, dc).band().ordinal()] += 1.0 / 20.0;
+        return out;
+    }
+
+    /** 1.94.0: the chance that one roll is not quiet (a minor encounter or worse). */
+    public static double chance(Mods mods, int dc) { return 1.0 - distribution(mods, dc)[Band.NOTHING.ordinal()]; }
 
     // ---------------------------------------------------------------- the budget and the cooldown
     /** What one health point-equivalent of a monster costs of the budget: a 20-health monster is one point, nothing is cheaper than one. */

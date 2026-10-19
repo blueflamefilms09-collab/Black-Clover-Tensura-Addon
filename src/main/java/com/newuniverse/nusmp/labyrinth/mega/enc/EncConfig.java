@@ -15,6 +15,9 @@ public final class EncConfig {
     // the Dungeon Master (random encounters)
     public static final ModConfigSpec.BooleanValue ENABLED, CUES, FLOOR_THREAT;
     public static final ModConfigSpec.IntValue ROLL_EVERY, BASE_COOLDOWN, MIN_COOLDOWN, MAX_LIVE, MAX_PER_ENCOUNTER, DC, MAX_AGE, SPAWN_ATTEMPTS;
+    // 1.94.0, the fixes of "encounters do not trigger / spawn badly"
+    public static final ModConfigSpec.BooleanValue ROLL_FOR_CREATIVE, SPAWN_WIDEN, HUNT_BY_ROOMS;
+    public static final ModConfigSpec.IntValue TENSION_EVERY, TENSION_CAP, RELAX_SIGHT_TIER, IDLE_LOG_SECONDS, STUCK_TICKS, RETRY_PASSES;
     public static final ModConfigSpec.DoubleValue PARTY_RADIUS, PARTY_EXTRA, BASE_BUDGET, NOISE_DECAY, NOISE_SCALE, NOISY_AT, HEALTH_PER_LEVEL, DAMAGE_PER_LEVEL,
             DESPAWN_DISTANCE, SPAWN_MIN, SPAWN_MAX;
     public static final ModConfigSpec.ConfigValue<String> PARTY_FACTORS;
@@ -62,8 +65,26 @@ public final class EncConfig {
                 .defineInRange("spawnMinDistance", 24.0, 8.0, 64.0);
         SPAWN_MAX = b.comment("The farthest, in blocks, from the nearest member of the party that an encounter may appear.")
                 .defineInRange("spawnMaxDistance", 48.0, 16.0, 96.0);
-        SPAWN_ATTEMPTS = b.comment("At most this many positions are tried per encounter before the Dungeon Master gives up (a bound on the work of one roll).")
+        SPAWN_ATTEMPTS = b.comment("At most four times this many positions are tried for EACH monster of an encounter before the Dungeon Master gives up on it (a bound on the work of one roll; before 1.94.0 it was twelve positions shared by the whole encounter, so one bad cell spent them all).")
                 .defineInRange("spawnAttempts", 12, 2, 64);
+        ROLL_FOR_CREATIVE = b.comment("false = players in Creative or Spectator mode are never rolled for (the monsters would not hunt them anyway). true = Creative players count as a party too, which is what a tester wants.")
+                .define("rollForCreative", false);
+        TENSION_EVERY = b.comment("The pity timer: every this many quiet passes (a roll that brought nothing) adds one point to the d20 of that party, up to tensionCap; an encounter that spawns spends them all.")
+                .defineInRange("tensionEvery", Tension.DEFAULT_EVERY, 1, 50);
+        TENSION_CAP = b.comment("The most points the pity timer adds. 0 = off (the dice alone decide: a party in the dark on the first floor then meets something only on a natural 20).")
+                .defineInRange("tensionCap", Tension.DEFAULT_CAP, 0, 10);
+        SPAWN_WIDEN = b.comment("When no place is found in the ring (spawnMinDistance to spawnMaxDistance, out of sight), try a wider ring, then every room, then a far place in view, instead of giving up.")
+                .define("spawnWiden", true);
+        RELAX_SIGHT_TIER = b.comment("From which rung of the search (1 ring, 2 wide ring, 3 every room, 4 far and in view) a place the party can see is accepted if it is far enough away (three quarters of the ring's far edge). 5 = never.")
+                .defineInRange("spawnRelaxSightTier", 4, 1, 5);
+        HUNT_BY_ROOMS = b.comment("The hunting monsters follow the doorways of the floor room by room instead of walking straight at the party (a straight walk through a maze finds no path). false = the old straight walk.")
+                .define("huntByRooms", true);
+        RETRY_PASSES = b.comment("When the dice say trouble but no place can be found, the next this many passes try again without rolling the dice. 0 = the roll is simply lost.")
+                .defineInRange("retryPasses", 3, 0, 10);
+        STUCK_TICKS = b.comment("A monster of the Dungeon Master that has not moved for this many ticks, has no target and is out of sight of every player is removed (it then no longer counts against maxLiveMobsPerParty).")
+                .defineInRange("stuckTicks", 900, 200, 12000);
+        IDLE_LOG_SECONDS = b.comment("Once this many seconds, while players are in the Mega-Dungeon and the Dungeon Master has spawned nothing, one line of the log says why. 0 = never.")
+                .defineInRange("idleLogSeconds", 60, 0, 3600);
         DESPAWN_DISTANCE = b.comment("The Dungeon Master's monsters with no player within this many blocks are removed (a sweep every five seconds).")
                 .defineInRange("despawnDistance", 96.0, 24.0, 256.0);
         MAX_AGE = b.comment("A monster of the Dungeon Master older than this many ticks, with no target and no player within 24 blocks, is removed.")

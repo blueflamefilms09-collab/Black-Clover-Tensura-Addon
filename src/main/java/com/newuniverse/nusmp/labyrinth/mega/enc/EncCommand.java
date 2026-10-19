@@ -33,8 +33,20 @@ public final class EncCommand {
     private static final List<String> BANDS = List.of("minor", "standard", "hard", "ambush");
     private static final SimpleCommandExceptionType NOT_HERE = new SimpleCommandExceptionType(Component.literal("You are not in the Mega-Dungeon."));
 
-    public static LiteralArgumentBuilder<CommandSourceStack> command() {
-        return Commands.literal("dm").requires(s -> s.hasPermission(2))
+    public static LiteralArgumentBuilder<CommandSourceStack> command() { return tree("dm"); }
+
+    /**
+     * 1.94.0: the same tree under the name {@code enc}, because "the encounters" is what the owner calls them: {@code /multiverse mega enc why} (every gate between you and an
+     * encounter, with its value) and {@code /multiverse mega enc force [band]} (spawn one now) read better than {@code dm}. Both names reach the same commands.
+     */
+    public static LiteralArgumentBuilder<CommandSourceStack> encAlias() { return tree("enc"); }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> tree(String name) {
+        return Commands.literal(name).requires(s -> s.hasPermission(2))
+                .then(Commands.literal("why").executes(ctx -> why(ctx.getSource())))
+                .then(Commands.literal("force").executes(ctx -> force(ctx.getSource(), null))
+                        .then(Commands.argument("band", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(BANDS, b))
+                                .executes(ctx -> force(ctx.getSource(), StringArgumentType.getString(ctx, "band")))))
                 .then(Commands.literal("status").executes(ctx -> status(ctx.getSource())))
                 .then(Commands.literal("roll").executes(ctx -> roll(ctx.getSource(), null))
                         .then(Commands.argument("band", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(BANDS, b))
@@ -110,6 +122,37 @@ public final class EncCommand {
         for (String line : EncounterDirector.status(level, p, party(level, p))) ok(src, line);
         for (String line : WandererDirector.status(level)) ok(src, line);
         return 1;
+    }
+
+    /** 1.94.0: every gate between you and an encounter, in the order the Director checks them, each with its value, and the verdict. */
+    private static int why(CommandSourceStack src) throws CommandSyntaxException {
+        ServerPlayer p = here(src);
+        ServerLevel level = p.serverLevel();
+        List<EncGates.Gate> gates = EncounterDirector.gates(level, p, party(level, p));
+        for (EncGates.Gate g : gates) ok(src, g.line());
+        String verdict = EncGates.verdict(gates);
+        return EncGates.firstBlock(gates) != null ? fail(src, verdict) : ok(src, verdict);
+    }
+
+    /**
+     * 1.94.0: spawn one encounter now for your party (the dice, the cooldown, the crowd cap and the safe-zone filter are skipped; a band may be named, the default is
+     * standard). Unlike {@code roll} it says, when it cannot, which gate stopped it.
+     */
+    private static int force(CommandSourceStack src, String band) throws CommandSyntaxException {
+        ServerPlayer p = here(src);
+        ServerLevel level = p.serverLevel();
+        Band b = Band.STANDARD;
+        if (band != null) {
+            b = Band.byName(band);
+            if (b == null || b == Band.NOTHING) return fail(src, "Bands: " + String.join(", ", BANDS) + ".");
+        }
+        List<ServerPlayer> party = party(level, p);
+        EncounterDirector.Outcome o = EncounterDirector.roll(level, party, EncounterDirector.Force.band(b));
+        if (o.spawned()) return ok(src, o.text());
+        fail(src, o.text());
+        EncGates.Gate block = EncGates.firstBlock(EncounterDirector.gates(level, p, party));
+        if (block != null) fail(src, "Because: " + block.line());
+        return 0;
     }
 
     private static int roll(CommandSourceStack src, String band) throws CommandSyntaxException {
