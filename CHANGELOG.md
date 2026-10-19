@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.96.0] — Erza's Requip: The Knight; skill books now teach Unique skills; the Skill Tree is removed
+
+### NEW
+- **Requip: The Knight** (Erza Scarlet, `requip`, `skill/ErzaRequipSkill`): a standalone Ultimate skill with 15 modes, 14 armours (Heart Kreuz, Heaven's Wheel, Flame, Lightning and Sea Empress, Black Wing, Clear Heart Clothing, Nakagami, Heaven's Wheel Grand Chariot, Adamantine, Purgatory, Flight Armor, Wind God, Fairy Armor) and Dismiss. Every swap and dismiss uses the Djinn full-equip animation (`EquipAnimation`): the old armour shatters, the new one forges in, with a flash and themed particles. Attribute buffs, resistances, flight on the winged armours, per-second upkeep, six 3D weapons with Tensura engravings. Learned from the book "Titania's Requip" (100,000 max EP, or 25,000 plus a mastered Unique skill); `/requip book|teach|set|dismiss`. `docs/erza_requip.md`.
+- `/multiverse skillbook list|learn|forget|give|gold|shop`.
+
+### REPLACED
+- **Skill books** now teach a real Tensura UNIQUE skill directly (254 skills, `nusmp:line_<id>`); the book is consumed, refused if you already own the skill. The skill's modes are the line's arts, passives run while it is switched on, and mastery replaces SP. Dungeon loot, rift chests, the Black Market and the creative tab hand out these books. Old saves migrate at login (owned lines become unique skills; SP is dropped; Black Market gold kept).
+- **The Skill Tree system is removed**: tree GUI, Arts bar, Passives panel, the nested Tensura panel, SP and its HUD, route nodes, `/multiverse tree`, keybinds, tree docs and tests. The 29 Fairy Tail books of the old system are removed (the new Fairy Tail skills of 1.95.0 and Requip stay). `docs/skillbooks_unique.md`, `docs/skilltree/REMOVED.md`.
+
+### KEPT
+- Old item and component ids (SP book etc.) and hidden legacy skill ids stay registered so old worlds load.
+
+### Honest notes
+- Nothing has been run in the game. Mastery progression and every balance number are first-pass. The celestial keys and Spirit King, Elsdocia, the grade damage ranges, new legend/god/Genesis weapons and the dungeon-humanoid player models are not in this release.
+
 ## [1.95.0] — Fairy Tail skills, GUI size options, worn relics on the player model
 
 ### NEW
