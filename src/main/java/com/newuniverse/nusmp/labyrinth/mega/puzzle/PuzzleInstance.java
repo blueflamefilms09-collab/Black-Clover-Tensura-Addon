@@ -128,7 +128,7 @@ public final class PuzzleInstance {
         for (ServerPlayer p : players) if (PuzzleBridge.affects(p)) party++;
         PuzzleRule r = PuzzleCatalog.create(type, new Params(seed, Math.max(1, party), PuzzleBridge.tier(floor)));
         if (r == null) return false;
-        PuzzleStage st = PuzzleStage.plan(level, r, anchor, room, Seeds.rng(seed));
+        PuzzleStage st = PuzzleStage.plan(level, r, anchor, room, seed);
         if (st == null) return false;
         rule = r;
         stage = st;
@@ -166,7 +166,7 @@ public final class PuzzleInstance {
         PuzzleRule r = PuzzleCatalog.create(type, rule.params().withParty(party));
         if (r == null) return;
         journal.restore();
-        PuzzleStage st = PuzzleStage.plan(level, r, anchor, room, Seeds.rng(seed));
+        PuzzleStage st = PuzzleStage.plan(level, r, anchor, room, seed);
         if (st == null) {                                                          // keep the old board (restore it)
             redrawAll();
             placeLectern();

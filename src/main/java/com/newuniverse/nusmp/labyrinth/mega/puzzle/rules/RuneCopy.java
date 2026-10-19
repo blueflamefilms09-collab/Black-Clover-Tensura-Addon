@@ -41,6 +41,8 @@ public final class RuneCopy extends PuzzleBase {
         return true;
     }
 
+    @Override protected void onBegin(long t) { shownUntil = p.lvl() == 0 ? Long.MAX_VALUE : t + 420 - 40L * p.lvl(); }
+
     @Override protected boolean countsAsMove(Act a) { return false; }
 
     @Override protected void handle(Act a) {

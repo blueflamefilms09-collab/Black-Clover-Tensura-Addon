@@ -241,6 +241,26 @@ class PuzzleSpecificTest {
         assertTrue(r.face(bad, 0) != 3, "the tile did not come back");
     }
 
+    // ---------------------------------------------------------------- rune copy: the master is shown, fades on deeper floors and the oracle shows it again
+    @Test
+    void theRuneMasterIsInViewAtAnyClockAndFadesOnDeeperFloors() {
+        for (long start : new long[] {0L, 5_000_000L}) for (int tier = 1; tier <= 5; tier++) {
+            PuzzleRule r = make("rune_copy", 3L * tier, 1, tier);
+            int n = (r.layout().total() - 2) / 2;
+            r.begin(start);
+            r.tick(start + 5);
+            for (int i = 0; i < n; i++) assertTrue(r.face(i, 0) != 6, "the master is hidden from the start (tier " + tier + ", start " + start + ")");
+            r.tick(start + 600);
+            boolean hidden = r.face(0, 0) == 6;
+            assertEquals(tier > 1, hidden, "tier " + tier + (hidden ? " hid" : " kept") + " its master after 30 seconds");
+            if (hidden) {
+                r.act(Act.click(0, 2 * n + 1, start + 700));                                    // the oracle stone
+                r.tick(start + 705);
+                assertTrue(r.face(0, 0) != 6, "the oracle did not show the master again");
+            }
+        }
+    }
+
     // ---------------------------------------------------------------- the costs and the rules of a few puzzles
     @Test
     void aWrongPlateCostsAndTheRightOrderStillWins() {

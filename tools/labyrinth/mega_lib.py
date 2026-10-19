@@ -120,7 +120,7 @@ LANTERN = "minecraft:lantern"
 SOUL_LANTERN = "minecraft:soul_lantern"
 
 MARKER_KINDS = {"arrival", "room_center", "spawn", "patrol", "seat", "hearth", "bed", "furniture", "guardian_spawn", "expansion_socket",
-                "vault_center", "pedestal", "faction", "gatekeeper", "trap", "stair_exit"}
+                "vault_center", "pedestal", "faction", "gatekeeper", "trap", "stair_exit", "puzzle"}
 
 # ------------------------------------------------------------------ block-state schema (the type-check we have instead of a game)
 _B = ("true", "false")

@@ -1019,6 +1019,24 @@
       }
     },
     {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/gallery_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/gallery_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -1037,7 +1055,7 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 4,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_a",
@@ -1046,7 +1064,7 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 4,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_b",

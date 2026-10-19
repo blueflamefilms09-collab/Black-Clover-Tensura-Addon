@@ -15,9 +15,13 @@ final class PuzzleSim {
     final List<Fx> log = new ArrayList<>();
     int steps;
 
-    PuzzleSim(PuzzleRule r) {
+    PuzzleSim(PuzzleRule r) { this(r, 0L); }
+
+    /** A player who starts at game tick {@code start} (the world's clock is nowhere near 0). */
+    PuzzleSim(PuzzleRule r, long start) {
         this.r = r;
-        log.addAll(r.begin(0));
+        this.t = start;
+        log.addAll(r.begin(start));
     }
 
     void advance(long to) {

@@ -38,7 +38,8 @@ public final class WaterLevel extends PuzzleBase {
 
     @Override protected void init() {
         cap = null;
-        for (int attempt = 0; attempt < 300 && cap == null; attempt++) {
+        int lo = 6 + 2 * p.lvl(), hi = 14 + 5 * p.lvl(), found = 0;
+        for (int attempt = 0; attempt < 400 && cap == null; attempt++) {
             int[] c = new int[n];
             boolean dup = false;
             for (int i = 0; i < n; i++) { c[i] = 3 + rng.nextInt(7); for (int j = 0; j < i; j++) dup |= c[j] == c[i]; }
@@ -48,15 +49,16 @@ public final class WaterLevel extends PuzzleBase {
             for (int v : c) isCap |= v == g;
             if (isCap) continue;
             int d = depth(c, g);
-            if (d >= 6 && d <= 26) { cap = c; goal = g; }
+            if (d >= lo && d <= hi) { cap = c; goal = g; found = d; }
         }
         if (cap == null) {
             cap = n == 2 ? new int[] {3, 5} : new int[] {3, 5, 8};
             goal = 4;
+            found = depth(cap, goal);
         }
         fill = new int[n];
         sel = -1;
-        jamBudget = 40;
+        jamBudget = Math.max(40, 2 * found + 12);
     }
 
     private static long key(int[] fill, int sel) {

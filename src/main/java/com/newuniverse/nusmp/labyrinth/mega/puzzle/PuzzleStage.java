@@ -12,15 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SplittableRandom;
 
 /**
- * Why: the world half of a {@link Layout}: where each cell of a puzzle stands in a real room. The groups of the layout are laid side by side (stacked along the room's depth, or along its
- * width if that fits better) round an anchor, each group as a row, a grid, a ring, a scatter or a list of explicit points, and every cell is checked against the real blocks: the floor under
- * it must be a solid, flat, block-entity-free floor of the same height as the others, there must be air (and headroom) where a tile's visitors stand and where a pillar's column rises, no
- * creature may stand in a pillar's column, and everything must lie inside the room (two blocks clear of its walls). If the anchor does not fit, a few other anchors are tried; if none does,
- * there is no stage and the puzzle is simply not armed in that room - a puzzle that cannot be placed never blocks a room. Compass directions are never rotated: the first group's row
- * runs along x and its rows along z, so an arrow pillar that says "north" really points to -z. Nothing is placed here: the stage only decides; the instance draws through a journal.
+ * Why: the world half of a {@link Layout}: where each cell of a puzzle stands in a real room. {@link PuzzleGeometry} says where the cells stand relative to each other; this class puts that
+ * arrangement round an anchor and checks it against the real blocks: the floor under every cell must be a solid, flat, block-entity-free floor of the same height as the others, there must be air
+ * (and headroom) where a tile's visitors stand and where a pillar's column rises, no creature may stand in a pillar's column, and everything must lie inside the room (two blocks clear of its
+ * walls). If the anchor does not fit, a few other anchors are tried (and the other stacking direction); if none does, there is no stage and the puzzle is simply not armed in that room - a puzzle
+ * that cannot be placed never blocks a room. Nothing is placed here: the stage only decides; the instance draws through a journal. Pillars stand two blocks apart, so there is always a
+ * block-wide gap to walk through, and tiles are floor: a stage never walls a room in.
  */
 final class PuzzleStage {
     /** One cell: its role, the position of its first block (a tile: the floor block; a column: the lowest block, above the floor) and its height. */
@@ -57,62 +56,6 @@ final class PuzzleStage {
             tileByXZ.put(((long) c.base().getX() << 32) ^ (c.base().getZ() & 0xFFFFFFFFL), c.index());
         } else {
             for (int y = 0; y < c.height(); y++) byPos.put(c.base().above(y).asLong(), c.index());
-        }
-    }
-
-    // ---------------------------------------------------------------- the geometry of a group in blocks
-    private record Geo(int w, int d, int[] ox, int[] oz) {}
-
-    private static Geo geo(Layout.Group g, SplittableRandom rng) {
-        int n = g.count();
-        int[] ox = new int[n], oz = new int[n];
-        int gap = Math.max(1, g.gap());
-        switch (g.shape()) {
-            case ROW -> {
-                for (int i = 0; i < n; i++) ox[i] = i * gap;
-                return new Geo((n - 1) * gap + 1, 1, ox, oz);
-            }
-            case GRID -> {
-                for (int i = 0; i < n; i++) { ox[i] = (i % g.cols()) * gap; oz[i] = (i / g.cols()) * gap; }
-                return new Geo((g.cols() - 1) * gap + 1, (g.rows() - 1) * gap + 1, ox, oz);
-            }
-            case RING -> {
-                int r = Math.max(2, (int) Math.ceil(n * gap / (2 * Math.PI)));
-                while (true) {
-                    Set<Long> seen = new HashSet<>();
-                    boolean ok = true;
-                    for (int i = 0; i < n; i++) {
-                        double a = i * 2 * Math.PI / n - Math.PI / 2;
-                        ox[i] = r + (int) Math.round(Math.cos(a) * r);
-                        oz[i] = r + (int) Math.round(Math.sin(a) * r);
-                        ok &= seen.add(((long) ox[i] << 32) ^ oz[i]);
-                        for (int j = 0; j < i; j++) if (Math.abs(ox[i] - ox[j]) + Math.abs(oz[i] - oz[j]) < 2) ok = false;
-                    }
-                    if (ok || r > 8) return new Geo(2 * r + 1, 2 * r + 1, ox, oz);
-                    r++;
-                }
-            }
-            case SCATTER -> {
-                int radius = Math.max(3, Math.min(5, n));
-                int size = 2 * radius + 1;
-                for (int i = 0; i < n; i++) {
-                    for (int tries = 0; tries < 80; tries++) {
-                        int x = rng.nextInt(size), z = rng.nextInt(size);
-                        boolean ok = true;
-                        for (int j = 0; j < i; j++) if (Math.max(Math.abs(ox[j] - x), Math.abs(oz[j] - z)) < 2) ok = false;
-                        if (!ok && tries < 79) continue;
-                        ox[i] = x;
-                        oz[i] = z;
-                        break;
-                    }
-                }
-                return new Geo(size, size, ox, oz);
-            }
-            default -> {
-                int mx = 0, mz = 0;
-                for (int i = 0; i < n; i++) { ox[i] = g.px()[i] * gap; oz[i] = g.pz()[i] * gap; mx = Math.max(mx, ox[i]); mz = Math.max(mz, oz[i]); }
-                return new Geo(mx + 1, mz + 1, ox, oz);
-            }
         }
     }
 
@@ -155,17 +98,15 @@ final class PuzzleStage {
     // ---------------------------------------------------------------- planning
     /**
      * Finds a place for every cell of the rule's layout round {@code anchor} (a standing cell) inside {@code room} (null for an admin zone), or null when there is none. {@code height(cell)} of
-     * the rule gives each column's height.
+     * the rule gives each column's height; {@code seed} fixes the scatter positions.
      */
-    static PuzzleStage plan(ServerLevel level, PuzzleRule rule, BlockPos anchor, Room room, SplittableRandom rng) {
+    static PuzzleStage plan(ServerLevel level, PuzzleRule rule, BlockPos anchor, Room room, long seed) {
         Layout lay = rule.layout();
-        List<Geo> geos = new ArrayList<>();
-        for (Layout.Group g : lay.groups()) geos.add(geo(g, rng));
         int fy = anchor.getY() - 1;
-        int[][] shifts = shifts();
-        for (int mode = 0; mode < 2; mode++) {
-            for (int[] sh : shifts) {
-                PuzzleStage st = tryPlace(level, rule, lay, geos, anchor.getX() + sh[0], anchor.getZ() + sh[1], fy, room, mode == 1);
+        for (boolean alongX : new boolean[] {false, true}) {
+            PuzzleGeometry.Arrangement arr = PuzzleGeometry.arrange(lay, seed, alongX);
+            for (int[] sh : shifts()) {
+                PuzzleStage st = tryPlace(level, rule, lay, arr, anchor.getX() + sh[0], anchor.getZ() + sh[1], fy, room);
                 if (st != null) return st;
             }
         }
@@ -188,31 +129,8 @@ final class PuzzleStage {
         return out.toArray(new int[0][]);
     }
 
-    private static PuzzleStage tryPlace(ServerLevel level, PuzzleRule rule, Layout lay, List<Geo> geos, int ax, int az, int fy, Room room, boolean alongX) {
-        int n = geos.size();
-        int[] gx = new int[n], gz = new int[n];
-        int margin = 2;
-        if (!alongX) {
-            int w = 0, d = 0;
-            for (Geo g : geos) { w = Math.max(w, g.w()); d += g.d(); }
-            d += margin * (n - 1);
-            int z = az - d / 2;
-            for (int i = 0; i < n; i++) {
-                gx[i] = ax - (geos.get(i).w() - 1) / 2;
-                gz[i] = z;
-                z += geos.get(i).d() + margin;
-            }
-        } else {
-            int w = 0, d = 0;
-            for (Geo g : geos) { w += g.w(); d = Math.max(d, g.d()); }
-            w += margin * (n - 1);
-            int x = ax - w / 2;
-            for (int i = 0; i < n; i++) {
-                gx[i] = x;
-                gz[i] = az - (geos.get(i).d() - 1) / 2;
-                x += geos.get(i).w() + margin;
-            }
-        }
+    private static PuzzleStage tryPlace(ServerLevel level, PuzzleRule rule, Layout lay, PuzzleGeometry.Arrangement arr, int ax, int az, int fy, Room room) {
+        int left = ax - arr.w() / 2, top = az - arr.d() / 2;
         PuzzleStage st = new PuzzleStage();
         st.floorY = fy;
         st.minX = Integer.MAX_VALUE;
@@ -220,13 +138,12 @@ final class PuzzleStage {
         st.maxX = Integer.MIN_VALUE;
         st.maxZ = Integer.MIN_VALUE;
         Set<Long> used = new HashSet<>();
-        for (int gi = 0; gi < n; gi++) {
+        for (int gi = 0; gi < lay.groups().size(); gi++) {
             Layout.Group g = lay.groups().get(gi);
-            Geo geo = geos.get(gi);
             int first = lay.start(gi);
             for (int i = 0; i < g.count(); i++) {
                 int cell = first + i;
-                int x = gx[gi] + geo.ox()[i], z = gz[gi] + geo.oz()[i];
+                int x = left + arr.x()[cell], z = top + arr.z()[cell];
                 int h = Math.max(1, rule.height(cell));
                 boolean tile = g.role() == Layout.Role.PLATE || (g.role() == Layout.Role.DISPLAY && h == 1);
                 if (!used.add(((long) x << 32) ^ (z & 0xFFFFFFFFL))) return null;

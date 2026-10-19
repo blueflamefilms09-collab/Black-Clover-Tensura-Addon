@@ -774,6 +774,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/puzzle/gallery_a",
+     "weight": 6
+    },
+    {
+     "template": "nusmp:mega/puzzle/gallery_b",
+     "weight": 6
+    },
+    {
      "template": "nusmp:mega/puzzle/holy_church_confessional",
      "weight": 20
     },
@@ -783,11 +791,11 @@
     },
     {
      "template": "nusmp:mega/puzzle/sigil_hall_a",
-     "weight": 10
+     "weight": 4
     },
     {
      "template": "nusmp:mega/puzzle/sigil_hall_b",
-     "weight": 10
+     "weight": 4
     },
     {
      "template": "nusmp:mega/puzzle/sunken_temple_tidal_gate",
@@ -18896,6 +18904,136 @@
    "themes": [
     "feywild_grove"
    ]
+  },
+  "nusmp:mega/puzzle/gallery_a": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "puzzle",
+     "x": 13,
+     "y": 10,
+     "z": 8
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/puzzle/gallery_b": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {
+      "faction": "goblin"
+     },
+     "kind": "faction",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "puzzle",
+     "x": 13,
+     "y": 10,
+     "z": 8
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": []
   },
   "nusmp:mega/puzzle/holy_church_confessional": {
    "kind": "PUZZLE",

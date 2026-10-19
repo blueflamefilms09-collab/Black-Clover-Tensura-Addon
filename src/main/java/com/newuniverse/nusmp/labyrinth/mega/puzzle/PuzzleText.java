@@ -161,6 +161,21 @@ public final class PuzzleText {
         p("common.adminOn", "Puzzle %s started here.");
         p("common.adminNo", "No room for that puzzle here.");
 
+        // ---------------------------------------------------------------- the admin command
+        p("cmd.clear", "Ended %s live puzzles.");
+        p("cmd.reset", "Cleared and given-up puzzles may start again.");
+        p("cmd.list.head", "Puzzle rooms: %s puzzles, at most %s a floor, switched %s.");
+        p("cmd.list.line", "  %s (%s): weight %s, tiers %s to %s");
+        p("cmd.nosuch", "No such puzzle '%s'.");
+        p("cmd.info", "Family %s, %s cells at tier 1 for one delver.");
+        p("cmd.player", "Only a player can do that.");
+        p("cmd.apply.no", "Cannot start it here: %s.");
+        p("cmd.apply.ok", "Started %s here (#%s). Crouch and right-click its lectern twice to give up.");
+        p("cmd.status.head", "%s live puzzles.");
+        p("cmd.plan.none", "You are not in a sector.");
+        p("cmd.plan.head", "Sector %s (theme %s): %s planned.");
+        p("cmd.verify.ok", "All %s puzzles pass: solvable by their own hint, palettes and texts complete.");
+
         // ---------------------------------------------------------------- the per-theme flavour (the argument is the puzzle's name)
         p("theme.default", "An old mechanism wakes as you enter: %s.");
         p("theme.abyss", "Something far below turns its attention to you: %s.");

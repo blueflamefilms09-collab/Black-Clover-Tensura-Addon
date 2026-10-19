@@ -94,6 +94,18 @@ class PuzzleRulesTest {
     }
 
     @Test
+    void theClockOfTheWorldIsNeverZeroSoNothingMayDependOnItBeingSo() {
+        for (String id : PuzzleCatalog.ids()) {
+            for (long start : new long[] {1L, 777_777L, 123_456_789L}) {
+                for (PuzzleRule r : sweep(id, 3)) {
+                    PuzzleSim sim = new PuzzleSim(r, start);
+                    assertTrue(sim.solve(900), id + " not solved when started at tick " + start + ": " + r.params());
+                }
+            }
+        }
+    }
+
+    @Test
     void aStormOfWrongActionsNeverLeavesAnUnsolvablePuzzle() {
         for (String id : PuzzleCatalog.ids()) {
             for (PuzzleRule r : sweep(id, 5)) {

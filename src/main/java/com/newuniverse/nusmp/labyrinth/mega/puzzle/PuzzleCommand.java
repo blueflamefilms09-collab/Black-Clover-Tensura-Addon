@@ -25,7 +25,7 @@ import java.util.List;
 public final class PuzzleCommand {
     private PuzzleCommand() {}
 
-    private static MutableComponent text(String key, String english, Object... args) { return Component.translatableWithFallback("message.nusmp.mega.puzzle.cmd." + key, english, args); }
+    private static MutableComponent text(String key, Object... args) { return Component.translatableWithFallback(PuzzleText.langKey("cmd." + key), PuzzleText.en("cmd." + key), args); }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {
         s.sendSuccess(() -> c, false);
@@ -46,10 +46,10 @@ public final class PuzzleCommand {
                         .then(Commands.literal("here").executes(ctx -> apply(ctx.getSource(), StringArgumentType.getString(ctx, "id"), 0L)))))
                 .then(Commands.literal("status").executes(ctx -> status(ctx.getSource())))
                 .then(Commands.literal("plan").executes(ctx -> plan(ctx.getSource())))
-                .then(Commands.literal("clear").executes(ctx -> ok(ctx.getSource(), text("clear", "Ended %s live puzzles.", PuzzleDirector.clearAll()))))
+                .then(Commands.literal("clear").executes(ctx -> ok(ctx.getSource(), text("clear", PuzzleDirector.clearAll()))))
                 .then(Commands.literal("reset").executes(ctx -> {
                     PuzzleDirector.resetSuppression();
-                    return ok(ctx.getSource(), text("reset", "Cleared and given-up puzzles may start again."));
+                    return ok(ctx.getSource(), text("reset"));
                 }))
                 .then(Commands.literal("verify").executes(ctx -> verify(ctx.getSource())));
     }
@@ -79,50 +79,50 @@ public final class PuzzleCommand {
 
     private static int list(CommandSourceStack src) {
         PuzzleWeights w = PuzzleWeights.get();
-        ok(src, text("list.head", "Puzzle rooms: %s puzzles, at most %s a floor, switched %s.", PuzzleCatalog.ids().size(), w.maxPerFloor, w.enabled ? "on" : "off"));
+        ok(src, text("list.head", PuzzleCatalog.ids().size(), w.maxPerFloor, w.enabled ? "on" : "off"));
         for (PuzzleCatalog.Entry e : PuzzleCatalog.all()) {
             PuzzleWeights.TypeW t = w.types.get(e.id());
-            ok(src, text("list.line", "  %s (%s): weight %s, tiers %s to %s", e.id(), e.family(), t == null ? "-" : t.weight(), t == null ? "-" : t.tierLo(), t == null ? "-" : t.tierHi()));
+            ok(src, text("list.line", e.id(), e.family(), t == null ? "-" : t.weight(), t == null ? "-" : t.tierLo(), t == null ? "-" : t.tierHi()));
         }
         return PuzzleCatalog.ids().size();
     }
 
     private static int info(CommandSourceStack src, String id) {
-        if (!PuzzleCatalog.has(id)) return fail(src, text("nosuch", "No such puzzle '%s'.", id));
+        if (!PuzzleCatalog.has(id)) return fail(src, text("nosuch", id));
         ok(src, Component.translatableWithFallback(PuzzleText.langKey(id + ".name"), PuzzleText.en(id + ".name")));
         ok(src, Component.translatableWithFallback(PuzzleText.langKey(id + ".hint"), PuzzleText.en(id + ".hint")));
         PuzzleRule r = PuzzleCatalog.create(id, new Params(1, 1, 1));
-        return ok(src, text("info", "Family %s, %s cells at tier 1 for one delver.", PuzzleCatalog.family(id), r.layout().total()));
+        return ok(src, text("info", PuzzleCatalog.family(id), r.layout().total()));
     }
 
     private static int apply(CommandSourceStack src, String id, long seed) {
-        if (!(src.getEntity() instanceof ServerPlayer p) || !(p.level() instanceof ServerLevel level)) return fail(src, text("player", "Only a player can do that."));
+        if (!(src.getEntity() instanceof ServerPlayer p) || !(p.level() instanceof ServerLevel level)) return fail(src, text("player"));
         String[] why = {""};
         PuzzleInstance in = PuzzleDirector.applyAt(level, id, p.blockPosition(), seed == 0L ? level.getRandom().nextLong() : seed, List.of(p), level.getGameTime(), why);
-        if (in == null) return fail(src, text("apply.no", "Cannot start it here: %s.", why[0]));
-        return ok(src, text("apply.ok", "Started %s here (#%s). Crouch and right-click its lectern twice to give up.", id, in.id));
+        if (in == null) return fail(src, text("apply.no", why[0]));
+        return ok(src, text("apply.ok", id, in.id));
     }
 
     private static int status(CommandSourceStack src) {
         List<PuzzleInstance> live = PuzzleDirector.active();
-        ok(src, text("status.head", "%s live puzzles.", live.size()));
+        ok(src, text("status.head", live.size()));
         for (PuzzleInstance in : live) ok(src, Component.literal("  " + in.describe()));
         return live.size();
     }
 
     private static int plan(CommandSourceStack src) {
-        if (!(src.getEntity() instanceof ServerPlayer p) || !(p.level() instanceof ServerLevel level)) return fail(src, text("player", "Only a player can do that."));
+        if (!(src.getEntity() instanceof ServerPlayer p) || !(p.level() instanceof ServerLevel level)) return fail(src, text("player"));
         Sector s = MegaDungeon.sectorAt(level, p.blockPosition());
-        if (s == null) return fail(src, text("plan.none", "You are not in a sector."));
+        if (s == null) return fail(src, text("plan.none"));
         List<PuzzlePlanner.Slot> slots = PuzzleDirector.planFor(s);
-        ok(src, text("plan.head", "Sector %s (theme %s): %s planned.", s.id, s.theme.id(), slots.size()));
+        ok(src, text("plan.head", s.id, s.theme.id(), slots.size()));
         for (PuzzlePlanner.Slot slot : slots) ok(src, Component.literal("  room " + slot.roomId() + ": " + slot.type()));
         return slots.size();
     }
 
     private static int verify(CommandSourceStack src) {
         List<String> bad = PuzzleVerify.run();
-        if (bad.isEmpty()) return ok(src, text("verify.ok", "All %s puzzles pass: solvable by their own hint, palettes and texts complete.", PuzzleCatalog.ids().size()));
+        if (bad.isEmpty()) return ok(src, text("verify.ok", PuzzleCatalog.ids().size()));
         for (String b : bad) fail(src, Component.literal(b));
         return 0;
     }
