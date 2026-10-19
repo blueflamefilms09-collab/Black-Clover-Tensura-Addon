@@ -82,8 +82,9 @@ public final class MirrorWorks {
         tensuraEffect(name).ifPresent(h -> t.addEffect(new MobEffectInstance(h, ticks, amp)));
     }
 
+    /** 1.93.0: a real ornate mirror is now the standing-mirror model (PropKind.MIRROR_1, tools/gen_mirror_geo.py) instead of the flat MIRROR_FRAME effect, which stays registered. */
     static void mirror(ServerPlayer p, Vec3 at, Vec3 facing, int ticks, float size) {
-        VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_FRAME, at, facing, VIOLET, ticks, size);
+        MirrorRebuild.mirrorProp(p.serverLevel(), at, facing, ticks, size, p);
     }
 
     // ---------------------------------------------------------------- Mirror Array
@@ -110,7 +111,7 @@ public final class MirrorWorks {
     private static void loseMirror(ServerPlayer p, Array a, Vec3 where) {
         a.count--;
         a.cracks = 0;
-        VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_SHATTER, where, where.add(0, 1, 0), VIOLET, 24, 1.1f);
+        VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_FX3, where, where.add(0, 1, 0), VIOLET, 24, 1.1f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.2f, 1.2f);
         if (a.count <= 0) {
             ARRAYS.remove(p.getUUID());
@@ -244,7 +245,7 @@ public final class MirrorWorks {
                 pr.setOwner(p);
                 pr.hurtMarked = true;
                 if (--holds[0] <= 0) {
-                    VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_SHATTER, pane, pane.add(0, 1, 0), VIOLET, 24, 1f);
+                    VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_FX3, pane, pane.add(0, 1, 0), VIOLET, 24, 1f);
                     return;
                 }
             }
@@ -262,7 +263,7 @@ public final class MirrorWorks {
         for (int k = 0; k < shots; k++) {
             SpellRuntime.later(p.serverLevel(), 2 + k * 4, () -> {
                 Vec3 l = p.getViewVector(1f), from = p.getEyePosition().add(l.scale(1.3)), end = from.add(l.scale(24));
-                b.vfx(p, VfxShape.MIRROR_RAY, from, end, 12, 0.9f);
+                b.vfx(p, VfxShape.MIRROR_FX1, from, end, 12, 0.9f);
                 for (LivingEntity t : GrimoireBook.along(p, from, end, 1.0)) {
                     b.hurt(i, p, t, mode, 4.5f * pw);
                     var ex = TensuraStorages.getExistenceFrom(t);              // light that cuts to the spirit
@@ -277,7 +278,7 @@ public final class MirrorWorks {
     public static boolean fullReflection(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.2f);
         p.getPersistentData().putLong("nusmp_full_reflect", p.level().getGameTime() + 160);
-        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MIRROR_ARRAY, p, p.position().add(0, 1, 0), 0xFFE8DAFF, 160, 6f);
+        MirrorRebuild.followingMirror(p.serverLevel(), p, 160, 1.6f);                                          // 1.93.0: the great mirror stands before you (it follows you)
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 160, 1));
         SpellRuntime.zone(p.serverLevel(), 160, 1, age -> {
             for (Projectile pr : WikiSpells.enemyShots(p, p.getBoundingBox().inflate(3.5))) {
@@ -312,8 +313,8 @@ public final class MirrorWorks {
             float a = k * 0.4f;
             Vec3 d = new Vec3(look.x * Mth.cos(a) - look.z * Mth.sin(a), 0, look.x * Mth.sin(a) + look.z * Mth.cos(a));
             Vec3 at = p.getEyePosition().add(d.scale(2.5));
-            mirror(p, at, at.add(d), 14, 0.8f);
-            b.vfx(p, VfxShape.MIRROR_RAY, at, at.add(d.scale(5)), 10, 0.5f);
+            MirrorRebuild.bladeProp(p.serverLevel(), at, (float) Math.toDegrees(Math.atan2(-d.x, d.z)), 7, 0.9f, 0, p);       // 1.93.0: a blade-edged mirror spins out along the arc
+            b.vfx(p, VfxShape.MIRROR_FX1, at, at.add(d.scale(5)), 10, 0.5f);
         }
         for (LivingEntity t : GrimoireBook.around(p, p.position(), 7)) {
             Vec3 to = t.position().subtract(p.position()).multiply(1, 0, 1).normalize();
@@ -336,9 +337,9 @@ public final class MirrorWorks {
         for (int k = 0; k < n; k++) {
             Vec3 hit = c.add((r.nextDouble() - 0.5) * 9, 0, (r.nextDouble() - 0.5) * 9);
             SpellRuntime.later(level, 4 + k * 4, () -> {
-                mirror(p, hit.add(0, 9, 0), hit.add(0, 8, 0), 10, 1.4f);
+                MirrorRebuild.bladeProp(level, hit.add(0, 9, 0), 0f, 9, 1.5f, 1, p);                   // 1.93.0: a blade-edged mirror falls
                 SpellRuntime.later(level, 8, () -> {
-                    VfxSpawn.send(level, VfxShape.MIRROR_SHATTER, hit.add(0, 0.5, 0), hit.add(0, 1.5, 0), VIOLET, 24, 1.5f);
+                    VfxSpawn.send(level, VfxShape.MIRROR_FX3, hit.add(0, 0.5, 0), hit.add(0, 1.5, 0), VIOLET, 24, 1.5f);
                     level.playSound(null, net.minecraft.core.BlockPos.containing(hit), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.3f, 0.8f);
                     for (LivingEntity t : GrimoireBook.around(p, hit, 2.5)) {
                         b.hurt(i, p, t, mode, 8f * pw);

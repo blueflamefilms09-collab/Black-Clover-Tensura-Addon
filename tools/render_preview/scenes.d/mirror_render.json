@@ -1,0 +1,14 @@
+{
+ "mirror_oval_idle": {
+  "kind": "geo", "model": "mirror_oval", "anim": "idle", "glow": "FFE6EEFF", "ages": [0, 25], "tile": [340, 440],
+  "views": [{"name": "front", "yaw": 12, "pitch": 6, "target": [0, 1.5, 0], "dist": 5.8}, {"name": "side 3/4", "yaw": 58, "pitch": 12, "target": [0, 1.5, 0], "dist": 5.8}]
+ },
+ "mirror_shapes": {
+  "kind": "geo", "model": "mirror_arch", "anim": "idle", "glow": "FFE6EEFF", "ages": [0], "tile": [340, 440],
+  "views": [{"name": "front", "yaw": 12, "pitch": 6, "target": [0, 1.5, 0], "dist": 5.8}]
+ },
+ "mirror_blade_idle": {
+  "kind": "geo", "model": "mirror_blade", "anim": "idle", "glow": "FFE6EEFF", "ages": [0, 20], "tile": [420, 360],
+  "views": [{"name": "side", "yaw": 90, "pitch": 10, "target": [0, 1.0, -1.0], "dist": 6.0}, {"name": "front 3/4", "yaw": 30, "pitch": 24, "target": [0, 1.0, -1.0], "dist": 6.0}]
+ }
+}

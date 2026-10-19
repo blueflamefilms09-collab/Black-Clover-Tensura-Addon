@@ -31,6 +31,7 @@ public class MirrorDoubleRenderer extends LivingEntityRenderer<MirrorDoubleEntit
         super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
         addLayer(new ItemInHandLayer<>(this, ctx.getItemInHandRenderer()));
         addLayer(new Sheen(this));
+        addLayer(new MirrorDoubleGarbLayer(this));                  // 1.93.0: the double wears the Glass Garb
     }
 
     public static void register(EntityRenderersEvent.RegisterRenderers e) {

@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.client.prop.PropDraw;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.Mth;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
@@ -49,7 +50,22 @@ public final class SpatialArmourKit {
                              float ox, float oy, float oz, Style st) {
         float a = EquipAnimation.assembled(c, delay);
         if (a == 0f) return;
-        PoseStack pose = c.pose();
+        drawPiece(c.pose(), c.buffers(), c.light(), c.age(), a, anchor, spec, clip, dx, dy, dz, ox, oy, oz, st);
+    }
+
+    /**
+     * The same piece on any posed humanoid model (the Real Doubles wear the Glass Garb): {@code life} ticks since the wearer appeared (the piece forges in through
+     * EquipAnimation after its delay and is never shattered: the wearer's own end does that), {@code age} the animation clock in ticks.
+     */
+    public static void pieceOn(PoseStack pose, MultiBufferSource buffers, int light, float life, float age, ModelPart anchor, GeoSpec spec, float delay,
+                               float dx, float dy, float dz, Style st) {
+        float a = EquipAnimation.assembled(life, 1.0e9f, delay);
+        if (a == 0f) return;
+        drawPiece(pose, buffers, light, age, a, anchor, spec, "idle", dx, dy, dz, 0f, 0f, 0f, st);
+    }
+
+    private static void drawPiece(PoseStack pose, MultiBufferSource buffers, int light, float age, float a, ModelPart anchor, GeoSpec spec, String clip,
+                                  float dx, float dy, float dz, float ox, float oy, float oz, Style st) {
         pose.pushPose();
         anchor.translateAndRotate(pose);
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
@@ -62,7 +78,7 @@ public final class SpatialArmourKit {
         int argb = ((int) (Mth.clamp(k, 0f, 1f) * 255f) << 24) | 0xFFFFFF;
         if (solid) argb = 0xFFFFFFFF;
         int glow = st.glowRgb == 0 || st.glowK <= 0f ? 0 : argb(Mth.clamp(st.glowK * alpha, 0f, 1f), st.glowRgb);
-        GeoDraw.paint(pose, c.buffers(), spec, clip, c.age() / 20f, GeoDraw.Space.PLAYER, solid ? GeoDraw.Layer.CUTOUT : GeoDraw.Layer.TRANSLUCENT, c.light(), argb, glow);
+        GeoDraw.paint(pose, buffers, spec, clip, age / 20f, GeoDraw.Space.PLAYER, solid ? GeoDraw.Layer.CUTOUT : GeoDraw.Layer.TRANSLUCENT, light, argb, glow);
         pose.popPose();
     }
 
