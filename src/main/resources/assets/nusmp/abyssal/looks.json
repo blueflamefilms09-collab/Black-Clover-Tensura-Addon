@@ -1,0 +1,2267 @@
+{
+ "schema": 1,
+ "looks": {
+  "lich": {
+   "name": "Lich",
+   "kind": "humanoid",
+   "height": 2.0,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.55,
+   "grow_xz": 2.4,
+   "grow_up": 1.8,
+   "boost": 1.0,
+   "glow": "#7dffa8",
+   "dust": true,
+   "lift": 0.0,
+   "animation": "lich",
+   "phases": [
+    {
+     "model": "lich_p1",
+     "caption": "",
+     "skin": "abyssal/skin_lich_p1",
+     "extras_model": "lich_extras_p1",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl"
+       ]
+      },
+      {
+       "id": "staff",
+       "anchor": "root",
+       "bones": [
+        "x_staff"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "lich_p2",
+     "caption": "The phylactery cracks, and soul fire pours out of the lich's sockets.",
+     "skin": "abyssal/skin_lich_p2",
+     "extras_model": "lich_extras_p2",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl"
+       ]
+      },
+      {
+       "id": "staff",
+       "anchor": "root",
+       "bones": [
+        "x_staff"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "lich_p3",
+     "caption": "The phylactery breaks. The lich burns with everything it has bound.",
+     "skin": "abyssal/skin_lich_p3",
+     "extras_model": "lich_extras_p3",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl",
+        "x_phylshard0",
+        "x_phylshard1",
+        "x_phylshard2",
+        "x_phylshard3"
+       ]
+      },
+      {
+       "id": "staff",
+       "anchor": "root",
+       "bones": [
+        "x_staff"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8",
+        "x_wisp9",
+        "x_wisp10",
+        "x_wisp11"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 106,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "acererak": {
+   "name": "Acererak",
+   "kind": "humanoid",
+   "height": 2.0,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.6,
+   "grow_xz": 1.5,
+   "grow_up": 1.05,
+   "boost": 1.05,
+   "glow": "#5ff0ff",
+   "dust": true,
+   "lift": 0.0,
+   "animation": "acererak",
+   "phases": [
+    {
+     "model": "acererak_p1",
+     "caption": "",
+     "skin": "abyssal/skin_acererak_p1",
+     "extras_model": "acererak_extras_p1",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "fan_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl"
+       ]
+      },
+      {
+       "id": "tome",
+       "anchor": "root",
+       "bones": [
+        "x_tome"
+       ]
+      },
+      {
+       "id": "orbit_skulls",
+       "anchor": "root",
+       "bones": [
+        "x_orbit",
+        "x_skull0",
+        "x_skull1",
+        "x_skull2"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "acererak_p2",
+     "caption": "Acererak's gems blaze, and the skulls of the Devoured begin to circle him faster.",
+     "skin": "abyssal/skin_acererak_p2",
+     "extras_model": "acererak_extras_p2",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "fan_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl"
+       ]
+      },
+      {
+       "id": "tome",
+       "anchor": "root",
+       "bones": [
+        "x_tome"
+       ]
+      },
+      {
+       "id": "orbit_skulls",
+       "anchor": "root",
+       "bones": [
+        "x_orbit",
+        "x_skull0",
+        "x_skull1",
+        "x_skull2",
+        "x_skull3",
+        "x_skull4"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "acererak_p3",
+     "caption": "The Eternal Lich rises: every gem in his crown is a soul, and all of them scream.",
+     "skin": "abyssal/skin_acererak_p3",
+     "extras_model": "acererak_extras_p3",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "crown",
+       "anchor": "head",
+       "bones": [
+        "x_crown"
+       ]
+      },
+      {
+       "id": "fan_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      },
+      {
+       "id": "phylactery",
+       "anchor": "body",
+       "bones": [
+        "x_phyl",
+        "x_phylshard0",
+        "x_phylshard1",
+        "x_phylshard2",
+        "x_phylshard3"
+       ]
+      },
+      {
+       "id": "tome",
+       "anchor": "root",
+       "bones": [
+        "x_tome"
+       ]
+      },
+      {
+       "id": "orbit_skulls",
+       "anchor": "root",
+       "bones": [
+        "x_orbit",
+        "x_skull0",
+        "x_skull1",
+        "x_skull2",
+        "x_skull3",
+        "x_skull4",
+        "x_skull5",
+        "x_skull6"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8",
+        "x_wisp9",
+        "x_wisp10",
+        "x_wisp11"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "arm_r",
+       "bones": []
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 128,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "vecna": {
+   "name": "Vecna",
+   "kind": "humanoid",
+   "height": 2.0,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.55,
+   "grow_xz": 2.0,
+   "grow_up": 0.66,
+   "boost": 1.0,
+   "glow": "#ff4040",
+   "dust": true,
+   "lift": 0.0,
+   "animation": "vecna",
+   "phases": [
+    {
+     "model": "vecna_p1",
+     "caption": "",
+     "skin": "abyssal/skin_vecna_p1",
+     "extras_model": "vecna_extras_p1",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0"
+       ]
+      },
+      {
+       "id": "hand_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_hand"
+       ]
+      },
+      {
+       "id": "eye_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_eye"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "body",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "vecna_p2",
+     "caption": "The Hand of Vecna ignites and the Eye opens: he sees everyone in the hall.",
+     "skin": "abyssal/skin_vecna_p2",
+     "extras_model": "vecna_extras_p2",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0"
+       ]
+      },
+      {
+       "id": "hand_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_hand",
+        "x_handflame0",
+        "x_handflame1",
+        "x_handflame2",
+        "x_handflame3"
+       ]
+      },
+      {
+       "id": "eye_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_eye",
+        "x_ray0"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "body",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "vecna_p3",
+     "caption": "Vecna is whole again. The Hand burns, the Eye is wide open, and the web closes.",
+     "skin": "abyssal/skin_vecna_p3",
+     "extras_model": "vecna_extras_p3",
+     "extras": [
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0"
+       ]
+      },
+      {
+       "id": "hand_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_hand",
+        "x_handflame0",
+        "x_handflame1",
+        "x_handflame2",
+        "x_handflame3"
+       ]
+      },
+      {
+       "id": "eye_of_vecna",
+       "anchor": "root",
+       "bones": [
+        "x_eye",
+        "x_ray0",
+        "x_ray1",
+        "x_ray2"
+       ]
+      },
+      {
+       "id": "wisps",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8",
+        "x_wisp9"
+       ]
+      },
+      {
+       "id": "shoulder_spikes",
+       "anchor": "body",
+       "bones": []
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 73,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {
+     "arm_l": [
+      1.0,
+      0.62,
+      1.0
+     ]
+    }
+   }
+  },
+  "strahd": {
+   "name": "Strahd",
+   "kind": "humanoid",
+   "height": 2.0,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.5,
+   "grow_xz": 3.0,
+   "grow_up": 0.66,
+   "boost": 1.0,
+   "glow": "#ff3030",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "strahd",
+   "phases": [
+    {
+     "model": "strahd_p1",
+     "caption": "",
+     "skin": "abyssal/skin_strahd_p1",
+     "extras_model": "strahd_extras_p1",
+     "extras": [
+      {
+       "id": "collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "bat_wings",
+       "anchor": "body",
+       "bones": []
+      },
+      {
+       "id": "bats",
+       "anchor": "root",
+       "bones": [
+        "x_bats",
+        "x_bat0_w0",
+        "x_bat0_w1",
+        "x_bat0",
+        "x_bat1_w0",
+        "x_bat1_w1",
+        "x_bat1",
+        "x_bat2_w0",
+        "x_bat2_w1",
+        "x_bat2",
+        "x_bat3_w0",
+        "x_bat3_w1",
+        "x_bat3"
+       ]
+      },
+      {
+       "id": "blood_mist",
+       "anchor": "root",
+       "bones": []
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": []
+      }
+     ]
+    },
+    {
+     "model": "strahd_p2",
+     "caption": "Strahd tears his cape open: leathery wings, and the bats come down from the rafters.",
+     "skin": "abyssal/skin_strahd_p2",
+     "extras_model": "strahd_extras_p2",
+     "extras": [
+      {
+       "id": "collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "bat_wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "bats",
+       "anchor": "root",
+       "bones": [
+        "x_bats",
+        "x_bat0_w0",
+        "x_bat0_w1",
+        "x_bat0",
+        "x_bat1_w0",
+        "x_bat1_w1",
+        "x_bat1",
+        "x_bat2_w0",
+        "x_bat2_w1",
+        "x_bat2",
+        "x_bat3_w0",
+        "x_bat3_w1",
+        "x_bat3",
+        "x_bat4_w0",
+        "x_bat4_w1",
+        "x_bat4",
+        "x_bat5_w0",
+        "x_bat5_w1",
+        "x_bat5",
+        "x_bat6_w0",
+        "x_bat6_w1",
+        "x_bat6"
+       ]
+      },
+      {
+       "id": "blood_mist",
+       "anchor": "root",
+       "bones": []
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "strahd_p3",
+     "caption": "The Devil of Barovia is the swarm. His eyes burn and the floor runs with red mist.",
+     "skin": "abyssal/skin_strahd_p3",
+     "extras_model": "strahd_extras_p3",
+     "extras": [
+      {
+       "id": "collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "bat_wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "bats",
+       "anchor": "root",
+       "bones": [
+        "x_bats",
+        "x_bat0_w0",
+        "x_bat0_w1",
+        "x_bat0",
+        "x_bat1_w0",
+        "x_bat1_w1",
+        "x_bat1",
+        "x_bat2_w0",
+        "x_bat2_w1",
+        "x_bat2",
+        "x_bat3_w0",
+        "x_bat3_w1",
+        "x_bat3",
+        "x_bat4_w0",
+        "x_bat4_w1",
+        "x_bat4",
+        "x_bat5_w0",
+        "x_bat5_w1",
+        "x_bat5",
+        "x_bat6_w0",
+        "x_bat6_w1",
+        "x_bat6",
+        "x_bat7_w0",
+        "x_bat7_w1",
+        "x_bat7",
+        "x_bat8_w0",
+        "x_bat8_w1",
+        "x_bat8",
+        "x_bat9_w0",
+        "x_bat9_w1",
+        "x_bat9"
+       ]
+      },
+      {
+       "id": "blood_mist",
+       "anchor": "root",
+       "bones": [
+        "x_mist0",
+        "x_mist1",
+        "x_mist2",
+        "x_mist3",
+        "x_mist4",
+        "x_mist5",
+        "x_mist6",
+        "x_mist7",
+        "x_mist8",
+        "x_mist9"
+       ]
+      },
+      {
+       "id": "eye_fire",
+       "anchor": "head",
+       "bones": [
+        "x_eyefire0",
+        "x_eyefire1"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 106,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "zariel": {
+   "name": "Zariel",
+   "kind": "humanoid",
+   "height": 2.0,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.5,
+   "grow_xz": 3.56,
+   "grow_up": 1.54,
+   "boost": 1.0,
+   "glow": "#ff7a20",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "zariel",
+   "phases": [
+    {
+     "model": "zariel_p1",
+     "caption": "",
+     "skin": "abyssal/skin_zariel_p1",
+     "extras_model": "zariel_extras_p1",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "flame_sword",
+       "anchor": "arm_r",
+       "bones": [
+        "x_sword",
+        "x_swordflame0",
+        "x_swordflame1",
+        "x_swordflame2"
+       ]
+      },
+      {
+       "id": "flames",
+       "anchor": "body",
+       "bones": [
+        "x_flame0",
+        "x_flame1",
+        "x_flame2",
+        "x_flame3"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "zariel_p2",
+     "caption": "Zariel's wings catch fire and the plate begins to glow.",
+     "skin": "abyssal/skin_zariel_p2",
+     "extras_model": "zariel_extras_p2",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "flame_sword",
+       "anchor": "arm_r",
+       "bones": [
+        "x_sword",
+        "x_swordflame0",
+        "x_swordflame1",
+        "x_swordflame2"
+       ]
+      },
+      {
+       "id": "flames",
+       "anchor": "body",
+       "bones": [
+        "x_flame0",
+        "x_flame1",
+        "x_flame2",
+        "x_flame3",
+        "x_flame4",
+        "x_flame5"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "zariel_p3",
+     "caption": "The Archduchess of Avernus unfolds a second pair of wings; her halo closes into a ring of fire.",
+     "skin": "abyssal/skin_zariel_p3",
+     "extras_model": "zariel_extras_p3",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2",
+        "x_wing2_r",
+        "x_wing2_r2",
+        "x_wing2_l",
+        "x_wing2_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "flame_sword",
+       "anchor": "arm_r",
+       "bones": [
+        "x_sword",
+        "x_swordflame0",
+        "x_swordflame1",
+        "x_swordflame2"
+       ]
+      },
+      {
+       "id": "flames",
+       "anchor": "body",
+       "bones": [
+        "x_flame0",
+        "x_flame1",
+        "x_flame2",
+        "x_flame3",
+        "x_flame4",
+        "x_flame5",
+        "x_flame6",
+        "x_flame7"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 78,
+   "humanoid": {
+    "slim": true,
+    "part_scale": {}
+   }
+  },
+  "asmodeus": {
+   "name": "Asmodeus",
+   "kind": "humanoid",
+   "height": 2.1,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.6,
+   "grow_xz": 4.33,
+   "grow_up": 1.29,
+   "boost": 1.05,
+   "glow": "#ffb030",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "asmodeus",
+   "phases": [
+    {
+     "model": "asmodeus_p1",
+     "caption": "",
+     "skin": "abyssal/skin_asmodeus_p1",
+     "extras_model": "asmodeus_extras_p1",
+     "extras": [
+      {
+       "id": "horn_crown",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "mantle",
+       "anchor": "body",
+       "bones": [
+        "x_mantle"
+       ]
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "ruby_rod",
+       "anchor": "arm_r",
+       "bones": [
+        "x_rod"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "tail",
+       "anchor": "body",
+       "bones": [
+        "x_tail_0",
+        "x_tail_1",
+        "x_tail_2",
+        "x_tail_3",
+        "x_tail_4"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "asmodeus_p2",
+     "caption": "Asmodeus spreads his wings and the hall fills with the heat of the Nine Hells.",
+     "skin": "abyssal/skin_asmodeus_p2",
+     "extras_model": "asmodeus_extras_p2",
+     "extras": [
+      {
+       "id": "horn_crown",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "mantle",
+       "anchor": "body",
+       "bones": [
+        "x_mantle"
+       ]
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "ruby_rod",
+       "anchor": "arm_r",
+       "bones": [
+        "x_rod"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "tail",
+       "anchor": "body",
+       "bones": [
+        "x_tail_0",
+        "x_tail_1",
+        "x_tail_2",
+        "x_tail_3",
+        "x_tail_4"
+       ]
+      },
+      {
+       "id": "hellfire",
+       "anchor": "body",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "asmodeus_p3",
+     "caption": "The wings burn along every vein, the horns grow tall, and a ring of hellfire opens behind the Archdevil.",
+     "skin": "abyssal/skin_asmodeus_p3",
+     "extras_model": "asmodeus_extras_p3",
+     "extras": [
+      {
+       "id": "horn_crown",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "mantle",
+       "anchor": "body",
+       "bones": [
+        "x_mantle"
+       ]
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "ruby_rod",
+       "anchor": "arm_r",
+       "bones": [
+        "x_rod"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "tail",
+       "anchor": "body",
+       "bones": [
+        "x_tail_0",
+        "x_tail_1",
+        "x_tail_2",
+        "x_tail_3",
+        "x_tail_4"
+       ]
+      },
+      {
+       "id": "hellfire",
+       "anchor": "body",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5"
+       ]
+      },
+      {
+       "id": "fire_ring",
+       "anchor": "head",
+       "bones": [
+        "x_ring"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 126,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "orcus": {
+   "name": "Orcus",
+   "kind": "humanoid",
+   "height": 2.1,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.8,
+   "grow_xz": 3.76,
+   "grow_up": 0.66,
+   "boost": 1.1,
+   "glow": "#78ff60",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "orcus",
+   "phases": [
+    {
+     "model": "orcus_p1",
+     "caption": "",
+     "skin": "abyssal/skin_orcus_p1",
+     "extras_model": "orcus_extras_p1",
+     "extras": [
+      {
+       "id": "belly",
+       "anchor": "body",
+       "bones": [
+        "x_belly"
+       ]
+      },
+      {
+       "id": "skull_chain",
+       "anchor": "body",
+       "bones": [
+        "x_chain"
+       ]
+      },
+      {
+       "id": "ram_horns",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "skull_pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "wand_of_orcus",
+       "anchor": "arm_r",
+       "bones": [
+        "x_wand"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "souls",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "orcus_p2",
+     "caption": "The gut of Orcus splits and soul fire shows in the wound.",
+     "skin": "abyssal/skin_orcus_p2",
+     "extras_model": "orcus_extras_p2",
+     "extras": [
+      {
+       "id": "belly",
+       "anchor": "body",
+       "bones": [
+        "x_belly"
+       ]
+      },
+      {
+       "id": "skull_chain",
+       "anchor": "body",
+       "bones": [
+        "x_chain"
+       ]
+      },
+      {
+       "id": "ram_horns",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "skull_pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "wand_of_orcus",
+       "anchor": "arm_r",
+       "bones": [
+        "x_wand"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "souls",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "orcus_p3",
+     "caption": "Ribs break out of the demon prince; a crowd of souls rises with him.",
+     "skin": "abyssal/skin_orcus_p3",
+     "extras_model": "orcus_extras_p3",
+     "extras": [
+      {
+       "id": "belly",
+       "anchor": "body",
+       "bones": [
+        "x_belly"
+       ]
+      },
+      {
+       "id": "skull_chain",
+       "anchor": "body",
+       "bones": [
+        "x_chain"
+       ]
+      },
+      {
+       "id": "ram_horns",
+       "anchor": "head",
+       "bones": [
+        "x_horns"
+       ]
+      },
+      {
+       "id": "skull_pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "wand_of_orcus",
+       "anchor": "arm_r",
+       "bones": [
+        "x_wand"
+       ]
+      },
+      {
+       "id": "skirt",
+       "anchor": "body",
+       "bones": [
+        "x_skirt_f0",
+        "x_skirt_b0",
+        "x_skirt_f1",
+        "x_skirt_b1",
+        "x_skirt_f2",
+        "x_skirt_b2",
+        "x_skirt_s0",
+        "x_skirt_s1"
+       ]
+      },
+      {
+       "id": "souls",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8",
+        "x_wisp9",
+        "x_wisp10",
+        "x_wisp11"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 107,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "lich_king": {
+   "name": "Lich King",
+   "kind": "humanoid",
+   "height": 2.2,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.7,
+   "grow_xz": 1.65,
+   "grow_up": 1.75,
+   "boost": 1.1,
+   "glow": "#6ad8ff",
+   "dust": true,
+   "lift": 0.0,
+   "animation": "lich_king",
+   "phases": [
+    {
+     "model": "lich_king_p1",
+     "caption": "",
+     "skin": "abyssal/skin_lich_king_p1",
+     "extras_model": "lich_king_extras_p1",
+     "extras": [
+      {
+       "id": "horned_helm",
+       "anchor": "head",
+       "bones": [
+        "x_helm"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "fur_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "runeblade",
+       "anchor": "arm_r",
+       "bones": [
+        "x_blade"
+       ]
+      },
+      {
+       "id": "frost",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "lich_king_p2",
+     "caption": "Ice crystals break through the Lich King's armour and the runeblade sings.",
+     "skin": "abyssal/skin_lich_king_p2",
+     "extras_model": "lich_king_extras_p2",
+     "extras": [
+      {
+       "id": "horned_helm",
+       "anchor": "head",
+       "bones": [
+        "x_helm"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "fur_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "runeblade",
+       "anchor": "arm_r",
+       "bones": [
+        "x_blade"
+       ]
+      },
+      {
+       "id": "frost",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "lich_king_p3",
+     "caption": "The Frozen Throne answers: a ring of runes opens under the Lich King.",
+     "skin": "abyssal/skin_lich_king_p3",
+     "extras_model": "lich_king_extras_p3",
+     "extras": [
+      {
+       "id": "horned_helm",
+       "anchor": "head",
+       "bones": [
+        "x_helm"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "fur_collar",
+       "anchor": "body",
+       "bones": [
+        "x_collar"
+       ]
+      },
+      {
+       "id": "cape",
+       "anchor": "body",
+       "bones": [
+        "x_cape0",
+        "x_cape1",
+        "x_cape2"
+       ]
+      },
+      {
+       "id": "runeblade",
+       "anchor": "arm_r",
+       "bones": [
+        "x_blade"
+       ]
+      },
+      {
+       "id": "rune_ring",
+       "anchor": "root",
+       "bones": [
+        "x_runes"
+       ]
+      },
+      {
+       "id": "frost",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8",
+        "x_wisp9"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 89,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "solar": {
+   "name": "Solar",
+   "kind": "humanoid",
+   "height": 2.1,
+   "walk_cycle": 1.3,
+   "run_cycle": 2.3,
+   "shadow": 0.55,
+   "grow_xz": 3.26,
+   "grow_up": 1.98,
+   "boost": 1.05,
+   "glow": "#ffe890",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "solar",
+   "phases": [
+    {
+     "model": "solar_p1",
+     "caption": "",
+     "skin": "abyssal/skin_solar_p1",
+     "extras_model": "solar_extras_p1",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "sunburst",
+       "anchor": "body",
+       "bones": [
+        "x_sun"
+       ]
+      },
+      {
+       "id": "bow_of_light",
+       "anchor": "arm_l",
+       "bones": [
+        "x_bow"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "radiance",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "solar_p2",
+     "caption": "A second pair of wings unfolds behind the Solar and the sunburst turns.",
+     "skin": "abyssal/skin_solar_p2",
+     "extras_model": "solar_extras_p2",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2",
+        "x_wing2_r",
+        "x_wing2_r2",
+        "x_wing2_l",
+        "x_wing2_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "sunburst",
+       "anchor": "body",
+       "bones": [
+        "x_sun"
+       ]
+      },
+      {
+       "id": "bow_of_light",
+       "anchor": "arm_l",
+       "bones": [
+        "x_bow"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "radiance",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5"
+       ]
+      }
+     ]
+    },
+    {
+     "model": "solar_p3",
+     "caption": "Six wings, a full halo and a bow drawn to the ear: the Solar judges the hall.",
+     "skin": "abyssal/skin_solar_p3",
+     "extras_model": "solar_extras_p3",
+     "extras": [
+      {
+       "id": "wings",
+       "anchor": "body",
+       "bones": [
+        "x_wing_r",
+        "x_wing_r2",
+        "x_wing_l",
+        "x_wing_l2",
+        "x_wing2_r",
+        "x_wing2_r2",
+        "x_wing2_l",
+        "x_wing2_l2",
+        "x_wing3_r",
+        "x_wing3_r2",
+        "x_wing3_l",
+        "x_wing3_l2"
+       ]
+      },
+      {
+       "id": "halo",
+       "anchor": "head",
+       "bones": [
+        "x_halo"
+       ]
+      },
+      {
+       "id": "sunburst",
+       "anchor": "body",
+       "bones": [
+        "x_sun"
+       ]
+      },
+      {
+       "id": "bow_of_light",
+       "anchor": "arm_l",
+       "bones": [
+        "x_bow"
+       ]
+      },
+      {
+       "id": "pauldrons",
+       "anchor": "arm_r",
+       "bones": []
+      },
+      {
+       "id": "radiance",
+       "anchor": "root",
+       "bones": [
+        "x_wisp0",
+        "x_wisp1",
+        "x_wisp2",
+        "x_wisp3",
+        "x_wisp4",
+        "x_wisp5",
+        "x_wisp6",
+        "x_wisp7",
+        "x_wisp8"
+       ]
+      }
+     ]
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 114,
+   "humanoid": {
+    "slim": false,
+    "part_scale": {}
+   }
+  },
+  "beholder": {
+   "name": "Beholder",
+   "kind": "geo",
+   "height": 3.3,
+   "walk_cycle": 2.2,
+   "run_cycle": 3.6,
+   "shadow": 1.1,
+   "grow_xz": 3.3,
+   "grow_up": 0.66,
+   "boost": 0.9,
+   "glow": "#ffb020",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "beholder",
+   "phases": [
+    {
+     "model": "beholder_p1",
+     "caption": ""
+    },
+    {
+     "model": "beholder_p2",
+     "caption": "The Beholder's eyestalks flare: every ray is awake."
+    },
+    {
+     "model": "beholder_p3",
+     "caption": "Four more stalks tear free and the central eye opens its cone of nothing."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 121
+  },
+  "elder_brain": {
+   "name": "Elder Brain",
+   "kind": "geo",
+   "height": 3.0,
+   "walk_cycle": 2.0,
+   "run_cycle": 3.4,
+   "shadow": 1.0,
+   "grow_xz": 1.47,
+   "grow_up": 0.66,
+   "boost": 0.95,
+   "glow": "#c080ff",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "elder_brain",
+   "phases": [
+    {
+     "model": "elder_brain_p1",
+     "caption": ""
+    },
+    {
+     "model": "elder_brain_p2",
+     "caption": "The jar cracks. The Elder Brain swells and the whole hall hums."
+    },
+    {
+     "model": "elder_brain_p3",
+     "caption": "The jar bursts. A bare brain, ringed with psionic light, hangs among its own glass."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 172
+  },
+  "kraken": {
+   "name": "Kraken",
+   "kind": "geo",
+   "height": 3.2,
+   "walk_cycle": 2.6,
+   "run_cycle": 4.2,
+   "shadow": 1.4,
+   "grow_xz": 1.61,
+   "grow_up": 1.18,
+   "boost": 0.95,
+   "glow": "#40ffd0",
+   "dust": false,
+   "lift": 0.0,
+   "animation": "kraken",
+   "phases": [
+    {
+     "model": "kraken_p1",
+     "caption": ""
+    },
+    {
+     "model": "kraken_p2",
+     "caption": "The Kraken's lights blaze and four more arms climb out from under it."
+    },
+    {
+     "model": "kraken_p3",
+     "caption": "Lightning crawls over the Kraken's mantle: the black tide is about to break."
+    }
+   ],
+   "glow_level": [
+    0.75,
+    0.9,
+    1.0
+   ],
+   "cubes": 250
+  }
+ }
+}
