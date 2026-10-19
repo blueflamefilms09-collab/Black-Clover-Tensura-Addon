@@ -155,6 +155,13 @@ public class MagicWeaponItem extends SwordItem {
         return s;
     }
 
+    /** 1.97.0: Elsdocia is Genesis grade: its name wears the Genesis colour. */
+    @Override
+    public Component getName(ItemStack stack) {
+        Component n = super.getName(stack);
+        return kind == Kind.ELSDOCIA ? n.copy().withStyle(com.newuniverse.nusmp.relics.Grade.GENESIS.colour()) : n;
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity holder, int slot, boolean selected) {
         if (level.isClientSide || level.getGameTime() % 20 != 0) return;
@@ -203,6 +210,7 @@ public class MagicWeaponItem extends SwordItem {
         }
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
+        if (kind == Kind.ELSDOCIA && ElsdociaArts.use(p, stack, this)) return InteractionResultHolder.success(stack);   // 1.97.0: lineage claim, learned magics (shift cycles, click casts)
         if (p.isShiftKeyDown() && WeaponArts.alt(kind) != null) {                    // 0.52: the second technique (sneak + right-click)
             WeaponArts.tryAlt(p, kind);
             return InteractionResultHolder.success(stack);
@@ -226,7 +234,7 @@ public class MagicWeaponItem extends SwordItem {
         for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, box)) if (pr.getOwner() != p) pr.discard();
     }
 
-    private boolean technique(ServerPlayer p, ItemStack stack) {
+    boolean technique(ServerPlayer p, ItemStack stack) {
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (kind) {
             case DEMON_SLASHER_KATANA -> {
@@ -492,6 +500,7 @@ public class MagicWeaponItem extends SwordItem {
         }
         if (kind == Kind.ELSDOCIA) {
             int charge = d == null ? 0 : Mth.clamp(d.copyTag().getInt("ElsdociaCharge"), 0, 1000);
+            ElsdociaArts.tooltip(stack, tip);                                                // 1.97.0: Genesis grade, damage, owner, learned magics
             tip.add(Component.literal("Legacy engraving: Legacy of the Wizard Kings").withStyle(ChatFormatting.LIGHT_PURPLE));
             tip.add(Component.literal("Stored magic: " + charge + "/1000").withStyle(ChatFormatting.AQUA));
             tip.add(Component.literal("Key Magic grimoire summoned: extended rift").withStyle(ChatFormatting.GOLD));

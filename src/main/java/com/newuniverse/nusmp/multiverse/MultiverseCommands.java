@@ -206,6 +206,7 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.entity.zogratis.ZogratisCommand.addTo(bossNode);                       // 1.20.0: dante | vanica | zenon | lucius | triad
         com.newuniverse.nusmp.relics.RelicCommands.addTo(root);
         com.newuniverse.nusmp.relics.tier.TierCommands.addTo(root);                                                       // 1.30.0: relic tier                                                       // 1.24.0: relic list|info|give|attune|unattune|grade
+        com.newuniverse.nusmp.item.ElsdociaCommand.addTo(root);                                                       // 1.97.0: relic elsdocia reset|owner|lineage
         com.newuniverse.nusmp.relics.order.RelicOrderCommand.addTo(root);                                              // relic order census|enforce|status|release|summon
         com.newuniverse.nusmp.relics.djinn.DjinnCommand.addTo(root);                                                   // djinn status|release|share|grant|phase
         root.then(com.newuniverse.nusmp.compat.CompatCommand.node());                                    // 1.33.0: compat book|status

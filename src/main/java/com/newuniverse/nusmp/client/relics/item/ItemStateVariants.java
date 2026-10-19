@@ -126,6 +126,7 @@ public final class ItemStateVariants {
         RelicDef def = Relics.defOf(stack);
         // 1.29.0: from Legend up (the effective tier: a raised tier counts) a relic wears the "_genesis" mesh if it ships one, else the stronger glow
         boolean stackGenesis = def != null && (def.grade() == Grade.GENESIS || VariantRules.elaborate(SocketGrades.tier(stack)));
+        if (!stackGenesis && com.newuniverse.nusmp.item.ElsdociaRules.isLegacyException(stack)) stackGenesis = true;     // 1.97.0: Elsdocia is Genesis grade
         boolean bc = stack.getItem() instanceof MagicWeaponItem;
         int packed = holder == null ? 0 : HolderFlags.get(holder.getId());
         boolean holderGenesis = HolderFlags.genesis(packed) || (holder != null && genesisBody(holder));
