@@ -1,0 +1,151 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.air_pauld_r",
+    "texture_width": 64,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "arm",
+     "pivot": [
+      -5,
+      22,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -6.9,
+        22.2,
+        -4.0
+       ],
+       "size": [
+        1,
+        5,
+        6
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        18
+       ],
+       "pivot": [
+        -6.4,
+        24.7,
+        -1.0
+       ]
+      },
+      {
+       "origin": [
+        -7.7,
+        22.2,
+        -1.4
+       ],
+       "size": [
+        1,
+        5,
+        4
+       ],
+       "uv": [
+        14,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        40
+       ],
+       "pivot": [
+        -7.2,
+        24.7,
+        0.6000000000000001
+       ]
+      },
+      {
+       "origin": [
+        -8.5,
+        22.2,
+        1.2000000000000002
+       ],
+       "size": [
+        1,
+        5,
+        4
+       ],
+       "uv": [
+        24,
+        0
+       ],
+       "rotation": [
+        0,
+        0,
+        62
+       ],
+       "pivot": [
+        -8.0,
+        24.7,
+        3.2
+       ]
+      },
+      {
+       "origin": [
+        -9.4,
+        22.0,
+        -2.6
+       ],
+       "size": [
+        6,
+        1,
+        5
+       ],
+       "uv": [
+        34,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -7.800000000000001,
+        22.799999999999997,
+        -1.6
+       ],
+       "size": [
+        3,
+        3,
+        3
+       ],
+       "uv": [
+        0,
+        11
+       ]
+      }
+     ],
+     "parent": "root"
+    }
+   ]
+  }
+ ]
+}

@@ -63,5 +63,12 @@ public enum Aura {
     SOUND,
     SOUL,
     SOUL_CORPSE,
-    MEMORY
+    MEMORY,
+    /** 1.93.0 rebuild: the temporary armour sets of Smoke, Snow, Wing, Vortex, Air and Ash Magic (client.aura.<Name>Aura, pieces forged in by EquipAnimation) */
+    SMOKE,
+    SNOW,
+    WING,
+    VORTEX,
+    AIR,
+    ASH
 }

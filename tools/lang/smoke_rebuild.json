@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_smoke.description": "A grimoire of Smoke Magic: the caster who hides, blinds and misleads inside a cloud of his own smoke. A bullet that bursts into a choking cloud, a serpent of smoke, a screen that hides allies and blinds foes, three clones, an armour of smoke that turns blows into vapour, a step through smoke, a coiling serpent and a rolling wave. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_smoke.attribute_bolt": "Smoke Bullet: a bolt of dense smoke that bursts where it lands, blinding and slowing everything in the burst, and leaves a cloud for 2.5 seconds that keeps foes blind and slow. Damage and size scale with your EP.",
+ "nusmp.page.book_smoke.attribute_cut": "Smoke Serpent: a serpent of smoke lunges ten blocks along your aim and bites every foe it passes through once, for damage and blindness. Damage scales with your EP.",
+ "nusmp.page.book_smoke.attribute_field": "Smoke Screen: five seconds of thick smoke where you aim. Foes inside are blinded and slowed, choke a little and lose track of you; you and your allies inside turn invisible. Radius scales with your EP.",
+ "nusmp.page.book_smoke.attribute_domain": "Smoke Clones: three clones of smoke stand round you for ten seconds (longer with EP). They breathe blinding smoke on everything near, cut the nearest hostile, make mobs lose you and burst into a cloud when they end. You vanish into the smoke armour for five seconds.",
+ "nusmp.page.book_smoke.attribute_guard": "Smoke Armour: nine seconds of armour forged from smoke piece by piece. 30 percent of the blows that reach you turn into smoke, attackers are pricked, your blows hit harder and you move faster.",
+ "nusmp.page.book_smoke.smoke_step": "Smoke Step: you turn to smoke and flow up to eleven blocks along your aim, blinding everything you pass, and stay unseen for two seconds. Mobs hunting you lose the trail.",
+ "nusmp.page.book_smoke.coiling_serpent": "Coiling Serpent: a serpent of smoke coils round one foe in sight. Held and squeezed for as long as your control allows (shortened on bosses, shares the twelve second control lock).",
+ "nusmp.page.book_smoke.smoke_wave": "Smoke Wave: a rolling wall of smoke in a cone in front of you: damage, a push and blindness. Damage scales with your EP."
+}

@@ -28,9 +28,18 @@ class MagicShapesTest {
 
     @Test
     void wikiAttributesUseTheSharedLayersAndEverythingElseTheGenericOnes() {
-        assertEquals(VfxStyle.WIKI, MagicShapes.of("AIR", true).style());
-        assertEquals(VfxShape.WIKI_MAGIC_CAST, MagicShapes.of("AIR", true).cast());
-        assertEquals(VfxStyle.GENERIC, MagicShapes.of("AIR", false).style());
+        // 1.93.0: Air, Smoke, Snow, Wing, Vortex and Ash have their own FX triples now; the first wiki attribute that has none stands for "a wiki attribute"
+        String wiki = null;
+        for (int k = 0; k < com.newuniverse.nusmp.vfx.WikiStyles.COUNT && wiki == null; k++) {
+            String n = com.newuniverse.nusmp.vfx.WikiStyles.name(k);
+            if (!MagicShapes.hasFxTriple(n)) wiki = n;
+        }
+        assertNotNull(wiki);
+        assertEquals(VfxStyle.WIKI, MagicShapes.of(wiki, true).style());
+        assertEquals(VfxShape.WIKI_MAGIC_CAST, MagicShapes.of(wiki, true).cast());
+        assertEquals(VfxStyle.GENERIC, MagicShapes.of(wiki, false).style());
+        assertEquals(VfxShape.SMOKE_FX1, MagicShapes.of("SMOKE", true).cast());
+        assertEquals(VfxShape.AIR_FX3, MagicShapes.of("AIR", true).burst());
         assertSame(MagicShapes.GENERIC, MagicShapes.of("SOMETHING_NEW", false));
         assertSame(MagicShapes.GENERIC, MagicShapes.of("", true));
         assertSame(MagicShapes.GENERIC, MagicShapes.of(null, true));

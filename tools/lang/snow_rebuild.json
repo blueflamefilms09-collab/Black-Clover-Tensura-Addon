@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_snow.description": "A grimoire of Snow Magic: snow and cold shaped into bullets, crescents, storms and soldiers. A packed snowball, a crescent of hard snow, a blizzard, a golem of snow, a mantle of snow and ice forged piece by piece, a drift to slide on, a frost crystal and a whiteout. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_snow.attribute_bolt": "Snow Bullet: a packed snowball that bursts where it lands for damage, slow II and frostbite. Damage scales with your EP.",
+ "nusmp.page.book_snow.attribute_cut": "Snow Crescent: a crescent of hard snow cut nine blocks ahead through every foe on the line: damage, slow II and frostbite.",
+ "nusmp.page.book_snow.attribute_field": "Blizzard: six seconds of blizzard at the aim point. Everything inside is slowed, frostbitten, hurt a little and pushed towards the edge. Radius scales with your EP.",
+ "nusmp.page.book_snow.attribute_domain": "Snow Golem: a golem of packed snow with an ice heart rises beside you and fights for twenty seconds (longer with EP): it walks to the nearest hostile and slams it with a chilling shockwave, and crumbles when it ends. You wear the snow armour for five seconds.",
+ "nusmp.page.book_snow.attribute_guard": "Snow Armour: nine seconds of mantle of snow, fur and ice forged piece by piece: damage resistance, a hit harder, and whatever strikes you in melee is chilled.",
+ "nusmp.page.book_snow.snow_drift": "Snow Drift: you slide on a drift up to ten blocks along your aim, chilling everything you pass.",
+ "nusmp.page.book_snow.frost_crystal": "Frost Crystal: an ice crystal grows where you aim and lasts ten seconds (longer with EP). Every second it pulses frost on everything within four and a half blocks, and it shatters at the end.",
+ "nusmp.page.book_snow.whiteout": "Whiteout: a ring of white around you: foes within seven blocks are blinded, slowed hard and hurt."
+}

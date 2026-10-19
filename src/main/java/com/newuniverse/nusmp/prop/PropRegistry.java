@@ -63,5 +63,11 @@ final class PropRegistry {
         SoulRebuildProps.init();
         SoulCorpseRebuildProps.init();
         MemoryRebuildProps.init();
+        SmokeProps.init();                   // 1.93.0: the rebuilt summons of Smoke, Snow, Wing, Vortex, Air and Ash
+        AshProps.init();
+        AirProps.init();
+        VortexProps.init();
+        WingProps.init();
+        SnowProps.init();
     }
 }

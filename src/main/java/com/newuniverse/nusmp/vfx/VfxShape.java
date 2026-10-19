@@ -273,7 +273,15 @@ public enum VfxShape {
     SOUND_FX1, SOUND_FX2, SOUND_FX3,
     SOUL_FX1, SOUL_FX2, SOUL_FX3,
     SOUL_CORPSE_FX1, SOUL_CORPSE_FX2, SOUL_CORPSE_FX3,
-    MEMORY_FX1, MEMORY_FX2, MEMORY_FX3;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    MEMORY_FX1, MEMORY_FX2, MEMORY_FX3,      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    BUTOH_AFTERIMAGE,     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    // 1.93.0 rebuild: Smoke, Snow, Wing, Vortex, Air and Ash Magic (<NAME>_FX1 cast / projectile, _FX2 zone (power = radius, drawn 1.5x), _FX3 impact; layers vfx/client/layer/<Name>Layer)
+    SMOKE_FX1, SMOKE_FX2, SMOKE_FX3,
+    SNOW_FX1, SNOW_FX2, SNOW_FX3,
+    WING_FX1, WING_FX2, WING_FX3,
+    VORTEX_FX1, VORTEX_FX2, VORTEX_FX3,
+    AIR_FX1, AIR_FX2, AIR_FX3,
+    ASH_FX1, ASH_FX2, ASH_FX3;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

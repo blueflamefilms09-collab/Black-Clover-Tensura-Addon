@@ -122,5 +122,12 @@ public enum PropKind {
     SOUL_CORPSE_1,
     SOUL_CORPSE_2,
     MEMORY_1,
-    MEMORY_2
+    MEMORY_2,
+    /** 1.93.0 rebuild: the summons of Smoke (clone, serpent), Snow (golem, crystal), Wing (hawk, feather blade), Vortex (core, funnel), Air (blades, orb) and Ash (soldier, trap); the variant is in param */
+    SMOKE_1,
+    SNOW_1,
+    WING_1,
+    VORTEX_1,
+    AIR_1,
+    ASH_1
 }

@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_vortex.description": "A grimoire of Vortex Magic: spinning wind that draws everything in. A spinning shot that pulls, a spiral lance, a whirlpool, a walking cyclone, a whirling mantle of teal steel and rings of wind forged piece by piece, a spinning step, a maelstrom core and a spiral gale. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_vortex.attribute_bolt": "Vortex Shot: a spinning bolt that bursts for damage and pulls everything near the burst towards its middle. Damage scales with your EP.",
+ "nusmp.page.book_vortex.attribute_cut": "Vortex Lance, the Spiral Lance: a lance of wind eleven blocks long. Everything on the line is hurt and pulled towards you.",
+ "nusmp.page.book_vortex.attribute_field": "Whirlpool: six seconds of whirlwind where you aim. Foes inside are drawn to the middle, slowed and cut a little. Radius scales with your EP.",
+ "nusmp.page.book_vortex.attribute_domain": "Great Vortex: a cyclone rises in front of you and walks eight seconds (longer with EP) along your aim, pulling in and lifting everything within 3.5 blocks and cutting it, and throws it all away when it ends. You wear the whirling mantle for five seconds.",
+ "nusmp.page.book_vortex.attribute_guard": "Vortex Mantle: nine seconds of a whirling mantle forged piece by piece, with bands of wind turning round you. Enemy projectiles that come within three and a half blocks are swept away, and your blows hit harder.",
+ "nusmp.page.book_vortex.vortex_step": "Vortex Step: you spin forward up to ten blocks, cutting what you pass and leaving a pull behind you.",
+ "nusmp.page.book_vortex.maelstrom_core": "Maelstrom Core: a core of wind hangs where you aim for eight seconds (longer with EP), drawing in everything within eight blocks (a boss at a third of the strength) and cutting what is near it, then implodes for damage.",
+ "nusmp.page.book_vortex.spiral_gale": "Spiral Gale: a spiral gale in a cone in front of you: damage, a push and a lift."
+}

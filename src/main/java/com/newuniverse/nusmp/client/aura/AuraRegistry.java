@@ -61,5 +61,11 @@ final class AuraRegistry {
         SoulAura.register();
         SoulCorpseAura.register();
         MemoryAura.register();
+        SmokeAura.register();                // 1.93.0: the rebuilt armour sets of Smoke, Snow, Wing, Vortex, Air and Ash Magic
+        AshAura.register();
+        AirAura.register();
+        VortexAura.register();
+        WingAura.register();
+        SnowAura.register();
     }
 }

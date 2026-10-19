@@ -63,5 +63,11 @@ final class PropPainterRegistry {
         SoulRebuildPropPainter.register();
         SoulCorpseRebuildPropPainter.register();
         MemoryRebuildPropPainter.register();
+        SmokePropPainter.register();         // 1.93.0: the rebuilt summons of Smoke, Snow, Wing, Vortex, Air and Ash
+        AshPropPainter.register();
+        AirPropPainter.register();
+        VortexPropPainter.register();
+        WingPropPainter.register();
+        SnowPropPainter.register();
     }
 }

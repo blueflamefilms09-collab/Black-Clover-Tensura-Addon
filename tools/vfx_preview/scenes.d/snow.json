@@ -1,0 +1,9 @@
+{
+ "_comment": "Snow Magic preview scenes (SnowLayer). The preview does not apply VfxInstance.scaleFor (x3 for FX1 / FX3, x1.5 for FX2): the powers below are the sizes the layer sees in game.",
+ "snow_cast": {"layer": "SnowLayer", "shape": "SNOW_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 9], "power": 1.0, "duration": 16, "cam": [7, 2.4, 4.5], "target": [0, 1.4, 4.5],
+               "ages": [2, 5, 8, 11, 14, 15], "figures": [[0, 0, 0, 1.8]]},
+ "snow_zone": {"layer": "SnowLayer", "shape": "SNOW_FX2", "from": [0, 0, 0], "to": [0, 1, 0], "power": 4.8, "duration": 90, "cam": [8, 5.5, 8], "target": [0, 1.0, 0],
+               "ages": [3, 10, 30, 60, 80], "figures": [[0, 0, 0, 1.8], [2, 0, 1, 1.8]]},
+ "snow_burst": {"layer": "SnowLayer", "shape": "SNOW_FX3", "from": [0, 0, 0], "to": [0, 1, 0], "power": 1.3, "duration": 22, "cam": [4.5, 2.6, 4.5], "target": [0, 1.0, 0],
+                "ages": [1, 3, 6, 10, 15, 20], "figures": [[0, 0, 0, 1.8]]}
+}
