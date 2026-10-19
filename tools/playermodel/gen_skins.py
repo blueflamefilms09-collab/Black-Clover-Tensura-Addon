@@ -1,0 +1,177 @@
+"""Why: writes the 64x64 skins (and glow maps) of every converted character, and the table that says how each is drawn (assets/nusmp/playermodel/looks.json: skin, slim arms, glow, hair style and
+colour, scale, extras). The sheets come from the arcs' art kit (tools/arc/char_*.py, see characters.py), so the skin of Asta is painted from Asta's own sheet: skin tone, face, hair colour,
+outfit, armour, accessories and glow. Run:
+    python3 -B tools/playermodel/gen_skins.py [id ...]         (no id: every character; the extras models must exist: run extract_extras.py first)
+The skins keep to the vanilla layout: base layers and the hat, jacket, sleeve and pants overlays, wide or slim arms. Existing skins are never overwritten unless the script is run for them.
+"""
+import json
+import os
+import sys
+
+sys.dont_write_bytecode = True
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+import numpy as np  # noqa: E402
+from PIL import Image  # noqa: E402
+
+import characters as CH  # noqa: E402
+import extract_extras as EX  # noqa: E402
+import gen_hair  # noqa: E402
+import skin_lib as K  # noqa: E402
+from arc_kit import color as C  # noqa: E402
+
+ROOT = CH.ROOT
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+SKINS = os.path.join(ASSETS, "textures", "entity", "playermodel")
+GEO = os.path.join(ASSETS, "geo", "entity")
+OUT_LOOKS = os.path.join(ASSETS, "playermodel", "looks.json")
+BASE_HEIGHT = 1.875
+BUILD_HEIGHT = {"slim": 1.95, "average": 2.0, "broad": 2.1, "huge": 3.1, "small": 1.5, "lanky": 2.3, "child": 1.4}
+
+
+def seed_of(name):
+    return sum((i + 1) * ord(c) for i, c in enumerate(name)) % 9973
+
+
+def is_slim(spec):
+    if spec["build"] in ("slim", "small", "child"):
+        return True
+    marks = [m if isinstance(m, str) else m.get("kind") for m in spec["face"].get("marks") or []]
+    if spec["face"].get("lashes") or "lipstick" in marks:
+        return True
+    return spec["outfit"]["top"]["kind"] == "dress"
+
+
+def to_rgb(c, default=(60, 40, 30)):
+    try:
+        return C.rgb(c)
+    except Exception:
+        return default
+
+
+def paint_character(spec, name, hair_masks):
+    """Returns (skin image, glow image or None, hair style id, hair rgb, slim)."""
+    seed = seed_of(name)
+    slim = is_slim(spec)
+    cv = K.Canvas(slim=slim)
+    tones = C.skin_palette(spec["skin"])
+    K.paint_skin_tone(cv, tones, seed)
+    muscle = spec["build"] in ("broad", "huge") or spec["outfit"]["top"]["kind"] in ("bare", "tank", "vest")
+    if spec["outfit"]["top"]["kind"] in ("bare", "tank", "vest"):
+        K.paint_pecs(cv, tones, muscle)
+    hair_style = CH.HAIR_MAP.get(spec["hair"]["style"], "short")
+    hair_rgb = to_rgb(spec["hair"]["color"])
+    scalp = hair_masks.get(hair_style)
+    if hair_style != "hood":
+        K.paint_hair_scalp(cv, scalp, hair_rgb, seed)
+    o = spec["outfit"]
+    K.paint_legs(cv, o["legs"], o["boots"], seed, tones, o["top"]["kind"])
+    K.paint_torso(cv, o["top"], o["inner"], o["sleeves"], seed, tones, o["legs"].get("color"))
+    K.paint_gloves(cv, o["gloves"], tones, seed)
+    K.paint_belt(cv, o["belt"], seed, o["top"]["kind"])
+    glow_texels = []
+    face_glow = K.paint_face(cv, spec, tones, seed, hair_rgb)
+    if spec["face"].get("mask"):
+        face_glow = face_glow + K.paint_mask(cv, spec["face"]["mask"], tones, seed)
+    armor_glow = K.paint_armor(cv, spec.get("armor"), tones, seed)
+    K.paint_accessories(cv, spec.get("accessories") or [], tones, hair_rgb, seed)
+    # the glow map: the eyes and marks that glow, and what the armour lights
+    glow = np.zeros((64, 64, 4), np.uint8)
+    any_glow = False
+    for (x, y, c) in face_glow:
+        glow[y, x] = (c[0], c[1], c[2], 255)
+        any_glow = True
+    hu, hv = cv.uv("head", False)
+    hfx, hfy, _, _ = K.rects(hu, hv, 8, 8, 8)["front"]
+    ou, ov = cv.uv("head", True)
+    ofx, ofy, _, _ = K.rects(ou, ov, 8, 8, 8)["front"]
+    bu, bv = cv.uv("body", True)
+    bfx, bfy, _, _ = K.rects(bu, bv, 8, 12, 4)["front"]
+    for (where, lx, ly, c) in armor_glow:
+        if where == "head_front":
+            glow[ofy + ly, ofx + lx] = (c[0], c[1], c[2], 255)
+        else:
+            glow[bfy + ly, bfx + lx] = (c[0], c[1], c[2], 255)
+        any_glow = True
+    # a character whose sheet says its trim glows: the outfit's trim colour and the emblem light up
+    g = spec["glow"]
+    if g.get("trim") and g.get("color"):
+        gc = C.rgb(g["color"])
+        em = o["top"].get("emblem")
+        if em and em.get("glow"):
+            for y in range(12):
+                for x in range(8):
+                    p = cv.px[bfy + y, bfx + x]
+                    if p[3] and K.emblem_pixel(em, x, y, C.shades(o["top"]["color"]), None) is not None and em.get("where") != "back":
+                        glow[bfy + y, bfx + x] = (gc[0], gc[1], gc[2], 255)
+                        any_glow = True
+    return cv.image(), (Image.fromarray(glow, "RGBA") if any_glow else None), hair_style, hair_rgb, slim
+
+
+def height_of(spec):
+    return spec.get("height") or BUILD_HEIGHT[spec["build"]]
+
+
+def look_entry(name, spec, hair_style, hair_rgb, slim, has_glow, extras_model, extras_texture, holds=None):
+    e = {"skin": name, "slim": slim, "scale": round(height_of(spec) / BASE_HEIGHT, 4)}
+    for anchor, v in (holds or {}).items():
+        e["hold_r" if anchor == "arm_r" else "hold_l"] = v
+    if has_glow:
+        e["glow"] = True
+    if hair_style and hair_style != "bald":
+        e["hair"] = hair_style
+        e["hair_color"] = "#%02x%02x%02x" % tuple(hair_rgb)
+    if extras_model and os.path.isfile(os.path.join(GEO, extras_model + ".geo.json")):
+        e["extras"] = [{"model": extras_model, "texture": extras_texture, "glow": os.path.isfile(os.path.join(ASSETS, "textures", "entity", extras_texture + "_glow.png"))}]
+    return e
+
+
+def main():
+    ids = sys.argv[1:]
+    gen_hair.build()
+    masks = {sid: getattr(st, "mask", None) for sid, st in gen_hair.STYLES.items()}
+    os.makedirs(SKINS, exist_ok=True)
+    looks = {}
+    names = ids or (CH.humanoid_ids() + sorted(CH.MANUAL))
+    for cid in names:
+        try:
+            jobs = []
+            if cid in CH.MANUAL:
+                jobs.append((cid, CH.manual(cid), None, None))
+            else:
+                jobs.append((cid, CH.normalized(cid, 1), "pmx_" + cid, "pmx_" + cid))
+                if CH.has_form2(cid):
+                    jobs.append((cid + "_form2", CH.normalized(cid, 2), "pmx_" + cid + "_form2", "pmx_" + cid + "_form2"))
+                for vname, (vraw, vform) in CH.variants(cid).items():
+                    from arc_kit import spec as S
+                    vs = S.normalize(S.form2_spec(vraw) if vform == 2 else vraw, cid)
+                    base = "pmx_" + cid + ("_form2" if vform == 2 else "")
+                    tex = "pmx_%s_%s" % (cid, vname)
+                    EX.copy_texture("arc_%s_%s" % (cid, vname), tex)
+                    jobs.append((cid + "_" + vname, vs, base, tex))
+            infos = {}
+            for name, spec, em, et in jobs:
+                if em and em not in infos:
+                    info = EX.extract(em[4:])
+                    infos[em] = info["holds"] if info else {}
+                img, glow, hs, hrgb, slim = paint_character(spec, name, masks)
+                img.save(os.path.join(SKINS, name + ".png"))
+                if glow is not None:
+                    glow.save(os.path.join(SKINS, name + "_glow.png"))
+                elif os.path.isfile(os.path.join(SKINS, name + "_glow.png")):
+                    os.remove(os.path.join(SKINS, name + "_glow.png"))
+                looks[name] = look_entry(name, spec, hs, hrgb, slim, glow is not None, em, et, infos.get(em))
+        except Exception as ex:                                   # one bad sheet must not stop the others
+            import traceback
+            print("FAILED", cid, repr(ex))
+            traceback.print_exc()
+    if not ids:
+        os.makedirs(os.path.dirname(OUT_LOOKS), exist_ok=True)
+        json.dump({"version": 1, "note": "generated by tools/playermodel/gen_skins.py (arc characters) and tools/playermodel/gen_looks.py (the rest); do not edit by hand", "looks": looks},
+                  open(OUT_LOOKS, "w"), indent=1)
+    print("painted %d skins" % len(looks))
+
+
+if __name__ == "__main__":
+    main()

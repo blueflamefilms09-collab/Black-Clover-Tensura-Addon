@@ -32,19 +32,13 @@ public final class AvatarParts {
     }
 
     /**
-     * Draws hair, horns, outfit extras and wings on a posed humanoid model.
+     * Draws horns, outfit extras and wings on a posed humanoid model. 1.94.0: the hair is no longer drawn here, the player-model kit draws every haircut ({@link #drawHair}); the old
+     * {@code avatar_hair_<n>} models stay in the assets (a saved look keeps its hair id, read by {@link com.newuniverse.nusmp.client.playermodel.LegacyHair}).
      * @param seconds the animation clock (age / 20), @param flap wing speed factor (1 on the ground, more in the air)
      */
     public static void draw(PoseStack pose, MultiBufferSource buffers, int light, HumanoidModel<?> model, AppearanceData look, float seconds, float flap, float glowPulse) {
         int glow = ((int) (150 + 90 * glowPulse) << 24) | 0xFFFFFF;
-        if (look.hairId() >= 0 && look.hairId() < HAIR.length) {
-            pose.pushPose();
-            model.head.translateAndRotate(pose);
-            GeoDraw.paint(pose, buffers, HAIR[look.hairId()], "idle", seconds, GeoDraw.Space.PLAYER, GeoDraw.Layer.CUTOUT, light, WHITE, 0);
-            if (look.hornId() >= 0 && look.hornId() < HORN.length)
-                GeoDraw.paint(pose, buffers, HORN[look.hornId()], null, seconds, GeoDraw.Space.PLAYER, GeoDraw.Layer.CUTOUT, light, WHITE, glow);
-            pose.popPose();
-        } else if (look.hornId() >= 0 && look.hornId() < HORN.length) {
+        if (look.hornId() >= 0 && look.hornId() < HORN.length) {
             pose.pushPose();
             model.head.translateAndRotate(pose);
             GeoDraw.paint(pose, buffers, HORN[look.hornId()], null, seconds, GeoDraw.Space.PLAYER, GeoDraw.Layer.CUTOUT, light, WHITE, glow);
@@ -59,6 +53,20 @@ public final class AvatarParts {
             if (wings) GeoDraw.paint(pose, buffers, WING[look.wingId()], "idle", seconds * flap, GeoDraw.Space.PLAYER, GeoDraw.Layer.CUTOUT, light, WHITE, glow);
             pose.popPose();
         }
+    }
+
+    /**
+     * 1.94.0: the creator's hair on a posed model, with the kit's hair system (the same {@link com.newuniverse.nusmp.client.playermodel.HairDraw} the world renderer's layer uses): the old hair
+     * id picks the haircut and its colour ({@code LegacyHair}), the springs in {@code state} move it, a helmet drops the cap. Used by the creation screen's preview, which has no entity.
+     */
+    public static void drawHair(PoseStack pose, MultiBufferSource buffers, int light, HumanoidModel<?> model, AppearanceData look, com.newuniverse.nusmp.client.playermodel.HairState state, float age, boolean helmet) {
+        com.newuniverse.nusmp.client.playermodel.LegacyHair.Cut cut = com.newuniverse.nusmp.client.playermodel.LegacyHair.of(look.hairId());
+        com.newuniverse.nusmp.client.playermodel.HairStyleData.Style style = com.newuniverse.nusmp.client.playermodel.PlayerAssets.hair(cut.style());
+        if (style == null || style.bald()) return;
+        com.newuniverse.nusmp.client.playermodel.HairState.idle(style, state, age);
+        net.minecraft.client.renderer.RenderType rt = net.minecraft.client.renderer.RenderType.entityCutoutNoCull(com.newuniverse.nusmp.client.playermodel.PlayerAssets.hairSheet(style));
+        com.newuniverse.nusmp.client.playermodel.HairDraw.draw(pose, buffers.getBuffer(rt), style, model.head, model.body, state, com.newuniverse.nusmp.client.playermodel.HairPalette.of(cut.rgb()), helmet, light,
+                net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
     }
 
     /**

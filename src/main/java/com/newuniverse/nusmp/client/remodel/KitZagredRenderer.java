@@ -64,7 +64,7 @@ public class KitZagredRenderer extends KitMobRenderer<ZagredBossEntity> {
     }
 
     /** A turning rune ring at the target's feet; casting adds four marks closing in and a brighter, faster ring. */
-    static void reticle(PoseStack pose, VertexConsumer vc, Vec3 off, float width, float age, boolean casting) {
+    public static void reticle(PoseStack pose, VertexConsumer vc, Vec3 off, float width, float age, boolean casting) {
         pose.pushPose();
         pose.translate(off.x, off.y + 0.06, off.z);
         float r = Math.max(0.8f, width * 1.3f) * (casting ? 1.0f + 0.15f * Mth.sin(age * 0.6f) : 1f);
