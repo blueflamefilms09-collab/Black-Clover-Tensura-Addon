@@ -23,8 +23,8 @@ import net.minecraft.client.resources.PlayerSkin;
  * <p>Pieces that sit on the head or the back are skipped for the local player in first person (the game does not draw that body there anyway and the
  * pieces would hang in front of the camera).
  */
-public final class AirSetKit {
-    private AirSetKit() {}
+public final class RebuildSetKit {
+    private RebuildSetKit() {}
 
     public enum Anchor { HEAD, BODY, ARM_R, ARM_L, LEG_R, LEG_L }
 

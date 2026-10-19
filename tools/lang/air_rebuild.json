@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_air.description": "A grimoire of Air Magic: air compressed, cut and made visible. A bullet of compressed air, a crescent blade of air, a field of dead air, a storm of orbiting blades, a glass-clear armour of air forged piece by piece, a burst forward, a pressure orb and a vacuum seal. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_air.attribute_bolt": "Air Bullet: a fast bullet of compressed air that bursts for damage and a hard push. Damage scales with your EP.",
+ "nusmp.page.book_air.attribute_cut": "Air Blade: a crescent blade of air flies twelve blocks along your aim, cutting and pushing aside every foe it passes once, and stops at a wall. Damage scales with your EP.",
+ "nusmp.page.book_air.attribute_field": "Dead Air: five seconds of thin air where you aim. Foes inside are slowed and weakened, silenced briefly (shortened on bosses, shares the control lock) and hurt a little; enemy projectiles and bolts fall out of the air. Radius scales with your EP.",
+ "nusmp.page.book_air.attribute_domain": "Air Blade Storm: five blades of air orbit you for fifteen seconds (longer with EP). Each flies at the nearest hostile within ten blocks once a second, cuts it and returns. You wear the air armour for five seconds.",
+ "nusmp.page.book_air.attribute_guard": "Air Cushion Armour: nine seconds of glass-clear armour of compressed air forged piece by piece. Falls cost nothing, 35 percent of enemy projectiles are turned aside, you move faster and your blows hit harder.",
+ "nusmp.page.book_air.air_step": "Air Step: a burst of air carries you up to nine blocks forward and a little up, pushing aside what you pass.",
+ "nusmp.page.book_air.pressure_burst": "Pressure Burst: a pressure orb swells where you aim for a second and a half, then bursts for damage and a hard push in 4.5 blocks (a boss is pushed a third as far).",
+ "nusmp.page.book_air.vacuum_seal": "Vacuum Seal: the air leaves the foe you look at. It is drawn in front of you (not a boss), silenced and slowed for as long as your control allows."
+}

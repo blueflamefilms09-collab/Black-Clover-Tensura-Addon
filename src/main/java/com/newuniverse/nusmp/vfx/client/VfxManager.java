@@ -194,6 +194,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SongRingLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.CorpseLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.SmokeLayer());                 // 1.93.0: Smoke, Snow, Wing, Vortex, Air and Ash Magic rebuild
+        register(new com.newuniverse.nusmp.vfx.client.layer.AirLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.VortexLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.WingLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.SnowLayer());

@@ -2,7 +2,7 @@
  "snow_golem_view": {"kind": "geo", "model": "snow_golem", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 15, 30], "tile": [300, 360]},
  "snow_crystal_view": {"kind": "geo", "model": "snow_crystal", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 20, 40], "tile": [300, 360]},
  "snow_aura_armour": {"kind": "aura", "attr": "Snow", "aura": "SNOW", "style": 0, "total": 120, "ages": [3, 9, 16, 40, 80, 108], "tile": [300, 420],
-  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/AirSetKit.java",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/RebuildSetKit.java",
                    "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"]},
  "snow_prop_golem": {"kind": "prop", "attr": "Snow", "propKind": "SNOW_1", "param": 0, "scale": 1.0, "maxLife": 400, "pos": [0, 0, 0], "ages": [3, 12, 40, 120, 385], "tile": [300, 380],
   "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"]},

@@ -3,8 +3,8 @@ package com.newuniverse.nusmp.client.aura;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.aura.Aura;
-import com.newuniverse.nusmp.client.aura.AirSetKit.Anchor;
-import com.newuniverse.nusmp.client.aura.AirSetKit.Piece;
+import com.newuniverse.nusmp.client.aura.RebuildSetKit.Anchor;
+import com.newuniverse.nusmp.client.aura.RebuildSetKit.Piece;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
 import net.minecraft.resources.ResourceLocation;
@@ -32,16 +32,16 @@ public final class SmokeAura {
 
     private static final String K = "smoke";
     private static final Piece[] SET = {
-            AirSetKit.piece(K, "chest", Anchor.BODY, 0f, 0f, 0f, -14f, true, true),
-            AirSetKit.piece(K, "helm", Anchor.HEAD, 2f, 0f, -14f, 0f, true, true),
-            AirSetKit.piece(K, "pauld_r", Anchor.ARM_R, 3f, -14f, -6f, 0f, false),
-            AirSetKit.piece(K, "pauld_l", Anchor.ARM_L, 4f, 14f, -6f, 0f, false),
-            AirSetKit.piece(K, "vamb_r", Anchor.ARM_R, 5f, -8f, 2f, -10f, false),
-            AirSetKit.piece(K, "vamb_l", Anchor.ARM_L, 6f, 8f, 2f, -10f, false),
-            AirSetKit.piece(K, "belt", Anchor.BODY, 6f, 0f, 12f, -4f, true),
-            AirSetKit.piece(K, "back", Anchor.BODY, 8f, 0f, -4f, 14f, true),
-            AirSetKit.piece(K, "greave_r", Anchor.LEG_R, 9f, -2f, 12f, -6f, false),
-            AirSetKit.piece(K, "greave_l", Anchor.LEG_L, 10f, 2f, 12f, -6f, false),
+            RebuildSetKit.piece(K, "chest", Anchor.BODY, 0f, 0f, 0f, -14f, true, true),
+            RebuildSetKit.piece(K, "helm", Anchor.HEAD, 2f, 0f, -14f, 0f, true, true),
+            RebuildSetKit.piece(K, "pauld_r", Anchor.ARM_R, 3f, -14f, -6f, 0f, false),
+            RebuildSetKit.piece(K, "pauld_l", Anchor.ARM_L, 4f, 14f, -6f, 0f, false),
+            RebuildSetKit.piece(K, "vamb_r", Anchor.ARM_R, 5f, -8f, 2f, -10f, false),
+            RebuildSetKit.piece(K, "vamb_l", Anchor.ARM_L, 6f, 8f, 2f, -10f, false),
+            RebuildSetKit.piece(K, "belt", Anchor.BODY, 6f, 0f, 12f, -4f, true),
+            RebuildSetKit.piece(K, "back", Anchor.BODY, 8f, 0f, -4f, 14f, true),
+            RebuildSetKit.piece(K, "greave_r", Anchor.LEG_R, 9f, -2f, 12f, -6f, false),
+            RebuildSetKit.piece(K, "greave_l", Anchor.LEG_L, 10f, 2f, 12f, -6f, false),
     };
 
     private static final int EMBER = 0xFF9A48, SMOKE_LO = 0x8A8098, SMOKE_HI = 0xD2CCE0;
@@ -62,10 +62,10 @@ public final class SmokeAura {
         if (f <= 0.002f) return;
         float age = c.age(), pulse = 0.75f + 0.25f * Mth.sin(age * 0.17f);
         PoseStack pose = c.pose();
-        boolean self1p = AirSetKit.firstPersonSelf(c);
+        boolean self1p = RebuildSetKit.firstPersonSelf(c);
 
         // 1. the armour pieces (cutout once assembled, translucent while forging / shattering) and their ember glow maps
-        AirSetKit.paint(c, SET, false, SealDraw.argb(0.85f * pulse, 0xFFFFFF), 1f);
+        RebuildSetKit.paint(c, SET, false, SealDraw.argb(0.85f * pulse, 0xFFFFFF), 1f);
 
         SealDraw.camera(pose);
         int light = SealDraw.lift(c.light(), 6);

@@ -53,6 +53,7 @@ final class PropRegistry {
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
         SmokeProps.init();                   // 1.93.0: the rebuilt summons of Smoke, Snow, Wing, Vortex, Air and Ash
+        AirProps.init();
         VortexProps.init();
         WingProps.init();
         SnowProps.init();
