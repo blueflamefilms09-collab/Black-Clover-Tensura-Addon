@@ -8,6 +8,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
@@ -60,6 +62,8 @@ final class PocketBuilder {
     /** Builds the realm of {@code p} and fills in its positions (entry, exit, bars, plates, boss spawn). */
     static void build(ServerLevel level, PocketRealm.Pocket p, RegionTheme theme) {
         int cx = RiftRules.pocketX(p.slot), cz = RiftRules.POCKET_Z, y = RiftRules.POCKET_Y;
+        clear(level, p.slot);                                                         // 1.94.0: whatever a crash or an older build left in this cell goes first
+        for (Entity stray : level.getEntitiesOfClass(Entity.class, bounds(p.slot), e -> !(e instanceof ServerPlayer))) stray.discard();
         for (int x = cx - 26; x <= cx + 22; x += 16) for (int z = cz - 14; z <= cz + 14; z += 16) level.getChunk(x >> 4, z >> 4);       // load (and so generate) every chunk of the cell first
         level.getChunk((cx + 22) >> 4, (cz + 14) >> 4);
         room(level, cx - 23, cz - 4, cx - 16, cz + 4, y, 6);                          // the Antechamber
@@ -91,7 +95,12 @@ final class PocketBuilder {
     private static void arena(ServerLevel level, int cx, int cz, int y, PocketRealm.Pocket p, RegionTheme theme) {
         p.bossSpawn = new BlockPos(cx + 4, y, cz);
         LabyrinthGuardianEntity g = LabyrinthGuardianEntity.create(level, p.bossSpawn, null, null);
-        if (g == null) return;
+        if (g == null) {                                                           // 1.94.0: no boss could be made: the vault must not stay barred for ever behind a guardian that does not exist
+            p.bossDead = true;
+            p.clearedAt = level.getGameTime();
+            openVault(level, p);
+            return;
+        }
         g.configureForFloor(p.floor, theme);
         g.addTag(BOSS_TAG);
         level.addFreshEntity(g);

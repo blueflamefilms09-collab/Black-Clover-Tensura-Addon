@@ -25,7 +25,7 @@ public final class PocketEvents {
     public static void register(IEventBus gameBus) {
         gameBus.addListener(PocketEvents::onTick);
         gameBus.addListener(PocketEvents::onUse);
-        gameBus.addListener(PocketEvents::onDeath);
+        gameBus.addListener(net.neoforged.bus.api.EventPriority.LOW, PocketEvents::onDeath);        // 1.94.0: after the Mythic Trait and every other listener that may cancel the death: only a real death opens the vault
         gameBus.addListener(PocketEvents::onLogin);
     }
 
@@ -45,10 +45,12 @@ public final class PocketEvents {
         PocketRealm realm = PocketRealm.get(level.getServer());
         PocketRealm.Pocket pocket = realm.at(slot);
         if (pocket == null || pocket.variantKind() != RiftRules.Variant.PUZZLE || pocket.solved) return;
-        int plate = -1;
-        for (int i = 0; i < pocket.plates.length; i++) if (pocket.plates[i].equals(e.getPos())) plate = i;
+        int[][] buttons = new int[pocket.plates.length][];
+        for (int i = 0; i < buttons.length; i++) buttons[i] = new int[]{pocket.plates[i].getX(), pocket.plates[i].getY(), pocket.plates[i].getZ()};
+        int plate = RiftRules.plateHit(buttons, e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());      // 1.94.0: the button or the coloured block it stands on (the button is two pixels tall)
         if (plate < 0) return;
         e.setCanceled(true);
+        e.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
         press(level, realm, pocket, p, plate, e.getPos());
     }
 
@@ -63,12 +65,7 @@ public final class PocketEvents {
                 level.playSound(null, at, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_CHIME.value(), net.minecraft.sounds.SoundSource.BLOCKS, 1.2f, 0.7f + 0.25f * puzzle.done());
                 p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.puzzle.progress", "The plate hums (%s of 4).", puzzle.done()).withStyle(ChatFormatting.AQUA), true);
             }
-            case SOLVED -> {
-                pocket.solved = true;
-                PocketBuilder.openVault(level, pocket);
-                for (ServerPlayer m : PocketRealm.playersIn(level, pocket.slot))
-                    m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.puzzle.solved", "The bars lift. The vault is open.").withStyle(ChatFormatting.GOLD), true);
-            }
+            case SOLVED -> realm.clear(level, pocket, "puzzle");
             case WRONG -> {
                 level.playSound(null, at, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_BASS.value(), net.minecraft.sounds.SoundSource.BLOCKS, 1.4f, 0.5f);
                 p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.puzzle.wrong", "Wrong. The plates go dark; something stirs.").withStyle(ChatFormatting.RED), true);
@@ -86,11 +83,7 @@ public final class PocketEvents {
         PocketRealm realm = PocketRealm.get(level.getServer());
         PocketRealm.Pocket pocket = realm.at(slot);
         if (pocket == null || pocket.bossDead) return;
-        pocket.bossDead = true;
-        realm.setDirty();
-        PocketBuilder.openVault(level, pocket);
-        for (ServerPlayer m : PocketRealm.playersIn(level, slot))
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.boss.dead", "The guardian falls. The bars lift. The vault is open.").withStyle(ChatFormatting.GOLD), true);
+        realm.clear(level, pocket, "boss");
     }
 
     private static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {

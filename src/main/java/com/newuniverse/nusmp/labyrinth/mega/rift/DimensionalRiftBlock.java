@@ -2,6 +2,11 @@ package com.newuniverse.nusmp.labyrinth.mega.rift;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -38,6 +43,17 @@ public final class DimensionalRiftBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) { return Shapes.empty(); }
+
+    /**
+     * 1.94.0: a right click on the tear steps through it. Walking in always worked, but a delver who stands at the edge of the tear (a ledge, a doorway) or whose box misses the tear by a hair
+     * had no other way; the outline of the block is what the crosshair meets, so it is a click on the shimmer.
+     */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (player instanceof ServerPlayer sp && level instanceof ServerLevel sl && !sp.isSpectator() && level.getBlockEntity(pos) instanceof DimensionalRiftBlockEntity be) RiftService.enter(sl, sp, be);
+        return InteractionResult.CONSUME;
+    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new DimensionalRiftBlockEntity(pos, state); }

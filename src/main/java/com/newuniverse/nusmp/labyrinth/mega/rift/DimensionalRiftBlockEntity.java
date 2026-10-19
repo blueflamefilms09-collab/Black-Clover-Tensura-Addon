@@ -13,9 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-
-import java.util.List;
 
 /**
  * Why: the state of one rift: what kind it is ({@link RiftType}), how old it is and how long it has left, the seed that decides where a shortcut goes and which pocket it opens, where a
@@ -32,6 +29,9 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
     private Polarity polarity = Polarity.HOLY;
     private boolean stable = true;
     private int nextExpand;
+    /** 1.94.0 (not saved): ticks this shortcut has waited for its floor to be built, and how many times its tick has failed. */
+    private int waited, failures;
+    private String lastError = "";
 
     public DimensionalRiftBlockEntity(BlockPos pos, BlockState state) { super(RiftRegistry.RIFT_BE.get(), pos, state); }
 
@@ -82,6 +82,28 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
 
     public void close() { left = Math.min(left, 1); }
 
+    /** 1.94.0: a shortcut that waited long enough for a floor that is not built settles for a nearer floor that is (server). */
+    public void retarget(int chain) {
+        this.targetChain = chain;
+        this.stable = true;
+        this.waited = 0;
+        sync();
+    }
+
+    int waited() { return waited; }
+
+    void waited(int ticks) { this.waited = ticks; }
+
+    int failures() { return failures; }
+
+    /** Counts one more failure of this rift's tick or of a step into it, remembers what it was (the self-test reports it), and returns how many there have been. */
+    int failed(Throwable ex) {
+        lastError = String.valueOf(ex);
+        return ++failures;
+    }
+
+    String lastError() { return lastError; }
+
     private void sync() {
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
@@ -90,13 +112,13 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) RiftService.noteLoaded(worldPosition);
+        if (level != null && !level.isClientSide) RiftService.noteLoaded(level, worldPosition);
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-        if (level != null && !level.isClientSide) RiftService.noteGone(worldPosition);
+        if (level != null && !level.isClientSide) RiftService.noteGone(level, worldPosition);
     }
 
     // ---------------------------------------------------------------- ticking
@@ -112,11 +134,12 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
             RiftService.collapse(sl, pos, be);
             return;
         }
-        if (be.age % 20 == 0 && be.type == RiftType.SHORTCUT) RiftService.refreshStability(sl, be);
-        if (be.age % 5 == 0 && be.age > RiftRules.GROW_TICKS) {
-            AABB box = new AABB(pos).inflate(0.45, 0.0, 0.45).expandTowards(0, 1.7, 0);
-            List<ServerPlayer> in = sl.getEntitiesOfClass(ServerPlayer.class, box, p -> p.isAlive() && !p.isSpectator());
-            for (ServerPlayer p : in) RiftService.touch(sl, p, be);
+        try {                                                       // 1.94.0: an error in a block entity's tick would be a crash report and a dead server; a rift logs it and closes itself after a few
+            if (be.age % 20 == 0 && be.type == RiftType.SHORTCUT) RiftService.refreshStability(sl, be);
+            if (be.age % 5 == 0 && be.age > RiftRules.GROW_TICKS) RiftService.step(sl, be, sl.players());
+            if (be.age % RiftRules.BEACON_EVERY == 0) RiftService.beacon(sl, be);
+        } catch (RuntimeException | LinkageError ex) {
+            RiftService.failed(sl, be, ex);
         }
     }
 
