@@ -438,7 +438,15 @@ public final class RiftService {
         OPEN.remove(new Key(level.dimension(), pos.asLong()));
         burst(level, pos, be.type());
         level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1.2f, 0.6f);
-        if (level.getBlockState(pos).is(RiftRegistry.RIFT.get())) level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        if (level.getBlockState(pos).is(RiftRegistry.RIFT.get())) {
+            // 1.101.0: the Dungeon Guard refuses every change that takes a held block away (the tear's block is one), so a rift in the Mega-Dungeon never went: its block stayed and collapsed again every tick
+            com.newuniverse.nusmp.dungeon.DungeonGuard.begin();
+            try {
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            } finally {
+                com.newuniverse.nusmp.dungeon.DungeonGuard.end();
+            }
+        }
     }
 
     static void burst(ServerLevel level, BlockPos at, RiftType type) {

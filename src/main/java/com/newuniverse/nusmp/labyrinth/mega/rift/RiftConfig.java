@@ -15,6 +15,8 @@ public final class RiftConfig {
     public static final ModConfigSpec.BooleanValue MEGA_ENABLED, MEGA_BROADCAST, KEEP_ITEMS, TRAPS_ON, GRAVITY_ON;
     public static final ModConfigSpec.DoubleValue MEGA_ONE_IN, DEPTH_BOOST, LUCK_STEP;
     public static final ModConfigSpec.IntValue PITY_START, PITY_HARD, MEGA_SECONDS, EXCLUSIVE_MINUTES, EXCLUSIVE_MAX, BUILD_PER_TICK;
+    /** 1.101.0 (pocket fix): seconds after a pocket formed until its release lever works whatever the boss does, and until the barred or sealed door opens by itself so nobody is stuck. */
+    public static final ModConfigSpec.IntValue SWITCH_UNLOCK_SECONDS, SWITCH_AUTO_SECONDS;
     public static final ModConfigSpec.IntValue CHECK_SECONDS, RIFT_SECONDS, JUMP_MIN, JUMP_MAX, MAX_NEAR, POCKET_MINUTES, CRYSTAL_COOLDOWN, GATE_COOLDOWN, PORTAL_SECONDS;
 
     static {
@@ -36,6 +38,10 @@ public final class RiftConfig {
         CRYSTAL_COOLDOWN = b.comment("Seconds between two uses of the Return Crystal.").defineInRange("crystalCooldown", 300, 10, 7200);
         GATE_COOLDOWN = b.comment("Seconds between two uses of the Gate Key.").defineInRange("gateKeyCooldown", 600, 10, 7200);
         PORTAL_SECONDS = b.comment("Seconds a Return Portal stays open on Floor 0.").defineInRange("portalSeconds", 90, 10, 600);
+        SWITCH_UNLOCK_SECONDS = b.comment("Seconds after a pocket realm or tomb formed until its release lever works even though the boss lives or the puzzle is unsolved (before that it works once the boss is dead / the puzzle solved).")
+                .defineInRange("switchUnlockSeconds", 120, 0, 3600);
+        SWITCH_AUTO_SECONDS = b.comment("Seconds after a pocket realm or tomb formed until its barred vault / sealed treasury opens by itself while somebody is inside, so nobody is ever stuck (never sooner than the lever's own delay).")
+                .defineInRange("switchAutoSeconds", 420, 30, 7200);
         b.push("mega");
         MEGA_ENABLED = b.comment("Mega-rare rifts: a very rare rift leads to an EXCLUSIVE pocket dungeon (own biome, own monsters, a mega-boss, relics that drop nowhere else). false = none open on their own (admins can still make them).")
                 .define("enabled", true);

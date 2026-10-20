@@ -1,7 +1,9 @@
 package com.newuniverse.nusmp.labyrinth.mega.rift.pocket;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.dungeon.DungeonGuard;
 import com.newuniverse.nusmp.item.ElsdociaEvents;
+import com.newuniverse.nusmp.labyrinth.mega.rift.PocketSwitchRules;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
@@ -34,6 +36,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -116,8 +119,61 @@ public final class ExclusivePockets {
         join(mega, realm, pocket, def, group, rift.getBlockPos());
     }
 
-    /** Takes players into a tomb: the way home remembered, put down at a safe landing in the entry hall. */
+    /**
+     * Takes players into a tomb: the way home remembered, put down at a safe landing in the entry hall. Since 1.101.0 nobody arrives in a tomb that is still being built (the owner found "only one room": the
+     * doorways open last, so a delver who arrived at once stood in a closed hall): while the tomb forms the players are held at the tear with a progress line, and taken in the tick the build is finished
+     * ({@link #waiting}).
+     */
     public static void join(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket pocket, PocketDef def, List<ServerPlayer> group, BlockPos riftPos) {
+        PocketRuntime rt = PocketRuntime.of(pocket);
+        if (rt == null) return;
+        if (pocket.phase == 0) {
+            for (ServerPlayer m : group) {
+                boolean fresh = rt.waiting.put(m.getUUID(), new PocketRuntime.Waiter(m, riftPos)) == null;
+                if (fresh) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming", "The tomb is forming behind the tear (%s%%). Wait here: you are taken in the moment it stands.", rt.build == null ? 0 : rt.build.percent())
+                        .withStyle(ChatFormatting.LIGHT_PURPLE), false);
+            }
+            if (rt.waitingSince < 0) rt.waitingSince = mega.getGameTime();
+            return;
+        }
+        joinNow(mega, realm, pocket, def, group, riftPos);
+    }
+
+    /** The delvers held at the tear of a tomb that is still forming: a progress line every second, and the whole group taken in the tick it stands. */
+    private static void waiting(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket p, PocketRuntime rt, long now) {
+        if (rt.waiting.isEmpty()) return;
+        if (p.phase >= 2) {
+            for (PocketRuntime.Waiter w : rt.waiting.values())
+                w.player().displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming.gone", "The tomb behind the tear is coming down. There is nothing to enter.").withStyle(ChatFormatting.GRAY), true);
+            rt.waiting.clear();
+            rt.waitingSince = -1;
+            return;
+        }
+        if (p.phase == 1) {
+            List<ServerPlayer> group = new ArrayList<>();
+            BlockPos rift = null;
+            for (PocketRuntime.Waiter w : rt.waiting.values()) {
+                if (w.player().isRemoved() || !w.player().isAlive()) continue;
+                group.add(w.player());
+                if (rift == null) rift = w.rift();
+            }
+            rt.waiting.clear();
+            rt.waitingSince = -1;
+            if (!group.isEmpty()) joinNow(mega, realm, p, rt.def, group, rift);
+            return;
+        }
+        if (now % 20 == 0)
+            for (PocketRuntime.Waiter w : rt.waiting.values())
+                w.player().displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming.progress", "The tomb forms: %s%%", rt.build == null ? 0 : rt.build.percent()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        if (rt.waitingSince >= 0 && now - rt.waitingSince > 20L * 90 && rt.build != null && !rt.build.done()) {         // a build that has not finished in a minute and a half is restarted (every fill is safe to place twice)
+            rt.waitingSince = now;
+            LOG.warn("[nusmp] The tomb {} in slot {} took more than 90 s to form ({}%); its build was restarted.", p.pocketId, p.slot, rt.build.percent());
+            rt.build = new PocketBuild(rt);
+            rt.build.entry(mega);
+        }
+    }
+
+    private static void joinNow(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket pocket, PocketDef def, List<ServerPlayer> group, BlockPos riftPos) {
         PocketRuntime rt = PocketRuntime.of(pocket);
         if (rt == null) return;
         BlockPos at = landing(mega, rt);
@@ -144,6 +200,9 @@ public final class ExclusivePockets {
             mega.playSound(null, at, SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 0.5f, 0.6f);
             NusmpEvents.fire(m, "mega.pocket", "tomb");
             NusmpEvents.fire(m, "mega.tomb_entered", def.id());
+            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.welcome", "[Tomb] The treasury behind the master's lair is sealed. It answers to %s magic, to the %s, to force, and to the SEAL LEVER on the wall of the key room: the lever gives in %s s, or the moment the master falls, and the seal opens by itself in %s s. The exit rift is in this hall.",
+                    Component.translatableWithFallback("pocket.nusmp." + def.id() + ".seal", def.seal().label()), Component.translatableWithFallback("pocket.nusmp." + def.id() + ".sigil", def.seal().sigil()),
+                    Math.max(0, PocketSwitchRules.secondsToUnlock(pocket.bossDead, mega.getGameTime() - pocket.createdAt, unlockTicks())), Math.max(0, PocketSwitchRules.secondsToAuto(mega.getGameTime() - pocket.createdAt, unlockTicks(), autoTicks(pocket)))).withStyle(ChatFormatting.AQUA), false);
         }
         pocket.lastOccupied = mega.getGameTime();
         realm.setDirty();
@@ -229,6 +288,8 @@ public final class ExclusivePockets {
             rt.build = new PocketBuild(rt);
             rt.build.entry(mega);
         }
+        leverTick(mega, realm, p, rt, in, now);                                                    // 1.101.0: the lever's cue, its word, and the seal that opens by itself so nobody is stuck
+        watchdog(mega, p, rt, in, now);                                                            // 1.101.0: a built tomb is read back and put right
         if (p.phase >= 1 && !p.relicTaken && relicGone(mega, rt)) relicTaken(mega, realm, p, rt, in, now);
         if (p.phase == 2 && rt.collapse == null) rt.collapse = new PocketCollapse(rt, p.collapseStart < 0 ? now : p.collapseStart);
         if (!p.bossDead && p.phase >= 1 && PocketBoss.sweep(mega, rt, p, in, now)) bossLost(mega, realm, p, rt, in);
@@ -324,6 +385,7 @@ public final class ExclusivePockets {
     public static void stopped() {
         PocketRuntime.forgetAll();
         ORPHANS.clear();
+        com.newuniverse.nusmp.labyrinth.mega.rift.PocketSwitch.stopped();
     }
 
     // ================================================================ every tick
@@ -367,6 +429,8 @@ public final class ExclusivePockets {
             p.phase = 1;
             realm.setDirty();
         }
+        if (rt.repairJob != null && (p.phase != 1 || rt.repairJob.step(mega, RiftConfig.get(RiftConfig.BUILD_PER_TICK)))) rt.repairJob = null;     // 1.101.0: the watchdog's repair pass
+        waiting(mega, realm, p, rt, now);                                                           // 1.101.0: delvers held at the tear are taken in the tick the tomb stands
         if (p.phase == 2 && rt.collapse != null) rt.collapse.step(mega, p, PocketRealm.playersIn(mega, p.slot), now);
     }
 
@@ -487,10 +551,18 @@ public final class ExclusivePockets {
         pk.sealHp = 0;
         realm.setDirty();
         int k = 0;
-        for (long l : rt.sealBlocks) {
-            BlockPos b = BlockPos.of(l);
-            mega.destroyBlockProgress(CRACK_ID - k++, b, -1);
-            mega.setBlock(b, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
+        DungeonGuard.begin();                                                                      // 1.101.0: the seal is crying obsidian and the Dungeon Guard refuses to everybody else every change that takes a held block away: before this no seal ever opened, whatever answered it
+        try {
+            for (long l : rt.sealBlocks) {
+                BlockPos b = BlockPos.of(l);
+                mega.destroyBlockProgress(CRACK_ID - k++, b, -1);
+                mega.setBlock(b, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
+            }
+        } finally {
+            DungeonGuard.end();
+        }
+        if (rt.switchPos != null && mega.getBlockState(rt.switchPos).is(Blocks.LEVER)) {            // the lever clicks down with the seal, whatever opened it
+            mega.setBlock(rt.switchPos, mega.getBlockState(rt.switchPos).setValue(LeverBlock.POWERED, true), 3);
         }
         BlockPos c = sealCentre(rt);
         if (c != null) {
@@ -500,12 +572,83 @@ public final class ExclusivePockets {
         }
         Random rnd = new Random(rt.seed ^ 0x5EA1L);
         for (ServerPlayer m : PocketRealm.playersIn(mega, pk.slot)) {
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.open." + how, how.equals("force") ? "The seal gives way to sheer force. The treasury is open." : how.equals("sigil") ? "The Sigil is spent. The treasury is open." : "The seal unravels at the touch of your magic. The treasury is open.")
-                    .withStyle(ChatFormatting.GOLD), false);
+            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.open." + how, how.equals("force") ? "The seal gives way to sheer force. The treasury is open." : how.equals("sigil") ? "The Sigil is spent. The treasury is open."
+                    : how.equals("lever") ? "A lever clicks down somewhere in the tomb. The seal falls away. The treasury is open." : how.equals("auto") ? "The old mechanism gives way by itself. The seal falls away. The treasury is open."
+                    : "The seal unravels at the touch of your magic. The treasury is open.").withStyle(ChatFormatting.GOLD), false);
             if (rt.resonated.add(m.getUUID())) AncientResonance.inscribe(m, rt.def, rnd.nextDouble());
         }
         if (by != null) NusmpEvents.fire(by, "mega.tomb_seal", rt.def.id());
         return true;
+    }
+
+    // ================================================================ 1.101.0: the lever, the watchdog
+    /** Ticks after the tomb formed until its seal lever works whatever the master does. */
+    public static long unlockTicks() { return 20L * RiftConfig.get(RiftConfig.SWITCH_UNLOCK_SECONDS); }
+
+    /** Ticks after the tomb formed until its seal opens by itself while somebody is inside (held to three fifths of its life). */
+    public static long autoTicks(PocketRealm.Pocket p) { return PocketSwitchRules.clampToLife(20L * RiftConfig.get(RiftConfig.SWITCH_AUTO_SECONDS), p.expiresAt - p.createdAt); }
+
+    /** The state of the seal lever of a tomb right now. */
+    public static PocketSwitchRules.State leverState(ServerLevel mega, PocketRealm.Pocket pk) { return PocketSwitchRules.state(pk.sealOpen, pk.bossDead, mega.getGameTime() - pk.createdAt, unlockTicks()); }
+
+    /**
+     * A delver pulls the seal lever (server side; also the admin's {@code rift switch open}). The lever works the moment the master of the tomb is dead, or {@code switchUnlockSeconds} after the tomb formed
+     * whatever the master does; before that it is stiff and says how long. Opening the seal this way is the free answer: no magic, no Sigil, no force. Returns "opened", "locked" or "spent".
+     */
+    public static String pullLever(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket pk, PocketRuntime rt, ServerPlayer by) {
+        PocketSwitchRules.State st = leverState(mega, pk);
+        BlockPos at = rt.switchPos == null ? BlockPos.containing(PocketCell.centreX(rt.slot), PocketPlan.Y0, PocketCell.centreZ()) : rt.switchPos;
+        switch (st) {
+            case SPENT -> {
+                mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.6f, 0.6f);
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.spent", "The lever is down. The seal is open already.").withStyle(ChatFormatting.GRAY), true);
+                return "spent";
+            }
+            case LOCKED -> {
+                mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.7f, 0.4f);
+                mega.playSound(null, at, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.7f, 0.5f);
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.locked", "The lever is stiff: the master of the tomb still holds the seal. It gives in %s s, or when the master falls.",
+                        PocketSwitchRules.secondsToUnlock(pk.bossDead, mega.getGameTime() - pk.createdAt, unlockTicks())).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                return "locked";
+            }
+            default -> {
+                mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0f, 0.8f);
+                if (openSeal(mega, realm, pk, rt, by, "lever")) {
+                    for (ServerPlayer m : PocketRealm.playersIn(mega, pk.slot))
+                        m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.pulled", "A lever clicks somewhere in the tomb... and the seal of the treasury falls away.").withStyle(ChatFormatting.GOLD), true);
+                }
+                return "opened";
+            }
+        }
+    }
+
+    /** One second of the lever's life in a tomb with people in it: the cue (a wisp over the lever, white when it works and grey while it is stiff), the word when it first gives, and the self-opening of the seal. */
+    private static void leverTick(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket p, PocketRuntime rt, List<ServerPlayer> in, long now) {
+        if (p.sealOpen || p.phase != 1) return;
+        long age = now - p.createdAt;
+        PocketSwitchRules.State st = leverState(mega, p);
+        if (rt.switchPos != null && !in.isEmpty()) {
+            mega.sendParticles(st == PocketSwitchRules.State.READY ? ParticleTypes.END_ROD : ParticleTypes.SMOKE, rt.switchPos.getX() + 0.5, rt.switchPos.getY() + 1.0, rt.switchPos.getZ() + 0.5, 2, 0.15, 0.3, 0.15, 0.01);
+            if (st == PocketSwitchRules.State.READY && !rt.leverTold) {
+                rt.leverTold = true;
+                for (ServerPlayer m : in) {
+                    m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.ready", "A lever clicks somewhere in the tomb: the seal lever in the key room gives way now.").withStyle(ChatFormatting.AQUA), true);
+                    mega.playSound(null, m.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5f, 1.2f);
+                }
+            }
+        }
+        if (PocketSwitchRules.autoOpens(false, age, unlockTicks(), autoTicks(p), !in.isEmpty())) openSeal(mega, realm, p, rt, null, "auto");
+    }
+
+    /** The watchdog: every few seconds a built tomb with people in it is read back; a gap starts a repair pass (at most six a tomb). */
+    private static void watchdog(ServerLevel mega, PocketRealm.Pocket p, PocketRuntime rt, List<ServerPlayer> in, long now) {
+        if (!PocketWatchdog.due(now, rt.lastProbe, p.phase, !in.isEmpty()) || rt.repairJob != null || rt.repairs >= 6) return;
+        rt.lastProbe = now;
+        List<String> gaps = PocketWatchdog.missing(mega, rt, p);
+        if (gaps.isEmpty()) return;
+        rt.repairs++;
+        LOG.warn("[nusmp] The tomb {} in slot {} is missing {} thing(s), e.g. '{}'; a repair pass starts ({} of 6).", p.pocketId, p.slot, gaps.size(), gaps.get(0), rt.repairs);
+        rt.repairJob = new PocketBuild(rt, true, p.sealOpen);
     }
 
     // ================================================================ the master dies

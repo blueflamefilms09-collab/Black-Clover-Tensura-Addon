@@ -193,6 +193,7 @@ public final class PocketRealm extends SavedData {
         Pocket pocket = rift.slot() >= 0 ? realm.pockets.get(rift.slot()) : null;
         if (pocket != null && pocket.seed != rift.seed()) pocket = null;                         // the slot was freed and given to another rift: this rift's realm is gone
         if (pocket == null) pocket = realm.create(mega, from, rift, here);
+        else realm.keepWhole(mega, pocket, here == null ? com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY : here.theme);        // 1.101.0: a realm that stands is read back before anybody walks into it
         if (pocket == null) {
             WaypointService.say(p, "pocket.full", "Every hidden realm is in use. Try again in a while.", ChatFormatting.GRAY);
             return;
@@ -222,6 +223,7 @@ public final class PocketRealm extends SavedData {
                     Component.translatableWithFallback("message.nusmp.mega.rift.pocket." + pocket.variant, pocket.variant.equals("boss") ? "Something old guards what is behind it." : "Press the plates in the order the wall shows."));
             mega.playSound(null, e, SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 0.4f, 1.4f);
             NusmpEvents.fire(m, "mega.pocket", pocket.variant);
+            PocketSwitch.welcome(mega, m, pocket);                                               // 1.101.0: where the lever is and when it works
         }
     }
 
@@ -239,6 +241,27 @@ public final class PocketRealm extends SavedData {
         return true;
     }
 
+    /**
+     * 1.101.0: the realm is read back (doorways open, floors, bars, the lever, the chests, the exits) and what is missing is put right. Returns the problems it found (empty = whole; the list is what they WERE
+     * before the repair). A repair that does not mend everything is logged; it does not throw (the tick must go on), the caller decides.
+     */
+    java.util.List<String> keepWhole(ServerLevel mega, Pocket p, com.newuniverse.nusmp.labyrinth.mega.RegionTheme theme) {
+        java.util.List<String> gaps;
+        try {
+            gaps = PocketBuilder.verify(mega, p);
+            if (gaps.isEmpty()) return gaps;
+            int fixed = PocketBuilder.repair(mega, p, theme);
+            LOG.warn("[nusmp] The realm in slot {} was missing {} thing(s), e.g. '{}'; {} block(s) were put back.", p.slot, gaps.size(), gaps.get(0), fixed);
+            setDirty();
+            java.util.List<String> still = PocketBuilder.verify(mega, p);
+            if (!still.isEmpty()) LOG.warn("[nusmp] The realm in slot {} is still missing: {}", p.slot, still);
+        } catch (RuntimeException ex) {
+            LOG.warn("[nusmp] The check of the realm in slot {} failed: {}", p.slot, ex.toString());
+            return java.util.List.of();
+        }
+        return gaps;
+    }
+
     private Pocket create(ServerLevel mega, ServerLevel from, DimensionalRiftBlockEntity rift, Sector s) {
         int slot = RiftRules.firstFreeSlot(pockets.keySet(), RiftRules.MAX_SLOTS);
         if (slot < 0) return null;
@@ -251,7 +274,13 @@ public final class PocketRealm extends SavedData {
         p.createdAt = mega.getGameTime();
         p.expiresAt = p.createdAt + 20L * 60L * RiftConfig.get(RiftConfig.POCKET_MINUTES);
         try {
-            PocketBuilder.build(mega, p, s == null ? com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY : s.theme);
+            com.newuniverse.nusmp.labyrinth.mega.RegionTheme theme = s == null ? com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY : s.theme;
+            PocketBuilder.build(mega, p, theme);
+            java.util.List<String> gaps = keepWhole(mega, p, theme);                              // 1.101.0: nobody is taken into a realm that is not whole: read it back, mend it, and refuse if it still is not
+            if (!gaps.isEmpty()) {
+                java.util.List<String> still = PocketBuilder.verify(mega, p);
+                if (!still.isEmpty()) throw new IllegalStateException("the realm is not whole: " + still);
+            }
         } catch (RuntimeException | LinkageError ex) {
             PocketBuilder.clear(mega, slot);                                                     // 1.94.0: a half-built realm is cleared, not left in the cell
             throw ex;
@@ -355,7 +384,11 @@ public final class PocketRealm extends SavedData {
             }
             if (warn > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn)
                     .withStyle(warn <= 10 ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE), true);
-            if (!in.isEmpty()) watchBoss(mega, p, now);
+            if (!in.isEmpty()) {
+                watchBoss(mega, p, now);
+                PocketSwitch.tick(mega, this, p, in, now);                                      // 1.101.0: the lever's cue and word, and the vault that opens by itself so nobody is stuck
+                if ((now / 20) % 5 == 0) keepWhole(mega, p, com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY);   // 1.101.0: the watchdog
+            }
             boolean cleared = p.bossDead || p.solved;
             long sinceCleared = p.clearedAt < 0 ? now - p.createdAt : now - p.clearedAt;
             if (left <= 0 || RiftRules.collapseEmpty(in.isEmpty(), cleared, now - p.createdAt, sinceCleared)) gone.add(p);

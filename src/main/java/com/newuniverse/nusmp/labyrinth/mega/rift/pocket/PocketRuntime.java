@@ -34,9 +34,23 @@ public final class PocketRuntime {
     public final Set<Long> sealBlocks = new HashSet<>();
     public BlockPos primary, secondary, arrival, exit, bossSpawn, keySpawn;
     public final List<BlockPos> chests = new ArrayList<>();
+    /** 1.101.0: the release lever of the sealed treasury (on a wall of the key room), the chest of the Sigil, the second exit rift in the treasury, and the signs. */
+    public BlockPos switchPos, sigilChest, shortcutExit;
+    public final List<BlockPos> signs = new ArrayList<>();
 
     /** Job state (server thread only). */
     public PocketBuild build;
+    /** 1.101.0: the watchdog's repair pass while one runs, the game time of the last probe, and how many repairs this tomb has needed. */
+    public PocketBuild repairJob;
+    public long lastProbe;
+    public int repairs;
+    public boolean leverTold;
+    /** 1.101.0: delvers waiting at the tear for the tomb to finish forming (see {@code ExclusivePockets.join}). */
+    public final java.util.Map<UUID, Waiter> waiting = new java.util.LinkedHashMap<>();
+    public long waitingSince = -1;
+
+    /** A delver held at the tear while the tomb forms, and the tear they came by (null when they were sent by a command). */
+    public record Waiter(net.minecraft.server.level.ServerPlayer player, BlockPos rift) {}
     public PocketClear clear;
     public PocketCollapse collapse;
     /** Rooms that fell in the collapse (a bit each), traps that fired (player, tile index) -> game time, mages already written to, delvers rescued lately. */
@@ -72,6 +86,10 @@ public final class PocketRuntime {
                 case BOSS_SPAWN -> bossSpawn = w;
                 case KEY_SPAWN -> keySpawn = w;
                 case CHEST_MINOR, CHEST_TREASURE -> chests.add(w);
+                case SWITCH -> switchPos = w;
+                case SIGIL_CHEST -> sigilChest = w;
+                case EXIT_SHORTCUT -> shortcutExit = w;
+                case SIGN -> signs.add(w);
                 default -> { }
             }
         }

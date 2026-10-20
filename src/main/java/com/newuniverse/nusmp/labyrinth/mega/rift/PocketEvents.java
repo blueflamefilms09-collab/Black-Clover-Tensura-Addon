@@ -27,6 +27,7 @@ public final class PocketEvents {
         gameBus.addListener(PocketEvents::onUse);
         gameBus.addListener(net.neoforged.bus.api.EventPriority.LOW, PocketEvents::onDeath);        // 1.94.0: after the Mythic Trait and every other listener that may cancel the death: only a real death opens the vault
         gameBus.addListener(PocketEvents::onLogin);
+        PocketSwitch.register(gameBus);                                                              // 1.101.0: the release lever of the realm and of the tombs
     }
 
     private static void onTick(ServerTickEvent.Post e) {

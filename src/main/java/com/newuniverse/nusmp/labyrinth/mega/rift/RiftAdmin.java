@@ -105,6 +105,40 @@ public final class RiftAdmin {
     }
 
     /**
+     * 1.101.0: where the release lever of the pocket in a slot is (the realm's lever chamber, or a tomb's key room), or null when the slot holds no pocket or the pocket has none. The {@code /dungeon admin}
+     * tree can teleport to it; {@code /multiverse mega rift switch tp} does.
+     */
+    public static BlockPos switchPos(MinecraftServer server, int slot) {
+        try {
+            PocketRealm.Pocket p = server == null ? null : PocketRealm.get(server).at(slot);
+            return p == null ? null : PocketSwitch.leverAt(p);
+        } catch (RuntimeException | LinkageError ex) {
+            LOG.warn("[nusmp] RiftAdmin.switchPos failed for slot {}: {}", slot, ex.toString());
+            return null;
+        }
+    }
+
+    /**
+     * 1.101.0: pulls the release lever of the pocket in a slot as an admin, with no delay: the realm's bars lift / the tomb's seal falls. False when there is no such pocket or its door is open already.
+     */
+    public static boolean openSwitch(MinecraftServer server, int slot) {
+        try {
+            ServerLevel mega = server == null ? null : MegaDungeon.level(server);
+            PocketRealm realm = server == null ? null : PocketRealm.get(server);
+            PocketRealm.Pocket p = realm == null ? null : realm.at(slot);
+            if (mega == null || p == null) return false;
+            if (p.exclusive()) {
+                com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketRuntime rt = com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketRuntime.of(p);
+                return rt != null && ExclusivePockets.openSeal(mega, realm, p, rt, null, "lever");
+            }
+            return realm.clear(mega, p, "admin");
+        } catch (RuntimeException | LinkageError ex) {
+            LOG.warn("[nusmp] RiftAdmin.openSwitch failed for slot {}: {}", slot, ex.toString());
+            return false;
+        }
+    }
+
+    /**
      * Brings everything down: every pocket realm of the dungeon's dimension collapses (the players inside are sent home first; the exclusive tombs are swept clear over the next ticks) and every open
      * rift of {@code level} closes. Returns the number of pockets collapsed plus the number of tears closed; 0 when there was nothing, and 0 on a level of a server without the dungeon's dimension
      * (the tears of {@code level} are still closed).

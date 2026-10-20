@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.labyrinth.mega.rift.pocket;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.dungeon.DungeonGuard;
+import com.newuniverse.nusmp.labyrinth.mega.rift.PocketSigns;
+import com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry;
 import com.newuniverse.nusmp.labyrinth.mega.rift.RiftService;
 import com.newuniverse.nusmp.labyrinth.mega.rift.RiftType;
 import com.newuniverse.nusmp.labyrinth.mega.rift.DimensionalRiftBlockEntity;
@@ -17,6 +20,9 @@ import net.minecraft.server.level.TicketType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.LeverBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,17 +51,29 @@ public final class PocketBuild {
     private final Set<Long> biomed = new HashSet<>();
     private final List<int[]> allChunks;
     private final long total;
-    private int stage, opIdx, biomeIdx;
+    private int stage, opIdx, biomeIdx, errors;
     private long cursor, placed, lastTicket = -1000;
+    /** 1.101.0: a repair pass (the watchdog's): it places the plan again but leaves the seal alone when it is open, and sets only the features that are gone. */
+    private final boolean repair, sealOpen;
 
-    public PocketBuild(PocketRuntime rt) {
+    public PocketBuild(PocketRuntime rt) { this(rt, false, false); }
+
+    public PocketBuild(PocketRuntime rt, boolean repair, boolean sealOpen) {
         this.rt = rt;
+        this.repair = repair;
+        this.sealOpen = sealOpen;
         this.ops = rt.plan.ops();
         long v = 0;
         for (PocketPlan.Fill f : ops) v += f.volume();
         this.total = Math.max(1, v);
         this.allChunks = PocketBiomes.chunksOf(rt.slot);
+        if (repair) stage = 0;
     }
+
+    public boolean isRepair() { return repair; }
+
+    /** How many fills threw and were skipped (the build still finishes; the watchdog puts the gaps right). */
+    public int errors() { return errors; }
 
     public boolean done() { return stage >= 3; }
 
@@ -69,6 +87,15 @@ public final class PocketBuild {
     // ---------------------------------------------------------------- stage A: the entry room, at once
     /** Places the entry room whole, lights its exit rift and sets the biome of the chunks it stands in. */
     public void entry(ServerLevel level) {
+        DungeonGuard.begin();                                                   // 1.101.0: the Dungeon Guard refuses to everybody else every change that takes a held block away (doorways, the seal, the sweep)
+        try {
+            entryInner(level);
+        } finally {
+            DungeonGuard.end();
+        }
+    }
+
+    private void entryInner(ServerLevel level) {
         keepLoaded(level, 0);
         int cx0 = PocketCell.centreX(rt.slot), cz0 = PocketCell.centreZ();
         int[] box = {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};
@@ -113,6 +140,15 @@ public final class PocketBuild {
     // ---------------------------------------------------------------- the rest, a budget a tick
     /** One slice of the job. Returns true when the whole tomb stands. */
     public boolean step(ServerLevel level, int budget) {
+        DungeonGuard.begin();
+        try {
+            return stepInner(level, budget);
+        } finally {
+            DungeonGuard.end();
+        }
+    }
+
+    private boolean stepInner(ServerLevel level, int budget) {
         if (stage >= 3) return true;
         long now = level.getGameTime();
         if (now - lastTicket >= 100) keepLoaded(level, now);
@@ -121,6 +157,7 @@ public final class PocketBuild {
             left -= placeOps(level, left);
             if (opIdx >= ops.size()) stage = 1;
         }
+        if (stage == 1 && repair) stage = 2;                                    // the biome was set when the tomb formed
         if (stage == 1 && left > 0) {
             int n = 0;
             while (biomeIdx < allChunks.size() && n < 8) {
@@ -144,16 +181,28 @@ public final class PocketBuild {
         while (did < budget && opIdx < ops.size()) {
             PocketPlan.Fill f = ops.get(opIdx);
             long vol = f.volume();
+            if (f.mat() == PocketPlan.Mat.SEAL && sealOpen) {                       // a repair never puts a seal back that was opened
+                placed += vol;
+                opIdx++;
+                cursor = 0;
+                continue;
+            }
             BlockState st = rt.palette.state(f.mat());
             int flags = f.mat() == PocketPlan.Mat.AIR ? FLAGS_AIR : FLAGS;
             int w = f.x1() - f.x0() + 1, d = f.z1() - f.z0() + 1;
-            while (cursor < vol && did < budget) {
-                int dx = (int) (cursor % w), dz = (int) ((cursor / w) % d), dy = (int) (cursor / ((long) w * d));
-                m.set(cx0 + f.x0() + dx, f.y0() + dy, cz0 + f.z0() + dz);
-                level.setBlock(m, st, flags);
-                cursor++;
-                did++;
-                placed++;
+            try {
+                while (cursor < vol && did < budget) {
+                    int dx = (int) (cursor % w), dz = (int) ((cursor / w) % d), dy = (int) (cursor / ((long) w * d));
+                    m.set(cx0 + f.x0() + dx, f.y0() + dy, cz0 + f.z0() + dz);
+                    level.setBlock(m, st, flags);
+                    cursor++;
+                    did++;
+                    placed++;
+                }
+            } catch (RuntimeException ex) {                                         // 1.101.0: one fill that throws is skipped (logged once), so the job always finishes and the rest of the tomb stands; the watchdog puts the gap right
+                if (errors++ < 3) LOG.warn("[nusmp] A fill of the tomb {} threw at op {} ({}) and was skipped: {}", rt.pocketId, opIdx, f, ex.toString());
+                placed += vol - cursor;
+                cursor = vol;
             }
             if (cursor >= vol) {
                 opIdx++;
@@ -173,6 +222,11 @@ public final class PocketBuild {
     }
 
     // ---------------------------------------------------------------- the features
+    /**
+     * Sets the point features of the plan: the trap runes, the pedestals with their loot tables, the chests, and (1.101.0) the release lever with its signs and lanterns, the chest of the Sigil and the
+     * second exit rift. A feature whose block already stands is left alone, so the same method serves the first build and a repair pass (a pedestal whose relic was taken, a chest that was looted, a
+     * lever that was pulled are not reset).
+     */
     private void features(ServerLevel level) {
         int slot = rt.slot;
         String id = rt.pocketId;
@@ -185,15 +239,49 @@ public final class PocketBuild {
                         PocketElement e = PocketElement.byId(f.tag());
                         if (e != null) level.setBlock(at.below(), PocketPalette.rune(e), FLAGS);
                     }
-                    case PEDESTAL_PRIMARY -> pedestal(level, at, "treasury", rt.seed ^ 0x51L);
-                    case PEDESTAL_SECONDARY -> pedestal(level, at, "secondary", rt.seed ^ 0x52L);
-                    case CHEST_TREASURE -> chest(level, at, "chest", rt.seed + 0x100L + chestN++);
-                    case CHEST_MINOR -> chest(level, at, "minor", rt.seed + 0x200L + chestN++);
+                    case PEDESTAL_PRIMARY -> {
+                        if (!level.getBlockState(at).is(VaultRegistry.PEDESTAL.get())) pedestal(level, at, "treasury", rt.seed ^ 0x51L);
+                    }
+                    case PEDESTAL_SECONDARY -> {
+                        if (!level.getBlockState(at).is(VaultRegistry.PEDESTAL.get())) pedestal(level, at, "secondary", rt.seed ^ 0x52L);
+                    }
+                    case CHEST_TREASURE -> {
+                        long n = chestN++;
+                        if (!level.getBlockState(at).is(Blocks.CHEST)) chest(level, at, "chest", rt.seed + 0x100L + n);
+                    }
+                    case CHEST_MINOR -> {
+                        long n = chestN++;
+                        if (!level.getBlockState(at).is(Blocks.CHEST)) chest(level, at, "minor", rt.seed + 0x200L + n);
+                    }
+                    case SWITCH -> {
+                        if (!level.getBlockState(at).is(Blocks.LEVER))
+                            level.setBlock(at, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.WALL).setValue(LeverBlock.FACING, PocketSigns.dir(f.tag().charAt(0)))
+                                    .setValue(LeverBlock.POWERED, sealOpen), FLAGS);
+                    }
+                    case SIGN -> {
+                        if (!(level.getBlockState(at).getBlock() instanceof WallSignBlock)) PocketSigns.place(level, at, PocketSigns.dir(f.tag().charAt(0)), f.tag().substring(2));
+                    }
+                    case LANTERN -> level.setBlock(at, Blocks.LANTERN.defaultBlockState(), FLAGS);
+                    case SIGIL_CHEST -> sigilChest(level, at, PocketSigns.dir(f.tag().charAt(0)));
+                    case EXIT_SHORTCUT -> openExit(level, at, rt.seed ^ 0x5C0FFL);
+                    case EXIT_RIFT -> {
+                        if (repair) openExit(level, at, rt.seed ^ 0x5DEECE66DL);                  // the first build opens it with the entry hall
+                    }
                     default -> { }
                 }
             } catch (RuntimeException ex) {
                 LOG.warn("[nusmp] The {} of the tomb {} could not be placed at {}: {}", f.type(), id, at.toShortString(), ex.toString());
             }
+        }
+    }
+
+    /** An exit rift at {@code at} that lives as long as the tomb (nothing if one stands there already). */
+    private void openExit(ServerLevel level, BlockPos at, long salt) {
+        if (level.getBlockState(at).is(RiftRegistry.RIFT.get())) return;
+        DimensionalRiftBlockEntity er = RiftService.open(level, at, RiftType.EXIT, salt);
+        if (er != null) {
+            er.aimPocket(rt.slot);
+            er.extendLife(20 * 60 * (com.newuniverse.nusmp.labyrinth.mega.rift.RiftConfig.get(com.newuniverse.nusmp.labyrinth.mega.rift.RiftConfig.EXCLUSIVE_MINUTES) + 2));
         }
     }
 
@@ -223,5 +311,13 @@ public final class PocketBuild {
             ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", "pocket/" + rt.pocketId + "/" + table));
             chest.setLootTable(key, seed);
         }
+    }
+
+    /** The chest of the key room that holds the tomb's Sigil (one stack, in the middle slot): a free, findable way through the seal that needs neither the keeper's death nor a mage. */
+    private void sigilChest(ServerLevel level, BlockPos at, Direction face) {
+        if (level.getBlockState(at).is(Blocks.CHEST)) return;
+        level.setBlock(at, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, face), FLAGS);
+        BlockEntity be = level.getBlockEntity(at);
+        if (be instanceof ChestBlockEntity chest && !sealOpen) chest.setItem(13, PocketSigil.make(rt.def, rt.seed));
     }
 }
