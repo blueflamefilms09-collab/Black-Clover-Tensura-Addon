@@ -246,7 +246,14 @@ public final class CuriosLink {
         put(Kind.HAND_OF_PROVIDENCE, Attributes.MAX_HEALTH, 4, add, "Providence: +4 health");
     }
 
-    private static ResourceLocation id(Kind k) { return ResourceLocation.fromNamespaceAndPath("nusmp", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT)); }
+    /** 1.99.0 (performance pass): the modifier id of each kind, built once. The once-a-second pass asked for one per kind per player (28 strings and locations per player per second). */
+    private static final ResourceLocation[] IDS = new ResourceLocation[Kind.values().length];
+
+    private static ResourceLocation id(Kind k) {
+        ResourceLocation r = IDS[k.ordinal()];
+        if (r == null) IDS[k.ordinal()] = r = ResourceLocation.fromNamespaceAndPath("nusmp", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT));
+        return r;
+    }
 
     /** The tooltip line of a weapon that can be worn. */
     static void tooltip(Kind k, List<Component> tip) {

@@ -67,12 +67,28 @@ public final class GrimoireFloatClient {
 
     private static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf.png");
     private static final ResourceLocation LEAF_TATTERED = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf_tattered.png");
+    /**
+     * 1.99.0 (performance pass): the rune texture of each magic, found once per resource reload. It used to be worked out for every floating grimoire on every frame: a lower-cased name, two string
+     * concatenations, a location, and a question to the resource manager ("is there a _rune_ring file?"), which walks the resource packs.
+     */
+    private static final ResourceLocation[] RUNE_TEXTURES = new ResourceLocation[MagicType.values().length];
+    private static int runeEpoch = -1;
+
     private static ResourceLocation runeTexture(ItemStack stack) {
         MagicType magic = MagicType.byName(GrimoireItem.data(stack).getString("Magic"));
+        int epoch = com.newuniverse.nusmp.perf.PerfEpoch.get();
+        if (epoch != runeEpoch) {
+            java.util.Arrays.fill(RUNE_TEXTURES, null);
+            runeEpoch = epoch;
+        }
+        ResourceLocation cached = RUNE_TEXTURES[magic.ordinal()];
+        if (cached != null) return cached;
         String id = magic.name().toLowerCase(java.util.Locale.ROOT);
         ResourceLocation ring = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + "_rune_ring.png");
-        if (Minecraft.getInstance().getResourceManager().getResource(ring).isPresent()) return ring;
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + ".png");
+        ResourceLocation found = Minecraft.getInstance().getResourceManager().getResource(ring).isPresent() ? ring
+                : ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + ".png");
+        RUNE_TEXTURES[magic.ordinal()] = found;
+        return found;
     }
 
     private static final class Entry {

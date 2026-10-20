@@ -74,6 +74,13 @@ public final class GeoDraw {
         pose.popPose();
     }
 
+    // 1.99.0 (performance pass, docs/performance_1_99.md): this is the draw routine of every geo model of the mod (the aura armours, the props, the arc and Zogratis bodies, the foundry mobs, the
+    // player-model extras), so it is where the per-frame garbage was: a Quaternionf per turned bone, a float[3] per sampled track, and about forty arrays per cube. The scratch objects below are
+    // used by the render thread only, and every value is consumed before the next one is written (the bone recursion copies what it needs into locals first); the cube's own numbers are worked out
+    // once and kept on the cube (GeoModelData.Cube#drawCorners). The floats that reach the vertex consumer are bit for bit the ones the allocating version produced.
+    private static final Quaternionf TURN = new Quaternionf();
+    private static final float[] ROT = new float[3], POS = new float[3], SCL = new float[3];
+
     // ================================================================ bones
     private static void bone(PoseStack pose, VertexConsumer vc, GeoModelData m, GeoModelData.Bone b, GeoModelData.Bone parent, GeoAnim.Clip clip,
                              float t, int light, int overlay, int argb) {
@@ -83,12 +90,9 @@ public final class GeoDraw {
         if (clip != null) {
             GeoAnim.BoneAnim a = clip.bones.get(b.name);
             if (a != null) {
-                float[] r = a.rotation == null ? null : a.rotation.sample(t);
-                float[] p = a.position == null ? null : a.position.sample(t);
-                float[] s = a.scale == null ? null : a.scale.sample(t);
-                if (r != null) { rx += r[0]; ry += r[1]; rz += r[2]; }
-                if (p != null) { x += p[0]; y -= p[1]; z += p[2]; }
-                if (s != null) { sx = s[0]; sy = s[1]; sz = s[2]; }
+                if (a.rotation != null && a.rotation.sampleInto(t, ROT)) { rx += ROT[0]; ry += ROT[1]; rz += ROT[2]; }
+                if (a.position != null && a.position.sampleInto(t, POS)) { x += POS[0]; y -= POS[1]; z += POS[2]; }
+                if (a.scale != null && a.scale.sampleInto(t, SCL)) { sx = SCL[0]; sy = SCL[1]; sz = SCL[2]; }
             }
         }
         pose.pushPose();
@@ -102,7 +106,7 @@ public final class GeoDraw {
 
     /** File rotation (y-up frame, degrees) -> vanilla's ZYX rotation: the file's x and z angles change sign under the y flip. */
     private static void rotate(PoseStack pose, float rx, float ry, float rz) {
-        if (rx != 0f || ry != 0f || rz != 0f) pose.mulPose(new Quaternionf().rotationZYX(-rz * DEG, ry * DEG, -rx * DEG));
+        if (rx != 0f || ry != 0f || rz != 0f) pose.mulPose(TURN.rotationZYX(-rz * DEG, ry * DEG, -rx * DEG));
     }
 
     // ================================================================ cubes (vanilla ModelPart.Cube)
@@ -116,36 +120,64 @@ public final class GeoDraw {
             rotate(pose, c.rx, c.ry, c.rz);
             pose.translate(-cx, -cy, -cz);
         }
+        if (c.drawCorners == null) prepare(m, b, c);
+        float[] v = c.drawCorners, uv = c.drawUv;
+        int mask = c.drawMask;
+        PoseStack.Pose p = pose.last();
+        boolean mirror = c.mirror;
+        float mx = mirror ? -1f : 1f;
+        int r = (argb >> 16) & 255, g = (argb >> 8) & 255, bl = argb & 255, a = argb >>> 24;
+        // face, its four corners (indices into the eight: x = bit 0, y = bit 1, z = bit 2; vanilla's order), its outward normal
+        if ((mask & 1) != 0)  face(p, vc, v, 0, 4, 6, 2, uv, 0,  mirror, -mx, 0f, 0f, light, overlay, r, g, bl, a);   // WEST
+        if ((mask & 2) != 0)  face(p, vc, v, 1, 0, 2, 3, uv, 4,  mirror, 0f, 0f, -1f, light, overlay, r, g, bl, a);   // NORTH
+        if ((mask & 4) != 0)  face(p, vc, v, 5, 1, 3, 7, uv, 8,  mirror, mx, 0f, 0f, light, overlay, r, g, bl, a);    // EAST
+        if ((mask & 8) != 0)  face(p, vc, v, 4, 5, 7, 6, uv, 12, mirror, 0f, 0f, 1f, light, overlay, r, g, bl, a);    // SOUTH
+        if ((mask & 16) != 0) face(p, vc, v, 5, 4, 0, 1, uv, 16, mirror, 0f, -1f, 0f, light, overlay, r, g, bl, a);   // TOP
+        if ((mask & 32) != 0) face(p, vc, v, 3, 2, 6, 7, uv, 20, mirror, 0f, 1f, 0f, light, overlay, r, g, bl, a);    // BOTTOM
+        if (turned) pose.popPose();
+    }
+
+    /** Works out, once per cube, the eight corners (as the vanilla box has them) and the normalised texture rectangle of each face. The same arithmetic the drawing did every frame. */
+    private static void prepare(GeoModelData m, GeoModelData.Bone b, GeoModelData.Cube c) {
         float g = c.inflate;
         float minX = c.ox - b.px - g, maxX = c.ox - b.px + c.sx + g;
         float minY = -(c.oy + c.sy) + b.py - g, maxY = -c.oy + b.py + g;
         float minZ = c.oz - b.pz - g, maxZ = c.oz - b.pz + c.sz + g;
         if (c.mirror) { float tmp = maxX; maxX = minX; minX = tmp; }
-        // the eight corners (names after their vanilla counterparts): index = x(0 min / 1 max) + 2 * y(0 min / 1 max) + 4 * z(0 min / 1 max)
-        float[][] v = new float[8][];
-        for (int i = 0; i < 8; i++) v[i] = new float[]{(i & 1) == 0 ? minX : maxX, (i & 2) == 0 ? minY : maxY, (i & 4) == 0 ? minZ : maxZ};
-        PoseStack.Pose p = pose.last();
-        float mx = c.mirror ? -1f : 1f;
-        //            face            corners in vanilla order                                   outward normal
-        face(p, vc, m, c.uv[GeoModelData.WEST],   new float[][]{v[0], v[4], v[6], v[2]}, c.mirror, -mx, 0f, 0f, light, overlay, argb);
-        face(p, vc, m, c.uv[GeoModelData.NORTH],  new float[][]{v[1], v[0], v[2], v[3]}, c.mirror, 0f, 0f, -1f, light, overlay, argb);
-        face(p, vc, m, c.uv[GeoModelData.EAST],   new float[][]{v[5], v[1], v[3], v[7]}, c.mirror, mx, 0f, 0f, light, overlay, argb);
-        face(p, vc, m, c.uv[GeoModelData.SOUTH],  new float[][]{v[4], v[5], v[7], v[6]}, c.mirror, 0f, 0f, 1f, light, overlay, argb);
-        face(p, vc, m, c.uv[GeoModelData.TOP],    new float[][]{v[5], v[4], v[0], v[1]}, c.mirror, 0f, -1f, 0f, light, overlay, argb);
-        face(p, vc, m, c.uv[GeoModelData.BOTTOM], new float[][]{v[3], v[2], v[6], v[7]}, c.mirror, 0f, 1f, 0f, light, overlay, argb);
-        if (turned) pose.popPose();
+        float[] v = new float[24];
+        for (int i = 0; i < 8; i++) {
+            v[i * 3] = (i & 1) == 0 ? minX : maxX;
+            v[i * 3 + 1] = (i & 2) == 0 ? minY : maxY;
+            v[i * 3 + 2] = (i & 4) == 0 ? minZ : maxZ;
+        }
+        float[] uv = new float[24];
+        int mask = 0;
+        for (int f = 0; f < 6; f++) {
+            float[] r = c.uv[f];
+            if (r == null) continue;
+            mask |= 1 << f;
+            uv[f * 4] = r[0] / m.texW;
+            uv[f * 4 + 1] = r[1] / m.texH;
+            uv[f * 4 + 2] = r[2] / m.texW;
+            uv[f * 4 + 3] = r[3] / m.texH;
+        }
+        c.drawUv = uv;
+        c.drawMask = mask;
+        c.drawCorners = v;                                                    // last: a non-null corner table means the rest is ready
     }
 
-    /** One polygon: vanilla gives its four corners the uvs (u2,v1) (u1,v1) (u1,v2) (u2,v2) in this order, and a mirrored cube reverses them. */
-    private static void face(PoseStack.Pose p, VertexConsumer vc, GeoModelData m, float[] uv, float[][] c, boolean mirror,
-                             float nx, float ny, float nz, int light, int overlay, int argb) {
-        if (uv == null) return;
-        float u1 = uv[0] / m.texW, v1 = uv[1] / m.texH, u2 = uv[2] / m.texW, v2 = uv[3] / m.texH;
-        float[][] t = {{u2, v1}, {u1, v1}, {u1, v2}, {u2, v2}};
-        int r = (argb >> 16) & 255, g = (argb >> 8) & 255, bl = argb & 255, a = argb >>> 24;
+    /**
+     * One polygon: vanilla gives its four corners the uvs (u2,v1) (u1,v1) (u1,v2) (u2,v2) in this order, and a mirrored cube reverses them. {@code a..d} are the corner indices of the four
+     * corners; {@code at} is where the face's {u1, v1, u2, v2} start in {@code uv}.
+     */
+    private static void face(PoseStack.Pose p, VertexConsumer vc, float[] v, int a, int b, int c, int d, float[] uv, int at, boolean mirror,
+                             float nx, float ny, float nz, int light, int overlay, int r, int g, int bl, int alpha) {
+        float u1 = uv[at], v1 = uv[at + 1], u2 = uv[at + 2], v2 = uv[at + 3];
         for (int k = 0; k < 4; k++) {
             int i = mirror ? 3 - k : k;
-            vc.addVertex(p, c[i][0], c[i][1], c[i][2]).setColor(r, g, bl, a).setUv(t[i][0], t[i][1])
+            int corner = (i == 0 ? a : i == 1 ? b : i == 2 ? c : d) * 3;
+            float u = i == 0 || i == 3 ? u2 : u1, vv = i < 2 ? v1 : v2;
+            vc.addVertex(p, v[corner], v[corner + 1], v[corner + 2]).setColor(r, g, bl, alpha).setUv(u, vv)
                     .setOverlay(overlay).setLight(light).setNormal(p, nx, ny, nz);
         }
     }

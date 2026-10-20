@@ -28,6 +28,13 @@ public final class GeoModelData {
         public float px, py, pz, rx, ry, rz;
         /** Per face {u1, v1, u2, v2} in texture pixels (order WEST, NORTH, EAST, SOUTH, TOP, BOTTOM); null = the face is not drawn. */
         public final float[][] uv = new float[6][];
+        /**
+         * 1.99.0 (performance pass): what {@link GeoDraw} works out from this cube once and keeps (the eight corners in the bone's frame and the texture coordinates of each face, normalised): they depend
+         * only on the cube, its bone's pivot and the texture size, none of which changes after parsing, yet the drawing rebuilt them (about forty arrays per cube) on every frame. Null until the cube is
+         * first drawn; a new parse makes new cubes, so a resource reload starts clean.
+         */
+        float[] drawCorners, drawUv;
+        int drawMask;
     }
 
     public static final class Bone {

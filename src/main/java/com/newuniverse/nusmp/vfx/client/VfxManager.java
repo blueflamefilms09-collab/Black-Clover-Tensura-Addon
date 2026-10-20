@@ -73,6 +73,9 @@ import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WindSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.EarthSpellLayer;
+import com.newuniverse.nusmp.perf.PerfProbe;
+import com.newuniverse.nusmp.perf.PerfSettings;
+import com.newuniverse.nusmp.perf.VfxQuality;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -86,14 +89,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/** Client-side owner of all running effects. Layers are registered here. */
+/**
+ * Client-side owner of all running effects. Layers are registered here.
+ *
+ * <p>1.99.0 (performance pass, docs/performance_1_99.md): {@link #render} gives each effect a level of detail by its distance from the camera ({@link VfxQuality}: full detail near, 3/4 and 1/2
+ * further out, not drawn beyond the far limit; the Time Magic layer is never thinned), caps the vertices of the frame when the quality asks for it (nearest effects first), and the number of effects
+ * that may run at once follows the quality (64 on high, as before). On {@code high} (the default) nothing near the camera changes. Sections of the performance probe ({@code c.vfx.*}) time the tick,
+ * the render and, while the probe is on, every layer.
+ */
 public final class VfxManager {
     private static final VfxManager INSTANCE = new VfxManager();
     private static final int MAX_ACTIVE = 64;
+    private static final PerfProbe.Section TICK_SECTION = PerfProbe.section("c.vfx.tick"), RENDER_SECTION = PerfProbe.section("c.vfx.render"), SPAWN_SECTION = PerfProbe.section("c.vfx.spawn");
+    private static final java.util.Map<AbstractVfxLayer, PerfProbe.Section> LAYER_SECTIONS = new java.util.HashMap<>();
 
     private final Map<VfxShape, AbstractVfxLayer> layers = new EnumMap<>(VfxShape.class);
     private final List<VfxInstance> active = new ArrayList<>();
     private final VfxVertexBuffer buffer = new VfxVertexBuffer();
+    /** Per-frame scratch of {@link #render} (one slot per running effect): its distance, its level of detail, whether the frame budget leaves it out. */
+    private double[] distance = new double[MAX_ACTIVE];
+    private float[] lod = new float[MAX_ACTIVE];
+    private boolean[] left = new boolean[MAX_ACTIVE];
 
     public static VfxManager get() { return INSTANCE; }
 
@@ -238,11 +254,13 @@ public final class VfxManager {
      * (core.magic.profile.SafeCast) and skipped; it can no longer crash the client.
      */
     public void spawn(VfxPayload p) {
+        long t0 = PerfProbe.begin();
         try {
             spawnUnguarded(p);
         } catch (RuntimeException | LinkageError e) {
             com.newuniverse.nusmp.core.magic.profile.SafeCast.clientFault("vfx:spawn:" + p.shapeType().name(), e);
         }
+        PerfProbe.end(SPAWN_SECTION, t0);
     }
 
     private void spawnUnguarded(VfxPayload p) {
@@ -265,7 +283,8 @@ public final class VfxManager {
             return;
         }
         int duration = p.duration() > 0 ? p.duration() : def != null && def.duration() > 0 ? def.duration() : layer.defaultDuration(shape);
-        if (active.size() >= MAX_ACTIVE) active.remove(0);
+        int cap = Math.min(MAX_ACTIVE, PerfSettings.vfxQuality().maxActive);      // 64 on high (as before), fewer on medium and low
+        while (active.size() >= cap) active.remove(0);
         VfxInstance inst = new VfxInstance(p, layer, color, duration, mc.level);
         active.add(inst);
         layer.onSpawn(inst);
@@ -276,6 +295,7 @@ public final class VfxManager {
     }
 
     public void tick() {
+        long t0 = PerfProbe.begin();
         VfxShake.tick();
         Iterator<VfxInstance> it = active.iterator();
         while (it.hasNext()) {
@@ -290,24 +310,52 @@ public final class VfxManager {
             inst.tick();
             if (inst.done()) it.remove();
         }
+        PerfProbe.end(TICK_SECTION, t0);
     }
 
     public void clear() { active.clear(); }
+
+    /** How many effects are running (for the report). */
+    public int activeCount() { return active.size(); }
+
+    /** The reach of an effect around its end points (blocks): the part of it that can be near the camera when its points are not. Generous, so a big zone is never taken for far away. */
+    private static double reach(VfxInstance inst) { return Math.min(192.0, 4.0 + 4.0 * inst.power); }
 
     /** Draw everything (render thread). */
     public void render(net.minecraft.client.Camera camera, Matrix4f modelView, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
         if (active.isEmpty() || mc.level == null) return;
-        float detail = mc.options.particles().get() == ParticleStatus.DECREASED ? 0.5f : 1f;
-        VfxRenderContext ctx = new VfxRenderContext(camera, modelView, partialTick, mc.level, detail);
-        for (VfxInstance inst : active) {
+        long t0 = PerfProbe.begin();
+        float base = mc.options.particles().get() == ParticleStatus.DECREASED ? 0.5f : 1f;
+        VfxRenderContext ctx = new VfxRenderContext(camera, modelView, partialTick, mc.level, base);
+        VfxQuality quality = PerfSettings.vfxQuality();
+        int n = active.size();
+        if (distance.length < n) {
+            distance = new double[n * 2];
+            lod = new float[n * 2];
+            left = new boolean[n * 2];
+        }
+        int culled = plan(ctx, quality, n, base);
+        int drawn = 0, thinned = 0, skipped = 0;
+        for (int i = 0; i < n; i++) {
+            VfxInstance inst = active.get(i);
+            if (lod[i] <= 0f) continue;                                  // too far to see
+            if (left[i]) {                                               // the vertex budget of the frame went to nearer effects
+                skipped++;
+                continue;
+            }
+            ctx.detail = base * lod[i];
+            if (lod[i] < 1f) thinned++;
             buffer.beginActivation(inst.layer.vertexBudget(inst.shape));
+            long lt = PerfProbe.begin();
             try {
                 inst.layer.render(inst, ctx, buffer);
             } catch (RuntimeException | LinkageError e) {           // 1.27.0: a layer that throws ends its effect (logged once per shape), the frame goes on
                 com.newuniverse.nusmp.core.magic.profile.SafeCast.clientFault("vfx:render:" + inst.shape.name(), e);
                 inst.expire();
             }
+            if (lt != 0L) PerfProbe.end(layerSection(inst.layer), lt);
+            drawn++;
         }
         // Vertices are pre-transformed into view space, so the model-view uniform must be identity.
         var mvStack = com.mojang.blaze3d.systems.RenderSystem.getModelViewStack();
@@ -317,6 +365,55 @@ public final class VfxManager {
         buffer.flush(modelView);
         mvStack.popMatrix();
         com.mojang.blaze3d.systems.RenderSystem.applyModelViewMatrix();
+        VfxStats.frame(n, drawn, thinned, culled, skipped, buffer.lastFlushVertices());
+        PerfProbe.end(RENDER_SECTION, t0);
+    }
+
+    /**
+     * Decides, for every running effect, how detailed it is drawn this frame: {@code lod[i]} (0 = culled), and, when the quality caps the vertices of a frame and the effects would not fit,
+     * which of the farther ones are left out ({@code left[i]}; the drawing order is not changed, only the set). The Time Magic layer is exempt from all of it: it is the standard the others are
+     * built to. Returns how many effects were culled.
+     */
+    private int plan(VfxRenderContext ctx, VfxQuality quality, int n, float base) {
+        int culled = 0;
+        int estimate = 0;
+        for (int i = 0; i < n; i++) {
+            VfxInstance inst = active.get(i);
+            left[i] = false;
+            if (inst.layer instanceof TimeMagicLayer) {
+                lod[i] = 1f;
+                distance[i] = 0.0;
+                continue;
+            }
+            Vec3 cam = ctx.camPos;
+            double d = Math.min(inst.from(ctx).distanceToSqr(cam), inst.to(ctx).distanceToSqr(cam));
+            double eff = Math.max(0.0, Math.sqrt(d) - reach(inst));
+            distance[i] = eff;
+            float l = quality.detailAt(eff);
+            lod[i] = l;
+            if (l <= 0f) culled++;
+            else estimate += Math.min(inst.layer.vertexBudget(inst.shape), VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION);
+        }
+        if (estimate > quality.frameVertices) {                         // the effects do not all fit: the nearest ones are kept until the allowance is spent
+            int room = quality.frameVertices;
+            boolean[] taken = new boolean[n];
+            for (int round = 0; round < n; round++) {
+                int best = -1;
+                for (int i = 0; i < n; i++) if (!taken[i] && lod[i] > 0f && (best < 0 || distance[i] < distance[best])) best = i;
+                if (best < 0) break;
+                taken[best] = true;
+                VfxInstance inst = active.get(best);
+                if (inst.layer instanceof TimeMagicLayer) continue;
+                int cost = Math.min(inst.layer.vertexBudget(inst.shape), VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION);
+                if (cost > room) left[best] = true;
+                else room -= cost;
+            }
+        }
+        return culled;
+    }
+
+    private static PerfProbe.Section layerSection(AbstractVfxLayer layer) {
+        return LAYER_SECTIONS.computeIfAbsent(layer, l -> PerfProbe.section("c.vfx.layer." + l.getClass().getSimpleName()));
     }
 
     private void dustFallback(VfxPayload p, int color) {

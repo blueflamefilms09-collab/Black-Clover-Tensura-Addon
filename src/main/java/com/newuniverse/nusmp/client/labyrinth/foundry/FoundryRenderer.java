@@ -37,25 +37,49 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
     private static final Logger LOG = LogUtils.getLogger();
     public static final String KEY = "foundry";
 
-    private final Map<String, GeoSpec> specs = new HashMap<>();
-    private final Map<String, Clips> clips = new HashMap<>();
-    private final Map<String, float[]> strides = new HashMap<>();
+    /**
+     * 1.99.0 (performance pass, docs/performance_1_99.md): everything this renderer works out for one mob id, kept under that id. Before, every mob on every frame built the string
+     * {@code id + "|" + anim} to find its spec, {@code spec.animations().toString()} to find its clip reader and two more strings to find its stride, and a texture query built a whole
+     * {@link GeoSpec} (four locations) just to read one of them; with a few dozen foundry mobs in view that was hundreds of strings and locations per frame. The entry is rebuilt only if the index
+     * names another animation class for the id (a resource reload that changed the index); the strides are worked out on the first frame the mob is drawn, as before.
+     */
+    private static final class Kit {
+        final String anim;
+        final GeoSpec spec;
+        final Clips reader;
+        float[] stride;
+        Kit(String anim, GeoSpec spec) {
+            this.anim = anim;
+            this.spec = spec;
+            this.reader = new Clips(spec);
+        }
+    }
+
+    private final Map<String, Kit> kits = new HashMap<>();
     private final Set<String> warned = new HashSet<>();
+    /** The texture of a foundry mob by id (read for every mob on every frame by the entity renderer). */
+    private static final com.newuniverse.nusmp.perf.BoundedCache<String, ResourceLocation> TEXTURES = new com.newuniverse.nusmp.perf.BoundedCache<>(1024);
 
     public FoundryRenderer(EntityRendererProvider.Context ctx) { super(ctx, 0.45f); }
 
     /** The files of a mob: its own model and textures, the shared clips of its class. Cached per id (the index is re-read on a resource reload, which clears nothing here because the
      *  entries hold only resource names). */
-    private GeoSpec spec(String id, FoundryIndex.Entry en) {
-        return specs.computeIfAbsent(id + "|" + en.anim(), k -> {
+    private Kit kit(String id, FoundryIndex.Entry en) {
+        Kit k = kits.get(id);
+        if (k == null || !k.anim.equals(en.anim())) {
             GeoSpec own = GeoSpec.of(KEY, id);
             ResourceLocation anim = ResourceLocation.fromNamespaceAndPath("nusmp", "animations/entity/foundry_anim_" + en.anim() + ".animation.json");
-            return new GeoSpec(own.model(), anim, own.texture(), own.glow());
-        });
+            k = new Kit(en.anim(), new GeoSpec(own.model(), anim, own.texture(), own.glow()));
+            kits.put(id, k);
+        }
+        return k;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FoundryMobEntity e) { return GeoSpec.of(KEY, e.foundryId().isEmpty() ? "none" : e.foundryId()).texture(); }
+    public ResourceLocation getTextureLocation(FoundryMobEntity e) {
+        String id = e.foundryId().isEmpty() ? "none" : e.foundryId();
+        return TEXTURES.get(id, i -> GeoSpec.of(KEY, i).texture());
+    }
 
     @Override
     public boolean shouldRender(FoundryMobEntity e, Frustum frustum, double x, double y, double z) {
@@ -65,15 +89,18 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
     }
 
     /** {walk, run} blocks of ground per cycle of the class's clips, from the thigh swing and the model's hip height (the maths of the arc renderers, for these file names). */
-    private float[] stride(GeoSpec spec) {
-        return strides.computeIfAbsent(spec.model().toString() + spec.animations(), k -> {
+    private float[] stride(Kit kit) {
+        float[] s = kit.stride;
+        if (s == null) {
+            GeoSpec spec = kit.spec;
             GeoModelData m = GeoModels.model(spec.model());
             GeoModelData.Bone leg = m.bones.get("leg_l");
             float hip = leg == null ? 12.5f : leg.py;
             GeoAnim a = GeoModels.animations(spec.animations());
-            return new float[]{ArcRenderMath.strideOr(ArcRenderMath.strideBlocks(hip, swing(a, "walk")), ArcRenderMath.DEFAULT_WALK_CYCLE),
+            s = kit.stride = new float[]{ArcRenderMath.strideOr(ArcRenderMath.strideBlocks(hip, swing(a, "walk")), ArcRenderMath.DEFAULT_WALK_CYCLE),
                     ArcRenderMath.strideOr(ArcRenderMath.strideBlocks(hip, swing(a, "run")), ArcRenderMath.DEFAULT_RUN_CYCLE)};
-        });
+        }
+        return s;
     }
 
     private static float swing(GeoAnim anim, String clip) {
@@ -99,11 +126,12 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
             super.render(e, yaw, partial, pose, buffers, light);
             return;
         }
-        GeoSpec spec = spec(id, en);
-        Clips reader = clips.computeIfAbsent(spec.animations().toString(), k -> new Clips(spec));
+        Kit kit = kit(id, en);
+        GeoSpec spec = kit.spec;
+        Clips reader = kit.reader;
         ZogratisPose clock = clock(e);
         ZogratisPose.Frame f = frame(e, partial);
-        float[] stride = stride(spec);
+        float[] stride = stride(kit);
         f.walkCycle = stride[0] * en.size();
         f.runCycle = stride[1] * en.size();
         boolean casting = e.casting();
