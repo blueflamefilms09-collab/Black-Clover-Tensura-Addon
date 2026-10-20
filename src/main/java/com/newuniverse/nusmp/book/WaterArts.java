@@ -129,7 +129,6 @@ public final class WaterArts {
     static boolean valkyrieDress(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.WATERFX_BURST, p.position(), p.position().add(0, 1, 0), 26, 1.6f);
-        WaterArmour.put(p, Aura.WATER, 600, STYLE_VALKYRIE);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1));
@@ -191,7 +190,6 @@ public final class WaterArts {
             if (ally != p && ally.isAlliedTo(p)) BalanceLaw.heal(ally, 3f * epMod(p));
         }
         b.vfx(p, VfxShape.WATERFX_ZONE, p.position(), p.position().add(0, 1, 0), 60, 2.4f);
-        WaterArmour.put(p, Aura.WATER, 300, 0);
         return true;
     }
 

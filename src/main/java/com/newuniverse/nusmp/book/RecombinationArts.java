@@ -72,7 +72,6 @@ public final class RecombinationArts {
     }
 
     private static void armour(ServerPlayer p, int ticks, int style) {
-        PlayerAuras.set(p, Aura.RECOMBINATION, ticks, style);
         var data = p.getPersistentData();
         data.putLong(ARMOUR_UNTIL, p.level().getGameTime() + ticks);
         data.putFloat(ARMOUR_CUT, RecombinationRules.armourCut(BalanceLaw.epScale(p)));
@@ -147,7 +146,7 @@ public final class RecombinationArts {
     }
 
     private static void shortArmour(ServerPlayer p) {
-        if (!PlayerAuras.active(p, Aura.RECOMBINATION)) armour(p, RecombinationRules.SHORT_ARMOUR_TICKS, 1);
+        // 1.99.0: no short armour after a cast (book.ArmourPolicy: a cast never equips)
     }
 
     // ------------------------------------------------------------------ the four new pages

@@ -108,7 +108,6 @@ public final class WingBook extends ElementBook {
         int life = AirPropKit.lifeFor(p, 400);
         for (int k = 0; k < 2; k++)
             MagicProps.spawn(p.serverLevel(), PropKind.WING_1, p.position().add(k == 0 ? 1.5 : -1.5, 2.0, 0), p.getYRot(), 1.0f, life, AirPropKit.pack(0, 0, 0), p);
-        PlayerAuras.set(p, Aura.WING, 100);
         b.vfx(p, VfxShape.WING_FX3, p.position(), p.position().add(0, 1, 0), 28, 0.7f);
         return true;
     }
@@ -124,7 +123,6 @@ public final class WingBook extends ElementBook {
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 0));
         p.addEffect(new MobEffectInstance(MobEffects.JUMP, ticks, 1));
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0, false, false));
-        PlayerAuras.set(p, Aura.WING, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WING_FX3, p, p.position().add(0, 1, 0), b.color, 26, 0.5f);
         return true;

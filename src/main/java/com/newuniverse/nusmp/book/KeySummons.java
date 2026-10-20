@@ -126,7 +126,6 @@ public final class KeySummons {
             MagicPropEntity key = MagicProps.spawn(level, PropKind.KEY_2, at, p.getYRot(), 0.55f, life, k | (n << 2), p);
             if (key != null) bind(key, b, i, mode, level.getGameTime() + life);
         }
-        PlayerAuras.set(p, Aura.KEY, life, 0);
         b.castCircle(p, 1.3f);
         VfxSpawn.sendFollowing(level, VfxShape.KEY_FX3, p, p.position().add(0, 1, 0), b.color, 30, 1.2f);
         return true;

@@ -62,10 +62,8 @@ public final class BronzeSummons {
 
     /** Bronze Armour: plates and rivets forge over the caster; Resistance II, and blows are softened and thrown back at the attacker as thorns. */
     static boolean armour(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        if (PlayerAuras.active(p, Aura.BRONZE)) { GrimoireBook.fail(p, "Your bronze armour still holds."); return false; }
         int ticks = span(ARMOUR_TICKS, p);
         int style = b.masteryFrac(i) >= 0.75 || GrimoireBook.inDevilState(p) ? 1 : 0;
-        PlayerAuras.set(p, Aura.BRONZE, ticks, style);
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 1));
         BronzeArts.guard(p, ticks, 0.25f, 2f + 0.3f * (float) Math.min(8.0, BalanceLaw.epScale(p) - 1.0));
         b.castCircle(p, 1.5f);

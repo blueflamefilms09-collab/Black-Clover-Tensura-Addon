@@ -253,8 +253,6 @@ public class ElementBook extends GrimoireBook {
             tag.putFloat("EmpowerBonus", bonus);
             if (thorns) tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
             for (Supplier<MobEffectInstance> e : effects) p.addEffect(e.get());
-            if (b.magic == MagicType.BONE) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.BONE, ticks);
-            if (WikiBooks.isNewAttribute(b.magic) && !ShakudoKit.armour(p, b.magic, ticks)) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.WIKI, ticks, Math.max(0, com.newuniverse.nusmp.vfx.WikiStyles.styleOf(b.magic.name())));      // 1.27.0: the wiki magics' temporary armour
             b.castCircle(p, 1f);
             VfxSpawn.sendFollowing(p.serverLevel(), ShakudoKit.mine(b.magic) ? ShakudoKit.fx(b.magic, 3) : shape, p, p.position().add(0, 1, 0), b.color, ticks, shape == VfxShape.WIKI_MAGIC_FIELD ? (ShakudoKit.mine(b.magic) ? 0.9f : 0.45f) : 1f);   // 0.92: a body-sized aura (the wiki field layer reads power as radius / 3)
             return true;

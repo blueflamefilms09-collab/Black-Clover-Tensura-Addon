@@ -92,11 +92,10 @@ public final class ModificationArts {
     }
 
     private static void armour(ServerPlayer p, int ticks, int style) {
-        PlayerAuras.set(p, Aura.MODIFICATION, ticks, style);
     }
 
     private static void shortArmour(ServerPlayer p) {
-        if (!PlayerAuras.active(p, Aura.MODIFICATION)) armour(p, ModificationRules.SHORT_ARMOUR_TICKS, 1);
+        // 1.99.0: no short armour after a cast (book.ArmourPolicy: a cast never equips)
     }
 
     /** A needle flying 'from' to 'to': the model prop with its direction, and the effect. */

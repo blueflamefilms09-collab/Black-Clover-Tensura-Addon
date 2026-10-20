@@ -208,7 +208,6 @@ public final class FlameArts {
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.FLAMEFX_BURST, p.position(), p.position().add(0, 1, 0), 26, 1.5f);
         b.vfx(p, VfxShape.FLAMEFX_ZONE, p.position(), p.position().add(0, 1, 0), 40, 2.2f);
-        WaterArmour.put(p, Aura.FLAME, 600, 0);
         p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 600, 0));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0));
         p.clearFire();

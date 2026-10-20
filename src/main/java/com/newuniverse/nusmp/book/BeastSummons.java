@@ -102,7 +102,6 @@ public final class BeastSummons {
         var tag = i.getOrCreateTag();
         tag.putLong("EmpowerUntil", p.level().getGameTime() + ticks);
         tag.putFloat("EmpowerBonus", great ? 6f : 4.5f);
-        PlayerAuras.set(p, Aura.BEAST, ticks, great ? 1 : 0);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.BEAST_FX3, p, p.position().add(0, 1, 0), b.color, 30, 1.4f);
         return true;
     }

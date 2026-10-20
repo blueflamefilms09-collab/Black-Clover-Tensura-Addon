@@ -50,17 +50,16 @@ public final class SoulCorpseBook extends ElementBook {
     }
 
     public static List<BookPage> familyList() {
-        Aura a = Aura.SOUL_CORPSE;
         List<BookPage> l = new ArrayList<>(List.of(
-                starter("attribute_bolt", "Soul Corpse: Marionette Thread", SongRebuildKit.armoured(a, SoulCorpseBook::thread)),
-                mid("attribute_cut", "Soul Corpse: Puppet Strings", SongRebuildKit.armoured(a, SoulCorpseBook::strings)),
-                zone("attribute_field", "Soul Corpse: Grave Field", SongRebuildKit.armoured(a, SoulCorpseBook::grave)),
-                signature("attribute_domain", "Soul Corpse: Necropolis", SongRebuildKit.armoured(a, SoulCorpseBook::necropolis)).withCooldown(900),
+                starter("attribute_bolt", "Soul Corpse: Marionette Thread", SoulCorpseBook::thread),
+                mid("attribute_cut", "Soul Corpse: Puppet Strings", SoulCorpseBook::strings),
+                zone("attribute_field", "Soul Corpse: Grave Field", SoulCorpseBook::grave),
+                signature("attribute_domain", "Soul Corpse: Necropolis", SoulCorpseBook::necropolis).withCooldown(900),
                 mid("attribute_guard", "Soul Corpse: Corpse Plate", SoulCorpseBook::plate)));
         l.addAll(ExclusiveExt.pages(MagicType.SOUL_CORPSE));
-        l.add(mid("corpse_marionette", "Soul Corpse: Marionette", SongRebuildKit.armoured(a, SoulCorpseBook::marionette)).withCooldown(260));
-        l.add(mid("corpse_swap", "Soul Corpse: Corpse Swap", SongRebuildKit.armoured(a, SoulCorpseBook::swap)).withCooldown(300));
-        l.add(signature("corpse_legion", "Soul Corpse: Corpse Legion", SongRebuildKit.armoured(a, SoulCorpseBook::legion)).withCooldown(1800).withAnim("signature"));
+        l.add(mid("corpse_marionette", "Soul Corpse: Marionette", SoulCorpseBook::marionette).withCooldown(260));
+        l.add(mid("corpse_swap", "Soul Corpse: Corpse Swap", SoulCorpseBook::swap).withCooldown(300));
+        l.add(signature("corpse_legion", "Soul Corpse: Corpse Legion", SoulCorpseBook::legion).withCooldown(1800).withAnim("signature"));
         return List.copyOf(l);
     }
 
@@ -160,7 +159,6 @@ public final class SoulCorpseBook extends ElementBook {
         tag.putLong("ThornsUntil", now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, 0, false, true));
-        SongRebuildKit.armour(p, Aura.SOUL_CORPSE, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.send(p.serverLevel(), VfxShape.SOUL_CORPSE_FX2, p.position(), p.position().add(0, 1, 0), VIOLET, 24, 1.6f);
         return true;

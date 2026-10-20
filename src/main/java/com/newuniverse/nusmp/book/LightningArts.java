@@ -103,7 +103,6 @@ public final class LightningArts {
         i.getOrCreateTag().putLong("FiendUntil", p.level().getGameTime() + 600);
         i.getOrCreateTag().putBoolean("FiendBlack", black);
         i.markDirty();
-        WaterArmour.put(p, Aura.LIGHTNING, 600, black ? 1 : 0);
         if (black) {
             p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 3));
             p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
@@ -178,7 +177,6 @@ public final class LightningArts {
     static boolean ragingLightning(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.LIGHTNINGFX_BURST, p.position().add(0, 1, 0), p.position().add(0, 1, 0), 22, 1.2f);
-        WaterArmour.put(p, Aura.LIGHTNING, 600, 0);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 2));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
         SpellRuntime.zone(p.serverLevel(), 600, 40, age -> {

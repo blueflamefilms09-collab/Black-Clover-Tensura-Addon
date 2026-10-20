@@ -70,7 +70,6 @@ public final class AshSpells {
             for (Mob m : p.serverLevel().getEntitiesOfClass(Mob.class, new AABB(c, c).inflate(r), m -> m.getTarget() == p)) m.setTarget(null);
         });
         MagicProps.spawn(p.serverLevel(), PropKind.ASH_1, c, p.getYRot(), 1.0f, 600, AirPropKit.pack(1, 0, 0), p);          // an ash trap stays behind under the cloud
-        PlayerAuras.set(p, Aura.ASH, 100);
         return true;
     }
 
@@ -100,7 +99,6 @@ public final class AshSpells {
         b.vfx(p, VfxShape.ASH_FX3, p.position(), p.position().add(0, 1, 0), 30, 0.5f);
         for (LivingEntity t : p.serverLevel().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(16), e -> e != p && e.isAlive()))
             if (t.isInvisible() || !WikiSpells.ally(p, t)) t.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
-        PlayerAuras.set(p, Aura.ASH, 100);
         return true;
     }
 
@@ -127,7 +125,6 @@ public final class AshSpells {
         tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0, false, false));
         p.getPersistentData().putLong("nusmp_ash_until", p.level().getGameTime() + ticks);
-        PlayerAuras.set(p, Aura.ASH, ticks);
         b.castCircle(p, 1f);
         com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ASH_FX3, p, p.position().add(0, 1, 0), COLOR, 26, 0.5f);
         return true;

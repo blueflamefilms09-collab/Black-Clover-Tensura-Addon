@@ -143,7 +143,6 @@ public final class AirBook extends ElementBook {
             double a = k * 2 * Math.PI / 5;
             MagicProps.spawn(p.serverLevel(), PropKind.AIR_1, p.position().add(Math.cos(a) * 1.8, 1.3, Math.sin(a) * 1.8), p.getYRot(), 1.0f, life, AirPropKit.pack(2, 0, 0), p);
         }
-        PlayerAuras.set(p, Aura.AIR, 100);
         b.vfx(p, VfxShape.AIR_FX3, p.position(), p.position().add(0, 1, 0), 26, 0.6f);
         return true;
     }
@@ -157,7 +156,6 @@ public final class AirBook extends ElementBook {
         tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
         p.getPersistentData().putLong(LIVE, p.level().getGameTime() + ticks);
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0, false, false));
-        PlayerAuras.set(p, Aura.AIR, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.AIR_FX3, p, p.position().add(0, 1, 0), b.color, 26, 0.5f);
         return true;

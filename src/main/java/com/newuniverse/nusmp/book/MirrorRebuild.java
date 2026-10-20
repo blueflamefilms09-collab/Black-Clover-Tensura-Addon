@@ -112,7 +112,6 @@ public final class MirrorRebuild {
     /** Glass Garb: 20 s. */
     static boolean glassGarb(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         p.getPersistentData().putLong(K_GARB, p.level().getGameTime() + 400);
-        SpatialArmourCast.on(p, Aura.MIRROR, 400, 1);
         b.castCircle(p, 1.2f);
         fx(p.serverLevel(), VfxShape.MIRROR_FX3, p.position().add(0, 1, 0), p.position().add(0, 1, 1), 24, 1.0f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.2f, 1.4f);

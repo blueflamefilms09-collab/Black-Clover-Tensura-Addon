@@ -83,7 +83,6 @@ public final class TransmutationArts {
     }
 
     private static void armour(ServerPlayer p, int ticks, int style, double ep) {
-        PlayerAuras.set(p, Aura.TRANSMUTATION, ticks, style);
         var data = p.getPersistentData();
         data.putLong(ARMOUR_UNTIL, p.level().getGameTime() + ticks);
         data.putFloat(ARMOUR_CUT, TransmutationRules.armourCut(ep));
@@ -91,7 +90,7 @@ public final class TransmutationArts {
 
     /** The short armour a signature cast puts on (five seconds), unless a longer one is still on. */
     private static void shortArmour(ServerPlayer p) {
-        if (!PlayerAuras.active(p, Aura.TRANSMUTATION)) armour(p, TransmutationRules.SHORT_ARMOUR_TICKS, 1, BalanceLaw.epScale(p));
+        // 1.99.0: no short armour after a cast (book.ArmourPolicy: a cast never equips)
     }
 
     // ------------------------------------------------------------------ the four old pages

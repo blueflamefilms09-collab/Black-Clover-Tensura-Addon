@@ -49,18 +49,17 @@ public final class SongBook extends ElementBook {
     }
 
     public static List<BookPage> familyList() {
-        Aura a = Aura.SONG;
         List<BookPage> l = new ArrayList<>(List.of(
-                starter("attribute_bolt", "Song: Staccato Bolt", SongRebuildKit.armoured(a, SongBook::staccato)),
-                mid("attribute_cut", "Song: Glissando", SongRebuildKit.armoured(a, SongBook::glissando)),
-                zone("attribute_field", "Song: Choir Field", SongRebuildKit.armoured(a, SongBook::choirField)),
-                signature("attribute_domain", "Song: Grand Concerto", SongRebuildKit.armoured(a, SongBook::concerto)).withCooldown(900),
+                starter("attribute_bolt", "Song: Staccato Bolt", SongBook::staccato),
+                mid("attribute_cut", "Song: Glissando", SongBook::glissando),
+                zone("attribute_field", "Song: Choir Field", SongBook::choirField),
+                signature("attribute_domain", "Song: Grand Concerto", SongBook::concerto).withCooldown(900),
                 mid("attribute_guard", "Song: Aria Armour", SongBook::aria)));
         l.addAll(ExclusiveExt.pages(MagicType.SONG));
-        l.add(mid("song_choir", "Song: Choir of Spirits", SongRebuildKit.armoured(a, SongBook::choir)).withCooldown(300));
-        l.add(mid("song_metronome", "Song: Metronome", SongRebuildKit.armoured(a, SongBook::metronome)).withCooldown(240));
-        l.add(mid("song_harmony", "Song: Harmony", SongRebuildKit.armoured(a, SongBook::harmony)).withCooldown(400));
-        l.add(signature("song_finale", "Song: Grand Finale", SongRebuildKit.armoured(a, SongBook::finale)).withCooldown(1800).withAnim("signature"));
+        l.add(mid("song_choir", "Song: Choir of Spirits", SongBook::choir).withCooldown(300));
+        l.add(mid("song_metronome", "Song: Metronome", SongBook::metronome).withCooldown(240));
+        l.add(mid("song_harmony", "Song: Harmony", SongBook::harmony).withCooldown(400));
+        l.add(signature("song_finale", "Song: Grand Finale", SongBook::finale).withCooldown(1800).withAnim("signature"));
         return List.copyOf(l);
     }
 
@@ -162,7 +161,6 @@ public final class SongBook extends ElementBook {
         tag.putFloat("EmpowerBonus", 4f);
         tag.putLong("ThornsUntil", now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, 0, false, true));
-        SongRebuildKit.armour(p, Aura.SONG, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SONG_NOTES, p, p.position().add(0, 1.6, 0), ROSE, 60, 1.2f);
         return true;

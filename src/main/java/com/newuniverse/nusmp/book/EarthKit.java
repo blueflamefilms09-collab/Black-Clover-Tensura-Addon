@@ -40,9 +40,11 @@ public final class EarthKit {
     }
 
     // ------------------------------------------------------------------ the temporary armour
-    /** Forges the magic's temporary armour on the caster for 'ticks' (Aura.WIKI, the style picks the set), with Resistance and the thorns tag of the book. */
+    /**
+     * The hardening of a guard page for 'ticks': Resistance and the thorns / Empower tags of the book. 1.99.0 (armour policy, {@link ArmourPolicy}): only Earth Magic has an armour (the
+     * Gnome Plate of its Spirit Dive / Gnome Plate page, put on by ArmourState); the other five earth-family magics have none, so no guard page grows the render layer (Aura.WIKI) any more.
+     */
     public static void armour(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int ticks, int resistAmp, float bonus) {
-        PlayerAuras.set(p, Aura.WIKI, ticks, EarthFxStyle.armourStyle(style(b)));
         if (resistAmp >= 0) p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, resistAmp));
         var tag = i.getOrCreateTag();
         long until = p.level().getGameTime() + ticks;
@@ -51,11 +53,8 @@ public final class EarthKit {
         i.markDirty();
     }
 
-    /** The short armour after a big cast (the brief's five seconds): only when no longer armour is already on. */
-    public static void flash(GrimoireBook b, ServerPlayer p) {
-        if (PlayerAuras.active(p, Aura.WIKI)) return;
-        PlayerAuras.set(p, Aura.WIKI, 100, EarthFxStyle.armourStyle(style(b)));
-    }
+    /** 1.99.0: does nothing. It was the short armour after a big cast; a cast no longer equips (book.ArmourPolicy). */
+    public static void flash(GrimoireBook b, ServerPlayer p) { }
 
     /** A guard page: forged armour for 'ticks', costs a share of aura (physical hardening), then the burst effect. */
     public static BookPage.Cast guard(int ticks, int resistAmp, float bonus, double auraFrac) {

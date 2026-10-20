@@ -160,7 +160,6 @@ public final class SmokeBook extends ElementBook {
         }
         p.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 100, 0, false, false));
         loseTrail(p, p.position(), 20);
-        PlayerAuras.set(p, Aura.SMOKE, 100);
         b.vfx(p, VfxShape.SMOKE_FX3, p.position(), p.position().add(0, 1, 0), 28, 0.6f);
         return true;
     }
@@ -175,7 +174,6 @@ public final class SmokeBook extends ElementBook {
         p.getPersistentData().putLong(LIVE, p.level().getGameTime() + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 0));
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0, false, false));
-        PlayerAuras.set(p, Aura.SMOKE, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SMOKE_FX3, p, p.position().add(0, 1, 0), b.color, 26, 0.5f);
         return true;

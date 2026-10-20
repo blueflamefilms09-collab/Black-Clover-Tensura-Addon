@@ -134,7 +134,6 @@ public final class SpatialWorks {
     /** Dimensional Armour: 20 s of the Gate Garb. */
     static boolean dimensionalArmour(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         p.getPersistentData().putLong(K_GARB, p.level().getGameTime() + 400);
-        SpatialArmourCast.on(p, Aura.SPATIAL, 400, 1);
         b.castCircle(p, 1.2f);
         fx(p.serverLevel(), VfxShape.SPATIAL_FX3, p.position().add(0, 1, 0), p.position().add(0, 1, 1), 24, 1.1f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ARMOR_EQUIP_NETHERITE.value(), SoundSource.PLAYERS, 1f, 1.7f);

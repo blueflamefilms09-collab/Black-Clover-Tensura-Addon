@@ -1,0 +1,780 @@
+{
+ "version": "1.99.0",
+ "defaults": {
+  "toggle_bonus": {
+   "cut": 0.0,
+   "attack": 0.0,
+   "speed": 0.0,
+   "knockback": 0.0,
+   "ward": "",
+   "senses": false,
+   "upkeep": 0.004,
+   "absorb": 0.0,
+   "hp_upkeep": 0.0
+  },
+  "form_bonus": {
+   "cut": 0.0,
+   "attack": 0.0,
+   "speed": 0.0,
+   "knockback": 0.0,
+   "ward": "",
+   "senses": false,
+   "upkeep": 0.02,
+   "absorb": 0.0,
+   "hp_upkeep": 0.0
+  }
+ },
+ "magics": {
+  "FLAME": {
+   "kind": "FORM",
+   "name": "Flame Armour",
+   "aura": "FLAME",
+   "armour_pages": {
+    "flame_armour": 0
+   },
+   "form_pages": [
+    "spirit_dive"
+   ],
+   "bonus": {
+    "cut": 0.1,
+    "attack": 0.08,
+    "ward": "fire",
+    "upkeep": 0.004
+   },
+   "form_bonus": {
+    "cut": 0.15,
+    "attack": 0.25,
+    "speed": 0.15,
+    "knockback": 0.3,
+    "ward": "fire",
+    "senses": true,
+    "absorb": 0.012
+   },
+   "canon": "Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."
+  },
+  "EXPLOSION": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MAGMA": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "WATER": {
+   "kind": "FORM",
+   "name": "Valkyrie Armour",
+   "aura": "WATER",
+   "armour_pages": {
+    "valkyrie_dress": 1,
+    "scale_mail": 0
+   },
+   "form_pages": [
+    "spirit_dive"
+   ],
+   "bonus": {
+    "cut": 0.12,
+    "attack": 0.05,
+    "speed": 0.08,
+    "knockback": 0.1,
+    "upkeep": 0.004
+   },
+   "form_bonus": {
+    "cut": 0.18,
+    "attack": 0.18,
+    "speed": 0.22,
+    "senses": true,
+    "absorb": 0.012
+   },
+   "canon": "Noelle Silva's Valkyrie Armor / Valkyrie Dress (water armour of the Sea Dragon) and, with the water spirit Undine, the Saint Valkyrie Dress (feathered wing-like parts and a halo). Spirit Dive is the form; Valkyrie Dress and Sea Dragon's Scale Mail are the explicit armour pages."
+  },
+  "ICE": {
+   "kind": "NONE",
+   "canon": "Ice spells are shots, walls and constructs (repo wiki: Heavenly Ice Fang, Cage of Infinite Hail ...); nothing is worn."
+  },
+  "MERCURY": {
+   "kind": "TOGGLE",
+   "name": "Silver Guardian",
+   "aura": "MERCURY",
+   "armour_pages": {
+    "mercury_shield": 0
+   },
+   "bonus": {
+    "cut": 0.2,
+    "upkeep": 0.004,
+    "hp_upkeep": 0.5
+   },
+   "canon": "Mercury Magic: Silver Guardian (repo wiki spell page): the mercury becomes a defensive coating over the whole body, solid enough to block repeated strikes, flexible enough not to hinder movement, and poisonous to the user (hence the health upkeep). Nozel Silva's magic."
+  },
+  "MIST": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "WIND": {
+   "kind": "FORM",
+   "name": "Spirit of Zephyr",
+   "aura": "",
+   "armour_pages": {},
+   "form_pages": [
+    "spirit_dive"
+   ],
+   "external_pages": [
+    "spirit_of_zephyr"
+   ],
+   "form_bonus": {
+    "cut": 0.1,
+    "attack": 0.15,
+    "speed": 0.3,
+    "senses": true,
+    "absorb": 0.012
+   },
+   "canon": "Yuno's Spirit Dive with the wind spirit Sylph (Spirit of Zephyr): the first dive transforms only the left half (one wing, half a crown, a ring round the wrist), the full dive has two wings and a full crown. Spirit Dive is the form; the Zephyr page is the older overlay (blackclover.ModeArmor)."
+  },
+  "STAR": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "STORM": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "EARTH": {
+   "kind": "FORM",
+   "name": "Gnome Plate",
+   "aura": "WIKI",
+   "form_aura": true,
+   "armour_pages": {
+    "earth_armor": 100
+   },
+   "form_pages": [
+    "spirit_dive"
+   ],
+   "bonus": {
+    "cut": 0.16,
+    "attack": 0.04,
+    "knockback": 0.4,
+    "upkeep": 0.004
+   },
+   "form_bonus": {
+    "cut": 0.22,
+    "attack": 0.2,
+    "speed": 0.08,
+    "knockback": 0.6,
+    "senses": true,
+    "absorb": 0.012
+   },
+   "canon": "The earth spirit exists in the lore but its name, look and host were never shown, so the dive is a generic earth spirit dive (the mod calls the spirit Gnome). Spirit Dive is the form; Gnome Plate is the explicit armour page."
+  },
+  "PLANT": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "PLANT"
+   ],
+   "shimmer": "PLANT_FX2",
+   "canon": "Plant Magic grows, heals and binds with plants; no one wears an armour of it."
+  },
+  "SAND": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "LIGHT": {
+   "kind": "NONE",
+   "canon": "Light Magic is rays, swords and healing (repo wiki: Healing Ray of Light, Light Sword of Judgment). The Light spirit form exists only as a spirit lord summon in this mod; a future Light Spirit Dive would be a FORM (follow-up), there is no worn armour to put on today."
+  },
+  "LIGHTNING": {
+   "kind": "TOGGLE",
+   "name": "Lightning Armour",
+   "aura": "LIGHTNING",
+   "armour_pages": {
+    "thunder_fiend": 0,
+    "black_lightning_battle_fiend": 1,
+    "raging_lightning": 0
+   },
+   "bonus": {
+    "cut": 0.06,
+    "attack": 0.08,
+    "speed": 0.12,
+    "ward": "lightning",
+    "upkeep": 0.005
+   },
+   "canon": "Luck Voltia's lightning armour (Thunder Fiend, Black Lightning Battle Fiend, Raging Lightning: the white-and-gold armour with bolts of docs/mode_armor_spec.md). The three Fiend pages are the explicit armour pages."
+  },
+  "SWORD": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DARK": {
+   "kind": "TOGGLE",
+   "name": "Dark Cloaked",
+   "aura": "DARK",
+   "armour_pages": {
+    "dark_cloak": 0
+   },
+   "bonus": {
+    "cut": 0.1,
+    "attack": 0.1,
+    "upkeep": 0.004
+   },
+   "canon": "Yami Sukehiro's Dark Cloaked: his body and blades coated in dark mana (obsidian plate, horned hood, tattered cape in the mod). Dark Cloaked Guard is the explicit armour page; the Dark Cloaked slashes are spells, not armour."
+  },
+  "SHADOW": {
+   "kind": "FORM",
+   "name": "Devil Unite (Nacht)",
+   "aura": "",
+   "armour_pages": {},
+   "external_pages": [
+    "unite_canis",
+    "unite_gallus",
+    "unite_canis_felis",
+    "unite_equus",
+    "unite_felis"
+   ],
+   "canon": "Nacht Faust's Devil Unite modes with his devils (Slotos, Gimodelo, Plumede, Walgner): a body-wide transformation with its own armour overlay. The Unite pages (shadow.UniteState, blackclover.ModeArmor) are the explicit form pages and are left as they are."
+  },
+  "POISON": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SPATIAL": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SPATIAL"
+   ],
+   "shimmer": "SPATIAL_FX2",
+   "canon": "Spatial Magic opens gates and cuts space; nothing is worn. Dimensional Armour (Gate Garb) keeps its blow-turning effect but is no render layer."
+  },
+  "MIRROR": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "MIRROR"
+   ],
+   "shimmer": "MIRROR_FX2",
+   "canon": "Mirror Magic makes doubles and reflections; nothing is worn. Glass Garb keeps its reflecting effect but is no render layer."
+  },
+  "GRAVITY": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "GRAVITY"
+   ],
+   "shimmer": "GRAVITY_FX2",
+   "canon": "Gravity Magic crushes and lifts; nothing is worn. Weighted Blows keeps its heavier blows."
+  },
+  "TIME": {
+   "kind": "NONE",
+   "canon": "Time Magic stops, rewinds and quickens time (Julius Novachrono); nothing is worn."
+  },
+  "SEALING": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SEALING"
+   ],
+   "shimmer": "SEALING_FX2",
+   "canon": "Seal Magic binds and seals; the ally seal shows as an orbiting seal effect, not as armour."
+  },
+  "REINFORCEMENT": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BEAST": {
+   "kind": "TOGGLE",
+   "name": "Primal Beast Form",
+   "aura": "BEAST",
+   "armour_pages": {
+    "primal_beast_form": 0
+   },
+   "style_by": "sneak",
+   "bonus": {
+    "cut": 0.08,
+    "attack": 0.12,
+    "speed": 0.1,
+    "upkeep": 0.004
+   },
+   "canon": "Beast Magic: Rhinoceros Armor (repo wiki spell page): a magic aura in the shape of a rhinoceros round the body, able to stop powerful impacts; the Beast spells (Bear Claw, Cheetah Charge ...) are animal forms. Primal Beast Form is the explicit page (sneak: the great beast)."
+  },
+  "BONE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "BONE"
+   ],
+   "shimmer": "BONE_FX2",
+   "canon": "Bone Magic makes weapons and constructs of bone; Bone Armor keeps its absorption and thorns but is no render layer."
+  },
+  "BLOOD": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "CREATION": {
+   "kind": "NONE",
+   "canon": "Creation Magic makes objects and weapons (Marx); nothing is worn."
+  },
+  "COPY": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "ILLUSION": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DREAM": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "ANTI_MAGIC": {
+   "kind": "FORM",
+   "name": "Devil Union (Black Asta)",
+   "aura": "",
+   "armour_pages": {},
+   "external_pages": [
+    "black_form"
+   ],
+   "canon": "Asta and the devil Liebe: Devil Union. No mana; Anti-Magic coats the body and erases, cuts or repels any magic it touches; horns, tail, slit pupils and pitch-black jagged armour. It needs a Devil-Binding Ritual contract (Asta's is an Equal Contract: the pair must synchronise thoughts, pain and motivation); a strict time limit of five minutes, then the form shatters and the user is incapacitated by muscle pain for about thirty minutes. The mod's Black Form toggle (antimagic.AntiMagicLordSkill, Demon Mode overlay, Aura gauge) is the form and is left as it is."
+  },
+  "STEEL": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "THREAD": {
+   "kind": "NONE",
+   "canon": "Thread Magic binds and sews (Vanessa); nothing is worn."
+  },
+  "TRANSMUTATION": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "TRANSMUTATION"
+   ],
+   "shimmer": "TRANSMUTATION_FX2",
+   "canon": "Transmutation Magic changes the material of things (Grey); nothing is worn. Alchemic Plate keeps its damage cut but is no render layer."
+  },
+  "ASH": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "ASH"
+   ],
+   "shimmer": "ASH_FX2",
+   "canon": "Ash Magic makes clouds, soldiers and traps of ash (Zora); nothing is worn. Ash Shroud keeps its guard effect but is no render layer."
+  },
+  "COTTON": {
+   "kind": "NONE",
+   "canon": "Cotton Magic makes clouds and sheep (Charmy); nothing is worn."
+  },
+  "RECOMBINATION": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "RECOMBINATION"
+   ],
+   "shimmer": "RECOMBINATION_FX2",
+   "canon": "Recombination Magic reshapes houses and matter; nothing is worn. House Armour keeps its damage cut but is no render layer."
+  },
+  "PAINTING": {
+   "kind": "NONE",
+   "canon": "Painting Magic brings painted creatures to life (Rill); nothing is worn."
+  },
+  "WORLD_TREE": {
+   "kind": "NONE",
+   "canon": "World Tree Magic grows great trees (William Vangeance); nothing is worn."
+  },
+  "DICE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SLASH": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SLASH"
+   ],
+   "shimmer": "SLASH_FX2",
+   "canon": "Slash Magic (Jack the Ripper): jagged slashes of green mana; the forearm blades are a following effect again, not an armour."
+  },
+  "COMPASS": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "KOTODAMA": {
+   "kind": "NONE",
+   "canon": "Kotodama is a word-spell magic (the mod's Zagred); nothing is worn."
+  },
+  "GAME": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DEMON_BEAST": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BODY": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "BODY"
+   ],
+   "shimmer": "BODY_FX2",
+   "canon": "Body Magic reshapes tissue and heals (repo wiki: Body Compression); Titan Form and Hardened Frame keep their stats, the steam effect stays, no armour is drawn."
+  },
+  "EYE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "EYEBALL": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "CURSE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "CURSE_WARDING": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DEMON_FIRE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DEMON_ICE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DEMON_LIGHT": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "DEMON_WATER": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BARRIER": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "KEY": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "KEY"
+   ],
+   "shimmer": "KEY_FX2",
+   "canon": "Key Magic opens gates and locks; the Key Guard keys orbit the caster as constructs, nothing is worn."
+  },
+  "CHAIN": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BUTOH": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BRIAR": {
+   "kind": "NONE",
+   "canon": "Briar Magic: the Queen of Briars wears a dress and crown of briars (repo wiki), but the mod has no briar armour painter (client.aura.BriarAura is an empty stub); if one is built it becomes a TOGGLE on Queen of Briars (follow-up)."
+  },
+  "CHERRY_BLOSSOM": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "FUNGUS": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "FOOD": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "CRYSTAL": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "CORUNDUM": {
+   "kind": "TOGGLE",
+   "name": "Gem Plate Armour",
+   "aura": "CORUNDUM",
+   "armour_pages": {
+    "gem_plate_armour": 0
+   },
+   "style_by": "mastery",
+   "bonus": {
+    "cut": 0.2,
+    "knockback": 0.3,
+    "attack": 0.05,
+    "upkeep": 0.005
+   },
+   "canon": "Corundum Magic: Ideal Closer (repo wiki spell page): the user's body is completely covered by corundum with a Y-shaped opening for eyes and mouth; the armour takes a larger humanoid shape. Gem Plate Armour is the explicit armour page (a crystal crown and wings of shards once mastered)."
+  },
+  "BRONZE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "BRONZE"
+   ],
+   "shimmer": "BRONZE_FX2",
+   "canon": "Bronze Magic (repo wiki: the Sekke spells) is shots and cannonballs of bronze; Bronze Armour keeps its resistance and thorns but is no render layer."
+  },
+  "COPPER": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "IRON": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BLACK_OIL": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "GEL": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "GLASS": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "BUBBLE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "ICE_WEDGE": {
+   "kind": "NONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "LEGION": {
+   "kind": "NONE",
+   "canon": "Legion Magic makes chess-piece soldiers that look like suits of armour; they are summons, nothing is worn by the caster."
+  },
+  "AIR": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "AIR"
+   ],
+   "shimmer": "AIR_FX2",
+   "canon": "Air Magic compresses and cuts air; the Air Cushion keeps its fall protection and deflection but is no render layer."
+  },
+  "HAIR": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "HAIR"
+   ],
+   "shimmer": "HAIR_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MEMORY": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "MEMORY"
+   ],
+   "shimmer": "MEMORY_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MINERAL": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "EARTHFAM_ZONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MODIFICATION": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "MODIFICATION"
+   ],
+   "shimmer": "MODIFICATION_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MUCUS": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "MUCUS"
+   ],
+   "shimmer": "MUCUS_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "MUD": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "MUD"
+   ],
+   "shimmer": "MUD_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "NAIL": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "NAIL"
+   ],
+   "shimmer": "NAIL_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "PERMEATION": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "PERMEATION"
+   ],
+   "shimmer": "PERMEATION_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "POISON_PLANT": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "POISON_PLANT"
+   ],
+   "shimmer": "POISON_PLANT_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "RED_OCHRE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "EARTHFAM_ZONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "ROCK": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "EARTHFAM_ZONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SANDSTONE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "EARTHFAM_ZONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SCALE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SCALE"
+   ],
+   "shimmer": "SCALE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SHAKUDO": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SHAKUDO"
+   ],
+   "shimmer": "SHAKUDO_FX2",
+   "canon": "Shakudo Magic (the wiki: the magic of Cesc): shakudo constructs; the guard keeps its damage cut and answers but is no render layer."
+  },
+  "SKIN": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "WIKI_MAGIC_FIELD",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SMOKE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SMOKE"
+   ],
+   "shimmer": "SMOKE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SNOW": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SNOW"
+   ],
+   "shimmer": "SNOW_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SONG": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SONG"
+   ],
+   "shimmer": "SONG_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SOUL_CORPSE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SOUL_CORPSE"
+   ],
+   "shimmer": "SOUL_CORPSE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SOUL": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SOUL"
+   ],
+   "shimmer": "SOUL_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SOUND": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SOUND"
+   ],
+   "shimmer": "SOUND_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SPIKE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "SPIKE"
+   ],
+   "shimmer": "SPIKE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "SWITCHING": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "WIKI_MAGIC_FIELD",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "TONGUE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "WIKI_MAGIC_FIELD",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "TREE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "TREE"
+   ],
+   "shimmer": "TREE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "STONE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WIKI"
+   ],
+   "shimmer": "EARTHFAM_ZONE",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "VINE": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "VINE"
+   ],
+   "shimmer": "VINE_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "VORTEX": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "VORTEX"
+   ],
+   "shimmer": "VORTEX_FX2",
+   "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
+  },
+  "WING": {
+   "kind": "NONE",
+   "legacy_auras": [
+    "WING"
+   ],
+   "shimmer": "WING_FX2",
+   "canon": "Wing Magic: wings of mana are a flight spell, not a worn armour; the wing glow is a shimmer now."
+  }
+ }
+}

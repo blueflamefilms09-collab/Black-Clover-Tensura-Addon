@@ -50,18 +50,17 @@ public final class SoundBook extends ElementBook {
     }
 
     public static List<BookPage> familyList() {
-        Aura a = Aura.SOUND;
         List<BookPage> l = new ArrayList<>(List.of(
-                starter("attribute_bolt", "Sound: Sonic Bolt", SongRebuildKit.armoured(a, SoundBook::sonicBolt)),
-                mid("attribute_cut", "Sound: Sound Wave", SongRebuildKit.armoured(a, SoundBook::soundWave)),
-                zone("attribute_field", "Sound: Resonance Field", SongRebuildKit.armoured(a, SoundBook::resonanceField)),
-                signature("attribute_domain", "Sound: Sonic Boom", SongRebuildKit.armoured(a, SoundBook::sonicBoom)).withCooldown(900),
+                starter("attribute_bolt", "Sound: Sonic Bolt", SoundBook::sonicBolt),
+                mid("attribute_cut", "Sound: Sound Wave", SoundBook::soundWave),
+                zone("attribute_field", "Sound: Resonance Field", SoundBook::resonanceField),
+                signature("attribute_domain", "Sound: Sonic Boom", SoundBook::sonicBoom).withCooldown(900),
                 mid("attribute_guard", "Sound: Echo Plate", SoundBook::echoPlate)));
         l.addAll(ExclusiveExt.pages(MagicType.SOUND));
-        l.add(mid("sound_speaker", "Sound: Speaker Stack", SongRebuildKit.armoured(a, SoundBook::speakers)).withCooldown(300));
-        l.add(mid("sound_silence", "Sound: Silence", SongRebuildKit.armoured(a, SoundBook::silence)).withCooldown(400));
-        l.add(zone("sound_resonance", "Sound: Resonant Shatter", SongRebuildKit.armoured(a, SoundBook::shatter)).withCooldown(320));
-        l.add(mid("sound_boom", "Sound: Mach Step", SongRebuildKit.armoured(a, SoundBook::machStep)).withCooldown(260));
+        l.add(mid("sound_speaker", "Sound: Speaker Stack", SoundBook::speakers).withCooldown(300));
+        l.add(mid("sound_silence", "Sound: Silence", SoundBook::silence).withCooldown(400));
+        l.add(zone("sound_resonance", "Sound: Resonant Shatter", SoundBook::shatter).withCooldown(320));
+        l.add(mid("sound_boom", "Sound: Mach Step", SoundBook::machStep).withCooldown(260));
         return List.copyOf(l);
     }
 
@@ -173,7 +172,6 @@ public final class SoundBook extends ElementBook {
         tag.putFloat("EmpowerBonus", 4f);
         tag.putLong("ThornsUntil", now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 0, false, true));
-        SongRebuildKit.armour(p, Aura.SOUND, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.send(p.serverLevel(), VfxShape.SOUND_FX2, p.position(), p.position().add(0, 1, 0), CYAN, 24, 1.6f);
         return true;
