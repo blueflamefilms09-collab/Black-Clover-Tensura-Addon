@@ -235,12 +235,16 @@ public final class Fx {
         return dispatch(l, c, off, Math.max(1, FxGeo.clamp(count, FxGeo.MAX_BURST)), x, y, z, dx, dy, dz, speed, FxGeo.MAX_BURST);
     }
 
-    /** One tinted particle of a theme slot with an explicit colour and size (coloured dust and the like). */
+    /** One particle of a theme slot with an explicit colour and size (coloured dust and the like). A texture that is not tintable keeps its own colours and takes only the size. */
     public static int sprayTinted(Level l, ThemeKey k, FxSlot slot, int rgb, float scale, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
+        return sprayTinted(l, k, slot, FxTone.LIGHT, rgb, scale, x, y, z, count, dx, dy, dz, speed);
+    }
+
+    public static int sprayTinted(Level l, ThemeKey k, FxSlot slot, FxTone tone, int rgb, float scale, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
         if (l == null) return 0;
-        ParticleOptions o = options(k, slot, FxTone.LIGHT);
-        ParticleOptions c = o instanceof TintedParticleOptions t ? t.with(rgb, scale) : o;
-        return dispatch(l, c, fallback(slot, FxTone.LIGHT), count, x, y, z, dx, dy, dz, speed, 4096);
+        ParticleOptions o = options(k, slot, tone);
+        ParticleOptions c = o instanceof TintedParticleOptions t ? (t.tintable() ? t.with(rgb, scale) : t.with(-1, scale)) : o;
+        return dispatch(l, c, fallback(slot, tone), count, x, y, z, dx, dy, dz, speed, 4096);
     }
 
     /** Replacement of {@code level.sendParticles(new DustParticleOptions(color, size), ...)}: the theme's signature particle dyed with that colour (the old dust when custom particles are off). */

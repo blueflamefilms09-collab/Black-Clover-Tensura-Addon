@@ -53,6 +53,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * The server half of the relics: once a second per player (staggered by entity id) it brings the player's attribute modifiers, ambient effects and
@@ -302,7 +303,7 @@ public final class RelicEngine {
         if (Attune.bind(p, stack)) {
             ServerLevel level = p.serverLevel();
             level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.4f, 0.9f);
-            Fx.ring(level, p.position(), 1.6, def.paletteGlow());
+            FxRelic.ring(level, p.position(), 1.6, def.paletteGlow());
             tell(p, def.cardName() + " is attuned to you (" + Attune.carried(p, null) + " of " + AttuneRules.CAP + ").", ChatFormatting.GOLD);
         } else {
             tell(p, "You can keep only " + AttuneRules.CAP + " relics attuned. Let one go first (/multiverse relic unattune).", ChatFormatting.RED);

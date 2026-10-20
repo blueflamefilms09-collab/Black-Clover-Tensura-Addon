@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * The allies {@link Fx#summon} calls up: at most six per player, each gone when its time is up, when its owner leaves or dies, or when the
@@ -77,7 +78,7 @@ final class RelicSummons {
                 if (!(e instanceof LivingEntity living) || !living.isAlive()) { it.remove(); continue; }
                 long now = living.level().getGameTime();
                 if (owner == null || !owner.isAlive() || now >= living.getPersistentData().getLong(Fx.UNTIL)) {
-                    Fx.burst((ServerLevel) living.level(), living.position(), 0x8888AA);
+                    FxRelic.burst((ServerLevel) living.level(), living.position(), 0x8888AA);
                     living.discard();
                     it.remove();
                     continue;

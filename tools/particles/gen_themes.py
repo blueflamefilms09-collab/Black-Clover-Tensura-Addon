@@ -226,6 +226,21 @@ OTHER = {
 }
 
 
+WAVE_ELEMENTS = ["fire", "storm", "ice", "nature", "holy", "arcane", "blood", "metal", "water", "dark", "wind", "earth", "time", "space", "soul",
+                 "music", "poison", "dream", "gem", "demon", "light", "fire", "ice", "storm", "nature", "arcane", "dark", "holy", "water", "metal"]
+
+
+def add_waves():
+    """relic.wave.<N>: the relic waves (relics/wave/WaveN*.java) each get the particles of one element, so no two neighbouring waves look alike."""
+    for n in range(100):
+        e = WAVE_ELEMENTS[n % len(WAVE_ELEMENTS)]
+        g, p, c = OTHER["relic.element." + e]
+        parts = p.split()
+        if (n // len(WAVE_ELEMENTS)) % 2 == 1 or n >= 20 and n % 2 == 1:      # the second round of an element (and every odd wave past 20) swaps its first two particles
+            parts[0], parts[1] = parts[1], parts[0]
+        OTHER["relic.wave.%d" % n] = (g, " ".join(parts), c)
+
+
 def catalog_ids():
     with open(os.path.join(RES, "data", "nusmp", "particle_catalog.json"), encoding="utf-8") as fh:
         return {p["id"] for p in json.load(fh)["particles"]}
@@ -238,6 +253,7 @@ def magic_names():
 
 
 def build():
+    add_waves()
     ids = catalog_ids()
     names = magic_names()
     missing = [n for n in names if n not in MAGIC]

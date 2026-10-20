@@ -56,15 +56,20 @@ class FxCodemodMapTest {
     }
 
     @Test
-    void everyThemeOfTheMapHasItsConstant() throws IOException {
+    void everyGeneratedThemeConstantNamesARealThemeAndTheLiteralOnesAreAllThere() throws IOException {
         String themes = read("particle/fx/FxThemes.java");
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("ThemeKey (\\w+) = ThemeKey\\.of\\(\"([^\"]+)\"\\);").matcher(themes);
+        Set<String> generated = new HashSet<>();
+        ParticleThemes.Table table = ParticleThemes.parse(JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/nusmp/particle_themes.json"), StandardCharsets.UTF_8)));
+        while (m.find()) {
+            generated.add(m.group(2));
+            assertEquals(m.group(2).replaceAll("[^A-Za-z0-9]", "_").toUpperCase(), m.group(1), "constant name");
+            assertTrue(table.has(m.group(2)), "FxThemes names a theme that is not in particle_themes.json: " + m.group(2));
+        }
         Set<String> ids = new HashSet<>();
         map().getAsJsonArray("themes").forEach(e -> ids.add(e.getAsJsonArray().get(1).getAsString()));
         ids.add(map().get("default_theme").getAsString());
-        for (String id : ids) {
-            String c = id.replaceAll("[^A-Za-z0-9]", "_").toUpperCase();
-            assertTrue(themes.contains("ThemeKey " + c + " = ThemeKey.of(\"" + id + "\");"), "FxThemes.java is out of date for " + id + " (run tools/particles/codemod.py --gen-only)");
-        }
+        for (String id : ids) if (!id.contains("$")) assertTrue(generated.contains(id), "FxThemes.java is out of date for " + id + " (run tools/particles/codemod.py --gen-only)");
     }
 
     @Test

@@ -20,6 +20,7 @@
     "globs": [
       "relics/djinn/**",
       "client/relics/djinn/**",
+      "relics/Fx.java",
       "labyrinth/**",
       "client/labyrinth/**",
       "dungeon/**",
@@ -35,8 +36,7 @@
       "relics/socket/**",
       "relics/order/**",
       "relics/pair/**",
-      "relics/forge/**",
-      "relics/Fx.java"
+      "relics/forge/**"
     ],
     "other": [
       "labyrinth/mega/rift/**"
@@ -102,6 +102,7 @@
     ["relics/pair/**", "relic.pair"],
     ["relics/forge/**", "relic.forge"],
     ["relics/socket/**", "relic.socket"],
+    ["re:^relics/wave/Wave(\\d+)", "relic.wave.$1"],
     ["relics/wave/**", "relic.wave"],
     ["client/relics/**", "relic"],
     ["relics/**", "relic"]

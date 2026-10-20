@@ -35,7 +35,7 @@ PKG = "com.newuniverse.nusmp"
 FX_PKG = PKG + ".particle.fx"
 FX_DIR_REL = "particle/fx"
 
-NAMES = {"Fx": FX_PKG + ".Fx", "FxTone": FX_PKG + ".FxTone", "FxOld": FX_PKG + ".FxOld", "FxThemes": FX_PKG + ".FxThemes", "ThemeKey": FX_PKG + ".ThemeKey"}
+NAMES = {"Fx": FX_PKG + ".Fx", "FxTone": FX_PKG + ".FxTone", "FxOld": FX_PKG + ".FxOld", "FxThemes": FX_PKG + ".FxThemes", "ThemeKey": FX_PKG + ".ThemeKey", "FxRelic": FX_PKG + ".FxRelic"}
 
 
 # ---------------------------------------------------------------------------------------------- globs
@@ -199,20 +199,26 @@ class Mapper:
         self.keep = Globs(self.map["rukh_keep"]["globs"])
         self.lane_relics = Globs(self.map["lanes"]["relics"])
         self.lane_other = Globs(self.map["lanes"]["other"])
-        self.themes = [(glob_re(g), t) for g, t in self.map["themes"]]
+        self.themes = [((re.compile(g[3:]), True) if g.startswith("re:") else (glob_re(g), False), t) for g, t in self.map["themes"]]
         self.default_theme = self.map["default_theme"]
         self.enum_themes = self.map.get("enum_themes", {})
         self.particles = {k: v for k, v in self.map["particles"].items() if k != "comment"}
 
     def theme(self, rel):
-        for r, t in self.themes:
-            if r.match(rel):
+        for (r, is_re), t in self.themes:
+            if is_re:
+                m = r.search(rel)
+                if m:
+                    return t.replace("$1", m.group(1)) if m.groups() else t
+            elif r.match(rel):
                 return t
         return self.default_theme
 
-    def all_themes(self):
-        s = {t for _, t in self.themes}
+    def all_themes(self, rels=()):
+        """Every theme the rules can answer: the literal ones, the default, and what the rules give for the files in rels."""
+        s = {t for _, t in self.themes if "$" not in t}
         s.add(self.default_theme)
+        s.update(self.theme(r) for r in rels)
         return sorted(s)
 
 
@@ -270,7 +276,19 @@ class FileJob:
         return self.names[simple]
 
     # -- the rewriting passes
+    DUST_HELPER = re.compile(r"(?P<ret>(?:net\.minecraft\.core\.particles\.)?SimpleParticleType)(?P<mid>\s+dust\s*\(\s*int\s+(?P<a>\w+)\s*,\s*float\s+(?P<b>\w+)\s*\)\s*\{\s*)return\s+(?:(?:[\w.]*\.)?align\(\s*(?P=a)\s*\)\s*\.type\(\)|(?:com\.newuniverse\.nusmp\.relics\.)?Fx\.dust\(\s*(?P=a)\s*,\s*(?P=b)\s*\))\s*;")
+
+    def _dust_helper(self, src):
+        """The idiom of the relic waves: 'SimpleParticleType dust(int rgb, float size) { return align(rgb).type(); }' becomes a helper that returns the colour's dyed particle."""
+        def repl(mt):
+            self.counts["relic_dust_helper"] += 1
+            self.uses.add("FxRelic")
+            return "net.minecraft.core.particles.ParticleOptions%sreturn %s.dust(%s, %s);" % (mt.group("mid"), self.names["FxRelic"], mt.group("a"), mt.group("b"))
+        return self.DUST_HELPER.sub(repl, src)
+
     def run(self):
+        if not self.keep_rukh:
+            self.src = self._dust_helper(self.src)
         for _ in range(12):
             before = self.src
             self.src = self._pass(self.src)
@@ -300,6 +318,10 @@ class FileJob:
                 self.uses.update(self._tmp)
             self._tmp.clear()
             return ok
+
+        def in_import(mm, idx):
+            ls = mm.rfind("\n", 0, idx) + 1
+            return mm[ls:idx].lstrip().startswith("import ") or mm[ls:ls + 7] == "import "
 
         mp = self.mapper
         class _Ref:                      # the theme constant, naming FxThemes only when a candidate edit is really built
@@ -379,6 +401,23 @@ class FileJob:
                 rest_text = ",".join(src[a:b] for a, b in args[1:])
                 new = "%s.%s(%s, %s,%s)" % (self.nm("Fx"), mt.group(1), a0, theme_ref, rest_text)
                 add(mt.start(), cl + 1, new, "rukh_" + mt.group(1))
+        # ---- the relic helpers of relics.Fx (ring, burst, align, alignOf, dust) answer with Rukh; the Djinn keeps them, everyone else moves to FxRelic
+        if not self.keep_rukh:
+            relics_fx_bare = self.names["Fx"] != "Fx" and (re.search(r"^import\s+%s\.relics\.Fx\s*;" % re.escape(PKG), src, re.M) or self._package() == PKG + ".relics")
+            for mt in re.finditer(r"(?:(?<![\w.])com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*relics\s*\.\s*Fx|(?<![\w.])Fx)\s*\.\s*(ring|burst|align|alignOf|dust)\s*\(", m):
+                txt = mt.group(0)
+                if not txt.startswith("com") and not relics_fx_bare:
+                    continue
+                op = mt.end() - 1
+                cl = match_close(m, op)
+                if cl < 0:
+                    continue
+                nargs = len(split_args(m, op, cl))
+                meth = mt.group(1)
+                if (meth == "ring" and nargs != 4) or (meth == "burst" and nargs != 3) or (meth == "dust" and nargs != 2) or (meth in ("align", "alignOf") and nargs != 1):
+                    continue
+                new = ("%s.toneOf" % self.nm("Fx")) if meth == "alignOf" else ("%s.%s" % (self.nm("FxRelic"), "tone" if meth == "align" else meth))
+                add(mt.start(), mt.end() - 1, new, "relic_fx_" + meth)
         # ---- comparisons with the Rukh type and Rukh types as values
         if not self.keep_rukh:
             for mt in re.finditer(r"(?P<lhs>[A-Za-z_][\w.]*(?:\([^()]*\))?)\s*==\s*(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?RukhParticles\s*\.\s*(?P<w>dark|light)\(\)", m):
@@ -395,6 +434,8 @@ class FileJob:
                 add(mt.start(), cl + 1, "%s.options(%s, %s)" % (self.nm("Fx"), theme_ref, src[op + 1:cl].strip()), "rukh_value")
             # ---- the Alignment type
             for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhFx\s*\.\s*Alignment\b", m):
+                if in_import(m, mt.start()):
+                    continue
                 if re.match(r"\s*\.\s*type\s*\(", m[mt.end():mt.end() + 12]):
                     continue
                 add(mt.start(), mt.end(), self.nm("FxTone"), "rukh_alignment")
@@ -542,8 +583,8 @@ public enum FxOld {
 ''' % (",\n".join(lines), cases)
 
 
-def gen_fx_themes(mapper):
-    consts = "\n".join('    public static final ThemeKey %s = ThemeKey.of("%s");' % (const_name(t), t) for t in mapper.all_themes())
+def gen_fx_themes(mapper, rels):
+    consts = "\n".join('    public static final ThemeKey %s = ThemeKey.of("%s");' % (const_name(t), t) for t in mapper.all_themes(rels))
     return '''package com.newuniverse.nusmp.particle.fx;
 
 /**
@@ -603,7 +644,7 @@ def main():
         is_other_lane = mp.lane_other.has(rel)
         with open(p, encoding="utf-8", newline="") as fh:
             src = fh.read()
-        if not re.search(r"ParticleTypes\.|Rukh(?:Fx|ClientFx|Particles)|DustParticleOptions", src):
+        if not re.search(r"ParticleTypes\.|Rukh(?:Fx|ClientFx|Particles)|DustParticleOptions|\bFx\s*\.\s*(?:ring|burst|align|alignOf|dust)\s*\(", src):
             continue
         scanned += 1
         if is_relic_lane and not a.include_relics:
@@ -634,7 +675,7 @@ def main():
 
     if not a.no_gen and not a.only:
         gen_dir = os.path.join(a.root, FX_DIR_REL)
-        for name, text in (("FxOld.java", gen_fx_old(mp)), ("FxThemes.java", gen_fx_themes(mp))):
+        for name, text in (("FxOld.java", gen_fx_old(mp)), ("FxThemes.java", gen_fx_themes(mp, [r for r, _ in files]))):
             path = os.path.join(gen_dir, name)
             old = open(path, encoding="utf-8", newline="").read() if os.path.exists(path) else None
             if old != text:

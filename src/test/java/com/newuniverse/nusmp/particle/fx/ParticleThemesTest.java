@@ -95,7 +95,21 @@ class ParticleThemesTest {
     void everyThemeTheCodemodMapNamesExistsExactly() throws IOException {
         JsonObject map = JsonParser.parseString(Files.readString(ROOT.resolve("tools/particles/map.json"), StandardCharsets.UTF_8)).getAsJsonObject();
         ParticleThemes.Table t = real();
-        map.getAsJsonArray("themes").forEach(e -> assertTrue(t.has(e.getAsJsonArray().get(1).getAsString()), "map.json names the unknown theme " + e));
+        map.getAsJsonArray("themes").forEach(e -> {
+            String id = e.getAsJsonArray().get(1).getAsString();
+            if (id.contains("$")) {                                     // a template (relic.wave.$1): every number the wave files can have must exist
+                try (java.util.stream.Stream<Path> waves = Files.list(SRC.resolve("relics/wave"))) {
+                    for (Path w : (Iterable<Path>) waves::iterator) {
+                        Matcher wm = Pattern.compile("^Wave(\\d+)").matcher(w.getFileName().toString());
+                        if (wm.find()) assertTrue(t.has(id.replace("$1", wm.group(1))), "map.json template " + id + " has no theme for wave " + wm.group(1));
+                    }
+                } catch (IOException ex) {
+                    throw new AssertionError(ex);
+                }
+            } else {
+                assertTrue(t.has(id), "map.json names the unknown theme " + e);
+            }
+        });
         assertTrue(t.has(map.get("default_theme").getAsString()));
     }
 

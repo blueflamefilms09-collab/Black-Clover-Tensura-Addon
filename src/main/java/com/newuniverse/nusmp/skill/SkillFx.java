@@ -10,6 +10,7 @@ import net.minecraft.world.phys.Vec3;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.particle.fx.FxTone;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Why: abilities spawn no raw vanilla particles: the mod's own custom particles ({@code particle.fx}, theme {@code skill}, light or dark flavour) go through {@link Fx} (which caps every
@@ -54,7 +55,7 @@ final class SkillFx {
     /** A ring of dust and a grimoire circle on the ground (0xRRGGBB). */
     static void ring(ServerLevel level, Vec3 at, double radius, int rgb) {
         if (level == null || at == null) return;
-        com.newuniverse.nusmp.relics.Fx.ring(level, at, radius, rgb);
+        FxRelic.ring(level, at, radius, rgb);
     }
 
     /** One of the mod's own effect shapes (ARGB colour). A failure to send is never the skill's failure. */
