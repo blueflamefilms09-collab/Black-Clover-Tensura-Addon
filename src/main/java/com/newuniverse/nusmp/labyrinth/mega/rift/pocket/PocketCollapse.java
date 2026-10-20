@@ -85,6 +85,7 @@ public final class PocketCollapse {
     /** One tick of the collapse (the caller runs it every tick while the tomb is collapsing). */
     public void step(ServerLevel level, PocketRealm.Pocket p, List<ServerPlayer> in, long now) {
         int el = elapsed(now);
+        com.newuniverse.nusmp.dungeon.DungeonGuard.begin();         // 1.101.0: a falling room is air over walls, which the Dungeon Guard refuses to everybody but the mod's own builders
         try {
             if (el == 0) start(level, in);
             rooms(level, p, in, el);
@@ -93,6 +94,8 @@ public final class PocketCollapse {
             clearing(level);
         } catch (RuntimeException ex) {
             LOG.warn("[nusmp] The collapse of {} failed a tick (it goes on): {}", rt.pocketId, ex.toString());
+        } finally {
+            com.newuniverse.nusmp.dungeon.DungeonGuard.end();
         }
     }
 

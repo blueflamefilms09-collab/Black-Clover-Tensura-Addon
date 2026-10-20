@@ -54,6 +54,15 @@ public final class PocketClear {
     /** One slice of the sweep: at most {@code budget} blocks are set (a section that is only air is free). Returns true when the cell is empty. */
     public boolean step(ServerLevel level, int budget) {
         if (finished) return true;
+        com.newuniverse.nusmp.dungeon.DungeonGuard.begin();         // 1.101.0: the Dungeon Guard refuses to everybody else every change that takes a held block away, so before this the sweep "finished" and left the whole tomb standing
+        try {
+            return stepGuarded(level, budget);
+        } finally {
+            com.newuniverse.nusmp.dungeon.DungeonGuard.end();
+        }
+    }
+
+    private boolean stepGuarded(ServerLevel level, int budget) {
         try {
             if (!started) {
                 started = true;

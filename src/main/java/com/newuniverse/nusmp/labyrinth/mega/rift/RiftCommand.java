@@ -82,7 +82,141 @@ public final class RiftCommand {
                         .then(Commands.literal("clear").executes(c -> clear(c.getSource(), c.getSource().getPlayerOrException()))
                                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> clear(c.getSource(), EntityArgument.getPlayer(c, "player")))))
                         .then(Commands.literal("return").executes(c -> back(c.getSource(), c.getSource().getPlayerOrException()))
-                                .then(Commands.argument("player", EntityArgument.player()).executes(c -> back(c.getSource(), EntityArgument.getPlayer(c, "player"))))));
+                                .then(Commands.argument("player", EntityArgument.player()).executes(c -> back(c.getSource(), EntityArgument.getPlayer(c, "player"))))))
+                .then(Commands.literal("rooms").executes(c -> rooms(c.getSource(), -1))                                                               // 1.101.0: every room of a pocket, its doors, its switch
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1)).executes(c -> rooms(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
+                .then(Commands.literal("switch").executes(c -> switchInfo(c.getSource(), -1))                                                         // 1.101.0: where the release lever is, whether it works, and the way to test it
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1)).executes(c -> switchInfo(c.getSource(), IntegerArgumentType.getInteger(c, "slot"))))
+                        .then(Commands.literal("open").executes(c -> switchOpen(c.getSource(), -1))
+                                .then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1)).executes(c -> switchOpen(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
+                        .then(Commands.literal("tp").executes(c -> switchTp(c.getSource(), -1))
+                                .then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1)).executes(c -> switchTp(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
+                        .then(Commands.literal("repair").executes(c -> repairPocket(c.getSource(), -1))
+                                .then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1)).executes(c -> repairPocket(c.getSource(), IntegerArgumentType.getInteger(c, "slot"))))));
+    }
+
+    // ---------------------------------------------------------------- 1.101.0: rooms and the switch (docs/labyrinth/pocket_fix.md)
+    /** The slot an admin means: the one given, else the pocket they stand in, else the only pocket alive; -1 when none of these is clear. */
+    private static int slotOf(CommandSourceStack s, int given) {
+        if (given >= 0) return given;
+        if (s.getEntity() != null) {
+            int here = RiftRules.slotAt(s.getEntity().getX(), s.getEntity().getZ());
+            if (here >= 0 && PocketRealm.get(s.getServer()).at(here) != null) return here;
+        }
+        PocketRealm realm = PocketRealm.get(s.getServer());
+        return realm.pockets().size() == 1 ? realm.pockets().keySet().iterator().next() : -1;
+    }
+
+    private static String where(int slot, int lx, int ly, int lz, boolean tomb) {
+        BlockPos w = tomb ? com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketCell.world(slot, lx, ly, lz) : PocketBuilder.world(slot, lx, ly, lz);
+        return w.getX() + " " + w.getY() + " " + w.getZ();
+    }
+
+    /** Lists every room of a pocket with its place, its doors (and which is sealed or barred), the switch, and what the watchdog finds missing. */
+    private static int rooms(CommandSourceStack s, int given) {
+        int slot = slotOf(s, given);
+        PocketRealm.Pocket pk = slot < 0 ? null : PocketRealm.get(s.getServer()).at(slot);
+        if (pk == null) return fail(s, text("noslot", "Name a pocket slot (/multiverse mega rift pocket list), or stand in one."));
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        int n = 0;
+        if (pk.exclusive()) {
+            PocketRuntime rt = PocketRuntime.of(pk);
+            if (rt == null) return fail(s, text("notombslot", "There is no tomb in slot %s.", slot));
+            ok(s, text("roomsTomb", "Tomb %s in slot %s: %s rooms, %s doors (1 sealed), phase %s, build %s%%; entry room %s, key room %s, lair %s, treasury %s.", pk.pocketId, slot, rt.layout.rooms().size(), rt.layout.doors().size(), pk.phase,
+                    rt.build == null ? 100 : rt.build.percent(), rt.layout.entryId(), rt.layout.keyId(), rt.layout.bossId(), rt.layout.treasuryId()));
+            for (com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketLayout.Room r : rt.layout.rooms()) {
+                StringBuilder doors = new StringBuilder();
+                for (com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketLayout.Door d : rt.layout.doors())
+                    if (d.a() == r.id() || d.b() == r.id()) doors.append(' ').append(d.a() == r.id() ? d.b() : d.a()).append(d.sealed() ? "(SEALED)" : "");
+                ok(s, text("roomRow", "  room %s %s at %s, half width %s, doors to%s", r.id(), r.kind(), where(slot, r.cx(rt.layout.grid()), com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketPlan.Y0, r.cz(rt.layout.grid()), true), r.half(), doors));
+                n++;
+            }
+            ok(s, text("roomsSwitch", "  %s", PocketSwitch.describe(s.getServer(), pk)));
+            if (rt.sigilChest != null) ok(s, text("roomsSigil", "  Sigil chest at %s; treasury exit rift at %s.", rt.sigilChest.toShortString(), rt.shortcutExit == null ? "none" : rt.shortcutExit.toShortString()));
+            if (mega != null && pk.phase == 1) for (String gap : com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketWatchdog.missing(mega, rt, pk)) ok(s, text("roomsGap", "  MISSING: %s", gap));
+            return n;
+        }
+        RealmPlan plan = PocketBuilder.planOf(pk);
+        ok(s, text("roomsRealm", "Realm %s in slot %s: %s rooms, %s doors, vault %s.", pk.variant, slot, plan.rooms().size(), plan.doors().size(), pk.bossDead || pk.solved ? "open" : "barred"));
+        for (RealmPlan.Room r : plan.rooms()) {
+            StringBuilder doors = new StringBuilder();
+            for (RealmPlan.Door d : plan.doors()) if (d.a().equals(r.id()) || d.b().equals(r.id())) doors.append(' ').append(d.a().equals(r.id()) ? d.b() : d.a());
+            if (r.id().equals(RealmPlan.HALL)) doors.append(" vault(BARS)");
+            ok(s, text("roomRowRealm", "  %s at %s to %s, height %s, doors to%s", r.id(), where(slot, r.x0(), 0, r.z0(), false), where(slot, r.x1(), r.h() - 1, r.z1(), false), r.h(), doors));
+            n++;
+        }
+        ok(s, text("roomsSwitch", "  %s", PocketSwitch.describe(s.getServer(), pk)));
+        if (mega != null) for (String gap : PocketBuilder.verify(mega, pk)) ok(s, text("roomsGap", "  MISSING: %s", gap));
+        return n;
+    }
+
+    private static int switchInfo(CommandSourceStack s, int given) {
+        int slot = slotOf(s, given);
+        PocketRealm.Pocket pk = slot < 0 ? null : PocketRealm.get(s.getServer()).at(slot);
+        if (pk == null) return fail(s, text("noslot", "Name a pocket slot (/multiverse mega rift pocket list), or stand in one."));
+        return ok(s, text("switchRow", "%s", PocketSwitch.describe(s.getServer(), pk)));
+    }
+
+    /** Pulls the lever as an admin: the door opens at once, whatever the delay says. */
+    private static int switchOpen(CommandSourceStack s, int given) {
+        int slot = slotOf(s, given);
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        PocketRealm realm = PocketRealm.get(s.getServer());
+        PocketRealm.Pocket pk = slot < 0 ? null : realm.at(slot);
+        if (pk == null || mega == null) return fail(s, text("noslot", "Name a pocket slot (/multiverse mega rift pocket list), or stand in one."));
+        if (pk.exclusive()) {
+            PocketRuntime rt = PocketRuntime.of(pk);
+            if (rt == null) return fail(s, text("notombslot", "There is no tomb in slot %s.", slot));
+            return ExclusivePockets.openSeal(mega, realm, pk, rt, null, "lever") ? ok(s, text("sealOpenedLever", "Pulled the seal lever of the tomb in slot %s: the seal is open.", slot)) : fail(s, text("sealWasOpen", "The seal of slot %s is open already.", slot));
+        }
+        if (!realm.clear(mega, pk, "admin")) return fail(s, text("alreadyOpen", "The vault of slot %s is open already.", slot));
+        return ok(s, text("leverOpened", "Pulled the release lever of the realm in slot %s: the vault is open.", slot));
+    }
+
+    /** Teleports the sender to the cell in front of the pocket's lever (they come back out through the exit rift, to where they stood). */
+    private static int switchTp(CommandSourceStack s, int given) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer p = s.getPlayerOrException();
+        int slot = slotOf(s, given);
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        PocketRealm.Pocket pk = slot < 0 ? null : PocketRealm.get(s.getServer()).at(slot);
+        BlockPos lever = PocketSwitch.leverAt(pk);
+        if (pk == null || mega == null || lever == null) return fail(s, text("noslot", "Name a pocket slot (/multiverse mega rift pocket list), or stand in one."));
+        if (pk.exclusive() && pk.phase == 0) return fail(s, text("forming", "The tomb in slot %s is still forming.", slot));
+        mega.getChunk(lever.getX() >> 4, lever.getZ() >> 4);
+        net.minecraft.core.Direction face = mega.getBlockState(lever).hasProperty(net.minecraft.world.level.block.LeverBlock.FACING) ? mega.getBlockState(lever).getValue(net.minecraft.world.level.block.LeverBlock.FACING) : net.minecraft.core.Direction.SOUTH;
+        BlockPos stand = lever.relative(face).below();
+        if (RiftRules.slotAt(p.getX(), p.getZ()) != slot || p.level() != mega) {
+            CompoundTag r = new CompoundTag();
+            r.putString("Dim", p.level().dimension().location().toString());
+            r.putDouble("X", p.getX());
+            r.putDouble("Y", p.getY());
+            r.putDouble("Z", p.getZ());
+            r.putFloat("Yaw", p.getYRot());
+            r.putFloat("Pitch", p.getXRot());
+            r.putInt("Slot", slot);
+            p.getPersistentData().put(PocketRealm.RETURN, r);
+        }
+        float yaw = switch (face) { case NORTH -> 180f; case EAST -> -90f; case WEST -> 90f; default -> 0f; };       // looking at the lever: against the way it faces
+        PocketRealm.move(p, mega, stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5, yaw, 10f);
+        return ok(s, text("switchTp", "Stepped to the release lever of slot %s at %s.", slot, lever.toShortString()));
+    }
+
+    /** Reads a pocket back and puts right what is missing. */
+    private static int repairPocket(CommandSourceStack s, int given) {
+        int slot = slotOf(s, given);
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        PocketRealm realm = PocketRealm.get(s.getServer());
+        PocketRealm.Pocket pk = slot < 0 ? null : realm.at(slot);
+        if (pk == null || mega == null) return fail(s, text("noslot", "Name a pocket slot (/multiverse mega rift pocket list), or stand in one."));
+        if (pk.exclusive()) {
+            PocketRuntime rt = PocketRuntime.of(pk);
+            if (rt == null || pk.phase != 1) return fail(s, text("notRepairable", "The tomb in slot %s is not standing (phase %s).", slot, pk.phase));
+            java.util.List<String> gaps = com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketWatchdog.missing(mega, rt, pk);
+            rt.repairJob = new com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketBuild(rt, true, pk.sealOpen);
+            return ok(s, text("repairTomb", "Slot %s: %s thing(s) missing; a repair pass is running.", slot, gaps.size()));
+        }
+        java.util.List<String> gaps = realm.keepWhole(mega, pk, com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY);
+        return ok(s, text("repairRealm", "Slot %s: %s thing(s) were missing; %s", slot, gaps.size(), gaps.isEmpty() ? "nothing to repair." : "repaired."));
     }
 
     private static MutableComponent text(String key, String english, Object... args) {

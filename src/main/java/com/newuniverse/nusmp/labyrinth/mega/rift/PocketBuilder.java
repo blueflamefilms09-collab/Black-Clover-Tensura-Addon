@@ -285,6 +285,8 @@ final class PocketBuilder {
         } finally {
             DungeonGuard.end();
         }
+        BlockPos lever = leverPos(p.slot);                                           // the lever clicks down with the bars, whatever lifted them
+        if (level.isLoaded(lever) && level.getBlockState(lever).is(Blocks.LEVER)) level.setBlock(lever, level.getBlockState(lever).setValue(LeverBlock.POWERED, true), 3);
         level.playSound(null, p.bars.isEmpty() ? p.entry : p.bars.get(0), net.minecraft.sounds.SoundEvents.IRON_DOOR_OPEN, net.minecraft.sounds.SoundSource.BLOCKS, 1.5f, 0.5f);
     }
 

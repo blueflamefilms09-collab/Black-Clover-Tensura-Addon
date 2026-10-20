@@ -19,18 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class PocketSigns {
     private PocketSigns() {}
 
-    /** The four lines of a sign, by key. */
-    public static String[] lines(String key) {
-        return switch (key) {
-            case "lever" -> new String[]{"RELEASE LEVER", "Pull it to lift", "the vault bars.", "It gives in time."};
-            case "vault" -> new String[]{"THE VAULT", "Barred door.", "The lever is in", "the north chamber"};
-            case "chamber" -> new String[]{"<- LEVER ROOM", "Opens the", "barred vault", "when pulled"};
-            case "seal" -> new String[]{"THE SEAL", "Magic, the Sigil,", "force, or the", "lever in the key room"};
-            case "tomb_lever" -> new String[]{"SEAL LEVER", "Opens the door", "of the treasury", "It gives in time."};
-            case "sigil" -> new String[]{"THE SIGIL", "Press it to the", "seal. It is", "spent when it opens."};
-            default -> new String[]{key, "", "", ""};
-        };
-    }
+    /** The four lines of a sign, by key (the words are in {@link PocketSignText}, which a unit test can reach). */
+    public static String[] lines(String key) { return PocketSignText.lines(key); }
 
     /** The component of one line (a lang key with its English fallback). */
     public static Component line(String key, int n) {

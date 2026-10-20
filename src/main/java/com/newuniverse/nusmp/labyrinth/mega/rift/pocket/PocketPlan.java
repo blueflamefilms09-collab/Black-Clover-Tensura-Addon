@@ -33,7 +33,12 @@ public final class PocketPlan {
         public long volume() { return (long) (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1); }
     }
 
-    public enum Type { EXIT_RIFT, ARRIVAL, BOSS_SPAWN, KEY_SPAWN, TRAP, PEDESTAL_PRIMARY, PEDESTAL_SECONDARY, CHEST_MINOR, CHEST_TREASURE, SEAL_BLOCK, AMBIENT }
+    /**
+     * The kinds of point feature. 1.101.0 (docs/labyrinth/pocket_fix.md) appended five: {@code SWITCH} (the release lever of the sealed treasury, on a wall of the key room; the tag is the letter of the
+     * way it faces), {@code SIGN} (a wall sign; the tag is "<facing letter>:<text key>"), {@code LANTERN} (a lit lantern on the floor), {@code SIGIL_CHEST} (the chest in the key room that holds the tomb's
+     * Sigil) and {@code EXIT_SHORTCUT} (a second exit rift in the treasury, so the way out is never the whole tomb away).
+     */
+    public enum Type { EXIT_RIFT, ARRIVAL, BOSS_SPAWN, KEY_SPAWN, TRAP, PEDESTAL_PRIMARY, PEDESTAL_SECONDARY, CHEST_MINOR, CHEST_TREASURE, SEAL_BLOCK, AMBIENT, SWITCH, SIGN, LANTERN, SIGIL_CHEST, EXIT_SHORTCUT }
 
     /** A point feature: its type, local position, and a tag (the element of a trap, the room id of a chest). */
     public record Feature(Type type, int x, int y, int z, String tag) {}
@@ -120,6 +125,7 @@ public final class PocketPlan {
         for (PocketLayout.Door d : l.doors()) p.corridor(l.room(d.a()), l.room(d.b()), d.sealed());
         for (PocketLayout.Door d : l.doors()) p.carve(l.room(d.a()), l.room(d.b()), d.sealed());
         p.ops.addAll(p.doorways);
+        p.ops.addAll(p.sealOps);                                                        // 1.101.0: the seal goes in AFTER the doorways; before, the doorway of the lair's wall (air) was laid over the seal's first layer, so only one of its two layers ever stood
         p.decorate(g);
         return p;
     }
@@ -135,6 +141,13 @@ public final class PocketPlan {
     }
 
     private void door(int x0, int y0, int z0, int x1, int y1, int z1) { doorways.add(new Fill(x0, y0, z0, x1, y1, z1, Mat.AIR)); }
+
+    private final List<Fill> sealOps = new ArrayList<>();
+
+    /** A fill along a corridor that is placed after the doorways (the seal). */
+    private void later(Run r, int t0, int t1, int l0, int l1, int y0, int y1, Mat mat) {
+        sealOps.add(r.alongX() ? new Fill(t0, y0, r.lateral() + l0, t1, y1, r.lateral() + l1, mat) : new Fill(r.lateral() + l0, y0, t0, r.lateral() + l1, y1, t1, mat));
+    }
 
     private void feature(Type t, int x, int y, int z, String tag) { features.add(new Feature(t, x, y, z, tag)); }
 
@@ -250,8 +263,13 @@ public final class PocketPlan {
             PocketLayout.Room boss = a.kind() == PocketLayout.Kind.BOSS ? a : b;
             boolean bossLow = boss == r.low();
             int plane = bossLow ? f - 1 : l + 1, inner = bossLow ? f : l;
-            box(r, plane, plane, -half, half, Y0, Y0 + PocketLayout.SEAL_HEIGHT - 1, Mat.SEAL);
-            box(r, inner, inner, -half, half, Y0, Y0 + PocketLayout.SEAL_HEIGHT - 1, Mat.SEAL);
+            later(r, plane, plane, -half, half, Y0, Y0 + PocketLayout.SEAL_HEIGHT - 1, Mat.SEAL);
+            later(r, inner, inner, -half, half, Y0, Y0 + PocketLayout.SEAL_HEIGHT - 1, Mat.SEAL);
+            int toward = bossLow ? -1 : 1;                                                  // the sign hangs on the lair's wall, inside the lair, beside the door: what the seal answers to, and where the lever is
+            char face = r.alongX() ? (bossLow ? 'W' : 'E') : (bossLow ? 'N' : 'S');
+            int sx = plane + toward, off = half + 2;
+            feature(Type.SIGN, r.alongX() ? sx : r.lateral() + off, Y0 + 1, r.alongX() ? r.lateral() + off : sx, face + ":seal");
+            feature(Type.SIGN, r.alongX() ? sx : r.lateral() - off, Y0 + 1, r.alongX() ? r.lateral() - off : sx, face + ":seal");
             for (int lat = -half; lat <= half; lat++)
                 for (int y = Y0; y < Y0 + PocketLayout.SEAL_HEIGHT; y++) {
                     feature(Type.SEAL_BLOCK, r.alongX() ? plane : r.lateral() + lat, y, r.alongX() ? r.lateral() + lat : plane, "");
@@ -395,6 +413,7 @@ public final class PocketPlan {
                     feature(Type.KEY_SPAWN, cx, Y0, cz, "");
                     for (int sx = -1; sx <= 1; sx += 2) for (int sz = -1; sz <= 1; sz += 2) add(cx + sx * (h - 1), Y0, cz + sz * (h - 1), cx + sx * (h - 1), Y0 + H - 2, cz + sz * (h - 1), Mat.PILLAR);
                     lights(r, g, 3);
+                    keyFixtures(r, g);
                 }
                 case BOSS -> {
                     feature(Type.BOSS_SPAWN, cx, Y0, cz, "");
@@ -415,6 +434,7 @@ public final class PocketPlan {
                     int px = -away[1], pz = away[0];                                         // the lateral direction
                     feature(Type.PEDESTAL_PRIMARY, cx, Y0, cz, "");
                     feature(Type.PEDESTAL_SECONDARY, cx + away[0] * 2 + px * 3, Y0, cz + away[1] * 2 + pz * 3, "");
+                    feature(Type.EXIT_SHORTCUT, cx - px * (h - 2), Y0, cz - pz * (h - 2), "");        // 1.101.0: a way out inside the treasury, so the run for the entry hall is not the only one
                     for (int i = -1; i <= 1; i++) feature(Type.CHEST_TREASURE, cx + away[0] * (h - 1) + px * i * 3, Y0, cz + away[1] * (h - 1) + pz * i * 3, "t" + (i + 1));
                     for (int sa = -1; sa <= 1; sa += 2) {
                         int ox = away[0] * (h - 1) + px * sa * (h - 1), oz = away[1] * (h - 1) + pz * sa * (h - 1);
@@ -428,6 +448,48 @@ public final class PocketPlan {
                 }
             }
         }
+    }
+
+    private static char letterOf(int dx, int dz) { return dz < 0 ? 'N' : dz > 0 ? 'S' : dx < 0 ? 'W' : 'E'; }
+
+    /**
+     * 1.101.0: what the key room holds besides its keeper. THE LEVER of the sealed treasury hangs on a wall that has no doorway (the opposite of the door when the room has one, so a delver enters facing the
+     * wall it is on), between two lit lanterns set in the wall and with a lantern each side on the floor, a sign over it; and the chest of the Sigil stands against the opposite wall with its own sign. The key
+     * room is reachable without crossing the seal (the layout check proves it), so the lever is never behind the door it opens. If all four walls have a doorway the lever goes beside one (three to the side).
+     */
+    private void keyFixtures(PocketLayout.Room r, int g) {
+        int cx = r.cx(g), cz = r.cz(g), h = r.half();
+        boolean[] door = new boolean[4];
+        for (int nb : layout.neighbours(r.id(), true)) {
+            PocketLayout.Room o = layout.room(nb);
+            int dx = o.gx() - r.gx(), dz = o.gz() - r.gz();
+            if (dz < 0) door[0] = true;
+            else if (dz > 0) door[1] = true;
+            else if (dx < 0) door[2] = true;
+            else door[3] = true;
+        }
+        int[][] dirs = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+        int side = -1, lat = 0;
+        for (int i = 0; i < 4 && side < 0; i++) if (!door[i]) side = i;
+        if (side < 0) {
+            side = 0;
+            lat = 3;
+        }
+        int sx = dirs[side][0], sz = dirs[side][1], px = -sz, pz = sx;
+        char face = letterOf(-sx, -sz);
+        int lx = cx + sx * h + px * lat, lz = cz + sz * h + pz * lat;
+        feature(Type.SWITCH, lx, Y0 + 1, lz, String.valueOf(face));
+        feature(Type.SIGN, lx, Y0 + 2, lz, face + ":tomb_lever");
+        for (int s = -1; s <= 1; s += 2) {
+            feature(Type.LANTERN, lx + px * 2 * s, Y0, lz + pz * 2 * s, "");
+            if (Math.abs(lat + 2 * s) < 2) continue;                                         // never in a doorway
+            int wx = cx + sx * (h + 1) + px * (lat + 2 * s), wz = cz + sz * (h + 1) + pz * (lat + 2 * s);
+            add(wx, Y0 + 1, wz, wx, Y0 + 1, wz, Mat.LIGHT);
+        }
+        int ox = cx - sx * h + px * 3, oz = cz - sz * h + pz * 3;
+        char ofacing = letterOf(sx, sz);
+        feature(Type.SIGIL_CHEST, ox, Y0, oz, String.valueOf(ofacing));
+        feature(Type.SIGN, ox, Y0 + 2, oz, ofacing + ":sigil");
     }
 
     /** The unit step from the treasury's door (the side that faces the lair) toward its far wall, as {dx, dz}. */

@@ -98,10 +98,24 @@ public final class DungeonGuard {
 
     /** Is this block one the registered rule lets a person break? False when no rule is registered. */
     public static boolean breakAllowed(Level level, BlockPos pos) {
+        if (level == null || pos == null) return false;
         java.util.function.BiPredicate<Level, BlockPos> r = breakRule;
-        if (r == null || level == null || pos == null) return false;
-        try { return r.test(level, pos); } catch (RuntimeException e) { return false; }
+        if (r != null) {
+            try { if (r.test(level, pos)) return true; } catch (RuntimeException e) { /* a faulty rule allows nothing */ }
+        }
+        for (java.util.function.BiPredicate<Level, BlockPos> extra : EXTRA_RULES) {
+            try { if (extra.test(level, pos)) return true; } catch (RuntimeException e) { /* a faulty rule allows nothing */ }
+        }
+        return false;
     }
+
+    private static final java.util.List<java.util.function.BiPredicate<Level, BlockPos>> EXTRA_RULES = new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    /**
+     * 1.101.0: adds one more rule to the allow-list (the rule above is a single slot and the Decennial halls own it). The exclusive tombs register theirs for the blocks of a sealed treasury's door, so that the
+     * blows and the hold that are the seal's "force" answer reach the tomb's own handler instead of being cancelled here first. The mod that adds a rule does the actual removal itself, inside {@link #internal}.
+     */
+    public static void addBreakRule(java.util.function.BiPredicate<Level, BlockPos> rule) { if (rule != null) EXTRA_RULES.add(rule); }
 
     // ---------------------------------------------------------------- what is held
     /** Water, lava and the like (a bubble column too): a fluid with no block in it. */

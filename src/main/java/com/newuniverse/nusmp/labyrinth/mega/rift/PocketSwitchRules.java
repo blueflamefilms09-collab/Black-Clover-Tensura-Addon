@@ -31,6 +31,9 @@ public final class PocketSwitchRules {
     /** The tick at which the door opens by itself: the configured one, but never sooner than {@link #AUTO_GAP_TICKS} after the lever works. */
     public static long autoAt(long unlockTicks, long autoTicks) { return Math.max(autoTicks, unlockTicks + AUTO_GAP_TICKS); }
 
+    /** The configured auto-open time, held to three fifths of the pocket's life so it can still happen in a short pocket (and never before the lever's own delay, see {@link #autoAt}). */
+    public static long clampToLife(long autoTicks, long lifeTicks) { return lifeTicks <= 0 ? autoTicks : Math.min(autoTicks, lifeTicks * 3L / 5L); }
+
     /** Does the door open by itself now? Only while somebody is inside (an empty realm just collapses on its own clock). */
     public static boolean autoOpens(boolean opened, long age, long unlockTicks, long autoTicks, boolean occupied) {
         return !opened && occupied && age >= autoAt(unlockTicks, autoTicks);
@@ -47,6 +50,12 @@ public final class PocketSwitchRules {
         long at = autoAt(unlockTicks, autoTicks);
         return age >= at ? 0 : (int) ((at - age + 19) / 20);
     }
+
+    /** Ticks between two probes of a tomb that has people in it (the watchdog). */
+    public static final int WATCHDOG_TICKS = 100;
+
+    /** Is a watchdog probe due: a built tomb in its open phase (1), people inside, and the interval passed. */
+    public static boolean watchdogDue(long now, long lastProbe, int phase, boolean occupied) { return phase == 1 && occupied && now - lastProbe >= WATCHDOG_TICKS; }
 
     /** Is the lever delay shorter than the pocket's life, so the door can open before the realm collapses? */
     public static boolean fits(long lifeTicks, long unlockTicks, long autoTicks) { return autoAt(unlockTicks, autoTicks) < lifeTicks; }

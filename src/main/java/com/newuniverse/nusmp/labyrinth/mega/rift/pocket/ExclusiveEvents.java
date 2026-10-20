@@ -64,6 +64,7 @@ public final class ExclusiveEvents {
         gameBus.addListener(ExclusiveEvents::onLogout);
         gameBus.addListener(ExclusiveEvents::onDimension);
         gameBus.addListener(ExclusiveEvents::onStopped);
+        com.newuniverse.nusmp.dungeon.DungeonGuard.addBreakRule(ExclusiveEvents::sealBreakable);        // 1.101.0: the seal's blows reach the tomb's handlers (see sealBreakable)
     }
 
     private static void onTick(ServerTickEvent.Post e) {
@@ -153,8 +154,26 @@ public final class ExclusiveEvents {
     }
 
     private static void onBreak(BlockEvent.BreakEvent e) {
-        if (!(e.getLevel() instanceof ServerLevel level) || tombAt(level, e.getPos()) == null) return;
-        if (survival(e.getPlayer())) e.setCanceled(true);
+        if (!(e.getLevel() instanceof ServerLevel level)) return;
+        PocketRealm.Pocket pk = tombAt(level, e.getPos());
+        if (pk == null) return;
+        PocketRuntime rt = PocketRuntime.of(pk);
+        if (survival(e.getPlayer()) || (rt != null && rt.isSeal(e.getPos()))) e.setCanceled(true);                // the seal is struck, never broken, not even in creative
+    }
+
+    /**
+     * 1.101.0: the Dungeon Guard's allow-list rule for the blocks of a sealed treasury's door. The guard's own handlers (highest priority) cancel every left click and every blow at a held block BEFORE the
+     * handlers above run, so the seal's "force" answer (a strike, a held blow) never reached them; this rule lets the event through for the seal's blocks only, and the handlers above then cancel the break
+     * themselves (the seal is hit, never broken) and add the force. On the client it only has to let the crack start, so any crying obsidian in the pocket field passes.
+     */
+    static boolean sealBreakable(net.minecraft.world.level.Level level, BlockPos pos) {
+        if (level == null || pos == null || RiftRules.slotAt(pos.getX(), pos.getZ()) < 0) return false;
+        if (level instanceof ServerLevel sl) {
+            PocketRealm.Pocket pk = tombAt(sl, pos);
+            PocketRuntime rt = pk == null ? null : PocketRuntime.of(pk);
+            return rt != null && !pk.sealOpen && rt.isSeal(pos);
+        }
+        return level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.CRYING_OBSIDIAN);
     }
 
     private static void onPlace(BlockEvent.EntityPlaceEvent e) {
