@@ -212,8 +212,8 @@ final class PocketBuilder {
         RealmPlan plan = planOf(p);
         boolean open = p.bossDead || p.solved;
         for (RealmPlan.Door d : plan.doors()) {
-            BlockPos a = world(p.slot, d.x0(), d.y0() + 1, d.z0()), b = world(p.slot, d.x1(), d.y0() + 1, d.z1());
-            if (!level.getBlockState(a).getCollisionShape(level, a).isEmpty() || !level.getBlockState(b).getCollisionShape(level, b).isEmpty())
+            BlockPos a = world(p.slot, d.x0(), d.y0() + 1, d.z0()), b = world(p.slot, d.x1(), d.y0() + 1, d.z1()), mid = world(p.slot, (d.x0() + d.x1()) / 2, d.y0() + 1, (d.z0() + d.z1()) / 2);
+            if (!level.getBlockState(a).getCollisionShape(level, a).isEmpty() || !level.getBlockState(b).getCollisionShape(level, b).isEmpty() || !level.getBlockState(mid).getCollisionShape(level, mid).isEmpty())
                 out.add("the doorway " + d.a() + " -> " + d.b() + " is closed at " + a.toShortString());
         }
         for (RealmPlan.Room r : plan.rooms()) {

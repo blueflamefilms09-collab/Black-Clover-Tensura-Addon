@@ -39,6 +39,9 @@ public final class RiftSelfTests {
 
     private static final int TEST_SLOT = RiftRules.MAX_SLOTS - 1;
 
+    /** The tests' own scenery (a platform to stand on, a rift block left behind) is cleared inside the Dungeon Guard's internal span: the guard refuses to everybody else every change that takes a held block away. */
+    private static void air(ServerLevel level, BlockPos pos) { com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2)); }
+
     public static void register() {
         SelfTests.register("rift.block", RiftSelfTests::block);
         SelfTests.register("rift.waypoint", RiftSelfTests::waypoint);
@@ -56,7 +59,7 @@ public final class RiftSelfTests {
             for (RiftType t : RiftType.values()) {
                 BlockPos at = new BlockPos(cx + 40, RiftRules.POCKET_Y + 20, cz + t.ordinal() * 4);
                 mega.getChunk(at.getX() >> 4, at.getZ() >> 4);
-                mega.setBlock(at, Blocks.AIR.defaultBlockState(), 2);
+                air(mega, at);
                 DimensionalRiftBlockEntity be = RiftService.open(mega, at, t, 12345L + t.ordinal());
                 if (be == null) return SelfTests.Result.fail("a " + t.id() + " rift did not open at " + at.toShortString());
                 if (be.type() != t) return SelfTests.Result.fail("the " + t.id() + " rift reports the type " + be.type().id());
@@ -69,7 +72,7 @@ public final class RiftSelfTests {
                 done.add(t.id());
             }
         } finally {
-            for (RiftType t : RiftType.values()) mega.setBlock(new BlockPos(cx + 40, RiftRules.POCKET_Y + 20, cz + t.ordinal() * 4), Blocks.AIR.defaultBlockState(), 2);
+            for (RiftType t : RiftType.values()) air(mega, new BlockPos(cx + 40, RiftRules.POCKET_Y + 20, cz + t.ordinal() * 4));
         }
         return SelfTests.Result.ok("opened, saved and collapsed one rift of each kind: " + done);
     }
@@ -205,7 +208,7 @@ public final class RiftSelfTests {
                     BlockPos floor = site.offset(dx, -1, dz);
                     mega.setBlock(floor, Blocks.STONE.defaultBlockState(), 2);
                     platform.add(floor);
-                    for (int dy = 0; dy <= 3; dy++) mega.setBlock(site.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), 2);
+                    for (int dy = 0; dy <= 3; dy++) air(mega, site.offset(dx, dy, dz));
                 }
             // 1. the rift opens and ticks
             DimensionalRiftBlockEntity be = RiftService.open(mega, site, RiftType.POCKET, seed);
@@ -280,9 +283,9 @@ public final class RiftSelfTests {
             if (realm.at(TEST_SLOT) != null) realm.collapseSlot(mega, TEST_SLOT);
             for (int i : held) realm.pockets().remove(i);
             realm.setDirty();
-            if (mega.getBlockState(site).is(RiftRegistry.RIFT.get())) mega.setBlock(site, Blocks.AIR.defaultBlockState(), 2);
+            if (mega.getBlockState(site).is(RiftRegistry.RIFT.get())) air(mega, site);
             RiftService.noteGone(mega, site);
-            for (BlockPos b : platform) mega.setBlock(b, Blocks.AIR.defaultBlockState(), 2);
+            for (BlockPos b : platform) air(mega, b);
             p.getPersistentData().remove(PocketRealm.RETURN);
             p.getPersistentData().remove(RiftService.TOUCH);
         }

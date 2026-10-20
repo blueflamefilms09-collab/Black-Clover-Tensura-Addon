@@ -57,6 +57,9 @@ public final class PocketSelfTests {
 
     private static final int TEST_SLOT = RiftRules.MAX_SLOTS - 2;
 
+    /** The tests' own scenery (a platform to stand on, a rift block left behind) is cleared inside the Dungeon Guard's internal span: the guard refuses to everybody else every change that takes a held block away. */
+    private static void air(ServerLevel level, BlockPos pos) { com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2)); }
+
     public static void register() {
         SelfTests.register("rift.pockets", PocketSelfTests::pockets);
         SelfTests.register("rift.mega_rare", PocketSelfTests::megaRare);
@@ -341,7 +344,7 @@ public final class PocketSelfTests {
                     BlockPos floor = site.offset(dx, -1, dz);
                     mega.setBlock(floor, Blocks.STONE.defaultBlockState(), 2);
                     platform.add(floor);
-                    for (int dy = 0; dy <= 3; dy++) mega.setBlock(site.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), 2);
+                    for (int dy = 0; dy <= 3; dy++) air(mega, site.offset(dx, dy, dz));
                 }
             // the pity moves only when a rift really opened
             MegaRifts.setPity(p, 10);
@@ -371,7 +374,10 @@ public final class PocketSelfTests {
             pk = realm.at(TEST_SLOT);
             if (pk == null || !pk.exclusive() || !def.id().equals(pk.pocketId)) return fail("stepping into the tear raised no tomb in the cell" + (be.failures() > 0 ? " (the tear logged: " + be.lastError() + ")" : ""));
             if (be.slot() != TEST_SLOT) return fail("the tear does not know its tomb (slot " + be.slot() + ")");
+            if (RiftRules.slotAt(p.getX(), p.getZ()) == TEST_SLOT && pk.phase == 0) return fail("the player arrived in a tomb that was still forming (phase 0): the arrival must wait for the build");
+            for (int i = 0; i < 6000 && RiftRules.slotAt(p.getX(), p.getZ()) != TEST_SLOT; i++) ExclusivePockets.fast(server);          // 1.101.0: the delver is held at the tear until the tomb stands, then taken in
             if (RiftRules.slotAt(p.getX(), p.getZ()) != TEST_SLOT) return fail("the player is not in the tomb: " + p.position());
+            if (pk.phase < 1) return fail("the player was taken in while the tomb was still forming");
             CompoundTag back = p.getPersistentData().getCompound(PocketRealm.RETURN);
             if (back.isEmpty() || back.getInt("RX") != site.getX() || back.getInt("RZ") != site.getZ()) return fail("the way home was not remembered: " + back);
             // the player leaves by the exit tear and arrives beside the one they came by
@@ -409,9 +415,9 @@ public final class PocketSelfTests {
             }
             for (int i : held) realm.pockets().remove(i);
             realm.setDirty();
-            for (BlockPos b : RiftService.openRifts(mega)) if (b.distSqr(site) < 400 && mega.getBlockState(b).is(com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.RIFT.get())) mega.setBlock(b, Blocks.AIR.defaultBlockState(), 2);
+            for (BlockPos b : RiftService.openRifts(mega)) if (b.distSqr(site) < 400 && mega.getBlockState(b).is(com.newuniverse.nusmp.labyrinth.mega.rift.RiftRegistry.RIFT.get())) air(mega, b);
             RiftService.noteGone(mega, site);
-            for (BlockPos b : platform) mega.setBlock(b, Blocks.AIR.defaultBlockState(), 2);
+            for (BlockPos b : platform) air(mega, b);
             p.getPersistentData().remove(PocketRealm.RETURN);
             p.getPersistentData().remove("nusmp_rift_touch");
             MegaRifts.setPity(p, oldPity);

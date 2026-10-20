@@ -39,6 +39,7 @@ public final class RiftRegistry {
         com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketLoot.init(modBus);                  // 1.99.0: the loot condition and entry of the exclusive tombs
         RiftSelfTests.register();
         com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketSelfTests.register();
+        PocketFixSelfTests.register();                                                    // 1.101.0: rift.pocket_fix (docs/labyrinth/pocket_fix.md)
     }
 
     public static void register(IEventBus gameBus) {
