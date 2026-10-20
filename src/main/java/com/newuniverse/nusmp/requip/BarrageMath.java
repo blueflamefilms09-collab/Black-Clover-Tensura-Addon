@@ -124,7 +124,13 @@ public final class BarrageMath {
     /** One volley may take at most this much of a boss's health in total (a share of max health); anything else has no volley cap. */
     public static final double BOSS_VOLLEY_SHARE = 0.10;
 
-    public static double volleyCap(double maxHealth, boolean boss) { return boss ? Math.max(1.0, maxHealth * BOSS_VOLLEY_SHARE) : Double.POSITIVE_INFINITY; }
+    public static double volleyCap(double maxHealth, boolean boss) { return volleyCap(maxHealth, boss, BOSS_VOLLEY_SHARE); }
+
+    /** The same with the share a server owner set in the config (held to 1 to 100 percent). */
+    public static double volleyCap(double maxHealth, boolean boss, double share) {
+        double s = Double.isNaN(share) ? BOSS_VOLLEY_SHARE : Math.max(0.01, Math.min(1.0, share));
+        return boss ? Math.max(1.0, maxHealth * s) : Double.POSITIVE_INFINITY;
+    }
 
     /** What of {@code damage} may still be dealt to a target that has already taken {@code dealt} of a volley with the cap {@code cap}. */
     public static double allowed(double damage, double dealt, double cap) { return Math.max(0.0, Math.min(damage, cap - dealt)); }

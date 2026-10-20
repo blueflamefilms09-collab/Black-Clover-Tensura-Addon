@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.aura.PlayerAuras;
 import com.newuniverse.nusmp.item.WeaponEngravings;
 import com.newuniverse.nusmp.requip.Armour;
+import com.newuniverse.nusmp.requip.PartialArmourMask;
 import com.newuniverse.nusmp.requip.RequipItems;
 import com.newuniverse.nusmp.requip.RequipParticles;
 import com.newuniverse.nusmp.requip.RequipRules;
@@ -52,9 +53,12 @@ final class ErzaRequipFx {
     }
 
     /** Puts the armour's attribute modifiers on the wearer (replacing whatever armour's were there). */
-    static void applyModifiers(LivingEntity who, Armour a, double mastery) {
+    static void applyModifiers(LivingEntity who, Armour a, double mastery) { applyModifiers(who, a, mastery, 1.0); }
+
+    /** The same for a partial armour: every modifier is the share {@code fraction} (0..1) of the whole armour's. */
+    static void applyModifiers(LivingEntity who, Armour a, double mastery, double fraction) {
         clearModifiers(who);
-        for (RequipRules.Mod m : RequipRules.modifiers(a, mastery)) {
+        for (RequipRules.Mod m : RequipRules.modifiers(a, mastery, fraction)) {
             AttributeInstance inst = who.getAttribute(attribute(m.attribute()));
             if (inst != null) inst.addTransientModifier(new AttributeModifier(modifierId(m.attribute()), m.amount(), op(m.op())));
         }
@@ -78,11 +82,17 @@ final class ErzaRequipFx {
 
     // ---------------------------------------------------------------- the render aura
     /** The armour as the clients see it: {@code ticks} long, style = the armour's ordinal. A refresh of the same style keeps the pieces assembled. */
-    static void setAura(ServerPlayer p, Armour a, int ticks) { PlayerAuras.set(p, Aura.ERZA, ticks, a.ordinal()); }
+    static void setAura(ServerPlayer p, Armour a, int ticks) { setAura(p, a, ticks, PartialArmourMask.FULL); }
+
+    /** A partial armour: the style carries the mask of the pieces next to the ordinal (a whole set is the plain ordinal), so every client draws the same subset. */
+    static void setAura(ServerPlayer p, Armour a, int ticks, int mask) { PlayerAuras.set(p, Aura.ERZA, ticks, PartialArmourMask.encode(a.ordinal(), mask)); }
 
     /** The old armour shatters out over the Djinn's shatter window and is gone. */
-    static void shatter(ServerPlayer p, Armour a) {
-        PlayerAuras.set(p, Aura.ERZA, RequipRules.SHATTER_WINDOW, a.ordinal());
+    static void shatter(ServerPlayer p, Armour a) { shatter(p, a, PartialArmourMask.FULL); }
+
+    /** The same for a partial armour: the pieces that were on are the pieces that shatter. */
+    static void shatter(ServerPlayer p, Armour a, int mask) {
+        PlayerAuras.set(p, Aura.ERZA, RequipRules.SHATTER_WINDOW, PartialArmourMask.encode(a.ordinal(), mask));
         ServerLevel level = p.serverLevel();
         themed(level, a, p.position().add(0, 1.0, 0), 28, 0.7);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.AMETHYST_BLOCK_BREAK, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 0.8F);

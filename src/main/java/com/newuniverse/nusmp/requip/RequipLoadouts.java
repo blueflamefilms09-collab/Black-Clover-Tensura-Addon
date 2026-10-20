@@ -79,7 +79,10 @@ public final class RequipLoadouts {
      * Swaps to loadout {@code n}. All or nothing: the plan is made on copies and written back only when it applies. A stack that an armour made (the flagged Requip weapon) standing in a slot the loadout
      * replaces is simply unmade (it comes back with its armour); everything else the loadout replaces goes to the armoury.
      */
-    public static Outcome equip(ServerPlayer p, int n, int capacity) {
+    public static Outcome equip(ServerPlayer p, int n, int capacity) { return equip(p, n, capacity, true); }
+
+    /** The same, but with {@code apply} false it only asks: the plan is made and its outcome returned, and nothing is written (so the cost can be checked before anything moves). */
+    public static Outcome equip(ServerPlayer p, int n, int capacity, boolean apply) {
         RequipArmoury.Data d = RequipArmoury.data(p);
         if (n < 0 || n >= d.loadouts.size()) return new Outcome(LoadoutRules.Status.EMPTY_LOADOUT, 0, 0);
         RequipArmoury.Loadout lo = d.loadouts.get(n);
@@ -90,6 +93,7 @@ public final class RequipLoadouts {
         }
         LoadoutRules.Plan<ItemStack> plan = LoadoutRules.plan(lo.template, w, rest(inv), d.cells, capacity, RequipArmoury.OPS, MATCHER);
         if (!plan.applies()) return new Outcome(plan.status(), 0, plan.missing());
+        if (!apply) return new Outcome(plan.status(), plan.moved(), plan.missing());
         for (int i = 0; i < LoadoutRules.ARMOUR_SLOTS; i++) inv.armor.set(3 - i, plan.worn().get(i));
         inv.offhand.set(0, plan.worn().get(LoadoutRules.OFFHAND));
         for (int i = 0; i < LoadoutRules.HOTBAR; i++) inv.items.set(i, plan.worn().get(LoadoutRules.HOTBAR_FIRST + i));

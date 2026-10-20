@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.aura.PlayerAuras;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.requip.Armour;
+import com.newuniverse.nusmp.requip.PartialArmourMask;
+import com.newuniverse.nusmp.requip.RequipMagicRules;
 import com.newuniverse.nusmp.requip.RequipRules;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -31,7 +33,7 @@ import net.minecraft.world.entity.LivingEntity;
  * winged ones), and costs a share of the Aura every second to keep. The table is {@link Armour}; the arithmetic is {@link RequipRules}. Armours past the first few unlock with mastery.
  */
 public class ErzaRequipSkill extends NUSkill {
-    static final String WORN = "Worn", PENDING = "Pending", SWAP_AT = "SwapAt", AURA_AT = "AuraAt", GUARD_UNTIL = "GuardUntil", NONE_NAME = "dismiss";
+    static final String WORN = "Worn", PENDING = "Pending", SWAP_AT = "SwapAt", AURA_AT = "AuraAt", GUARD_UNTIL = "GuardUntil", NONE_NAME = "dismiss", WORN_MASK = "WornMask";
 
     static final SkillText TEXT = SkillText.of("erza_requip", "Requip: The Knight",
             "Ultimate. Equip Magic: change between fourteen armours, one per mode, each with its own strength, resistances, weapon and two special attacks. Press the skill key in an armour's mode to put it on, again to attack (sneak for the second attack); the last mode takes the armour off.");
@@ -39,17 +41,22 @@ public class ErzaRequipSkill extends NUSkill {
     public ErzaRequipSkill() { super(SkillType.ULTIMATE, TEXT, true); }
 
     // ---------------------------------------------------------------- modes
-    @Override public int getModes(ManasSkillInstance i) { return RequipRules.MODES; }
+    // The modes: the 14 armours (0 to 13) and Dismiss (14) as always, then the Equip Magic appended after them (RequipMagicRules.Mode: Armoury, Loadouts, Blade, Barrage, Strike, Partial Armour, the finishers).
+    @Override public int getModes(ManasSkillInstance i) { return RequipMagicRules.MODES; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) {
-        return reverse ? (mode + RequipRules.MODES - 1) % RequipRules.MODES : (mode + 1) % RequipRules.MODES;
+        return reverse ? (mode + RequipMagicRules.MODES - 1) % RequipMagicRules.MODES : (mode + 1) % RequipMagicRules.MODES;
     }
     @Override public String getModeId(ManasSkillInstance i, int mode) {
+        RequipMagicRules.Mode m = RequipMagicRules.byModeIndex(mode);
+        if (m != null) return "erza." + m.id();
         Armour a = Armour.byOrdinal(mode);
         return "erza." + (a == null ? NONE_NAME : a.id());
     }
 
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
+        RequipMagicRules.Mode m = RequipMagicRules.byModeIndex(mode);
+        if (m != null) return SkillMsg.mode("erza." + m.id(), m.english());
         Armour a = Armour.byOrdinal(mode);
         return a == null ? SkillMsg.mode("erza." + NONE_NAME, "Dismiss Armor") : SkillMsg.mode("erza." + a.id(), a.displayName());
     }
@@ -65,6 +72,12 @@ public class ErzaRequipSkill extends NUSkill {
         return tag.contains(PENDING) ? Armour.byOrdinal(tag.getInt(PENDING)) : null;
     }
 
+    /** The mask of the pieces the worn armour was put on with (the whole set when none was recorded). */
+    static int wornMask(ManasSkillInstance i) {
+        var tag = i.getOrCreateTag();
+        return tag.contains(WORN_MASK) ? PartialArmourMask.normalize(tag.getInt(WORN_MASK)) : PartialArmourMask.FULL;
+    }
+
     private static boolean guarding(ManasSkillInstance i, LivingEntity who) {
         return who.level().getGameTime() < i.getOrCreateTag().getLong(GUARD_UNTIL);
     }
@@ -73,6 +86,8 @@ public class ErzaRequipSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer p) || !p.isAlive()) return;
+        RequipMagicRules.Mode magic = RequipMagicRules.byModeIndex(mode);
+        if (magic != null) { ErzaRequipMagic.press(p, instance, magic); return; }                    // the Equip Magic (modes after Dismiss)
         if (pending(instance) != null) { SkillUtil.fail(p, SkillMsg.t("erza.changing", "The armor is still changing.")); return; }
         Armour target = Armour.byOrdinal(mode), now = worn(instance);
         if (target == null) {                                                                 // the Dismiss mode
@@ -81,6 +96,7 @@ public class ErzaRequipSkill extends NUSkill {
             return;
         }
         if (now == target) {                                                                  // already in it: attack
+            if (!PartialArmourMask.canFight(target, wornMask(instance))) { SkillUtil.fail(p, SkillMsg.t("erza.too_little", "Too little of the armor is on for its attacks.")); return; }
             Armour.Attack atk = p.isShiftKeyDown() ? target.secondary() : target.primary();
             if (ErzaRequipAttacks.cast(p, instance, target, atk, masteryFrac(instance))) grow(instance, p, 1);
             else instance.markDirty();
@@ -93,7 +109,7 @@ public class ErzaRequipSkill extends NUSkill {
             SkillUtil.fail(p, SkillMsg.t("erza.locked", "%s is not yet yours: master Requip to %s percent.", target.displayName(), (int) Math.round(target.unlock() * 100)));
             return;
         }
-        if (!EnergyBridge.aura(p, RequipRules.equipShare(target, now != null), RequipRules.EQUIP_FLOOR)) {
+        if (!EnergyBridge.aura(p, RequipRules.equipShare(target, now != null) * ErzaRequipMagic.fractionOf(p, target), RequipRules.EQUIP_FLOOR)) {
             SkillUtil.fail(p, SkillMsg.t("erza.no_power", "Not enough magic power for %s.", target.displayName()));
             return;
         }
@@ -107,7 +123,7 @@ public class ErzaRequipSkill extends NUSkill {
         if (old == null) { finishEquip(p, inst, target); return; }
         ErzaRequipFx.clearModifiers(p);
         ErzaRequipFx.removeWeapons(p);
-        ErzaRequipFx.shatter(p, old);
+        ErzaRequipFx.shatter(p, old, wornMask(inst));
         var tag = inst.getOrCreateTag();
         tag.remove(WORN);
         tag.putInt(PENDING, target.ordinal());
@@ -119,11 +135,13 @@ public class ErzaRequipSkill extends NUSkill {
     static void finishEquip(ServerPlayer p, ManasSkillInstance inst, Armour target) {
         var tag = inst.getOrCreateTag();
         tag.remove(PENDING);
+        int mask = ErzaRequipMagic.maskOf(p);                                                  // Partial Armour: the pieces this armour is put on with
         tag.putInt(WORN, target.ordinal());
+        tag.putInt(WORN_MASK, mask);
         tag.putLong(AURA_AT, p.level().getGameTime());
         tag.putLong(GUARD_UNTIL, 0L);
-        ErzaRequipFx.applyModifiers(p, target, masteryFrac(inst));
-        ErzaRequipFx.setAura(p, target, RequipRules.AURA_TICKS);
+        ErzaRequipFx.applyModifiers(p, target, masteryFrac(inst), PartialArmourMask.fraction(target, mask));
+        ErzaRequipFx.setAura(p, target, RequipRules.AURA_TICKS, mask);
         ErzaRequipFx.flash(p, target);
         ErzaRequipFx.giveWeapon(p, target);
         p.displayClientMessage(SkillMsg.t("erza.equipped", "%s", target.displayName()).withStyle(net.minecraft.network.chat.Style.EMPTY.withColor(target.theme())), true);
@@ -134,7 +152,7 @@ public class ErzaRequipSkill extends NUSkill {
     static void dismiss(ServerPlayer p, ManasSkillInstance inst, Armour old) {
         ErzaRequipFx.clearModifiers(p);
         ErzaRequipFx.removeWeapons(p);
-        ErzaRequipFx.shatter(p, old);
+        ErzaRequipFx.shatter(p, old, wornMask(inst));
         var tag = inst.getOrCreateTag();
         tag.remove(WORN);
         tag.remove(PENDING);
@@ -188,10 +206,12 @@ public class ErzaRequipSkill extends NUSkill {
             if (p.tickCount % 40 == 0 && (ErzaRequipFx.strayWeapon(p, null))) ErzaRequipFx.removeWeapons(p);   // a weapon left over from a lost armour
             return;
         }
-        ErzaRequipFx.flightTick(p, a);
+        int mask = wornMask(instance);
+        double fraction = PartialArmourMask.fraction(a, mask);
+        if (PartialArmourMask.flies(a, mask)) ErzaRequipFx.flightTick(p, a);
         if (p.tickCount % 20 != 0) return;
         // the upkeep: the armour is kept up with the Aura (else Magicule); when the power runs dry it comes off
-        if (!EnergyBridge.aura(p, a.cost().upkeep(), RequipRules.UPKEEP_FLOOR)) {
+        if (!EnergyBridge.aura(p, a.cost().upkeep() * fraction, RequipRules.UPKEEP_FLOOR)) {
             p.displayClientMessage(SkillMsg.t("erza.dry", "Your magic power runs dry: the armor fades.").withStyle(net.minecraft.ChatFormatting.RED), true);
             dismiss(p, instance, a);
             return;
@@ -200,10 +220,10 @@ public class ErzaRequipSkill extends NUSkill {
             float self = RequipRules.selfDamage(p.getHealth(), a.upkeepSelfDamage() / Math.max(1f, p.getHealth()));
             if (self > 0f) { p.setHealth(p.getHealth() - self); p.serverLevel().broadcastEntityEvent(p, (byte) 2); }
         }
-        if (!ErzaRequipFx.hasModifiers(p, a, masteryFrac(instance))) ErzaRequipFx.applyModifiers(p, a, masteryFrac(instance));   // after a relog
+        if (!ErzaRequipFx.hasModifiers(p, a, masteryFrac(instance))) ErzaRequipFx.applyModifiers(p, a, masteryFrac(instance), fraction);   // after a relog
         if (ErzaRequipFx.strayWeapon(p, a)) ErzaRequipFx.removeWeapons(p);
         if (!PlayerAuras.active(p, Aura.ERZA) || now - tag.getLong(AURA_AT) >= RequipRules.AURA_REFRESH) {
-            ErzaRequipFx.setAura(p, a, RequipRules.AURA_TICKS);
+            ErzaRequipFx.setAura(p, a, RequipRules.AURA_TICKS, mask);
             tag.putLong(AURA_AT, now);
         }
         if (a == Armour.SEA_EMPRESS && p.isInWater()) {                                        // the Sea Empress's underwater bonus
@@ -227,11 +247,12 @@ public class ErzaRequipSkill extends NUSkill {
 
     @Override
     public boolean onTakenDamage(ManasSkillInstance instance, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
+        if (owner instanceof ServerPlayer hit) ErzaRequipMagic.reflex(hit, instance);                // Requip Reflex: swaps to the reflex loadout (or the Adamantine Armor), once per pause
         Armour a = worn(instance);
         if (a == null || pending(instance) != null) return true;
         boolean guard = guarding(instance, owner);
         float before = amount.get();
-        amount.set(RequipRules.afterResist(a, classify(source), before, guard));
+        amount.set(RequipRules.afterResist(a, classify(source), before, guard, PartialArmourMask.fraction(a, wornMask(instance))));
         double reflect = RequipRules.reflect(a, guard);
         Entity direct = source.getDirectEntity();
         if (reflect > 0 && direct instanceof LivingEntity attacker && attacker != owner && !source.is(DamageTypes.THORNS) && classify(source) == Armour.DamageClass.PHYSICAL) {
@@ -242,6 +263,7 @@ public class ErzaRequipSkill extends NUSkill {
 
     @Override
     public boolean onDamageEntity(ManasSkillInstance instance, LivingEntity owner, LivingEntity target, DamageSource source, Changeable<Float> amount) {
+        if (owner instanceof ServerPlayer hitter) amount.set(amount.get() * ErzaRequipMagic.affinityFactor(hitter, masteryFrac(instance)));     // Weapon Affinity: the summoned weapon hits harder
         Armour a = worn(instance);
         if (a == null || pending(instance) != null) return true;
         switch (a) {

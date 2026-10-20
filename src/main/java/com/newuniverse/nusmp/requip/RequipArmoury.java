@@ -216,11 +216,14 @@ public final class RequipArmoury {
         p.openMenu(new SimpleMenuProvider((id, inv, pl) -> new Menu(id, inv, new CellContainer(p)), Component.translatableWithFallback("nusmp.requip.armoury.title", "Requip Armoury")));
     }
 
+    /** The server menu of a player (for the in-game self-test and for code that opens the window itself). */
+    public static Menu serverMenu(ServerPlayer p, int containerId) { return new Menu(containerId, p.getInventory(), new CellContainer(p)); }
+
     // ------------------------------------------------------------ the menu
     public static final class Menu extends AbstractContainerMenu {
         public static final int TAB_POCKET = 0, TAB_LOADOUTS = 1, TAB_PARTIAL = 2;
         /** Button ids of {@link #clickMenuButton}. */
-        public static final int BTN_TAB = 0, BTN_SAVE = 10, BTN_EQUIP = 20, BTN_CLEAR = 30, BTN_REFLEX = 40, BTN_FAMILY = 50, BTN_PRESET = 70, BTN_PARTIAL_ON = 71;
+        public static final int BTN_TAB = 0, BTN_SAVE = 10, BTN_EQUIP = 20, BTN_CLEAR = 30, BTN_REFLEX = 40, BTN_FAMILY = 50, BTN_PRESET = 70, BTN_PARTIAL_ON = 71, BTN_APPLY = 72;
         public static final int WIDTH = 176, HEIGHT = 240, X0 = 8, Y0 = 32, INV_Y = 160;
         public static final int CELLS = ArmouryRules.MAX_SLOTS, PLAYER_FIRST = CELLS, PLAYER_END = CELLS + 36;
 
@@ -284,22 +287,30 @@ public final class RequipArmoury {
             if (!(p instanceof ServerPlayer sp) || !sp.isAlive()) return false;
             Data d = data(sp);
             if (id >= BTN_TAB && id <= BTN_TAB + 2) { tab.set(id - BTN_TAB); return true; }
-            if (id >= BTN_SAVE && id < BTN_SAVE + LoadoutRules.MAX_LOADOUTS) { RequipLoadouts.save(sp, id - BTN_SAVE); return true; }
+            if (id >= BTN_SAVE && id < BTN_SAVE + LoadoutRules.MAX_LOADOUTS) {
+                if (!SkillLink.mayUse(sp, "loadouts")) return false;
+                int n = RequipLoadouts.save(sp, id - BTN_SAVE);
+                sp.displayClientMessage(Component.translatableWithFallback(n > 0 ? "nusmp.requip.loadout.saved" : "nusmp.requip.loadout.nothing", n > 0 ? "Loadout %s saved: %s pieces." : "Nothing is worn to save.", id - BTN_SAVE + 1, n), true);
+                return true;
+            }
             if (id >= BTN_EQUIP && id < BTN_EQUIP + LoadoutRules.MAX_LOADOUTS) { SkillLink.equipLoadout(sp, id - BTN_EQUIP); return true; }
-            if (id >= BTN_CLEAR && id < BTN_CLEAR + LoadoutRules.MAX_LOADOUTS) { RequipLoadouts.clear(sp, id - BTN_CLEAR); return true; }
+            if (id >= BTN_CLEAR && id < BTN_CLEAR + LoadoutRules.MAX_LOADOUTS) { if (!SkillLink.mayUse(sp, "loadouts")) return false; RequipLoadouts.clear(sp, id - BTN_CLEAR); return true; }
             if (id >= BTN_REFLEX && id < BTN_REFLEX + LoadoutRules.MAX_LOADOUTS) {
+                if (!SkillLink.mayUse(sp, "loadouts")) return false;
                 int n = id - BTN_REFLEX;
                 d.reflex = d.reflex == n ? -1 : n;
                 return true;
             }
-            if (id >= BTN_FAMILY && id < BTN_FAMILY + PartialArmourMask.FAMILIES) { d.mask = PartialArmourMask.toggle(d.mask, id - BTN_FAMILY); SkillLink.partialChanged(sp); return true; }
+            if (id >= BTN_FAMILY && id <= BTN_APPLY && !SkillLink.mayUse(sp, "partial")) return false;
+            if (id >= BTN_FAMILY && id < BTN_FAMILY + PartialArmourMask.FAMILIES) { d.mask = PartialArmourMask.toggle(d.mask, id - BTN_FAMILY); d.partialOn = true; return true; }
             if (id == BTN_PRESET) {
                 int now = PartialArmourMask.presetIndexOf(d.mask);
                 d.mask = PartialArmourMask.preset(now + 1).mask();
-                SkillLink.partialChanged(sp);
+                d.partialOn = d.mask != PartialArmourMask.FULL;
                 return true;
             }
-            if (id == BTN_PARTIAL_ON) { d.partialOn = !d.partialOn; SkillLink.partialChanged(sp); return true; }
+            if (id == BTN_PARTIAL_ON) { d.partialOn = !d.partialOn; return true; }
+            if (id == BTN_APPLY) { SkillLink.applyPartial(sp); return true; }
             return false;
         }
 
@@ -348,16 +359,19 @@ public final class RequipArmoury {
         public interface Hooks {
             int capacity(ServerPlayer p);
             boolean mayOpen(ServerPlayer p);
+            /** True when the player knows the skill and the mode ({@code loadouts}, {@code partial}, ...) is open to them. */
+            boolean mayUse(ServerPlayer p, String modeId);
             void equipLoadout(ServerPlayer p, int n);
-            void partialChanged(ServerPlayer p);
+            void applyPartial(ServerPlayer p);
         }
 
         private static volatile Hooks hooks;
 
         public static void set(Hooks h) { hooks = h; }
         static int of(ServerPlayer p) { Hooks h = hooks; return h == null ? ArmouryRules.MIN_CAPACITY : h.capacity(p); }
+        static boolean mayUse(ServerPlayer p, String mode) { Hooks h = hooks; return h != null && h.mayUse(p, mode); }
         static void equipLoadout(ServerPlayer p, int n) { Hooks h = hooks; if (h != null) h.equipLoadout(p, n); }
-        static void partialChanged(ServerPlayer p) { Hooks h = hooks; if (h != null) h.partialChanged(p); }
+        static void applyPartial(ServerPlayer p) { Hooks h = hooks; if (h != null) h.applyPartial(p); }
         static void openFor(ServerPlayer p) { Hooks h = hooks; if (h != null && h.mayOpen(p)) open(p); }
     }
 }
