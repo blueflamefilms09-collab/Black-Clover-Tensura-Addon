@@ -1,8 +1,7 @@
 package com.newuniverse.nusmp.blackclover;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import com.newuniverse.nusmp.core.magic.profile.MagicKeys;
@@ -147,11 +146,11 @@ public enum MagicType {
     public final String word;
     public final String soulType;
     public final HitEffect hit;
-    private final Supplier<SimpleParticleType> particle;
+    private final Supplier<ParticleOptions> particle;
     private final Supplier<Holder<MobEffect>> guardEffect;
 
     MagicType(String displayName, String word, String soulType, HitEffect hit,
-              Supplier<SimpleParticleType> particle, Supplier<Holder<MobEffect>> guardEffect) {
+              Supplier<ParticleOptions> particle, Supplier<Holder<MobEffect>> guardEffect) {
         this.displayName = displayName;
         this.word = word;
         this.soulType = soulType;
@@ -168,12 +167,12 @@ public enum MagicType {
     public boolean restricted() { return profile().restricted(); }
 
     /** The particle of this magic; GLOW if the supplier is missing or throws (never null). An override registered in MagicProfiles wins. */
-    public SimpleParticleType particle() { return profile().particle(); }
+    public ParticleOptions particle() { return profile().particle(); }
     /** The guard effect of this magic; Resistance if the supplier is missing or throws (never null). An override registered in MagicProfiles wins. */
     public Holder<MobEffect> guardEffect() { return profile().guardEffect(); }
 
     /** The enum's own particle supplier, null if it is missing or throws. Used by the profile; prefer {@link #particle()}. */
-    public SimpleParticleType rawParticle() {
+    public ParticleOptions rawParticle() {
         try { return particle == null ? null : particle.get(); } catch (RuntimeException | LinkageError e) { return null; }
     }
 

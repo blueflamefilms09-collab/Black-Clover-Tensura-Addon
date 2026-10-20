@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.NUConfig;
@@ -122,7 +123,7 @@ public class GrimoireMagicSkill extends Skill {
                 Set<LivingEntity> hit = new HashSet<>();
                 for (double d = 0; d < start.distanceTo(end); d += 0.5) {
                     Vec3 p = start.add(dir.scale(d));
-                    RukhFx.spray(level, RukhFx.Alignment.of(m.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), p.x, p.y, p.z, 1, 0.05, 0.05, 0.05, 0.0);
+                    Fx.spray(level, m.profile().themeKey(), Fx.toneOf(m.particle()), p.x, p.y, p.z, 1, 0.05, 0.05, 0.05, 0.0);
                     hit.addAll(DMUtil.around(player, p, 1.2));
                     if (!hit.isEmpty() && m.hit != MagicType.HitEffect.PIERCE) break;
                 }
@@ -134,7 +135,7 @@ public class GrimoireMagicSkill extends Skill {
                 Vec3 c = DMUtil.lookPoint(player, 32);
                 double r = 5 + (leaves(instance) - 3);
                 for (LivingEntity t : DMUtil.around(player, c, r)) strike(player, instance, t, 14 * pow);
-                RukhFx.spray(level, RukhFx.Alignment.of(m.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), c.x, c.y + 1, c.z, 120, r / 2, 1, r / 2, 0.05);
+                Fx.spray(level, m.profile().themeKey(), Fx.toneOf(m.particle()), c.x, c.y + 1, c.z, 120, r / 2, 1, r / 2, 0.05);
                 cooldown(instance, BURST, 120);
             }
             case WARD -> {
@@ -143,7 +144,7 @@ public class GrimoireMagicSkill extends Skill {
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, leaves(instance) >= 4 ? 1 : 0));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, leaves(instance) - 2));
                 player.addEffect(new MobEffectInstance(m.guardEffect(), ticks, 1));
-                RukhFx.spray(level, RukhFx.Alignment.of(m.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), player.getX(), player.getY() + 1, player.getZ(), 40, 0.6, 0.8, 0.6, 0.02);
+                Fx.spray(level, m.profile().themeKey(), Fx.toneOf(m.particle()), player.getX(), player.getY() + 1, player.getZ(), 40, 0.6, 0.8, 0.6, 0.02);
                 cooldown(instance, WARD, 600);
             }
             case FINISHER -> {
@@ -151,7 +152,7 @@ public class GrimoireMagicSkill extends Skill {
                 if (!SkillUtil.spendMagicules(player, 3000 * cost)) return;
                 Vec3 c = DMUtil.lookPoint(player, 48);
                 for (LivingEntity t : DMUtil.around(player, c, 9)) strike(player, instance, t, 35 * pow);
-                RukhFx.spray(level, RukhFx.Alignment.of(m.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), c.x, c.y + 1, c.z, 400, 4, 2, 4, 0.1);
+                Fx.spray(level, m.profile().themeKey(), Fx.toneOf(m.particle()), c.x, c.y + 1, c.z, 400, 4, 2, 4, 0.1);
                 level.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.2F, 0.7F);
                 cooldown(instance, FINISHER, 1200);
             }

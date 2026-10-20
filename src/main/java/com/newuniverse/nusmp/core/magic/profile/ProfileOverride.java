@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.blackclover.MagicType.HitEffect;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.effect.MobEffect;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public final class ProfileOverride implements MagicProfile {
     private HitEffect hit, secondaryHit;
     private Boolean restricted;
     private Integer color, cooldown;
-    private SimpleParticleType particle;
+    private ParticleOptions particle;
     private Holder<MobEffect> guard;
     private VfxStyle style;
     private VfxShape cast, field, burst;
@@ -48,7 +48,7 @@ public final class ProfileOverride implements MagicProfile {
     public ProfileOverride secondaryHit(HitEffect v) { secondaryHit = v; return this; }
     public ProfileOverride restricted(boolean v) { restricted = v; return this; }
     public ProfileOverride color(int argb) { color = argb | 0xFF000000; return this; }
-    public ProfileOverride particle(SimpleParticleType v) { particle = v; return this; }
+    public ProfileOverride particle(ParticleOptions v) { particle = v; return this; }
     public ProfileOverride guardEffect(Holder<MobEffect> v) { guard = v; return this; }
     public ProfileOverride style(VfxStyle v) { style = v; return this; }
     public ProfileOverride shapes(VfxShape cast, VfxShape field, VfxShape burst) { this.cast = cast; this.field = field; this.burst = burst; return this; }
@@ -67,7 +67,7 @@ public final class ProfileOverride implements MagicProfile {
     @Override public boolean isMerged() { return base.isMerged(); }
     @Override public List<String> parentIds() { return parents != null ? parents : base.parentIds(); }
     @Override public int color() { return color != null ? color : base.color(); }
-    @Override public SimpleParticleType particle() { return particle != null ? particle : base.particle(); }
+    @Override public ParticleOptions particle() { return particle != null ? particle : base.particle(); }
     @Override public Holder<MobEffect> guardEffect() { return guard != null ? guard : base.guardEffect(); }
     @Override public VfxStyle vfxStyle() { return style != null ? style : base.vfxStyle(); }
     @Override public VfxShape castShape() { return cast != null ? cast : base.castShape(); }
