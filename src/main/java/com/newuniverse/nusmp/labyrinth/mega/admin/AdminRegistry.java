@@ -45,6 +45,10 @@ public final class AdminRegistry {
             warned = false;
         });
         SelfTests.register("dungeon.admin", AdminSelfTests::run);
+        // 1.99.0: the Decennial bosses and their thematic halls answer /dungeon boss spawn and kill
+        DungeonAdminHooks.setBossHook(DungeonAdminHooks.BossHook.of(
+                (l, lv, p) -> com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialBosses.spawnBoss(l, lv, p) != null,
+                com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialBosses::killBosses));
     }
 
     private static void tick(MinecraftServer server) {
