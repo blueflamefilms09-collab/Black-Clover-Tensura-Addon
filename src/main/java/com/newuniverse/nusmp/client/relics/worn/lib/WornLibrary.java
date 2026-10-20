@@ -78,8 +78,10 @@ public final class WornLibrary {
                     default -> { }
                 }
                 float[] pos = r.mesh().pos;
+                byte[] flags = r.mesh().flags;
                 int n = r.mesh().quads * 12;
                 for (int i = 0; i + 2 < n; i += 3) {
+                    if ((flags[i / 12] & WornMesh.HALO) != 0) continue;                      // the soft light shapes of a visual upgrade model (rings, flares, shafts) do not size the object
                     float x = (r.mirror() ? -pos[i] : pos[i]) + ox, y = pos[i + 1] + oy, z = pos[i + 2];
                     b[0] = Math.min(b[0], x); b[3] = Math.max(b[3], x);
                     b[1] = Math.min(b[1], y); b[4] = Math.max(b[4], y);
