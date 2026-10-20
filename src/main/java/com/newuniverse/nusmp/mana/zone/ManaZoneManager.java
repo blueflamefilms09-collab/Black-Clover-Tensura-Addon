@@ -453,13 +453,14 @@ public final class ManaZoneManager {
         if (ZONES.isEmpty()) return;
         LivingEntity victim = event.getEntity();
         if (victim.level().isClientSide) return;
+        if (event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return;      // the void and /kill are not blows anyone foresees or a space holds off
         long now = victim.level().getGameTime();
         ManaZoneRules.Zone zr = ManaZoneData.zone();
         Entity attacker = event.getSource().getEntity();
         boolean boss = attacker instanceof LivingEntity la && BalanceLaw.isBoss(la);
         double f = 1.0;
         Zone own = victim instanceof ServerPlayer sp ? ZONES.get(sp.getUUID()) : null;
-        if (own != null) f *= 1.0 - ManaZoneMath.predictReduction(zr, own.reinforcement, boss);
+        if (own != null && attacker != null) f *= 1.0 - ManaZoneMath.predictReduction(zr, own.reinforcement, boss);      // only a blow struck by someone can be foreseen: not a fall, not the cold
         double bubble = 1.0, ally = 1.0;
         for (Zone z : ZONES.values()) {
             if (z.dim != victim.level().dimension()) continue;

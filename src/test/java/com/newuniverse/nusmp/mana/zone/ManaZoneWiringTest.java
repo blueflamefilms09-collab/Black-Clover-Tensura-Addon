@@ -62,7 +62,7 @@ class ManaZoneWiringTest {
 
     @Test
     void anAvatarNeverCastsTheTechnique() {
-        for (String id : new String[]{"mana_zone", ManaZoneActions.VOLLEY_ID, ManaZoneActions.SPACE_ID})
+        for (String id : new String[]{"mana_zone", "zone_omni_volley", "zone_pressure_space", "true_magic_rune_array"})
             assertFalse(AvatarSkillList.allowedPage(id, 6.0), id);
     }
 
@@ -76,8 +76,8 @@ class ManaZoneWiringTest {
         int gate = book.indexOf("isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e)", usable);
         int instant = book.indexOf("if (instant(mode)) return true;", usable);
         assertTrue(usable > 0 && gate > usable && gate < instant, "the gate is asked before the instant-page rule that used to open the Mana Zone to everyone");
-        int volley = book.indexOf("ManaZoneActions.volleyPage()"), space = book.indexOf("ManaZoneActions.spacePage()"), sig = book.indexOf("SignatureSpell.pages()");
-        assertTrue(sig > 0 && volley > sig && space > volley, "the new pages are appended after everything else");
+        int volley = book.indexOf("ManaZoneActions.volleyPage()"), space = book.indexOf("ManaZoneActions.spacePage()"), truth = book.indexOf("TrueMagic.page()"), sig = book.indexOf("SignatureSpell.pages()");
+        assertTrue(sig > 0 && volley > sig && space > volley && truth > space, "the new pages are appended after everything else");
         assertTrue(book.contains("page(mode).id().equals(ZONE_ID)") || book.contains("pg.id().equals(ZONE_ID)"));
     }
 
@@ -101,7 +101,7 @@ class ManaZoneWiringTest {
 
     @Test
     void noTextInTheTechniqueTouchesHunger() throws Exception {
-        for (String f : new String[]{"mana/zone/ManaZoneManager.java", "mana/zone/GrandZones.java", "mana/zone/ManaZoneActions.java", "mana/zone/ManaZonePlayer.java"}) {
+        for (String f : new String[]{"mana/zone/ManaZoneManager.java", "mana/zone/GrandZones.java", "mana/zone/ManaZoneActions.java", "mana/zone/ManaZonePlayer.java", "mana/zone/TrueMagic.java"}) {
             String s = src(f);
             assertFalse(s.contains("MobEffects.HUNGER"), f);
             assertFalse(s.contains("causeFoodExhaustion"), f);

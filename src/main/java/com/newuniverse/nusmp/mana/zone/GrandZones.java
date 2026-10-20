@@ -249,7 +249,10 @@ public final class GrandZones {
             t.nextSync = now + GrandZoneMath.SYNC_REFRESH;
             toPlayer(p, payload(r, t));
         }
-        if (entered) announce(p, r, t);
+        if (entered && now - ManaZonePlayer.data(p).getLong("ZoneNoticeAt") > 600) {                // the border does not nag: one notice a half minute at most
+            ManaZonePlayer.data(p).putLong("ZoneNoticeAt", now);
+            announce(p, r, t);
+        }
         if (p.isCreative()) return;                                                       // creative players feel the weather, not the pressure
 
         double harm = t.harm * t.fade, boon = t.boon * t.fade;

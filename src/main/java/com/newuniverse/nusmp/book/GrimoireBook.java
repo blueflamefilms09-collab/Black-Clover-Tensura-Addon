@@ -125,6 +125,7 @@ public abstract class GrimoireBook extends Skill {
                 l.addAll(SignatureSpell.pages());                                       // 1.16.0: the wizard's own spells, appended last
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.volleyPage());     // 1.99.0: the Mana Zone's offence and its pressurised space, appended after everything (late-game gate: see usable)
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.spacePage());
+                l.add(com.newuniverse.nusmp.mana.zone.TrueMagic.page());                 // 1.99.0: True Magic (Mana Method): the real element from a rune array, natural attributes only, same late-game gate
             }
             all = l;
         }
@@ -154,7 +155,8 @@ public abstract class GrimoireBook extends Skill {
     /** 1.99.0: the Mana Zone page and the two pages that need it are LATE-GAME: not selectable, listed or castable until the gate (mana.zone.ManaZoneGate) is open. */
     private boolean isZoneGated(int mode) {
         BookPage pg = page(mode);
-        return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID));
+        return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID)
+                || pg.id().equals(com.newuniverse.nusmp.mana.zone.TrueMagic.ID));
     }
     private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
     /** Pages that act on the key press itself without magicule cost or a cooldown. */

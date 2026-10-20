@@ -49,3 +49,11 @@ Code: `wizard/*`, `mana/Heritage.java`, `client/wizard/*`.
 The grimoire item and skill carry `Fusion = "FLAME:WATER"` (and `BornName`). Its cover is generated from the pair (`grimoire/FusionDesign.java`): blended leather, one parent's metal each, a ring of gems, corner brackets, spine gems.
 
 **A signature for every wizard** (`mana/Signature.java`): a name unique on the server (a registry in the world's saved data), two traits (small trades of power, cost and recharge applied by `ManaLaw`), and a shape. **Custom spells** (`book/SignatureSpell.java`): the Signature Spell on every grimoire, and on a fused grimoire the Fusion Spell and the Born Spell too; their effects are drawn by `vfx/client/layer/BornMagicLayer.java` from two colours and a style, so a magic born of any pair has effects.
+
+---
+
+## 1.99.0: the Mana Zone is a late-game technique, the Grand Magic Zones are places
+
+The 1.5.0 row "Mana Zone ... toggles it for 30 s" and the "Grand Magic Zones" row above are **replaced**: the Mana Zone is gated to the end of the road (EP, rank, mana skin,
+bosses, depth and a long attunement) and rebuilt after the canon; a Grand Magic Zone is now a data-driven region of dense, unstable mana (Seabed Temple, Witches' Forest,
+Ultime-Volcano Mountain Trail, Gravito Rock Zone, Elysia). See `docs/mana/mana_zone_redesign.md`.

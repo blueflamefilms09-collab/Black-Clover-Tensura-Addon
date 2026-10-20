@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 /**
  * The CI self-tests of the Mana Zone (run by the server smoke test with a stand-in player, see labyrinth.mega.SelfTests):
  * <ul>
- *   <li>{@code mana.zone_gate}: the gate is closed for a fresh player in every way it can be asked (the verdict, the toggle, the old ManaLaw entry point, the three
+ *   <li>{@code mana.zone_gate}: the gate is closed for a fresh player in every way it can be asked (the verdict, the toggle, the old ManaLaw entry point, the four
  *       grimoire pages, the Avatar's cast list) and is the late-game numbers (floors, the shipped file read by the game);</li>
  *   <li>{@code mana.zone_core}: one tracked entry per caster, the radius a function of the start tick and capped, a foreign projectile destroyed from within and a
  *       boss's only slowed, the end (flight and speed taken back, nothing of hunger touched), and the Grand Magic Zone regions (all five loaded, found by position,
@@ -51,18 +51,19 @@ public final class ManaZoneSelfTests {
         // the pages: Mana Zone and the two new ones are not usable, and are the last pages of the book
         GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
         var pages = book.pages();
-        int zone = -1, volley = -1, space = -1;
+        int zone = -1, volley = -1, space = -1, truth = -1;
         for (int i = 0; i < pages.size(); i++) {
             String id = pages.get(i).id();
             if (id.equals(GrimoireBook.ZONE_ID)) zone = i;
             else if (id.equals(ManaZoneActions.VOLLEY_ID)) volley = i;
             else if (id.equals(ManaZoneActions.SPACE_ID)) space = i;
+            else if (id.equals(TrueMagic.ID)) truth = i;
         }
-        if (zone < 0 || volley < 0 || space < 0) return Result.fail("a grimoire misses a Mana Zone page (zone " + zone + ", volley " + volley + ", space " + space + ")");
-        if (volley != pages.size() - 2 || space != pages.size() - 1) return Result.fail("the new pages are not the last two (" + volley + ", " + space + " of " + pages.size() + ")");
-        for (int m : new int[]{zone, volley, space})
+        if (zone < 0 || volley < 0 || space < 0 || truth < 0) return Result.fail("a grimoire misses a Mana Zone page (zone " + zone + ", volley " + volley + ", space " + space + ", true magic " + truth + ")");
+        if (volley != pages.size() - 3 || space != pages.size() - 2 || truth != pages.size() - 1) return Result.fail("the new pages are not the last three (" + volley + ", " + space + ", " + truth + " of " + pages.size() + ")");
+        for (int m : new int[]{zone, volley, space, truth})
             if (book.usable(null, p, m)) return Result.fail("page " + pages.get(m).id() + " is usable for a player who fails the gate");
-        for (String id : new String[]{GrimoireBook.ZONE_ID, ManaZoneActions.VOLLEY_ID, ManaZoneActions.SPACE_ID})
+        for (String id : new String[]{GrimoireBook.ZONE_ID, ManaZoneActions.VOLLEY_ID, ManaZoneActions.SPACE_ID, TrueMagic.ID})
             if (AvatarSkillList.allowedPage(id, 6.0)) return Result.fail("the Avatar's cast list allows " + id);
         // the Wizard King's crown is the one forced way in (pure check: the gate's own rule)
         if (!ManaZoneGate.passes(rules.gate(), 1.0, new ManaZoneGate.Progress(0, 16, 0, 0, 0, 0, 0, true))) return Result.fail("the Wizard King is refused");

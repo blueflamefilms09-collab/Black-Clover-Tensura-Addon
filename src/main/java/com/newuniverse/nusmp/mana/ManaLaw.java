@@ -325,13 +325,14 @@ public final class ManaLaw {
         int maxHits = com.newuniverse.nusmp.mana.zone.ManaZoneManager.strikeTargets(p, 3);
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f), end = eye.add(look.scale(reach));
         int hits = 0;
-        for (LivingEntity t : GrimoireBook.along(p, eye, end, 1.2)) {
+        double width = zoneActive(p) ? 1.8 : 1.2;                                                           // 1.99.0: and wider (the zone's "size")
+        for (LivingEntity t : GrimoireBook.along(p, eye, end, width)) {
             if (t == p || t.isAlliedTo(p)) continue;
             t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, 7f, 0.6));
             hits++;
             if (hits >= maxHits) { end = t.getBoundingBox().getCenter(); break; }
         }
-        VfxSpawn.send(sl, VfxShape.LIGHT_BLADE, eye.add(0, -0.3, 0), end, book.color, 8, 1.0f);
+        VfxSpawn.send(sl, VfxShape.LIGHT_BLADE, eye.add(0, -0.3, 0), end, book.color, 8, (float) (width / 1.2));
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, end, end, book.color, 10, 0.5f);
         sl.playSound(null, p.blockPosition(), SoundEvents.ILLUSIONER_CAST_SPELL, SoundSource.PLAYERS, 1.2f, 1.3f);
         return true;

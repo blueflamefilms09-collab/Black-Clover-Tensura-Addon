@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -33,6 +34,14 @@ public final class GrandZoneCommands {
                 .then(Commands.literal("info").executes(ctx -> info(ctx, null))
                         .then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> { for (var r : GrandZones.all()) b.suggest(r.id()); return b.buildFuture(); })
                                 .executes(ctx -> info(ctx, StringArgumentType.getString(ctx, "id")))))
+                .then(Commands.literal("bind").then(Commands.argument("key", StringArgumentType.word()).then(Commands.argument("id", StringArgumentType.word())
+                        .suggests((c, b) -> { for (var r : GrandZones.all()) b.suggest(r.id()); return b.buildFuture(); })
+                        .then(Commands.argument("from", BlockPosArgument.blockPos()).then(Commands.argument("to", BlockPosArgument.blockPos()).executes(GrandZoneCommands::bind))))))
+                .then(Commands.literal("unbind").then(Commands.argument("key", StringArgumentType.word()).executes(ctx -> {
+                    boolean had = GrandZones.unbind(StringArgumentType.getString(ctx, "key"));
+                    send(ctx, had ? "Released." : "No such binding.", ChatFormatting.GRAY);
+                    return had ? 1 : 0;
+                })))
                 .then(Commands.literal("tp").then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> { for (var r : GrandZones.all()) b.suggest(r.id()); return b.buildFuture(); })
                         .executes(ctx -> tp(ctx, ctx.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> tp(ctx, EntityArgument.getPlayer(ctx, "player"))))));
@@ -65,6 +74,18 @@ public final class GrandZoneCommands {
             send(ctx, "For you: harm " + String.format(Locale.ROOT, "%.2f", ex.harm()) + ", boon " + String.format(Locale.ROOT, "%.2f", ex.boon())
                     + (ManaZoneManager.active(p) ? " (your Mana Zone halves the harm)" : ""), ChatFormatting.AQUA);
         }
+        return 1;
+    }
+
+    /** {@code /multiverse zone bind <key> <id> <from> <to>}: gives the box between two corners, in this dimension, the environment of zone {@code id} (the dungeon's hook by hand; not saved). */
+    private static int bind(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        var a = BlockPosArgument.getBlockPos(ctx, "from");
+        var b = BlockPosArgument.getBlockPos(ctx, "to");
+        String key = StringArgumentType.getString(ctx, "key"), id = StringArgumentType.getString(ctx, "id");
+        String dim = ctx.getSource().getLevel().dimension().location().toString();
+        boolean ok = GrandZones.bind(key, id, dim, a.getX(), a.getY(), a.getZ(), b.getX() + 1, b.getY() + 1, b.getZ() + 1);
+        if (!ok) { ctx.getSource().sendFailure(Component.literal("No such zone to copy: " + id)); return 0; }
+        send(ctx, "Bound " + key + " to the box in " + dim + " with the environment of " + id + " (not saved: a floor binds itself when it loads).", ChatFormatting.LIGHT_PURPLE);
         return 1;
     }
 
