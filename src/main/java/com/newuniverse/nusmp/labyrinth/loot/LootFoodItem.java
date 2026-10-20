@@ -46,7 +46,7 @@ public class LootFoodItem extends Item {
         List<FoodProperties.PossibleEffect> fx = new ArrayList<>();
         for (LootRoster.EffectDef e : def.effects()) {
             Holder<MobEffect> h = effect(e.effect());
-            if (h != null) fx.add(new FoodProperties.PossibleEffect(new MobEffectInstance(h, Math.max(1, e.seconds()) * 20, Math.max(0, e.amp())), 1.0F));
+            if (h != null) { final Holder<MobEffect> hh = h; final int ticks = Math.max(1, e.seconds()) * 20, amp = Math.max(0, e.amp()); fx.add(new FoodProperties.PossibleEffect(() -> new MobEffectInstance(hh, ticks, amp), 1.0F)); }
         }
         int nutrition = Math.max(1, def.nutrition());
         Optional<ItemStack> back = Optional.ofNullable(returns(def.id()));
