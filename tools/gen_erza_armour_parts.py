@@ -138,8 +138,9 @@ def chest(c):
     _lames(p, c, -101, 101, [17.4, 16.1, 14.8, 13.5, 12.6], 0.12)
     top = Loft([(22.55, 4.6, 2.62, 2.6, 4), (23.25, 4.58, 2.6, 2.58, 4)])
     shell_auto(p, "root", top.surf(-103, 103, 22.55, 23.25), P["trim"], ref=top.ref(), rim="lrtb", thick=0.55, cell=0.9)
-    if style in ("breast", "heavy"):                                   # the keel: a raised ridge down the middle of the breastplate
-        shell_auto(p, "root", BODY.surf(-5, 5, 17.4, 22.5, extra=ex, dr=0.32), P["trim"], ref=BODY.ref(), rim="tb", thick=0.5, cell=0.9)
+    if style in ("breast", "heavy"):                                   # the armholes: a gold edge down each side of the breastplate (the middle is left to the emblem)
+        for sx in (0, 1):
+            shell_auto(p, "root", mirror_surf(BODY.surf(-97, -88, 17.8, 22.6, extra=ex, dr=0.3), sx), P["trim"], ref=mirror_ref(BODY.ref(), sx), rim="tb", thick=0.5, cell=0.9)
     if style == "heavy":                                               # a second, raised plate over the pectoral with rivets, and rivets down the sides
         shell_auto(p, "root", BODY.surf(-58, 58, 18.3, 22.3, extra=ex, dr=0.5), P["alt"], ref=BODY.ref(), rim="lrtb", thick=0.6, cell=1.2,
                    decals=[Decal("shield", 0.6, (0.5, 0.5), mode="glow", stroke=0.06)])

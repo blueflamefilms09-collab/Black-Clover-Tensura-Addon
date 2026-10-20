@@ -88,254 +88,369 @@ Percentages are the share of the incoming damage class taken off (at most 90 per
 
 ## Pieces: anchor part, delay, fly-in side
 
-The direction is the side the piece flies in from, in model pixels in the anchor part's frame (the Djinn's own numbers are about 2 to 14); y is down in that frame, so "above" is the head's own. The table is `requip/ArmourSets.java`; the models are
-`assets/nusmp/geo/entity/erza_<armour>_arm_<piece>.geo.json` with a texture, a `_glow` map and, for animated pieces, an animation clip.
+The direction is the side the piece flies in from, in model pixels in the anchor part's frame (the Djinn's own numbers are about 2 to 14); y is down in that frame, so "above" is the head's own. The table is
+`requip/ArmourSets.java`; the models are `assets/nusmp/geo/entity/erza_<armour>_arm_<piece>.geo.json` with a texture, a `_glow` map and, for animated pieces, an animation clip. Since 1.99.0 (the
+Djinn-quality remake, `docs/erza_armour_remake.md`) every armour is a **full set of eighteen pieces** (belt, gorget, two gauntlets, two vambraces, two sabatons, two greaves, two cuisses, skirt, helm, two
+pauldrons, chest, backplate) plus its own signature pieces, and the forging order follows the weight of a piece: the light underlayers first (belt 0, gorget 1), then the hands and feet, the legs, the
+helm and skirt, the pauldrons, the cuirass and the back, the wings and the halo, the backdrop last (delay 12); `ArmourSets.weightOf` is the rule, `ErzaArmourPiecesTest` pins it.
 
 **Heart Kreuz Armor** (`erza_heart_kreuz`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| ribbon | head | 1 | 1 | above (0,-14,4) | detail (24 blocks), hidden in first person, animated |
 
 **Heaven's Wheel Armor** (`erza_heavens_wheel`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| backdrop | body | 12 | behind (0,0,12) | translucent, detail (24 blocks), animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
+| backdrop | body | 12 | 7 | behind (0,0,12) | translucent, detail (24 blocks), animated |
 
 **Flame Empress Armor** (`erza_flame_empress`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| tail | body | 9 | behind (0,6,14) | detail (24 blocks), animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| tail | body | 9 | 5 | behind (0,6,14) | detail (24 blocks), animated |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
 
 **Lightning Empress Armor** (`erza_lightning_empress`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
 
 **Sea Empress Armor** (`erza_sea_empress`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
 
 **Black Wing Armor** (`erza_black_wing`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | animated, flaps faster in the air |
 
 **Clear Heart Clothing** (`erza_clear_heart`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| ribbon | head | 1 | 1 | above (0,-14,4) | detail (24 blocks), hidden in first person, animated |
+| tail | body | 9 | 5 | behind (0,6,14) | detail (24 blocks), animated |
 
 **Nakagami Armor** (`erza_nakagami`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| cape | body | 9 | behind (0,-4,12) | detail (24 blocks), animated, no glow pass |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| cape | body | 9 | 5 | behind (0,-4,12) | detail (24 blocks), animated |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
 
 **Heaven's Wheel Armor: Grand Chariot** (`erza_grand_chariot`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| backdrop | body | 12 | behind (0,0,12) | translucent, detail (24 blocks), animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
+| backdrop | body | 12 | 7 | behind (0,0,12) | translucent, detail (24 blocks), animated |
 
 **Adamantine Armor** (`erza_adamantine`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| cape | body | 9 | 5 | behind (0,-4,12) | detail (24 blocks), animated |
 
 **Purgatory Armor** (`erza_purgatory`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| backdrop | body | 12 | behind (0,0,12) | translucent, detail (24 blocks), animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| cape | body | 9 | 5 | behind (0,-4,12) | detail (24 blocks), animated |
+| backdrop | body | 12 | 7 | behind (0,0,12) | translucent, detail (24 blocks), animated |
 
 **Flight Armor** (`erza_flight_armor`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | animated, flaps faster in the air |
+| ribbon | head | 1 | 1 | above (0,-14,4) | detail (24 blocks), hidden in first person, animated |
 
 **Wind God Armor** (`erza_wind_god`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
-| tail | body | 9 | behind (0,6,14) | detail (24 blocks), animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
+| tail | body | 9 | 5 | behind (0,6,14) | detail (24 blocks), animated |
 
 **Fairy Armor** (`erza_fairy_armor`)
 
-| Piece | Anchor part | Delay (ticks) | Flies in from (x,y,z px) | Notes |
-|---|---|---|---|---|
-| chest | body | 1 | front (0,0,-14) |  |
-| pauldron_r | arm_r | 2 | right (-14,-4,0) |  |
-| pauldron_l | arm_l | 2 | left (14,-4,0) |  |
-| vambrace_r | arm_r | 4 | right (-12,2,-6) | no glow pass |
-| vambrace_l | arm_l | 4 | left (12,2,-6) | no glow pass |
-| greave_r | leg_r | 6 | below (-3,14,-6) | no glow pass |
-| greave_l | leg_l | 7 | below (3,14,-6) | no glow pass |
-| helm | head | 0 | above (0,-16,0) | hidden in first person |
-| skirt | body | 5 | below (0,10,-6) | detail (24 blocks), no glow pass |
-| gauntlet_r | arm_r | 5 | right (-10,8,-6) |  |
-| gauntlet_l | arm_l | 5 | left (10,8,-6) |  |
-| wing_r | body | 8 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
-| wing_l | body | 8 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
-| halo | head | 10 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
+| Piece | Anchor part | Delay (ticks) | Weight | Flies in from (x,y,z px) | Notes |
+|---|---|---|---|---|---|
+| belt | body | 0 | 1 | below (0,8,-8) | detail (24 blocks) |
+| gorget | body | 1 | 1 | above (0,-10,-4) | detail (24 blocks) |
+| gauntlet_r | arm_r | 2 | 2 | right (-10,8,-6) | detail (24 blocks) |
+| gauntlet_l | arm_l | 2 | 2 | left (10,8,-6) | detail (24 blocks) |
+| vambrace_r | arm_r | 3 | 2 | right (-12,2,-6) |  |
+| vambrace_l | arm_l | 3 | 2 | left (12,2,-6) |  |
+| sabaton_r | leg_r | 3 | 2 | below (-3,14,-8) |  |
+| sabaton_l | leg_l | 4 | 2 | below (3,14,-8) |  |
+| greave_r | leg_r | 5 | 3 | below (-3,14,-6) |  |
+| greave_l | leg_l | 6 | 3 | below (3,14,-6) |  |
+| cuisse_r | leg_r | 5 | 3 | below (-4,12,-6) |  |
+| cuisse_l | leg_l | 6 | 3 | below (4,12,-6) |  |
+| skirt | body | 6 | 3 | below (0,10,-6) | detail (24 blocks), animated |
+| helm | head | 6 | 3 | above (0,-16,0) | hidden in first person |
+| pauldron_r | arm_r | 7 | 4 | right (-14,-4,0) |  |
+| pauldron_l | arm_l | 7 | 4 | left (14,-4,0) |  |
+| chest | body | 8 | 5 | front (0,0,-14) |  |
+| backplate | body | 9 | 5 | behind (0,0,12) |  |
+| wing_r | body | 10 | 6 | behind (-10,-4,12) | translucent, animated, flaps faster in the air |
+| wing_l | body | 10 | 6 | behind (10,-4,12) | translucent, animated, flaps faster in the air |
+| halo | head | 10 | 6 | above (0,-16,0) | translucent, detail (24 blocks), hidden in first person, animated |
 
 
 ## Weapons and engravings
@@ -359,7 +474,7 @@ Six armours put a weapon in the hand (a real item flagged `ErzaRequip`, unbreaka
 | Items, loot, command | `requip/RequipItems.java`, `requip/TitaniasRequipItem.java`, `requip/RequipWeaponItem.java`, `requip/RequipSystem.java` |
 | Skill, effects, attacks, self-test | `skill/ErzaRequipSkill.java`, `skill/ErzaRequipFx.java`, `skill/ErzaRequipAttacks.java`, `skill/ErzaSelfTests.java` |
 | Client | `client/aura/ErzaAura.java` |
-| Assets | `tools/gen_erza_requip_geo.py` (176 piece models), `tools/gen_erza_weapons.py` (six weapons, the book, the skill icon), the preview scenes `tools/render_preview/scenes.d/erza_requip.json` |
+| Assets | `tools/gen_erza_armour.py` (the 1.99.0 Djinn-quality remake: 288 piece models, see `docs/erza_armour_remake.md`; the 1.96.0 `tools/gen_erza_requip_geo.py` is kept behind `--legacy`), `tools/gen_erza_weapons.py` (six weapons, the book, the skill icon), the preview scenes `tools/render_preview/scenes.d/erza_requip.json` and `erza_armour.json` |
 | Lang | `tools/lang/erza_requip.json` (a flat fragment, not yet merged into `en_us.json`) |
 | Tests | `ArmourTableTest`, `RequipAnimationTest`, `ArmourAssetsTest` (`src/test/java/.../requip`), `RequipEngravingsTest` (`.../item`), the in-game self-test `skill.erza_requip` |
 
