@@ -1,0 +1,14 @@
+{
+  "_comment": "Ultime-Volcano Mountain Trail: a magma-filled volcanic region, used for mana skin training. Placeholder position.",
+  "name": "Ultime-Volcano Mountain Trail",
+  "dimension": "minecraft:overworld",
+  "shape": "sphere",
+  "centre": [-2500, 90, -4200],
+  "radius": 240,
+  "theme": "volcano",
+  "density": 2.4,
+  "recommended_ep": 1200000,
+  "effects": ["magma_heat", "pressure", "mana_storm"],
+  "tint": "#FF6A2A",
+  "border": true
+}

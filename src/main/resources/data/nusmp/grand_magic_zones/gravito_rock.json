@@ -1,0 +1,14 @@
+{
+  "_comment": "Gravito Rock Zone: chaotic gravity and massive floating boulders; a dungeon sits on the largest floating rock. Placeholder position.",
+  "name": "Gravito Rock Zone",
+  "dimension": "minecraft:overworld",
+  "shape": "sphere",
+  "centre": [4600, 140, 2600],
+  "radius": 280,
+  "theme": "gravito",
+  "density": 2.8,
+  "recommended_ep": 2000000,
+  "effects": ["chaotic_gravity", "floating_boulders", "pressure", "mana_storm"],
+  "tint": "#B49CFF",
+  "border": true
+}

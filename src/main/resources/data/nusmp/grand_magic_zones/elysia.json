@@ -1,0 +1,14 @@
+{
+  "_comment": "Elysia: a hidden forested village on the coast, the refuge of the elves: a safe haven inside the dense mana. Placeholder position.",
+  "name": "Elysia",
+  "dimension": "minecraft:overworld",
+  "shape": "sphere",
+  "centre": [-4500, 70, -1000],
+  "radius": 120,
+  "theme": "haven",
+  "density": 2.0,
+  "recommended_ep": 100000,
+  "effects": ["calm"],
+  "tint": "#8CFFD0",
+  "border": false
+}

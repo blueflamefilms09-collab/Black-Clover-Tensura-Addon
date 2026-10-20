@@ -370,6 +370,7 @@ public final class MultiverseCommands {
                 })))
                 .then(Commands.literal("dethrone").requires(MultiverseCommands::admin).executes(ctx -> { WizardKing.dethrone(ctx.getSource().getServer()); return 1; })));
         root.then(com.newuniverse.nusmp.mana.ManaCommands.build());                                           // 1.5.0: the mana system
+        root.then(com.newuniverse.nusmp.mana.zone.GrandZoneCommands.build());                                 // 1.99.0: /multiverse zone list|info|tp (the Grand Magic Zones)
         root.then(Commands.literal("choose").then(Commands.argument("magic", StringArgumentType.word()).executes(ctx -> {    // 1.5.0: the ceremony's choice
             ServerPlayer p = ctx.getSource().getPlayerOrException();
             return Ceremony.pick(p, StringArgumentType.getString(ctx, "magic")) ? 1 : fail(ctx, "There is no such choice waiting for you.");

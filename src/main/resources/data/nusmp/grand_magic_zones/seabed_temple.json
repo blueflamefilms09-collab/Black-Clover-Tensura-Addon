@@ -1,0 +1,14 @@
+{
+  "_comment": "Seabed Temple: underwater, violent swirling currents, one of the most dangerous Grand Magic Zones. Placeholder position (a datapack or an edit moves it); use /multiverse zone tp seabed_temple.",
+  "name": "Seabed Temple",
+  "dimension": "minecraft:overworld",
+  "shape": "sphere",
+  "centre": [-3600, 20, 2800],
+  "radius": 220,
+  "theme": "seabed",
+  "density": 2.6,
+  "recommended_ep": 1500000,
+  "effects": ["violent_currents", "pressure", "mana_storm"],
+  "tint": "#2A7BFF",
+  "border": true
+}

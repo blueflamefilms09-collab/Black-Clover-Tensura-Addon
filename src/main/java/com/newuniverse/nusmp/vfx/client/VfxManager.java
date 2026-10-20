@@ -228,6 +228,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.PoisonPlantLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.MudLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.MucusLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.ManaZoneLayer());              // 1.99.0: the Mana Zone and the Grand Magic Zones
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

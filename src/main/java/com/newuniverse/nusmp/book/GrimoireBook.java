@@ -123,6 +123,8 @@ public abstract class GrimoireBook extends Skill {
                 l.add(new BookPage(STRIKE_ID, "Mana Strike", "Mana Strike", 5, 100, 40, (b, i, p, m) -> com.newuniverse.nusmp.mana.ManaLaw.manaStrike(b, p)));
                 l.add(new BookPage(ZONE_ID, "Mana Zone", "Mana Zone", 0, 0, 0, (b, i, p, m) -> true));
                 l.addAll(SignatureSpell.pages());                                       // 1.16.0: the wizard's own spells, appended last
+                l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.volleyPage());     // 1.99.0: the Mana Zone's offence and its pressurised space, appended after everything (late-game gate: see usable)
+                l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.spacePage());
             }
             all = l;
         }
@@ -149,6 +151,11 @@ public abstract class GrimoireBook extends Skill {
     /** 1.5.0: the universal pages (mana.ManaLaw). */
     public static final String STRIKE_ID = "mana_strike", ZONE_ID = "mana_zone";
     private boolean isManaZone(int mode) { return page(mode) != null && page(mode).id().equals(ZONE_ID); }
+    /** 1.99.0: the Mana Zone page and the two pages that need it are LATE-GAME: not selectable, listed or castable until the gate (mana.zone.ManaZoneGate) is open. */
+    private boolean isZoneGated(int mode) {
+        BookPage pg = page(mode);
+        return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID));
+    }
     private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
     /** Pages that act on the key press itself without magicule cost or a cooldown. */
     private boolean instant(int mode) {
@@ -168,6 +175,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
+        if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
         if (instant(mode)) return true;
         if (page(mode) != null && page(mode).id().equals(STRIKE_ID)) return true;      // 1.5.0: Mana Strike, in every grimoire
         if (page(mode) != null && SignatureSpell.isSig(page(mode).id()))                // 1.16.0: the Signature Spell for every wizard, the born spells for a fused book

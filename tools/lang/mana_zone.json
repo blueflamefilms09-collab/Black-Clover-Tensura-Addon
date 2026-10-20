@@ -1,0 +1,23 @@
+{
+  "nusmp.mana_zone.refused": "The mana of the land is beyond you. The Mana Zone still needs: %s.",
+  "nusmp.mana_zone.refused_head": "Mana Zone: a technique for the end of the road, after mana skin and reinforcement. You are missing:",
+  "nusmp.mana_zone.cooldown": "The ambient mana has not settled yet (%s s).",
+  "nusmp.mana_zone.low_mana": "You need at least %s%% of your mana to open a Mana Zone.",
+  "nusmp.mana_zone.open": "Mana Zone: the mana around you answers (radius up to %s).",
+  "nusmp.mana_zone.attuned": "The mana of this place has taught you all it can: your attunement is complete.",
+  "nusmp.mana_zone.end.cancel": "Your Mana Zone fades.",
+  "nusmp.mana_zone.end.collapse": "The Mana Zone collapses: you have no mana left to hold it.",
+  "nusmp.mana_zone.end.expired": "Your Mana Zone fades: the mana is too wild to hold any longer.",
+  "nusmp.mana_zone.end.mount": "Your Mana Zone breaks as you mount or dismount.",
+  "nusmp.mana_zone.end.dimension": "Your Mana Zone does not follow you across the dimensions.",
+  "nusmp.mana_zone.end.death": "Your Mana Zone fades.",
+  "nusmp.mana_zone.end.logout": "Your Mana Zone fades.",
+  "nusmp.mana_zone.end.admin": "Your Mana Zone fades.",
+  "nusmp.zone.enter": "You enter %s, a Grand Magic Zone. %s",
+  "nusmp.zone.feel.haven": "A haven: the mana here is calm and gives to everyone.",
+  "nusmp.zone.feel.crushing": "The mana here is far beyond you. Turn back.",
+  "nusmp.zone.feel.heavy": "The mana here is heavy and unstable. You are not ready for it.",
+  "nusmp.zone.feel.pressing": "The mana presses on you; stay on guard.",
+  "nusmp.zone.feel.fed": "The dense mana feeds you.",
+  "nusmp.zone.feel.balanced": "The mana here is thick and wild, and it answers your strength."
+}

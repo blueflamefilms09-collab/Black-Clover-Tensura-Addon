@@ -18,7 +18,12 @@ public final class ManaCommands {
 
     private static boolean admin(CommandSourceStack s) { return s.hasPermission(2); }
 
+    /** 1.99.0: the tree with the Mana Zone's gate command ({@code /multiverse mana zone}) added after the original commands. */
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
+        return base().then(com.newuniverse.nusmp.mana.zone.ManaZoneCommands.build());
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> base() {
         return Commands.literal("mana")
                 .then(Commands.literal("info").executes(ctx -> {
                     ServerPlayer p = ctx.getSource().getPlayerOrException();
@@ -26,7 +31,7 @@ public final class ManaCommands {
                     var a = ManaLaw.affinity(p);
                     send(ctx.getSource(), s.label() + " | " + a.label + " | spells cost " + Math.round(s.cost() * a.cost * 100) + "%, hit for " + Math.round(s.power() * 100) + "%");
                     send(ctx.getSource(), "Mana density here: " + String.format("%.1f", ManaLaw.density(p.level(), p.blockPosition()))
-                            + (ManaLaw.isGrandZone(p.level(), p.blockPosition()) ? " (a Grand Magic Zone)" : "") + " | corruption " + (int) ManaLaw.corruption(p) + "/100");
+                            + (ManaLaw.isGrandZone(p.level(), p.blockPosition()) ? " (dense mana)" : "") + " | corruption " + (int) ManaLaw.corruption(p) + "/100");
                     return 1;
                 }))
                 .then(Commands.literal("affinity").then(Commands.argument("kind", StringArgumentType.word())
