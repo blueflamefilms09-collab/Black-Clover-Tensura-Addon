@@ -7,12 +7,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import com.newuniverse.nusmp.relics.Relics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +42,37 @@ public class DjinnSealItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack seal = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.sidedSuccess(seal, level.isClientSide);
-        ItemStack other = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        DjinnBinding.attempt(p, seal, other);
+        // 1.101.0: the other hand is read from the inventory. Better Combat answers EMPTY for getItemInHand(OFF_HAND) whenever a two-handed weapon is held
+        // (BcHands), which refused every bind to a two-handed vessel with "Hold a Metal Vessel in your other hand".
+        ItemStack other = VesselAccess.rawOtherThan(player, hand);
+        DjinnBinding.attempt(p, seal, other, hand == InteractionHand.MAIN_HAND ? BindGesture.Gesture.USE_SEAL_MAIN : BindGesture.Gesture.USE_SEAL_OFF);
         return InteractionResultHolder.sidedSuccess(seal, false);
+    }
+
+    /**
+     * 1.101.0: in an inventory screen, the Seal on the cursor and a right-click on a relic in your own inventory binds it (the same ritual, the same price).
+     * Needs no hand at all, so it works with a two-handed weapon (Better Combat hides the off hand) and with anything else that eats a right-click.
+     * Only a relic is taken over; every other click is left to the game.
+     */
+    @Override
+    public boolean overrideStackedOnOther(ItemStack seal, Slot slot, ClickAction action, Player player) {
+        if (action != ClickAction.SECONDARY) return false;
+        return stackBind(player, seal, slot.getItem(), slot.container instanceof Inventory);
+    }
+
+    /** The other way round: the vessel on the cursor, a right-click on the Seal lying in the inventory. */
+    @Override
+    public boolean overrideOtherStackedOnMe(ItemStack seal, ItemStack cursor, Slot slot, ClickAction action, Player player, SlotAccess access) {
+        if (action != ClickAction.SECONDARY) return false;
+        return stackBind(player, seal, cursor, slot.container instanceof Inventory);
+    }
+
+    private boolean stackBind(Player player, ItemStack seal, ItemStack target, boolean ownInventory) {
+        if (target.isEmpty() || target == seal || Relics.defOf(target) == null) return false;          // only a relic: any other click stays vanilla
+        if (player.level().isClientSide || !(player instanceof ServerPlayer p)) return true;           // the client predicts nothing; the server answers
+        if (!ownInventory) DjinnBinding.tell(p, BindGesture.Why.NOT_IN_INVENTORY, target);
+        else DjinnBinding.attempt(p, seal, target, BindGesture.Gesture.GUI_STACK);
+        return true;
     }
 
     @Override
@@ -66,6 +100,9 @@ public class DjinnSealItem extends Item {
         tip.add(Component.literal(djinn.affinity().label + " Djinn, asleep in this seal").withStyle(ChatFormatting.GRAY));
         for (String line : wrap("Use it with a Legend-grade Metal Vessel, attuned to you, in your other hand.", 38)) tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY));
         for (String line : wrap("Price: a full Magoi bar, a quarter of your EP, three high-quality magic crystals.", 38)) tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY));
+        for (String line : wrap(Component.translatableWithFallback("tooltip.nusmp.djinn_seal.bind_hint",
+                "No free hand? Right-click the vessel with this Seal in the inventory screen, or use /multiverse djinn bind.").getString(), 38))
+            tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         tip.add(Component.literal("Only one of each Djinn exists.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
     }
 

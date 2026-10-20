@@ -56,7 +56,9 @@ public final class VesselAccess {
     /** The relics the player has equipped (hands included, off-hand too), from the core: held, armour, Curios. */
     public static List<ItemStack> equipped(Player p) {
         List<ItemStack> out = new ArrayList<>(Relics.equipped(p));
-        for (ItemStack h : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem()}) if (!h.isEmpty() && !out.contains(h)) out.add(h);
+        // 1.101.0: the raw inventory, not getOffhandItem(): Better Combat answers EMPTY for the off hand behind a two-handed weapon (see BcHands), which made a
+        // vessel held in the off hand "leave" the bearer the moment a two-handed Djinn weapon (or any two-handed weapon) was in the main hand.
+        for (ItemStack h : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem(), rawMain(p), rawOff(p)}) if (!h.isEmpty() && !out.contains(h)) out.add(h);
         return out;
     }
 
@@ -83,9 +85,43 @@ public final class VesselAccess {
         return n[0];
     }
 
-    /** The first legal, unbound vessel in the player's other hand than {@code sealHand} (the ritual's vessel), or EMPTY. */
+    /** The stack in the selected hotbar slot, read from the inventory (Better Combat cannot hide it). */
+    public static ItemStack rawMain(Player p) {
+        ItemStack s = p.getInventory().getSelected();
+        return s == null ? ItemStack.EMPTY : s;
+    }
+
+    /** The off-hand stack, read from the inventory: {@code getOffhandItem()} is EMPTY under Better Combat when a two-handed weapon is in either hand ({@link BcHands}). */
+    public static ItemStack rawOff(Player p) {
+        ItemStack s = p.getInventory().offhand.get(0);
+        return s == null ? ItemStack.EMPTY : s;
+    }
+
+    /** The stack in a hand, read from the inventory. */
+    public static ItemStack rawIn(Player p, net.minecraft.world.InteractionHand hand) {
+        return hand == net.minecraft.world.InteractionHand.MAIN_HAND ? rawMain(p) : rawOff(p);
+    }
+
+    /** The stack in the hand that is not {@code hand}, read from the inventory (the ritual's vessel; the old reads went through Better Combat's off-hand lie). */
+    public static ItemStack rawOtherThan(Player p, net.minecraft.world.InteractionHand hand) {
+        return rawIn(p, hand == net.minecraft.world.InteractionHand.MAIN_HAND ? net.minecraft.world.InteractionHand.OFF_HAND : net.minecraft.world.InteractionHand.MAIN_HAND);
+    }
+
+    /** The stack in the player's other hand than the one holding {@code seal}, or EMPTY (kept for the old callers; reads the inventory). */
     public static ItemStack otherHand(Player p, ItemStack seal) {
-        ItemStack main = p.getMainHandItem(), off = p.getOffhandItem();
+        ItemStack main = rawMain(p), off = rawOff(p);
         return main == seal ? off : main;
     }
+
+    /** How the ritual sees a stack as a vessel for this player: the item through the catalog, plus the two components the ritual owns, nothing else. */
+    public static BindGesture.Look look(ItemStack s, Player p) {
+        if (s == null || s.isEmpty()) return BindGesture.Look.NONE;
+        RelicDef d = Relics.defOf(s);
+        boolean bound = boundDjinn(s) != null;
+        if (d == null) return new BindGesture.Look(false, false, false, false, bound, false);
+        return new BindGesture.Look(false, true, d.isVessel(), d.grade().djinnCapable(), bound, Attune.works(s, d, p));
+    }
+
+    /** The reason a stack cannot be the vessel for this player, or OK. */
+    public static BindGesture.Why verdict(ItemStack s, Player p) { return BindGesture.judge(look(s, p)); }
 }

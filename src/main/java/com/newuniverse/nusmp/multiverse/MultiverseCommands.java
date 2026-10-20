@@ -376,6 +376,7 @@ public final class MultiverseCommands {
             return Ceremony.pick(p, StringArgumentType.getString(ctx, "magic")) ? 1 : fail(ctx, "There is no such choice waiting for you.");
         })));
         d.register(root);
+        com.newuniverse.nusmp.relics.djinn.DjinnCommand.registerAlias(d);                                              // 1.101.0: /djinn bind|status|... as well as /multiverse djinn ...
     }
 
     // ---------------------------------------------------------------- handlers

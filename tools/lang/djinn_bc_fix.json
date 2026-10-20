@@ -1,0 +1,13 @@
+{
+  "message.nusmp.djinn_bind.ok": "The ritual can begin.",
+  "message.nusmp.djinn_bind.gesture_disabled": "This way of binding is switched off on this server (config nusmp-djinn-bind-server.toml).",
+  "message.nusmp.djinn_bind.no_seal": "You carry no Djinn Seal. A Seal is the dormant Djinn; bind it to a Legend-grade vessel.",
+  "message.nusmp.djinn_bind.empty": "No vessel found. Hold the vessel, or right-click it with the Seal in the inventory screen, or use /multiverse djinn bind main|off|slot <n>.",
+  "message.nusmp.djinn_bind.not_a_relic": "%s is not a relic. A Djinn sleeps only in a Legend-grade Metal Vessel.",
+  "message.nusmp.djinn_bind.not_a_vessel": "%s is a relic but not a Metal Vessel: a Djinn cannot sleep in it.",
+  "message.nusmp.djinn_bind.not_legend": "%s is below Legend grade. A Djinn sleeps only in a relic of Legend grade or above.",
+  "message.nusmp.djinn_bind.already_bound": "%s already holds a Djinn.",
+  "message.nusmp.djinn_bind.not_attuned": "%s must be attuned to you first: sneak and hold use on it for five seconds.",
+  "message.nusmp.djinn_bind.not_in_inventory": "%s must be in your own inventory (not a chest) to be bound.",
+  "tooltip.nusmp.djinn_seal.bind_hint": "No free hand? Right-click the vessel with this Seal in the inventory screen, or use /multiverse djinn bind."
+}
