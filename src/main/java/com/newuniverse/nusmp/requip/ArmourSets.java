@@ -55,6 +55,24 @@ public final class ArmourSets {
         };
     }
 
+    /**
+     * The model part a piece belongs to, from its NAME alone (null for a name no part owns): the helm, the halo and the ribbon sit on the head; the plates of the trunk, the skirt, the cape, the tail, the
+     * wings and the backdrop on the body; {@code pauldron / vambrace / gauntlet _r / _l} on an arm; {@code cuisse / greave / sabaton _r / _l} on a leg. The tests and the in-game self-test hold every piece
+     * of every armour to it, so a misspelt piece cannot be drawn on the wrong part.
+     */
+    public static Anchor anchorOfName(String piece) {
+        switch (piece) {
+            case "helm", "halo", "ribbon": return Anchor.HEAD;
+            case "chest", "backplate", "gorget", "belt", "skirt", "cape", "tail", "backdrop", "wing_r", "wing_l": return Anchor.BODY;
+            default: break;
+        }
+        boolean r = piece.endsWith("_r"), l = piece.endsWith("_l");
+        if (!r && !l) return null;
+        if (piece.startsWith("pauldron") || piece.startsWith("vambrace") || piece.startsWith("gauntlet")) return r ? Anchor.ARM_R : Anchor.ARM_L;
+        if (piece.startsWith("cuisse") || piece.startsWith("greave") || piece.startsWith("sabaton")) return r ? Anchor.LEG_R : Anchor.LEG_L;
+        return null;
+    }
+
     // ------------------------------------------------------------ the standard pieces: the Djinn's fly-in sides (head from above, arms from their side, legs from below, the back from behind)
     static Piece belt() { return p("belt", Anchor.BODY, 0, 0, 8, -8).withDetail(); }
     static Piece gorget() { return p("gorget", Anchor.BODY, 1, 0, -10, -4).withDetail(); }
@@ -96,7 +114,7 @@ public final class ArmourSets {
         SETS.put(Armour.HEART_KREUZ, full(ribbon()));
         SETS.put(Armour.HEAVENS_WHEEL, full(wingR(), wingL(), halo(), backdrop()));                      // backdrop = the wheel of swords turning behind the back
         SETS.put(Armour.FLAME_EMPRESS, full(tail(), halo()));
-        SETS.put(Armour.LIGHTNING_EMPRESS, full(wingR(), wingL(), halo()));
+        SETS.put(Armour.LIGHTNING_EMPRESS, full(wingR().withGlass(), wingL().withGlass(), halo()));        // the wings are sheets of lightning
         SETS.put(Armour.SEA_EMPRESS, full(wingR().withGlass(), wingL().withGlass(), halo()));            // the fins
         SETS.put(Armour.BLACK_WING, full(wingR(), wingL()));
         SETS.put(Armour.CLEAR_HEART, full(ribbon(), tail()));                                            // cloth: ribbons and a trailing scarf

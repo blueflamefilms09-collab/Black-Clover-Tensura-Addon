@@ -220,6 +220,22 @@ def _filigree(u, v, w, h, D, band_v, period=1.0):
     return np.maximum(line, dots * 0.9)
 
 
+def _border_scroll(xx, yy, ex, ey, w, h, bw, D):
+    """A running scroll (a vine with a dot in each loop) in a band along the border of a face, 1 where it is engraved."""
+    pitch = max(5.0, 2.4 * D)
+    inner = bw * 2.7
+    on_tb = ey <= ex                                              # nearer to the top / bottom edge: run along u
+    s_along = np.where(on_tb, xx, yy)
+    d_edge = np.minimum(ex, ey)
+    ph = (s_along / pitch) * 2 * math.pi
+    off = d_edge - inner - 0.9 * D * 0.28 * np.sin(ph)
+    line = np.clip(max(0.5, 0.11 * D) + 0.5 - np.abs(off), 0.0, 1.0)
+    cell = np.mod(s_along, pitch) - pitch * 0.5
+    dot = np.clip(1.0 - np.hypot(cell, d_edge - inner - 0.9 * D * 0.35) / max(0.9, 0.26 * D), 0.0, 1.0)
+    band = (d_edge > bw * 1.6) & (d_edge < bw * 4.2)
+    return np.maximum(line, dot * 0.9) * band
+
+
 def pattern(mat, w, h, face, tag, dims, rng):
     """(tone 0..1, height 0..1, accent 0..1, glow 0..1, alpha 0..1) of a face of w x h texels whose size in model pixels is `dims`."""
     xx, yy, ex, ey = _edges(w, h)
@@ -250,6 +266,15 @@ def pattern(mat, w, h, face, tag, dims, rng):
             tone = tone + (np.broadcast_to(streak, (h, w)) - 0.5) * 0.16 + 0.04 * np.sin(u * w * 0.9)
         else:
             tone = tone + 0.18 * (1.0 - v) - 0.06 * np.abs(u - 0.5)                  # enamel: the upper half of the plate catches more light
+        if kind == "plate" and mn >= 2.4 * D:
+            P0 = max(6.0, 1.7 * D)
+            a_, b_ = (xx + yy) / P0, (xx - yy) / P0
+            lat = np.abs(np.sin(math.pi * a_)) * np.abs(np.sin(math.pi * b_))
+            damask = (lat < 0.13 * (1.0 + 0.3 * kw.get("damask", 1))).astype(np.float32) * smooth(edge, bw * 1.2, bw * 2.2)
+            dots = np.clip(1.0 - np.hypot(np.mod(a_, 1.0) - 0.5, np.mod(b_, 1.0) - 0.5) / 0.14, 0.0, 1.0) * smooth(edge, bw * 1.2, bw * 2.2)
+            tone = tone - 0.05 * damask + 0.05 * dots
+            hgt = hgt - 0.05 * damask + 0.05 * dots
+            tone = tone + 0.11 * np.exp(-((u - 0.22 - 0.5 * v) / 0.11) ** 2)                 # a sheen sweeping across the enamel
         if kw.get("grooves", 0) and big:
             for pos in (1.0 / 3.0, 2.0 / 3.0):
                 gcoord = v if w >= h else u
@@ -272,10 +297,9 @@ def pattern(mat, w, h, face, tag, dims, rng):
         if kw.get("trim", 0) and (mat.accent is not None) and mn >= 2.2 * D:
             acc = np.maximum(acc, _line(edge, bw * 0.55, bw * 0.40)) * 1.0
             hgt += 0.10 * acc
-            if kw.get("filigree", 0) and big and min(w, h) >= 4.0 * D:
-                f = _filigree(u, v, w, h, D, 0.5 if h <= w else 0.5)
-                innr = smooth(edge, bw * 1.4, bw * 1.8)
-                acc = np.maximum(acc, f * innr * 0.8)
+            if kw.get("filigree", 1) and mn >= 4.2 * D:
+                acc = np.maximum(acc, _border_scroll(xx, yy, ex, ey, w, h, bw, D) * 0.85)
+                hgt = hgt + 0.06 * acc
         if kind == "gold" and kw.get("filigree", 1) and mn >= 1.6 * D:
             f = _filigree(u, v, w, h, D, 0.5)
             acc = np.maximum(acc, f * smooth(edge, 0.8, 1.4) * 0.7)
@@ -365,6 +389,22 @@ def pattern(mat, w, h, face, tag, dims, rng):
         tone = np.where(st, 0.8, tone)
         hgt = np.where(st, hgt + 0.2, hgt)
         hgt = hgt * (0.8 + 0.2 * smooth(edge, 0.0, bw))
+    elif kind == "membrane":
+        # a translucent energy membrane (fins, bolt and fairy wings): soft gradient, long ribs, fine cross veins, fading to the tip (v = 0) and the edges
+        nr = int(kw.get("ribs", 4))
+        ribs = np.zeros_like(u)
+        for k in range(nr + 1):
+            ribs = np.maximum(ribs, _line(u * w, w * k / max(1, nr), max(0.5, 0.07 * D)))
+        veins = _line(np.mod(v * h * 0.5 + np.abs(u - 0.5) * w * 0.9, max(6.0, 2.2 * D)), 0.0, max(0.4, 0.05 * D))
+        tone = 0.42 + 0.34 * (1.0 - v) + 0.12 * noise
+        tone = np.where(ribs > 0.35, 0.92, tone)
+        tone = tone + 0.18 * veins
+        hgt = 0.5 + 0.2 * ribs
+        edge_fade = smooth(np.minimum(u, 1.0 - u), 0.0, 0.16)
+        alpha = np.clip((0.35 + 0.65 * v) * (0.55 + 0.45 * edge_fade) + 0.35 * ribs, 0.0, 1.0)
+        alpha = np.where(ribs > 0.35, 1.0, alpha)
+        if mat.has_glow:
+            gl = np.clip(ribs * 0.95 + veins * 0.35 + 0.18 * (1.0 - v), 0.0, 1.0) * mat.glow_amount
     elif kind == "gem":
         cx, cy = w * 0.5, h * 0.5
         d = np.hypot((xx + 0.5 - cx) / (w * 0.5), (yy + 0.5 - cy) / (h * 0.5))

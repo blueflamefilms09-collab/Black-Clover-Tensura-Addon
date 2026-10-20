@@ -21,8 +21,8 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from erza_armour_kit import (Piece, Mat, Decal, Anim, V3, superellipse, unit, frame, euler_of, rot_xyz, mx, mv, mrot, sine_rot, spin_y, loop_rot, SKIN)  # noqa: E402,F401
 
-CELL = 1.15                       # the model pixels one panel of a curved plate covers (the Djinn's quads are about this size)
-DENSITY = 10.0                    # texels per model pixel (the Djinn atlas: 5.4 to 7.3)
+CELL = 1.3                        # the model pixels one panel of a curved plate covers (the Djinn's quads are about this size)
+DENSITY = float(os.environ.get("ERZA_D", "14"))      # texels per model pixel (the Djinn atlas: 5.4 to 7.3); ERZA_D=8 builds a quick draft
 
 
 def lerp(a, b, t):
@@ -91,6 +91,19 @@ class Loft:
         """The surface of a patch: u from th0 to th1 (even along the arc), v from y0 to y1; `dr` (a number or a function of (theta radians, y)) pushes it outward."""
         def S(u, v):
             y = y0 + (y1 - y0) * v
+            th = self.theta_of(y, th0, th1, u)
+            P = self.point(th, y, dr(math.radians(th), y) if callable(dr) else dr)
+            if extra is not None:
+                P = P + V3(extra(math.radians(th), y))
+            return P
+        return S
+
+    def surf_rows(self, th0, th1, ys, extra=None, dr=0.0):
+        """Like surf, but the rows of the grid sit at the heights `ys` (so a dome gets thin rows where it curves fast); v = k / (len(ys) - 1) is row k."""
+        n = len(ys) - 1
+
+        def S(u, v):
+            y = float(np.interp(v * n, np.arange(n + 1), ys))
             th = self.theta_of(y, th0, th1, u)
             P = self.point(th, y, dr(math.radians(th), y) if callable(dr) else dr)
             if extra is not None:

@@ -64,6 +64,25 @@ def _palette(png, min_share=0.001):
     return n, int((counts >= max(1, n * min_share)).sum()), (w, h)
 
 
+def _quant(png):
+    """(painted texels, {5-bit colour: count}) of a texture."""
+    if not os.path.isfile(png):
+        return 0, {}
+    im = np.asarray(Image.open(png).convert("RGBA"))
+    op = im[..., 3] > 0
+    n = int(op.sum())
+    if n == 0:
+        return 0, {}
+    q = (im[..., 0].astype(np.uint32) >> 3) << 10 | (im[..., 1].astype(np.uint32) >> 3) << 5 | (im[..., 2].astype(np.uint32) >> 3)
+    u, c = np.unique(q[op], return_counts=True)
+    return n, dict(zip(u.tolist(), c.tolist()))
+
+
+def _rich(counts, total):
+    lim = max(1, math.ceil(total * 0.001))
+    return sum(1 for v in counts.values() if v >= lim)
+
+
 def _x2(a, b):
     return float(a[0] * b[1] - a[1] * b[0])
 
@@ -230,7 +249,7 @@ def erza_set(key):
     pieces, faces, cubes, glow_faces = {}, 0, 0, 0
     dens, wts = [], []
     tex_max, tex_sum, painted, gpainted, gtex = 0, 0, 0, 0, 0
-    pal_total, gpal_total = {}, {}
+    pal_all, gpal_all = {}, {}
     ext, sizes = {}, {}
     folder = os.path.join(ASSETS, "geo", "entity")
     anim_pieces = 0
@@ -247,25 +266,27 @@ def erza_set(key):
         tex_sum += s["tex"][0] * s["tex"][1]
         sizes[pname] = s["tex"][0]
         base = os.path.join(ASSETS, "textures", "entity", key + "_arm_" + pname)
-        pn, pal, _ = _palette(base + ".png")
-        gn, gpal, gsz = _palette(base + "_glow.png")
+        pn, pc = _quant(base + ".png")
+        gn, gc = _quant(base + "_glow.png")
+        gsz = Image.open(base + "_glow.png").size if os.path.isfile(base + "_glow.png") else (0, 0)
         painted += pn
         gpainted += gn
         gtex += gsz[0] * gsz[1]
+        for k_, v_ in pc.items():
+            pal_all[k_] = pal_all.get(k_, 0) + v_
+        for k_, v_ in gc.items():
+            gpal_all[k_] = gpal_all.get(k_, 0) + v_
         if gn > 0:
             glow_faces += s["faces"]
         if os.path.isfile(os.path.join(ASSETS, "animations", "entity", key + "_arm_" + pname + ".animation.json")):
             anim_pieces += 1
-        for kk, v in (("p", pal), ):
-            pal_total[pname] = pal
-        gpal_total[pname] = gpal
         if pname in SLOT_OF_PIECE and s["pts"]:
             bb = _bbox(s["pts"])
             slot = SLOT_OF_PIECE[pname]
             ext[pname] = {"slot": slot, "min": [round(v, 2) for v in bb[0]], "max": [round(v, 2) for v in bb[1]], "ratio": _ratio(bb, slot)}
     return {"set": key, "kind": "erza", "id": key[5:], "pieces": len(pieces), "faces": faces, "glow_faces": glow_faces, "cubes": cubes, "texture_max": tex_max,
-            "texture_sum_texels": tex_sum, "painted_texels": painted, "glow_painted_texels": gpainted, "palette": max(pal_total.values()) if pal_total else 0,
-            "palette_median": _median(list(pal_total.values())), "glow_palette": max(gpal_total.values()) if gpal_total else 0,
+            "texture_sum_texels": tex_sum, "painted_texels": painted, "glow_painted_texels": gpainted, "palette": _rich(pal_all, painted),
+            "glow_palette": _rich(gpal_all, gpainted),
             "density_median": round(_wmedian(dens, wts), 2), "density_mean": round(float(np.average(dens, weights=wts)) if dens else 0.0, 2),
             "animated_pieces": anim_pieces, "passes": 3, "extents": ext, "piece_faces": pieces, "piece_texture": sizes}
 
@@ -315,7 +336,7 @@ def tables(djinn, erza):
         L.append("")
     if erza:
         L.append("### Erza sets\n")
-        L.append("| Armour | Pieces | Cubes | Faces | Glow faces | Largest piece texture | Sum of texture texels | Painted texels | Palette (best piece) | Glow palette | Density (median) | Animated pieces |")
+        L.append("| Armour | Pieces | Cubes | Faces | Glow faces | Largest piece texture | Sum of texture texels | Painted texels | Palette (whole set) | Glow palette | Density (median) | Animated pieces |")
         L.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
         for e in erza:
             L.append("| %s | %d | %d | %d | %d | %d | %d | %d | %d | %d | %s | %d |" % (e["id"], e["pieces"], e["cubes"], e["faces"], e["glow_faces"], e["texture_max"],

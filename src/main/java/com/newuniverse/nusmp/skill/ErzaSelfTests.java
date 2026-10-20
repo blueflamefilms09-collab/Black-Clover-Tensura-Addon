@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.item.WeaponEngravings;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
 import com.newuniverse.nusmp.requip.Armour;
+import com.newuniverse.nusmp.requip.ArmourQuality;
 import com.newuniverse.nusmp.requip.ArmourSets;
 import com.newuniverse.nusmp.requip.RequipItems;
 import com.newuniverse.nusmp.requip.RequipRules;
@@ -39,6 +40,7 @@ public final class ErzaSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("skill.erza_requip", ErzaSelfTests::run);
+        SelfTests.register("skill.erza_requip2", ErzaSelfTests::runArmourQuality);       // 1.99.0: the Djinn-quality remake of the armour models, measured from the jar
     }
 
     private static Result run(MinecraftServer server) {
@@ -51,6 +53,41 @@ public final class ErzaSelfTests {
         if ((why = engravings(server)) != null) return Result.fail("engravings: " + why);
         if ((why = teaching(p)) != null) return Result.fail("teaching: " + why);
         return Result.ok(Armour.values().length + " armours, " + ArmourSets.allModelIds().size() + " piece models, " + RequipItems.weaponIds().size() + " weapons, book teaches once");
+    }
+
+    /**
+     * 1.99.0 (the Djinn-quality remake): measures every armour from the files in the jar and holds it to the Djinn minimum ({@link ArmourQuality#BAR}: pieces, drawn faces, glow faces, painted texels, palette,
+     * texel density, skin area), checks that every piece name resolves to its model part, that no heavier piece forges before a lighter one, that no delay is outside 0..12 ticks, that every animated piece
+     * has its idle clip file, and that every piece model has a root bone. One line: the smallest armour of the set and its numbers.
+     */
+    private static Result runArmourQuality(MinecraftServer server) {
+        ArmourQuality.Source src = path -> ErzaSelfTests.class.getClassLoader().getResourceAsStream(path);
+        List<String> bad = new ArrayList<>();
+        int pieces = 0, minFaces = Integer.MAX_VALUE;
+        String smallest = "";
+        double minDensity = Double.MAX_VALUE;
+        for (Armour a : Armour.values()) {
+            try {
+                ArmourQuality.Metrics m = ArmourQuality.measure(a, src);
+                bad.addAll(ArmourQuality.violations(a.id(), m, ArmourQuality.BAR));
+                pieces += m.pieces();
+                if (m.faces() < minFaces) { minFaces = m.faces(); smallest = a.id(); }
+                minDensity = Math.min(minDensity, m.density());
+            } catch (java.io.IOException e) {
+                bad.add(a.id() + ": " + e.getMessage());
+            }
+            for (ArmourSets.Piece p : ArmourSets.of(a)) {
+                if (ArmourSets.anchorOfName(p.name()) != p.anchor()) bad.add(a.id() + "/" + p.name() + " resolves to the wrong model part");
+                if (p.delay() < 0f || p.delay() > 12f) bad.add(a.id() + "/" + p.name() + " delay " + p.delay());
+                if (p.clip() != null && ErzaSelfTests.class.getClassLoader().getResource("assets/nusmp/animations/entity/" + ArmourSets.modelId(a, p) + ".animation.json") == null)
+                    bad.add(a.id() + "/" + p.name() + " has no animation file");
+                for (ArmourSets.Piece q : ArmourSets.of(a))
+                    if (ArmourSets.weightOf(p.name()) > ArmourSets.weightOf(q.name()) && p.delay() < q.delay()) bad.add(a.id() + ": " + p.name() + " forges before the lighter " + q.name());
+            }
+        }
+        if (!bad.isEmpty()) return Result.fail(bad.size() + " problems, first: " + bad.get(0));
+        return Result.ok(Armour.values().length + " armours, " + pieces + " pieces, the smallest is " + smallest + " with " + minFaces + " faces (Djinn minimum " + ArmourQuality.BAR.faces() + "), density from "
+                + String.format("%.1f", minDensity) + " texels per model pixel (Djinn " + ArmourQuality.BAR.density() + ")");
     }
 
     private static String skill() {
