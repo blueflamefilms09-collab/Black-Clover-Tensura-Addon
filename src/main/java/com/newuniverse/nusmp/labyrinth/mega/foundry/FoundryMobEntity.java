@@ -1,5 +1,9 @@
 package com.newuniverse.nusmp.labyrinth.mega.foundry;
 
+import com.newuniverse.nusmp.audio.Cue;
+import com.newuniverse.nusmp.audio.MobSoundSet;
+import com.newuniverse.nusmp.audio.MobVoice;
+import com.newuniverse.nusmp.audio.SoundFamilied;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import net.minecraft.nbt.CompoundTag;
@@ -39,7 +43,7 @@ import java.util.UUID;
  * It implements {@link Enemy} so every system that asks "is this hostile?" says yes. All state that matters survives a restart (identity, floor, owner); the cast, dash and aura
  * timers do not (a mob that reloads mid-cast simply starts over).
  */
-public class FoundryMobEntity extends PathfinderMob implements Enemy {
+public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamilied {
     private static final EntityDataAccessor<String> IDENTITY = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> CAST_LEFT = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CAST_MAX = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.INT);
@@ -173,57 +177,62 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
         return d == null ? super.getTypeName() : Component.literal(d.name());
     }
 
-    private String sound() {
-        FoundryDef d = def();
-        return d == null ? "" : d.faction();
+    private String voiceId = "";
+    private String voiceFamily = MobSoundSet.DEFAULT_FAMILY;
+    private int lastAggroTick = -1000;
+
+    /**
+     * 1.99.0 (the bespoke audio engine, docs/audio/mob_audio.md): the family of {@code audio/MobSoundSet} this mob sounds like: the first known word of its id (a kobold, a lich, a dragon, a
+     * banshee), else its faction. Until 1.98.0 every faction borrowed a vanilla zombie, wolf, ravager or pillager sound.
+     */
+    @Override
+    public String soundFamily() {
+        String id = foundryId();
+        if (!id.equals(voiceId)) {
+            voiceId = id;
+            FoundryDef d = def();
+            voiceFamily = MobSoundSet.forFoundry(d == null ? null : d.faction(), id);
+        }
+        return voiceFamily;
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return switch (sound()) {
-            case "undead", "cultist" -> SoundEvents.ZOMBIE_AMBIENT;
-            case "beast" -> SoundEvents.WOLF_GROWL;
-            case "demon" -> SoundEvents.PIGLIN_BRUTE_ANGRY;
-            case "slime" -> SoundEvents.SLIME_SQUISH_SMALL;
-            case "construct" -> SoundEvents.IRON_GOLEM_STEP;
-            case "insect" -> SoundEvents.SPIDER_AMBIENT;
-            case "ogre" -> SoundEvents.RAVAGER_AMBIENT;
-            case "elemental" -> SoundEvents.BLAZE_AMBIENT;
-            case "aquatic" -> SoundEvents.DROWNED_AMBIENT;
-            default -> SoundEvents.PILLAGER_AMBIENT;
-        };
+    protected SoundEvent getAmbientSound() { return MobVoice.event(soundFamily(), Cue.AMBIENT); }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) { return MobVoice.event(soundFamily(), Cue.HURT); }
+
+    @Override
+    protected SoundEvent getDeathSound() { return MobVoice.event(soundFamily(), Cue.DEATH); }
+
+    @Override
+    protected float getSoundVolume() { return MobSoundSet.family(soundFamily()).volume(); }
+
+    @Override
+    public float getVoicePitch() { return MobVoice.pitch(soundFamily(), Cue.AMBIENT, random); }
+
+    @Override
+    protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        String f = soundFamily();
+        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(f, Cue.STEP, random));
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return switch (sound()) {
-            case "undead", "cultist" -> SoundEvents.ZOMBIE_HURT;
-            case "beast" -> SoundEvents.WOLF_HURT;
-            case "demon" -> SoundEvents.PIGLIN_BRUTE_HURT;
-            case "slime" -> SoundEvents.SLIME_HURT_SMALL;
-            case "construct" -> SoundEvents.IRON_GOLEM_HURT;
-            case "insect" -> SoundEvents.SPIDER_HURT;
-            case "ogre" -> SoundEvents.RAVAGER_HURT;
-            case "elemental" -> SoundEvents.BLAZE_HURT;
-            case "aquatic" -> SoundEvents.DROWNED_HURT;
-            default -> SoundEvents.PILLAGER_HURT;
-        };
+    public boolean doHurtTarget(Entity target) {
+        boolean hit = super.doHurtTarget(target);
+        if (hit) MobVoice.play(this, soundFamily(), Cue.ATTACK);
+        return hit;
     }
 
+    /** The first time it notices a target (and at most every three seconds) it shouts its aggro cue. */
     @Override
-    protected SoundEvent getDeathSound() {
-        return switch (sound()) {
-            case "undead", "cultist" -> SoundEvents.ZOMBIE_DEATH;
-            case "beast" -> SoundEvents.WOLF_DEATH;
-            case "demon" -> SoundEvents.PIGLIN_BRUTE_DEATH;
-            case "slime" -> SoundEvents.SLIME_DEATH_SMALL;
-            case "construct" -> SoundEvents.IRON_GOLEM_DEATH;
-            case "insect" -> SoundEvents.SPIDER_DEATH;
-            case "ogre" -> SoundEvents.RAVAGER_DEATH;
-            case "elemental" -> SoundEvents.BLAZE_DEATH;
-            case "aquatic" -> SoundEvents.DROWNED_DEATH;
-            default -> SoundEvents.PILLAGER_DEATH;
-        };
+    public void setTarget(LivingEntity target) {
+        LivingEntity before = getTarget();
+        super.setTarget(target);
+        if (target != null && before == null && !level().isClientSide && tickCount - lastAggroTick > 60) {
+            lastAggroTick = tickCount;
+            MobVoice.play(this, soundFamily(), Cue.AGGRO);
+        }
     }
 
     // ================================================================ casting (synced to the client for the cast clips)
@@ -235,6 +244,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy {
     public boolean casting() { return castLeft() > 0; }
 
     void setCast(int left, int max) {
+        if (left > 0 && entityData.get(CAST_LEFT) == 0) MobVoice.play(this, soundFamily(), Cue.CAST);              // 1.99.0: the wind-up of an ability has the family's cast cue
         if (entityData.get(CAST_LEFT) != left) entityData.set(CAST_LEFT, left);
         if (entityData.get(CAST_MAX) != max) entityData.set(CAST_MAX, max);
     }

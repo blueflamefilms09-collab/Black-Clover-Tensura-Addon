@@ -336,9 +336,10 @@ public class BloodBeastEntity extends Monster {
     }
 
     // ---------------------------------------------------------------- sounds
-    @Override protected SoundEvent getAmbientSound() { return SoundEvents.WOLF_GROWL; }
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.WOLF_HURT; }
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.WOLF_DEATH; }
+    // 1.99.0: the beast family of the bespoke audio engine
+    @Override protected SoundEvent getAmbientSound() { return com.newuniverse.nusmp.audio.MobVoice.ambient("beast"); }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("beast"); }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("beast"); }
 
     // ---------------------------------------------------------------- client flavour
     @Override

@@ -56,6 +56,10 @@ class NoHungerDrainTest {
     private static final Pattern CLEANSE = Pattern.compile("removeEffect|hasEffect|Util\\.remove\\(|\\.lift\\(|Wave6Kit\\.lift|TIME_EFFECTS|HARMFUL|FATIGUE|refuses|isHungerEffectId|HUNGER_EFFECT"
             + "|Map\\.entry\\(\"hunger\"|case \"poison\", \"wither\"");
 
+    /** The one file that may TRY to apply Hunger (the in-game self-test {@code dungeon.nohunger} does it on purpose, to prove the refusal), and how many such statements it may hold. */
+    private static final String PROBES_FILE = "labyrinth/mega/mechanics/MechanicsSelfTests.java";
+    private static final int MAX_PROBES = 4;
+
     private static final Pattern STATEMENT_WITH_HUNGER = Pattern.compile("MobEffects\\.HUNGER|\"minecraft:hunger|'minecraft:hunger|[\"']hunger:\\d");
     private static final Pattern APPLY_PLAIN_HUNGER = Pattern.compile("(addEffect|give|giveQuiet|effect|MobEffectInstance)\\s*\\([^;]*\"hunger\"");
 
@@ -101,11 +105,15 @@ class NoHungerDrainTest {
         List<String> bad = new ArrayList<>();
         for (Path f : sources()) {
             String src = code(f);
+            int probes = 0;
             for (String stmt : src.split(";")) {
                 String s = stmt.replace('\n', ' ');
-                if (STATEMENT_WITH_HUNGER.matcher(s).find() && !CLEANSE.matcher(s).find()) bad.add(rel(f) + ": " + shorten(s));
-                if (APPLY_PLAIN_HUNGER.matcher(s).find()) bad.add(rel(f) + ": " + shorten(s));
+                boolean hit = (STATEMENT_WITH_HUNGER.matcher(s).find() && !CLEANSE.matcher(s).find()) || APPLY_PLAIN_HUNGER.matcher(s).find();
+                if (!hit) continue;
+                if (rel(f).equals(PROBES_FILE)) probes++;                         // the self-test dungeon.nohunger tries to apply Hunger to prove it is refused
+                else bad.add(rel(f) + ": " + shorten(s));
             }
+            if (rel(f).equals(PROBES_FILE) && probes > MAX_PROBES) bad.add(PROBES_FILE + ": " + probes + " probes, the self-test needs at most " + MAX_PROBES);
         }
         assertTrue(bad.isEmpty(), "the hunger ban: the Hunger effect may only be removed or refused, never applied: " + bad);
     }

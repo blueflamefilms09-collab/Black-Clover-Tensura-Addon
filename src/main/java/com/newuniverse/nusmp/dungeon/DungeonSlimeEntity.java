@@ -24,6 +24,8 @@ public class DungeonSlimeEntity extends DungeonCreature {
 
     public DungeonSlimeEntity(EntityType<? extends PathfinderMob> type, Level level) { super(type, level); }
 
+    @Override public String soundFamily() { return "slime"; }
+
     public static AttributeSupplier.Builder createAttributes() {
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 6).add(Attributes.MOVEMENT_SPEED, 0.2).add(Attributes.FOLLOW_RANGE, 16);
     }

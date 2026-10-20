@@ -295,7 +295,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     private void enterPhaseTwo(ServerLevel sl) {
         phaseTwo = true;
         traits.restart(sl.getGameTime(), 40);
-        sl.playSound(null, blockPosition(), SoundEvents.WARDEN_ROAR, SoundSource.HOSTILE, 2.0f, 0.7f);
+        com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.AGGRO);       // 1.99.0: the roar of its own family (a lich whispers, a dragon roars)
         sl.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getY() + getBbHeight() * 0.5, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         sl.sendParticles(ParticleTypes.END_ROD, getX(), getY() + getBbHeight() * 0.5, getZ(), 60, 1.2, 1.6, 1.2, 0.12);
         for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) {
@@ -320,7 +320,19 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         getNavigation().stop();
         setTarget(null);
         sl.sendParticles(ParticleTypes.REVERSE_PORTAL, getX(), getY() + 1.4, getZ(), 30, 0.5, 1.2, 0.5, 0.1);
-        sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0f, 0.5f);
+        com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.CAST);
+    }
+
+    // ---------------------------------------------------------------- the voice (1.99.0, audio/MobSoundSet)
+    /** The family of the bespoke voice: the {@code sound_set} of its D&D profile, else its look, its name or its side (see {@code BossSoundSets}); living armour when it has no profile. */
+    @Override
+    public String soundFamily() {
+        try {
+            DndProfile p = dnd.profile;
+            return com.newuniverse.nusmp.audio.BossSoundSets.family(p.id(), lookId().isEmpty() ? p.look() : lookId(), p.name(), p.dnd(), p.side());
+        } catch (RuntimeException e) {
+            return "armor";
+        }
     }
 
     // ---------------------------------------------------------------- blood: a shield fed by its own hits

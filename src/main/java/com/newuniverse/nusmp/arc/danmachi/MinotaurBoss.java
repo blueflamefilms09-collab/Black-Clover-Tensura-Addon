@@ -63,11 +63,11 @@ public class MinotaurBoss extends DanMachiBoss {
     @Override protected double preferredRange(double suggested) { return Math.max(2.5, Math.min(9.0, suggested)); }
 
     // ================================================================ sounds
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.RAVAGER_HURT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("ogre"); }          // 1.99.0: the ogre family of the bespoke audio engine
 
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.RAVAGER_DEATH; }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("ogre"); }
 
-    @Override protected SoundEvent getAmbientSound() { return SoundEvents.RAVAGER_AMBIENT; }
+    @Override protected SoundEvent getAmbientSound() { return com.newuniverse.nusmp.audio.MobVoice.ambient("ogre"); }
 
     // ================================================================ the Hunt
     @Override

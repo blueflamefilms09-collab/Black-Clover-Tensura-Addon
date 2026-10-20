@@ -164,7 +164,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
                 && !(e instanceof Player p && (p.isCreative() || p.isSpectator())))) {
             if (e.hurt(damageSources().mobAttack(this), slamDamage())) e.knockback(1.4, getX() - e.getX(), getZ() - e.getZ());
         }
-        sl.playSound(null, blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.4f, 0.55f);
+        com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.ATTACK);       // 1.99.0: its family's own blow, not an anvil
         sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.1, getZ(), 1, 0, 0, 0, 0);
         for (int i = 0; i < 24; i++) {
             double a = i * Math.PI / 12.0;
@@ -186,13 +186,12 @@ public class FloorWardenEntity extends LivingArmorEntity {
             if (!sl.noCollision(this, getBoundingBox().move(c.subtract(position())))) continue;                  // would be inside a wall
             Vec3 from = position();
             sl.sendParticles(ParticleTypes.LARGE_SMOKE, from.x, from.y + 1.0, from.z, 24, 0.5, 1.0, 0.5, 0.02);
-            sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0f, 0.5f);
+            com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.CAST);
             teleportTo(c.x, c.y, c.z);
             getNavigation().stop();
             lookAt(target, 180f, 180f);
             sl.sendParticles(ParticleTypes.LARGE_SMOKE, c.x, c.y + 1.0, c.z, 24, 0.5, 1.0, 0.5, 0.02);
             sl.sendParticles(ParticleTypes.WITCH, c.x, c.y + 1.2, c.z, 10, 0.4, 0.6, 0.4, 0.0);
-            sl.playSound(null, feet, SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0f, 0.4f);
             return true;
         }
         return false;
@@ -212,7 +211,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
             sl.addFreshEntity(guard);
             sl.sendParticles(ParticleTypes.WITCH, guard.getX(), guard.getY() + 1.0, guard.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
         }
-        sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 0.6f, 1.4f);
+        com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.AGGRO);
     }
 
     // ---------------------------------------------------------------- what the food web would do, undone
