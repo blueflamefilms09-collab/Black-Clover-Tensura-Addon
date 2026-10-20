@@ -27,7 +27,7 @@ def ring_pulse(c, i, n, rng):
     e = 1 - (1 - t) ** 2
     r = lerp(3.0, 14.8, e)
     w = lerp(2.4, 0.9, t)
-    inten = np.clip(1.0 - np.abs(c.r - r) / (w * 0.5 + 0.9), 0, 1) * (1 - t) ** 0.9 * 1.15
+    inten = np.clip(1.0 - np.abs(c.r - r) / (w * 0.5 + 0.9), 0, 1) * (0.14 + 0.86 * (1 - t) ** 0.9) * 1.15
     inner = np.exp(-((c.r / (r * 0.8 + 1)) ** 2)) * 0.18 * (1 - t)
     return glow(c, inten + inner, WHITE, levels=4, amax=250, floor=0.15)
 
