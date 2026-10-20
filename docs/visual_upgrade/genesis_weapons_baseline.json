@@ -1,0 +1,1041 @@
+{
+  "slice": "genesis_weapons",
+  "mode": "baseline",
+  "note": "see tools/visual_upgrade/genesis_weapons/measure.py for the definitions",
+  "items": [
+    {
+      "id": "astralis_the_eye_of_the_universe",
+      "name": "Astralis - The Eye of the Universe",
+      "grade": "GENESIS",
+      "kind": "staff",
+      "meshes": {
+        "astralis_the_eye_of_the_universe": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/astralis_the_eye_of_the_universe.txt",
+          "quads": {
+            "body": 2124,
+            "void": 0,
+            "glow": 750,
+            "veins": 0,
+            "halo": 0,
+            "total": 2874
+          },
+          "welded_vertices_body": 2010,
+          "welded_vertices_all": 2010,
+          "submitted_corners_per_frame": 11496,
+          "named_parts": 17
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/astralis_the_eye_of_the_universe.txt",
+        "quads": {
+          "body": 2124,
+          "void": 0,
+          "glow": 750,
+          "veins": 0,
+          "halo": 0,
+          "total": 2874
+        },
+        "welded_vertices_body": 2010,
+        "welded_vertices_all": 2010,
+        "submitted_corners_per_frame": 11496,
+        "named_parts": 17
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 1024,
+        "painted_texels": 334760,
+        "detail_texels": 196086
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 155348,
+        "detail_texels": 6836
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "astral_cast",
+          "astral_pick"
+        ],
+        "generic_shapes": []
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "blackrazor",
+      "name": "Blackrazor",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "meshes": {
+        "blackrazor": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/blackrazor.txt",
+          "quads": {
+            "body": 854,
+            "void": 96,
+            "glow": 222,
+            "veins": 0,
+            "halo": 0,
+            "total": 1172
+          },
+          "welded_vertices_body": 850,
+          "welded_vertices_all": 952,
+          "submitted_corners_per_frame": 4688,
+          "named_parts": 12
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/blackrazor.txt",
+        "quads": {
+          "body": 854,
+          "void": 96,
+          "glow": 222,
+          "veins": 0,
+          "halo": 0,
+          "total": 1172
+        },
+        "welded_vertices_body": 850,
+        "welded_vertices_all": 952,
+        "submitted_corners_per_frame": 4688,
+        "named_parts": 12
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 512,
+        "painted_texels": 121722,
+        "detail_texels": 39138
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 67761,
+        "detail_texels": 7505
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "devour_soul",
+          "void_cleave",
+          "hunger_eternal"
+        ],
+        "generic_shapes": [
+          "SLASH_SCYTHE",
+          "DEMON_METEOR"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "cardinal_halo_chakram",
+      "name": "Cardinal Halo Chakram",
+      "grade": "GENESIS",
+      "kind": "handaxe",
+      "meshes": {
+        "cardinal_halo_chakram": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/cardinal_halo_chakram.txt",
+          "quads": {
+            "body": 1224,
+            "void": 0,
+            "glow": 888,
+            "veins": 0,
+            "halo": 0,
+            "total": 2112
+          },
+          "welded_vertices_body": 1225,
+          "welded_vertices_all": 1225,
+          "submitted_corners_per_frame": 8448,
+          "named_parts": 9
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/cardinal_halo_chakram.txt",
+        "quads": {
+          "body": 1224,
+          "void": 0,
+          "glow": 888,
+          "veins": 0,
+          "halo": 0,
+          "total": 2112
+        },
+        "welded_vertices_body": 1225,
+        "welded_vertices_all": 1225,
+        "submitted_corners_per_frame": 8448,
+        "named_parts": 9
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 189770,
+        "detail_texels": 83238
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 163616,
+        "detail_texels": 7296
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "halo_throw",
+          "judgement_ring",
+          "cardinal_descent"
+        ],
+        "generic_shapes": [
+          "LIGHT_BLADE",
+          "WIND_RING",
+          "LIGHT_FLARE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "fairy_glitter_gauntlets",
+      "name": "Fairy Glitter Gauntlets",
+      "grade": "GENESIS",
+      "kind": "dagger",
+      "meshes": {
+        "fairy_glitter_gauntlets": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/fairy_glitter_gauntlets.txt",
+          "quads": {
+            "body": 1200,
+            "void": 0,
+            "glow": 816,
+            "veins": 0,
+            "halo": 0,
+            "total": 2016
+          },
+          "welded_vertices_body": 1078,
+          "welded_vertices_all": 1078,
+          "submitted_corners_per_frame": 8064,
+          "named_parts": 17
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/fairy_glitter_gauntlets.txt",
+        "quads": {
+          "body": 1200,
+          "void": 0,
+          "glow": 816,
+          "veins": 0,
+          "halo": 0,
+          "total": 2016
+        },
+        "welded_vertices_body": 1078,
+        "welded_vertices_all": 1078,
+        "submitted_corners_per_frame": 8064,
+        "named_parts": 17
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 202059,
+        "detail_texels": 81490
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 123193,
+        "detail_texels": 6530
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "glitter_barrage",
+          "fairy_glitter",
+          "law_of_the_guild"
+        ],
+        "generic_shapes": [
+          "LIGHT_FLARE",
+          "MAGIC_CIRCLE_EXPLOSION"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "gae_bolg_heartseeker",
+      "name": "Gae Bolg, Heart-Seeker",
+      "grade": "GENESIS",
+      "kind": "spear",
+      "meshes": {
+        "gae_bolg_heartseeker": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/gae_bolg_heartseeker.txt",
+          "quads": {
+            "body": 1202,
+            "void": 0,
+            "glow": 266,
+            "veins": 0,
+            "halo": 0,
+            "total": 1468
+          },
+          "welded_vertices_body": 1385,
+          "welded_vertices_all": 1385,
+          "submitted_corners_per_frame": 5872,
+          "named_parts": 8
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/gae_bolg_heartseeker.txt",
+        "quads": {
+          "body": 1202,
+          "void": 0,
+          "glow": 266,
+          "veins": 0,
+          "halo": 0,
+          "total": 1468
+        },
+        "welded_vertices_body": 1385,
+        "welded_vertices_all": 1385,
+        "submitted_corners_per_frame": 5872,
+        "named_parts": 8
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 90584,
+        "detail_texels": 28619
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 58645,
+        "detail_texels": 7396
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "heart_thrust",
+          "thirty_barbs",
+          "wound_that_will_not_close"
+        ],
+        "generic_shapes": [
+          "MERCURY_SPEAR",
+          "THREAD_LINE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "magic_emperors_black_halberd",
+      "name": "Magic Emperor's Black Halberd",
+      "grade": "GENESIS",
+      "kind": "glaive",
+      "meshes": {
+        "magic_emperors_black_halberd": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/magic_emperors_black_halberd.txt",
+          "quads": {
+            "body": 823,
+            "void": 38,
+            "glow": 364,
+            "veins": 0,
+            "halo": 0,
+            "total": 1225
+          },
+          "welded_vertices_body": 687,
+          "welded_vertices_all": 727,
+          "submitted_corners_per_frame": 4900,
+          "named_parts": 13
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/magic_emperors_black_halberd.txt",
+        "quads": {
+          "body": 823,
+          "void": 38,
+          "glow": 364,
+          "veins": 0,
+          "halo": 0,
+          "total": 1225
+        },
+        "welded_vertices_body": 687,
+        "welded_vertices_all": 727,
+        "submitted_corners_per_frame": 4900,
+        "named_parts": 13
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 512,
+        "painted_texels": 56548,
+        "detail_texels": 14778
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 10093,
+        "detail_texels": 2567
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "emperors_sweep",
+          "dimensional_rift",
+          "dark_triad"
+        ],
+        "generic_shapes": [
+          "SLASH_SCYTHE",
+          "SPACE_PORTAL",
+          "DEVIL_CIRCLE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "primordial_hearth_blade",
+      "name": "Primordial Hearth Blade",
+      "grade": "GENESIS",
+      "kind": "dagger",
+      "meshes": {
+        "primordial_hearth_blade": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/primordial_hearth_blade.txt",
+          "quads": {
+            "body": 692,
+            "void": 0,
+            "glow": 120,
+            "veins": 0,
+            "halo": 0,
+            "total": 812
+          },
+          "welded_vertices_body": 699,
+          "welded_vertices_all": 699,
+          "submitted_corners_per_frame": 3248,
+          "named_parts": 6
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/primordial_hearth_blade.txt",
+        "quads": {
+          "body": 692,
+          "void": 0,
+          "glow": 120,
+          "veins": 0,
+          "halo": 0,
+          "total": 812
+        },
+        "welded_vertices_body": 699,
+        "welded_vertices_all": 699,
+        "submitted_corners_per_frame": 3248,
+        "named_parts": 6
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 114144,
+        "detail_texels": 34372
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 23903,
+        "detail_texels": 4870
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "falna_flurry",
+          "hearth_dash",
+          "goddess_blessing"
+        ],
+        "generic_shapes": [
+          "SLASH_BLADES",
+          "FIRE_SPEAR"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "starforged_aeon_bow",
+      "name": "Starforged Aeon Bow",
+      "grade": "GENESIS",
+      "kind": "bow",
+      "meshes": {
+        "starforged_aeon_bow": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow.txt",
+          "quads": {
+            "body": 1100,
+            "void": 0,
+            "glow": 882,
+            "veins": 0,
+            "halo": 0,
+            "total": 1982
+          },
+          "welded_vertices_body": 1010,
+          "welded_vertices_all": 1010,
+          "submitted_corners_per_frame": 7928,
+          "named_parts": 9
+        },
+        "starforged_aeon_bow_pull1": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull1.txt",
+          "quads": {
+            "body": 1202,
+            "void": 0,
+            "glow": 900,
+            "veins": 0,
+            "halo": 0,
+            "total": 2102
+          },
+          "welded_vertices_body": 1094,
+          "welded_vertices_all": 1094,
+          "submitted_corners_per_frame": 8408,
+          "named_parts": 12
+        },
+        "starforged_aeon_bow_pull2": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull2.txt",
+          "quads": {
+            "body": 1202,
+            "void": 0,
+            "glow": 900,
+            "veins": 0,
+            "halo": 0,
+            "total": 2102
+          },
+          "welded_vertices_body": 1094,
+          "welded_vertices_all": 1094,
+          "submitted_corners_per_frame": 8408,
+          "named_parts": 12
+        },
+        "starforged_aeon_bow_pull3": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull3.txt",
+          "quads": {
+            "body": 1202,
+            "void": 0,
+            "glow": 900,
+            "veins": 0,
+            "halo": 0,
+            "total": 2102
+          },
+          "welded_vertices_body": 1094,
+          "welded_vertices_all": 1094,
+          "submitted_corners_per_frame": 8408,
+          "named_parts": 12
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow.txt",
+        "quads": {
+          "body": 1100,
+          "void": 0,
+          "glow": 882,
+          "veins": 0,
+          "halo": 0,
+          "total": 1982
+        },
+        "welded_vertices_body": 1010,
+        "welded_vertices_all": 1010,
+        "submitted_corners_per_frame": 7928,
+        "named_parts": 9
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 170261,
+        "detail_texels": 82543
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 107063,
+        "detail_texels": 7660
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "meteor_arrow",
+          "constellation_volley",
+          "starfall"
+        ],
+        "generic_shapes": [
+          "DEMON_METEOR",
+          "MIRROR_RAY",
+          "FIRE_SPEAR"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "starsplitter_hammer",
+      "name": "Starsplitter Hammer",
+      "grade": "GENESIS",
+      "kind": "hammer",
+      "meshes": {
+        "starsplitter_hammer": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/starsplitter_hammer.txt",
+          "quads": {
+            "body": 840,
+            "void": 12,
+            "glow": 328,
+            "veins": 0,
+            "halo": 0,
+            "total": 1180
+          },
+          "welded_vertices_body": 840,
+          "welded_vertices_all": 868,
+          "submitted_corners_per_frame": 4720,
+          "named_parts": 9
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/starsplitter_hammer.txt",
+        "quads": {
+          "body": 840,
+          "void": 12,
+          "glow": 328,
+          "veins": 0,
+          "halo": 0,
+          "total": 1180
+        },
+        "welded_vertices_body": 840,
+        "welded_vertices_all": 868,
+        "submitted_corners_per_frame": 4720,
+        "named_parts": 9
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 512,
+        "painted_texels": 104943,
+        "detail_texels": 55080
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 44966,
+        "detail_texels": 3222
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "meteor_smash",
+          "gravity_well",
+          "starsplit"
+        ],
+        "generic_shapes": [
+          "FIRE_BURST",
+          "ASH_FORMATION",
+          "EARTH_FISSURE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "sword_of_the_first_dawn",
+      "name": "Sword of the First Dawn",
+      "grade": "GENESIS",
+      "kind": "longsword",
+      "meshes": {
+        "sword_of_the_first_dawn": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/sword_of_the_first_dawn.txt",
+          "quads": {
+            "body": 1368,
+            "void": 0,
+            "glow": 508,
+            "veins": 0,
+            "halo": 0,
+            "total": 1876
+          },
+          "welded_vertices_body": 1311,
+          "welded_vertices_all": 1311,
+          "submitted_corners_per_frame": 7504,
+          "named_parts": 8
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/sword_of_the_first_dawn.txt",
+        "quads": {
+          "body": 1368,
+          "void": 0,
+          "glow": 508,
+          "veins": 0,
+          "halo": 0,
+          "total": 1876
+        },
+        "welded_vertices_body": 1311,
+        "welded_vertices_all": 1311,
+        "submitted_corners_per_frame": 7504,
+        "named_parts": 8
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 3,
+      "skin": {
+        "size": 512,
+        "painted_texels": 86160,
+        "detail_texels": 36471
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 54510,
+        "detail_texels": 4602
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "dawnlight_cut",
+          "first_light",
+          "daybreak"
+        ],
+        "generic_shapes": [
+          "LIGHT_BLADE",
+          "LIGHT_FLARE",
+          "LIGHT_FLARE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "void_origin_katana",
+      "name": "Void Origin Katana",
+      "grade": "GENESIS",
+      "kind": "katana",
+      "meshes": {
+        "void_origin_katana": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/void_origin_katana.txt",
+          "quads": {
+            "body": 842,
+            "void": 30,
+            "glow": 255,
+            "veins": 0,
+            "halo": 0,
+            "total": 1127
+          },
+          "welded_vertices_body": 902,
+          "welded_vertices_all": 966,
+          "submitted_corners_per_frame": 4508,
+          "named_parts": 8
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/void_origin_katana.txt",
+        "quads": {
+          "body": 842,
+          "void": 30,
+          "glow": 255,
+          "veins": 0,
+          "halo": 0,
+          "total": 1127
+        },
+        "welded_vertices_body": 902,
+        "welded_vertices_all": 966,
+        "submitted_corners_per_frame": 4508,
+        "named_parts": 8
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 512,
+        "painted_texels": 74723,
+        "detail_texels": 13755
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 9491,
+        "detail_texels": 2970
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "dimension_cut",
+          "void_step",
+          "world_sever"
+        ],
+        "generic_shapes": [
+          "SPACE_PORTAL",
+          "SPACE_CUBE",
+          "NIHILITY_ZONE"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "nekrathuls_pact_scythe",
+      "name": "Nekrathul's Pact Scythe",
+      "grade": "GENESIS",
+      "kind": "scythe",
+      "meshes": {
+        "nekrathuls_pact_scythe": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/nekrathuls_pact_scythe.txt",
+          "quads": {
+            "body": 1144,
+            "void": 36,
+            "glow": 708,
+            "veins": 0,
+            "halo": 0,
+            "total": 1888
+          },
+          "welded_vertices_body": 1019,
+          "welded_vertices_all": 1061,
+          "submitted_corners_per_frame": 7552,
+          "named_parts": 14
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/nekrathuls_pact_scythe.txt",
+        "quads": {
+          "body": 1144,
+          "void": 36,
+          "glow": 708,
+          "veins": 0,
+          "halo": 0,
+          "total": 1888
+        },
+        "welded_vertices_body": 1019,
+        "welded_vertices_all": 1061,
+        "submitted_corners_per_frame": 7552,
+        "named_parts": 14
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "glow_additive",
+        "genesis_emissive_translucent"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 512,
+        "painted_texels": 88489,
+        "detail_texels": 38434
+      },
+      "glow_skin": {
+        "size": 512,
+        "painted_texels": 41108,
+        "detail_texels": 4186
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "pact_breaking_reap",
+          "soul_tithe"
+        ],
+        "generic_shapes": [
+          "SLASH_SCYTHE",
+          "SHADOW_POOL"
+        ]
+      },
+      "sound_loop": null
+    },
+    {
+      "id": "elsdocia",
+      "name": "Elsdocia",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "meshes": {
+        "elsdocia": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes/elsdocia.txt",
+          "quads": {
+            "body": 3896,
+            "void": 0,
+            "glow": 1369,
+            "veins": 0,
+            "halo": 0,
+            "total": 5265
+          },
+          "welded_vertices_body": 3656,
+          "welded_vertices_all": 3725,
+          "submitted_corners_per_frame": 21060,
+          "named_parts": 28
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes/elsdocia.txt",
+        "quads": {
+          "body": 3896,
+          "void": 0,
+          "glow": 1369,
+          "veins": 0,
+          "halo": 0,
+          "total": 5265
+        },
+        "welded_vertices_body": 3656,
+        "welded_vertices_all": 3725,
+        "submitted_corners_per_frame": 21060,
+        "named_parts": 28
+      },
+      "passes": [
+        "body_cutout",
+        "glow_additive",
+        "genesis_emissive_translucent",
+        "elsdocia_halo (a wider, fainter copy of the glow that breathes against the main pulse)"
+      ],
+      "material_pass_count": 4,
+      "skin": {
+        "size": 1024,
+        "painted_texels": 715167,
+        "detail_texels": 184547
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 392901,
+        "detail_texels": 20698
+      },
+      "ambient_layers": [
+        "grade_shimmer_motes (RelicGradeFx, one mote per 8 ticks round the holder)",
+        "genesis_extra_motes (RelicGradeFx, one in three)",
+        "held_glitter (ElsdociaGlitterClient)"
+      ],
+      "idle_animations": [
+        "glow_pulse (WeaponRenderer, sine of the mesh's glow speed, stronger for Genesis)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [],
+        "generic_shapes": []
+      },
+      "sound_loop": null
+    }
+  ]
+}
