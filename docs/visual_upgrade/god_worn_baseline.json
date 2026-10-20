@@ -12,11 +12,11 @@
    "animation": 0.1
   },
   "references": {
-   "mesh": 1000.0,
-   "texture": 16384.0,
-   "glow": 4.0,
-   "ambient": 4.0,
-   "animation": 4.0
+   "mesh": 900.0,
+   "texture": 20480.0,
+   "glow": 3.0,
+   "ambient": 3.0,
+   "animation": 3.0
   },
   "formula": "V = sum(weight * count / reference)"
  },
@@ -29,10 +29,9 @@
    ],
    "quads": 392,
    "vertices": 1568,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -48,8 +47,9 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -61,13 +61,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5872,
+   "V": 0.3958,
    "V_terms": {
-    "mesh": 0.392,
-    "texture": 0.375,
+    "mesh": 0.4356,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Flamme's Founder Cloak",
    "slot": "BACK",
@@ -83,10 +83,9 @@
    ],
    "quads": 404,
    "vertices": 1616,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -102,8 +101,9 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -115,13 +115,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5914,
+   "V": 0.4004,
    "V_terms": {
-    "mesh": 0.404,
-    "texture": 0.375,
+    "mesh": 0.4489,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Mantle of the Overlord",
    "slot": "BACK",
@@ -137,10 +137,9 @@
    ],
    "quads": 376,
    "vertices": 1504,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -156,8 +155,9 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -169,13 +169,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5816,
+   "V": 0.3896,
    "V_terms": {
-    "mesh": 0.376,
-    "texture": 0.375,
+    "mesh": 0.4178,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Pactbreaker Shroud",
    "slot": "BACK",
@@ -191,10 +191,9 @@
    ],
    "quads": 385,
    "vertices": 1540,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -210,8 +209,9 @@
    "painted_texels": 3072,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -223,13 +223,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5473,
+   "V": 0.3631,
    "V_terms": {
-    "mesh": 0.385,
-    "texture": 0.1875,
+    "mesh": 0.4278,
+    "texture": 0.15,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Shadow Monarch's Mantle",
    "slot": "BACK",
@@ -245,10 +245,9 @@
    ],
    "quads": 340,
    "vertices": 1360,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -264,8 +263,9 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -277,13 +277,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5565,
+   "V": 0.3656,
    "V_terms": {
-    "mesh": 0.34,
-    "texture": 0.3125,
+    "mesh": 0.3778,
+    "texture": 0.25,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Shadow's Slime Cloak",
    "slot": "BACK",
@@ -299,10 +299,9 @@
    ],
    "quads": 561,
    "vertices": 2244,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -318,8 +317,9 @@
    "painted_texels": 7168,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -331,13 +331,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6589,
+   "V": 0.4715,
    "V_terms": {
-    "mesh": 0.561,
-    "texture": 0.4375,
+    "mesh": 0.6233,
+    "texture": 0.35,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Silent Winter Mantle",
    "slot": "BACK",
@@ -353,10 +353,9 @@
    ],
    "quads": 485,
    "vertices": 1940,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -372,8 +371,9 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -385,13 +385,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6198,
+   "V": 0.4319,
    "V_terms": {
-    "mesh": 0.485,
-    "texture": 0.375,
+    "mesh": 0.5389,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Six-Faced Dragon's Scale",
    "slot": "BACK",
@@ -407,10 +407,9 @@
    ],
    "quads": 501,
    "vertices": 2004,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -426,8 +425,9 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -439,13 +439,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6253,
+   "V": 0.4382,
    "V_terms": {
-    "mesh": 0.501,
-    "texture": 0.375,
+    "mesh": 0.5567,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Urek Mazino's Chain Mantle",
    "slot": "BACK",
@@ -461,10 +461,9 @@
    ],
    "quads": 470,
    "vertices": 1880,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -480,17 +479,19 @@
    "painted_texels": 7168,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 9,
+   "ambient_layers": 5,
    "ambient_layer_names": [
-    "plan:motes(5)",
-    "plan:rune_ring",
-    "plan:halo_band",
-    "particles:ambient_theme",
     "model:uq_excaliburs_scabbard_avalon:orbit",
     "model:uq_excaliburs_scabbard_avalon:bob",
     "model:uq_excaliburs_scabbard_avalon:bob",
     "model:uq_excaliburs_scabbard_avalon:bob",
     "model:uq_excaliburs_scabbard_avalon:bob"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
    ],
    "animation_groups": 6,
    "animation_kinds": [
@@ -500,13 +501,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 1.002,
+   "V": 0.9361,
    "V_terms": {
-    "mesh": 0.47,
-    "texture": 0.4375,
+    "mesh": 0.5222,
+    "texture": 0.35,
     "glow": 1.0,
-    "ambient": 2.25,
-    "animation": 1.5
+    "ambient": 1.6667,
+    "animation": 2.0
    },
    "name": "Excalibur's Scabbard Avalon",
    "slot": "BELT",
@@ -522,10 +523,9 @@
    ],
    "quads": 394,
    "vertices": 1576,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -541,15 +541,17 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 7,
+   "ambient_layers": 3,
    "ambient_layer_names": [
-    "plan:motes(5)",
-    "plan:rune_ring",
-    "plan:halo_band",
-    "particles:ambient_theme",
     "model:uq_silvered_sash_of_reflections:bob",
     "model:uq_silvered_sash_of_reflections:bob",
     "model:uq_silvered_sash_of_reflections:bob"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
    ],
    "animation_groups": 4,
    "animation_kinds": [
@@ -558,13 +560,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.8129,
+   "V": 0.6966,
    "V_terms": {
-    "mesh": 0.394,
-    "texture": 0.375,
+    "mesh": 0.4378,
+    "texture": 0.3,
     "glow": 1.0,
-    "ambient": 1.75,
-    "animation": 1.0
+    "ambient": 1.0,
+    "animation": 1.3333
    },
    "name": "Silvered Sash of Reflections",
    "slot": "BELT",
@@ -582,10 +584,9 @@
    ],
    "quads": 391,
    "vertices": 1564,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -601,13 +602,15 @@
    "painted_texels": 4672,
    "armour_layer_texels": 576,
    "glow_map_texels": 25,
-   "ambient_layers": 5,
+   "ambient_layers": 1,
    "ambient_layer_names": [
+    "model:uq_berserker_armor_shard:orbit"
+   ],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
-    "particles:ambient_theme",
-    "model:uq_berserker_armor_shard:orbit"
+    "particles:ambient_theme"
    ],
    "animation_groups": 1,
    "animation_kinds": [
@@ -615,13 +618,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6189,
+   "V": 0.4477,
    "V_terms": {
-    "mesh": 0.391,
-    "texture": 0.2852,
+    "mesh": 0.4344,
+    "texture": 0.2281,
     "glow": 1.0,
-    "ambient": 1.25,
-    "animation": 0.25
+    "ambient": 0.3333,
+    "animation": 0.3333
    },
    "name": "Berserker Armor Shard",
    "slot": "CHEST",
@@ -639,10 +642,9 @@
    ],
    "quads": 418,
    "vertices": 1672,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -658,8 +660,9 @@
    "painted_texels": 5696,
    "armour_layer_texels": 576,
    "glow_map_texels": 25,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -669,12 +672,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5658,
+   "V": 0.3682,
    "V_terms": {
-    "mesh": 0.418,
-    "texture": 0.3477,
+    "mesh": 0.4644,
+    "texture": 0.2781,
     "glow": 1.0,
-    "ambient": 1.0,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Orsted's Dragon-God Armor",
@@ -691,10 +694,9 @@
    ],
    "quads": 648,
    "vertices": 2592,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -710,8 +712,11 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
+   "ambient_layers": 1,
    "ambient_layer_names": [
+    "particles:theme_spark"
+   ],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -723,13 +728,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6893,
+   "V": 0.5853,
    "V_terms": {
-    "mesh": 0.648,
-    "texture": 0.3125,
+    "mesh": 0.72,
+    "texture": 0.25,
     "glow": 1.0,
-    "ambient": 1.0,
-    "animation": 0.5
+    "ambient": 0.3333,
+    "animation": 0.6667
    },
    "name": "Greaves of the Wind Walker",
    "slot": "FEET",
@@ -745,10 +750,9 @@
    ],
    "quads": 301,
    "vertices": 1204,
-   "glow_passes": 2,
+   "glow_passes": 1,
    "glow_pass_names": [
-    "emissive_model",
-    "procedural_additive"
+    "emissive_model"
    ],
    "skin": {
     "texture": "textures/relic_worn/atlas.png (shared)",
@@ -762,8 +766,9 @@
    "painted_texels": 4096,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -773,12 +778,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.4304,
+   "V": 0.2071,
    "V_terms": {
-    "mesh": 0.301,
-    "texture": 0.25,
-    "glow": 0.5,
-    "ambient": 1.0,
+    "mesh": 0.3344,
+    "texture": 0.2,
+    "glow": 0.3333,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "White Whistle",
@@ -795,10 +800,9 @@
    ],
    "quads": 328,
    "vertices": 1312,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -814,8 +818,9 @@
    "painted_texels": 3072,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -825,12 +830,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5023,
+   "V": 0.3076,
    "V_terms": {
-    "mesh": 0.328,
-    "texture": 0.1875,
+    "mesh": 0.3644,
+    "texture": 0.15,
     "glow": 1.0,
-    "ambient": 1.0,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Hand of Vecna",
@@ -849,10 +854,9 @@
    ],
    "quads": 336,
    "vertices": 1344,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -868,8 +872,9 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -879,12 +884,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5301,
+   "V": 0.3307,
    "V_terms": {
-    "mesh": 0.336,
-    "texture": 0.3125,
+    "mesh": 0.3733,
+    "texture": 0.25,
     "glow": 1.0,
-    "ambient": 1.0,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Aerie Courier Gloves",
@@ -903,10 +908,9 @@
    ],
    "quads": 610,
    "vertices": 2440,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -922,8 +926,9 @@
    "painted_texels": 4096,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -933,12 +938,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6135,
+   "V": 0.4272,
    "V_terms": {
-    "mesh": 0.61,
-    "texture": 0.25,
+    "mesh": 0.6778,
+    "texture": 0.2,
     "glow": 1.0,
-    "ambient": 1.0,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Bloodbound Gauntlets",
@@ -957,10 +962,9 @@
    ],
    "quads": 496,
    "vertices": 1984,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -976,8 +980,9 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 4,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -987,12 +992,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5861,
+   "V": 0.3929,
    "V_terms": {
-    "mesh": 0.496,
-    "texture": 0.3125,
+    "mesh": 0.5511,
+    "texture": 0.25,
     "glow": 1.0,
-    "ambient": 1.0,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Incinerator Arm",
@@ -1008,10 +1013,9 @@
    ],
    "quads": 307,
    "vertices": 1228,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -1027,8 +1031,9 @@
    "painted_texels": 7168,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 5,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -1041,13 +1046,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.62,
+   "V": 0.3727,
    "V_terms": {
-    "mesh": 0.307,
-    "texture": 0.4375,
+    "mesh": 0.3411,
+    "texture": 0.35,
     "glow": 1.0,
-    "ambient": 1.25,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Eye of Vecna",
    "slot": "HEAD",
@@ -1063,10 +1068,9 @@
    ],
    "quads": 304,
    "vertices": 1216,
-   "glow_passes": 2,
+   "glow_passes": 1,
    "glow_pass_names": [
-    "emissive_model",
-    "procedural_additive"
+    "emissive_model"
    ],
    "skin": {
     "texture": "textures/relic_worn/atlas.png (shared)",
@@ -1080,8 +1084,9 @@
    "painted_texels": 4096,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 5,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -1092,12 +1097,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.4814,
+   "V": 0.2082,
    "V_terms": {
-    "mesh": 0.304,
-    "texture": 0.25,
-    "glow": 0.5,
-    "ambient": 1.25,
+    "mesh": 0.3378,
+    "texture": 0.2,
+    "glow": 0.3333,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Basilica Halo",
@@ -1113,10 +1118,9 @@
    ],
    "quads": 624,
    "vertices": 2496,
-   "glow_passes": 2,
+   "glow_passes": 1,
    "glow_pass_names": [
-    "emissive_model",
-    "procedural_additive"
+    "emissive_model"
    ],
    "skin": {
     "texture": "textures/relic_worn/atlas.png (shared)",
@@ -1130,14 +1134,17 @@
    "painted_texels": 6144,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 6,
+   "ambient_layers": 2,
    "ambient_layer_names": [
+    "particles:theme_star",
+    "model:crown_godking:orbit"
+   ],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
     "particles:ambient_theme",
-    "particles:head_halo",
-    "model:crown_godking:orbit"
+    "particles:head_halo"
    ],
    "animation_groups": 2,
    "animation_kinds": [
@@ -1146,13 +1153,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.7184,
+   "V": 0.5527,
    "V_terms": {
-    "mesh": 0.624,
-    "texture": 0.375,
-    "glow": 0.5,
-    "ambient": 1.5,
-    "animation": 0.5
+    "mesh": 0.6933,
+    "texture": 0.3,
+    "glow": 0.3333,
+    "ambient": 0.6667,
+    "animation": 0.6667
    },
    "name": "Godking Crown",
    "slot": "HEAD",
@@ -1168,10 +1175,9 @@
    ],
    "quads": 555,
    "vertices": 2220,
-   "glow_passes": 4,
+   "glow_passes": 3,
    "glow_pass_names": [
     "emissive_model",
-    "procedural_additive",
     "shell_rim",
     "shimmer"
    ],
@@ -1187,8 +1193,9 @@
    "painted_texels": 4096,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 5,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -1201,13 +1208,13 @@
    ],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.6693,
+   "V": 0.4392,
    "V_terms": {
-    "mesh": 0.555,
-    "texture": 0.25,
+    "mesh": 0.6167,
+    "texture": 0.2,
     "glow": 1.0,
-    "ambient": 1.25,
-    "animation": 0.25
+    "ambient": 0.0,
+    "animation": 0.3333
    },
    "name": "Limitless Blindfold",
    "slot": "HEAD",
@@ -1223,10 +1230,9 @@
    ],
    "quads": 388,
    "vertices": 1552,
-   "glow_passes": 2,
+   "glow_passes": 1,
    "glow_pass_names": [
-    "emissive_model",
-    "procedural_additive"
+    "emissive_model"
    ],
    "skin": {
     "texture": "textures/relic_worn/atlas.png (shared)",
@@ -1240,8 +1246,9 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 5,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -1252,12 +1259,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5233,
+   "V": 0.2509,
    "V_terms": {
-    "mesh": 0.388,
-    "texture": 0.3125,
-    "glow": 0.5,
-    "ambient": 1.25,
+    "mesh": 0.4311,
+    "texture": 0.25,
+    "glow": 0.3333,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Odin's All-Seeing Eye",
@@ -1274,10 +1281,9 @@
    ],
    "quads": 382,
    "vertices": 1528,
-   "glow_passes": 2,
+   "glow_passes": 1,
    "glow_pass_names": [
-    "emissive_model",
-    "procedural_additive"
+    "emissive_model"
    ],
    "skin": {
     "texture": "textures/relic_worn/atlas.png (shared)",
@@ -1291,8 +1297,9 @@
    "painted_texels": 5120,
    "armour_layer_texels": 0,
    "glow_map_texels": 0,
-   "ambient_layers": 5,
-   "ambient_layer_names": [
+   "ambient_layers": 0,
+   "ambient_layer_names": [],
+   "shared_grade_plan": [
     "plan:motes(5)",
     "plan:rune_ring",
     "plan:halo_band",
@@ -1303,12 +1310,12 @@
    "animation_kinds": [],
    "act_vfx": 0,
    "swing_trail": false,
-   "V": 0.5212,
+   "V": 0.2486,
    "V_terms": {
-    "mesh": 0.382,
-    "texture": 0.3125,
-    "glow": 0.5,
-    "ambient": 1.25,
+    "mesh": 0.4244,
+    "texture": 0.25,
+    "glow": 0.3333,
+    "ambient": 0.0,
     "animation": 0.0
    },
    "name": "Ra's Dawn Crown",
@@ -1322,9 +1329,9 @@
   "quads": 10396,
   "vertices": 41584,
   "painted_texels": 128128,
-  "ambient_layers": 112,
+  "ambient_layers": 12,
   "animation_groups": 25,
-  "glow_passes": 86,
-  "V": 14.6529
+  "glow_passes": 62,
+  "V": 10.0278
  }
 }
