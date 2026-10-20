@@ -73,13 +73,13 @@ public final class VuModels {
     }
 
     /** The hand entry of a relic while the upgrade is on, else null. */
-    public static VuOverrides.Entry handEntry(String relicId) { return enabled() ? table().hand(relicId) : null; }
+    public static VuOverrides.Entry handEntry(String relicId) { return table().handIf(enabled(), relicId); }
 
     /** The models a relic is held as while the upgrade is on, else null (the older catalog answers). */
     public static List<WornCatalog.Piece> handPieces(String relicId) { return pieces(handEntry(relicId)); }
 
     /** The models a relic wears while the upgrade is on, else null (the older catalog answers). */
-    public static List<WornCatalog.Piece> wornPieces(String relicId) { return enabled() ? pieces(table().worn(relicId)) : null; }
+    public static List<WornCatalog.Piece> wornPieces(String relicId) { return pieces(table().wornIf(enabled(), relicId)); }
 
     /** Forgets the table (a resource reload) and tells the caches to rebuild. */
     public static void clear() {

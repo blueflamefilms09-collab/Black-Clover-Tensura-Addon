@@ -1,0 +1,161 @@
+{
+ "id": "sukunas_twenty_fingers",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.sukunas_twenty_fingers",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "malevolence",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "malevolence",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "finger bouquet",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "finger_bouquet",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "inner fingers",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "inner_fingers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cleave blades",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "cleave_blades",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far blades",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "cleave_blades_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "four eyes",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "four_eyes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "curse cloth",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "curse_cloth",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "curse smoke",
+   "kind": "geometry",
+   "type": "distortion",
+   "group": "curse_smoke",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shrine seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "shrine_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cursed embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "dust",
+   "count": 2,
+   "every": 3,
+   "radius": 0.6,
+   "rise": 0.022,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FF3A3A"
+  },
+  {
+   "name": "malice smoke",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "smoke",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.02,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "slash sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "crit",
+   "count": 1,
+   "every": 7,
+   "radius": 0.7,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

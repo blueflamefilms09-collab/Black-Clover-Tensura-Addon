@@ -94,16 +94,13 @@ public final class WornMesh {
     public boolean custom() { return skin != null; }
 
     /**
-     * The model to draw from far away: the model named by its {@code lod} record (read through {@link WornModels}), else this one. Resolved once and kept.
+     * The model to draw from far away: the lod model named by this model's {@code lod} record once {@link WornModels} has read it (it attaches it with {@link #attachLod}), else this one.
+     * Pure: the loading is the library's business, so the parser stays free of game classes.
      */
-    public WornMesh lod() {
-        if (lodName == null) return this;
-        if (lodMesh == null) {
-            WornMesh m = WornModels.mesh(lodName);
-            lodMesh = m == null ? this : m;
-        }
-        return lodMesh;
-    }
+    public WornMesh lod() { return lodMesh == null ? this : lodMesh; }
+
+    /** Called by the library when it has read the lod model this model names. */
+    public void attachLod(WornMesh lod) { this.lodMesh = lod; }
 
     /**
      * The box of the player's second skin layer (hat, jacket, sleeves, pants) round an anchor part, in the part's own layer space: x0, x1, y0, y1, z0, z1. The outer layer is the
@@ -153,7 +150,10 @@ public final class WornMesh {
             np[3 * i + 1] = qy;
             np[3 * i + 2] = qz;
         }
-        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups, skin, glowTex, starTex, lodName);
+        if (np == null) return this;
+        WornMesh moved = new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups, skin, glowTex, starTex, lodName);
+        moved.lodMesh = lodMesh;
+        return moved;
     }
 
     /**

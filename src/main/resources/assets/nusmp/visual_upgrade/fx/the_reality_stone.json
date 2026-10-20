@@ -1,5 +1,6 @@
 {
  "id": "the_reality_stone",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.the_reality_stone",
  "draw_ticks": 12,
  "layers": [

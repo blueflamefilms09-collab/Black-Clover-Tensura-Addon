@@ -43,6 +43,7 @@ class VU:
         self.atlas = None
         self._names = set()
         self.layers = []                 # the ambient layers this model declares (written into the fx json by the item)
+        self.pal = None                  # (main, trim, glow) of the relic: the additive quads are toned by it
 
     # ------------------------------------------------------------ construction
     def S(self, n, lo=3, f=None):
@@ -88,10 +89,29 @@ class VU:
         self.decos.append((fn, a, kw))
 
     # ------------------------------------------------------------ additive fx quads
+    def _lum(self, slot):
+        """Luminance 0..1 of a colour slot of the relic as the game computes it (WornPalette.slots: dark = main x 0.38, accent = the mean of trim and glow)."""
+        if self.pal is None:
+            return 0.5
+        main, trim, glow = ((c >> 16 & 255, c >> 8 & 255, c & 255) for c in self.pal)
+        rgb = {MAIN: main, TRIM: trim, GLOW: glow, DARK: tuple(0.38 * x for x in main), ACCENT: tuple((a + b) / 2 for a, b in zip(trim, glow))}.get(slot, glow)
+        return (0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]) / 255.0
+
+    def tone(self, slot):
+        """The additive layers add up, so a bright palette would burn white: take the wanted colour slot if its light is moderate, else the nearest slot that is."""
+        if self.pal is None:
+            return slot
+        order = [slot] + [s for s in (GLOW, ACCENT, TRIM, DARK) if s != slot]
+        for s in order:
+            if 0.14 <= self._lum(s) <= 0.66:
+                return s
+        return min(order, key=lambda s: abs(self._lum(s) - 0.4))
+
     def fx_quad(self, group, slot, P4, cell, normal=(0, 0, 1), uvrot=0, double=True, lod=False):
         u0, v0, u1, v1 = fxtex.cell_uv(cell)
         uv = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
         uv = uv[uvrot % 4:] + uv[:uvrot % 4]
+        slot = self.tone(slot)
         self.fxq.append(dict(group=group, slot=slot, P=np.array(P4, float), uv=np.array(uv), n=geo.unit(normal), double=double, lod=lod))
 
     def fx_disc(self, group, slot, center, normal, size, cell, rot=0.0, lod=False):
@@ -131,7 +151,7 @@ class VU:
             self.stars = [(p, g) for (p, g) in self.stars if p.F and self.plod.get(p.name, True)]
         m.finish()
         self.atlas = ml.Atlas(self.size, bleed=1, pad=2)
-        self.atlas.layout(m, ppu_max=(14.0 if not self.lod else 6.0))
+        self.atlas.layout(m, ppu_max=((14.0 if self.size <= 512 else 28.0) if not self.lod else 6.0))
         self.atlas.paint(m)
         for fn, a, kw in self.decos:
             kw = dict(kw)

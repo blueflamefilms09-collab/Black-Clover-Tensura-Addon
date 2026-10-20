@@ -15,8 +15,8 @@ import metrics as MT  # noqa: E402
 import roster as R  # noqa: E402
 import vu as V  # noqa: E402
 
-CAPS = {"GOD": {"mesh_vertices": 2500, "drawn_vertices": 2500, "lod_ratio": 0.15, "skin": 256, "lod_skin": 64},
-        "GENESIS": {"mesh_vertices": 6000, "drawn_vertices": 6000, "lod_ratio": 0.15, "skin": 512, "lod_skin": 96}}
+CAPS = {"GOD": {"mesh_vertices": 2500, "drawn_vertices": 2500, "lod_ratio": 0.15, "skin": 512, "lod_skin": 64},
+        "GENESIS": {"mesh_vertices": 6000, "drawn_vertices": 6000, "lod_ratio": 0.15, "skin": 1024, "lod_skin": 128}}
 
 
 class Item:
@@ -39,6 +39,7 @@ def make(item, lod):
     grade = info[2]
     cap = CAPS[grade]
     vm = V.VU(item.rid + ("_lod" if lod else ""), lod=lod, skin=(cap["lod_skin"] if lod else (item.skin or cap["skin"])), seed=item.seed)
+    vm.pal = info[4]
     item.build(vm, info)
     vm.build()
     return vm
@@ -112,7 +113,7 @@ def step(shape, rgb, power, dur, where):
 
 
 def fx_json(item):
-    return {"id": item.rid, "ambient_sound": item.sound, "draw_ticks": 12, "layers": [dict(l) for l in item.layers]}
+    return {"id": item.rid, "grade": R.BY_ID[item.rid][2], "ambient_sound": item.sound, "draw_ticks": 12, "layers": [dict(l) for l in item.layers]}
 
 
 def hand_line(item):

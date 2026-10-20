@@ -77,6 +77,10 @@ public final class WornModels {
             if (ex instanceof IllegalStateException || ex instanceof NullPointerException) return null;      // the resource manager was not ready: ask again next time
         }
         MESHES.put(name, Optional.ofNullable(mesh));
+        if (mesh != null && mesh.lodName != null && !mesh.lodName.equals(name)) {                  // a visual upgrade model: read its lod model too, once
+            WornMesh lod = mesh(mesh.lodName);
+            if (lod != null) mesh.attachLod(lod);
+        }
         return mesh;
     }
 

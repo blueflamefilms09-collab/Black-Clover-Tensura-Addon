@@ -1,0 +1,191 @@
+{
+ "id": "gate_of_babylon_crest",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.gate_of_babylon_crest",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "great gate ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "gate_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "great gate ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "gate_ripple_1",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "second ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "gate_ripple_2",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "third ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "gate_ripple_3",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lesser gates a",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "mini_gate_1",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lesser gates b",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "mini_gate_2",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lesser gates c",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "mini_gate_3",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "emerging weapons",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "emerging_weapons",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "golden mantle",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "golden_mantle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "chains of light",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "light_chains",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "treasury seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "treasury_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "golden rays",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "golden_ripples",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 2,
+   "every": 3,
+   "radius": 0.6,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "treasury dust",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 2,
+   "every": 4,
+   "radius": 0.7,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFF0A0"
+  },
+  {
+   "name": "gate sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "crit",
+   "count": 1,
+   "every": 6,
+   "radius": 0.7,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

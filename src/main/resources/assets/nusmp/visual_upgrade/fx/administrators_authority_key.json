@@ -1,5 +1,6 @@
 {
  "id": "administrators_authority_key",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.administrators_authority_key",
  "draw_ticks": 12,
  "layers": [

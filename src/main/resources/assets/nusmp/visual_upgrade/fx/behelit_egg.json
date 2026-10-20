@@ -1,5 +1,6 @@
 {
  "id": "behelit_egg",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.behelit_egg",
  "draw_ticks": 12,
  "layers": [

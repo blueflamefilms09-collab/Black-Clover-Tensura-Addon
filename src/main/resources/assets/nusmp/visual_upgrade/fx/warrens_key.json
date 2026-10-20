@@ -1,5 +1,6 @@
 {
  "id": "warrens_key",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.warrens_key",
  "draw_ticks": 12,
  "layers": [

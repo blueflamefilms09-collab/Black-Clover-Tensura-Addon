@@ -36,3 +36,21 @@ hand series_ancient_grimoire vu/series_ancient_grimoire | size=0.78 style=palm
 worn series_ancient_grimoire vu/series_ancient_grimoire_worn
 hand vaultmakers_pocketwatch vu/vaultmakers_pocketwatch | size=0.74 style=hang
 worn vaultmakers_pocketwatch vu/vaultmakers_pocketwatch_worn
+hand holy_grail_fragment vu/holy_grail_fragment | size=1.00 style=palm
+worn holy_grail_fragment vu/holy_grail_fragment_worn
+hand philosophers_stone_shard vu/philosophers_stone_shard | size=1.00 style=palm
+worn philosophers_stone_shard vu/philosophers_stone_shard_worn
+hand prison_realm_cube vu/prison_realm_cube | size=0.90 style=palm
+worn prison_realm_cube vu/prison_realm_cube_worn
+hand seal_of_the_sealed_god vu/seal_of_the_sealed_god | size=0.85 style=palm
+worn seal_of_the_sealed_god vu/seal_of_the_sealed_god_worn
+hand sukunas_twenty_fingers vu/sukunas_twenty_fingers | size=1.00 style=palm
+worn sukunas_twenty_fingers vu/sukunas_twenty_fingers_worn
+hand the_infinity_gauntlet vu/the_infinity_gauntlet@larm~ | size=1.00 style=tool
+worn the_infinity_gauntlet vu/the_infinity_gauntlet@larm~
+hand absolute_beings_crown_shard vu/absolute_beings_crown_shard@head | size=0.90 style=brim
+worn absolute_beings_crown_shard vu/absolute_beings_crown_shard@head
+hand zahards_crown_fragment vu/zahards_crown_fragment@head | size=0.90 style=brim
+worn zahards_crown_fragment vu/zahards_crown_fragment@head
+hand gate_of_babylon_crest vu/gate_of_babylon_crest@body | size=0.95 style=palm
+worn gate_of_babylon_crest vu/gate_of_babylon_crest@body

@@ -1,0 +1,162 @@
+{
+ "id": "philosophers_stone_shard",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.philosophers_stone_shard",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "people inside the stone",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "soul_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "crystal burst",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "shard_burst",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "transmutation circle",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "transmutation_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "inner hexagram",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "transmutation_inner",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "element plates",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "element_plates",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold wire cage",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "gold_wire",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rising souls",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "rising_souls",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far souls",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "rising_souls_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "chain lightning",
+   "kind": "geometry",
+   "type": "energy_arcs",
+   "group": "chain_lightning",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "dust",
+   "count": 2,
+   "every": 3,
+   "radius": 0.55,
+   "rise": 0.02,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FF6A5A"
+  },
+  {
+   "name": "alchemy sparks",
+   "kind": "particle",
+   "type": "arcs",
+   "particle": "electric_spark",
+   "count": 1,
+   "every": 5,
+   "radius": 0.6,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "red glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.6,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "F0E0A0"
+  }
+ ]
+}

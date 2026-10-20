@@ -221,7 +221,10 @@ public final class WornLibDraw {
      * Draws an ensemble as an object (an armour item in the hand, on the ground or in a frame): the pieces at the rest pose of the player model, solid and emissive, no
      * shell pass. {@code pose} must already be scaled so that one unit is one model pixel and centred on the ensemble ({@link #itemFit}).
      */
-    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age) {
+    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age) { drawItem(e, pose, buffers, light, age, false); }
+
+    /** The same; {@code near} forces the full model and every additive pass (an object drawn in a GUI slot, where the pose has no distance in blocks). */
+    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age, boolean near) {
         if (e == null || e.pieces.isEmpty()) return;
         int used = 0;
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(ATLAS));
@@ -247,6 +250,7 @@ public final class WornLibDraw {
         for (int u = 0; u < used; u++) if (SLOTS[u].mesh.emitQuads > 0) glow(vc, SLOTS[u], age, 0f, false, hot);
         Matrix4f at = pose.last().pose();                                                // where the object stands relative to the camera: the lod and additive distances of a held object
         double distSq = (double) at.m30() * at.m30() + (double) at.m31() * at.m31() + (double) at.m32() * at.m32();
+        if (near) distSq = 0.0;
         customPasses(buffers, used, light, age, 0f, false, distSq, RelicFxOptions.quality());
     }
 

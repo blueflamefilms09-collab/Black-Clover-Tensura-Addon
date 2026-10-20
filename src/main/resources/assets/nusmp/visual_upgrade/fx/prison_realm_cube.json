@@ -1,0 +1,162 @@
+{
+ "id": "prison_realm_cube",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.prison_realm_cube",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "sealed eye",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "sealed_eye",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "inner realm faces",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "inner_realm",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sutra tags",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "sutra_tags",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sutra tags b",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "sutra_tags_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "binding chains",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "binding_chains",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tiny sealed cubes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "tiny_cubes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seal circle",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seal circle b",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_circle_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cursed ash",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.006,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "DDDDDD"
+  },
+  {
+   "name": "seal sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 7,
+   "radius": 0.6,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "red ink",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "dust",
+   "count": 1,
+   "every": 9,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "C82A1A"
+  }
+ ]
+}

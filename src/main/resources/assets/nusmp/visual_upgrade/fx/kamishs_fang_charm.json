@@ -1,5 +1,6 @@
 {
  "id": "kamishs_fang_charm",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.kamishs_fang_charm",
  "draw_ticks": 12,
  "layers": [

@@ -1,5 +1,6 @@
 {
  "id": "moon_tower_black_sigil",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.moon_tower_black_sigil",
  "draw_ticks": 12,
  "layers": [

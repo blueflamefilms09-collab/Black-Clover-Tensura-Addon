@@ -228,6 +228,7 @@ def main(argv):
             bad += 1
     if not check:
         cat.write()
+    if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "visual_upgrade", "charms_genesis_worn", "build.py"), run_name="vu_charms_genesis_worn")      # visual upgrade, slice charms_genesis_worn: bakes its own files under assets/nusmp/visual_upgrade only
     return 1 if over or bad else 0
 
 

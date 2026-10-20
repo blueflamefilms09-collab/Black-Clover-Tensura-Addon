@@ -179,7 +179,7 @@ def build_orrery(vm, info):
         arm = vm.P("arm_%d" % (i + 1), "bronze", group=g, base=(176, 146, 80), lod=False)
         geo.tube_path(arm, [(0, 3, 0), (rr * 0.5, 3.0 + 0.4 * i, 0), (rr, 3.0 + 0.4 * i, 0)], 0.16, sides=3, caps=(False, True))
         pl = vm.P("planet_%d" % (i + 1), "crystal", group=g, base=[(90, 220, 220), (240, 160, 120), (150, 190, 255), (120, 230, 170), (255, 220, 120), (200, 150, 255), (255, 140, 160)][i], slot=GLOW, lod=False)
-        geo.merge(pl, geo.prim_octa(0.55 + 0.1 * (i % 3), 0.7 + 0.1 * (i % 3)), None, (rr, 3.0 + 0.4 * i, 0))
+        geo.merge(pl, geo.prim_octa(1.0 + 0.18 * (i % 3), 1.25 + 0.18 * (i % 3)), None, (rr, 3.0 + 0.4 * i, 0))
         vm.deco(PT.deco_fill_glow, pl, glow, strength=0.8, seed=i)
     bubbles = K.orbs(vm, "bubbles", g_bub, 4, 6.0, 8.0, 0.45, "crystal", (190, 250, 255), slot=ACCENT, phase=0.2, wobble=3.0, lod=False)
     vm.fx_disc(g_tide, GLOW, (0, -11.5, 0), (0, 1, 0), 26.0, "ripple")
@@ -244,14 +244,14 @@ def build_watch(vm, info):
         geo.merge(h, blade, geo.rot_matrix("x", 90) @ geo.rot_matrix("z", 0), (0, 0, -2.0 - 0.15 * (0 if nm == "hand_hour" else 1 if nm == "hand_min" else 2)))
     lid = vm.P("open_lid", "silver", group=g_lid, base=(196, 198, 212), lod=False)
     geo.lathe(lid, "y", (0, 0, 0), [(-0.4, 8.4), (0.6, 8.2), (0.6, 7.4)], sides=vm.S(12, 8), caps=(True, False))
-    lid.V = [geo.rot_matrix("y", -50) @ (geo.rot_matrix("x", -90) @ v) + np.array([9.5 + 0.0, 0.0, 0.0]) for v in lid.V]
+    lid.V = [geo.rot_matrix("y", 105) @ (geo.rot_matrix("x", -90) @ v) + np.array([9.2, 0.0, 0.0]) for v in lid.V]
     # two gears in the case back peeking out, and rings that rewind
     for g, nm, c, R_ in ((g_gear1, "gear_a", (-8.0, 6.0, 2.0), 3.2), (g_gear2, "gear_b", (8.0, -6.0, 2.0), 2.6)):
         gp = vm.P(nm, "gold", group=g, base=(220, 190, 120), slot=TRIM, lod=False)
         gg = geo.prim_gear(R_, 6, 0.7, 0.8)
         geo.merge(gp, gg, geo.rot_matrix("x", 90), c)
-    vm.fx_disc(g_rew, GLOW, (0, 0, -2.3), (0, 0, 1), 26.0, "ripple")
-    vm.fx_disc(g_rew2, GLOW, (0, 0, -2.6), (0, 0, 1), 21.0, "ticks")
+    vm.fx_disc(g_rew, TRIM, (0, 0, -2.3), (0, 0, 1), 22.0, "ripple")
+    vm.fx_disc(g_rew2, DARK, (0, 0, -2.6), (0, 0, 1), 19.0, "ticks")
     K.halo_set(vm, pal, y=0.0, R=9.0, rune=True, shaft_len=22.0)
     vm.deco(PT.deco_glyphs, body, glow, text="RETURN", rows=1, glow=False, seed=3)
     vm.deco(PT.deco_filigree, bez, trim, seed=4)

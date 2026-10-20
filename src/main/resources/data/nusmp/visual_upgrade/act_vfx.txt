@@ -40,3 +40,28 @@ act series_ancient_grimoire ancient_spell MAGIC_CIRCLE:D8B8FF:3:50:ground ELF_CI
 act series_ancient_grimoire thousand_year_magic MAGIC_CIRCLE_EXPLOSION:D8B8FF:4:60:ground DIVINE_HALO:E8E0F0:3:60:sky STAR_MAGIC:D8B8FF:2.4:60:self
 act vaultmakers_pocketwatch stop_the_watch MAGIC_CIRCLE:E0A040:3.2:60:ground DIVINE_HALO:FFE0A0:2.4:60:self LIGHT_FLARE:FFE0A0:1.4:14:self
 act vaultmakers_pocketwatch wind_back MAGIC_CIRCLE:E0A040:2.4:40:ground MANA_CHARGE:FFE0A0:1.6:30:self
+act holy_grail_fragment wish DIVINE_PILLAR:FFF0A0:3.4:80:ground DIVINE_HALO:E8D070:3.2:70:sky LIGHT_FLARE:FFFFFF:2:16:self
+act holy_grail_fragment the_cup_overflows DIVINE_PILLAR:E8D070:4:90:ground MAGIC_CIRCLE_EXPLOSION:FFF0A0:4.4:60:ground DIVINE_SIGIL:FFF0A0:3:70:sky
+act philosophers_stone_shard transmute ALCHEMY_CIRCLE:FF6A5A:3.6:70:ground LIGHTNING_FIEND:FF3A2A:2.4:40:self LIGHT_FLARE:FFB0A0:1.6:14:self
+act philosophers_stone_shard equivalent_exchange ALCHEMY_CIRCLE:F0E0A0:4.4:80:ground SOUL_VORTEX:C8302A:3:70:self MAGIC_CIRCLE_EXPLOSION:FF6A5A:3.6:50:ground
+act prison_realm_cube seal SEAL_CHAINS:FFFFFF:2.6:70:front SEAL_TRINITY:E8E4D4:2.6:70:ground SPACE_CUBE:FFFFFF:2:70:front
+act prison_realm_cube lock_the_room SPACE_CUBE:FFFFFF:4:90:self SEAL_TRINITY:FFFFFF:3.4:80:ground SEAL_CHAINS:E8E4D4:3.4:80:self
+act seal_of_the_sealed_god break_one_seal SEAL_TRINITY:D8A8FF:3:70:ground SPACE_CRACK:D8A8FF:2.2:36:front LIGHT_FLARE:FFFFFF:1.6:14:front
+act seal_of_the_sealed_god the_tomb_opens SEAL_CHAINS:6A3A9A:4:90:self SPACE_TEAR:D8A8FF:3.4:70:front SHADOW_POOL:2A1040:3.4:80:ground
+act sukunas_twenty_fingers cleave SLASH_SCYTHE:FF3A3A:3:40:front LIGHT_BLADE:FF6A5A:2.4:24:front
+act sukunas_twenty_fingers malevolent_shrine SPACE_CUBE:FF3A3A:4.4:90:self SLASH_SCYTHE:FF3A3A:4:60:self BLOOD_SIGIL:FF3A3A:3.6:80:ground
+act the_infinity_gauntlet greater_wish DIVINE_PILLAR:FFD27A:4:90:ground DIVINE_HALO:FFD27A:3.6:80:sky LIGHT_FLARE:FFFFFF:2.4:18:self
+act the_infinity_gauntlet choose_wish MAGIC_CIRCLE:FFD27A:2.4:40:ground
+act the_infinity_gauntlet stone_space SPACE_PORTAL:3A8BFF:2.4:50:front
+act the_infinity_gauntlet stone_mind DIVINE_HALO:FFD93A:2.4:50:self
+act the_infinity_gauntlet stone_power MAGIC_CIRCLE_EXPLOSION:A04AF0:3.6:40:ground LIGHTNING_FIEND:D0A0FF:2.6:36:self
+act the_infinity_gauntlet stone_time DIVINE_HALO:3AE07A:3:70:self MAGIC_CIRCLE:3AE07A:3:50:ground
+act the_infinity_gauntlet stone_reality DREAM_MANIFEST:E03A3A:2.2:40:front
+act the_infinity_gauntlet stone_soul SOUL_VORTEX:FF8A2A:2.4:60:self
+act the_infinity_gauntlet snap MAGIC_CIRCLE_EXPLOSION:FFD27A:5:60:ground DIVINE_PILLAR:FFFFFF:4.6:90:ground LIGHT_FLARE:FFFFFF:3:20:self
+act absolute_beings_crown_shard sovereigns_will SHADOW_UNITE:6A4AA8:3.6:80:self DIVINE_HALO:D8C0FF:3.4:70:sky LIGHT_FLARE:FFFFFF:1.8:16:self
+act absolute_beings_crown_shard absolute_command SEAL_CHAINS:D8C0FF:4:90:front MAGIC_CIRCLE_EXPLOSION:6A4AA8:4.4:60:ground DEMON_METEOR:6A4AA8:3:56:sky
+act zahards_crown_fragment kings_edict DIVINE_SIGIL:FFE8A0:3.2:70:sky MAGIC_CIRCLE:8A6AC8:3.4:60:ground LIGHT_FLARE:FFE8A0:1.6:14:self
+act zahards_crown_fragment ascend DIVINE_PILLAR:FFE8A0:3.6:90:ground DIVINE_HALO:8A6AC8:3.2:80:sky STAR_MAGIC:FFE8A0:2.6:70:self
+act gate_of_babylon_crest shower_of_blades WEAPON_CONSTRUCTS:FFF0A0:3:70:self SPACE_PORTAL:E8C850:3:50:sky LIGHT_FLARE:FFF0A0:1.6:14:self
+act gate_of_babylon_crest gate_fully_open SPACE_PORTAL:E8C850:4.6:90:front WEAPON_CONSTRUCTS:FFF0A0:4:90:self DIVINE_PILLAR:FFF0A0:3.6:80:ground

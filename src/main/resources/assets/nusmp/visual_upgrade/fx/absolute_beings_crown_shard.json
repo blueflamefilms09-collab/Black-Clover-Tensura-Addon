@@ -1,0 +1,182 @@
+{
+ "id": "absolute_beings_crown_shard",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.absolute_beings_crown_shard",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "shard heart",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "shard_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sovereign halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "sovereign_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "second halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "sovereign_halo_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "orbiting shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "orbiting_shards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "orbiting_shards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "throne chains",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "throne_chains",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "floating runes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "floating_runes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "royal ribbons",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "royal_ribbons",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "throne void",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "throne_void",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "command seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "command_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sovereign rays",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "sovereign_rays",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sovereign motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 2,
+   "every": 3,
+   "radius": 0.6,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "void wisps",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.55,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "6A4AA8"
+  },
+  {
+   "name": "crown glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "D8C0FF"
+  }
+ ]
+}

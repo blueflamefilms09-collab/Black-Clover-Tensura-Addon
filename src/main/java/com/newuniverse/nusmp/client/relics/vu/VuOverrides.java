@@ -83,6 +83,12 @@ public final class VuOverrides {
     /** The worn entry of a relic, or null. */
     public Entry worn(String id) { return worn.get(id); }
 
+    /** The hand entry while the upgrade is on, else null: with {@code visual.upgrade=false} every relic is held as its older model (the fallback is this one line). */
+    public Entry handIf(boolean upgrade, String id) { return upgrade ? hand.get(id) : null; }
+
+    /** The worn entry while the upgrade is on, else null (the older catalog answers). */
+    public Entry wornIf(boolean upgrade, String id) { return upgrade ? worn.get(id) : null; }
+
     public Iterable<String> handIds() { return hand.keySet(); }
 
     public Iterable<String> wornIds() { return worn.keySet(); }

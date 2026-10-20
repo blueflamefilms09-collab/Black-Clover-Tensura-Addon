@@ -1,5 +1,6 @@
 {
  "id": "series_ancient_grimoire",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.series_ancient_grimoire",
  "draw_ticks": 12,
  "layers": [

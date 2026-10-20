@@ -77,6 +77,44 @@ def write_data(items):
         fh.write("\n".join(caps) + "\n")
 
 
+def wave_acts():
+    """relic id -> the act keys its RelicDef declares, read from the wave sources (the generator checks its act effects against them)."""
+    import glob
+    import re
+    root = os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+    src = {f: open(f, encoding="utf8").read() for f in glob.glob(root + "/*.java")}
+    consts = {}
+    for t in src.values():
+        for m in re.finditer(r'(ID_[A-Z]+)\s*=\s*"([a-z0-9_]+)"', t):
+            consts.setdefault(m.group(1), m.group(2))
+    out = {}
+    for t in src.values():
+        for m in re.finditer(r'RelicDef\.of\((?:\w+Tune\.)?(ID_[A-Z]+|"[a-z0-9_]+"),', t):
+            rid = consts.get(m.group(1)) if m.group(1).startswith("ID_") else m.group(1).strip('"')
+            end = t.find("out.accept", m.end())
+            body = t[m.end():end if end > 0 else m.end() + 4000]
+            out[rid] = re.findall(r'Act\.of\("([^"]+)"', body)
+    return out
+
+
+def verify_acts(items):
+    acts = wave_acts()
+    bad = []
+    for it in items:
+        have = acts.get(it.rid)
+        if have is None:
+            bad.append("%s: no RelicDef found in the wave sources" % it.rid)
+            continue
+        for k in it.acts:
+            if k != "*" and k not in have:
+                bad.append("%s: act %s is not one of %s" % (it.rid, k, have))
+        for k in have:
+            if k not in it.acts and "*" not in it.acts:
+                bad.append("%s: act %s has no effect" % (it.rid, k))
+    if bad:
+        raise SystemExit("act effects do not match the relics:\n  " + "\n  ".join(bad))
+
+
 def main(argv):
     import fxtex
     import vu
@@ -87,9 +125,12 @@ def main(argv):
         SP.bake(it)
         if "--preview" in argv:
             print("  preview", quick_preview(it))
+    verify_acts(all_items())
     write_data(all_items())
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
+elif __name__ == "vu_charms_genesis_worn":                  # run by the one hook line at the end of tools/relics/gen_worn_all.py main()
+    main([])

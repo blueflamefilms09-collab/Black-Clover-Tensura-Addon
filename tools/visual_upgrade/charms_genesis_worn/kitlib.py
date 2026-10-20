@@ -31,7 +31,7 @@ def mixc(a, b, t):
 
 
 # ------------------------------------------------------------------ fx sets
-def halo_set(vm, pal, y=0.0, R=9.0, group_ring=None, group_flare=None, rune=True, flare=True, shafts=True, shaft_len=16.0, tilt=0.0):
+def halo_set(vm, pal, y=0.0, R=9.0, group_ring=None, group_flare=None, rune=True, flare=True, shafts=True, shaft_len=16.0, tilt=0.0, shaft=None):
     """The additive layers most items share: a rotating rune ring in the horizontal plane, a pulsing lens flare, light shafts up and down.
     Returns the groups made {'ring', 'flare', 'shafts'} (declared by the caller's layers list)."""
     out = {}
@@ -47,7 +47,8 @@ def halo_set(vm, pal, y=0.0, R=9.0, group_ring=None, group_flare=None, rune=True
         out["flare"] = g
     if shafts:
         g = vm.grp("light_shafts", "pulse", (0, y, 0), 0.10, 0.07, 1.3)
-        vm.fx_beam(g, ACCENT, (0, y - shaft_len * 0.5, 0), (0, y + shaft_len * 0.5, 0), R * 0.7, "beam", lod=True)
+        y0, y1 = shaft if shaft else (y - shaft_len * 0.5, y + shaft_len * 0.5)
+        vm.fx_beam(g, ACCENT, (0, y0, 0), (0, y1, 0), R * 0.7, "beam", lod=True)
         out["shafts"] = g
     return out
 

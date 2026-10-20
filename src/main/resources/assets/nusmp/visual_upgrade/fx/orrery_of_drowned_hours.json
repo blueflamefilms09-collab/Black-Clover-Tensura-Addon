@@ -1,5 +1,6 @@
 {
  "id": "orrery_of_drowned_hours",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.orrery_of_drowned_hours",
  "draw_ticks": 12,
  "layers": [

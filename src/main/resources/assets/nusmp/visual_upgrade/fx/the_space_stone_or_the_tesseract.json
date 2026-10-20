@@ -1,5 +1,6 @@
 {
  "id": "the_space_stone_or_the_tesseract",
+ "grade": "GOD",
  "ambient_sound": "nusmp:relic.ambient.the_space_stone_or_the_tesseract",
  "draw_ticks": 12,
  "layers": [
