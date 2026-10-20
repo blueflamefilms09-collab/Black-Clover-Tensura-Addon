@@ -59,7 +59,18 @@ public final class SystemSync {
 
     // ---------------------------------------------------------------- sending
     /** Server tick: sends the syncs that are due. Cheap when nobody is dirty. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_SYSTEM_SYNC = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.system_sync");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void tick(MinecraftServer server) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            tick0(server);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_SYSTEM_SYNC, t0);
+        }
+    }
+
+    private static void tick0(MinecraftServer server) {
         if (THROTTLES.isEmpty()) return;
         long now = server.getTickCount();
         Iterator<Map.Entry<UUID, SyncThrottle>> it = THROTTLES.entrySet().iterator();

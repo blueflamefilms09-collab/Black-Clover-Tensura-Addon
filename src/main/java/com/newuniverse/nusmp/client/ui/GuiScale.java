@@ -207,6 +207,6 @@ public final class GuiScale {
     }
 
     private static void onLayerPost(RenderGuiLayerEvent.Post e) {
-        if (PUSHED_LAYERS.remove(e.getName())) e.getGuiGraphics().pose().popPose();
+        if (!PUSHED_LAYERS.isEmpty() && PUSHED_LAYERS.remove(e.getName())) e.getGuiGraphics().pose().popPose();      // 1.99.0: runs for every HUD layer every frame
     }
 }

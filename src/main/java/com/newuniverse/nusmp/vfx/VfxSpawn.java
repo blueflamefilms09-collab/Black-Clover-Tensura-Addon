@@ -28,7 +28,17 @@ public final class VfxSpawn {
         send(level, new VfxPayload(shape.ordinal(), follow.position(), to, color, duration, power, follow.getId(), level.random.nextLong()));
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section SEND_SECTION = com.newuniverse.nusmp.perf.PerfProbe.section("s.vfx.send");
+
+    /**
+     * Every effect of the server goes out through here. 1.99.0 (performance pass): the effects of ONE tick have a budget ({@code maxEffectPacketsPerTick} in nusmp-performance-common.toml, 160 by
+     * default, 0 = no limit): a boss that loops a spell over a crowd of targets cannot send hundreds of packets to everyone in range in one tick; the ones over the budget are not sent (the
+     * effect is not shown, nothing else changes) and are counted in {@code /multiverse perf report}.
+     */
     public static void send(ServerLevel level, VfxPayload payload) {
+        if (!com.newuniverse.nusmp.perf.PerfBudgets.effectPacket(level.getGameTime())) return;
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
         PacketDistributor.sendToPlayersNear(level, null, payload.from().x, payload.from().y, payload.from().z, SEND_RANGE, payload);
+        com.newuniverse.nusmp.perf.PerfProbe.end(SEND_SECTION, t0);
     }
 }

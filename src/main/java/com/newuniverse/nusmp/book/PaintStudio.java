@@ -380,7 +380,18 @@ public final class PaintStudio {
     }
 
     // ================================================================ events
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_PAINT_STUDIO = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.paint_studio");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_PAINT_STUDIO, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
         Inventory inv = p.getInventory();
         boolean out = GrimoireSummon.floatingMagic(p) == MagicType.PAINTING;

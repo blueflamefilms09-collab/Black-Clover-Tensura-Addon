@@ -130,7 +130,18 @@ public final class FloorTracker {
     public static void forget(UUID id) { CURRENT.remove(id); }
 
     // ---------------------------------------------------------------- the clock
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_FLOOR_TRACKER = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.floor_tracker");   // 1.99.0: performance probe (off by default: one flag read)
+
     private static void onServerTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_FLOOR_TRACKER, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post e) {
         try {
             tick(e.getServer());
         } catch (RuntimeException ex) {

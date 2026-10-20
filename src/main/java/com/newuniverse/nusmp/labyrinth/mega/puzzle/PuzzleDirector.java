@@ -124,7 +124,18 @@ public final class PuzzleDirector {
     static String key(Sector s, PuzzlePlanner.Slot slot) { return s.id + ":" + slot.roomId() + ":" + slot.type(); }
 
     // ---------------------------------------------------------------- the tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_PUZZLE = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.puzzle");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_PUZZLE, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post e) {
         try {
             tick(e.getServer());
         } catch (Throwable t) {

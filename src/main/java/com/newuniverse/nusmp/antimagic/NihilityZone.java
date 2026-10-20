@@ -51,7 +51,18 @@ public final class NihilityZone {
         return false;
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_ANTIMAGIC_NIHILITY = com.newuniverse.nusmp.perf.PerfProbe.section("s.antimagic.nihility");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_ANTIMAGIC_NIHILITY, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post e) {
         if (ZONES.isEmpty()) return;
         Iterator<Zone> it = ZONES.iterator();
         while (it.hasNext()) {

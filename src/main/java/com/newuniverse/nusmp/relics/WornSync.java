@@ -82,12 +82,34 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
         return out;
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_RELIC_WORN_SYNC = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.worn_sync");   // 1.99.0: performance probe (off by default: one flag read)
+
     static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_RELIC_WORN_SYNC, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || (p.tickCount + p.getId()) % 10 != 0) return;
         check(p, true);
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_RELIC_WORN_SYNC_MOB = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.worn_sync_mob");   // 1.99.0: performance probe (off by default: one flag read)
+
     static void onEntityTick(EntityTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onEntityTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_RELIC_WORN_SYNC_MOB, t0);
+        }
+    }
+
+    private static void onEntityTick0(EntityTickEvent.Post e) {
         if (!(e.getEntity() instanceof LivingEntity mob) || mob instanceof Player || mob.level().isClientSide() || (mob.tickCount + mob.getId()) % 20 != 0) return;
         if (!MobRelics.hasPack(mob) && !SIG.containsKey(mob.getUUID())) return;             // the cheap exit for every mob that never carried a relic
         check(mob, false);

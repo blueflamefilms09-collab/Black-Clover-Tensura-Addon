@@ -89,7 +89,18 @@ public final class GrimoireSlot {
     }
 
     // ---------------------------------------------------------------- tick: fill the slot, sync the hip book
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_GRIMOIRE_SLOT = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.grimoire_slot");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_GRIMOIRE_SLOT, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
         if (get(p).isEmpty()) {
             Inventory inv = p.getInventory();

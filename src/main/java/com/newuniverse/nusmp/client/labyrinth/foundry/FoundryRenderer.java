@@ -117,8 +117,19 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
         return best;
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_C_FOUNDRY_RENDER = com.newuniverse.nusmp.perf.PerfProbe.section("c.foundry.render");   // 1.99.0: performance probe (off by default: one flag read)
+
     @Override
     public void render(FoundryMobEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            render0(e, yaw, partial, pose, buffers, light);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_C_FOUNDRY_RENDER, t0);
+        }
+    }
+
+    private void render0(FoundryMobEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
         String id = e.foundryId();
         FoundryIndex.Entry en = id.isEmpty() ? null : FoundryIndex.get(id);
         if (en == null) {

@@ -351,7 +351,18 @@ public final class ManaZoneManager {
     }
 
     // ---------------------------------------------------------------- the server tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MANA_ZONE = com.newuniverse.nusmp.perf.PerfProbe.section("s.mana.zone");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MANA_ZONE, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post event) {
         if (ZONES.isEmpty()) return;                                                      // the idle path: nothing at all
         tickAll(event.getServer(), event.getServer().overworld().getGameTime());
     }

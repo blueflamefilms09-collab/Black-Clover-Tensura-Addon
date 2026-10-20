@@ -163,7 +163,18 @@ public final class DiscoveryTracker {
     }
 
     // ---------------------------------------------------------------- the tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_DISCOVERY_TRACKER = com.newuniverse.nusmp.perf.PerfProbe.section("s.discovery.tracker");   // 1.99.0: performance probe (off by default: one flag read)
+
     private static void onTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_DISCOVERY_TRACKER, t0);
+        }
+    }
+
+    private static void onTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         List<String> pending = PENDING.get(p.getUUID());
         if (pending != null && !pending.isEmpty()) {

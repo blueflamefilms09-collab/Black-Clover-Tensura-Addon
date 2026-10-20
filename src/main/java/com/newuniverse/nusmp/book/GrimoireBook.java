@@ -625,7 +625,18 @@ public abstract class GrimoireBook extends Skill {
     protected void tickBook(ManasSkillInstance i, ServerPlayer p) {}
 
     /** Every second: each grimoire book the player has gets its upkeep (see {@link #second}). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_GRIMOIRE = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.grimoire");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_GRIMOIRE, t0);
+        }
+    }
+
+    private static void onPlayerTick0(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         var skills = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p);
         if (p.tickCount % 10 == 3) {

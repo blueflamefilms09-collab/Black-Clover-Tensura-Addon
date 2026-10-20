@@ -39,8 +39,19 @@ public class HumanoidRelicLayer<T extends LivingEntity, M extends HumanoidModel<
         return !WornSync.client(e.getUUID()).isEmpty();
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_C_RELIC_HUMANOID_LAYER = com.newuniverse.nusmp.perf.PerfProbe.section("c.relic.humanoid_layer");   // 1.99.0: performance probe (off by default: one flag read)
+
     @Override
     public void render(PoseStack pose, MultiBufferSource buffers, int light, T e, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            render0(pose, buffers, light, e, limbSwing, limbSwingAmount, partial, age, netHeadYaw, headPitch);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_C_RELIC_HUMANOID_LAYER, t0);
+        }
+    }
+
+    private void render0(PoseStack pose, MultiBufferSource buffers, int light, T e, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
         if (e.isInvisible() || e.isSpectator() || !candidate(e)) return;
         List<Relics.Located> found = Relics.locatedList(e);
         if (found.isEmpty()) return;

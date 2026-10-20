@@ -51,7 +51,18 @@ public record RelicHolderSync(int entity, int packed) implements CustomPacketPay
         gameBus.addListener(RelicHolderSync::onLogout);
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_RELIC_HOLDER_SYNC = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.holder_sync");   // 1.99.0: performance probe (off by default: one flag read)
+
     static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_RELIC_HOLDER_SYNC, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || (p.tickCount + p.getId()) % 20 != 0) return;
         int now = packedFor(p);
         Integer before = LAST.put(p.getUUID(), now);

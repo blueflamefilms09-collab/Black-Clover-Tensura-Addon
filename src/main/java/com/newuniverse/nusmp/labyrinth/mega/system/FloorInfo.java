@@ -227,7 +227,18 @@ public final class FloorInfo implements FloorListener {
     }
 
     /** Server tick: once a second, compare what each player was told with what is around them now. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_FLOOR_INFO = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.floor_info");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void tick(MinecraftServer server) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            tick0(server);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_FLOOR_INFO, t0);
+        }
+    }
+
+    private static void tick0(MinecraftServer server) {
         if (SEEN.isEmpty() || server.getTickCount() % 20 != 7 || !FloorInfoConfig.enabled() || !FloorInfoConfig.get(FloorInfoConfig.MECHANIC_UPDATES)) return;
         ServerLevel mega = MegaDungeon.level(server);
         if (mega == null) return;

@@ -128,7 +128,18 @@ public final class SpellRuntime {
     }
 
     // ---------------------------------------------------------------- tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_SPELL_RUNTIME = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.spell_runtime");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_SPELL_RUNTIME, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post event) {
         // 1.27.0: one spell's code that throws (a bolt hit, a zone step, a delayed task) is caught and logged once, never crashes the tick
         for (Bolt b : new ArrayList<>(BOLTS)) if (!b.dead && !SafeCast.tick("spell-bolt", () -> tickBolt(b))) b.dead = true;
         BOLTS.removeIf(b -> b.dead);

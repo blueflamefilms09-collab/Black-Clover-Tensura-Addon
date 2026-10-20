@@ -50,7 +50,18 @@ public final class MegaGenRegistry {
         StairTravel.register(gameBus);                                // 1.58.0: walking onto the pad at the end of a staircase takes the player to the linked floor
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_GEN = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.gen");   // 1.99.0: performance probe (off by default: one flag read)
+
     private static void onServerTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_GEN, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post e) {
         try {
             ExpansionQueue.get().tick(e.getServer());
             MegaTravel.tick(e.getServer());

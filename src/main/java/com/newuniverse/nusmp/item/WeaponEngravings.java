@@ -149,7 +149,18 @@ public final class WeaponEngravings {
     }
 
     /** Server player tick: once a second, engrave any of this mod's weapons in the inventory that aren't yet. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_ENGRAVINGS_WEAPON = com.newuniverse.nusmp.perf.PerfProbe.section("s.engravings.weapon");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_ENGRAVINGS_WEAPON, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         Player p = e.getEntity();
         if (!(p instanceof ServerPlayer sp) || sp.tickCount % 20 != 7) return;
         var inv = sp.getInventory();

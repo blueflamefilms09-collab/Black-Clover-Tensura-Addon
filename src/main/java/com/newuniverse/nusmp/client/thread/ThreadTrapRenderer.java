@@ -22,7 +22,9 @@ public class ThreadTrapRenderer extends EntityRenderer<ThreadTrapEntity> {
         this.shadowRadius = 0f;
     }
 
-    @Override public ResourceLocation getTextureLocation(ThreadTrapEntity e) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/rouge_cat.png"); }
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/rouge_cat.png");     // 1.99.0: built once, not per entity per frame
+
+    @Override public ResourceLocation getTextureLocation(ThreadTrapEntity e) { return TEXTURE; }
 
     @Override
     public void render(ThreadTrapEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {

@@ -150,7 +150,18 @@ public final class AvatarAiEvents {
 
     // ---------------------------------------------------------------- the frenzy clock
     /** Counts every Avatar's Yandere frenzy down. An entity tick (not a goal) so it also runs for an Avatar whose goals were rebuilt or removed. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_AVATAR_AI_ENTITY = com.newuniverse.nusmp.perf.PerfProbe.section("s.avatar.ai_entity");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onEntityTick(EntityTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onEntityTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_AVATAR_AI_ENTITY, t0);
+        }
+    }
+
+    private static void onEntityTick0(EntityTickEvent.Post e) {
         if (e.getEntity() instanceof AvatarEntity a && !a.level().isClientSide) {
             try { YandereFrenzyHandler.tick(a); } catch (RuntimeException soft) { /* the clock must never break the tick */ }
         }

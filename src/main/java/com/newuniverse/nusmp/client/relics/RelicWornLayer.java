@@ -59,9 +59,19 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
 
     public RelicWornLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) { super(parent); }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_C_RELIC_WORN_LAYER = com.newuniverse.nusmp.perf.PerfProbe.section("c.relic.worn_layer");   // 1.99.0: performance probe (off by default: one flag read)
+
     @Override
-    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount,
-                       float partial, float age, float netHeadYaw, float headPitch) {
+    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            render0(pose, buffers, light, p, limbSwing, limbSwingAmount, partial, age, netHeadYaw, headPitch);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_C_RELIC_WORN_LAYER, t0);
+        }
+    }
+
+    private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
         boolean slim = p.getSkin().model() == PlayerSkin.Model.SLIM;
         WornPlan.View view = WornExec.viewOf(p);
         long now = p.level().getGameTime();

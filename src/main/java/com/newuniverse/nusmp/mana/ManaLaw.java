@@ -278,7 +278,18 @@ public final class ManaLaw {
     }
 
     // ---------------------------------------------------------------- once a second
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MANA_LAW = com.newuniverse.nusmp.perf.PerfProbe.section("s.mana.law");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MANA_LAW, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
         ServerLevel sl = p.serverLevel();
         CompoundTag d = data(p);
