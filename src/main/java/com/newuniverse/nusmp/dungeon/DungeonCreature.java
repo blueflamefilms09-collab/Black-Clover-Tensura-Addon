@@ -63,12 +63,12 @@ public abstract class DungeonCreature extends PathfinderMob implements SoundFami
 
     @Override protected float getSoundVolume() { return MobSoundSet.family(soundFamily()).volume(); }
 
-    @Override public float getVoicePitch() { return MobVoice.pitch(soundFamily(), Cue.AMBIENT, random); }
+    @Override public float getVoicePitch() { return MobVoice.pitch(this, soundFamily(), Cue.AMBIENT); }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         String f = soundFamily();
-        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(f, Cue.STEP, random));
+        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(this, f, Cue.STEP));
     }
 
     @Override

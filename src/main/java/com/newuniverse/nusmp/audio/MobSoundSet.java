@@ -114,6 +114,15 @@ public final class MobSoundSet {
         return (float) (lo + (hi - lo) * Math.max(0.0, Math.min(1.0, r01)));
     }
 
+    /**
+     * The pitch factor of a creature's size: a big one (the SCALE attribute above 1) sounds lower, a small one higher, by the 0.4th power of the scale (scale 2 -> 0.76, scale 0.7 -> 1.15),
+     * for scales between 0.6 and 2.5.
+     */
+    public static float sizeShift(float scale) {
+        double s = Math.max(0.6, Math.min(2.5, Double.isNaN(scale) ? 1.0 : scale));
+        return (float) Math.pow(s, -0.4);
+    }
+
     // ================================================================================================================================ choosing a family
     private static final Map<String, String> FACTION = Map.ofEntries(
             Map.entry("undead", "ghoul"), Map.entry("cultist", "cultist"), Map.entry("beast", "beast"), Map.entry("demon", "demon"), Map.entry("slime", "slime"),

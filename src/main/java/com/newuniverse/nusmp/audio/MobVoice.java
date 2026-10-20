@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * Why: the small game-side layer between a mob class and the catalogue. A mob class overrides {@code getAmbientSound}, {@code getHurtSound}, {@code getDeathSound},
@@ -29,6 +30,11 @@ public final class MobVoice {
     /** A random pitch of the family's range for the cue. */
     public static float pitch(String family, Cue cue, RandomSource random) { return MobSoundSet.pitch(family, cue, random.nextDouble()); }
 
+    /** Like {@link #pitch(String, Cue, RandomSource)} for a creature: a big one (its SCALE attribute) sounds lower than a small one of the same family, always inside the game's 0.5 to 2.0. */
+    public static float pitch(LivingEntity e, String family, Cue cue) {
+        return Math.max(0.5f, Math.min(2.0f, pitch(family, cue, e.getRandom()) * MobSoundSet.sizeShift(e.getScale())));
+    }
+
     /** The family of an entity, or null when it is not a mob the catalogue knows. */
     public static String familyOf(Entity e) {
         if (e instanceof SoundFamilied sf) return sf.soundFamily();
@@ -39,6 +45,7 @@ public final class MobVoice {
     /** Plays a cue of a family from this entity (server side only; a silent entity plays nothing). */
     public static void play(Entity e, String family, Cue cue) {
         if (e.level().isClientSide || e.isSilent()) return;
-        e.level().playSound(null, e.getX(), e.getY(), e.getZ(), event(family, cue), e.getSoundSource(), volume(family, cue), pitch(family, cue, e.getRandom()));
+        float pitch = e instanceof LivingEntity le ? pitch(le, family, cue) : pitch(family, cue, e.getRandom());
+        e.level().playSound(null, e.getX(), e.getY(), e.getZ(), event(family, cue), e.getSoundSource(), volume(family, cue), pitch);
     }
 }

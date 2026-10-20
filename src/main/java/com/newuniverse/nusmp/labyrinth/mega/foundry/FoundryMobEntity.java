@@ -209,12 +209,12 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
     protected float getSoundVolume() { return MobSoundSet.family(soundFamily()).volume(); }
 
     @Override
-    public float getVoicePitch() { return MobVoice.pitch(soundFamily(), Cue.AMBIENT, random); }
+    public float getVoicePitch() { return MobVoice.pitch(this, soundFamily(), Cue.AMBIENT); }
 
     @Override
     protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
         String f = soundFamily();
-        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(f, Cue.STEP, random));
+        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(this, f, Cue.STEP));
     }
 
     @Override

@@ -115,6 +115,16 @@ class MobSoundSetTest {
     }
 
     @Test
+    void aBigCreatureSoundsLowerAndASmallOneHigher() {
+        assertEquals(1.0f, MobSoundSet.sizeShift(1.0f), 1e-6f);
+        assertTrue(MobSoundSet.sizeShift(2.0f) < 0.8f && MobSoundSet.sizeShift(2.0f) > 0.7f);
+        assertTrue(MobSoundSet.sizeShift(0.7f) > 1.1f && MobSoundSet.sizeShift(0.7f) < 1.2f);
+        assertEquals(MobSoundSet.sizeShift(100.0f), MobSoundSet.sizeShift(2.5f), 1e-6f, "clamped at 2.5");
+        assertEquals(MobSoundSet.sizeShift(0.01f), MobSoundSet.sizeShift(0.6f), 1e-6f, "clamped at 0.6");
+        assertEquals(1.0f, MobSoundSet.sizeShift(Float.NaN), 1e-6f);
+    }
+
+    @Test
     void theVanillaVoiceReader() {
         MobSoundSet.Voice v = MobSoundSet.parseVanillaVoice("entity.zombie.ambient");
         assertNotNull(v);

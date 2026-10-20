@@ -85,6 +85,6 @@ public final class MobSoundRemap {
         e.setSound(ModSounds.holder(family, cue));
         float vol = MobVoice.volume(family, cue);
         e.setNewVolume(cue == Cue.STEP ? vol : vol * Math.min(1.0f, e.getOriginalVolume()));
-        e.setNewPitch(MobVoice.pitch(family, cue, m.getRandom()));
+        e.setNewPitch(MobVoice.pitch(m, family, cue));
     }
 }
