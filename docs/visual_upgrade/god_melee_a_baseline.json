@@ -1,0 +1,1060 @@
+{
+ "slice": "god_melee_a",
+ "grade": "god",
+ "weights": {
+  "mesh": 0.35,
+  "texture": 0.2,
+  "glow": 0.15,
+  "ambient": 0.2,
+  "animation": 0.1
+ },
+ "references": {
+  "mesh_quads": 600.0,
+  "texels": 262144.0,
+  "passes": 2.0,
+  "ambient_layers": 3.0
+ },
+ "unique_vertex_cap": 2500,
+ "lod_fraction": 0.15,
+ "note": "V = sum(weight * component); component = a plain count over a fixed reference (never capped). Proxies, not a measure of how it looks in the game.",
+ "items": [
+  {
+   "id": "staff_of_the_magi",
+   "grade": "god",
+   "kind": "staff",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 3170,
+    "quads_body": 1892,
+    "quads_glow": 1278,
+    "quads_void": 0,
+    "unique_vertices": 1768,
+    "emitted_vertices": 12680,
+    "parts": 13,
+    "layers": {
+     "0": 1892,
+     "2": 1278
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 56655,
+    "lit_texels": 56655
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 28532,
+    "lit_texels": 28532
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "retributive_strike",
+     "shape": "MAGIC_CIRCLE_EXPLOSION"
+    },
+    {
+     "act": "spell_turning",
+     "shape": null
+    },
+    {
+     "act": "arcane_tempest",
+     "shape": "LIGHTNING_GOD"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 2.2091,
+   "V_components": {
+    "mesh": 5.2833,
+    "texture": 0.2161,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "wizard_kings_vow",
+   "grade": "god",
+   "kind": "rapier",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1392,
+    "quads_body": 914,
+    "quads_glow": 478,
+    "quads_void": 0,
+    "unique_vertices": 898,
+    "emitted_vertices": 5568,
+    "parts": 8,
+    "layers": {
+     "0": 914,
+     "2": 478
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 44801,
+    "lit_texels": 44801
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 19632,
+    "lit_texels": 17928
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "clover_thrust",
+     "shape": "MERCURY_SPEAR"
+    },
+    {
+     "act": "magic_zone",
+     "shape": null
+    },
+    {
+     "act": "kings_judgement",
+     "shape": "LIGHT_FLARE"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.1628,
+   "V_components": {
+    "mesh": 2.32,
+    "texture": 0.1709,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "wand_of_the_wisdom_king",
+   "grade": "god",
+   "kind": "wand",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 982,
+    "quads_body": 736,
+    "quads_glow": 246,
+    "quads_void": 0,
+    "unique_vertices": 689,
+    "emitted_vertices": 3928,
+    "parts": 11,
+    "layers": {
+     "0": 736,
+     "2": 246
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 124045,
+    "lit_texels": 124045
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 64706,
+    "lit_texels": 64706
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "sagely_barrage",
+     "shape": "MIRROR_RAY"
+    },
+    {
+     "act": "absolute_defence",
+     "shape": null
+    },
+    {
+     "act": "accelerated_thought",
+     "shape": null
+    }
+   ],
+   "lod_mesh": false,
+   "V": 0.9841,
+   "V_components": {
+    "mesh": 1.6367,
+    "texture": 0.4732,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "hammer_of_thunderbolts",
+   "grade": "god",
+   "kind": "hammer",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 986,
+    "quads_body": 790,
+    "quads_glow": 196,
+    "quads_void": 0,
+    "unique_vertices": 766,
+    "emitted_vertices": 3944,
+    "parts": 9,
+    "layers": {
+     "0": 790,
+     "2": 196
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 110053,
+    "lit_texels": 110053
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 26188,
+    "lit_texels": 16604
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "thunderclap",
+     "shape": "LIGHTNING_GOD"
+    },
+    {
+     "act": "hurled_bolt",
+     "shape": "LIGHTNING_SPEAR"
+    },
+    {
+     "act": "tempest",
+     "shape": "FX_LIGHTNING_ARC"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 0.9758,
+   "V_components": {
+    "mesh": 1.6433,
+    "texture": 0.4198,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "gungnir_the_unerring",
+   "grade": "god",
+   "kind": "spear",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 2382,
+    "quads_body": 1436,
+    "quads_glow": 946,
+    "quads_void": 0,
+    "unique_vertices": 1510,
+    "emitted_vertices": 9528,
+    "parts": 9,
+    "layers": {
+     "0": 1436,
+     "2": 946
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 27435,
+    "lit_texels": 27435
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 5008,
+    "lit_texels": 4815
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "unerring_cast",
+     "shape": "LIGHTNING_SPEAR"
+    },
+    {
+     "act": "allfathers_pledge",
+     "shape": null
+    },
+    {
+     "act": "valhalla_rain",
+     "shape": "FIRE_SPEAR"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.7271,
+   "V_components": {
+    "mesh": 3.97,
+    "texture": 0.1047,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "kusanagi_the_grass_cutter",
+   "grade": "god",
+   "kind": "katana",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1088,
+    "quads_body": 848,
+    "quads_glow": 240,
+    "quads_void": 0,
+    "unique_vertices": 886,
+    "emitted_vertices": 4352,
+    "parts": 8,
+    "layers": {
+     "0": 848,
+     "2": 240
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 89719,
+    "lit_texels": 89719
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 11170,
+    "lit_texels": 10673
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "wind_cut",
+     "shape": "WIND_SLASH"
+    },
+    {
+     "act": "cloud_step",
+     "shape": "WIND_RING"
+    },
+    {
+     "act": "eightfold_cut",
+     "shape": "WIND_GALE"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.0198,
+   "V_components": {
+    "mesh": 1.8133,
+    "texture": 0.3423,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "leviathans_crown_trident",
+   "grade": "god",
+   "kind": "trident",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1330,
+    "quads_body": 834,
+    "quads_glow": 496,
+    "quads_void": 0,
+    "unique_vertices": 715,
+    "emitted_vertices": 5320,
+    "parts": 12,
+    "layers": {
+     "0": 834,
+     "2": 496
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 64053,
+    "lit_texels": 64053
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 41847,
+    "lit_texels": 40165
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "tidal_lance",
+     "shape": "WATER_JAVELIN"
+    },
+    {
+     "act": "maelstrom",
+     "shape": "WATER_NEST"
+    },
+    {
+     "act": "sea_kings_wrath",
+     "shape": "WATER_BURST"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.1414,
+   "V_components": {
+    "mesh": 2.2167,
+    "texture": 0.2443,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "calamity_wave_aegis",
+   "grade": "god",
+   "kind": "shield",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1000,
+    "quads_body": 760,
+    "quads_glow": 240,
+    "quads_void": 0,
+    "unique_vertices": 705,
+    "emitted_vertices": 4000,
+    "parts": 7,
+    "layers": {
+     "0": 760,
+     "2": 240
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 179391,
+    "lit_texels": 179391
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 23708,
+    "lit_texels": 7550
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "wave_guard",
+     "shape": null
+    },
+    {
+     "act": "retaliating_surge",
+     "shape": "WATER_RING"
+    },
+    {
+     "act": "aegis_anthem",
+     "shape": null
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.0369,
+   "V_components": {
+    "mesh": 1.6667,
+    "texture": 0.6843,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "hellblaze_the_demon_sin",
+   "grade": "god",
+   "kind": "longsword",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1098,
+    "quads_body": 812,
+    "quads_glow": 286,
+    "quads_void": 0,
+    "unique_vertices": 828,
+    "emitted_vertices": 4392,
+    "parts": 8,
+    "layers": {
+     "0": 812,
+     "2": 286
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 89366,
+    "lit_texels": 89366
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 34842,
+    "lit_texels": 31572
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "hellblaze_slash",
+     "shape": "FIRE_SPIRAL"
+    },
+    {
+     "act": "demon_mark",
+     "shape": null
+    },
+    {
+     "act": "black_inferno",
+     "shape": "FIRE_PILLAR"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.0253,
+   "V_components": {
+    "mesh": 1.83,
+    "texture": 0.3409,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "minotaur_kings_labrys",
+   "grade": "god",
+   "kind": "battleaxe",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1500,
+    "quads_body": 1162,
+    "quads_glow": 338,
+    "quads_void": 0,
+    "unique_vertices": 1111,
+    "emitted_vertices": 6000,
+    "parts": 14,
+    "layers": {
+     "0": 1162,
+     "2": 338
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 120822,
+    "lit_texels": 120822
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 25148,
+    "lit_texels": 25148
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "labrys_cleave",
+     "shape": "SLASH_SCYTHE"
+    },
+    {
+     "act": "bull_charge",
+     "shape": "EARTH_RAMPAGE"
+    },
+    {
+     "act": "kings_roar",
+     "shape": "EARTH_SPIKES"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.2838,
+   "V_components": {
+    "mesh": 2.5,
+    "texture": 0.4609,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "dragon_force_twin_fangs",
+   "grade": "god",
+   "kind": "dagger",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1416,
+    "quads_body": 996,
+    "quads_glow": 420,
+    "quads_void": 0,
+    "unique_vertices": 930,
+    "emitted_vertices": 5664,
+    "parts": 12,
+    "layers": {
+     "0": 996,
+     "2": 420
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 162194,
+    "lit_texels": 162194
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 124044,
+    "lit_texels": 124044
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "twin_fang_flurry",
+     "shape": "SLASH_BLADES"
+    },
+    {
+     "act": "dragon_force",
+     "shape": null
+    },
+    {
+     "act": "dragons_roar",
+     "shape": "FIRE_BURST"
+    }
+   ],
+   "lod_mesh": false,
+   "V": 1.2664,
+   "V_components": {
+    "mesh": 2.36,
+    "texture": 0.6187,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  },
+  {
+   "id": "dawnpiercer_crossbow",
+   "grade": "god",
+   "kind": "crossbow",
+   "slice": "god_melee_a",
+   "state": "baseline (1.101.0)",
+   "mesh": {
+    "quads_total": 1128,
+    "quads_body": 756,
+    "quads_glow": 372,
+    "quads_void": 0,
+    "unique_vertices": 688,
+    "emitted_vertices": 4512,
+    "parts": 12,
+    "layers": {
+     "0": 756,
+     "2": 372
+    },
+    "orbit_groups": 0
+   },
+   "skin": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 128087,
+    "lit_texels": 128087
+   },
+   "glow_map": {
+    "size": [
+     512,
+     512
+    ],
+    "texels": 262144,
+    "painted_texels": 66837,
+    "lit_texels": 66837
+   },
+   "passes": {
+    "count": 2,
+    "list": [
+     "skin (entityCutout)",
+     "glow (eyes, additive, full bright, pulsing)"
+    ]
+   },
+   "ambient": {
+    "count": 1,
+    "layers": [
+     {
+      "layer": "grade_shimmer",
+      "where": "client/relics/RelicGradeFx.onClientTick: one mote round a carrier of a God relic every 8 ticks"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_pulse"
+    ],
+    "swing_trail": false,
+    "unique_act_vfx": 0,
+    "score": 1.0
+   },
+   "act_vfx": [
+    {
+     "act": "piercing_bolt",
+     "shape": "LIGHT_BLADE"
+    },
+    {
+     "act": "sunrise_volley",
+     "shape": "LIGHT_BLADE"
+    },
+    {
+     "act": "dawns_net",
+     "shape": null
+    }
+   ],
+   "lod_mesh": false,
+   "state_meshes": {
+    "dawnpiercer_crossbow_pull1": 1128,
+    "dawnpiercer_crossbow_pull2": 1128,
+    "dawnpiercer_crossbow_pull3": 1128,
+    "dawnpiercer_crossbow_charged": 1188
+   },
+   "V": 1.0724,
+   "V_components": {
+    "mesh": 1.88,
+    "texture": 0.4886,
+    "glow": 1.0,
+    "ambient": 0.3333,
+    "animation": 1.0
+   }
+  }
+ ]
+}
