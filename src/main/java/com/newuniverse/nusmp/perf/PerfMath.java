@@ -71,8 +71,8 @@ public final class PerfMath {
 
     /**
      * The start tick that selects the {@code n} most recently started live windows: every window that started at or after it is kept. A window is {@code {start, end, ...}} in game ticks
-     * and is live while {@code now < end}. Windows that started on the same tick are kept or dropped together, so a tie can let a few more than {@code n} through. Returns Long.MIN_VALUE
-     * when there are no more than n live windows (keep them all). Allocation free apart from the iterators; n is small.
+     * and is live while {@code now < end}. Windows that started on the same tick are kept or dropped together, so a tie can let a few more than {@code n} through. With no more than n live
+     * windows the result is the oldest live start (so every live window is kept); with none it is Long.MIN_VALUE. Allocation free apart from the iterators; n is small.
      */
     public static long nthNewestStart(Iterable<long[]> windows, float now, int n) {
         long bound = Long.MAX_VALUE;                                   // only starts below this are still to be taken

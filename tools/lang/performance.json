@@ -1,0 +1,8 @@
+{
+  "nusmp.perf.server.on": "Performance probe ON. Let the server run for a minute, then use /multiverse perf report.",
+  "nusmp.perf.server.off": "Performance probe OFF.",
+  "nusmp.perf.server.reset": "Performance probe cleared.",
+  "nusmp.perf.client.on": "Client performance probe ON. Play for a minute, then use /nusmp perf report.",
+  "nusmp.perf.client.off": "Client performance probe OFF.",
+  "nusmp.perf.client.reset": "Client performance probe cleared."
+}

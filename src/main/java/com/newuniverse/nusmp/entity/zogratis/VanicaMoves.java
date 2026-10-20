@@ -524,7 +524,7 @@ public final class VanicaMoves {
             Vec3 d = vel.normalize();
             Vec3 tail = pos.subtract(d.scale(0.7));
             splash(sl, pos, 2, 0.08);
-            sl.sendParticles(DUST_DARK, tail.x, tail.y, tail.z, 2, 0.05, 0.05, 0.05, 0.0);
+            com.newuniverse.nusmp.perf.PerfParticles.send(sl, DUST_DARK, tail.x, tail.y, tail.z, 2, 0.05, 0.05, 0.05, 0.0);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
             if (blocked) {
                 splash(sl, pos, 10, 0.25);
                 done = true;

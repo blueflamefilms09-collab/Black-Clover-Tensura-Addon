@@ -31,7 +31,7 @@ import java.util.WeakHashMap;
  * size attribute), times the look's boost; the glow layer follows the phase (brighter as the fight goes on) and the cast. An undead look crumbles to ash and soul fire while it dies.</p>
  */
 public class AbyssalRenderer extends KitMobRenderer<LivingArmorEntity> {
-    private final Map<String, KitClips> clipsOf = new HashMap<>();
+    private final Map<ResourceLocation, KitClips> clipsOf = new HashMap<>();             // 1.99.0: by the animation file (the only thing a KitClips reads), not by a string built from the look, the animation and the phase on every frame
     private final Map<LivingArmorEntity, Integer> lastDust = new WeakHashMap<>();
     /** How long a cast cue shows the cast clip, in ticks. */
     private static final int CAST_TICKS = 24;
@@ -46,6 +46,26 @@ public class AbyssalRenderer extends KitMobRenderer<LivingArmorEntity> {
 
     /** The geo files of one phase of a look: the model, the shared animation file, the atlas and its glow layer. */
     static GeoSpec spec(AbyssalLooks.Look look, int phase) {
+        if (phase < 0 || phase >= PHASES) return build(look, phase);
+        GeoSpec[] row = SPECS.get(look);
+        if (row != null && row[phase] != null) return row[phase];
+        GeoSpec made = build(look, phase);
+        if (row == null) {
+            if (SPECS.size() > 512) SPECS.clear();                                       // looks are a short fixed table; this only guards against a reload that makes new ones
+            SPECS.put(look, row = new GeoSpec[PHASES]);
+        }
+        row[phase] = made;
+        return made;
+    }
+
+    /**
+     * 1.99.0 (performance pass, docs/performance_1_99.md): the spec of a look and phase is worked out once. It used to be rebuilt (four string concatenations and four locations) for every Guardian on every
+     * frame, twice (the entity renderer asks for the texture, and the draw asks for the whole spec). Looks are the same objects every time ({@link AbyssalLooks#get}), so they are the key.
+     */
+    private static final int PHASES = 8;
+    private static final Map<AbyssalLooks.Look, GeoSpec[]> SPECS = new java.util.IdentityHashMap<>();
+
+    private static GeoSpec build(AbyssalLooks.Look look, int phase) {
         String m = look.model(phase);
         return new GeoSpec(rl("geo/entity/abyssal_" + m + ".geo.json"), rl("animations/entity/abyssal_" + look.animation() + ".animation.json"), rl("textures/entity/abyssal_" + m + ".png"),
                 rl("textures/entity/abyssal_" + m + "_glow.png"));
@@ -81,7 +101,7 @@ public class AbyssalRenderer extends KitMobRenderer<LivingArmorEntity> {
         LabyrinthGuardianEntity g = (LabyrinthGuardianEntity) e;
         int phase = g.lookPhase();
         GeoSpec spec = spec(look, phase);
-        KitClips clips = clipsOf.computeIfAbsent(look.id() + "/" + look.animation() + "/" + phase, k -> new KitClips(spec));
+        KitClips clips = clipsOf.computeIfAbsent(spec.animations(), k -> new KitClips(spec));
         ZogratisPose clock = clock(e);
         ZogratisPose.Frame f = frame(e, partial);
         float scale = scaleOf(e, look);

@@ -65,12 +65,12 @@ public final class PerfClient {
                 .executes(PerfClient::report)
                 .then(Commands.literal("on").executes(ctx -> {
                     PerfProbe.setEnabled(true);
-                    say(ctx, "Client performance probe ON. Play for a minute, then use /nusmp perf report.", ChatFormatting.GOLD);
+                    sayKey(ctx, "nusmp.perf.client.on", "Client performance probe ON. Play for a minute, then use /nusmp perf report.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("off").executes(ctx -> {
                     PerfProbe.setEnabled(false);
-                    say(ctx, "Client performance probe OFF.", ChatFormatting.GOLD);
+                    sayKey(ctx, "nusmp.perf.client.off", "Client performance probe OFF.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("report").executes(PerfClient::report))
@@ -78,7 +78,7 @@ public final class PerfClient {
                     PerfProbe.reset();
                     VfxStats.reset();
                     PerfBudgets.resetStats();
-                    say(ctx, "Client performance probe cleared.", ChatFormatting.GOLD);
+                    sayKey(ctx, "nusmp.perf.client.reset", "Client performance probe cleared.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("settings").executes(ctx -> {
@@ -98,6 +98,10 @@ public final class PerfClient {
         out.add(VfxStats.line());
         out.add(PerfCommands.budgetLine(PerfBudgets.CLIENT_PARTICLES));
         return out;
+    }
+
+    private static void sayKey(CommandContext<CommandSourceStack> ctx, String key, String fallback, ChatFormatting color) {
+        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback(key, fallback).withStyle(color), false);
     }
 
     private static void say(CommandContext<CommandSourceStack> ctx, String line, ChatFormatting color) {

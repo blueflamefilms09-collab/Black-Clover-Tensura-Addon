@@ -80,8 +80,8 @@ final class MorrisMoves {
                 return;
             }
             Vec3 tail = pos.subtract(vel.normalize().scale(0.5));
-            sl.sendParticles(SpadeFx.dust(ORANGE_RGB, 1.0f), next.x, next.y, next.z, 2, 0.04, 0.04, 0.04, 0.0);
-            sl.sendParticles(SpadeFx.dust(PALE_RGB, 0.8f), tail.x, tail.y, tail.z, 1, 0.03, 0.03, 0.03, 0.0);
+            com.newuniverse.nusmp.perf.PerfParticles.send(sl, SpadeFx.dust(ORANGE_RGB, 1.0f), next.x, next.y, next.z, 2, 0.04, 0.04, 0.04, 0.0);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
+            com.newuniverse.nusmp.perf.PerfParticles.send(sl, SpadeFx.dust(PALE_RGB, 0.8f), tail.x, tail.y, tail.z, 1, 0.03, 0.03, 0.03, 0.0);
             pos = next;
             if (blocked || --life <= 0) {
                 spark(sl, pos);

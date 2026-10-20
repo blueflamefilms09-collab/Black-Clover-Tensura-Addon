@@ -120,7 +120,7 @@ public final class GeoDraw {
             rotate(pose, c.rx, c.ry, c.rz);
             pose.translate(-cx, -cy, -cz);
         }
-        if (c.drawCorners == null) prepare(m, b, c);
+        if (c.drawCorners == null) c.prepareDraw(m, b);
         float[] v = c.drawCorners, uv = c.drawUv;
         int mask = c.drawMask;
         PoseStack.Pose p = pose.last();
@@ -135,35 +135,6 @@ public final class GeoDraw {
         if ((mask & 16) != 0) face(p, vc, v, 5, 4, 0, 1, uv, 16, mirror, 0f, -1f, 0f, light, overlay, r, g, bl, a);   // TOP
         if ((mask & 32) != 0) face(p, vc, v, 3, 2, 6, 7, uv, 20, mirror, 0f, 1f, 0f, light, overlay, r, g, bl, a);    // BOTTOM
         if (turned) pose.popPose();
-    }
-
-    /** Works out, once per cube, the eight corners (as the vanilla box has them) and the normalised texture rectangle of each face. The same arithmetic the drawing did every frame. */
-    private static void prepare(GeoModelData m, GeoModelData.Bone b, GeoModelData.Cube c) {
-        float g = c.inflate;
-        float minX = c.ox - b.px - g, maxX = c.ox - b.px + c.sx + g;
-        float minY = -(c.oy + c.sy) + b.py - g, maxY = -c.oy + b.py + g;
-        float minZ = c.oz - b.pz - g, maxZ = c.oz - b.pz + c.sz + g;
-        if (c.mirror) { float tmp = maxX; maxX = minX; minX = tmp; }
-        float[] v = new float[24];
-        for (int i = 0; i < 8; i++) {
-            v[i * 3] = (i & 1) == 0 ? minX : maxX;
-            v[i * 3 + 1] = (i & 2) == 0 ? minY : maxY;
-            v[i * 3 + 2] = (i & 4) == 0 ? minZ : maxZ;
-        }
-        float[] uv = new float[24];
-        int mask = 0;
-        for (int f = 0; f < 6; f++) {
-            float[] r = c.uv[f];
-            if (r == null) continue;
-            mask |= 1 << f;
-            uv[f * 4] = r[0] / m.texW;
-            uv[f * 4 + 1] = r[1] / m.texH;
-            uv[f * 4 + 2] = r[2] / m.texW;
-            uv[f * 4 + 3] = r[3] / m.texH;
-        }
-        c.drawUv = uv;
-        c.drawMask = mask;
-        c.drawCorners = v;                                                    // last: a non-null corner table means the rest is ready
     }
 
     /**

@@ -32,14 +32,14 @@ public final class PerfCommands {
 
     private static int switchTo(CommandContext<CommandSourceStack> ctx, boolean on) {
         PerfProbe.setEnabled(on);
-        say(ctx, on ? "Performance probe ON. Let the server run for a minute, then use /multiverse perf report." : "Performance probe OFF.", ChatFormatting.GOLD);
+        sayKey(ctx, on ? "nusmp.perf.server.on" : "nusmp.perf.server.off", on ? "Performance probe ON. Let the server run for a minute, then use /multiverse perf report." : "Performance probe OFF.", ChatFormatting.GOLD);
         return 1;
     }
 
     private static int reset(CommandContext<CommandSourceStack> ctx) {
         PerfProbe.reset();
         PerfBudgets.resetStats();
-        say(ctx, "Performance probe cleared.", ChatFormatting.GOLD);
+        sayKey(ctx, "nusmp.perf.server.reset", "Performance probe cleared.", ChatFormatting.GOLD);
         return 1;
     }
 
@@ -51,6 +51,10 @@ public final class PerfCommands {
     private static int settings(CommandContext<CommandSourceStack> ctx) {
         for (String line : settingsLines()) say(ctx, line, ChatFormatting.GRAY);
         return 1;
+    }
+
+    private static void sayKey(CommandContext<CommandSourceStack> ctx, String key, String fallback, ChatFormatting color) {
+        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback(key, fallback).withStyle(color), false);
     }
 
     private static void say(CommandContext<CommandSourceStack> ctx, String line, ChatFormatting color) {

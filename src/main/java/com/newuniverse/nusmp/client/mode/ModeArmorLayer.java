@@ -80,6 +80,15 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
     }
 
+    /** 1.99.0 (performance pass): {@code "mode_" + name.toLowerCase()} built once per mode (it was a lower-cased copy and a concatenation per frame per player in a mode). */
+    private static final String[] LIBRARY_KEYS = new String[ModeArmor.Mode.values().length];
+
+    private static String libraryKey(ModeArmor.Mode mode) {
+        String k = LIBRARY_KEYS[mode.ordinal()];
+        if (k == null) LIBRARY_KEYS[mode.ordinal()] = k = "mode_" + mode.name().toLowerCase(Locale.ROOT);
+        return k;
+    }
+
     private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partial, float ageInTicks, float netHeadYaw, float headPitch) {
         if (player.isInvisible() || Minecraft.getInstance().level == null) return;
         long gt = Minecraft.getInstance().level.getGameTime();
@@ -91,7 +100,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         float k = grow * fade;
         if (k <= 0.01f) return;
         PlayerModel<AbstractClientPlayer> m = getParentModel();
-        WornLibrary.Ensemble lib = RelicFxOptions.models() ? WornLibrary.ofKey("mode_" + mode.name().toLowerCase(Locale.ROOT)) : null;     // 1.34.0: 3D wings, crowns and horns
+        WornLibrary.Ensemble lib = RelicFxOptions.models() ? WornLibrary.ofKey(libraryKey(mode)) : null;     // 1.34.0: 3D wings, crowns and horns
         Ctx c = new Ctx(pose, buffers, light, now, k, limbSwingAmount, lib != null);
         switch (mode) {
             case WIND_SPIRIT_DIVE -> wind(c, m);
