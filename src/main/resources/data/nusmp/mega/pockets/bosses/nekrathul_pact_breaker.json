@@ -1,0 +1,64 @@
+{
+  "side": "evil",
+  "tier": 5,
+  "variant": 0,
+  "name": "Nekrathul, the Pact-Breaker",
+  "anime": [
+    "Black Clover: a devil's house-lord who broke his own pact"
+  ],
+  "dnd": [
+    "Archdevil",
+    "Asmodeus",
+    "Pit Fiend"
+  ],
+  "forms": [
+    "Nekrathul",
+    "Pact Unbound",
+    "Devil Crowned"
+  ],
+  "resistances": 5,
+  "legendary_points": 5,
+  "legendary_actions": [
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "magic_drain",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "falling_stars",
+    "necrotic_mist"
+  ],
+  "anti_magic_aura": true,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": true,
+  "breath": "fire",
+  "reflective": false,
+  "look": "asmodeus",
+  "mega": {
+    "damage": 1.5,
+    "scale": 1.2,
+    "intro": "The floor and the ceiling trade places in your mind. A voice that has not spoken in a thousand years says: another contract.",
+    "death": "The pact tears itself in two, and Nekrathul is the thing between the halves.",
+    "adds": "umbral_imp",
+    "add_count": 5
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "starfall_archive",
+  "name": "Starfall Archive",
+  "series": "Black Clover: Dungeons (star scribes)",
+  "lore": "A library built where a star fell, by scribes who copied the star's light onto paper until the paper burned. Gravity is a suggestion here; the books float, and so do you.",
+  "accent": "#b9a3ff",
+  "sky": "#1a1040",
+  "biome": {
+    "sky": "#201450",
+    "fog": "#1a1040",
+    "water": "#6a5ad8",
+    "water_fog": "#0c0828",
+    "particle": "minecraft:end_rod",
+    "particle_chance": 0.02,
+    "ambient": "minecraft:ambient.warped_forest.loop",
+    "mood": "minecraft:ambient.warped_forest.mood",
+    "additions": "minecraft:ambient.warped_forest.additions",
+    "music": "minecraft:music.end",
+    "weather": "clear",
+    "soft_ambient": "nusmp:pocket.starfall_archive.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 1,
+    "negated": 2,
+    "rivers": 1,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:deepslate_tiles",
+    "floor": "minecraft:polished_blackstone",
+    "ceiling": "minecraft:amethyst_block",
+    "pillar": "minecraft:purpur_pillar",
+    "accent": "minecraft:amethyst_block",
+    "light": "minecraft:pearlescent_froglight",
+    "glass": "minecraft:blue_stained_glass",
+    "liquid": "minecraft:water"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 21,
+    "cycles": 0.4,
+    "boss_half": 10
+  },
+  "traps": [
+    "light",
+    "time"
+  ],
+  "mobs": [
+    {
+      "id": "archive_scribe",
+      "name": "Archive Scribe",
+      "base": "foundry:lunar_archive_scribe",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.4,
+      "armor": 0,
+      "speed": 1.0,
+      "scale": 1.05,
+      "knockback": 0.0,
+      "glow": "#b9a3ff",
+      "aura": {
+        "particle": "minecraft:enchant",
+        "color": "#b9a3ff"
+      },
+      "weight": 4,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "star_oracle",
+      "name": "Star Oracle",
+      "base": "foundry:starfall_oracle",
+      "fallback": "minecraft:evoker",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.2,
+      "damage": 1.5,
+      "armor": 0,
+      "speed": 0.95,
+      "scale": 1.1,
+      "knockback": 0.0,
+      "glow": "#e0d0ff",
+      "aura": {
+        "particle": "minecraft:end_rod",
+        "color": "#e0d0ff"
+      },
+      "weight": 2,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    },
+    {
+      "id": "ink_golem",
+      "name": "Ink Golem",
+      "base": "foundry:prismatic_golem_chimes",
+      "fallback": "minecraft:iron_golem",
+      "habitat": "ground",
+      "role": "tank",
+      "hp": 2.0,
+      "damage": 1.1,
+      "armor": 4,
+      "speed": 0.85,
+      "scale": 1.25,
+      "knockback": 0.6,
+      "glow": "#8a70e8",
+      "aura": {
+        "particle": "minecraft:squid_ink",
+        "color": "#8a70e8"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    },
+    {
+      "id": "astral_wingmaiden",
+      "name": "Astral Wingmaiden",
+      "base": "foundry:deva_wingmaiden",
+      "fallback": "minecraft:phantom",
+      "habitat": "air",
+      "role": "skirmisher",
+      "hp": 1.1,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 1.25,
+      "scale": 1.1,
+      "knockback": 0.0,
+      "glow": "#f0e0ff",
+      "aura": {
+        "particle": "minecraft:glow",
+        "color": "#f0e0ff"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    }
+  ],
+  "boss": "oriel_many_eyed_archivist",
+  "theme": "astral",
+  "seal": {
+    "magic": [
+      "STAR",
+      "LIGHT",
+      "TIME",
+      "GRAVITY",
+      "COMPASS"
+    ],
+    "label": "Star",
+    "force": 2400,
+    "sigil": "Astral Sigil"
+  },
+  "relics": {
+    "boss": [
+      "orials_starfall_staff"
+    ],
+    "treasury": [
+      "archivists_starbound_codex"
+    ],
+    "primary": "archivists_starbound_codex"
+  },
+  "resonance": [
+    "STAR",
+    "TIME",
+    "GRAVITY",
+    "COMPASS",
+    "LIGHT"
+  ],
+  "collapse_seconds": 165,
+  "weight": 8,
+  "min_depth": 20,
+  "floor_min": 260
+}

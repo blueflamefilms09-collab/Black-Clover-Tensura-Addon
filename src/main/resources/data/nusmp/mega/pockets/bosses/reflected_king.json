@@ -1,0 +1,59 @@
+{
+  "side": "holy",
+  "tier": 4,
+  "variant": 1,
+  "name": "The Reflected King",
+  "anime": [
+    "Black Clover: the mirror-king of a vanished court"
+  ],
+  "dnd": [
+    "Vecna",
+    "Mirror Lord",
+    "Mind Flayer Elder"
+  ],
+  "forms": [
+    "The Reflected King",
+    "Two Kings in One Hall",
+    "Every Mirror Crowned"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "eye_rays",
+      "cost": 2
+    },
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "searing_light",
+    "anti_magic_field"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": false,
+  "absorb_magic": true,
+  "mythic": true,
+  "execution": false,
+  "breath": "lightning",
+  "reflective": true,
+  "look": "vecna",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.1,
+    "intro": "A hundred mirrors show a hundred kings. One of them is not a reflection, and he is looking at you.",
+    "death": "The mirrors go dark one by one. The last one shows only you.",
+    "adds": "mirror_duelist",
+    "add_count": 4
+  }
+}

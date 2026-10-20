@@ -1,0 +1,199 @@
+{
+  "id": "stormspire_aerie",
+  "name": "Stormspire Aerie",
+  "series": "Black Clover: Dungeons (sky riders)",
+  "lore": "The sky riders built their roost on a spire of stone that no longer remembers the ground. Their halls have forgotten weight; their guardians have not forgotten their lances.",
+  "accent": "#7aa8ff",
+  "sky": "#34406a",
+  "biome": {
+    "sky": "#405080",
+    "fog": "#34406a",
+    "water": "#5a8ad8",
+    "water_fog": "#1a2a4a",
+    "particle": "minecraft:cloud",
+    "particle_chance": 0.03,
+    "ambient": "minecraft:ambient.nether_wastes.loop",
+    "mood": "minecraft:ambient.nether_wastes.mood",
+    "additions": "minecraft:ambient.nether_wastes.additions",
+    "music": "minecraft:music.overworld.jagged_peaks",
+    "weather": "storm",
+    "soft_ambient": "nusmp:pocket.stormspire_aerie.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 0,
+    "negated": 2,
+    "rivers": 0,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:tuff_bricks",
+    "floor": "minecraft:polished_tuff",
+    "ceiling": "minecraft:chiseled_tuff",
+    "pillar": "minecraft:waxed_oxidized_copper",
+    "accent": "minecraft:light_gray_concrete",
+    "light": "minecraft:sea_lantern",
+    "glass": "minecraft:white_stained_glass",
+    "liquid": "minecraft:water"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 17,
+    "cycles": 0.35,
+    "boss_half": 10
+  },
+  "traps": [
+    "lightning",
+    "wind"
+  ],
+  "mobs": [
+    {
+      "id": "cloud_knight",
+      "name": "Cloud Knight",
+      "base": "foundry:sky_citadel_cloudknight",
+      "fallback": "minecraft:vex",
+      "habitat": "air",
+      "role": "brute",
+      "hp": 1.4,
+      "damage": 1.3,
+      "armor": 2,
+      "speed": 1.1,
+      "scale": 1.1,
+      "knockback": 0.2,
+      "glow": "#7aa8ff",
+      "aura": {
+        "particle": "minecraft:cloud",
+        "color": "#cfe0ff"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "storm_lancer",
+      "name": "Storm Lancer",
+      "base": "foundry:warband_centaur_lancer",
+      "fallback": "minecraft:pillager",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.3,
+      "damage": 1.4,
+      "armor": 1,
+      "speed": 1.3,
+      "scale": 1.1,
+      "knockback": 0.2,
+      "glow": "#a8c8ff",
+      "aura": {
+        "particle": "minecraft:electric_spark",
+        "color": "#fff07a"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "gale_dancer",
+      "name": "Gale Dancer",
+      "base": "foundry:windmill_reed_dancer",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 1.1,
+      "scale": 1.0,
+      "knockback": 0.0,
+      "glow": "#cfeff6",
+      "aura": {
+        "particle": "minecraft:cloud",
+        "color": "#cfeff6"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "cloud_giant",
+      "name": "Cloud Giant",
+      "base": "foundry:cloud_giant_courtier",
+      "fallback": "minecraft:iron_golem",
+      "habitat": "ground",
+      "role": "tank",
+      "hp": 2.2,
+      "damage": 1.1,
+      "armor": 3,
+      "speed": 0.85,
+      "scale": 1.35,
+      "knockback": 0.6,
+      "glow": "#8ab0ff",
+      "aura": {
+        "particle": "minecraft:cloud",
+        "color": "#e6f0ff"
+      },
+      "weight": 2,
+      "group_min": 1,
+      "group_max": 1,
+      "elite": false
+    },
+    {
+      "id": "thunder_roc",
+      "name": "Thunder Roc",
+      "base": "foundry:thunderbird_rider_of_the_spire",
+      "fallback": "minecraft:phantom",
+      "habitat": "air",
+      "role": "skirmisher",
+      "hp": 1.1,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 1.3,
+      "scale": 1.15,
+      "knockback": 0.0,
+      "glow": "#fff07a",
+      "aura": {
+        "particle": "minecraft:electric_spark",
+        "color": "#fff07a"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    }
+  ],
+  "boss": "valkarin_stormwing",
+  "theme": "sky_citadel",
+  "seal": {
+    "magic": [
+      "LIGHTNING",
+      "STORM",
+      "WIND",
+      "AIR",
+      "STAR"
+    ],
+    "label": "Storm",
+    "force": 2400,
+    "sigil": "Gale Sigil"
+  },
+  "relics": {
+    "boss": [
+      "valkarins_stormlance"
+    ],
+    "treasury": [
+      "aerie_courier_gloves"
+    ],
+    "primary": "aerie_courier_gloves"
+  },
+  "resonance": [
+    "STORM",
+    "LIGHTNING",
+    "WIND",
+    "AIR"
+  ],
+  "collapse_seconds": 150,
+  "weight": 9,
+  "min_depth": 0,
+  "floor_min": 220
+}

@@ -1,0 +1,63 @@
+{
+  "side": "evil",
+  "tier": 4,
+  "variant": 1,
+  "name": "Anhetep, the Sun-Eater",
+  "anime": [
+    "Black Clover: a desert dynast who swallowed the sun"
+  ],
+  "dnd": [
+    "Mummy Lord",
+    "Acererak",
+    "Death Tyrant"
+  ],
+  "forms": [
+    "Anhetep",
+    "Sun-Eater Unwrapped",
+    "Eclipse Pharaoh"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "magic_drain",
+      "cost": 1
+    },
+    {
+      "id": "life_drain",
+      "cost": 1
+    },
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "eye_rays",
+      "cost": 2
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "anti_magic_field"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "mythic": true,
+  "execution": true,
+  "breath": "fire",
+  "reflective": false,
+  "look": "acererak",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.15,
+    "intro": "The gold in the walls dims, all at once. Something very old unwraps itself on the dais.",
+    "death": "Anhetep's mouth opens one last time, and the sun he swallowed comes out of it, and goes.",
+    "adds": "canopic_priest",
+    "add_count": 3
+  }
+}

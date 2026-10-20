@@ -1,0 +1,176 @@
+{
+  "id": "radiant_basilica",
+  "name": "Radiant Basilica of the Unfallen",
+  "series": "Black Clover: Dungeons (light kingdom)",
+  "lore": "A basilica that kept its lamps lit for a thousand years after its congregation was gone. Its seraph never fell, and has been waiting ever since for someone to be worthy of the vault.",
+  "accent": "#ffd860",
+  "sky": "#5a5030",
+  "biome": {
+    "sky": "#6a5c38",
+    "fog": "#5a5030",
+    "water": "#e8d070",
+    "water_fog": "#2a2410",
+    "particle": "minecraft:glow",
+    "particle_chance": 0.03,
+    "ambient": "minecraft:ambient.warped_forest.loop",
+    "mood": "minecraft:ambient.cave",
+    "additions": "minecraft:ambient.warped_forest.additions",
+    "music": "minecraft:music.overworld.meadow",
+    "weather": "clear",
+    "soft_ambient": "nusmp:pocket.radiant_basilica.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 0,
+    "negated": 1,
+    "rivers": 2,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:smooth_quartz",
+    "floor": "minecraft:polished_diorite",
+    "ceiling": "minecraft:calcite",
+    "pillar": "minecraft:chiseled_quartz_block",
+    "accent": "minecraft:gold_block",
+    "light": "minecraft:glowstone",
+    "glass": "minecraft:yellow_stained_glass",
+    "liquid": "minecraft:water"
+  },
+  "layout": {
+    "grid": 5,
+    "rooms": 15,
+    "cycles": 0.4,
+    "boss_half": 11
+  },
+  "traps": [
+    "light",
+    "fire"
+  ],
+  "mobs": [
+    {
+      "id": "choir_knight",
+      "name": "Choir Knight",
+      "base": "foundry:holy_knight_grand_cross",
+      "fallback": "minecraft:vindicator",
+      "habitat": "ground",
+      "role": "brute",
+      "hp": 1.8,
+      "damage": 1.3,
+      "armor": 3,
+      "speed": 0.95,
+      "scale": 1.15,
+      "knockback": 0.4,
+      "glow": "#ffd860",
+      "aura": {
+        "particle": "minecraft:glow",
+        "color": "#ffd860"
+      },
+      "weight": 4,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "bell_cantor",
+      "name": "Bell Cantor",
+      "base": "foundry:vesper_bell_cantor",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.4,
+      "armor": 0,
+      "speed": 1.0,
+      "scale": 1.05,
+      "knockback": 0.0,
+      "glow": "#fff0a0",
+      "aura": {
+        "particle": "minecraft:end_rod",
+        "color": "#fff0a0"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "dawn_lancer",
+      "name": "Dawn Lancer",
+      "base": "foundry:starlit_vigil_cavalier",
+      "fallback": "minecraft:pillager",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.4,
+      "damage": 1.4,
+      "armor": 2,
+      "speed": 1.25,
+      "scale": 1.1,
+      "knockback": 0.2,
+      "glow": "#ffe880",
+      "aura": {
+        "particle": "minecraft:small_flame",
+        "color": "#ffe880"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "seraph_scout",
+      "name": "Seraph Scout",
+      "base": "foundry:celestial_choir_seraphim_scout",
+      "fallback": "minecraft:phantom",
+      "habitat": "air",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 1.2,
+      "scale": 1.1,
+      "knockback": 0.0,
+      "glow": "#fffbd0",
+      "aura": {
+        "particle": "minecraft:end_rod",
+        "color": "#fffbd0"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    }
+  ],
+  "boss": "auriel_unfallen_seraph",
+  "theme": "radiant",
+  "seal": {
+    "magic": [
+      "LIGHT",
+      "SWORD",
+      "REINFORCEMENT",
+      "STEEL",
+      "DEMON_LIGHT"
+    ],
+    "label": "Light",
+    "force": 2600,
+    "sigil": "Dawn Sigil"
+  },
+  "relics": {
+    "boss": [
+      "aurliels_seraph_halberd"
+    ],
+    "treasury": [
+      "basilica_halo"
+    ],
+    "primary": "basilica_halo"
+  },
+  "resonance": [
+    "LIGHT",
+    "SWORD",
+    "STEEL",
+    "REINFORCEMENT"
+  ],
+  "collapse_seconds": 150,
+  "weight": 8,
+  "min_depth": 30,
+  "floor_min": 380
+}

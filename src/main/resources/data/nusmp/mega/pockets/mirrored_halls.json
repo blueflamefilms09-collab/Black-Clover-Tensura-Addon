@@ -1,0 +1,176 @@
+{
+  "id": "mirrored_halls",
+  "name": "Halls of the Reflected King",
+  "series": "Black Clover: Dungeons (mirror courts)",
+  "lore": "A court that ruled by showing every visitor a better version of themselves, until no one could tell the visitors from the reflections. The King is whichever one is not you.",
+  "accent": "#cfd8e8",
+  "sky": "#3a4658",
+  "biome": {
+    "sky": "#445268",
+    "fog": "#3a4658",
+    "water": "#8aa8d0",
+    "water_fog": "#1a2230",
+    "particle": "minecraft:end_rod",
+    "particle_chance": 0.02,
+    "ambient": "minecraft:ambient.soul_sand_valley.loop",
+    "mood": "minecraft:ambient.soul_sand_valley.mood",
+    "additions": "minecraft:ambient.soul_sand_valley.additions",
+    "music": "minecraft:music.overworld.stony_peaks",
+    "weather": "mist",
+    "soft_ambient": "nusmp:pocket.mirrored_halls.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 1,
+    "negated": 1,
+    "rivers": 1,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:quartz_bricks",
+    "floor": "minecraft:smooth_quartz",
+    "ceiling": "minecraft:chiseled_quartz_block",
+    "pillar": "minecraft:quartz_pillar",
+    "accent": "minecraft:white_concrete",
+    "light": "minecraft:sea_lantern",
+    "glass": "minecraft:light_gray_stained_glass",
+    "liquid": "minecraft:water"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 19,
+    "cycles": 0.45,
+    "boss_half": 10
+  },
+  "traps": [
+    "light",
+    "wind"
+  ],
+  "mobs": [
+    {
+      "id": "mirror_duelist",
+      "name": "Mirror Duelist",
+      "base": "foundry:radiant_mirror_duelist",
+      "fallback": "minecraft:vindicator",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.3,
+      "damage": 1.5,
+      "armor": 1,
+      "speed": 1.25,
+      "scale": 1.05,
+      "knockback": 0.1,
+      "glow": "#e8f0ff",
+      "aura": {
+        "particle": "minecraft:end_rod",
+        "color": "#e8f0ff"
+      },
+      "weight": 5,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    },
+    {
+      "id": "doppel_courtier",
+      "name": "Doppelganger Courtier",
+      "base": "foundry:doppelganger_masquerade_duelist",
+      "fallback": "minecraft:vindicator",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.2,
+      "damage": 1.4,
+      "armor": 0,
+      "speed": 1.2,
+      "scale": 1.0,
+      "knockback": 0.0,
+      "glow": "#b0c0e0",
+      "aura": {
+        "particle": "minecraft:glow",
+        "color": "#b0c0e0"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "glass_warden",
+      "name": "Glass Warden",
+      "base": "foundry:hollow_sunshield_penitent",
+      "fallback": "minecraft:iron_golem",
+      "habitat": "ground",
+      "role": "tank",
+      "hp": 2.0,
+      "damage": 1.0,
+      "armor": 4,
+      "speed": 0.85,
+      "scale": 1.2,
+      "knockback": 0.5,
+      "glow": "#cfd8e8",
+      "aura": {
+        "particle": "minecraft:cloud",
+        "color": "#cfd8e8"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    },
+    {
+      "id": "shard_sparrow",
+      "name": "Shard Sparrow",
+      "base": "foundry:stained_glass_sparrow",
+      "fallback": "minecraft:vex",
+      "habitat": "air",
+      "role": "skirmisher",
+      "hp": 0.8,
+      "damage": 1.2,
+      "armor": 0,
+      "speed": 1.3,
+      "scale": 1.1,
+      "knockback": 0.0,
+      "glow": "#f0f8ff",
+      "aura": {
+        "particle": "minecraft:glow",
+        "color": "#f0f8ff"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    }
+  ],
+  "boss": "reflected_king",
+  "theme": "spatial",
+  "seal": {
+    "magic": [
+      "MIRROR",
+      "COPY",
+      "SPATIAL",
+      "ILLUSION",
+      "GLASS"
+    ],
+    "label": "Mirror",
+    "force": 2400,
+    "sigil": "Silver Sigil"
+  },
+  "relics": {
+    "boss": [
+      "reflected_kings_mirrorblade"
+    ],
+    "treasury": [
+      "silvered_sash_of_reflections"
+    ],
+    "primary": "silvered_sash_of_reflections"
+  },
+  "resonance": [
+    "MIRROR",
+    "COPY",
+    "ILLUSION",
+    "SPATIAL"
+  ],
+  "collapse_seconds": 150,
+  "weight": 8,
+  "min_depth": 10,
+  "floor_min": 300
+}

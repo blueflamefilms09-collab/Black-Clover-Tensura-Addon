@@ -1,0 +1,63 @@
+{
+  "side": "holy",
+  "tier": 4,
+  "variant": 0,
+  "name": "Valkarin the Stormwing",
+  "anime": [
+    "Black Clover: the roost-lord of a vanished sky-rider house"
+  ],
+  "dnd": [
+    "Bahamut",
+    "Roc",
+    "Storm Giant"
+  ],
+  "forms": [
+    "Valkarin",
+    "Stormwing Ascendant",
+    "Tempest Crowned"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "wing_buffet",
+      "cost": 1
+    },
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 3
+    }
+  ],
+  "lair_actions": [
+    "falling_stars",
+    "searing_light"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false,
+  "breath": "lightning",
+  "reflective": false,
+  "look": "bahamut",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.2,
+    "intro": "Lightning walks along the spire. Valkarin lowers himself from the roof of the world.",
+    "death": "The storm leaves Valkarin all at once, and the spire is very quiet.",
+    "adds": "thunder_roc",
+    "add_count": 3
+  }
+}

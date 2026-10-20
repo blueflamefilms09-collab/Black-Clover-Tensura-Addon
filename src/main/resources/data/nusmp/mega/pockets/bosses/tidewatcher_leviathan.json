@@ -1,0 +1,59 @@
+{
+  "side": "evil",
+  "tier": 4,
+  "variant": 1,
+  "name": "Tidewatcher Leviathan",
+  "anime": [
+    "Black Clover: the sea-warden of a drowned astronomers' house"
+  ],
+  "dnd": [
+    "Kraken",
+    "Aboleth",
+    "Sea Hag Admiral"
+  ],
+  "forms": [
+    "Tidewatcher",
+    "Drowned Leviathan",
+    "Maelstrom Unbound"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "gravity_crush",
+      "cost": 2
+    },
+    {
+      "id": "magic_drain",
+      "cost": 1
+    },
+    {
+      "id": "haki_pulse",
+      "cost": 3
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "necrotic_mist"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false,
+  "breath": "lightning",
+  "reflective": false,
+  "look": "kraken",
+  "mega": {
+    "damage": 1.3,
+    "scale": 1.2,
+    "intro": "Every river on the ceiling turns once, as if the sea were looking down. The Leviathan unfolds out of the dark water.",
+    "death": "The tide pulls back from the Leviathan and does not return.",
+    "adds": "brine_marine",
+    "add_count": 3
+  }
+}

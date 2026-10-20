@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * ancient magic that resonates with a mage's grimoire.
  */
 public record PocketDef(String id, String name, String series, String lore, int accent, int sky, Biome biome, Gravity gravity, Palette palette, Layout layout, List<PocketElement> traps,
-                        List<Mob> mobs, String boss, Seal seal, Relics relics, List<String> resonance, int collapseSeconds, int weight, int minDepth, int floorMin) {
+                        List<Mob> mobs, String boss, String theme, Seal seal, Relics relics, List<String> resonance, int collapseSeconds, int weight, int minDepth, int floorMin) {
 
     public PocketDef {
         traps = List.copyOf(traps);
@@ -127,6 +127,8 @@ public record PocketDef(String id, String name, String series, String lore, int 
         if (!ground) throw new IllegalArgumentException(id + ": at least one mob must walk (habitat ground)");
         String boss = str(o, "boss");
         if (!ID.matcher(boss).matches()) throw new IllegalArgumentException(id + ": boss '" + boss + "' is not a profile id");
+        String theme = str(o, "theme");
+        if (!theme.matches("[a-z][a-z_]*")) throw new IllegalArgumentException(id + ": theme '" + theme + "' is not a region theme id");
         JsonObject s = obj(o, "seal", id);
         List<String> magic = new ArrayList<>();
         for (String m : strings(s, "magic")) magic.add(m.toUpperCase(Locale.ROOT));
@@ -141,7 +143,7 @@ public record PocketDef(String id, String name, String series, String lore, int 
         for (String x : rb) if (rt.contains(x)) throw new IllegalArgumentException(id + ": the relic '" + x + "' is in both relics.boss and relics.treasury");
         List<String> resonance = new ArrayList<>();
         for (String m : strings(o, "resonance")) resonance.add(m.toUpperCase(Locale.ROOT));
-        return new PocketDef(id, str(o, "name"), str(o, "series"), str(o, "lore"), color(o, "accent", id), color(o, "sky", id), biome, gravity, palette, layout, traps, mobs, boss, seal,
+        return new PocketDef(id, str(o, "name"), str(o, "series"), str(o, "lore"), color(o, "accent", id), color(o, "sky", id), biome, gravity, palette, layout, traps, mobs, boss, theme, seal,
                 new Relics(rb, rt, primary), resonance, clampI((int) num(o, "collapse_seconds", 150), COLLAPSE_MIN, COLLAPSE_MAX), clampI((int) num(o, "weight", 10), 1, 1000),
                 clampI((int) num(o, "min_depth", 0), 0, 1000), clampI((int) num(o, "floor_min", 1), 1, 1000));
     }

@@ -1,0 +1,176 @@
+{
+  "id": "crimson_abattoir",
+  "name": "Crimson Abattoir",
+  "series": "Black Clover: Dungeons (blood cults)",
+  "lore": "A cult's arena where every wound was an offering. The rivers on its ceilings are not water, and the floors remember every one who bled on them.",
+  "accent": "#c01818",
+  "sky": "#3a0a0e",
+  "biome": {
+    "sky": "#4a1016",
+    "fog": "#3a0a0e",
+    "water": "#a01010",
+    "water_fog": "#240408",
+    "particle": "minecraft:crimson_spore",
+    "particle_chance": 0.05,
+    "ambient": "minecraft:ambient.crimson_forest.loop",
+    "mood": "minecraft:ambient.crimson_forest.mood",
+    "additions": "minecraft:ambient.crimson_forest.additions",
+    "music": "minecraft:music.nether.crimson_forest",
+    "weather": "spores",
+    "soft_ambient": "nusmp:pocket.crimson_abattoir.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 1,
+    "negated": 0,
+    "rivers": 1,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:nether_bricks",
+    "floor": "minecraft:red_nether_bricks",
+    "ceiling": "minecraft:red_nether_bricks",
+    "pillar": "minecraft:stripped_crimson_stem",
+    "accent": "minecraft:nether_wart_block",
+    "light": "minecraft:shroomlight",
+    "glass": "minecraft:red_stained_glass",
+    "liquid": "minecraft:lava"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 19,
+    "cycles": 0.45,
+    "boss_half": 10
+  },
+  "traps": [
+    "blood",
+    "fire"
+  ],
+  "mobs": [
+    {
+      "id": "blood_butcher",
+      "name": "Blood Butcher",
+      "base": "foundry:executioner_of_the_black_mass",
+      "fallback": "minecraft:vindicator",
+      "habitat": "ground",
+      "role": "brute",
+      "hp": 1.7,
+      "damage": 1.4,
+      "armor": 2,
+      "speed": 0.95,
+      "scale": 1.15,
+      "knockback": 0.3,
+      "glow": "#c01818",
+      "aura": {
+        "particle": "minecraft:crimson_spore",
+        "color": "#c01818"
+      },
+      "weight": 4,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "gore_hound",
+      "name": "Gore Hound",
+      "base": "foundry:blood_moon_werewolf_huntsman",
+      "fallback": "minecraft:wolf",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.2,
+      "damage": 1.4,
+      "armor": 0,
+      "speed": 1.35,
+      "scale": 1.05,
+      "knockback": 0.0,
+      "glow": "#e03030",
+      "aura": {
+        "particle": "minecraft:damage_indicator",
+        "color": "#e03030"
+      },
+      "weight": 5,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    },
+    {
+      "id": "sanguine_priest",
+      "name": "Sanguine Priest",
+      "base": "foundry:inquisitor_of_the_weeping_altar",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.1,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 0.95,
+      "scale": 1.05,
+      "knockback": 0.0,
+      "glow": "#ff4a4a",
+      "aura": {
+        "particle": "minecraft:dripping_lava",
+        "color": "#ff4a4a"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "carrion_bat",
+      "name": "Carrion Bat",
+      "base": "foundry:pit_bat_swarmlord",
+      "fallback": "minecraft:vex",
+      "habitat": "air",
+      "role": "skirmisher",
+      "hp": 0.9,
+      "damage": 1.2,
+      "armor": 0,
+      "speed": 1.3,
+      "scale": 1.1,
+      "knockback": 0.0,
+      "glow": "#a01010",
+      "aura": {
+        "particle": "minecraft:crimson_spore",
+        "color": "#a01010"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    }
+  ],
+  "boss": "vorgrim_sanguine_warden",
+  "theme": "vampire_castle",
+  "seal": {
+    "magic": [
+      "BLOOD",
+      "BEAST",
+      "BONE",
+      "REINFORCEMENT",
+      "BODY"
+    ],
+    "label": "Blood",
+    "force": 2400,
+    "sigil": "Blood Sigil"
+  },
+  "relics": {
+    "boss": [
+      "sanguine_wardens_cleaver"
+    ],
+    "treasury": [
+      "bloodbound_gauntlets"
+    ],
+    "primary": "bloodbound_gauntlets"
+  },
+  "resonance": [
+    "BLOOD",
+    "BONE",
+    "BEAST",
+    "BODY"
+  ],
+  "collapse_seconds": 150,
+  "weight": 9,
+  "min_depth": 0,
+  "floor_min": 180
+}

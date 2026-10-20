@@ -43,6 +43,24 @@ public enum PocketElement {
 
     public String id() { return id; }
 
+    /** The registry id of the rune block at the middle of a trap tile of this element (a patterned block of its colour, so a careful delver can read the floor). */
+    public String rune() {
+        return switch (this) {
+            case FIRE -> "minecraft:orange_glazed_terracotta";
+            case PLANT -> "minecraft:lime_glazed_terracotta";
+            case FROST -> "minecraft:light_blue_glazed_terracotta";
+            case LIGHTNING -> "minecraft:yellow_glazed_terracotta";
+            case POISON -> "minecraft:green_glazed_terracotta";
+            case EARTH -> "minecraft:brown_glazed_terracotta";
+            case WIND -> "minecraft:white_glazed_terracotta";
+            case DARK -> "minecraft:purple_glazed_terracotta";
+            case LIGHT -> "minecraft:glowstone";
+            case WATER -> "minecraft:blue_glazed_terracotta";
+            case TIME -> "minecraft:magenta_glazed_terracotta";
+            case BLOOD -> "minecraft:red_glazed_terracotta";
+        };
+    }
+
     /** The vanilla particle type id the trap draws. */
     public String particle() { return particle; }
 
