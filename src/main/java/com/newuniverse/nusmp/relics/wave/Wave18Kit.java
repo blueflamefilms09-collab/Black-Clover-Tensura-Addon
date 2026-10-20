@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -13,19 +12,21 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /** Wave 18: the small glue the charms share (dust particles, a foe in front of the player, an entity by id). Statics only; server side. */
 final class Wave18Kit {
     private Wave18Kit() {}
 
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);                    // Rukh replaces vanilla dust: the colour only picks the alignment
     }
 
     /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
-    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+    static FxTone align(int rgb) {
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
-        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
+        return FxTone.of(lum < 0.33);
     }
 
     /** The registry id of an entity type, for messages and checks. */

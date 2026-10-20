@@ -1,9 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -14,6 +12,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19: the wild magic table played out. Used by the Scroll of Unreadable Spells (one surge per letter read) and by Fey Honey (a surge when
@@ -56,13 +57,13 @@ final class Wave19Surge {
     private static void play(ServerPlayer p, Wave19Rules.Surge s) {
         ServerLevel sl = p.serverLevel();
         Vec3 at = p.position();
-        Fx.burst(sl, at, 0xC060FF);
+        FxRelic.burst(sl, at, 0xC060FF);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.2f, 0.6f + p.getRandom().nextFloat() * 0.8f);
         switch (s) {
             case LEVITATE -> Wave19Util.give(p, "minecraft:levitation", 100, 0);
             case MENDING -> Fx.heal(p, 6f);
             case FIRE_BURST -> {
-                Fx.ring(sl, at, 4.0, 0xFF7A20);
+                FxRelic.ring(sl, at, 4.0, 0xFF7A20);
                 for (LivingEntity t : Wave19Util.foesAt(p, at, 4.0)) {
                     Fx.damage(p, t, 5f, "minecraft:in_fire");
                     t.igniteForSeconds(3f);
@@ -78,7 +79,7 @@ final class Wave19Surge {
             case MISTY_STEP -> Fx.teleportLook(p, 10);
             case SWAP_PLACES -> swap(p);
             case STINK_CLOUD -> {
-                Fx.ring(sl, at, 5.0, 0x7AC030);
+                FxRelic.ring(sl, at, 5.0, 0x7AC030);
                 Fx.aoe(p, 5.0, 0f, null, "minecraft:nausea", 160, 0);
                 Fx.aoe(p, 5.0, 0f, null, "minecraft:poison", 80, 0);
             }
@@ -93,14 +94,14 @@ final class Wave19Surge {
             case FLASH -> {
                 Fx.aoe(p, 6.0, 0f, null, "minecraft:blindness", 80, 0);
                 Wave19Util.give(p, "minecraft:blindness", 40, 0);
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, at.x, at.y + 1.0, at.z, 1, 0, 0, 0, 0);
             }
             case MANA_SURGE -> Wave19Util.addMagicules(p, 0.20);
             case BLOOM -> {
                 Wave19Util.give(p, "minecraft:regeneration", 200, 1);
                 p.getFoodData().eat(4, 0.4f);
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 40, 1.5, 0.8, 1.5, 0.05);
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 2.0, at.z, 30, 1.5, 0.6, 1.5, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, at.x, at.y + 1.0, at.z, 40, 1.5, 0.8, 1.5, 0.05);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, at.x, at.y + 2.0, at.z, 30, 1.5, 0.6, 1.5, 0.02);
             }
             case BACKFIRE -> {
                 Wave19Util.give(p, "minecraft:weakness", 120, 0);

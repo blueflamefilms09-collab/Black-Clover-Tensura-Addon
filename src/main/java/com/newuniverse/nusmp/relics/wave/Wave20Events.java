@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -22,6 +21,9 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the damage, death and tick rules of the twelve weapons of wave 20. Extra damage is added to the hit that is being dealt (never a second
@@ -58,7 +60,7 @@ final class Wave20Events {
                 if (!RelicFlags.has(atk, "w20_shovel")) return;
                 e.setAmount(e.getAmount() + 3.5f);                                               // 1d6 necrotic
                 Fx.addEffect(victim, "minecraft:wither", 40, 0);
-                RukhFx.spray(level, RukhFx.Alignment.DARK, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.25, 0.3, 0.25, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.DARK, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.25, 0.3, 0.25, 0.02);
             }
             case "dragoons_halberd" -> halberd(e, atk, victim, level);
             case "efreetis_kusarigama" -> {
@@ -75,7 +77,7 @@ final class Wave20Events {
                 if (!RelicFlags.has(atk, "w20_mjolnir")) return;
                 if (victim.isInWaterOrRain()) {                                                  // a wet foe conducts the hammer's lightning
                     e.setAmount(e.getAmount() + 3.0f);
-                    RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.2);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.2);
                 }
             }
             case "phoenix_flame" -> {
@@ -83,7 +85,7 @@ final class Wave20Events {
                 if (victim.fireImmune()) return;
                 e.setAmount(e.getAmount() + Wave20Rules.BLAZE_DAMAGE);                          // 2d6 fire while ablaze
                 victim.setRemainingFireTicks(Math.max(victim.getRemainingFireTicks(), 100));
-                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 8, 0.3, 0.5, 0.3, 0.08);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 8, 0.3, 0.5, 0.3, 0.08);
             }
             case "primal_chaos" -> {
                 if (!RelicFlags.has(atk, "w20_chaos")) return;
@@ -93,13 +95,13 @@ final class Wave20Events {
                     Fx.addEffect(victim, "tensura:spatial_blockade", 40, 0);
                 }
                 e.setAmount(e.getAmount() + add);
-                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 4, 0.2, 0.3, 0.2, 0.05);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 4, 0.2, 0.3, 0.2, 0.05);
             }
             case "lightworkers_scepter" -> {
                 if (!RelicFlags.has(atk, "w20_lightworker")) return;
                 if (victim.getType().is(EntityTypeTags.UNDEAD)) {
                     e.setAmount(e.getAmount() + 4.0f);                                           // radiant against the undead
-                    RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.05);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.05);
                 }
             }
             default -> { }
@@ -123,7 +125,7 @@ final class Wave20Events {
                 } finally {
                     busy = false;
                 }
-                RukhFx.burst(level, vp.position().add(0, 1.2, 0), RukhFx.Alignment.LIGHT, 8);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_20, vp.position().add(0, 1.2, 0), FxTone.LIGHT, 8);
                 Fx.say(vp, "Deflection: the folded steel turns the blow and answers it.");
                 return true;
             }
@@ -135,7 +137,7 @@ final class Wave20Events {
                 } finally {
                     busy = false;
                 }
-                RukhFx.stream(level, vp.position().add(0, 1.5, 0), attacker.position().add(0, 1.0, 0), RukhFx.Alignment.LIGHT, 6);
+                com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, vp.position().add(0, 1.5, 0), attacker.position().add(0, 1.0, 0), FxTone.LIGHT, 6);
                 level.playSound(null, vp.blockPosition(), net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_SWEEP, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 0.8f);
             }
         }
@@ -147,7 +149,7 @@ final class Wave20Events {
                 vp.setHealth(Wave20Rules.SOULGATE_HEALTH);
                 Fx.addEffect(vp, "minecraft:resistance", 80, 4);
                 Fx.addEffect(vp, "minecraft:regeneration", 120, 2);
-                Fx.ring(level, vp.position(), 3.0, 0xEAF8FF);
+                FxRelic.ring(level, vp.position(), 3.0, 0xEAF8FF);
                 Fx.say(vp, "Soulgate: the voice pulls you through the plane of life, and the killing blow finds no one. Once a day.");
                 return true;
             }
@@ -194,7 +196,7 @@ final class Wave20Events {
         } finally {
             busy = false;
         }
-        Fx.ring(level, victim.position(), Wave20Rules.DROP_RADIUS, el == Wave20Rules.Element.FROST ? 0xBFE8FF : el == Wave20Rules.Element.FIRE ? 0xFF8A30 : 0xFFF0A0);
+        FxRelic.ring(level, victim.position(), Wave20Rules.DROP_RADIUS, el == Wave20Rules.Element.FROST ? 0xBFE8FF : el == Wave20Rules.Element.FIRE ? 0xFF8A30 : 0xFFF0A0);
     }
 
     private static void carnage(LivingIncomingDamageEvent e, ServerPlayer atk, LivingEntity victim, ServerLevel level, long now) {
@@ -205,7 +207,7 @@ final class Wave20Events {
         if (Wave20Rules.severs(atk.getRandom().nextDouble())) {                                  // of sharpness: a severing cut
             add += e.getAmount() * 0.4f;
             Fx.addEffect(victim, "minecraft:poison", 80, 1);
-            RukhFx.spray(level, RukhFx.Alignment.DARK, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.DARK, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
         }
         if (add > 0) e.setAmount(e.getAmount() + add);
     }
@@ -219,7 +221,7 @@ final class Wave20Events {
         int stacks = Wave20Rules.carnageAfterKill(pd.getInt(Wave20Acts.K_CARN_N), pd.getLong(Wave20Acts.K_CARN_AT), now);
         pd.putInt(Wave20Acts.K_CARN_N, stacks);
         pd.putLong(Wave20Acts.K_CARN_AT, now);
-        RukhFx.burst(killer.serverLevel(), e.getEntity(), RukhFx.Alignment.DARK, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(killer.serverLevel(), FxThemes.RELIC_WAVE_20, e.getEntity(), FxTone.DARK, 6);
         if (stacks >= Wave20Rules.CARNAGE_MAX) Fx.heal(killer, 2.0f);
         Fx.say(killer, "Carnage x" + stacks + ".");
     }
@@ -239,10 +241,10 @@ final class Wave20Events {
                 Fx.say(p, "The phoenix's flames die as the halberd leaves your hand.");
             } else {
                 Fx.addEffect(p, "minecraft:night_vision", 260, 0);
-                RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
+                com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_20, p, FxTone.LIGHT);
             }
         }
-        if (pd.getLong(Wave20Acts.K_HOVER) > now && t % 20 == 3) RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
+        if (pd.getLong(Wave20Acts.K_HOVER) > now && t % 20 == 3) com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_20, p, FxTone.LIGHT);
         if (RelicFlags.has(p, "w20_lightworker")) {                                              // resistance to psychic damage: the mind's afflictions slide off
             for (String id : new String[]{"tensura:fear", "tensura:confusion", "tensura:insanity", "tensura:hypnosis"}) Wave20Util.removeEffect(p, id);
         }
@@ -263,7 +265,7 @@ final class Wave20Events {
         boolean big = Wave20Util.isBig(t);
         Fx.addEffect(t, "minecraft:slowness", 30, big ? 1 : 5);
         if (!big) pull(p, t);
-        RukhFx.stream(level, p, t, RukhFx.Alignment.LIGHT, 3);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, p, t, FxTone.LIGHT, 3);
         if (Wave20Rules.grappleDamageDue(now, pd.getLong(Wave20Acts.K_GRAP_NEXT))) {
             pd.putLong(Wave20Acts.K_GRAP_NEXT, now + Wave20Rules.GRAPPLE_STEP);
             Fx.damage(p, t, Wave20Rules.GRAPPLE_DAMAGE, "minecraft:in_fire");
@@ -298,6 +300,6 @@ final class Wave20Events {
                 Fx.addEffect(m, "minecraft:weakness", 60, 0);
             }
         }
-        RukhFx.aura(level, p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(level, FxThemes.RELIC_WAVE_20, p, FxTone.LIGHT);
     }
 }

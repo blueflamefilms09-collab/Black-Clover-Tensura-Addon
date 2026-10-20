@@ -17,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Aiming for wave 5's rays, cones and bursts. Targets always come from {@link Fx#foesAround} (hostile or unallied, never creative or spectator
@@ -91,7 +92,7 @@ final class Wave5Aim {
         for (int i = 0; i <= n; i++) {
             double t = i / (double) n;
             Vec3 at = from.add(to.subtract(from).scale(t));
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_5, com.newuniverse.nusmp.particle.fx.Fx.toneOf(fx), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 
@@ -99,7 +100,7 @@ final class Wave5Aim {
     static Vec3 muzzle(ServerPlayer p) { return p.getEyePosition().add(p.getLookAngle().scale(0.6)).add(0, -0.25, 0); }
 
     static void puff(ServerLevel l, Vec3 at, ParticleOptions fx, int count, double spread) {
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), at.x, at.y, at.z, Math.max(1, Math.min(count, 40)), spread, spread, spread, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_5, com.newuniverse.nusmp.particle.fx.Fx.toneOf(fx), at.x, at.y, at.z, Math.max(1, Math.min(count, 40)), spread, spread, spread, 0.02);
     }
 
     static void sound(ServerLevel l, Vec3 at, SoundEvent s, float volume, float pitch) {

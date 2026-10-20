@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.mana.ManaLaw;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -45,6 +44,9 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 7 gameplay: the armours' abilities (act bodies, the staggered player tick, the damage / death / visibility / effect hooks).
@@ -142,8 +144,8 @@ public final class Wave7Events {
         d.putLong(K_STAR, l.getGameTime() + Wave7Math.STAR_TICKS);
         d.putBoolean(K_STAR_ON, true);
         double r = Wave7Math.starRadius(l.getDayTime());
-        Fx.burst(l, p.position().add(0, 1, 0), STAR_COLOR);
-        Fx.ring(l, p.position().add(0, 0.1, 0), r, STAR_COLOR);
+        FxRelic.burst(l, p.position().add(0, 1, 0), STAR_COLOR);
+        FxRelic.ring(l, p.position().add(0, 0.1, 0), r, STAR_COLOR);
         Fx.lendSkills(p, Wave7Math.STAR_TICKS, Wave7Skills.MAGIC_SENSE, Wave7Skills.THOUGHT_COMMUNICATION);   // the stars see, and carry a message to anyone you know
         Fx.say(p, "A starscape unfolds around you (" + (int) r + " blocks, 1 minute): Magic Sense and Thought Communication are lent while it lasts.");
     }
@@ -157,7 +159,7 @@ public final class Wave7Events {
         if (t == null) { Fx.say(p, "No foe in the starscape."); return; }
         Fx.damage(p, t, Wave7Math.STAR_BOLT, "minecraft:magic");
         Fx.addEffect(t, "minecraft:glowing", 100, 0);
-        Fx.burst(l, t.position().add(0, t.getBbHeight() * 0.5, 0), STAR_COLOR);
+        FxRelic.burst(l, t.position().add(0, t.getBbHeight() * 0.5, 0), STAR_COLOR);
     }
 
     /** Coat of the Duelist: En Garde. */
@@ -165,7 +167,7 @@ public final class Wave7Events {
         ServerPlayer p = ctx.player();
         p.getPersistentData().putLong(K_GUARD, p.level().getGameTime() + Wave7Math.GUARD_TICKS);
         Fx.lendSkills(p, Wave7Math.GUARD_TICKS + 20, Wave7Skills.DANGER_SENSE, Wave7Skills.THOUGHT_ACCELERATION);   // the fencer reads the blow before it comes
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.6, 0xB8BCC8);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.6, 0xB8BCC8);
         Fx.say(p, "En garde: the next melee blow within 6 seconds is parried (Danger Sense and Thought Acceleration are lent).");
     }
 
@@ -196,7 +198,7 @@ public final class Wave7Events {
         quiet(p, "tensura:presence_concealment", ticks, 0);                              // Unseen merges invisibility, Presence Concealment and Shadow Motion
         Fx.lendSkill(p, Wave7Skills.SHADOW_MOTION, ticks);
         p.getPersistentData().putLong(K_GOLD, l.getGameTime() + ticks);
-        Fx.burst(l, p.position().add(0, 1, 0), GOLD_COLOR);
+        FxRelic.burst(l, p.position().add(0, 1, 0), GOLD_COLOR);
         Fx.say(p, "You slip into the shadow for " + ticks / 20 + " seconds (a Rogue's training: " + Math.round(training * 100) + "%; attacking ends it with a sneak attack).");
     }
 
@@ -214,7 +216,7 @@ public final class Wave7Events {
         }
         Fx.lendSkill(p, Wave7Skills.HERO_HAKI, Wave7Math.ROAR_TICKS);                       // the roar itself is a hero's haki
         l.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.2f, 0.8f);
-        Fx.ring(l, p.position().add(0, 0.1, 0), Wave7Math.PRIDE_RADIUS, LION_COLOR);
+        FxRelic.ring(l, p.position().add(0, 0.1, 0), Wave7Math.PRIDE_RADIUS, LION_COLOR);
         Fx.say(p, "A lion's roar: " + (group.size() - 1) + " allies are bolstered for 30 seconds.");
     }
 
@@ -231,7 +233,7 @@ public final class Wave7Events {
         if (pick == null) { Fx.say(p, "No ally within reach."); return; }
         pick.getPersistentData().putLong(K_PROT, now + Wave7Math.RESOLVE_TICKS);
         p.getPersistentData().putLong(K_EXPO, now + Wave7Math.RESOLVE_TICKS);
-        Fx.ring(p.serverLevel(), pick.position().add(0, 0.1, 0), 1.4, LION_COLOR);
+        FxRelic.ring(p.serverLevel(), pick.position().add(0, 0.1, 0), 1.4, LION_COLOR);
         if (pick instanceof ServerPlayer sp) tell(sp, p.getName().getString() + " lends you their guard.");
         Fx.say(p, "Your guard passes to " + pick.getName().getString() + " for 5 seconds; you are exposed.");
     }
@@ -243,7 +245,7 @@ public final class Wave7Events {
         CompoundTag d = p.getPersistentData();
         if (on(d, K_HEAD, now)) { endHead(p, d); return; }
         d.putLong(K_HEAD, now + Wave7Math.HEAD_TICKS);
-        Fx.ring(p.serverLevel(), p.position().add(0, 1.6, 0), 1.0, 0x9FD8FF);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 1.6, 0), 1.0, 0x9FD8FF);
         Fx.say(p, "You lift your head off (45 seconds): magical senses (night sight, Magic Sense), no drowning, no blinding; you cannot eat or drink.");
     }
 
@@ -273,7 +275,7 @@ public final class Wave7Events {
         for (ServerPlayer o : l.getEntitiesOfClass(ServerPlayer.class, p.getBoundingBox().inflate(Wave7Math.DISPEL_RADIUS), x -> x != p && x.distanceToSqr(p) <= Wave7Math.DISPEL_RADIUS * Wave7Math.DISPEL_RADIUS)) {
             if (has(o, Wave7.F_HEAD)) o.getPersistentData().putLong(K_DISPEL, dark);
         }
-        Fx.ring(l, p.position().add(0, 0.1, 0), Wave7Math.DISPEL_RADIUS, 0x9FD8FF);
+        FxRelic.ring(l, p.position().add(0, 0.1, 0), Wave7Math.DISPEL_RADIUS, 0x9FD8FF);
         Fx.say(p, "Dispel Magic: " + cleansed + " afflictions washed off you, " + foes + " foes stripped and jammed, " + broken + " magic constructs broken."
                 + (on(d, K_DISPEL, now) ? " Your own magical senses go dark for a minute." : ""));
     }
@@ -294,7 +296,7 @@ public final class Wave7Events {
             p.setDeltaMovement(v.x, Math.max(v.y, 0.45), v.z);
             p.hurtMarked = true;
         }
-        Fx.burst(l, p.position().add(0, 1.2, 0), FLAME_COLOR);
+        FxRelic.burst(l, p.position().add(0, 1.2, 0), FLAME_COLOR);
         Fx.say(p, "Fiery wings unfurl: you fly for 2 minutes (double-tap jump to land or take off again).");
     }
 
@@ -307,7 +309,7 @@ public final class Wave7Events {
         boolean refused = !Wave7Math.modeAllowed(mode, Wave7Math.isCaster(pool));
         if (refused) mode = Wave7Math.MODE_BASE;                                           // only a spellcaster's pool can drive the other modes
         d.putInt(K_ARCANE, mode);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.2, 0x58A8FF);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.2, 0x58A8FF);
         Fx.say(p, "Arcane Conduction Armor: " + Wave7Math.modeName(mode) + "."
                 + (refused ? " The circuits stay dark: the other modes need a spellcaster's pool of " + (long) Wave7Math.GATE_CASTER_MAGICULE + " magicules." : ""));
     }
@@ -324,7 +326,7 @@ public final class Wave7Events {
             t.push(dir.x * push, 0.4, dir.z * push);
             t.hurtMarked = true;
         }
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), Wave7Math.TAIL_RADIUS, 0x8FB4C8);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.2, 0), Wave7Math.TAIL_RADIUS, 0x8FB4C8);
     }
 
     // ================================================================ state changes shared by acts and ticks
@@ -501,7 +503,7 @@ public final class Wave7Events {
             quiet(p, "minecraft:night_vision", 260, 0);
             if (second) {
                 Fx.lendSkill(p, Wave7Skills.MAGIC_SENSE, Wave7Skills.LEASE);               // the card's +5 to Insight, Investigation and Perception
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.35, 0.6, 0.35, 0.0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_7, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.35, 0.6, 0.35, 0.0);
             }
             if (level == 2) {                                                              // the statue: overlooked entirely
                 quiet(p, "minecraft:invisibility", 30, 0);
@@ -533,8 +535,8 @@ public final class Wave7Events {
         }
         ServerLevel l = p.serverLevel();
         double r = Wave7Math.starRadius(l.getDayTime());
-        if (second) Fx.ring(l, p.position().add(0, 0.1, 0), r, STAR_COLOR);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, r * 0.5, 0.9, r * 0.5, 0.01);
+        if (second) FxRelic.ring(l, p.position().add(0, 0.1, 0), r, STAR_COLOR);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_7, FxTone.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, r * 0.5, 0.9, r * 0.5, 0.01);
         revealHidden(p, r);
     }
 
@@ -598,7 +600,7 @@ public final class Wave7Events {
             double spread = 0.45 + 0.28 * i, lift = 1.0 + 0.2 * i;
             for (int side = -1; side <= 1; side += 2) {
                 Vec3 at = p.position().add(right.scale(side * spread)).add(fwd.scale(-0.4)).add(0, lift, 0);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 1, 0.04, 0.04, 0.04, 0.01);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_7, FxTone.LIGHT, at.x, at.y, at.z, 1, 0.04, 0.04, 0.04, 0.01);
             }
         }
     }
@@ -667,7 +669,7 @@ public final class Wave7Events {
             try { Fx.damage(p, att, 5f, "minecraft:player_attack"); } finally { busy = false; }
         }
         Fx.addEffect(p, "minecraft:speed", 80, 1);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, att.getX(), att.getY() + att.getBbHeight() * 0.6, att.getZ(), 10, 0.3, 0.3, 0.3, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_7, FxTone.LIGHT, att.getX(), att.getY() + att.getBbHeight() * 0.6, att.getZ(), 10, 0.3, 0.3, 0.3, 0.2);
         tell(p, "Parried!");
     }
 
@@ -681,7 +683,7 @@ public final class Wave7Events {
             boolean onYou = victim instanceof Mob m && m.getTarget() == a;
             if (Wave7Math.isSneakAttack(cloaked, mob, onYou)) {
                 e.setAmount(e.getAmount() + Wave7Math.sneakBonus(e.getAmount(), rogue(ad)));
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(a.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 8, 0.25, 0.25, 0.25, 0.15);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(a.serverLevel(), FxThemes.RELIC_WAVE_7, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 8, 0.25, 0.25, 0.25, 0.15);
             }
             if (cloaked) {                                              // striking breaks Unseen / Fade from View
                 ad.remove(K_GOLD);
@@ -725,8 +727,8 @@ public final class Wave7Events {
             Fx.say(k, "The armour drinks its first soul and wakes.");
         }
         returnEnergy(k, Wave7Math.soulEnergyShare(first));
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(k.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, dead.getX(), dead.getY() + dead.getBbHeight() * 0.5, dead.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
-        Fx.burst(k.serverLevel(), k.position().add(0, 1, 0), SOUL_COLOR);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(k.serverLevel(), FxThemes.RELIC_WAVE_7, FxTone.DARK, dead.getX(), dead.getY() + dead.getBbHeight() * 0.5, dead.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
+        FxRelic.burst(k.serverLevel(), k.position().add(0, 1, 0), SOUL_COLOR);
     }
 
     /** The escaping life energy: a share of the wearer's maximum magicules and aura comes back (Tensura's existence storage). */

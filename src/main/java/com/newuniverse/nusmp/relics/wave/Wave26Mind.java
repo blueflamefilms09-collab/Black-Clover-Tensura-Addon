@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.wave.Wave26Rules.Voodoo;
@@ -24,6 +23,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the relics of wave 26 that bend other minds (the Helm of Whispers, the Mind stone, the two masks of Difference and Indifference, the
@@ -63,7 +65,7 @@ final class Wave26Mind {
         mine.remove(m.getUUID());
         mine.addLast(m.getUUID());
         while (mine.size() > MAX_CHARMED) release((ServerLevel) p.level(), mine.removeFirst());
-        RukhFx.burst((ServerLevel) p.level(), m, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst((ServerLevel) p.level(), FxThemes.RELIC_WAVE_26, m, FxTone.LIGHT, 8);
         return Result.CHARMED;
     }
 
@@ -165,7 +167,7 @@ final class Wave26Mind {
                 Wave26Util.say(p, "  " + e.getName().getString() + " thinks of: " + want, ChatFormatting.DARK_GREEN);
             }
         }
-        RukhFx.gather(sl, p, RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(sl, FxThemes.RELIC_WAVE_26, p, FxTone.DARK, 10);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave26Util.tell(p, minds.isEmpty() ? "The whispers find no mind within sixteen blocks." : "You hear " + minds.size() + (minds.size() == 1 ? " mind." : " minds."), ChatFormatting.DARK_GREEN);
     }
@@ -179,7 +181,7 @@ final class Wave26Mind {
             return;
         }
         Result r = charm(p, t, Wave26Rules.DOMINATE_TICKS);
-        RukhFx.stream(p.serverLevel(), p, t, RukhFx.Alignment.DARK, 4);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, t, FxTone.DARK, 4);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WARDEN_HEARTBEAT, SoundSource.PLAYERS, 1.0f, 0.6f);
         Wave26Util.tell(p, "Dominate Person: " + t.getName().getString() + " " + resultWord(r) + ".", ChatFormatting.DARK_GREEN);
     }
@@ -197,8 +199,8 @@ final class Wave26Mind {
             if (e instanceof Mob m) m.setTarget(null);
             hit++;
         }
-        Fx.ring(sl, p.position(), Wave26Rules.SCREAM_RADIUS, 0x3FD06A);
-        RukhFx.burst(sl, p, RukhFx.Alignment.DARK, 12);
+        FxRelic.ring(sl, p.position(), Wave26Rules.SCREAM_RADIUS, 0x3FD06A);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(sl, FxThemes.RELIC_WAVE_26, p, FxTone.DARK, 12);
         sl.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 1.0f, 1.4f);
         Wave26Util.tell(p, "Psychic Scream tears through " + hit + (hit == 1 ? " mind." : " minds."), ChatFormatting.DARK_GREEN);
     }
@@ -213,8 +215,8 @@ final class Wave26Mind {
             if (r == Result.CHARMED || r == Result.FRIGHTENED) bent++;
             else shrugged++;
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave26Rules.MASS_SUGGESTION_RADIUS, 0xC8E86A);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 12);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave26Rules.MASS_SUGGESTION_RADIUS, 0xC8E86A);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, FxTone.LIGHT, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.6f);
         Wave26Util.tell(p, "Mass Suggestion: " + bent + " bent, " + shrugged + " unmoved.", ChatFormatting.YELLOW);
     }
@@ -236,7 +238,7 @@ final class Wave26Mind {
         ServerPlayer p = c.player();
         Wave26Util.give(p, Wave26Rules.FRIENDS_TICKS, 0, "minecraft:hero_of_the_village");
         Wave26Util.give(p, Wave26Rules.FRIENDS_TICKS, 0, "minecraft:luck");
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, FxTone.LIGHT, 8);
         Wave26Util.tell(p, "\"Friends!\" Everyone you meet for a minute is a little warmer to you.", ChatFormatting.AQUA);
     }
 
@@ -251,7 +253,7 @@ final class Wave26Mind {
             if (e instanceof Mob m) m.setTarget(null);
             n++;
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave26Rules.HALT_RADIUS, 0x4FA8FF);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave26Rules.HALT_RADIUS, 0x4FA8FF);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 0.6f, 1.8f);
         Wave26Util.tell(p, "\"HALT!\" " + n + (n == 1 ? " creature stops." : " creatures stop."), ChatFormatting.AQUA);
     }
@@ -276,7 +278,7 @@ final class Wave26Mind {
         }
         Wave26Util.remove(p, RAMPAGE);
         Wave26Util.remove(p, "tensura:fear", "tensura:confusion", "tensura:mind_control", "tensura:hypnosis");
-        Fx.ring(p.serverLevel(), p.position(), Wave26Rules.HALT_RADIUS, 0xB8BCC8);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave26Rules.HALT_RADIUS, 0xB8BCC8);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave26Util.tell(p, "Calm Emotions: " + n + (n == 1 ? " creature loses its fury." : " creatures lose their fury."), ChatFormatting.GRAY);
     }
@@ -292,7 +294,7 @@ final class Wave26Mind {
             Wave26Util.tell(p, "The gem glows (" + spell + ") but there is no one to hex.", ChatFormatting.GRAY);
             return;
         }
-        RukhFx.stream(sl, p, t, RukhFx.Alignment.of(spell == Voodoo.HEX), 5);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(sl, FxThemes.RELIC_WAVE_26, p, t, FxTone.of(spell == Voodoo.HEX), 5);
         switch (spell) {
             case WITCH_BOLT -> {
                 Fx.damage(p, t, Wave26Rules.BOLT_DAMAGE, "minecraft:lightning_bolt");
@@ -320,7 +322,7 @@ final class Wave26Mind {
                     Wave26Util.give(e, Wave26Rules.HYPNOSIS_TICKS, 4, "minecraft:slowness");
                     if (e instanceof Mob m) m.setTarget(null);
                 }
-                Fx.ring(sl, at, 5.0, 0xA46CE0);
+                FxRelic.ring(sl, at, 5.0, 0xA46CE0);
                 sl.playSound(null, t.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 0.5f);
             }
         }
@@ -365,7 +367,7 @@ final class Wave26Mind {
         }
         int xp = Wave26Rules.memoryXp((int) (t.getMaxHealth() / 2f));
         p.giveExperiencePoints(xp);
-        RukhFx.stream(sl, t, p, RukhFx.Alignment.DARK, 5);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(sl, FxThemes.RELIC_WAVE_26, t, p, FxTone.DARK, 5);
         sl.playSound(null, t.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 0.8f, 1.5f);
         Wave26Util.say(p, "You remember " + MEMORIES[p.getRandom().nextInt(MEMORIES.length)] + ". (+" + xp + " experience; " + t.getName().getString() + " is an empty husk.)", ChatFormatting.DARK_AQUA);
         if (Wave26Rules.stealsMemory(Wave26Rules.die(Wave26Util.rng(p), 100))) {
@@ -390,7 +392,7 @@ final class Wave26Mind {
         } else {
             Fx.heal(p, 4f);
         }
-        RukhFx.burst(sl, t, RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(sl, FxThemes.RELIC_WAVE_26, t, FxTone.DARK, 10);
         sl.playSound(null, t.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 0.8f);
         Wave26Util.tell(p, "The purple gem flares: the Raven Queen spares " + (t == p ? "you." : t.getName().getString() + "."), ChatFormatting.DARK_PURPLE);
     }

@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the Amulet of the Forest's figurines. Touching one gives its spirit's blessing for a game day (one spirit at a time); the
@@ -49,8 +50,8 @@ final class Wave4ForestActs {
             x.putLong(Wave4Store.K_BLESSED_UNTIL, now + Wave4Forest.DURATION);
         });
         Wave4Upkeep.forest(p);
-        Fx.ring(lv, p.position().add(0, 0.2, 0), 2.0, FOREST_GREEN);
-        Fx.burst(lv, p.position().add(0, 1.0, 0), FOREST_GREEN);
+        FxRelic.ring(lv, p.position().add(0, 0.2, 0), 2.0, FOREST_GREEN);
+        FxRelic.burst(lv, p.position().add(0, 1.0, 0), FOREST_GREEN);
         Fx.say(p, "The " + spirit.label + " spirit answers: its blessing is yours for a day.");
     }
 
@@ -92,7 +93,7 @@ final class Wave4ForestActs {
             Wave4Upkeep.forget(m);
             charmed++;
         }
-        Fx.ring(lv, p.position().add(0, 0.5, 0), Wave4Charm.RADIUS, 0x3FD0B0);
+        FxRelic.ring(lv, p.position().add(0, 0.5, 0), Wave4Charm.RADIUS, 0x3FD0B0);
         Fx.say(p, charmed + resisted == 0 ? "The peacock's display finds nobody to charm."
                 : "Charm Person: " + charmed + " charmed for 20 seconds" + (resisted > 0 ? ", " + resisted + " shrugged it off (immune for a day)." : "."));
     }

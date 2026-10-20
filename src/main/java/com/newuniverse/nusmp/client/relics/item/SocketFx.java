@@ -10,10 +10,7 @@ import com.newuniverse.nusmp.relics.socket.SocketService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +25,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.IdentityHashMap;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The client half of the sockets (1.29.0): ambient particles round a relic that carries a bound Spirit or Devil, and the tooltip lines. The particles
@@ -47,7 +47,7 @@ public final class SocketFx {
     private static final double[] SLOT_HEIGHT = {0.95, 0.95, 1.7, 1.1, 0.15};
 
     /** The particles of one socket: the family's own particle (or null) and a coloured dust mote. */
-    private record Look(Alignment base, Alignment dust) {}
+    private record Look(FxTone base, FxTone dust) {}
 
     private static final IdentityHashMap<SocketDef, Look> LOOKS = new IdentityHashMap<>();
 
@@ -59,12 +59,12 @@ public final class SocketFx {
     private static Look look(SocketDef d) {
         Look l = LOOKS.get(d);
         if (l != null) return l;
-        Alignment base = switch (d.fx()) {
-            case EMBER, DROPLET, WISP, LIGHT -> Alignment.LIGHT;
+        FxTone base = switch (d.fx()) {
+            case EMBER, DROPLET, WISP, LIGHT -> FxTone.LIGHT;
             case MOTE -> null;
-            case SMOKE -> Alignment.DARK;
+            case SMOKE -> FxTone.DARK;
         };
-        l = new Look(base, d.fx() == SocketFxKind.SMOKE ? Alignment.DARK : Alignment.LIGHT);
+        l = new Look(base, d.fx() == SocketFxKind.SMOKE ? FxTone.DARK : FxTone.LIGHT);
         LOOKS.put(d, l);
         return l;
     }
@@ -117,11 +117,11 @@ public final class SocketFx {
             int count = SocketFxRules.perBurst(quality);
             boolean falling = d.fx() == SocketFxKind.DROPLET;
             for (int i = 0; i < count; i++) {
-                RukhClientFx.spray(level, l.base(), x, y, z, 1, (rng.nextDouble() - 0.5) * 0.02, falling ? 0.0 : 0.02 + rng.nextDouble() * 0.02, (rng.nextDouble() - 0.5) * 0.02, 1.0);
+                Fx.spray(level, FxThemes.RELIC, l.base(), x, y, z, 1, (rng.nextDouble() - 0.5) * 0.02, falling ? 0.0 : 0.02 + rng.nextDouble() * 0.02, (rng.nextDouble() - 0.5) * 0.02, 1.0);
                 n++;
             }
         }
-        RukhClientFx.spray(level, l.dust(), x, y, z, 1, 0.0, 0.01, 0.0, 1.0);
+        Fx.spray(level, FxThemes.RELIC, l.dust(), x, y, z, 1, 0.0, 0.01, 0.0, 1.0);
         return n + 1;
     }
 

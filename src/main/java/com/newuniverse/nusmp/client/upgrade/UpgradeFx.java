@@ -8,7 +8,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -22,6 +21,9 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the ambient layers and the swing trail of the upgraded weapons, as client particles. Every upgraded weapon has, in its spec, six layers (rising motes, turning rings, sparks along the
@@ -286,7 +288,7 @@ public final class UpgradeFx {
         ParticleOptions known = PLAIN.get(name);
         if (known != null) return known;
         Object t = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.withDefaultNamespace(name));
-        known = t instanceof ParticleOptions po ? po : ParticleTypes.END_ROD;
+        known = t instanceof ParticleOptions po ? po : Fx.options(FxThemes.WORLD, FxOld.END_ROD);
         PLAIN.put(name, known);
         return known;
     }

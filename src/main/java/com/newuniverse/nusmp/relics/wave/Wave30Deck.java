@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.labyrinth.gen.LabyrinthLocate;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Grade;
@@ -30,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the deck is the wave's most dangerous toy; keeping every card effect in one place makes the fairness rules (no lethal outcome, no theft of
@@ -68,7 +70,7 @@ final class Wave30Deck {
         Wave30Data.putStackInt(stack, Wave30Data.DECK_DRAWN, d.drawnAfter());
         Wave30Data.putStackLong(stack, Wave30Data.DECK_DAY, today);
         Wave30Data.putStackInt(stack, Wave30Data.DECK_USED, used + n);
-        Fx.ring(level, p.position(), 2.0, 0xE6B94A);
+        FxRelic.ring(level, p.position(), 2.0, 0xE6B94A);
         if (d.extra() > 0) Wave30Kit.say(p, "The cards chain: " + d.extra() + " more come up of themselves.");
         for (int i = 0; i < d.cards().size(); i++) {
             Wave30DeckMath.Card card = d.cards().get(i);
@@ -83,7 +85,7 @@ final class Wave30Deck {
         }
         if (Wave30DeckMath.crumbles(d.drawnAfter())) {
             Wave30Kit.shout(p, "The twenty-second card turns: the Deck of Many Things crumbles to dust in your hands.", ChatFormatting.GOLD);
-            RukhFx.burst(level, p.position().add(0, 1, 0), RukhFx.Alignment.DARK, 12, 0.6);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, p.position().add(0, 1, 0), FxTone.DARK, 12, 0.6);
             stack.shrink(1);
         }
     }
@@ -118,7 +120,7 @@ final class Wave30Deck {
                 Fx.addEffect(p, "minecraft:slowness", Wave30Tune.DONJON_TICKS, 1);
                 Fx.addEffect(p, "minecraft:weakness", Wave30Tune.DONJON_TICKS, 0);
                 Fx.addEffect(p, "minecraft:mining_fatigue", Wave30Tune.DONJON_TICKS, 0);
-                Fx.ring(level, p.position(), 1.6, 0x1A1A24);
+                FxRelic.ring(level, p.position(), 1.6, 0x1A1A24);
                 Wave30Kit.say(p, "A sphere of dark glass closes round you: for three minutes you are slowed, weak and unable to dig. You are not harmed, and it will fade.");
             }
             case EURYALE -> {
@@ -186,7 +188,7 @@ final class Wave30Deck {
                 Fx.addEffect(p, "minecraft:slowness", Wave30Tune.VOID_TICKS, 3);
                 Fx.addEffect(p, "minecraft:blindness", Wave30Tune.VOID_TICKS, 0);
                 Fx.addEffect(p, "minecraft:resistance", Wave30Tune.VOID_TICKS, 4);
-                Fx.ring(level, p.position(), 1.6, 0x0A0A10);
+                FxRelic.ring(level, p.position(), 1.6, 0x0A0A10);
                 Wave30Kit.say(p, "The Void takes your soul for two minutes: you stand blind and still, and nothing in the world can harm you.");
             }
         }

@@ -48,6 +48,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 0: the game-bus listeners of the remade sixteen. Every one starts with a cheap test (who is hit, what is held) and does its real work
@@ -222,7 +224,7 @@ final class Wave0Hooks {
         Wave0Util.extra(p, t, Wave0Util.roll(p, set ? 2 : 1, 6), type);
         if (flag.equals(Wave0.F_SABRE)) Fx.addEffect(t, "tensura:chill", 60, 0);
         Vec3 mid = t.getBoundingBox().getCenter();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_0, FxTone.LIGHT, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.04);
     }
 
     // ---------------------------------------------------------------- Bloodbound Katana: the card's rules on top of the item's own charges

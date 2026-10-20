@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
@@ -17,6 +16,9 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the staff's rules (charge pool, holds that obey the boss control caps, the backlash with its madness table) are one mechanism; none of it touches
@@ -63,7 +65,7 @@ final class Wave30Paradox {
             Fx.addEffect(t, "minecraft:weakness", t instanceof Player ? 80 : Wave30Tune.PARADOX_SLOW_TICKS, 0);
             n++;
         }
-        Fx.ring(p.serverLevel(), p.position(), 10, 0xB070FF);
+        FxRelic.ring(p.serverLevel(), p.position(), 10, 0xB070FF);
         Wave30Kit.say(p, n == 0 ? "Time thickens round you, but no foe is near." : "Time thickens round " + n + (n == 1 ? " foe." : " foes."));
     }
 
@@ -72,7 +74,7 @@ final class Wave30Paradox {
         Fx.addEffect(t, "minecraft:slowness", ticks, 6);
         Fx.addEffect(t, "minecraft:weakness", ticks, 1);
         Fx.addEffect(t, "minecraft:glowing", ticks, 0);
-        RukhFx.gather(p.serverLevel(), t, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.LIGHT, 12);
         Wave30Kit.say(p, t.getName().getString() + " is caught between moments for " + (ticks / 20) + " seconds.");
     }
 
@@ -108,7 +110,7 @@ final class Wave30Paradox {
         if (!spend(c, Wave30Tune.PARADOX_HASTE)) return;
         Fx.addEffect(p, "minecraft:speed", Wave30Tune.PARADOX_HASTE_TICKS, 1);
         Fx.addEffect(p, "minecraft:haste", Wave30Tune.PARADOX_HASTE_TICKS, 1);
-        RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_30, p, FxTone.LIGHT);
         Wave30Kit.say(p, "Time runs quick for you.");
     }
 
@@ -125,7 +127,7 @@ final class Wave30Paradox {
         }
         Fx.addEffect(p, "minecraft:speed", Wave30Tune.PARADOX_STOP_TICKS, 2);
         Fx.addEffect(p, "minecraft:haste", Wave30Tune.PARADOX_STOP_TICKS, 2);
-        Fx.ring(p.serverLevel(), p.position(), 16, 0xD8C8FF);
+        FxRelic.ring(p.serverLevel(), p.position(), 16, 0xD8C8FF);
         Wave30Kit.shout(p, "TIME STOPS: " + n + (n == 1 ? " foe is" : " foes are") + " held in the moment.", net.minecraft.ChatFormatting.LIGHT_PURPLE);
         forced(p);
     }
@@ -141,7 +143,7 @@ final class Wave30Paradox {
             Fx.addEffect(t, Wave30Tune.EF_CONFUSION, t instanceof Player ? 60 : Wave30Tune.PARADOX_ALT_TICKS, 0);
             n++;
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave30Tune.PARADOX_RADIUS, 0xB070FF);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave30Tune.PARADOX_RADIUS, 0xB070FF);
         Wave30Kit.say(p, "The timeline forks: " + n + (n == 1 ? " foe" : " foes") + " lose the thread.");
     }
 
@@ -155,7 +157,7 @@ final class Wave30Paradox {
         }
         if (!spend(c, Wave30Tune.PARADOX_CLOCK)) return;
         off.setDamageValue(0);
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 1, 0), RukhFx.Alignment.LIGHT, 12, 0.5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, p.position().add(0, 1, 0), FxTone.LIGHT, 12, 0.5);
         Wave30Kit.say(p, "The clock turns back: your " + off.getHoverName().getString() + " is as new.");
     }
 
@@ -181,7 +183,7 @@ final class Wave30Paradox {
             }
             changed++;
         }
-        Fx.ring(level, p.position(), r, 0xFFC8FF);
+        FxRelic.ring(level, p.position(), r, 0xFFC8FF);
         Wave30Kit.say(p, "Time slips for " + changed + (changed == 1 ? " creature" : " creatures") + " near you: some grow old, some young, for twenty seconds.");
         forced(p);
     }
@@ -214,7 +216,7 @@ final class Wave30Paradox {
                 Fx.addEffect(p, "minecraft:mining_fatigue", ticks, 0);
             }
         }
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 1, 0), RukhFx.Alignment.DARK, 12, 0.8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, p.position().add(0, 1, 0), FxTone.DARK, 12, 0.8);
         String how = switch (m) {
             case PRONE -> "You are knocked flat, and nothing more.";
             case SHORT -> "Short-term madness for " + (ticks / 20) + " seconds.";

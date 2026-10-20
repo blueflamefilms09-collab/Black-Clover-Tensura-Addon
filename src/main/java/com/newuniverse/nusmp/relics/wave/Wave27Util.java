@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
@@ -33,6 +32,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the small Minecraft helpers the twelve cards of wave 27 share: where a player's own numbers are kept, effects by id (a missing id is skipped),
@@ -218,7 +220,7 @@ final class Wave27Util {
         if (p != null && text != null) p.sendSystemMessage(Component.literal(text).withStyle(colour));
     }
 
-    static void puff(ServerLevel lv, RukhFx.Alignment a, LivingEntity e, int count) {
-        RukhFx.spray(lv, a, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), count, 0.3, 0.4, 0.3, 0.02);
+    static void puff(ServerLevel lv, FxTone a, LivingEntity e, int count) {
+        Fx.spray(lv, FxThemes.RELIC_WAVE_27, a, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), count, 0.3, 0.4, 0.3, 0.02);
     }
 }

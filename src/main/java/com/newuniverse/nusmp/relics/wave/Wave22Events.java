@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicEngine;
@@ -23,6 +22,8 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the abilities that are not a click (the sky's double and half damage of the Double Moon, the Lich Wand's no-food-no-sleep body, the wisps'
@@ -109,7 +110,7 @@ final class Wave22Events {
         if (!bite.isAlive()) return;
         Wave0Util.extra(p, bite, 3.5f, "minecraft:magic");
         Fx.addEffect(bite, "minecraft:poison", 100, 0);
-        if (p.level() instanceof ServerLevel l) RukhFx.stream(l, p.getEyePosition().add(p.getLookAngle().scale(0.8)), bite.getBoundingBox().getCenter(), RukhFx.Alignment.DARK, 4);
+        if (p.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_22, p.getEyePosition().add(p.getLookAngle().scale(0.8)), bite.getBoundingBox().getCenter(), FxTone.DARK, 4);
     }
 
     // ================================================================ the player tick
@@ -139,12 +140,12 @@ final class Wave22Events {
     /** Bifrost: rainbows round the body while it is wielded; footprints on the ground while Rainbow Road is on (and a little speed for the walker). */
     private static void rainbow(ServerPlayer p) {
         ServerLevel l = p.serverLevel();
-        RukhFx.aura(l, p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(l, FxThemes.RELIC_WAVE_22, p, FxTone.LIGHT);
         if (RelicEngine.isOn(p, "the_bifrost", "rainbow_road")) {
             if (p.onGround() && p.getDeltaMovement().horizontalDistanceSqr() > 0.004) {
                 Vec3 at = p.position();
-                RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y + 0.05, at.z, 3, 0.25, 0.0, 0.25, 0.0);
-                RukhFx.spray(l, RukhFx.Alignment.DARK, at.x, at.y + 0.05, at.z, 1, 0.2, 0.0, 0.2, 0.0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_22, FxTone.LIGHT, at.x, at.y + 0.05, at.z, 3, 0.25, 0.0, 0.25, 0.0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_22, FxTone.DARK, at.x, at.y + 0.05, at.z, 1, 0.2, 0.0, 0.2, 0.0);
             }
             Fx.addEffect(p, "minecraft:speed", 40, 0);
         }
@@ -154,11 +155,11 @@ final class Wave22Events {
     private static void wisps(ServerPlayer p, int count) {
         List<LivingEntity> foes = Fx.foesAround(p, 12.0);
         ServerLevel l = p.serverLevel();
-        RukhFx.aura(l, p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(l, FxThemes.RELIC_WAVE_22, p, FxTone.LIGHT);
         for (int i = 0; i < Math.min(count, Wave22Rules.WISP_MAX) && !foes.isEmpty(); i++) {
             LivingEntity t = foes.get(Math.min(i, foes.size() - 1));
             Vec3 from = p.position().add(Math.cos(i * Math.PI) * 1.2, 2.0, Math.sin(i * Math.PI) * 1.2);
-            RukhFx.stream(l, from, t.getBoundingBox().getCenter(), RukhFx.Alignment.LIGHT, 4);
+            com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_22, from, t.getBoundingBox().getCenter(), FxTone.LIGHT, 4);
             Fx.damage(p, t, Wave22Rules.WISP_DAMAGE, "minecraft:magic");
         }
     }
@@ -166,8 +167,8 @@ final class Wave22Events {
     /** The ember flame: it burns what is near it (humanoid), ranges wider and quickens you (beast), or lights your foes (hummingbird). */
     private static void ember(ServerPlayer p, Wave22Rules.Form f) {
         ServerLevel l = p.serverLevel();
-        RukhFx.aura(l, p, RukhFx.Alignment.LIGHT);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 2.2, p.getZ(), 2, 0.3, 0.1, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(l, FxThemes.RELIC_WAVE_22, p, FxTone.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_22, FxTone.LIGHT, p.getX(), p.getY() + 2.2, p.getZ(), 2, 0.3, 0.1, 0.3, 0.02);
         List<LivingEntity> foes = Fx.foesAround(p, f.radius());
         if (f == Wave22Rules.Form.BIRD) {
             for (LivingEntity t : foes) Fx.addEffect(t, "minecraft:glowing", 60, 0);
@@ -186,7 +187,7 @@ final class Wave22Events {
     private static void lich(ServerPlayer p) {
         if (p.getFoodData().getFoodLevel() < Wave22Rules.LICH_FOOD_FLOOR) p.getFoodData().setFoodLevel(Wave22Rules.LICH_FOOD_FLOOR);
         p.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));                    // phantoms never come for a sleepless wielder
-        if (due(p, 80)) RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.DARK);                      // eyes of pale fire
+        if (due(p, 80)) com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_22, p, FxTone.DARK);                      // eyes of pale fire
     }
 
     /**
@@ -207,7 +208,7 @@ final class Wave22Events {
         int total = Wave22Rules.windTotal(d.getInt(Wave22Acts.K_WIND), stored);
         d.putInt(Wave22Acts.K_WIND, total);
         d.putLong(Wave22Acts.K_WIND_UNTIL, now + Wave22Rules.WIND_TICKS);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 4 + Math.min(8, total));
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_22, p, FxTone.LIGHT, 4 + Math.min(8, total));
         Wave0Util.note(p, "The wind wheel spins: " + total + " charge(s).", net.minecraft.ChatFormatting.YELLOW);
     }
 }

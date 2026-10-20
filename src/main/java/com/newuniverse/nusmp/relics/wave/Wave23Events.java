@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
@@ -31,6 +30,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: wave 23's game-bus rules: what the three longbows add to an arrow that lands, the Sentence of Divine Mercy, the lute's rhythm, the four shields'
@@ -60,10 +61,10 @@ final class Wave23Events {
 
     private static Vec3 centre(LivingEntity e) { return new Vec3(e.getX(), e.getY() + e.getBbHeight() * 0.6, e.getZ()); }
 
-    private static void puff(LivingEntity e, RukhFx.Alignment a, int n) {
+    private static void puff(LivingEntity e, FxTone a, int n) {
         if (!(e.level() instanceof ServerLevel l)) return;
         Vec3 c = centre(e);
-        RukhFx.spray(l, a, c.x, c.y, c.z, n, 0.3, 0.4, 0.3, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_23, a, c.x, c.y, c.z, n, 0.3, 0.4, 0.3, 0.05);
     }
 
     // ================================================================ damage in
@@ -87,7 +88,7 @@ final class Wave23Events {
         if (RelicFlags.has(atk, Wave23.F_MERCY)) mercy(e, atk, victim, now);
         if (RelicFlags.has(atk, Wave23.F_REAVER)) {
             e.setAmount(e.getAmount() + Wave23Rules.REAVER_BONUS);
-            puff(victim, RukhFx.Alignment.DARK, 6);
+            puff(victim, FxTone.DARK, 6);
         }
     }
 
@@ -95,7 +96,7 @@ final class Wave23Events {
     private static void mercy(LivingIncomingDamageEvent e, ServerPlayer atk, LivingEntity victim, long now) {
         e.setAmount(e.getAmount() + Wave23Rules.MERCY_BONUS);
         Wave0Util.extra(atk, victim, Wave23Rules.radiant(Wave23Acts.fiendOrUndead(victim)), "tensura:holy_damage");
-        puff(victim, RukhFx.Alignment.LIGHT, 10);
+        puff(victim, FxTone.LIGHT, 10);
         CompoundTag d = atk.getPersistentData();
         if (d.getLong(Wave23Acts.K_SENTENCE) < now || !victim.isAlive()) return;
         if (!Wave23Rules.canSentence(victim.getMaxHealth())) {
@@ -107,7 +108,7 @@ final class Wave23Events {
         float dmg = Wave23Rules.sentenceDamage(victim.getMaxHealth(), saved);
         victim.invulnerableTime = 0;
         Wave0Util.extra(atk, victim, dmg, "tensura:holy_damage");
-        puff(victim, RukhFx.Alignment.LIGHT, 12);
+        puff(victim, FxTone.LIGHT, 12);
         Wave23Acts.note(atk, saved ? victim.getName().getString() + " endures the Sentence." : "The Sentence is passed on " + victim.getName().getString() + ".", ChatFormatting.GOLD);
     }
 
@@ -127,7 +128,7 @@ final class Wave23Events {
                 && Wave23Rules.isCritical(e.getAmount(), vp.getMaxHealth()) && now >= d.getLong(K_RIPOSTE)) {
             d.putLong(K_RIPOSTE, now + Wave23Rules.RIPOSTE_COOLDOWN);
             Fx.damage(vp, foe, Wave23Rules.RIPOSTE_DAMAGE, "minecraft:player_attack");                           // the reaction: an attack back
-            puff(foe, RukhFx.Alignment.LIGHT, 10);
+            puff(foe, FxTone.LIGHT, 10);
             Wave23Acts.note(vp, "Celestial Support strikes back.", ChatFormatting.AQUA);
         }
     }
@@ -143,7 +144,7 @@ final class Wave23Events {
             double d2 = sp.distanceToSqr(victim);
             if (lightning && d2 <= Wave23Rules.THUNDER_RADIUS * Wave23Rules.THUNDER_RADIUS && RelicFlags.has(sp, Wave23.F_THUNDER) && (victim == sp || Wave23Acts.ally(sp, victim))) {
                 e.setCanceled(true);
-                puff(victim, RukhFx.Alignment.LIGHT, 4);
+                puff(victim, FxTone.LIGHT, 4);
                 return;
             }
             if (spell && victim != sp && d2 <= Wave23Rules.HUNGER_RADIUS * Wave23Rules.HUNGER_RADIUS && RelicFlags.has(sp, Wave23.F_AEGIS) && Wave23Acts.ally(sp, victim)) {
@@ -169,7 +170,7 @@ final class Wave23Events {
         Fx.shield(wielder, Wave23Rules.absorbGain(swallowed), 600);
         if (victim.level() instanceof ServerLevel l) {
             Vec3 c = centre(victim);
-            RukhFx.spray(l, RukhFx.Alignment.DARK, c.x, c.y, c.z, 12, 0.4, 0.5, 0.4, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_23, FxTone.DARK, c.x, c.y, c.z, 12, 0.4, 0.5, 0.4, 0.05);
         }
         if (Wave23Rules.shatters(amount)) {
             d.putLong(K_AEGIS_BROKEN, now + Wave23Rules.DAY);
@@ -193,7 +194,7 @@ final class Wave23Events {
         d.putLong(K_DEATHSAVE, now + Wave23Rules.DEATH_SAVE_COOLDOWN);
         Fx.addEffect(vp, "minecraft:regeneration", 100, 1);
         Fx.addEffect(vp, "minecraft:resistance", 60, 1);
-        puff(vp, RukhFx.Alignment.LIGHT, 12);
+        puff(vp, FxTone.LIGHT, 12);
         Fx.say(vp, "The winged shield holds you at the edge: a death save. It will not do this again for five minutes.");
     }
 
@@ -232,7 +233,7 @@ final class Wave23Events {
         d.putInt(Wave23Acts.K_BOON, boon);
         d.putLong(Wave23Acts.K_BOON_DAY, today + 1);
         Fx.say(p, "Ancient Twisted Magic (d4 = " + boon + "): " + Wave23Rules.boonName(boon) + " until your next long rest.");
-        puff(p, RukhFx.Alignment.DARK, 12);
+        puff(p, FxTone.DARK, 12);
     }
 
     static void onPlayerTick(PlayerTickEvent.Post e) {

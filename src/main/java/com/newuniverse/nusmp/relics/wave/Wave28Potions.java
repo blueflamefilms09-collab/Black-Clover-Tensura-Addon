@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -16,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the potions are the only cards of the wave whose effect plays out over minutes after the item is gone, so their timers and the things they do
@@ -55,7 +56,7 @@ final class Wave28Potions {
         Wave28Util.give(p, 100, 0, "minecraft:slowness");
         Wave28Util.say(p, "Your head comes away from your body, and you live. For three hours of the day you survive being beheaded: you are slow and weak, "
                 + "you cannot eat or drink, and a killing blow will leave you on one hit point (once every ten seconds). Sleep in a bed to put your head back.", ChatFormatting.DARK_RED);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.7, 0), RukhFx.Alignment.DARK, 12);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.7, 0), FxTone.DARK, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WITHER_HURT, SoundSource.PLAYERS, 0.6f, 0.6f);
     }
 
@@ -68,7 +69,7 @@ final class Wave28Potions {
         d.putLong(H_SAVE, now + Wave28Rules.HEAD_SAVE_GAP);
         Wave28Util.give(p, Wave28Rules.HEAD_GRACE_TICKS, 4, "minecraft:resistance");
         Wave28Util.tell(p, "The blow takes your head off again, and you hang on by a thread.", ChatFormatting.DARK_RED);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.5, 0), RukhFx.Alignment.DARK, 8);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.5, 0), FxTone.DARK, 8);
         return true;
     }
 
@@ -79,7 +80,7 @@ final class Wave28Potions {
         Fx.heal(p, 8f);
         Wave28Util.remove(p, "minecraft:slowness", "minecraft:weakness");
         Wave28Util.say(p, "Your head is back on your shoulders and the wound closes.", ChatFormatting.AQUA);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.7, 0), RukhFx.Alignment.LIGHT, 8);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.7, 0), FxTone.LIGHT, 8);
     }
 
     /** Once a second: keep the beheaded state's weakness, and when the three hours end unmended let the body give out (never to the last hit point). */
@@ -213,14 +214,14 @@ final class Wave28Potions {
             case PLASMA -> {
                 for (LivingEntity t : Wave28Util.near(l, p.position(), 3.0, e -> Wave28Util.foe(p, e))) Fx.damage(p, t, 4f, "minecraft:lightning_bolt");
                 Wave28Util.give(p, 60, 0, "minecraft:slowness");
-                Fx.ring(l, p.position(), 3.0, 0xA0D8FF);
+                FxRelic.ring(l, p.position(), 3.0, 0xA0D8FF);
             }
             case COFFIN -> {
                 give(p, "minecraft:chest", 1);
                 give(p, "minecraft:bone", 1);
             }
         }
-        Wave28Util.burst(l, mouth, k == Wave28Rules.Puke.BUBBLES || k == Wave28Rules.Puke.RAINBOW_SLIME ? RukhFx.Alignment.LIGHT : RukhFx.Alignment.DARK, 6);
+        Wave28Util.burst(l, mouth, k == Wave28Rules.Puke.BUBBLES || k == Wave28Rules.Puke.RAINBOW_SLIME ? FxTone.LIGHT : FxTone.DARK, 6);
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.7f, 0.6f);
         Wave28Util.tell(p, "You puke up " + what + ".", ChatFormatting.DARK_GREEN);
     }

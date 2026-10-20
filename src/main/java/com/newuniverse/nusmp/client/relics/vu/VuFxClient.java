@@ -28,6 +28,9 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the ambient effect layers of an upgraded relic that are particles (idle motes, sparks, embers, arcs, drips, wisps) are spawned here, from the data of
@@ -159,7 +162,7 @@ public final class VuFxClient {
                 o = new DustParticleOptions(new Vector3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f), 0.9f);
             } else {
                 var type = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.withDefaultNamespace(l.particle));
-                o = type instanceof ParticleOptions po ? po : net.minecraft.core.particles.ParticleTypes.END_ROD;
+                o = type instanceof ParticleOptions po ? po : Fx.options(FxThemes.RELIC, FxOld.END_ROD);
             }
             OPTS.put(l, o);
         }

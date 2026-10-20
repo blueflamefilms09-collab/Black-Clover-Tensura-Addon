@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.Relics;
@@ -24,6 +23,8 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the long-lived parts of the wave-24 relics: the Ring of Power's extra force, the Lucky Egg's reroll, the Ring of Endless Rage (one crushed
@@ -56,7 +57,7 @@ final class Wave24Events {
         if (src.getEntity() instanceof ServerPlayer a && src.getDirectEntity() == a && e.getEntity() != a && RelicFlags.has(a, Wave24.F_POWER)) {
             float extra = Wave24Rules.forceBonus(Wave24Rules.d(Wave24Util.dice(a), 8), e.getEntity() instanceof net.minecraft.world.entity.player.Player);
             e.setAmount(amount + extra);
-            if (a.level() instanceof ServerLevel l) RukhFx.burst(l, e.getEntity(), RukhFx.Alignment.DARK, 2);
+            if (a.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, e.getEntity(), FxTone.DARK, 2);
         }
     }
 
@@ -72,7 +73,7 @@ final class Wave24Events {
             d.remove(Wave24Acts.K_EGG_UNTIL);
             e.setNewDamage(again);
             dmg = again;
-            if (p.level() instanceof ServerLevel l) RukhFx.burst(l, p, RukhFx.Alignment.LIGHT, 6);
+            if (p.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, p, FxTone.LIGHT, 6);
             Wave24Util.bar(p, "Lucky Egg: the blow is rolled again (" + String.format(java.util.Locale.ROOT, "%.1f", again) + ").", ChatFormatting.AQUA);
         }
         if (d != null && Wave24Acts.raging(p)) {
@@ -93,7 +94,7 @@ final class Wave24Events {
         Wave24Util.give(p, "minecraft:strength", Wave24Rules.RAGE_TICKS, 1);
         Wave24Util.give(p, "minecraft:speed", Wave24Rules.RAGE_TICKS, 0);
         if (p.level() instanceof ServerLevel l) {
-            RukhFx.spray(l, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.6, 0.8, 0.6, 0.15);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_24, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.6, 0.8, 0.6, 0.15);
             l.playSound(null, p.blockPosition(), net.minecraft.sounds.SoundEvents.RAVAGER_ROAR, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 0.7f);
         }
         Wave24Util.say(p, "Ring of Endless Rage: you crush the ruby. You cannot die for 30 seconds, and nothing can heal you.", ChatFormatting.DARK_RED);
@@ -166,7 +167,7 @@ final class Wave24Events {
         if (p.getHealth() < p.getMaxHealth() && (now - last >= Wave24Rules.REGEN_EVERY_TICKS || now < last)) {
             d.putLong(Wave24Acts.K_REGEN_AT, now);
             Fx.heal(p, Wave24Rules.regenAmount(Wave24Rules.d(Wave24Util.dice(p), 6)));
-            if (p.level() instanceof ServerLevel l) RukhFx.aura(l, p, RukhFx.Alignment.LIGHT);
+            if (p.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.aura(l, FxThemes.RELIC_WAVE_24, p, FxTone.LIGHT);
         }
         long lastRegrow = d.getLong(Wave24Acts.K_REGROW_AT);
         if (now - lastRegrow >= Wave24Rules.REGROW_EVERY_TICKS || now < lastRegrow) {
@@ -204,7 +205,7 @@ final class Wave24Events {
             }
         }
         Vec3 c = p.position();
-        if (p.level() instanceof ServerLevel l) RukhFx.burst(l, c.add(0, 1.0, 0), RukhFx.Alignment.DARK, 6);
+        if (p.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, c.add(0, 1.0, 0), FxTone.DARK, 6);
         Wave24Util.say(p, "Ring of Endless Rage: the rage ends. Death saves: " + ok + " of 3 held. " + switch (a) {
             case STABLE_GOOD -> "You wake stable, bruised but whole.";
             case STABLE -> "You stabilise.";

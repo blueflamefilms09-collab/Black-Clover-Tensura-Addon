@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.dungeon.DungeonGuard;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
@@ -25,6 +24,8 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the three hand relics keep small per-player states (a charge pool, a blow count, the held kind, the chosen spell); keeping their code together
@@ -89,7 +90,7 @@ final class Wave28Hands {
         d.putInt(HELL_BLOWS, n + 1);
         if (n + 1 == Wave28Rules.HELL_AWAKEN_BLOWS) {
             Wave28Util.say(a, "The Hellfire Gauntlet wakes. Three charges burn in its knuckles (they come back at dawn).", net.minecraft.ChatFormatting.GOLD);
-            Wave28Util.burst(a.serverLevel(), a.position().add(0, 1.0, 0), RukhFx.Alignment.LIGHT, 12);
+            Wave28Util.burst(a.serverLevel(), a.position().add(0, 1.0, 0), FxTone.LIGHT, 12);
         }
     }
 
@@ -107,7 +108,7 @@ final class Wave28Hands {
         if (Wave28Rules.shoves(fire, bare) && Wave28Rules.mediumOrSmaller(victim.getBbWidth() * victim.getBbWidth() * victim.getBbHeight(),
                 a.getBbWidth() * a.getBbWidth() * a.getBbHeight() * 1.0) && !Wave28Util.saves(a, victim)) {
             victim.knockback(0.9, a.getX() - victim.getX(), a.getZ() - victim.getZ());
-            Wave28Util.burst(a.serverLevel(), victim.position().add(0, victim.getBbHeight() * 0.5, 0), RukhFx.Alignment.LIGHT, 6);
+            Wave28Util.burst(a.serverLevel(), victim.position().add(0, victim.getBbHeight() * 0.5, 0), FxTone.LIGHT, 6);
         }
         drank(a);
     }
@@ -117,12 +118,12 @@ final class Wave28Hands {
         ServerPlayer p = c.player();
         if (!ready(p)) return;
         Wave28Util.Aim aim = Wave28Util.aim(p, Wave28Rules.FIREBOLT_RANGE, e -> Wave28Util.foe(p, e));
-        Wave28Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), aim.end(), RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), aim.end(), FxTone.LIGHT);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 0.8f, 1.2f);
         if (aim.hit() == null) return;
         Fx.damage(p, aim.hit(), Wave28Rules.fireboltDamage(p.experienceLevel), "minecraft:on_fire");
         aim.hit().setRemainingFireTicks(Math.max(aim.hit().getRemainingFireTicks(), 80));
-        Wave28Util.burst(p.serverLevel(), aim.end(), RukhFx.Alignment.LIGHT, 8);
+        Wave28Util.burst(p.serverLevel(), aim.end(), FxTone.LIGHT, 8);
     }
 
     /** Fireball (awakened, 1 charge): fire bursts where you look (24 blocks), 12 damage and burning to every foe within 4 blocks. No block is touched. */
@@ -132,12 +133,12 @@ final class Wave28Hands {
         Wave28Util.Aim aim = Wave28Util.aim(p, Wave28Rules.FIREBALL_RANGE, e -> Wave28Util.foe(p, e));
         Vec3 at = aim.end();
         ServerLevel l = p.serverLevel();
-        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), at, RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), at, FxTone.LIGHT);
         for (LivingEntity t : Wave28Util.near(l, at, Wave28Rules.FIREBALL_RADIUS, e -> Wave28Util.foe(p, e))) {
             Fx.damage(p, t, Wave28Rules.FIREBALL_DAMAGE, "minecraft:on_fire");
             t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 100));
         }
-        Fx.ring(l, at, Wave28Rules.FIREBALL_RADIUS, 0xFF6A1A);
+        FxRelic.ring(l, at, Wave28Rules.FIREBALL_RADIUS, 0xFF6A1A);
         l.playSound(null, BlockPos.containing(at), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.7f, 1.4f);
     }
 
@@ -158,8 +159,8 @@ final class Wave28Hands {
             t.setDeltaMovement(push.x, 0.35, push.z);
             t.hurtMarked = true;
         }
-        Fx.ring(l, p.position(), Wave28Rules.QUAKE_RADIUS, 0xFF5A10);
-        Wave28Util.burst(l, p.position(), RukhFx.Alignment.LIGHT, 12);
+        FxRelic.ring(l, p.position(), Wave28Rules.QUAKE_RADIUS, 0xFF5A10);
+        Wave28Util.burst(l, p.position(), FxTone.LIGHT, 12);
         l.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.8f, 0.8f);
     }
 
@@ -169,7 +170,7 @@ final class Wave28Hands {
         if (!awakenedSpend(p, Wave28Rules.HELL_AURA)) return;
         Wave28Util.data(p).putLong(HELL_AURA, p.level().getGameTime() + Wave28Rules.HELL_AURA_TICKS);
         Wave28Util.give(p, Wave28Rules.HELL_AURA_TICKS, 0, "minecraft:fire_resistance");
-        Fx.ring(p.serverLevel(), p.position(), 1.8, 0xFF7A20);
+        FxRelic.ring(p.serverLevel(), p.position(), 1.8, 0xFF7A20);
         Wave28Util.tell(p, "An aura of fire washes over you (one minute).");
     }
 
@@ -182,7 +183,7 @@ final class Wave28Hands {
         d.putLong(HELL_AURA_AT, now);
         attacker.hurt(v.damageSources().thorns(v), Wave28Rules.AURA_RETURN);
         attacker.setRemainingFireTicks(Math.max(attacker.getRemainingFireTicks(), 60));
-        Wave28Util.burst(v.serverLevel(), attacker.position().add(0, attacker.getBbHeight() * 0.5, 0), RukhFx.Alignment.LIGHT, 6);
+        Wave28Util.burst(v.serverLevel(), attacker.position().add(0, attacker.getBbHeight() * 0.5, 0), FxTone.LIGHT, 6);
     }
 
     // ================================================================ Proficiency Gloves
@@ -242,7 +243,7 @@ final class Wave28Hands {
         int next = Wave28Rules.gamelonNext(d.getInt(GAM));
         d.putInt(GAM, next);
         Wave28Util.tell(p, "Gamelon: " + Wave28Rules.gamelonName(next));
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.3, 0), RukhFx.Alignment.LIGHT, 4);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.3, 0), FxTone.LIGHT, 4);
     }
 
     /** Cast the spell of the gem that is turned up. */
@@ -254,7 +255,7 @@ final class Wave28Hands {
             case 0 -> levitateStone(p, l);
             case 1 -> {
                 Wave28Util.give(p, 600, 0, "minecraft:resistance");
-                Wave28Util.burst(l, p.position().add(0, 1, 0), RukhFx.Alignment.LIGHT, 8);
+                Wave28Util.burst(l, p.position().add(0, 1, 0), FxTone.LIGHT, 8);
             }
             case 2 -> earthSpikes(p, l);
             case 3 -> flameBolt(p, l);
@@ -268,17 +269,17 @@ final class Wave28Hands {
                     t.setDeltaMovement(push.x, 0.2, push.z);
                     t.hurtMarked = true;
                 }
-                Fx.ring(l, p.position(), 4.0, 0xFF7A20);
+                FxRelic.ring(l, p.position(), 4.0, 0xFF7A20);
             }
             case 5 -> {
                 Wave28Util.give(p, 1200, 0, "minecraft:fire_resistance");
-                Fx.ring(l, p.position(), 1.6, 0xFF7A20);
+                FxRelic.ring(l, p.position(), 1.6, 0xFF7A20);
             }
             case 6 -> iceBridge(p, l);
             case 7 -> {
                 Fx.heal(p, 6f);
                 Wave28Util.give(p, 100, 0, "minecraft:regeneration");
-                Wave28Util.burst(l, p.position().add(0, 1, 0), RukhFx.Alignment.LIGHT, 8);
+                Wave28Util.burst(l, p.position().add(0, 1, 0), FxTone.LIGHT, 8);
             }
             case 8 -> {
                 for (LivingEntity t : Wave28Util.near(l, p.position(), 5.0, e -> Wave28Util.foe(p, e))) {
@@ -291,20 +292,20 @@ final class Wave28Hands {
                     t.hurtMarked = true;
                 }
                 Wave28Util.give(p, 600, 0, "minecraft:water_breathing");
-                Fx.ring(l, p.position(), 5.0, 0x4AA8FF);
+                FxRelic.ring(l, p.position(), 5.0, 0x4AA8FF);
             }
             case 9 -> {
                 Fx.dash(p, 6.0);
                 p.setDeltaMovement(p.getDeltaMovement().x, Math.max(p.getDeltaMovement().y, 0.55), p.getDeltaMovement().z);
                 p.hurtMarked = true;
                 Wave28Util.give(p, 140, 0, "minecraft:slow_falling");
-                Wave28Util.burst(l, p.position(), RukhFx.Alignment.LIGHT, 8);
+                Wave28Util.burst(l, p.position(), FxTone.LIGHT, 8);
             }
             case 10 -> windCutter(p, l);
             default -> {
                 Wave28Util.give(p, 1200, 0, "minecraft:slow_falling");
                 Wave28Util.give(p, 400, 1, "minecraft:jump_boost");
-                Wave28Util.burst(l, p.position().add(0, 0.5, 0), RukhFx.Alignment.LIGHT, 8);
+                Wave28Util.burst(l, p.position().add(0, 0.5, 0), FxTone.LIGHT, 8);
             }
         }
         l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.9f, 0.9f + 0.1f * (idx % 4));
@@ -313,7 +314,7 @@ final class Wave28Hands {
     /** Levitate stone: the foe you look at (14 blocks) is lifted for three seconds, then drifts down gently. */
     private static void levitateStone(ServerPlayer p, ServerLevel l) {
         Wave28Util.Aim a = Wave28Util.aim(p, 14.0, e -> Wave28Util.foe(p, e));
-        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), a.end(), RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), a.end(), FxTone.LIGHT);
         if (a.hit() == null) return;
         Wave28Util.give(a.hit(), 50, 0, "minecraft:levitation");
         Wave28Util.give(a.hit(), 200, 0, "minecraft:slow_falling");
@@ -324,13 +325,13 @@ final class Wave28Hands {
         for (LivingEntity t : Wave28Util.cone(p, 5.0, 0.5)) {
             Fx.damage(p, t, 6f, "minecraft:stalagmite");
             Wave28Util.give(t, 60, 1, "minecraft:slowness");
-            Wave28Util.burst(l, t.position(), RukhFx.Alignment.DARK, 6);
+            Wave28Util.burst(l, t.position(), FxTone.DARK, 6);
         }
     }
 
     private static void flameBolt(ServerPlayer p, ServerLevel l) {
         Wave28Util.Aim a = Wave28Util.aim(p, 18.0, e -> Wave28Util.foe(p, e));
-        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), a.end(), RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), a.end(), FxTone.LIGHT);
         if (a.hit() == null) return;
         Fx.damage(p, a.hit(), 5f, "minecraft:on_fire");
         a.hit().setRemainingFireTicks(Math.max(a.hit().getRemainingFireTicks(), 80));
@@ -339,7 +340,7 @@ final class Wave28Hands {
     /** Wind cutter: a blade of air along your look (8 blocks) cuts every foe near the line. */
     private static void windCutter(ServerPlayer p, ServerLevel l) {
         Vec3 look = p.getViewVector(1f);
-        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), p.getEyePosition().add(look.scale(8.0)), RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(l, p.getEyePosition().add(0, -0.3, 0), p.getEyePosition().add(look.scale(8.0)), FxTone.LIGHT);
         for (LivingEntity t : Wave28Util.cone(p, 8.0, 0.93)) Fx.damage(p, t, 5f, "minecraft:player_attack");
     }
 
@@ -372,6 +373,6 @@ final class Wave28Hands {
             }
         }
         if (placed == 0) Wave28Util.tell(p, "There is no still water at your feet's level ahead.", net.minecraft.ChatFormatting.GRAY);
-        else Wave28Util.trail(l, p.position(), p.position().add(dir.scale(Wave28Rules.ICE_BRIDGE_LENGTH)), RukhFx.Alignment.LIGHT);
+        else Wave28Util.trail(l, p.position(), p.position().add(dir.scale(Wave28Rules.ICE_BRIDGE_LENGTH)), FxTone.LIGHT);
     }
 }

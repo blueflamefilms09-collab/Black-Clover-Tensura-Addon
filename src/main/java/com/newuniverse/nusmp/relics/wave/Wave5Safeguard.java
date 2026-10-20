@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.relics.Relics;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +26,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Amulet of Safeguarding. Once a month (one full-moon night in eight days) the wearer meditates over it for thirty seconds without moving or
@@ -69,7 +71,7 @@ final class Wave5Safeguard {
         st.putFloat("mhp", p.getHealth());
         st.putString("mdim", p.level().dimension().location().toString());
         Wave5Data.save(s, st);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.4, COLOUR);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.4, COLOUR);
         Wave5Aim.msg(p, "You sink into stillness. Stay where you are for 30 seconds and let nothing touch you.", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -103,7 +105,7 @@ final class Wave5Safeguard {
             return;
         }
         ServerLevel l = p.serverLevel();
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12, 0.7);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 12, 0.7);
         Wave5Aim.msg(p, "Meditating... " + (Wave5Pure.MEDITATE_TICKS - elapsed) / 20 + " s", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -130,7 +132,7 @@ final class Wave5Safeguard {
         st.putFloat("yaw", p.getYRot());
         st.putLong("last_cycle", Wave5Pure.cycle(p.serverLevel().getServer().overworld().getDayTime()));
         ServerLevel l = p.serverLevel();
-        Fx.burst(l, p.position().add(0, 1.0, 0), COLOUR);
+        FxRelic.burst(l, p.position().add(0, 1.0, 0), COLOUR);
         Wave5Aim.sound(l, p.position(), SoundEvents.BEACON_ACTIVATE, 0.9f, 1.4f);
         Wave5Aim.msg(p, "The amulet holds a complete record of you: body, belongings, experience and memory.", ChatFormatting.LIGHT_PURPLE);
     }
@@ -204,7 +206,7 @@ final class Wave5Safeguard {
             ex.markDirty();
         }
 
-        Fx.burst(from, p.position().add(0, 1.0, 0), COLOUR);
+        FxRelic.burst(from, p.position().add(0, 1.0, 0), COLOUR);
         if (moves) {                                                 // the move itself waits for the end of this tick (never teleport in the middle of a hit)
             CompoundTag d = Wave5Data.player(p);
             d.putString("tp_dim", to.dimension().location().toString());
@@ -213,7 +215,7 @@ final class Wave5Safeguard {
             d.putDouble("tp_z", spot.z);
             d.putFloat("tp_yaw", st.getFloat("yaw"));
         }
-        Fx.ring(from, p.position().add(0, 0.2, 0), 2.5, COLOUR);
+        FxRelic.ring(from, p.position().add(0, 0.2, 0), 2.5, COLOUR);
         Wave5Aim.sound(from, p.position(), SoundEvents.TOTEM_USE, 1.0f, 1.3f);
 
         // the amulet cracks and needs two more full moons to mend; the record is spent
@@ -245,8 +247,8 @@ final class Wave5Safeguard {
         p.teleportTo(to, spot.x, spot.y, spot.z, yaw, p.getXRot());
         p.setDeltaMovement(Vec3.ZERO);
         p.hurtMarked = true;
-        Fx.burst(p.serverLevel(), p.position().add(0, 1.0, 0), COLOUR);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 2.5, COLOUR);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1.0, 0), COLOUR);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 2.5, COLOUR);
     }
 
     /** Is there room for a player to stand at this point? */

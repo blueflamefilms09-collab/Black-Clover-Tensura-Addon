@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -24,6 +23,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the three drinks of wave 29 that change the drinker for a while (Potion of Vampirism, Romlo's Potion of Sleep, Spider Brew) keep their acts and
@@ -54,7 +55,7 @@ final class Wave29Brews {
         CompoundTag d = Wave29Util.data(p);
         long now = p.level().getGameTime();
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.7, 0.5, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.DARK, p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.7, 0.5, 0.03);
         sl.playSound(null, p.blockPosition(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0f, 0.6f);
         switch (Wave29Rules.vampire(roll)) {
             case CURSE -> {
@@ -93,13 +94,13 @@ final class Wave29Brews {
             exposed = sun || flowing;
             if (cursed && exposed && !p.isCreative() && Wave29Rules.burns(p.getHealth())) {
                 p.hurt(p.damageSources().onFire(), Wave29Rules.BURN);
-                RukhFx.aura(sl, p, RukhFx.Alignment.DARK);
+                com.newuniverse.nusmp.particle.fx.Fx.aura(sl, FxThemes.RELIC_WAVE_29, p, FxTone.DARK);
                 if (sun) Wave29Util.give(p, "minecraft:weakness", 60, 0);
             }
         }
         if (d.getBoolean(K_REGEN) && !exposed && d.getLong(K_REGEN_HOLD) <= now && p.getHealth() < p.getMaxHealth() && (p.tickCount / 20) % 2 == 0) {
             Fx.heal(p, Wave29Rules.REGEN_HEAL);
-            RukhFx.aura(sl, p, RukhFx.Alignment.DARK);
+            com.newuniverse.nusmp.particle.fx.Fx.aura(sl, FxThemes.RELIC_WAVE_29, p, FxTone.DARK);
         }
         long at = d.getLong(K_PACK_AT);
         if (at > 0 && now >= at) {
@@ -119,7 +120,7 @@ final class Wave29Brews {
         d.putLong(K_PACK_AT, now + Wave29Rules.packDelay(Wave29Rules.die(p.getRandom()::nextInt, 4)));
         d.putBoolean(K_PACK_OUT, p.serverLevel().canSeeSky(p.blockPosition()));
         Wave29Util.tell(p, "Children of the Night: you call, and the dark answers. They are coming.", ChatFormatting.DARK_PURPLE);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.DARK, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_29, p, FxTone.DARK, 8);
     }
 
     /** The pack: wolves if the call was made under the open sky, bats otherwise; allies for five minutes, driven by the relics' summon sweep. */
@@ -130,7 +131,7 @@ final class Wave29Brews {
             LivingEntity e = outdoors ? Fx.summon(p, "minecraft:wolf", Wave29Rules.PACK_LIFE) : bat(p);
             if (e == null) continue;
             made++;
-            RukhFx.burst(p.serverLevel(), e, RukhFx.Alignment.DARK, 4);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_29, e, FxTone.DARK, 4);
         }
         Wave29Util.tell(p, made > 0 ? "Children of the Night: " + made + (outdoors ? " wolves" : " bats") + " arrive and take your side for five minutes."
                 : "Children of the Night: no creature answers this time.", ChatFormatting.DARK_PURPLE);
@@ -170,7 +171,7 @@ final class Wave29Brews {
         String who = target == p ? "You" : target.getName().getString();
         if (Wave29Rules.saves(roll, bonus)) {
             Wave29Util.give(target, "minecraft:slowness", Wave29Rules.DROWSY_TICKS, 0);
-            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, target.getX(), target.getY() + target.getBbHeight() * 0.8, target.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.LIGHT, target.getX(), target.getY() + target.getBbHeight() * 0.8, target.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
             Wave29Util.say(p, "Romlo's Potion of Sleep: " + who + " save" + (target == p ? "" : "s") + " against it (" + roll + "+" + bonus + " against DC " + Wave29Rules.SLEEP_DC + ") and only yawn" + (target == p ? "" : "s") + ".");
             if (target instanceof ServerPlayer tp && tp != p) Wave29Util.say(tp, "Something sleepy was poured into your mouth, but you shake it off.");
             return;
@@ -266,7 +267,7 @@ final class Wave29Brews {
         int lent = Fx.lendSkills(p, ticks, "tensura:poison_resistance", "tensura:sticky_steel_thread");
         Wave29Util.give(p, "minecraft:night_vision", ticks, 0);
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.5, 0.6, 0.5, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.5, 0.6, 0.5, 0.04);
         sl.playSound(null, p.blockPosition(), SoundEvents.SPIDER_AMBIENT, SoundSource.PLAYERS, 1.0f, 0.7f);
         Wave29Util.say(p, "Spider Brew (rolled " + d4 + "): your limbs fold and lengthen and you scuttle as a giant spider for " + d4 * 5 + " minutes" + (lent > 0 ? " (Tensura skills lent: " + lent + ")" : "") + ". Press against a wall to climb it; sneak to cling.");
     }
@@ -328,7 +329,7 @@ final class Wave29Brews {
     /** The bite: poison on a melee hit, and extra damage when the main hand is empty. Returns the extra damage (0 if none). */
     static float bite(ServerPlayer attacker, LivingEntity victim) {
         Wave29Util.give(victim, "minecraft:poison", Wave29Rules.POISON_TICKS, 0);
-        RukhFx.burst(attacker.serverLevel(), victim, RukhFx.Alignment.DARK, 3);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(attacker.serverLevel(), FxThemes.RELIC_WAVE_29, victim, FxTone.DARK, 3);
         return attacker.getMainHandItem().isEmpty() ? Wave29Rules.BITE : 0f;
     }
 }

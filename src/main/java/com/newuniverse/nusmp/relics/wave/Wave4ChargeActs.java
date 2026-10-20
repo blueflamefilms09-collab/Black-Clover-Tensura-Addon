@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the two charged amulets.
@@ -53,7 +54,7 @@ final class Wave4ChargeActs {
         save(c.stack(), Wave4Store.K_GLASS, s);
         int kind = Wave4Glass.kindOf(lv.random.nextInt(6) + 1);
         Wave4Glass.arm(p.getUUID(), kind, now);
-        Fx.ring(lv, p.position().add(0, 1.4, 0), 0.8, SILVER);
+        FxRelic.ring(lv, p.position().add(0, 1.4, 0), 0.8, SILVER);
         boolean keen = kind == Wave4Glass.KEEN;
         Fx.say(p, (keen ? "The glass shows you the opening: your next blow within 10 seconds lands 50% harder."
                 : "The glass clouds over: your next blow within 10 seconds lands 30% weaker.") + " (" + s.charges() + "/" + MAX + " charges)");
@@ -66,7 +67,7 @@ final class Wave4ChargeActs {
         ServerPlayer p = c.player();
         if (!spend(c, 2)) return;
         Wave4Look.ambient(p, "minecraft:water_breathing", BREATH_TICKS, 0);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.3, 0), 1.6, BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.3, 0), 1.6, BLUE);
         Fx.say(p, "Blessing of the Deep: you breathe water for ten minutes.");
     }
 
@@ -85,7 +86,7 @@ final class Wave4ChargeActs {
         final long until = now + GILLS_TICKS;
         Wave4Store.edit(c.stack(), x -> x.putLong(Wave4Store.K_GILLS, until));
         Wave4Upkeep.dreamer(p);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.3, 0), 1.6, BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.3, 0), 1.6, BLUE);
         Fx.say(p, "Features of the Ancient: gills and webbing; you breathe water and swim as fast as you walk, for ten minutes (use again to close them).");
     }
 
@@ -107,8 +108,8 @@ final class Wave4ChargeActs {
             Fx.addEffect(target, "tensura:fear", 100, 0);                      // Tensura fear (skipped if absent)
             Nullification.bleed(target, 0.05);                                  // and a mind torn open leaks magicules: 5% of its pool, which regenerates
         }
-        Fx.ring(lv, p.position().add(0, 1.5, 0), 0.8, BLUE);
-        if (target.level() instanceof ServerLevel tl) Fx.burst(tl, target.position().add(0, target.getBbHeight() * 0.7, 0), BLUE);
+        FxRelic.ring(lv, p.position().add(0, 1.5, 0), 0.8, BLUE);
+        if (target.level() instanceof ServerLevel tl) FxRelic.burst(tl, target.position().add(0, target.getBbHeight() * 0.7, 0), BLUE);
         Fx.say(p, "Force of Mhigh'Raine: " + target.getName().getString() + (saved ? " resists; the blast is halved." : " reels from the blast, afraid and leaking magicules."));
     }
 

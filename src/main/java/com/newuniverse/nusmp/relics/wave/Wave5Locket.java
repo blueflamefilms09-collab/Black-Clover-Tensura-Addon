@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.relics.wave;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,6 +13,8 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Lovelorn Locket. The tabletop card is a social charm (advantage on Persuasion, any former soldier will house you for the night). Here the
@@ -51,7 +52,7 @@ final class Wave5Locket {
         Fx.heal(p, p.getMaxHealth() * 0.5f);
         p.getFoodData().eat(8, 0.8f);
         Fx.addEffect(p, "minecraft:regeneration", 400, 1);
-        Wave5Aim.puff(l, p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 8, 0.5);
+        Wave5Aim.puff(l, p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 8, 0.5);
         Wave5Aim.sound(l, p.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 1.0f);
         Wave5Aim.msg(p, "An old soldier opens a door to you. You sleep warm, and you will wake here if you fall.", ChatFormatting.LIGHT_PURPLE);
     }

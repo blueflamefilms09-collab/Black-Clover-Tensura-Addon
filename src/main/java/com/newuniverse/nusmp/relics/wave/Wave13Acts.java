@@ -1,11 +1,9 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -19,6 +17,9 @@ import net.minecraft.world.item.alchemy.PotionContents;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /** Wave 13: the active abilities of the nine blades (the server side of right-click and sneak + right-click). */
 final class Wave13Acts {
@@ -32,7 +33,7 @@ final class Wave13Acts {
         ServerPlayer p = c.player();
         long now = p.level().getGameTime();
         Wave13Store.bag(Wave13Store.stack(c)).put("eth_until", now + ETHEREAL_TICKS);
-        Fx.ring(p.serverLevel(), p.position(), 1.8, 0x9FEFFF);
+        FxRelic.ring(p.serverLevel(), p.position(), 1.8, 0x9FEFFF);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, 1.6f);
         Fx.say(p, "The glass blade turns to dream. For two minutes it passes through worn armour (not through barriers or natural hide).");
     }
@@ -41,7 +42,7 @@ final class Wave13Acts {
         ServerPlayer p = c.player();
         p.getPersistentData().putLong(K_DRAW, p.level().getGameTime() + 120);
         Fx.addEffect(p, "minecraft:invisibility", 30, 0);
-        Fx.burst(p.serverLevel(), p.position(), 0x9FEFFF);
+        FxRelic.burst(p.serverLevel(), p.position(), 0x9FEFFF);
         Fx.say(p, "The blade fades out of the world: your next blow within six seconds comes from nowhere.");
     }
 
@@ -62,7 +63,7 @@ final class Wave13Acts {
         int next = Wave13Rules.nextOffer(cur);
         Wave13Rules.setStage(bag, now, next);
         Fx.say(p, OFFERS[next]);
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.3, 0.3, 0.3, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_13, FxTone.DARK, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.3, 0.3, 0.3, 0.05);
     }
 
     static void everything(ActCtx c) {
@@ -75,7 +76,7 @@ final class Wave13Acts {
         }
         Wave13Rules.setStage(bag, now, Wave13Rules.STAGE_EVERYTHING);
         Fx.say(p, OFFERS[Wave13Rules.STAGE_EVERYTHING]);
-        Fx.burst(p.serverLevel(), p.position(), 0xC01818);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xC01818);
     }
 
     // ================================================================ Palladion
@@ -92,7 +93,7 @@ final class Wave13Acts {
                 t.knockback(0.8, dx, dz);
             }
         }
-        Fx.ring(p.serverLevel(), p.position(), 7.0, 0xFFF0B0);
+        FxRelic.ring(p.serverLevel(), p.position(), 7.0, 0xFFF0B0);
         Fx.say(p, n > 0 ? "\"Begone!\" " + n + (n == 1 ? " creature is" : " creatures are") + " sent back beyond the plane for five seconds." : "\"Begone!\" Nothing from beyond answers; the rest are driven back.");
     }
 
@@ -122,7 +123,7 @@ final class Wave13Acts {
         p.getPersistentData().putLong(K_AURA, p.level().getGameTime() + AURA_TICKS);
         ServerLevel level = p.serverLevel();
         level.playSound(null, p.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.0f, 0.6f);
-        Fx.ring(level, p.position(), 9.0, 0xFFD25A);
+        FxRelic.ring(level, p.position(), 9.0, 0xFFD25A);
         Wave13Events.pulseAura(p);
         Fx.say(p, "The handle rings on the floor: for one minute you and your allies within 9 blocks cannot be frightened and are shielded.");
     }
@@ -149,7 +150,7 @@ final class Wave13Acts {
         float dmg = (float) Math.min(14.0, 3.0 + (ch / 100.0) * 0.18);
         Wave13Rules.clearCharge(bag, now);
         Fx.aoe(p, 5.0, dmg, "minecraft:magic", "minecraft:slowness", 40, 1);
-        Fx.ring(p.serverLevel(), p.position(), 5.0, 0x6FFFE0);
+        FxRelic.ring(p.serverLevel(), p.position(), 5.0, 0x6FFFE0);
         Fx.say(p, "The segmented blade lashes out and the charge is spent.");
     }
 
@@ -194,7 +195,7 @@ final class Wave13Acts {
             if (!p.getInventory().add(bottle)) p.drop(bottle, false);
         }
         Wave13Rules.Trigger t = Wave13Rules.triggerAt(bag.get("trig"));
-        Fx.burst(p.serverLevel(), p.position(), 0x8FE8FF);
+        FxRelic.burst(p.serverLevel(), p.position(), 0x8FE8FF);
         Fx.say(p, "The spell sinks into the blade. It takes effect on you when " + t.when() + ", once, and the dagger rests until dawn.");
     }
 
@@ -221,7 +222,7 @@ final class Wave13Acts {
         Fx.lendSkill(p, "tensura:thought_acceleration", 160);
         Fx.addEffect(p, "minecraft:speed", 160, 2);
         Fx.addEffect(p, "minecraft:haste", 160, 1);
-        Fx.ring(p.serverLevel(), p.position(), 6.0, 0x3FD0FF);
+        FxRelic.ring(p.serverLevel(), p.position(), 6.0, 0x3FD0FF);
         Fx.say(p, "Time slows for everyone but you: eight seconds of another turn.");
     }
 
@@ -250,7 +251,7 @@ final class Wave13Acts {
             Fx.addEffect(t, "tensura:spatial_blockade", hold, 0);
             Fx.addEffect(t, "minecraft:blindness", hold, 0);
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 50, 0.4, 0.7, 0.4, 0.5);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_13, FxTone.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 50, 0.4, 0.7, 0.4, 0.5);
         Fx.say(p, "The target is flung into another dimension for a round and comes back dazed.");
     }
 

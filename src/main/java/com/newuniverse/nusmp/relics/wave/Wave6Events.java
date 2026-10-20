@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +37,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 6: the game-bus side of the ten armours and robes, one listener per event, each one starting with the cheapest test (is a wearer even involved)
@@ -120,7 +122,7 @@ public final class Wave6Events {
             int gain = Wave6Tune.absorbGain(e.getAmount());
             Wave6Pool.State after = Wave6Pool.add(st, gain, Wave6Pools.SKY.max());
             Wave6Kit.put(s, Wave6Pools.SKY, after);
-            Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
+            FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
             Wave6Kit.hint(p, "Spell Absorption: the crystals drink the spell (+" + (after.charges() - st.charges()) + " charges, " + after.charges() + "/" + Wave6Pools.SKY.max() + ").");
             return true;
         }
@@ -141,7 +143,7 @@ public final class Wave6Events {
         Wave6Kit.give(p, "minecraft:strength", 160, 0, false);
         Wave6Kit.give(p, "minecraft:speed", 160, 0, false);
         Fx.lendSkill(p, Wave6Skills.THOUGHT_ACCELERATION, 160);                       // "advantage on your next spell attack": thought acceleration for eight seconds
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xB070FF);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xB070FF);
         Wave6Kit.hint(p, "Into the Void: the spell finds nothing to strike (" + (st.charges() - 1) + "/" + Wave6Pools.VOID.max() + " left today). You are charged with the void.");
         return true;
     }
@@ -169,7 +171,7 @@ public final class Wave6Events {
         e.setCanceled(true);
         Fx.addEffect(p, Wave6Skills.FX_FATE_CHANGE, 60, 0);
         ServerLevel sl = p.serverLevel();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.5, 0.4, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_6, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.5, 0.4, 0.2);
         Wave6Kit.hint(p, "The blow misses by a hair.");
         return true;
     }
@@ -186,7 +188,7 @@ public final class Wave6Events {
             wd.putLong(K_ZAR_GUIDE, now + Wave6Tune.GUIDANCE_COOLDOWN);
             e.setAmount(e.getAmount() + Wave6Tune.GUIDANCE_BONUS);
             Fx.addEffect(att, Wave6Skills.FX_ALLY_BOOST, 100, 0);                      // the prophet's blessing, as Tensura's ally boost
-            Fx.burst(w.serverLevel(), att.position().add(0, 1, 0), 0xC03030);
+            FxRelic.burst(w.serverLevel(), att.position().add(0, 1, 0), 0xC03030);
             return;
         }
     }
@@ -227,8 +229,8 @@ public final class Wave6Events {
         Wave6Kit.give(p, "minecraft:resistance", Wave6Tune.PLOT_GRACE_TICKS, 3, false);
         Wave6Kit.give(p, "minecraft:regeneration", Wave6Tune.PLOT_GRACE_TICKS, 1, false);
         Fx.addEffect(p, Wave6Skills.FX_FATE_CHANGE, Wave6Tune.PLOT_GRACE_TICKS, 0);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFD27A);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 3.0, 0xFFD27A);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFD27A);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 3.0, 0xFFD27A);
         int left = st.charges() - 1;
         Fx.say(p, left > 0 ? "Plot Armor: the story is not over yet (" + left + "/" + Wave6Pools.PLOT.max() + " plot points left)."
                 : "Plot Armor: that was the last plot point. The ending is near: Luck -3, no more saves, until a point returns at dawn.");
@@ -262,7 +264,7 @@ public final class Wave6Events {
         if (!Wave6Pool.canSpend(st, 1)) return false;
         Wave6Kit.put(s, Wave6Pools.ZAR, Wave6Pool.spend(st, 1));
         d.putLong(K_ZAR_WINDOW, now + Wave6Tune.ZAR_WINDOW);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xC03030);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xC03030);
         Wave6Kit.hint(p, "Legendary Resistance! (" + (st.charges() - 1) + "/" + Wave6Pools.ZAR.max() + " left today)");
         return true;
     }
@@ -297,7 +299,7 @@ public final class Wave6Events {
         if (!RelicFlags.has(p, Wave6Tune.F_SLIME) || now >= until) { endSlime(p, true); return; }
         slimeMods(p, true);                                                                       // re-applied after a relog
         Wave6Kit.give(p, "minecraft:jump_boost", 40, 0, true);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.3, p.getZ(), 4, 0.2, 0.1, 0.2, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_6, FxTone.LIGHT, p.getX(), p.getY() + 0.3, p.getZ(), 4, 0.2, 0.1, 0.2, 0.02);
     }
 
     /** Ends Slime Form. With {@code checkFit} it waits (up to 25 s) while there is no room to stand up again, so nobody is squeezed into a wall. */
@@ -314,7 +316,7 @@ public final class Wave6Events {
         d.putLong(Wave6Acts.K_SLIME, 0);
         d.remove(Wave6Acts.K_SLIME_EXT);
         slimeMods(p, false);
-        Fx.burst(p.serverLevel(), p.position().add(0, 0.8, 0), 0x6BFFB5);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 0.8, 0), 0x6BFFB5);
         Fx.say(p, "You take your own shape again.");
     }
 
@@ -339,7 +341,7 @@ public final class Wave6Events {
         if (pass % 2 != 0) return;
         Fx.lendSkills(p, 100, Wave6Skills.MAGIC_SENSE, Wave6Skills.ALL_SEEING_EYE);          // "see the unseen": magic sense and the all-seeing eye while the light shines
         ServerLevel sl = p.serverLevel();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.5, 0.6, 0.5, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_6, FxTone.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.5, 0.6, 0.5, 0.01);
         int n = 0;
         double r = Wave6Tune.DAWN_REVEAL_RADIUS;
         for (LivingEntity le : sl.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r), x -> x != p && x.isAlive() && x.isInvisible() && !(x instanceof Player pl && pl.isSpectator()))) {

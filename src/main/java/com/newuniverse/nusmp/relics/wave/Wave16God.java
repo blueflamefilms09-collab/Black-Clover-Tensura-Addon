@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 16: the Portable God. Twelve charges (three come back each dawn) buy six favours; the damage is of a kind that fits the pictured god (here a
@@ -79,7 +80,7 @@ final class Wave16God {
         p.getPersistentData().putLong(Wave16Tune.K_GOD_AVATAR, p.level().getGameTime() + Wave16Tune.GOD_ARM_TICKS);
         Fx.addEffect(p, "minecraft:resistance", Wave16Tune.GOD_ARM_TICKS, 0);
         Fx.addEffect(p, "minecraft:glowing", Wave16Tune.GOD_ARM_TICKS, 0);
-        Fx.ring(p.serverLevel(), p.position(), 3.0, 0xFF3030);
+        FxRelic.ring(p.serverLevel(), p.position(), 3.0, 0xFF3030);
         Fx.say(p, "Thou art the god's avatar for a minute.");
     }
 
@@ -101,7 +102,7 @@ final class Wave16God {
                 Fx.addEffect(p, "minecraft:strength", 600, 1);
                 Fx.shield(p, 8f, 1200);
             }
-            case 0 -> { Fx.ring(lv, p.position(), 5.0, 0xFF6020); Fx.aoe(p, 5.0, 6f, "minecraft:in_fire", null, 0, 0); }
+            case 0 -> { FxRelic.ring(lv, p.position(), 5.0, 0xFF6020); Fx.aoe(p, 5.0, 6f, "minecraft:in_fire", null, 0, 0); }
             case 1 -> {
                 LivingEntity t = Wave16Kit.lookTarget(p, 24.0);
                 if (t != null) { Fx.damage(p, t, 8f, "minecraft:lightning_bolt"); Wave16Kit.puff(lv, t.position().add(0, 1.0, 0), 0xFFFF80, 20, 0.4); }
@@ -119,7 +120,7 @@ final class Wave16God {
 
     /** A shock wave: every foe within the radius is thrown back and slowed. */
     private static void shove(ServerPlayer p, double radius) {
-        Fx.ring(p.serverLevel(), p.position(), radius, 0xC0C0FF);
+        FxRelic.ring(p.serverLevel(), p.position(), radius, 0xC0C0FF);
         for (LivingEntity t : Fx.foesAround(p, radius)) {
             Vec3 away = t.position().subtract(p.position());
             if (away.lengthSqr() < 1.0e-4) continue;

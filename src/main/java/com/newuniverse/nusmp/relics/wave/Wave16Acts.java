@@ -1,11 +1,9 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +18,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 16: the act bodies of the necklace pieces and the single-purpose charms (Sigil, Clasp, Po'eur, Handgrenade, Doll, Perfume, Sunscreen, Coin, Idol,
@@ -34,7 +35,7 @@ final class Wave16Acts {
     static void sigilFlame(ActCtx c) {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
-        Fx.ring(lv, p.position(), 4.0, 0xFF8A2A);
+        FxRelic.ring(lv, p.position(), 4.0, 0xFF8A2A);
         for (LivingEntity t : Fx.foesAround(p, 4.0)) {
             Fx.damage(p, t, 5f, "minecraft:in_fire");
             t.setRemainingFireTicks(60);
@@ -75,7 +76,7 @@ final class Wave16Acts {
     /** Starburst: a ring of cold shards (the brooch is a snowflake). */
     static void poeurStarburst(ActCtx c) {
         ServerPlayer p = c.player();
-        Fx.ring(p.serverLevel(), p.position(), 7.0, 0xBFEFFF);
+        FxRelic.ring(p.serverLevel(), p.position(), 7.0, 0xBFEFFF);
         Fx.aoe(p, 7.0, 6f, "minecraft:freeze", "minecraft:slowness", 120, 2);
         Fx.say(p, "The brooch bursts into a starburst of frost.");
     }
@@ -100,9 +101,9 @@ final class Wave16Acts {
     private static void blast(ServerPlayer p, ServerLevel lv) {
         net.minecraft.world.phys.BlockHitResult hit = Wave16Kit.lookBlock(p, Wave16Tune.GRENADE_THROW);
         Vec3 at = hit != null ? hit.getLocation().add(0, 0.2, 0) : p.getEyePosition().add(p.getLookAngle().scale(Wave16Tune.GRENADE_THROW));
-        Fx.ring(lv, at, Wave16Tune.GRENADE_RADIUS, 0xFFF2B0);
-        Fx.burst(lv, at, 0xFFF2B0);
-        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+        FxRelic.ring(lv, at, Wave16Tune.GRENADE_RADIUS, 0xFFF2B0);
+        FxRelic.burst(lv, at, 0xFFF2B0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_16, FxTone.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
         String holy = Wave6Kit.damageType(lv, "tensura:holy_damage", "minecraft:magic");
         double r2 = Wave16Tune.GRENADE_RADIUS * Wave16Tune.GRENADE_RADIUS;
         int smitten = 0, healed = 0, seen = 0;
@@ -120,8 +121,8 @@ final class Wave16Acts {
     }
 
     private static void backfire(ServerPlayer p, ServerLevel lv, boolean tainted) {
-        Fx.ring(lv, p.position(), Wave16Tune.BACKFIRE_RADIUS, 0x6A1B3A);
-        Fx.burst(lv, p.position(), 0x6A1B3A);
+        FxRelic.ring(lv, p.position(), Wave16Tune.BACKFIRE_RADIUS, 0x6A1B3A);
+        FxRelic.burst(lv, p.position(), 0x6A1B3A);
         String dark = Wave6Kit.damageType(lv, "tensura:darkness_elemental", "minecraft:magic");
         for (LivingEntity t : Fx.foesAround(p, Wave16Tune.BACKFIRE_RADIUS)) Fx.damageHeavy(p, t, Wave16Tune.BACKFIRE_DAMAGE, dark);
         float self = Wave16Rules.backfireSelf(p.getHealth());
@@ -256,14 +257,14 @@ final class Wave16Acts {
                     if (!(st.getBlock() instanceof CropBlock || st.getBlock() instanceof SaplingBlock || st.getBlock() instanceof StemBlock)) continue;
                     if (!(st.getBlock() instanceof BonemealableBlock b) || !b.isValidBonemealTarget(lv, pos, st)) continue;
                     b.performBonemeal(lv, p.getRandom(), pos, st);
-                    RukhFx.spray(lv, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.0);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_16, FxTone.LIGHT, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.0);
                     if (++grown >= 12) break outer;
                 }
             }
         }
         Fx.aoe(p, 4.0, 0f, null, "minecraft:slowness", 100, 2);
         Fx.addEffect(p, "minecraft:regeneration", 120, 0);
-        Fx.ring(lv, p.position(), 4.0, 0x58C060);
+        FxRelic.ring(lv, p.position(), 4.0, 0x58C060);
         Fx.say(p, "You speak with the plants. " + grown + " grow at once, and the vines hold whatever is near you.");
     }
 }

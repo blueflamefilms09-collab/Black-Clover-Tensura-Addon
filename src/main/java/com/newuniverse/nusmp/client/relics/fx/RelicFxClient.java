@@ -1,7 +1,5 @@
 package com.newuniverse.nusmp.client.relics.fx;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
@@ -10,7 +8,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -18,6 +15,9 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Vector3f;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The ambient particles of worn relics: embers, snow, sparks, leaves, wisps, stars, petals drifting off whoever wears a relic of RARE grade or higher, themed by the relic's glow
@@ -110,14 +110,14 @@ public final class RelicFxClient {
         double vx = (rnd.nextDouble() - 0.5) * 0.01, vz = (rnd.nextDouble() - 0.5) * 0.01;
         budget++;
         switch (theme) {
-            case EMBER -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
-            case SNOW -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
-            case SPARK -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
-            case LEAF -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
-            case WISP -> RukhClientFx.spray(level, Alignment.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
-            case STAR -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
-            case BEE -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
-            case PETAL -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case EMBER -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
+            case SNOW -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
+            case SPARK -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
+            case LEAF -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case WISP -> Fx.spray(level, FxThemes.RELIC, FxTone.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
+            case STAR -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
+            case BEE -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
+            case PETAL -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
             default -> { }
         }
     }
@@ -129,8 +129,8 @@ public final class RelicFxClient {
         double x = p.getX() + Math.cos(a) * r, z = p.getZ() + Math.sin(a) * r;
         budget++;
         double tx = -Math.sin(a) * 0.035, tz = Math.cos(a) * 0.035;
-        if (d.grade().tier() >= 7) RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
-        else RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
+        if (d.grade().tier() >= 7) Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
+        else Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
     }
 
 }

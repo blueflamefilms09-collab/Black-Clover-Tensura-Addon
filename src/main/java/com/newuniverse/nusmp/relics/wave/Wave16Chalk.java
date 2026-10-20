@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 16: the two runechalks. Each symbol costs one of twenty charges (two come back each dawn). The symbols that last a while are wards in a bounded
@@ -106,7 +107,7 @@ final class Wave16Chalk {
             p.getInventory().placeItemBackInInventory(new ItemStack(to, n));
             fixed += n;
         }
-        Fx.ring(lv, p.position(), Wave16Tune.PURIFY_RADIUS, 0x70E8FF);
+        FxRelic.ring(lv, p.position(), Wave16Tune.PURIFY_RADIUS, 0x70E8FF);
         Fx.say(p, "Purified." + (fixed > 0 ? " " + fixed + " spoiled morsels are good again." : ""));
     }
 
@@ -187,7 +188,7 @@ final class Wave16Chalk {
         }
         while (WARDS.size() >= Wave16Tune.MAX_WARDS) WARDS.remove(0);
         WARDS.add(new Ward(p.getUUID(), p.level().dimension(), p.blockPosition(), kind, until));
-        Fx.ring(p.serverLevel(), Vec3.atBottomCenterOf(p.blockPosition()), kind == CIRCLE ? Wave16Tune.CIRCLE_RADIUS : 1.0, kind == ALARM ? 0x70E8FF : 0xFFFFFF);
+        FxRelic.ring(p.serverLevel(), Vec3.atBottomCenterOf(p.blockPosition()), kind == CIRCLE ? Wave16Tune.CIRCLE_RADIUS : 1.0, kind == ALARM ? 0x70E8FF : 0xFFFFFF);
     }
 
     /** Once a second: alarms look for foes, circles bless, glyphs burn. */

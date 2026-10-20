@@ -6,7 +6,6 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -16,6 +15,9 @@ import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The tables of the upgraded weapons, read from assets/nusmp/visual_upgrade/&lt;item id&gt;.json the first time an item is asked for and kept until the next resource reload
@@ -86,6 +88,6 @@ public final class UpgradeSpecs {
         }
         ResourceLocation id = ResourceLocation.tryParse(l.particle());
         Object t = id == null ? null : BuiltInRegistries.PARTICLE_TYPE.get(id);
-        return t instanceof ParticleOptions po ? po : ParticleTypes.END_ROD;
+        return t instanceof ParticleOptions po ? po : Fx.options(FxThemes.WORLD, FxOld.END_ROD);
     }
 }

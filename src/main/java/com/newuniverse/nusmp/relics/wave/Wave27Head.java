@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -23,6 +22,9 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the four headpieces of wave 27 (Soul Searchers, the Mad King's Crown, the Orb of Ancient Sight, the Trickster Mask) as Minecraft mechanics.
@@ -82,7 +84,7 @@ final class Wave27Head {
         }
         if (t instanceof ServerPlayer o) Wave27Util.say(o, p.getName().getString() + " looked into your soul through stained glass.", ChatFormatting.LIGHT_PURPLE);
         else if (t instanceof Mob m) m.getLookControl().setLookAt(p);
-        Wave27Util.puff(lv, RukhFx.Alignment.LIGHT, t, 10);
+        Wave27Util.puff(lv, FxTone.LIGHT, t, 10);
     }
 
     // ================================================================ The Mad King's Crown
@@ -97,7 +99,7 @@ final class Wave27Head {
         if (ex >= 1) Wave27Util.giveQuiet(p, 100, 0, "minecraft:weakness");
         if (ex >= 2) Wave27Util.giveQuiet(p, 100, 0, "minecraft:mining_fatigue");
         if (ex >= 1 && p.getRandom().nextInt(90) == 0) Wave27Util.tell(p, "A throne, red and wet. It is yours. It was always yours.", ChatFormatting.DARK_RED);
-        if (p.tickCount % 80 < 20) RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.DARK);
+        if (p.tickCount % 80 < 20) com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_27, p, FxTone.DARK);
     }
 
     /** Waking in the crown after two days of wearing it: insane nightmares of power, ruling and blood (a short nausea and dark, never harm). */
@@ -107,7 +109,7 @@ final class Wave27Head {
         Wave27Util.give(p, 200, 0, "minecraft:nausea");
         Wave27Util.give(p, 120, 0, "minecraft:darkness");
         Wave27Util.say(p, "You dreamed of power, of ruling, and of blood. You woke wearing the crown.", ChatFormatting.DARK_RED);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_27, p, FxTone.DARK, 10);
     }
 
     // ================================================================ The Orb of Ancient Sight
@@ -133,7 +135,7 @@ final class Wave27Head {
         }
         if (found == 0) Wave27Util.say(p, "No magic stirs within twenty-four blocks.", ChatFormatting.GRAY);
         else if (found > shown) Wave27Util.say(p, "... and " + (found - shown) + " more auras.", ChatFormatting.GRAY);
-        Fx.ring(lv, p.position().add(0, 1.0, 0), 3.0, 0xE83A3A);
+        FxRelic.ring(lv, p.position().add(0, 1.0, 0), 3.0, 0xE83A3A);
     }
 
     // ================================================================ Trickster Mask
@@ -157,7 +159,7 @@ final class Wave27Head {
         d.putLong("mask_until", now + Wave27Rules.MASK_TICKS);
         d.putLong("mask_day", Wave27Rules.dailyMark(today));
         Wave27Util.giveQuiet(p, Wave27Rules.MASK_TICKS, 0, "tensura:presence_concealment");
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_27, p, FxTone.DARK, 12);
         Wave27Util.say(p, "Everyone who looks at you now sees a full skeleton.", ChatFormatting.AQUA);
     }
 

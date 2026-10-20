@@ -1,9 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -34,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19, what stays in the world after a scroll is read: the creatures charmed by the Scroll of Charm Parson and the Mug of The Boss (they leave
@@ -160,16 +161,16 @@ final class Wave19Field {
                 double r = 1.0 + 3.0 * left;
                 for (int i = 0; i < 20; i++) {
                     double a = i * (Math.PI * 2 / 20);
-                    RukhFx.spray(sl, Wave19Util.align(0xE04020), q.at().x + Math.cos(a) * r, q.at().y + 0.1, q.at().z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
+                    Fx.spray(sl, FxThemes.RELIC_WAVE_19, Wave19Util.align(0xE04020), q.at().x + Math.cos(a) * r, q.at().y + 0.1, q.at().z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
                 }
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, q.at().x, q.at().y + 0.4, q.at().z, 6, 0.6, 0.3, 0.6, 0.02);
+                Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, q.at().x, q.at().y + 0.4, q.at().z, 6, 0.6, 0.3, 0.6, 0.02);
                 continue;
             }
             it.remove();
             Mob crab = spawnCrab(sl, q.at(), new Alive(q.owner(), now + Wave19Rules.CRAB_TICKS, q.dim()));
             if (crab != null) {
                 sl.playSound(null, crab.blockPosition(), SoundEvents.TURTLE_EGG_CRACK, SoundSource.HOSTILE, 1.6f, 0.5f);
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, q.at().x, q.at().y + 0.5, q.at().z, 40, 1.2, 0.5, 1.2, 0.1);
+                Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, q.at().x, q.at().y + 0.5, q.at().z, 40, 1.2, 0.5, 1.2, 0.1);
             }
         }
     }
@@ -182,7 +183,7 @@ final class Wave19Field {
             Entity e = sl == null ? null : sl.getEntity(en.getKey());
             if (!(e instanceof Mob m) || !m.isAlive()) { it.remove(); continue; }
             if (now >= en.getValue().until()) {
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, m.getX(), m.getY() + 0.8, m.getZ(), 30, 0.8, 0.6, 0.8, 0.05);
+                Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, m.getX(), m.getY() + 0.8, m.getZ(), 30, 0.8, 0.6, 0.8, 0.05);
                 m.discard();
                 it.remove();
                 continue;

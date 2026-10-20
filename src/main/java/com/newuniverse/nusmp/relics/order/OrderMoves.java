@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -18,6 +17,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The four moves of the God of Order. All of them are telegraphed on the ground first (a ring, a line or a circle of gold that can be left), none
@@ -81,7 +83,7 @@ final class OrderMoves {
         if (first(left, total)) OrderVfx.decreeTell(god, m, r, total);
         Tells.ring(sl, m, r, OrderFx.GOLD, 1.3f, 40);
         Tells.ring(sl, m, r * (0.3 + 0.7 * left / (double) Math.max(1, total)), OrderFx.WHITE_GOLD, 1.0f, 24);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, m.x, m.y + 0.8, m.z, 8, r * 0.5, 0.5, r * 0.5, 0.3);
+        Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, m.x, m.y + 0.8, m.z, 8, r * 0.5, 0.5, r * 0.5, 0.3);
     }
 
     /** A ring of binding glyphs closes on the locked spot: whoever is inside is struck lightly and slowed for four seconds. */
@@ -120,7 +122,7 @@ final class OrderMoves {
             if (first(left, total)) OrderVfx.writTell(god, o, d, OrderTable.WRIT_LENGTH, total);
             Tells.line(sl, o.add(side), end.add(side), OrderFx.GOLD);
             Tells.line(sl, o.subtract(side), end.subtract(side), OrderFx.GOLD);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, o.x + d.x * 1.5, o.y + 1.8, o.z + d.z * 1.5, 6, 0.4, 0.4, 0.4, 0.3);
+            Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, o.x + d.x * 1.5, o.y + 1.8, o.z + d.z * 1.5, 6, 0.4, 0.4, 0.4, 0.3);
         }
     }
 
@@ -148,7 +150,7 @@ final class OrderMoves {
             Tells.line(sl, o.add(0, 1.0, 0), end.add(0, 1.0, 0), OrderFx.WHITE_GOLD);
             for (int i = 1; i <= 12; i++) {
                 Vec3 p = o.add(d.scale(OrderTable.WRIT_LENGTH * i / 12.0));
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.x, p.y + 1.0, p.z, 3, 0.15, 0.4, 0.15, 0.02);
+                Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, p.x, p.y + 1.0, p.z, 3, 0.15, 0.4, 0.15, 0.02);
             }
             for (LivingEntity e : god.foesAround(o, OrderTable.WRIT_LENGTH + 2.0)) {
                 if (hit.contains(e.getId())) continue;
@@ -177,7 +179,7 @@ final class OrderMoves {
         Tells.ring(sl, m, r, OrderFx.GOLD, 1.5f, 48);
         if (p > 0.5f) Tells.ring(sl, m, r * 0.55, OrderFx.WHITE_GOLD, 1.2f, 28);
         Tells.column(sl, m, 1.5 + 4.0 * p, OrderFx.WHITE_GOLD);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, m.x, m.y + 1.2, m.z, 10, r * 0.5, 1.0, r * 0.5, 0.4);
+        Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, m.x, m.y + 1.2, m.z, 10, r * 0.5, 1.0, r * 0.5, 0.4);
     }
 
     /** The circle is struck: one heavy hit on everyone in it. */
@@ -193,7 +195,7 @@ final class OrderMoves {
             god.strike(e, OrderTable.JUDGEMENT_DAMAGE, true);
         }
         Tells.burst(sl, at.add(0, 0.8, 0), OrderFx.GOLD, 60);
-        for (int i = 0; i < 10; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.4 + i * 0.5, at.z, 3, 0.25, 0.1, 0.25, 0.03);
+        for (int i = 0; i < 10; i++) Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, at.x, at.y + 0.4 + i * 0.5, at.z, 3, 0.25, 0.1, 0.25, 0.03);
         sl.playSound(null, BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 0.9f, 1.5f);
         sl.playSound(null, BlockPos.containing(at), SoundEvents.BELL_BLOCK, SoundSource.HOSTILE, 2.0f, 0.5f);
     }
@@ -206,7 +208,7 @@ final class OrderMoves {
         if (first(left, total)) OrderVfx.erasureTell(god, total);
         Tells.ring(sl, god.position(), r, OrderFx.GOLD, 1.4f, 56);
         Tells.column(sl, god.position(), 5.0, OrderFx.WHITE_GOLD);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, god.getX(), god.getY() + 2.0, god.getZ(), 16, 1.2, 1.4, 1.2, 0.6);
+        Fx.spray(sl, FxThemes.RELIC_ORDER, FxTone.LIGHT, god.getX(), god.getY() + 2.0, god.getZ(), 16, 1.2, 1.4, 1.2, 0.6);
     }
 
     /**

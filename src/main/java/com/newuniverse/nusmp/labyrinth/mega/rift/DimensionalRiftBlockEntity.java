@@ -13,6 +13,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the state of one rift: what kind it is ({@link RiftType}), how old it is and how long it has left, the seed that decides where a shortcut goes and which pocket it opens, where a
@@ -200,7 +202,7 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         var rg = level.random;
         boolean dark = type == RiftType.POCKET;
         if (isExclusive() && age % 6 == 0) {                                                // 1.99.0: a mega-rare tear spits sparks of its own colour
-            level.addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(((accent >> 16) & 255) / 255f, ((accent >> 8) & 255) / 255f, (accent & 255) / 255f), 1.4f),
+            Fx.addDust(level, FxThemes.DUNGEON_RIFT, new org.joml.Vector3f(((accent >> 16) & 255) / 255f, ((accent >> 8) & 255) / 255f, (accent & 255) / 255f), 1.4f,
                     worldPosition.getX() + 0.5 + (rg.nextDouble() - 0.5) * 2.4 * open, worldPosition.getY() + 0.1 + rg.nextDouble() * 3.0 * open, worldPosition.getZ() + 0.5 + (rg.nextDouble() - 0.5) * 2.4 * open, 0, 0.03, 0);
         }
         double x = worldPosition.getX() + 0.5 + (rg.nextDouble() - 0.5) * 1.6 * open, y = worldPosition.getY() + 0.2 + rg.nextDouble() * 2.4 * open, z = worldPosition.getZ() + 0.5 + (rg.nextDouble() - 0.5) * 1.6 * open;

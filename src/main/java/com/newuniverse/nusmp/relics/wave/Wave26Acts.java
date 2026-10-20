@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.wave.Wave26Rules.Mark;
@@ -21,6 +20,8 @@ import net.neoforged.neoforge.common.Tags;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the three relics of wave 26 whose ability is a physical act rather than a mind spell (the Goggles of Dwarvenkin that show hidden
@@ -71,7 +72,7 @@ final class Wave26Acts {
                 default -> hidden++;
             }
             if (i < Wave26Rules.GOGGLES_MARKS)
-                RukhFx.spray(sl, RukhFx.Alignment.of(s.kind == Find.TRAP), s.pos.getX() + 0.5, s.pos.getY() + 0.5, s.pos.getZ() + 0.5, 2, 0.25, 0.25, 0.25, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_26, FxTone.of(s.kind == Find.TRAP), s.pos.getX() + 0.5, s.pos.getY() + 0.5, s.pos.getZ() + 0.5, 2, 0.25, 0.25, 0.25, 0.02);
         }
         sl.playSound(null, o, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.8f, 0.6f);
         Wave26Util.tell(p, "Amber light along the seams: " + ore + " ore, " + hidden + " hidden stone, " + trap + " traps (nearest " + Math.min(spots.size(), Wave26Rules.GOGGLES_MARKS) + " marked).", ChatFormatting.GOLD);
@@ -108,7 +109,7 @@ final class Wave26Acts {
             Wave26Util.give(t, Wave26Rules.STUN_TICKS, 0, "tensura:paralysis");
             Wave26Util.give(t, Wave26Rules.STUN_TICKS, 6, "minecraft:slowness");
         }
-        RukhFx.burst(sl, t, RukhFx.Alignment.LIGHT, crit ? 10 : 5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(sl, FxThemes.RELIC_WAVE_26, t, FxTone.LIGHT, crit ? 10 : 5);
         sl.playSound(null, t.blockPosition(), crit ? SoundEvents.ANVIL_LAND : SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.PLAYERS, crit ? 0.6f : 1.0f, crit ? 1.4f : 0.8f);
         Wave26Util.tell(p, crit ? "CRITICAL HEADBUTT! " + t.getName().getString() + " is stunned." : "Headbutt!", ChatFormatting.YELLOW);
     }
@@ -121,7 +122,7 @@ final class Wave26Acts {
         long now = sl.getGameTime();
         List<Mark> tracks = Wave26Wear.ledger(p).recent(now, Wave26Rules.TRACK_AGE, p.getX(), p.getZ(), Wave26Rules.LENS_RADIUS, Wave26Rules.LENS_MARKS);
         for (Mark mk : tracks) {
-            RukhFx.spray(sl, RukhFx.Alignment.of(mk.kind() == 0), mk.x(), mk.y() + 0.15, mk.z(), 2, 0.1, 0.02, 0.1, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_26, FxTone.of(mk.kind() == 0), mk.x(), mk.y() + 0.15, mk.z(), 2, 0.1, 0.02, 0.1, 0.0);
         }
         int seen = 0;
         for (LivingEntity e : Wave26Util.near(sl, p.position(), 24.0, e -> e != p)) {

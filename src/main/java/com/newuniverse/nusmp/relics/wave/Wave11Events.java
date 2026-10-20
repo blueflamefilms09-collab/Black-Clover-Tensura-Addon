@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -8,7 +7,6 @@ import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +27,8 @@ import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 11 gameplay hooks: the damage rules of the blades (Wavebreaker's reflection, the Tripolar mood, the heated Heart of the Flame, Sorrow's Edge,
@@ -63,7 +63,7 @@ public final class Wave11Events {
                 e.setAmount(e.getAmount() * 0.6f);
                 pd.putUUID(Wave11Acts.K_RIPOSTE, foe.getUUID());                 // "advantage on the next attack against the attacker"
                 pd.putLong(Wave11Acts.K_RIPOSTE_UNTIL, now + 100);
-                RukhFx.spray(((ServerLevel) vp.level()), RukhFx.Alignment.LIGHT, vp.getX(), vp.getY() + 1.0, vp.getZ(), 16, 0.4, 0.5, 0.4, 0.1);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) vp.level()), FxThemes.RELIC_WAVE_11, FxTone.LIGHT, vp.getX(), vp.getY() + 1.0, vp.getZ(), 16, 0.4, 0.5, 0.4, 0.1);
             }
         }
 
@@ -103,7 +103,7 @@ public final class Wave11Events {
             case "sorrows_edge" -> {
                 if (!RelicFlags.has(atk, Wave11.F_SORROW)) return;
                 e.setAmount(e.getAmount() + 2.5f);                                // 1d4 necrotic
-                RukhFx.spray(((ServerLevel) victim.level()), RukhFx.Alignment.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_11, FxTone.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.02);
             }
             default -> { }
         }

@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The Boreal Blades' Fusion: with the Permafrost Sabre in one hand and the Cyclone Rapier in the other, both attuned, the wielder interlocks
@@ -139,7 +140,7 @@ final class Wave0Fusion {
         Vec3 c = new Vec3(w.x, w.y, w.z);
         if (age % 8 == 0) {
             Wave0Util.send(sl, VfxShape.WIND_TORNADO, c, c, ICE, 14, 2.4f);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1.0, c.z, 12, Wave0Rules.WHIRL_RADIUS * 0.5, 0.9, Wave0Rules.WHIRL_RADIUS * 0.5, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_0, FxTone.LIGHT, c.x, c.y + 1.0, c.z, 12, Wave0Rules.WHIRL_RADIUS * 0.5, 0.9, Wave0Rules.WHIRL_RADIUS * 0.5, 0.05);
         }
         w.held.keySet().removeIf(id -> sl.getEntity(id) == null);
         w.immune.values().removeIf(until -> until <= now);

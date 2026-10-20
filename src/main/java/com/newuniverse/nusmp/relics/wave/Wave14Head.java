@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Attune;
@@ -15,7 +14,6 @@ import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,6 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.IntUnaryOperator;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 14, the head relics: the three dragon circlets (a breath each, and a trait), the Tiny Duck Crown (a flock at dawn), the Unicorn Crown and
@@ -101,10 +102,10 @@ final class Wave14Head {
                 double spread = i * 0.12;
                 Vec3 at = eye.add(look.scale(i)).add((p.getRandom().nextDouble() - 0.5) * spread * 2, (p.getRandom().nextDouble() - 0.5) * spread * 2,
                         (p.getRandom().nextDouble() - 0.5) * spread * 2);
-                RukhFx.spray(sl, Wave14Util.align(b.rgb), at.x, at.y, at.z, 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, Wave14Util.align(b.rgb), at.x, at.y, at.z, 1, 0, 0, 0, 0);
             }
             Vec3 at = eye.add(look.scale(i));
-            RukhFx.spray(sl, Wave14Util.align(b.rgb), at.x, at.y, at.z, 2, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, Wave14Util.align(b.rgb), at.x, at.y, at.z, 2, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.02);
         }
         sl.playSound(null, p.blockPosition(), b == Breath.THUNDER ? SoundEvents.LIGHTNING_BOLT_IMPACT : b == Breath.COLD ? SoundEvents.PLAYER_HURT_FREEZE : SoundEvents.DRAGON_FIREBALL_EXPLODE,
                 SoundSource.PLAYERS, 1.0f, 0.8f);
@@ -172,7 +173,7 @@ final class Wave14Head {
         if (!Wave14Rules.wintersFury(p.getHealth(), p.getMaxHealth())) return 0f;
         float extra = Wave14Rules.furyExtra(1 + p.getRandom().nextInt(8), victim instanceof net.minecraft.world.entity.player.Player);
         Wave14Util.give(victim, 40, 0, "minecraft:slowness");
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
         return extra;
     }
 
@@ -182,7 +183,7 @@ final class Wave14Head {
         ServerPlayer p = c.player();
         Wave14Util.data(p).putLong(K_SIEGE, p.level().getGameTime() + Wave14Rules.SIEGE_TICKS);
         siegeApply(p);
-        Fx.burst(p.serverLevel(), p.position(), 0x8A93A6);
+        FxRelic.burst(p.serverLevel(), p.position(), 0x8A93A6);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.IRON_GOLEM_REPAIR, SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave14Util.say(p, "Siege Monster: you swell to a Large creature for three minutes. A single blow of 10 or more breaks your concentration.");
     }
@@ -320,8 +321,8 @@ final class Wave14Head {
         if (t instanceof ServerPlayer tp) Fx.heal(tp, amount);
         else t.heal(amount);
         Wave14Util.remove(t, "minecraft:poison", "minecraft:hunger", "minecraft:nausea", "tensura:infection", "tensura:fatal_poison", "tensura:magicule_poison");
-        RukhFx.spray(p.serverLevel(), Wave14Util.align(0xFF9AD5), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 18, 0.4, 0.5, 0.4, 0.02);
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() + 0.2, t.getZ(), 4, 0.3, 0.2, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, Wave14Util.align(0xFF9AD5), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 18, 0.4, 0.5, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.LIGHT, t.getX(), t.getY() + t.getBbHeight() + 0.2, t.getZ(), 4, 0.3, 0.2, 0.3, 0.0);
         Wave14Util.say(p, "Healing Touch: " + (t == p ? "you recover " : t.getName().getString() + " recovers ") + amount + " health and is cleansed. " + Wave14Util.pool(d, P_UNI, Wave14Rules.UNICORN_CHARGES, today, () -> 0).have() + " charges left.");
     }
 
@@ -333,7 +334,7 @@ final class Wave14Head {
             Wave14Util.give(e, 200, 0, "minecraft:glowing");
             n++;
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 24, 1.5, 0.8, 1.5, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 24, 1.5, 0.8, 1.5, 0.05);
         Wave14Util.tell(p, n == 0 ? "You sense no evil near." : "You sense " + n + (n == 1 ? " hostile presence." : " hostile presences."), ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -347,11 +348,11 @@ final class Wave14Head {
             BlockState st = sl.getBlockState(pos);
             if (sl.mayInteract(p, pos) && st.getBlock() instanceof BonemealableBlock bb && bb.isValidBonemealTarget(sl, pos, st)) {
                 if (bb.isBonemealSuccess(sl, sl.random, pos, st)) bb.performBonemeal(sl, sl.random, pos, st);
-                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 10, 0.4, 0.3, 0.4, 0.0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, FxTone.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 10, 0.4, 0.3, 0.4, 0.0);
                 return;
             }
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
         Wave14Util.tell(p, "Druidcraft: nothing here wants to grow.", ChatFormatting.GRAY);
     }
 
@@ -362,7 +363,7 @@ final class Wave14Head {
         for (LivingEntity e : Wave14Util.friendsAround(p, 8.0)) {
             if (Wave14Util.give(e, 1200, 0, "tensura:presence_concealment", "minecraft:invisibility")) n++;
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.5, p.getZ(), 20, 0.8, 0.4, 0.8, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.DARK, p.getX(), p.getY() + 0.5, p.getZ(), 20, 0.8, 0.4, 0.8, 0.01);
         Wave14Util.tell(p, "Pass without Trace: " + n + (n == 1 ? " walks" : " walk") + " unnoticed for a minute.", ChatFormatting.GRAY);
     }
 
@@ -372,7 +373,7 @@ final class Wave14Head {
         CompoundTag d = Wave14Util.data(p);
         int h = Wave14Rules.nextHair(d.getInt(K_HAIR));
         d.putInt(K_HAIR, h);
-        Fx.burst(p.serverLevel(), p.position().add(0, 0.8, 0), Wave14Rules.HAIR[h]);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 0.8, 0), Wave14Rules.HAIR[h]);
         Wave14Util.tell(p, "Your hair shimmers a new colour.", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -384,7 +385,7 @@ final class Wave14Head {
         double y = p.getEyeY() + 0.35;
         for (int i = 0; i < 3; i++) {
             double a = p.tickCount * 0.1 + i * 2.09;
-            RukhFx.spray(p.serverLevel(), Wave14Util.align(Wave14Rules.HAIR[h]), p.getX() + Math.cos(a) * 0.45, y, p.getZ() + Math.sin(a) * 0.45, 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, Wave14Util.align(Wave14Rules.HAIR[h]), p.getX() + Math.cos(a) * 0.45, y, p.getZ() + Math.sin(a) * 0.45, 1, 0, 0, 0, 0);
         }
     }
 
@@ -412,7 +413,7 @@ final class Wave14Head {
         Vec3 to = a.hit().getBoundingBox().getCenter();
         Wave14Util.trail(sl, p.getEyePosition().add(0, -0.2, 0), to, Wave14Util.dust(0x3A0A1A, 1.5f));
         Wave14Util.trail(sl, p.getEyePosition().add(0, -0.2, 0), to, Wave14Util.dust(0xB0182E, 0.9f));
-        RukhFx.spray(sl, RukhFx.Alignment.DARK, to.x, to.y, to.z, 12, 0.3, 0.3, 0.3, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, FxTone.DARK, to.x, to.y, to.z, 12, 0.3, 0.3, 0.3, 0.04);
         Fx.damage(p, a.hit(), dmg, "minecraft:wither");
         if (!saved) Wave14Util.give(a.hit(), 40, 0, "minecraft:wither");
         sl.playSound(null, p.blockPosition(), SoundEvents.WITHER_SHOOT, SoundSource.PLAYERS, 0.8f, 1.4f);
@@ -429,7 +430,7 @@ final class Wave14Head {
             n++;
         }
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WITHER_AMBIENT, SoundSource.PLAYERS, 1.2f, 0.6f);
-        Fx.ring(p.serverLevel(), p.position(), 3.0, 0x6A0F26);
+        FxRelic.ring(p.serverLevel(), p.position(), 3.0, 0x6A0F26);
         Wave14Util.tell(p, n == 0 ? "Your voice booms; nothing flinches." : n + " creatures flinch from your voice.", ChatFormatting.DARK_RED);
     }
 
@@ -458,7 +459,7 @@ final class Wave14Head {
         for (Relics.Worn w : Relics.wornList(p)) {
             if (!w.def().id().equals(relicId)) continue;
             Attune.release(p, w.stack());
-            Fx.burst(p.serverLevel(), p.position(), colour);
+            FxRelic.burst(p.serverLevel(), p.position(), colour);
             Wave14Util.say(p, message);
             return;
         }
@@ -468,7 +469,7 @@ final class Wave14Head {
     /** Feather Fall, as often as you like: twenty seconds of slow falling (and the circlet already takes the sting out of every fall). */
     static void featherFall(ActCtx c) {
         Wave14Util.give(c.player(), 400, 0, "minecraft:slow_falling");
-        RukhFx.spray(c.player().serverLevel(), RukhFx.Alignment.LIGHT, c.player().getX(), c.player().getY() + 0.2, c.player().getZ(), 8, 0.3, 0.1, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(c.player().serverLevel(), FxThemes.RELIC_WAVE_14, FxTone.LIGHT, c.player().getX(), c.player().getY() + 0.2, c.player().getZ(), 8, 0.3, 0.1, 0.3, 0.01);
     }
 
     /**
@@ -495,10 +496,10 @@ final class Wave14Head {
             Fx.damageHeavy(p, f, dmg, "minecraft:in_fire");
             if (!f.fireImmune()) f.setRemainingFireTicks(100);
         }
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 80, 1.2, 0.8, 1.2, 0.12);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 1.0, 0.6, 1.0, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 80, 1.2, 0.8, 1.2, 0.12);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_14, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 1.0, 0.6, 1.0, 0.0);
         sl.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0f, 1.2f);
-        Fx.ring(sl, p.position(), 3.0, 0xFF7A1C);
+        FxRelic.ring(sl, p.position(), 3.0, 0xFF7A1C);
         Wave14Util.say(p, "Up in Flames: you erupt in fire and rise again, ashen and weak. The circlet is spent for three days.");
         return true;
     }
@@ -522,7 +523,7 @@ final class Wave14Head {
         int power = Wave14Rules.conjurePower(extra);
         if (swift) finishConjure(p, power);
         else {
-            Fx.ring(p.serverLevel(), p.position(), 2.5, 0x6FE08A);
+            FxRelic.ring(p.serverLevel(), p.position(), 2.5, 0x6FE08A);
             Wave14Zones.later(p, Wave14Rules.CONJURE_RITUAL, Wave14Zones.KIND_CONJURE, power);
             Wave14Util.tell(p, "The circle is drawn: the fey comes in three seconds.", ChatFormatting.GREEN);
         }
@@ -537,7 +538,7 @@ final class Wave14Head {
             fey = Fx.summon(p, id, Wave14Rules.conjureLife(power));
             if (fey != null) break;
         }
-        Fx.ring(p.serverLevel(), p.position(), 2.0, 0x6FE08A);
+        FxRelic.ring(p.serverLevel(), p.position(), 2.0, 0x6FE08A);
         Wave14Util.tell(p, fey == null ? "The circle holds nothing: the fey did not come." : "A fey creature answers (strength " + power + ").", ChatFormatting.GREEN);
     }
 
@@ -584,7 +585,7 @@ final class Wave14Head {
         } catch (RuntimeException | LinkageError none) {
             ep = 0.0;
         }
-        RukhFx.spray(p.serverLevel(), Wave14Util.align(0x5CF0A0), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.4, 0.5, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_14, Wave14Util.align(0x5CF0A0), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.4, 0.5, 0.4, 0.02);
         Wave14Util.say(p, "Zone of Truth: " + t.getName().getString() + " has " + Math.round(t.getHealth()) + " of " + Math.round(t.getMaxHealth()) + " health and an existence of "
                 + Math.round(ep) + (t instanceof Mob m && m.getTarget() == p ? ", and it means you harm." : "."));
     }

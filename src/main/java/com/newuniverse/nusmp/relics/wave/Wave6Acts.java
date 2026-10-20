@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.relics.wave;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 6: the bodies of the actives of the ten armours and robes. Charges are paid only when the effect really happened (a teleport with nowhere
@@ -77,7 +77,7 @@ public final class Wave6Acts {
         p.setRemainingFireTicks(0);
         // the tabletop's "resistance to acid, cold, fire, lightning or thunder" becomes four Tensura resistances merged into one cast
         Fx.lendSkills(p, 240, Wave6Skills.FLAME_ATTACK_RESISTANCE, Wave6Skills.COLD_RESISTANCE, Wave6Skills.ELECTRICITY_RESISTANCE, Wave6Skills.WATER_ATTACK_RESISTANCE);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.6, SKY_BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.6, SKY_BLUE);
         skySpent(c, st, Wave6Tune.SKY_ABSORB_ELEMENTS, "Absorb Elements");
     }
 
@@ -88,7 +88,7 @@ public final class Wave6Acts {
         if (st == null) return;
         Fx.shield(p, 6f, 160);
         Fx.lendSkill(p, Wave6Skills.MULTILAYER_BARRIER, 200);                    // the spell's invisible plate of force, as Tensura's barrier skill
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
         skySpent(c, st, Wave6Tune.SKY_SHIELD, "Shield");
     }
 
@@ -99,8 +99,8 @@ public final class Wave6Acts {
         if (st == null) return;
         if (!Wave6Zones.addGlobe(p, p.position(), Wave6Tune.GLOBE_TICKS)) { Fx.say(p, "Too many globes stand already."); return; }
         Fx.lendSkills(p, Wave6Tune.GLOBE_TICKS, Wave6Skills.MAGIC_NULLIFICATION, Wave6Skills.MAGIC_JAMMING);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), Wave6Tune.GLOBE_RADIUS, SKY_BLUE);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), Wave6Tune.GLOBE_RADIUS, SKY_BLUE);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), SKY_BLUE);
         skySpent(c, st, Wave6Tune.SKY_GLOBE, "Globe of Invulnerability: spells cannot touch those inside");
     }
 
@@ -112,8 +112,8 @@ public final class Wave6Acts {
         Wave6Kit.give(p, "minecraft:resistance", Wave6Tune.INVULN_TICKS, 4, false);
         p.setRemainingFireTicks(0);
         Fx.lendSkills(p, Wave6Tune.INVULN_TICKS, Wave6Skills.PHYSICAL_ATTACK_NULLIFICATION, Wave6Skills.MAGIC_NULLIFICATION, Wave6Skills.PAIN_NULLIFICATION, Wave6Skills.PHYSICAL_ATTACK_RESISTANCE);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 2.2, SKY_BLUE);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFFFFF);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 2.2, SKY_BLUE);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFFFFF);
         skySpent(c, st, Wave6Tune.SKY_INVULN, "Invulnerability");
     }
 
@@ -146,8 +146,8 @@ public final class Wave6Acts {
         Wave6Events.slimeMods(p, true);
         // a body of slime shrugs off blows and pain: Tensura's physical, pierce and pain resistances for the whole form
         Fx.lendSkills(p, Wave6Tune.SLIME_TICKS, Wave6Skills.PHYSICAL_ATTACK_RESISTANCE, Wave6Skills.PIERCE_RESISTANCE, Wave6Skills.PAIN_RESISTANCE);
-        Fx.burst(p.serverLevel(), p.position().add(0, 0.6, 0), SLIME_GREEN);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.4, SLIME_GREEN);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 0.6, 0), SLIME_GREEN);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.4, SLIME_GREEN);
         int left = pay(c, Wave6Pools.SLIME, st, 1);
         left(p, "You and your gear melt into slime for 60 seconds. You cannot use items or cast. Use the armour again to end it", left, Wave6Pools.SLIME);
     }
@@ -159,7 +159,7 @@ public final class Wave6Acts {
         CompoundTag d = p.getPersistentData();
         boolean on = !d.getBoolean(K_DAWN_ON);
         d.putBoolean(K_DAWN_ON, on);
-        if (on) Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), Wave6Tune.DAWN_FLASH_RADIUS, DAWN_GOLD);
+        if (on) FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), Wave6Tune.DAWN_FLASH_RADIUS, DAWN_GOLD);
         Fx.say(p, on ? "The armour sheds the Eternal Light." : "The light dims.");
     }
 
@@ -176,9 +176,9 @@ public final class Wave6Acts {
     /** The flash itself: 6 radius, the close take it all and are blinded, the far take half; the undead are always caught and take half again. */
     public static void flash(ServerPlayer p) {
         ServerLevel sl = p.serverLevel();
-        Fx.ring(sl, p.position().add(0, 0.1, 0), Wave6Tune.DAWN_FLASH_RADIUS, DAWN_GOLD);
-        Fx.ring(sl, p.position().add(0, 1.0, 0), Wave6Tune.DAWN_CLOSE, 0xFFFFFF);
-        Fx.burst(sl, p.position().add(0, 1, 0), 0xFFF3C0);
+        FxRelic.ring(sl, p.position().add(0, 0.1, 0), Wave6Tune.DAWN_FLASH_RADIUS, DAWN_GOLD);
+        FxRelic.ring(sl, p.position().add(0, 1.0, 0), Wave6Tune.DAWN_CLOSE, 0xFFFFFF);
+        FxRelic.burst(sl, p.position().add(0, 1, 0), 0xFFF3C0);
         String light = Wave6Kit.damageType(sl, Wave6Skills.DMG_LIGHT, "minecraft:magic"), holy = Wave6Kit.damageType(sl, Wave6Skills.DMG_HOLY, light);
         for (LivingEntity t : Fx.foesAround(p, Wave6Tune.DAWN_FLASH_RADIUS)) {
             boolean undead = t.getType().is(EntityTypeTags.UNDEAD);
@@ -200,7 +200,7 @@ public final class Wave6Acts {
         boolean on = !d.getBoolean(K_FLY_ON);
         if (on && !Wave2Mana.has(p, Wave6Tune.FLIGHT_MANA_MIN)) { Fx.say(p, "Your magicules are too thin to leave the ground."); return; }
         d.putBoolean(K_FLY_ON, on);
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.5, 0xB070FF);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.5, 0xB070FF);
         Fx.say(p, on ? "Gravity lets go of you. Flight costs magicules." : "Gravity takes hold again.");
     }
 
@@ -228,8 +228,8 @@ public final class Wave6Acts {
         }
         Fx.lendSkill(p, Wave6Skills.SHADOW_MOTION, 200);                                 // the step is Tensura's shadow motion, lent for ten seconds
         Wave6Zones.addCloud(p, from);
-        Fx.burst(level, from.add(0, 1, 0), SHADOW_VIOLET);
-        Fx.burst(level, p.position().add(0, 1, 0), SHADOW_VIOLET);
+        FxRelic.burst(level, from.add(0, 1, 0), SHADOW_VIOLET);
+        FxRelic.burst(level, p.position().add(0, 1, 0), SHADOW_VIOLET);
         int left = pay(c, Wave6Pools.SHADOW, st, 1);
         left(p, "Shadow Step: a cloud of necrotic energy waits where you stood", left, Wave6Pools.SHADOW);
     }
@@ -267,7 +267,7 @@ public final class Wave6Acts {
         if (st == null) return;
         if (!body.test(p)) { Fx.say(p, what + ": nowhere safe to go."); return; }
         Fx.shield(p, 2f, 160);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), MIST_GREY);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), MIST_GREY);
         int left = pay(c, Wave6Pools.MIST, st, cost);
         left(p, what, left, Wave6Pools.MIST);
         if (left == 0 && Wave6Tune.mistMisfire(roll(p))) mistSlip(p);
@@ -359,7 +359,7 @@ public final class Wave6Acts {
         d.putLong(K_MAGE_UNTIL, now + Wave6Tune.MAGE_TICKS);
         Wave6Events.mageMods(p, true);
         Fx.lendSkill(p, Wave6Skills.MULTILAYER_BARRIER, 3600);                          // the spell's invisible mail, as Tensura's barrier skill for three minutes
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.3, MAGE_BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.3, MAGE_BLUE);
         Fx.say(p, "Mage Armor wraps you (" + (st.charges() - 1) + "/" + Wave6Pools.MAGE.max() + " stored).");
         return true;
     }
@@ -370,7 +370,7 @@ public final class Wave6Acts {
         Wave6Pool.State st = Wave6Kit.pool(stack(c), Wave6Pools.MAGE, p);
         if (st.charges() >= Wave6Pools.MAGE.max()) { Fx.say(p, "The robe already holds five Mage Armors."); return; }
         Wave6Kit.put(stack(c), Wave6Pools.MAGE, Wave6Pool.add(st, 1, Wave6Pools.MAGE.max()));
-        Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.0, MAGE_BLUE);
+        FxRelic.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.0, MAGE_BLUE);
         Fx.say(p, "A Mage Armor is stored in the robe (" + (st.charges() + 1) + "/" + Wave6Pools.MAGE.max() + ").");
     }
 
@@ -393,7 +393,7 @@ public final class Wave6Acts {
             if (m.getEffect().value().getCategory() == MobEffectCategory.HARMFUL && n++ < 16) best.removeEffect(m.getEffect());
         }
         if (best instanceof ServerPlayer ally) Fx.lendSkill(ally, Wave6Skills.ABNORMAL_CONDITION_RESISTANCE, 600);    // and a minute of Tensura's resistance to the next one
-        Fx.burst(p.serverLevel(), best.position().add(0, 1, 0), 0xC03030);
+        FxRelic.burst(p.serverLevel(), best.position().add(0, 1, 0), 0xC03030);
         int left = pay(c, Wave6Pools.ZAR, st, 1);
         left(p, "Your ally succeeds where they failed", left, Wave6Pools.ZAR);
     }

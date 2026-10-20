@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -25,6 +24,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: wave 21: the act bodies of the twelve weapons (the server side of every use, sneak-use and key). The core has already checked attunement, paid
@@ -72,7 +73,7 @@ final class Wave21Acts {
     }
 
     private static void beam(ServerLevel l, Vec3 from, Vec3 to, int rgb) {
-        RukhFx.stream(l, from, to, Fx.align(rgb), 4);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_21, from, to, FxRelic.tone(rgb), 4);
     }
 
     private static boolean has(ServerPlayer p, String flag) { return RelicFlags.has(p, flag); }
@@ -87,7 +88,7 @@ final class Wave21Acts {
         if (ctx.sneaking()) {
             Vec3 eye = p.getEyePosition(), end = aim(p, Wave21Rules.RIFT_RANGE, x -> false).end();
             beam(l, eye.add(p.getLookAngle()), end, PINK);
-            Fx.ring(l, end, 1.2, PINK);
+            FxRelic.ring(l, end, 1.2, PINK);
             int n = 0;
             List<LivingEntity> line = new ArrayList<>();
             for (LivingEntity e : l.getEntitiesOfClass(LivingEntity.class, new AABB(eye, end).inflate(2.0), x -> Wave0Util.fair(p, x)))
@@ -106,8 +107,8 @@ final class Wave21Acts {
             return;
         }
         LivingEntity t = a.target();
-        Fx.ring(l, p.position().add(0, 1.0, 0), 1.0, PINK);
-        Fx.ring(l, t.position().add(0, t.getBbHeight() * 0.5, 0), 1.0, PINK);
+        FxRelic.ring(l, p.position().add(0, 1.0, 0), 1.0, PINK);
+        FxRelic.ring(l, t.position().add(0, t.getBbHeight() * 0.5, 0), 1.0, PINK);
         beam(l, p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0), PINK);
         Wave0Util.extra(p, t, 9.0f, "minecraft:trident");
     }
@@ -116,10 +117,10 @@ final class Wave21Acts {
     static void dimensionDoor(ActCtx ctx) {
         ServerPlayer p = ctx.player();
         ServerLevel l = p.serverLevel();
-        Fx.ring(l, p.position(), 1.2, PINK);
+        FxRelic.ring(l, p.position(), 1.2, PINK);
         Fx.lendSkill(p, "tensura:spatial_motion", 200);
         boolean ok = Fx.teleportLook(p, 24.0);
-        if (ok) Fx.ring(l, p.position(), 1.2, GOLD);
+        if (ok) FxRelic.ring(l, p.position(), 1.2, GOLD);
         say(p, ok ? "You step through the rift." : "There is no safe place to step to.");
     }
 
@@ -144,7 +145,7 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         Wave21Rules.Season s = Wave21Rules.season(p.level().getDayTime() / 24000L);
         if (ctx.isOn("command_word")) {
-            Fx.burst(p.serverLevel(), p.position().add(0, 1.2, 0), Wave21Rules.seasonColour(s));
+            FxRelic.burst(p.serverLevel(), p.position().add(0, 1.2, 0), Wave21Rules.seasonColour(s));
             say(p, "The scimitar takes on the season: " + Wave21Rules.seasonName(s) + ". Every blow bites for 2d6 more. Use it again to dismiss it.");
         } else {
             say(p, "The seasonal edge is dismissed.");
@@ -179,7 +180,7 @@ final class Wave21Acts {
             if (pr.getOwner() != p) pr.setDeltaMovement(pr.getDeltaMovement().add(look.scale(1.2)));
         }
         beam(l, p.getEyePosition(), p.getEyePosition().add(look.scale(Wave21Rules.GUST_RANGE)), WIND);
-        Fx.burst(l, p.position().add(look.scale(3.0)).add(0, 1.0, 0), WIND);
+        FxRelic.burst(l, p.position().add(look.scale(3.0)).add(0, 1.0, 0), WIND);
     }
 
     /** Whirlwind Maneuver (2 charges, twice a day): five seconds in a storm of 4 blocks: foes are dragged in and cut, you cannot walk (the timer is in persistent data). */
@@ -187,7 +188,7 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         if (!glaive(p, ctx, 2)) return;
         p.getPersistentData().putLong(K_WHIRL, p.level().getGameTime() + Wave21Rules.WHIRL_TICKS);
-        Fx.ring(p.serverLevel(), p.position(), Wave21Rules.WHIRL_RADIUS, WIND);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave21Rules.WHIRL_RADIUS, WIND);
     }
 
     /** Become the Hurricane (5 charges): a steel wind strike: up to five foes within 9 blocks are cut in a row, and the wind carries you back to where you stood. */
@@ -201,7 +202,7 @@ final class Wave21Acts {
             if (n++ >= Wave21Rules.HURRICANE_TARGETS) break;
             Vec3 at = e.position().add(0, e.getBbHeight() * 0.5, 0);
             beam(l, from, at, WIND);
-            Fx.burst(l, at, WIND);
+            FxRelic.burst(l, at, WIND);
             Wave0Util.extra(p, e, 8.0f, "minecraft:player_attack");
             from = at;
         }
@@ -215,7 +216,7 @@ final class Wave21Acts {
         p.getPersistentData().putLong(K_CLIMB, p.level().getGameTime() + 200);
         Fx.lendSkill(p, "tensura:sticky_steel_thread", 200);
         Fx.dash(p, 3.0);
-        Fx.burst(p.serverLevel(), p.position().add(0, 0.2, 0), 0xBE2822);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 0.2, 0), 0xBE2822);
         say(p, "Your feet stick: you can climb walls for ten seconds.");
     }
 
@@ -232,7 +233,7 @@ final class Wave21Acts {
         Fx.addEffect(t, "minecraft:slowness", ticks, 4);
         Fx.addEffect(t, "minecraft:weakness", ticks, 0);
         beam(p.serverLevel(), p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0xE8E8E8);
-        Fx.burst(p.serverLevel(), t.position().add(0, 0.8, 0), 0xE8E8E8);
+        FxRelic.burst(p.serverLevel(), t.position().add(0, 0.8, 0), 0xE8E8E8);
     }
 
     // ================================================================ Stick of Youth
@@ -241,7 +242,7 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         int next = Wave21Rules.nextForm(Wave0Util.stackInt(ctx.stack(), K_FORM, 0));
         Wave0Util.edit(ctx.stack(), t -> t.putInt(K_FORM, next));
-        Fx.burst(p.serverLevel(), p.position().add(0, 1.2, 0), 0x70B040);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1.2, 0), 0x70B040);
         say(p, "The stick takes the form of a " + Wave21Rules.formName(next) + ".");
     }
 
@@ -265,13 +266,13 @@ final class Wave21Acts {
         if (a.target() == null) return;
         Wave0Util.extra(p, a.target(), 8.0f, "tensura:holy_damage");
         Fx.addEffect(a.target(), "minecraft:glowing", 200, 0);
-        Fx.burst(p.serverLevel(), a.end(), SUN);
+        FxRelic.burst(p.serverLevel(), a.end(), SUN);
     }
 
     private static void blast(ServerPlayer p, Vec3 at, double r, float fire, float radiant, int colour) {
         ServerLevel l = p.serverLevel();
-        Fx.ring(l, at, r, colour);
-        Fx.burst(l, at, colour);
+        FxRelic.ring(l, at, r, colour);
+        FxRelic.burst(l, at, colour);
         for (LivingEntity e : foesNear(p, at, r)) {
             Wave0Util.extra(p, e, fire, "minecraft:in_fire");
             if (radiant > 0f) Wave0Util.extra(p, e, radiant, "tensura:holy_damage");
@@ -294,7 +295,7 @@ final class Wave21Acts {
         if (!sun(p, ctx, 3)) return;
         Aim a = aim(p, 20.0, x -> Wave0Util.fair(p, x));
         blast(p, a.end(), 3.0, 14.0f, 10.0f, SUN);
-        for (int i = 1; i <= 4; i++) Fx.burst(p.serverLevel(), a.end().add(0, i, 0), ORANGE);
+        for (int i = 1; i <= 4; i++) FxRelic.burst(p.serverLevel(), a.end().add(0, i, 0), ORANGE);
     }
 
     /** Firebolt (the cantrip, no charge): one bolt of fire. */
@@ -333,7 +334,7 @@ final class Wave21Acts {
         if (best instanceof ServerPlayer sp) Fx.heal(sp, 4.0f);
         else best.heal(4.0f);
         Fx.addEffect(best, "minecraft:regeneration", 100, 1);
-        Fx.burst(p.serverLevel(), best.position().add(0, 1.0, 0), VIOLET);
+        FxRelic.burst(p.serverLevel(), best.position().add(0, 1.0, 0), VIOLET);
     }
 
     /** Speak With Dead: for ten seconds every undead creature within 24 blocks glows, and you are told how many there are. */
@@ -345,7 +346,7 @@ final class Wave21Acts {
             Fx.addEffect(e, "minecraft:glowing", 200, 0);
         }
         Fx.addEffect(p, "minecraft:night_vision", 200, 0);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1.0, 0), VIOLET);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1.0, 0), VIOLET);
         say(p, n == 0 ? "The dead are silent here." : "The dead whisper: " + n + " of them stir nearby.");
     }
 
@@ -416,7 +417,7 @@ final class Wave21Acts {
             if (n++ >= 6) break;
             Wave0Util.extra(p, e, 10.0f, "minecraft:lightning_bolt");
         }
-        Fx.burst(l, end, 0x78DCFF);
+        FxRelic.burst(l, end, 0x78DCFF);
         p.getPersistentData().putLong(K_HEADLESS, now + Wave21Rules.HEADLESS_TICKS);
         say(p, "The head flies: the hammer is headless for eight seconds (a poor club) until you recall it.");
     }
@@ -426,7 +427,7 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         if (p.getPersistentData().getLong(K_HEADLESS) <= p.level().getGameTime()) return;
         p.getPersistentData().remove(K_HEADLESS);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1.2, 0), 0x78DCFF);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1.2, 0), 0x78DCFF);
         for (LivingEntity e : foesNear(p, p.position(), 5.0)) Wave0Util.extra(p, e, 5.0f, "minecraft:lightning_bolt");
         say(p, "The head slams back onto the handle.");
     }
@@ -435,7 +436,7 @@ final class Wave21Acts {
     /** Quiet Please: the book slams shut: foes within 4 blocks are hurt, slowed and silenced (players for a second). */
     static void quietPlease(ActCtx ctx) {
         ServerPlayer p = ctx.player();
-        Fx.ring(p.serverLevel(), p.position(), 4.0, 0x90F0E0);
+        FxRelic.ring(p.serverLevel(), p.position(), 4.0, 0x90F0E0);
         for (LivingEntity e : foesNear(p, p.position(), 4.0)) {
             Wave0Util.extra(p, e, 7.0f, "minecraft:player_attack");
             int t = e instanceof Player ? 40 : 120;
@@ -450,8 +451,8 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         if (!has(p, Wave21Rules.F_TIME)) return;
         ServerLevel l = p.serverLevel();
-        Fx.ring(l, p.position(), 6.0, ORANGE);
-        Fx.ring(l, p.position(), Wave21Rules.STOP_RADIUS, 0xFFD0A0);
+        FxRelic.ring(l, p.position(), 6.0, ORANGE);
+        FxRelic.ring(l, p.position(), Wave21Rules.STOP_RADIUS, 0xFFD0A0);
         for (LivingEntity e : foesNear(p, p.position(), Wave21Rules.STOP_RADIUS)) {
             int t = e instanceof Player ? 60 : Wave21Rules.STOP_TICKS;
             Fx.addEffect(e, "minecraft:slowness", t, 9);
@@ -485,8 +486,8 @@ final class Wave21Acts {
         ServerPlayer p = ctx.player();
         ServerLevel l = p.serverLevel();
         Vec3 look = p.getLookAngle();
-        Fx.ring(l, p.position().add(look.x * 3.0, 0, look.z * 3.0), 3.0, RED);
-        Fx.burst(l, p.position().add(look.x * 2.0, 0.5, look.z * 2.0), RED);
+        FxRelic.ring(l, p.position().add(look.x * 3.0, 0, look.z * 3.0), 3.0, RED);
+        FxRelic.burst(l, p.position().add(look.x * 2.0, 0.5, look.z * 2.0), RED);
         int n = 0;
         for (LivingEntity e : foesNear(p, p.position(), Wave21Rules.CONE_RANGE)) {
             Vec3 d = e.position().subtract(p.position());
@@ -501,7 +502,7 @@ final class Wave21Acts {
     /** Battle Cries: the previous owners shout: every foe within 6 blocks may be frightened. */
     static void battleCries(ActCtx ctx) {
         ServerPlayer p = ctx.player();
-        Fx.ring(p.serverLevel(), p.position(), 6.0, RED);
+        FxRelic.ring(p.serverLevel(), p.position(), 6.0, RED);
         for (LivingEntity e : foesNear(p, p.position(), 6.0)) frighten(p, e, 0.0);
     }
 }

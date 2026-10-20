@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -53,6 +52,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 2's game-bus handlers and the little bit of state they share with the abilities (Wave2Acts). Everything here is server side, keyed
@@ -209,7 +211,7 @@ final class Wave2Events {
             if (n++ >= 6) break;
             Fx.damage(p, t, 1.0f, "minecraft:magic");
             Fx.addEffect(t, "tensura:holy_damage", 30, 0);                      // Tensura's own holy burn on top, where it exists
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.6), t.getZ(), 3, 0.2, 0.3, 0.2, 0.01);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, t.getX(), t.getY(0.6), t.getZ(), 3, 0.2, 0.3, 0.2, 0.01);
         }
     }
 
@@ -371,7 +373,7 @@ final class Wave2Events {
             Fx.lendSkills(p, 600, "tensura:self_regeneration", "tensura:pain_resistance");   // the spirit licks the wounds: regeneration and no pain for half a minute
             ServerLevel lv = p.serverLevel();
             lv.playSound(null, p.blockPosition(), net.minecraft.sounds.SoundEvents.CAT_AMBIENT, net.minecraft.sounds.SoundSource.PLAYERS, 1.2f, 0.7f);
-            Fx.burst(lv, p.position().add(0, 1, 0), 0xFF4C9A);
+            FxRelic.burst(lv, p.position().add(0, 1, 0), 0xFF4C9A);
             if (after.justSpent(before)) {
                 Fx.say(p, "Meow. The ninth life is gone: the cat spirit flies off and you are a cat. (Five minutes; it will come back for a Nether Star.)");
                 Fx.addEffect(p, "minecraft:weakness", 6000, 2);
@@ -439,18 +441,18 @@ final class Wave2Events {
             if (b[0] > now) {
                 e.setAmount(e.getAmount() + (float) Wave2Rules.smiteBonus(1 + att.getRandom().nextInt(8), evil(victim)));
                 b[0] = 0;
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY(0.6), victim.getZ(), 8, 0.25, 0.4, 0.25, 0.04);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, victim.getX(), victim.getY(0.6), victim.getZ(), 8, 0.25, 0.4, 0.25, 0.04);
                 if (evil(victim)) Fx.addEffect(victim, "tensura:holy_damage", 40, 0);
             }
             b[1] = now + Wave2Rules.BOOST_TICKS;
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.DARK, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
         } else {
             if (b[1] > now) {
                 e.setAmount(e.getAmount() * (float) Wave2Rules.SPELL_BOOST);
                 b[1] = 0;
             }
             b[0] = now + Wave2Rules.BOOST_TICKS;
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
         }
     }
 

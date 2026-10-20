@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,6 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 15, worn things that are not bracers: the Boots of Burglery (a stride through walls), and the nine cloaks, capes and mantles. The ability code
@@ -48,8 +49,8 @@ final class Wave15Wear {
             Wave15Util.tell(p, c.sneaking() ? "No room behind that wall." : "No room to step into.", ChatFormatting.GRAY);
             return;
         }
-        Fx.burst(lv, from, 0xCFE8FF);
-        Fx.burst(lv, p.position(), 0xCFE8FF);
+        FxRelic.burst(lv, from, 0xCFE8FF);
+        FxRelic.burst(lv, p.position(), 0xCFE8FF);
         lv.playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.5f, 1.5f);
     }
 
@@ -121,7 +122,7 @@ final class Wave15Wear {
         Fx.heal(p, sky ? 12f : 6f);
         Wave15Util.giveQuiet(p, 100, 0, "minecraft:regeneration");
         Wave15Util.remove(p, "minecraft:weakness", "minecraft:mining_fatigue");
-        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), sky ? 24 : 8, 0.6, 0.8, 0.6, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), sky ? 24 : 8, 0.6, 0.8, 0.6, 0.02);
         Wave15Util.tell(p, sky ? "The towel and the stars: twice the rest." : "A rest on the towel. (Under an open night sky it would heal twice as much.)", ChatFormatting.GOLD);
     }
 
@@ -131,7 +132,7 @@ final class Wave15Wear {
         p.clearFire();
         p.setTicksFrozen(0);
         Wave15Util.remove(p, "tensura:chill", "tensura:frost");
-        RukhFx.spray(c.player().serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(c.player().serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.02);
         Wave15Util.tell(p, "Dry. \"42!\"", ChatFormatting.GOLD);
     }
 
@@ -141,7 +142,7 @@ final class Wave15Wear {
         Wave15Util.Aim a = Wave15Util.aim(p, 16.0);
         Vec3 at = a.hit() != null ? a.hit().position().add(0, a.hit().getBbHeight() * 0.6, 0) : a.end();
         Wave15Field.release(p, a.hit(), at);
-        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xF2C230), p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.4, 0.5, 0.1);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0xF2C230), p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.4, 0.5, 0.1);
         Wave15Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.4, 0), at, Wave15Util.dust(0x1E1C1A, 1.0f));
         Wave15Util.tell(p, "The cape flaps open: bees!", ChatFormatting.YELLOW);
     }
@@ -158,7 +159,7 @@ final class Wave15Wear {
         Wave15Util.giveQuiet(p, Wave15Rules.FLURRY_TICKS, 0, "minecraft:speed");
         for (LivingEntity t : Fx.foesAround(p, 3.5)) Wave15Util.give(t, 60, 0, "tensura:chill", "minecraft:slowness");
         ServerLevel lv = p.serverLevel();
-        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.8, 0.7, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.8, 0.7, 0.05);
         Wave15Util.tell(p, "Gone in a flurry: nothing catches you for a while.", ChatFormatting.AQUA);
     }
 
@@ -174,7 +175,7 @@ final class Wave15Wear {
         CompoundTag d = Wave15Util.data(p);
         d.putLong("evade_until", p.level().getGameTime() + Wave15Rules.BLUR_TICKS);
         d.putString("evade_kind", "blur");
-        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xE08A2A), p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.9, 0.7, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0xE08A2A), p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.9, 0.7, 0.05);
         Wave15Util.tell(p, "The leaves swirl round you, blurring you for a minute.", ChatFormatting.GOLD);
     }
 
@@ -183,8 +184,8 @@ final class Wave15Wear {
         CompoundTag d = Wave15Util.peek(p);
         if (d == null || p.level().getGameTime() >= d.getLong("evade_until")) return;
         ServerLevel lv = p.serverLevel();
-        if ("flurry".equals(d.getString("evade_kind"))) RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.5, 0.7, 0.5, 0.03);
-        else RukhFx.spray(lv, Wave15Util.align(0xC8601E), p.getX(), p.getY() + 1.0, p.getZ(), 5, 0.5, 0.7, 0.5, 0.03);
+        if ("flurry".equals(d.getString("evade_kind"))) com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.5, 0.7, 0.5, 0.03);
+        else com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, Wave15Util.align(0xC8601E), p.getX(), p.getY() + 1.0, p.getZ(), 5, 0.5, 0.7, 0.5, 0.03);
     }
 
     // ================================================================ Darkened Cloak of Elvenkind
@@ -243,7 +244,7 @@ final class Wave15Wear {
         Wave15Util.data(p).putLong("elven_trace_until", p.level().getGameTime() + 1200);
         for (LivingEntity f : Wave15Util.near(p.serverLevel(), p.position(), 10, e -> Wave15Util.friend(p, e))) Wave15Util.give(f, 1200, 0, "tensura:presence_concealment");
         Wave15Util.giveQuiet(p, 1200, 0, "tensura:presence_concealment");
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.3, p.getZ(), 20, 0.8, 0.2, 0.8, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.DARK, p.getX(), p.getY() + 0.3, p.getZ(), 20, 0.8, 0.2, 0.8, 0.01);
     }
 
     /** Darkness (2 charges): a cloud of dark round you; foes within eight blocks cannot see, you can. */
@@ -253,8 +254,8 @@ final class Wave15Wear {
         ServerLevel lv = p.serverLevel();
         for (LivingEntity t : Fx.foesAround(p, 8.0)) Wave15Util.give(t, 120, 0, "minecraft:blindness");
         Wave15Util.giveQuiet(p, 600, 0, "minecraft:night_vision");
-        Fx.ring(lv, p.position(), 8.0, 0x20243A);
-        RukhFx.spray(lv, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 3.0, 0.8, 3.0, 0.01);
+        FxRelic.ring(lv, p.position(), 8.0, 0x20243A);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 3.0, 0.8, 3.0, 0.01);
     }
 
     /** Greater Invisibility (3 charges): half a minute unseen; lowering the hood ends it. */
@@ -263,7 +264,7 @@ final class Wave15Wear {
         if (!spendCharges(p, Wave15Rules.INVISIBILITY_COST)) return;
         Wave15Util.data(p).putBoolean("elven_inv", true);
         Wave15Util.giveQuiet(p, 600, 0, "minecraft:invisibility");
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.8, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.8, 0.4, 0.02);
     }
 
     /** Hood up keeps the Tensura stealth effect on you; the cloak's wearer sneaks better. */
@@ -310,7 +311,7 @@ final class Wave15Wear {
         Wave15Util.give(t, 80, 5, "minecraft:slowness");
         Wave15Util.give(t, 80, 0, "minecraft:weakness");
         Wave15Util.give(t, 40, 0, "minecraft:blindness");
-        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xB02A2A), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0xB02A2A), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
     }
 
     /** Hover: flight while the toggle is on (and the cloak is worn); taken away again when it is not. Creative and spectator players are left alone. */
@@ -356,9 +357,9 @@ final class Wave15Wear {
             m.setTarget(null);
             m.getPersistentData().putUUID("w15_calm_who", p.getUUID());
             m.getPersistentData().putLong("w15_calm_until", until);
-            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, m.getX(), m.getY() + m.getBbHeight() + 0.2, m.getZ(), 2, 0.2, 0.1, 0.2, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, m.getX(), m.getY() + m.getBbHeight() + 0.2, m.getZ(), 2, 0.2, 0.1, 0.2, 0.0);
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.7, p.getZ(), 10, 0.3, 0.2, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.7, p.getZ(), 10, 0.3, 0.2, 0.3, 0.01);
         Wave15Util.tell(p, n > 0 ? "A smouldering look: " + n + " lose interest." : "A smouldering look... nobody was impressed.", ChatFormatting.GOLD);
     }
 
@@ -375,7 +376,7 @@ final class Wave15Wear {
         int waves = p.getRandom().nextInt(20) == 19 ? 2 : 1;
         int healed = 0;
         for (int w = 0; w < waves; w++) healed = Math.max(healed, wave(p, 6f + 1 + p.getRandom().nextInt(4)));
-        Fx.ring(p.serverLevel(), p.position(), 6.0, 0xFFF2B0);
+        FxRelic.ring(p.serverLevel(), p.position(), 6.0, 0xFFF2B0);
         Wave15Util.tell(p, healed == 0 ? "No one near needs you." : (waves == 2 ? "A natural 20: the mantle heals twice! " : "") + "The mantle heals " + healed + " (not you).", ChatFormatting.WHITE);
     }
 
@@ -385,7 +386,7 @@ final class Wave15Wear {
             if (n >= 12) break;
             if (f instanceof ServerPlayer sp) Fx.heal(sp, amount);
             else f.heal(amount);
-            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, f.getX(), f.getY() + f.getBbHeight() + 0.2, f.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, f.getX(), f.getY() + f.getBbHeight() + 0.2, f.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
             n++;
         }
         return n;

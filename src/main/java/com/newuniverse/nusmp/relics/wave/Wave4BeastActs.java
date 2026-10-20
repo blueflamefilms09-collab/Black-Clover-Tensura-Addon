@@ -16,6 +16,7 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the Beast Masters Amulet. Two acts: Store (the creature under your crosshair, within 6 blocks, goes into the amulet) and
@@ -85,7 +86,7 @@ final class Wave4BeastActs {
         });
         Vec3 at = t.position().add(0, t.getBbHeight() * 0.5, 0);
         t.discard();
-        Fx.burst(lv, at, GREY);
+        FxRelic.burst(lv, at, GREY);
         Fx.say(p, row.getString("n") + " is drawn into the amulet (" + (used + w) + "/" + Wave4Beasts.CAPACITY + ").");
     }
 
@@ -121,7 +122,7 @@ final class Wave4BeastActs {
             if (!l.isEmpty()) l.remove(l.size() - 1);
             x.put(Wave4Store.K_BEASTS, l);
         });
-        Fx.burst(lv, e.position().add(0, e.getBbHeight() * 0.5, 0), GREY);
+        FxRelic.burst(lv, e.position().add(0, e.getBbHeight() * 0.5, 0), GREY);
         Fx.say(p, name + " steps out of the amulet.");
     }
 }

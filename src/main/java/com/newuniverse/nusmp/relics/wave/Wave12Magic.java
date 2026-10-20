@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -8,7 +7,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.UseRules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +20,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The enchanted blades of wave 12: the Warmage's Longsword (five missiles a day), the Sword Crystal (a crystal arm, four charges, moonlit
@@ -68,8 +69,8 @@ final class Wave12Magic {
             LivingEntity t = targets.get(i);
             float dmg = 0f;
             for (int k = 0; k < share[i]; k++) dmg += Wave12Rules.missileDamage(1 + p.getRandom().nextInt(4));   // each 1d4 + 1 force
-            Wave5Aim.beam(l, from, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 14);
-            Wave5Aim.puff(l, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6 + 2 * share[i], 0.3);
+            Wave5Aim.beam(l, from, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.DARK), 14);
+            Wave5Aim.puff(l, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 6 + 2 * share[i], 0.3);
             Wave0Util.extra(p, t, dmg, "minecraft:magic");                              // one blow per foe: the core caps it for players
         }
         Wave5Aim.sound(l, p.position(), SoundEvents.EVOKER_CAST_SPELL, 0.8f, 1.5f);
@@ -106,8 +107,8 @@ final class Wave12Magic {
         d.putFloat("crystal_hp", Wave12Rules.CRYSTAL_HP);
         if (p.getHealth() > 3f) p.hurt(p.damageSources().generic(), 1.0f);               // the prick of the finger
         ServerLevel l = p.serverLevel();
-        Fx.burst(l, p.position(), 0x7FD8FF);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24, 0.5);
+        FxRelic.burst(l, p.position(), 0x7FD8FF);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 24, 0.5);
         Wave5Aim.sound(l, p.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 0.7f);
         Wave5Aim.msg(p, "Stay cool, Bird Boy. Crystal arm: " + Math.round(Wave12Rules.CRYSTAL_HP) + " HP, " + (charges - 1) + "/" + Wave12Rules.CRYSTAL_CHARGES + " charges left.", ChatFormatting.AQUA);
     }
@@ -130,11 +131,11 @@ final class Wave12Magic {
             float back = Wave12Rules.shatterBackfire(1 + p.getRandom().nextInt(4), 1 + p.getRandom().nextInt(4));
             float safe = Wave12Rules.safeBackfire(back, p.getHealth());
             if (safe > 0f) p.hurt(p.damageSources().freeze(), safe);                       // 2d4 of cold, never a killing one
-            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40, 0.8);
+            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 40, 0.8);
             Wave5Aim.sound(l, p.position(), SoundEvents.GLASS_BREAK, 1.0f, 0.8f);
             Wave5Aim.msg(p, "The crystal arm shatters!", ChatFormatting.RED);
         } else {
-            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12, 0.4);
+            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 12, 0.4);
             Wave5Aim.msg(p, "The crystal melts away.", ChatFormatting.AQUA);
         }
     }
@@ -144,7 +145,7 @@ final class Wave12Magic {
         Wave0Util.extra(p, t, 3.0f, "minecraft:freeze");
         Fx.addEffect(t, "tensura:frost", 60, 0);
         Fx.addEffect(t, "minecraft:slowness", 40, 0);
-        Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.3);
+        Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 10, 0.3);
         CompoundTag d = Wave12Data.player(p);
         float hp = Wave12Rules.crystalAfterBlow(d.getFloat("crystal_hp"));
         d.putFloat("crystal_hp", hp);
@@ -169,7 +170,7 @@ final class Wave12Magic {
         st.putInt("charges", charges + 1);
         st.putLong("night", night);
         Wave12Data.save(s, st);
-        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.4);
+        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 10, 0.4);
         Wave5Aim.msg(p, "The Sword Crystal drinks the moonlight: " + (charges + 1) + "/" + Wave12Rules.CRYSTAL_CHARGES + " charges.", ChatFormatting.AQUA);
     }
 
@@ -199,11 +200,11 @@ final class Wave12Magic {
         ServerLevel l = p.serverLevel();
         Vec3 from = Wave5Aim.muzzle(p);
         for (LivingEntity t : hit) {
-            Wave5Aim.beam(l, from, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16);
+            Wave5Aim.beam(l, from, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 16);
             Wave0Util.extra(p, t, 5.0f, "minecraft:freeze");
             Fx.addEffect(t, "minecraft:slowness", 60, 1);
             Fx.addEffect(t, "tensura:frost", 60, 0);
-            Wave5Aim.puff(l, t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.3);
+            Wave5Aim.puff(l, t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 10, 0.3);
         }
         setDry(s, true);
         Wave5Aim.sound(l, p.position(), SoundEvents.PLAYER_SPLASH, 1.0f, 0.8f);
@@ -226,7 +227,7 @@ final class Wave12Magic {
             Wave5Aim.msg(p, "The bottle fills from the water.", ChatFormatting.AQUA);
             return;
         }
-        Fx.ring(l, p.position(), 5.0, 0x3FB8E0);
+        FxRelic.ring(l, p.position(), 5.0, 0x3FB8E0);
         for (LivingEntity t : Fx.foesAround(p, 5.0)) {
             Wave0Util.extra(p, t, 2.0f, "minecraft:drown");
             t.knockback(1.1, p.getX() - t.getX(), p.getZ() - t.getZ());
@@ -256,7 +257,7 @@ final class Wave12Magic {
         if (Wave12Rules.critical(d20)) {
             Fx.addEffect(t, "minecraft:poison", 400, 0);                                // "poisoned": a long poison and a weakened foe
             Fx.addEffect(t, "minecraft:weakness", 400, 0);
-            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 14, 0.4);
+            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 14, 0.4);
             Wave5Aim.msg(p, "Natural 20: a deep stab, and the poison takes hold.", ChatFormatting.GREEN);
             return amount * 2.0f;
         }
@@ -267,8 +268,8 @@ final class Wave12Magic {
     /** Natural 1: a burst of spores round the wielder; everyone in melee range is poisoned and blinded for a moment. */
     private static void spores(ServerPlayer p) {
         ServerLevel l = p.serverLevel();
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40, 1.0);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20, 1.0);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 40, 1.0);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 20, 1.0);
         Fx.addEffect(p, "minecraft:poison", 40, 0);
         Fx.addEffect(p, "minecraft:blindness", 30, 0);
         for (LivingEntity t : Fx.foesAround(p, 2.0)) {
@@ -293,8 +294,8 @@ final class Wave12Magic {
         d.putLong("dagger_at", now + Wave12Rules.BLAST_DELAY);
         ServerLevel l = p.serverLevel();
         Vec3 at = dead.position().add(0, dead.getBbHeight() * 0.5, 0);
-        Wave5Aim.puff(l, at, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 30, 0.5);                              // the body starts to crumble
-        Wave5Aim.puff(l, at, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 14, 0.4);
+        Wave5Aim.puff(l, at, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.DARK), 30, 0.5);                              // the body starts to crumble
+        Wave5Aim.puff(l, at, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.DARK), 14, 0.4);
         java.util.UUID who = p.getUUID();
         SpellRuntime.later(l, Wave12Rules.BLAST_DELAY, () -> blast(l, who, at));
     }
@@ -302,9 +303,9 @@ final class Wave12Magic {
     private static void blast(ServerLevel l, java.util.UUID who, Vec3 at) {
         ServerPlayer p = l.getServer().getPlayerList().getPlayer(who);
         if (p == null || !p.isAlive() || p.level() != l) return;
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 3, 0.5, 0.4, 0.5, 0.0);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 40, 1.2, 0.6, 1.2, 0.08);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 10, 1.0, 0.4, 1.0, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_12, FxTone.LIGHT, at.x, at.y, at.z, 3, 0.5, 0.4, 0.5, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_12, FxTone.LIGHT, at.x, at.y, at.z, 40, 1.2, 0.6, 1.2, 0.08);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_12, FxTone.LIGHT, at.x, at.y, at.z, 10, 1.0, 0.4, 1.0, 0.0);
         Wave5Aim.sound(l, at, SoundEvents.GENERIC_EXPLODE.value(), 0.7f, 1.3f);
         for (LivingEntity t : Wave5Aim.foesNear(p, at, Wave12Rules.BLAST_RADIUS)) {
             double dist = t.getBoundingBox().getCenter().distanceTo(at);

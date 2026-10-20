@@ -1,9 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 17: the Crystal Dragon's illusory dragon. It is not an entity: for eight seconds it is drawn in dust and sparks over the player, its head follows
@@ -84,22 +84,22 @@ final class Wave17Dragon {
         Vec3 head = p.getEyePosition().add(f.scale(5.0)).add(up.scale(0.5));
         var teal = Wave17Kit.align(TEAL);
         var deep = Wave17Kit.align(DEEP);
-        RukhFx.spray(level, teal, head.x, head.y, head.z, 3, 0.25, 0.2, 0.25, 0.0);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, head.x + r.x * 0.3, head.y + 0.15, head.z + r.z * 0.3, 1, 0, 0, 0, 0.0);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, head.x - r.x * 0.3, head.y + 0.15, head.z - r.z * 0.3, 1, 0, 0, 0, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, teal, head.x, head.y, head.z, 3, 0.25, 0.2, 0.25, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, FxTone.LIGHT, head.x + r.x * 0.3, head.y + 0.15, head.z + r.z * 0.3, 1, 0, 0, 0, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, FxTone.LIGHT, head.x - r.x * 0.3, head.y + 0.15, head.z - r.z * 0.3, 1, 0, 0, 0, 0.0);
         double wave = age * 0.3;
         Vec3 wingRoot = head;
         for (int i = 1; i <= 11; i++) {
             double t = i / 11.0;
             Vec3 at = head.subtract(f.scale(t * 9.0)).add(r.scale(Math.sin(t * 5.0 + wave) * 1.2)).add(up.scale(0.4 + Math.cos(t * 4.0 + wave) * 0.4 - t * 0.6));
-            RukhFx.spray(level, i % 3 == 0 ? teal : deep, at.x, at.y, at.z, 2, 0.12, 0.12, 0.12, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, i % 3 == 0 ? teal : deep, at.x, at.y, at.z, 2, 0.12, 0.12, 0.12, 0.0);
             if (i == 3) wingRoot = at;
         }
         double flap = Math.sin(age * 0.45) * 0.5;
         for (int side = -1; side <= 1; side += 2) {
             for (int j = 1; j <= 7; j++) {
                 Vec3 at = wingRoot.add(r.scale(side * j * 0.75)).add(up.scale(j * (0.38 + flap * 0.4) - j * j * 0.035)).subtract(f.scale(j * 0.35));
-                RukhFx.spray(level, deep, at.x, at.y, at.z, 1, 0.05, 0.05, 0.05, 0.0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, deep, at.x, at.y, at.z, 1, 0.05, 0.05, 0.05, 0.0);
             }
         }
     }
@@ -114,7 +114,7 @@ final class Wave17Dragon {
             double dist = 0.5 + p.getRandom().nextDouble() * REACH;
             Vec3 dir = f.add(p.getRandom().nextGaussian() * 0.16, p.getRandom().nextGaussian() * 0.16, p.getRandom().nextGaussian() * 0.16).normalize();
             Vec3 at = head.add(dir.scale(dist));
-            RukhFx.spray(level, k % 2 == 0 ? RukhFx.Alignment.DARK : shade, at.x, at.y, at.z, 1, 0.05, 0.05, 0.05, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, k % 2 == 0 ? FxTone.DARK : shade, at.x, at.y, at.z, 1, 0.05, 0.05, 0.05, 0.0);
         }
         level.playSound(null, head.x, head.y, head.z, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 0.7f, 1.5f);
         for (LivingEntity t : Fx.foesAround(p, REACH + 3.0)) {

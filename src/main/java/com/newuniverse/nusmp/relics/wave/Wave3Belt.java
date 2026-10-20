@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.relics.wave;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +15,9 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 3, the Alchemist's Belt: six vials (red healing, blue shield, green regeneration, yellow enlightening, purple love, black undeath), each
@@ -30,7 +32,7 @@ final class Wave3Belt {
 
     private static void puff(ServerPlayer p, int rgb) {
         ServerLevel sl = p.serverLevel();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.relics.Fx.align(rgb), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.6, 0.4, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxRelic.tone(rgb), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.6, 0.4, 0.04);
         sl.playSound(null, p.blockPosition(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0f, 1.2f);
     }
 
@@ -84,7 +86,7 @@ final class Wave3Belt {
         Mob m = (Mob) a.hit();
         if (m instanceof Animal an) an.setInLove(p);
         Wave3Field.charm(m, p, 1800, false);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, m.getX(), m.getEyeY() + 0.3, m.getZ(), 10, 0.4, 0.3, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, m.getX(), m.getEyeY() + 0.3, m.getZ(), 10, 0.4, 0.3, 0.4, 0.02);
         puff(p, 0xA050E0);
     }
 
@@ -100,7 +102,7 @@ final class Wave3Belt {
         Wave3Util.giveQuiet(p, UNDEAD_TICKS, 0, "minecraft:water_breathing");
         Wave3Util.remove(p, "minecraft:poison");
         Fx.lendSkill(p, "tensura:poison_resistance", UNDEAD_TICKS);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.7, 0.4, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_3, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.7, 0.4, 0.04);
         puff(p, 0x2A2230);
         Wave3Util.tell(p, "Undeath: you need neither air nor food for three minutes, and death may pass you by once.", ChatFormatting.DARK_PURPLE);
     }
@@ -135,7 +137,7 @@ final class Wave3Belt {
         e.setAmount(cut);
         d.putBoolean(K_FORT, true);
         Vec3 at = p.position();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y + 1.0, at.z, 24, 0.4, 0.7, 0.4, 0.06);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_3, FxTone.DARK, at.x, at.y + 1.0, at.z, 24, 0.4, 0.7, 0.4, 0.06);
         Wave3Util.say(p, "Undead Fortitude: the blow should have killed you; you stay on your feet.");
     }
 }

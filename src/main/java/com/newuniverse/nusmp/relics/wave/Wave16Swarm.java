@@ -1,11 +1,9 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 16: the creatures the charms keep. Snuggles (the Doll's cat), the Jar's bats and the three Weaverlings. Each owner has at most one of each
@@ -148,7 +148,7 @@ final class Wave16Swarm {
                 }
                 Fx.damage(owner, target, Wave16Tune.BAT_BITE * alive.size(), "minecraft:mob_attack");
                 Vec3 at = target.position().add(0, target.getBbHeight() * 0.6, 0);
-                RukhFx.spray(lv, RukhFx.Alignment.DARK, at.x, at.y, at.z, 10, 0.4, 0.3, 0.4, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_16, FxTone.DARK, at.x, at.y, at.z, 10, 0.4, 0.3, 0.4, 0.02);
             } else {
                 for (Bat b : alive) if (b.distanceToSqr(owner) > 144) b.teleportTo(owner.getX(), owner.getY() + 1.6, owner.getZ());
             }

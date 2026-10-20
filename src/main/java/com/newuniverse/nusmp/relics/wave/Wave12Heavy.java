@@ -1,13 +1,11 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The two heavy weapons of wave 12.
@@ -64,7 +64,7 @@ final class Wave12Heavy {
         Fx.addEffect(p, "minecraft:slowness", 60, 2);                    // "only half your movement while you charge it"
         ServerLevel l = p.serverLevel();
         Wave5Aim.sound(l, p.position(), SoundEvents.IRON_GOLEM_ATTACK, 0.8f, 0.6f + 0.15f * n);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6 * n, 0.5);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 6 * n, 0.5);
         Wave5Aim.msg(p, "Jawblade charge " + n + "/" + Wave12Rules.JAW_MAX_CHARGES + ": the next blow hits " + Math.round(Wave12Rules.jawMultiplier(n) * 100) + "% hard.", ChatFormatting.GOLD);
     }
 
@@ -89,7 +89,7 @@ final class Wave12Heavy {
         victim.knockback(0.35 + 0.35 * n, atk.getX() - victim.getX(), atk.getZ() - victim.getZ());
         if (n >= Wave12Rules.JAW_MAX_CHARGES) Fx.addEffect(victim, "minecraft:slowness", 40, 1);
         ServerLevel l = atk.serverLevel();
-        Wave5Aim.puff(l, victim.position().add(0, victim.getBbHeight() * 0.5, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 8 * n, 0.4);
+        Wave5Aim.puff(l, victim.position().add(0, victim.getBbHeight() * 0.5, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_12, FxTone.LIGHT), 8 * n, 0.4);
         Wave5Aim.sound(l, victim.position(), SoundEvents.ANVIL_LAND, 0.4f + 0.2f * n, 0.7f);
     }
 
@@ -150,7 +150,7 @@ final class Wave12Heavy {
         }
         for (int i = 1; i <= Math.min(height, 24); i++) {                 // the trunk coming down, a line of splinters
             Vec3 at = base.add(dir.scale(i)).add(0, 0.4, 0);
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 3, 0.4, 0.3, 0.4, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_12, FxTone.LIGHT, at.x, at.y, at.z, 3, 0.4, 0.3, 0.4, 0.05);
         }
         Wave5Aim.msg(p, "Timber! " + broken + " logs felled" + (hit > 0 ? ", " + hit + " caught under it." : "."), ChatFormatting.GOLD);
     }

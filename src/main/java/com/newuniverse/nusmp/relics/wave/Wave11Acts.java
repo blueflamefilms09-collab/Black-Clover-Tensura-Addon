@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 11: the act bodies of the ten blades (Mystic Reflection, Shape Water, Encircle, Control Winds, Temporal Loop, Wall of Fire, Burn, Bianca's drum,
@@ -62,7 +63,7 @@ final class Wave11Acts {
         LivingEntity clone = Fx.summon(p, "tensura:undine", 1200);
         if (clone != null) pd.putUUID(K_CLONE, clone.getUUID());
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_SPLASH, SoundSource.PLAYERS, 1.0f, 1.3f);
-        Fx.burst(l, p.position(), 0x7FE6FF);
+        FxRelic.burst(l, p.position(), 0x7FE6FF);
         Fx.say(p, "A reflection of water rises beside you for one minute. Sheathe the blade to dismiss it.");
     }
 
@@ -114,7 +115,7 @@ final class Wave11Acts {
             Fx.say(p, "There is no still water to shape here.");
             return;
         }
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, centre.getX() + 0.5, centre.getY() + 1.0, centre.getZ() + 0.5, 24, 1.0, 0.3, 1.0, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, centre.getX() + 0.5, centre.getY() + 1.0, centre.getZ() + 0.5, 24, 1.0, 0.3, 1.0, 0.02);
         SpellRuntime.later(l, 400, () -> {
             for (BlockPos q : frozen) if (l.isLoaded(q) && l.getBlockState(q).is(Blocks.ICE)) l.setBlock(q, Blocks.WATER.defaultBlockState(), 3);
         });
@@ -153,7 +154,7 @@ final class Wave11Acts {
                 double a = k * 2.399963 + age * 0.2;
                 double y = 1.0 - 2.0 * (k + 0.5) / 20.0;
                 double rr = Math.sqrt(Math.max(0.0, 1.0 - y * y));
-                RukhFx.spray(l, RukhFx.Alignment.LIGHT, ctr.x + Math.cos(a) * rr * r, ctr.y + y * r, ctr.z + Math.sin(a) * rr * r, 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, ctr.x + Math.cos(a) * rr * r, ctr.y + y * r, ctr.z + Math.sin(a) * rr * r, 1, 0, 0, 0, 0);
             }
             if (age % 20 == 0) grip(target, ally, ally ? 30 : Math.min(30, hold));
         });
@@ -186,7 +187,7 @@ final class Wave11Acts {
                 boolean ally = a instanceof ServerPlayer sp ? (sp.isAlliedTo(p) && !sp.isSpectator()) : a instanceof OwnableEntity o && p.getUUID().equals(o.getOwnerUUID());
                 if (ally) lift(a);
             }
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.2, p.getZ(), 40, 1.2, 0.1, 1.2, 0.15);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, p.getX(), p.getY() + 0.2, p.getZ(), 40, 1.2, 0.1, 1.2, 0.15);
             l.playSound(null, p.blockPosition(), SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
             return;
         }
@@ -210,7 +211,7 @@ final class Wave11Acts {
         }
         for (int i = 1; i <= 10; i++) {
             Vec3 at = eye.add(look.scale(i * 1.1));
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 4, 0.3 + i * 0.07, 0.3, 0.3 + i * 0.07, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, at.x, at.y, at.z, 4, 0.3 + i * 0.07, 0.3, 0.3 + i * 0.07, 0.05);
         }
         l.playSound(null, p.blockPosition(), SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 1.2f, 0.8f);
     }
@@ -242,8 +243,8 @@ final class Wave11Acts {
             final double spread = (i - copies / 2.0) * 0.12;
             SpellRuntime.later(l, i * 2, () -> {
                 Vec3 to = hit && t.isAlive() ? t.getBoundingBox().getCenter() : end.add(spread, 0.0, spread);
-                trail(l, from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
-                RukhFx.spray(l, RukhFx.Alignment.LIGHT, from.x, from.y, from.z, 3, 0.1, 0.1, 0.1, 0.02);
+                trail(l, from, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_11, FxTone.LIGHT));
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, from.x, from.y, from.z, 3, 0.1, 0.1, 0.1, 0.02);
                 if (hit && t.isAlive()) Fx.damage(p, t, 2.0f, null);
             });
         }
@@ -254,7 +255,7 @@ final class Wave11Acts {
         int steps = (int) Math.min(24, Math.max(3, a.distanceTo(b) * 1.5));
         for (int s = 0; s <= steps; s++) {
             Vec3 q = a.lerp(b, s / (double) steps);
-            RukhFx.spray(l, RukhFx.Alignment.of(what == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), q.x, q.y, q.z, 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.of(com.newuniverse.nusmp.particle.fx.Fx.toneOf(what) == FxTone.DARK), q.x, q.y, q.z, 1, 0, 0, 0, 0);
         }
     }
 
@@ -275,10 +276,10 @@ final class Wave11Acts {
             for (int i = -3; i <= 3; i++) {
                 for (int h = 0; h < 3; h++) {
                     Vec3 at = centre.add(side.scale(i)).add(0, h + 0.2, 0);
-                    RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 2, 0.25, 0.25, 0.25, 0.02);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, at.x, at.y, at.z, 2, 0.25, 0.25, 0.25, 0.02);
                 }
             }
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, centre.x, centre.y + 1.0, centre.z, 3, 2.5, 0.8, 0.3, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, centre.x, centre.y + 1.0, centre.z, 3, 2.5, 0.8, 0.3, 0.0);
             if (!p.isAlive()) return;
             for (LivingEntity e : Fx.foesAround(p, 10.0)) {
                 Vec3 d = e.position().subtract(centre);
@@ -311,7 +312,7 @@ final class Wave11Acts {
             Fx.say(p, "The blade cools.");
         } else {
             Fx.say(p, "\"Burn!\" The blade glows white-hot.");
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.5, 0.5, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_11, FxTone.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.5, 0.5, 0.05);
             l.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0f, 0.8f);
         }
     }
@@ -370,12 +371,12 @@ final class Wave11Acts {
         int d8 = 1 + p.getRandom().nextInt(8);
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0f, 1.5f);
         if (t == null) {
-            trail(l, from, p.getEyePosition().add(p.getLookAngle().scale(14.0)), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+            trail(l, from, p.getEyePosition().add(p.getLookAngle().scale(14.0)), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_11, FxTone.LIGHT));
             Fx.say(p, "The tooth flies wide and the belt draws it home.");
             return;
         }
         Vec3 to = t.getBoundingBox().getCenter();
-        trail(l, from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+        trail(l, from, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_11, FxTone.LIGHT));
         boolean pvp = t instanceof Player;                                                // PvP-safe: 5 in all against a player, 9 against anything else
         Fx.damage(p, t, pvp ? 2.0f : 4.0f, null);
         if (!t.isAlive()) return;
@@ -401,7 +402,7 @@ final class Wave11Acts {
             }
             default -> { }
         }
-        Fx.burst(l, to.subtract(0, 0.6, 0), BREATH_RGB[d8 - 1]);
+        FxRelic.burst(l, to.subtract(0, 0.6, 0), BREATH_RGB[d8 - 1]);
         Fx.say(p, "The tooth strikes and its breath of " + kind + " blasts through the foe.");
     }
 

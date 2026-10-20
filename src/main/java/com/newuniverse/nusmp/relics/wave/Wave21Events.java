@@ -35,6 +35,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Why: wave 21: the game-bus listeners of the twelve weapons. Every listener starts with a cheap test (who is hit, which flag the attacker carries) and does
@@ -78,7 +79,7 @@ final class Wave21Events {
             if (ZONES.size() >= MAX_ZONES) return false;
             ZONES.add(new Zone(p.serverLevel().dimension(), centre, p.serverLevel().getGameTime() + Wave21Rules.ZONE_TICKS));
         }
-        Fx.ring(p.serverLevel(), centre, Wave21Rules.ZONE_RADIUS + 0.4, 0xFF5AC0);
+        FxRelic.ring(p.serverLevel(), centre, Wave21Rules.ZONE_RADIUS + 0.4, 0xFF5AC0);
         return true;
     }
 
@@ -90,7 +91,7 @@ final class Wave21Events {
             ZONES.removeIf(z -> {
                 ServerLevel l = server.getLevel(z.dim());
                 if (l == null || l.getGameTime() >= z.until()) return true;
-                if (server.getTickCount() % 12 == 0) Fx.ring(l, z.centre(), Wave21Rules.ZONE_RADIUS, 0xFF5AC0);
+                if (server.getTickCount() % 12 == 0) FxRelic.ring(l, z.centre(), Wave21Rules.ZONE_RADIUS, 0xFF5AC0);
                 AABB box = new AABB(z.centre(), z.centre()).inflate(Wave21Rules.ZONE_RADIUS, 2.0, Wave21Rules.ZONE_RADIUS);
                 int n = 0;
                 for (LivingEntity en : l.getEntitiesOfClass(LivingEntity.class, box)) {
@@ -122,10 +123,10 @@ final class Wave21Events {
                     ground = !below.getCollisionShape(l, feet.below(k)).isEmpty();
                 }
                 if (!ground || bad || l.getFluidState(feet).is(FluidTags.LAVA)) continue;
-                Fx.burst(l, en.position(), 0xFF5AC0);
+                FxRelic.burst(l, en.position(), 0xFF5AC0);
                 en.teleportTo(x, y, z);
                 en.fallDistance = 0;
-                Fx.burst(l, en.position(), 0xFFE27A);
+                FxRelic.burst(l, en.position(), 0xFFE27A);
                 return;
             }
         }
@@ -171,7 +172,7 @@ final class Wave21Events {
         if (!has(p, Wave21Rules.F_GLAIVE)) return;
         if (now % 4 == 0) Fx.addEffect(p, "minecraft:slowness", 8, 6);
         if (now % Wave21Rules.WHIRL_PULSE != 0) return;
-        Fx.ring(p.serverLevel(), p.position(), Wave21Rules.WHIRL_RADIUS, 0x9CCBFF);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave21Rules.WHIRL_RADIUS, 0x9CCBFF);
         for (LivingEntity t : Wave21Acts.foesNear(p, p.position(), Wave21Rules.WHIRL_RADIUS)) {
             Vec3 to = p.position().subtract(t.position());
             Vec3 pull = to.lengthSqr() < 1.0e-4 ? Vec3.ZERO : to.normalize().scale(0.35);
@@ -246,7 +247,7 @@ final class Wave21Events {
                     }
                     default -> Fx.addEffect(t, "minecraft:glowing", 60, 0);
                 }
-                Fx.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), Wave21Rules.seasonColour(s));
+                FxRelic.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), Wave21Rules.seasonColour(s));
             }
             case "spider_sword" -> {
                 if (!has(p, Wave21Rules.F_SPIDER)) return;
@@ -264,7 +265,7 @@ final class Wave21Events {
             case "the_legacy" -> {
                 if (has(p, Wave21Rules.F_LEGACY) && p.getPersistentData().getLong(Wave21Acts.K_HEADLESS) <= now) {
                     Wave0Util.extra(p, t, Wave21Rules.THUNDER_BONUS, "minecraft:lightning_bolt");
-                    Fx.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0x78DCFF);
+                    FxRelic.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0x78DCFF);
                 }
             }
             case "time_hammer" -> {
@@ -280,7 +281,7 @@ final class Wave21Events {
                     t.push(n.x, 0.4, n.z);
                     t.hurtMarked = true;
                 }
-                Fx.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0xFF9650);
+                FxRelic.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0xFF9650);
                 Fx.say(p, "Hammertime!");
             }
             default -> { }
@@ -311,8 +312,8 @@ final class Wave21Events {
     private static void onCrit(CriticalHitEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || !e.isCriticalHit() || !heldId(p).equals("willbreaker") || !has(p, Wave21Rules.F_WILL)) return;
         if (!(e.getTarget() instanceof LivingEntity t)) return;
-        Fx.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0xD2242C);
-        Fx.ring(p.serverLevel(), t.position(), 3.0, 0xD2242C);
+        FxRelic.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), 0xD2242C);
+        FxRelic.ring(p.serverLevel(), t.position(), 3.0, 0xD2242C);
         Wave21Acts.frighten(p, t, 0.0);
         for (LivingEntity o : Wave21Acts.foesNear(p, t.position(), 3.0)) if (o != t) Wave21Acts.frighten(p, o, 0.0);
     }

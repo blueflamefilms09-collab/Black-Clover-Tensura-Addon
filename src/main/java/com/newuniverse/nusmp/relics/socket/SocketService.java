@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * The server side of putting a Core into a relic and drawing it out again, with the Great Sage style answers. {@link SocketEngine} calls it from the
@@ -52,7 +53,7 @@ public final class SocketService {
                 SocketComponents.set(relic, next);
                 Relics.invalidate(p);
                 p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, core.kind() == SocketKind.DEVIL ? 0.6f : 1.1f);
-                Fx.ring(p.serverLevel(), p.position(), 1.4, core.rgb());
+                FxRelic.ring(p.serverLevel(), p.position(), 1.4, core.rgb());
                 com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "relic.socketed", core.key());
                 say(p, ChatFormatting.AQUA, "socket.nusmp.msg.bound", Component.translatable(core.nameKey()), def.cardName(), next.size(), slots);
             }

@@ -1,12 +1,10 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19, the Spellbook of Concentration. The book holds three pages of two spells each (Tensura skills); a page is marked with a bookmark that is
@@ -55,8 +55,8 @@ final class Wave19Book {
         String[] ids = Wave19Rules.page(page);
         int n = Fx.lendSkills(p, ticks, ids);
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 40, 0.5, 0.5, 0.5, 0.9);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 8, 0.4, 0.4, 0.4, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 40, 0.5, 0.5, 0.5, 0.9);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 8, 0.4, 0.4, 0.4, 0.03);
         sl.playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 1.0f);
         if (n == 0) {
             Wave19Util.addMagicules(p, ticks >= Wave19Rules.PREPARE_TICKS ? 0.25 : 0.10);

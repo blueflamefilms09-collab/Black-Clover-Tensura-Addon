@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -28,6 +27,9 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the eight gloves and gauntlets of wave 27 (Arcane Trickster's Glove, Bear's Grip, Dragon's Fire Gauntlet, Gauntlet Mimic, Gauntlet of the
@@ -108,7 +110,7 @@ final class Wave27Hands {
         }
         Wave27Util.give(t, 80, 5, "minecraft:slowness");
         Wave27Util.give(t, 80, 0, "minecraft:weakness");
-        Wave27Util.puff(p.serverLevel(), RukhFx.Alignment.LIGHT, t, 8);
+        Wave27Util.puff(p.serverLevel(), FxTone.LIGHT, t, 8);
         Wave27Util.tell(p, "You have " + t.getName().getString() + " in a bear's grip.", ChatFormatting.GOLD);
     }
 
@@ -124,7 +126,7 @@ final class Wave27Hands {
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         for (int i = 1; i <= 5; i++) {
             Vec3 at = eye.add(look.scale(i)).add(0, -0.3, 0);
-            RukhFx.spray(lv, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 4, 0.2 + 0.08 * i, 0.2, 0.2 + 0.08 * i, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_27, FxTone.LIGHT, at.x, at.y, at.z, 4, 0.2 + 0.08 * i, 0.2, 0.2 + 0.08 * i, 0.02);
         }
         int hit = 0;
         for (LivingEntity e : Fx.foesAround(p, 5.0)) {
@@ -152,7 +154,7 @@ final class Wave27Hands {
         d.putLong("dragon_save_at", now + 20);
         Wave27Util.store(v, "dragon", c.spend(1));
         e.setCanceled(true);
-        RukhFx.burst(v.serverLevel(), v, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(v.serverLevel(), FxThemes.RELIC_WAVE_27, v, FxTone.LIGHT, 8);
         Wave27Util.tell(v, "The gauntlet moves your hand: saved (" + (c.left() - 1) + " of " + Wave27Rules.DRAGON_MAX + " charges left).", ChatFormatting.GOLD);
     }
 
@@ -191,7 +193,7 @@ final class Wave27Hands {
             t.knockback(1.2, p.getX() - t.getX(), p.getZ() - t.getZ());
         }
         lv.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.8f, 1.5f);
-        Fx.ring(lv, p.position().add(0, 0.5, 0), 4.0, 0x58C8FF);
+        FxRelic.ring(lv, p.position().add(0, 0.5, 0), 4.0, 0x58C8FF);
     }
 
     /** Call Lightning (3 charges): a bolt falls where you look (up to 24 blocks) and burns what stands within three blocks of it (12 lightning damage). */
@@ -208,7 +210,7 @@ final class Wave27Hands {
             lv.addFreshEntity(bolt);
         }
         for (LivingEntity t : Wave27Util.near(lv, at, 3.0, e -> Wave27Util.target(p, e))) Fx.damage(p, t, 12.0f, LIGHTNING);
-        Fx.ring(lv, at.add(0, 0.3, 0), 3.0, 0x58C8FF);
+        FxRelic.ring(lv, at.add(0, 0.3, 0), 3.0, 0x58C8FF);
     }
 
     /** Shocking Grasp: a touch (3.5 blocks) that shocks for 5 lightning damage, 2 more against a target in heavy armour; it works even while stunned. */
@@ -225,14 +227,14 @@ final class Wave27Hands {
     private static void shock(ServerPlayer p, LivingEntity t) {
         Fx.damage(p, t, t.getArmorValue() >= 8 ? 7.0f : 5.0f, LIGHTNING);
         Wave27Util.give(t, 20, 1, "minecraft:slowness");
-        Wave27Util.puff(p.serverLevel(), RukhFx.Alignment.LIGHT, t, 8);
+        Wave27Util.puff(p.serverLevel(), FxTone.LIGHT, t, 8);
     }
 
     /** Once a second for a wearer: arcs run through the metal in battle; while stunned the gauntlet shocks the nearest foe by itself (every three seconds). */
     static void stormPass(ServerPlayer p) {
         List<LivingEntity> foes = Fx.foesAround(p, 10.0);
         if (foes.isEmpty()) return;
-        RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_27, p, FxTone.LIGHT);
         boolean stunned = Wave27Rules.stunned(Wave27Util.amp(p, STUN[0]) >= 0, Wave27Util.amp(p, STUN[1]) >= 0, Wave27Util.amp(p, STUN[2]) >= 0, Wave27Util.amp(p, "minecraft:slowness"));
         if (!stunned) return;
         CompoundTag d = Wave27Util.data(p);
@@ -265,7 +267,7 @@ final class Wave27Hands {
         from.putLong(key, now);
         d.putInt("glove_n", Math.min(Wave27Rules.GLOVE_MAX, d.getInt("glove_n") + 1));
         Wave27Util.tell(wearer, why + " The glove glows warmer (" + d.getInt("glove_n") + " of " + Wave27Rules.GLOVE_MAX + ").", ChatFormatting.GOLD);
-        RukhFx.burst(wearer.serverLevel(), wearer, RukhFx.Alignment.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(wearer.serverLevel(), FxThemes.RELIC_WAVE_27, wearer, FxTone.LIGHT, 6);
     }
 
     /**
@@ -287,19 +289,19 @@ final class Wave27Hands {
         }
         d.putInt("glove_n", d.getInt("glove_n") - 1);
         ServerLevel lv = p.serverLevel();
-        RukhFx.stream(lv, p, t, RukhFx.Alignment.LIGHT, 4);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(lv, FxThemes.RELIC_WAVE_27, p, t, FxTone.LIGHT, 4);
         p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Thank you!").withStyle(ChatFormatting.GOLD));
         if (Wave27Util.friend(p, t) || !Wave27Util.hostile(p, t)) {
             t.heal(6.0f);
             Wave27Util.give(t, 100, 0, "minecraft:regeneration");
-            Wave27Util.puff(lv, RukhFx.Alignment.LIGHT, t, 10);
+            Wave27Util.puff(lv, FxTone.LIGHT, t, 10);
             Wave27Util.tell(p, "High-five with " + t.getName().getString() + "!", ChatFormatting.GOLD);
         } else if (Wave27Util.saves(p, t)) {
             Wave27Util.tell(p, t.getName().getString() + " refuses the high-five.", ChatFormatting.GRAY);
         } else {
             if (t instanceof Mob m) m.setTarget(null);
             Wave27Util.give(t, 60, 1, "minecraft:slowness");
-            Wave27Util.puff(lv, RukhFx.Alignment.LIGHT, t, 10);
+            Wave27Util.puff(lv, FxTone.LIGHT, t, 10);
             Wave27Util.tell(p, t.getName().getString() + " is high-fived against its will.", ChatFormatting.GOLD);
         }
     }
@@ -319,7 +321,7 @@ final class Wave27Hands {
         d.putLong("opp_at", now + Wave27Rules.FUMBLE_GAP);
         e.setCanceled(true);
         ItemStack got = Wave27Util.steal(v, attacker);
-        RukhFx.burst(v.serverLevel(), attacker, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(v.serverLevel(), FxThemes.RELIC_WAVE_27, attacker, FxTone.LIGHT, 8);
         Wave27Util.tell(v, got.isEmpty() ? "It swings wide!" : "It swings wide, and your gloves take " + got.getHoverName().getString() + "!", ChatFormatting.AQUA);
     }
 
@@ -368,8 +370,8 @@ final class Wave27Hands {
         }
         Fx.damageHeavy(p, t, Wave27Rules.GORISTRO_CHARGE_DAMAGE, HIT);
         t.knockback(1.6, p.getX() - t.getX(), p.getZ() - t.getZ());
-        RukhFx.stream(lv, from.add(0, 1, 0), p.position().add(0, 1, 0), RukhFx.Alignment.DARK, 5);
-        RukhFx.burst(lv, t, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(lv, FxThemes.RELIC_WAVE_27, from.add(0, 1, 0), p.position().add(0, 1, 0), FxTone.DARK, 5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(lv, FxThemes.RELIC_WAVE_27, t, FxTone.DARK, 12);
         lv.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ATTACK, SoundSource.PLAYERS, 0.9f, 0.7f);
     }
 
@@ -381,7 +383,7 @@ final class Wave27Hands {
         float add = 0f;
         if (RelicFlags.has(p, Wave27Rules.F_GORISTRO)) {
             add += Wave27Rules.GORISTRO_BONUS;
-            Wave27Util.puff(lv, RukhFx.Alignment.DARK, victim, 3);
+            Wave27Util.puff(lv, FxTone.DARK, victim, 3);
         }
         if (RelicFlags.has(p, Wave27Rules.F_MIMIC)) {
             CompoundTag d = Wave27Util.data(p);

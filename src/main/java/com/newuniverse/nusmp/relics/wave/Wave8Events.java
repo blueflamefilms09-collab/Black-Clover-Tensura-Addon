@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +29,8 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 8 gameplay: what the blades and axes do on their own (on-hit bonuses, kills, the staggered player tick). Everything keys off one flag
@@ -66,7 +67,7 @@ final class Wave8Events {
                 if (!RelicFlags.has(atk, F_SPOT) || ad.getLong(Wave8Acts.K_SPOT) < now) return;
                 ad.remove(Wave8Acts.K_SPOT);                                                              // "advantage": the next blow lands true
                 bonus(e, Math.min(6f, e.getAmount() * 0.5f), pvp, 3f);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) victim.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.2);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_8, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.2);
             }
             case "duality_blade" -> {
                 if (!RelicFlags.has(atk, F_DUAL)) return;
@@ -104,7 +105,7 @@ final class Wave8Events {
                     n = 0;
                     bonus(e, 7f, pvp, 3f);
                     victim.setRemainingFireTicks(100);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) victim.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 24, 0.3, 0.6, 0.3, 0.05);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_8, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 24, 0.3, 0.6, 0.3, 0.05);
                 }
                 ad.putInt(K_CN, n);
                 if (ad.getLong(Wave8Acts.K_FANG) >= now) victim.setRemainingFireTicks(60);                // Searing Fang
@@ -124,7 +125,7 @@ final class Wave8Events {
                 if (ad.getLong(Wave8Acts.K_STALK) >= now) {                                               // Shadow Stalk's "advantage"
                     ad.remove(Wave8Acts.K_STALK);
                     bonus(e, Math.min(8f, e.getAmount() * 0.4f), pvp, 4f);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) victim.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.2);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_8, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.2);
                 }
                 if (Wave8Rules.dim(victim.level().getMaxLocalRawBrightness(victim.blockPosition()))) {    // a foe standing in shadow burns
                     bonus(e, 2f, pvp, 2f);
@@ -158,7 +159,7 @@ final class Wave8Events {
             int before = Wave8Util.souls(atk);
             int after = Wave8Rules.addSoul(before);
             Wave8Util.setSouls(atk, after);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(level, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 8, 0.3, 0.5, 0.3, 0.03);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_8, FxTone.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 8, 0.3, 0.5, 0.3, 0.03);
             milestone(atk, before, after);
         }
     }
@@ -200,7 +201,7 @@ final class Wave8Events {
         Fx.addEffect(p, "minecraft:speed", 160, lv);
         if (lv >= 2) Fx.addEffect(p, "minecraft:strength", 160, 0);
         Wave2Mana.take(p, 0.01);                                                                          // the smell of death makes the sword and its user go wild (1.99.0, the hunger ban: it costs 1% of the magicules, not hunger)
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) p.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) p.level()), FxThemes.RELIC_WAVE_8, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.03);
         Wave8Util.tell(p, "Feeding Frenzy " + (lv + 1));
     }
 
@@ -250,20 +251,20 @@ final class Wave8Events {
             case "spotlight" -> {
                 if (pd.getLong(Wave8Acts.K_SPOT) >= now && RelicFlags.has(p, F_SPOT)) {
                     ServerLevel l = p.serverLevel();
-                    for (int i = 0; i < 8; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.5 + i * 0.5, p.getZ(), 1, 0.2, 0.0, 0.2, 0.0);
+                    for (int i = 0; i < 8; i++) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_8, FxTone.LIGHT, p.getX(), p.getY() + 0.5 + i * 0.5, p.getZ(), 1, 0.2, 0.0, 0.2, 0.0);
                 }
             }
             case "duality_blade" -> {
                 if (RelicFlags.has(p, F_DUAL) && RelicEngine.isOn(p, "duality_blade", "streamers")) {      // bright light: you shine, and you see
                     Fx.addEffect(p, "minecraft:glowing", 60, 0);
                     Fx.addEffect(p, "minecraft:night_vision", 260, 0);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.5, 0.6, 0.5, 0.01);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_8, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.5, 0.6, 0.5, 0.01);
                 }
             }
             case "leviathan_axe" -> {
                 if (pd.getLong(Wave8Acts.K_AWAKE) >= now && RelicFlags.has(p, F_LEV)) {                    // the freezing fog of the awakened runes
                     for (LivingEntity t : Fx.foesAround(p, 4.0)) Wave8Util.chill(t, 60);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 1.8, 0.8, 1.8, 0.02);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_8, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 1.8, 0.8, 1.8, 0.02);
                 }
             }
             case "soul_shatter_blade" -> whisper(p, pd, now);
@@ -309,7 +310,7 @@ final class Wave8Events {
                 placed++;
             }
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.1, p.getZ(), 3, 0.3, 0.05, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_8, FxTone.LIGHT, p.getX(), p.getY() + 0.1, p.getZ(), 3, 0.3, 0.05, 0.3, 0.01);
         if (p.tickCount % 20 == 0) for (LivingEntity t : Fx.foesAround(p, 2.5)) Wave8Util.chill(t, 40);
     }
 }

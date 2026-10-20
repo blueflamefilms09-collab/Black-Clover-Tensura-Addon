@@ -9,7 +9,6 @@ import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +29,8 @@ import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.function.Consumer;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Relics of Many Worlds, wave 1: the hand-held staves, wands, swords and tools (the Staff of Moonlight, Liquid Sword, Marid's Valor,
@@ -202,7 +203,7 @@ public final class Wave1 {
             if (pd.getLong(Wave1Casts.K_GUARD_UNTIL) >= now && pd.getInt(Wave1Casts.K_GUARD_N) > 0) {
                 pd.putInt(Wave1Casts.K_GUARD_N, pd.getInt(Wave1Casts.K_GUARD_N) - 1);
                 e.setCanceled(true);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) sp.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, sp.getX(), sp.getY() + 1.0, sp.getZ(), 10, 0.4, 0.5, 0.4, 0.03);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) sp.level()), FxThemes.RELIC_WAVE_1, FxTone.DARK, sp.getX(), sp.getY() + 1.0, sp.getZ(), 10, 0.4, 0.5, 0.4, 0.03);
                 if (sp.getRandom().nextInt(5) == 0) frighten(foe);
                 return;
             }
@@ -245,7 +246,7 @@ public final class Wave1 {
                 if (RelicFlags.has(atk, "w1_deliverance") && ad.getLong(Wave1Casts.K_SMITE) >= now) {
                     ad.remove(Wave1Casts.K_SMITE);
                     e.setAmount(e.getAmount() + (Wave1Aim.undead(victim) ? 9.0f : 6.0f));
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) victim.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.6, 0.3, 0.05);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_1, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.6, 0.3, 0.05);
                 }
             }
             default -> { }

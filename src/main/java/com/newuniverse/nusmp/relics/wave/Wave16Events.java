@@ -28,6 +28,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 16: the game-bus side of the seventeen charms, one listener per event, each starting with the cheapest test (is a wearer even involved).
@@ -77,7 +78,7 @@ public final class Wave16Events {
         }
         d.putLong(Wave16Tune.K_POEUR, now + Wave16Tune.POEUR_COOLDOWN);
         Wave16Kit.give(p, costPercent / 100.0, 0.0);
-        Fx.burst(p.serverLevel(), p.position(), 0xBFEFFF);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xBFEFFF);
         Wave6Kit.hint(p, "Po'eur: the spell costs nothing (" + roll + " + " + Wave16Tune.POEUR_BONUS + " against " + Wave16Rules.poeurDc(costPercent) + ")");
     }
 
@@ -109,7 +110,7 @@ public final class Wave16Events {
         if (melee && d.getLong(Wave16Tune.K_GOD_SPIRIT) > now) {
             e.setAmount(e.getAmount() + d.getInt(Wave16Tune.K_GOD_SPIRIT_ROLL));
             d.putLong(Wave16Tune.K_GOD_SPIRIT, 0L);
-            Fx.burst(att.serverLevel(), e.getEntity().position(), 0xFFE0A0);
+            FxRelic.burst(att.serverLevel(), e.getEntity().position(), 0xFFE0A0);
         }
         if (melee && d.getLong(Wave16Tune.K_GOD_AVATAR) > now) e.setAmount(e.getAmount() + att.getRandom().nextInt(10) + 1);
     }
@@ -126,7 +127,7 @@ public final class Wave16Events {
             int dmg = 0;
             for (int i = 0; i < 3; i++) dmg += p.getRandom().nextInt(10) + 1;
             Fx.damage(p, a, dmg, "minecraft:magic");
-            Fx.burst(p.serverLevel(), a.position(), 0xFF3030);
+            FxRelic.burst(p.serverLevel(), a.position(), 0xFF3030);
         }
         if (!inReprisal && RelicFlags.has(p, Wave16Tune.F_FLAME)) reprisal(e, p, src, d, now);
     }
@@ -149,7 +150,7 @@ public final class Wave16Events {
         } finally {
             inReprisal = false;
         }
-        Fx.burst(p.serverLevel(), att.position(), 0xFF8A2A);
+        FxRelic.burst(p.serverLevel(), att.position(), 0xFF8A2A);
         Wave6Kit.hint(p, "Reprisal! The spell is halved and a fireball goes back (" + cost + " charge" + (cost > 1 ? "s" : "") + ")");
     }
 

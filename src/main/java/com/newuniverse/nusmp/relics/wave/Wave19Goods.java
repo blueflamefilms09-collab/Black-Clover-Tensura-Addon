@@ -1,13 +1,11 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -35,6 +33,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19, the drinks and sweets: Fey Honey, Blood Chocolates, the Ale-lemental, the Mug of The Boss and Holy Water.
@@ -65,8 +65,8 @@ final class Wave19Goods {
         Wave19Util.give(p, "minecraft:hero_of_the_village", t, 0);
         boolean skill = Fx.lendSkill(p, "tensura:thought_communication", t);
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, Wave19Util.align(0xDDE6F2), p.getX(), p.getY() + 1.4, p.getZ(), 30, 0.5, 0.6, 0.5, 0.02);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), 14, 0.5, 0.6, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, Wave19Util.align(0xDDE6F2), p.getX(), p.getY() + 1.4, p.getZ(), 30, 0.5, 0.6, 0.5, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), 14, 0.5, 0.6, 0.5, 0.05);
         sl.playSound(null, p.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.PLAYERS, 1.0f, 1.3f);
         Wave19Util.say(p, "Fey Honey: sweet, silver and intoxicating. For twenty minutes everyone finds you irresistible" + (skill ? " (Thought Communication lent)" : "") + ". Mind the come-down.");
     }
@@ -82,7 +82,7 @@ final class Wave19Goods {
         p.getFoodData().eat(2, 0.3f);
         Wave19Util.data(p).putLong(K_BLOOD, p.level().getGameTime() + Wave19Rules.VULNERABLE_TICKS);
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, Wave19Util.align(0x8B0A1E), p.getX(), p.getY() + 1.3, p.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, Wave19Util.align(0x8B0A1E), p.getX(), p.getY() + 1.3, p.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
         sl.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 1.0f, 0.7f);
         Wave19Util.say(p, "Blood Chocolates: a metallic sweetness; your wounds close. For seven minutes holy light will hurt you twice as much.");
     }
@@ -103,8 +103,8 @@ final class Wave19Goods {
         }
         p.clearFire();
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 1.0, e.getZ(), 50, 0.8, 1.0, 0.8, 0.2);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.6, 0.8, 0.6, 0.1);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, e.getX(), e.getY() + 1.0, e.getZ(), 50, 0.8, 1.0, 0.8, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.6, 0.8, 0.6, 0.1);
         sl.playSound(null, p.blockPosition(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0f, 0.8f);
         Wave19Util.say(p, "Ale-lemental: a frothing elemental of ale rises and takes your side.");
     }
@@ -173,8 +173,8 @@ final class Wave19Goods {
             }
         }
         ServerLevel sl = p.serverLevel();
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 2.2, p.getZ(), 6, 0.5, 0.2, 0.5, 1.0);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 20, 0.6, 0.6, 0.6, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 2.2, p.getZ(), 6, 0.5, 0.2, 0.5, 1.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 20, 0.6, 0.6, 0.6, 0.05);
         sl.playSound(null, p.blockPosition(), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 1.0f, 0.9f);
         Wave19Util.say(p, "Mug of The Boss: WORLD'S BEST " + Wave19Rules.title(title).toUpperCase() + "! You chug the cup and hold the mug up high"
                 + (awed > 0 ? "; " + awed + " creature" + (awed == 1 ? " is" : "s are") + " awestruck." : "."));
@@ -188,7 +188,7 @@ final class Wave19Goods {
         for (Mob m : near) {
             if (n >= 12) break;
             Wave19Field.charm(m, p, Wave19Rules.MUG_AWE_TICKS, true);
-            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, m.getX(), m.getEyeY() + 0.4, m.getZ(), 2, 0.2, 0.2, 0.2, 1.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_19, FxTone.LIGHT, m.getX(), m.getEyeY() + 0.4, m.getZ(), 2, 0.2, 0.2, 0.2, 1.0);
             n++;
         }
         return n;
@@ -227,8 +227,8 @@ final class Wave19Goods {
         EntityHitResult ent = ProjectileUtil.getEntityHitResult(sl, p, eye, stop, new AABB(eye, stop).inflate(1.0), e -> e instanceof LivingEntity l && harmable(p, l) && e.isPickable());
         if (ent != null) stop = ent.getLocation();
         Wave19Scrolls.beam(sl, eye.add(0, -0.3, 0), stop, 0xDDEEFF);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, stop.x, stop.y, stop.z, 30, 0.8, 0.5, 0.8, 0.2);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, stop.x, stop.y + 0.3, stop.z, 16, 0.8, 0.5, 0.8, 0.06);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, stop.x, stop.y, stop.z, 30, 0.8, 0.5, 0.8, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, stop.x, stop.y + 0.3, stop.z, 16, 0.8, 0.5, 0.8, 0.06);
         sl.playSound(null, BlockPos.containing(stop), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0f, 1.3f);
         String type = holyType(p);
         int hit = 0;
@@ -237,7 +237,7 @@ final class Wave19Goods {
             float dmg = Wave19Rules.radiantDamage(Wave19Rules.HOLY_DAMAGE, t instanceof Player o && Wave19Util.running(o, K_BLOOD), true);
             Fx.damage(p, t, dmg, type);
             t.clearFire();
-            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 10, 0.3, 0.4, 0.3, 0.05);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 10, 0.3, 0.4, 0.3, 0.05);
             hit++;
         }
         Wave19Util.say(p, "Holy Water: " + (hit > 0 ? "it sears " + hit + " unholy creature" + (hit == 1 ? "." : "s.") : "it splashes harmlessly; nothing unholy was there."));

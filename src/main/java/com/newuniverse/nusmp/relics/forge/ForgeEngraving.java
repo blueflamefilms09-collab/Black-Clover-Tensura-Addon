@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.forge;
 
 import com.newuniverse.nusmp.item.MagicWeaponItem;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
@@ -22,6 +21,9 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the Relic Forge's third panel puts a Tensura engraving (an enchantment of the {@code #tensura:engraving} tag) from an enchanted book onto a
@@ -90,7 +92,7 @@ public final class ForgeEngraving {
         CustomData.update(DataComponents.CUSTOM_DATA, weapon, (CompoundTag t) -> t.putInt(COUNT, total));
         if (!p.isCreative()) book.shrink(1);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0f, 1.2f);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 4);
+        Fx.burst(p.serverLevel(), FxThemes.RELIC_FORGE, p, FxTone.LIGHT, 4);
         return ForgeRules.Msg.ENGRAVED;
     }
 }

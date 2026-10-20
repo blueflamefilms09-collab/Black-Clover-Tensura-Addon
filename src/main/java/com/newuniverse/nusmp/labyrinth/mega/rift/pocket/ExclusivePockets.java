@@ -20,7 +20,6 @@ import com.newuniverse.nusmp.labyrinth.vault.RelicPedestalBlockEntity;
 import com.newuniverse.nusmp.quests.NusmpEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -50,6 +49,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the life of an exclusive tomb, from the tear to the empty cell, in one place the pocket realm hands over to. {@link #enter} is what stepping into a mega-rare tear does: it finds the tomb that tear
@@ -535,7 +537,7 @@ public final class ExclusivePockets {
             for (long l : rt.sealBlocks) mega.destroyBlockProgress(CRACK_ID - k++, BlockPos.of(l), stage);
         }
         if (c != null) {
-            mega.sendParticles(ParticleTypes.CRIT, c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5, 6, 0.8, 1.0, 0.8, 0.1);
+            Fx.spray(mega, FxThemes.DUNGEON_RIFT, FxOld.CRIT, c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5, 6, 0.8, 1.0, 0.8, 0.1);
             mega.playSound(null, c, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1.0f, 0.6f);
         }
         if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.force", "The seal holds: %s%% left.",
@@ -566,7 +568,7 @@ public final class ExclusivePockets {
         }
         BlockPos c = sealCentre(rt);
         if (c != null) {
-            mega.sendParticles(ParticleTypes.END_ROD, c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5, 80, 1.5, 1.8, 1.5, 0.15);
+            Fx.spray(mega, FxThemes.DUNGEON_RIFT, FxOld.END_ROD, c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5, 80, 1.5, 1.8, 1.5, 0.15);
             mega.playSound(null, c, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 2.0f, 0.5f);
             mega.playSound(null, c, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 2.0f, 0.4f);
         }
@@ -628,7 +630,7 @@ public final class ExclusivePockets {
         long age = now - p.createdAt;
         PocketSwitchRules.State st = leverState(mega, p);
         if (rt.switchPos != null && !in.isEmpty()) {
-            mega.sendParticles(st == PocketSwitchRules.State.READY ? ParticleTypes.END_ROD : ParticleTypes.SMOKE, rt.switchPos.getX() + 0.5, rt.switchPos.getY() + 1.0, rt.switchPos.getZ() + 0.5, 2, 0.15, 0.3, 0.15, 0.01);
+            mega.sendParticles(st == PocketSwitchRules.State.READY ? Fx.options(FxThemes.DUNGEON_RIFT, FxOld.END_ROD) : Fx.options(FxThemes.DUNGEON_RIFT, FxOld.SMOKE), rt.switchPos.getX() + 0.5, rt.switchPos.getY() + 1.0, rt.switchPos.getZ() + 0.5, 2, 0.15, 0.3, 0.15, 0.01);
             if (st == PocketSwitchRules.State.READY && !rt.leverTold) {
                 rt.leverTold = true;
                 for (ServerPlayer m : in) {

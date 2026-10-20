@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -35,6 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 18: the game-bus handlers of the charms. One damage listener (the Lover's Divide shares a blow, the Coin of Fortune bends the next one, the
@@ -136,7 +138,7 @@ final class Wave18Events {
                 float back = Math.min(e.getAmount(), Wave18Tune.MIRROR_CAP);
                 e.setCanceled(true);
                 Fx.damage(p, caster, back, "minecraft:magic");
-                Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xC9D6F2);
+                FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xC9D6F2);
                 Fx.say(p, "The mirror throws the spell back.");
                 return;
             }
@@ -191,7 +193,7 @@ final class Wave18Events {
         }
         if (hurt) {
             e.setAmount(e.getAmount() - share);
-            RukhFx.spray(level, Wave18Kit.align(0xE8A23A), partner.getX(), partner.getY() + partner.getBbHeight() * 0.6, partner.getZ(), 6, 0.3, 0.3, 0.3, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0xE8A23A), partner.getX(), partner.getY() + partner.getBbHeight() * 0.6, partner.getZ(), 6, 0.3, 0.3, 0.3, 0.0);
         }
     }
 
@@ -233,10 +235,10 @@ final class Wave18Events {
                 m.hurtMarked = true;
                 if (m.getTarget() instanceof Player) m.setTarget(null);
             }
-            RukhFx.Alignment glow = Wave18Kit.align(0xF2C14E);
+            FxTone glow = Wave18Kit.align(0xF2C14E);
             for (int i = 0; i < 16; i++) {
                 double a = i * (Math.PI * 2 / 16) + level.getGameTime() * 0.05;
-                RukhFx.spray(level, glow, c.x + Math.cos(a) * r, c.y + 0.3, c.z + Math.sin(a) * r, 1, 0, 0.05, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, glow, c.x + Math.cos(a) * r, c.y + 0.3, c.z + Math.sin(a) * r, 1, 0, 0.05, 0, 0);
             }
         }
     }
@@ -248,8 +250,8 @@ final class Wave18Events {
         double a = p.tickCount * 0.2;
         double x = p.getX() + Math.cos(a) * Wave18Tune.ORBIT_RADIUS, z = p.getZ() + Math.sin(a) * Wave18Tune.ORBIT_RADIUS;
         double y = p.getY() + p.getBbHeight() + 0.2 + Math.sin(a * 0.5) * 0.05;
-        RukhFx.spray(level, Wave18Kit.align(0xE9E4D4), x, y, z, 1, 0, 0, 0, 0);
-        RukhFx.spray(level, Wave18Kit.align(0x8E8A82), x + 0.03, y + 0.02, z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0xE9E4D4), x, y, z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0x8E8A82), x + 0.03, y + 0.02, z, 1, 0, 0, 0, 0);
         if ((p.tickCount + p.getId()) % 40 == 8 && level.getMaxLocalRawBrightness(p.blockPosition()) < Wave18Tune.ORBIT_DARK) {
             Wave6Kit.give(p, "minecraft:night_vision", 260, 0, true);                       // the little moon lights the dark
         }

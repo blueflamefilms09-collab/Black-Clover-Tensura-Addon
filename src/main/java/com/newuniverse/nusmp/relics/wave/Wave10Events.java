@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -50,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 10: the game-bus listeners of the ten weapons. Every listener starts with a cheap test (who is hit, which flag the attacker carries) and does its
@@ -126,8 +126,8 @@ final class Wave10Events {
         for (int i = 0; i < 6; i++) {
             double s = (l.random.nextDouble() * 2 - 1) * Wave10Rules.WALL_HALF_WIDTH;
             double y = w.centre().y + l.random.nextDouble() * Wave10Rules.WALL_HEIGHT;
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, w.centre().x + px * s, y, w.centre().z + pz * s, 2, 0.05, 0.2, 0.05, 0.0);
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, w.centre().x + px * s, y, w.centre().z + pz * s, 2, 0.1, 0.2, 0.1, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, w.centre().x + px * s, y, w.centre().z + pz * s, 2, 0.05, 0.2, 0.05, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, w.centre().x + px * s, y, w.centre().z + pz * s, 2, 0.1, 0.2, 0.1, 0.0);
         }
         double r = Wave10Rules.WALL_HALF_WIDTH + 1.0;
         AABB box = new AABB(w.centre().x - r, w.centre().y - 1, w.centre().z - r, w.centre().x + r, w.centre().y + Wave10Rules.WALL_HEIGHT + 1, w.centre().z + r);
@@ -177,8 +177,8 @@ final class Wave10Events {
     private static void kraken(ServerPlayer p) {
         ServerLevel l = p.serverLevel();
         Vec3 hand = p.position().add(p.getLookAngle().scale(0.8)).add(0, 1.1, 0);
-        RukhFx.spray(l, Wave10Acts.align(0x3FE0C8), hand.x, hand.y, hand.z, 6, 0.4, 0.5, 0.4, 0.0);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, hand.x, hand.y, hand.z, 2, 0.3, 0.3, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, Wave10Acts.align(0x3FE0C8), hand.x, hand.y, hand.z, 6, 0.4, 0.5, 0.4, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, hand.x, hand.y, hand.z, 2, 0.3, 0.3, 0.3, 0.01);
     }
 
     private static void runeLight(ServerPlayer p) {
@@ -186,8 +186,8 @@ final class Wave10Events {
         int col = Wave10Rules.lightColour(p.getPersistentData().getInt(Wave10Acts.K_LIGHT_COL));
         Fx.addEffect(p, "minecraft:night_vision", 260, 0);
         Vec3 c = p.position().add(0, 1.2, 0);
-        RukhFx.spray(l, Wave10Acts.align(col), c.x, c.y, c.z, 10, 0.6, 0.6, 0.6, 0.0);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, c.x, c.y, c.z, 2, 0.5, 0.5, 0.5, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, Wave10Acts.align(col), c.x, c.y, c.z, 10, 0.6, 0.6, 0.6, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, c.x, c.y, c.z, 2, 0.5, 0.5, 0.5, 0.01);
         int n = 0;
         for (LivingEntity t : Fx.foesAround(p, Wave10Rules.LIGHT_RADIUS)) {
             if (n++ >= 12) break;
@@ -207,7 +207,7 @@ final class Wave10Events {
             Vec3 to = t.position().subtract(p.position());
             if (!Wave10Rules.inRear(look.x, look.z, to.x, to.z)) continue;
             Wave0Util.extra(p, t, Wave10Rules.flailDamage(whip), "minecraft:player_attack");
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 1, 0, 0, 0, 0);
             l.playSound(null, t.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 0.8f, 0.7f);
             left--;
         }
@@ -267,7 +267,7 @@ final class Wave10Events {
         }
         Wave0Util.extra(p, t, Wave10Rules.psychic(p.getRandom().nextInt(4)), "minecraft:magic");
         Fx.addEffect(t, "minecraft:weakness", 80, 0);
-        RukhFx.spray(l, RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() + 0.3, t.getZ(), 3, 0.3, 0.1, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.DARK, t.getX(), t.getY() + t.getBbHeight() + 0.3, t.getZ(), 3, 0.3, 0.1, 0.3, 0.0);
     }
 
     private static final String K_SHOUT_AT = "nusmp_w10_shout_at", K_SHOUT_N = "nusmp_w10_shout_n";
@@ -297,7 +297,7 @@ final class Wave10Events {
         stack.shrink(1);
         Relics.invalidate(p);
         Vec3 c = p.position().add(0, 1.0, 0);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, c.x, c.y, c.z, 40, 0.8, 0.6, 0.8, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, c.x, c.y, c.z, 40, 0.8, 0.6, 0.8, 0.2);
         l.playSound(null, p.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.4f, 0.8f);
         int n = 0;
         for (LivingEntity t : Fx.foesAround(p, 5.0)) {

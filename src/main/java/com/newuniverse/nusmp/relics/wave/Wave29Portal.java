@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
@@ -28,6 +27,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the Pocket Portal is two things at once: an orb that remembers the place it was "brewed" (its home, kept on the stack) and a ring on the ground that
@@ -95,7 +97,7 @@ final class Wave29Portal {
         OPEN.removeIf(o -> o.owner().equals(p.getUUID()));
         while (OPEN.size() >= Wave29Rules.PORTAL_MAX) OPEN.remove(0);
         OPEN.add(new Open(p.getUUID(), sl.dimension(), at, home, sl.getGameTime() + Wave29Rules.PORTAL_TICKS));
-        RukhFx.burst(sl, at.add(0, 0.8, 0), RukhFx.Alignment.LIGHT, 12, 1.2);
+        Fx.burst(sl, FxThemes.RELIC_WAVE_29, at.add(0, 0.8, 0), FxTone.LIGHT, 12, 1.2);
         sl.playSound(null, p.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0f, 0.7f);
         sl.playSound(null, p.blockPosition(), SoundEvents.PORTAL_TRIGGER, SoundSource.PLAYERS, 0.6f, 1.4f);
         Wave29Util.say(p, "Pocket Portal: the orb shatters and a ring of swirling light opens for twelve seconds. Whoever steps in comes out at the circle it was brewed in.");
@@ -110,7 +112,7 @@ final class Wave29Portal {
             mark(one, p);
             if (!p.getInventory().add(one)) p.drop(one, false);
         }
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 0.2, 0), RukhFx.Alignment.LIGHT, 8, 0.8);
+        Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_29, p.position().add(0, 0.2, 0), FxTone.LIGHT, 8, 0.8);
         Wave29Util.say(p, wasMarked ? "Pocket Portal: the orb forgets its old circle and is brewed anew in this spot. Drink it without sneaking to smash it."
                 : "Pocket Portal: a circle is drawn here and the orb remembers it. Drink it without sneaking, aimed at the ground, to smash it.");
     }
@@ -137,7 +139,7 @@ final class Wave29Portal {
             ServerLevel sl = server.getLevel(o.dim());
             if (sl == null || sl.getGameTime() >= o.until()) {
                 OPEN.remove(i);
-                if (sl != null) RukhFx.burst(sl, o.at().add(0, 0.5, 0), RukhFx.Alignment.LIGHT, 6, 0.8);
+                if (sl != null) Fx.burst(sl, FxThemes.RELIC_WAVE_29, o.at().add(0, 0.5, 0), FxTone.LIGHT, 6, 0.8);
                 continue;
             }
             swirl(sl, o);
@@ -148,9 +150,9 @@ final class Wave29Portal {
     private static void swirl(ServerLevel sl, Open o) {
         double a = (sl.getGameTime() % 40) / 40.0 * Math.PI * 2;
         double r = Wave29Rules.PORTAL_RADIUS;
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, o.at().x + Math.cos(a) * r, o.at().y + 0.4, o.at().z + Math.sin(a) * r, 2, 0.1, 0.5, 0.1, 0.02);
-        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, o.at().x - Math.cos(a) * r, o.at().y + 1.0, o.at().z - Math.sin(a) * r, 2, 0.1, 0.5, 0.1, 0.02);
-        RukhFx.spray(sl, RukhFx.Alignment.DARK, o.at().x, o.at().y + 0.8, o.at().z, 2, 0.3, 0.6, 0.3, 0.01);
+        Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.LIGHT, o.at().x + Math.cos(a) * r, o.at().y + 0.4, o.at().z + Math.sin(a) * r, 2, 0.1, 0.5, 0.1, 0.02);
+        Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.LIGHT, o.at().x - Math.cos(a) * r, o.at().y + 1.0, o.at().z - Math.sin(a) * r, 2, 0.1, 0.5, 0.1, 0.02);
+        Fx.spray(sl, FxThemes.RELIC_WAVE_29, FxTone.DARK, o.at().x, o.at().y + 0.8, o.at().z, 2, 0.3, 0.6, 0.3, 0.01);
     }
 
     private static void carry(ServerLevel sl, Open o) {
@@ -183,12 +185,12 @@ final class Wave29Portal {
                 break;
             }
         }
-        RukhFx.burst(sl, e.position().add(0, e.getBbHeight() * 0.5, 0), RukhFx.Alignment.LIGHT, 8, 0.5);
+        Fx.burst(sl, FxThemes.RELIC_WAVE_29, e.position().add(0, e.getBbHeight() * 0.5, 0), FxTone.LIGHT, 8, 0.5);
         Wave29Util.data(e).putLong(K_ARRIVED, now + Wave29Rules.ARRIVAL_GRACE);
         if (e instanceof Mob m) m.getNavigation().stop();
         e.teleportTo(spot.x, spot.y, spot.z);
         e.fallDistance = 0;
-        RukhFx.burst(sl, spot.add(0, e.getBbHeight() * 0.5, 0), RukhFx.Alignment.LIGHT, 10, 0.6);
+        Fx.burst(sl, FxThemes.RELIC_WAVE_29, spot.add(0, e.getBbHeight() * 0.5, 0), FxTone.LIGHT, 10, 0.6);
         sl.playSound(null, e.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.2f);
     }
 

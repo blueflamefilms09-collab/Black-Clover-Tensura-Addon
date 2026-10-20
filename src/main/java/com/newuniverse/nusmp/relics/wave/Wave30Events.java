@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.UseRules;
@@ -44,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: all of these listeners react to the same events; one class registers them once and keeps the per-world tables together so they can be cleared
@@ -177,7 +178,7 @@ final class Wave30Events {
                 Wave30Data.putLong(v, Wave30Data.SURPRISE_READY, now + Wave30Tune.SURPRISE_COOLDOWN);
                 e.setCanceled(true);
                 Wave30Kit.hint(v, "You felt it coming: the first blow is turned aside.");
-                RukhFx.burst(v.serverLevel(), v, RukhFx.Alignment.LIGHT, 6);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(v.serverLevel(), FxThemes.RELIC_WAVE_30, v, FxTone.LIGHT, 6);
                 return;
             }
         }
@@ -216,7 +217,7 @@ final class Wave30Events {
                 Fx.addEffect(v, "minecraft:resistance", Wave30Tune.SOUL_BLESS_TICKS, 1);
                 Fx.addEffect(v, "minecraft:absorption", Wave30Tune.SOUL_BLESS_TICKS, 1);
                 v.invulnerableTime = 40;
-                RukhFx.burst(level, v, RukhFx.Alignment.LIGHT, 12);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, v, FxTone.LIGHT, 12);
                 Wave30Kit.shout(v, "TRUE RESURRECTION: a soul in the Stone is spent, and you stand again.", net.minecraft.ChatFormatting.GOLD);
                 return;
             }
@@ -373,7 +374,7 @@ final class Wave30Events {
                 if (owner == null || !owner.isAlive() || now >= en.getValue().until()) {
                     m.getPersistentData().remove(Wave30Kit.ALLY_OWNER);
                     m.setTarget(null);
-                    RukhFx.burst((ServerLevel) m.level(), m, RukhFx.Alignment.DARK, 6);
+                    com.newuniverse.nusmp.particle.fx.Fx.burst((ServerLevel) m.level(), FxThemes.RELIC_WAVE_30, m, FxTone.DARK, 6);
                     it.remove();
                     continue;
                 }
@@ -427,8 +428,8 @@ final class Wave30Events {
                 continue;
             }
             Vec3 ca = Vec3.atBottomCenterOf(q.a()), cb = Vec3.atBottomCenterOf(q.b());
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, ca.x, ca.y + 1.0, ca.z, 2, 0.3, 0.5, 0.3, 0.02);
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, cb.x, cb.y + 1.0, cb.z, 2, 0.3, 0.5, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_30, FxTone.LIGHT, ca.x, ca.y + 1.0, ca.z, 2, 0.3, 0.5, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_30, FxTone.LIGHT, cb.x, cb.y + 1.0, cb.z, 2, 0.3, 0.5, 0.3, 0.02);
             for (ServerPlayer p : level.players()) {
                 if (p.isSpectator() || PORTAL_CD.containsKey(p.getUUID())) continue;
                 Vec3 to = null;
@@ -461,7 +462,7 @@ final class Wave30Events {
             UUID owner = m.getPersistentData().hasUUID(Wave30Kit.FOE_OWNER) ? m.getPersistentData().getUUID(Wave30Kit.FOE_OWNER) : null;
             ServerPlayer op = owner == null ? null : server.getPlayerList().getPlayer(owner);
             if (op == null || !op.isAlive() || now >= m.getPersistentData().getLong(Wave30Kit.FOE_UNTIL)) {
-                RukhFx.burst((ServerLevel) m.level(), m, RukhFx.Alignment.DARK, 8);
+                com.newuniverse.nusmp.particle.fx.Fx.burst((ServerLevel) m.level(), FxThemes.RELIC_WAVE_30, m, FxTone.DARK, 8);
                 m.discard();
                 it.remove();
             } else if (m.getTarget() != op) {

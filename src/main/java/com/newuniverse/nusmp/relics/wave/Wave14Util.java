@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.util.EnergyHelper;
@@ -35,6 +34,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 14: the small Minecraft helpers every card of the wave shares: where a player's own numbers are kept, effects by id (a Tensura effect with a
@@ -216,14 +218,14 @@ final class Wave14Util {
     }
 
     // ---------------------------------------------------------------- particles and words
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);                    // Rukh replaces vanilla dust: the colour only picks the alignment
     }
 
     /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
-    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+    static FxTone align(int rgb) {
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
-        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
+        return FxTone.of(lum < 0.33);
     }
 
     /** A line of particles (at most 48 points) from one point to another. */
@@ -234,7 +236,7 @@ final class Wave14Util {
         int n = (int) Math.max(2, Math.min(48, len * 2.0));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            RukhFx.spray(level, RukhFx.Alignment.of(particle == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_14, FxTone.of(com.newuniverse.nusmp.particle.fx.Fx.toneOf(particle) == FxTone.DARK), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 

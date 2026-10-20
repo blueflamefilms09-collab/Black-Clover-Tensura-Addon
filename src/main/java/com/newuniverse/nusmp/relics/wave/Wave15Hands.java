@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +29,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 15, the bracers and bracelets and the Crest of Foresight: Phasing, Initiative, the Phantom's Hand, Manhandling, the Arcane Blades, the Bear
@@ -53,7 +54,7 @@ final class Wave15Hands {
         ServerPlayer p = c.player();
         Wave15Util.give(p, 160, 1, "minecraft:speed");
         Wave15Util.give(p, 160, 1, "minecraft:haste");
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.7, 0.5, 0.08);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.7, 0.5, 0.08);
         Wave15Util.tell(p, "Initiative! Your hair streams in a breeze that is only for you.", ChatFormatting.AQUA);
     }
 
@@ -123,7 +124,7 @@ final class Wave15Hands {
         t.hasImpulse = true;
         t.fallDistance = 0f;
         Wave15Field.thrown(p, t);
-        Wave15Util.trail(p.serverLevel(), t.position().add(0, 0.5, 0), t.position().add(0, 0.5, 0).add(v.scale(3)), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+        Wave15Util.trail(p.serverLevel(), t.position().add(0, 0.5, 0), t.position().add(0, 0.5, 0).add(v.scale(3)), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_15, FxTone.LIGHT));
         Wave15Util.tell(p, "YEET.", ChatFormatting.AQUA);
     }
 
@@ -139,7 +140,7 @@ final class Wave15Hands {
         Vec3 hand = p.getEyePosition().add(look.scale(0.5)).add(0, -0.35, 0);
         var glow = Wave15Util.dust(0x9A7CFF, 1.0f);
         Wave15Util.trail(lv, hand.add(side), a.end(), glow);
-        Wave15Util.trail(lv, hand.subtract(side), a.end(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+        Wave15Util.trail(lv, hand.subtract(side), a.end(), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_15, FxTone.LIGHT));
         LivingEntity first = a.hit();
         if (first == null) return;
         LivingEntity second = null;
@@ -167,11 +168,11 @@ final class Wave15Hands {
         float add = 0f;
         if (RelicFlags.has(p, Wave15Rules.F_BEAR) && RelicEngine.isOn(p, Wave15Rules.ID_BEAR, "bear_paw")) {
             add += 3.0f;
-            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 1, 0, 0, 0, 0);
         }
         if (RelicFlags.has(p, Wave15Rules.F_BLADES) && RelicEngine.isOn(p, Wave15Rules.ID_BLADES, "blade_mode")) {
             add += 3.0f;
-            RukhFx.spray(p.serverLevel(), Wave15Util.align(0x9A7CFF), victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 6, 0.2, 0.3, 0.2, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0x9A7CFF), victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 6, 0.2, 0.3, 0.2, 0.0);
         }
         if (add > 0f) e.setAmount(e.getAmount() + add);
     }
@@ -257,7 +258,7 @@ final class Wave15Hands {
         Wave15Util.data(p).putLong("foresight_until", p.level().getGameTime() + 12000);
         Wave15Util.ensureMod(p, ARMOR, "foresight_ac", 2.0, Operation.ADD_VALUE);
         Wave15Util.give(p, 400, 0, "tensura:future_vision");
-        Fx.ring(p.serverLevel(), p.position(), 2.5, 0xFFF0A0);
+        FxRelic.ring(p.serverLevel(), p.position(), 2.5, 0xFFF0A0);
         Wave15Util.tell(p, "You have already seen this moment.", ChatFormatting.GOLD);
     }
 }

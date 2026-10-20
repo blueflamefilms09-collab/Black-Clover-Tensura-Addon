@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -32,6 +31,8 @@ import org.joml.Vector3f;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 17: the small glue the notebooks, pouches and charms share: the live stack of a relic, its data, per-player persistent data, a safe landing
@@ -103,14 +104,14 @@ public final class Wave17Kit {
     public static void hint(ServerPlayer p, String text, ChatFormatting colour) { p.displayClientMessage(Component.literal(text).withStyle(colour), true); }
 
     // ---------------------------------------------------------------- particles
-    public static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    public static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);                    // Rukh replaces vanilla dust: the colour only picks the alignment
     }
 
     /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
-    public static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+    public static FxTone align(int rgb) {
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
-        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
+        return FxTone.of(lum < 0.33);
     }
 
     // ---------------------------------------------------------------- a safe place to land

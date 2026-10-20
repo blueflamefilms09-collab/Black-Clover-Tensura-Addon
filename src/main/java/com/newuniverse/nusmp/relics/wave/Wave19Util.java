@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
@@ -30,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19: the small server-side helpers its consumables share: the player's own numbers (kept in persistent data, so they survive relog and
@@ -95,14 +96,14 @@ final class Wave19Util {
     }
 
     // ---------------------------------------------------------------- particles
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);                    // Rukh replaces vanilla dust: the colour only picks the alignment
     }
 
     /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
-    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+    static FxTone align(int rgb) {
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
-        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
+        return FxTone.of(lum < 0.33);
     }
 
     // ---------------------------------------------------------------- foes

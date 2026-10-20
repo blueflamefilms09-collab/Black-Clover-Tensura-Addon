@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -31,6 +30,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: one place for what each wand does when it is used, so the tabletop text of every card can be read next to the Minecraft rule it became.
@@ -53,7 +54,7 @@ final class Wave22Acts {
 
     private static IntUnaryOperator dice(ServerPlayer p) { return n -> 1 + p.getRandom().nextInt(n); }
 
-    private static RukhFx.Alignment al(boolean dark) { return RukhFx.Alignment.of(dark); }
+    private static FxTone al(boolean dark) { return FxTone.of(dark); }
 
     /** The creature in the line of sight within {@code range} that {@code ok} accepts (blocks stop the line); null if none. */
     private static LivingEntity target(ServerPlayer p, double range, java.util.function.Predicate<LivingEntity> ok) { return Wave10Acts.aim(p, range, ok).target(); }
@@ -62,8 +63,8 @@ final class Wave22Acts {
 
     private static void beam(ServerPlayer p, LivingEntity t, boolean dark) {
         if (p.level() instanceof ServerLevel l) {
-            RukhFx.stream(l, handPos(p), t.getBoundingBox().getCenter(), al(dark), 6);
-            RukhFx.burst(l, t, al(dark), 8);
+            com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_22, handPos(p), t.getBoundingBox().getCenter(), al(dark), 6);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, t, al(dark), 8);
         }
     }
 
@@ -250,7 +251,7 @@ final class Wave22Acts {
                 List<LivingEntity> foes = Fx.foesAround(p, 7.0);
                 if (foes.isEmpty()) return miss(p);
                 for (LivingEntity t : foes) Wave0Util.frighten(p, t, 140, 14, 0);
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(true), 12, 3.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(true), 12, 3.0);
             }
             default -> {
                 int n = 0;
@@ -260,7 +261,7 @@ final class Wave22Acts {
                 }
                 Fx.lendSkill(p, "tensura:magic_sense", 600);
                 note(p, "The dead whisper: " + n + " undead within 24 blocks.");
-                RukhFx.gather(l, p, al(true), 8);
+                com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_22, p, al(true), 8);
             }
         }
         return true;
@@ -345,7 +346,7 @@ final class Wave22Acts {
             p.hurtMarked = true;
         }
         ServerLevel l = p.serverLevel();
-        RukhFx.burst(l, p.position().add(0, 1.0, 0), al(true), 6, 0.5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1.0, 0), al(true), 6, 0.5);
         for (LivingEntity t : targets) {
             beam(p, t, true);
             Fx.damage(p, t, Wave22Rules.BLOOD_DAMAGE[idx], "minecraft:magic");
@@ -370,7 +371,7 @@ final class Wave22Acts {
         Wave22Rules.Form f = Wave22Rules.Form.of(Wave0Util.stackInt(ctx.stack(), K_FORM, 0));
         emberRecord(p, f);
         ServerLevel l = p.serverLevel();
-        RukhFx.burst(l, p.position().add(0, 1.2, 0), al(false), 12, 0.8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1.2, 0), al(false), 12, 0.8);
         l.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.7f, 1.3f);
         note(p, "A small flame takes the shape of a " + form(f) + " (10 minutes).");
     }
@@ -382,7 +383,7 @@ final class Wave22Acts {
         Wave0Util.edit(ctx.stack(), t -> t.putInt(K_FORM, f.ordinal()));
         CompoundTag d = Wave0Util.persisted(p);
         if (d.getLong(K_EMBER_UNTIL) > p.level().getGameTime()) d.putInt(K_EMBER_FORM, f.ordinal());
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 1.2, 0), al(false), 6, 0.6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_22, p.position().add(0, 1.2, 0), al(false), 6, 0.6);
         note(p, "The flame reshapes into a " + form(f) + ".");
     }
 
@@ -431,15 +432,15 @@ final class Wave22Acts {
             case 0 -> {                                                                               // Shield
                 Fx.shield(p, 6.0f, 200);
                 Fx.addEffect(p, "minecraft:resistance", 100, 1);
-                RukhFx.gather(l, p, al(false), 8);
+                com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_22, p, al(false), 8);
             }
             case 1 -> {                                                                               // Protection from Good and Evil
                 Fx.addEffect(p, "minecraft:resistance", 600, 0);
                 purge(p, "tensura:fear", "tensura:insanity", "tensura:hypnosis", "tensura:curse");
-                RukhFx.gather(l, p, al(false), 8);
+                com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_22, p, al(false), 8);
             }
             case 2 -> {                                                                               // Fog Cloud
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(true), 12, 2.5);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(true), 12, 2.5);
                 for (LivingEntity t : Fx.foesAround(p, 5.0)) {
                     ctrl(t, "minecraft:darkness", 120, 0);
                     ctrl(t, "minecraft:slowness", 80, 0);
@@ -447,7 +448,7 @@ final class Wave22Acts {
                 Fx.addEffect(p, "minecraft:invisibility", 60, 0);
             }
             case 3 -> {                                                                               // Grease
-                RukhFx.burst(l, p.position(), al(true), 10, 2.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position(), al(true), 10, 2.0);
                 for (LivingEntity t : Fx.foesAround(p, 4.0)) ctrl(t, "minecraft:slowness", 100, 2);
             }
             case 4 -> {                                                                               // Detect Magic
@@ -471,7 +472,7 @@ final class Wave22Acts {
                     ctrl(t, "minecraft:slowness", 100, 3);
                     if (t instanceof Mob m) m.setTarget(null);
                 }
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(false), 10, 2.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(false), 10, 2.0);
             }
             case 7 -> {                                                                               // Charm Person
                 LivingEntity t = target(p, 12, x -> foe(p, x));
@@ -498,13 +499,13 @@ final class Wave22Acts {
                     t.setRemainingFireTicks(60);
                     n++;
                 }
-                RukhFx.burst(l, handPos(p).add(look.scale(1.5)), al(false), 12, 1.2);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, handPos(p).add(look.scale(1.5)), al(false), 12, 1.2);
                 if (n == 0) note(p, "The flames find no one.");
             }
             case 10 -> {                                                                              // Silent Image
                 for (LivingEntity t : Fx.foesAround(p, 12.0)) if (t instanceof Mob m && m.getTarget() == p) m.setTarget(null);
                 Fx.addEffect(p, "minecraft:invisibility", 100, 0);
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(false), 12, 1.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(false), 12, 1.0);
             }
             case 11 -> {                                                                              // Color Spray
                 List<LivingEntity> foes = Fx.foesAround(p, 5.0);
@@ -513,7 +514,7 @@ final class Wave22Acts {
                     ctrl(t, "tensura:flashed_blindness", 60, 0);
                     ctrl(t, "minecraft:blindness", 60, 0);
                 }
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(false), 12, 2.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(false), 12, 2.0);
             }
             case 12 -> {                                                                              // Ray of Sickness
                 LivingEntity t = target(p, 14, x -> foe(p, x));
@@ -526,15 +527,15 @@ final class Wave22Acts {
                 List<LivingEntity> foes = Fx.foesAround(p, 5.0);
                 if (foes.isEmpty()) return miss(p);
                 for (LivingEntity t : foes) Wave0Util.frighten(p, t, 120, 13, 0);
-                RukhFx.burst(l, p.position().add(0, 1, 0), al(true), 10, 2.0);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1, 0), al(true), 10, 2.0);
             }
             case 14 -> {                                                                              // Feather Fall
                 Fx.addEffect(p, "minecraft:slow_falling", 1800, 0);
-                RukhFx.gather(l, p, al(false), 6);
+                com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_22, p, al(false), 6);
             }
             default -> {                                                                              // Jump
                 Fx.addEffect(p, "minecraft:jump_boost", 1200, 2);
-                RukhFx.gather(l, p, al(false), 6);
+                com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_22, p, al(false), 6);
             }
         }
         return true;
@@ -551,7 +552,7 @@ final class Wave22Acts {
             ctrl(t, "tensura:flashed_blindness", Wave22Rules.blindTicks(80), 0);
             Fx.addEffect(t, "minecraft:glowing", Wave22Rules.SUNBURST_TICKS, 0);
         }
-        RukhFx.burst(l, p.position().add(0, 1.6, 0), al(false), 12, 1.5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_22, p.position().add(0, 1.6, 0), al(false), 12, 1.5);
         l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 1.6f);
         note(p, foes.isEmpty() ? "The little sun flares, but no one is near." : foes.size() + " creature(s) dazzled.");
     }
@@ -571,7 +572,7 @@ final class Wave22Acts {
         c.putString("dim", p.level().dimension().location().toString());
         next.add(c);
         Wave0Util.edit(ctx.stack(), t -> t.put(K_PLACES, next));
-        RukhFx.gather(p.serverLevel(), p, al(false), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_22, p, al(false), 8);
         note(p, "The staff keeps this place as an image (" + next.size() + "/" + Wave22Rules.PROJECTION_PLACES + ").");
     }
 
@@ -589,7 +590,7 @@ final class Wave22Acts {
             Vec3 to = new Vec3(c.getInt("x") + 0.5, c.getInt("y") + 1.0, c.getInt("z") + 0.5);
             Vec3 d = to.subtract(p.position());
             Vec3 dir = d.lengthSqr() < 1.0e-4 ? p.getLookAngle() : d.normalize();
-            RukhFx.stream(l, p.getEyePosition().add(0, -0.3, 0), p.getEyePosition().add(dir.scale(Math.min(5.0, d.length()))), al(false), 6);
+            com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_22, p.getEyePosition().add(0, -0.3, 0), p.getEyePosition().add(dir.scale(Math.min(5.0, d.length()))), al(false), 6);
             sb.append("#").append(i + 1).append(" ").append((int) d.length()).append(" blocks ").append(Wave22Rules.bearing(d.x, d.z)).append("  ");
         }
         Fx.say(p, "Projection: " + sb.toString().trim());
@@ -622,7 +623,7 @@ final class Wave22Acts {
         if (from == dest) {
             for (LivingEntity e : from.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(3.0), e -> e != p && e.isAlive() && !(e instanceof ServerPlayer o && (o.isSpectator() || o.isCreative())) && carry(p, e))) friends.add(e);
         }
-        RukhFx.burst(from, start.add(0, 1, 0), al(false), 12, 1.2);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(from, FxThemes.RELIC_WAVE_22, start.add(0, 1, 0), al(false), 12, 1.2);
         p.teleportTo(dest, x, landY, z, p.getYRot(), p.getXRot());
         p.fallDistance = 0;
         for (LivingEntity e : friends) {
@@ -632,7 +633,7 @@ final class Wave22Acts {
             e.fallDistance = 0;
             if (e instanceof Mob m) m.getNavigation().stop();
         }
-        RukhFx.burst(dest, new Vec3(x, landY + 1, z), al(false), 12, 1.2);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(dest, FxThemes.RELIC_WAVE_22, new Vec3(x, landY + 1, z), al(false), 12, 1.2);
         dest.playSound(null, BlockPos.containing(x, landY, z), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 0.8f);
         Fx.say(p, "The rainbow bridge carries you home" + (friends.isEmpty() ? "." : " with " + friends.size() + " companion(s)."));
     }
@@ -655,7 +656,7 @@ final class Wave22Acts {
         for (LivingEntity t : foes) {
             t.getPersistentData().putLong(K_FAERIE, until);
             Fx.addEffect(t, "minecraft:glowing", Wave22Rules.FAERIE_TICKS, 0);
-            RukhFx.burst(p.serverLevel(), t, al(false), 4);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_22, t, al(false), 4);
         }
         note(p, foes.size() + " foe(s) outlined in faerie fire.");
     }
@@ -670,7 +671,7 @@ final class Wave22Acts {
         d.putInt(K_WISPS, Wave22Rules.wispCount(current));
         d.putLong(K_WISP_UNTIL, now + Wave22Rules.WISP_TICKS);
         Vec3 spot = handPos(p).add(p.getLookAngle().scale(2.0));
-        RukhFx.burst(p.serverLevel(), spot, al(false), 12, 0.6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_22, spot, al(false), 12, 0.6);
         note(p, "A will-o-wisp joins you (" + d.getInt(K_WISPS) + "/" + Wave22Rules.WISP_MAX + ", one minute).");
     }
 

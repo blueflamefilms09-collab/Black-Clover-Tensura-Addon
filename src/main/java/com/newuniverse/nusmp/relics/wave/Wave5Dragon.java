@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,6 +20,9 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Amulet of Dragon Rage. The command word turns the wearer into an Adult Silver Dragon for two minutes (the tabletop hour), once a day, for
@@ -64,9 +66,9 @@ final class Wave5Dragon {
         Wave5Skills.lendAll(p, 60, Wave5Skills.PHYSICAL_RESIST, Wave5Skills.DANGER_SENSE, Wave5Skills.MAGIC_SENSE);
         p.setAbsorptionAmount(Wave5Pure.DRAGON_POOL);
         ServerLevel l = p.serverLevel();
-        Fx.burst(l, p.position().add(0, 1.0, 0), SILVER);
-        Fx.ring(l, p.position().add(0, 0.2, 0), 3.0, SILVER);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 30, 0.9);
+        FxRelic.burst(l, p.position().add(0, 1.0, 0), SILVER);
+        FxRelic.ring(l, p.position().add(0, 0.2, 0), 3.0, SILVER);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 30, 0.9);
         Wave5Aim.sound(l, p.position(), SoundEvents.ENDER_DRAGON_GROWL, 1.0f, 1.3f);
         Wave5Aim.msg(p, "The command word: you are an Adult Silver Dragon. Two minutes. Your hit points are the dragon's now.", ChatFormatting.AQUA);
     }
@@ -91,7 +93,7 @@ final class Wave5Dragon {
         ServerLevel l = p.serverLevel();
         Vec3 from = Wave5Aim.muzzle(p);
         Vec3 look = p.getLookAngle();
-        for (int i = 1; i <= 5; i++) Wave5Aim.puff(l, from.add(look.scale(9.0 * i / 5.0)), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.25 * i);
+        for (int i = 1; i <= 5; i++) Wave5Aim.puff(l, from.add(look.scale(9.0 * i / 5.0)), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 10, 0.25 * i);
         Wave5Aim.sound(l, from, SoundEvents.ENDER_DRAGON_GROWL, 0.8f, 1.8f);
         List<LivingEntity> hit = Wave5Aim.cone(p, 9.0, 0.7, 8);
         for (LivingEntity e : hit) {
@@ -151,8 +153,8 @@ final class Wave5Dragon {
         Wave5Attr.clamp(p);
         if (message != null) {
             ServerLevel l = p.serverLevel();
-            Fx.ring(l, p.position().add(0, 0.2, 0), 2.0, SILVER);
-            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16, 0.7);
+            FxRelic.ring(l, p.position().add(0, 0.2, 0), 2.0, SILVER);
+            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 16, 0.7);
             Wave5Aim.msg(p, message, ChatFormatting.AQUA);
         }
     }
@@ -183,8 +185,8 @@ final class Wave5Dragon {
         if (p.tickCount % 20 == 0) {
             // the dragon's senses and scales as Tensura skills, merged into the one form for as long as it lasts
             Wave5Skills.lendAll(p, 60, Wave5Skills.PHYSICAL_RESIST, Wave5Skills.DANGER_SENSE, Wave5Skills.MAGIC_SENSE);
-            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.2, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 0.8);
-            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 1.0);
+            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.2, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 6, 0.8);
+            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 6, 1.0);
         }
     }
 

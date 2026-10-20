@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.relics.wave.Wave3Rules.MarbleField;
 import com.newuniverse.nusmp.relics.wave.Wave3Rules.Slots;
 import com.newuniverse.nusmp.relics.wave.Wave3Rules.Step;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -24,6 +23,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 3: the things that stay in the world after an ability has run, kept in three short bounded lists and stepped from the server tick:
@@ -92,15 +95,15 @@ final class Wave3Field {
 
     private static void slip(ServerLevel sl, LivingEntity e) {
         Wave3Util.give(e, 30, 6, "minecraft:slowness");
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 0.1, e.getZ(), 6, 0.3, 0.05, 0.3, 0.1);
+        Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, e.getX(), e.getY() + 0.1, e.getZ(), 6, 0.3, 0.05, 0.3, 0.1);
         sl.playSound(null, e.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.8f, 1.6f);
     }
 
     /** The marbles go off: coloured sparks, and a blinded creature for "1d4 rounds". */
     private static void pop(ServerLevel sl, LivingEntity e) {
         int[] colours = {0xE250D8, 0xFF9A2E, 0x2EE8D8, 0x58E848, 0xB48CFF};
-        for (int c : colours) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.relics.Fx.align(c), e.getX(), e.getY() + 0.5, e.getZ(), 6, 0.45, 0.4, 0.45, 0.05);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 0.6, e.getZ(), 14, 0.4, 0.4, 0.4, 0.12);
+        for (int c : colours) Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxRelic.tone(c), e.getX(), e.getY() + 0.5, e.getZ(), 6, 0.45, 0.4, 0.45, 0.05);
+        Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, e.getX(), e.getY() + 0.6, e.getZ(), 14, 0.4, 0.4, 0.4, 0.12);
         sl.playSound(null, e.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 0.9f, 1.3f);
         Wave3Util.give(e, Wave3Rules.blindTicks(1 + sl.getRandom().nextInt(4)), 0, "minecraft:blindness");
     }
@@ -121,8 +124,8 @@ final class Wave3Field {
                 continue;
             }
             double r = c.radius();
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.at().x, c.at().y + 1.0, c.at().z, 10, r * 0.45, 0.8, r * 0.45, 0.01);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.at().x, c.at().y + 0.6, c.at().z, 3, r * 0.4, 0.4, r * 0.4, 0.01);
+            Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, c.at().x, c.at().y + 1.0, c.at().z, 10, r * 0.45, 0.8, r * 0.45, 0.01);
+            Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, c.at().x, c.at().y + 0.6, c.at().z, 3, r * 0.4, 0.4, r * 0.4, 0.01);
             if (t % 20 != 0) continue;
             ServerPlayer owner = server.getPlayerList().getPlayer(c.owner());
             int n = 0;

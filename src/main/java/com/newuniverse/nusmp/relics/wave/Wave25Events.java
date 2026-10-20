@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -34,6 +33,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the game-bus handlers of the wave 25 relics. One damage listener (the Rose's ensnaring blow and thorns, the Forgotten Ring's ambush, the spider
@@ -89,7 +89,7 @@ final class Wave25Events {
                 Wave25Data.remove(atk, Wave25Data.ENSNARE_UNTIL);
                 e.setAmount(e.getAmount() + Wave25Tune.ENSNARE_BONUS);
                 Fx.addEffect(victim, "minecraft:slowness", Wave25Tune.ENSNARE_ROOT, 5);
-                RukhFx.burst(atk.serverLevel(), victim, Wave25Kit.light(), 5);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(atk.serverLevel(), FxThemes.RELIC_WAVE_25, victim, Wave25Kit.light(), 5);
                 Wave25Kit.hint(atk, "Thorned vines bind " + victim.getName().getString() + ".");
             } else if (until != 0L && until <= now) {
                 Wave25Data.remove(atk, Wave25Data.ENSNARE_UNTIL);
@@ -209,7 +209,7 @@ final class Wave25Events {
             ServerLevel level = server.getLevel(r.dimension());
             if (level == null || level.getGameTime() >= r.until()) { REPLAYS.remove(i); continue; }
             double a = level.getGameTime() * 0.35, h = 0.4 + ((r.until() - level.getGameTime()) % 40) * 0.04;
-            RukhFx.spray(level, Wave25Kit.light(), r.at().x + Math.cos(a) * 0.5, r.at().y + h, r.at().z + Math.sin(a) * 0.5, 1, 0, 0.04, 0, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_25, Wave25Kit.light(), r.at().x + Math.cos(a) * 0.5, r.at().y + h, r.at().z + Math.sin(a) * 0.5, 1, 0, 0.04, 0, 0.0);
         }
     }
 
@@ -276,7 +276,7 @@ final class Wave25Events {
             if (n++ >= Wave25Tune.GAME_CURSE_MOBS) break;
             if (!p.isCreative()) m.setTarget(p);
         }
-        RukhFx.burst(level, p, Wave25Kit.dark(), 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 6);
     }
 
     // ---------------------------------------------------------------- Ring of the Mimic
@@ -312,7 +312,7 @@ final class Wave25Events {
 
     // ---------------------------------------------------------------- Spirit Lantern
     private static void lantern(ServerPlayer p, ServerLevel level) {
-        RukhFx.aura(level, p, Wave25Kit.light());
+        com.newuniverse.nusmp.particle.fx.Fx.aura(level, FxThemes.RELIC_WAVE_25, p, Wave25Kit.light());
         if (level.getMaxLocalRawBrightness(p.blockPosition()) < Wave25Tune.LANTERN_DARK) Wave6Kit.give(p, "minecraft:night_vision", 260, 0, true);
         int n = 0;
         for (LivingEntity t : level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(Wave25Tune.LANTERN_GLOW_RANGE), t -> t != p && t.isAlive() && t.getType().is(EntityTypeTags.UNDEAD))) {
@@ -335,7 +335,7 @@ final class Wave25Events {
         Wave25Data.putBool(p, Wave25Data.VANISHED, false);
         Wave6Kit.lift(p, "minecraft:invisibility");
         if (line != null) Wave25Kit.hint(p, line);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 4);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 4);
     }
 
     // ---------------------------------------------------------------- Witch's Ring
@@ -365,7 +365,7 @@ final class Wave25Events {
             Wave25Kit.setMod(p, attr, m, 0, Operation.ADD_VALUE, false);
         }
         if (line != null) Wave25Kit.hint(p, line);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 6);
     }
 
     // ---------------------------------------------------------------- Bucket of Disguise
@@ -433,7 +433,7 @@ final class Wave25Events {
                 Wave25Data.putInt(p, Wave25Data.DK_CON, 0);
                 float dmg = Wave25Pure.selfHurt(Wave25Pure.curseDamage(stage, p.getRandom()::nextInt), p.getHealth(), p.getMaxHealth(), Wave25Tune.DKH_CAP);
                 if (dmg > 0f) p.hurt(p.damageSources().magic(), dmg);
-                RukhFx.burst(level, p, Wave25Kit.dark(), 8);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 8);
                 Fx.say(p, "Death's Call (DC " + dc + ") finds you: your mind burns for " + (int) dmg + " and the helmet takes its stamina back. The next failure hurts " + (stage + 1) + " times 2d8.");
             }
         }

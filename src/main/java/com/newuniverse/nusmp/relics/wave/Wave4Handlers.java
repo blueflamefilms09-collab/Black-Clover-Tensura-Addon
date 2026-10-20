@@ -22,6 +22,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the game-bus listeners of the neck relics. All cheap: each begins with a type check or an empty-table check.
@@ -69,8 +70,8 @@ final class Wave4Handlers {
         Wave4Echo.start(p.getUUID(), now, warriors);
         Wave4Upkeep.shakeSkillDebuffs(p);                                          // no spell effect of Tensura's holds on you either
         if (warriors.isEmpty()) Fx.shield(p, 6f, 200);                              // no warrior could answer: a shell of bone for five seconds
-        Fx.ring(lv, p.position().add(0, 0.3, 0), 2.5, BONE);
-        Fx.burst(lv, p.position().add(0, 1.0, 0), BONE);
+        FxRelic.ring(lv, p.position().add(0, 0.3, 0), 2.5, BONE);
+        FxRelic.burst(lv, p.position().add(0, 1.0, 0), BONE);
         Fx.say(p, warriors.isEmpty() ? "The pendant cracks the blow into a shell of bone: you hang on at 1 health."
                 : "The pendant echoes: you hang on at 1 health and " + warriors.size() + " spectral " + (warriors.size() == 1 ? "warrior rises" : "warriors rise")
                 + ". Nothing can touch you until they fall (at most a minute). It will not answer again for a day.");

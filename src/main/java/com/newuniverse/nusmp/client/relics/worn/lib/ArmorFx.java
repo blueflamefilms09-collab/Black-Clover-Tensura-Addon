@@ -1,17 +1,17 @@
 package com.newuniverse.nusmp.client.relics.worn.lib;
 
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import com.newuniverse.nusmp.client.relics.fx.FxQuality;
 import com.newuniverse.nusmp.client.relics.fx.FxTheme;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The ambient particles of the mod's armour items (the robe sets ...): embers off a Crimson Lion mantle, petals off the Heart uniform, sparks off a Black Bull robe, themed by
@@ -54,14 +54,14 @@ public final class ArmorFx {
         double vx = (rnd.nextDouble() - 0.5) * 0.01, vz = (rnd.nextDouble() - 0.5) * 0.01;
         int glow = e.colors[WornMesh.GLOW], main = e.colors[WornMesh.MAIN];
         switch (e.theme) {
-            case EMBER -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
-            case SNOW -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
-            case SPARK -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
-            case LEAF -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
-            case WISP -> RukhClientFx.spray(level, Alignment.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
-            case STAR -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
-            case BEE -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
-            case PETAL -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case EMBER -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
+            case SNOW -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
+            case SPARK -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
+            case LEAF -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case WISP -> Fx.spray(level, FxThemes.RELIC, FxTone.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
+            case STAR -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
+            case BEE -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
+            case PETAL -> Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
             default -> { }
         }
     }

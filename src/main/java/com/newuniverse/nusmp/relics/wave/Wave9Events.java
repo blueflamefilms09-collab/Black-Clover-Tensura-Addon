@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.Attune;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -56,6 +54,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 9: the game-bus rules of the ten weapons: bonuses on a blow, what a weapon does to the one it strikes, the frost patches, the rebelling
@@ -198,7 +199,7 @@ final class Wave9Events {
             proj.setOwner(vp);
             proj.setDeltaMovement(proj.getDeltaMovement().scale(-0.8));
             proj.hurtMarked = true;
-            RukhFx.spray(((ServerLevel) vp.level()), RukhFx.Alignment.LIGHT, proj.getX(), proj.getY(), proj.getZ(), 8, 0.2, 0.2, 0.2, 0.2);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) vp.level()), FxThemes.RELIC_WAVE_9, FxTone.LIGHT, proj.getX(), proj.getY(), proj.getZ(), 8, 0.2, 0.2, 0.2, 0.2);
             return;
         }
         if (!proj.getPersistentData().getBoolean(K_SURFACE) || !(proj.getOwner() instanceof ServerPlayer owner)) return;
@@ -218,8 +219,8 @@ final class Wave9Events {
         }
         while (!PATCHES.isEmpty() && PATCHES.size() >= Wave9Rules.FROST_PATCH_CAP) PATCHES.remove(0);
         PATCHES.add(new Patch(level.dimension(), at, level.getGameTime() + Wave9Rules.FROST_PATCH_TICKS, owner.getUUID()));
-        Fx.ring(level, at, Wave9Rules.FROST_PATCH_RADIUS, 0x9FE8FF);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, at.x, at.y + 0.3, at.z, 30, 1.2, 0.3, 1.2, 0.02);
+        FxRelic.ring(level, at, Wave9Rules.FROST_PATCH_RADIUS, 0x9FE8FF);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, at.x, at.y + 0.3, at.z, 30, 1.2, 0.3, 1.2, 0.02);
         if (Labyrinth.in(level)) return;                                                   // the Dungeon's blocks are not for turning into ice
         int r = (int) Math.ceil(Wave9Rules.FROST_PATCH_RADIUS);
         BlockPos c = BlockPos.containing(at);
@@ -254,7 +255,7 @@ final class Wave9Events {
             Fx.addEffect(victim, "minecraft:slowness", ticks, Wave9Rules.FROST_SLOW_AMP);       // "movement speed is halved"
             Fx.addEffect(victim, "tensura:frost", ticks, 0);
             victim.setTicksFrozen(Math.min(victim.getTicksRequiredToFreeze() + 40, victim.getTicksFrozen() + 60));
-            RukhFx.spray(((ServerLevel) victim.level()), RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 12, 0.3, 0.4, 0.3, 0.03);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) victim.level()), FxThemes.RELIC_WAVE_9, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 12, 0.3, 0.4, 0.3, 0.03);
         }
 
         if (victim instanceof ServerPlayer vp) incomingOnWielder(e, vp, src, now);
@@ -273,8 +274,8 @@ final class Wave9Events {
         switch (id) {
             case "astralaria" -> {                                                              // 3d6 radiant, as a flat blow of light
                 e.setAmount(e.getAmount() + 4.5f);
-                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.05);
-                RukhFx.spray(level, RukhFx.Alignment.DARK, atk.getX(), atk.getY() + 1.2, atk.getZ(), 10, 0.5, 0.5, 0.5, 0.5);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.5, 0.3, 0.05);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.DARK, atk.getX(), atk.getY() + 1.2, atk.getZ(), 10, 0.5, 0.5, 0.5, 0.5);
             }
             case "null_blade" -> nullStrike(e, atk, victim, level, now);
             case "viper_whip" -> {                                                              // 1d4 + 1d6 poison
@@ -286,7 +287,7 @@ final class Wave9Events {
                 float amount = e.getAmount();
                 if (Wave9Rules.twinCrit(atk.getRandom().nextDouble())) {
                     amount *= 1.5f;
-                    RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.2);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.2);
                 }
                 e.setAmount(amount);
             }
@@ -314,7 +315,7 @@ final class Wave9Events {
             }
             e.setAmount(e.getAmount() * 0.4f);
             if (src.getEntity() instanceof LivingEntity foe && foe != vp && foe.distanceToSqr(vp) < 25.0) {
-                RukhFx.spray(((ServerLevel) vp.level()), RukhFx.Alignment.LIGHT, vp.getX(), vp.getY() + 1.1, vp.getZ(), 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) vp.level()), FxThemes.RELIC_WAVE_9, FxTone.LIGHT, vp.getX(), vp.getY() + 1.1, vp.getZ(), 1, 0, 0, 0, 0);
                 Wave9Acts.quiet(() -> Fx.damage(vp, foe, 2.5f, "minecraft:player_attack"));      // the riposte
             }
         }
@@ -346,14 +347,14 @@ final class Wave9Events {
                 Fx.addEffect(foe, "minecraft:slowness", ticks, 6);
                 Fx.addEffect(foe, "tensura:paralysis", ticks / 2, 0);
                 Fx.addEffect(foe, "tensura:frost", ticks, 1);
-                RukhFx.spray(((ServerLevel) foe.level()), RukhFx.Alignment.LIGHT, foe.getX(), foe.getY() + 1.0, foe.getZ(), 30, 0.4, 0.8, 0.4, 0.04);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) foe.level()), FxThemes.RELIC_WAVE_9, FxTone.LIGHT, foe.getX(), foe.getY() + 1.0, foe.getZ(), 30, 0.4, 0.8, 0.4, 0.04);
             } else if (d.getLong(K_EYE) <= now) {
                 d.putLong(K_EYE, now + Wave9Rules.EYE_COOLDOWN);
                 int ticks = Wave9Rules.controlTicks(Wave9Rules.RESTRAIN_TICKS, foe.getMaxHealth());
                 ft.putLong(K_RESTRAIN, now + Wave9Rules.FREEZE_WINDOW);
                 Fx.addEffect(foe, "minecraft:slowness", ticks, 4);
                 Fx.addEffect(foe, "tensura:frost", ticks, 0);
-                RukhFx.spray(((ServerLevel) foe.level()), RukhFx.Alignment.LIGHT, foe.getX(), foe.getY() + 1.0, foe.getZ(), 16, 0.3, 0.6, 0.3, 0.03);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(((ServerLevel) foe.level()), FxThemes.RELIC_WAVE_9, FxTone.LIGHT, foe.getX(), foe.getY() + 1.0, foe.getZ(), 16, 0.3, 0.6, 0.3, 0.03);
             }
         }
     }
@@ -361,7 +362,7 @@ final class Wave9Events {
     private static void nullStrike(LivingIncomingDamageEvent e, ServerPlayer atk, LivingEntity victim, ServerLevel level, long now) {
         e.setAmount(e.getAmount() + 3.0f);                                                     // the extra d6 of cold; the blade deals cold in place of slashing
         Fx.addEffect(victim, "tensura:frost", 60, 0);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.5, 0.3, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.5, 0.3, 0.03);
         AttributeInstance mh = victim.getAttribute(Attributes.MAX_HEALTH);
         if (mh == null) return;
         boolean player = victim instanceof Player;
@@ -427,12 +428,12 @@ final class Wave9Events {
         Fx.addEffect(victim, "tensura:corrosion", 80, 0);
         CompoundTag d = atk.getPersistentData();
         d.putLong(K_FED, now);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.4, 0.3, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.4, 0.3, 0.05);
         if (d.getLong(K_DEVOUR) >= now) {                                                      // Devouring: the blood becomes temporary health
             d.remove(K_DEVOUR);
             double gain = Wave9Rules.devourTemp(e.getAmount(), victim instanceof Player);
             if (gain > 0.0) tempHp(atk, Math.min(atk.getAbsorptionAmount() + gain, 16.0));
-            RukhFx.spray(level, RukhFx.Alignment.DARK, atk.getX(), atk.getY() + 1.4, atk.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_9, FxTone.DARK, atk.getX(), atk.getY() + 1.4, atk.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
         }
     }
 
@@ -447,7 +448,7 @@ final class Wave9Events {
         Wave9Store.put(blade, "kills", before + 1);
         if (!Wave9Rules.awakened(before) && Wave9Rules.awakened(before + 1)) {
             Fx.say(p, "Twenty lives taken. The Null Blade awakens: cold and necrotic harm is halved, and Armor of Agathys answers your call.");
-            Fx.burst((ServerLevel) p.level(), p.position(), 0x9FE8FF);
+            FxRelic.burst((ServerLevel) p.level(), p.position(), 0x9FE8FF);
         }
     }
 
@@ -478,8 +479,8 @@ final class Wave9Events {
             case "astralaria" -> {
                 if (RelicEngine.isOn(p, "astralaria", "footprints") && p.onGround() && p.getDeltaMovement().horizontalDistanceSqr() > 0.002) {
                     ServerLevel l = (ServerLevel) p.level();
-                    RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.05, p.getZ(), 1, 0.18, 0.0, 0.18, 0.0);
-                    RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.08, p.getZ(), 3, 0.2, 0.0, 0.2, 0.0);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, p.getX(), p.getY() + 0.05, p.getZ(), 1, 0.18, 0.0, 0.18, 0.0);
+                    com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, p.getX(), p.getY() + 0.08, p.getZ(), 3, 0.2, 0.0, 0.2, 0.0);
                 }
                 if (p.tickCount % 20 == 1) revealInvisible(p);
             }
@@ -633,7 +634,7 @@ final class Wave9Events {
                 continue;
             }
             double r = Wave9Rules.FROST_PATCH_RADIUS;
-            RukhFx.spray(l, RukhFx.Alignment.LIGHT, pt.at().x, pt.at().y + 0.2, pt.at().z, 5, r * 0.5, 0.1, r * 0.5, 0.01);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_9, FxTone.LIGHT, pt.at().x, pt.at().y + 0.2, pt.at().z, 5, r * 0.5, 0.1, r * 0.5, 0.01);
             AABB box = new AABB(pt.at().x - r, pt.at().y - 1.0, pt.at().z - r, pt.at().x + r, pt.at().y + 2.0, pt.at().z + r);
             int n = 0;
             for (LivingEntity x : l.getEntitiesOfClass(LivingEntity.class, box, v -> v.isAlive() && !v.isSpectator() && !v.getUUID().equals(pt.owner())
@@ -686,7 +687,7 @@ final class Wave9Events {
             v.getPersistentData().putLong(K_ROGUE, now + Wave9Rules.ROGUE_LIFE);                  // not persistent: if it is left behind it despawns like any raider
             v.setTarget(owner);
             if (l.addFreshEntity(v)) ROGUES.put(v.getUUID(), now + Wave9Rules.ROGUE_LIFE);
-            Fx.burst(l, v.position(), 0x8B2E2E);
+            FxRelic.burst(l, v.position(), 0x8B2E2E);
         }
     }
 
@@ -700,7 +701,7 @@ final class Wave9Events {
                 continue;
             }
             if (m.level().getGameTime() >= en.getValue()) {
-                Fx.burst((ServerLevel) m.level(), m.position(), 0x8888AA);
+                FxRelic.burst((ServerLevel) m.level(), m.position(), 0x8888AA);
                 m.discard();
                 it.remove();
             }

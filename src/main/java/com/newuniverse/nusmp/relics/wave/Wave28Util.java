@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -37,6 +36,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: every card of the wave needs the same few safe lookups (a mob effect that may not exist, an attribute that may not be there, a target that must
@@ -208,18 +210,18 @@ final class Wave28Util {
 
     // ---------------------------------------------------------------- particles, words, items
     /** A line of Rukh (at most 40 points) from one point to another. */
-    static void trail(ServerLevel level, Vec3 from, Vec3 to, RukhFx.Alignment a) {
+    static void trail(ServerLevel level, Vec3 from, Vec3 to, FxTone a) {
         Vec3 d = to.subtract(from);
         double len = d.length();
         if (len < 0.1) return;
         int n = (int) Math.max(2, Math.min(40, len * 2.0));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            RukhFx.spray(level, a, at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            Fx.spray(level, FxThemes.RELIC_WAVE_28, a, at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 
-    static void burst(ServerLevel level, Vec3 at, RukhFx.Alignment a, int count) { RukhFx.burst(level, at, a, count, 0.5); }
+    static void burst(ServerLevel level, Vec3 at, FxTone a, int count) { Fx.burst(level, FxThemes.RELIC_WAVE_28, at, a, count, 0.5); }
 
     /** A line on the action bar (the chat stays quiet for the small things). */
     static void tell(ServerPlayer p, String text, ChatFormatting colour) {

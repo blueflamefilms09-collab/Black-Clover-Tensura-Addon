@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +27,9 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Hemlock's Amulet. The Mask of the Living (an ability, paid in mana) hides the wearer from the dead for a few minutes: undead creatures can not
@@ -60,7 +62,7 @@ final class Wave5Hemlock {
         int tier = Wave5Pure.tier(Wave5Data.stack(s).getInt("energy"));
         d.putLong(VEIL, now + Wave5Pure.veilTicks(tier));
         ServerLevel l = p.serverLevel();
-        Fx.ring(l, p.position().add(0, 0.2, 0), 1.6, MASK_COLOUR);
+        FxRelic.ring(l, p.position().add(0, 0.2, 0), 1.6, MASK_COLOUR);
         Wave5Aim.sound(l, p.position(), SoundEvents.ILLUSIONER_CAST_SPELL, 0.8f, 0.7f);
         Wave5Aim.msg(p, "You wear the face of a living man: the dead can not find you for " + Wave5Pure.veilTicks(tier) / 1200 + " minutes.", ChatFormatting.LIGHT_PURPLE);
     }
@@ -173,7 +175,7 @@ final class Wave5Hemlock {
         int was = Wave5Pure.tier(before), now = Wave5Pure.tier(after);
         if (now > was) {
             ServerLevel l = p.serverLevel();
-            Fx.burst(l, p.position().add(0, 1.0, 0), MASK_COLOUR);
+            FxRelic.burst(l, p.position().add(0, 1.0, 0), MASK_COLOUR);
             Wave5Aim.sound(l, p.position(), SoundEvents.BEACON_ACTIVATE, 0.9f, 0.6f);
             Wave5Aim.msg(p, now == 1
                     ? "Hemlock's Amulet is Awakened: it has drunk enough to hold more than it did."
@@ -202,9 +204,9 @@ final class Wave5Hemlock {
         Fx.addEffect(p, "minecraft:weakness", 1800, 0);          // soul-torn: weak for a minute and a half
         Fx.addEffect(p, "minecraft:slowness", 600, 0);
         ServerLevel l = p.serverLevel();
-        Fx.burst(l, p.position().add(0, 1.0, 0), MASK_COLOUR);
-        Fx.ring(l, p.position().add(0, 0.2, 0), 2.5, MASK_COLOUR);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 24, 0.6);
+        FxRelic.burst(l, p.position().add(0, 1.0, 0), MASK_COLOUR);
+        FxRelic.ring(l, p.position().add(0, 0.2, 0), 2.5, MASK_COLOUR);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.DARK), 24, 0.6);
         Wave5Aim.sound(l, p.position(), SoundEvents.TOTEM_USE, 1.0f, 0.6f);
         Wave5Aim.msg(p, "The Reliquary holds your soul in the world: you rise, soul-torn. It will not do this again for a day.", ChatFormatting.DARK_PURPLE);
         return true;

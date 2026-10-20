@@ -1,12 +1,10 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +34,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 10: the act bodies of the ten weapons (the server side of every right-click, sneak-click and worn-relic key). The core has already checked
@@ -91,22 +92,22 @@ final class Wave10Acts {
         int n = Mth.clamp((int) (len / Math.max(0.2, step)), 1, 48);
         Vec3 d = to.subtract(from).scale(1.0 / n);
         var dust = align(rgb);
-        for (int i = 0; i <= n; i++) RukhFx.spray(l, dust, from.x + d.x * i, from.y + d.y * i, from.z + d.z * i, 1, 0.02, 0.02, 0.02, 0.0);
+        for (int i = 0; i <= n; i++) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, dust, from.x + d.x * i, from.y + d.y * i, from.z + d.z * i, 1, 0.02, 0.02, 0.02, 0.0);
     }
 
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);                    // Rukh replaces vanilla dust: the colour only picks the alignment
     }
 
     /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
-    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+    static FxTone align(int rgb) {
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
-        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
+        return FxTone.of(lum < 0.33);
     }
 
     private static void waterBurst(ServerLevel l, Vec3 at) {
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 40, 0.5, 0.4, 0.5, 0.2);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 16, 0.4, 0.4, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, at.x, at.y, at.z, 40, 0.5, 0.4, 0.5, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, at.x, at.y, at.z, 16, 0.4, 0.4, 0.4, 0.05);
         l.playSound(null, BlockPos.containing(at), SoundEvents.PLAYER_SPLASH, SoundSource.PLAYERS, 0.9f, 1.2f);
     }
 
@@ -142,8 +143,8 @@ final class Wave10Acts {
         giveBuff(t, b);
         ServerLevel l = p.serverLevel();
         Vec3 at = t.position().add(0, t.getBbHeight() * 0.6, 0);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 10, 0.4, 0.4, 0.4, 0.02);
-        Fx.burst(l, at, 0xFFB8F0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, at.x, at.y, at.z, 10, 0.4, 0.4, 0.4, 0.02);
+        FxRelic.burst(l, at, 0xFFB8F0);
         l.playSound(null, BlockPos.containing(at), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.4f);
         Fx.say(p, (t == p ? "No one in reach: the horn pokes you. " : "You poke " + nameOf(t) + ". ") + "The d8 shows " + roll + ": "
                 + b.effect().substring(b.effect().indexOf(':') + 1).replace('_', ' ') + ".");
@@ -163,7 +164,7 @@ final class Wave10Acts {
         if (ctx.isOn("light")) {
             int col = (d.getInt(K_LIGHT_COL) + 1) % Wave10Rules.LIGHT_COLOURS.length;
             d.putInt(K_LIGHT_COL, col);
-            Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), Wave10Rules.lightColour(col));
+            FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), Wave10Rules.lightColour(col));
             Fx.say(p, "The Rune Splitter shines (it lights hostile creatures within " + (int) Wave10Rules.LIGHT_RADIUS + " blocks and gives you night sight). Use it again to put it out.");
         } else {
             Fx.say(p, "The light goes out.");
@@ -179,7 +180,7 @@ final class Wave10Acts {
         if (t == null) {
             int n = 0;
             while (Wave0Util.cleanseOne(p) && n++ < 8) { /* every affliction on you */ }
-            Fx.burst(l, p.position().add(0, 1, 0), GOLDEN);
+            FxRelic.burst(l, p.position().add(0, 1, 0), GOLDEN);
             Fx.say(p, "No target: the axe dispels the harmful magic on you (" + n + ").");
             return;
         }
@@ -194,7 +195,7 @@ final class Wave10Acts {
         }
         if (t instanceof Mob m && !ally(p, t) && m.getPersistentData().getLong("nusmp_sealed_until") > 0) m.getPersistentData().putLong("nusmp_sealed_until", 0);
         trail(l, p.getEyePosition().add(0, -0.2, 0), a.end(), GOLDEN, 0.5);
-        Fx.burst(l, t.position().add(0, t.getBbHeight() * 0.5, 0), GOLDEN);
+        FxRelic.burst(l, t.position().add(0, t.getBbHeight() * 0.5, 0), GOLDEN);
         l.playSound(null, t.blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0f, 1.6f);
         Fx.say(p, "Dispel Magic on " + nameOf(t) + ": " + ended + " ended" + (kept > 0 ? ", " + kept + " held (" + (infernal ? "infernal: harder to strip" : "too strong") + ")" : "") + ".");
     }
@@ -248,7 +249,7 @@ final class Wave10Acts {
         t.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         if (!p.getInventory().add(taken)) p.drop(taken, false);
         Fx.addEffect(t, "minecraft:slowness", 60, 0);
-        Fx.burst(l, t.position().add(0, 1, 0), THORN);
+        FxRelic.burst(l, t.position().add(0, 1, 0), THORN);
         l.playSound(null, t.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 0.8f, 1.5f);
         Fx.say(p, "You snatch " + taken.getHoverName().getString() + " from " + nameOf(t) + ".");
     }
@@ -289,7 +290,7 @@ final class Wave10Acts {
                 struck.add(a.target());
                 if (!(a.target() instanceof Player)) a.target().invulnerableTime = 0;   // each needle is its own hit on a creature
                 Fx.damageHeavy(p, a.target(), Wave10Rules.NEEDLE_DAMAGE, "minecraft:arrow");
-                RukhFx.spray(l, RukhFx.Alignment.LIGHT, a.end().x, a.end().y, a.end().z, 4, 0.1, 0.1, 0.1, 0.1);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, a.end().x, a.end().y, a.end().z, 4, 0.1, 0.1, 0.1, 0.1);
                 hits++;
             }
         }
@@ -316,7 +317,7 @@ final class Wave10Acts {
         boolean whip = ctx.isOn("command_word");
         ServerLevel l = p.serverLevel();
         l.playSound(null, p.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.PLAYERS, 1.0f, 0.6f);
-        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.4, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.4, 0.4, 0.02);
         Fx.say(p, whip ? "\"Clatter!\" The spine falls apart into a whip: it lashes up to five blocks behind you, two foes at a time."
                 : "\"Clatter!\" The vertebrae snap back into a greatsword: it lashes three blocks behind you, one foe at a time.");
     }
@@ -327,7 +328,7 @@ final class Wave10Acts {
         ServerPlayer p = ctx.player();
         ServerLevel l = p.serverLevel();
         l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.4f, 1.8f);
-        Fx.ring(l, p.position(), 5.0, JADE);
+        FxRelic.ring(l, p.position(), 5.0, JADE);
         Fx.aoe(p, 5.0, 3.0f, "minecraft:sonic_boom", "minecraft:slowness", 40, 0);
         Fx.say(p, "A high, clear note rings from the blade. (Sneak and hold to shatter it on purpose.)");
     }
@@ -398,8 +399,8 @@ final class Wave10Acts {
         boolean saved = Wave0Util.saves(t, Wave10Rules.FINGER_DC, 0);
         float dmg = Wave10Rules.fingerDamage(t.getMaxHealth(), saved);
         Vec3 at = t.position().add(0, t.getBbHeight() * 0.5, 0);
-        for (int i = 0; i < 12; i++) RukhFx.spray(l, align(PINK), t.getX(), t.getY() + i * 0.25, t.getZ(), 3, 0.2, 0.05, 0.2, 0.0);
-        Fx.burst(l, at, PINK);
+        for (int i = 0; i < 12; i++) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_10, align(PINK), t.getX(), t.getY() + i * 0.25, t.getZ(), 3, 0.2, 0.05, 0.2, 0.0);
+        FxRelic.burst(l, at, PINK);
         l.playSound(null, t.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.5f, 1.8f);
         boolean humanoid = Wave10Rules.humanoidPath(pathOf(t));
         Fx.damageHeavy(p, t, dmg, "minecraft:magic");

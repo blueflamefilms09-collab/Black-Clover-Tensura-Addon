@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.relics.Fx;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 6: the two standing areas of the wave, both short-lived and bounded: the Skycrystal Armor's Globe of Invulnerability (magic cannot hurt the
@@ -86,7 +88,7 @@ public final class Wave6Zones {
             z.next = now + (z.kind == Kind.CLOUD ? Wave6Tune.CLOUD_PERIOD : 20);
             Vec3 at = new Vec3(z.x, z.y, z.z);
             if (z.kind == Kind.GLOBE) {
-                Fx.ring(level, at.add(0, 0.1, 0), Wave6Tune.GLOBE_RADIUS, GLOBE_COLOUR);
+                FxRelic.ring(level, at.add(0, 0.1, 0), Wave6Tune.GLOBE_RADIUS, GLOBE_COLOUR);
             } else {
                 pulse(s, level, z, at);
             }
@@ -94,8 +96,8 @@ public final class Wave6Zones {
     }
 
     private static void pulse(MinecraftServer s, ServerLevel level, Zone z, Vec3 at) {
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(level, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y + 0.6, at.z, 14, Wave6Tune.CLOUD_RADIUS * 0.4, 0.4, Wave6Tune.CLOUD_RADIUS * 0.4, 0.01);
-        Fx.ring(level, at.add(0, 0.1, 0), Wave6Tune.CLOUD_RADIUS, CLOUD_COLOUR);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_6, FxTone.DARK, at.x, at.y + 0.6, at.z, 14, Wave6Tune.CLOUD_RADIUS * 0.4, 0.4, Wave6Tune.CLOUD_RADIUS * 0.4, 0.01);
+        FxRelic.ring(level, at.add(0, 0.1, 0), Wave6Tune.CLOUD_RADIUS, CLOUD_COLOUR);
         ServerPlayer owner = s.getPlayerList().getPlayer(z.owner);
         if (owner == null || z.pulses >= Wave6Tune.CLOUD_PULSES) return;
         z.pulses++;

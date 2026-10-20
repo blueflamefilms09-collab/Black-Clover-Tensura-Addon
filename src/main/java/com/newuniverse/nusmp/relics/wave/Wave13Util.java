@@ -1,11 +1,9 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.Relics;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +21,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /** Wave 13: the small shared helpers of the nine blades (what a foe is, banishing and surrendering, picking a target in front). */
 final class Wave13Util {
@@ -99,8 +99,8 @@ final class Wave13Util {
             m.getNavigation().stop();
         }
         ServerLevel level = p.serverLevel();
-        RukhFx.spray(level, RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 40, 0.4, 0.6, 0.4, 0.4);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 12, 0.3, 0.5, 0.3, 0.1);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_13, FxTone.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 40, 0.4, 0.6, 0.4, 0.4);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_13, FxTone.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 12, 0.3, 0.5, 0.3, 0.1);
     }
 
     /** A foe that gives up the fight: it loses its target, cowers (Tensura's fear) and is slowed and weakened for a few seconds. Mobs only. */
@@ -111,6 +111,6 @@ final class Wave13Util {
         Fx.addEffect(m, "minecraft:weakness", 100, 0);
         m.setTarget(null);
         m.getNavigation().stop();
-        if (m.level() instanceof ServerLevel level) RukhFx.spray(level, RukhFx.Alignment.DARK, m.getX(), m.getY() + m.getBbHeight(), m.getZ(), 8, 0.25, 0.2, 0.25, 0.01);
+        if (m.level() instanceof ServerLevel level) com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_13, FxTone.DARK, m.getX(), m.getY() + m.getBbHeight(), m.getZ(), 8, 0.25, 0.2, 0.25, 0.01);
     }
 }

@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.UseRules;
 import net.minecraft.core.BlockPos;
@@ -26,6 +25,9 @@ import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the Key edits door states and keeps saved locks, which needs more care than a simple act (bounds, dungeon refusal, a save that the dungeon's
@@ -132,7 +134,7 @@ final class Wave30Key {
         remember(c.stack(), dim, pos);
         spend(c.stack(), K_LOCK_DAY, K_LOCK_USED, today);
         level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 1.3f);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.4, 0.5, 0.4, 0.4);
+        Fx.spray(level, FxThemes.RELIC_WAVE_30, FxTone.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.4, 0.5, 0.4, 0.4);
         Wave30Kit.say(p, (lifted ? "Your arcane lock gives way and the way opens" : "Knock: the way opens") + " (" + left(c.stack(), K_LOCK_DAY, K_LOCK_USED, today) + " uses left today).");
     }
 
@@ -166,7 +168,7 @@ final class Wave30Key {
         remember(c.stack(), dim, pos);
         spend(c.stack(), K_LOCK_DAY, K_LOCK_USED, today);
         level.playSound(null, pos, SoundEvents.IRON_DOOR_CLOSE, SoundSource.BLOCKS, 1.0f, 0.8f);
-        RukhFx.spray(level, RukhFx.Alignment.DARK, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.4, 0.5, 0.4, 0.2);
+        Fx.spray(level, FxThemes.RELIC_WAVE_30, FxTone.DARK, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.4, 0.5, 0.4, 0.2);
         Wave30Kit.say(p, "Arcane Lock: it is shut against everyone but you until you Knock on it (" + left(c.stack(), K_LOCK_DAY, K_LOCK_USED, today) + " uses left today).");
     }
 
@@ -253,8 +255,8 @@ final class Wave30Key {
         Wave30Events.openPortal(p, dim, a, b, now + Wave30Tune.KEY_PORTAL_TICKS);
         spend(c.stack(), K_DOOR_DAY, K_DOOR_USED, today);
         level.playSound(null, a, SoundEvents.PORTAL_TRIGGER, SoundSource.BLOCKS, 0.5f, 1.6f);
-        RukhFx.burst(level, net.minecraft.world.phys.Vec3.atBottomCenterOf(a).add(0, 1, 0), RukhFx.Alignment.LIGHT, 12, 0.6);
-        RukhFx.burst(level, net.minecraft.world.phys.Vec3.atBottomCenterOf(b).add(0, 1, 0), RukhFx.Alignment.LIGHT, 12, 0.6);
+        Fx.burst(level, FxThemes.RELIC_WAVE_30, net.minecraft.world.phys.Vec3.atBottomCenterOf(a).add(0, 1, 0), FxTone.LIGHT, 12, 0.6);
+        Fx.burst(level, FxThemes.RELIC_WAVE_30, net.minecraft.world.phys.Vec3.atBottomCenterOf(b).add(0, 1, 0), FxTone.LIGHT, 12, 0.6);
         Wave30Kit.say(p, "Door to Door: the door opens onto " + b.getX() + ", " + b.getY() + ", " + b.getZ() + ". Step through; shut either door to close it ("
                 + left(c.stack(), K_DOOR_DAY, K_DOOR_USED, today) + " uses left today).");
     }

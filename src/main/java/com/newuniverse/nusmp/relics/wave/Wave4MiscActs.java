@@ -11,6 +11,7 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the acts of the two simpler amulets.
@@ -45,8 +46,8 @@ final class Wave4MiscActs {
             Fx.addEffect(e, "minecraft:haste", ROUSE_TICKS, 0);
             if (e instanceof ServerPlayer ally) inspire(ally);
         }
-        Fx.ring(lv, p.position().add(0, 0.3, 0), ROUSE_RADIUS * 0.5, EMERALD);
-        Fx.burst(lv, p.position().add(0, 1.6, 0), EMERALD);
+        FxRelic.ring(lv, p.position().add(0, 0.3, 0), ROUSE_RADIUS * 0.5, EMERALD);
+        FxRelic.burst(lv, p.position().add(0, 1.6, 0), EMERALD);
         Fx.say(p, "The horn sounds: " + Math.min(n, ROUSE_MAX) + (n == 1 ? " ally is" : " allies are") + " roused (Speed and Haste for 20 seconds; players also draw " + (int) (INSPIRE * 100) + "% of their magicules back).");
     }
 
@@ -76,7 +77,7 @@ final class Wave4MiscActs {
         long now = lv.getGameTime();
         Wave4State.SIGHT.put(p.getUUID(), now + SIGHT_TICKS, now);
         Wave4Upkeep.sight(p, now, true);
-        Fx.ring(lv, p.position().add(0, 1.6, 0), 1.0, AMETHYST);
+        FxRelic.ring(lv, p.position().add(0, 1.6, 0), 1.0, AMETHYST);
         Fx.say(p, "Star-Eyed: Truesight for five minutes. What hides from the dark cannot hide from you.");
     }
 }

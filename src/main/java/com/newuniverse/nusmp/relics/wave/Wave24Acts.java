@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.Relics;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,6 +38,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the server side of every use of the twelve wave-24 relics (act bodies). The core has already checked attunement, paid mana or existence
@@ -86,7 +87,7 @@ final class Wave24Acts {
         d.putString(K_COOK_ITEM, cooked);
         d.putInt(K_COOK_N, n);
         ServerLevel l = p.serverLevel();
-        RukhFx.burst(l, p.position().add(0, 1.0, 0), RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, p.position().add(0, 1.0, 0), FxTone.LIGHT, 8);
         l.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.6f, 1.4f);
         Wave24Util.say(p, "Instant Cooking Pot: rolled " + die + ", " + n + " item" + (n == 1 ? "" : "s") + " in the pot, ready in " + ticks / 20 + " seconds.", ChatFormatting.GOLD);
     }
@@ -120,7 +121,7 @@ final class Wave24Acts {
         ServerPlayer p = ctx.player();
         Wave24Util.data(p).putLong(K_EGG_UNTIL, now(p) + Wave24Rules.EGG_ARMED_TICKS);
         Wave24Util.give(p, "minecraft:luck", Wave24Rules.EGG_ARMED_TICKS, 1);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_24, p, FxTone.LIGHT, 8);
         Wave24Util.say(p, "Lucky Egg: you kiss the egg. For 30 seconds the next heavy blow is rolled again, and fortune leans your way.", ChatFormatting.AQUA);
     }
 
@@ -138,7 +139,7 @@ final class Wave24Acts {
             var b = st.getBlock();
             if (b instanceof ButtonBlock || b instanceof LeverBlock || b instanceof DoorBlock || b instanceof TrapDoorBlock || b instanceof FenceGateBlock) {
                 st.useWithoutItem(l, p, hit);
-                RukhFx.stream(l, eye.add(p.getLookAngle().scale(0.8)), Vec3.atCenterOf(hit.getBlockPos()), RukhFx.Alignment.LIGHT, 3);
+                com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_24, eye.add(p.getLookAngle().scale(0.8)), Vec3.atCenterOf(hit.getBlockPos()), FxTone.LIGHT, 3);
                 did = true;
             }
         }
@@ -151,7 +152,7 @@ final class Wave24Acts {
             it.setDeltaMovement(to.scale(0.22).add(0, 0.12, 0));
             it.setNoPickUpDelay();
             it.hurtMarked = true;
-            RukhFx.stream(l, it.position(), p.position().add(0, 0.8, 0), RukhFx.Alignment.LIGHT, 1);
+            com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_24, it.position(), p.position().add(0, 0.8, 0), FxTone.LIGHT, 1);
             pulled++;
         }
         did |= pulled > 0;
@@ -188,7 +189,7 @@ final class Wave24Acts {
             shown++;
         }
         Wave24Util.say(p, "Lumpy: \"I peeked into " + minds.size() + " head" + (minds.size() == 1 ? "" : "s") + ". It was mostly empty in there.\"", ChatFormatting.AQUA);
-        RukhFx.gather(l, p, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(l, FxThemes.RELIC_WAVE_24, p, FxTone.LIGHT, 8);
     }
 
     private static String thought(ServerPlayer reader, LivingEntity e) {
@@ -269,7 +270,7 @@ final class Wave24Acts {
             if (e instanceof Mob m && m.getTarget() == p) m.setTarget(null);
             n++;
         }
-        RukhFx.burst(l, p.position().add(0, 1.6, 0), RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, p.position().add(0, 1.6, 0), FxTone.LIGHT, 8);
         Wave24Util.bar(p, n == 0 ? "You flash the badge. Nobody is impressed." : "You flash the badge: " + n + " creature" + (n == 1 ? " backs" : "s back") + " away.", ChatFormatting.GOLD);
     }
 
@@ -382,7 +383,7 @@ final class Wave24Acts {
         if (!pay(ctx, Wave24Rules.COST_CLOUD)) return;
         Wave24Util.Aim a = Wave24Util.aim(p, Wave24Rules.ORB_RANGE, e -> false);
         Vec3 c = a.end().distanceTo(p.getEyePosition()) < 2.0 ? p.position().add(p.getLookAngle().scale(6)) : a.end();
-        RukhFx.spray(l, RukhFx.Alignment.DARK, c.x, c.y + 0.5, c.z, 12, 1.6, 0.6, 1.6, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_24, FxTone.DARK, c.x, c.y + 0.5, c.z, 12, 1.6, 0.6, 1.6, 0.02);
         for (LivingEntity e : Wave24Util.around(l, c, Wave24Rules.CLOUD_RADIUS, x -> Wave24Util.touchable(p, x))) {
             boolean saved = Wave24Rules.saves(Wave24Rules.d(Wave24Util.dice(p), 20), Wave24Rules.saveBonus(e.getMaxHealth()), 14);
             int dur = Wave24Rules.afterSave(240, saved, e.getMaxHealth());
@@ -434,8 +435,8 @@ final class Wave24Acts {
     private static void shatter(ServerPlayer p, ItemStack orb, double radius, int dc) {
         ServerLevel l = p.serverLevel();
         Vec3 c = p.position();
-        RukhFx.spray(l, RukhFx.Alignment.DARK, c.x, c.y + 1.0, c.z, 12, radius * 0.35, 0.8, radius * 0.35, 0.03);
-        RukhFx.spray(l, RukhFx.Alignment.DARK, c.x, c.y + 0.5, c.z, 12, radius * 0.5, 0.4, radius * 0.5, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_24, FxTone.DARK, c.x, c.y + 1.0, c.z, 12, radius * 0.35, 0.8, radius * 0.35, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_24, FxTone.DARK, c.x, c.y + 0.5, c.z, 12, radius * 0.5, 0.4, radius * 0.5, 0.05);
         l.playSound(null, p.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0f, 0.6f);
         for (LivingEntity e : Wave24Util.around(l, c, radius, x -> Wave24Util.touchable(p, x))) {
             sicken(p, e, dc, Wave24Rules.disease(Wave24Rules.d(Wave24Util.dice(p), 6)), Wave24Rules.DISEASE_TICKS);
@@ -498,7 +499,7 @@ final class Wave24Acts {
                 healTouch(e, Wave24Util.dice(p));
                 healed++;
             }
-            RukhFx.stream(l, from, to, RukhFx.Alignment.LIGHT, 5);
+            com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_24, from, to, FxTone.LIGHT, 5);
         }
         CompoundTag d = Wave24Util.data(p);
         d.putString(K_DRY_TARGET, target.getUUID().toString());
@@ -511,7 +512,7 @@ final class Wave24Acts {
         float amt = Wave24Rules.dryadHeal(Wave24Rules.d(dice, 4));
         if (e instanceof ServerPlayer sp) Fx.heal(sp, amt);
         else e.heal(amt);
-        if (e.level() instanceof ServerLevel l) RukhFx.aura(l, e, RukhFx.Alignment.LIGHT);
+        if (e.level() instanceof ServerLevel l) com.newuniverse.nusmp.particle.fx.Fx.aura(l, FxThemes.RELIC_WAVE_24, e, FxTone.LIGHT);
     }
 
     /** One second of the orb's hover: when the next pulse is due, it heals the target again; at the end it flies home if the bearer is within range. */
@@ -533,7 +534,7 @@ final class Wave24Acts {
         d.putInt(K_DRY_LEFT, left);
         d.putLong(K_DRY_NEXT, now(p) + Wave24Rules.DRYAD_PULSE_TICKS);
         if (left == 0 && t != p && t.distanceToSqr(p) <= Wave24Rules.DRYAD_RANGE * Wave24Rules.DRYAD_RANGE) {
-            RukhFx.stream(p.serverLevel(), t, p, RukhFx.Alignment.LIGHT, 3);           // the orb returns; it does not heal on the way back
+            com.newuniverse.nusmp.particle.fx.Fx.stream(p.serverLevel(), FxThemes.RELIC_WAVE_24, t, p, FxTone.LIGHT, 3);           // the orb returns; it does not heal on the way back
         }
     }
 
@@ -549,7 +550,7 @@ final class Wave24Acts {
         int roll = Wave24Rules.d(Wave24Util.dice(p), 12);
         long fwd = Wave24Rules.ticksForward(l.getDayTime(), roll);
         l.setDayTime(l.getDayTime() + fwd);
-        RukhFx.burst(l, p.position().add(0, 1.2, 0), RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, p.position().add(0, 1.2, 0), FxTone.LIGHT, 12);
         l.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_CHIME.value(), SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave24Util.say(p, "Pocket Time: rolled " + roll + ". The world jumps " + (fwd / 1000) + " hours ahead, to " + Wave24Rules.clockText(l.getDayTime()) + ".", ChatFormatting.GOLD);
     }
@@ -561,7 +562,7 @@ final class Wave24Acts {
         ServerLevel l = p.serverLevel();
         Wave24Util.Aim a = Wave24Util.aim(p, Wave24Rules.POWER_RANGE, e -> Wave24Util.touchable(p, e));
         Vec3 end = a.target() != null ? a.target().position().add(0, a.target().getBbHeight() * 0.5, 0) : a.end();
-        RukhFx.stream(l, p.getEyePosition().add(0, -0.2, 0), end, RukhFx.Alignment.DARK, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_24, p.getEyePosition().add(0, -0.2, 0), end, FxTone.DARK, 6);
         l.playSound(null, p.blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0f, 1.6f);
         LivingEntity t = a.target();
         if (t == null) {
@@ -571,7 +572,7 @@ final class Wave24Acts {
         t.getPersistentData().putLong(K_DUST, now(p));
         Fx.damageHeavy(p, t, Wave24Rules.disintegrate(Wave24Util.dice(p)), "minecraft:magic");
         if (t.isAlive()) t.getPersistentData().remove(K_DUST);
-        else RukhFx.spray(l, RukhFx.Alignment.DARK, end.x, end.y, end.z, 12, 0.4, 0.5, 0.4, 0.1);
+        else com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_24, FxTone.DARK, end.x, end.y, end.z, 12, 0.4, 0.5, 0.4, 0.1);
     }
 
     // ================================================================ Ring of Memories
@@ -604,7 +605,7 @@ final class Wave24Acts {
         d.putString(K_MEM_DIM, d.getString("trail_dim"));
         d.putBoolean(K_MEM_SEALED, ctx.sneaking());
         d.putLongArray(K_TRAIL, new long[0]);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_24, p, FxTone.LIGHT, 8);
         Wave24Util.say(p, "Ring of Memories: " + Wave24Rules.samples(t) + " moments stored (" + Wave24Rules.span(t) / 20 + " seconds)." + (ctx.sneaking() ? " You keep no recollection of it, and no mind-reader can find it." : ""), ChatFormatting.AQUA);
     }
 
@@ -650,8 +651,8 @@ final class Wave24Acts {
             Vec3 at = new Vec3(mem[i * Wave24Rules.TRAIL_STRIDE + 1] + 0.5, mem[i * Wave24Rules.TRAIL_STRIDE + 2] + 1.0, mem[i * Wave24Rules.TRAIL_STRIDE + 3] + 0.5);
             // near the place the memory plays out on the spot; from afar it is a small replay floating in front of you
             Vec3 shown = here ? at : p.position().add(0, 2.4, 0).add(at.subtract(first).scale(0.2));
-            RukhFx.burst(l, shown, RukhFx.Alignment.LIGHT, 2);
-            if (prev != null) RukhFx.stream(l, prev, shown, RukhFx.Alignment.LIGHT, 2);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(l, FxThemes.RELIC_WAVE_24, shown, FxTone.LIGHT, 2);
+            if (prev != null) com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_24, prev, shown, FxTone.LIGHT, 2);
             prev = shown;
         }
         Wave24Util.give(p, "minecraft:slowness", 40, 9);

@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -14,7 +13,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,6 +39,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 17: the game-bus side. Each listener starts with the cheapest test (is a wearer even involved), so the other thousand events a second cost
@@ -102,8 +103,8 @@ public final class Wave17Events {
         Wave17Kit.give(p, "minecraft:resistance", 100, 1);
         Wave17Acts.lifeSpent(p, cuff);
         ServerLevel level = p.serverLevel();
-        Fx.burst(level, p.position(), 0xE0364A);
-        Fx.ring(level, p.position(), 2.5, 0xE0364A);
+        FxRelic.burst(level, p.position(), 0xE0364A);
+        FxRelic.ring(level, p.position(), 2.5, 0xE0364A);
         Fx.say(p, "Life's Emergency: the cuff spends its " + stored + " stored life at death's door and you are back on your feet. It starts to fill again at the next dawn.");
     }
 
@@ -146,8 +147,8 @@ public final class Wave17Events {
         if (!Wave17Rules.furyActive(p.getHealth(), p.getMaxHealth())) { if (!LIT.isEmpty()) LIT.remove(p.getUUID()); return; }
         if (!RelicFlags.has(p, F_FURY)) return;
         ServerLevel level = p.serverLevel();
-        RukhFx.spray(level, Wave17Kit.align(RED), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.45, 0.7, 0.45, 0.0);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.4, 0.6, 0.4, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, Wave17Kit.align(RED), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.45, 0.7, 0.45, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.4, 0.6, 0.4, 0.0);
         if (LIT.add(p.getUUID())) Wave17Kit.hint(p, "Fury of the Fallen: you glow red, and every blow you land hits twice as hard.", ChatFormatting.RED);
     }
 

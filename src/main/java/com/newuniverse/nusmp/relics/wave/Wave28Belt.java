@@ -1,11 +1,11 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the card's one rule is a small curse with a fix, a "natural 1" on any check; the game's checks are jumps and blows, so those roll the die, and
@@ -28,7 +28,7 @@ final class Wave28Belt {
         if (!RelicFlags.has(p, Wave28Rules.F_PANTS) || down(p)) return;
         if (!Wave28Rules.naturalOne(p.getRandom().nextInt(Wave28Rules.PANTS_DIE))) return;
         Wave28Util.data(p).putBoolean(DOWN, true);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 0.4, 0), RukhFx.Alignment.LIGHT, 6);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 0.4, 0), FxTone.LIGHT, 6);
         Wave28Util.say(p, "A natural 1! Your pantaloons fall down around your ankles. (Spend an action to pull them up.)", ChatFormatting.LIGHT_PURPLE);
     }
 

@@ -20,6 +20,8 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The game-bus side of weapon pairs.
@@ -91,7 +93,7 @@ public final class PairHooks {
             victim.setDeltaMovement(v);                                                // no second shove
             p.swing(InteractionHand.OFF_HAND, true);
             if (p.level() instanceof ServerLevel l) {
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.2, 0.25, 0.2, 0.15);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_PAIR, FxTone.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.2, 0.25, 0.2, 0.15);
             }
             PairEffects.OffHandEffect fx = PairEffects.of(off.pairBaseId());
             if (fx != null && victim.isAlive()) fx.strike(p, victim, off);

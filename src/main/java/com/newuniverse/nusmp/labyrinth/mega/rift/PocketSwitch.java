@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets;
 import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketRuntime;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -21,6 +20,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the switch of the hidden realms and the tombs (1.101.0, docs/labyrinth/pocket_fix.md). A barred vault or a sealed treasury had no way open that a delver could see: the owner's report was "there is
@@ -93,7 +95,7 @@ public final class PocketSwitch {
             default -> {
                 level.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0f, 0.8f);
                 if (level.getBlockState(at).is(Blocks.LEVER)) level.setBlock(at, level.getBlockState(at).setValue(LeverBlock.POWERED, true), 3);
-                level.sendParticles(ParticleTypes.END_ROD, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 12, 0.3, 0.3, 0.3, 0.05);
+                Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 12, 0.3, 0.3, 0.3, 0.05);
                 if (realm.clear(level, pk, "lever")) {
                     for (ServerPlayer m : PocketRealm.playersIn(level, pk.slot))
                         m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.pulled", "A lever clicks somewhere in the realm... iron grinds: the bars of the vault lift.").withStyle(ChatFormatting.GOLD), true);
@@ -122,7 +124,7 @@ public final class PocketSwitch {
         BlockPos at = leverAt(pk);
         PocketSwitchRules.State st = PocketSwitchRules.state(false, false, age, unlockTicks());
         if (level.getBlockState(at).is(Blocks.LEVER)) {
-            level.sendParticles(st == PocketSwitchRules.State.READY ? ParticleTypes.END_ROD : ParticleTypes.SMOKE, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 2, 0.15, 0.3, 0.15, 0.01);
+            level.sendParticles(st == PocketSwitchRules.State.READY ? Fx.options(FxThemes.DUNGEON_RIFT, FxOld.END_ROD) : Fx.options(FxThemes.DUNGEON_RIFT, FxOld.SMOKE), at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 2, 0.15, 0.3, 0.15, 0.01);
             if (st == PocketSwitchRules.State.READY && !TOLD.contains(pk.slot * 31L + pk.seed)) {
                 TOLD.add(pk.slot * 31L + pk.seed);
                 for (ServerPlayer m : in) {

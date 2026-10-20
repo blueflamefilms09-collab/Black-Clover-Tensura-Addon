@@ -1,9 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +27,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 19, the handlers: the Scroll of Absorption's reaction, the double radiant damage of Blood Chocolates, the iron fist of Mace Hand, charmed
@@ -113,7 +114,7 @@ final class Wave19Events {
         int second = p.tickCount / 20;                                          // 1.99.0, the hunger ban: the mug no longer adds a little hunger each tick
         ServerLevel sl = p.serverLevel();
         if (p.isInWater() && second % 4 == 0) {
-            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 2.3, p.getZ(), 3, 0.4, 0.2, 0.4, 1.0);
+            Fx.spray(sl, FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 2.3, p.getZ(), 3, 0.4, 0.2, 0.4, 1.0);
             sl.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_BANJO.value(), SoundSource.PLAYERS, 0.8f, 0.6f + p.getRandom().nextFloat());
             if (second % 20 == 0) Wave19Util.tell(p, "You can't help singing in the water.", ChatFormatting.DARK_GRAY);
         }
@@ -132,7 +133,7 @@ final class Wave19Events {
             if (cd == null || !cd.contains(Wave19Scrolls.K_FACE_UNTIL)) continue;
             if (cd.copyTag().getLong(Wave19Scrolls.K_FACE_UNTIL) > now) continue;
             inv.setItem(i, ItemStack.EMPTY);
-            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.3, 0.3, 0.3, 0.05);
+            Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_19, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.3, 0.3, 0.3, 0.05);
             Wave19Util.tell(p, "A facsimile crumbles to dust in your pack.", ChatFormatting.GRAY);
         }
     }

@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * The abilities of the three boss relics (server side). Dante's Gravity Crown: Weight of the Crown (a gravity well) and Lift. Zenon's Spatial Ring:
@@ -50,14 +52,14 @@ final class WaveBossActs {
         WaveBossNet.cue(p, WaveBossNet.WHICH_CROWN, WaveBossNet.KIND_WELL);
         l.playSound(null, BlockPos.containing(c), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.6f, 0.45f);
         VfxSpawn.send(l, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), 0xFF000000 | VIOLET, WaveBossRules.WELL_TICKS, (float) (WaveBossRules.WELL_RADIUS / 1.6));
-        Fx.ring(l, c, WaveBossRules.WELL_RADIUS, VIOLET);
+        FxRelic.ring(l, c, WaveBossRules.WELL_RADIUS, VIOLET);
         SpellRuntime.zone(l, WaveBossRules.WELL_TICKS, WaveBossRules.WELL_STEP, safe("gravity well", age -> wellStep(p, l, c, age)));
     }
 
     private static void wellStep(ServerPlayer p, ServerLevel l, Vec3 c, int age) {
         if (!p.isAlive() || p.isRemoved()) return;
         double r = WaveBossRules.WELL_RADIUS;
-        if (age > 0 && age % 20 == 0) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, c.x, c.y + 1.0, c.z, 24, r * 0.4, 0.6, r * 0.4, 0.05);
+        if (age > 0 && age % 20 == 0) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE, FxTone.DARK, c.x, c.y + 1.0, c.z, 24, r * 0.4, 0.6, r * 0.4, 0.05);
         double reach = r + Math.sqrt(p.distanceToSqr(c.x, c.y, c.z));                        // the well stays where it was cast; the caster may walk away
         boolean closing = WaveBossRules.closing(age);
         for (LivingEntity t : Fx.foesAround(p, Math.min(32.0, reach))) {
@@ -83,7 +85,7 @@ final class WaveBossActs {
             t.fallDistance = 0;
             if (closing && dist <= r * WaveBossRules.CRUSH_FRACTION) Fx.damage(p, t, WaveBossRules.CRUSH, WaveBossSkills.GRAVITY_PRESS);
         }
-        if (closing) Fx.burst(l, c, VIOLET);
+        if (closing) FxRelic.burst(l, c, VIOLET);
     }
 
     /** Lift: Tensura's gravity flight lent for seven seconds, with a slow fall and a high jump to go with it. */
@@ -95,7 +97,7 @@ final class WaveBossActs {
         Fx.addEffect(p, "minecraft:slow_falling", ticks, 0);
         Fx.addEffect(p, "minecraft:jump_boost", ticks, 1);
         WaveBossNet.cue(p, WaveBossNet.WHICH_CROWN, WaveBossNet.KIND_WELL);
-        Fx.burst(l, p.position(), VIOLET);
+        FxRelic.burst(l, p.position(), VIOLET);
         Fx.say(p, flight ? "The crown lifts the weight off you for 7 seconds." : "The crown makes you feather-light for 7 seconds.");
     }
 
@@ -121,8 +123,8 @@ final class WaveBossActs {
         Vec3 to = p.position();
         VfxSpawn.send(l, VfxShape.SPACE_PORTAL, from, to, 0xFF000000 | INDIGO, 14, 1.0f);                // 'to' is a point: the gate faces it
         VfxSpawn.send(l, VfxShape.SPACE_PORTAL, to, from, 0xFF000000 | INDIGO, 14, 1.0f);
-        Fx.burst(l, from.add(0, 0.2, 0), INDIGO);
-        Fx.burst(l, to.add(0, 0.2, 0), INDIGO);
+        FxRelic.burst(l, from.add(0, 0.2, 0), INDIGO);
+        FxRelic.burst(l, to.add(0, 0.2, 0), INDIGO);
         l.playSound(null, BlockPos.containing(to), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.3f);
     }
 
@@ -158,8 +160,8 @@ final class WaveBossActs {
         PAIRS.put(p.getUUID(), pair);
         VfxSpawn.send(l, VfxShape.SPACE_PORTAL, first, second, 0xFF000000 | INDIGO, WaveBossRules.GATES_TICKS, 1.0f);
         VfxSpawn.send(l, VfxShape.SPACE_PORTAL, second, first, 0xFF000000 | INDIGO, WaveBossRules.GATES_TICKS, 1.0f);
-        Fx.burst(l, first.add(0, 0.2, 0), INDIGO);
-        Fx.burst(l, second.add(0, 0.2, 0), INDIGO);
+        FxRelic.burst(l, first.add(0, 0.2, 0), INDIGO);
+        FxRelic.burst(l, second.add(0, 0.2, 0), INDIGO);
         l.playSound(null, BlockPos.containing(first), SoundEvents.PORTAL_TRIGGER, SoundSource.PLAYERS, 0.5f, 1.6f);
         Fx.say(p, "Two gates open for 15 seconds: step into either to come out of the other.");
         SpellRuntime.zone(l, WaveBossRules.GATES_TICKS, 2, safe("twin gates", age -> gateStep(p, l, pair, age)));
@@ -173,7 +175,7 @@ final class WaveBossActs {
         }
         long now = l.getGameTime();
         if (age % 10 == 0) {
-            for (double[] g : new double[][]{pair.a(), pair.b()}) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, g[0], g[1] + 1.0, g[2], 3, 0.3, 0.6, 0.3, 0.02);
+            for (double[] g : new double[][]{pair.a(), pair.b()}) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE, FxTone.DARK, g[0], g[1] + 1.0, g[2], 3, 0.3, 0.6, 0.3, 0.02);
         }
         for (int side = 0; side < 2; side++) {
             double[] in = side == 0 ? pair.a() : pair.b(), out = side == 0 ? pair.b() : pair.a();
@@ -190,7 +192,7 @@ final class WaveBossActs {
                 e.fallDistance = 0;
                 e.hurtMarked = true;
                 moved++;
-                Fx.burst(l, new Vec3(out[0], out[1] + 0.2, out[2]), INDIGO);
+                FxRelic.burst(l, new Vec3(out[0], out[1] + 0.2, out[2]), INDIGO);
                 l.playSound(null, BlockPos.containing(out[0], out[1], out[2]), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.6f, 1.5f);
             }
         }
@@ -210,7 +212,7 @@ final class WaveBossActs {
         ServerLevel l = p.serverLevel();
         WaveBossNet.cue(p, WaveBossNet.WHICH_MIMIC, WaveBossNet.KIND_BITE);
         l.playSound(null, p.blockPosition(), SoundEvents.CHEST_OPEN, SoundSource.PLAYERS, 1.0f, 0.6f);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.5, 0.3, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.5, 0.3, 0.5, 0.05);
         SpellRuntime.later(l, WaveBossRules.BITE_DELAY, safe("mimic bite", () -> snap(p, l)));
     }
 
@@ -238,7 +240,7 @@ final class WaveBossActs {
         Fx.damage(p, target, WaveBossRules.BITE_DAMAGE, "minecraft:player_attack");
         Fx.addEffect(target, "minecraft:slowness", 40, 1);
         Fx.heal(p, 1.0f);                                                                      // it keeps a bite's worth of what it chews
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 14, 0.3, 0.3, 0.3, 0.2);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE, FxTone.LIGHT, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 14, 0.3, 0.3, 0.3, 0.2);
     }
 
     /** Hoard: opens the belt's twenty-seven slot pocket (the Mimic yawns while you rummage). */

@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActBody;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
@@ -18,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the active abilities of the 35 weapons of wave 71. Each method returns an {@link ActBody} of one SHAPE (a cone cleave, a piercing line, a nova, a blink strike, an
@@ -62,7 +63,7 @@ final class Wave71Acts {
 
     private static void spark(ServerLevel l, Vec3 at, int rgb, int n) {
         if (l == null) return;
-        RukhFx.spray(l, Fx.align(rgb), at.x, at.y, at.z, Mth.clamp(n, 1, 24), 0.35, 0.35, 0.35, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_71, FxRelic.tone(rgb), at.x, at.y, at.z, Mth.clamp(n, 1, 24), 0.35, 0.35, 0.35, 0.05);
     }
 
     private static void hit(ServerPlayer p, LivingEntity t, float dmg, String type, boolean heavy, String eff, int secs, int amp) {
@@ -122,7 +123,7 @@ final class Wave71Acts {
             ServerPlayer p = c.player();
             ServerLevel l = p.serverLevel();
             fx(l, shape, p.position(), p.position().add(0, 1, 0), glow(c), 16, (float) radius);
-            Fx.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
+            FxRelic.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
             for (LivingEntity t : Fx.foesAround(p, radius)) {
                 hit(p, t, dmg, type, false, eff, secs, amp);
                 if (knock > 0) {
@@ -144,7 +145,7 @@ final class Wave71Acts {
             boolean moved = Fx.teleportLook(p, range);
             if (!moved) Fx.say(p, "There is no room to step into.");
             fx(l, shape, start, chest(p), glow(c), 14, (float) radius);
-            Fx.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
+            FxRelic.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
             for (LivingEntity t : Fx.foesAround(p, radius)) hit(p, t, dmg, type, false, eff, secs, amp);
         });
     }
@@ -224,7 +225,7 @@ final class Wave71Acts {
             ServerLevel l = p.serverLevel();
             Fx.shield(p, absorb, secs * 20);
             if (eff != null && !eff.isEmpty()) Fx.addEffect(p, eff, effSecs * 20, effAmp);
-            Fx.ring(l, p.position(), Math.min(Math.max(repelRadius, 2.0), 12.0), glow(c));
+            FxRelic.ring(l, p.position(), Math.min(Math.max(repelRadius, 2.0), 12.0), glow(c));
             if (repelRadius > 0 && repel > 0) {
                 for (LivingEntity t : Fx.foesAround(p, repelRadius)) {
                     Vec3 d = t.position().subtract(p.position());
@@ -240,7 +241,7 @@ final class Wave71Acts {
     static ActBody rally(double radius, String effA, String effB, int secs, int amp, float heal) {
         return guard("rally", c -> {
             ServerPlayer p = c.player();
-            Fx.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), glow(c));
+            FxRelic.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), glow(c));
             if (effA != null && !effA.isEmpty()) Wave31Acts.allies(c, radius, effA, secs, amp);
             if (effB != null && !effB.isEmpty()) Wave31Acts.allies(c, radius, effB, secs, amp);
             if (heal > 0f) Fx.heal(p, heal);
@@ -321,7 +322,7 @@ final class Wave71Acts {
             if (effB != null && !effB.isEmpty()) Fx.addEffect(p, effB, secs * 20, ampB);
             if (absorb > 0f) Fx.shield(p, absorb, secs * 20);
             if (heal > 0f) Fx.heal(p, heal);
-            Fx.ring(p.serverLevel(), p.position(), 2.5, glow(c));
+            FxRelic.ring(p.serverLevel(), p.position(), 2.5, glow(c));
         });
     }
 }

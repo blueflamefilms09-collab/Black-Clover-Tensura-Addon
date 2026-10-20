@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Attune;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -39,6 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the twelve head relics of wave 26 share the same small Minecraft chores (where a player's own numbers are kept, effects by id with a
@@ -241,7 +241,7 @@ final class Wave26Util {
     }
 
     // ---------------------------------------------------------------- particles and words
-    static RukhFx.Alignment align(boolean dark) { return RukhFx.Alignment.of(dark); }
+    static FxTone align(boolean dark) { return FxTone.of(dark); }
 
     static void tell(ServerPlayer p, String text, ChatFormatting colour) {
         if (p != null && text != null) p.displayClientMessage(Component.literal(text).withStyle(colour), true);

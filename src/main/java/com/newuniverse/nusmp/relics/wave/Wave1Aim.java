@@ -13,6 +13,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Wave 1: targeting and particle helpers for the hand-held relics. Foes always come from {@link Fx#foesAround}, which already
@@ -105,12 +106,12 @@ final class Wave1Aim {
         int n = Math.max(2, Math.min(steps, 48));
         for (int i = 0; i <= n; i++) {
             Vec3 q = from.lerp(to, i / (double) n);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), q.x, q.y, q.z, 1, 0.0, 0.0, 0.0, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_1, com.newuniverse.nusmp.particle.fx.Fx.toneOf(fx), q.x, q.y, q.z, 1, 0.0, 0.0, 0.0, 0.0);
         }
     }
 
     static void column(ServerLevel l, Vec3 base, double height, ParticleOptions fx) {
         int n = (int) Math.max(2, Math.min(24, height * 3));
-        for (int i = 0; i < n; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), base.x, base.y + height * i / n, base.z, 1, 0.12, 0.0, 0.12, 0.0);
+        for (int i = 0; i < n; i++) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_1, com.newuniverse.nusmp.particle.fx.Fx.toneOf(fx), base.x, base.y + height * i / n, base.z, 1, 0.12, 0.0, 0.12, 0.0);
     }
 }

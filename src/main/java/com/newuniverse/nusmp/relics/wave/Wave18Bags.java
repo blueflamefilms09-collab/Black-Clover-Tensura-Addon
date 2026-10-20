@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -32,6 +30,8 @@ import net.minecraft.world.phys.HitResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 18: what the seven Bountiful Bags do besides holding things. Opening one is the first act of each; the Bags of Colding, Molding, Scolding
@@ -87,12 +87,12 @@ final class Wave18Bags {
         }
     }
 
-    private static RukhFx.Alignment puff(Wave18Pure.Hazard h) {
+    private static FxTone puff(Wave18Pure.Hazard h) {
         return switch (h) {
-            case COLD -> RukhFx.Alignment.LIGHT;
-            case POISON -> RukhFx.Alignment.DARK;
-            case PSYCHIC -> RukhFx.Alignment.LIGHT;
-            default -> RukhFx.Alignment.DARK;
+            case COLD -> FxTone.LIGHT;
+            case POISON -> FxTone.DARK;
+            case PSYCHIC -> FxTone.LIGHT;
+            default -> FxTone.DARK;
         };
     }
 
@@ -101,7 +101,7 @@ final class Wave18Bags {
         ServerPlayer owner = Wave18Kit.player(level, pid);
         LivingEntity t = Wave18Kit.living(level, tid);
         if (owner == null || t == null) return;
-        RukhFx.spray(level, puff(bag.hazard()), t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 10, 0.3, 0.4, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, puff(bag.hazard()), t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 10, 0.3, 0.4, 0.3, 0.02);
         double kb = t.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
         if (!Wave18Pure.failsSave(level.getRandom().nextDouble(), kb)) return;
         fails[0]++;
@@ -154,7 +154,7 @@ final class Wave18Bags {
             LivingEntity target = Wave18Kit.living(level, tid);
             if (owner == null || target == null) return;
             Fx.damageHeavy(owner, target, Wave18Pure.gulp(target.getMaxHealth()), "minecraft:magic");
-            RukhFx.spray(level, RukhFx.Alignment.DARK, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 24, 0.4, 0.5, 0.4, 0.03);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.DARK, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 24, 0.4, 0.5, 0.4, 0.03);
             level.playSound(null, target.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 1.2f, 0.6f);
         });
     }
@@ -208,7 +208,7 @@ final class Wave18Bags {
         }
         if (opened) {
             level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 1.2f);
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 16, 0.4, 0.5, 0.4, 0.5);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 16, 0.4, 0.5, 0.4, 0.5);
         } else if (held.isEmpty()) {
             Fx.say(p, "Nothing here is latched.");
         }

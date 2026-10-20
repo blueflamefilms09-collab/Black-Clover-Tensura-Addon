@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Why: the 1.70.0 relic waves (31 and up) are generated from tables ({@code tools/relics/relic_rows_*.py}, written to Java by {@code gen_relic_waves.py}), and a table of hundreds of relics can only
@@ -36,7 +37,7 @@ public final class Wave31Acts {
 
     public static void aoe(ActCtx c, double radius, float damage, String type, String effectId, int seconds, int amp) {
         ServerPlayer p = c.player();
-        Fx.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
+        FxRelic.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
         Fx.aoe(p, radius, damage, type, effectId, seconds * 20, amp);
     }
 
@@ -67,7 +68,7 @@ public final class Wave31Acts {
         Vec3 a = p.getEyePosition(), b = t.getBoundingBox().getCenter();
         for (int i = 0; i <= 10; i++) {
             Vec3 at = a.lerp(b, i / 10.0);
-            Fx.burst(p.serverLevel(), at, c.def().paletteGlow());
+            FxRelic.burst(p.serverLevel(), at, c.def().paletteGlow());
         }
         Fx.damage(p, t, damage, type);
         if (effectId != null) Fx.addEffect(t, effectId, seconds * 20, amp);
@@ -123,7 +124,7 @@ public final class Wave31Acts {
             n++;
         }
         if (n > 0) Fx.heal(p, Math.min(20f, damage * 0.4f * n));
-        Fx.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
+        FxRelic.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
     }
 
     /** Throws every foe within the radius away from the wearer. */
@@ -135,7 +136,7 @@ public final class Wave31Acts {
             t.setDeltaMovement(t.getDeltaMovement().add(d.x / len * strength, 0.3, d.z / len * strength));
             t.hurtMarked = true;
         }
-        Fx.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
+        FxRelic.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
     }
 
     /** Drags every foe within the radius towards the wearer. */
@@ -147,7 +148,7 @@ public final class Wave31Acts {
             t.setDeltaMovement(t.getDeltaMovement().add(d.x / len * strength, 0.2, d.z / len * strength));
             t.hurtMarked = true;
         }
-        Fx.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
+        FxRelic.ring(p.serverLevel(), p.position(), Math.min(radius, 12.0), c.def().paletteGlow());
     }
 
     /** Sets the foes around the wearer alight for a number of seconds. */

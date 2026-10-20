@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.djinn.Bonds;
@@ -24,6 +23,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the six necklaces are the largest group of the wave and share the same wearer-side bookkeeping (a draw, a form timer, a charge pool, a hum
@@ -56,7 +58,7 @@ final class Wave28Neck {
         chromaPass(p);
         Wave28Util.say(p, "Dragon's Resistance: you rolled " + roll + ": " + WARD_NAMES[w.ordinal()] + " resistance"
                 + (roll >= 6 ? " and +1 armour" : "") + " until the next dawn.", net.minecraft.ChatFormatting.AQUA);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.4, 0), RukhFx.Alignment.LIGHT, 8);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.4, 0), FxTone.LIGHT, 8);
     }
 
     /** The resistance a 6 lets you choose: acid, poison, fire, lightning, cold in turn. */
@@ -120,7 +122,7 @@ final class Wave28Neck {
         ServerPlayer p = c.player();
         ServerLevel l = p.serverLevel();
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
-        for (int i = 1; i <= 6; i++) RukhFx.spray(l, RukhFx.Alignment.LIGHT, eye.x + look.x * i, eye.y - 0.2 + look.y * i, eye.z + look.z * i, 3, 0.25 + 0.08 * i, 0.25 + 0.08 * i, 0.25 + 0.08 * i, 0.02);
+        for (int i = 1; i <= 6; i++) com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_28, FxTone.LIGHT, eye.x + look.x * i, eye.y - 0.2 + look.y * i, eye.z + look.z * i, 3, 0.25 + 0.08 * i, 0.25 + 0.08 * i, 0.25 + 0.08 * i, 0.02);
         for (LivingEntity t : Wave28Util.cone(p, Wave28Rules.BREATH_RANGE, Wave28Rules.BREATH_CONE)) {
             float dmg = Wave28Rules.BREATH_DAMAGE + (t.getType().is(EntityTypeTags.UNDEAD) ? Wave28Rules.BREATH_UNDEAD_BONUS : 0f);
             Fx.damage(p, t, dmg, "tensura:holy_damage");
@@ -143,7 +145,7 @@ final class Wave28Neck {
         ServerPlayer p = c.player();
         ServerLevel l = p.serverLevel();
         Wave28Util.Aim a = Wave28Util.aim(p, Wave28Rules.CHARM_RANGE, e -> Wave28Util.target(p, e));
-        Wave28Util.trail(l, p.getEyePosition().add(0, -0.1, 0), a.end(), RukhFx.Alignment.DARK);
+        Wave28Util.trail(l, p.getEyePosition().add(0, -0.1, 0), a.end(), FxTone.DARK);
         LivingEntity t = a.hit();
         if (t == null) {
             Wave28Util.tell(p, "The eye finds no creature within ten blocks.", net.minecraft.ChatFormatting.GRAY);
@@ -153,7 +155,7 @@ final class Wave28Neck {
             Wave28Util.tell(p, t.getName().getString() + " throws off the gaze.", net.minecraft.ChatFormatting.GRAY);
             return;
         }
-        Wave28Util.burst(l, t.position().add(0, t.getBbHeight() * 0.6, 0), RukhFx.Alignment.DARK, 8);
+        Wave28Util.burst(l, t.position().add(0, t.getBbHeight() * 0.6, 0), FxTone.DARK, 8);
         if (t instanceof Player) {
             Wave28Util.give(t, Wave28Rules.PLAYER_CHARM_TICKS, 1, "minecraft:weakness");
             Wave28Util.give(t, Wave28Rules.PLAYER_CHARM_TICKS, 0, "minecraft:slowness");
@@ -217,7 +219,7 @@ final class Wave28Neck {
         formMods(p);
         Fx.lendSkills(p, ticks, "tensura:godwolf_sense", "tensura:strengthen_body");
         Wave28Util.give(p, ticks, 0, "minecraft:night_vision");
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.0, 0), RukhFx.Alignment.DARK, 12);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.0, 0), FxTone.DARK, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WOLF_HOWL, SoundSource.PLAYERS, 1.0f, 0.8f);
         Wave28Util.say(p, ctrl ? "The moon holds the wolf: you keep your mind for " + ticks / 1200 + " minutes."
                 : "The wolf is not yours tonight: the form will slip in " + ticks / 20 + " seconds and the curse will take its price.", net.minecraft.ChatFormatting.DARK_RED);
@@ -244,7 +246,7 @@ final class Wave28Neck {
         } else {
             Wave28Util.tell(p, "You are yourself again.");
         }
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.0, 0), RukhFx.Alignment.DARK, 6);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.0, 0), FxTone.DARK, 6);
     }
 
     /** Moon vigil: a night under the open sky at the full moon. The collar then holds the wolf for you until the next full moon. */
@@ -259,7 +261,7 @@ final class Wave28Neck {
         Fx.heal(p, 6f);
         Wave28Util.give(p, 200, 0, "minecraft:regeneration");
         Wave28Util.say(p, "You keep the vigil. Until the next full moon you hold the wolf.", net.minecraft.ChatFormatting.AQUA);
-        Wave28Util.burst(l, p.position().add(0, 1.6, 0), RukhFx.Alignment.LIGHT, 10);
+        Wave28Util.burst(l, p.position().add(0, 1.6, 0), FxTone.LIGHT, 10);
     }
 
     /** Once a second: keeps the form's modifiers and night eyes while it lasts and the collar is worn; ends it (with the price if the moon did not hold it). */
@@ -308,12 +310,12 @@ final class Wave28Neck {
     static void sacredFlame(ActCtx c) {
         ServerPlayer p = c.player();
         Wave28Util.Aim a = Wave28Util.aim(p, 14.0, e -> Wave28Util.foe(p, e));
-        Wave28Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), a.end(), RukhFx.Alignment.LIGHT);
+        Wave28Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), a.end(), FxTone.LIGHT);
         if (a.hit() == null) return;
         float dmg = Wave28Rules.SACRED_FLAME + (a.hit().getType().is(EntityTypeTags.UNDEAD) ? Wave28Rules.SACRED_UNDEAD_BONUS : 0f);
         Fx.damage(p, a.hit(), dmg, "tensura:holy_damage");
         a.hit().setRemainingFireTicks(Math.max(a.hit().getRemainingFireTicks(), 40));
-        Wave28Util.burst(p.serverLevel(), a.end(), RukhFx.Alignment.LIGHT, 8);
+        Wave28Util.burst(p.serverLevel(), a.end(), FxTone.LIGHT, 8);
     }
 
     /** Bathed in dawn's first light (open sky, once a day): the medallion takes 1d8+3 charges back, up to ten. */
@@ -335,7 +337,7 @@ final class Wave28Neck {
         saveSun(p, now.add(gain));
         d.putLong(S_DAWN, today + 1);
         Wave28Util.say(p, "The medallion drinks the dawn: +" + gain + " charges (" + Math.min(Wave28Rules.SUN_MAX, now.left() + gain) + " of " + Wave28Rules.SUN_MAX + ").", net.minecraft.ChatFormatting.GOLD);
-        Wave28Util.burst(l, p.position().add(0, 1.5, 0), RukhFx.Alignment.LIGHT, 12);
+        Wave28Util.burst(l, p.position().add(0, 1.5, 0), FxTone.LIGHT, 12);
     }
 
     private static List<LivingEntity> friends(ServerPlayer p, double r) { return Wave28Util.near(p.serverLevel(), p.position(), r, e -> Wave28Util.friend(p, e)); }
@@ -350,7 +352,7 @@ final class Wave28Neck {
     private static void healFriend(ServerPlayer p, LivingEntity e, float amount) {
         if (e instanceof ServerPlayer sp) Fx.heal(sp, amount);
         else e.heal(amount);
-        Wave28Util.burst(p.serverLevel(), e.position().add(0, e.getBbHeight() * 0.6, 0), RukhFx.Alignment.LIGHT, 5);
+        Wave28Util.burst(p.serverLevel(), e.position().add(0, e.getBbHeight() * 0.6, 0), FxTone.LIGHT, 5);
     }
 
     /** Aura of Vitality (1 charge): you and friends within 10 blocks get Regeneration II for 20 seconds. */
@@ -358,7 +360,7 @@ final class Wave28Neck {
         ServerPlayer p = c.player();
         if (!spendSun(p, Wave28Rules.COST_VITALITY)) return;
         for (LivingEntity e : friends(p, 10.0)) Wave28Util.give(e, 400, 1, "minecraft:regeneration");
-        Fx.ring(p.serverLevel(), p.position(), 5.0, 0xFFD060);
+        FxRelic.ring(p.serverLevel(), p.position(), 5.0, 0xFFD060);
     }
 
     /** Fire Shield (2 charges): five minutes of fire resistance and a shield of absorption. */
@@ -367,7 +369,7 @@ final class Wave28Neck {
         if (!spendSun(p, Wave28Rules.COST_SHIELD)) return;
         Wave28Util.give(p, 6000, 0, "minecraft:fire_resistance");
         Fx.shield(p, 8f, 6000);
-        Fx.ring(p.serverLevel(), p.position(), 1.8, 0xFF9A30);
+        FxRelic.ring(p.serverLevel(), p.position(), 1.8, 0xFF9A30);
     }
 
     /** Mass Cure Wounds (3 charges): you and friends within 8 blocks heal 10 hit points. */
@@ -375,7 +377,7 @@ final class Wave28Neck {
         ServerPlayer p = c.player();
         if (!spendSun(p, Wave28Rules.COST_MASS_CURE)) return;
         for (LivingEntity e : friends(p, 8.0)) healFriend(p, e, 10f);
-        Fx.ring(p.serverLevel(), p.position(), 8.0, 0xFFE080);
+        FxRelic.ring(p.serverLevel(), p.position(), 8.0, 0xFFE080);
     }
 
     /** Greater Restoration (5 charges): every harmful effect leaves you and friends within 6 blocks. */
@@ -383,7 +385,7 @@ final class Wave28Neck {
         ServerPlayer p = c.player();
         if (!spendSun(p, Wave28Rules.COST_RESTORATION)) return;
         for (LivingEntity e : friends(p, 6.0)) cleanse(e);
-        Fx.ring(p.serverLevel(), p.position(), 6.0, 0xFFF0B0);
+        FxRelic.ring(p.serverLevel(), p.position(), 6.0, 0xFFF0B0);
     }
 
     private static LivingEntity healTarget(ServerPlayer p) {
@@ -420,10 +422,10 @@ final class Wave28Neck {
         for (LivingEntity e : friends(p, 16.0)) {
             e.getPersistentData().putLong(WARD, until);
             e.heal(e.getMaxHealth());
-            Wave28Util.burst(p.serverLevel(), e.position().add(0, e.getBbHeight() * 0.6, 0), RukhFx.Alignment.LIGHT, 12);
+            Wave28Util.burst(p.serverLevel(), e.position().add(0, e.getBbHeight() * 0.6, 0), FxTone.LIGHT, 12);
             if (e instanceof ServerPlayer sp) Wave28Potions.reattach(sp);
         }
-        Fx.ring(p.serverLevel(), p.position(), 16.0, 0xFFE9A0);
+        FxRelic.ring(p.serverLevel(), p.position(), 16.0, 0xFFE9A0);
         Wave28Util.say(p, "The Sunheart Medallion shatters into brilliant sunlight, lost for ever. Ten minutes of its ward remain on you and your friends.", net.minecraft.ChatFormatting.GOLD);
         c.stack().shrink(1);
     }
@@ -437,7 +439,7 @@ final class Wave28Neck {
     static void spendWard(LivingEntity v) {
         v.getPersistentData().remove(WARD);
         if (v.getHealth() < v.getMaxHealth() * 0.5f) v.setHealth(v.getMaxHealth() * 0.5f);
-        if (v.level() instanceof ServerLevel l) Wave28Util.burst(l, v.position().add(0, v.getBbHeight() * 0.6, 0), RukhFx.Alignment.LIGHT, 12);
+        if (v.level() instanceof ServerLevel l) Wave28Util.burst(l, v.position().add(0, v.getBbHeight() * 0.6, 0), FxTone.LIGHT, 12);
     }
 
     /** Once a second while worn: disease cannot take hold (Tensura infection and the sickness of rotten food); an evil (devil-bound) wearer burns a little each round. */
@@ -451,7 +453,7 @@ final class Wave28Neck {
         if (burn <= 0f) return;
         d.putLong(S_BURN, now + Wave28Rules.EVIL_BURN_GAP);
         p.hurt(p.damageSources().onFire(), burn);
-        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.2, 0), RukhFx.Alignment.DARK, 6);
+        Wave28Util.burst(p.serverLevel(), p.position().add(0, 1.2, 0), FxTone.DARK, 6);
         Wave28Util.tell(p, "The medallion burns the evil in you.", net.minecraft.ChatFormatting.RED);
     }
 
@@ -502,7 +504,7 @@ final class Wave28Neck {
             Wave28Util.give(e, Wave28Rules.SENSE_TICKS, 0, "minecraft:glowing");
             n++;
         }
-        Wave28Util.burst(l, p.position().add(0, 1.6, 0), RukhFx.Alignment.DARK, 6);
+        Wave28Util.burst(l, p.position().add(0, 1.6, 0), FxTone.DARK, 6);
         Wave28Util.tell(p, "Witcher senses: " + n + (n == 1 ? " monster" : " monsters") + " lit for fifteen seconds.");
     }
 }

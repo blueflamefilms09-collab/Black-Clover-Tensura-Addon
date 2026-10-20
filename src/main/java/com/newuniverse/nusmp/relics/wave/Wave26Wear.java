@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
@@ -17,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: most of the wave's relics have something they do while merely worn or carried, once a second (a beard that grows at dawn, a curse
@@ -91,7 +92,7 @@ final class Wave26Wear {
             d.putBoolean("beard", grows);
             if (grows) {
                 Wave26Util.say(p, "Your chin itches. A magnificent beard has grown overnight. (The miners will want to compare.)", ChatFormatting.GOLD);
-                RukhFx.burst(sl, p, RukhFx.Alignment.LIGHT, 8);
+                com.newuniverse.nusmp.particle.fx.Fx.burst(sl, FxThemes.RELIC_WAVE_26, p, FxTone.LIGHT, 8);
             }
         }
         if (d.getBoolean("beard")) Wave26Util.setMod(p, "minecraft:generic.knockback_resistance", "beard", Wave26Rules.BEARD_KNOCKBACK, Operation.ADD_VALUE);
@@ -220,7 +221,7 @@ final class Wave26Wear {
         float dmg = Wave26Rules.wrathDamage(Wave26Rules.die(Wave26Util.rng(wearer), 6), saved);
         Fx.damage(wearer, attacker, dmg, "minecraft:magic");
         if (!saved) Wave26Util.give(attacker, Wave26Rules.WRATH_POISON_TICKS, 0, "minecraft:poison");
-        RukhFx.burst((ServerLevel) wearer.level(), attacker, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst((ServerLevel) wearer.level(), FxThemes.RELIC_WAVE_26, attacker, FxTone.LIGHT, 8);
         Wave26Util.tell(wearer, "Jellyfish Wrath: poisonous cells lash out at " + attacker.getName().getString() + ".", ChatFormatting.AQUA);
     }
 }

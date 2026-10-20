@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -31,6 +30,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: wave 23's act bodies, the server side of every sneak-click and worn-relic key of the bows, the lute, the lyre, the ring and the horn. The core has
@@ -52,12 +54,12 @@ final class Wave23Acts {
     // ================================================================ shared helpers
     static void note(ServerPlayer p, String text, ChatFormatting colour) { Wave0Util.note(p, text, colour); }
 
-    static void spark(ServerLevel l, Vec3 at, int rgb, int n) { RukhFx.spray(l, Fx.align(rgb), at.x, at.y, at.z, n, 0.3, 0.4, 0.3, 0.05); }
+    static void spark(ServerLevel l, Vec3 at, int rgb, int n) { com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_23, FxRelic.tone(rgb), at.x, at.y, at.z, n, 0.3, 0.4, 0.3, 0.05); }
 
     /** A line of Rukh from one point to another (one call: the particles fly along it). */
     static void beam(ServerLevel l, Vec3 from, Vec3 to, int rgb) {
         if (from.distanceToSqr(to) < 0.04) return;
-        RukhFx.stream(l, from, to, Fx.align(rgb), 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(l, FxThemes.RELIC_WAVE_23, from, to, FxRelic.tone(rgb), 6);
         spark(l, to, rgb, 8);
     }
 
@@ -116,7 +118,7 @@ final class Wave23Acts {
         p.getPersistentData().putLong(K_SENTENCE, p.level().getGameTime() + Wave23Rules.SENTENCE_ARMED_TICKS);
         note(p, "Divine Mercy: your next arrow carries the Sentence (30 s).", ChatFormatting.GOLD);
         spark(p.serverLevel(), p.position().add(0, 1.4, 0), GOLD, 12);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_23, p, FxTone.LIGHT, 10);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 1.4f);
     }
 
@@ -138,7 +140,7 @@ final class Wave23Acts {
         Fx.shield(p, Wave23Rules.PROTECT_ABSORB, Wave23Rules.PROTECT_TICKS);
         Fx.addEffect(p, "minecraft:speed", Wave23Rules.PROTECT_TICKS, 0);
         Fx.say(p, "Protect me!  (" + (Wave23Rules.PROTECT_USES - after.used()) + " of " + Wave23Rules.PROTECT_USES + " left before a rest)");
-        RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
+        com.newuniverse.nusmp.particle.fx.Fx.aura(p.serverLevel(), FxThemes.RELIC_WAVE_23, p, FxTone.LIGHT);
         spark(p.serverLevel(), p.position().add(0, 1.2, 0), 0x8AE070, 14);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.2f);
     }
@@ -166,7 +168,7 @@ final class Wave23Acts {
             if (bp.distToCenterSqr(at) > r * r) continue;
             var key = BuiltInRegistries.BLOCK.getKey(level.getBlockState(bp).getBlock());
             if (key == null || !Wave23Rules.isTrapBlock(key.getPath())) continue;
-            RukhFx.spray(level, RukhFx.Alignment.DARK, bp.getX() + 0.5, bp.getY() + 0.8, bp.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_23, FxTone.DARK, bp.getX() + 0.5, bp.getY() + 0.8, bp.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.02);
             if (++traps >= 24) break;
         }
         Fx.addEffect(p, "minecraft:night_vision", Wave23Rules.SIGHT_TICKS, 0);          // the truesight itself
@@ -210,9 +212,9 @@ final class Wave23Acts {
         Vec3 to = from.add(look.scale(Wave23Rules.STRIKE_LENGTH));
         for (int i = 0; i <= 8; i++) {
             Vec3 at = from.add(look.scale(Wave23Rules.STRIKE_LENGTH * i / 8.0));
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 6, 0.25, 0.25, 0.25, 0.04);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_23, FxTone.LIGHT, at.x, at.y, at.z, 6, 0.25, 0.25, 0.25, 0.04);
         }
-        RukhFx.stream(level, from, to, RukhFx.Alignment.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_23, from, to, FxTone.LIGHT, 6);
         int hit = 0;
         AABB box = new AABB(from, to).inflate(2.0);
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, box, x -> Wave0Util.fair(p, x))) {
@@ -290,7 +292,7 @@ final class Wave23Acts {
         Fx.addEffect(t, "tensura:inspiration", Wave23Rules.CHORD_TICKS, amp);
         ServerLevel level = p.serverLevel();
         beam(level, hand(p), centre(t), GOLD);
-        RukhFx.gather(level, t, RukhFx.Alignment.LIGHT, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(level, FxThemes.RELIC_WAVE_23, t, FxTone.LIGHT, 10);
         level.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_GUITAR.value(), SoundSource.PLAYERS, 1.2f, beat ? 1.6f : 1.2f);
         note(p, "Chord of Valor" + (beat ? " (on the beat)" : "") + ": " + t.getName().getString() + " is inspired.", ChatFormatting.GOLD);
     }
@@ -348,7 +350,7 @@ final class Wave23Acts {
             spark(level, centre(f), PINK, 8);
             fell++;
         }
-        RukhFx.burst(level, p.position().add(0, 1.2, 0), RukhFx.Alignment.LIGHT, 12, 1.2);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_23, p.position().add(0, 1.2, 0), FxTone.LIGHT, 12, 1.2);
         level.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_HARP.value(), SoundSource.PLAYERS, 1.4f, 0.8f);
         note(p, "Bewitching Lyre: " + fell + " of " + foes.size() + " fell under the song" + (spend ? " (charge spent, " + lyreCharges(p) + " left)" : "") + ".", ChatFormatting.LIGHT_PURPLE);
     }
@@ -365,7 +367,7 @@ final class Wave23Acts {
             audience++;
         }
         boolean ok = Wave23Rules.performed(audience, p.getRandom().nextDouble());
-        RukhFx.burst(level, p.position().add(0, 1.2, 0), RukhFx.Alignment.LIGHT, 12, 1.5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_23, p.position().add(0, 1.2, 0), FxTone.LIGHT, 12, 1.5);
         level.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 1.4f, 1.0f);
         if (ok) {
             p.getPersistentData().putInt(K_LYRE, Wave23Rules.LYRE_CHARGES);
@@ -411,7 +413,7 @@ final class Wave23Acts {
         Fx.addEffect(t, "minecraft:weakness", ticks, 1);
         Fx.damage(p, t, 3.0f, "minecraft:player_attack");
         beam(level, hand(p), centre(t), 0x2FA060);
-        RukhFx.gather(level, t, RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(level, FxThemes.RELIC_WAVE_23, t, FxTone.DARK, 10);
         note(p, "The tentacles close on " + t.getName().getString() + ".", ChatFormatting.DARK_GREEN);
     }
 
@@ -436,15 +438,15 @@ final class Wave23Acts {
                 List<LivingEntity> foes = Fx.foesAround(p, 24);
                 if (!foes.isEmpty()) m.setTarget(foes.get(0));
             }
-            RukhFx.aura(level, e, RukhFx.Alignment.LIGHT);
+            com.newuniverse.nusmp.particle.fx.Fx.aura(level, FxThemes.RELIC_WAVE_23, e, FxTone.LIGHT);
             rallied++;
         }
         Fx.addEffect(p, "minecraft:strength", Wave23Rules.HORN_TICKS, 1);
         Fx.addEffect(p, "minecraft:speed", Wave23Rules.HORN_TICKS, 0);
         Fx.addEffect(p, "minecraft:luck", Wave23Rules.HORN_TICKS, 4);                      // "+10 on persuasion checks"
         Fx.addEffect(p, "tensura:inspiration", Wave23Rules.HORN_TICKS, 1);
-        RukhFx.burst(level, p.position().add(0, 1.4, 0), RukhFx.Alignment.LIGHT, 12, 2.0);
-        RukhFx.burst(level, p.position().add(0, 1.0, 0), RukhFx.Alignment.DARK, 12, 1.5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_23, p.position().add(0, 1.4, 0), FxTone.LIGHT, 12, 2.0);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_23, p.position().add(0, 1.0, 0), FxTone.DARK, 12, 1.5);
         level.playSound(null, p.blockPosition(), SoundEvents.RAID_HORN.value(), SoundSource.PLAYERS, 3.0f, 1.0f);
         Fx.say(p, "LEEEEROOOOY JENKINS!  " + rallied + " fighter(s) follow you. Fell " + Wave23Rules.HORN_KILLS + " hostile creatures in five minutes to win the day.");
         p.displayClientMessage(net.minecraft.network.chat.Component.literal("The horn crumbles in your hands; it will be whole again in five days.").withStyle(ChatFormatting.GRAY), false);
@@ -459,7 +461,7 @@ final class Wave23Acts {
         if (timedOut && Wave23Rules.victory(kills)) {
             d.putInt(K_CHARISMA, Wave23Rules.charismaAfterVictory(d.getInt(K_CHARISMA)));
             Fx.say(p, "Victory! Leroy lives on in you: +1 Charisma (" + d.getInt(K_CHARISMA) + " of " + Wave23Rules.CHARISMA_CAP + "; luck +" + Wave23Rules.charismaLuck(d.getInt(K_CHARISMA)) + ").");
-            RukhFx.burst(p.serverLevel(), p.position().add(0, 1.4, 0), RukhFx.Alignment.LIGHT, 12, 1.5);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_23, p.position().add(0, 1.4, 0), FxTone.LIGHT, 12, 1.5);
         } else {
             Fx.say(p, "The battle was lost (" + kills + " felled). A bucket of chicken appears in your hands.");
             ItemStack bucket = new ItemStack(Items.COOKED_CHICKEN, 8);

@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.labyrinth.mega.crucible.CatastropheRules;
 import com.newuniverse.nusmp.labyrinth.mega.rift.PocketRealm;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the canon says a tomb collapses when its primary artifact is taken, and that this is a race. This is the runner of that collapse; it reuses the catastrophe clocks of the Crucible
@@ -130,8 +132,8 @@ public final class PocketCollapse {
         }
         if (el % 4 == 0) {
             double cx = box.getCenter().x, cz = box.getCenter().z;
-            level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, cx + (rnd.nextDouble() - 0.5) * (box.maxX - box.minX), box.maxY - 1, cz + (rnd.nextDouble() - 0.5) * (box.maxZ - box.minZ), 1, 0.0, -0.1, 0.0, 0.0);
-            level.sendParticles(ParticleTypes.ASH, cx + (rnd.nextDouble() - 0.5) * (box.maxX - box.minX), box.minY + 2, cz + (rnd.nextDouble() - 0.5) * (box.maxZ - box.minZ), 3, 1.0, 1.0, 1.0, 0.02);
+            Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.CAMPFIRE_COSY_SMOKE, cx + (rnd.nextDouble() - 0.5) * (box.maxX - box.minX), box.maxY - 1, cz + (rnd.nextDouble() - 0.5) * (box.maxZ - box.minZ), 1, 0.0, -0.1, 0.0, 0.0);
+            Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.ASH, cx + (rnd.nextDouble() - 0.5) * (box.maxX - box.minX), box.minY + 2, cz + (rnd.nextDouble() - 0.5) * (box.maxZ - box.minZ), 3, 1.0, 1.0, 1.0, 0.02);
         }
     }
 
@@ -157,7 +159,7 @@ public final class PocketCollapse {
         }
         BlockPos centre = BlockPos.containing(rt.roomBox(id).getCenter());
         level.playSound(null, centre, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.AMBIENT, 4.0f, 0.5f);
-        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, centre.getX() + 0.5, centre.getY() + 0.5, centre.getZ() + 0.5, 2, 3.0, 2.0, 3.0, 0.0);
+        Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.EXPLOSION_EMITTER, centre.getX() + 0.5, centre.getY() + 0.5, centre.getZ() + 0.5, 2, 3.0, 2.0, 3.0, 0.0);
     }
 
     /** Carries a delver caught in a falling room to the entry hall, and takes a fifth of their health (never the last of it). */
@@ -203,9 +205,9 @@ public final class PocketCollapse {
             if (room < 0 || room == rt.layout.entryId() || fell(room) || el < fallsAt(room) - PocketRules.ROOM_WARN_TICKS * 3) continue;
             double x = pl.getX() + (rnd.nextDouble() - 0.5) * 2.0, z = pl.getZ() + (rnd.nextDouble() - 0.5) * 2.0;
             strikes.add(new double[]{el + CatastropheRules.DEBRIS_TELEGRAPH_TICKS, x, pl.getY(), z});
-            level.sendParticles(ParticleTypes.CRIT, x, pl.getY() + 0.1, z, 12, 0.6, 0.0, 0.6, 0.0);
+            Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.CRIT, x, pl.getY() + 0.1, z, 12, 0.6, 0.0, 0.6, 0.0);
             for (int i = 0; i < CatastropheRules.DEBRIS_DECOR_PER_PULSE; i++)
-                level.sendParticles(ParticleTypes.ASH, x + (rnd.nextDouble() - 0.5) * 6, pl.getY() + 4, z + (rnd.nextDouble() - 0.5) * 6, 6, 0.3, 0.8, 0.3, 0.0);
+                Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.ASH, x + (rnd.nextDouble() - 0.5) * 6, pl.getY() + 4, z + (rnd.nextDouble() - 0.5) * 6, 6, 0.3, 0.8, 0.3, 0.0);
         }
     }
 
@@ -215,7 +217,7 @@ public final class PocketCollapse {
             double[] s = strikes.get(i);
             if (el < s[0]) continue;
             strikes.remove(i);
-            level.sendParticles(ParticleTypes.EXPLOSION, s[1], s[2] + 0.2, s[3], 1, 0, 0, 0, 0);
+            Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.EXPLOSION, s[1], s[2] + 0.2, s[3], 1, 0, 0, 0, 0);
             level.playSound(null, BlockPos.containing(s[1], s[2], s[3]), SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.5f, 0.6f);
             for (ServerPlayer pl : in) {
                 if (!CatastropheRules.debrisHits(pl.getX() - s[1], pl.getY() - s[2], pl.getZ() - s[3]) || pl.isCreative() || pl.isSpectator()) continue;

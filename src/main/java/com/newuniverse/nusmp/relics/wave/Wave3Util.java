@@ -33,6 +33,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Wave 3: the small Minecraft helpers every card of the wave shares: where a player's own numbers are kept, effects by id (a Tensura effect with a
@@ -205,8 +207,8 @@ final class Wave3Util {
     }
 
     // ---------------------------------------------------------------- particles and words
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
-        return com.newuniverse.nusmp.relics.Fx.dust(rgb, size);
+    static net.minecraft.core.particles.ParticleOptions dust(int rgb, float size) {
+        return FxRelic.dust(rgb, size);
     }
 
     /** A line of particles (at most 48 points) from one point to another. */
@@ -217,7 +219,7 @@ final class Wave3Util {
         int n = (int) Math.max(2, Math.min(48, len * 2.0));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(level, com.newuniverse.nusmp.relics.Fx.alignOf(particle), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_3, com.newuniverse.nusmp.particle.fx.Fx.toneOf(particle), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 

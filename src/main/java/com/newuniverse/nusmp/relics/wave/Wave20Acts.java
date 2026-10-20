@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.dungeon.DungeonGuard;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
@@ -16,6 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the active abilities of the twelve weapons of wave 20 (the server side of right-click, sneak + right-click and the worn-relic key), one method per
@@ -55,7 +57,7 @@ final class Wave20Acts {
                 }
             }
         });
-        RukhFx.spray(level, RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.3, p.getZ(), 12, 2.5, 0.2, 2.5, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.DARK, p.getX(), p.getY() + 0.3, p.getZ(), 12, 2.5, 0.2, 2.5, 0.02);
         Fx.say(p, grown[0] > 0 ? "Evil gardening: " + grown[0] + " plants lean in and grow, a little too eagerly." : "Nothing here wants to grow, evilly or otherwise.");
     }
 
@@ -74,7 +76,7 @@ final class Wave20Acts {
             t.hurtMarked = true;
             n++;
         }
-        Fx.ring(p.serverLevel(), centre, 3.0, 0x2A1038);
+        FxRelic.ring(p.serverLevel(), centre, 3.0, 0x2A1038);
         Fx.say(p, n > 0 ? "A pit of shadow opens: " + n + (n == 1 ? " foe tumbles" : " foes tumble") + " in." : "A pit of shadow opens, and nothing falls in.");
     }
 
@@ -93,7 +95,7 @@ final class Wave20Acts {
         p.setDeltaMovement(look.x * 0.6, 1.05, look.z * 0.6);
         p.hurtMarked = true;
         p.fallDistance = 0;
-        RukhFx.burst(p.serverLevel(), p.position(), RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, p.position(), FxTone.LIGHT, 8);
         Fx.say(p, "You leap. Come down on something large.");
     }
 
@@ -113,7 +115,7 @@ final class Wave20Acts {
         Fx.damage(p, t, Wave20Rules.GRAPPLE_DAMAGE, "minecraft:in_fire");
         t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 40));
         Wave20Events.pull(p, t);
-        RukhFx.stream(p.serverLevel(), p, t, RukhFx.Alignment.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(p.serverLevel(), FxThemes.RELIC_WAVE_20, p, t, FxTone.LIGHT, 6);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.PLAYERS, 1.0f, 0.8f);
         Fx.say(p, "The burning chain wraps round the foe and holds it for six seconds, scorching it as it struggles.");
     }
@@ -138,8 +140,8 @@ final class Wave20Acts {
         pd.putDouble(K_STAR_X, end.x);
         pd.putDouble(K_STAR_Y, end.y);
         pd.putDouble(K_STAR_Z, end.z);
-        RukhFx.stream(level, eye.add(0, -0.3, 0), end, RukhFx.Alignment.LIGHT, 6);
-        RukhFx.burst(level, end, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, eye.add(0, -0.3, 0), end, FxTone.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_20, end, FxTone.LIGHT, 8);
         level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.5f);
         Fx.say(p, (t != null ? "The katana flies into the foe." : "The katana flies and bites into the " + "mark.") + " Sneak + use within five seconds to step to it.");
     }
@@ -166,11 +168,11 @@ final class Wave20Acts {
             Fx.say(p, "There is no room to stand where the katana struck.");
             return;
         }
-        RukhFx.burst(level, p.position(), RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_20, p.position(), FxTone.LIGHT, 8);
         p.teleportTo(spot.x, spot.y, spot.z);
         p.fallDistance = 0;
         pd.remove(K_STAR_AT);
-        RukhFx.burst(level, spot.add(0, 1, 0), RukhFx.Alignment.LIGHT, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_20, spot.add(0, 1, 0), FxTone.LIGHT, 10);
         level.playSound(null, p.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.0f, 1.4f);
         Fx.say(p, "You step along the starlight and take the katana in hand.");
     }
@@ -191,7 +193,7 @@ final class Wave20Acts {
         Fx.heal(p, stacks * 1.0f);
         pd.putInt(K_CARN_N, 0);
         pd.putLong(K_CARN_AT, 0L);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, p, FxTone.DARK, 10);
         Fx.say(p, "Bloodlust: " + stacks + " stacks of carnage become " + (ticks / 20) + " seconds of speed and haste, and a little blood back.");
     }
 
@@ -203,7 +205,7 @@ final class Wave20Acts {
         LivingEntity last = null;
         for (LivingEntity t : foes) {
             Fx.damage(p, t, 7.0f, "minecraft:magic");
-            RukhFx.burst(p.serverLevel(), t, RukhFx.Alignment.LIGHT, 6);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, t, FxTone.LIGHT, 6);
             last = t;
         }
         if (last != null) {
@@ -213,7 +215,7 @@ final class Wave20Acts {
                 p.fallDistance = 0;
             }
         }
-        Fx.ring(p.serverLevel(), p.position(), 4.0, 0xE8F0FF);
+        FxRelic.ring(p.serverLevel(), p.position(), 4.0, 0xE8F0FF);
         Fx.say(p, foes.isEmpty() ? "Steel Wind Strike: the wind has nothing to cut." : "Steel Wind Strike: you flicker between " + foes.size() + (foes.size() == 1 ? " foe." : " foes."));
     }
 
@@ -229,7 +231,7 @@ final class Wave20Acts {
             n++;
             if (n >= 8) break;
         }
-        Fx.ring(p.serverLevel(), p.position(), 8.0, 0xBFEFFF);
+        FxRelic.ring(p.serverLevel(), p.position(), 8.0, 0xBFEFFF);
         Fx.say(p, "A gentle voice: \"Breathe. Mercy is also strength.\" You are mended" + (n > 0 ? ", and so are " + n + " near you." : "."));
     }
 
@@ -237,7 +239,7 @@ final class Wave20Acts {
         ServerPlayer p = c.player();
         p.getPersistentData().putLong(K_AURA, p.level().getGameTime() + Wave20Rules.AURA_TICKS);
         Wave20Events.pulseAura(p);
-        Fx.ring(p.serverLevel(), p.position(), 6.0, 0xDFF6FF);
+        FxRelic.ring(p.serverLevel(), p.position(), 6.0, 0xDFF6FF);
         Fx.say(p, "Your aura turns radiant: for a minute everyone within six blocks is soothed and feels safe.");
     }
 
@@ -249,10 +251,10 @@ final class Wave20Acts {
         for (LivingEntity v : Wave20Util.foesNear(p, centre, 10.0)) {
             boolean undead = v.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD);
             Fx.damage(p, v, undead ? 21.0f : 14.0f, "minecraft:magic");
-            RukhFx.burst(p.serverLevel(), v, RukhFx.Alignment.LIGHT, 8);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, v, FxTone.LIGHT, 8);
             n++;
         }
-        Fx.ring(p.serverLevel(), centre, 10.0, 0xEAF8FF);
+        FxRelic.ring(p.serverLevel(), centre, 10.0, 0xEAF8FF);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1.2f, 1.4f);
         Fx.say(p, "Mighty Ethereal Light falls in a ten-block ring" + (n > 0 ? ": " + n + (n == 1 ? " foe is smitten." : " foes are smitten.") : ", and finds no one."));
     }
@@ -270,8 +272,8 @@ final class Wave20Acts {
             n++;
         }
         Vec3 end = eye.add(look.scale(len));
-        RukhFx.stream(level, eye.add(0, -0.3, 0), end, RukhFx.Alignment.LIGHT, 6);
-        RukhFx.burst(level, end, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, eye.add(0, -0.3, 0), end, FxTone.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_20, end, FxTone.LIGHT, 8);
         level.playSound(null, p.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.8f, 1.4f);
         Fx.say(p, n > 0 ? "Mjolnir flies, strikes " + n + (n == 1 ? " foe" : " foes") + " and is back in your hand." : "Mjolnir flies, finds nothing and is back in your hand.");
     }
@@ -289,8 +291,8 @@ final class Wave20Acts {
             n++;
         }
         Vec3 end = eye.add(look.scale(len));
-        RukhFx.stream(level, eye.add(0, -0.3, 0), end, RukhFx.Alignment.LIGHT, 6);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, end.x, end.y + 1.0, end.z, 12, 0.3, 1.2, 0.3, 0.3);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, eye.add(0, -0.3, 0), end, FxTone.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_20, FxTone.LIGHT, end.x, end.y + 1.0, end.z, 12, 0.3, 1.2, 0.3, 0.3);
         level.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 1.0f, 1.2f);
         Fx.say(p, n > 0 ? "Lightning Bolt: the sky answers and " + n + (n == 1 ? " foe is" : " foes are") + " struck." : "Lightning Bolt: the sky answers, and the bolt hits only air.");
     }
@@ -306,7 +308,7 @@ final class Wave20Acts {
             return;
         }
         pd.putLong(K_HOVER, now + Wave20Rules.HOVER_TICKS);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, p, FxTone.LIGHT, 8);
         Fx.say(p, "The halberd rises and hovers round you for three minutes: it strikes back at whoever hits you in melee, once every two seconds, even when it is not in your hand.");
     }
 
@@ -320,7 +322,7 @@ final class Wave20Acts {
             return;
         }
         pd.putBoolean(K_LIT, true);
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 1.0, 0), RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, p.position().add(0, 1.0, 0), FxTone.LIGHT, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0f, 0.8f);
         Fx.say(p, "\"Rise.\" Flames erupt along the blade and light the way. They burn until you speak again, drop the halberd or stow it.");
     }
@@ -340,7 +342,7 @@ final class Wave20Acts {
             n++;
         }
         Fx.dash(p, 5.0);
-        RukhFx.stream(level, p.getEyePosition(), p.getEyePosition().add(p.getLookAngle().scale(5.0)), RukhFx.Alignment.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_20, p.getEyePosition(), p.getEyePosition().add(p.getLookAngle().scale(5.0)), FxTone.LIGHT, 6);
         Fx.say(p, n > 0 ? "Void Rend: the rapier lunges through " + n + (n == 1 ? " foe" : " foes") + (voids > 0 ? ", and the void creatures among them cannot slip away." : ".") : "Void Rend: you lunge through empty air.");
     }
 
@@ -354,7 +356,7 @@ final class Wave20Acts {
         }
         boolean saved = Wave20Rules.saveHolds(p.getRandom().nextDouble()) || Wave20Util.isBig(t);
         Fx.damage(p, t, Wave20Rules.tollDamage(t.getHealth(), t.getMaxHealth(), saved), "minecraft:magic");
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 12, 0.4, 0.6, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_20, FxTone.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 12, 0.4, 0.6, 0.4, 0.05);
         p.serverLevel().playSound(null, t.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.2f, 0.6f);
         Fx.say(p, saved ? "Toll the Dead: the creature holds its ground and takes half." : "Toll the Dead: the bell rings in its bones.");
     }
@@ -377,7 +379,7 @@ final class Wave20Acts {
         if (worst instanceof ServerPlayer sp) Fx.heal(sp, 6.0f);
         else worst.heal(6.0f);
         Fx.addEffect(worst, "minecraft:regeneration", 100, 1);
-        RukhFx.burst(p.serverLevel(), worst, RukhFx.Alignment.LIGHT, 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, worst, FxTone.LIGHT, 8);
         Fx.say(p, "Spare the Dying: the raven's wing brushes " + (worst == p ? "you" : "an ally") + " and the bleeding stops.");
     }
 
@@ -389,7 +391,7 @@ final class Wave20Acts {
             Fx.addEffect(t, "minecraft:glowing", 200, 0);
             n++;
         }
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 2.0, 0), RukhFx.Alignment.DARK, 10);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_20, p.position().add(0, 2.0, 0), FxTone.DARK, 10);
         Fx.say(p, "Ravens wheel overhead and tell you what they see: " + n + " creature" + (n == 1 ? "" : "s") + " outlined within thirty blocks for ten seconds, and your senses stay sharp for three minutes.");
     }
 }

@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Amulet of the Warmage: four charges (one cantrip each) from the Wizard's list, and 1d4 charges back when a new day begins. The four cantrips
@@ -81,8 +82,8 @@ final class Wave5Warmage {
         if (t == null) return false;
         ServerLevel l = p.serverLevel();
         Vec3 to = t.getBoundingBox().getCenter();
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20);
-        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 0.25);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 20);
+        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 6, 0.25);
         Wave5Aim.sound(l, to, SoundEvents.FIRECHARGE_USE, 1.0f, 1.2f);
         Fx.damage(p, t, Wave5Pure.cantrip(4, p.experienceLevel), "minecraft:in_fire");
         t.igniteForSeconds(3);
@@ -94,8 +95,8 @@ final class Wave5Warmage {
         if (t == null) return false;
         ServerLevel l = p.serverLevel();
         Vec3 to = t.getBoundingBox().getCenter();
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24);
-        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.3);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 24);
+        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 10, 0.3);
         Wave5Aim.sound(l, to, SoundEvents.GLASS_BREAK, 0.7f, 1.6f);
         Fx.damage(p, t, Wave5Pure.cantrip(3, p.experienceLevel), "minecraft:freeze");
         Fx.addEffect(t, "minecraft:slowness", 100, 1);
@@ -107,7 +108,7 @@ final class Wave5Warmage {
         if (t == null) return false;
         ServerLevel l = p.serverLevel();
         Vec3 to = t.getBoundingBox().getCenter();
-        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 18, 0.35);
+        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 18, 0.35);
         Wave5Aim.sound(l, to, SoundEvents.LIGHTNING_BOLT_THUNDER, 0.35f, 2.0f);
         Fx.damage(p, t, Wave5Pure.cantrip(4, p.experienceLevel), "minecraft:lightning_bolt");
         Fx.addEffect(t, "minecraft:slowness", 30, 3);          // it can take no reaction for a moment
@@ -119,8 +120,8 @@ final class Wave5Warmage {
         if (t == null) return false;
         ServerLevel l = p.serverLevel();
         Vec3 to = t.getBoundingBox().getCenter();
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16);
-        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 14, 0.4);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 16);
+        Wave5Aim.puff(l, to, com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_5, FxTone.LIGHT), 14, 0.4);
         Wave5Aim.sound(l, to, SoundEvents.EVOKER_CAST_SPELL, 0.6f, 1.8f);
         float dmg = Wave5Pure.cantrip(3, p.experienceLevel);
         Fx.damage(p, t, dmg, "minecraft:magic");

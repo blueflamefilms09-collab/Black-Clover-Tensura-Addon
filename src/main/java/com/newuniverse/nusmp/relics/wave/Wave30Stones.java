@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -30,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the Stones are six separate unique relics but one design; the Gauntlet's acts reuse the Stones' bodies, so they live together to keep the two
@@ -104,8 +106,8 @@ final class Wave30Stones {
             }
             moved++;
         }
-        RukhFx.burst(level, from.add(0, 1, 0), RukhFx.Alignment.LIGHT, 12, 0.8);
-        RukhFx.burst(level, new Vec3(x, y + 1, z), RukhFx.Alignment.LIGHT, 12, 0.8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, from.add(0, 1, 0), FxTone.LIGHT, 12, 0.8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, new Vec3(x, y + 1, z), FxTone.LIGHT, 12, 0.8);
         Wave30Kit.say(p, "The Tesseract opens: " + moved + (moved == 1 ? " person steps" : " people step") + " through to " + dest.getX() + ", " + dest.getY() + ", " + dest.getZ() + ".");
     }
 
@@ -137,7 +139,7 @@ final class Wave30Stones {
         Wave30Data.putInt(p, Wave30Data.MARK_X, b.getX());
         Wave30Data.putInt(p, Wave30Data.MARK_Y, b.getY());
         Wave30Data.putInt(p, Wave30Data.MARK_Z, b.getZ());
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_30, p, FxTone.LIGHT, 12);
         Wave30Kit.say(p, "The Tesseract remembers this place: " + b.getX() + ", " + b.getY() + ", " + b.getZ() + ".");
     }
 
@@ -166,7 +168,7 @@ final class Wave30Stones {
             Wave30Kit.say(p, "  " + e.getName().getString() + " at " + e.getBlockX() + ", " + e.getBlockY() + ", " + e.getBlockZ() + ": " + thought(e));
             if (e.distanceToSqr(p) <= 96 * 96) Fx.addEffect(e, "minecraft:glowing", 100, 0);
         }
-        RukhFx.gather(level, p, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(level, FxThemes.RELIC_WAVE_30, p, FxTone.LIGHT, 12);
     }
 
     private static String thought(LivingEntity e) {
@@ -197,7 +199,7 @@ final class Wave30Stones {
         if (t instanceof Player o) sb.append(", food ").append(o.getFoodData().getFoodLevel()).append("/20, at ").append(o.getBlockX()).append(", ").append(o.getBlockY()).append(", ").append(o.getBlockZ());
         sb.append(", carrying ").append(t.getActiveEffects().size()).append(" lingering effects");
         Wave30Kit.say(p, sb.toString() + ".");
-        RukhFx.stream(p.serverLevel(), p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.7, 0), RukhFx.Alignment.LIGHT, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.stream(p.serverLevel(), FxThemes.RELIC_WAVE_30, p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.7, 0), FxTone.LIGHT, 6);
     }
 
     // ================================================================ Power
@@ -214,8 +216,8 @@ final class Wave30Stones {
             t.hurtMarked = true;
             n++;
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave30Tune.POWER_RADIUS * boost, 0xB070FF);
-        RukhFx.burst(p.serverLevel(), p.position().add(0, 1, 0), RukhFx.Alignment.LIGHT, 12, 1.0);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave30Tune.POWER_RADIUS * boost, 0xB070FF);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, p.position().add(0, 1, 0), FxTone.LIGHT, 12, 1.0);
         Wave30Kit.say(p, "Raw power bursts from you" + (n == 0 ? ", and strikes only air." : " and throws back " + n + (n == 1 ? " foe." : " foes.")));
     }
 
@@ -228,7 +230,7 @@ final class Wave30Stones {
         Fx.addEffect(p, "minecraft:luck", ticks, 1);
         Fx.addEffect(p, Wave30Tune.EF_FUTURE_VISION, Math.min(ticks, 2400), 0);
         Fx.lendSkill(p, Wave30Tune.SK_DANGER_SENSE, ticks);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_30, p, FxTone.LIGHT, 12);
         Wave30Kit.say(p, "Foresight opens: for " + UseRules.span(ticks) + " you cannot be surprised (the first blow from an attacker in each 20 seconds is turned aside).");
     }
 
@@ -247,7 +249,7 @@ final class Wave30Stones {
         Fx.addEffect(t, "minecraft:weakness", ticks, 2);
         Fx.addEffect(t, "minecraft:slowness", ticks, 0);
         Fx.addEffect(t, "minecraft:glowing", ticks, 0);
-        RukhFx.burst(p.serverLevel(), t, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.LIGHT, 12);
         Wave30Kit.say(p, t.getName().getString() + " shrinks into a small, feeble form for " + UseRules.span(ticks) + ".");
     }
 
@@ -257,7 +259,7 @@ final class Wave30Stones {
         int ticks = scale(Wave30Tune.SEEMING_TICKS, boost(p));
         Fx.addEffect(p, "minecraft:invisibility", ticks, 0);
         Fx.addEffect(p, Wave30Tune.EF_PRESENCE_CONCEAL, ticks, 0);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, p, FxTone.LIGHT, 12);
         Wave30Kit.say(p, "Reality gives you another seeming for " + UseRules.span(ticks) + ": you are unseen.");
     }
 
@@ -276,7 +278,7 @@ final class Wave30Stones {
                 n++;
             }
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave30Tune.MIRAGE_RADIUS * boost, 0xFF6A6A);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave30Tune.MIRAGE_RADIUS * boost, 0xFF6A6A);
         Wave30Kit.say(p, n == 0 ? "A mirage shimmers, but no mind is near to be fooled." : "A mirage shimmers: " + n + (n == 1 ? " foe loses" : " foes lose") + " you and wander.");
     }
 
@@ -372,7 +374,7 @@ final class Wave30Stones {
             }
         }
         Wave30Data.putLong(p, Wave30Data.GREAT_DAY, today + 1);
-        Fx.burst(level, p.position(), 0xFFFFFF);
+        FxRelic.burst(level, p.position(), 0xFFFFFF);
         Wave30Kit.shout(p, "THE GREATER WISH: " + w.title + ".", ChatFormatting.GOLD);
     }
 
@@ -397,13 +399,13 @@ final class Wave30Stones {
             if (amount > 0f) Wave30Kit.hurtShare(p, m, amount);
             Fx.addEffect(m, "minecraft:weakness", 200, 1);
             Fx.addEffect(m, "minecraft:slowness", 200, 1);
-            RukhFx.burst(level, m, RukhFx.Alignment.DARK, 6);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, m, FxTone.DARK, 6);
             n++;
         }
         Wave30Data.putLong(p, Wave30Data.SNAP_DAY, today + 1);
         Fx.addEffect(p, "minecraft:weakness", Wave30Tune.SNAP_TOLL_TICKS, 1);
         Fx.addEffect(p, "minecraft:mining_fatigue", Wave30Tune.SNAP_TOLL_TICKS, 1);
-        Fx.ring(level, p.position(), 10.0, 0xFFD27A);
+        FxRelic.ring(level, p.position(), 10.0, 0xFFD27A);
         Wave30Kit.shout(p, "THE SNAP: dust takes " + n + (n == 1 ? " foe" : " foes") + " by half. The Gauntlet's toll falls on you for thirty seconds.", ChatFormatting.GOLD);
     }
 

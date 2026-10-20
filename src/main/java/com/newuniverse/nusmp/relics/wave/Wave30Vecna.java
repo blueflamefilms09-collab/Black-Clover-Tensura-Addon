@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -16,6 +15,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the pair is one design (the risk of the Eye, the coercion of the Hand, the set that lifts both), so its code sits together; nothing here ever
@@ -53,7 +55,7 @@ final class Wave30Vecna {
                 Fx.addEffect(e, "minecraft:glowing", Wave30Tune.CLAIR_GLOW, 0);
             }
         }
-        RukhFx.gather(level, p, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(level, FxThemes.RELIC_WAVE_30, p, FxTone.DARK, 12);
         afterEyeAct(p);
     }
 
@@ -67,7 +69,7 @@ final class Wave30Vecna {
         }
         Wave30Events.madden((Mob) t, t.level().getGameTime() + Wave30Tune.CROWN_TICKS);
         Fx.addEffect(t, "minecraft:glowing", Wave30Tune.CROWN_TICKS, 0);
-        RukhFx.burst(p.serverLevel(), t, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.DARK, 12);
         Wave30Kit.say(p, "Madness crowns " + t.getName().getString() + ": it turns on its own for ten seconds.");
         afterEyeAct(p);
     }
@@ -80,14 +82,14 @@ final class Wave30Vecna {
         Vec3 from = p.getEyePosition().add(0, -0.2, 0);
         if (t == null) {
             Vec3 end = from.add(p.getLookAngle().scale(Wave30Tune.DISINTEGRATE_REACH));
-            for (int i = 0; i < 3; i++) RukhFx.stream(level, from, end, RukhFx.Alignment.DARK, 6);
+            for (int i = 0; i < 3; i++) com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_30, from, end, FxTone.DARK, 6);
             Wave30Kit.say(p, "The beam finds nothing to unmake.");
             afterEyeAct(p);
             return;
         }
         Vec3 to = t.position().add(0, t.getBbHeight() * 0.5, 0);
-        for (int i = 0; i < 3; i++) RukhFx.stream(level, from, to, RukhFx.Alignment.DARK, 6);
-        RukhFx.burst(level, to, RukhFx.Alignment.DARK, 12, 0.6);
+        for (int i = 0; i < 3; i++) com.newuniverse.nusmp.particle.fx.Fx.stream(level, FxThemes.RELIC_WAVE_30, from, to, FxTone.DARK, 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_30, to, FxTone.DARK, 12, 0.6);
         Wave30Kit.hit(p, t, Wave30Tune.DISINTEGRATE_DAMAGE, "minecraft:magic", true);
         Wave30Kit.say(p, "A grey beam unmakes the air: " + t.getName().getString() + " is struck.");
         afterEyeAct(p);
@@ -102,7 +104,7 @@ final class Wave30Vecna {
             return;
         }
         Wave30Events.dominate((Mob) t, p, t.level().getGameTime() + Wave30Tune.DOMINATE_TICKS);
-        RukhFx.gather(p.serverLevel(), t, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.DARK, 12);
         Wave30Kit.say(p, t.getName().getString() + " bends to your will for a minute.");
         afterEyeAct(p);
     }
@@ -123,7 +125,7 @@ final class Wave30Vecna {
         }
         Vec3 look = p.getLookAngle();
         Vec3 at = p.getEyePosition().add(look.scale(3.0));
-        RukhFx.burst(p.serverLevel(), at, RukhFx.Alignment.DARK, 12, 1.2);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, at, FxTone.DARK, 12, 1.2);
         Wave30Kit.say(p, n == 0 ? "Your gaze falls on empty air." : "Your gaze bites " + n + (n == 1 ? " foe: fear, weakness and slowness." : " foes: fear, weakness and slowness."));
         afterEyeAct(p);
     }
@@ -145,7 +147,7 @@ final class Wave30Vecna {
         Fx.addEffect(p, "minecraft:slowness", Wave30Tune.HUNGER_TICKS, 1);
         Mob hand = Wave30Kit.foe(p, "minecraft:vex", Wave30Tune.HUNGER_TICKS, "Vecna's Hand", Wave30Tune.HUNGER_HAND_HEALTH, Wave30Tune.HUNGER_HAND_DAMAGE);
         if (hand == null) Fx.addEffect(p, "minecraft:weakness", Wave30Tune.HUNGER_TICKS, 0);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_30, p, FxTone.DARK, 12);
         Wave30Kit.shout(p, "VECNA'S HUNGER: the Eye turns inward and devours at your will. For twenty seconds a withered hand comes for you: strike it down.", ChatFormatting.DARK_RED);
     }
 
@@ -161,7 +163,7 @@ final class Wave30Vecna {
         }
         Wave30Kit.hit(p, t, Wave30Tune.TOUCH_DAMAGE, "minecraft:wither", true);
         Fx.addEffect(t, "minecraft:wither", t instanceof Player ? 100 : 200, 1);
-        RukhFx.burst(p.serverLevel(), t, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.DARK, 12);
         Wave30Kit.say(p, "Your cold fingers close on " + t.getName().getString() + ": the life drains from it.");
         afterHandAct(p);
     }
@@ -178,7 +180,7 @@ final class Wave30Vecna {
             t.setTicksFrozen(Math.min(t.getTicksRequiredToFreeze() + 80, t.getTicksFrozen() + 120));
             n++;
         }
-        Fx.ring(p.serverLevel(), p.position(), Wave30Tune.GRASP_RADIUS, 0xBFE8FF);
+        FxRelic.ring(p.serverLevel(), p.position(), Wave30Tune.GRASP_RADIUS, 0xBFE8FF);
         Wave30Kit.say(p, n == 0 ? "Rime spreads from your palm, but nothing stands near." : "Rime crawls from your palm over " + n + (n == 1 ? " foe." : " foes."));
         afterHandAct(p);
     }
@@ -205,7 +207,7 @@ final class Wave30Vecna {
         Fx.addEffect(t, "minecraft:slowness", ticks, 2);
         Fx.addEffect(t, "minecraft:weakness", ticks, 2);
         Fx.addEffect(t, "minecraft:glowing", ticks, 0);
-        RukhFx.burst(p.serverLevel(), t, RukhFx.Alignment.DARK, 12);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_30, t, FxTone.DARK, 12);
         Wave30Kit.say(p, t.getName().getString() + "'s bones go soft as jelly: it sags, slowed and weakened.");
         afterHandAct(p);
     }
@@ -270,7 +272,7 @@ final class Wave30Vecna {
             case SUMMON_RAIN -> level.getServer().overworld().setWeatherParameters(0, 6000, true, false);
         }
         Wave30Data.putLong(p, Wave30Data.WISH_LAST, now);
-        Fx.burst(level, p.position(), 0xFFD27A);
+        FxRelic.burst(level, p.position(), 0xFFD27A);
         Wave30Kit.shout(p, "THE WISH IS GRANTED: " + w.title + ". It will not come again for thirty days.", ChatFormatting.GOLD);
     }
 

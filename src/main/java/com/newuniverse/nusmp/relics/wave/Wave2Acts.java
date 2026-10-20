@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +30,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 2's active abilities (the bodies of the Act definitions in Wave2). Server side. The core has already settled cooldowns, uses per
@@ -85,7 +87,7 @@ final class Wave2Acts {
         int n = (int) Math.max(2, Math.min(10, d.length() * 1.5));
         for (int i = 1; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.relics.Fx.alignOf(what), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, com.newuniverse.nusmp.particle.fx.Fx.toneOf(what), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
         }
     }
 
@@ -94,7 +96,7 @@ final class Wave2Acts {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
                 Vec3 mouth = p.getEyePosition().add(p.getLookAngle().scale(1.4));
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, mouth.x, mouth.y - 0.2, mouth.z, 36, 0.35, 0.2, 0.35, 0.12);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, mouth.x, mouth.y - 0.2, mouth.z, 36, 0.35, 0.2, 0.35, 0.12);
         sound(p, SoundEvents.SAND_BREAK, 1.0f, 1.3f);
         LivingEntity t = aimed(p, Wave2Rules.SAND_RANGE, Wave2Rules.SAND_COS_HALF, true, x -> !Wave2Rules.eyeless(Wave2Events.entityId(x)));
         if (t == null) {
@@ -105,7 +107,7 @@ final class Wave2Acts {
         Fx.addEffect(t, "minecraft:blindness", ticks, 0);
         Fx.addEffect(t, "tensura:flashed_blindness", ticks, 0);
         Fx.addEffect(t, "minecraft:weakness", ticks, 0);                        // the "disadvantage on attacks"
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY(), t.getZ(), 20, 0.2, 0.15, 0.2, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, t.getX(), t.getEyeY(), t.getZ(), 20, 0.2, 0.15, 0.2, 0.05);
         bar(p, "Sand in the eyes!");
     }
 
@@ -197,7 +199,7 @@ final class Wave2Acts {
     private static void undo(ServerLevel lv, ServerPlayer victim, Wave2Tome.Failure f) {
         if (victim == null) return;
         Wave2Events.clear(victim, f.effectId());
-        Fx.burst(lv, victim.position().add(0, 1, 0), 0x4DE8E8);
+        FxRelic.burst(lv, victim.position().add(0, 1, 0), 0x4DE8E8);
     }
 
     private static void auditLetter(ServerPlayer p) {
@@ -225,7 +227,7 @@ final class Wave2Acts {
             return;
         }
         StringBuilder log = new StringBuilder();
-        streak(p.serverLevel(), p.getEyePosition().add(0, -0.2, 0), t.getEyePosition(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+        streak(p.serverLevel(), p.getEyePosition().add(0, -0.2, 0), t.getEyePosition(), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_2, FxTone.LIGHT));
         sound(p, SoundEvents.ARROW_SHOOT, 0.6f, 1.8f);
         mask = flip(p, t, mask, 0, null, log, day);
         if (!(t instanceof Player) && p.getRandom().nextInt(20) == 0 && t.isAlive()) {                    // a critical hit: two cards
@@ -249,11 +251,11 @@ final class Wave2Acts {
             case ACE -> {                                                       // vulnerable until the end of the next turn
                 Wave2Events.VULN.put(t.getUUID(), now + 120);
                 Fx.addEffect(t, "tensura:fragility", 120, 0);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 12, 0.3, 0.4, 0.3, 0.1);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 12, 0.3, 0.4, 0.3, 0.1);
             }
             case JACK -> {                                                      // spikes at its feet: its movement is halved
                 Fx.addEffect(t, "minecraft:slowness", 60, 2);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 0.1, t.getZ(), 10, 0.3, 0.05, 0.3, 0.05);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, t.getX(), t.getY() + 0.1, t.getZ(), 10, 0.3, 0.05, 0.3, 0.05);
             }
             case QUEEN -> {                                                     // draw and throw another card, choosing any damage type
                 if (chain < Wave2Deck.MAX_QUEEN_CHAIN && t.isAlive()) {
@@ -293,7 +295,7 @@ final class Wave2Acts {
                     Fx.damage(p, o, 2.0f, "minecraft:magic");
                     if (++n >= 4) break;
                 }
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 40, 1.2, 0.8, 1.2, 0.15);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 40, 1.2, 0.8, 1.2, 0.15);
             }
             case SWAP -> {
                 Vec3 mine = p.position(), theirs = t.position();
@@ -346,7 +348,7 @@ final class Wave2Acts {
         Wave2Mana.give(p, Wave2Deck.channelFraction(aces));
         if (joker) mask = surgeSelf(p, mask, log);
         Wave2Data.setDeck(deck, mask, day);
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFF3C0);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFFF3C0);
         sound(p, SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 1.4f);
         Fx.say(p, "You draw the pact: " + log + (aces >= 2 ? "two aces, the spell was free! " : "") + "[" + Wave2Deck.remaining(mask) + " cards left]");
     }
@@ -370,11 +372,11 @@ final class Wave2Acts {
     static void clickHeels(ActCtx c) {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
-        Fx.ring(lv, p.position(), 1.5, 0x8C7CFF);
+        FxRelic.ring(lv, p.position(), 1.5, 0x8C7CFF);
         Fx.lendSkills(p, 400, "tensura:shadow_motion", "tensura:spatial_motion");      // the heels borrow Tensura's two ways through the world for twenty seconds
         boolean through = !Labyrinth.in(lv) && phase(p, 8.0);                // through walls too, except inside the Dungeon, whose walls hold
         if (!through && !Fx.teleportLook(p, 8.0)) Fx.dash(p, 6.0);              // through creatures; no safe place beyond: slip forward instead
-        Fx.ring(lv, p.position(), 1.5, 0x8C7CFF);
+        FxRelic.ring(lv, p.position(), 1.5, 0x8C7CFF);
         Fx.addEffect(p, "minecraft:invisibility", 40, 0);
         Fx.shield(p, 4.0f, 80);
         sound(p, SoundEvents.ENDERMAN_TELEPORT, 0.6f, 1.6f);
@@ -421,8 +423,8 @@ final class Wave2Acts {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
         double r = 5.0;
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY(0.5), p.getZ(), 90, r * 0.5, 0.8, r * 0.5, 0.02);
-        Fx.ring(lv, p.position(), r, 0x15153A);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.DARK, p.getX(), p.getY(0.5), p.getZ(), 90, r * 0.5, 0.8, r * 0.5, 0.02);
+        FxRelic.ring(lv, p.position(), r, 0x15153A);
         sound(p, SoundEvents.SQUID_SQUIRT, 1.2f, 0.7f);
         for (LivingEntity t : Fx.foesAround(p, r)) {
             Fx.addEffect(t, "minecraft:blindness", 80, 0);
@@ -450,7 +452,7 @@ final class Wave2Acts {
             Fx.damage(p, t, 3.0f, "minecraft:player_attack");                   // bludgeoning
             Fx.addEffect(t, "minecraft:slowness", 100, 0);
             Fx.addEffect(t, "minecraft:weakness", 100, 0);
-            streak(lv, p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark());
+            streak(lv, p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_2, FxTone.DARK));
         }
         sound(p, SoundEvents.SQUID_HURT, 0.9f, 0.6f);
     }
@@ -476,7 +478,7 @@ final class Wave2Acts {
                 t.hurtMarked = true;
             }
         }
-        streak(p.serverLevel(), p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark());
+        streak(p.serverLevel(), p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.fx.Fx.options(FxThemes.RELIC_WAVE_2, FxTone.DARK));
         sound(p, SoundEvents.SQUID_SQUIRT, 1.0f, 0.5f);
     }
 
@@ -496,7 +498,7 @@ final class Wave2Acts {
             return;
         }
         Wave2Events.MOTHS.put(p.getUUID(), moth.getUUID());
-        Fx.burst(p.serverLevel(), moth.position().add(0, 0.8, 0), 0xFF9A3C);
+        FxRelic.burst(p.serverLevel(), moth.position().add(0, 0.8, 0), 0xFF9A3C);
         Fx.say(p, "The cloak unfolds into a giant moth. It fights beside you for five minutes.");
     }
 
@@ -510,7 +512,7 @@ final class Wave2Acts {
         }
         Entity e = p.serverLevel().getEntity(id);
         if (e != null) {
-            Fx.burst(p.serverLevel(), e.position().add(0, 0.8, 0), 0xFF9A3C);
+            FxRelic.burst(p.serverLevel(), e.position().add(0, 0.8, 0), 0xFF9A3C);
             e.discard();
         }
         if (say) bar(p, "The moth folds back into the cloak.");
@@ -534,8 +536,8 @@ final class Wave2Acts {
             }
             n++;
         }
-        Fx.ring(lv, p.position(), r, 0xB05A30);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY(1.0), p.getZ(), 30, 0.6, 0.8, 0.6, 0.03);
+        FxRelic.ring(lv, p.position(), r, 0xB05A30);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.DARK, p.getX(), p.getY(1.0), p.getZ(), 30, 0.6, 0.8, 0.6, 0.03);
         sound(p, SoundEvents.RAVAGER_ROAR, 0.8f, 1.2f);
         bar(p, n == 0 ? "The terrible face grins at no one." : n + " cowering.");
     }
@@ -550,7 +552,7 @@ final class Wave2Acts {
         }
         Fx.lendSkill(p, "tensura:gravity_flight", ticks);                      // Tensura's own flight skill for the same minute, for those who know how to use it
         Fx.addEffect(p, "minecraft:slow_falling", ticks + 100, 0);              // if a mod takes the flight away, the wings still glide
-        Fx.ring(p.serverLevel(), p.position(), 2.0, 0x6B4328);
+        FxRelic.ring(p.serverLevel(), p.position(), 2.0, 0x6B4328);
         sound(p, SoundEvents.BAT_TAKEOFF, 1.0f, 0.7f);
         Fx.say(p, "The leathery wings open. You can fly for sixty seconds.");
     }
@@ -570,7 +572,7 @@ final class Wave2Acts {
         sound(p, SoundEvents.WARDEN_SONIC_BOOM, 0.9f, 1.5f);
         for (int i = 1; i <= 6; i++) {
             Vec3 at = eye.add(look.scale(i * range / 6.0));
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.DARK, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
         int hit = 0;
         for (LivingEntity t : Fx.foesAround(p, range)) {
@@ -619,7 +621,7 @@ final class Wave2Acts {
         star.shrink(1);
         Wave2Data.setLives(c.stack(), l.wished());
         Wave2Events.GRACE.remove(p.getUUID());
-        Fx.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFF4C9A);
+        FxRelic.burst(p.serverLevel(), p.position().add(0, 1, 0), 0xFF4C9A);
         sound(p, SoundEvents.CAT_PURR, 1.0f, 1.0f);
         Fx.say(p, "A wish is made. The cat spirit returns with nine lives, and the whiskers fade.");
     }
@@ -641,7 +643,7 @@ final class Wave2Acts {
         Fx.addEffect(p, "minecraft:regeneration", 200, 0);
         Wave2Events.clear(p, "tensura:chill");
         p.getFoodData().eat(4, 0.6f);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.2, p.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_2, FxTone.DARK, p.getX(), p.getY() + 0.2, p.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
         sound(p, SoundEvents.CAMPFIRE_CRACKLE, 1.0f, 1.0f);
         Fx.say(p, "The cloak wraps you in a warm, quiet camp. You rest, and your spawn point is set here.");
     }

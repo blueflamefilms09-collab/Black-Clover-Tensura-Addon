@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Attune;
 import com.newuniverse.nusmp.relics.Fx;
@@ -20,6 +19,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the active abilities of the wave 25 relics: eating rocks, passing the Game, the Mimic's Guidance and bite, the Rose Petal's bloom and three spells,
@@ -59,7 +59,7 @@ final class Wave25Acts {
             int gain = (int) Math.max(1, Math.round(fed));
             p.getFoodData().setFoodLevel(Math.min(20, p.getFoodData().getFoodLevel() + gain));
             p.getFoodData().setSaturation(Math.min(p.getFoodData().getFoodLevel(), p.getFoodData().getSaturationLevel() + gain * Wave25Tune.ROCK_SATURATION_PER_FOOD));
-            RukhFx.burst(p.serverLevel(), p, Wave25Kit.light(), 4);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 4);
         }
         return eaten;
     }
@@ -72,7 +72,7 @@ final class Wave25Acts {
             Fx.damage(p, t, Wave25Tune.PASS_DAMAGE + p.getRandom().nextInt(4), "minecraft:magic");
             Fx.addEffect(t, "tensura:confusion", Wave25Tune.PASS_CONFUSE, 0);
             Fx.addEffect(t, "minecraft:nausea", Wave25Tune.PASS_CONFUSE, 0);
-            RukhFx.burst(p.serverLevel(), t, Wave25Kit.dark(), 3);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, t, Wave25Kit.dark(), 3);
             n++;
         }
         Fx.say(p, n == 0 ? "You say it aloud, but nobody near you has anything to lose." : n + (n == 1 ? " foe has" : " foes have") + " just lost The Game.");
@@ -83,7 +83,7 @@ final class Wave25Acts {
         ServerPlayer p = c.player();
         Fx.addEffect(p, "minecraft:luck", Wave25Tune.GUIDANCE_TICKS, 0);
         Fx.addEffect(p, "tensura:inspiration", Wave25Tune.GUIDANCE_TICKS / 2, 0);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.light(), 5);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 5);
         int face = p.getRandom().nextInt(Wave25Tune.GUIDANCE_FUMBLE_SIDES);
         if (!Wave25Pure.fumble(face)) {
             Fx.say(p, "Guidance: the ring licks your finger and the next minute goes your way.");
@@ -94,7 +94,7 @@ final class Wave25Acts {
         if (bite > 0f) p.hurt(p.damageSources().generic(), bite);
         Attune.release(p, c.stack());
         Wave25Data.putLong(p, Wave25Data.FINGER_UNTIL, p.level().getGameTime() + Wave25Tune.FINGER_TICKS);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 8);
         Fx.say(p, "The ring begins to spin and devours your finger! Its bond is broken. You are slower and clumsier until magic mends it (a golden apple does) or a while passes. Attune it again to a new finger.");
     }
 
@@ -104,7 +104,7 @@ final class Wave25Acts {
     static void bloom(ActCtx c) {
         ServerPlayer p = c.player();
         boolean on = c.isOn("bloom");
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.light(), 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 6);
         Fx.say(p, on ? "The rose unfolds into a thorned halberd: +2 damage, longer reach, and thorns for those who strike you." : "The halberd folds back into a rose.");
     }
 
@@ -131,7 +131,7 @@ final class Wave25Acts {
         ServerPlayer p = c.player();
         if (!spendRose(c, Wave25Tune.ENSNARE_COST)) return;
         Wave25Data.putLong(p, Wave25Data.ENSNARE_UNTIL, p.level().getGameTime() + Wave25Tune.ENSNARE_WINDOW);
-        RukhFx.gather(p.serverLevel(), p, Wave25Kit.light(), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 8);
         Fx.say(p, "Ensnaring Strike: your next blow within half a minute lashes the target with thorned vines.");
     }
 
@@ -149,7 +149,7 @@ final class Wave25Acts {
                 t.setDeltaMovement(d.x, 0.1, d.z);
                 t.hurtMarked = true;
             }
-            RukhFx.burst(level, t, Wave25Kit.light(), 4);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_25, t, Wave25Kit.light(), 4);
             n++;
         }
         Fx.say(p, "Grasping Vine: thorned vines tear out of the ground" + (n == 0 ? " but find no one." : " and drag " + n + " foe(s) in, rooted."));
@@ -170,7 +170,7 @@ final class Wave25Acts {
             Wave6Kit.give(p, "minecraft:jump_boost", Wave25Tune.GUARDIAN_TICKS, 1, true);
             Fx.say(p, "Guardian of Nature, Primal Beast: for a minute you are strong, quick and keen-eyed. (Sneak while casting for the Great Tree.)");
         }
-        RukhFx.gather(p.serverLevel(), p, Wave25Kit.light(), 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 10);
     }
 
     // ---------------------------------------------------------------- Silver Tongued Lyre
@@ -196,7 +196,7 @@ final class Wave25Acts {
         Fx.addEffect(best, "minecraft:weakness", ticks, 2);
         Fx.addEffect(best, "minecraft:nausea", ticks, 0);
         Fx.addEffect(best, "tensura:confusion", ticks, 0);
-        RukhFx.burst(p.serverLevel(), best, Wave25Kit.dark(), 6);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, best, Wave25Kit.dark(), 6);
         Fx.say(p, "Hideous Laughter: " + best.getName().getString() + (saved ? " chuckles and shakes it off in part." : " collapses in helpless laughter."));
     }
 
@@ -213,10 +213,10 @@ final class Wave25Acts {
             float dmg = Wave25Pure.lyreDamage(Wave25Pure.dice(4, 6, p.getRandom()::nextInt), saved);
             Fx.damageHeavy(p, t, dmg, "minecraft:magic");
             Fx.addEffect(t, "minecraft:weakness", Wave25Tune.DISSONANCE_WEAK, saved ? 0 : 1);
-            RukhFx.burst(level, t, Wave25Kit.dark(), 3);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(level, FxThemes.RELIC_WAVE_25, t, Wave25Kit.dark(), 3);
             hit++;
         }
-        RukhFx.gather(level, p, Wave25Kit.dark(), 10);
+        com.newuniverse.nusmp.particle.fx.Fx.gather(level, FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 10);
         Fx.say(p, hit == 0 ? "You play the dissonant tune, but no one who can hear it (humanoid or celestial) is within eighteen blocks." : "Hellish Dissonance rips through " + hit + " listener(s).");
     }
 
@@ -235,7 +235,7 @@ final class Wave25Acts {
             }
             Wave25Data.putLong(p, Wave25Data.STEADY_UNTIL, p.level().getGameTime() + Wave25Tune.SPOON_STEADY);
             Fx.say(p, "A perfect, steady sip" + (potion.isEmpty() ? " of cool water" : "") + ": for a while nothing throws you off (weakness, slowness, fatigue, blindness and the like fade fast).");
-            RukhFx.burst(p.serverLevel(), p, Wave25Kit.light(), 4);
+            com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.light(), 4);
         } else {
             if (!potion.isEmpty() && !p.isCreative()) { potion.shrink(1); ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE); if (!p.getInventory().add(bottle)) p.drop(bottle, false); }
             Wave25Data.putLong(p, Wave25Data.SPOON_DAY, today + 1);
@@ -258,7 +258,7 @@ final class Wave25Acts {
         }
         Wave25Data.putBool(p, Wave25Data.VANISHED, true);
         Wave6Kit.give(p, "minecraft:invisibility", 60, 0, true);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 8);
         Fx.say(p, "You vanish. You stay hidden until you strike, cast, take the ring off or use it again. Your first blow from hiding hits half again as hard.");
     }
 
@@ -283,7 +283,7 @@ final class Wave25Acts {
             Fx.say(p, "The ring chooses your beast with a roll of the d8: the " + Wave25Pure.Form.of(Wave25Data.getInt(p, Wave25Data.FORM)).label() + ".");
         }
         Wave25Data.putBool(p, Wave25Data.FORM_ON, true);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 8);
         Fx.say(p, "You become the " + Wave25Pure.Form.of(Wave25Data.getInt(p, Wave25Data.FORM)).label() + " (" + Wave25Data.getInt(p, Wave25Data.FORM_LEFT) / 20 + " seconds of form left today).");
     }
 
@@ -307,7 +307,7 @@ final class Wave25Acts {
         Wave25Data.putLong(p, Wave25Data.MASK_UNTIL, p.level().getGameTime() + Wave25Tune.MASK_TICKS);
         p.getPersistentData().putString("nusmp_w25_face", face);
         Wave25Events.calmKin(p, face);
-        RukhFx.burst(p.serverLevel(), p, Wave25Kit.dark(), 8);
+        com.newuniverse.nusmp.particle.fx.Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_25, p, Wave25Kit.dark(), 8);
         Fx.say(p, "You take the face of " + Wave25Pure.faceName(face) + " for five minutes. Their own kind take you for one of them.");
     }
 

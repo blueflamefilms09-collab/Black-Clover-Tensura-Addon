@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.relics.wave.Wave3Rules.Gauntlet;
 import com.newuniverse.nusmp.relics.wave.Wave3Rules.Thermo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +34,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 3, the hand relics: Claws of Greed (stealth and a daily snatch), the Gloves of Instant Cleanliness (a snap that scours), the Elemental Hand
@@ -87,7 +89,7 @@ final class Wave3Hands {
         m.setItemSlot(slot, ItemStack.EMPTY);
         if (!p.getInventory().add(stolen)) p.drop(stolen, false);
         Vec3 at = m.getBoundingBox().getCenter();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y, at.z, 24, 0.3, 0.3, 0.3, 0.6);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.DARK, at.x, at.y, at.z, 24, 0.3, 0.3, 0.3, 0.6);
         sl.playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.7f);
         Wave3Util.tell(p, "Seize: the claws snatch " + stolen.getHoverName().getString() + " from " + m.getName().getString() + ".", ChatFormatting.GOLD);
     }
@@ -100,7 +102,7 @@ final class Wave3Hands {
         for (LivingEntity e : Wave3Util.friendsAround(p, 3.0)) {
             cleanse(e);
             e.clearFire();
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 0.9, e.getZ(), 10, 0.35, 0.5, 0.35, 0.02);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, e.getX(), e.getY() + 0.9, e.getZ(), 10, 0.35, 0.5, 0.35, 0.02);
         }
         BlockPos at = p.blockPosition();
         int cleared = 0;
@@ -117,7 +119,7 @@ final class Wave3Hands {
                 }
             }
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 1.4, 0.8, 1.4, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 1.4, 0.8, 1.4, 0.04);
         sl.playSound(null, at, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.1f, 1.9f);
         Wave3Util.tell(p, cleared > 0 ? "Snap: spotless (" + cleared + " cobwebs and flames swept away)." : "Snap: spotless.", ChatFormatting.AQUA);
     }
@@ -142,7 +144,7 @@ final class Wave3Hands {
         Element next = element(p).next();
         Wave3Util.data(p).putInt(K_WRAPS, next.ordinal());
         ServerLevel sl = p.serverLevel();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, colour(next) == 0 ? com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT : com.newuniverse.nusmp.relics.Fx.align(colour(next)), p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.5, 0.4, 0.04);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, colour(next) == 0 ? FxTone.LIGHT : FxRelic.tone(colour(next)), p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.5, 0.4, 0.04);
         Wave3Util.tell(p, next.active() ? "Elemental Infusion: your fists burn with " + next.label + "." : "Elemental Infusion: the wraps are quiet.", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -185,7 +187,7 @@ final class Wave3Hands {
             case THUNDER -> {
                 Fx.damage(p, t, amount, "minecraft:sonic_boom");
                 t.knockback(0.7, p.getX() - t.getX(), p.getZ() - t.getZ());
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, mid.x, mid.y, mid.z, 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.DARK, mid.x, mid.y, mid.z, 1, 0, 0, 0, 0);
             }
             case ACID -> {
                 Fx.damage(p, t, amount, "minecraft:magic");
@@ -193,7 +195,7 @@ final class Wave3Hands {
             }
             default -> { return; }
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, el == Element.COLD ? com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT : com.newuniverse.nusmp.relics.Fx.align(colour(el)), mid.x, mid.y, mid.z, 10, 0.3, 0.4, 0.3, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, el == Element.COLD ? FxTone.LIGHT : FxRelic.tone(colour(el)), mid.x, mid.y, mid.z, 10, 0.3, 0.4, 0.3, 0.05);
     }
 
     // ================================================================ Thermo-Gloves
@@ -221,7 +223,7 @@ final class Wave3Hands {
             t.setTicksFrozen(Math.min(t.getTicksRequiredToFreeze() + 20, t.getTicksFrozen() + 40));
         }
         Vec3 mid = t.getBoundingBox().getCenter();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, mid.x, mid.y, mid.z, 6, 0.3, 0.4, 0.3, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_3, FxTone.LIGHT, mid.x, mid.y, mid.z, 6, 0.3, 0.4, 0.3, 0.03);
     }
 
     /** The red glove's touch: a flame on the flammable thing you look at (as a flint and steel would), or on the creature in front of you. */
@@ -231,7 +233,7 @@ final class Wave3Hands {
         Wave3Util.Aim near = Wave3Util.aim(p, 3.5);
         if (near.hit() != null) {
             near.hit().igniteForSeconds(4);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, near.hit().getX(), near.hit().getEyeY(), near.hit().getZ(), 12, 0.3, 0.3, 0.3, 0.04);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, near.hit().getX(), near.hit().getEyeY(), near.hit().getZ(), 12, 0.3, 0.3, 0.3, 0.04);
             return;
         }
         HitResult h = p.pick(5.0, 1f, false);
@@ -280,7 +282,7 @@ final class Wave3Hands {
                 }
             }
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, centre.getX() + 0.5, centre.getY() + 0.8, centre.getZ() + 0.5, 20, 0.8, 0.4, 0.8, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, centre.getX() + 0.5, centre.getY() + 0.8, centre.getZ() + 0.5, 20, 0.8, 0.4, 0.8, 0.03);
         sl.playSound(null, centre, SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 0.8f, 1.8f);
         Wave3Util.tell(p, n > 0 ? "The water freezes (" + n + " blocks); it thaws in a while." : "The water would not freeze there.", ChatFormatting.AQUA);
     }
@@ -296,7 +298,7 @@ final class Wave3Hands {
             e.knockback(0.9, at.x - e.getX(), at.z - e.getZ());
             Wave3Util.give(e, 40, 3, "minecraft:slowness");
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 60, 2.5, 0.9, 2.5, 0.06);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.LIGHT, at.x, at.y + 1.0, at.z, 60, 2.5, 0.9, 2.5, 0.06);
         sl.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.2f, 0.6f);
     }
 
@@ -305,7 +307,7 @@ final class Wave3Hands {
         ServerLevel sl = p.serverLevel();
         Vec3 to = t.getBoundingBox().getCenter();
         Wave3Util.trail(sl, p.getEyePosition().add(0, -0.3, 0), to, Wave3Util.dust(twin ? 0x52F2E0 : 0x1FA698, 1.1f));
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, to.x, to.y, to.z, 8, 0.2, 0.25, 0.2, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.DARK, to.x, to.y, to.z, 8, 0.2, 0.25, 0.2, 0.03);
         Fx.damage(p, t, dmg, "minecraft:magic");
     }
 
@@ -358,7 +360,7 @@ final class Wave3Hands {
             Wave3Util.setMod(p, Attributes.MAX_HEALTH, BL_MOD, -pen, Operation.ADD_VALUE);
             Wave3Util.data(p).putLong(K_BL, sl.getGameTime() + Gauntlet.BACKLASH_TICKS);
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.6, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(sl, FxThemes.RELIC_WAVE_3, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.6, 0.4, 0.05);
         Wave3Util.say(p, "Gauntlets of Eldritch Ferocity: the extra beam turns on you" + (pen > 0f ? " (your maximum health is down " + (int) pen + " until you rest)." : "."));
     }
 

@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Optional;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the small glue the wave 25 relics share (transient attribute modifiers under this wave's own ids, the hotbar line, the day number, the item
@@ -57,7 +57,7 @@ final class Wave25Kit {
 
     static boolean live(Player p) { return p.isAlive() && !p.isSpectator(); }
 
-    static RukhFx.Alignment light() { return RukhFx.Alignment.LIGHT; }
+    static FxTone light() { return FxTone.LIGHT; }
 
-    static RukhFx.Alignment dark() { return RukhFx.Alignment.DARK; }
+    static FxTone dark() { return FxTone.DARK; }
 }

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Locale;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Wave 4: the three powers of the Amulet of the Coven (a hag goddess's eye).
@@ -56,7 +57,7 @@ final class Wave4CovenActs {
         }
         Wave4Look.ambient(p, "minecraft:night_vision", 300, 0);
         Fx.lendSkills(p, WATCH_SKILL_TICKS, "tensura:magic_sense", "tensura:danger_sense");      // it sees through walls the way Magic Sense does
-        Fx.ring(lv, p.position().add(0, 1.0, 0), 2.5, RUBY);
+        FxRelic.ring(lv, p.position().add(0, 1.0, 0), 2.5, RUBY);
         Fx.say(p, seen == 0 ? "The eye opens and sees nothing hostile ahead (Magic Sense and Danger Sense stay with you for 15 seconds)."
                 : "The eye opens: " + seen + (seen == 1 ? " creature glows" : " creatures glow") + " before you (Magic Sense and Danger Sense stay with you for 15 seconds).");
     }
@@ -93,8 +94,8 @@ final class Wave4CovenActs {
         p.setHealth(p.getHealth() - PRESAGE_COST);                             // the vial: it cannot kill you
         Wave4Store.edit(c.stack(), x -> x.putLong(Wave4Store.K_PRESAGE, now));
         Fx.addEffect(target, "minecraft:glowing", blood ? PRESAGE_BLOOD_GLOW : PRESAGE_GLOW, 0);
-        Fx.ring(lv, p.position().add(0, 1.0, 0), 1.5, RUBY);
-        if (target.level() instanceof ServerLevel tl) Fx.ring(tl, target.position().add(0, target.getBbHeight() * 0.5, 0), 1.2, RUBY);
+        FxRelic.ring(lv, p.position().add(0, 1.0, 0), 1.5, RUBY);
+        if (target.level() instanceof ServerLevel tl) FxRelic.ring(tl, target.position().add(0, target.getBbHeight() * 0.5, 0), 1.2, RUBY);
         BlockPosText at = new BlockPosText(target);
         Fx.lendSkill(p, "tensura:sage", PRESAGE_SKILL_TICKS);                                   // the eye reads its target through Sage for half a minute
         int mp = Wave4Look.magiculePercent(target);
@@ -120,8 +121,8 @@ final class Wave4CovenActs {
         }
         Vec3 at = p.position().add(0, 1.0, 0);
         NihilityZone.start(lv, p, p.position().add(0, 0.2, 0), GAZE_RADIUS, GAZE_TICKS);       // the anti-magic itself: barriers shatter, foes are silenced and their skills jammed for the 8 seconds
-        Fx.ring(lv, at, GAZE_RADIUS, RUBY);
-        Fx.burst(lv, at, RUBY);
+        FxRelic.ring(lv, at, GAZE_RADIUS, RUBY);
+        FxRelic.burst(lv, at, RUBY);
         Fx.say(p, n == 0 ? "The gaze opens; nothing hostile is near enough to feel it."
                 : "The gaze strips " + n + (n == 1 ? " foe" : " foes") + " of their defences for 8 seconds (they take 30% more, are silenced, and their skills are jammed).");
     }

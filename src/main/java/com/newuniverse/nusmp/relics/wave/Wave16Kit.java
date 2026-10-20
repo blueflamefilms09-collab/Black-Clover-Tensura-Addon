@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.storage.TensuraStorages;
@@ -29,6 +28,8 @@ import org.joml.Vector3f;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.IntSupplier;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 16: the glue the seventeen charms share: charge pools on the stack (the dawn refill of {@link Wave6Pool}), what the wearer is looking at, who
@@ -126,7 +127,7 @@ final class Wave16Kit {
     static void puff(ServerLevel l, Vec3 at, int rgb, int count, double spread) {
         if (l == null || at == null) return;
         double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;   // legacy colour -> alignment
-        RukhFx.spray(l, RukhFx.Alignment.of(lum < 0.33), at.x, at.y, at.z, Math.min(count, 48), spread, spread, spread, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(l, FxThemes.RELIC_WAVE_16, FxTone.of(lum < 0.33), at.x, at.y, at.z, Math.min(count, 48), spread, spread, spread, 0.02);
     }
 
     /** Alive, loaded entities of a list, capped (the targets of an area ability). */

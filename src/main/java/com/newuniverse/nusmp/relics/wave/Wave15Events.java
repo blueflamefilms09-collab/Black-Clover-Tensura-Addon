@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +20,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 15: the game-bus handlers, registered once by {@link Wave15#hooks}. Each leaves at once for anyone the wave does not concern: the relics'
@@ -65,11 +67,11 @@ final class Wave15Events {
         if (flurry && RelicFlags.has(v, Wave15Rules.F_SNOW) && direct instanceof LivingEntity && Wave15Rules.flurryEvades(now, until, d.getLong("evade_last"))) {
             d.putLong("evade_last", now);
             e.setCanceled(true);
-            RukhFx.spray(v.serverLevel(), RukhFx.Alignment.LIGHT, v.getX(), v.getY() + 1.0, v.getZ(), 20, 0.5, 0.6, 0.5, 0.05);
+            Fx.spray(v.serverLevel(), FxThemes.RELIC_WAVE_15, FxTone.LIGHT, v.getX(), v.getY() + 1.0, v.getZ(), 20, 0.5, 0.6, 0.5, 0.05);
         } else if (!flurry && RelicFlags.has(v, Wave15Rules.F_AUTUMN) && (direct instanceof LivingEntity || direct instanceof Projectile)
                 && Wave15Rules.blurEvades(now, until, v.getRandom().nextInt(100))) {
             e.setCanceled(true);
-            RukhFx.spray(v.serverLevel(), Wave15Util.align(0xC8601E), v.getX(), v.getY() + 1.0, v.getZ(), 14, 0.5, 0.6, 0.5, 0.03);
+            Fx.spray(v.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0xC8601E), v.getX(), v.getY() + 1.0, v.getZ(), 14, 0.5, 0.6, 0.5, 0.03);
         }
     }
 

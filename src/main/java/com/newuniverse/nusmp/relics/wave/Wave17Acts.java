@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -9,7 +8,6 @@ import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -33,6 +31,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 17: the bodies of the actives of the seventeen notebooks, pouches and charms. Costs and cooldowns are settled by the engine before a body runs;
@@ -88,7 +89,7 @@ public final class Wave17Acts {
                 what = "a remembered rite wards you";
             }
         }
-        Fx.burst(p.serverLevel(), p.position(), 0xD8B86A);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xD8B86A);
         say(p, nb.check + " study: " + (b == 0 ? "the book had little to say, but " : "the book had +" + b + " to give and ") + what + " (" + (t / 1200) + " minutes).");
     }
 
@@ -147,7 +148,7 @@ public final class Wave17Acts {
         Vec3 spot = Wave17Kit.safeSpot(level, p, d.pos());
         if (spot == null) { say(p, "There is no safe ground at " + describe(d) + ". The bead stays on the chain."); return; }
         List<LivingEntity> party = party(p);
-        Fx.burst(level, p.position(), VIOLET);
+        FxRelic.burst(level, p.position(), VIOLET);
         p.teleportTo(spot.x, spot.y, spot.z);
         p.fallDistance = 0;
         int[][] ring = {{2, 0}, {-2, 0}, {0, 2}, {0, -2}, {2, 2}, {-2, -2}};
@@ -155,7 +156,7 @@ public final class Wave17Acts {
         for (LivingEntity o : party) {
             Vec3 at = Wave17Kit.safeSpot(level, o, d.pos().offset(ring[carried % ring.length][0], 0, ring[carried % ring.length][1]));
             if (at == null) continue;
-            Fx.burst(level, o.position(), VIOLET);
+            FxRelic.burst(level, o.position(), VIOLET);
             if (o instanceof ServerPlayer sp) sp.teleportTo(at.x, at.y, at.z);
             else {
                 o.teleportTo(at.x, at.y, at.z);
@@ -164,8 +165,8 @@ public final class Wave17Acts {
             o.fallDistance = 0;
             carried++;
         }
-        Fx.burst(level, spot, VIOLET);
-        Fx.ring(level, spot, 2.0, VIOLET);
+        FxRelic.burst(level, spot, VIOLET);
+        FxRelic.ring(level, spot, 2.0, VIOLET);
         int now = left - 1;
         Wave17Kit.edit(stack, t -> t.putInt(BEADS, now));
         say(p, "A bead cracks and the stars swallow you: " + describe(d) + (carried > 0 ? ", with " + carried + " companion" + (carried == 1 ? "" : "s") : "")
@@ -232,7 +233,7 @@ public final class Wave17Acts {
         }
         int choice = 2 + where;
         Wave17Kit.edit(stack, t -> { t.put(MARKS, list); t.putInt(SEL, choice); });
-        Fx.ring(p.serverLevel(), p.position(), 1.5, VIOLET);
+        FxRelic.ring(p.serverLevel(), p.position(), 1.5, VIOLET);
         say(p, "The beads remember this place (" + here.getX() + " " + here.getY() + " " + here.getZ() + ") and it is now your destination.");
     }
 
@@ -247,7 +248,7 @@ public final class Wave17Acts {
         p.getFoodData().setFoodLevel(Math.max(p.getFoodData().getFoodLevel(), 18));
         p.getFoodData().setSaturation(Math.max(p.getFoodData().getSaturationLevel(), 6f));
         p.removeEffect(MobEffects.HUNGER);
-        Fx.burst(p.serverLevel(), p.position(), 0xC9A0FF);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xC9A0FF);
         spend(c);
         say(p, "Sweet, light and strangely filling: you will not go hungry for three days, and there is still room to eat.");
     }
@@ -287,7 +288,7 @@ public final class Wave17Acts {
             if (rest.isEmpty()) e.discard();
             else e.setItem(rest);
         }
-        Fx.burst(p.serverLevel(), p.position(), 0xFFE0D0);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xFFE0D0);
         say(p, taken == 0 ? "Nothing to gather, or the pouch is full." : "The pouch pulls in " + taken + " loose item" + (taken == 1 ? "" : "s") + ".");
     }
 
@@ -307,7 +308,7 @@ public final class Wave17Acts {
         ServerPlayer p = c.player();
         Wave17Vault.Vault v = vault(c, Wave17Vault.KIND_TRANSFER, 2, Wave17Rules.POUCH_ROWS);
         v.swapSides();
-        Fx.burst(p.serverLevel(), p.position(), 0xFFD27F);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xFFD27F);
         say(p, "The words are spoken: the contents of the near and the far bag trade places. No distance matters.");
     }
 
@@ -380,7 +381,7 @@ public final class Wave17Acts {
                 believed++;
             } else doubted++;
         }
-        Fx.ring(p.serverLevel(), p.position(), 3.0, 0xD8DCE4);
+        FxRelic.ring(p.serverLevel(), p.position(), 3.0, 0xD8DCE4);
         say(p, believed + doubted == 0 ? "\"Halt!\" There is no one to bluff." : "\"Halt! In the name of the law!\" " + believed + " believe the badge, " + doubted + " do not.");
     }
 
@@ -403,8 +404,8 @@ public final class Wave17Acts {
             Wave17Kit.give(target, "tensura:corrosion", 200, 0);
             corrode(target);
         }
-        RukhFx.spray(level, Wave17Kit.align(ACID), impact.x, impact.y + 0.8, impact.z, 40, 0.5, 0.5, 0.5, 0.05);
-        RukhFx.spray(level, RukhFx.Alignment.DARK, impact.x, impact.y + 0.8, impact.z, 16, 0.4, 0.4, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, Wave17Kit.align(ACID), impact.x, impact.y + 0.8, impact.z, 40, 0.5, 0.5, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, FxTone.DARK, impact.x, impact.y + 0.8, impact.z, 16, 0.4, 0.4, 0.4, 0.02);
         LivingEntity pudding = null;
         for (String type : new String[]{"tensura:slime", "minecraft:slime"}) {
             pudding = Fx.summon(p, type, Wave17Rules.PUDDING_TICKS);
@@ -478,7 +479,7 @@ public final class Wave17Acts {
             case LESSON -> { p.giveExperiencePoints(15); note = "the wrapper holds a tiny lesson"; }
             case HOP -> {
                 Vec3 at = Wave17Kit.safeSpot(level, p, p.blockPosition().offset(p.getRandom().nextInt(13) - 6, 0, p.getRandom().nextInt(13) - 6));
-                if (at != null) { Fx.burst(level, p.position(), VIOLET); p.teleportTo(at.x, at.y, at.z); p.fallDistance = 0; note = "pop! you hop elsewhere"; }
+                if (at != null) { FxRelic.burst(level, p.position(), VIOLET); p.teleportTo(at.x, at.y, at.z); p.fallDistance = 0; note = "pop! you hop elsewhere"; }
                 else note = "pop! but there was nowhere to hop";
             }
             case SNEEZE -> {
@@ -499,7 +500,7 @@ public final class Wave17Acts {
             case FORTUNE -> { Wave17Kit.give(p, "minecraft:luck", 6000, 0); note = "luck is on your side"; }
             default -> note = "the sugar fizzes and nothing happens";
         }
-        Fx.burst(level, p.position(), 0xFF9AD0);
+        FxRelic.burst(level, p.position(), 0xFF9AD0);
         say(p, "Wild magic (" + s.label().toLowerCase(java.util.Locale.ROOT) + "): " + note + ".");
     }
 
@@ -514,9 +515,9 @@ public final class Wave17Acts {
         }
         if (devil == null) { say(p, "The coin stays cold: nothing in hell answers here."); return; }
         ServerLevel level = p.serverLevel();
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, devil.getX(), devil.getY() + 1.0, devil.getZ(), 60, 0.6, 0.9, 0.6, 0.08);
-        Fx.ring(level, devil.position(), 2.5, HELL);
-        Fx.burst(level, devil.position(), HELL);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_17, FxTone.LIGHT, devil.getX(), devil.getY() + 1.0, devil.getZ(), 60, 0.6, 0.9, 0.6, 0.08);
+        FxRelic.ring(level, devil.position(), 2.5, HELL);
+        FxRelic.burst(level, devil.position(), HELL);
         spend(c);
         say(p, "The coin erupts in hellfire and a horned devil steps out to fight at your side. It is yours for five minutes; the coin is gone.");
     }

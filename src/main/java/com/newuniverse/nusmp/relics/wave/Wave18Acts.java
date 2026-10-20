@@ -1,13 +1,11 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicComponents2;
 import com.newuniverse.nusmp.relics.UseRules;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +25,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 18: the abilities of the charms that are not bags: the Old Master's study, the Lover's Divide, the Coin of Fortune, the Defender's Dial, the
@@ -43,7 +44,7 @@ final class Wave18Acts {
         Fx.addEffect(p, "tensura:magic_aura", Wave18Tune.STUDY_TICKS, 0);
         Fx.addEffect(p, "minecraft:haste", Wave18Tune.STUDY_TICKS, 0);
         Fx.lendSkill(p, "tensura:magic_sense", Wave18Tune.STUDY_TICKS);
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 30, 0.6, 0.4, 0.6, 0.8);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_18, FxTone.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 30, 0.6, 0.4, 0.6, 0.8);
         Fx.say(p, "You find the shortcut in the old margins: learning and casting come easier for five minutes.");
     }
 
@@ -67,8 +68,8 @@ final class Wave18Acts {
             return;
         }
         Wave18Events.link(p, best, level.getGameTime());
-        RukhFx.spray(level, Wave18Kit.align(0xE8A23A), best.getX(), best.getY() + best.getBbHeight() * 0.6, best.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
-        RukhFx.spray(level, Wave18Kit.align(0xE8A23A), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0xE8A23A), best.getX(), best.getY() + best.getBbHeight() * 0.6, best.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0xE8A23A), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
         Fx.say(p, "The bangles close: you and " + best.getName().getString() + " share every blow for five minutes.");
         if (best instanceof ServerPlayer o) Fx.say(o, p.getName().getString() + " has joined your hurts to theirs for five minutes.");
     }
@@ -107,7 +108,7 @@ final class Wave18Acts {
         if (idx == 0) p.clearFire();
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 1.0f, 1.4f);
         int[] colours = {0xFF7A2E, 0x8FD8FF, 0xFFE95A};
-        Fx.burst(p.serverLevel(), p.position(), colours[idx]);
+        FxRelic.burst(p.serverLevel(), p.position(), colours[idx]);
         Fx.say(p, "The dial clicks to " + Wave18Pure.dialName(idx) + ": that damage is cut by 60% for five minutes. Next: " + Wave18Pure.dialName(idx + 1) + ".");
     }
 
@@ -117,7 +118,7 @@ final class Wave18Acts {
         long now = p.level().getGameTime();
         Wave18Data.putLong(p, Wave18Data.MIRROR_UNTIL, now + Wave18Tune.MIRROR_WINDOW);
         Fx.addEffect(p, "tensura:magic_barrier", Wave18Tune.MIRROR_WINDOW, 0);
-        Fx.ring(p.serverLevel(), p.position(), 1.4, 0xC9D6F2);
+        FxRelic.ring(p.serverLevel(), p.position(), 1.4, 0xC9D6F2);
         Fx.say(p, "You raise the mirror: the next spell to strike you in five seconds is thrown back at its caster.");
     }
 
@@ -150,7 +151,7 @@ final class Wave18Acts {
         Fx.say(p, "You say your deepest secret out loud, and the elephant swells to fill the room!");
         Fx.shield(p, 8f, Wave18Tune.ELEPHANT_TICKS);
         level.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.6f, 0.5f);
-        Fx.ring(level, centre, Math.min(r, 8.0), 0x555560);
+        FxRelic.ring(level, centre, Math.min(r, 8.0), 0x555560);
         elephantPulse(level, p.getUUID(), centre, r, level.getGameTime(), level.getGameTime() + Wave18Tune.ELEPHANT_TICKS, true);
     }
 
@@ -182,7 +183,7 @@ final class Wave18Acts {
         }
         for (int i = 0; i < 24; i++) {
             double a = i * (Math.PI * 2 / 24);
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.5, centre.z + Math.sin(a) * r, 1, 0.1, 0.4, 0.1, 0.01);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.5, centre.z + Math.sin(a) * r, 1, 0.1, 0.4, 0.1, 0.01);
         }
         long next = now + Wave18Tune.ELEPHANT_PULSE;
         Wave18Events.QUEUE.at(next, () -> elephantPulse(level, pid, centre, r, next, end, false));
@@ -215,7 +216,7 @@ final class Wave18Acts {
         cat.setPersistenceRequired();
         if (!level.addFreshEntity(cat)) return;
         stack.set(RelicComponents2.STATE.get(), n - 1);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, cat.getX(), cat.getY() + 0.5, cat.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, cat.getX(), cat.getY() + 0.5, cat.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
         level.playSound(null, cat.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.6f);
         Fx.say(p, "You pick a kitten out of the bag (" + (n - 1) + " left inside).");
     }
@@ -239,7 +240,7 @@ final class Wave18Acts {
             Fx.say(p, "No kitten of yours is close enough to pop into the bag.");
             return;
         }
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, best.getX(), best.getY() + 0.5, best.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, best.getX(), best.getY() + 0.5, best.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
         best.discard();
         stack.set(RelicComponents2.STATE.get(), n + 1);
         Fx.say(p, "A kitten tumbles into the bag (" + (n + 1) + " inside).");
@@ -278,9 +279,9 @@ final class Wave18Acts {
         }
         for (int i = 0; i < 20; i++) {
             double a = i * (Math.PI * 2 / 20);
-            RukhFx.spray(level, RukhFx.Alignment.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.4, centre.z + Math.sin(a) * r, 1, 0.2, 0.3, 0.2, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.4, centre.z + Math.sin(a) * r, 1, 0.2, 0.3, 0.2, 0.0);
         }
-        RukhFx.spray(level, Wave18Kit.align(0xE8C48A), centre.x, centre.y + 0.3, centre.z, 24, r * 0.5, 0.2, r * 0.5, 0.0);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, Wave18Kit.align(0xE8C48A), centre.x, centre.y + 0.3, centre.z, 24, r * 0.5, 0.2, r * 0.5, 0.0);
         long next = level.getGameTime() + 20;
         Wave18Events.QUEUE.at(next, () -> floodPulse(level, pid, centre, kittens, pulse + 1, pulses));
     }
@@ -367,7 +368,7 @@ final class Wave18Acts {
         var dust = Wave18Kit.align(Wave18Pure.powderColour(kind));
         for (int i = 1; i <= 8; i++) {
             double reach = i * Wave18Tune.SATCHEL_RANGE / 8.0, spread = reach * 0.4;
-            RukhFx.spray(level, dust, p.getX() + f.x * reach, p.getEyeY() - 0.3, p.getZ() + f.z * reach, 6, spread, 0.3, spread, 0.0);
+            com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, dust, p.getX() + f.x * reach, p.getEyeY() - 0.3, p.getZ() + f.z * reach, 6, spread, 0.3, spread, 0.0);
         }
         level.playSound(null, p.blockPosition(), SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.PLAYERS, 0.5f, 1.6f);
         int after = left - 1;

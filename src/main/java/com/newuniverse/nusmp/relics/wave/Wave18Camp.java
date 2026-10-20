@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -8,7 +7,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,6 +21,8 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 18: The Pocket Campsite. Pointing the pouch pitches a large tent with a bed, two small tents, a campfire and seats of oak slabs in front of
@@ -119,7 +119,7 @@ final class Wave18Camp {
         });
         Wave18Events.pitch(p.getUUID(), new Wave18Events.Zone(level.dimension(), fire, level.getGameTime() + Wave18Tune.CAMP_TICKS));
         level.playSound(null, fire, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1.4f, 0.8f);
-        RukhFx.spray(level, RukhFx.Alignment.LIGHT, fire.getX() + 0.5, fire.getY() + 1.0, fire.getZ() + 0.5, 30, 2.5, 0.8, 2.5, 0.02);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.RELIC_WAVE_18, FxTone.LIGHT, fire.getX() + 0.5, fire.getY() + 1.0, fire.getZ() + 0.5, 30, 2.5, 0.8, 2.5, 0.02);
         Fx.say(p, "The camp unfolds: a large tent with a bed, two small tents, a fire and seats. The tiny hut keeps the dark away for ten minutes.");
     }
 

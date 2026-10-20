@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import com.newuniverse.nusmp.relics.wave.Wave26Rules.Command;
@@ -26,6 +25,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: Frank is the one relic of the wave with a story that unfolds over days (a curse that follows you as a rabbit, a Foresight that asks
@@ -54,7 +56,7 @@ final class Wave26Frank {
         d.putInt(K_ROUND, 0);
         d.putLong(K_CMD_AT, 0L);
         d.putLong(K_NEXT, now + 10 * 20);
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 12);
+        Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, FxTone.LIGHT, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.7f, 1.8f);
         Wave26Util.say(p, "The mask twists into a pale metal bunny. Frank whispers: \"Foresight is yours for an hour. Do as I say, and it stays.\"", ChatFormatting.LIGHT_PURPLE);
     }
@@ -150,7 +152,7 @@ final class Wave26Frank {
         d.putInt(K_ROUND, d.getInt(K_ROUND) + 1);
         d.putLong(K_CMD_AT, 0L);
         d.putLong(K_NEXT, now + Wave26Rules.COMMAND_GAP);
-        RukhFx.burst(p.serverLevel(), p, RukhFx.Alignment.LIGHT, 8);
+        Fx.burst(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, FxTone.LIGHT, 8);
         Wave26Util.tell(p, "Frank giggles. \"Good. Very good.\"", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -175,7 +177,7 @@ final class Wave26Frank {
         d.putLong(K_COUNT_DAY, today);
         d.putLong(K_NOTE_DAY, today);
         Wave26Util.give(p, 120, 0, "minecraft:darkness");
-        RukhFx.gather(p.serverLevel(), p, RukhFx.Alignment.DARK, 12);
+        Fx.gather(p.serverLevel(), FxThemes.RELIC_WAVE_26, p, FxTone.DARK, 12);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMBIENT_CAVE.value(), SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave26Util.say(p, "In the night, a figure in a stupid bunny suit sits at the foot of your bed.", ChatFormatting.DARK_RED);
         Wave26Util.say(p, QUOTE, ChatFormatting.DARK_RED);

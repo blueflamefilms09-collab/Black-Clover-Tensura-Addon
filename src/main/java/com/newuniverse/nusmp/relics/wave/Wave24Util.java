@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -33,6 +32,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the small server-side helpers the twelve wave-24 relics share: the player's own saved numbers (persistent data, so timers survive relog and
@@ -120,11 +122,11 @@ final class Wave24Util {
     static void bar(ServerPlayer p, String text, ChatFormatting colour) { bar(p, Component.literal(text).withStyle(colour)); }
 
     // ---------------------------------------------------------------- particles (Rukh only)
-    static RukhFx.Alignment align(boolean dark) { return RukhFx.Alignment.of(dark); }
+    static FxTone align(boolean dark) { return FxTone.of(dark); }
 
-    static void burst(ServerLevel l, Vec3 at, boolean dark, int count) { RukhFx.burst(l, at, align(dark), count); }
+    static void burst(ServerLevel l, Vec3 at, boolean dark, int count) { Fx.burst(l, FxThemes.RELIC_WAVE_24, at, align(dark), count); }
 
-    static void trail(ServerLevel l, Vec3 from, Vec3 to, boolean dark) { RukhFx.stream(l, from, to, align(dark), 4); }
+    static void trail(ServerLevel l, Vec3 from, Vec3 to, boolean dark) { Fx.stream(l, FxThemes.RELIC_WAVE_24, from, to, align(dark), 4); }
 
     // ---------------------------------------------------------------- creatures
     /** Is this a creature the player may hurt: hostile or hunting them, never an ally, a pet, a relic summon, a stand, or a creative or spectator player. */

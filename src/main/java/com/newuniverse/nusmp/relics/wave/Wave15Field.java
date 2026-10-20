@@ -1,12 +1,10 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +24,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Wave 15: what stays in the world between ticks. Three small, capped lists, all cleared when the server stops:
@@ -140,8 +141,8 @@ final class Wave15Field {
             s.age++;
             Vec3 c = s.at;
             if (s.age % 3 == 0) {
-                RukhFx.spray(lv, Wave15Util.align(0xF2C230), c.x, c.y, c.z, 6, 0.6, 0.45, 0.6, 0.02);
-                RukhFx.spray(lv, Wave15Util.align(0x1E1C1A), c.x, c.y, c.z, 4, 0.6, 0.45, 0.6, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, Wave15Util.align(0xF2C230), c.x, c.y, c.z, 6, 0.6, 0.45, 0.6, 0.02);
+                com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, Wave15Util.align(0x1E1C1A), c.x, c.y, c.z, 4, 0.6, 0.45, 0.6, 0.02);
             }
             if (s.age % Wave15Rules.SWARM_PULSE == 0) pulse(owner, lv, c, s.target);
             if (s.age >= Wave15Rules.SWARM_TICKS) it.remove();
@@ -185,7 +186,7 @@ final class Wave15Field {
             it.remove();
             ServerLevel lv = owner.serverLevel();
             Fx.damage(owner, le, Wave15Rules.THROW_IMPACT, "minecraft:fall");
-            Fx.burst(lv, le.position(), 0xC8D4E4);
+            FxRelic.burst(lv, le.position(), 0xC8D4E4);
             int n = 0;
             for (LivingEntity o : Wave15Util.near(lv, le.position(), 1.8, x -> x != le && Wave15Util.target(owner, x))) {
                 if (n++ >= 4) break;
@@ -215,7 +216,7 @@ final class Wave15Field {
         d.putDouble(K_Z, p.getZ());
         PHASED.put(p.getUUID(), new Phase(p.getServer().getTickCount() + PHASE_TICKS, p.position()));
         p.setGameMode(GameType.SPECTATOR);
-        Fx.burst(p.serverLevel(), p.position(), 0xFFD860);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xFFD860);
         return true;
     }
 
@@ -231,7 +232,7 @@ final class Wave15Field {
                 PHASED.remove(id);
                 continue;
             }
-            if (now % 20 == 0 || now % 20 == 5) RukhFx.spray(p.serverLevel(), Wave15Util.align(0xFFD860), p.getX(), p.getY() + 0.9, p.getZ(), 3, 0.3, 0.5, 0.3, 0.0);
+            if (now % 20 == 0 || now % 20 == 5) com.newuniverse.nusmp.particle.fx.Fx.spray(p.serverLevel(), FxThemes.RELIC_WAVE_15, Wave15Util.align(0xFFD860), p.getX(), p.getY() + 0.9, p.getZ(), 3, 0.3, 0.5, 0.3, 0.0);
             if (now < ph.until) continue;
             if (p.serverLevel().noCollision(p, p.getBoundingBox())) {
                 endPhase(p, false);
@@ -267,7 +268,7 @@ final class Wave15Field {
         p.setGameMode(back);
         p.fallDistance = 0;
         if (back != GameType.CREATIVE && back != GameType.SPECTATOR) Wave15Util.give(p, 100, 0, "minecraft:slow_falling");     // thirty seconds of ghost flight may end high in the air
-        Fx.burst(p.serverLevel(), p.position(), 0xFFD860);
+        FxRelic.burst(p.serverLevel(), p.position(), 0xFFD860);
         Wave15Util.tell(p, "You are solid again.", ChatFormatting.GOLD);
     }
 
@@ -308,6 +309,6 @@ final class Wave15Field {
 
     /** Snowflake or other flavour particles are sent by the callers; this one is the sparkle of a finished step. */
     static void sparkle(ServerLevel lv, Vec3 at) {
-        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, at.x, at.y + 0.8, at.z, 8, 0.3, 0.4, 0.3, 0.03);
+        com.newuniverse.nusmp.particle.fx.Fx.spray(lv, FxThemes.RELIC_WAVE_15, FxTone.LIGHT, at.x, at.y + 0.8, at.z, 8, 0.3, 0.4, 0.3, 0.03);
     }
 }
