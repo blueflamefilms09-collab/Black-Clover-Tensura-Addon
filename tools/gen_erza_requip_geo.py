@@ -515,4 +515,9 @@ def main(only=None):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    # 1.99.0: the armours were remade at the Djinn's quality by tools/gen_erza_armour.py, which writes the SAME file names; this 1.96.0 generator (boxes, 128 to 256 px textures, 7 to 15 pieces
+    # an armour) would overwrite the remade models with the old look, so it only runs when asked to with --legacy (it is kept as the record of the first version, never deleted).
+    if "--legacy" not in sys.argv:
+        print("tools/gen_erza_requip_geo.py is the 1.96.0 generator, superseded by tools/gen_erza_armour.py (1.99.0, the Djinn-quality remake). Pass --legacy to rewrite the old models anyway.")
+        sys.exit(0)
+    main([a for a in sys.argv[1:] if a != "--legacy"])

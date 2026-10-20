@@ -1,0 +1,210 @@
+"""The fourteen Erza armours as data (1.99.0): the palette of each (the materials its pieces are painted with) and the spec of each (the style of every piece).
+
+    main   the body plate (enamel over steel)        alt    the second plate colour      trim   the metal trim (gold, silver, bronze) with filigree
+    hot    the glowing parts (inlays, veins, vents)  gem    jewels                       cloth  the soft layer (under plates, cloaks, ribbons)
+    leather straps and belts                         glass  the energy material of fins, halos and flames (translucent)      feather  the material of wing feathers
+
+A palette entry is built by `M(kind, base, dark, light, glow, amount, seed, accent=, **options)` (see tools/erza_armour_paint.py). The keys of a spec are read by tools/gen_erza_armour_parts.py,
+tools/gen_erza_armour_limbs.py and tools/gen_erza_armour_extras.py; `extras` lists the signature pieces as "kind:style".
+"""
+import os
+import sys
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from erza_armour_paint import Mat  # noqa: E402
+
+
+def M(kind, base, dark, light, glow=None, amount=0.5, seed=0, accent=None, **kw):
+    return Mat(kind, base, dark=dark, light=light, accent=accent, glow=glow, glow_amount=amount, seed=seed, **kw)
+
+
+def pal(seed, main, alt, trim, hot, gem, cloth, leather, glass, feather):
+    """A palette whose materials are given as (kind, base, dark, light, glow, amount, accent, options) tuples; the seed offsets every material's random stream."""
+    out = {}
+    for i, (k, v) in enumerate(zip(("main", "alt", "trim", "hot", "gem", "cloth", "leather", "glass", "feather"), (main, alt, trim, hot, gem, cloth, leather, glass, feather))):
+        kind, base, dark, light, glow, amount, accent, opts = v
+        out[k] = M(kind, base, dark, light, glow, amount, seed + i, accent=accent, **opts)
+    return out
+
+
+GOLD = ("gold", "E0B040", "5A3A06", "FFEEA0", "FFD070", 0.35, None, dict(wear=0.25))
+BRONZE = ("gold", "B8863A", "3E2606", "F0CC80", "FFB060", 0.35, None, dict(wear=0.35))
+SILVER = ("gold", "C8D0E0", "4A5268", "FFFFFF", "C0E0FF", 0.3, None, dict(wear=0.3))
+LEATHER = ("leather", "4A2418", "1A0A06", "9A5A38", None, 0.0, None, dict(wear=0.0, shine=0.25))
+DARKLEATHER = ("leather", "2A2024", "0A0608", "6A5058", None, 0.0, None, dict(wear=0.0, shine=0.25))
+NAVYLEATHER = ("leather", "26305A", "0A1030", "5A6AA8", None, 0.0, None, dict(wear=0.0, shine=0.25))
+
+PALETTES = {
+    "heart_kreuz": pal(100,
+        ("plate", "B8203E", "3A0612", "F06A84", "FF6A8C", 0.8, "E0B040", dict(trim=1, grooves=1, inlay=1)),
+        ("plate", "CCD0DC", "4A5068", "FFFFFF", "FF8AA0", 0.5, "E0B040", dict(trim=1, grooves=1, wear=0.3)),
+        GOLD,
+        ("plate", "FF6A8C", "9A1840", "FFC0D0", "FF8AA8", 1.0, None, dict(inlay=1)),
+        ("gem", "FF5A82", "8A1038", "FFD0DC", "FF7A9E", 1.0, None, {}),
+        ("cloth", "7A1228", "2A040C", "C04060", "FF6A8C", 0.5, "E0B040", dict(trim=1, wear=0.0, shine=0.15)),
+        LEATHER,
+        ("crystal", "E85A78", "7A1030", "FFC0D0", "FF7A9A", 0.9, None, dict(alpha=200, cells=6)),
+        ("feather", "C02040", "50081A", "FF8AA0", "FF6A8C", 0.6, "E0B040", {})),
+    "heavens_wheel": pal(110,
+        ("plate", "D8DEEC", "5A6690", "FFFFFF", "7AB8FF", 0.6, "E8C860", dict(trim=1, grooves=1, inlay=1, wear=0.3)),
+        ("plate", "2E3E78", "0A1030", "6A80D0", "7AB8FF", 0.5, "E8C860", dict(trim=1, grooves=1)),
+        GOLD,
+        ("steel", "E8F0FF", "6A7AA0", "FFFFFF", "A0D0FF", 1.0, "E8C860", dict(wear=0.2, rivets=0)),
+        ("gem", "5AA0FF", "1A3A8A", "D0E8FF", "7AB8FF", 1.0, None, {}),
+        ("cloth", "DCE6FA", "7A8CB8", "FFFFFF", "A0D0FF", 0.5, "E8C860", dict(trim=1, wear=0.0, shine=0.15)),
+        NAVYLEATHER,
+        ("crystal", "BCD8FF", "5A78C0", "FFFFFF", "A0D0FF", 0.9, None, dict(alpha=190, cells=7)),
+        ("steel", "E4ECFA", "6A7AA0", "FFFFFF", "A0D0FF", 0.7, "E8C860", dict(wear=0.2, rivets=0))),
+    "flame_empress": pal(120,
+        ("plate", "A31E27", "2E060A", "E65440", "FF7A22", 0.8, "D9A730", dict(trim=1, grooves=1, inlay=1)),
+        ("plate", "7A1018", "260408", "C83A32", "FF6A1E", 0.6, "D9A730", dict(trim=1, grooves=1)),
+        GOLD,
+        ("flame", "FF7C1E", "B3200C", "FFE276", "FF9830", 0.95, None, dict(grain=0.04)),
+        ("gem", "FF5A1E", "8A1204", "FFD090", "FF8A30", 1.0, None, {}),
+        ("cloth", "7A1018", "300408", "D04030", "FF7A22", 0.5, "D9A730", dict(trim=1, wear=0.0, shine=0.15)),
+        DARKLEATHER,
+        ("flame", "FF9A30", "D0300C", "FFE680", "FFB040", 1.0, None, dict(grain=0.04)),
+        ("feather", "C02A20", "50080A", "FF8A40", "FF7A22", 0.7, "D9A730", {})),
+    "lightning_empress": pal(130,
+        ("plate", "EAC23A", "5A3E06", "FFF2A0", "FFF080", 0.85, "FFFFFF", dict(trim=1, grooves=1, inlay=2, wear=0.3)),
+        ("plate", "F6F0D0", "7A6A28", "FFFFFF", "FFF080", 0.6, "E8C050", dict(trim=1, grooves=1, inlay=1, wear=0.25)),
+        GOLD,
+        ("flame", "FFE870", "D09A10", "FFFFF0", "FFF490", 1.0, None, dict(grain=0.03)),
+        ("gem", "FFE040", "9A7A08", "FFFFC0", "FFF490", 1.0, None, {}),
+        ("cloth", "F4EBC0", "9A8844", "FFFFFF", "FFF080", 0.6, "E8C050", dict(trim=1, wear=0.0, shine=0.15)),
+        LEATHER,
+        ("membrane", "FFF2A0", "C8A020", "FFFFFF", "FFF490", 0.95, None, dict(alpha=215, ribs=3)),
+        ("membrane", "FFF8B8", "D8B830", "FFFFFF", "FFF490", 0.95, None, dict(alpha=215, ribs=3))),
+    "sea_empress": pal(140,
+        ("scales", "1E8CA8", "062C3A", "6AD8EC", "80F0FF", 0.5, "F0E8D8", dict(cells=4)),
+        ("plate", "E8F2F2", "6A8A94", "FFFFFF", "80F0FF", 0.4, "F0E8D8", dict(trim=1, grooves=1, wear=0.25)),
+        SILVER,
+        ("water", "6AD8F0", "1A6C90", "E8FCFF", "90F4FF", 1.0, None, {}),
+        ("gem", "FF9AB8", "9A2A58", "FFE0EC", "FFB0C8", 0.9, None, {}),
+        ("cloth", "1A6C88", "083040", "5ABCD8", "80F0FF", 0.5, "F0E8D8", dict(trim=1, wear=0.0, shine=0.15)),
+        NAVYLEATHER,
+        ("membrane", "4ABCE0", "1470A0", "D8FAFF", "80F0FF", 0.9, None, dict(alpha=210, ribs=5)),
+        ("membrane", "5AC8E8", "1470A0", "E8FCFF", "90F4FF", 0.9, None, dict(alpha=210, ribs=5))),
+    "black_wing": pal(150,
+        ("plate", "1E1830", "050308", "52468A", "A060FF", 0.7, "9A90C8", dict(trim=1, grooves=1, inlay=1)),
+        ("plate", "2E2650", "0A0818", "6A5CB0", "A060FF", 0.5, "9A90C8", dict(trim=1, grooves=1)),
+        SILVER,
+        ("wisp", "3A2A5C", "0A0614", "9A70E8", "B070FF", 1.0, None, {}),
+        ("gem", "A060FF", "3A1A7A", "E0C8FF", "C090FF", 1.0, None, {}),
+        ("cloth", "1A1430", "06040C", "48388A", "A060FF", 0.5, "9A90C8", dict(trim=1, wear=0.0, shine=0.15)),
+        DARKLEATHER,
+        ("feather", "241C3C", "0A0614", "7A5CC8", "A870FF", 0.8, None, {}),
+        ("feather", "241C3C", "060410", "8A6CD8", "A870FF", 0.8, "9A90C8", {})),
+    "clear_heart": pal(160,
+        ("cloth", "ECF0FA", "9AA4C0", "FFFFFF", "C8E0FF", 0.5, "E8D8A0", dict(trim=1, wear=0.0, shine=0.15)),
+        ("cloth", "C8D4EE", "7884A8", "F4F8FF", "C8E0FF", 0.4, "E8D8A0", dict(trim=1, wear=0.0, shine=0.15)),
+        ("gold", "E8D8A0", "8A7A44", "FFFBE0", "FFF0B0", 0.4, None, dict(wear=0.2)),
+        ("wisp", "E0ECFF", "8A9CC8", "FFFFFF", "D8ECFF", 1.0, None, {}),
+        ("gem", "E8F4FF", "7A9AC8", "FFFFFF", "D8ECFF", 1.0, None, {}),
+        ("cloth", "F0F4FC", "9AA6C6", "FFFFFF", "D8ECFF", 0.5, "E8D8A0", dict(trim=1, wear=0.0, shine=0.15)),
+        ("leather", "7A6A58", "2A2218", "C8B898", None, 0.0, None, dict(wear=0.0, shine=0.2)),
+        ("cloth", "F4F8FF", "A8B4D4", "FFFFFF", "D8ECFF", 0.6, None, dict(ragged=1)),
+        ("cloth", "F4F8FF", "A8B4D4", "FFFFFF", "D8ECFF", 0.6, "E8D8A0", {})),
+    "nakagami": pal(170,
+        ("plate", "F0F2FA", "6A74A0", "FFFFFF", "60C0FF", 0.8, "E4BE5C", dict(trim=1, grooves=1, inlay=2, wear=0.25)),
+        ("plate", "DCE2F2", "5A66A0", "FFFFFF", "60C0FF", 0.6, "E4BE5C", dict(trim=1, grooves=1, wear=0.25)),
+        GOLD,
+        ("bolt", "BCE4FF", "3E88D0", "FFFFFF", "70C8FF", 1.0, None, {}),
+        ("gem", "60C0FF", "1A5A9A", "D8F0FF", "80D0FF", 1.0, None, {}),
+        ("cloth", "F4F6FC", "9AA4C4", "FFFFFF", "70C8FF", 0.6, "E4BE5C", dict(trim=1, wear=0.0, shine=0.15)),
+        NAVYLEATHER,
+        ("crystal", "C8E8FF", "5A9AD8", "FFFFFF", "70C8FF", 0.95, None, dict(alpha=190, cells=6)),
+        ("feather", "E4F0FF", "7A8CC0", "FFFFFF", "70C8FF", 0.6, "E4BE5C", {})),
+    "grand_chariot": pal(180,
+        ("plate", "F4E4A8", "7A6020", "FFFBE0", "FFD060", 0.7, "F0C850", dict(trim=1, grooves=1, inlay=1, wear=0.25)),
+        ("plate", "E0C870", "6A5418", "FFF4C0", "FFD060", 0.5, "F0C850", dict(trim=1, grooves=1)),
+        GOLD,
+        ("steel", "FFF0B8", "9A8438", "FFFFFF", "FFE890", 1.0, "F0C850", dict(wear=0.2, rivets=0)),
+        ("gem", "FFD060", "9A6A08", "FFF4C0", "FFE070", 1.0, None, {}),
+        ("cloth", "F8EEC8", "A08C50", "FFFFFF", "FFD060", 0.6, "F0C850", dict(trim=1, wear=0.0, shine=0.15)),
+        LEATHER,
+        ("crystal", "FFEAA0", "C09A30", "FFFFFF", "FFE070", 0.95, None, dict(alpha=190, cells=7)),
+        ("steel", "FFF0B8", "9A8438", "FFFFFF", "FFE890", 0.8, "F0C850", dict(wear=0.2, rivets=0))),
+    "adamantine": pal(190,
+        ("steel", "586A64", "10181A", "9AB4AA", "7AFFC0", 0.8, None, dict(wear=0.5, inlay=2)),
+        ("plate", "46564F", "0C1210", "86A096", "7AFFC0", 0.6, "8E9E98", dict(trim=1, grooves=1, wear=0.5, inlay=1)),
+        ("gold", "8E9E98", "2A3430", "DCEAE4", "A0FFD0", 0.4, None, dict(wear=0.4)),
+        ("plate", "3C4A44", "0A1010", "7A968C", "7AFFC0", 0.9, None, dict(inlay=2, wear=0.4)),
+        ("gem", "7AFFC0", "1A6A44", "E0FFF0", "9AFFD0", 1.0, None, {}),
+        ("cloth", "3A4A44", "0C1210", "6A8A7E", "7AFFC0", 0.3, "8E9E98", dict(trim=1, wear=0.0, shine=0.1)),
+        DARKLEATHER,
+        ("crystal", "9AD8C0", "3A7A62", "F0FFF8", "9AFFD0", 0.8, None, dict(alpha=200, cells=5)),
+        ("steel", "586A64", "10181A", "9AB4AA", "7AFFC0", 0.5, None, dict(wear=0.5))),
+    "purgatory": pal(200,
+        ("plate", "241A1E", "050204", "5A4048", "FF3A1A", 0.9, "7A6A72", dict(trim=1, grooves=1, inlay=2, wear=0.55)),
+        ("plate", "30222A", "070305", "6A4A54", "FF3A1A", 0.7, "7A6A72", dict(trim=1, grooves=1, wear=0.55)),
+        ("gold", "7A6A72", "2A2226", "C8B8C0", "FF6A3A", 0.5, None, dict(wear=0.5)),
+        ("flame", "FF4A1A", "A01808", "FFB050", "FF6A2A", 1.0, None, dict(grain=0.04)),
+        ("gem", "FF3A1A", "7A0A04", "FFB070", "FF6A2A", 1.0, None, {}),
+        ("cloth", "30121A", "0E0408", "7A2A34", "FF3A1A", 0.7, "7A6A72", dict(trim=1, wear=0.0, shine=0.1)),
+        DARKLEATHER,
+        ("flame", "FF5A1E", "B01C08", "FFC070", "FF7A30", 1.0, None, dict(grain=0.04)),
+        ("feather", "301418", "0A0204", "8A3A30", "FF4A1A", 0.7, None, {})),
+    "flight_armor": pal(210,
+        ("plate", "8CB8E8", "233E6A", "D8ECFF", "C0F0FF", 0.7, "C8D8EC", dict(trim=1, grooves=1, inlay=1, wear=0.3)),
+        ("plate", "E8F0FA", "6A7E9E", "FFFFFF", "C0F0FF", 0.5, "C8D8EC", dict(trim=1, grooves=1, wear=0.3)),
+        SILVER,
+        ("bolt", "C8F0FF", "4A9ADC", "FFFFFF", "C0F0FF", 1.0, None, {}),
+        ("gem", "70D0FF", "1A5A9A", "E0F8FF", "A0E8FF", 1.0, None, {}),
+        ("cloth", "BCD4F0", "5A7AA8", "F0F8FF", "C0F0FF", 0.5, "C8D8EC", dict(trim=1, wear=0.0, shine=0.15)),
+        NAVYLEATHER,
+        ("crystal", "A8D8FF", "4A8AD0", "FFFFFF", "C0F0FF", 0.95, None, dict(alpha=185, cells=6)),
+        ("plate", "8CB8E8", "233E6A", "D8ECFF", "C0F0FF", 0.7, "C8D8EC", dict(trim=1))),
+    "wind_god": pal(220,
+        ("plate", "E8F4EC", "5A8A72", "FFFFFF", "70F0B0", 0.6, "D8F0E4", dict(trim=1, grooves=1, inlay=1, wear=0.25)),
+        ("plate", "58C898", "0E4A30", "A8F4D0", "70F0B0", 0.6, "D8F0E4", dict(trim=1, grooves=1)),
+        ("gold", "D8F0E4", "5A8A72", "FFFFFF", "A0FFD0", 0.4, None, dict(wear=0.3)),
+        ("wisp", "A8F0D0", "2A8860", "F0FFF8", "90FFC8", 1.0, None, {}),
+        ("gem", "70F0B0", "1A7A4A", "E0FFF0", "A0FFD0", 1.0, None, {}),
+        ("cloth", "C8F0DC", "5AA888", "F4FFF8", "90FFC8", 0.6, "D8F0E4", dict(trim=1, wear=0.0, shine=0.15)),
+        ("leather", "2A5A48", "0A2018", "6AB898", None, 0.0, None, dict(wear=0.0, shine=0.25)),
+        ("feather", "A0F0C8", "2A9068", "F4FFF8", "90FFC8", 0.9, None, {}),
+        ("feather", "B8F4D8", "2A9068", "FFFFFF", "90FFC8", 0.8, "58C898", {})),
+    "fairy_armor": pal(230,
+        ("plate", "F2B8E4", "7A3868", "FFE8F8", "FFE0A0", 0.7, "F0C860", dict(trim=1, grooves=1, inlay=1, wear=0.25)),
+        ("plate", "FFF0D8", "8A6A40", "FFFFFF", "FFE0A0", 0.5, "F0C860", dict(trim=1, grooves=1, wear=0.25)),
+        GOLD,
+        ("steel", "FFE8A0", "9A7A30", "FFFFFF", "FFF0B0", 1.0, "F0C860", dict(wear=0.2, rivets=0)),
+        ("gem", "FF9AE0", "9A3A80", "FFE8F8", "FFB8F0", 1.0, None, {}),
+        ("cloth", "FADCF2", "B07AA4", "FFFFFF", "FFE0A0", 0.6, "F0C860", dict(trim=1, wear=0.0, shine=0.15)),
+        ("leather", "7A3A68", "2A0E24", "C070A8", None, 0.0, None, dict(wear=0.0, shine=0.25)),
+        ("membrane", "FFC8F0", "C070B0", "FFFFFF", "FFE8B0", 0.95, None, dict(alpha=200, ribs=3)),
+        ("membrane", "FFD8F4", "C070B0", "FFFFFF", "FFE8B0", 0.95, None, dict(alpha=200, ribs=3))),
+}
+
+SPECS = {
+    "heart_kreuz": dict(helm="circlet", chest=dict(style="bust", emblem="heart", back_emblem="kreuz"), skirt="tassets", pauldron="round", vambrace="plain", gauntlet="plain", cuisse="plain",
+                        greave="plain", sabaton="plain", extras=("ribbon:bow",)),
+    "heavens_wheel": dict(helm="winged", chest=dict(style="breast", emblem="cross", back_emblem="wing"), skirt="tassets", pauldron="wing", vambrace="finned", gauntlet="plain", cuisse="plain",
+                          greave="winged", sabaton="plain", wing=dict(rows=3), extras=("wing:blade", "halo:blades", "backdrop:wheel")),
+    "flame_empress": dict(helm="crest", chest=dict(style="breast", emblem="sun", back_emblem="flame"), skirt="tassets", pauldron="spiked", vambrace="finned", gauntlet="claw", cuisse="spiked",
+                          greave="spiked", sabaton="pointed", extras=("tail:flame", "halo:flame")),
+    "lightning_empress": dict(helm="winged", chest=dict(style="breast", emblem="bolt", back_emblem="bolt"), skirt="short", pauldron="spiked", vambrace="finned", gauntlet="plain", cuisse="plain",
+                              greave="winged", sabaton="plain", extras=("halo:runes", "wing:bolt")),
+    "sea_empress": dict(helm="crown", chest=dict(style="breast", emblem="wave", back_emblem="drop"), skirt="tassets", pauldron="fin", vambrace="finned", gauntlet="plain", cuisse="plain",
+                        greave="winged", sabaton="plain", extras=("halo:coral", "wing:fin")),
+    "black_wing": dict(helm="horned", chest=dict(style="breast", emblem="feather", back_emblem="wing"), skirt="short", pauldron="wing", vambrace="finned", gauntlet="claw", cuisse="spiked",
+                       greave="spiked", sabaton="pointed", extras=("wing:feather",)),
+    "clear_heart": dict(helm="ribbon", chest=dict(style="cloth", emblem="star4", back_emblem="star4"), skirt="cloth", pauldron="cloth", vambrace="cloth", gauntlet="cloth", cuisse="cloth",
+                        greave="cloth", sabaton="cloth", extras=("ribbon:bow", "tail:ribbon")),
+    "nakagami": dict(helm="visor", chest=dict(style="breast", emblem="rune", back_emblem="rune"), skirt="tassets", pauldron="tiered", vambrace="ring", gauntlet="plain", cuisse="plain",
+                     greave="plain", sabaton="plain", extras=("halo:runes", "cape:cloth")),
+    "grand_chariot": dict(helm="winged", chest=dict(style="breast", emblem="cross", back_emblem="wheel"), skirt="tassets", pauldron="wing", vambrace="finned", gauntlet="plain", cuisse="plain",
+                          greave="winged", sabaton="plain", wing=dict(rows=3), extras=("wing:blade", "halo:blades", "backdrop:chariot")),
+    "adamantine": dict(helm="visor", chest=dict(style="heavy", emblem="cross", back_emblem="shield"), skirt="tassets", pauldron="tiered", vambrace="ring", gauntlet="plain", cuisse="plain",
+                       greave="plain", sabaton="plain", extras=("cape:mail",)),
+    "purgatory": dict(helm="horned", chest=dict(style="heavy", emblem="sun", back_emblem="fang"), skirt="short", pauldron="spiked", vambrace="finned", gauntlet="claw", cuisse="spiked",
+                      greave="spiked", sabaton="pointed", extras=("cape:tattered", "backdrop:spikes")),
+    "flight_armor": dict(helm="visor", chest=dict(style="breast", emblem="star4", back_emblem="wing"), skirt="short", pauldron="round", vambrace="plain", gauntlet="plain", cuisse="plain",
+                         greave="winged", sabaton="plain", extras=("wing:jet", "ribbon:scarf")),
+    "wind_god": dict(helm="winged", chest=dict(style="breast", emblem="feather", back_emblem="wing"), skirt="short", pauldron="wing", vambrace="finned", gauntlet="plain", cuisse="plain",
+                     greave="winged", sabaton="plain", extras=("wing:feather", "halo:ring", "tail:ribbon")),
+    "fairy_armor": dict(helm="crown", chest=dict(style="bust", emblem="heart", back_emblem="star"), skirt="tassets", pauldron="round", vambrace="plain", gauntlet="plain", cuisse="plain",
+                        greave="plain", sabaton="plain", extras=("wing:fairy", "halo:petals")),
+}

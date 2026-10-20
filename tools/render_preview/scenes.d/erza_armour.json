@@ -1,0 +1,1906 @@
+{
+ "erza_geo_source": {
+  "kind": "geo",
+  "model": "erza_heart_kreuz_arm_belt",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "glow": "C0FFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   240,
+   240
+  ]
+ },
+ "erza_armour_heart_kreuz": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 0,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_heart_kreuz": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 0,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_heart_kreuz": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 0,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_heavens_wheel": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 1,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_heavens_wheel": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 1,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_heavens_wheel": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 1,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_flame_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 2,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_flame_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 2,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_flame_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 2,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_lightning_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 3,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_lightning_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 3,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_lightning_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 3,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_sea_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 4,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_sea_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 4,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_sea_empress": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 4,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_black_wing": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 5,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_black_wing": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 5,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_black_wing": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 5,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_clear_heart": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 6,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_clear_heart": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 6,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_clear_heart": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 6,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_nakagami": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 7,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_nakagami": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 7,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_nakagami": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 7,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_grand_chariot": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 8,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_grand_chariot": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 8,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_grand_chariot": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 8,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_adamantine": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 9,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_adamantine": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 9,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_adamantine": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 9,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_purgatory": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 10,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_purgatory": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 10,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_purgatory": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 10,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_flight_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 11,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_flight_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 11,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_flight_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 11,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_wind_god": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 12,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_wind_god": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 12,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_wind_god": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 12,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "erza_armour_fairy_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 13,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_slim_fairy_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 13,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   760
+  ],
+  "skin": "alex",
+  "views": [
+   {
+    "name": "slim (Alex) front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0.1
+    ],
+    "dist": 3.7
+   }
+  ]
+ },
+ "erza_closeup_fairy_armor": {
+  "kind": "aura",
+  "attr": "Erza",
+  "style": 13,
+  "total": 100,
+  "ages": [
+   50
+  ],
+  "exampleFiles": [
+   "../../../src/main/java/com/newuniverse/nusmp/requip/Armour.java",
+   "../../../src/main/java/com/newuniverse/nusmp/requip/ArmourSets.java"
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "head",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     1.85,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "torso",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.3
+   },
+   {
+    "name": "legs",
+    "yaw": 25,
+    "pitch": 6,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ }
+}
