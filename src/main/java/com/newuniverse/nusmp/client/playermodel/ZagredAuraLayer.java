@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.client.remodel.KitZagredRenderer;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
@@ -49,7 +48,7 @@ public class ZagredAuraLayer extends RenderLayer<ZagredBossEntity, PlayerModel<Z
         Entity t = e.level().getEntity(e.clientTarget());
         if (t == null || !t.isAlive()) return;
         Vec3 off = t.getPosition(partial).subtract(e.getPosition(partial));
-        KitZagredRenderer.reticle(deco.pose(), deco.buffers().getBuffer(RenderType.eyes(PlayerAssets.rl("textures/particle/koto_ring.png"))), off, t.getBbWidth(), e.tickCount + partial,
+        KitZagredRenderer.reticle(deco.pose(), deco.buffers().getBuffer(com.newuniverse.nusmp.client.AdditiveTypes.of(PlayerAssets.rl("textures/particle/koto_ring.png"))), off, t.getBbWidth(), e.tickCount + partial,
                 state == ZagredBossEntity.STATE_CASTING);
     }
 }

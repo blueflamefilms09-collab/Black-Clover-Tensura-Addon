@@ -23,6 +23,9 @@ public final class VfxDefinitions implements ResourceManagerReloadListener {
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
         WikiTextures.reload(manager);       // 1.27.0: which wiki_*.png exist (cached; the render path never asks the resource manager)
+        TextureAudit.clear();                                // 1.105.0 (square bug): the texture audits, their guard answers and the additive render types are read from the resources again
+        VfxTextureGuard.clear();
+        com.newuniverse.nusmp.client.AdditiveTypes.clear();
         com.newuniverse.nusmp.perf.PerfEpoch.bump();      // 1.99.0: answers kept from the resources (does this texture exist?) are stale after a reload
         DEFS.clear();
         manager.getResource(FILE).ifPresent(res -> {
