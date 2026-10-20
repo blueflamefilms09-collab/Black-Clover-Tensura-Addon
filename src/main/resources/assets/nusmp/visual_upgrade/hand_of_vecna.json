@@ -1,0 +1,257 @@
+{
+ "id": "hand_of_vecna",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "cold_mist",
+   "kind": "motes",
+   "particle": "minecraft:snowflake",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 7,
+   "box": [
+    0.3,
+    0.3,
+    -0.1,
+    0.55,
+    1.0,
+    0.1
+   ],
+   "speed": -0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "red_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.55,
+    0.4,
+    -0.15,
+    0.55,
+    1.1,
+    0.15
+   ],
+   "speed": 0.008,
+   "max_per_tick": 2
+  },
+  {
+   "name": "vecna_circle",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0.42,
+    0.1,
+    0
+   ],
+   "radius": 0.45,
+   "spin": 0.5,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "wish_ring",
+   "kind": "ring",
+   "particle": "minecraft:witch",
+   "color": "C9A24A",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    1.0,
+    0
+   ],
+   "radius": 0.95,
+   "spin": -0.18,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "rune_forearm",
+   "kind": "line",
+   "particle": "minecraft:witch",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 7,
+   "from": [
+    0.42,
+    1.1,
+    -0.15
+   ],
+   "to": [
+    0.42,
+    0.55,
+    -0.15
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "withered_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "8E8A78",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.2,
+   "max_per_tick": 2
+  },
+  {
+   "name": "gold_cuff_glints",
+   "kind": "motes",
+   "particle": "minecraft:wax_on",
+   "color": "C9A24A",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    -0.62,
+    0.55,
+    -0.12,
+    -0.3,
+    1.0,
+    0.12
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "finger_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0.42,
+    0.6,
+    0
+   ],
+   "radius": 0.45,
+   "spin": 0.6,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "grave_trail",
+   "kind": "trail",
+   "particle": "minecraft:smoke",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0.45,
+    0.6,
+    0.2
+   ],
+   "radius": 0.4,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "touch_of_death": [
+   {
+    "shape": "SLASH_SCYTHE",
+    "color": "E0245E",
+    "duration": 26,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:soul",
+    "count": 40,
+    "spread": 0.8,
+    "radius": 3.0,
+    "height": 1.2
+   },
+   {
+    "shape": "BONE_FX1",
+    "color": "8E8A78",
+    "duration": 22,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:witch",
+    "count": 30,
+    "spread": 1.0,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "rimed_grasp": [
+   {
+    "shape": "WATER_RING",
+    "color": "9FE3FF",
+    "duration": 28,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:snowflake",
+    "count": 70,
+    "spread": 1.6,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "skeleton_to_jelly": [
+   {
+    "shape": "BODY_FX1",
+    "color": "E0245E",
+    "duration": 30,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:glow_squid_ink",
+    "count": 50,
+    "spread": 1.0,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "choose_wish": [
+   {
+    "shape": "SPELL_CARD",
+    "color": "C9A24A",
+    "duration": 20,
+    "power": 2.0,
+    "at": "eye",
+    "particle": "minecraft:enchant",
+    "count": 20,
+    "spread": 0.8,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "wish": [
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "E0245E",
+    "duration": 46,
+    "power": 7.0,
+    "at": "feet",
+    "particle": "minecraft:witch",
+    "count": 90,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SEAL_TRINITY",
+    "color": "C9A24A",
+    "duration": 40,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:enchant",
+    "count": 60,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

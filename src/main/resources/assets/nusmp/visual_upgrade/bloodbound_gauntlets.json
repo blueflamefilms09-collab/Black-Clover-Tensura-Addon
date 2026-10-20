@@ -1,0 +1,215 @@
+{
+ "id": "bloodbound_gauntlets",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "blood_mist",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "C01818",
+   "size": 1.1,
+   "per_second": 9,
+   "box": [
+    -0.6,
+    0.4,
+    -0.2,
+    0.6,
+    1.1,
+    0.25
+   ],
+   "speed": 0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "drips",
+   "kind": "motes",
+   "particle": "minecraft:dripping_lava",
+   "color": "FF5A5A",
+   "size": 1.0,
+   "per_second": 2,
+   "box": [
+    -0.55,
+    0.2,
+    -0.15,
+    0.55,
+    0.9,
+    0.15
+   ],
+   "speed": 0.0,
+   "max_per_tick": 1
+  },
+  {
+   "name": "fist_ring_r",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "FF5A5A",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    -0.42,
+    0.55,
+    0
+   ],
+   "radius": 0.4,
+   "spin": 0.7,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "fist_ring_l",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "FF5A5A",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0.42,
+    0.55,
+    0
+   ],
+   "radius": 0.4,
+   "spin": -0.7,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "vein_line",
+   "kind": "line",
+   "particle": "minecraft:flame",
+   "color": "FF5A5A",
+   "size": 1.0,
+   "per_second": 6,
+   "from": [
+    -0.42,
+    1.0,
+    -0.28
+   ],
+   "to": [
+    -0.42,
+    0.45,
+    -0.28
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "offering_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "C01818",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.2,
+   "max_per_tick": 2
+  },
+  {
+   "name": "knuckle_sparks",
+   "kind": "motes",
+   "particle": "minecraft:crit",
+   "color": "FF5A5A",
+   "size": 1.0,
+   "per_second": 4,
+   "box": [
+    -0.6,
+    0.35,
+    -0.3,
+    0.6,
+    0.55,
+    -0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blood_orbit",
+   "kind": "orbit",
+   "particle": "dust",
+   "color": "C01818",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    0.8,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.45,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "wound_trail",
+   "kind": "trail",
+   "particle": "dust",
+   "color": "C01818",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.7,
+    0.3
+   ],
+   "radius": 0.6,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "blood_fist": [
+   {
+    "shape": "BLOOD_FX1",
+    "color": "FF5A5A",
+    "duration": 24,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:crit",
+    "count": 50,
+    "spread": 0.8,
+    "radius": 2.5,
+    "height": 1.2
+   },
+   {
+    "shape": "SLASH_WAVE",
+    "color": "C01818",
+    "duration": 16,
+    "power": 2.5,
+    "at": "aim",
+    "particle": "minecraft:flame",
+    "count": 24,
+    "spread": 0.6,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "bloodbond": [
+   {
+    "shape": "DEVIL_CIRCLE",
+    "color": "C01818",
+    "duration": 34,
+    "power": 4.0,
+    "at": "feet",
+    "particle": "minecraft:heart",
+    "count": 14,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SEAL_TRINITY",
+    "color": "FF5A5A",
+    "duration": 30,
+    "power": 3.5,
+    "at": "feet",
+    "particle": "minecraft:flame",
+    "count": 40,
+    "spread": 2.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

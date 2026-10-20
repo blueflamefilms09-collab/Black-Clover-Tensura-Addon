@@ -1,0 +1,215 @@
+{
+ "id": "urek_mazinos_chain_mantle",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "iron_sparks",
+   "kind": "motes",
+   "particle": "minecraft:electric_spark",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 5,
+   "box": [
+    -0.5,
+    0.4,
+    0.25,
+    0.5,
+    1.6,
+    0.8
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "gold_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "C8A030",
+   "size": 1.0,
+   "per_second": 7,
+   "box": [
+    -0.5,
+    0.2,
+    0.3,
+    0.5,
+    1.4,
+    0.7
+   ],
+   "speed": 0.003,
+   "max_per_tick": 2
+  },
+  {
+   "name": "tower_halo",
+   "kind": "ring",
+   "particle": "minecraft:wax_on",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    1.4,
+    0.5
+   ],
+   "radius": 0.5,
+   "spin": 0.1,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "shackle_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "C8A030",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.9,
+    0
+   ],
+   "radius": 1.05,
+   "spin": 0.12,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "chain_curtain",
+   "kind": "line",
+   "particle": "minecraft:electric_spark",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 5,
+   "from": [
+    -0.45,
+    1.5,
+    0.45
+   ],
+   "to": [
+    0.45,
+    1.5,
+    0.45
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "tower_foundation",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "C8A030",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.3,
+   "max_per_tick": 2
+  },
+  {
+   "name": "shoulder_links",
+   "kind": "motes",
+   "particle": "minecraft:wax_on",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    1.5,
+    -0.1,
+    0.65,
+    1.7,
+    0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "chain_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:electric_spark",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 4,
+   "center": [
+    0,
+    1.1,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.22,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "drag_sparks",
+   "kind": "trail",
+   "particle": "minecraft:crit",
+   "color": "FFD860",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.1,
+    0.5
+   ],
+   "radius": 0.8,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "chain_down": [
+   {
+    "shape": "SEAL_CHAINS",
+    "color": "FFD860",
+    "duration": 34,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:electric_spark",
+    "count": 70,
+    "spread": 2.4,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "THREAD_LINE",
+    "color": "C8A030",
+    "duration": 20,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:crit",
+    "count": 30,
+    "spread": 0.8,
+    "radius": 7.0,
+    "height": 1.2
+   }
+  ],
+  "unbreakable_tower": [
+   {
+    "shape": "EARTH_SPIKES",
+    "color": "C8A030",
+    "duration": 36,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:crit",
+    "count": 60,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MAGIC_CIRCLE",
+    "color": "FFD860",
+    "duration": 40,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "minecraft:wax_on",
+    "count": 50,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

@@ -1,0 +1,215 @@
+{
+ "id": "limitless_blindfold",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "six_eyes_motes",
+   "kind": "motes",
+   "particle": "minecraft:end_rod",
+   "color": "C8E8FF",
+   "size": 1.0,
+   "per_second": 7,
+   "box": [
+    -0.45,
+    1.5,
+    -0.45,
+    0.45,
+    2.2,
+    0.45
+   ],
+   "speed": 0.006,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blue_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "8AC8FF",
+   "size": 0.9,
+   "per_second": 8,
+   "box": [
+    -0.5,
+    1.4,
+    -0.5,
+    0.5,
+    2.1,
+    0.5
+   ],
+   "speed": 0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "infinity_ring",
+   "kind": "ring",
+   "particle": "minecraft:glow",
+   "color": "C8E8FF",
+   "size": 1.0,
+   "per_second": 12,
+   "center": [
+    0,
+    1.9,
+    0
+   ],
+   "radius": 0.62,
+   "spin": 0.25,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "infinity_ring_tilt",
+   "kind": "ring",
+   "particle": "minecraft:end_rod",
+   "color": "8AC8FF",
+   "size": 1.0,
+   "per_second": 10,
+   "center": [
+    0,
+    1.9,
+    0
+   ],
+   "radius": 0.9,
+   "spin": -0.2,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "tail_line",
+   "kind": "line",
+   "particle": "minecraft:glow",
+   "color": "8AC8FF",
+   "size": 1.0,
+   "per_second": 7,
+   "from": [
+    0,
+    1.8,
+    0.3
+   ],
+   "to": [
+    0,
+    0.9,
+    0.45
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "void_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "8AC8FF",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.4,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blue_orb",
+   "kind": "motes",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "8AC8FF",
+   "size": 1.0,
+   "per_second": 4,
+   "box": [
+    0.4,
+    1.9,
+    -0.1,
+    0.6,
+    2.1,
+    0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "hollow_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:witch",
+   "color": "C8E8FF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    2.0,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.45,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "barrier_trail",
+   "kind": "trail",
+   "particle": "minecraft:glow",
+   "color": "C8E8FF",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.8,
+    0.2
+   ],
+   "radius": 0.3,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "infinity": [
+   {
+    "shape": "MERCURY_DOME",
+    "color": "C8E8FF",
+    "duration": 34,
+    "power": 4.0,
+    "at": "feet",
+    "particle": "minecraft:glow",
+    "count": 60,
+    "spread": 1.8,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FX_SPIRIT_AURA",
+    "color": "8AC8FF",
+    "duration": 30,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 40,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "hollow_purple": [
+   {
+    "shape": "DEMON_METEOR",
+    "color": "A060FF",
+    "duration": 40,
+    "power": 7.0,
+    "at": "aim",
+    "particle": "minecraft:witch",
+    "count": 90,
+    "spread": 2.0,
+    "radius": 12.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "8AC8FF",
+    "duration": 36,
+    "power": 6.0,
+    "at": "aim",
+    "particle": "minecraft:end_rod",
+    "count": 80,
+    "spread": 3.0,
+    "radius": 14.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

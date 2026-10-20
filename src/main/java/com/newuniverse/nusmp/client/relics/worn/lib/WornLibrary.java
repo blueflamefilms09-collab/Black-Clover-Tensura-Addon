@@ -39,12 +39,31 @@ public final class WornLibrary {
         public final int[] colors;
         public final int tier, baseVerts, shellVerts;
         public final FxTheme theme;
+        /**
+         * 1.102.0 (visual upgrade): true for a relic worn as its upgraded models; {@code lodPieces} are its low detail models (at most 15% of the vertices, drawn beyond
+         * {@link #LOD_DISTANCE} blocks and at the low quality), {@code lodVerts} their vertex count. Empty and 0 for every other ensemble.
+         */
+        public final boolean upgraded;
+        public final List<Resolved> lodPieces;
+        public final int lodVerts;
+
+        /** Blocks beyond which an upgraded relic is drawn as its low detail models, and past which (see {@link #ADDITIVE_CUTOFF}) its additive passes are skipped. */
+        public static final double LOD_DISTANCE = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.LOD_DISTANCE, ADDITIVE_CUTOFF = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.ADDITIVE_CUTOFF;
 
         Ensemble(RelicDef def, List<Resolved> pieces, FxTheme theme) {
             this(def, def.id(), def.slot().name(), false, WornPalette.slots(def.paletteMain(), def.paletteTrim(), def.paletteGlow()), def.grade().tier(), pieces, theme);
         }
 
         Ensemble(RelicDef def, String id, String slotKey, boolean exact, int[] colors, int tier, List<Resolved> pieces, FxTheme theme) {
+            this(def, id, slotKey, exact, colors, tier, pieces, theme, false, List.of());
+        }
+
+        Ensemble(RelicDef def, String id, String slotKey, boolean exact, int[] colors, int tier, List<Resolved> pieces, FxTheme theme, boolean upgraded, List<Resolved> lodPieces) {
+            this.upgraded = upgraded;
+            this.lodPieces = lodPieces;
+            int lv = 0;
+            for (Resolved r : lodPieces) lv += r.mesh().totalVertices();
+            this.lodVerts = lv;
             this.def = def;
             this.id = id;
             this.slotKey = slotKey;
@@ -115,7 +134,7 @@ public final class WornLibrary {
         }
         Optional<Ensemble> e = CACHE.get(def.id());
         if (e == null) {
-            Ensemble built = build(def);
+            Ensemble built = build(def, true);
             if (built == null && !WornModels.catalogLoaded()) return null;                  // 1.99.0: the catalog was not readable just now: do not remember "no model" for the session
             e = Optional.ofNullable(built);
             CACHE.put(def.id(), e);
@@ -123,11 +142,17 @@ public final class WornLibrary {
         return e.orElse(null);
     }
 
-    private static Ensemble build(RelicDef def) {
-        WornCatalog cat = WornModels.catalog();
-        List<WornCatalog.Piece> wanted = VuModels.wornPieces(def.id());                // the visual upgrade's override table first (null: not upgraded or switched off)
-        if (wanted == null) wanted = cat.piecesFor(def.id(), def.slot().name(), def.look().name());
-        if (wanted.isEmpty()) return null;
+    /** Where this relic's upgraded look comes from right now (NONE: the 1.101 look). */
+    public static UpgradeSource sourceOf(String relicId) {
+        if (!VuModels.enabled()) return UpgradeSource.NONE;
+        return UpgradeSource.choose(true, VuModels.wornPieces(relicId) != null, WornModels.upgrade().has(relicId));
+    }
+
+    /** Is this relic worn as its God worn upgrade models right now (the shared switch {@code visual.upgrade} is on and the God catalog has it, and no override beats it)? */
+    public static boolean upgradeOf(String relicId) { return sourceOf(relicId) == UpgradeSource.GOD_CATALOG; }
+
+    /** Resolves pieces the way the library always did: the anchor of the piece, the fit of its body part, pushed out of the skin's second layer. */
+    private static List<Resolved> resolve(List<WornCatalog.Piece> wanted) {
         List<Resolved> out = new ArrayList<>(wanted.size());
         for (WornCatalog.Piece p : wanted) {
             WornMesh m = WornModels.mesh(p.model());
@@ -137,10 +162,29 @@ public final class WornLibrary {
             m = m.clearOf(at, p.mirror(), fit.scale(), fit.dx(), fit.dy(), fit.dz());              // 1.71.0: never under the skin's second layer (hat, jacket, sleeves, pants)
             out.add(new Resolved(m, at, p.mirror()));
         }
-        if (out.isEmpty()) return null;
+        return out;
+    }
+
+    private static Ensemble build(RelicDef def, boolean allowUpgrade) {
+        WornCatalog cat = WornModels.catalog();
+        UpgradeSource src = allowUpgrade ? sourceOf(def.id()) : UpgradeSource.NONE;
+        List<WornCatalog.Piece> wanted = switch (src) {
+            case OVERRIDES -> VuModels.wornPieces(def.id());
+            case GOD_CATALOG -> WornModels.upgrade().up(def.id());
+            case NONE -> null;
+        };
+        if (wanted == null) wanted = cat.piecesFor(def.id(), def.slot().name(), def.look().name());
+        if (wanted.isEmpty()) return null;
+        List<Resolved> out = resolve(wanted);
+        if (out.isEmpty()) {
+            if (src == UpgradeSource.NONE) return null;
+            return build(def, false);                                                        // an upgraded model that cannot be loaded: the 1.101 look, never nothing
+        }
         FxTheme theme = FxTheme.byName(cat.themeOf(def.id()));
         if (theme == null) theme = FxTheme.fromGlow(def.paletteGlow());
-        return new Ensemble(def, List.copyOf(out), theme);
+        List<Resolved> lod = src == UpgradeSource.GOD_CATALOG ? resolve(WornModels.upgrade().lod(def.id())) : List.of();   // an override model names its own lod in its file (WornMesh#lod)
+        return new Ensemble(def, def.id(), def.slot().name(), false, WornPalette.slots(def.paletteMain(), def.paletteTrim(), def.paletteGlow()), def.grade().tier(), List.copyOf(out), theme,
+                src != UpgradeSource.NONE, List.copyOf(lod));
     }
 
     private static final Map<String, Optional<Ensemble>> ITEM_CACHE = new HashMap<>();

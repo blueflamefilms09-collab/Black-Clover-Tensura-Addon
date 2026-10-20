@@ -28,5 +28,6 @@ public final class WornLibClient {
         com.newuniverse.nusmp.client.relics.hand.HandClient.init(modBus);                  // 1.48.0: relics as held objects
         RelicFxClient.init();
         com.newuniverse.nusmp.client.relics.vu.VuFxClient.init();                           // visual upgrade: the particle layers and the draw animation clock
+        com.newuniverse.nusmp.client.relics.fx.UpgradeFxClient.init();                     // 1.102.0: the ambient layers of the upgraded God relics (data: assets/nusmp/visual_upgrade)
     }
 }

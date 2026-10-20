@@ -1,0 +1,227 @@
+{
+ "id": "incinerator_arm",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "vent_embers",
+   "kind": "motes",
+   "particle": "minecraft:flame",
+   "color": "FFB060",
+   "size": 1.0,
+   "per_second": 10,
+   "box": [
+    -0.62,
+    0.5,
+    0.0,
+    -0.3,
+    1.4,
+    0.4
+   ],
+   "speed": 0.02,
+   "max_per_tick": 2
+  },
+  {
+   "name": "heat_haze",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "C86A3A",
+   "size": 1.1,
+   "per_second": 8,
+   "box": [
+    -0.6,
+    0.3,
+    -0.2,
+    0.6,
+    1.2,
+    0.3
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "furnace_ring",
+   "kind": "ring",
+   "particle": "minecraft:flame",
+   "color": "FFB060",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    -0.42,
+    0.55,
+    0
+   ],
+   "radius": 0.45,
+   "spin": 0.6,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "muzzle_ring",
+   "kind": "ring",
+   "particle": "minecraft:lava",
+   "color": "FFB060",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    -0.42,
+    -0.1,
+    0
+   ],
+   "radius": 0.35,
+   "spin": -0.8,
+   "plane": "flat",
+   "max_per_tick": 2
+  },
+  {
+   "name": "barrel_line",
+   "kind": "line",
+   "particle": "minecraft:flame",
+   "color": "FFB060",
+   "size": 1.0,
+   "per_second": 8,
+   "from": [
+    -0.42,
+    0.5,
+    -0.1
+   ],
+   "to": [
+    -0.42,
+    -0.2,
+    -0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "scorched_floor",
+   "kind": "ground",
+   "particle": "minecraft:flame",
+   "color": "C86A3A",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.3,
+   "max_per_tick": 2
+  },
+  {
+   "name": "pipe_smoke",
+   "kind": "motes",
+   "particle": "minecraft:large_smoke",
+   "color": "2A2430",
+   "size": 1.0,
+   "per_second": 5,
+   "box": [
+    -0.7,
+    1.1,
+    0.2,
+    -0.4,
+    1.6,
+    0.5
+   ],
+   "speed": 0.02,
+   "max_per_tick": 2
+  },
+  {
+   "name": "spark_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:electric_spark",
+   "color": "FFB060",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    -0.42,
+    0.55,
+    0
+   ],
+   "radius": 0.55,
+   "spin": 0.9,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "exhaust_trail",
+   "kind": "trail",
+   "particle": "minecraft:smoke",
+   "color": "C86A3A",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    -0.5,
+    0.9,
+    0.4
+   ],
+   "radius": 0.5,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "fist_of_fire": [
+   {
+    "shape": "FIRE_BURST",
+    "color": "FFB060",
+    "duration": 24,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:flame",
+    "count": 70,
+    "spread": 1.4,
+    "radius": 3.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FX_FIRE_ERUPTION",
+    "color": "C86A3A",
+    "duration": 22,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:lava",
+    "count": 20,
+    "spread": 1.0,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "incinerator": [
+   {
+    "shape": "FLAME_TRAIL",
+    "color": "FFB060",
+    "duration": 30,
+    "power": 6.0,
+    "at": "eye",
+    "particle": "minecraft:flame",
+    "count": 110,
+    "spread": 1.0,
+    "radius": 10.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FIRE_PILLAR",
+    "color": "C86A3A",
+    "duration": 30,
+    "power": 7.0,
+    "at": "aim",
+    "particle": "minecraft:lava",
+    "count": 60,
+    "spread": 3.0,
+    "radius": 12.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FLAME_EXPLOSION",
+    "color": "FFB060",
+    "duration": 30,
+    "power": 7.0,
+    "at": "aim",
+    "particle": "minecraft:flame",
+    "count": 80,
+    "spread": 3.0,
+    "radius": 14.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

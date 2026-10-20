@@ -51,6 +51,12 @@ public final class RelicFxOptions {
 
     public static boolean models() { return get(MODELS); }
 
+    /**
+     * The one client switch {@code visual.upgrade} of the whole visual upgrade (default on; true when the config is not loaded): the God worn relics (1.102.0) and the Charms / Genesis
+     * relics (1.104.0) both read it, from {@code config/nusmp-visual-charms-client.toml} (the file the Charms slice released first). Off = every relic is worn and held as in 1.101.
+     */
+    public static boolean upgrade() { return com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.upgrade(); }
+
     /** True when the robe sets are worn as anime cloaks ({@code relicfx.robeAnime}, default on); true when the config is not loaded. */
     public static boolean robeAnime() { return get(ROBE_ANIME); }
     /** Relics that are not weapons as 3D objects in hand, on the ground and in frames ({@code relicfx.handModels}). */

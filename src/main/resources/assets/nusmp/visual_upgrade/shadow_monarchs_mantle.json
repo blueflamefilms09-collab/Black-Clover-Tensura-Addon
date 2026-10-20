@@ -1,0 +1,215 @@
+{
+ "id": "shadow_monarchs_mantle",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "rising_shadow",
+   "kind": "motes",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "A060FF",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.5,
+    0.2,
+    0.2,
+    0.5,
+    2.0,
+    0.8
+   ],
+   "speed": 0.02,
+   "max_per_tick": 2
+  },
+  {
+   "name": "violet_mist",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "5A2A9A",
+   "size": 1.2,
+   "per_second": 9,
+   "box": [
+    -0.6,
+    0.2,
+    0.3,
+    0.6,
+    1.2,
+    0.9
+   ],
+   "speed": 0.008,
+   "max_per_tick": 2
+  },
+  {
+   "name": "crown_of_flames",
+   "kind": "ring",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "A060FF",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    1.95,
+    0.35
+   ],
+   "radius": 0.4,
+   "spin": 0.25,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "domain_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "5A2A9A",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    0.7,
+    0
+   ],
+   "radius": 1.25,
+   "spin": 0.12,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "blade_edge",
+   "kind": "line",
+   "particle": "minecraft:witch",
+   "color": "A060FF",
+   "size": 1.0,
+   "per_second": 6,
+   "from": [
+    0.4,
+    1.6,
+    0.0
+   ],
+   "to": [
+    0.7,
+    2.1,
+    0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "monarch_shadow",
+   "kind": "ground",
+   "particle": "minecraft:smoke",
+   "color": "5A2A9A",
+   "size": 1.2,
+   "per_second": 8,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.7,
+   "max_per_tick": 3
+  },
+  {
+   "name": "shoulder_flames",
+   "kind": "motes",
+   "particle": "minecraft:soul",
+   "color": "A060FF",
+   "size": 1.0,
+   "per_second": 4,
+   "box": [
+    0.28,
+    1.5,
+    -0.1,
+    0.62,
+    2.0,
+    0.2
+   ],
+   "speed": 0.02,
+   "max_per_tick": 2
+  },
+  {
+   "name": "shade_soldiers",
+   "kind": "orbit",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "A060FF",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.0,
+    0
+   ],
+   "radius": 1.0,
+   "spin": -0.28,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "shadow_train",
+   "kind": "trail",
+   "particle": "minecraft:large_smoke",
+   "color": "5A2A9A",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.7,
+    0.5
+   ],
+   "radius": 0.8,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "arise": [
+   {
+    "shape": "SHADOW_UNITE",
+    "color": "A060FF",
+    "duration": 36,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:soul_fire_flame",
+    "count": 80,
+    "spread": 2.5,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SHADOW_POOL",
+    "color": "5A2A9A",
+    "duration": 40,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:soul",
+    "count": 40,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "monarchs_domain": [
+   {
+    "shape": "NIHILITY_ZONE",
+    "color": "A060FF",
+    "duration": 50,
+    "power": 8.0,
+    "at": "feet",
+    "particle": "minecraft:smoke",
+    "count": 100,
+    "spread": 5.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SHADOW_POOL",
+    "color": "5A2A9A",
+    "duration": 50,
+    "power": 9.0,
+    "at": "feet",
+    "particle": "minecraft:soul_fire_flame",
+    "count": 90,
+    "spread": 5.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

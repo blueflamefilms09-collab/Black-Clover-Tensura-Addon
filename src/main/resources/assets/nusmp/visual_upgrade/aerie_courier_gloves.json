@@ -1,0 +1,215 @@
+{
+ "id": "aerie_courier_gloves",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "wind_wisps",
+   "kind": "motes",
+   "particle": "minecraft:cloud",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.6,
+    0.4,
+    -0.2,
+    0.6,
+    1.1,
+    0.25
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "sky_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "7AA8FF",
+   "size": 0.8,
+   "per_second": 7,
+   "box": [
+    -0.55,
+    0.5,
+    -0.15,
+    0.55,
+    1.1,
+    0.15
+   ],
+   "speed": 0.006,
+   "max_per_tick": 2
+  },
+  {
+   "name": "wrist_ring_r",
+   "kind": "ring",
+   "particle": "minecraft:cloud",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    -0.42,
+    0.65,
+    0
+   ],
+   "radius": 0.4,
+   "spin": 0.9,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "wrist_ring_l",
+   "kind": "ring",
+   "particle": "minecraft:cloud",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0.42,
+    0.65,
+    0
+   ],
+   "radius": 0.4,
+   "spin": -0.9,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "wing_edge",
+   "kind": "line",
+   "particle": "minecraft:end_rod",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 6,
+   "from": [
+    -0.65,
+    0.75,
+    0.0
+   ],
+   "to": [
+    -0.75,
+    0.55,
+    0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "courier_floor",
+   "kind": "ground",
+   "particle": "minecraft:cloud",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.1,
+   "max_per_tick": 2
+  },
+  {
+   "name": "feather_down",
+   "kind": "motes",
+   "particle": "minecraft:glow",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    -0.7,
+    0.5,
+    -0.1,
+    0.7,
+    1.0,
+    0.3
+   ],
+   "speed": -0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "parcel_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:cloud",
+   "color": "7AA8FF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.8,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.6,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "gust_trail",
+   "kind": "trail",
+   "particle": "minecraft:cloud",
+   "color": "C8DCFF",
+   "size": 1.0,
+   "per_second": 12,
+   "center": [
+    0,
+    0.7,
+    0.3
+   ],
+   "radius": 0.7,
+   "max_per_tick": 4
+  }
+ ],
+ "acts": {
+  "couriers_dash": [
+   {
+    "shape": "WIND_GALE",
+    "color": "C8DCFF",
+    "duration": 22,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:cloud",
+    "count": 50,
+    "spread": 1.2,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "WIND_SLASH",
+    "color": "7AA8FF",
+    "duration": 16,
+    "power": 2.5,
+    "at": "aim",
+    "particle": "minecraft:end_rod",
+    "count": 24,
+    "spread": 0.6,
+    "radius": 6.0,
+    "height": 1.2
+   }
+  ],
+  "gale_parcel": [
+   {
+    "shape": "WIND_TORNADO",
+    "color": "C8DCFF",
+    "duration": 32,
+    "power": 3.5,
+    "at": "aim",
+    "particle": "minecraft:cloud",
+    "count": 70,
+    "spread": 1.4,
+    "radius": 4.0,
+    "height": 1.2
+   },
+   {
+    "shape": "WIND_RING",
+    "color": "7AA8FF",
+    "duration": 24,
+    "power": 4.0,
+    "at": "eye",
+    "particle": "minecraft:end_rod",
+    "count": 30,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

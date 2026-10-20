@@ -1,0 +1,215 @@
+{
+ "id": "pactbreaker_shroud",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "void_motes",
+   "kind": "motes",
+   "particle": "minecraft:portal",
+   "color": "D8A0FF",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.5,
+    0.3,
+    0.25,
+    0.5,
+    1.8,
+    0.8
+   ],
+   "speed": 0.008,
+   "max_per_tick": 2
+  },
+  {
+   "name": "torn_pages",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "A04AFF",
+   "size": 0.9,
+   "per_second": 7,
+   "box": [
+    -0.55,
+    0.4,
+    0.3,
+    0.55,
+    1.5,
+    0.8
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "broken_seal",
+   "kind": "ring",
+   "particle": "minecraft:dragon_breath",
+   "color": "D8A0FF",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    1.15,
+    0.5
+   ],
+   "radius": 0.5,
+   "spin": 0.1,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "pact_ring",
+   "kind": "ring",
+   "particle": "minecraft:enchant",
+   "color": "D8A0FF",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.8,
+    0
+   ],
+   "radius": 1.0,
+   "spin": -0.2,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "fracture_line",
+   "kind": "line",
+   "particle": "minecraft:witch",
+   "color": "D8A0FF",
+   "size": 1.0,
+   "per_second": 7,
+   "from": [
+    0.1,
+    1.5,
+    0.45
+   ],
+   "to": [
+    -0.12,
+    0.35,
+    0.5
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "unbound_floor",
+   "kind": "ground",
+   "particle": "minecraft:reverse_portal",
+   "color": "A04AFF",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.3,
+   "max_per_tick": 2
+  },
+  {
+   "name": "snapped_chain_sparks",
+   "kind": "motes",
+   "particle": "minecraft:electric_spark",
+   "color": "D8A0FF",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    1.0,
+    0.0,
+    0.62,
+    1.5,
+    0.3
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "pages_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:enchant",
+   "color": "A04AFF",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.1,
+    0
+   ],
+   "radius": 0.8,
+   "spin": 0.32,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "shroud_wake",
+   "kind": "trail",
+   "particle": "minecraft:dragon_breath",
+   "color": "A04AFF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.8,
+    0.5
+   ],
+   "radius": 0.8,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "break_the_pact": [
+   {
+    "shape": "SEAL_TRINITY",
+    "color": "D8A0FF",
+    "duration": 34,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:enchant",
+    "count": 70,
+    "spread": 2.4,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "ANTI_MAGIC_SLASH",
+    "color": "A04AFF",
+    "duration": 16,
+    "power": 3.0,
+    "at": "eye",
+    "particle": "minecraft:witch",
+    "count": 30,
+    "spread": 1.2,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "void_step": [
+   {
+    "shape": "SPATIAL_RIFT",
+    "color": "D8A0FF",
+    "duration": 20,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:portal",
+    "count": 60,
+    "spread": 1.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SPATIAL_RIFT",
+    "color": "A04AFF",
+    "duration": 20,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:reverse_portal",
+    "count": 60,
+    "spread": 1.0,
+    "radius": 10.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

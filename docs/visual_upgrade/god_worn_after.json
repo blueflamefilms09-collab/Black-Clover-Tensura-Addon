@@ -1,0 +1,2626 @@
+{
+ "slice": "god_worn",
+ "state": "after the 1.102.0 visual upgrade",
+ "grade": "GOD",
+ "kind": "worn relic (3D worn models of the worn relic library, plus painted armour layer for chest relics)",
+ "score": {
+  "weights": {
+   "mesh": 0.35,
+   "texture": 0.2,
+   "glow": 0.15,
+   "ambient": 0.2,
+   "animation": 0.1
+  },
+  "references": {
+   "mesh": 900.0,
+   "texture": 20480.0,
+   "glow": 3.0,
+   "ambient": 3.0,
+   "animation": 3.0
+  },
+  "formula": "V = sum(weight * count / reference)"
+ },
+ "targets": {
+  "quads": "after >= max(900, 5 x before)",
+  "painted_texels": "after >= 4 x before",
+  "V": "V_after >= 5 x V_before",
+  "lod": "<= 15% of the vertices",
+  "held": "<= 2500 vertices"
+ },
+ "items": {
+  "flammes_founder_cloak": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_flammes_founder_cloak_body",
+    "gw_flammes_founder_cloak_body_2"
+   ],
+   "quads": 2102,
+   "vertices": 8408,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/flammes_founder_cloak.png + flammes_founder_cloak_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 12,
+    "cell": 64
+   },
+   "painted_texels": 49152,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 9776,
+   "ambient_layers": 14,
+   "ambient_layer_names": [
+    "model:gw_flammes_founder_cloak_body_2:orbit",
+    "model:gw_flammes_founder_cloak_body_2:orbit",
+    "model:gw_flammes_founder_cloak_body_2:orbit",
+    "model:gw_flammes_founder_cloak_body_2:orbit",
+    "model:gw_flammes_founder_cloak_body_2:pulse",
+    "fx:starlight(motes)",
+    "fx:gold_dust(motes)",
+    "fx:founders_halo(ring)",
+    "fx:mana_circle(ring)",
+    "fx:hem_gleam(line)",
+    "fx:nameless_circle(ground)",
+    "fx:shoulder_stars(motes)",
+    "fx:orbit_sparks(orbit)",
+    "fx:cape_dust(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 9,
+   "animation_kinds": [
+    "orbit",
+    "pulse",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 192,
+    "vertices": 768,
+    "fraction": 0.0913
+   },
+   "held": {
+    "quads": 488,
+    "vertices": 1952
+   },
+   "V": 2.7308,
+   "V_terms": {
+    "mesh": 2.3356,
+    "texture": 2.4,
+    "glow": 1.3333,
+    "ambient": 4.6667,
+    "animation": 3.0
+   },
+   "name": "Flamme's Founder Cloak",
+   "slot": "BACK",
+   "look": "CLOAK",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "mantle_of_the_overlord": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_mantle_of_the_overlord_body",
+    "gw_mantle_of_the_overlord_body_2"
+   ],
+   "quads": 2202,
+   "vertices": 8808,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/mantle_of_the_overlord.png + mantle_of_the_overlord_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 14,
+    "cell": 64
+   },
+   "painted_texels": 57344,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 9682,
+   "ambient_layers": 11,
+   "ambient_layer_names": [
+    "model:gw_mantle_of_the_overlord_body_2:orbit",
+    "model:gw_mantle_of_the_overlord_body_2:orbit",
+    "fx:courteous_gloom(motes)",
+    "fx:crimson_dust(motes)",
+    "fx:skull_halo(ring)",
+    "fx:domination_circle(ring)",
+    "fx:collar_edge(line)",
+    "fx:overlord_floor(ground)",
+    "fx:shoulder_embers(motes)",
+    "fx:watching_eyes(orbit)",
+    "fx:train_smoke(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 10,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 194,
+    "vertices": 776,
+    "fraction": 0.0881
+   },
+   "held": {
+    "quads": 492,
+    "vertices": 1968
+   },
+   "V": 2.683,
+   "V_terms": {
+    "mesh": 2.4467,
+    "texture": 2.8,
+    "glow": 1.3333,
+    "ambient": 3.6667,
+    "animation": 3.3333
+   },
+   "name": "Mantle of the Overlord",
+   "slot": "BACK",
+   "look": "CLOAK",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "pactbreaker_shroud": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_pactbreaker_shroud_body",
+    "gw_pactbreaker_shroud_body_2"
+   ],
+   "quads": 2104,
+   "vertices": 8416,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/pactbreaker_shroud.png + pactbreaker_shroud_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 11,
+    "cell": 64
+   },
+   "painted_texels": 45056,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 9609,
+   "ambient_layers": 14,
+   "ambient_layer_names": [
+    "model:gw_pactbreaker_shroud_body_2:orbit",
+    "model:gw_pactbreaker_shroud_body_2:orbit",
+    "model:gw_pactbreaker_shroud_body_2:orbit",
+    "model:gw_pactbreaker_shroud_body_2:orbit",
+    "model:gw_pactbreaker_shroud_body_2:orbit",
+    "fx:void_motes(motes)",
+    "fx:torn_pages(motes)",
+    "fx:broken_seal(ring)",
+    "fx:pact_ring(ring)",
+    "fx:fracture_line(line)",
+    "fx:unbound_floor(ground)",
+    "fx:snapped_chain_sparks(motes)",
+    "fx:pages_orbit(orbit)",
+    "fx:shroud_wake(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 20,
+   "animation_kinds": [
+    "orbit",
+    "swing",
+    "wave"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 196,
+    "vertices": 784,
+    "fraction": 0.0932
+   },
+   "held": {
+    "quads": 513,
+    "vertices": 2052
+   },
+   "V": 3.0582,
+   "V_terms": {
+    "mesh": 2.3378,
+    "texture": 2.2,
+    "glow": 1.3333,
+    "ambient": 4.6667,
+    "animation": 6.6667
+   },
+   "name": "Pactbreaker Shroud",
+   "slot": "BACK",
+   "look": "CLOAK",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "shadow_monarchs_mantle": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_shadow_monarchs_mantle_body",
+    "gw_shadow_monarchs_mantle_body_2"
+   ],
+   "quads": 2154,
+   "vertices": 8616,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/shadow_monarchs_mantle.png + shadow_monarchs_mantle_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 7397,
+   "ambient_layers": 14,
+   "ambient_layer_names": [
+    "model:gw_shadow_monarchs_mantle_body_2:orbit",
+    "model:gw_shadow_monarchs_mantle_body_2:orbit",
+    "model:gw_shadow_monarchs_mantle_body_2:orbit",
+    "model:gw_shadow_monarchs_mantle_body_2:orbit",
+    "model:gw_shadow_monarchs_mantle_body_2:orbit",
+    "fx:rising_shadow(motes)",
+    "fx:violet_mist(motes)",
+    "fx:crown_of_flames(ring)",
+    "fx:domain_ring(ring)",
+    "fx:blade_edge(line)",
+    "fx:monarch_shadow(ground)",
+    "fx:shoulder_flames(motes)",
+    "fx:shade_soldiers(orbit)",
+    "fx:shadow_train(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 11,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 196,
+    "vertices": 784,
+    "fraction": 0.091
+   },
+   "held": {
+    "quads": 476,
+    "vertices": 1904
+   },
+   "V": 2.6977,
+   "V_terms": {
+    "mesh": 2.3933,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 4.6667,
+    "animation": 3.6667
+   },
+   "name": "Shadow Monarch's Mantle",
+   "slot": "BACK",
+   "look": "CLOAK",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "shadows_slime_cloak": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_shadows_slime_cloak_body",
+    "gw_shadows_slime_cloak_body_2"
+   ],
+   "quads": 1954,
+   "vertices": 7816,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/shadows_slime_cloak.png + shadows_slime_cloak_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 12682,
+   "ambient_layers": 19,
+   "ambient_layer_names": [
+    "model:gw_shadows_slime_cloak_body:bob",
+    "model:gw_shadows_slime_cloak_body:bob",
+    "model:gw_shadows_slime_cloak_body:bob",
+    "model:gw_shadows_slime_cloak_body:bob",
+    "model:gw_shadows_slime_cloak_body:bob",
+    "model:gw_shadows_slime_cloak_body:pulse",
+    "model:gw_shadows_slime_cloak_body_2:pulse",
+    "model:gw_shadows_slime_cloak_body_2:bob",
+    "model:gw_shadows_slime_cloak_body_2:orbit",
+    "model:gw_shadows_slime_cloak_body_2:orbit",
+    "fx:slime_bubbles(motes)",
+    "fx:drips(motes)",
+    "fx:slime_halo(ring)",
+    "fx:jelly_ring(ring)",
+    "fx:blade_pseudopod(line)",
+    "fx:puddle(ground)",
+    "fx:nucleus_glow(motes)",
+    "fx:blob_companions(orbit)",
+    "fx:goo_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 14,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "pulse",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 196,
+    "vertices": 784,
+    "fraction": 0.1003
+   },
+   "held": {
+    "quads": 524,
+    "vertices": 2096
+   },
+   "V": 3.0532,
+   "V_terms": {
+    "mesh": 2.1711,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 6.3333,
+    "animation": 4.6667
+   },
+   "name": "Shadow's Slime Cloak",
+   "slot": "BACK",
+   "look": "CLOAK",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "silent_winter_mantle": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_silent_winter_mantle_body",
+    "gw_silent_winter_mantle_body_2",
+    "gw_silent_winter_mantle_body_3"
+   ],
+   "quads": 2972,
+   "vertices": 11888,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/silent_winter_mantle.png + silent_winter_mantle_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 10,
+    "cell": 64
+   },
+   "painted_texels": 40960,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 8892,
+   "ambient_layers": 13,
+   "ambient_layer_names": [
+    "model:gw_silent_winter_mantle_body_3:orbit",
+    "model:gw_silent_winter_mantle_body_3:orbit",
+    "model:gw_silent_winter_mantle_body_3:orbit",
+    "model:gw_silent_winter_mantle_body_3:orbit",
+    "fx:snowfall(motes)",
+    "fx:frost_dust(motes)",
+    "fx:ice_crown(ring)",
+    "fx:winter_circle(ring)",
+    "fx:icicle_edge(line)",
+    "fx:hoarfrost(ground)",
+    "fx:shoulder_frost(motes)",
+    "fx:flake_orbit(orbit)",
+    "fx:breath_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 9,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 268,
+    "vertices": 1072,
+    "fraction": 0.0902
+   },
+   "held": {
+    "quads": 526,
+    "vertices": 2104
+   },
+   "V": 2.9224,
+   "V_terms": {
+    "mesh": 3.3022,
+    "texture": 2.0,
+    "glow": 1.3333,
+    "ambient": 4.3333,
+    "animation": 3.0
+   },
+   "name": "Silent Winter Mantle",
+   "slot": "BACK",
+   "look": "MANTLE",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "six_faced_dragons_scale": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_six_faced_dragons_scale_body",
+    "gw_six_faced_dragons_scale_body_2",
+    "gw_six_faced_dragons_scale_body_3"
+   ],
+   "quads": 2768,
+   "vertices": 11072,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/six_faced_dragons_scale.png + six_faced_dragons_scale_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 10,
+    "cell": 64
+   },
+   "painted_texels": 40960,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 10179,
+   "ambient_layers": 13,
+   "ambient_layer_names": [
+    "model:gw_six_faced_dragons_scale_body_3:orbit",
+    "model:gw_six_faced_dragons_scale_body_3:orbit",
+    "model:gw_six_faced_dragons_scale_body_3:orbit",
+    "model:gw_six_faced_dragons_scale_body_3:orbit",
+    "fx:dragon_embers(motes)",
+    "fx:gold_scales(motes)",
+    "fx:six_faces_halo(ring)",
+    "fx:dragon_circle(ring)",
+    "fx:spine_ridge(line)",
+    "fx:heat_haze(ground)",
+    "fx:shoulder_smoulder(motes)",
+    "fx:ember_orbit(orbit)",
+    "fx:fire_wake(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 9,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 324,
+    "vertices": 1296,
+    "fraction": 0.1171
+   },
+   "held": {
+    "quads": 598,
+    "vertices": 2392
+   },
+   "V": 2.8431,
+   "V_terms": {
+    "mesh": 3.0756,
+    "texture": 2.0,
+    "glow": 1.3333,
+    "ambient": 4.3333,
+    "animation": 3.0
+   },
+   "name": "Six-Faced Dragon's Scale",
+   "slot": "BACK",
+   "look": "MANTLE",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "urek_mazinos_chain_mantle": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_urek_mazinos_chain_mantle_body",
+    "gw_urek_mazinos_chain_mantle_body_2",
+    "gw_urek_mazinos_chain_mantle_body_3"
+   ],
+   "quads": 2728,
+   "vertices": 10912,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/urek_mazinos_chain_mantle.png + urek_mazinos_chain_mantle_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 10,
+    "cell": 64
+   },
+   "painted_texels": 40960,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 4780,
+   "ambient_layers": 11,
+   "ambient_layer_names": [
+    "model:gw_urek_mazinos_chain_mantle_body_3:orbit",
+    "model:gw_urek_mazinos_chain_mantle_body_3:orbit",
+    "fx:iron_sparks(motes)",
+    "fx:gold_dust(motes)",
+    "fx:tower_halo(ring)",
+    "fx:shackle_ring(ring)",
+    "fx:chain_curtain(line)",
+    "fx:tower_foundation(ground)",
+    "fx:shoulder_links(motes)",
+    "fx:chain_orbit(orbit)",
+    "fx:drag_sparks(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 15,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 236,
+    "vertices": 944,
+    "fraction": 0.0865
+   },
+   "held": {
+    "quads": 538,
+    "vertices": 2152
+   },
+   "V": 2.8942,
+   "V_terms": {
+    "mesh": 3.0311,
+    "texture": 2.0,
+    "glow": 1.3333,
+    "ambient": 3.6667,
+    "animation": 5.0
+   },
+   "name": "Urek Mazino's Chain Mantle",
+   "slot": "BACK",
+   "look": "MANTLE",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "excaliburs_scabbard_avalon": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_excaliburs_scabbard_avalon_body",
+    "gw_excaliburs_scabbard_avalon_body_2",
+    "gw_excaliburs_scabbard_avalon_body_3"
+   ],
+   "quads": 2704,
+   "vertices": 10816,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/excaliburs_scabbard_avalon.png + excaliburs_scabbard_avalon_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 21,
+    "cell": 64
+   },
+   "painted_texels": 86016,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 16630,
+   "ambient_layers": 31,
+   "ambient_layer_names": [
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:bob",
+    "model:gw_excaliburs_scabbard_avalon_body_3:orbit",
+    "model:gw_excaliburs_scabbard_avalon_body_3:orbit",
+    "model:gw_excaliburs_scabbard_avalon_body_3:pulse",
+    "model:gw_excaliburs_scabbard_avalon_body_3:pulse",
+    "model:gw_excaliburs_scabbard_avalon_body_3:pulse",
+    "model:gw_excaliburs_scabbard_avalon_body_3:pulse",
+    "fx:avalon_lights(motes)",
+    "fx:fairy_dust(motes)",
+    "fx:healing_ring(ring)",
+    "fx:utopia_circle(ring)",
+    "fx:scabbard_edge(line)",
+    "fx:avalon_floor(ground)",
+    "fx:mouth_glow(motes)",
+    "fx:light_orbit(orbit)",
+    "fx:fairy_trail(trail)",
+    "fx:petal_fall(motes)",
+    "fx:spore_blossom(motes)",
+    "fx:avalon_edge_b(line)",
+    "fx:belt_sparkle(ring)",
+    "fx:outer_floor(ground)",
+    "fx:vertical_glory(ring)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 32,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "pulse",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 252,
+    "vertices": 1008,
+    "fraction": 0.0932
+   },
+   "held": {
+    "quads": 556,
+    "vertices": 2224
+   },
+   "V": 5.2249,
+   "V_terms": {
+    "mesh": 3.0044,
+    "texture": 4.2,
+    "glow": 1.3333,
+    "ambient": 10.3333,
+    "animation": 10.6667
+   },
+   "name": "Excalibur's Scabbard Avalon",
+   "slot": "BELT",
+   "look": "BELT",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "silvered_sash_of_reflections": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_silvered_sash_of_reflections_body",
+    "gw_silvered_sash_of_reflections_body_2"
+   ],
+   "quads": 2186,
+   "vertices": 8744,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/silvered_sash_of_reflections.png + silvered_sash_of_reflections_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 11,
+    "cell": 64
+   },
+   "painted_texels": 45056,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 11326,
+   "ambient_layers": 25,
+   "ambient_layer_names": [
+    "model:gw_silvered_sash_of_reflections_body_2:orbit",
+    "model:gw_silvered_sash_of_reflections_body_2:orbit",
+    "model:gw_silvered_sash_of_reflections_body_2:orbit",
+    "model:gw_silvered_sash_of_reflections_body_2:pulse",
+    "model:gw_silvered_sash_of_reflections_body_2:pulse",
+    "model:gw_silvered_sash_of_reflections_body_2:pulse",
+    "model:gw_silvered_sash_of_reflections_body_2:pulse",
+    "model:gw_silvered_sash_of_reflections_body_2:bob",
+    "model:gw_silvered_sash_of_reflections_body_2:bob",
+    "model:gw_silvered_sash_of_reflections_body_2:bob",
+    "model:gw_silvered_sash_of_reflections_body_2:bob",
+    "fx:glass_glints(motes)",
+    "fx:mirror_dust(motes)",
+    "fx:reflected_halo(ring)",
+    "fx:reflection_ring(ring)",
+    "fx:bandolier_line(line)",
+    "fx:mirror_floor(ground)",
+    "fx:tail_shards(motes)",
+    "fx:shard_orbit(orbit)",
+    "fx:silver_trail(trail)",
+    "fx:reflected_stars(motes)",
+    "fx:sash_gleam_b(line)",
+    "fx:mirror_circle(ring)",
+    "fx:silver_drift(motes)",
+    "fx:halo_vertical(ring)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 23,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "pulse",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 204,
+    "vertices": 816,
+    "fraction": 0.0933
+   },
+   "held": {
+    "quads": 478,
+    "vertices": 1912
+   },
+   "V": 3.9234,
+   "V_terms": {
+    "mesh": 2.4289,
+    "texture": 2.2,
+    "glow": 1.3333,
+    "ambient": 8.3333,
+    "animation": 7.6667
+   },
+   "name": "Silvered Sash of Reflections",
+   "slot": "BELT",
+   "look": "BELT",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "berserker_armor_shard": {
+   "pieces": 4,
+   "piece_files": [
+    "gw_berserker_armor_shard_body",
+    "gw_berserker_armor_shard_body_2",
+    "gw_berserker_armor_shard_arm",
+    "gw_berserker_armor_shard_arm"
+   ],
+   "quads": 2110,
+   "vertices": 8440,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/berserker_armor_shard.png + berserker_armor_shard_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 37440,
+   "armour_layer_texels": 576,
+   "glow_map_texels": 11229,
+   "ambient_layers": 11,
+   "ambient_layer_names": [
+    "model:gw_berserker_armor_shard_body:orbit",
+    "model:gw_berserker_armor_shard_body:orbit",
+    "fx:rage_embers(motes)",
+    "fx:blood_dust(motes)",
+    "fx:rage_halo(ring)",
+    "fx:berserk_ring(ring)",
+    "fx:crack_line(line)",
+    "fx:scorch(ground)",
+    "fx:shoulder_flames(motes)",
+    "fx:blood_orbit(orbit)",
+    "fx:fury_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 6,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 226,
+    "vertices": 904,
+    "fraction": 0.1071
+   },
+   "held": {
+    "quads": 526,
+    "vertices": 2104
+   },
+   "V": 2.3195,
+   "V_terms": {
+    "mesh": 2.3444,
+    "texture": 1.8281,
+    "glow": 1.3333,
+    "ambient": 3.6667,
+    "animation": 2.0
+   },
+   "name": "Berserker Armor Shard",
+   "slot": "CHEST",
+   "look": "PLATE",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "orsteds_dragon_god_armor": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_orsteds_dragon_god_armor_body",
+    "gw_orsteds_dragon_god_armor_arm",
+    "gw_orsteds_dragon_god_armor_arm"
+   ],
+   "quads": 2266,
+   "vertices": 9064,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/orsteds_dragon_god_armor.png + orsteds_dragon_god_armor_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 11,
+    "cell": 64
+   },
+   "painted_texels": 45632,
+   "armour_layer_texels": 576,
+   "glow_map_texels": 8882,
+   "ambient_layers": 12,
+   "ambient_layer_names": [
+    "model:gw_orsteds_dragon_god_armor_body:orbit",
+    "model:gw_orsteds_dragon_god_armor_body:orbit",
+    "model:gw_orsteds_dragon_god_armor_body:orbit",
+    "fx:dragon_gloom(motes)",
+    "fx:curse_motes(motes)",
+    "fx:seal_halo(ring)",
+    "fx:hundred_curses(ring)",
+    "fx:crest_line(line)",
+    "fx:dragon_god_floor(ground)",
+    "fx:pauldron_fire(motes)",
+    "fx:curse_orbit(orbit)",
+    "fx:patient_wake(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 7,
+   "animation_kinds": [
+    "orbit",
+    "sway",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 214,
+    "vertices": 856,
+    "fraction": 0.0944
+   },
+   "held": {
+    "quads": 618,
+    "vertices": 2472
+   },
+   "V": 2.5602,
+   "V_terms": {
+    "mesh": 2.5178,
+    "texture": 2.2281,
+    "glow": 1.3333,
+    "ambient": 4.0,
+    "animation": 2.3333
+   },
+   "name": "Orsted's Dragon-God Armor",
+   "slot": "CHEST",
+   "look": "PLATE",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "greaves_of_the_wind_walker": {
+   "pieces": 4,
+   "piece_files": [
+    "gw_greaves_of_the_wind_walker_leg",
+    "gw_greaves_of_the_wind_walker_leg",
+    "gw_greaves_of_the_wind_walker_leg_2",
+    "gw_greaves_of_the_wind_walker_leg_2"
+   ],
+   "quads": 3660,
+   "vertices": 14640,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/greaves_of_the_wind_walker.png + greaves_of_the_wind_walker_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 8888,
+   "ambient_layers": 18,
+   "ambient_layer_names": [
+    "model:gw_greaves_of_the_wind_walker_leg:spin",
+    "model:gw_greaves_of_the_wind_walker_leg:spin",
+    "model:gw_greaves_of_the_wind_walker_leg_2:spin",
+    "model:gw_greaves_of_the_wind_walker_leg_2:spin",
+    "model:gw_greaves_of_the_wind_walker_leg_2:orbit",
+    "model:gw_greaves_of_the_wind_walker_leg_2:spin",
+    "model:gw_greaves_of_the_wind_walker_leg_2:spin",
+    "model:gw_greaves_of_the_wind_walker_leg_2:orbit",
+    "particles:theme_spark",
+    "fx:breeze_motes(motes)",
+    "fx:storm_sparks(motes)",
+    "fx:wind_ring(ring)",
+    "fx:ankle_ring(ring)",
+    "fx:shin_edge(line)",
+    "fx:gale_floor(ground)",
+    "fx:heel_wings(motes)",
+    "fx:breeze_orbit(orbit)",
+    "fx:wind_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 16,
+   "animation_kinds": [
+    "orbit",
+    "spin",
+    "sway",
+    "wave"
+   ],
+   "act_vfx": 8,
+   "acts": 8,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 354,
+    "vertices": 1416,
+    "fraction": 0.0967
+   },
+   "held": {
+    "quads": 518,
+    "vertices": 2072
+   },
+   "V": 3.7167,
+   "V_terms": {
+    "mesh": 4.0667,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 6.0,
+    "animation": 5.3333
+   },
+   "name": "Greaves of the Wind Walker",
+   "slot": "FEET",
+   "look": "GREAVES",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "white_whistle": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_white_whistle_body",
+    "gw_white_whistle_body_2"
+   ],
+   "quads": 1646,
+   "vertices": 6584,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/white_whistle.png + white_whistle_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 7,
+    "cell": 64
+   },
+   "painted_texels": 28672,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 8941,
+   "ambient_layers": 22,
+   "ambient_layer_names": [
+    "model:gw_white_whistle_body_2:pulse",
+    "model:gw_white_whistle_body_2:pulse",
+    "model:gw_white_whistle_body_2:pulse",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:bob",
+    "model:gw_white_whistle_body_2:orbit",
+    "model:gw_white_whistle_body_2:orbit",
+    "fx:breath(motes)",
+    "fx:note_motes(motes)",
+    "fx:sound_halo(ring)",
+    "fx:abyss_ring(ring)",
+    "fx:cord_gleam(line)",
+    "fx:white_floor(ground)",
+    "fx:whistle_glow(motes)",
+    "fx:wave_orbit(orbit)",
+    "fx:echo_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 13,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "pulse"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 145,
+    "vertices": 580,
+    "fraction": 0.0881
+   },
+   "held": {
+    "quads": 517,
+    "vertices": 2068
+   },
+   "V": 3.0201,
+   "V_terms": {
+    "mesh": 1.8289,
+    "texture": 1.4,
+    "glow": 1.3333,
+    "ambient": 7.3333,
+    "animation": 4.3333
+   },
+   "name": "White Whistle",
+   "slot": "NECK",
+   "look": "PENDANT",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "hand_of_vecna": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_hand_of_vecna_rarm",
+    "gw_hand_of_vecna_larm"
+   ],
+   "quads": 1740,
+   "vertices": 6960,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/hand_of_vecna.png + hand_of_vecna_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 12,
+    "cell": 64
+   },
+   "painted_texels": 49152,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 11150,
+   "ambient_layers": 12,
+   "ambient_layer_names": [
+    "model:gw_hand_of_vecna_rarm:orbit",
+    "model:gw_hand_of_vecna_larm:bob",
+    "model:gw_hand_of_vecna_larm:spin",
+    "fx:cold_mist(motes)",
+    "fx:red_motes(motes)",
+    "fx:vecna_circle(ring)",
+    "fx:wish_ring(ring)",
+    "fx:rune_forearm(line)",
+    "fx:withered_floor(ground)",
+    "fx:gold_cuff_glints(motes)",
+    "fx:finger_orbit(orbit)",
+    "fx:grave_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 3,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "spin"
+   ],
+   "act_vfx": 5,
+   "acts": 5,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 135,
+    "vertices": 540,
+    "fraction": 0.0776
+   },
+   "held": {
+    "quads": 503,
+    "vertices": 2012
+   },
+   "V": 2.2567,
+   "V_terms": {
+    "mesh": 1.9333,
+    "texture": 2.4,
+    "glow": 1.3333,
+    "ambient": 4.0,
+    "animation": 1.0
+   },
+   "name": "Hand of Vecna",
+   "slot": "HANDS",
+   "look": "GAUNTLETS",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "aerie_courier_gloves": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_aerie_courier_gloves_arm",
+    "gw_aerie_courier_gloves_arm"
+   ],
+   "quads": 1832,
+   "vertices": 7328,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/aerie_courier_gloves.png + aerie_courier_gloves_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 8,
+    "cell": 64
+   },
+   "painted_texels": 32768,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 10148,
+   "ambient_layers": 13,
+   "ambient_layer_names": [
+    "model:gw_aerie_courier_gloves_arm:spin",
+    "model:gw_aerie_courier_gloves_arm:orbit",
+    "model:gw_aerie_courier_gloves_arm:spin",
+    "model:gw_aerie_courier_gloves_arm:orbit",
+    "fx:wind_wisps(motes)",
+    "fx:sky_dust(motes)",
+    "fx:wrist_ring_r(ring)",
+    "fx:wrist_ring_l(ring)",
+    "fx:wing_edge(line)",
+    "fx:courier_floor(ground)",
+    "fx:feather_down(motes)",
+    "fx:parcel_orbit(orbit)",
+    "fx:gust_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 10,
+   "animation_kinds": [
+    "orbit",
+    "spin",
+    "sway",
+    "wave"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 214,
+    "vertices": 856,
+    "fraction": 0.1168
+   },
+   "held": {
+    "quads": 536,
+    "vertices": 2144
+   },
+   "V": 2.4324,
+   "V_terms": {
+    "mesh": 2.0356,
+    "texture": 1.6,
+    "glow": 1.3333,
+    "ambient": 4.3333,
+    "animation": 3.3333
+   },
+   "name": "Aerie Courier Gloves",
+   "slot": "HANDS",
+   "look": "GLOVES",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "bloodbound_gauntlets": {
+   "pieces": 4,
+   "piece_files": [
+    "gw_bloodbound_gauntlets_arm",
+    "gw_bloodbound_gauntlets_arm",
+    "gw_bloodbound_gauntlets_arm_2",
+    "gw_bloodbound_gauntlets_arm_2"
+   ],
+   "quads": 3408,
+   "vertices": 13632,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/bloodbound_gauntlets.png + bloodbound_gauntlets_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 11,
+    "cell": 64
+   },
+   "painted_texels": 45056,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 10117,
+   "ambient_layers": 11,
+   "ambient_layer_names": [
+    "model:gw_bloodbound_gauntlets_arm_2:orbit",
+    "model:gw_bloodbound_gauntlets_arm_2:orbit",
+    "fx:blood_mist(motes)",
+    "fx:drips(motes)",
+    "fx:fist_ring_r(ring)",
+    "fx:fist_ring_l(ring)",
+    "fx:vein_line(line)",
+    "fx:offering_floor(ground)",
+    "fx:knuckle_sparks(motes)",
+    "fx:blood_orbit(orbit)",
+    "fx:wound_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 10,
+   "animation_kinds": [
+    "orbit",
+    "swing"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 234,
+    "vertices": 936,
+    "fraction": 0.0687
+   },
+   "held": {
+    "quads": 548,
+    "vertices": 2192
+   },
+   "V": 3.032,
+   "V_terms": {
+    "mesh": 3.7867,
+    "texture": 2.2,
+    "glow": 1.3333,
+    "ambient": 3.6667,
+    "animation": 3.3333
+   },
+   "name": "Bloodbound Gauntlets",
+   "slot": "HANDS",
+   "look": "GAUNTLETS",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "incinerator_arm": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_incinerator_arm_rarm",
+    "gw_incinerator_arm_rarm_2",
+    "gw_incinerator_arm_larm"
+   ],
+   "quads": 2642,
+   "vertices": 10568,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/incinerator_arm.png + incinerator_arm_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 10416,
+   "ambient_layers": 12,
+   "ambient_layer_names": [
+    "model:gw_incinerator_arm_rarm:pulse",
+    "model:gw_incinerator_arm_rarm_2:bob",
+    "model:gw_incinerator_arm_rarm_2:spin",
+    "fx:vent_embers(motes)",
+    "fx:heat_haze(motes)",
+    "fx:furnace_ring(ring)",
+    "fx:muzzle_ring(ring)",
+    "fx:barrel_line(line)",
+    "fx:scorched_floor(ground)",
+    "fx:pipe_smoke(motes)",
+    "fx:spark_orbit(orbit)",
+    "fx:exhaust_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme"
+   ],
+   "animation_groups": 3,
+   "animation_kinds": [
+    "bob",
+    "pulse",
+    "spin"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 136,
+    "vertices": 544,
+    "fraction": 0.0515
+   },
+   "held": {
+    "quads": 549,
+    "vertices": 2196
+   },
+   "V": 2.4874,
+   "V_terms": {
+    "mesh": 2.9356,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 4.0,
+    "animation": 1.0
+   },
+   "name": "Incinerator Arm",
+   "slot": "HANDS",
+   "look": "GAUNTLETS",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "eye_of_vecna": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_eye_of_vecna_head",
+    "gw_eye_of_vecna_head_2"
+   ],
+   "quads": 1640,
+   "vertices": 6560,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/eye_of_vecna.png + eye_of_vecna_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 10,
+    "cell": 64
+   },
+   "painted_texels": 40960,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 13006,
+   "ambient_layers": 16,
+   "ambient_layer_names": [
+    "model:gw_eye_of_vecna_head:orbit",
+    "model:gw_eye_of_vecna_head:orbit",
+    "model:gw_eye_of_vecna_head:orbit",
+    "model:gw_eye_of_vecna_head:orbit",
+    "model:gw_eye_of_vecna_head:orbit",
+    "model:gw_eye_of_vecna_head_2:orbit",
+    "model:gw_eye_of_vecna_head_2:pulse",
+    "fx:gold_motes(motes)",
+    "fx:crimson_dust(motes)",
+    "fx:optic_halo(ring)",
+    "fx:eyebite_ring(ring)",
+    "fx:brow_line(line)",
+    "fx:seeing_floor(ground)",
+    "fx:tail_motes(motes)",
+    "fx:eyelet_orbit(orbit)",
+    "fx:gaze_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 10,
+   "animation_kinds": [
+    "orbit",
+    "pulse",
+    "wave"
+   ],
+   "act_vfx": 5,
+   "acts": 5,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 138,
+    "vertices": 552,
+    "fraction": 0.0841
+   },
+   "held": {
+    "quads": 502,
+    "vertices": 2008
+   },
+   "V": 2.6378,
+   "V_terms": {
+    "mesh": 1.8222,
+    "texture": 2.0,
+    "glow": 1.3333,
+    "ambient": 5.3333,
+    "animation": 3.3333
+   },
+   "name": "Eye of Vecna",
+   "slot": "HEAD",
+   "look": "CIRCLET",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "basilica_halo": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_basilica_halo_head",
+    "gw_basilica_halo_head_2"
+   ],
+   "quads": 1748,
+   "vertices": 6992,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/basilica_halo.png + basilica_halo_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 11143,
+   "ambient_layers": 18,
+   "ambient_layer_names": [
+    "model:gw_basilica_halo_head:spin",
+    "model:gw_basilica_halo_head_2:orbit",
+    "model:gw_basilica_halo_head_2:orbit",
+    "model:gw_basilica_halo_head_2:pulse",
+    "model:gw_basilica_halo_head_2:pulse",
+    "model:gw_basilica_halo_head_2:pulse",
+    "model:gw_basilica_halo_head_2:pulse",
+    "model:gw_basilica_halo_head_2:pulse",
+    "model:gw_basilica_halo_head_2:pulse",
+    "fx:falling_light(motes)",
+    "fx:gold_dust(motes)",
+    "fx:halo_ring(ring)",
+    "fx:benediction_circle(ring)",
+    "fx:light_shaft(line)",
+    "fx:basilica_floor(ground)",
+    "fx:temple_wings(motes)",
+    "fx:cherub_orbit(orbit)",
+    "fx:blessed_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 11,
+   "animation_kinds": [
+    "orbit",
+    "pulse",
+    "spin",
+    "sway"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 176,
+    "vertices": 704,
+    "fraction": 0.1007
+   },
+   "held": {
+    "quads": 502,
+    "vertices": 2008
+   },
+   "V": 2.8064,
+   "V_terms": {
+    "mesh": 1.9422,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 6.0,
+    "animation": 3.6667
+   },
+   "name": "Basilica Halo",
+   "slot": "HEAD",
+   "look": "CIRCLET",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "godking_crown": {
+   "pieces": 4,
+   "piece_files": [
+    "gw_godking_crown_head",
+    "gw_godking_crown_head_2",
+    "gw_godking_crown_head_3",
+    "gw_godking_crown_head_4"
+   ],
+   "quads": 3468,
+   "vertices": 13872,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/godking_crown.png + godking_crown_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 11343,
+   "ambient_layers": 14,
+   "ambient_layer_names": [
+    "model:gw_godking_crown_head_3:orbit",
+    "model:gw_godking_crown_head_3:orbit",
+    "model:gw_godking_crown_head_3:orbit",
+    "model:gw_godking_crown_head_3:spin",
+    "particles:theme_star",
+    "fx:emerald_motes(motes)",
+    "fx:jade_dust(motes)",
+    "fx:crown_halo(ring)",
+    "fx:flight_ring(ring)",
+    "fx:spire_line(line)",
+    "fx:godking_floor(ground)",
+    "fx:wing_motes(motes)",
+    "fx:skill_orbit(orbit)",
+    "fx:ascent_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 6,
+   "animation_kinds": [
+    "orbit",
+    "spin",
+    "sway"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 336,
+    "vertices": 1344,
+    "fraction": 0.0969
+   },
+   "held": {
+    "quads": 502,
+    "vertices": 2008
+   },
+   "V": 3.042,
+   "V_terms": {
+    "mesh": 3.8533,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 4.6667,
+    "animation": 2.0
+   },
+   "name": "Godking Crown",
+   "slot": "HEAD",
+   "look": "CROWN",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "limitless_blindfold": {
+   "pieces": 3,
+   "piece_files": [
+    "gw_limitless_blindfold_head",
+    "gw_limitless_blindfold_head_2",
+    "gw_limitless_blindfold_head_3"
+   ],
+   "quads": 3068,
+   "vertices": 12272,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/limitless_blindfold.png + limitless_blindfold_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 9,
+    "cell": 64
+   },
+   "painted_texels": 36864,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 14595,
+   "ambient_layers": 28,
+   "ambient_layer_names": [
+    "model:gw_limitless_blindfold_head:spin",
+    "model:gw_limitless_blindfold_head_2:spin",
+    "model:gw_limitless_blindfold_head_2:spin",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_2:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "model:gw_limitless_blindfold_head_3:orbit",
+    "fx:six_eyes_motes(motes)",
+    "fx:blue_dust(motes)",
+    "fx:infinity_ring(ring)",
+    "fx:infinity_ring_tilt(ring)",
+    "fx:tail_line(line)",
+    "fx:void_floor(ground)",
+    "fx:blue_orb(motes)",
+    "fx:hollow_orbit(orbit)",
+    "fx:barrier_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 22,
+   "animation_kinds": [
+    "orbit",
+    "spin",
+    "wave"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 312,
+    "vertices": 1248,
+    "fraction": 0.1017
+   },
+   "held": {
+    "quads": 500,
+    "vertices": 2000
+   },
+   "V": 4.3531,
+   "V_terms": {
+    "mesh": 3.4089,
+    "texture": 1.8,
+    "glow": 1.3333,
+    "ambient": 9.3333,
+    "animation": 7.3333
+   },
+   "name": "Limitless Blindfold",
+   "slot": "HEAD",
+   "look": "HOOD",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "odins_all_seeing_eye": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_odins_all_seeing_eye_head",
+    "gw_odins_all_seeing_eye_head_2"
+   ],
+   "quads": 2150,
+   "vertices": 8600,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/odins_all_seeing_eye.png + odins_all_seeing_eye_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 12,
+    "cell": 64
+   },
+   "painted_texels": 49152,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 13053,
+   "ambient_layers": 12,
+   "ambient_layer_names": [
+    "model:gw_odins_all_seeing_eye_head_2:orbit",
+    "model:gw_odins_all_seeing_eye_head_2:orbit",
+    "model:gw_odins_all_seeing_eye_head_2:orbit",
+    "fx:raven_feathers(motes)",
+    "fx:rune_motes(motes)",
+    "fx:sight_halo(ring)",
+    "fx:odin_circle(ring)",
+    "fx:spear_line(line)",
+    "fx:god_tomb_floor(ground)",
+    "fx:eye_glints(motes)",
+    "fx:huginn_muninn(orbit)",
+    "fx:known_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 6,
+   "animation_kinds": [
+    "bob",
+    "orbit",
+    "sway"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 184,
+    "vertices": 736,
+    "fraction": 0.0856
+   },
+   "held": {
+    "quads": 480,
+    "vertices": 1920
+   },
+   "V": 2.5161,
+   "V_terms": {
+    "mesh": 2.3889,
+    "texture": 2.4,
+    "glow": 1.3333,
+    "ambient": 4.0,
+    "animation": 2.0
+   },
+   "name": "Odin's All-Seeing Eye",
+   "slot": "HEAD",
+   "look": "CIRCLET",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  },
+  "ras_dawn_crown": {
+   "pieces": 2,
+   "piece_files": [
+    "gw_ras_dawn_crown_head",
+    "gw_ras_dawn_crown_head_2"
+   ],
+   "quads": 2133,
+   "vertices": 8532,
+   "glow_passes": 4,
+   "glow_pass_names": [
+    "emissive_model",
+    "glow_map",
+    "shell_rim",
+    "shimmer"
+   ],
+   "skin": {
+    "texture": "textures/relic_worn/god/ras_dawn_crown.png + ras_dawn_crown_glow.png",
+    "size": [
+     512,
+     512
+    ],
+    "texels_total": 262144,
+    "cells_used": 10,
+    "cell": 64
+   },
+   "painted_texels": 40960,
+   "armour_layer_texels": 0,
+   "glow_map_texels": 13539,
+   "ambient_layers": 21,
+   "ambient_layer_names": [
+    "model:gw_ras_dawn_crown_head:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:pulse",
+    "model:gw_ras_dawn_crown_head_2:orbit",
+    "model:gw_ras_dawn_crown_head_2:orbit",
+    "fx:dawn_motes(motes)",
+    "fx:gold_dust(motes)",
+    "fx:sun_halo(ring)",
+    "fx:noon_ring(ring)",
+    "fx:ray_line(line)",
+    "fx:dawn_floor(ground)",
+    "fx:cobra_sparks(motes)",
+    "fx:sun_orbit(orbit)",
+    "fx:sunrise_trail(trail)"
+   ],
+   "shared_grade_plan": [
+    "plan:motes(5)",
+    "plan:rune_ring",
+    "plan:halo_band",
+    "particles:ambient_theme",
+    "particles:head_halo"
+   ],
+   "animation_groups": 15,
+   "animation_kinds": [
+    "orbit",
+    "pulse",
+    "sway"
+   ],
+   "act_vfx": 2,
+   "acts": 2,
+   "acts_without_visual": [],
+   "swing_trail": false,
+   "lod": {
+    "quads": 206,
+    "vertices": 824,
+    "fraction": 0.0966
+   },
+   "held": {
+    "quads": 505,
+    "vertices": 2020
+   },
+   "V": 3.3295,
+   "V_terms": {
+    "mesh": 2.37,
+    "texture": 2.0,
+    "glow": 1.3333,
+    "ambient": 7.0,
+    "animation": 5.0
+   },
+   "name": "Ra's Dawn Crown",
+   "slot": "HEAD",
+   "look": "CROWN",
+   "grade": "GOD",
+   "kind": "worn relic",
+   "checks": {
+    "quads_5x_and_floor_900": true,
+    "painted_texels_4x": true,
+    "separate_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "every_act_has_its_own_visual": true,
+    "lod_le_15pct": true,
+    "held_le_2500_vertices": true,
+    "ensemble_within_cap": true,
+    "V_5x": true
+   }
+  }
+ },
+ "ratios": {
+  "flammes_founder_cloak": {
+   "quads": 5.36,
+   "painted_texels": 8.0,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 9.0,
+   "V": 6.9
+  },
+  "mantle_of_the_overlord": {
+   "quads": 5.45,
+   "painted_texels": 9.33,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 10.0,
+   "V": 6.7
+  },
+  "pactbreaker_shroud": {
+   "quads": 5.6,
+   "painted_texels": 7.33,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 20.0,
+   "V": 7.85
+  },
+  "shadow_monarchs_mantle": {
+   "quads": 5.59,
+   "painted_texels": 12.0,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 11.0,
+   "V": 7.43
+  },
+  "shadows_slime_cloak": {
+   "quads": 5.75,
+   "painted_texels": 7.2,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 14.0,
+   "V": 8.35
+  },
+  "silent_winter_mantle": {
+   "quads": 5.3,
+   "painted_texels": 5.71,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 9.0,
+   "V": 6.2
+  },
+  "six_faced_dragons_scale": {
+   "quads": 5.71,
+   "painted_texels": 6.67,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 9.0,
+   "V": 6.58
+  },
+  "urek_mazinos_chain_mantle": {
+   "quads": 5.45,
+   "painted_texels": 6.67,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 15.0,
+   "V": 6.6
+  },
+  "excaliburs_scabbard_avalon": {
+   "quads": 5.75,
+   "painted_texels": 12.0,
+   "glow_passes": 1.33,
+   "ambient_layers": 6.2,
+   "animation_groups": 5.33,
+   "V": 5.58
+  },
+  "silvered_sash_of_reflections": {
+   "quads": 5.55,
+   "painted_texels": 7.33,
+   "glow_passes": 1.33,
+   "ambient_layers": 8.33,
+   "animation_groups": 5.75,
+   "V": 5.63
+  },
+  "berserker_armor_shard": {
+   "quads": 5.4,
+   "painted_texels": 8.01,
+   "glow_passes": 1.33,
+   "ambient_layers": 11.0,
+   "animation_groups": 6.0,
+   "V": 5.18
+  },
+  "orsteds_dragon_god_armor": {
+   "quads": 5.42,
+   "painted_texels": 8.01,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 6.95
+  },
+  "greaves_of_the_wind_walker": {
+   "quads": 5.65,
+   "painted_texels": 7.2,
+   "glow_passes": 1.33,
+   "ambient_layers": 18.0,
+   "animation_groups": 8.0,
+   "V": 6.35
+  },
+  "white_whistle": {
+   "quads": 5.47,
+   "painted_texels": 7.0,
+   "glow_passes": 4.0,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 14.58
+  },
+  "hand_of_vecna": {
+   "quads": 5.3,
+   "painted_texels": 16.0,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 7.34
+  },
+  "aerie_courier_gloves": {
+   "quads": 5.45,
+   "painted_texels": 6.4,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 7.36
+  },
+  "bloodbound_gauntlets": {
+   "quads": 5.59,
+   "painted_texels": 11.0,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 7.1
+  },
+  "incinerator_arm": {
+   "quads": 5.33,
+   "painted_texels": 7.2,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 6.33
+  },
+  "eye_of_vecna": {
+   "quads": 5.34,
+   "painted_texels": 5.71,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 10.0,
+   "V": 7.08
+  },
+  "basilica_halo": {
+   "quads": 5.75,
+   "painted_texels": 9.0,
+   "glow_passes": 4.0,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 13.48
+  },
+  "godking_crown": {
+   "quads": 5.56,
+   "painted_texels": 6.0,
+   "glow_passes": 4.0,
+   "ambient_layers": 7.0,
+   "animation_groups": 3.0,
+   "V": 5.5
+  },
+  "limitless_blindfold": {
+   "quads": 5.53,
+   "painted_texels": 9.0,
+   "glow_passes": 1.33,
+   "ambient_layers": null,
+   "animation_groups": 22.0,
+   "V": 9.91
+  },
+  "odins_all_seeing_eye": {
+   "quads": 5.54,
+   "painted_texels": 9.6,
+   "glow_passes": 4.0,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 10.03
+  },
+  "ras_dawn_crown": {
+   "quads": 5.58,
+   "painted_texels": 8.0,
+   "glow_passes": 4.0,
+   "ambient_layers": null,
+   "animation_groups": null,
+   "V": 13.39
+  }
+ },
+ "caps": {
+  "model_vertices": 4800,
+  "ensemble_vertices": 16000,
+  "held_vertices": 2500,
+  "lod_fraction": 0.15,
+  "lod_distance": 12.0,
+  "additive_cutoff": 24.0
+ },
+ "totals": {
+  "before": {
+   "quads": 10396,
+   "painted_texels": 128128,
+   "ambient_layers": 12,
+   "animation_groups": 25,
+   "glow_passes": 62,
+   "V": 10.028
+  },
+  "after": {
+   "quads": 57385,
+   "painted_texels": 1033344,
+   "ambient_layers": 385,
+   "animation_groups": 290,
+   "glow_passes": 96,
+   "V": 72.541
+  },
+  "all_checks_pass": true
+ }
+}

@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.client.relics.vu.VuOverrides;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornCatalog;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornMesh;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornModels;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 
@@ -50,8 +51,15 @@ public final class HandForms {
         if (style == null) return null;
         VuOverrides.Entry upgrade = VuModels.handEntry(def.id());                      // the visual upgrade: the override table of assets/nusmp/visual_upgrade (null: the older catalog)
         List<WornCatalog.Piece> sig = VuModels.handPieces(def.id());
-        if (sig == null) sig = HandModels.catalog().sigFor(def.id());
-        else style = upgradeStyle(xf, style, upgrade);
+        if (sig == null) {
+            sig = HandModels.catalog().sigFor(def.id());
+            if (WornLibrary.upgradeOf(def.id())) {                                        // the God worn upgrade: held as its held form (at most 2500 vertices), whatever it was held as before
+                List<WornCatalog.Piece> held = WornModels.upgrade().held(def.id());
+                if (!held.isEmpty()) sig = held;
+            }
+        } else {
+            style = upgradeStyle(xf, style, upgrade);                                 // the override table of the Charms / Genesis upgrade comes first (WornLibrary.UpgradeSource)
+        }
         boolean signature = !sig.isEmpty();
         List<WornLibrary.Resolved> pieces = new ArrayList<>();
         if (signature) {
