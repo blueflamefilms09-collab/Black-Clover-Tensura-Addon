@@ -448,6 +448,19 @@
   "golem_core_belt": "handitem",
   "wraith_cloak": "handitem",
   "cultist_sigil_ring": "handitem",
-  "tide_pearl_amulet": "handitem"
+  "tide_pearl_amulet": "handitem",
+  "thornmothers_briar_bow": "bow",
+  "broodqueens_stinger": "dagger",
+  "anheteps_sunscourge": "whip",
+  "ignareths_forge_hammer": "hammer",
+  "rimeheart_greatblade": "greatsword",
+  "deepwatch_harpoon": "spear",
+  "sanguine_wardens_cleaver": "cleaver",
+  "valkarins_stormlance": "spear",
+  "orials_starfall_staff": "staff",
+  "chronarchs_pendulum_sabre": "sabre",
+  "reflected_kings_mirrorblade": "longsword",
+  "aurliels_seraph_halberd": "glaive",
+  "nekrathuls_pact_scythe": "scythe"
  }
 }

@@ -1140,6 +1140,66 @@
       "class": "rapier",
       "profile": "rapier",
       "source": "relic"
+    },
+    "anheteps_sunscourge": {
+      "class": "whip",
+      "profile": "whip",
+      "source": "relic"
+    },
+    "aurliels_seraph_halberd": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
+    "broodqueens_stinger": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
+    "chronarchs_pendulum_sabre": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
+    "deepwatch_harpoon": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "relic"
+    },
+    "ignareths_forge_hammer": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
+    "nekrathuls_pact_scythe": {
+      "class": "scythe",
+      "profile": "scythe",
+      "source": "relic"
+    },
+    "orials_starfall_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "reflected_kings_mirrorblade": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
+    "rimeheart_greatblade": {
+      "class": "greatsword",
+      "profile": "greatsword",
+      "source": "relic"
+    },
+    "sanguine_wardens_cleaver": {
+      "class": "cleaver",
+      "profile": "cleaver",
+      "source": "relic"
+    },
+    "valkarins_stormlance": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "relic"
     }
   },
   "excluded": {
@@ -1226,6 +1286,7 @@
     "wisp_lantern": "hand item / charm / book / key: not a weapon",
     "wraith_cloak": "hand item / charm / book / key: not a weapon",
     "written_consent": "hand item / charm / book / key: not a weapon",
-    "zogratis_hourglass": "hand item / charm / book / key: not a weapon"
+    "zogratis_hourglass": "hand item / charm / book / key: not a weapon",
+    "thornmothers_briar_bow": "ranged (bow): Better Combat only handles melee"
   }
 }

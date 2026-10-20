@@ -144,6 +144,10 @@
     "nusmp:golem_core_belt",
     "nusmp:goblin_fang_dagger",
     "nusmp:delvers_longsword",
-    "nusmp:shadowsteel_katana"
+    "nusmp:shadowsteel_katana",
+    {
+      "id": "nusmp:silvered_sash_of_reflections",
+      "required": false
+    }
   ]
 }

@@ -1,0 +1,59 @@
+{
+  "side": "holy",
+  "tier": 3,
+  "variant": 1,
+  "name": "Oriel, the Many-Eyed Archivist",
+  "anime": [
+    "Black Clover: the last archivist of a star-scribe house"
+  ],
+  "dnd": [
+    "Beholder",
+    "Elder Brain",
+    "Death Tyrant"
+  ],
+  "forms": [
+    "Oriel",
+    "Archivist Awake",
+    "Every Eye Open"
+  ],
+  "resistances": 3,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "eye_rays",
+      "cost": 2
+    },
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "magic_drain",
+      "cost": 1
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "searing_light"
+  ],
+  "anti_magic_aura": true,
+  "frightful_aura": false,
+  "absorb_magic": true,
+  "mythic": true,
+  "execution": false,
+  "breath": "lightning",
+  "reflective": false,
+  "look": "beholder",
+  "mega": {
+    "damage": 1.3,
+    "scale": 1.15,
+    "intro": "Every book in the Archive turns its pages at once. Oriel opens, one eye after another, to read you.",
+    "death": "The eyes of the Archivist close, one after another, and the last page is written.",
+    "adds": "archive_scribe",
+    "add_count": 4
+  }
+}

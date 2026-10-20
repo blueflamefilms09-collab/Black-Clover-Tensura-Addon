@@ -1,0 +1,60 @@
+{
+  "side": "holy",
+  "tier": 4,
+  "variant": 0,
+  "name": "Rimeheart Archon",
+  "anime": [
+    "Black Clover: the last high priest of a winter kingdom"
+  ],
+  "dnd": [
+    "Lich",
+    "Ice Devil",
+    "Frost Giant Jarl"
+  ],
+  "forms": [
+    "Rimeheart Archon",
+    "Shattered Archon",
+    "Winter Unbound"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "dragon_breath",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "death_touch",
+      "cost": 2
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "anti_magic_field",
+    "searing_light",
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": true,
+  "mythic": true,
+  "execution": false,
+  "breath": "frost",
+  "reflective": false,
+  "look": "lich_king",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.15,
+    "intro": "The frozen bells ring once. The Archon rises from the choir stalls with a sound like ice splitting.",
+    "death": "The Archon's heart, a lump of blue ice, cracks and runs like water.",
+    "adds": "glacier_knight",
+    "add_count": 3
+  }
+}

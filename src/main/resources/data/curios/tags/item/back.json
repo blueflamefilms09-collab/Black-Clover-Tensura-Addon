@@ -225,6 +225,14 @@
     "nusmp:orc_cleaver",
     "nusmp:golem_maul",
     "nusmp:bone_lance",
-    "nusmp:wisp_staff"
+    "nusmp:wisp_staff",
+    {
+      "id": "nusmp:pactbreaker_shroud",
+      "required": false
+    },
+    {
+      "id": "nusmp:silent_winter_mantle",
+      "required": false
+    }
   ]
 }

@@ -108,6 +108,7 @@ public final class RelicLoot {
         List<RelicDef> pool = new ArrayList<>();
         for (RelicDef d : Relics.all()) {
             if (d.slot() == RelicSlot.CONSUMABLE || d.isPairLeft()) continue;
+            if (com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketRelics.exclusive(d.id())) continue;     // 1.99.0: the relics of the exclusive tombs drop in their tombs and nowhere else
             if (d.isUnique() && live.contains(d.id())) continue;                          // 1.68.0: a relic the God of Order's list lets exist many times is never 'alive'
             if (d.isUnique() && d.hasPair() && live.contains(d.pairPartnerId())) continue;
             if (d.grade().ordinal() < min.ordinal() || d.grade().ordinal() > max.ordinal()) continue;

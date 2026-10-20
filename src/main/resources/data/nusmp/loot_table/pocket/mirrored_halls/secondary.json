@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "nusmp:in_pocket",
+          "pocket": "mirrored_halls",
+          "stage": "treasury"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "nusmp:magic_tool_sword",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "nusmp:magic_tool_bow",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "nusmp:magic_tool_spear",
+          "weight": 3
+        }
+      ]
+    }
+  ]
+}

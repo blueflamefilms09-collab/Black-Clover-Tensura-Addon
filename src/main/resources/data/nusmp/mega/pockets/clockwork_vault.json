@@ -1,0 +1,177 @@
+{
+  "id": "clockwork_vault",
+  "name": "Clockwork Vault of Hours",
+  "series": "Black Clover: Dungeons (time artificers)",
+  "lore": "Artificers who tried to build a vault that no thief could outwait. They succeeded: the Vault still ticks, and it will wait for you, and wait, and wait.",
+  "accent": "#e0a040",
+  "sky": "#2a2418",
+  "biome": {
+    "sky": "#342c1e",
+    "fog": "#2a2418",
+    "water": "#b08030",
+    "water_fog": "#14100a",
+    "particle": "minecraft:electric_spark",
+    "particle_chance": 0.01,
+    "ambient": "minecraft:ambient.nether_wastes.loop",
+    "mood": "minecraft:ambient.cave",
+    "additions": "minecraft:ambient.nether_wastes.additions",
+    "music": "minecraft:music.overworld.dripstone_caves",
+    "weather": "clear",
+    "soft_ambient": "nusmp:pocket.clockwork_vault.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 2,
+    "negated": 1,
+    "rivers": 0,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:waxed_cut_copper",
+    "floor": "minecraft:polished_andesite",
+    "ceiling": "minecraft:waxed_cut_copper",
+    "pillar": "minecraft:waxed_chiseled_copper",
+    "accent": "minecraft:raw_gold_block",
+    "light": "minecraft:ochre_froglight",
+    "glass": "minecraft:orange_stained_glass",
+    "liquid": "minecraft:water"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 20,
+    "cycles": 0.45,
+    "boss_half": 10
+  },
+  "traps": [
+    "time",
+    "lightning",
+    "earth"
+  ],
+  "mobs": [
+    {
+      "id": "gear_sentinel",
+      "name": "Gear Sentinel",
+      "base": "foundry:bellmetal_choir_golem",
+      "fallback": "minecraft:iron_golem",
+      "habitat": "ground",
+      "role": "tank",
+      "hp": 2.0,
+      "damage": 1.1,
+      "armor": 4,
+      "speed": 0.8,
+      "scale": 1.2,
+      "knockback": 0.6,
+      "glow": "#e0a040",
+      "aura": {
+        "particle": "minecraft:electric_spark",
+        "color": "#ffd070"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    },
+    {
+      "id": "brass_lancer",
+      "name": "Brass Lancer",
+      "base": "foundry:dawnbreak_lancer_cavalry",
+      "fallback": "minecraft:pillager",
+      "habitat": "ground",
+      "role": "skirmisher",
+      "hp": 1.3,
+      "damage": 1.4,
+      "armor": 2,
+      "speed": 1.25,
+      "scale": 1.1,
+      "knockback": 0.2,
+      "glow": "#ffc060",
+      "aura": {
+        "particle": "minecraft:small_flame",
+        "color": "#ffc060"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "tick_artificer",
+      "name": "Tick Artificer",
+      "base": "foundry:rune_smith_gnome_tinkerer",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.3,
+      "armor": 0,
+      "speed": 1.0,
+      "scale": 1.0,
+      "knockback": 0.0,
+      "glow": "#ffe0a0",
+      "aura": {
+        "particle": "minecraft:reverse_portal",
+        "color": "#ffe0a0"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "pendulum_gargoyle",
+      "name": "Pendulum Gargoyle",
+      "base": "foundry:gargoyle_spire_sentinel",
+      "fallback": "minecraft:vex",
+      "habitat": "air",
+      "role": "brute",
+      "hp": 1.3,
+      "damage": 1.2,
+      "armor": 3,
+      "speed": 1.05,
+      "scale": 1.15,
+      "knockback": 0.3,
+      "glow": "#b08030",
+      "aura": {
+        "particle": "minecraft:electric_spark",
+        "color": "#b08030"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    }
+  ],
+  "boss": "veyl_chronarch",
+  "theme": "gravity",
+  "seal": {
+    "magic": [
+      "TIME",
+      "SEALING",
+      "GRAVITY",
+      "CREATION",
+      "KEY"
+    ],
+    "label": "Time",
+    "force": 2600,
+    "sigil": "Gear Sigil"
+  },
+  "relics": {
+    "boss": [
+      "chronarchs_pendulum_sabre"
+    ],
+    "treasury": [
+      "vaultmakers_pocketwatch"
+    ],
+    "primary": "vaultmakers_pocketwatch"
+  },
+  "resonance": [
+    "TIME",
+    "SEALING",
+    "GRAVITY",
+    "KEY"
+  ],
+  "collapse_seconds": 180,
+  "weight": 6,
+  "min_depth": 20,
+  "floor_min": 340
+}

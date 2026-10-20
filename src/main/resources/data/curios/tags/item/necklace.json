@@ -258,6 +258,14 @@
       "required": false
     },
     "nusmp:lich_dust_pendant",
-    "nusmp:tide_pearl_amulet"
+    "nusmp:tide_pearl_amulet",
+    {
+      "id": "nusmp:hivemind_carapace_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:sun_eaters_locket",
+      "required": false
+    }
   ]
 }

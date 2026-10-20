@@ -11,6 +11,10 @@ public final class RiftConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, POCKETS, WAYPOINT;
     public static final ModConfigSpec.DoubleValue SHORTCUT_CHANCE, POCKET_CHANCE, BOSS_SHARE;
+    /** 1.99.0 (the exclusive tombs): the mega-rare switches, the one-in-N, the pity, the depth and luck weights, the lifetimes, the cap, the build speed. */
+    public static final ModConfigSpec.BooleanValue MEGA_ENABLED, MEGA_BROADCAST, KEEP_ITEMS, TRAPS_ON, GRAVITY_ON;
+    public static final ModConfigSpec.DoubleValue MEGA_ONE_IN, DEPTH_BOOST, LUCK_STEP;
+    public static final ModConfigSpec.IntValue PITY_START, PITY_HARD, MEGA_SECONDS, EXCLUSIVE_MINUTES, EXCLUSIVE_MAX, BUILD_PER_TICK;
     public static final ModConfigSpec.IntValue CHECK_SECONDS, RIFT_SECONDS, JUMP_MIN, JUMP_MAX, MAX_NEAR, POCKET_MINUTES, CRYSTAL_COOLDOWN, GATE_COOLDOWN, PORTAL_SECONDS;
 
     static {
@@ -32,6 +36,23 @@ public final class RiftConfig {
         CRYSTAL_COOLDOWN = b.comment("Seconds between two uses of the Return Crystal.").defineInRange("crystalCooldown", 300, 10, 7200);
         GATE_COOLDOWN = b.comment("Seconds between two uses of the Gate Key.").defineInRange("gateKeyCooldown", 600, 10, 7200);
         PORTAL_SECONDS = b.comment("Seconds a Return Portal stays open on Floor 0.").defineInRange("portalSeconds", 90, 10, 600);
+        b.push("mega");
+        MEGA_ENABLED = b.comment("Mega-rare rifts: a very rare rift leads to an EXCLUSIVE pocket dungeon (own biome, own monsters, a mega-boss, relics that drop nowhere else). false = none open on their own (admins can still make them).")
+                .define("enabled", true);
+        MEGA_ONE_IN = b.comment("On average one rift in this many is mega-rare (at floor 1, Luck 0, before the pity). The least is 20.").defineInRange("oneIn", 250.0, 20.0, 100000.0);
+        PITY_START = b.comment("A player's pity counts the rifts that opened near them since their last mega-rare one; past this many the chance climbs.").defineInRange("pityStart", 150, 0, 100000);
+        PITY_HARD = b.comment("At this many rifts without a mega-rare one the next is certain.").defineInRange("pityHard", 600, 1, 100000);
+        DEPTH_BOOST = b.comment("Extra multiple of the chance at floor 1000 (1.0 = twice as likely; 0 = depth does not matter).").defineInRange("depthBoost", 1.0, 0.0, 10.0);
+        LUCK_STEP = b.comment("Change of the chance per point of the Luck attribute (never below half or above three times).").defineInRange("luckStep", 0.08, 0.0, 0.5);
+        MEGA_SECONDS = b.comment("Seconds an opened mega-rare rift stays open.").defineInRange("riftSeconds", 600, 60, 7200);
+        EXCLUSIVE_MINUTES = b.comment("Minutes before an exclusive tomb collapses by itself and throws everyone inside back where they came in.").defineInRange("tombMinutes", 25, 5, 240);
+        EXCLUSIVE_MAX = b.comment("Exclusive tombs that may stand at once on the server (each is a region of about 170 x 170 blocks that is built when someone enters and cleared when it collapses).").defineInRange("maxTombs", 4, 1, 32);
+        BUILD_PER_TICK = b.comment("Blocks of a tomb the builder places per tick while it forms (lower = gentler on the server, slower to form).").defineInRange("buildPerTick", 2500, 200, 50000);
+        MEGA_BROADCAST = b.comment("Announce to the whole server when a mega-rare rift opens (the kingdoms race for the tomb).").define("broadcast", true);
+        KEEP_ITEMS = b.comment("A delver who dies inside a tomb keeps their items (they are given back when they return); the tomb is cleared whatever happens, so nothing they dropped could be fetched.").define("keepItemsOnDeath", true);
+        TRAPS_ON = b.comment("The elemental traps of the tombs fire on contact. false = the tiles are only floor.").define("traps", true);
+        GRAVITY_ON = b.comment("The gravity zones of the tombs (ceiling walkers, weightless rooms). false = normal gravity everywhere.").define("gravityZones", true);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }

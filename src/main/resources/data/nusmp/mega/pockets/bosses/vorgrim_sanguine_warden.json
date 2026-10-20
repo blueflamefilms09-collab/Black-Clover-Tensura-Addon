@@ -1,0 +1,59 @@
+{
+  "side": "evil",
+  "tier": 3,
+  "variant": 0,
+  "name": "Vorgrim, the Sanguine Warden",
+  "anime": [
+    "Black Clover: the warden of a blood cult's arena"
+  ],
+  "dnd": [
+    "Vampire Lord",
+    "Strahd",
+    "Blood Hunter"
+  ],
+  "forms": [
+    "Vorgrim",
+    "Warden Unleashed",
+    "Crimson Sovereign"
+  ],
+  "resistances": 3,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "vampiric_bite",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    },
+    {
+      "id": "frightful_presence",
+      "cost": 2
+    },
+    {
+      "id": "life_drain",
+      "cost": 2
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": true,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false,
+  "breath": "fire",
+  "reflective": false,
+  "look": "strahd",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.1,
+    "intro": "The red rivers slow on the ceiling. Vorgrim steps out of the shadow behind the dais, already smiling.",
+    "death": "Vorgrim laughs once, wetly, and the arena is quiet.",
+    "adds": "carrion_bat",
+    "add_count": 5
+  }
+}

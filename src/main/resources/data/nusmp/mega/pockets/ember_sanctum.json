@@ -1,0 +1,174 @@
+{
+  "id": "ember_sanctum",
+  "name": "Sanctum of the Ashen Forge",
+  "series": "Black Clover: Dungeons (flame smiths)",
+  "lore": "A smith-kingdom that fed its furnaces with its own sun-stone, buried with its king still at the anvil. The air tastes of cold iron and old coals.",
+  "accent": "#ff6a1a",
+  "sky": "#4a1208",
+  "biome": {
+    "sky": "#5a1a0a",
+    "fog": "#3a1208",
+    "water": "#d84a14",
+    "water_fog": "#4a1408",
+    "particle": "minecraft:ash",
+    "particle_chance": 0.04,
+    "ambient": "minecraft:ambient.basalt_deltas.loop",
+    "mood": "minecraft:ambient.basalt_deltas.mood",
+    "additions": "minecraft:ambient.basalt_deltas.additions",
+    "music": "minecraft:music.nether.basalt_deltas",
+    "weather": "ash",
+    "soft_ambient": "nusmp:pocket.ember_sanctum.ambient",
+    "soft_crackle": "nusmp:rift.crackle"
+  },
+  "gravity": {
+    "inverted": 0,
+    "negated": 1,
+    "rivers": 2,
+    "base": 1.0
+  },
+  "palette": {
+    "wall": "minecraft:polished_blackstone_bricks",
+    "floor": "minecraft:blackstone",
+    "ceiling": "minecraft:chiseled_polished_blackstone",
+    "pillar": "minecraft:gilded_blackstone",
+    "accent": "minecraft:red_nether_bricks",
+    "light": "minecraft:shroomlight",
+    "glass": "minecraft:red_stained_glass",
+    "liquid": "minecraft:lava"
+  },
+  "layout": {
+    "grid": 7,
+    "rooms": 18,
+    "cycles": 0.35,
+    "boss_half": 10
+  },
+  "traps": [
+    "fire",
+    "earth"
+  ],
+  "mobs": [
+    {
+      "id": "slag_brute",
+      "name": "Slag Brute",
+      "base": "foundry:flame_brigade_cadet",
+      "fallback": "minecraft:zombie",
+      "habitat": "ground",
+      "role": "brute",
+      "hp": 1.5,
+      "damage": 1.2,
+      "armor": 2,
+      "speed": 0.95,
+      "scale": 1.1,
+      "knockback": 0.3,
+      "glow": "#ff7a2a",
+      "aura": {
+        "particle": "minecraft:flame",
+        "color": "#ff6a1a"
+      },
+      "weight": 5,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    },
+    {
+      "id": "anvil_warden",
+      "name": "Anvil Warden",
+      "base": "foundry:hearthstone_salamander_smith",
+      "fallback": "minecraft:vindicator",
+      "habitat": "ground",
+      "role": "tank",
+      "hp": 2.2,
+      "damage": 1.0,
+      "armor": 4,
+      "speed": 0.85,
+      "scale": 1.2,
+      "knockback": 0.6,
+      "glow": "#ffb040",
+      "aura": {
+        "particle": "minecraft:lava",
+        "color": "#ff8a30"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 2,
+      "elite": false
+    },
+    {
+      "id": "cinder_adept",
+      "name": "Cinder Adept",
+      "base": "foundry:ember_choir_pyromancer",
+      "fallback": "minecraft:witch",
+      "habitat": "ground",
+      "role": "caster",
+      "hp": 1.0,
+      "damage": 1.4,
+      "armor": 0,
+      "speed": 1.0,
+      "scale": 1.0,
+      "knockback": 0.0,
+      "glow": "#ff5a1a",
+      "aura": {
+        "particle": "minecraft:small_flame",
+        "color": "#ff5a1a"
+      },
+      "weight": 3,
+      "group_min": 1,
+      "group_max": 3,
+      "elite": false
+    },
+    {
+      "id": "emberwing",
+      "name": "Emberwing",
+      "base": "foundry:ember_bat_flameling_swarm_king",
+      "fallback": "minecraft:blaze",
+      "habitat": "air",
+      "role": "skirmisher",
+      "hp": 0.9,
+      "damage": 1.1,
+      "armor": 0,
+      "speed": 1.2,
+      "scale": 1.0,
+      "knockback": 0.0,
+      "glow": "#ff9a30",
+      "aura": {
+        "particle": "minecraft:flame",
+        "color": "#ffa030"
+      },
+      "weight": 4,
+      "group_min": 2,
+      "group_max": 4,
+      "elite": false
+    }
+  ],
+  "boss": "ignareth_last_smith_king",
+  "theme": "dwarven_forgehold",
+  "seal": {
+    "magic": [
+      "FLAME",
+      "MAGMA",
+      "EXPLOSION"
+    ],
+    "label": "Flame",
+    "force": 2400,
+    "sigil": "Ember Sigil"
+  },
+  "relics": {
+    "boss": [
+      "ignareths_forge_hammer"
+    ],
+    "treasury": [
+      "ashen_forgeheart"
+    ],
+    "primary": "ashen_forgeheart"
+  },
+  "resonance": [
+    "FLAME",
+    "MAGMA",
+    "EXPLOSION",
+    "ASH"
+  ],
+  "collapse_seconds": 150,
+  "weight": 10,
+  "min_depth": 0,
+  "floor_min": 120
+}

@@ -1,0 +1,59 @@
+{
+  "side": "holy",
+  "tier": 3,
+  "variant": 1,
+  "name": "Thornmother Yselde",
+  "anime": [
+    "Black Clover: a grove-mother of a buried elven house"
+  ],
+  "dnd": [
+    "Treant",
+    "Dryad Queen",
+    "Hezrou"
+  ],
+  "forms": [
+    "Thornmother",
+    "Rootbound Matriarch",
+    "Blighted Bloom"
+  ],
+  "resistances": 3,
+  "legendary_points": 3,
+  "legendary_actions": [
+    {
+      "id": "life_drain",
+      "cost": 1
+    },
+    {
+      "id": "vampiric_bite",
+      "cost": 2
+    },
+    {
+      "id": "mind_blast",
+      "cost": 2
+    },
+    {
+      "id": "cantrip",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "necrotic_mist",
+    "tremor"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": false,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false,
+  "breath": "poison",
+  "reflective": false,
+  "look": "hezrou",
+  "mega": {
+    "damage": 1.3,
+    "scale": 1.1,
+    "intro": "The roots of the reliquary draw tight. A voice like creaking timber says: you may take nothing.",
+    "death": "The Thornmother's leaves fall, one by one, and do not grow back.",
+    "adds": "thorn_stalker",
+    "add_count": 4
+  }
+}

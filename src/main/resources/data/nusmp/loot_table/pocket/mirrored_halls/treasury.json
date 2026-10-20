@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "nusmp:in_pocket",
+          "pocket": "mirrored_halls",
+          "stage": "treasury"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "nusmp:pocket_relic",
+              "relic": "silvered_sash_of_reflections",
+              "pocket": "mirrored_halls"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "tensura:high_quality_magic_crystal",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 3,
+                    "max": 5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

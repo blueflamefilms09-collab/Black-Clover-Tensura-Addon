@@ -1,0 +1,60 @@
+{
+  "side": "evil",
+  "tier": 4,
+  "variant": 0,
+  "name": "Veyl, the Chronarch",
+  "anime": [
+    "Black Clover: the vault-keeper automaton of a time-artificer house"
+  ],
+  "dnd": [
+    "Tarrasque",
+    "Clockwork Colossus",
+    "Modron Primus"
+  ],
+  "forms": [
+    "Veyl",
+    "Chronarch Wound Tight",
+    "Every Hour at Once"
+  ],
+  "resistances": 4,
+  "legendary_points": 4,
+  "legendary_actions": [
+    {
+      "id": "tail_sweep",
+      "cost": 1
+    },
+    {
+      "id": "gravity_crush",
+      "cost": 2
+    },
+    {
+      "id": "counterspell",
+      "cost": 1
+    },
+    {
+      "id": "blink",
+      "cost": 1
+    }
+  ],
+  "lair_actions": [
+    "tremor",
+    "falling_stars",
+    "anti_magic_field"
+  ],
+  "anti_magic_aura": false,
+  "frightful_aura": false,
+  "absorb_magic": false,
+  "mythic": true,
+  "execution": false,
+  "breath": "lightning",
+  "reflective": true,
+  "look": "tarrasque",
+  "mega": {
+    "damage": 1.4,
+    "scale": 1.2,
+    "intro": "Every clock in the Vault strikes the same second. The Chronarch unwinds from the centre of the hall.",
+    "death": "The Chronarch winds down, and for one breath every clock in the Vault shows the same, true hour.",
+    "adds": "brass_lancer",
+    "add_count": 3
+  }
+}

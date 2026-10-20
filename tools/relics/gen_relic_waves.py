@@ -29,7 +29,8 @@ BATCHES = [(31, "relic_rows_rezero", "Re:Zero"), (32, "relic_rows_abyss", "Made 
            (34, "relic_rows_jjk", "Jujutsu Kaisen"), (35, "relic_rows_fate", "the Fate series"), (36, "relic_rows_rift", "the dimensional rifts and the waypoint"), (37, "relic_rows_overlord", "Overlord"), (38, "relic_rows_frieren", "Frieren"),
            (39, "relic_rows_meshi", "Delicious in Dungeon"), (40, "relic_rows_solo", "Solo Leveling"), (41, "relic_rows_mushoku", "Mushoku Tensei"),
            (42, "relic_rows_konosuba", "KonoSuba"), (43, "relic_rows_eminence", "The Eminence in Shadow"), (44, "relic_rows_tower", "Tower of God"), (45, "relic_rows_fmaberserk", "Fullmetal Alchemist and Berserk"),
-           (46, "relic_rows_sao", "Sword Art Online and Log Horizon")]
+           (46, "relic_rows_sao", "Sword Art Online and Log Horizon"),
+           (79, "relic_rows_pockets", "the exclusive pocket tombs")]
 
 
 def all_rows():
