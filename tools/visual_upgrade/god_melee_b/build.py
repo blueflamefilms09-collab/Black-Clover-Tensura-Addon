@@ -27,7 +27,7 @@ GOD_WELDED_CAP = 2500              # the brief's God cap, read as WELDED vertice
 def build(item_id, verbose=True):
     it = ITEMS[item_id]
     place, grip = lib.old_header(item_id)
-    cap = lib.run_old_builder(item_id, it["geometry"])
+    cap = lib.run_old_builder(item_id, it["geometry"], size=it.get("atlas", lib.ATLAS_SIZE))
     m, atlas = cap["m"], cap["atlas"]
     g2 = np.zeros_like(atlas.glow)
     it["paint"](m, atlas, g2)

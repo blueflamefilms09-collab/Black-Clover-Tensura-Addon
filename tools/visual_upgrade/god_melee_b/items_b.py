@@ -209,5 +209,5 @@ ITEMS_B = [
     dict(id="chronarchs_pendulum_sabre", geometry=geo_chronarch, paint=paint_chronarch, spec=SPEC_CHRONARCH),
     dict(id="reflected_kings_mirrorblade", geometry=geo_mirror, paint=paint_mirror, spec=SPEC_MIRROR),
     dict(id="aurliels_seraph_halberd", geometry=geo_aurliel, paint=paint_aurliel, spec=SPEC_AURLIEL),
-    dict(id="paradox", geometry=geo_paradox, paint=paint_paradox, spec=SPEC_PARADOX),
+    dict(id="paradox", geometry=geo_paradox, paint=paint_paradox, spec=SPEC_PARADOX, atlas=1536),        # its old skin was already 89% painted at 512 px: a 1536 skin gives >= 4x the painted texels
 ]

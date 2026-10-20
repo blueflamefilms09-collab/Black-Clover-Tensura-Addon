@@ -164,17 +164,20 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         // 1.62.0: a hero weapon in a curse form (its stack says look=curse) is drawn from its <id>_curse mesh and skins; without that mesh it keeps the base look
         if (stack.getItem() instanceof com.newuniverse.nusmp.heroweapon.HeroWeaponItem && "curse".equals(com.newuniverse.nusmp.heroweapon.HeroComponents.look(stack)) && mesh(id + "_curse") != null)
             return id + "_curse";
-        return id;
+        return GodMeleeBRender.meshFor(id);                                        // 1.102.0: the nine upgraded God melee weapons draw their up/<id> mesh while visual.upgrade is on (the old mesh is the fallback)
     }
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+        if (ctx == ItemDisplayContext.GUI && GodMeleeBRender.gui(id, pose, buffers, light, overlay)) return;                // 1.102.0: visual.guiModel (off by default): the upgraded model in the slot
         // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
                 : ItemStateVariants.resolve(stack, meshId(stack, id), ctx, m -> mesh(m) != null);
         Mesh mesh = state == null ? null : mesh(state.meshId());
+        int upTier = mesh == null ? -1 : GodMeleeBRender.tier(state.meshId(), pose);                                         // 1.102.0: the level of detail of an upgraded weapon (-1 = not one)
+        if (upTier >= com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_LOD) mesh = GodMeleeBRender.lod(mesh, state.meshId());
         if (mesh == null) {                                                        // the inventory (or a missing mesh): the old icon
             BakedModel icon = resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
             pose.pushPose();
@@ -218,8 +221,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 vc.addVertex(q.x, q.y, q.z);
             }
         }
-        if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty()) {
-            float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f);
+        if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && upTier < com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_FAR) {      // 1.102.0: no additive pass beyond 24 blocks for an upgraded weapon
+            float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f) * GodMeleeBRender.flicker(upTier, state.meshId(), time);
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
             emit(p, buffers.getBuffer(RenderType.eyes(mesh.glowTex)), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
@@ -237,13 +240,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
             emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
+        if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
         pose.popPose();
     }
 
     /** 1.99.0 (performance pass): render-thread scratch vectors for {@link #emit} and the void pass. */
     private static final Vector3f SCRATCH_POS = new Vector3f(), SCRATCH_NORMAL = new Vector3f();
 
-    private static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int argb, int light, int overlay) {
+    static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int argb, int light, int overlay) {      // 1.102.0: package-private (client/GodMeleeBRender draws its extra passes with it)
         Matrix4f m = p.pose();
         Matrix3f nm = p.normal();
         int a = argb >>> 24, r = argb >> 16 & 255, g = argb >> 8 & 255, b = argb & 255;
@@ -402,7 +406,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
      */
     private static net.minecraft.resources.ResourceLocation skin(String id, String suffix) {
         net.minecraft.resources.ResourceLocation own = DemonSlayerRenderer.rl("textures/entity/weapon/" + id + suffix + ".png");
-        String base = id.replaceAll("_(pull[123]|charged|spent|genesis|5leaf)$", "");
+        String base = id.replaceAll("_(pull[123]|charged|spent|genesis|5leaf|lod|orbit)$", "");       // 1.102.0: + lod, orbit (the level-of-detail mesh and the orbiting piece of an upgraded weapon share its skins)
         if (base.equals(id)) return own;
         try {
             if (Minecraft.getInstance().getResourceManager().getResource(own).isPresent()) return own;

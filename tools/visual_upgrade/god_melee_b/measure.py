@@ -164,7 +164,7 @@ def main(mode):
     bmap = {r["item"]: r for r in base["items"]}
     rows, table = [], []
     for i in ITEMS:
-        a = measure(i, i + "_up", True)
+        a = measure(i, "up/" + i, True)
         ratios, v = score(bmap[i], a, WEIGHTS)
         _r2, v2 = score(bmap[i], a, WEIGHTS_BRIEF)
         a["ratios"] = ratios
