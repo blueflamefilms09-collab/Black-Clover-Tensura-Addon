@@ -150,6 +150,29 @@ class ArmourPolicyTest {
     }
 
     @Test
+    void aBrokenTableIsReportedAndAnEmptyOneEquipsNothing() {
+        String bad = "{\"magics\":{"
+                + "\"A\":{\"kind\":\"SOMETIMES\",\"canon\":\"x\"},"
+                + "\"B\":{\"kind\":\"NONE\",\"armour_pages\":{\"p\":0},\"canon\":\"x\"},"
+                + "\"C\":{\"kind\":\"TOGGLE\",\"canon\":\"x\"},"
+                + "\"D\":{\"kind\":\"TOGGLE\",\"name\":\"D\",\"aura\":\"X\",\"armour_pages\":{\"p\":0},\"canon\":\"\"},"
+                + "\"E\":{\"kind\":\"TOGGLE\",\"name\":\"E\",\"aura\":\"X\",\"armour_pages\":{\"p\":300},\"canon\":\"x\"}}}";
+        ArmourPolicy p = ArmourPolicy.parse(bad);
+        String all = String.join(" | ", p.problems());
+        assertTrue(all.contains("A: unknown kind"), all);
+        assertTrue(all.contains("B: a NONE magic lists armour"), all);
+        assertTrue(all.contains("C: TOGGLE without an armour page"), all);
+        assertTrue(all.contains("D: no canon justification"), all);
+        assertTrue(all.contains("E: style 300"), all);
+        assertEquals(ArmourPolicy.Instruction.NONE, p.forCast("B", "p"), "a NONE magic never answers an instruction, whatever its row says");
+        ArmourPolicy none = ArmourPolicy.parse("{}");
+        assertEquals(0, none.entries().size());
+        assertEquals(ArmourPolicy.Instruction.NONE, none.forCast("FLAME", "flame_armour"), "an empty table equips nothing");
+        assertEquals(ArmourPolicy.Kind.NONE, none.kind("FLAME"));
+        assertFalse(none.armoured("FLAME"));
+    }
+
+    @Test
     void theArmourPagesOfASingleMagicNeverOverlapAndStylesFitTheAuraPayload() throws IOException {
         for (ArmourPolicy.Entry e : policy().entries().values()) {
             for (String id : e.armourPages().keySet()) assertFalse(e.formPages().contains(id), e.magic() + " " + id);

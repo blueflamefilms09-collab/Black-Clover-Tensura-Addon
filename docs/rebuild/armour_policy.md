@@ -242,7 +242,7 @@ a recollection it stays general rather than naming a character.
 ## 8. What could not be verified
 
 * Nothing was run in a game. Gradle is not available offline: the changed files were type-checked against the API stubs (0 real errors, the negative control fails as it should) and the
-  pure rules run as JUnit in the shim (`ArmourPolicyTest`: 18 tests). `MagicEnumAuditTest` and the other tests that need game classes cannot run in the shim.
+  pure rules run as JUnit in the shim (`ArmourPolicyTest`: 19 tests). `MagicEnumAuditTest` and the other tests that need game classes cannot run in the shim.
 * The self-test `magic.armour_policy` is registered for the CI server smoke test; it was not run (it needs the real registries). It uses a connection-less fake player, so the clients' side
   of the sync (the payload, the lease, the shatter window) is checked by reading `PlayerAuraClient.receive` and `EquipAnimation`, not by seeing it.
 * The wiki host was unreachable; canon is from memory and from the repository's copy of the wiki text.

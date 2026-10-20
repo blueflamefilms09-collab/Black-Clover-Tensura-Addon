@@ -58,7 +58,7 @@ public final class ArmourState {
         AttributeEvents.death(e -> { if (e.getEntity() instanceof ServerPlayer p) end(p, ArmourRules.Drop.DEATH); });
         AttributeEvents.logout(ArmourState::onLogout);
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> { if (e.getEntity() instanceof ServerPlayer p) onLogin(p); });
-        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerRespawnEvent e) -> { if (e.getEntity() instanceof ServerPlayer p) onRespawn(p); });
+        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerRespawnEvent e) -> { if (e.getEntity() instanceof ServerPlayer p) onRespawn(p, e.isEndConquered()); });
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerChangedDimensionEvent e) -> { if (e.getEntity() instanceof ServerPlayer p) sync(p, held(p)); });
     }
 
@@ -124,6 +124,7 @@ public final class ArmourState {
         if (h == null) return;
         p.getPersistentData().remove(KEY);
         removeBonus(p);
+        clearSenses(p, h);
         if (h.form()) SpiritDiveForm.stop(p, h.magic());                                    // a form that ends takes its dive with it
         if (!h.aura().isEmpty()) {
             Aura a = aura(h.aura());
@@ -141,6 +142,14 @@ public final class ArmourState {
             case UNKNOWN_MAGIC -> say(p, "nusmp.armour.lost", "The %s answers to nothing and falls away.", name);
             default -> say(p, h.form() ? "nusmp.armour.form_off" : "nusmp.armour.off", h.form() ? "%s ends." : "%s taken off.", name);
         }
+    }
+
+    /** The hidden night vision of a form's senses goes with the form (only the ambient, hidden, short one this class gave). */
+    private static void clearSenses(ServerPlayer p, ArmourRules.Held h) {
+        ArmourPolicy.Entry e = ArmourPolicy.get().entry(h.magic());
+        if (e == null || !(h.form() ? e.formBonus() : e.bonus()).senses()) return;
+        MobEffectInstance nv = p.getEffect(MobEffects.NIGHT_VISION);
+        if (nv != null && nv.isAmbient() && !nv.isVisible() && nv.getAmplifier() == 0 && nv.getDuration() <= 400) p.removeEffect(MobEffects.NIGHT_VISION);
     }
 
     private static Aura aura(String name) {
@@ -184,7 +193,9 @@ public final class ArmourState {
         sync(p, h);                                                           // forged in again for the player and everyone who sees them
     }
 
-    private static void onRespawn(ServerPlayer p) {
+    /** A new body after death starts bare. Coming back from the End is not a death: a toggled armour that came along is restored like at a login. */
+    private static void onRespawn(ServerPlayer p, boolean endConquered) {
+        if (endConquered) { onLogin(p); return; }
         p.getPersistentData().remove(KEY);
         removeBonus(p);
     }
