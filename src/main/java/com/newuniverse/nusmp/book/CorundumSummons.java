@@ -130,11 +130,9 @@ public final class CorundumSummons {
      * grimoire is well mastered or in a devil state), with Resistance III and Strength, and gem shards (PropKind.CORUNDUM_2) circle the caster and spear foes.
      */
     static boolean gemPlateArmour(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        if (PlayerAuras.active(p, Aura.CORUNDUM)) { GrimoireBook.fail(p, "Your gem armour still holds."); return false; }
         ServerLevel level = p.serverLevel();
         int ticks = span(ARMOUR_TICKS, p);
         int style = b.masteryFrac(i) >= 0.75 || GrimoireBook.inDevilState(p) ? 1 : 0;
-        PlayerAuras.set(p, Aura.CORUNDUM, ticks, style);
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 2));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, 0));
         dismiss(p, PropKind.CORUNDUM_2);

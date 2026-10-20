@@ -309,6 +309,7 @@ public abstract class GrimoireBook extends Skill {
             return;
         }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
+        if (ArmourCast.beforeCast(player, this, instance, p.id())) return;      // 1.99.0: the armour page of a worn armour only takes it off (free, no cooldown, no spell)
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
         // 1.27.0: a magic whose code faulted is on a short recovery cooldown (checked BEFORE any mana is spent), and its cast runs
         // inside SafeCast: an exception in one magic's spell or effect code can not crash the server tick (core.magic.profile.SafeCast)
@@ -321,6 +322,7 @@ public abstract class GrimoireBook extends Skill {
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
         if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> p.cast().cast(this, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
                 : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
@@ -379,6 +381,7 @@ public abstract class GrimoireBook extends Skill {
         if (target == caster || target.isAlliedTo(caster)) return;
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
                 * buildUpMultiplier(i, caster)
+                * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
@@ -467,7 +470,15 @@ public abstract class GrimoireBook extends Skill {
     public com.newuniverse.nusmp.blackclover.ModeArmor.Mode diveArmor() {
         if (this instanceof WindBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.WIND_SPIRIT_DIVE;
         if (this instanceof FireBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.FIRE_SPIRIT_DIVE;
+        if (this instanceof WaterBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.VALKYRIE;       // 1.99.0: Noelle's Valkyrie plates and avian water wings are Undine's dive
         return null;
+    }
+
+    /** 1.99.0: the mode number of the Spirit Dive page of this book, or -1. */
+    private int diveIndex() {
+        List<BookPage> l = pages();
+        for (int k = 0; k < l.size(); k++) if (SpiritDiveForm.PAGE.equals(l.get(k).id())) return k;
+        return -1;
     }
 
     private static boolean spiritDive(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
@@ -476,6 +487,7 @@ public abstract class GrimoireBook extends Skill {
             i.getOrCreateTag().putLong("DiveUntil", now);
             i.setCoolDown(60, mode);                                   // seconds
             if (b.diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, b.diveArmor());
+            SpiritDiveForm.end(p, b);                                  // 1.99.0: the form's stats and its look go with the dive
             return false;
         }
         if (!SpiritBond.willAnswer(p)) { fail(p, b.spiritName() + " will not answer you. Earn back its trust."); return false; }
@@ -494,7 +506,8 @@ public abstract class GrimoireBook extends Skill {
         SpiritBond.heavyUse(p);
         i.getOrCreateTag().putLong("DiveUntil", now + 160);
         if (b.diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.start(p, b.diveArmor(), 160);   // 0.38: the Spirit Dive armour overlay
-        i.setCoolDown(8 + 60, mode);                                  // seconds: 8 s dive + 60 s spirit lock
+        SpiritDiveForm.begin(p, b, i);                                // 1.99.0: the dive is a FORM (stats, ambient intake, held while the upkeep is paid; book.ArmourPolicy)
+        i.setCoolDown(3, mode);                                       // seconds: long enough not to end the dive by accident; the 60 s spirit lock starts when the dive ends (recast or upkeep failure)
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), b.color, 160, 1.0F);
         p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + " dives with " + b.spiritName() + "!")
                 .withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), false);
@@ -577,7 +590,11 @@ public abstract class GrimoireBook extends Skill {
             if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
                 i.getOrCreateTag().putLong("DiveUntil", now);
                 if (diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, diveArmor());
+                SpiritDiveForm.end(p, this);
+                if (diveIndex() >= 0) i.setCoolDown(60, diveIndex());     // 1.99.0: the spirit lock starts when the dive ends
                 fail(p, "The spirit slips away.");
+            } else {
+                SpiritDiveForm.second(p, this, i, now);                    // 1.99.0: the ambient intake, and the dive held while the upkeep is paid
             }
         }
         // Devil Union: HP drain; at the price floor it ends and you're stunned 2 s.

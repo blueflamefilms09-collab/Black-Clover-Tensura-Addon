@@ -52,18 +52,17 @@ public final class MemoryBook extends ElementBook {
     }
 
     public static List<BookPage> familyList() {
-        Aura a = Aura.MEMORY;
         List<BookPage> l = new ArrayList<>(List.of(
-                starter("attribute_bolt", "Memory: Recollection Bolt", SongRebuildKit.armoured(a, MemoryBook::bolt)),
-                mid("attribute_cut", "Memory: Replay Line", SongRebuildKit.armoured(a, MemoryBook::replayLine)),
-                zone("attribute_field", "Memory: Forgetting Field", SongRebuildKit.armoured(a, MemoryBook::forgettingField)),
-                signature("attribute_domain", "Memory: Flashback Domain", SongRebuildKit.armoured(a, MemoryBook::flashback)).withCooldown(900),
+                starter("attribute_bolt", "Memory: Recollection Bolt", MemoryBook::bolt),
+                mid("attribute_cut", "Memory: Replay Line", MemoryBook::replayLine),
+                zone("attribute_field", "Memory: Forgetting Field", MemoryBook::forgettingField),
+                signature("attribute_domain", "Memory: Flashback Domain", MemoryBook::flashback).withCooldown(900),
                 mid("attribute_guard", "Memory: Memory Veil", MemoryBook::veil)));
         l.addAll(ExclusiveExt.pages(MagicType.MEMORY));
-        l.add(mid("memory_echo", "Memory: Echo", SongRebuildKit.armoured(a, MemoryBook::echo)).withCooldown(320));
-        l.add(mid("memory_forget", "Memory: Forget", SongRebuildKit.armoured(a, MemoryBook::forget)).withCooldown(300));
-        l.add(mid("memory_recall", "Memory: Recall", SongRebuildKit.armoured(a, MemoryBook::recall)).withCooldown(600));
-        l.add(signature("memory_archive", "Memory: Archive", SongRebuildKit.armoured(a, MemoryBook::archive)).withCooldown(1500).withAnim("signature"));
+        l.add(mid("memory_echo", "Memory: Echo", MemoryBook::echo).withCooldown(320));
+        l.add(mid("memory_forget", "Memory: Forget", MemoryBook::forget).withCooldown(300));
+        l.add(mid("memory_recall", "Memory: Recall", MemoryBook::recall).withCooldown(600));
+        l.add(signature("memory_archive", "Memory: Archive", MemoryBook::archive).withCooldown(1500).withAnim("signature"));
         return List.copyOf(l);
     }
 
@@ -170,7 +169,6 @@ public final class MemoryBook extends ElementBook {
         tag.putLong("ThornsUntil", now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, ticks + 200, 0, false, false));
         p.getPersistentData().putLong(MemoryRebuildProps.VEIL_UNTIL, now + 160);
-        SongRebuildKit.armour(p, Aura.MEMORY, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.send(p.serverLevel(), VfxShape.MEMORY_FX2, p.position(), p.position().add(0, 1, 0), LAV, 24, 1.6f);
         return true;

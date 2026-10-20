@@ -213,7 +213,6 @@ public final class GravityWorks {
     /** Weighted Blows: 15 s of heavier melee. */
     static boolean weightedBlows(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         p.getPersistentData().putLong(K_WEIGHT, p.level().getGameTime() + 300);
-        SpatialArmourCast.on(p, Aura.GRAVITY, 300, 1);
         fx(p.serverLevel(), VfxShape.GRAVITY_FX3, p.position(), p.position().add(0, 1, 0), 20, 0.9f);
         b.castCircle(p, 1f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 0.9f, 0.5f);

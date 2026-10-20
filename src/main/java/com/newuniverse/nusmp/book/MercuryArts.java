@@ -49,10 +49,8 @@ public final class MercuryArts {
         if (e != null) e.setXRot(pitch);
     }
 
-    /** The short armour a signature cast puts on (five seconds), unless a longer one is still on. */
-    static void shortArmour(ServerPlayer p) {
-        if (!PlayerAuras.active(p, Aura.MERCURY)) PlayerAuras.set(p, Aura.MERCURY, MercuryRules.SHORT_ARMOUR_TICKS, 1);
-    }
+    /** 1.99.0: does nothing. It was the short armour a signature cast put on; only the Silver Guardian page puts the Mercury armour on now (book.ArmourPolicy). */
+    static void shortArmour(ServerPlayer p) { }
 
     /** Silver Spear's helper and the old pages': one spear 'from' to the target point, a liquid tail, pierces; the visual body is a prop. */
     static void lance(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Vec3 from, Vec3 to, float raw, LivingEntity homing, int bodyKind, float power) {

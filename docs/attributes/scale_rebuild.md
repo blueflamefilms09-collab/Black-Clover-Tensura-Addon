@@ -123,3 +123,7 @@ The CI server smoke test runs `magic.scale_rebuild` (`/multiverse mega selftest 
 * The balance numbers of the spells and constructs (damage, cost tier, durations) were set by reading the other books, not by play testing.
 * The construct hit boxes are estimates from the model sizes; the golem and serpent walk with the simple `walk` of the Bronze constructs and can get stuck on odd terrain.
 * No canon text for this magic could be fetched (the network is closed to the wiki); see section 2.
+
+## 1.99.0 armour policy
+
+Scale Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SCALE_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

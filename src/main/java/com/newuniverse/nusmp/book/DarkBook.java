@@ -28,17 +28,17 @@ import java.util.List;
 /** Dark Magic (Yami). */
 public class DarkBook extends GrimoireBook {
     // 0.28: rebuilt after the wiki (Yami Sukehiro); page ids kept so unlocks and mastery carry over, new spells appended
-    // 1.93.0 (the Dark rebuild): the nine pages keep their ids, order, names and cost tiers and are re-implemented in DarkArts (numbers kept, new bodies and VFX, the Dark armour for 5 s per cast);
+    // 1.93.0 (the Dark rebuild): the nine pages keep their ids, order, names and cost tiers and are re-implemented in DarkArts (numbers kept, new bodies and VFX; 1.99.0: no cast puts the Dark armour on, only Dark Cloaked Guard does, book.ArmourPolicy);
     // three pages are appended. CanonSpells and the old static methods below stay.
     private final List<BookPage> pages = List.of(
-            WaterArmour.wrap(BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", DarkArts::avidyaSlash), Aura.DARK),
-            WaterArmour.wrap(BookPage.zone("black_hole", "Black Hole", DarkArts::blackHole), Aura.DARK),
-            WaterArmour.wrap(BookPage.signature("dimension_slash", "Dark Cloaked Dimension Slash", DarkArts::dimensionSlash).withCooldown(300), Aura.DARK),
-            WaterArmour.wrap(BookPage.mid("death_thrust", "Death Thrust", DarkArts::deathThrust), Aura.DARK),
+            BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", DarkArts::avidyaSlash),
+            BookPage.zone("black_hole", "Black Hole", DarkArts::blackHole),
+            BookPage.signature("dimension_slash", "Dark Cloaked Dimension Slash", DarkArts::dimensionSlash).withCooldown(300),
+            BookPage.mid("death_thrust", "Death Thrust", DarkArts::deathThrust),
             BookPage.mid("black_blade", "Dark Cloaked Black Blade", DarkArts::blackBlade).withCooldown(900),
-            WaterArmour.wrap(BookPage.mid("avidya_wild_slash", "Dark Cloaked Avidya Wild Slash", DarkArts::avidyaWildSlash), Aura.DARK),
+            BookPage.mid("avidya_wild_slash", "Dark Cloaked Avidya Wild Slash", DarkArts::avidyaWildSlash),
             BookPage.zone("black_moon", "Dark Cloaked Black Moon", DarkArts::blackMoon).withCooldown(900),
-            WaterArmour.wrap(BookPage.mid("iai_slash", "Dark Cloaked Iai Slash", DarkArts::iaiSlash), Aura.DARK),
+            BookPage.mid("iai_slash", "Dark Cloaked Iai Slash", DarkArts::iaiSlash),
             BookPage.signature("dimension_slash_equinox", "Dark Cloaked Dimension Slash: Equinox", DarkArts::dimensionSlashEquinox),
             // 1.93.0: appended
             BookPage.mid("dark_cloak", "Dark Cloaked Guard", DarkArts::darkCloak).withCooldown(900),

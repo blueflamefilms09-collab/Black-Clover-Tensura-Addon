@@ -76,3 +76,7 @@ All damage goes through `GrimoireBook.hurtAs` (the balance law caps it); text th
 * The armour has about 10 000 vertices a frame with its glow pass: heavier than the older sets (the preview's soft budget note). Players more than a few blocks away see the same set.
 * The gate frame is drawn together with the old 3D portal at the same spot; their depth ordering in game is unchecked.
 * The `SpatialWorks` hit hook and the new pages were type-checked only (stub API); the pages' balance numbers are unplayed.
+
+## 1.99.0 armour policy
+
+Spatial Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SPATIAL_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

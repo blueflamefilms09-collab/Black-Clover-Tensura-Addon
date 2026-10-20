@@ -82,3 +82,7 @@ New: `book/MercuryArts.java`, `MercuryRules.java`, `prop/MercuryProps.java` and 
 * The old dome VFX still draws the Rain's cloud; the new pool and cloud are not synchronised beyond their start times.
 * The wing and feather boxes are 0.5 to 1 px thick: thin from the front.
 * The Silver Eagle cannot carry other people (the wiki says it can); the Star of Execution has no "chaotic mana" failure; Dimension Slash: Scorching Light is not built.
+
+## 1.99.0 armour policy
+
+Mercury Magic is policy kind TOGGLE (Silver Guardian). The armour is put on **only** by `mercury_shield` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

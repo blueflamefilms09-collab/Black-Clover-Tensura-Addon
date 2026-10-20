@@ -56,3 +56,7 @@ As the Sandstone doc, plus `EarthFamilyRebuildTest.earthBookKeepsItsSixPagesFirs
 ## 7. NOT verified
 
 Nothing was run in the game. Specific to Earth: the interplay of the new `onTakenDamage` with the book's spirit hooks, the golem's pathing over uneven ground, whether the older effect layer and the new burst overlap too busily on the claws.
+
+## 1.99.0 armour policy
+
+Earth Magic is policy kind FORM (Gnome Plate). The armour is put on **only** by `earth_armor` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. The form is `spirit_dive`: Spirit Dive. It is held as long as the mana upkeep is paid; the spirit's ambient intake pays most of it; speed, attack and senses are raised while it lasts. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

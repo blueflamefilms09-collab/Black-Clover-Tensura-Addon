@@ -121,7 +121,6 @@ public final class VortexBook extends ElementBook {
         Vec3 look = p.getViewVector(1f).multiply(1, 0, 1).normalize();
         Vec3 at = p.position().add(look.scale(3.0));
         MagicProps.spawn(p.serverLevel(), PropKind.VORTEX_1, at, p.getYRot(), 1.0f * GrimoireBook.size(i, p), AirPropKit.lifeFor(p, 160), AirPropKit.pack(1, 0, 0), p);
-        PlayerAuras.set(p, Aura.VORTEX, 100);
         b.vfx(p, VfxShape.VORTEX_FX3, at, at.add(0, 1, 0), 26, 0.7f);
         return true;
     }
@@ -135,7 +134,6 @@ public final class VortexBook extends ElementBook {
         tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
         p.getPersistentData().putLong(LIVE, p.level().getGameTime() + ticks);
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0, false, false));
-        PlayerAuras.set(p, Aura.VORTEX, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.VORTEX_FX3, p, p.position().add(0, 1, 0), b.color, 26, 0.5f);
         return true;

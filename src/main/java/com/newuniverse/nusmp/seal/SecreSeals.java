@@ -219,7 +219,6 @@ public final class SecreSeals {
         } else {
             ally.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0));
         }
-        if (ally instanceof ServerPlayer sp) PlayerAuras.set(sp, Aura.SEALING, ticks, 1);
         b.castCircle(p, 0.9f);
         final float radius = Math.max(1.2f, ally.getBbHeight() * 0.9f);
         SpellRuntime.zone(level, ticks, 80, age -> {

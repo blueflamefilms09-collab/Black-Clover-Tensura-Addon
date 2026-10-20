@@ -128,14 +128,14 @@ public final class TreeKit {
 
     // ------------------------------------------------------------------ the temporary armour
     /**
-     * Grows the magic's temporary armour over the caster for {@code ticks} (the render layer, Aura.TREE ... with the Djinn-style forge-in) and arms the passive that goes with it
-     * (the kind is the magic's name; see {@link TreeElementBook#onTakenDamage}). The caster also takes the given resistance level for the same time.
+     * Arms the passive of the guard page of the nature magics (the kind is the magic's name; see {@link TreeElementBook#onTakenDamage}) for {@code ticks}. The caster also takes the
+     * given resistance level for the same time. 1.99.0 (armour policy, {@link ArmourPolicy}): Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic have no armour in the anime, so the
+     * guard page no longer grows the render layer (Aura.TREE ... stay registered and on disk); {@code aura} is kept in the signature for the callers.
      */
     public static void armour(ManasSkillInstance i, ServerPlayer p, Aura aura, String kind, int ticks, int resistAmp) {
         var tag = i.getOrCreateTag();
         tag.putLong(ARMOUR_UNTIL, p.level().getGameTime() + ticks);
         tag.putString(ARMOUR_KIND, kind);
-        PlayerAuras.set(p, aura, ticks, 0);
         if (resistAmp >= 0) p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, resistAmp));
     }
 

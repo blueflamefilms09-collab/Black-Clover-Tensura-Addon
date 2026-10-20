@@ -73,14 +73,11 @@ public final class ShakudoKit {
     }
 
     /**
-     * ElementBook.empower (the Guard page): sets the magic's own armour layer instead of the generic wiki one. Returns true when the magic is one of the five.
-     * The aura lasts at least 40 ticks so the last piece is on before the shatter window opens.
+     * ElementBook.empower (the Guard page): answers whether the magic is one of the five (its guard page is then theirs). 1.99.0 (armour policy, {@link ArmourPolicy}): Shakudo, Scale, Spike,
+     * Nail and Hair Magic have no armour in the anime, so this no longer sets the render layer (Aura.SHAKUDO ... HAIR stay registered and on disk).
      */
     public static boolean armour(ServerPlayer p, MagicType m, int ticks) {
-        Aura a = aura(m);
-        if (a == null) return false;
-        PlayerAuras.set(p, a, Math.max(40, ticks));
-        return true;
+        return aura(m) != null;
     }
 
     // ------------------------------------------------------------------ the armour's gameplay
@@ -132,7 +129,7 @@ public final class ShakudoKit {
     public static boolean guard(GrimoireBook b, ServerPlayer p, MagicType m, int ticks, float cut, float thorns, int resistance) {
         Aura a = aura(m);
         if (a == null) return false;
-        if (PlayerAuras.active(p, a) && p.getPersistentData().getLong(UNTIL) > p.level().getGameTime() + 60) {
+        if (p.getPersistentData().getLong(UNTIL) > p.level().getGameTime() + 60) {
             GrimoireBook.fail(p, "Your " + m.displayName.replace(" Magic", "").toLowerCase() + " armour still holds.");
             return false;
         }
@@ -142,7 +139,6 @@ public final class ShakudoKit {
         d.putFloat(CUT, cut);
         d.putFloat(THORNS, thorns);
         d.putString(KIND, m.name());
-        PlayerAuras.set(p, a, Math.max(40, t));
         if (resistance >= 0) p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, t, resistance));
         b.castCircle(p, 1.4f);
         VfxSpawn.sendFollowing(p.serverLevel(), fx(m, 3), p, p.position().add(0, 1, 0), b.color, 40, 1.4f);

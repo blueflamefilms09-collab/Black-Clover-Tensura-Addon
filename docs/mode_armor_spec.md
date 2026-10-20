@@ -218,3 +218,10 @@ An early end also removes the overlay: recasting the dive, losing the spirit, th
 - **The swap is instant:** the layer reads the synced mode on the next frame after the cast packet, and any previous mode
   is replaced, because a player wears one mode at a time.
 - **Not drawn:** while the player is invisible, or in first person (vanilla draws only the arm there).
+
+## 1.99.0 armour policy
+
+The five overlays above are the FORMs of `book.ArmourPolicy` (Spirit Dive of Wind and Fire, Anti-Magic's Demon Mode / Devil Union, Luck's Lightning God mode, Noelle's Valkyrie
+Dress; the Devil Unite modes of Nacht were added in 1.43.0). They are started only by their own explicit pages and by Spirit Dive, never by an ordinary cast, and they stay as they
+were. Since 1.99.0 Spirit Dive is held as long as its upkeep is paid (the overlay is renewed every second instead of ending after 160 ticks), Water's Spirit Dive shows the Valkyrie
+overlay, and Devil Union has a strict time limit with an aftermath. See `docs/rebuild/armour_policy.md`.

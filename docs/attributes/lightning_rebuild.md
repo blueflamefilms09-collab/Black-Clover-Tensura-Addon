@@ -88,3 +88,7 @@ Edited (additions only): `book/LightningBook.java` (the page list and the import
 * Nothing ran in a game; preview tools only. The wing bolts read as sparse bars in the preview (a bolt wing as sprites might look better); the flicker rate and cost of the re-rolled arcs in a crowd are unmeasured.
 * Balance not play-tested; `thunder_lance` and `thunderbird_cavalry` changed from Tensura / `ElementBook` projectiles to `SpellRuntime` bolts, so their interaction with Tensura's magic rules (barriers, resistances) is the shared `hurt` path only.
 * Self-test `magic.lightning_rebuild` never ran in a real server.
+
+## 1.99.0 armour policy
+
+Lightning Magic is policy kind TOGGLE (Lightning Armour). The armour is put on **only** by `thunder_fiend`, `black_lightning_battle_fiend`, `raging_lightning` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

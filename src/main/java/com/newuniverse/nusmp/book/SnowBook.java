@@ -112,7 +112,6 @@ public final class SnowBook extends ElementBook {
         Vec3 look = p.getViewVector(1f).multiply(1, 0, 1).normalize();
         Vec3 at = p.position().add(look.scale(2.4));
         MagicProps.spawn(p.serverLevel(), PropKind.SNOW_1, at, p.getYRot() + 180f, 1.0f, AirPropKit.lifeFor(p, 400), AirPropKit.pack(0, 0, 0), p);
-        PlayerAuras.set(p, Aura.SNOW, 100);
         b.vfx(p, VfxShape.SNOW_FX3, at, at.add(0, 1, 0), 26, 0.7f);
         return true;
     }
@@ -126,7 +125,6 @@ public final class SnowBook extends ElementBook {
         tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
         p.getPersistentData().putLong(LIVE, p.level().getGameTime() + ticks);
         p.addEffect(new MobEffectInstance(b.magic.guardEffect(), ticks, 0));
-        PlayerAuras.set(p, Aura.SNOW, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SNOW_FX3, p, p.position().add(0, 1, 0), b.color, 26, 0.5f);
         return true;

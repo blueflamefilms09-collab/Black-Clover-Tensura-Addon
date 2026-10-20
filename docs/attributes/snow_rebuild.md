@@ -39,3 +39,7 @@ FX1 flake charge, packed head with flake halo, flake helix, streak and shards, b
 
 ## Not verified
 Nothing was run in a game; previews are software re-implementations over stubs. The wiki could not be read. Numbers are untested in play.
+
+## 1.99.0 armour policy
+
+Snow Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SNOW_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

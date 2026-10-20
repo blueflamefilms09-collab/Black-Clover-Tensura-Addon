@@ -50,18 +50,17 @@ public final class SoulBook extends ElementBook {
     }
 
     public static List<BookPage> familyList() {
-        Aura a = Aura.SOUL;
         List<BookPage> l = new ArrayList<>(List.of(
-                starter("attribute_bolt", "Soul: Soul Flame Bolt", SongRebuildKit.armoured(a, SoulBook::flameBolt)),
-                mid("attribute_cut", "Soul: Soul Sever", SongRebuildKit.armoured(a, SoulBook::sever)),
-                zone("attribute_field", "Soul: Soul Vortex", SongRebuildKit.armoured(a, SoulBook::vortex)),
-                signature("attribute_domain", "Soul: Soul Release", SongRebuildKit.armoured(a, SoulBook::release)).withCooldown(900),
+                starter("attribute_bolt", "Soul: Soul Flame Bolt", SoulBook::flameBolt),
+                mid("attribute_cut", "Soul: Soul Sever", SoulBook::sever),
+                zone("attribute_field", "Soul: Soul Vortex", SoulBook::vortex),
+                signature("attribute_domain", "Soul: Soul Release", SoulBook::release).withCooldown(900),
                 mid("attribute_guard", "Soul: Spirit Mantle", SoulBook::mantle)));
         l.addAll(ExclusiveExt.pages(MagicType.SOUL));
-        l.add(mid("soul_wisps", "Soul: Soul Wisps", SongRebuildKit.armoured(a, SoulBook::wisps)).withCooldown(300));
-        l.add(mid("soul_bind", "Soul: Soul Bind", SongRebuildKit.armoured(a, SoulBook::bind)).withCooldown(260));
-        l.add(zone("soul_harvest", "Soul: Soul Harvest", SongRebuildKit.armoured(a, SoulBook::harvest)).withCooldown(600));
-        l.add(signature("soul_ascension", "Soul: Soul Ascension", SongRebuildKit.armoured(a, SoulBook::ascension)).withCooldown(1800).withAnim("signature"));
+        l.add(mid("soul_wisps", "Soul: Soul Wisps", SoulBook::wisps).withCooldown(300));
+        l.add(mid("soul_bind", "Soul: Soul Bind", SoulBook::bind).withCooldown(260));
+        l.add(zone("soul_harvest", "Soul: Soul Harvest", SoulBook::harvest).withCooldown(600));
+        l.add(signature("soul_ascension", "Soul: Soul Ascension", SoulBook::ascension).withCooldown(1800).withAnim("signature"));
         return List.copyOf(l);
     }
 
@@ -154,7 +153,6 @@ public final class SoulBook extends ElementBook {
         tag.putLong("ThornsUntil", now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, 1, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, 0, false, true));
-        SongRebuildKit.armour(p, Aura.SOUL, ticks);
         b.castCircle(p, 1f);
         VfxSpawn.send(p.serverLevel(), VfxShape.SOUL_FX2, p.position(), p.position().add(0, 1, 0), TEAL, 24, 1.6f);
         return true;
@@ -209,7 +207,6 @@ public final class SoulBook extends ElementBook {
     private static boolean ascension(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         ServerLevel level = p.serverLevel();
         spawnWisps(b, i, p, mode, 60, SoulRebuildProps.ASCEND);
-        SongRebuildKit.armour(p, Aura.SOUL, 100);
         b.castCircle(p, 1.4f);
         VfxSpawn.send(level, VfxShape.SOUL_FX2, p.position(), p.position().add(0, 1, 0), TEAL, 40, 4f);
         SpellRuntime.later(level, 40, () -> {

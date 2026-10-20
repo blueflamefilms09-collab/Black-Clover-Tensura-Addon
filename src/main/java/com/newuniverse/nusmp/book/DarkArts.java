@@ -134,7 +134,6 @@ public final class DarkArts {
         b.castCircle(p, 0.6f);
         DarkProps.blade(p.serverLevel(), p, 600, 1.0f, false);
         b.vfx(p, VfxShape.DARKFX_BURST, p.position().add(0, 1, 0), p.position().add(0, 1, 0), 22, 0.7f);
-        WaterArmour.put(p, Aura.DARK, 600, 0);
         return true;
     }
 
@@ -152,7 +151,6 @@ public final class DarkArts {
                 pr.discard();
             }
         });
-        WaterArmour.put(p, Aura.DARK, 200, 0);
         return true;
     }
 
@@ -176,7 +174,6 @@ public final class DarkArts {
             Vec3 d = new Vec3(look.x * Math.cos(a) - look.z * Math.sin(a), look.y, look.x * Math.sin(a) + look.z * Math.cos(a));
             DarkProps.crescent(p.serverLevel(), p, p.getEyePosition().add(d.scale(1.4)).add(0, -0.3, 0), d, 3.2, 15, 2.8f);
         }
-        WaterArmour.put(p, Aura.DARK, 200, 1);
         return true;
     }
 
@@ -191,7 +188,6 @@ public final class DarkArts {
         i.getOrCreateTag().putLong(CLOAK, p.level().getGameTime() + 300);
         i.markDirty();
         b.vfx(p, VfxShape.DARKFX_BURST, p.position().add(0, 1, 0), p.position().add(0, 1, 0), 22, 0.9f);
-        WaterArmour.put(p, Aura.DARK, 300, 0);
         return true;
     }
 
@@ -216,7 +212,6 @@ public final class DarkArts {
                 if (age % 20 == 0) b.hurt(i, p, t, mode, 3f);
             }
         });
-        WaterArmour.put(p, Aura.DARK, 100, 0);
         return true;
     }
 
@@ -246,7 +241,6 @@ public final class DarkArts {
             }
             b.vfx(p, VfxShape.DARKFX_BURST, c.add(0, 1, 0), c.add(0, 1, 0), 30, 2.0f);
         });
-        WaterArmour.put(p, Aura.DARK, 100, 0);
         return true;
     }
 }

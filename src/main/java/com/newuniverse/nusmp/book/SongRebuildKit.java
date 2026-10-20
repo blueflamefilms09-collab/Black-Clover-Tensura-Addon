@@ -107,24 +107,15 @@ public final class SongRebuildKit {
     /** Bosses take half of what the page would deal. */
     public static float safe(LivingEntity t, float raw) { return BalanceLaw.isBoss(t) ? raw * 0.5f : raw; }
 
-    // ================================================================ the armour after a cast
-    /** Puts the temporary armour on the caster; a shorter call never cuts a longer one that is running. */
-    public static void armour(ServerPlayer p, Aura a, int ticks) {
-        long now = p.level().getGameTime();
-        String key = "nusmp_rb_armour_" + a.name();
-        if (PlayerAuras.active(p, a) && p.getPersistentData().getLong(key) - now >= ticks) return;
-        p.getPersistentData().putLong(key, now + ticks);
-        PlayerAuras.set(p, a, ticks, 0);
-    }
+    // ================================================================ the armour after a cast (1.99.0: there is none)
+    /**
+     * 1.99.0 (armour policy, {@link ArmourPolicy}): does nothing. Song, Sound, Soul, Soul Corpse and Memory Magic have no armour in the anime; the render layers (Aura.SONG ... Aura.MEMORY,
+     * client.aura.SongArmourKit) stay registered and on disk, but no cast puts them on any more.
+     */
+    public static void armour(ServerPlayer p, Aura a, int ticks) { }
 
-    /** A cast that puts the 5 second armour on the caster whenever it succeeds. */
-    public static BookPage.Cast armoured(Aura a, BookPage.Cast c) {
-        return (b, i, p, mode) -> {
-            boolean ok = c.cast(b, i, p, mode);
-            if (ok) armour(p, a, ARMOUR_TICKS);
-            return ok;
-        };
-    }
+    /** 1.99.0: the cast as it is (it used to put the 5 second armour on the caster whenever it succeeded). */
+    public static BookPage.Cast armoured(Aura a, BookPage.Cast c) { return c; }
 
     // ================================================================ projectiles: a server hitbox that is also a flying prop model
     /**

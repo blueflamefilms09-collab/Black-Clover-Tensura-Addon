@@ -92,7 +92,6 @@ public class MercuryBook extends GrimoireBook {
         ServerLevel level = p.serverLevel();
         float r = 2.2f + 0.6f * pw(p);
         i.getOrCreateTag().putLong("ShieldUntil", p.level().getGameTime() + MercuryRules.GUARDIAN_TICKS);
-        PlayerAuras.set(p, Aura.MERCURY, MercuryRules.GUARDIAN_TICKS, 0);
         b.castCircle(p, 1.2f);
         VfxSpawn.sendFollowing(level, VfxShape.MERCURY_FX2, p, p.position(), SILVER, MercuryRules.GUARDIAN_TICKS, r / 1.5f);
         VfxSpawn.sendFollowing(level, VfxShape.MERCURY_FX3, p, p.position().add(0, 1, 0), SILVER, 30, 1.2f);
@@ -156,7 +155,6 @@ public class MercuryBook extends GrimoireBook {
         float yaw = (float) Math.toDegrees(Math.atan2(-dir.x, dir.z)), pitch = (float) -Math.toDegrees(Math.atan2(dir.y, Math.sqrt(dir.x * dir.x + dir.z * dir.z)));
         MagicPropEntity eagle = MagicProps.spawn(level, PropKind.MERCURY_2, from, yaw, span / 3.8f, MercuryRules.EAGLE_FLIGHT_TICKS + 8, 0, p);
         if (eagle != null) eagle.setXRot(pitch);
-        PlayerAuras.set(p, Aura.MERCURY, MercuryRules.EAGLE_FLIGHT_TICKS + 40, 1);
         Set<UUID> cut = new HashSet<>();
         SpellRuntime.zone(level, MercuryRules.EAGLE_FLIGHT_TICKS, 1, age -> {
             if (!p.isAlive()) return;

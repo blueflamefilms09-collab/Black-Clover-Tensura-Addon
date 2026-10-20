@@ -174,7 +174,6 @@ final class BodyArts {
         if (!aura(p, 0.08, 40)) return false;
         i.getOrCreateTag().putLong(FRAME, p.level().getGameTime() + 400);
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 400, 1));
-        PlayerAuras.set(p, Aura.BODY, 400, 0);
         b.castCircle(p, 1.1f);
         VfxSpawn.sendFollowing(p.serverLevel(), BURST, p, p.position().add(0, 1, 0), b.color, 28, 1.0f);
         return true;
@@ -261,7 +260,6 @@ final class BodyArts {
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 400, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 400, 1));
         p.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 400, 2));
-        PlayerAuras.set(p, Aura.BODY, 400, 1);
         b.castCircle(p, 1.6f);
         b.vfx(p, ZONE, p.position(), p.position().add(0, 1, 0), 40, 4f);
         VfxSpawn.sendFollowing(p.serverLevel(), BURST, p, p.position().add(0, 1, 0), b.color, 30, 1.6f);
@@ -277,7 +275,6 @@ final class BodyArts {
             if (!p.isAlive() || i.getOrCreateTag().getLong(TITAN) != until) return;   // a recast has its own ending
             p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1));
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 80, 0));
-            PlayerAuras.clear(p, Aura.BODY);
         });
         return true;
     }

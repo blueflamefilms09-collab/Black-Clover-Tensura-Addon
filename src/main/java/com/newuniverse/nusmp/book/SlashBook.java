@@ -94,7 +94,7 @@ public class SlashBook extends GrimoireBook {
         if (!EnergyBridge.aura(p, 0.02, 6)) { fail(p, "Not enough aura to hold the blades."); return false; }
         ServerLevel level = p.serverLevel();
         p.getPersistentData().putLong(K_BLADES, level.getGameTime() + 400);
-        SpatialArmourCast.on(p, com.newuniverse.nusmp.aura.Aura.SLASH, 400, 0);                                   // 1.93.0: the forearm blades are part of the Ripper's armour (they replace the old SLASH_BLADES effect)
+        VfxSpawn.sendFollowing(level, VfxShape.SLASH_BLADES, p, p.position().add(0, 1, 0), GREEN, 400, 1.0f);      // 1.99.0: the blades are a following effect again (the armour layer is not a side effect of a cast; the old shape is still registered)
         VfxSpawn.send(level, VfxShape.SLASH_FX3, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), GREEN, 20, 0.9f);
         SpellRuntime.zone(level, 400, 20, age -> {                                    // the blades are held with aura
             if (age == 0 || p.getPersistentData().getLong(K_BLADES) <= level.getGameTime()) return;
