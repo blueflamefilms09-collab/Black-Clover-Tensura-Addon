@@ -53,8 +53,18 @@ public final class RemodelRenderers {
         }
     }
 
+    /** 1.99.0: every provider this class registered, by type, so the player-model kit can build the renderer a type had before it (the fallback flag {@code client.playermodel.dungeon}). */
+    private static final java.util.Map<EntityType<?>, EntityRendererProvider<?>> PROVIDERS = new java.util.HashMap<>();
+
+    /** The provider this class registered for a type (the art kit's renderer of it), or null. Read by {@code client/playermodel/DungeonRenderers}; valid once this class's renderer event has run. */
+    @SuppressWarnings("unchecked")
+    public static <T extends Entity> EntityRendererProvider<T> providerOf(EntityType<?> type) {
+        return (EntityRendererProvider<T>) PROVIDERS.get(type);
+    }
+
     @SuppressWarnings("unchecked")
     private static <T extends Entity> void put(EntityRenderersEvent.RegisterRenderers e, EntityType<?> type, EntityRendererProvider<T> provider) {
+        PROVIDERS.put(type, provider);
         e.registerEntityRenderer((EntityType<T>) type, provider);
     }
 

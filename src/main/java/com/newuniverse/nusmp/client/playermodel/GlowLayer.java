@@ -26,7 +26,7 @@ public class GlowLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMode
     @Override
     public void render(PoseStack pose, MultiBufferSource buffers, int light, T e, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
         PlayerLook look = owner.look();
-        if (look == null || e.isInvisible()) return;
+        if (look == null || e.isInvisible() || !PlayerLod.glow(owner.lod())) return;                               // beyond the far distance no additive pass at all
         boolean flashOnly = !look.glow() || owner.playerBody().skin(e) != null;
         PlayerBody.Dynamic d = owner.dynamic();
         if (d.flash > 0.02f) {                      // the burst of colour over a power-up: the whole skin, additive

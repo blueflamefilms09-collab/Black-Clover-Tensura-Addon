@@ -25,7 +25,7 @@ public class HairLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMode
     @Override
     public void render(PoseStack pose, MultiBufferSource buffers, int light, T e, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
         PlayerLook look = owner.look();
-        if (look == null || !look.hasHair() || e.isInvisible()) return;
+        if (look == null || !look.hasHair() || e.isInvisible() || !PlayerLod.hair(owner.lod())) return;        // far away the hair (a hundred boxes and its springs) is skipped
         HairStyleData.Style style = PlayerAssets.hair(look.hair());
         if (style == null || style.bald()) return;
         KitPlayerModel<T> kit = owner.kit();
@@ -35,6 +35,6 @@ public class HairLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMode
         boolean fading = look.alpha() * owner.dynamic().alpha < 0.999f;
         var sheet = PlayerAssets.hairSheet(style);
         RenderType rt = fading ? RenderType.entityTranslucent(sheet) : RenderType.entityCutoutNoCull(sheet);
-        HairDraw.draw(pose, buffers.getBuffer(rt), style, kit.head, kit.body, state, HairPalette.of(look.hairRgb()), helmet, light, LivingEntityRenderer.getOverlayCoords(e, 0f), 0xFFFFFFFF);
+        HairDraw.draw(pose, buffers.getBuffer(rt), style, kit.head, kit.body, state, HairPalette.cached(look.hairRgb()), helmet, light, LivingEntityRenderer.getOverlayCoords(e, 0f), 0xFFFFFFFF);
     }
 }

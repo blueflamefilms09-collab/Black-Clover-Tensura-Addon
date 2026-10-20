@@ -47,6 +47,11 @@ public final class PlayerModelRegistry {
     /** Adds the listener to the mod bus, last in line (the same priority as RemodelRenderers, registered after it). Call from the client block of the mod constructor. */
     public static void init(IEventBus modBus) {
         PlayerAssets.init(modBus);
+        try {                                                          // 1.99.0: config/nusmp-playermodel-client.toml (the fallback flag and the level-of-detail distances)
+            net.neoforged.fml.ModLoadingContext.get().getActiveContainer().registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, PlayerModelOptions.SPEC, "nusmp-playermodel-client.toml");
+        } catch (RuntimeException ex) {
+            LOG.error("[nusmp] the player-model client config could not be registered: {}", ex.toString());
+        }
         modBus.addListener(EventPriority.LOWEST, PlayerModelRegistry::register);
     }
 
@@ -97,6 +102,7 @@ public final class PlayerModelRegistry {
         guard("tower_wizard", () -> put(e, NUEntities.TOWER_WIZARD.get(), new PlayerBodies.Wizard()));
         guard("avatar", () -> put(e, AvatarEntities.AVATAR.get(), new AvatarPlayerBody()));
         guard("painted_construct", () -> PaintedSplit.register(e));
+        guard("the dungeon's humanoids", () -> DungeonRenderers.register(e));        // 1.99.0, phase 2: Foundry people, Living Armor, Warden, Guardian, Goliath, puppets (each with the old renderer as the flag's fallback)
         List<Consumer<EntityRenderersEvent.RegisterRenderers>> more;
         synchronized (PlayerModelRegistry.class) { more = new ArrayList<>(EXTENSIONS); }
         for (Consumer<EntityRenderersEvent.RegisterRenderers> c : more) guard("an extension", () -> c.accept(e));

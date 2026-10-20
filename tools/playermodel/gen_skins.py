@@ -50,8 +50,9 @@ def to_rgb(c, default=(60, 40, 30)):
         return default
 
 
-def paint_character(spec, name, hair_masks):
-    """Returns (skin image, glow image or None, hair style id, hair rgb, slim)."""
+def paint_character(spec, name, hair_masks, post=None):
+    """Returns (skin image, glow image or None, hair style id, hair rgb, slim). `post(cv, spec, seed, glow)` (phase 2: the dungeon's wear passes) may paint on the finished canvas and into the
+    glow array and returns True when it wrote glow texels."""
     seed = seed_of(name)
     slim = is_slim(spec)
     cv = K.Canvas(slim=slim)
@@ -106,6 +107,8 @@ def paint_character(spec, name, hair_masks):
                     if p[3] and K.emblem_pixel(em, x, y, C.shades(o["top"]["color"]), None) is not None and em.get("where") != "back":
                         glow[bfy + y, bfx + x] = (gc[0], gc[1], gc[2], 255)
                         any_glow = True
+    if post is not None and post(cv, spec, seed, glow):
+        any_glow = True
     return cv.image(), (Image.fromarray(glow, "RGBA") if any_glow else None), hair_style, hair_rgb, slim
 
 

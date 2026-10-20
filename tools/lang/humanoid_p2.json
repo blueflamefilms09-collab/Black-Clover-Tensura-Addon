@@ -1,0 +1,10 @@
+{
+ "nusmp.configuration.playermodel": "Player-model characters",
+ "nusmp.configuration.playermodel.tooltip": "How the humanoids of the dungeon are drawn (the player model with their own HD skins).",
+ "nusmp.configuration.dungeon": "Dungeon humanoids on the player model",
+ "nusmp.configuration.dungeon.tooltip": "On: the Mob Foundry's people, the Living Armor, the Floor Warden, the Labyrinth Guardian, the Goliath and the soul-corpse puppets wear the player model and their skins. Off: the models they had before. No restart needed.",
+ "nusmp.configuration.detailDistance": "Detail distance (blocks)",
+ "nusmp.configuration.detailDistance.tooltip": "Beyond this distance a character is drawn without its second skin layer and without hair.",
+ "nusmp.configuration.farDistance": "Far distance (blocks)",
+ "nusmp.configuration.farDistance.tooltip": "Beyond this distance the glowing passes of a character are dropped as well."
+}

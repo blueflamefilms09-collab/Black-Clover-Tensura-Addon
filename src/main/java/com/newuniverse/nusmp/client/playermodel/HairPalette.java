@@ -53,6 +53,21 @@ public final class HairPalette {
         NAMED.put("lavender", 0xB49AE0);
     }
 
+    private record Slot(int rgb, Tint tint) {}
+
+    private static final Slot[] SLOTS = new Slot[64];
+
+    /** {@link #of} through a 64-slot direct-mapped cache: the hair layer asks every frame for the tint of the same few colours, and a record per frame per entity is waste. */
+    public static Tint cached(int rgb) {
+        int c = rgb & 0xFFFFFF;
+        int i = (c * 0x9E3779B1) >>> 26;
+        Slot s = SLOTS[i];
+        if (s != null && s.rgb == c) return s.tint;
+        Tint t = of(c);
+        SLOTS[i] = new Slot(c, t);
+        return t;
+    }
+
     /**
      * The tint of a colour. A very light colour keeps its base and gains a cool shade; a very dark one gains a lifted highlight (so black hair still shines).
      */

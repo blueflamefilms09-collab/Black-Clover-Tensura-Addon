@@ -11,28 +11,35 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import org.slf4j.Logger;
 
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 /**
- * Why: the kit's data (the table of looks, the hair styles, the resource locations of skins and sheets) is read from the resource packs once per reload, not per frame, and a missing or broken
+ * Why: the kit's data (the tables of looks, the hair styles, the resource locations of skins and sheets) is read from the resource packs once per reload, not per frame, and a missing or broken
  * file must never throw in the render thread: it is logged once and the character is drawn with the default look. This is the one place that holds those caches ({@link #look},
- * {@link #hair}, {@link #skin}, {@link #exists}); {@link #init} clears them on a model reload, so a resource pack that replaces looks.json, a skin or a hair sheet takes effect on F3+T.
+ * {@link #hair}, {@link #skin}, {@link #exists}); {@link #init} clears them on a model reload, so a resource pack that replaces a table, a skin or a hair sheet takes effect on F3+T.
+ *
+ * <p>1.99.0 (phase 2): the looks come from every table of {@link PlayerLookTables#FILES} (the arcs', the abyssal bosses', the dungeon's), merged add-only; and the lookups of the render thread no
+ * longer build a key string per call: every cache is a map of its own keyed by the plain name, so a frame allocates nothing here, and {@link #generation} lets a body cache what it derived from a
+ * look (the foundry's look of an id) until the next reload.
  */
 public final class PlayerAssets {
     private PlayerAssets() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    public static final String LOOKS = "playermodel/looks.json", HAIR = "playermodel/hair_styles.json";
+    public static final String LOOKS = PlayerLookTables.FILES.get(0), HAIR = "playermodel/hair_styles.json";
     private static final Map<String, PlayerLook> LOOKS_BY_ID = new HashMap<>();
     private static final Map<String, HairStyleData.Style> HAIR_BY_ID = new HashMap<>();
-    private static final Map<String, ResourceLocation> LOCATIONS = new HashMap<>();
+    private static final Map<String, ResourceLocation> SKINS = new HashMap<>(), GLOWS = new HashMap<>(), EXTRAS = new HashMap<>(), EXTRAS_GLOW = new HashMap<>(), HAIR_SHEETS = new HashMap<>();
     private static final Map<ResourceLocation, Boolean> EXISTS = new HashMap<>();
     private static final Set<String> WARNED = new HashSet<>();
     private static boolean loadedLooks, loadedHair;
+    private static int generation;
 
     /** Adds the reload hook (call once from the client constructor). */
     public static void init(IEventBus modBus) { modBus.addListener((ModelEvent.BakingCompleted e) -> clear()); }
@@ -40,19 +47,27 @@ public final class PlayerAssets {
     public static synchronized void clear() {
         LOOKS_BY_ID.clear();
         HAIR_BY_ID.clear();
-        LOCATIONS.clear();
+        SKINS.clear();
+        GLOWS.clear();
+        EXTRAS.clear();
+        EXTRAS_GLOW.clear();
+        HAIR_SHEETS.clear();
         EXISTS.clear();
         loadedLooks = false;
         loadedHair = false;
+        generation++;
     }
+
+    /** Counts the reloads: anything derived from the looks (a body's cache of the look of an id) is valid for as long as this number is the same. */
+    public static synchronized int generation() { return generation; }
 
     public static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath(SkinPath.NAMESPACE, path); }
 
-    private static JsonObject readJson(String path) {
+    private static JsonObject readJson(String path, boolean optional) {
         try {
             Optional<Resource> r = Minecraft.getInstance().getResourceManager().getResource(rl(path));
             if (r.isEmpty()) {
-                warnOnce("missing:" + path, "[nusmp] player-model data file {} not found: characters use the default look", path);
+                if (!optional) warnOnce("missing:" + path, "[nusmp] player-model data file {} not found: characters use the default look", path);
                 return null;
             }
             try (Reader in = r.get().openAsReader()) {
@@ -70,18 +85,23 @@ public final class PlayerAssets {
 
     private static void loadLooks() {
         loadedLooks = true;
-        JsonObject o = readJson(LOOKS);
-        if (o == null) return;
-        try {
-            LOOKS_BY_ID.putAll(PlayerLook.parseTable(o));
-        } catch (RuntimeException ex) {
-            warnOnce("looks-parse", "[nusmp] looks.json is malformed ({}): characters use the default look", ex.toString());
+        for (int i = 0; i < PlayerLookTables.FILES.size(); i++) {
+            String path = PlayerLookTables.FILES.get(i);
+            JsonObject o = readJson(path, i > 0);                  // looks.json is required; the abyssal and dungeon tables are optional
+            if (o == null) continue;
+            try {
+                List<String> problems = new ArrayList<>();
+                PlayerLookTables.merge(LOOKS_BY_ID, PlayerLook.parseTable(o), path, problems);
+                for (String p : problems) warnOnce("dup:" + p, "[nusmp] {}", p);
+            } catch (RuntimeException ex) {
+                warnOnce("looks-parse:" + path, "[nusmp] {} is malformed ({}): its characters use the default look", path, ex.toString());
+            }
         }
     }
 
     private static void loadHair() {
         loadedHair = true;
-        JsonObject o = readJson(HAIR);
+        JsonObject o = readJson(HAIR, false);
         if (o == null) return;
         try {
             HAIR_BY_ID.putAll(HairStyleData.parse(o));
@@ -109,6 +129,12 @@ public final class PlayerAssets {
         return id != null && LOOKS_BY_ID.containsKey(id);
     }
 
+    /** The look of an id, or null when there is none (no fallback, no warning): for a renderer that chooses between the kit and an older renderer. */
+    public static synchronized PlayerLook lookOrNull(String id) {
+        if (!loadedLooks) loadLooks();
+        return id == null ? null : LOOKS_BY_ID.get(id);
+    }
+
     /** The hair style of an id, or null for none (bald, an unknown id). */
     public static synchronized HairStyleData.Style hair(String id) {
         if (id == null || id.isEmpty() || id.equals("bald")) return null;
@@ -120,61 +146,61 @@ public final class PlayerAssets {
 
     /** The texture location of a skin name or path (cached); the default skin when the name is not valid. */
     public static synchronized ResourceLocation skin(String name) {
-        String key = "skin:" + name;
-        ResourceLocation rl = LOCATIONS.get(key);
+        ResourceLocation rl = SKINS.get(name);
         if (rl == null) {
             String path = SkinPath.resolve(name);
             if (path.isEmpty()) path = SkinPath.defaultPath();
             rl = rl(path);
-            LOCATIONS.put(key, rl);
+            SKINS.put(name, rl);
         }
         return rl;
     }
 
     /** The glow map next to a skin. */
     public static synchronized ResourceLocation glowOf(String skinName) {
-        String key = "glow:" + skinName;
-        ResourceLocation rl = LOCATIONS.get(key);
+        ResourceLocation rl = GLOWS.get(skinName);
         if (rl == null) {
             String p = SkinPath.glowOf(SkinPath.resolve(skinName));
             rl = rl(p.isEmpty() ? SkinPath.glowOf(SkinPath.defaultPath()) : p);
-            LOCATIONS.put(key, rl);
+            GLOWS.put(skinName, rl);
         }
         return rl;
     }
 
     /** A texture under textures/entity/ by plain name (the textures of extras). */
     public static synchronized ResourceLocation extraTexture(String name, boolean glow) {
-        String key = (glow ? "xg:" : "x:") + name;
-        ResourceLocation rl = LOCATIONS.get(key);
+        Map<String, ResourceLocation> cache = glow ? EXTRAS_GLOW : EXTRAS;
+        ResourceLocation rl = cache.get(name);
         if (rl == null) {
             String p = SkinPath.extraTexture(glow ? name + "_glow" : name);
             rl = rl(p.isEmpty() ? SkinPath.defaultPath() : p);
-            LOCATIONS.put(key, rl);
+            cache.put(name, rl);
         }
         return rl;
     }
 
     /** The hair sheet of a style. */
     public static synchronized ResourceLocation hairSheet(HairStyleData.Style s) {
-        String key = "hair:" + s.id();
-        ResourceLocation rl = LOCATIONS.get(key);
+        ResourceLocation rl = HAIR_SHEETS.get(s.id());
         if (rl == null) {
             String p = SkinPath.hairSheet(s.texture());
             rl = rl(p.isEmpty() ? SkinPath.defaultPath() : p);
-            LOCATIONS.put(key, rl);
+            HAIR_SHEETS.put(s.id(), rl);
         }
         return rl;
     }
 
     /** Does the resource exist? (cached; nothing is logged for a miss: glow maps are optional). */
     public static synchronized boolean exists(ResourceLocation rl) {
-        return EXISTS.computeIfAbsent(rl, k -> {
-            try {
-                return Minecraft.getInstance().getResourceManager().getResource(k).isPresent();
-            } catch (RuntimeException ex) {
-                return false;
-            }
-        });
+        Boolean known = EXISTS.get(rl);
+        if (known != null) return known;
+        boolean ok;
+        try {
+            ok = Minecraft.getInstance().getResourceManager().getResource(rl).isPresent();
+        } catch (RuntimeException ex) {
+            ok = false;
+        }
+        EXISTS.put(rl, ok);
+        return ok;
     }
 }

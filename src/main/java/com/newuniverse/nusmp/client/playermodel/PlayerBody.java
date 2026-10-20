@@ -82,6 +82,8 @@ public interface PlayerBody<T extends LivingEntity> {
         public boolean keepUpright;
         /** The shadow's radius in blocks; 0 = the kit's default (scaled with the character). */
         public float shadow;
+        /** No shadow at all (a body still sunk in the floor). */
+        public boolean noShadow;
         /** 0..1 strength of a flash of {@link #flashRgb} over the whole body (the power-up's burst), drawn additive. */
         public float flash;
         public int flashRgb = 0xFFFFFF;
@@ -99,6 +101,7 @@ public interface PlayerBody<T extends LivingEntity> {
             transforming = false;
             keepUpright = false;
             shadow = 0f;
+            noShadow = false;
             flash = 0f;
             flashRgb = 0xFFFFFF;
         }
