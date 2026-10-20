@@ -91,6 +91,7 @@ public final class DjinnGui {
         boolean sized = com.newuniverse.nusmp.client.ui.GuiScale.begin(g, "djinn_panel", ox + GuiLayout.W * fx, oy + GuiLayout.H);
         try {
             PAINTER.paint(CANVAS, theme(d, st.dark), st, ox, oy);
+            if (st.phase == 1) com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnPortrait.draw(g, d, st.dark, ox + GuiLayout.MED_CX, oy + GuiLayout.MED_CY, st.time);   // 1.105.0: the tiny figure's head in the circle (the silhouette is the fallback)
         } finally {
             if (sized) g.pose().popPose();
         }

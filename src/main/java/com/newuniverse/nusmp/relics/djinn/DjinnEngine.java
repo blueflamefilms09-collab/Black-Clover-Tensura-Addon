@@ -116,6 +116,7 @@ public final class DjinnEngine {
         if (s.phase() >= DjinnPhaseRules.HALF && t % 8 == 0) trail(p, s);
         Djinn d = s.active();
         if (d != null && s.phase() == DjinnPhaseRules.LESSER && t % 40 == 0) DjinnMagic.lesserBolt(p, d);
+        if (d != null && s.phase() == DjinnPhaseRules.LESSER && t % 40 == 24) TinyDjinnCue.lesserCue(p);                          // 1.105.0: tells the tiny figure to point and dash, 16 ticks before the bolt
         if (((t >> 2) + p.getId()) % 5 == 0) second(p, s, r, now);
     }
 

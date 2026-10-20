@@ -60,10 +60,25 @@ public final class DjinnNet {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /**
+     * 1.105.0 (the Tiny Djinn): the Lesser Summon of {@code owner} is about to strike the foe {@code foe} (entity ids). Sent to everyone who sees the owner,
+     * 16 ticks before the bolt lands ({@link TinyDjinnCue}), so the little figure can point, dash and arrive with it. Purely visual: it changes nothing on the server.
+     */
+    public record Cue(int owner, int foe) implements CustomPacketPayload {
+        public static final Type<Cue> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_cue"));
+        public static final StreamCodec<FriendlyByteBuf, Cue> STREAM_CODEC = StreamCodec.of(
+                (buf, p) -> { buf.writeVarInt(p.owner()); buf.writeVarInt(p.foe()); },
+                buf -> new Cue(buf.readVarInt(), buf.readVarInt()));
+
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         var r = event.registrar("1").optional();
         r.playToClient(Sync.TYPE, Sync.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.relics.djinn.DjinnClientState.receive(payload)));
+        r.playToClient(Cue.TYPE, Cue.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnClient.cue(payload.owner(), payload.foe())));
         r.playToServer(Act.TYPE, Act.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> { if (ctx.player() instanceof ServerPlayer sp) DjinnEngine.onKey(sp, payload.action()); }));
     }

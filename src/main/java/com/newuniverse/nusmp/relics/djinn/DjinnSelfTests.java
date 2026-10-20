@@ -46,6 +46,7 @@ public final class DjinnSelfTests {
     public static void register() {
         SelfTests.register("djinn.core_rebuild", DjinnSelfTests::coreRebuild);
         DjinnBindSelfTest.register();                                                            // 1.101.0: djinn.bc_bind
+        TinyDjinnSelfTest.register();                                                            // 1.105.0: djinn.tiny
     }
 
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
