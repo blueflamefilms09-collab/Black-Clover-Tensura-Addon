@@ -46,7 +46,7 @@ import java.util.List;
 
 /**
  * 0.102: the Black Clover Spirit Lords in their true bodies: Salamander (a winged fire dragon), Undine (a woman of water), Sylph (a green
- * fairy) and Gnome (a stone giant). Unlike the small orbs (see {@link SpiritLordEntity}, the Tensura-style spirits anyone may call), these
+ * fairy) and Gnome (a stone giant). 1.99.0: as the canon has them, Salamander is massive, Undine a giant mermaid and Sylph a tiny winged fairy (see docs/rebuild/great_spirits.md). Unlike the small orbs (see {@link SpiritLordEntity}, the Tensura-style spirits anyone may call), these
  * four are exclusive, as in Black Clover: each element has exactly one mage on the server ({@link SpiritSlots}), only that mage can call
  * it, and only one of each can exist. They are built from tools/gen_spirit_lords.py and drawn by client.ElementalSpiritRenderer.
  * <ul>
@@ -58,9 +58,10 @@ import java.util.List;
  */
 public class ElementalSpiritLordEntity extends TamableAnimal {
     public enum Kind {
-        SALAMANDER("Salamander", "Salamander", 0xFFFF6A1E, true, 1.4f, 1.9f),
-        UNDINE("Undine", "Undine", 0xFF4FA8FF, true, 0.8f, 2.0f),
-        SYLPH("Sylph", "Sylph", 0xFF8CFFC2, true, 0.6f, 1.4f),
+        // 1.99.0 (Great Spirits): Salamander a MASSIVE dragon, Undine a GIANT mermaid, Sylph a TINY fairy (the hit boxes follow the canon sizes the renderer draws, client.SpiritLooks)
+        SALAMANDER("Salamander", "Salamander", 0xFFFF6A1E, true, 1.8f, 2.5f),
+        UNDINE("Undine", "Undine", 0xFF4FA8FF, true, 1.3f, 3.3f),
+        SYLPH("Sylph", "Sylph", 0xFF8CFFC2, true, 0.35f, 0.45f),
         GNOME("Gnome", "Gnome", 0xFFB08850, false, 1.3f, 3.0f);
 
         public final String display, slot;

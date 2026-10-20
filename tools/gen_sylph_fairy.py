@@ -21,7 +21,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from great_spirits_lib import (FnMat, Piece, Anim, Mat, grid, blank, paste, add_glow, cover, disc, ellipse, capsule, shaded, film, hexcells, hash2,  # noqa: E402
-                               col, fbm, smooth, sine_rot, loop_rot, TAU)
+                               col, fbm, smooth, sine_rot, loop_rot, solid, TAU)
 
 KEY = "spirit"
 

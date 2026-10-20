@@ -59,7 +59,7 @@ public final class GreatSpiritModels {
         float pulse = 0.8f + 0.2f * Mth.sin(age * 0.12f);
         GeoDraw.paint(pose, buffers, SALAMANDER, anim, secs, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, SpiritLooks.greyArgb(pulse));
         float blaze = 0.72f + 0.2f * Mth.sin(age * 0.23f) + 0.08f * Mth.sin(age * 0.71f);
-        GeoDraw.paint(pose, buffers, SALAMANDER_BLAZE, anim, secs, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, light, SpiritLooks.greyArgb(blaze * 0.85f), SpiritLooks.greyArgb(blaze));
+        GeoDraw.paint(pose, buffers, SALAMANDER_BLAZE, anim, secs, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, light, SpiritLooks.greyArgb(blaze * 0.5f), SpiritLooks.greyArgb(blaze * 0.32f));
         pose.popPose();
     }
 }
