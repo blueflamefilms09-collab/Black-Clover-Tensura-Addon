@@ -72,6 +72,9 @@ public final class PocketDefs extends SimpleJsonResourceReloadListener {
         Map<String, PocketDef> defs = new LinkedHashMap<>();
         for (PocketDef d : parsed) defs.put(d.id(), d);
         loaded = new Loaded(Map.copyOf(defs), Map.copyOf(bosses), Map.copyOf(extras));
+        Map<String, String> relics = new LinkedHashMap<>();
+        for (PocketDef d : defs.values()) for (String r : d.relics().all()) relics.put(r, d.id());
+        PocketRelics.loaded(relics);
         LOG.info("[nusmp] exclusive pockets: {} loaded, {} boss profiles", defs.size(), bosses.size());
     }
 

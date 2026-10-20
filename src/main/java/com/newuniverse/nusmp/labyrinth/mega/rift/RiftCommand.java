@@ -1,11 +1,17 @@
 package com.newuniverse.nusmp.labyrinth.mega.rift;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets;
+import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts;
+import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketDef;
+import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketDefs;
+import com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketRuntime;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -34,7 +40,10 @@ public final class RiftCommand {
                         .then(Commands.literal("shortcut").executes(c -> open(c.getSource(), RiftType.SHORTCUT, null)))
                         .then(Commands.literal("pocket").executes(c -> open(c.getSource(), RiftType.POCKET, null))
                                 .then(Commands.literal("boss").executes(c -> open(c.getSource(), RiftType.POCKET, RiftRules.Variant.BOSS)))
-                                .then(Commands.literal("puzzle").executes(c -> open(c.getSource(), RiftType.POCKET, RiftRules.Variant.PUZZLE))))
+                                .then(Commands.literal("puzzle").executes(c -> open(c.getSource(), RiftType.POCKET, RiftRules.Variant.PUZZLE)))
+                                .then(Commands.literal("mega").executes(c -> openMega(c.getSource(), ""))
+                                        .then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(PocketDefs.ids(), b))
+                                                .executes(c -> openMega(c.getSource(), StringArgumentType.getString(c, "id"))))))
                         .then(Commands.literal("return").executes(c -> open(c.getSource(), RiftType.RETURN, null))))
                 .then(Commands.literal("list").executes(c -> list(c.getSource())))
                 .then(Commands.literal("info").executes(c -> info(c.getSource())))
@@ -53,7 +62,18 @@ public final class RiftCommand {
                         .then(Commands.literal("clear").then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1))
                                 .executes(c -> clearPocket(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
                         .then(Commands.literal("enter").then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1))
-                                .executes(c -> visit(c.getSource(), IntegerArgumentType.getInteger(c, "slot"))))))
+                                .executes(c -> visit(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
+                        .then(Commands.literal("types").executes(c -> types(c.getSource())))                                                      // 1.99.0: the exclusive tombs
+                        .then(Commands.literal("make").then(Commands.argument("id", StringArgumentType.word()).suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(PocketDefs.ids(), b))
+                                .executes(c -> make(c.getSource(), StringArgumentType.getString(c, "id")))))
+                        .then(Commands.literal("seal").then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1))
+                                .executes(c -> sealOpen(c.getSource(), IntegerArgumentType.getInteger(c, "slot")))))
+                        .then(Commands.literal("fall").then(Commands.argument("slot", IntegerArgumentType.integer(0, RiftRules.MAX_SLOTS - 1))
+                                .executes(c -> fall(c.getSource(), IntegerArgumentType.getInteger(c, "slot"))))))
+                .then(Commands.literal("tier").executes(c -> tier(c.getSource(), c.getSource().getPlayerOrException()))
+                        .then(Commands.argument("player", EntityArgument.player()).executes(c -> tier(c.getSource(), EntityArgument.getPlayer(c, "player")))))
+                .then(Commands.literal("pity").then(Commands.argument("player", EntityArgument.player())
+                        .then(Commands.argument("count", IntegerArgumentType.integer(0, 100000)).executes(c -> pity(c.getSource(), EntityArgument.getPlayer(c, "player"), IntegerArgumentType.getInteger(c, "count"))))))
                 .then(Commands.literal("waypoint")
                         .then(Commands.literal("show").executes(c -> show(c.getSource(), c.getSource().getPlayerOrException()))
                                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> show(c.getSource(), EntityArgument.getPlayer(c, "player")))))
@@ -107,7 +127,7 @@ public final class RiftCommand {
     private static String describe(ServerLevel level, DimensionalRiftBlockEntity be) {
         return be.type().id() + " at " + be.getBlockPos().toShortString() + ", age " + be.age() / 20 + " s, " + be.left() / 20 + " s left" + (be.type() == RiftType.SHORTCUT
                 ? ", floor chain " + be.fromChain() + " to " + be.targetChain() + (be.stable() ? " (steady)" : " (forming, waited " + be.waited() / 20 + " s)") : "")
-                + (be.slot() >= 0 ? ", pocket slot " + be.slot() : "");
+                + (be.slot() >= 0 ? ", pocket slot " + be.slot() : "") + (be.isExclusive() ? ", MEGA-RARE tear to the tomb " + be.pocketId() : "");
     }
 
     private static int list(CommandSourceStack s) {
@@ -193,16 +213,24 @@ public final class RiftCommand {
         PocketRealm realm = PocketRealm.get(s.getServer());
         return ok(s, text("status", "Rifts: enabled=%s pockets=%s waypoint=%s; open now %s; pockets alive %s; jump %s-%s floors; pocket %s min.", RiftConfig.get(RiftConfig.ENABLED),
                 RiftConfig.get(RiftConfig.POCKETS), RiftConfig.get(RiftConfig.WAYPOINT), RiftService.openRifts().size(), realm.pockets().size(), RiftConfig.get(RiftConfig.JUMP_MIN),
-                RiftConfig.get(RiftConfig.JUMP_MAX), RiftConfig.get(RiftConfig.POCKET_MINUTES)).append(mega == null ? text("nodim", " (the dungeon dimension is not loaded)") : Component.empty()));
+                RiftConfig.get(RiftConfig.JUMP_MAX), RiftConfig.get(RiftConfig.POCKET_MINUTES)).append(mega == null ? text("nodim", " (the dungeon dimension is not loaded)") : Component.empty())
+                .append(text("statusMega", " Mega-rare: enabled=%s one in %s, pity %s to %s, %s tombs loaded, %s of %s tombs standing.", RiftConfig.get(RiftConfig.MEGA_ENABLED), RiftConfig.get(RiftConfig.MEGA_ONE_IN),
+                        RiftConfig.get(RiftConfig.PITY_START), RiftConfig.get(RiftConfig.PITY_HARD), PocketDefs.count(), realm.exclusiveCount(), RiftConfig.get(RiftConfig.EXCLUSIVE_MAX))));
     }
 
     private static int pockets(CommandSourceStack s) {
         PocketRealm realm = PocketRealm.get(s.getServer());
         if (realm.pockets().isEmpty()) return ok(s, text("nopockets", "No pocket realm is alive."));
         ServerLevel mega = MegaDungeon.level(s.getServer());
-        for (PocketRealm.Pocket p : realm.pockets().values())
+        for (PocketRealm.Pocket p : realm.pockets().values()) {
+            if (p.exclusive()) {                                                                      // 1.99.0: an exclusive tomb
+                ok(s, text("tomb", "slot %s: TOMB %s (floor %s), phase %s, %s inside, %s s left; boss %s, seal %s, relic %s", p.slot, p.pocketId, p.originFloor, p.phase, mega == null ? 0 : PocketRealm.playersIn(mega, p.slot).size(),
+                        mega == null ? 0 : Math.max(0, (p.expiresAt - mega.getGameTime()) / 20), p.bossDead ? "dead" : "alive", p.sealOpen ? "open" : p.sealHp + " left", p.relicTaken ? "taken" : "on its pedestal"));
+                continue;
+            }
             ok(s, text("pocket", "slot %s: %s (floor %s), %s inside, %s s left%s", p.slot, p.variant, p.floor, mega == null ? 0 : PocketRealm.playersIn(mega, p.slot).size(),
                     mega == null ? 0 : Math.max(0, (p.expiresAt - mega.getGameTime()) / 20), p.bossDead || p.solved ? ", vault open" : ""));
+        }
         return realm.pockets().size();
     }
 
@@ -240,6 +268,72 @@ public final class RiftCommand {
         mega.getChunk(pk.entry.getX() >> 4, pk.entry.getZ() >> 4);
         PocketRealm.move(p, mega, pk.entry.getX() + 0.5, pk.entry.getY(), pk.entry.getZ() + 0.5, -90f, 0f);
         return ok(s, text("visited", "Stepped into the pocket in slot %s.", slot));
+    }
+
+    // ---------------------------------------------------------------- 1.99.0: the exclusive tombs
+    /** Opens a mega-rare tear three blocks ahead of the sender, to the tomb {@code id} (empty: a random one). */
+    private static int openMega(CommandSourceStack s, String id) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer p = s.getPlayerOrException();
+        ServerLevel level = p.serverLevel();
+        PocketDef def = MegaRifts.pickForced(id, level.getRandom());
+        if (def == null) return fail(s, text("notomb", "There is no tomb '%s' (try /multiverse mega rift pocket types).", id));
+        BlockPos at = p.blockPosition().relative(p.getDirection(), 3);
+        DimensionalRiftBlockEntity be = RiftService.open(level, at, RiftType.POCKET, level.getRandom().nextLong());
+        if (be == null) return fail(s, text("nospace", "There is no room for a rift three blocks ahead."));
+        MegaRifts.aim(be, def);
+        MegaRifts.announce(level, at, def, null);
+        return ok(s, text("openedMega", "Opened a MEGA-RARE rift to %s at %s.", def.id(), at.toShortString()));
+    }
+
+    private static int types(CommandSourceStack s) {
+        if (PocketDefs.count() == 0) return fail(s, text("notombs", "No exclusive tomb is loaded."));
+        for (PocketDef d : PocketDefs.all())
+            ok(s, text("tombRow", "%s: %s (%s), %s rooms, boss %s, relics %s, weight %s, from depth %s", d.id(), d.name(), d.series(), d.layout().rooms(), d.boss(), d.relics().all(), d.weight(), d.minDepth()));
+        return PocketDefs.count();
+    }
+
+    /** Raises a fresh tomb of {@code id} and takes the sender into it. */
+    private static int make(CommandSourceStack s, String id) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer p = s.getPlayerOrException();
+        if (PocketDefs.get(id) == null) return fail(s, text("notomb", "There is no tomb '%s' (try /multiverse mega rift pocket types).", id));
+        return RiftAdmin.enter(p, id) ? ok(s, text("made", "Raised the tomb %s and stepped in.", id)) : fail(s, text("nomake", "The tomb %s could not be raised (you are in a pocket already, no cell is free, or the cap on tombs is reached).", id));
+    }
+
+    /** Opens the seal of the tomb in a slot as if it had been unravelled. */
+    private static int sealOpen(CommandSourceStack s, int slot) {
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        PocketRealm realm = PocketRealm.get(s.getServer());
+        PocketRealm.Pocket pk = realm.at(slot);
+        PocketRuntime rt = pk == null ? null : PocketRuntime.of(pk);
+        if (mega == null || rt == null) return fail(s, text("notombslot", "There is no tomb in slot %s.", slot));
+        return ExclusivePockets.openSeal(mega, realm, pk, rt, null, "magic") ? ok(s, text("sealOpened", "Opened the seal of the tomb in slot %s.", slot)) : fail(s, text("sealWasOpen", "The seal of slot %s is open already.", slot));
+    }
+
+    /** Starts the collapse of the tomb in a slot as if its primary relic had been taken. */
+    private static int fall(CommandSourceStack s, int slot) {
+        ServerLevel mega = MegaDungeon.level(s.getServer());
+        PocketRealm realm = PocketRealm.get(s.getServer());
+        PocketRealm.Pocket pk = realm.at(slot);
+        PocketRuntime rt = pk == null ? null : PocketRuntime.of(pk);
+        if (mega == null || rt == null) return fail(s, text("notombslot", "There is no tomb in slot %s.", slot));
+        return ExclusivePockets.startCollapse(mega, realm, pk, rt, mega.getGameTime()) ? ok(s, text("falling", "The tomb in slot %s begins to fall (%s s).", slot, rt.def.collapseSeconds())) : fail(s, text("fallingAlready", "The tomb in slot %s is already falling or gone.", slot));
+    }
+
+    /** What a player's next rift is worth: the chance that it is mega-rare and the pity behind it. */
+    private static int tier(CommandSourceStack s, ServerPlayer p) {
+        int floor = 1;
+        if (Labyrinth.inMega(p.level())) {
+            Sector here = MegaData.get(s.getServer()).sectorAt(p.blockPosition());
+            if (here != null) floor = Math.abs(here.firstFloor());
+        }
+        double chance = MegaRifts.chance(p, floor);
+        return ok(s, text("tier", "%s: pity %s (soft from %s, certain at %s); the next rift near them is mega-rare with chance %s (about one in %s) at floor %s.", p.getName(), MegaRifts.pity(p), RiftConfig.get(RiftConfig.PITY_START),
+                RiftConfig.get(RiftConfig.PITY_HARD), String.format(java.util.Locale.ROOT, "%.4f", chance), chance <= 0 ? "never" : Math.round(1.0 / chance), floor));
+    }
+
+    private static int pity(CommandSourceStack s, ServerPlayer p, int count) {
+        MegaRifts.setPity(p, count);
+        return ok(s, text("pitySet", "Set the pity of %s to %s.", p.getName(), count));
     }
 
     private static int show(CommandSourceStack s, ServerPlayer p) {

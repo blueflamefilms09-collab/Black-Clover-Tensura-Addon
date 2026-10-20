@@ -140,6 +140,10 @@
     {
       "id": "nusmp:lightning_flashs_rapier_sash",
       "required": false
+    },
+    {
+      "id": "nusmp:silvered_sash_of_reflections",
+      "required": false
     }
   ]
 }

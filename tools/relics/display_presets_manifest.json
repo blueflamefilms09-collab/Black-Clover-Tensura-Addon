@@ -26,6 +26,20 @@
       "length_blocks": 0.95
     },
     {
+      "id": "anheteps_sunscourge",
+      "action": "preset",
+      "length_blocks": 2.353,
+      "first_person_scale": 0.402,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.34,
+      "fixed_scale": 0.637
+    },
+    {
       "id": "anti_bird_charm",
       "action": "keep",
       "length_blocks": 0.686
@@ -57,6 +71,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.303,
       "fixed_scale": 0.569
+    },
+    {
+      "id": "aurliels_seraph_halberd",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        2.26,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "axe_of_the_crimson_saint",
@@ -145,6 +173,11 @@
       "length_blocks": 0.647
     },
     {
+      "id": "broodqueens_stinger",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
       "id": "buster_sword",
       "action": "preset",
       "length_blocks": 3.059,
@@ -228,6 +261,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.431,
       "fixed_scale": 0.808
+    },
+    {
+      "id": "chronarchs_pendulum_sabre",
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.662,
+      "first_person_translation_px": [
+        1.13,
+        2.94,
+        0.82
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "chronicle_sigil",
@@ -324,6 +371,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.217,
       "fixed_scale": 0.408
+    },
+    {
+      "id": "deepwatch_harpoon",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.262,
+      "first_person_translation_px": [
+        1.13,
+        2.29,
+        0.72
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "deliverance",
@@ -772,6 +833,20 @@
       "length_blocks": 1.271
     },
     {
+      "id": "ignareths_forge_hammer",
+      "action": "preset",
+      "length_blocks": 1.882,
+      "first_person_scale": 0.524,
+      "first_person_translation_px": [
+        1.13,
+        2.77,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.425,
+      "fixed_scale": 0.796
+    },
+    {
       "id": "ilmare_gin_the_starlight_silver",
       "action": "preset",
       "length_blocks": 1.835,
@@ -1135,6 +1210,20 @@
       "length_blocks": 1.271
     },
     {
+      "id": "nekrathuls_pact_scythe",
+      "action": "preset",
+      "length_blocks": 2.765,
+      "first_person_scale": 0.439,
+      "first_person_translation_px": [
+        1.13,
+        3.12,
+        0.97
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.289,
+      "fixed_scale": 0.542
+    },
+    {
       "id": "noon_cleaver",
       "action": "preset",
       "length_blocks": 3.235,
@@ -1161,6 +1250,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.269,
       "fixed_scale": 0.505
+    },
+    {
+      "id": "orials_starfall_staff",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
     },
     {
       "id": "otherworld_trident",
@@ -1305,6 +1408,20 @@
       "length_blocks": 1.091
     },
     {
+      "id": "reflected_kings_mirrorblade",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "returning_hand_axe",
       "action": "preset",
       "length_blocks": 1.435,
@@ -1333,6 +1450,20 @@
       "fixed_scale": 0.408
     },
     {
+      "id": "rimeheart_greatblade",
+      "action": "preset",
+      "length_blocks": 3.118,
+      "first_person_scale": 0.315,
+      "first_person_translation_px": [
+        1.13,
+        2.38,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.256,
+      "fixed_scale": 0.481
+    },
+    {
       "id": "rimeheart_runeblade",
       "action": "preset",
       "length_blocks": 1.941,
@@ -1359,6 +1490,11 @@
       "tip_out_of_view": false,
       "ground_scale": 0.386,
       "fixed_scale": 0.724
+    },
+    {
+      "id": "sanguine_wardens_cleaver",
+      "action": "keep",
+      "length_blocks": 1.235
     },
     {
       "id": "scepter_of_the_double_moon",
@@ -1800,6 +1936,11 @@
       "fixed_scale": 1.0
     },
     {
+      "id": "thornmothers_briar_bow",
+      "action": "skip_manual",
+      "length_blocks": 1.2
+    },
+    {
       "id": "thunder_shield",
       "action": "preset",
       "length_blocks": 1.855,
@@ -1907,6 +2048,20 @@
       "id": "unicorn_dagger",
       "action": "keep",
       "length_blocks": 0.647
+    },
+    {
+      "id": "valkarins_stormlance",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.26,
+      "first_person_translation_px": [
+        1.13,
+        2.27,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "vanguard_hammer",

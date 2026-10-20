@@ -281,6 +281,14 @@
     {
       "id": "nusmp:sleeping_knights_pact_ring",
       "required": false
+    },
+    {
+      "id": "nusmp:aerie_courier_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:bloodbound_gauntlets",
+      "required": false
     }
   ]
 }

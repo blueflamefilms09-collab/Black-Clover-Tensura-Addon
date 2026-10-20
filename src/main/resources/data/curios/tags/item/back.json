@@ -219,6 +219,14 @@
     {
       "id": "nusmp:ruined_castle_guild_banner",
       "required": false
+    },
+    {
+      "id": "nusmp:pactbreaker_shroud",
+      "required": false
+    },
+    {
+      "id": "nusmp:silent_winter_mantle",
+      "required": false
     }
   ]
 }

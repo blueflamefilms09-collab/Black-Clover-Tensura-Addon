@@ -736,6 +736,45 @@
   },
   "tidebreaker_chakram": {
    "class": "handaxe"
+  },
+  "thornmothers_briar_bow": {
+   "class": "bow"
+  },
+  "broodqueens_stinger": {
+   "class": "dagger"
+  },
+  "anheteps_sunscourge": {
+   "class": "whip"
+  },
+  "ignareths_forge_hammer": {
+   "class": "hammer"
+  },
+  "rimeheart_greatblade": {
+   "class": "greatsword"
+  },
+  "deepwatch_harpoon": {
+   "class": "spear"
+  },
+  "sanguine_wardens_cleaver": {
+   "class": "cleaver"
+  },
+  "valkarins_stormlance": {
+   "class": "spear"
+  },
+  "orials_starfall_staff": {
+   "class": "staff"
+  },
+  "chronarchs_pendulum_sabre": {
+   "class": "sabre"
+  },
+  "reflected_kings_mirrorblade": {
+   "class": "longsword"
+  },
+  "aurliels_seraph_halberd": {
+   "class": "glaive"
+  },
+  "nekrathuls_pact_scythe": {
+   "class": "scythe"
   }
  },
  "_excluded_was": {

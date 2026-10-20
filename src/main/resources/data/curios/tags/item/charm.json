@@ -689,6 +689,26 @@
     {
       "id": "nusmp:teleport_crystal",
       "required": false
+    },
+    {
+      "id": "nusmp:archivists_starbound_codex",
+      "required": false
+    },
+    {
+      "id": "nusmp:ashen_forgeheart",
+      "required": false
+    },
+    {
+      "id": "nusmp:orrery_of_drowned_hours",
+      "required": false
+    },
+    {
+      "id": "nusmp:reliquary_seedheart",
+      "required": false
+    },
+    {
+      "id": "nusmp:vaultmakers_pocketwatch",
+      "required": false
     }
   ]
 }

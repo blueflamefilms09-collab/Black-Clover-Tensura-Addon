@@ -277,6 +277,22 @@ class PocketDataTest {
             }
         }
         assertTrue(owner.size() >= 24, "at least two exclusive relics a pocket, " + owner.size());
+        assertEquals(PocketRelics.BUILT_IN, owner.keySet(), "the built-in set of exclusive relics (kept out of every random relic roll) is exactly the relics of the pocket files");
+        for (String r : owner.keySet()) assertTrue(PocketRelics.exclusive(r), r);
+        assertFalse(PocketRelics.exclusive("vorpal_sword"), "an ordinary relic stays in the pools");
+        assertFalse(PocketRelics.exclusive(null));
+    }
+
+    @Test
+    void theWeaponsAreWave78AndTheAccessoriesWave79AndEachTombHasOneOfEach() throws IOException {
+        String w78 = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/relics/wave/Wave78.java")), w79 = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/relics/wave/Wave79.java"));
+        for (PocketDef d : defs().values()) {
+            assertEquals(1, d.relics().boss().size(), d.id() + ": one weapon from the boss");
+            assertEquals(1, d.relics().treasury().size(), d.id() + ": one artifact from the treasury");
+            assertTrue(w78.contains("RelicDef.of(\"" + d.relics().boss().get(0) + "\""), d.id() + ": the boss relic is a weapon of wave 78");
+            assertTrue(w79.contains("RelicDef.of(\"" + d.relics().treasury().get(0) + "\""), d.id() + ": the treasury relic is an artifact of wave 79");
+            assertEquals(d.relics().treasury().get(0), d.relics().primary(), d.id() + ": the artifact on the pedestal is the primary one, whose removal collapses the tomb");
+        }
     }
 
     @Test
@@ -362,7 +378,7 @@ class PocketDataTest {
         try (Stream<Path> s = Files.walk(DATA)) {
             for (Path f : s.filter(x -> x.toString().endsWith(".json")).toList()) {
                 String norm = f.toString().replace('\\', '/');
-                if (norm.contains("loot_table/pocket/") || norm.contains("mega/pockets/")) continue;
+                if (norm.contains("loot_table/pocket/") || norm.contains("mega/pockets/") || norm.endsWith("mega/relic_themes.json")) continue;     // the dungeon road of a weapon is not a way to get it
                 String t = Files.readString(f);
                 for (String r : owner.keySet()) assertFalse(t.contains("\"nusmp:" + r + "\"") || t.contains("\"" + r + "\""), r + " appears in " + f);
             }

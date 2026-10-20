@@ -234,6 +234,19 @@
     "magic_emperors_black_halberd": "spatial",
     "starsplitter_hammer": "gravity",
     "sword_of_the_first_dawn": "holy_church",
-    "tidebreaker_chakram": "sunken_temple"
+    "tidebreaker_chakram": "sunken_temple",
+    "thornmothers_briar_bow": "feywild_grove",
+    "broodqueens_stinger": "spider_warrens",
+    "anheteps_sunscourge": "shadow",
+    "ignareths_forge_hammer": "dwarven_forgehold",
+    "rimeheart_greatblade": "frost",
+    "deepwatch_harpoon": "drowned_crypt",
+    "sanguine_wardens_cleaver": "vampire_castle",
+    "valkarins_stormlance": "sky_citadel",
+    "orials_starfall_staff": "astral",
+    "chronarchs_pendulum_sabre": "gravity",
+    "reflected_kings_mirrorblade": "spatial",
+    "aurliels_seraph_halberd": "radiant",
+    "nekrathuls_pact_scythe": "abyss"
   }
 }
