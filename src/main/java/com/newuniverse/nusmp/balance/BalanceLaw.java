@@ -40,7 +40,7 @@ public final class BalanceLaw {
     public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac) {
         double m = Math.max(0, Math.min(1, masteryFrac));
         double r = raw * epScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);   // 1.5.0: stage, Mana Zone, negative mana
-        r += target.getMaxHealth() * 0.01 * raw / 10.0;                      // a sliver of the target's max health
+        r += DamageSliver.of(raw, target.getMaxHealth(), isBoss(target));    // 1.105.0: no percentage-of-max-health damage for weapon-scale hits or bosses (it made a 400 hit take 40% of a boss, see DamageSliver)
         return cap(target, (float) r);
     }
 
