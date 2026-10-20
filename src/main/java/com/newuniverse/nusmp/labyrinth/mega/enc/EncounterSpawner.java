@@ -232,6 +232,7 @@ final class EncounterSpawner {
         if (faction != null && !faction.isEmpty()) mob.addTag(TAG + "_" + faction);
         mob.getPersistentData().putString(ENTRY, entryId);
         mob.getPersistentData().putLong(BORN, level.getGameTime());
+        com.newuniverse.nusmp.labyrinth.squad.SquadHook.stamp(mob);          // squads: the squad id goes into the monster before it joins, and the join event attaches it
         scale(mob, ThreatScale.amount(threat, EncConfig.get(EncConfig.HEALTH_PER_LEVEL)), ThreatScale.amount(threat, EncConfig.get(EncConfig.DAMAGE_PER_LEVEL)));
     }
 
