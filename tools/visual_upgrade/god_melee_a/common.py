@@ -66,17 +66,36 @@ def read_mesh(path):
 
 
 def mesh_stats(path):
-    m = read_mesh(path)
+    """Quads per layer and WELDED vertices of a mesh file. Positions are compared at two decimals, rounded half up on the file's own text (what tests in Java do too)."""
+    from decimal import Decimal, ROUND_HALF_UP
+    q2 = Decimal("0.01")
     layers = {}
     verts = set()
-    for (ly, P, UV, N) in m["quads"]:
-        layers[ly] = layers.get(ly, 0) + 1
-        for p in P:
-            verts.add((round(float(p[0]), 2), round(float(p[1]), 2), round(float(p[2]), 2)))
+    parts = set()
+    norbit = 0
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            v = line.split()
+            if not v:
+                continue
+            if v[0] == "#":
+                if len(v) > 2 and v[1] == "part":
+                    parts.add(v[2])
+                continue
+            if v[0] == "orbit":
+                norbit += 1
+            if v[0] in ("q", "qn"):
+                stride = 5 if v[0] == "q" else 8
+                ly = int(v[1])
+                layers[ly] = layers.get(ly, 0) + 1
+                for k in range(4):
+                    o = 2 + k * stride
+                    verts.add(tuple(str(d) if d != 0 else "0.00" for d in (Decimal(v[o + j]).quantize(q2, rounding=ROUND_HALF_UP) for j in range(3))))
+    total = sum(layers.values())
     body = sum(c for k, c in layers.items() if k not in (1, 2))             # body (0) and orbiting groups (3 and up) are skin quads
-    return {"quads_total": len(m["quads"]), "quads_body": body, "quads_glow": layers.get(2, 0), "quads_void": layers.get(1, 0),
-            "unique_vertices": len(verts), "emitted_vertices": 4 * len(m["quads"]), "parts": len(set(m["parts"])), "layers": {str(k): v for k, v in sorted(layers.items())},
-            "orbit_groups": len(m["orbits"])}
+    return {"quads_total": total, "quads_body": body, "quads_glow": layers.get(2, 0), "quads_void": layers.get(1, 0),
+            "unique_vertices": len(verts), "emitted_vertices": 4 * total, "parts": len(parts), "layers": {str(k): v for k, v in sorted(layers.items())},
+            "orbit_groups": norbit}
 
 
 def png_stats(path):

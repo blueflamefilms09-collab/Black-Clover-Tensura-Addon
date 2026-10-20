@@ -284,7 +284,7 @@ class Hammer:
         YH_ENG = Hammer.YH + 20.0
 
         def thunder(en, pc):
-            en.text_col("TONITRUS", -3.0, YH_ENG, 1.2, 1.5, 0.12, 0.35)
+            en.text_row("TONITRUS", -10.5, YH_ENG - 6.0, 2.2, 3.0, 0.2, 0.2)
             en.burn(0.5, 0.25, ICE, 0.8, 0.5)
         SK.engrave_face(atlas, head, thunder)
 

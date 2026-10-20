@@ -132,7 +132,7 @@ class Gungnir:
                                    {"t": "column", "at": "caster", "h": 14.0, "r": 0.8, "rgb": [255, 240, 190], "dur": 30},
                                    {"t": "orbit", "at": "caster", "r": 2.6, "n": 2, "rgb": [40, 40, 60], "tex": "glow", "dur": 44, "spin": 0.16, "y": 3.0, "size": 1.4}]),
             ("valhalla_rain", [{"t": "glyph", "at": "caster", "r": 9.0, "rgb": [255, 226, 130], "tex": "magic_circle", "dur": 44, "spin": -0.06},
-                               {"t": "rain", "at": "caster", "r": 10.0, "h": 18.0, "n": 26, "len": 5.0, "rgb": [255, 236, 170], "tex": "streak", "dur": 40},
+                               {"t": "rain", "at": "caster", "r": 10.0, "h": 18.0, "n": 26, "len": 5.0, "rgb": [255, 236, 170], "tex": "air_streak", "dur": 40},
                                {"t": "ring", "at": "caster", "r0": 1.0, "r1": 11.0, "rgb": [130, 180, 255], "dur": 24, "tex": "rune_ring"}]),
         ],
         note="Odin's spear: two ravens, nine rune stones, a head that carries its own name")

@@ -109,7 +109,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
-        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; ItemStateVariants.clearCache(); });     // a resource reload re-reads the meshes
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
                 ResourceLocation.withDefaultNamespace("blocking"),
@@ -175,6 +175,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
                 : ItemStateVariants.resolve(stack, meshId(stack, id), ctx, m -> mesh(m) != null);
         Mesh mesh = state == null ? null : mesh(state.meshId());
+        if (mesh != null && mesh.up != null) mesh = WeaponUpgrade.pick(mesh, pose.last().pose());             // 1.102.0: the low-detail mesh of an upgraded weapon from 12 blocks, without its glow from 24
         if (mesh == null) {                                                        // the inventory (or a missing mesh): the old icon
             BakedModel icon = resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
             pose.pushPose();
@@ -219,7 +220,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty()) {
-            float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f);
+            float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f) * WeaponUpgrade.flicker(mesh, time);
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
             emit(p, buffers.getBuffer(RenderType.eyes(mesh.glowTex)), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
@@ -237,6 +238,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
             emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
+        if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         pose.popPose();
     }
 
@@ -265,23 +267,45 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
         int glowRgb;
         ResourceLocation tex, glowTex;
+        WeaponUpgrade.Data up;                                                   // 1.102.0: set on an upgraded mesh: its spec, orbiting groups, low-detail meshes (null on every shipped mesh)
         @SuppressWarnings("unchecked")
         final List<float[]>[] layers = new List[]{new ArrayList<>(), new ArrayList<>(), new ArrayList<>()};
     }
 
-    /** The parsed mesh for an item id, read once per resource reload; null if it is missing or broken (the icon is used). */
+    /**
+     * The mesh to draw for an item id. 1.102.0: the upgraded mesh when the option {@code visual.upgrade} is on and the weapon has one ({@link WeaponUpgrade}), else the shipped one
+     * ({@link #plainMesh}); the shipped meshes, skins and glows are untouched, so the option falls back to the old look at once.
+     */
     static Mesh mesh(String id) {
+        Mesh up = WeaponUpgrade.mesh(id);
+        return up != null ? up : plainMesh(id);
+    }
+
+    /** The parsed mesh for an item id, read once per resource reload; null if it is missing or broken (the icon is used). */
+    static Mesh plainMesh(String id) {
         if (MESHES.containsKey(id)) return MESHES.get(id);
+        Mesh mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
+        MESHES.put(id, mesh);
+        return mesh;
+    }
+
+    /**
+     * Reads one mesh file (placement, glow, quads, normalisation) into a {@link Mesh}; null if it is missing or broken. {@code tex} and {@code glowTex} replace the skin paths the file
+     * and the id imply (1.102.0: the upgraded meshes carry their own skins under textures/entity/weapon/up).
+     */
+    static Mesh read(String id, String file, ResourceLocation tex, ResourceLocation glowTex) {
         Mesh mesh = null;
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl("weapon_meshes/" + id + ".txt"));
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl(file));
             if (res.isPresent()) {
                 mesh = new Mesh();
-                mesh.tex = skin(id, "");
+                mesh.tex = tex != null ? tex : skin(id, "");
                 try (BufferedReader in = res.get().openAsReader()) {
                     String line;
                     while ((line = in.readLine()) != null) parse(mesh, id, line.trim().split("\\s+"));
                 }
+                if (tex != null) mesh.tex = tex;
+                if (glowTex != null && mesh.glowTex != null) mesh.glowTex = glowTex;
                 float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
                 if (info[1] > 0f) mesh.manual = true;
                 applyOrient(mesh);
@@ -295,7 +319,6 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             LogUtils.getLogger().error("[nusmp] weapon mesh {} failed to load; its icon is used instead", id, ex);
             mesh = null;
         }
-        MESHES.put(id, mesh);
         return mesh;
     }
 
@@ -438,23 +461,26 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
             case "q" -> {
                 int layer = Integer.parseInt(v[1]);
+                List<float[]> dst = layer < mesh.layers.length ? mesh.layers[layer] : WeaponUpgrade.orbitLayer(mesh, layer);       // 1.102.0: layer 3 and up = an orbiting group of an upgraded mesh
                 float nx = Float.parseFloat(v[22]), ny = Float.parseFloat(v[23]), nz = Float.parseFloat(v[24]);
                 for (int k = 0; k < 4; k++) {
                     int o = 2 + k * 5;
-                    mesh.layers[layer].add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
+                    dst.add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), nx, ny, nz});
-                    mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
+                    if (layer < mesh.layers.length) mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
                 }
             }
             case "qn" -> {      // 1.24.0: per-vertex smoothed normals (tools/relics/mesh_lib.py, normals="vertex")
                 int layer = Integer.parseInt(v[1]);
+                List<float[]> dst = layer < mesh.layers.length ? mesh.layers[layer] : WeaponUpgrade.orbitLayer(mesh, layer);
                 for (int k = 0; k < 4; k++) {
                     int o = 2 + k * 8;
-                    mesh.layers[layer].add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
+                    dst.add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), Float.parseFloat(v[o + 5]), Float.parseFloat(v[o + 6]), Float.parseFloat(v[o + 7])});
-                    mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
+                    if (layer < mesh.layers.length) mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
                 }
             }
+            case "orbit" -> WeaponUpgrade.addOrbit(mesh, v);                         // 1.102.0: `orbit <layer> <pivot xyz> <axis xyz> <degrees per tick> <phase> <glow 0|1>`
             default -> { }
         }
     }

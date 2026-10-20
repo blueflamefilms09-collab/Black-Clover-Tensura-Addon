@@ -92,8 +92,32 @@ def main(mode):
             }
             r["ratios_vs_baseline"] = ratios
             r["baseline_V"] = b["V"]
+            r["component_ratios"] = {k: round(r["V_components"][k] / b["V_components"][k], 3) for k in r["V_components"]}
+            r["v_target_5x_met"] = ratios["V"] >= 5.0
+            r["targets"] = {
+                "V_after_ge_5x_V_before": ratios["V"] >= 5.0,
+                "mesh_quads_ge_5x_baseline": ratios["mesh_quads"] >= 5.0,
+                "mesh_floor_600_quads": r["mesh"]["quads_total"] >= 600,
+                "welded_vertices_within_guard_2500": r["mesh"]["unique_vertices"] <= C.GOD_UNIQUE_VERTEX_CAP,
+                "skin_painted_texels_ge_4x": ratios["skin_painted_texels"] >= 4.0,
+                "separate_emissive_glow_map": r["glow_map"] is not None and bool(r["extra_maps"]),
+                "ambient_layers_ge_3": r["ambient"]["count"] >= 3,
+                "idle_animation": len(r["animation"]["idle"]) >= 1,
+                "unique_swing_and_act_vfx": r["animation"]["swing_trail"] and r["animation"]["unique_act_vfx"] >= 1,
+                "low_detail_mesh_le_15pct": r["lod_mesh"] and r["lod"]["quads_total"] <= C.LOD_FRACTION * r["mesh"]["quads_total"],
+            }
             out["items"].append(r)
         path = os.path.join(C.DOCS, "god_melee_a_after.json")
+        n = len(out["items"])
+        out["summary"] = {
+            "items": n,
+            "V_ratio_min": min(r["ratios_vs_baseline"]["V"] for r in out["items"]), "V_ratio_max": max(r["ratios_vs_baseline"]["V"] for r in out["items"]),
+            "V_ratio_mean": round(sum(r["ratios_vs_baseline"]["V"] for r in out["items"]) / n, 3),
+            "items_reaching_5x_V": sum(1 for r in out["items"] if r["v_target_5x_met"]),
+            "targets_met_count": {k: sum(1 for r in out["items"] if r["targets"][k]) for k in out["items"][0]["targets"]},
+            "honest_note": "The composite 5x was not reached by any item: the shipped meshes already had 1000 to 3200 quads (the brief assumed far fewer), so the mesh component, 35% of V, cannot grow "
+                           "5x inside the performance guard of 2500 welded vertices; the components that could grow did (skin texels, passes, ambient layers, animation, act effects).",
+        }
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(out, fh, indent=1)
         fh.write("\n")

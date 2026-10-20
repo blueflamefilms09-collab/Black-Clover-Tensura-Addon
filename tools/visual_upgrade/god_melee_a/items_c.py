@@ -464,14 +464,14 @@ class Crossbow:
         ],
         swing={"pattern": "ray", "particle": "end_rod", "rgb": [255, 214, 110], "rgb2": [255, 246, 214], "count": 3, "size": 0.7, "reach": 1.1},
         acts=[
-            ("piercing_bolt", [{"t": "beam", "from": "caster", "to": "to", "w": 0.9, "rgb": [255, 246, 214], "tex": "streak", "dur": 10},
+            ("piercing_bolt", [{"t": "beam", "from": "caster", "to": "to", "w": 0.9, "rgb": [255, 246, 214], "tex": "air_streak", "dur": 10},
                                {"t": "spiral", "at": "caster", "r": 0.7, "h": 8.0, "turns": 5, "n": 18, "rgb": [255, 214, 110], "dur": 12},
                                {"t": "burst", "at": "to", "n": 10, "len": 3.4, "rgb": [255, 236, 160], "tex": "spark", "dur": 12}]),
             ("sunrise_volley", [{"t": "glyph", "at": "caster", "r": 5.0, "rgb": [255, 214, 110], "tex": "magic_circle", "dur": 28, "spin": 0.1},
-                                {"t": "burst", "at": "caster", "n": 14, "len": 7.0, "rgb": [255, 236, 160], "tex": "streak", "dur": 20},
+                                {"t": "burst", "at": "caster", "n": 14, "len": 7.0, "rgb": [255, 236, 160], "tex": "air_streak", "dur": 20},
                                 {"t": "beam", "from": "caster", "to": "to", "w": 1.4, "rgb": [255, 214, 110], "dur": 12}]),
             ("dawns_net", [{"t": "glyph", "at": "to", "r": 9.0, "rgb": [255, 214, 110], "tex": "barrier_hex_grid", "dur": 44, "spin": 0.03},
-                           {"t": "rain", "at": "to", "r": 9.0, "h": 14.0, "n": 22, "len": 5.0, "rgb": [255, 236, 160], "tex": "streak", "dur": 36},
+                           {"t": "rain", "at": "to", "r": 9.0, "h": 14.0, "n": 22, "len": 5.0, "rgb": [255, 236, 160], "tex": "air_streak", "dur": 36},
                            {"t": "ring", "at": "to", "r0": 1.0, "r1": 10.0, "rgb": [255, 246, 214], "dur": 24, "tex": "rune_ring"}]),
         ],
         note="a sun in a crossbow: a turning halo of sixteen rays, rays ribbed across the limbs")

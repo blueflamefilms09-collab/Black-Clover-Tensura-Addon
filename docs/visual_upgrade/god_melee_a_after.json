@@ -1,0 +1,2095 @@
+{
+ "slice": "god_melee_a",
+ "grade": "god",
+ "weights": {
+  "mesh": 0.35,
+  "texture": 0.2,
+  "glow": 0.15,
+  "ambient": 0.2,
+  "animation": 0.1
+ },
+ "references": {
+  "mesh_quads": 600.0,
+  "texels": 262144.0,
+  "passes": 2.0,
+  "ambient_layers": 3.0
+ },
+ "unique_vertex_cap": 2500,
+ "lod_fraction": 0.15,
+ "note": "V = sum(weight * component); component = a plain count over a fixed reference (never capped). Proxies, not a measure of how it looks in the game.",
+ "items": [
+  {
+   "id": "staff_of_the_magi",
+   "grade": "god",
+   "kind": "staff",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 4119,
+    "quads_body": 2726,
+    "quads_glow": 1393,
+    "quads_void": 0,
+    "unique_vertices": 2461,
+    "emitted_vertices": 16476,
+    "parts": 26,
+    "layers": {
+     "0": 2172,
+     "2": 1393,
+     "3": 280,
+     "4": 96,
+     "5": 88,
+     "6": 90
+    },
+    "orbit_groups": 4
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 523001,
+    "lit_texels": 523001
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 382627,
+    "lit_texels": 370175
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 24352,
+     "lit_texels": 22830
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "retributive_strike",
+     "signature": 235751490
+    },
+    {
+     "act": "spell_turning",
+     "signature": 1106312954
+    },
+    {
+     "act": "arcane_tempest",
+     "signature": 1894945710
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 555,
+    "quads_body": 378,
+    "quads_glow": 177,
+    "quads_void": 0,
+    "unique_vertices": 333,
+    "emitted_vertices": 2220,
+    "parts": 6,
+    "layers": {
+     "0": 378,
+     "2": 177
+    },
+    "orbit_groups": 0
+   },
+   "V": 4.2018,
+   "V_components": {
+    "mesh": 6.865,
+    "texture": 1.9951,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 1.902,
+    "mesh_quads": 1.299,
+    "unique_vertices": 1.392,
+    "skin_painted_texels": 9.231,
+    "glow_map_painted_texels": 13.41,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 2.2091,
+   "component_ratios": {
+    "mesh": 1.299,
+    "texture": 9.232,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "wizard_kings_vow",
+   "grade": "god",
+   "kind": "rapier",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 3047,
+    "quads_body": 1896,
+    "quads_glow": 1151,
+    "quads_void": 0,
+    "unique_vertices": 1758,
+    "emitted_vertices": 12188,
+    "parts": 17,
+    "layers": {
+     "0": 1656,
+     "2": 1151,
+     "3": 144,
+     "4": 96
+    },
+    "orbit_groups": 2
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 490744,
+    "lit_texels": 490744
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 325001,
+    "lit_texels": 316737
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 38849,
+     "lit_texels": 36390
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "mid"
+     },
+     {
+      "layer": "edge",
+      "where": "blade"
+     },
+     {
+      "layer": "ring",
+      "where": "mid"
+     },
+     {
+      "layer": "orbit",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "clover_thrust",
+     "signature": 1769943273
+    },
+    {
+     "act": "magic_zone",
+     "signature": 1467235188
+    },
+    {
+     "act": "kings_judgement",
+     "signature": 1212067495
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 388,
+    "quads_body": 216,
+    "quads_glow": 172,
+    "quads_void": 0,
+    "unique_vertices": 183,
+    "emitted_vertices": 1552,
+    "parts": 4,
+    "layers": {
+     "0": 216,
+     "2": 172
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.5518,
+   "V_components": {
+    "mesh": 5.0783,
+    "texture": 1.872,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.055,
+    "mesh_quads": 2.189,
+    "unique_vertices": 1.958,
+    "skin_painted_texels": 10.954,
+    "glow_map_painted_texels": 16.555,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.1628,
+   "component_ratios": {
+    "mesh": 2.189,
+    "texture": 10.954,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "wand_of_the_wisdom_king",
+   "grade": "god",
+   "kind": "wand",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2314,
+    "quads_body": 1918,
+    "quads_glow": 396,
+    "quads_void": 0,
+    "unique_vertices": 1711,
+    "emitted_vertices": 9256,
+    "parts": 21,
+    "layers": {
+     "0": 886,
+     "2": 396,
+     "3": 96,
+     "4": 96,
+     "5": 96,
+     "6": 192,
+     "7": 552
+    },
+    "orbit_groups": 5
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 961178,
+    "lit_texels": 961178
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 858780,
+    "lit_texels": 858780
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 16273,
+     "lit_texels": 15200
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     },
+     {
+      "layer": "orbit",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "sagely_barrage",
+     "signature": 61031385
+    },
+    {
+     "act": "absolute_defence",
+     "signature": 2137346189
+    },
+    {
+     "act": "accelerated_thought",
+     "signature": 711306413
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 120,
+    "quads_body": 78,
+    "quads_glow": 42,
+    "quads_void": 0,
+    "unique_vertices": 67,
+    "emitted_vertices": 480,
+    "parts": 3,
+    "layers": {
+     "0": 78,
+     "2": 42
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.4832,
+   "V_components": {
+    "mesh": 3.8567,
+    "texture": 3.6666,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.539,
+    "mesh_quads": 2.356,
+    "unique_vertices": 2.483,
+    "skin_painted_texels": 7.749,
+    "glow_map_painted_texels": 13.272,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 0.9841,
+   "component_ratios": {
+    "mesh": 2.356,
+    "texture": 7.749,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "hammer_of_thunderbolts",
+   "grade": "god",
+   "kind": "hammer",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 3229,
+    "quads_body": 2212,
+    "quads_glow": 1017,
+    "quads_void": 0,
+    "unique_vertices": 2141,
+    "emitted_vertices": 12916,
+    "parts": 20,
+    "layers": {
+     "0": 1788,
+     "2": 1017,
+     "3": 264,
+     "4": 160
+    },
+    "orbit_groups": 2
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 957530,
+    "lit_texels": 957530
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 582325,
+    "lit_texels": 500313
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 55802,
+     "lit_texels": 52337
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "arc",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     },
+     {
+      "layer": "edge",
+      "where": "blade"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "thunderclap",
+     "signature": 1966787079
+    },
+    {
+     "act": "hurled_bolt",
+     "signature": 2038541355
+    },
+    {
+     "act": "tempest",
+     "signature": 1025933787
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 442,
+    "quads_body": 248,
+    "quads_glow": 194,
+    "quads_void": 0,
+    "unique_vertices": 258,
+    "emitted_vertices": 1768,
+    "parts": 5,
+    "layers": {
+     "0": 248,
+     "2": 194
+    },
+    "orbit_groups": 0
+   },
+   "V": 4.0141,
+   "V_components": {
+    "mesh": 5.3817,
+    "texture": 3.6527,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 4.114,
+    "mesh_quads": 3.275,
+    "unique_vertices": 2.795,
+    "skin_painted_texels": 8.701,
+    "glow_map_painted_texels": 22.236,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 0.9758,
+   "component_ratios": {
+    "mesh": 3.275,
+    "texture": 8.701,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "gungnir_the_unerring",
+   "grade": "god",
+   "kind": "spear",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2563,
+    "quads_body": 1815,
+    "quads_glow": 748,
+    "quads_void": 0,
+    "unique_vertices": 1723,
+    "emitted_vertices": 10252,
+    "parts": 18,
+    "layers": {
+     "0": 1451,
+     "2": 748,
+     "3": 144,
+     "4": 220
+    },
+    "orbit_groups": 2
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 291580,
+    "lit_texels": 291580
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 111363,
+    "lit_texels": 101265
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 17647,
+     "lit_texels": 16426
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "edge",
+      "where": "blade"
+     },
+     {
+      "layer": "orbit",
+      "where": "tip"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "unerring_cast",
+     "signature": 323153856
+    },
+    {
+     "act": "allfathers_pledge",
+     "signature": 911106568
+    },
+    {
+     "act": "valhalla_rain",
+     "signature": 777814628
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 236,
+    "quads_body": 180,
+    "quads_glow": 56,
+    "quads_void": 0,
+    "unique_vertices": 238,
+    "emitted_vertices": 944,
+    "parts": 5,
+    "layers": {
+     "0": 180,
+     "2": 56
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.1175,
+   "V_components": {
+    "mesh": 4.2717,
+    "texture": 1.1123,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 1.805,
+    "mesh_quads": 1.076,
+    "unique_vertices": 1.141,
+    "skin_painted_texels": 10.628,
+    "glow_map_painted_texels": 22.237,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.7271,
+   "component_ratios": {
+    "mesh": 1.076,
+    "texture": 10.624,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "kusanagi_the_grass_cutter",
+   "grade": "god",
+   "kind": "katana",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2774,
+    "quads_body": 2151,
+    "quads_glow": 623,
+    "quads_void": 0,
+    "unique_vertices": 2064,
+    "emitted_vertices": 11096,
+    "parts": 19,
+    "layers": {
+     "0": 1463,
+     "2": 623,
+     "3": 256,
+     "4": 144,
+     "5": 144,
+     "6": 144
+    },
+    "orbit_groups": 4
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 751037,
+    "lit_texels": 751037
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 378364,
+    "lit_texels": 341690
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 63135,
+     "lit_texels": 59397
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "edge",
+      "where": "blade"
+     },
+     {
+      "layer": "motes",
+      "where": "mid"
+     },
+     {
+      "layer": "ring",
+      "where": "mid"
+     },
+     {
+      "layer": "orbit",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "wind_cut",
+     "signature": 1230517320
+    },
+    {
+     "act": "cloud_step",
+     "signature": 1452542669
+    },
+    {
+     "act": "eightfold_cut",
+     "signature": 1213695756
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 302,
+    "quads_body": 224,
+    "quads_glow": 78,
+    "quads_void": 0,
+    "unique_vertices": 272,
+    "emitted_vertices": 1208,
+    "parts": 6,
+    "layers": {
+     "0": 224,
+     "2": 78
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.5912,
+   "V_components": {
+    "mesh": 4.6233,
+    "texture": 2.865,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.521,
+    "mesh_quads": 2.55,
+    "unique_vertices": 2.33,
+    "skin_painted_texels": 8.371,
+    "glow_map_painted_texels": 33.873,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.0198,
+   "component_ratios": {
+    "mesh": 2.55,
+    "texture": 8.37,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "leviathans_crown_trident",
+   "grade": "god",
+   "kind": "trident",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2981,
+    "quads_body": 1972,
+    "quads_glow": 1009,
+    "quads_void": 0,
+    "unique_vertices": 1721,
+    "emitted_vertices": 11924,
+    "parts": 23,
+    "layers": {
+     "0": 1508,
+     "2": 1009,
+     "3": 160,
+     "4": 160,
+     "5": 144
+    },
+    "orbit_groups": 3
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 695130,
+    "lit_texels": 695130
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 581786,
+    "lit_texels": 559957
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 53607,
+     "lit_texels": 50179
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "drip",
+      "where": "tip"
+     },
+     {
+      "layer": "orbit",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "tidal_lance",
+     "signature": 1106748678
+    },
+    {
+     "act": "maelstrom",
+     "signature": 1311427017
+    },
+    {
+     "act": "sea_kings_wrath",
+     "signature": 465466710
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 324,
+    "quads_body": 162,
+    "quads_glow": 162,
+    "quads_void": 0,
+    "unique_vertices": 146,
+    "emitted_vertices": 1296,
+    "parts": 4,
+    "layers": {
+     "0": 162,
+     "2": 162
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.6693,
+   "V_components": {
+    "mesh": 4.9683,
+    "texture": 2.6517,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.215,
+    "mesh_quads": 2.241,
+    "unique_vertices": 2.407,
+    "skin_painted_texels": 10.852,
+    "glow_map_painted_texels": 13.903,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.1414,
+   "component_ratios": {
+    "mesh": 2.241,
+    "texture": 10.854,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "calamity_wave_aegis",
+   "grade": "god",
+   "kind": "shield",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2500,
+    "quads_body": 1666,
+    "quads_glow": 834,
+    "quads_void": 0,
+    "unique_vertices": 1527,
+    "emitted_vertices": 10000,
+    "parts": 13,
+    "layers": {
+     "0": 1282,
+     "2": 834,
+     "3": 240,
+     "4": 144
+    },
+    "orbit_groups": 2
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 952832,
+    "lit_texels": 952832
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 402482,
+    "lit_texels": 271716
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 85101,
+     "lit_texels": 79441
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "ring",
+      "where": "front"
+     },
+     {
+      "layer": "motes",
+      "where": "front"
+     },
+     {
+      "layer": "edge",
+      "where": "front"
+     },
+     {
+      "layer": "orbit",
+      "where": "front"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "drip",
+      "where": "front"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "wave_guard",
+     "signature": 1706542409
+    },
+    {
+     "act": "retaliating_surge",
+     "signature": 2099061331
+    },
+    {
+     "act": "aegis_anthem",
+     "signature": 1584560296
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 216,
+    "quads_body": 120,
+    "quads_glow": 96,
+    "quads_void": 0,
+    "unique_vertices": 100,
+    "emitted_vertices": 864,
+    "parts": 2,
+    "layers": {
+     "0": 120,
+     "2": 96
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.5853,
+   "V_components": {
+    "mesh": 4.1667,
+    "texture": 3.6348,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.458,
+    "mesh_quads": 2.5,
+    "unique_vertices": 2.166,
+    "skin_painted_texels": 5.311,
+    "glow_map_painted_texels": 16.977,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.0369,
+   "component_ratios": {
+    "mesh": 2.5,
+    "texture": 5.312,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "hellblaze_the_demon_sin",
+   "grade": "god",
+   "kind": "longsword",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2968,
+    "quads_body": 1906,
+    "quads_glow": 1062,
+    "quads_void": 0,
+    "unique_vertices": 1856,
+    "emitted_vertices": 11872,
+    "parts": 16,
+    "layers": {
+     "0": 1566,
+     "2": 1062,
+     "3": 180,
+     "4": 160
+    },
+    "orbit_groups": 2
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 824616,
+    "lit_texels": 824616
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 519614,
+    "lit_texels": 467319
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 79830,
+     "lit_texels": 75257
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "mid"
+     },
+     {
+      "layer": "edge",
+      "where": "blade"
+     },
+     {
+      "layer": "ring",
+      "where": "mid"
+     },
+     {
+      "layer": "drip",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "hellblaze_slash",
+     "signature": 1778498801
+    },
+    {
+     "act": "demon_mark",
+     "signature": 854570833
+    },
+    {
+     "act": "black_inferno",
+     "signature": 1867767442
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 390,
+    "quads_body": 216,
+    "quads_glow": 174,
+    "quads_void": 0,
+    "unique_vertices": 208,
+    "emitted_vertices": 1560,
+    "parts": 2,
+    "layers": {
+     "0": 216,
+     "2": 174
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.7605,
+   "V_components": {
+    "mesh": 4.9467,
+    "texture": 3.1457,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.668,
+    "mesh_quads": 2.703,
+    "unique_vertices": 2.242,
+    "skin_painted_texels": 9.227,
+    "glow_map_painted_texels": 14.913,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.0253,
+   "component_ratios": {
+    "mesh": 2.703,
+    "texture": 9.228,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "minotaur_kings_labrys",
+   "grade": "god",
+   "kind": "battleaxe",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 3490,
+    "quads_body": 2586,
+    "quads_glow": 904,
+    "quads_void": 0,
+    "unique_vertices": 2303,
+    "emitted_vertices": 13960,
+    "parts": 27,
+    "layers": {
+     "0": 2226,
+     "2": 904,
+     "3": 360
+    },
+    "orbit_groups": 1
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 913640,
+    "lit_texels": 913640
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 554040,
+    "lit_texels": 501489
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 65238,
+     "lit_texels": 61248
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "tip"
+     },
+     {
+      "layer": "ring",
+      "where": "tip"
+     },
+     {
+      "layer": "edge",
+      "where": "tip"
+     },
+     {
+      "layer": "drip",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "labrys_cleave",
+     "signature": 1957788298
+    },
+    {
+     "act": "bull_charge",
+     "signature": 627309767
+    },
+    {
+     "act": "kings_roar",
+     "signature": 1479569819
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 501,
+    "quads_body": 266,
+    "quads_glow": 235,
+    "quads_void": 0,
+    "unique_vertices": 216,
+    "emitted_vertices": 2004,
+    "parts": 4,
+    "layers": {
+     "0": 266,
+     "2": 235
+    },
+    "orbit_groups": 0
+   },
+   "V": 4.1329,
+   "V_components": {
+    "mesh": 5.8167,
+    "texture": 3.4853,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.219,
+    "mesh_quads": 2.327,
+    "unique_vertices": 2.073,
+    "skin_painted_texels": 7.562,
+    "glow_map_painted_texels": 22.031,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.2838,
+   "component_ratios": {
+    "mesh": 2.327,
+    "texture": 7.562,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "dragon_force_twin_fangs",
+   "grade": "god",
+   "kind": "dagger",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 2581,
+    "quads_body": 1856,
+    "quads_glow": 725,
+    "quads_void": 0,
+    "unique_vertices": 1675,
+    "emitted_vertices": 10324,
+    "parts": 23,
+    "layers": {
+     "0": 1436,
+     "2": 725,
+     "3": 240,
+     "4": 90,
+     "5": 90
+    },
+    "orbit_groups": 3
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 991336,
+    "lit_texels": 991336
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 860420,
+    "lit_texels": 860420
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 127898,
+     "lit_texels": 120219
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "mid"
+     },
+     {
+      "layer": "edge",
+      "where": "blade"
+     },
+     {
+      "layer": "ring",
+      "where": "mid"
+     },
+     {
+      "layer": "arc",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "shaft",
+      "where": "tip"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "twin_fang_flurry",
+     "signature": 1039242580
+    },
+    {
+     "act": "dragon_force",
+     "signature": 832245382
+    },
+    {
+     "act": "dragons_roar",
+     "signature": 1789675800
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 192,
+    "quads_body": 96,
+    "quads_glow": 96,
+    "quads_void": 0,
+    "unique_vertices": 88,
+    "emitted_vertices": 768,
+    "parts": 2,
+    "layers": {
+     "0": 96,
+     "2": 96
+    },
+    "orbit_groups": 0
+   },
+   "V": 3.6619,
+   "V_components": {
+    "mesh": 4.3017,
+    "texture": 3.7816,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 2.892,
+    "mesh_quads": 1.823,
+    "unique_vertices": 1.809,
+    "skin_painted_texels": 6.112,
+    "glow_map_painted_texels": 6.936,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.2664,
+   "component_ratios": {
+    "mesh": 1.823,
+    "texture": 6.112,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  },
+  {
+   "id": "dawnpiercer_crossbow",
+   "grade": "god",
+   "kind": "crossbow",
+   "slice": "god_melee_a",
+   "state": "upgraded (1.102.0)",
+   "mesh": {
+    "quads_total": 3197,
+    "quads_body": 2116,
+    "quads_glow": 1081,
+    "quads_void": 0,
+    "unique_vertices": 1858,
+    "emitted_vertices": 12788,
+    "parts": 20,
+    "layers": {
+     "0": 1612,
+     "2": 1081,
+     "3": 504
+    },
+    "orbit_groups": 1
+   },
+   "skin": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 830892,
+    "lit_texels": 830892
+   },
+   "glow_map": {
+    "size": [
+     1024,
+     1024
+    ],
+    "texels": 1048576,
+    "painted_texels": 610672,
+    "lit_texels": 610672
+   },
+   "extra_maps": {
+    "veins": {
+     "size": [
+      1024,
+      1024
+     ],
+     "texels": 1048576,
+     "painted_texels": 77249,
+     "lit_texels": 72359
+    }
+   },
+   "passes": {
+    "count": 4,
+    "list": [
+     "skin",
+     "glow_core",
+     "veins_flow",
+     "halo_shell"
+    ]
+   },
+   "ambient": {
+    "count": 6,
+    "layers": [
+     {
+      "layer": "motes",
+      "where": "mid"
+     },
+     {
+      "layer": "ring",
+      "where": "mid"
+     },
+     {
+      "layer": "shaft",
+      "where": "mid"
+     },
+     {
+      "layer": "edge",
+      "where": "tip"
+     },
+     {
+      "layer": "ground",
+      "where": "feet"
+     },
+     {
+      "layer": "arc",
+      "where": "mid"
+     }
+    ]
+   },
+   "animation": {
+    "idle": [
+     "glow_breath",
+     "orbit_parts",
+     "flow_veins",
+     "halo_breath",
+     "rune_flicker"
+    ],
+    "swing_trail": true,
+    "unique_act_vfx": 3,
+    "score": 7.0
+   },
+   "act_vfx": [
+    {
+     "act": "piercing_bolt",
+     "signature": 1371930004
+    },
+    {
+     "act": "sunrise_volley",
+     "signature": 1590925749
+    },
+    {
+     "act": "dawns_net",
+     "signature": 1797388980
+    }
+   ],
+   "lod_mesh": true,
+   "lod": {
+    "quads_total": 348,
+    "quads_body": 252,
+    "quads_glow": 96,
+    "quads_void": 0,
+    "unique_vertices": 222,
+    "emitted_vertices": 1392,
+    "parts": 5,
+    "layers": {
+     "0": 252,
+     "2": 96
+    },
+    "orbit_groups": 0
+   },
+   "state_meshes": {
+    "dawnpiercer_crossbow_pull1": 3197,
+    "dawnpiercer_crossbow_pull2": 3197,
+    "dawnpiercer_crossbow_pull3": 3197,
+    "dawnpiercer_crossbow_charged": 3367
+   },
+   "V": 3.8988,
+   "V_components": {
+    "mesh": 5.3283,
+    "texture": 3.1696,
+    "glow": 2.0,
+    "ambient": 2.0,
+    "animation": 7.0
+   },
+   "ratios_vs_baseline": {
+    "V": 3.636,
+    "mesh_quads": 2.834,
+    "unique_vertices": 2.701,
+    "skin_painted_texels": 6.487,
+    "glow_map_painted_texels": 9.137,
+    "passes": 2.0,
+    "ambient_layers": 6.0,
+    "animation": 7.0
+   },
+   "baseline_V": 1.0724,
+   "component_ratios": {
+    "mesh": 2.834,
+    "texture": 6.487,
+    "glow": 2.0,
+    "ambient": 6.001,
+    "animation": 7.0
+   },
+   "v_target_5x_met": false,
+   "targets": {
+    "V_after_ge_5x_V_before": false,
+    "mesh_quads_ge_5x_baseline": false,
+    "mesh_floor_600_quads": true,
+    "welded_vertices_within_guard_2500": true,
+    "skin_painted_texels_ge_4x": true,
+    "separate_emissive_glow_map": true,
+    "ambient_layers_ge_3": true,
+    "idle_animation": true,
+    "unique_swing_and_act_vfx": true,
+    "low_detail_mesh_le_15pct": true
+   }
+  }
+ ],
+ "summary": {
+  "items": 12,
+  "V_ratio_min": 1.805,
+  "V_ratio_max": 4.114,
+  "V_ratio_mean": 3.169,
+  "items_reaching_5x_V": 0,
+  "targets_met_count": {
+   "V_after_ge_5x_V_before": 0,
+   "mesh_quads_ge_5x_baseline": 0,
+   "mesh_floor_600_quads": 12,
+   "welded_vertices_within_guard_2500": 12,
+   "skin_painted_texels_ge_4x": 12,
+   "separate_emissive_glow_map": 12,
+   "ambient_layers_ge_3": 12,
+   "idle_animation": 12,
+   "unique_swing_and_act_vfx": 12,
+   "low_detail_mesh_le_15pct": 12
+  },
+  "honest_note": "The composite 5x was not reached by any item: the shipped meshes already had 1000 to 3200 quads (the brief assumed far fewer), so the mesh component, 35% of V, cannot grow 5x inside the performance guard of 2500 welded vertices; the components that could grow did (skin texels, passes, ambient layers, animation, act effects)."
+ }
+}

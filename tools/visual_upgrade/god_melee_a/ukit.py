@@ -52,6 +52,45 @@ def S(n, lo=3):
     return max(lo, int(round(n * (CUR.detail if CUR else 1.0))))
 
 
+# ================================================================ a denser skin packer (MaxRects, best short side fit) for the upgraded skins
+def pack_maxrects(sizes, W, H, pad):
+    """Packs (w, h) boxes into W x H with `pad` px between and round the edge: MaxRects with the best-short-side-fit rule, tallest first. Returns [(x, y)] or None when they do not fit.
+    The shelf packer of mesh_lib wastes the space beside long thin strips (a staff shaft, a spear haft); this one gives the same atlas a larger px-per-cm."""
+    n = len(sizes)
+    order = sorted(range(n), key=lambda i: (-max(sizes[i]), -min(sizes[i])))
+    free = [(pad, pad, W - 2 * pad, H - 2 * pad)]
+    pos = [None] * n
+    for i in order:
+        w, h = sizes[i]
+        best = None
+        for (fx, fy, fw, fh) in free:
+            if w <= fw and h <= fh:
+                key = (min(fw - w, fh - h), max(fw - w, fh - h), fy, fx)
+                if best is None or key < best[0]:
+                    best = (key, fx, fy)
+        if best is None:
+            return None
+        _k, x, y = best
+        pos[i] = (x, y)
+        bx0, by0, bx1, by1 = x, y, x + w + pad, y + h + pad
+        new = []
+        for (fx, fy, fw, fh) in free:
+            if bx0 >= fx + fw or bx1 <= fx or by0 >= fy + fh or by1 <= fy:
+                new.append((fx, fy, fw, fh))
+                continue
+            if bx0 > fx:
+                new.append((fx, fy, bx0 - fx, fh))
+            if bx1 < fx + fw:
+                new.append((bx1, fy, fx + fw - bx1, fh))
+            if by0 > fy:
+                new.append((fx, fy, fw, by0 - fy))
+            if by1 < fy + fh:
+                new.append((fx, by1, fw, fy + fh - by1))
+        # drop rectangles contained in another
+        free = [r for k, r in enumerate(new) if not any(j != k and new[j][0] <= r[0] and new[j][1] <= r[1] and new[j][0] + new[j][2] >= r[0] + r[2] and new[j][1] + new[j][3] >= r[1] + r[3] and (new[j] != r or j < k) for j in range(len(new)))]
+    return pos
+
+
 # ================================================================ patched names of the old builders
 def _new_atlas(size=512):
     return ml.Atlas(CUR.size)
@@ -103,6 +142,8 @@ def patched(ctx):
             mod.tube = _wrap_tube(mod.tube, ctx.tube_cap)
     saved.append((RG, "finish_crossbow", RG.finish_crossbow))
     RG.finish_crossbow = _finish_crossbow
+    saved.append((ml, "pack_shelf", ml.pack_shelf))
+    ml.pack_shelf = pack_maxrects
     lod_saved = []
     if ctx.lod:
         lod_saved = lod_patch()

@@ -330,7 +330,10 @@ public enum VfxShape {
     MANA_ZONE_GROUND,
     MANA_ZONE_BURST,
     MANA_ZONE_BUBBLE,
-    GRAND_ZONE_ENV;
+    GRAND_ZONE_ENV,
+    // 1.102.0 visual upgrade (vfx.client.layer.UpgradeSignatureLayer): the signature effect of an act of an upgraded weapon. The packet's seed carries the signature id of (item, act) in its upper 32 bits
+    // (relics.upgrade.UpgradeItems); from = the caster (the effect follows him), to = the point he looks at; the recipe is read from assets/nusmp/visual_upgrade/<item>.json
+    UPGRADE_SIGNATURE;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

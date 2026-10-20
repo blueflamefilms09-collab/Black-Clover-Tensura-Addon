@@ -156,8 +156,13 @@ class Engraver:
         rr = max(0.8, r * self.ppu)
         self.dr.ellipse([a[0] - rr, a[1] - rr, a[0] + rr, a[1] + rr], fill=level)
 
+    def legible(self, cw, ch, stroke):
+        """A letter is never smaller than 7 x 9 texels with a stroke of at least 1.3 texels: on a coarse skin (a long staff) the same text is simply drawn larger."""
+        return max(cw, 7.0 / self.ppu), max(ch, 9.0 / self.ppu), max(stroke, 1.3 / self.ppu)
+
     def text_col(self, text, x, y_top, cw, ch, stroke=0.12, gap=0.5, level=255):
         """A column of letters going down from y_top at x (centre), each cw x ch cm."""
+        cw, ch, stroke = self.legible(cw, ch, stroke)
         y = y_top
         for c in text:
             if c != " ":
@@ -167,6 +172,7 @@ class Engraver:
         return y
 
     def text_row(self, text, x_left, y, cw, ch, stroke=0.1, gap=0.35, level=255):
+        cw, ch, stroke = self.legible(cw, ch, stroke)
         x = x_left
         for c in text:
             if c != " ":
