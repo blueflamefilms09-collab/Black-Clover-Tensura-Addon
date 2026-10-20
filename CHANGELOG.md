@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.106.0] — Worn God relics upgraded, the Rukh kept for Djinn and dungeons only, CI fixes for 1.105.0
+
+### NEW
+- **Worn God relics (visual upgrade), 24 items:** cloaks, crowns, armour and ornaments each have their own 3D worn model (about 5.5x the quads of the old ones), a painted skin with its own glow map, palette tint, ambient effect layers, idle animation groups, act visuals and a reduced-detail model. They share one library with the 1.104.0 charms and Genesis relics (one flag table, one draw path, one switch `visual.upgrade`, one lookup order). `docs/visual_upgrade/god_worn.md`, `docs/visual_upgrade/worn_merge.md`.
+- **The particle conversion now covers the relics too:** the relic waves, the client relic effects and the rift pockets use the custom particles; the Rukh (magoi) stays only in the Djinn and dungeon code (`docs/rukh/exclusive_enforced` makes the test strict).
+
+### FIXED
+- 1.105.0 did not build: two source-scan tests found the old `END_ROD` particle left in the relic effect files. Converted.
+
+### REPLACED
+- How the 24 God worn relics are drawn (old models stay on disk; `visual.upgrade=false` gives the old look).
+
+### KEPT
+- Every id, stat, act, passive, engraving, saved data; Time Magic.
+
+### Honest notes
+- Nothing has been run in the game; the "5x" figures are measured proxies (quads, texels, layers, animation groups: ratios between 5.2x and 14.6x), not how it looks. Two helper files still use coloured dust (`UpgradeFxClient`, `UpgradeActFx`): follow-up.
+
 ## [1.105.0] — Boss damage fix, custom particles, Genesis weapons upgraded (carries the 1.104.0 content, whose build failed on a test)
 
 ### NEW
