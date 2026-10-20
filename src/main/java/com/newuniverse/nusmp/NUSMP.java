@@ -127,6 +127,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.aura.PlayerAuraPayload::register);                     // 0.53: player render layers
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
         com.newuniverse.nusmp.client.playermodel.PlayerModelSelfTests.register();                            // 1.94.0: self-test render.playermodel (data only, runs on the dedicated server)
+        com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
