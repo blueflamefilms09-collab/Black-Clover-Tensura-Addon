@@ -15214,5 +15214,8 @@
   "nusmp.configuration.djinn.tinyTimerBar": "Timer bar under the name",
   "nusmp.configuration.djinn.tinyTimerBar.tooltip": "A thin bar under the name that shows the seconds the Lesser Summon has left.",
   "nusmp.configuration.djinn.tinyPortrait": "Head in the Djinn panel",
-  "nusmp.configuration.djinn.tinyPortrait.tooltip": "Draw the figure's head in the circle of the Djinn panel during a Lesser Summon, instead of the silhouette."
+  "nusmp.configuration.djinn.tinyPortrait.tooltip": "Draw the figure's head in the circle of the Djinn panel during a Lesser Summon, instead of the silhouette.",
+  "nusmp.particles.cmd.nogroup": "No such group: %s. Groups: %s",
+  "nusmp.particles.cmd.unknown": "No such custom particle: %s (see /multiverse particles list)",
+  "nusmp.particles.cmd.player": "Run this as a player."
 }

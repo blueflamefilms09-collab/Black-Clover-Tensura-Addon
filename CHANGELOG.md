@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.105.0] — Boss damage fix, custom particles, Genesis weapons upgraded (carries the 1.104.0 content, whose build failed on a test)
+
+### NEW
+- **Fix: a hit no longer takes a slice of the boss's maximum health.** The balance law added about 40% of the target's max health on top of every hit (a 400 tooltip emptied a million-HP boss). The extra is now a tiny sliver (at most 2% of max health, none on bosses and none on hits above 20). Elsdocia and every other weapon now deal what the tooltip says plus that sliver. Pure class `DamageSliver` with tests.
+- **Custom particles instead of the Rukh/vanilla ones:** 70 particle types in 21 groups (fire, ice, stars, motes, shards, runes ...), a theme table of 284 themes (all magic types, relic grades, elements and waves, skills, bosses, dungeon areas) and the `Fx` facade through the perf budgets. `/multiverse particles list|spawn|theme|status`. Client/server switch `particles.custom`. `docs/custom_particles.md`.
+- **The Rukh (magoi) is now exclusive to Djinn users and the dungeons.** Everything else uses the new particles (`docs/rukh/exclusive.md`).
+- **Genesis hand weapons upgraded (visual upgrade), 13 items:** Astralis, Blackrazor, Cardinal Halo Chakram, Fairy Glitter Gauntlets, Gae Bolg, Magic Emperor's Black Halberd, Primordial Hearth Blade, Starforged Aeon Bow, Starsplitter Hammer, Sword of the First Dawn, Void Origin Katana, Nekrathul's Pact Scythe and Elsdocia: 2500+ quad meshes with floating parts, 2048 px skins with glow and vein maps, a halo layer, 8 to 10 ambient effect layers, idle and draw animations, swing trails, a signature effect on every act, a reduced-detail mesh from 12 blocks, a looped sound id. `docs/visual_upgrade/genesis_weapons.md`.
+- Everything from 1.104.0: the Lesser Summon as a real tiny Djinn, the second slice of God weapons and 27 charms and Genesis relics (see the 1.104.0 entry below).
+
+### REPLACED
+- How the 13 Genesis weapons are held (new meshes and skins while client `visual.upgrade` is on; the old files stay on disk). The old Rukh calls outside Djinn/dungeons now use the custom particles (`particles.custom=false` brings back the old ones).
+
+### KEPT
+- Every id, stat, act, passive, engraving, Better Combat file, saved data; the Genesis Demon-Slayer; Time Magic.
+
+### Honest notes
+- Nothing has been run in the game. For the Genesis weapons the measured proxy score is 4.0x to 18.6x (not 20x: the vertex cap bounds the mesh ratio); the visual impression is unverified. Not done yet: the Genesis Demon-Slayer, worn God relics (cloaks, crowns, armour), the dark Djinn weapons. The jar is larger because of the 2048 px skins.
+- The soundboard sounds still wait for the domain `www.101soundboards.com` to be allowed or for the clips to be uploaded.
+
 ## [1.104.0] — Tiny Djinn for the Lesser Summon, God weapons (second slice), charms and Genesis relics upgraded
 
 ### NEW
