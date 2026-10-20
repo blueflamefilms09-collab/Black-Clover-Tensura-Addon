@@ -132,6 +132,11 @@ final class CustomBarPainter {
         if (s.casting()) st.cast.set(font, CustomBarState.resolve(s.castName()), s.castName());
         if (s.invulnerable() && !st.invulnerable.isSet()) st.invulnerable.set(font, Component.translatableWithFallback("nusmp.bossbar.invulnerable", "Invulnerable"), BarStyles.class);
         if (s.enraged() && !st.enraged.isSet()) st.enraged.set(font, Component.translatableWithFallback("nusmp.bossbar.enraged", "Enraged"), BarStyles.class);
+        if (BossBarOptions.showHp() && st.portrait != null && !st.portrait.isRemoved()) {
+            int cur = Math.round(st.portrait.getHealth()), max = Math.round(st.portrait.getMaxHealth());
+            long k = cur * 1000003L + max;
+            if (st.hp.differs(k)) st.hp.setNum(font, Component.literal(cur + " / " + max), k);
+        }
         if (BossBarOptions.showDps()) {
             int d = Math.round(st.dps.percentPerSecond());
             if (st.dpsText.differs(d)) st.dpsText.setNum(font, Component.translatableWithFallback("nusmp.bossbar.dps", "-%s%%/s", d), d);
@@ -150,8 +155,8 @@ final class CustomBarPainter {
         layer(g, atlas, 0, 0, W, 0f, 0f);
         // socket: the boss itself if it is near, else the emblem
         boolean live = false;
-        LivingEntity e = mc.level != null && BossBarOptions.portrait() && !portraitFailed && !compact && !st.preview ? st.entity(mc.level, now) : null;
-        if (e != null) live = portrait(g, e, BarLayoutMath.SOCK_X, BarLayoutMath.SOCK_Y, BarLayoutMath.SOCK_R - 1);
+        LivingEntity e = mc.level != null && (BossBarOptions.portrait() || BossBarOptions.showHp()) && !st.preview ? st.entity(mc.level, now) : null;
+        if (e != null && BossBarOptions.portrait() && !portraitFailed && !compact) live = portrait(g, e, BarLayoutMath.SOCK_X, BarLayoutMath.SOCK_Y, BarLayoutMath.SOCK_R - 1);
         if (!live) {
             tint(g, WHITE, alpha);
             g.blit(BarStyles.EMBLEMS, BarLayoutMath.SOCK_X - 13, BarLayoutMath.SOCK_Y - 13, 26, 26, (float) ls.emblemU, (float) ls.emblemV, 32, 32, 256, 160);
@@ -312,7 +317,8 @@ final class CustomBarPainter {
         if (s.phaseCount() > 1 && BossBarOptions.showPhaseMarkers()) draw(g, font, st.roman.seq, BarLayoutMath.PLATE_X + 5, compact ? 8 : 5, 1f, bs.color("marker"), alpha);
         int right = BarLayoutMath.PLATE_X + BarLayoutMath.PLATE_W - 5;
         draw(g, font, st.pct.seq, right - st.pct.w, compact ? 8 : 5, 1f, WHITE, alpha);
-        if (rage && !compact) draw(g, font, st.enraged.seq, right - st.enraged.w * 0.7f, 12.5f, 0.7f, 0xFF6040, alpha);
+        if (rage && !compact) draw(g, font, st.enraged.seq, BarLayoutMath.PLATE_X + 5, 12.5f, 0.7f, 0xFF6040, alpha);
+        if (!compact && BossBarOptions.showHp() && st.hp.w > 0) draw(g, font, st.hp.seq, right - st.hp.w * 0.7f, 12.5f, 0.7f, 0xE6E6E6, alpha);
     }
 
     private static void underRow(GuiGraphics g, Font font, CustomBarState st, BarStyle bs, BossBarState s, double time, long now, float alpha, boolean invul) {

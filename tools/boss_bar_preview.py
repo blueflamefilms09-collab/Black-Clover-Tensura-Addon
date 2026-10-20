@@ -206,6 +206,9 @@ def render(sid, hp=1.0, ghost=None, phase=1, phases=3, thresholds=(0.66, 0.33), 
     gl = layer(2)
     gcol = (255, 90, 60) if enraged else (hexc(c["invulnerable"]) if invulnerable else hexc(c["glow"]))
     comp(canvas, tinted(gl, gcol, 0.85), 0, 0, add=True)
+    if cast is not None:
+        rect(wx, CAST_Y, ww, 3, (0, 0, 0), 0.7)
+        rect(wx, CAST_Y, int(ww * cast[1]), 3, hexc(c["cast"]))
     img = Image.fromarray(np.clip(canvas, 0, 255).astype(np.uint8), "RGBA")
     d = ImageDraw.Draw(img)
 
@@ -224,8 +227,6 @@ def render(sid, hp=1.0, ghost=None, phase=1, phases=3, thresholds=(0.66, 0.33), 
     text("%d%%" % (round(hp * 100) if hp > 0.005 else 0), px + pw - 3, py + 1.5, (255, 255, 255), big, "ra")
     # under row
     if cast is not None:
-        rect(wx, CAST_Y, ww, 3, (0, 0, 0), 0.7)
-        rect(wx, CAST_Y, int(ww * cast[1]), 3, hexc(c["cast"]))
         text(cast[0], wx + ww / 2, ROW_Y - 1, hexc(c["cast"]), small, "ma")
     elif lair is not None:
         text("! " + lair[0] + "  %.1fs" % lair[1], wx + ww / 2, ROW_Y - 1, hexc(c["lair"]), small, "ma")
@@ -271,7 +272,7 @@ def sheet(ids, path, S=2):
             bar = render(sid, S=S, **stt)
             img.alpha_composite(bar, (8 + (k % 2) * cw, y + 12 + (k // 2) * ch))
         y += ch * 2 + 12
-    img.convert("RGB").save(path, optimize=True)
+    img.convert("RGB").quantize(256, dither=Image.Dither.NONE).save(path, optimize=True)
 
 
 def main(argv):
@@ -290,7 +291,7 @@ def main(argv):
     img = backdrop(cols * cw + 6, rows * ch + 6)
     for i, sid in enumerate(ids):
         img.alpha_composite(render(sid, S=S, hp=0.82, phase=1, phases=3, thresholds=(0.66, 0.33)), (6 + (i % cols) * cw, 6 + (i // cols) * ch))
-    img.convert("RGB").save(os.path.join(OUT, "overview.png"), optimize=True)
+    img.convert("RGB").quantize(256, dither=Image.Dither.NONE).save(os.path.join(OUT, "overview.png"), optimize=True)
     print("wrote", len(ids), "styles")
 
 

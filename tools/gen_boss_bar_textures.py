@@ -171,15 +171,15 @@ def fx_tile(name):
                 edge = max(abs(hy) * 1.15, abs(hx) * 0.58 + abs(hy) * 0.58)
                 a[yy, xx] = 0.8 if edge > 2.6 else 0.12
     elif name == "chains":
-        for xx in range(FX_W):
-            link = (xx % 16)
-            y = 8 + math.sin(link / 16 * 2 * math.pi) * 3.5
-            for t in range(-1, 2):
-                put(xx, y + t, 0.95 if t == 0 else 0.55)
-        for k in range(4):
-            blob(k * 16 + 8, 8, 3.2, 5.0, 0.0)
-            for t in np.linspace(0, 6.283, 28):
-                put(k * 16 + 8 + math.cos(t) * 4.2, 8 + math.sin(t) * 5.5, 0.9)
+        big = Image.new("L", (FX_W * 4, FX_ROW_H * 4), 0)
+        bd = ImageDraw.Draw(big)
+        for k in range(FX_W // 16):
+            for cx, rx in ((k * 16 + 4, 5.2), (k * 16 + 12, 2.4)):
+                for dx in (-FX_W, 0, FX_W):
+                    bd.ellipse([(cx + dx - rx) * 4, (8 - 3.6) * 4, (cx + dx + rx) * 4, (8 + 3.6) * 4], outline=255, width=6)
+            bd.line([(k * 16 + 7, 8 * 4 / 4), (k * 16 + 9.5, 8)], fill=0)
+        small = np.array(big.resize((FX_W, FX_ROW_H), Image.BOX), float) / 255.0
+        a = np.clip(small * 1.6, 0, 1)
     arr = np.zeros((FX_ROW_H, FX_W, 4), np.uint8)
     arr[..., :3] = 255
     arr[..., 3] = np.clip(a * 255, 0, 255).astype(np.uint8)
