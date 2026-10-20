@@ -1,0 +1,323 @@
+{
+ "id": "minotaur_kings_labrys",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   255,
+   110,
+   50
+  ],
+  "secondary": [
+   255,
+   236,
+   200
+  ]
+ },
+ "maps": {
+  "skin": "up/minotaur_kings_labrys.png",
+  "glow": "up/minotaur_kings_labrys_glow.png",
+  "veins": "up/minotaur_kings_labrys_veins.png"
+ },
+ "lod": {
+  "mesh": "up/minotaur_kings_labrys_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/minotaur_kings_labrys_lod.png",
+  "glow": "up/minotaur_kings_labrys_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    255,
+    110,
+    50
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    236,
+    200
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "tip",
+   "particle": "flame",
+   "rgb": [
+    255,
+    110,
+    50
+   ],
+   "rate": 12,
+   "radius": 0.8,
+   "rise": 0.03
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    255,
+    110,
+    50
+   ],
+   "rate": 16,
+   "radius": 0.8,
+   "speed": 0.2,
+   "size": 0.55,
+   "tilt": 90.0
+  },
+  {
+   "type": "edge",
+   "anchor": "tip",
+   "particle": "lava",
+   "rgb": [
+    255,
+    150,
+    70
+   ],
+   "rate": 8,
+   "radius": 0.9,
+   "from": 0.0,
+   "to": 1.0
+  },
+  {
+   "type": "drip",
+   "anchor": "tip",
+   "particle": "dripping_lava",
+   "rgb": [
+    255,
+    110,
+    50
+   ],
+   "rate": 6,
+   "radius": 0.7
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "smoke",
+   "rgb": [
+    60,
+    50,
+    50
+   ],
+   "rate": 10,
+   "radius": 1.1,
+   "speed": 0.05,
+   "size": 0.5
+  },
+  {
+   "type": "arc",
+   "anchor": "tip",
+   "particle": "crit",
+   "rgb": [
+    255,
+    200,
+    140
+   ],
+   "rate": 4,
+   "radius": 0.9
+  }
+ ],
+ "hand": {
+  "length": 1.85,
+  "tilt": 18
+ },
+ "swing": {
+  "pattern": "crescent",
+  "particle": "dust",
+  "rgb": [
+   255,
+   110,
+   50
+  ],
+  "rgb2": [
+   255,
+   236,
+   200
+  ],
+  "count": 5,
+  "size": 0.9,
+  "reach": 1.9
+ },
+ "acts": [
+  {
+   "act": "labrys_cleave",
+   "id": 1957788298,
+   "recipe": [
+    {
+     "t": "burst",
+     "at": "caster",
+     "n": 10,
+     "len": 6.0,
+     "rgb": [
+      255,
+      110,
+      50
+     ],
+     "tex": "spark",
+     "dur": 14
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.6,
+     "r1": 7.0,
+     "rgb": [
+      255,
+      170,
+      90
+     ],
+     "dur": 14,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 4.0,
+     "rgb": [
+      255,
+      220,
+      170
+     ],
+     "dur": 6
+    }
+   ]
+  },
+  {
+   "act": "bull_charge",
+   "id": 627309767,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 2.0,
+     "rgb": [
+      255,
+      110,
+      50
+     ],
+     "tex": "flame_trail",
+     "dur": 14
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 1.2,
+     "h": 3.0,
+     "turns": 3,
+     "n": 14,
+     "rgb": [
+      255,
+      170,
+      90
+     ],
+     "dur": 14
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 12,
+     "len": 4.0,
+     "rgb": [
+      255,
+      110,
+      50
+     ],
+     "tex": "spark",
+     "dur": 14
+    }
+   ]
+  },
+  {
+   "act": "kings_roar",
+   "id": 1479569819,
+   "recipe": [
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.5,
+     "r1": 12.0,
+     "rgb": [
+      255,
+      110,
+      50
+     ],
+     "dur": 20,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.5,
+     "r1": 9.0,
+     "rgb": [
+      255,
+      236,
+      200
+     ],
+     "dur": 16,
+     "tex": "magic_circle"
+    },
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 8.0,
+     "rgb": [
+      255,
+      110,
+      50
+     ],
+     "tex": "devil_circle",
+     "dur": 36,
+     "spin": 0.1
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 7.0,
+     "rgb": [
+      255,
+      220,
+      170
+     ],
+     "dur": 8
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.minotaur_kings_labrys.hum",
+ "note": "a bull king's axe: a halo of spectral axe heads, the labyrinth in the iron, a brow and a nose ring"
+}

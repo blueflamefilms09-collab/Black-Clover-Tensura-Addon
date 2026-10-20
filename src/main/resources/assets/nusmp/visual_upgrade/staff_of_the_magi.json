@@ -1,0 +1,342 @@
+{
+ "id": "staff_of_the_magi",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   190,
+   130,
+   255
+  ],
+  "secondary": [
+   255,
+   222,
+   130
+  ]
+ },
+ "maps": {
+  "skin": "up/staff_of_the_magi.png",
+  "glow": "up/staff_of_the_magi_glow.png",
+  "veins": "up/staff_of_the_magi_veins.png"
+ },
+ "lod": {
+  "mesh": "up/staff_of_the_magi_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/staff_of_the_magi_lod.png",
+  "glow": "up/staff_of_the_magi_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    190,
+    130,
+    255
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    222,
+    130
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "tip",
+   "particle": "enchant",
+   "rgb": [
+    190,
+    130,
+    255
+   ],
+   "rate": 14,
+   "radius": 0.5,
+   "rise": 0.03
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    255,
+    222,
+    130
+   ],
+   "rate": 18,
+   "radius": 0.62,
+   "speed": 0.22,
+   "size": 0.55,
+   "tilt": 0.0
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    200,
+    150,
+    255
+   ],
+   "rate": 12,
+   "radius": 0.42,
+   "speed": -0.31,
+   "size": 0.45,
+   "tilt": 55.0
+  },
+  {
+   "type": "arc",
+   "anchor": "tip",
+   "particle": "electric_spark",
+   "rgb": [
+    220,
+    190,
+    255
+   ],
+   "rate": 4,
+   "radius": 0.7
+  },
+  {
+   "type": "shaft",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    210,
+    170,
+    255
+   ],
+   "rate": 5,
+   "height": 1.6
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    170,
+    110,
+    255
+   ],
+   "rate": 10,
+   "radius": 0.95,
+   "speed": 0.06,
+   "size": 0.5
+  }
+ ],
+ "hand": {
+  "length": 2.3,
+  "tilt": 12
+ },
+ "swing": {
+  "pattern": "sigil",
+  "particle": "dust",
+  "rgb": [
+   200,
+   150,
+   255
+  ],
+  "rgb2": [
+   255,
+   222,
+   130
+  ],
+  "count": 3,
+  "size": 0.7,
+  "reach": 1.9
+ },
+ "acts": [
+  {
+   "act": "retributive_strike",
+   "id": 235751490,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 5.0,
+     "rgb": [
+      190,
+      130,
+      255
+     ],
+     "tex": "magic_circle",
+     "dur": 26,
+     "spin": 0.08
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.5,
+     "r1": 9.0,
+     "rgb": [
+      255,
+      222,
+      130
+     ],
+     "dur": 18,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "burst",
+     "at": "caster",
+     "n": 12,
+     "len": 4.0,
+     "rgb": [
+      200,
+      160,
+      255
+     ],
+     "tex": "spark",
+     "dur": 14
+    },
+    {
+     "t": "column",
+     "at": "caster",
+     "h": 9.0,
+     "r": 0.7,
+     "rgb": [
+      190,
+      130,
+      255
+     ],
+     "dur": 16
+    }
+   ]
+  },
+  {
+   "act": "spell_turning",
+   "id": 1106312954,
+   "recipe": [
+    {
+     "t": "orbit",
+     "at": "caster",
+     "r": 1.8,
+     "n": 6,
+     "rgb": [
+      255,
+      222,
+      130
+     ],
+     "tex": "rune_ring",
+     "dur": 34,
+     "spin": 0.18,
+     "y": 1.1,
+     "size": 0.7
+    },
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 2.6,
+     "rgb": [
+      200,
+      150,
+      255
+     ],
+     "tex": "elf_circle",
+     "dur": 34,
+     "spin": -0.12
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 2.6,
+     "r1": 3.0,
+     "rgb": [
+      255,
+      240,
+      190
+     ],
+     "dur": 34,
+     "tex": "magic_circle"
+    }
+   ]
+  },
+  {
+   "act": "arcane_tempest",
+   "id": 1894945710,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 8.0,
+     "rgb": [
+      170,
+      110,
+      255
+     ],
+     "tex": "magic_circle",
+     "dur": 40,
+     "spin": 0.05
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 9.0,
+     "h": 14.0,
+     "n": 22,
+     "len": 3.5,
+     "rgb": [
+      200,
+      160,
+      255
+     ],
+     "tex": "spark",
+     "dur": 36
+    },
+    {
+     "t": "arcs",
+     "at": "caster",
+     "n": 6,
+     "r": 9.0,
+     "h": 12.0,
+     "rgb": [
+      235,
+      215,
+      255
+     ],
+     "dur": 30
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 6.0,
+     "rgb": [
+      255,
+      230,
+      190
+     ],
+     "dur": 8
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.staff_of_the_magi.hum",
+ "note": "the great crystal, the armillary and the shards come from the lore text: a staff that takes magic in and turns it back"
+}

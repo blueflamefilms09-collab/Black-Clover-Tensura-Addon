@@ -1,0 +1,323 @@
+{
+ "id": "hammer_of_thunderbolts",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   140,
+   205,
+   255
+  ],
+  "secondary": [
+   225,
+   240,
+   255
+  ]
+ },
+ "maps": {
+  "skin": "up/hammer_of_thunderbolts.png",
+  "glow": "up/hammer_of_thunderbolts_glow.png",
+  "veins": "up/hammer_of_thunderbolts_veins.png"
+ },
+ "lod": {
+  "mesh": "up/hammer_of_thunderbolts_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/hammer_of_thunderbolts_lod.png",
+  "glow": "up/hammer_of_thunderbolts_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    140,
+    205,
+    255
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    225,
+    240,
+    255
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "arc",
+   "anchor": "tip",
+   "particle": "electric_spark",
+   "rgb": [
+    190,
+    225,
+    255
+   ],
+   "rate": 16,
+   "radius": 0.9
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    140,
+    205,
+    255
+   ],
+   "rate": 16,
+   "radius": 0.7,
+   "speed": 0.28,
+   "size": 0.5,
+   "tilt": 90.0
+  },
+  {
+   "type": "motes",
+   "anchor": "tip",
+   "particle": "electric_spark",
+   "rgb": [
+    225,
+    240,
+    255
+   ],
+   "rate": 8,
+   "radius": 0.6,
+   "rise": 0.04
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    120,
+    190,
+    255
+   ],
+   "rate": 10,
+   "radius": 1.2,
+   "speed": 0.09,
+   "size": 0.5
+  },
+  {
+   "type": "shaft",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    200,
+    230,
+    255
+   ],
+   "rate": 4,
+   "height": 2.0
+  },
+  {
+   "type": "edge",
+   "anchor": "blade",
+   "particle": "electric_spark",
+   "rgb": [
+    190,
+    225,
+    255
+   ],
+   "rate": 6,
+   "radius": 0.15,
+   "from": 0.0,
+   "to": 0.4
+  }
+ ],
+ "hand": {
+  "length": 1.6,
+  "tilt": 20
+ },
+ "swing": {
+  "pattern": "bolt",
+  "particle": "electric_spark",
+  "rgb": [
+   190,
+   225,
+   255
+  ],
+  "rgb2": [
+   255,
+   255,
+   255
+  ],
+  "count": 5,
+  "size": 0.7,
+  "reach": 1.6
+ },
+ "acts": [
+  {
+   "act": "thunderclap",
+   "id": 1966787079,
+   "recipe": [
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.5,
+     "r1": 10.0,
+     "rgb": [
+      190,
+      225,
+      255
+     ],
+     "dur": 14,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "arcs",
+     "at": "caster",
+     "n": 6,
+     "r": 5.0,
+     "h": 6.0,
+     "rgb": [
+      225,
+      240,
+      255
+     ],
+     "dur": 14
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 5.0,
+     "rgb": [
+      235,
+      245,
+      255
+     ],
+     "dur": 6
+    }
+   ]
+  },
+  {
+   "act": "hurled_bolt",
+   "id": 2038541355,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 0.8,
+     "rgb": [
+      190,
+      225,
+      255
+     ],
+     "dur": 10
+    },
+    {
+     "t": "arcs",
+     "at": "to",
+     "n": 5,
+     "r": 2.5,
+     "h": 4.0,
+     "rgb": [
+      235,
+      245,
+      255
+     ],
+     "dur": 12
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 8,
+     "len": 3.5,
+     "rgb": [
+      140,
+      205,
+      255
+     ],
+     "tex": "spark",
+     "dur": 12
+    }
+   ]
+  },
+  {
+   "act": "tempest",
+   "id": 1025933787,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 9.0,
+     "rgb": [
+      140,
+      205,
+      255
+     ],
+     "tex": "magic_circle",
+     "dur": 40,
+     "spin": 0.12
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 10.0,
+     "h": 16.0,
+     "n": 24,
+     "len": 4.0,
+     "rgb": [
+      200,
+      230,
+      255
+     ],
+     "tex": "spark",
+     "dur": 36
+    },
+    {
+     "t": "arcs",
+     "at": "caster",
+     "n": 8,
+     "r": 10.0,
+     "h": 15.0,
+     "rgb": [
+      235,
+      245,
+      255
+     ],
+     "dur": 32
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 8.0,
+     "rgb": [
+      235,
+      245,
+      255
+     ],
+     "dur": 8
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.hammer_of_thunderbolts.hum",
+ "note": "a storm in a hammer: bolts circling the head, orbs, rods and a thunder script"
+}
