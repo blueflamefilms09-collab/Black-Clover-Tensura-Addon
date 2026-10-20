@@ -43,7 +43,10 @@ import java.util.UUID;
 public final class DjinnSelfTests {
     private DjinnSelfTests() {}
 
-    public static void register() { SelfTests.register("djinn.core_rebuild", DjinnSelfTests::coreRebuild); }
+    public static void register() {
+        SelfTests.register("djinn.core_rebuild", DjinnSelfTests::coreRebuild);
+        DjinnBindSelfTest.register();                                                            // 1.101.0: djinn.bc_bind
+    }
 
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
 

@@ -275,6 +275,11 @@ public final class DjinnEngine {
         r.lastKey = now;
         DjinnState s = DjinnState.of(p);
         if (s.active() == null) {
+            // 1.101.0: with a Seal in the pack the key starts the ritual (a vessel in a hand or the inventory), a way that needs no item use at all
+            if (action == DjinnNet.ACT_UP && !DjinnBinding.findSeal(p, null).isEmpty()) {
+                DjinnBinding.fromInventory(p, BindGesture.Gesture.KEY, DjinnBinding.Pick.AUTO, 0, null);
+                return;
+            }
             p.displayClientMessage(Component.literal("You hold no Djinn. Bind a Djinn Seal to a Legend-grade vessel.").withStyle(ChatFormatting.GRAY), true);
             return;
         }
@@ -760,6 +765,7 @@ public final class DjinnEngine {
                 Mth.clamp((int) (s.assimilation() * 10), 0, 1000), Mth.clamp(s.trust(), 0, 100), (int) Math.max(0, s.lockoutUntil() - now),
                 (int) Math.max(0, s.extremeReadyAt() - now), r.pulse, flags);
         int sig = phase * 31 + (d == null ? 0 : d.ordinal() + 1) * 7 + flags * 3 + (int) (s.assimilation() / 5) * 11 + s.trust() * 13 + (r.pulse > 0 ? 17 : 0);
+        if (p.connection == null) return;                                                   // 1.101.0: a stand-in with no connection (a self-test) has nobody to tell
         if (!force && sig == r.lastSig) return;
         boolean changed = sig != r.lastSig;
         r.lastSig = sig;

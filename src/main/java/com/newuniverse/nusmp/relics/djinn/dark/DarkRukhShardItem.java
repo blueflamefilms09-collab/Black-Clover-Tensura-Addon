@@ -25,7 +25,7 @@ public class DarkRukhShardItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack shard = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.sidedSuccess(shard, level.isClientSide);
-        ItemStack other = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        ItemStack other = com.newuniverse.nusmp.relics.djinn.VesselAccess.rawOtherThan(player, hand);       // 1.101.0: the inventory, not Better Combat's off-hand answer
         DarkDjinn.drink(p, shard, other);
         return InteractionResultHolder.sidedSuccess(shard, false);
     }

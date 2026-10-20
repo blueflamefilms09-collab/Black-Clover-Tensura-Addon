@@ -137,7 +137,7 @@ public final class DarkDjinn {
         if (!isHolyWater(water)) return;
         DjinnState s = DjinnState.of(p);
         if (!active(s)) return;
-        ItemStack other = p.getItemInHand(e.getHand() == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        ItemStack other = VesselAccess.rawOtherThan(p, e.getHand());                  // 1.101.0: the inventory, not Better Combat's off-hand answer
         Djinn d = s.djinn();
         if (s.serial() == null || VesselAccess.boundDjinn(other) != d || !s.serial().equals(VesselAccess.serial(other))) return;
         e.setCancellationResult(InteractionResult.SUCCESS);

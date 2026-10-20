@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:cutlass",
+  "attributes": {
+    "range_bonus": 0.01
+  }
+}

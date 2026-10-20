@@ -97,7 +97,7 @@ def djinn_weapons():
     prefix = re.search(r'PREFIX\s*=\s*"([a-z_]+)"', rules).group(1)
     dark = re.search(r'DARK_SUFFIX\s*=\s*"([a-z_]+)"', rules).group(1)
     out = {}
-    for m in re.finditer(r'row\(Djinn\.([A-Z]+),\s*"([a-z]+)",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),', rules):
+    for m in re.finditer(r'row\(Djinn\.([A-Z_]+),\s*"([a-z]+)",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),', rules):
         did, kind, reach = m.group(1).lower(), m.group(2), float(m.group(5))
         out[prefix + did] = (kind, reach)
         out[prefix + did + dark] = (kind, reach)

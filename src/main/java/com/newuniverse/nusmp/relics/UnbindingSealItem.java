@@ -28,7 +28,7 @@ public class UnbindingSealItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack seal = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer sp)) return InteractionResultHolder.success(seal);
-        ItemStack other = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        ItemStack other = com.newuniverse.nusmp.relics.djinn.VesselAccess.rawOtherThan(player, hand);       // 1.101.0: the inventory, not Better Combat's off-hand answer
         RelicDef def = other.isEmpty() ? null : Relics.defOf(other);
         boolean attuned = def != null && Attune.owner(other) != null;
         switch (AttuneRules.unbind(def != null, attuned)) {

@@ -18,7 +18,7 @@ import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
 import java.util.UUID;
 
 /**
- * {@code /multiverse djinn ...}. Players: {@code status}, {@code release}, {@code share <player>}, {@code unshare <player>}, {@code accept},
+ * {@code /multiverse djinn ...}. Players: {@code status}, {@code bind [main|off|slot <n>] [djinn]} (1.101.0), {@code release}, {@code share <player>}, {@code unshare <player>}, {@code accept},
  * {@code leave}. Admins (permission 2): {@code status <player>}, {@code ledger}, {@code grant <player> <djinn> [bind]}, {@code reset <djinn>},
  * {@code phase <0-4>} (the phase for yourself, no price), {@code dark <on|off> [player]} (the Dark Djinn, no price). Attach with {@code DjinnCommand.addTo(root)} on the {@code multiverse} node.
  */
@@ -38,7 +38,17 @@ public final class DjinnCommand {
     }
 
     public static void addTo(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("djinn")
+        root.then(djinnNode());
+    }
+
+    /** 1.101.0: {@code /djinn ...} as well as {@code /multiverse djinn ...}: the same tree, so the bind command is short (call once from the command registration). */
+    public static void registerAlias(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(djinnNode());
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> djinnNode() {
+        return Commands.literal("djinn")
+                .then(bindNode())
                 .then(Commands.literal("status").executes(ctx -> status(ctx, ctx.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player()).requires(DjinnCommand::admin)
                                 .executes(ctx -> status(ctx, EntityArgument.getPlayer(ctx, "player")))))
@@ -78,7 +88,42 @@ public final class DjinnCommand {
                     int n = IntegerArgumentType.getInteger(ctx, "phase");
                     boolean done = DjinnEngine.go(p, n, true);
                     return done ? ok(ctx, "Phase " + n + ".") : fail(ctx, "Not possible (no Djinn or vessel, or the step is out of order).");
-                }))));
+                })));
+    }
+
+    // ---------------------------------------------------------------- 1.101.0: bind (the gesture that needs no item use)
+    /**
+     * {@code bind [main|off|slot <0-40>] [djinn]}: binds a Seal you carry to the vessel in a hand or an inventory slot with the normal price and trial. It reads the
+     * inventory, so Better Combat's two-handed off-hand rule (or any other mod's click handling) cannot stop it. Players may use it unless
+     * {@code commandBind} is switched off in {@code nusmp-djinn-bind-server.toml}.
+     */
+    private static LiteralArgumentBuilder<CommandSourceStack> bindNode() {
+        return Commands.literal("bind")
+                .executes(ctx -> bind(ctx, DjinnBinding.Pick.AUTO, 0, null))
+                .then(Commands.literal("main").executes(ctx -> bind(ctx, DjinnBinding.Pick.MAIN, 0, null))
+                        .then(djinnArg().executes(ctx -> bind(ctx, DjinnBinding.Pick.MAIN, 0, StringArgumentType.getString(ctx, "djinn")))))
+                .then(Commands.literal("off").executes(ctx -> bind(ctx, DjinnBinding.Pick.OFF, 0, null))
+                        .then(djinnArg().executes(ctx -> bind(ctx, DjinnBinding.Pick.OFF, 0, StringArgumentType.getString(ctx, "djinn")))))
+                .then(Commands.literal("slot").then(Commands.argument("slot", IntegerArgumentType.integer(0, 40))
+                        .executes(ctx -> bind(ctx, DjinnBinding.Pick.SLOT, IntegerArgumentType.getInteger(ctx, "slot"), null))
+                        .then(djinnArg().executes(ctx -> bind(ctx, DjinnBinding.Pick.SLOT, IntegerArgumentType.getInteger(ctx, "slot"), StringArgumentType.getString(ctx, "djinn"))))))
+                .then(djinnArg().executes(ctx -> bind(ctx, DjinnBinding.Pick.AUTO, 0, StringArgumentType.getString(ctx, "djinn"))));
+    }
+
+    private static com.mojang.brigadier.builder.RequiredArgumentBuilder<CommandSourceStack, String> djinnArg() {
+        return Commands.argument("djinn", StringArgumentType.word())
+                .suggests((c, b) -> { for (Djinn d : Djinn.values()) b.suggest(d.id()); return b.buildFuture(); });
+    }
+
+    private static int bind(CommandContext<CommandSourceStack> ctx, DjinnBinding.Pick pick, int slot, String djinnName) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        Djinn hint = null;
+        if (djinnName != null) {
+            hint = Djinn.byName(djinnName);
+            if (hint == null) return fail(ctx, "Unknown Djinn. Try one of the suggestions.");
+        }
+        // the ritual speaks for itself (action bar and chat, with the exact reason); the command only reports whether it ended in a bond
+        return DjinnBinding.fromInventory(p, BindGesture.Gesture.COMMAND, pick, slot, hint) ? 1 : 0;
     }
 
     // ---------------------------------------------------------------- the Djinn weapons (admin)
@@ -194,7 +239,7 @@ public final class DjinnCommand {
             return ok(ctx, "Gave " + p.getName().getString() + " the Seal of " + d.displayName() + ".");
         }
         DjinnState st = DjinnState.of(p);
-        ItemStack vessel = VesselAccess.isVessel(p.getMainHandItem()) ? p.getMainHandItem() : p.getOffhandItem();
+        ItemStack vessel = VesselAccess.isVessel(VesselAccess.rawMain(p)) ? VesselAccess.rawMain(p) : VesselAccess.rawOff(p);       // 1.101.0: the inventory (Better Combat hides the off hand)
         if (!VesselAccess.isVessel(vessel) || VesselAccess.boundDjinn(vessel) != null) return fail(ctx, p.getName().getString() + " must hold a free Legend-grade vessel.");
         if (st.owns() || st.lent()) return fail(ctx, p.getName().getString() + " already carries a Djinn.");
         UUID serial = UUID.randomUUID();

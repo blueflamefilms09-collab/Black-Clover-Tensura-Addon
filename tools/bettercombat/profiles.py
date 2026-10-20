@@ -106,6 +106,9 @@ LEGACY = {
 # Djinn weapon kinds (relics/djinn/weapon/DjinnWeaponRules) -> class. "bow" (Sitri) is ranged and excluded by inventory.py.
 DJINN_KIND_CLASS = {"lance": "spear", "greatsword": "greatsword", "trident": "trident", "glaive": "glaive", "staff": "staff",
                     "axe": "greataxe", "horn": "club", "claws": "fist", "scythe": "scythe"}
+# 1.101.0: the kinds the 1.93.0 roster added (their weapons shipped no Better Combat file, so they swung with the vanilla attack); appended, nothing above changes.
+DJINN_KIND_CLASS.update({"claymore": "greatsword", "harpoon": "trident", "daggers": "dagger", "rapier": "rapier", "anchor": "hammer", "fans": "dagger",
+                         "pincers": "fist", "sabre": "sabre", "spear": "spear", "cleaver": "cleaver", "halberd": "glaive", "longsword": "longsword", "mace": "club"})
 # Classes that are not melee at all: no profile.
 NON_MELEE_CLASSES = ("handitem", "crossbow", "bow", "shield", "item")
 
