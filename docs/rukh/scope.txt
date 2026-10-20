@@ -30,3 +30,6 @@ dungeon/nexus/relic/**    @p3
 !client/relics/djinn/tiny/**
 !client/relics/vu/**
 !client/relics/item/vu/**
+# God worn upgrade effects (1.106.0): coloured dust built by a helper per layer; they use no Rukh. Moving them onto the custom particles is a follow-up.
+!client/relics/fx/UpgradeFxClient.java
+!relics/upgrade/UpgradeActFx.java

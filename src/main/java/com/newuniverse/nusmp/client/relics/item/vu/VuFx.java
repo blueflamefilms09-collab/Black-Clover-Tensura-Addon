@@ -29,6 +29,9 @@ import org.joml.Vector3f;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The particle half of the upgraded Genesis weapons, a client tick (never a draw call): the ambient layers of the effect data that are particles (motes off the blade, a ring of
@@ -89,7 +92,7 @@ public final class VuFx {
     private static ParticleOptions options(String name, int rgb) {
         if (name == null || name.isEmpty() || name.equals("dust")) return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.9f);
         ParticleType<?> t = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.parse(name.contains(":") ? name : "minecraft:" + name));
-        return t instanceof SimpleParticleType s ? s : ParticleTypes.END_ROD;
+        return t instanceof SimpleParticleType s ? s : Fx.options(com.newuniverse.nusmp.particle.fx.ThemeKey.of("relic.grade.GENESIS"), FxOld.END_ROD);
     }
 
     // ================================================================ the tick
@@ -187,7 +190,7 @@ public final class VuFx {
             double f = (i + 1.0) / n;
             double px = last[0] + (tx - last[0]) * f, py = last[1] + (ty - last[1]) * f, pz = last[2] + (tz - last[2]) * f;
             level.addParticle(i % 2 == 0 ? a : b, px, py, pz, 0.0, 0.0, 0.0);
-            if (i == n - 1 && rng.nextInt(3) == 0) level.addParticle(ParticleTypes.END_ROD, px, py, pz, (rng.nextDouble() - 0.5) * 0.02, 0.01, (rng.nextDouble() - 0.5) * 0.02);
+            if (i == n - 1 && rng.nextInt(3) == 0) Fx.add(level, FxThemes.RELIC, FxOld.END_ROD, px, py, pz, (rng.nextDouble() - 0.5) * 0.02, 0.01, (rng.nextDouble() - 0.5) * 0.02);
         }
         last[0] = (float) tx;
         last[1] = (float) ty;
@@ -228,7 +231,7 @@ public final class VuFx {
             VuBurst.point(act.pattern(), i, allowed, act.ring(), (float) i / Math.max(1, allowed), OUT);
             double x = p.getX() + rx * OUT[0] + fx * OUT[2], y = p.getY() + 1.0 + OUT[1], z = p.getZ() + rz * OUT[0] + fz * OUT[2];
             double vx = rx * OUT[3] + fx * OUT[5], vz = rz * OUT[3] + fz * OUT[5];
-            mc.level.addParticle(i % 5 == 0 ? ParticleTypes.END_ROD : main, x, y, z, vx, OUT[4], vz);
+            mc.level.addParticle(i % 5 == 0 ? Fx.options(FxThemes.RELIC, FxOld.END_ROD) : main, x, y, z, vx, OUT[4], vz);
         }
         if (!act.sound().isEmpty()) {
             ResourceLocation id = ResourceLocation.parse(act.sound());
