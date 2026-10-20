@@ -16,6 +16,7 @@ public final class VfxClientEvents {
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterClientReloadListenersEvent e) -> e.registerReloadListener(new VfxDefinitions()));
         modBus.addListener(FxRenderer::registerShaders);
+        VfxVertexBuffer.textureGuard = VfxTextureGuard::resolve;                          // 1.105.0 (square bug): a missing or opaque flat sprite is drawn as the generated soft circle
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> { VfxManager.get().tick(); FxRenderer.tick(); });
         NeoForge.EVENT_BUS.addListener(VfxShake::onCameraAngles);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { VfxManager.get().clear(); FxRenderer.clear(); });

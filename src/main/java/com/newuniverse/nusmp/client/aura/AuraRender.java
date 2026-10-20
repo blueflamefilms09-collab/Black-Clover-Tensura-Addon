@@ -22,7 +22,8 @@ public final class AuraRender {
     /** {@code nusmp:textures/<path>.png}. 1.99.0: built once per path (the painters that ask for a sprite while they paint did a string concatenation and a location per call, per frame). */
     public static ResourceLocation tex(String path) { return com.newuniverse.nusmp.perf.RlCache.modTexture(path); }
 
-    public static RenderType additive(ResourceLocation t) { return RenderType.eyes(t); }
+    /** 1.105.0: {@code RenderType.eyes} for a texture that is black under its transparent texels, the alpha-weighted additive type for one that carries a colour there (it would be a solid square otherwise); see {@link com.newuniverse.nusmp.client.AdditiveTypes}. */
+    public static RenderType additive(ResourceLocation t) { return com.newuniverse.nusmp.client.AdditiveTypes.of(t); }
     public static RenderType translucent(ResourceLocation t) { return RenderType.entityTranslucent(t); }
     public static RenderType emissive(ResourceLocation t) { return RenderType.entityTranslucentEmissive(t); }
     public static RenderType cutout(ResourceLocation t) { return RenderType.entityCutoutNoCull(t); }

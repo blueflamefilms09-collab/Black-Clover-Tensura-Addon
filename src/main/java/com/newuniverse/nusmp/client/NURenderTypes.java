@@ -46,6 +46,31 @@ public final class NURenderTypes extends RenderType {
     /** Zagred's fresnel aura, or vanilla's additive eyes pass if the shader did not load. */
     public static RenderType zagredAura(ResourceLocation tex) { return NUShaders.zagredAura() != null ? ZAGRED_AURA.apply(tex) : RenderType.eyes(tex); }
 
+    /**
+     * 1.105.0 (docs/vfx_square_bug.md): vanilla's additive blend adds the texture's RGB without weighing it by alpha, so a sprite that carries a colour under its transparent texels (a ring or glow painted
+     * "colour everywhere, alpha shapes it") is a solid square. This one is {@code RenderType.eyes} (same shader, format, texture state and write mask) with the blend {@code SRC_ALPHA, ONE}: the transparent
+     * texels add nothing and the vertex alpha fades the sprite.
+     */
+    private static final TransparencyStateShard ALPHA_ADDITIVE = new TransparencyStateShard("nusmp_alpha_additive", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(com.mojang.blaze3d.platform.GlStateManager.SourceFactor.SRC_ALPHA, com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
+
+    private static final java.util.function.Function<ResourceLocation, RenderType> ADDITIVE_ALPHA = net.minecraft.Util.memoize(tex ->
+            create("nusmp_additive_alpha", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, false, true,
+                    CompositeState.builder()
+                            .setShaderState(RENDERTYPE_EYES_SHADER)
+                            .setTextureState(new TextureStateShard(tex, false, false))
+                            .setTransparencyState(ALPHA_ADDITIVE)
+                            .setWriteMaskState(COLOR_WRITE)
+                            .createCompositeState(false)));
+
+    /** The alpha-weighted additive render type for a sprite or glow map (see {@link #ALPHA_ADDITIVE}). */
+    public static RenderType additiveAlpha(ResourceLocation tex) { return ADDITIVE_ALPHA.apply(tex); }
+
     /** nusmp's crimson void, or vanilla's end portal if the shader did not load. Vertex format POSITION either way. */
     public static RenderType demonVoid() { return NUShaders.demonVoid() != null ? DEMON_VOID : RenderType.endPortal(); }
 

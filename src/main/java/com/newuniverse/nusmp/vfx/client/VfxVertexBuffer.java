@@ -71,6 +71,21 @@ public final class VfxVertexBuffer {
     private int activationLimit = MAX_VERTICES_PER_ACTIVATION;
     private int lastFlushVertices;
 
+    /**
+     * 1.105.0: the texture a batch binds, given the one it was built for and its blend. Identity until {@link VfxClientEvents} installs {@link VfxTextureGuard#resolve}; a guard that throws is ignored
+     * (the texture is used as it is), so the render path can never fail on it.
+     */
+    public static volatile java.util.function.BiFunction<ResourceLocation, VfxBlend, ResourceLocation> textureGuard = (t, bl) -> t;
+
+    private static ResourceLocation guard(ResourceLocation tex, VfxBlend blend) {
+        try {
+            ResourceLocation r = textureGuard.apply(tex, blend);
+            return r != null ? r : tex;
+        } catch (RuntimeException | LinkageError e) {
+            return tex;
+        }
+    }
+
     /** The vertices the last {@link #flush} drew (for the performance report). */
     public int lastFlushVertices() { return lastFlushVertices; }
 
@@ -248,16 +263,20 @@ public final class VfxVertexBuffer {
         List<Batch> sorted = new ArrayList<>(order);
         sorted.sort(Comparator.comparingInt(b -> b.blend.order));              // stable: equal blend orders stay in the order of their first quad
 
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        RenderSystem.depthMask(false);
-        RenderSystem.disableCull();
-        RenderSystem.enableDepthTest();
         Vector3f p = new Vector3f();
         for (Batch b : sorted) {
             if (b.size == 0) continue;
             lastFlushVertices += b.size / 6;
-            Minecraft.getInstance().getTextureManager().getTexture(b.texture).setFilter(true, false);       // not cached on purpose: the aura render types set the same texture to nearest between frames
-            RenderSystem.setShaderTexture(0, b.texture);
+            // 1.105.0 (docs/vfx_square_bug.md): every batch sets the whole state it depends on itself (shader, colour modulator, depth, cull, texture, blend), so nothing a draw before it left behind
+            // (a modulator, a disabled blend, a texture bound to unit 0) can reach it; the texture goes through the guard (a missing or opaque flat sprite becomes the generated soft circle).
+            ResourceLocation tex = guard(b.texture, b.blend);
+            RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+            RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+            RenderSystem.depthMask(false);
+            RenderSystem.disableCull();
+            RenderSystem.enableDepthTest();
+            Minecraft.getInstance().getTextureManager().getTexture(tex).setFilter(true, false);       // not cached on purpose: the aura render types set the same texture to nearest between frames
+            RenderSystem.setShaderTexture(0, tex);
             b.blend.apply();
             BufferBuilder bb = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
             for (int i = 0; i < b.size; i += 6) {
