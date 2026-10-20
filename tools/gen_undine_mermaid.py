@@ -48,7 +48,6 @@ def face_mat():
         for side in (-1, 1):
             ex, ey = w * (0.5 + side * 0.215), h * 0.56
             rx, ry = 1.55 * s, 1.05 * s
-            paste(img, col("A9C2D8"), cover(ellipse(x, y, ex, ey - 0.1 * s, rx + 0.2 * s, ry + 0.3 * s), soft=1.2 * s) * 0.22)    # eye shadow
             white = cover(ellipse(x, y, ex, ey, rx, ry))
             paste(img, col("F2F8FD"), white)
             iris = cover(ellipse(x, y, ex, ey + 0.02 * s, 0.9 * s, 1.0 * s)) * white
