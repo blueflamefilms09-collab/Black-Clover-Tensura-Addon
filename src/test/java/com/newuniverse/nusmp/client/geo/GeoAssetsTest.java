@@ -110,6 +110,19 @@ class GeoAssetsTest {
                 continue;
             }
             File geo = new File(GEO, stem(f) + ".geo.json");
+            if (stem(f).equals("tinydjinn_anim")) {
+                // 1.105.0: the Tiny Djinn's one shared clip file: every bone a clip moves must exist in EVERY tiny model (they share one skeleton)
+                File[] tiny = GEO.listFiles((d, n) -> n.startsWith("tinydjinn_") && n.endsWith(".geo.json"));
+                assertTrue(tiny != null && tiny.length > 0, f.getName() + ": no tiny djinn model");
+                GeoAnim shared = GeoAnim.parse(json(f));
+                for (File t : tiny) {
+                    Set<String> own = GeoModelData.parse(t.getName(), json(t)).bones.keySet();
+                    for (String name : shared.names())
+                        for (String bone : shared.clip(name).bones.keySet())
+                            assertTrue(own.contains(bone), f.getName() + ": animation " + name + " moves the bone " + bone + " that " + t.getName() + " lacks");
+                }
+                continue;
+            }
             if (!geo.isFile() && stem(f).startsWith("abyssal_")) {
                 // The abyssal boss looks share one clip file between their three phase models ("abyssal_<look>_p1..p3"): each animated bone must exist in at least one of them.
                 Set<String> phaseBones = new HashSet<>();

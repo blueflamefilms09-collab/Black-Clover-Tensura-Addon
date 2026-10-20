@@ -43,6 +43,7 @@ public final class DjinnClient {
     public static void init(IEventBus modBus) {
         registerGuiConfig();
         DjinnWeaponClient.init(modBus);                                                  // 1.34.0: the 24 temporary Djinn weapons drawn in 3D
+        com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnClient.init(modBus);     // 1.105.0: the Lesser Summon as a real tiny Djinn (client/relics/djinn/tiny)
         modBus.addListener(DjinnKeys::register);
         modBus.addListener(DjinnClient::addLayers);
         modBus.addListener((RegisterGuiLayersEvent e) ->

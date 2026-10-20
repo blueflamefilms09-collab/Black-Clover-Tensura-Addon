@@ -82,7 +82,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
         if (s.phase() >= 2 && dist2 < DjinnAmbient.RANGE2 && DjinnAmbient.due(p.getId(), gt)) DjinnAmbient.emit(mc.level, p, d, s, dark);
 
-        if (s.phase() == 1 || (s.phase() == 0 && s.prev() == 1 && now - s.since() < 8)) bust(pose, buffers, p, d, dark, s, gt, now, partial);
+        if ((s.phase() == 1 || (s.phase() == 0 && s.prev() == 1 && now - s.since() < 8)) && !com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnClient.replacesBust()) bust(pose, buffers, p, d, dark, s, gt, now, partial);   // 1.105.0: the tiny figure replaces the bust (config djinn.tinyModel false brings it back)
 
         // the pieces of the Half Equip set belong to the main-hand arm; the rest wait for the Maso
         boolean mainRight = main == HumanoidArm.RIGHT;
