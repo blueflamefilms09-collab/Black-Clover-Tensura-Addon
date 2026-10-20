@@ -106,7 +106,7 @@ class WornAssetsTest {
             if (bad > 0) worst.add(name + "=" + bad + "/" + e);
         }
         assertTrue(emissive > 5000, "emissive quads: " + emissive);
-        assertTrue(front >= emissive - 8, front + " of " + emissive + " glowing quads face front; reversed: " + worst);
+        assertEquals(emissive, front, front + " of " + emissive + " glowing quads face front; reversed: " + worst);
     }
 
     @Test

@@ -9,7 +9,7 @@ import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.Relics;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -90,7 +90,7 @@ public final class WornExec {
     }
 
     /** Draws the collected ensembles in the pose of {@code model}. */
-    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model, boolean crouching, double distSq,
+    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, HumanoidModel<?> model, boolean crouching, double distSq,
                             float age, float limb, float armInset) {
         if (sets.isEmpty()) return;
         WornLibDraw.draw(sets, pose, buffers, light, model, crouching, distSq, age, limb, RelicFxOptions.quality(), armInset);

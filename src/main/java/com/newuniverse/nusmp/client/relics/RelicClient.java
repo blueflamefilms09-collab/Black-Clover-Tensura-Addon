@@ -2,11 +2,15 @@ package com.newuniverse.nusmp.client.relics;
 
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
@@ -54,7 +58,27 @@ public final class RelicClient {
     private static volatile int layersAdded;
     private static volatile String layersRefused = "";
 
+    private static volatile int humanoidLayers;
+
     public static int layersAdded() { return layersAdded; }
+
+    /** How many non-player humanoid renderers got {@link HumanoidRelicLayer} in the last renderer build. */
+    public static int humanoidLayers() { return humanoidLayers; }
+
+    private static <E extends Entity> boolean addHumanoid(EntityRenderersEvent.AddLayers event, EntityType<E> type) {
+        try {
+            if (event.getRenderer(type) instanceof LivingEntityRenderer<?, ?> r && !(r instanceof PlayerRenderer) && r.getModel() instanceof HumanoidModel<?>) {
+                attachHumanoid(r);
+                return true;
+            }
+        } catch (RuntimeException | LinkageError oddRenderer) {
+            // a renderer that cannot take a layer is left as it is
+        }
+        return false;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void attachHumanoid(LivingEntityRenderer renderer) { renderer.addLayer(new HumanoidRelicLayer(renderer)); }
 
     public static String layersRefused() { return layersRefused; }
 
@@ -73,7 +97,12 @@ public final class RelicClient {
         }
         layersAdded = added;
         layersRefused = refused.toString().trim();
+        int humanoids = 0;
+        for (EntityType<?> type : event.getEntityTypes()) {                           // 1.99.0: armour stands, zombies, skeletons, piglins, humanoid mobs of other mods: a relic helmet or pair of boots has a blank painted box, so they need this layer
+            if (type != EntityType.PLAYER && addHumanoid(event, type)) humanoids++;
+        }
+        humanoidLayers = humanoids;
         if (refused.length() > 0) com.mojang.logging.LogUtils.getLogger().error("[nusmp] the worn relic layer was NOT added to: {} (only PlayerRenderer instances take it)", layersRefused);
-        else com.mojang.logging.LogUtils.getLogger().info("[nusmp] the worn relic layer was added to {} player renderers", added);
+        else com.mojang.logging.LogUtils.getLogger().info("[nusmp] the worn relic layer was added to {} player renderers and {} humanoid renderers", added, humanoids);
     }
 }

@@ -29,6 +29,7 @@ class WornWiringTest {
         assertTrue(c.contains("RelicLayerGuard::onPre"), "a renderer the layer event never reached gets the layer at its first frame");
         assertTrue(c.contains("RelicLayerGuard.known(r)"), "the guard must know the renderers the event did reach, or it would add the layer twice");
         assertTrue(c.contains("modBus.addListener(RelicClient::addLayers)"));
+        assertTrue(c.contains("new HumanoidRelicLayer(renderer)") && c.contains("r.getModel() instanceof HumanoidModel<?>"), "armour stands and humanoid mobs get the layer too");
         String k = read("client/playermodel/PlayerModelRenderer.java");
         assertTrue(k.contains("new KitRelicLayer<>(this)"), "the player-model characters wear their relics");
         String n = read("NUSMP.java");

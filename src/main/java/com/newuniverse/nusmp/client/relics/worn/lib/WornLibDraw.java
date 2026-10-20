@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.client.relics.fx.FxQuality;
 import com.newuniverse.nusmp.client.relics.fx.WornBudget;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.LightTexture;
@@ -76,7 +76,7 @@ public final class WornLibDraw {
         return p;
     }
 
-    private static ModelPart part(PlayerModel<?> m, WornAnchor a) {
+    private static ModelPart part(HumanoidModel<?> m, WornAnchor a) {
         return switch (a) {
             case HEAD -> m.head;
             case BODY -> m.body;
@@ -93,7 +93,7 @@ public final class WornLibDraw {
      * @param distSq distance from the camera to the wearer, squared
      * @param limb   the wearer's stride, 0 standing .. 1 running
      */
-    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model,
+    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, HumanoidModel<?> model,
                             boolean crouching, double distSq, float age, float limb, FxQuality q) {
         draw(sets, pose, buffers, light, model, crouching, distSq, age, limb, q, 0f);
     }
@@ -102,7 +102,7 @@ public final class WornLibDraw {
      * The same for a wearer with slim arms ({@code armInset} 0.5, see {@code WornPlan#SLIM_INSET}): every relic piece anchored on an arm is moved that many model pixels toward the
      * body, because a slim arm is one pixel narrower on its outer side (an armour item's own pieces are made for the arm and are not moved). 0 for wide arms.
      */
-    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model,
+    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, HumanoidModel<?> model,
                             boolean crouching, double distSq, float age, float limb, FxQuality q, float armInset) {
         int n = Math.min(sets.size(), MAX_SETS);
         if (n == 0) return;

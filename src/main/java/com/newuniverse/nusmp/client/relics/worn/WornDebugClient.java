@@ -39,7 +39,8 @@ public final class WornDebugClient {
         String name = who == null ? target.toString() : who.getName().getString();
         out.add(t("client_title", "Worn relics of %s (client view, this machine)", name));
         out.add(t("layers", "Worn layer added to %s player renderers; refused: %s", RelicClient.layersAdded(), RelicClient.layersRefused().isEmpty() ? "-" : RelicClient.layersRefused()));
-        out.add(t("guard", "Renderers that got the layer from the first-frame guard instead of the event: %s (%s)", com.newuniverse.nusmp.client.relics.RelicLayerGuard.healedCount(),
+        out.add(t("humanoids", "Worn layer added to %s other humanoid renderers (armour stands, zombies, skeletons, mobs of other mods)", RelicClient.humanoidLayers()));
+        out.add(t("guard","Renderers that got the layer from the first-frame guard instead of the event: %s (%s)", com.newuniverse.nusmp.client.relics.RelicLayerGuard.healedCount(),
                 com.newuniverse.nusmp.client.relics.RelicLayerGuard.lastHealed().isEmpty() ? "-" : com.newuniverse.nusmp.client.relics.RelicLayerGuard.lastHealed()));
         boolean atlas = mc.getResourceManager().getResource(WornLibDraw.ATLAS).isPresent(), shimmer = mc.getResourceManager().getResource(WornLibDraw.SHIMMER).isPresent();
         out.add(t("client_textures", "Atlas texture resolved: %s, shimmer: %s, white pixel registered: %s", yes(atlas), yes(shimmer), yes(RelicTextures.whiteRegistered())));

@@ -89,7 +89,7 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
 
     static void onEntityTick(EntityTickEvent.Post e) {
         if (!(e.getEntity() instanceof LivingEntity mob) || mob instanceof Player || mob.level().isClientSide() || (mob.tickCount + mob.getId()) % 20 != 0) return;
-        if (!MobRelics.carries(mob) && !SIG.containsKey(mob.getUUID())) return;             // the cheap exit for every mob that never carried a relic
+        if (!MobRelics.hasPack(mob) && !SIG.containsKey(mob.getUUID())) return;             // the cheap exit for every mob that never carried a relic
         check(mob, false);
     }
 
