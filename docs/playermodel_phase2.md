@@ -6,7 +6,7 @@ biped animations, with custom HD skins and small 3D appendages (horns, ears, tai
 a person in the dungeon and adds what the spec asks of a crowd: skins by script, appendages, postures, level of detail, and a switch back.
 
 Status: **written, type-checked against the API stubs, the pure parts and every data file tested through the local JUnit shim, previewed with the repo's software rasteriser
-(`docs/previews/humanoids/`). Nothing here has run in the game.** Section 11 lists what could not be verified.
+(`docs/previews/humanoids/`). Nothing here has run in the game.** Section 12 lists what could not be verified.
 
 ## 1. NEW / REPLACED / KEPT (rule 5)
 
@@ -176,7 +176,16 @@ the armour layers drawing the equipped armour (wide and slim models; a Living Ar
 * `parts.py`: the head box is the one thing the player model does not borrow from the art kit; a part is a few boxes and a grey texture, so one part serves every colour.
 * `DungeonAudit`: nothing of this can be seen by its author; a file that is missing, a mob that is both a person and a creature, a boss phase nobody drew are all found without a person.
 
-## 11. Not verified (nothing visual could be run)
+## 11. Adding a person later
+
+* **A Foundry mob**: add its row to `tools/foundry/rows/*.txt` and run the foundry generator as before, then `python3 -B tools/gen_dungeon_skins.py foundry --only <id>` (a person gets its skin, extras and look; a
+  creature goes into `foundry_class.LEGACY` with a reason). `render.playermodel2` fails until the mob is one or the other.
+* **A new family**: one line in `tools/dungeon_skins/archetypes.py` (the roster's language) and, if it needs its own wear, a recipe in `recipes.py`; run the `archetypes` step.
+* **A boss of the Decennial layer**: name an existing look in the profile's `look` (it is drawn as that boss). A NEW humanoid look is the three entries `abyssal_<look>_p1..p3` of the kit's format in
+  `playermodel/looks_abyssal.json` (or `looks_decennial.json`) plus the look's row in `assets/nusmp/abyssal/looks.json` (`kind: humanoid`); a new creature look is a geo model and needs nothing in the kit.
+* **A switch back**: set `playermodel.dungeon = false` in `config/nusmp-playermodel-client.toml`.
+
+## 12. Not verified (nothing visual could be run)
 
 * the look in the game: light and colours (the previews are a re-implementation), the second layer's thickness against the armour layer's, the extras' placement on slim arms, the tint of the head parts at
   game lighting, the stances' angles, the Goliath's poses at six blocks, whether a stride of one over the scale looks natural at 6 blocks;

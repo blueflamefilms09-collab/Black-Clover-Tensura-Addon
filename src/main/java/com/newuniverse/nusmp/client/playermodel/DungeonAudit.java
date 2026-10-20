@@ -112,7 +112,7 @@ public final class DungeonAudit {
         for (String id : index) {
             boolean person = looks.containsKey(DungeonLooks.foundry(id)), creature = creatures.contains(id);
             if (person && creature) bad.add("the foundry mob " + id + " is both a person (it has a look) and a creature (it is listed in " + LEGACY + ")");
-            else if (!person && !creature) bad.add("the foundry mob " + id + " is neither a person (no look foundry_" + id + ") nor a listed creature: it would be drawn by nothing sure");
+            else if (!person && !creature) bad.add("the foundry mob " + id + " is neither a person (no look foundry_" + id + ") nor a listed creature (a mob added to the roster after the skins were made: run python3 -B tools/gen_dungeon_skins.py foundry)");
             if (person) converted++;
         }
         for (String id : creatures) if (!index.contains(id)) bad.add(LEGACY + " lists " + id + " that is not a foundry mob");
