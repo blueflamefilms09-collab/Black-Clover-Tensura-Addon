@@ -290,7 +290,7 @@ def write_outputs(ctx, m, atlas, rig=None):
 
 def _post_header(path, ctx):
     """Copies the `grip` / `orient` lines of the shipped mesh when the new one has none, and adds the `orbit` lines of the orbiting groups after the glow line."""
-    lines = open(path, encoding="utf-8").read().split("\n")
+    lines = [l for l in open(path, encoding="utf-8").read().split("\n") if not l.startswith("grip ")]       # the grip directive is the shipped mesh's (or absent), never one guessed from the new part names
     head = ctx.base
     out = []
     have = {l.split()[0] for l in lines if l.split()}
