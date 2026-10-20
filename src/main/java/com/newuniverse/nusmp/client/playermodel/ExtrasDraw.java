@@ -26,12 +26,18 @@ public final class ExtrasDraw {
     }
 
     public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, Motion m, int light, int overlay, int argb, float glowLevel, int glowRgb) {
+        draw(pose, buffers, model, look, m.dead(), m.transforming(), m.cast(), m.swinging(), m.speed(), m.seconds(), m.progress(), light, overlay, argb, glowLevel, glowRgb);
+    }
+
+    /** The same without a {@link Motion} object (the entity renderer draws this every frame and allocates nothing for it). */
+    public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, boolean dead, boolean transforming, int cast, boolean swinging, float speed,
+                            float clockSeconds, float progress, int light, int overlay, int argb, float glowLevel, int glowRgb) {
         for (PlayerLook.Extra ex : look.extras()) {
             ExtraModels.Ready r = ExtraModels.of(ex.model());
             if (r.empty()) continue;
-            String clipName = ExtraClip.pick(r.clips, m.dead(), m.transforming(), m.cast(), m.swinging(), m.speed());
+            String clipName = ExtraClip.pick(r.clips, dead, transforming, cast, swinging, speed);
             GeoAnim.Clip clip = r.anim == null ? null : r.anim.clip(clipName);
-            float seconds = clock(clipName, clip, m);
+            float seconds = clock(clipName, clip, clockSeconds, progress);
             ResourceLocation tex = PlayerAssets.extraTexture(ex.texture(), false);
             boolean translucent = (argb >>> 24) < 250 || (ex.tint() >>> 24) < 250;
             RenderType rt = translucent ? AuraRender.translucent(tex) : AuraRender.cutout(tex);
@@ -53,10 +59,12 @@ public final class ExtrasDraw {
     }
 
     /** The seconds into a clip: a one-shot clip runs on the frame's progress, a looping one on the clock. */
-    static float clock(String name, GeoAnim.Clip clip, Motion m) {
-        if (clip == null) return m.seconds();
+    static float clock(String name, GeoAnim.Clip clip, Motion m) { return clock(name, clip, m.seconds(), m.progress()); }
+
+    static float clock(String name, GeoAnim.Clip clip, float clockSeconds, float progress) {
+        if (clip == null) return clockSeconds;
         boolean oneShot = name.equals(ExtraClip.DEATH) || name.equals(ExtraClip.TRANSFORM) || name.equals(ExtraClip.ATTACK) || name.equals(ExtraClip.CAST_BIG) || name.equals(ExtraClip.HURT);
-        return oneShot ? Math.max(0f, Math.min(1f, m.progress())) * clip.length : ExtraClip.time(m.seconds(), clip.length, clip.loop);
+        return oneShot ? Math.max(0f, Math.min(1f, progress)) * clip.length : ExtraClip.time(clockSeconds, clip.length, clip.loop);
     }
 
     /** The additive glow colour of an extra: its glow flag, the frame's level and colour; 0 = no glow pass. */

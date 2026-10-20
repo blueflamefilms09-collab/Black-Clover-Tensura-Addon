@@ -28,10 +28,11 @@ public class ExtrasLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMo
         boolean dead = e.isDeadOrDying();
         float speed = (float) Math.hypot(e.getX() - e.xo, e.getZ() - e.zo);
         float progress = dead ? Math.min(1f, (e.deathTime + partial) / 20f) : d.transforming || d.cast > 0 ? d.progress : e.getAttackAnim(partial);
-        ExtrasDraw.Motion m = new ExtrasDraw.Motion(dead, d.transforming, d.cast, e.swinging, speed, age / 20f + (e.getId() & 15) * 0.37f, progress);
         float opacity = look.alpha() * d.alpha;
         int argb = opacity < 0.999f ? ((Math.round(opacity * 255f)) << 24) | 0xFFFFFF : 0xFFFFFFFF;
         int rgb = d.glowRgb >= 0 ? d.glowRgb : look.glowRgb();
-        ExtrasDraw.draw(pose, buffers, owner.kit(), look, m, light, LivingEntityRenderer.getOverlayCoords(e, 0f), argb, d.glowLevel, rgb);
+        float glow = PlayerLod.glow(owner.lod()) ? d.glowLevel : 0f;                  // far away the additive pass of every extra is dropped
+        ExtrasDraw.draw(pose, buffers, owner.kit(), look, dead, d.transforming, d.cast, e.swinging, speed, age / 20f + (e.getId() & 15) * 0.37f, progress, light,
+                LivingEntityRenderer.getOverlayCoords(e, 0f), argb, glow, rgb);
     }
 }

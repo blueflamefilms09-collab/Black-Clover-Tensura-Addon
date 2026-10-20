@@ -36,14 +36,10 @@ public final class PlayerModelAudit {
             bad.add("hair_styles.json: " + e);
         }
         if (hair != null) hairProblems(hair, open, bad);
-        Map<String, PlayerLook> looks = null;
-        try (InputStream in = open.apply("playermodel/looks.json")) {
-            if (in == null) bad.add("playermodel/looks.json is missing");
-            else looks = PlayerLook.parseTable(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
-        } catch (Exception e) {
-            bad.add("looks.json: " + e);
-        }
-        if (looks != null) lookProblems(looks, hair, open, bad);
+        PlayerLookTables.Merged merged = PlayerLookTables.load(open);          // 1.99.0: looks.json, looks_abyssal.json and looks_dungeon.json, merged add-only
+        bad.addAll(merged.problems());
+        Map<String, PlayerLook> looks = merged.looks();
+        lookProblems(looks, hair, open, bad);
         if (hair != null) {
             for (int i = 0; i < LegacyHair.COUNT; i++) {
                 LegacyHair.Cut c = LegacyHair.of(i);

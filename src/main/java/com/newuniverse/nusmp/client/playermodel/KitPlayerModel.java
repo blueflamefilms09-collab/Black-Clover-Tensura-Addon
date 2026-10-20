@@ -13,6 +13,8 @@ import net.minecraft.world.entity.LivingEntity;
 public class KitPlayerModel<T extends LivingEntity> extends PlayerModel<T> {
     /** The pose laid over the vanilla animation; the renderer fills it before every draw. */
     public final PoseState state = new PoseState();
+    /** The factor the walk cycle's position is multiplied by (the renderer sets it below 1 for a body drawn large, so a giant's legs do not scurry). */
+    public float stride = 1f;
     private final boolean slimArms;
 
     public KitPlayerModel(ModelPart root, boolean slim) {
@@ -22,10 +24,20 @@ public class KitPlayerModel<T extends LivingEntity> extends PlayerModel<T> {
 
     public boolean slim() { return slimArms; }
 
+    /** Shows or hides the second skin layer (hat, jacket, sleeves, pants): far characters are drawn without it ({@link PlayerLod}). */
+    public void setOuterVisible(boolean on) {
+        hat.visible = on;
+        jacket.visible = on;
+        leftSleeve.visible = on;
+        rightSleeve.visible = on;
+        leftPants.visible = on;
+        rightPants.visible = on;
+    }
+
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         if (state.sitting) this.riding = true;
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(entity, limbSwing * stride, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         if (!state.any()) return;
         apply(PoseState.HEAD, head);
         apply(PoseState.BODY, body);

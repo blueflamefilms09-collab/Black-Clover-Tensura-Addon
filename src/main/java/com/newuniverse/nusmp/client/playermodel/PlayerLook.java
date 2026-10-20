@@ -31,8 +31,10 @@ import java.util.Map;
  * @param cape     a cape texture name (a plain id under the skin folder) or "" for none; drawn like the vanilla cape
  * @param holdR    radians the right arm is held raised forward (negative) while an extra is held in that hand, 0 = hangs
  * @param holdL    the same for the left arm
+ * @param stance   a posture laid over the animation ({@link Stances}: "" none, "hunch", "zombie"); added by phase 2 of the kit, absent in the older tables
  */
-public record PlayerLook(String id, String skin, boolean slim, boolean glow, int glowRgb, String hair, int hairRgb, float scale, float alpha, List<Extra> extras, String cape, float holdR, float holdL) {
+public record PlayerLook(String id, String skin, boolean slim, boolean glow, int glowRgb, String hair, int hairRgb, float scale, float alpha, List<Extra> extras, String cape, float holdR, float holdL,
+                         String stance) {
     /** The height, in blocks, of the top of the head of a model at scale 1. */
     public static final float BASE_HEIGHT = 1.875f;
     public static final int WHITE = 0xFFFFFF;
@@ -72,7 +74,13 @@ public record PlayerLook(String id, String skin, boolean slim, boolean glow, int
         public static Extra of(String model) { return new Extra(model, model, 0xFFFFFFFF, true); }
     }
 
+    /** The look of the first phase of the kit (no stance): kept so every older constructor call still compiles. */
+    public PlayerLook(String id, String skin, boolean slim, boolean glow, int glowRgb, String hair, int hairRgb, float scale, float alpha, List<Extra> extras, String cape, float holdR, float holdL) {
+        this(id, skin, slim, glow, glowRgb, hair, hairRgb, scale, alpha, extras, cape, holdR, holdL, "");
+    }
+
     public PlayerLook {
+        stance = stance == null ? "" : stance;
         skin = skin == null ? "" : skin;
         hair = hair == null ? "" : hair;
         cape = cape == null ? "" : cape;
@@ -88,17 +96,17 @@ public record PlayerLook(String id, String skin, boolean slim, boolean glow, int
 
     public boolean hasHair() { return !hair.isEmpty() && !hair.equals("bald"); }
 
-    public PlayerLook withSkin(String s) { return new PlayerLook(id, s, slim, glow, glowRgb, hair, hairRgb, scale, alpha, extras, cape, holdR, holdL); }
+    public PlayerLook withSkin(String s) { return new PlayerLook(id, s, slim, glow, glowRgb, hair, hairRgb, scale, alpha, extras, cape, holdR, holdL, stance); }
 
-    public PlayerLook withHair(String style, int rgb) { return new PlayerLook(id, skin, slim, glow, glowRgb, style, rgb, scale, alpha, extras, cape, holdR, holdL); }
+    public PlayerLook withHair(String style, int rgb) { return new PlayerLook(id, skin, slim, glow, glowRgb, style, rgb, scale, alpha, extras, cape, holdR, holdL, stance); }
 
-    public PlayerLook withScale(float s) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, s, alpha, extras, cape, holdR, holdL); }
+    public PlayerLook withScale(float s) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, s, alpha, extras, cape, holdR, holdL, stance); }
 
-    public PlayerLook withAlpha(float a) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, scale, a, extras, cape, holdR, holdL); }
+    public PlayerLook withAlpha(float a) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, scale, a, extras, cape, holdR, holdL, stance); }
 
-    public PlayerLook withGlowRgb(int rgb) { return new PlayerLook(id, skin, slim, glow, rgb, hair, hairRgb, scale, alpha, extras, cape, holdR, holdL); }
+    public PlayerLook withGlowRgb(int rgb) { return new PlayerLook(id, skin, slim, glow, rgb, hair, hairRgb, scale, alpha, extras, cape, holdR, holdL, stance); }
 
-    public PlayerLook withExtras(List<Extra> e) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, scale, alpha, e, cape, holdR, holdL); }
+    public PlayerLook withExtras(List<Extra> e) { return new PlayerLook(id, skin, slim, glow, glowRgb, hair, hairRgb, scale, alpha, e, cape, holdR, holdL, stance); }
 
     // ---------------------------------------------------------------- the table file
     /** Reads one look of {@code looks.json}. Unknown keys are ignored; a missing key takes its default. */
@@ -118,7 +126,7 @@ public record PlayerLook(String id, String skin, boolean slim, boolean glow, int
         }
         return new PlayerLook(id, str(o, "skin", ""), bool(o, "slim", false), bool(o, "glow", false), rgb(o, "glow_color", WHITE), str(o, "hair", ""), rgb(o, "hair_color", 0x3A281C),
                 o.has("scale") ? o.get("scale").getAsFloat() : 1f, o.has("alpha") ? o.get("alpha").getAsFloat() : 1f, extras, str(o, "cape", ""),
-                o.has("hold_r") ? o.get("hold_r").getAsFloat() : 0f, o.has("hold_l") ? o.get("hold_l").getAsFloat() : 0f);
+                o.has("hold_r") ? o.get("hold_r").getAsFloat() : 0f, o.has("hold_l") ? o.get("hold_l").getAsFloat() : 0f, str(o, "stance", ""));
     }
 
     private static String str(JsonObject o, String k, String d) { return o.has(k) ? o.get(k).getAsString() : d; }

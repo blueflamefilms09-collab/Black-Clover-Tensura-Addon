@@ -36,7 +36,7 @@ VANILLA = {"head": (0.0, 24.0, 0.0), "body": (0.0, 24.0, 0.0), "arm_r": (-5.0, 2
 
 # how far (degrees about x) a held prop is turned up out of the forward pointing rest pose the art kit gave it: the player model's arm hangs, the kit's arms were bent to the hold
 PROP_TILT = {"sword": 38, "katana": 38, "dagger": 22, "greatsword": 52, "axe": 52, "rhitta": 52, "hammer": 46, "spear": 58, "staff": 62, "witch_staff": 62, "courechouse": 58, "wand": 30,
-             "bow": 0, "orb": 0, "grimoire": 0, "broom": 40}
+             "bow": 0, "orb": 0, "grimoire": 0, "broom": 40, "mace": 46, "trident": 58, "scythe": 62, "shield": 0}
 
 
 def prop_kinds(model):
@@ -120,9 +120,13 @@ def tf_point(p, A, V, k):
     return [round(V[i] + k * (p[i] - A[i]), 4) for i in range(3)]
 
 
-def extract(model, out_name=None, height=None):
-    """Writes pmx_<model>. Returns the info dict, or None when the model has no extras."""
-    g = load("arc_" + model)
+def extract(model, out_name=None, height=None, src=None, geo=None, anim_src=None, tex_src=None, tex_images=None, kinds=None, compact=False):
+    """Writes pmx_<model>. Returns the info dict, or None when the model has no extras.
+
+    Phase 2 (the dungeon's humanoids) takes the same cut from models that are not arc characters: `src` is the geo file's stem (default arc_<model>), `geo` a geo dict built in memory instead
+    (an archetype that is never written as a model), `anim_src` the animation file to take the extras' tracks from (the Mob Foundry shares one file per animation class), `tex_src` the texture
+    stem to copy, `tex_images` an (image, glow image) pair to write instead of copying, `kinds` the {'prop_r': kind, 'prop_l': kind} of the held props, `compact` writes minified json (hundreds of files: the jar stays small)."""
+    g = geo if geo is not None else load(src or ("arc_" + model))
     if g is None:
         return None
     geo = g["minecraft:geometry"][0]
@@ -156,7 +160,7 @@ def extract(model, out_name=None, height=None):
         out_bones.append({"name": "x_" + a, "pivot": list(VANILLA[a]), "cubes": []})
     emitted = set(roots.values())
     infos = []
-    kinds_of = prop_kinds(model)
+    kinds_of = kinds if kinds is not None else prop_kinds(model)
     holds = {}
     for n in ex:
         a, chain, extra_parent = chains[n]
@@ -212,9 +216,9 @@ def extract(model, out_name=None, height=None):
     stem = out_name or ("pmx_" + model)
     ng = {"format_version": "1.12.0", "minecraft:geometry": [{"description": {**desc, "identifier": "geometry." + stem}, "bones": out_bones}]}
     os.makedirs(GEO, exist_ok=True)
-    json.dump(ng, open(os.path.join(GEO, stem + ".geo.json"), "w"), indent=1)
+    json.dump(ng, open(os.path.join(GEO, stem + ".geo.json"), "w"), **({"separators": (",", ":")} if compact else {"indent": 1}))
     # animations: only the tracks of the extras, positions scaled
-    ap = os.path.join(ANIM, "arc_" + model + ".animation.json")
+    ap = anim_src or os.path.join(ANIM, "arc_" + model + ".animation.json")
     if os.path.isfile(ap):
         anim = json.load(open(ap))
         outa = {"format_version": anim.get("format_version", "1.8.0"), "animations": {}}
@@ -235,8 +239,17 @@ def extract(model, out_name=None, height=None):
             nclip["bones"] = nb
             outa["animations"][cname] = nclip
         os.makedirs(ANIM, exist_ok=True)
-        json.dump(outa, open(os.path.join(ANIM, stem + ".animation.json"), "w"), indent=1)
-    copy_texture("arc_" + model, stem)
+        json.dump(outa, open(os.path.join(ANIM, stem + ".animation.json"), "w"), **({"separators": (",", ":")} if compact else {"indent": 1}))
+    if tex_images is not None:
+        os.makedirs(TEX, exist_ok=True)
+        tex_images[0].save(os.path.join(TEX, stem + ".png"), optimize=True)
+        glow_path = os.path.join(TEX, stem + "_glow.png")
+        if tex_images[1] is not None:
+            tex_images[1].save(glow_path, optimize=True)
+        elif os.path.isfile(glow_path):
+            os.remove(glow_path)
+    else:
+        copy_texture(tex_src or ("arc_" + model), stem)
     return {"stem": stem, "anchors": anchors, "bones": infos, "k": k, "height": h_blocks, "holds": holds}
 
 

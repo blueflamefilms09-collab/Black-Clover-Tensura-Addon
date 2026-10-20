@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -32,6 +33,9 @@ import net.minecraft.world.phys.Vec3;
  * <p>Public API of the kit (small and stable): {@link PlayerModelRenderer#PlayerModelRenderer(EntityRendererProvider.Context, PlayerBody)}, {@link PlayerBody}, {@link PlayerLook},
  * {@link PoseState}/{@link PosePatterns}, {@link HairStyleData}/{@link HairDraw} for a screen that draws hair itself, {@link PlayerAssets}, and the registration helper
  * {@link PlayerModelRegistry}. Everything else is internal.
+ *
+ * <p>1.99.0 (phase 2): a frame draws less with distance ({@link PlayerLod}: no second skin layer and no hair beyond the detail distance, no additive glow beyond the far one), lays the look's
+ * {@link Stances stance} under the body's own poses, slows the walk cycle of a body drawn large, and allocates nothing of its own (the tint wrapper and the decoration are reused).
  */
 public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<T> {
     /** The scale vanilla's player renderer draws the model with. */
@@ -66,7 +70,10 @@ public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<
         private final PlayerBody<T> body;
         private final KitPlayerModel<T> kit;
         private final PlayerBody.Dynamic dyn = new PlayerBody.Dynamic();
+        private final TintedBuffers tinted = new TintedBuffers(null, 0xFFFFFFFF);
+        private final Deco deco = new Deco();
         private PlayerLook look;
+        private int lod;
 
         @SuppressWarnings("unchecked")
         Body(EntityRendererProvider.Context ctx, PlayerBody<T> body, boolean slim) {
@@ -91,6 +98,9 @@ public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<
 
         /** The per-frame state of the frame being drawn. */
         public PlayerBody.Dynamic dynamic() { return dyn; }
+
+        /** The level of detail of the frame being drawn ({@link PlayerLod}). */
+        public int lod() { return lod; }
 
         /** The model, with its pose state. */
         public KitPlayerModel<T> kit() { return kit; }
@@ -147,27 +157,48 @@ public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<
             }
             dyn.reset();
             body.dynamic(e, partial, dyn);
+            this.lod = PlayerLod.level(this.entityRenderDispatcher.distanceToSqr(e), PlayerModelOptions.detailSqr(), PlayerModelOptions.farSqr());
+            kit.setOuterVisible(PlayerLod.outerLayer(lod));
             PoseState ps = kit.state;
             ps.clear();
             if (look.holdR() != 0f) ps.add(PoseState.ARM_R, look.holdR(), 0f, 0f);
             if (look.holdL() != 0f) ps.add(PoseState.ARM_L, look.holdL(), 0f, 0f);
+            if (!look.stance().isEmpty()) Stances.apply(look.stance(), ps, e instanceof Mob m && m.isAggressive(), e.swinging, e.walkAnimation.speed() > 0.1f, e.tickCount + partial);
             body.pose(e, partial, ps);
             ArmPoses.apply(e, kit);
+            float total = look.scale() * dyn.size * e.getScale();
+            kit.stride = total > 1f ? 1f / total : 1f;                                  // a body drawn large takes longer steps: the walk cycle spans more ground
             float opacity = opacity();
-            this.shadowRadius = opacity < 0.5f ? 0f : (dyn.shadow > 0f ? dyn.shadow : 0.42f * look.scale() * dyn.size);
+            this.shadowRadius = opacity < 0.5f || dyn.noShadow ? 0f : (dyn.shadow > 0f ? dyn.shadow : 0.42f * look.scale() * dyn.size);
             int argb = ((Math.max(0, Math.min(255, Math.round(opacity * 255f)))) << 24) | (dyn.tint & 0xFFFFFF);
-            MultiBufferSource source = argb == 0xFFFFFFFF ? buffers : new TintedBuffers(buffers, argb);
+            MultiBufferSource source = argb == 0xFFFFFFFF ? buffers : tinted.set(buffers, argb);
             pose.pushPose();
             if (dyn.lift != 0f || ps.lift != 0f) pose.translate(0.0, dyn.lift + ps.lift, 0.0);
             super.render(e, yaw, partial, pose, source, light);
             pose.popPose();
             pose.pushPose();
-            body.decorate(e, partial, new PlayerBody.Decoration() {
-                @Override public PoseStack pose() { return pose; }
-                @Override public MultiBufferSource buffers() { return buffers; }
-                @Override public int light() { return light; }
-            });
+            body.decorate(e, partial, deco.set(pose, buffers, light));
             pose.popPose();
+        }
+
+        /** What a body may draw on top of the character: one object per renderer, re-aimed every frame. */
+        private static final class Deco implements PlayerBody.Decoration {
+            private PoseStack pose;
+            private MultiBufferSource buffers;
+            private int light;
+
+            Deco set(PoseStack pose, MultiBufferSource buffers, int light) {
+                this.pose = pose;
+                this.buffers = buffers;
+                this.light = light;
+                return this;
+            }
+
+            @Override public PoseStack pose() { return pose; }
+
+            @Override public MultiBufferSource buffers() { return buffers; }
+
+            @Override public int light() { return light; }
         }
 
         /** The ARGB the frame multiplies into hair and extras (opacity and tint). */

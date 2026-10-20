@@ -22,12 +22,14 @@ public final class ExtraModels {
 
     /** The ready-to-draw form of one extras file. */
     public static final class Ready {
+        public final ResourceLocation rl;
         public final GeoModelData model;
         public final Map<PlayerLook.Anchor, GeoModelData> views = new EnumMap<>(PlayerLook.Anchor.class);
         public final GeoAnim anim;
         public final Set<String> clips = new HashSet<>();
 
-        Ready(GeoModelData model, GeoAnim anim) {
+        Ready(ResourceLocation rl, GeoModelData model, GeoAnim anim) {
+            this.rl = rl;
             this.model = model;
             this.anim = anim;
             for (PlayerLook.Anchor a : PlayerLook.Anchor.values()) {
@@ -42,26 +44,23 @@ public final class ExtraModels {
     }
 
     private static final Map<String, Ready> CACHE = new HashMap<>();
-    private static final Map<String, GeoModelData> SOURCE = new HashMap<>();
 
     public static ResourceLocation modelRl(String model) { return PlayerAssets.rl("geo/entity/" + model + ".geo.json"); }
 
     public static ResourceLocation animRl(String model) { return PlayerAssets.rl("animations/entity/" + model + ".animation.json"); }
 
-    /** The ready form of a model name ({@code pmx_asta}); an empty one when the file is missing or malformed (the geo loader logs it once). */
+    /**
+     * The ready form of a model name ({@code pmx_asta}); an empty one when the file is missing or malformed (the geo loader logs it once). A frame with a known model does one map get and one
+     * identity check against the loader's parsed model (no resource location is built, nothing is allocated); a resource reload makes the loader parse a new instance, which is how a stale entry is found.
+     */
     public static synchronized Ready of(String model) {
-        GeoModelData m = GeoModels.model(modelRl(model));
         Ready r = CACHE.get(model);
-        if (r == null || SOURCE.get(model) != m) {          // a resource reload made the loader parse a new instance
-            r = new Ready(m, GeoModels.animations(animRl(model)));
-            CACHE.put(model, r);
-            SOURCE.put(model, m);
-        }
+        if (r != null && GeoModels.model(r.rl) == r.model) return r;
+        ResourceLocation rl = modelRl(model);
+        r = new Ready(rl, GeoModels.model(rl), GeoModels.animations(animRl(model)));
+        CACHE.put(model, r);
         return r;
     }
 
-    public static synchronized void clear() {
-        CACHE.clear();
-        SOURCE.clear();
-    }
+    public static synchronized void clear() { CACHE.clear(); }
 }
