@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.book;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
@@ -14,7 +13,6 @@ import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -30,6 +28,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /** Black Oil Magic: the spells of BlackOilBook that need their own logic (oiled targets, tar traps, the ignition, the curse). */
 public final class BlackOilArts {
@@ -91,8 +92,8 @@ public final class BlackOilArts {
     }
 
     private static void flames(ServerPlayer p, Vec3 c, int n, double spread) {
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, c.x, c.y + 0.5, c.z, n, spread, 0.4, spread, 0.06);
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, c.x, c.y + 0.5, c.z, n / 2, spread, 0.5, spread, 0.04);
+        Fx.spray(p.serverLevel(), FxThemes.MAGIC_BLACK_OIL, FxTone.LIGHT, c.x, c.y + 0.5, c.z, n, spread, 0.4, spread, 0.06);
+        Fx.spray(p.serverLevel(), FxThemes.MAGIC_BLACK_OIL, FxTone.DARK, c.x, c.y + 0.5, c.z, n / 2, spread, 0.5, spread, 0.04);
     }
 
     // ------------------------------------------------------------------ Sticky Tar: a glob that leaves a trapping pool
@@ -325,7 +326,7 @@ public final class BlackOilArts {
             t.setDeltaMovement(t.getDeltaMovement().add(0, up, 0));
             t.hurtMarked = true;
         }
-        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, c.x, c.y + 1, c.z, 40, r * 0.2, 1.5, r * 0.2, 0.1);
+        Fx.spray(p.serverLevel(), FxThemes.MAGIC_BLACK_OIL, FxTone.DARK, c.x, c.y + 1, c.z, 40, r * 0.2, 1.5, r * 0.2, 0.1);
         // two seconds later the geyser catches
         SpellRuntime.later(p.serverLevel(), 40, () -> {
             if (p.isRemoved()) return;

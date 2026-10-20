@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.wizard;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.blackclover.Devil;
@@ -38,6 +37,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * 1.6.0: how a mage gets their grimoire in the Black Clover way. When you come of age (enough play time) and/or have grown enough (enough
@@ -169,7 +171,7 @@ public final class WizardSystem {
         }
         book.setDeltaMovement(to.normalize().scale(Math.min(0.32, 0.04 + i * 0.008)));
         book.hurtMarked = true;
-        if (i % 4 == 0) RukhFx.spray(sl, RukhFx.Alignment.LIGHT, book.getX(), book.getY() + 0.3, book.getZ(), 6, 0.2, 0.2, 0.2, 0.4);
+        if (i % 4 == 0) Fx.spray(sl, FxThemes.WIZARD, FxTone.LIGHT, book.getX(), book.getY() + 0.3, book.getZ(), 6, 0.2, 0.2, 0.2, 0.4);
         SpellRuntime.later(sl, 2, () -> step(sl, p, book, arrive, i + 1));
     }
 

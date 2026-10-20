@@ -44,6 +44,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.IntConsumer;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Lucifero's moves and Body Magic's pulse, as plain static functions on any {@link ZogratisBoss}: Dante uses them, and Lucius
@@ -545,7 +547,7 @@ public final class DanteMoves {
             Vec3 tail = pos.subtract(d.scale(0.6));
             sl.sendParticles(chip, pos.x, pos.y, pos.z, 2, 0.12, 0.12, 0.12, 0.0);
             sl.sendParticles(chip, tail.x, tail.y, tail.z, 1, 0.08, 0.08, 0.08, 0.0);
-            sl.sendParticles(new DustParticleOptions(new Vector3f(DevilStyle.red(ACCENT), DevilStyle.green(ACCENT), DevilStyle.blue(ACCENT)), 0.9f),
+            Fx.sprayDust(sl, FxThemes.BOSS_DANTE, new Vector3f(DevilStyle.red(ACCENT), DevilStyle.green(ACCENT), DevilStyle.blue(ACCENT)), 0.9f,
                     pos.x, pos.y, pos.z, 1, 0.05, 0.05, 0.05, 0.0);
         }
 

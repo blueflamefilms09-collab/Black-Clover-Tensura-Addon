@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.dungeon.DungeonEntities;
 import com.newuniverse.nusmp.dungeon.LivingArmorEntity;
 import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -45,6 +44,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Floor Warden is the Labyrinth's mini-boss, the thing that drops the Shadow Key. It is a subclass of the Living Armor
@@ -166,10 +168,10 @@ public class FloorWardenEntity extends LivingArmorEntity {
             if (e.hurt(damageSources().mobAttack(this), slamDamage())) e.knockback(1.4, getX() - e.getX(), getZ() - e.getZ());
         }
         com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.ATTACK);       // 1.99.0: its family's own blow, not an anvil
-        sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.1, getZ(), 1, 0, 0, 0, 0);
+        Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.EXPLOSION, getX(), getY() + 0.1, getZ(), 1, 0, 0, 0, 0);
         for (int i = 0; i < 24; i++) {
             double a = i * Math.PI / 12.0;
-            sl.sendParticles(ParticleTypes.LARGE_SMOKE, getX() + Math.cos(a) * radius, getY() + 0.2, getZ() + Math.sin(a) * radius, 1, 0, 0, 0, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.LARGE_SMOKE, getX() + Math.cos(a) * radius, getY() + 0.2, getZ() + Math.sin(a) * radius, 1, 0, 0, 0, 0.02);
         }
         onGroundSlam(sl);
     }
@@ -186,13 +188,13 @@ public class FloorWardenEntity extends LivingArmorEntity {
             if (sl.getBlockState(feet.below()).getCollisionShape(sl, feet.below()).isEmpty()) continue;          // no floor there
             if (!sl.noCollision(this, getBoundingBox().move(c.subtract(position())))) continue;                  // would be inside a wall
             Vec3 from = position();
-            sl.sendParticles(ParticleTypes.LARGE_SMOKE, from.x, from.y + 1.0, from.z, 24, 0.5, 1.0, 0.5, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.LARGE_SMOKE, from.x, from.y + 1.0, from.z, 24, 0.5, 1.0, 0.5, 0.02);
             com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.CAST);
             teleportTo(c.x, c.y, c.z);
             getNavigation().stop();
             lookAt(target, 180f, 180f);
-            sl.sendParticles(ParticleTypes.LARGE_SMOKE, c.x, c.y + 1.0, c.z, 24, 0.5, 1.0, 0.5, 0.02);
-            sl.sendParticles(ParticleTypes.WITCH, c.x, c.y + 1.2, c.z, 10, 0.4, 0.6, 0.4, 0.0);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.LARGE_SMOKE, c.x, c.y + 1.0, c.z, 24, 0.5, 1.0, 0.5, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.WITCH, c.x, c.y + 1.2, c.z, 10, 0.4, 0.6, 0.4, 0.0);
             return true;
         }
         return false;
@@ -210,7 +212,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
             guard.addTag("nusmp_servant");                                                 // 1.54.0: a boss's minion is no faction's fighter (the Mega-Dungeon's turf wars leave it alone)
             guard.setTarget(getTarget());
             sl.addFreshEntity(guard);
-            sl.sendParticles(ParticleTypes.WITCH, guard.getX(), guard.getY() + 1.0, guard.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.WITCH, guard.getX(), guard.getY() + 1.0, guard.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
         }
         com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.AGGRO);
     }

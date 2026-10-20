@@ -9,7 +9,6 @@ import com.newuniverse.nusmp.entity.zogratis.VolleyBudget;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -26,6 +25,9 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 import java.util.function.IntConsumer;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * What the Charybdis Spawn does ({@link CharybdisTable} has the numbers, {@link CharybdisMath} the geometry): for each move its telegraph and its
@@ -132,7 +134,7 @@ final class CharybdisMoves {
         double wr = CharybdisMath.whirlRadius(boss.gatesOpen());
         Tells.ring(sl, c, wr, rgb, 1.3f, 44);
         Tells.ring(sl, c, Math.max(0.8, wr * left / Math.max(1, total)), GLOW, 1.0f, 24);
-        sl.sendParticles(ParticleTypes.CURRENT_DOWN, c.x, c.y + 1.0, c.z, 6, wr * 0.5, 0.8, wr * 0.5, 0.02);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.CURRENT_DOWN, c.x, c.y + 1.0, c.z, 6, wr * 0.5, 0.8, wr * 0.5, 0.02);
         if (first(left, total)) CharybdisVfx.whirlTell(boss, c, wr, total);
     }
 
@@ -163,7 +165,7 @@ final class CharybdisMoves {
         for (Vec3 s : boss.peekSpots()) {
             if (first(left, total)) CharybdisVfx.summonTell(boss, s, total);
             Tells.ring(sl, s, 1.6, colour(left, total), 1.3f, 18);
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 5, 0.5, 0.8, 0.5, 0.05);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 5, 0.5, 0.8, 0.5, 0.05);
         }
         Tells.gather(sl, boss.position().add(0, boss.getBbHeight() / 2, 0), 1.4, TEAL, 6);
         if (first(left, total)) sl.playSound(null, boss.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2.0f, 0.6f);
@@ -194,7 +196,7 @@ final class CharybdisMoves {
         Tells.ring(sl, c, CharybdisMath.MAELSTROM_RADIUS, colour(left, total), 1.4f, 52);
         Tells.ring(sl, c, Math.min(14, 2 + (total - left) * 0.2), GLOW, 1.0f, 32);
         Tells.gather(sl, c.add(0, boss.getBbHeight() / 2, 0), 2.0, GLOW, 10);
-        sl.sendParticles(ParticleTypes.CURRENT_DOWN, c.x, c.y + 1.5, c.z, 10, CharybdisMath.MAELSTROM_RADIUS * 0.6, 1.0, CharybdisMath.MAELSTROM_RADIUS * 0.6, 0.02);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.CURRENT_DOWN, c.x, c.y + 1.5, c.z, 10, CharybdisMath.MAELSTROM_RADIUS * 0.6, 1.0, CharybdisMath.MAELSTROM_RADIUS * 0.6, 0.02);
         if (first(left, total)) {
             boss.announce(CharybdisText.maelstrom());
             sl.playSound(null, boss.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 3.0f, 0.5f);
@@ -242,7 +244,7 @@ final class CharybdisMoves {
             double[] d = CharybdisMath.aim(aim.x, aim.y, aim.z, fan[i], CharybdisMath.fanPitch(i, n));
             MagiculeScaleEntity.launch(sl, boss, from.add(d[0] * 0.4, d[1] * 0.4, d[2] * 0.4), new Vec3(d[0], d[1], d[2]), budget, pool);
         }
-        sl.sendParticles(ParticleTypes.GLOW, from.x, from.y, from.z, 16, 0.5, 0.5, 0.5, 0.1);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.GLOW, from.x, from.y, from.z, 16, 0.5, 0.5, 0.5, 0.1);
         CharybdisVfx.volleyStrike(boss, from);
         sl.playSound(null, boss.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.HOSTILE, 2.0f, 0.8f);
     }
@@ -272,8 +274,8 @@ final class CharybdisMoves {
         double yaw = Math.atan2(dir.z, dir.x);
         for (int i = 0; i <= 12; i++) {
             double a = yaw - CharybdisMath.SWEEP_HALF_ARC + 2 * CharybdisMath.SWEEP_HALF_ARC * i / 12.0, r = reach * 0.8;
-            sl.sendParticles(ParticleTypes.SWEEP_ATTACK, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 1, 0, 0, 0, 0);
-            sl.sendParticles(ParticleTypes.BUBBLE, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 6, 0.5, 0.5, 0.5, 0.15);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.SWEEP_ATTACK, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 1, 0, 0, 0, 0);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 6, 0.5, 0.5, 0.5, 0.15);
         }
         sl.playSound(null, boss.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 2.0f, 0.5f);
     }
@@ -301,8 +303,8 @@ final class CharybdisMoves {
         double a = age * 0.45;
         for (int k = 0; k < 3; k++) {
             double r = radius * (0.35 + 0.65 * ((age + k * 7) % 11) / 10.0), th = a + k * 2.1;
-            sl.sendParticles(ParticleTypes.CURRENT_DOWN, centre.x + Math.cos(th) * r, centre.y + 0.6 + k * 0.8, centre.z + Math.sin(th) * r, 1, 0.1, 0.2, 0.1, 0.0);
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, centre.x + Math.cos(th + 1.0) * r, centre.y + 0.3, centre.z + Math.sin(th + 1.0) * r, 1, 0.1, 0.4, 0.1, 0.02);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.CURRENT_DOWN, centre.x + Math.cos(th) * r, centre.y + 0.6 + k * 0.8, centre.z + Math.sin(th) * r, 1, 0.1, 0.2, 0.1, 0.0);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, centre.x + Math.cos(th + 1.0) * r, centre.y + 0.3, centre.z + Math.sin(th + 1.0) * r, 1, 0.1, 0.4, 0.1, 0.02);
         }
         if (age % 10 == 0) Tells.ring(sl, centre, radius, TEAL, 1.0f, 36);
     }
@@ -334,9 +336,9 @@ final class CharybdisMoves {
                 shove(f, v, 0.9, 0.1);
                 slow(f, 40, 0);
             }
-            sl.sendParticles(ParticleTypes.CRIT, f.getX(), f.getY() + 1, f.getZ(), 12, 0.3, 0.4, 0.3, 0.2);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.CRIT, f.getX(), f.getY() + 1, f.getZ(), 12, 0.3, 0.4, 0.3, 0.2);
         }
-        sl.sendParticles(ParticleTypes.BUBBLE, boss.getX(), boss.getY() + boss.getBbHeight() / 2, boss.getZ(), 6, 1.0, 0.8, 1.0, 0.1);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE, boss.getX(), boss.getY() + boss.getBbHeight() / 2, boss.getZ(), 6, 1.0, 0.8, 1.0, 0.1);
     }
 
     // ---------------------------------------------------------------- Tidal Crush
@@ -356,7 +358,7 @@ final class CharybdisMoves {
             }
         }
         for (int i = 1; i <= 3; i++) Tells.ring(sl, floorCentre.add(0, 0.2 * i, 0), cr * (0.5 + 0.25 * i), GLOW, 1.4f, 40);
-        sl.sendParticles(ParticleTypes.BUBBLE_POP, floorCentre.x, floorCentre.y + 1, floorCentre.z, 40, cr * 0.6, 1.2, cr * 0.6, 0.1);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_POP, floorCentre.x, floorCentre.y + 1, floorCentre.z, 40, cr * 0.6, 1.2, cr * 0.6, 0.1);
         sl.playSound(null, BlockPos.containing(floorCentre), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2.5f, 0.6f);
         boss.swing(InteractionHand.MAIN_HAND);
     }

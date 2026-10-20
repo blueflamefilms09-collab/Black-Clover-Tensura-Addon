@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.decennial;
 
 import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -18,6 +17,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: every Decennial boss has ONE signature mechanic, the thing a party says about it afterwards ("the one that puts up a shield every twenty seconds", "the one that steps behind you"). Fourteen
@@ -62,7 +64,7 @@ final class Signatures {
             case "shield_pulse" -> {
                 if (due(now, period)) {
                     g.addShield((float) (g.getMaxHealth() * sig.power()));
-                    DecennialFx.ring(sl, ParticleTypes.END_ROD, g.getX(), g.getY() + 1.0, g.getZ(), 1.6 * Math.max(1.0, g.getScale() * 0.5), 20);
+                    DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.END_ROD), g.getX(), g.getY() + 1.0, g.getZ(), 1.6 * Math.max(1.0, g.getScale() * 0.5), 20);
                     sl.playSound(null, g.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 1.0f, 1.6f);
                 }
             }
@@ -105,7 +107,7 @@ final class Signatures {
     // ================================================================ blink: marked, then behind you
     private void blink(LabyrinthGuardianEntity g, ServerLevel sl, long now, List<Player> players, long period) {
         if (armedTarget != null) {
-            if (now % 4 == 0) DecennialFx.ring(sl, ParticleTypes.PORTAL, armedX, armedY + 0.1, armedZ, 1.4, 14);
+            if (now % 4 == 0) DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.PORTAL), armedX, armedY + 0.1, armedZ, 1.4, 14);
             if (now < armedAt) return;
             Player t = null;
             for (Player p : players) if (p.getUUID().equals(armedTarget)) t = p;
@@ -113,7 +115,7 @@ final class Signatures {
             if (t == null) return;
             double tx = armedX, ty = armedY, tz = armedZ;
             if (g.insideLeash(tx, tz) && sl.noCollision(g, g.getBoundingBox().move(tx - g.getX(), ty - g.getY(), tz - g.getZ()))) {
-                DecennialFx.ring(sl, ParticleTypes.REVERSE_PORTAL, g.getX(), g.getY() + 1.0, g.getZ(), 1.2, 16);
+                DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.REVERSE_PORTAL), g.getX(), g.getY() + 1.0, g.getZ(), 1.2, 16);
                 g.teleportTo(tx, ty, tz);
                 g.getNavigation().stop();
                 g.setTarget(t);
@@ -136,9 +138,9 @@ final class Signatures {
     private void aura(LabyrinthGuardianEntity g, ServerLevel sl, List<Player> players) {
         double r = 6.0 * Math.max(1.0, g.getScale() * 0.6);
         var type = switch (sig.kind()) {
-            case "frost_aura" -> ParticleTypes.SNOWFLAKE;
-            case "scorch_aura" -> ParticleTypes.FLAME;
-            default -> ParticleTypes.HAPPY_VILLAGER;
+            case "frost_aura" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SNOWFLAKE);
+            case "scorch_aura" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.FLAME);
+            default -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.HAPPY_VILLAGER);
         };
         DecennialFx.ring(sl, type, g.getX(), g.getY() + 0.3, g.getZ(), r, 24);
         for (Player p : players) {
@@ -157,7 +159,7 @@ final class Signatures {
     // ================================================================ gravity well: shown, then everyone is dragged in
     private void gravityWell(LabyrinthGuardianEntity g, ServerLevel sl, long now, List<Player> players, long period) {
         if (armedAt >= 0) {
-            if (now % 4 == 0) DecennialFx.ring(sl, ParticleTypes.PORTAL, g.getX(), g.getY() + 0.2, g.getZ(), 12.0, 40);
+            if (now % 4 == 0) DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.PORTAL), g.getX(), g.getY() + 0.2, g.getZ(), 12.0, 40);
             if (now < armedAt) return;
             armedAt = -1;
             for (Player p : players) {
@@ -178,7 +180,7 @@ final class Signatures {
             if (g.distanceToSqr(p) <= 14.0 * 14.0) continue;
             now.add(p.getUUID());
             if (!far.contains(p.getUUID())) continue;                   // the first time it is only a mark; the ward strikes someone who stays far
-            DecennialFx.line(sl, ParticleTypes.ELECTRIC_SPARK, g.getX(), g.getY() + g.getBbHeight() * 0.7, g.getZ(), p.getX(), p.getY() + 1.0, p.getZ(), 14);
+            DecennialFx.line(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.ELECTRIC_SPARK), g.getX(), g.getY() + g.getBbHeight() * 0.7, g.getZ(), p.getX(), p.getY() + 1.0, p.getZ(), 14);
             DecennialFx.hurt(g, p, DecennialFx.baseAttack(g) * (0.15 + sig.power()), true);
             sl.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 0.6f, 1.8f);
         }
@@ -196,7 +198,7 @@ final class Signatures {
         }
         if (n > 0) {
             g.addShield((float) (g.getMaxHealth() * 0.004 * n));
-            DecennialFx.ring(sl, ParticleTypes.SCULK_SOUL, g.getX(), g.getY() + 1.0, g.getZ(), 10.0, 24);
+            DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SCULK_SOUL), g.getX(), g.getY() + 1.0, g.getZ(), 10.0, 24);
         }
     }
 
@@ -205,7 +207,7 @@ final class Signatures {
         if (!sig.kind().equals("echo_strike") || !(target instanceof Player p) || echoes.size() >= 6) return;
         echoes.add(new long[] {now + 16});
         echoTargets.add(p.getUUID());
-        sl.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
+        Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
     }
 
     private void echoes(LabyrinthGuardianEntity g, ServerLevel sl, long now) {
@@ -220,7 +222,7 @@ final class Signatures {
             Entity e = sl.getEntity(id);
             if (e instanceof Player p && DecennialFx.target(p) && g.distanceToSqr(p) < 36.0) {
                 DecennialFx.hurt(g, p, DecennialFx.baseAttack(g) * sig.power(), false);
-                sl.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.35, 0.5, 0.35, 0.1);
+                Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.35, 0.5, 0.35, 0.1);
                 sl.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1.0f, 0.7f);
             }
         }
@@ -239,7 +241,7 @@ final class Signatures {
                     Entity shooter = source.getEntity();
                     if (shooter instanceof Player p && DecennialFx.target(p)) {
                         DecennialFx.hurt(g, p, Math.min(amount * sig.power(), DecennialFx.baseAttack(g) * 0.5), true);
-                        DecennialFx.ring(sl, ParticleTypes.ELECTRIC_SPARK, g.getX(), g.getY() + 1.2, g.getZ(), 1.2, 12);
+                        DecennialFx.ring(sl, Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.ELECTRIC_SPARK), g.getX(), g.getY() + 1.2, g.getZ(), 1.2, 12);
                     }
                     return (float) (amount * (1.0 - sig.power()));
                 }
@@ -258,7 +260,7 @@ final class Signatures {
         double back = Math.min(amount * sig.power(), DecennialFx.baseAttack(g) * 0.5);
         if (back < 1.0) back = 1.0;
         DecennialFx.hurt(g, p, back, false);
-        sl.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
+        Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
     }
 
     /** One of the boss's adds died: the tithe is paid to the boss as a shield. */

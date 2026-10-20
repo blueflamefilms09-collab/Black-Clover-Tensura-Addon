@@ -1,13 +1,10 @@
 package com.newuniverse.nusmp.client;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -20,6 +17,9 @@ import net.neoforged.neoforge.common.NeoForge;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * 0.52: the player-side half of the Grimoire Sword Draw (docs/grimoire_sword_draw.md): 24 ticks of keyframed pose for the arms,
@@ -155,18 +155,18 @@ public final class SwordDrawClient {
                 for (int k = 0; k < 3; k++) {
                     double ox = (r.nextDouble() - 0.5) * 0.4, oz = (r.nextDouble() - 0.5) * 0.4;
                     if (am) {
-                        RukhClientFx.spray(p.level(), Alignment.DARK, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.05 + 0.02 * t / 4.0, 0, 1.0);
+                        Fx.spray(p.level(), FxThemes.MAGIC_SWORD, FxTone.DARK, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.05 + 0.02 * t / 4.0, 0, 1.0);
                     } else {
-                        RukhClientFx.spray(p.level(), Alignment.LIGHT, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.06, 0, 1.0);
+                        Fx.spray(p.level(), FxThemes.MAGIC_SWORD, FxTone.LIGHT, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.06, 0, 1.0);
                     }
                 }
             }
             if (t == GIVE_TICK) {                                                         // the hilt leaves the pages
                 for (int k = 0; k < 24; k++) {
                     double ang = r.nextDouble() * Math.PI * 2, sp = 0.08 + r.nextDouble() * 0.12;
-                    RukhClientFx.spray(p.level(), am ? Alignment.DARK : Alignment.LIGHT, hx, hy + 0.5, hz, 1, Math.cos(ang) * sp, 0.05 + r.nextDouble() * 0.1, Math.sin(ang) * sp, 1.0);
+                    Fx.spray(p.level(), FxThemes.MAGIC_SWORD, am ? FxTone.DARK : FxTone.LIGHT, hx, hy + 0.5, hz, 1, Math.cos(ang) * sp, 0.05 + r.nextDouble() * 0.1, Math.sin(ang) * sp, 1.0);
                 }
-                if (am) RukhClientFx.spray(p.level(), Alignment.LIGHT, hx, hy + 0.5, hz, 1, 0, 0, 0, 1.0);
+                if (am) Fx.spray(p.level(), FxThemes.MAGIC_SWORD, FxTone.LIGHT, hx, hy + 0.5, hz, 1, 0, 0, 0, 1.0);
             }
         }
     }

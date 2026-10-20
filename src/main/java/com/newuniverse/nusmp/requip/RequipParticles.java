@@ -2,12 +2,14 @@ package com.newuniverse.nusmp.requip;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the themed particles of Requip: The Knight (the flash of light of a swap, the dust of the armour's colours, the trail of the flying armours) in one place. The skill package keeps to the mod's own
@@ -23,15 +25,15 @@ public final class RequipParticles {
 
     private static ParticleOptions primary(Armour.Particle k) {
         return switch (k) {
-            case HEART -> ParticleTypes.HEART;
-            case SWORD -> ParticleTypes.END_ROD;
-            case FLAME -> ParticleTypes.FLAME;
-            case SPARK -> ParticleTypes.ELECTRIC_SPARK;
-            case WATER -> ParticleTypes.SPLASH;
-            case DARK -> ParticleTypes.SQUID_INK;
-            case CLOUD -> ParticleTypes.CLOUD;
-            case RUNE -> ParticleTypes.ENCHANT;
-            case GLINT -> ParticleTypes.GLOW;
+            case HEART -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.HEART);
+            case SWORD -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.END_ROD);
+            case FLAME -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.FLAME);
+            case SPARK -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.ELECTRIC_SPARK);
+            case WATER -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.SPLASH);
+            case DARK -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.SQUID_INK);
+            case CLOUD -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.CLOUD);
+            case RUNE -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.ENCHANT);
+            case GLINT -> Fx.options(FxThemes.SKILL_REQUIP, FxOld.GLOW);
         };
     }
 
@@ -45,7 +47,7 @@ public final class RequipParticles {
     /** The flash of light of a swap: a white flash, a rising ring of the theme colours and the theme particles. */
     public static void flash(ServerLevel level, ServerPlayer p, Armour a) {
         Vec3 c = p.position().add(0, 1.0, 0);
-        level.sendParticles(ParticleTypes.FLASH, c.x, c.y, c.z, 1, 0, 0, 0, 0);
+        Fx.spray(level, FxThemes.SKILL_REQUIP, FxOld.FLASH, c.x, c.y, c.z, 1, 0, 0, 0, 0);
         for (int i = 0; i < 36; i++) {
             double ang = i / 36.0 * Mth.TWO_PI, r = 0.9;
             level.sendParticles(dust(i % 2 == 0 ? a.theme() : a.glow(), 1.5f), c.x + Math.cos(ang) * r, p.getY() + 0.1 + i * 0.05, c.z + Math.sin(ang) * r, 1, 0, 0.05, 0, 0.0);

@@ -1,0 +1,16 @@
+# Who may use the Rukh (the magoi): the single source of truth for RukhExclusiveScopeTest (docs/rukh/exclusive.md says WHY).
+# Paths are globs relative to src/main/java/com/newuniverse/nusmp, same syntax as docs/rukh/scope.txt. tools/particles/map.json "rukh_keep" must list exactly the OWNERS.
+# The owner's decision (1.103.0): the Rukh belongs to Djinn users and to the dungeons. Everything else has its own custom particles (particle.fx, themes).
+# OWNERS
+relics/djinn/**
+client/relics/djinn/**
+relics/Fx.java
+labyrinth/**
+client/labyrinth/**
+dungeon/**
+client/dungeon/**
+# INFRASTRUCTURE (the Rukh types and their emitters, the custom particle facade that falls back to them, the mod entry class that registers them)
+# particle/rukh/**
+# client/particle/rukh/**
+# particle/fx/**
+# NUSMP.java

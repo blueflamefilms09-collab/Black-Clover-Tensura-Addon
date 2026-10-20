@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.arena;
 
 import com.newuniverse.nusmp.multiverse.Squads;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: Lucius answers only in his own arena (1.46.0), so the players need a way to be carried there and back that is a deliberate act
@@ -111,11 +113,11 @@ public class ZogratisHourglassItem extends Item {
 
     /** A closing ring of Rukh light round the user (the mod's own particles, drawn by the server through the Rukh budget). */
     private static void ring(ServerLevel sl, Player p, double radius, int phase) {
-        RukhFx.Alignment light = RukhFx.Alignment.of(false);
+        FxTone light = FxTone.of(false);
         int n = 10;
         for (int i = 0; i < n; i++) {
             double a = Math.PI * 2 * i / n + phase * 0.12;
-            RukhFx.burst(sl, p.getX() + Math.cos(a) * radius, p.getY() + 0.15 + (phase % 16) * 0.12, p.getZ() + Math.sin(a) * radius, light, 1);
+            Fx.burst(sl, FxThemes.ARENA_LUCIUS, p.getX() + Math.cos(a) * radius, p.getY() + 0.15 + (phase % 16) * 0.12, p.getZ() + Math.sin(a) * radius, light, 1);
         }
     }
 
@@ -143,7 +145,7 @@ public class ZogratisHourglassItem extends Item {
         for (UUID id : chosen) if (((ServerLevel) level).getPlayerByUUID(id) instanceof ServerPlayer sp) companions.add(sp);
         Vec3 at = user.position();
         ServerLevel sl = (ServerLevel) level;
-        RukhFx.burst(sl, at.add(0, 1, 0), RukhFx.Alignment.of(false), 12, 1.2);
+        Fx.burst(sl, FxThemes.ARENA_LUCIUS, at.add(0, 1, 0), FxTone.of(false), 12, 1.2);
         ArenaTravel.enter(user, companions);
         return stack;
     }

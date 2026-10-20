@@ -27,6 +27,9 @@ import org.slf4j.Logger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the first half of the Crucible's life: deciding WHICH relics the vault offers and putting them on the pedestals WITHOUT issuing any of them.
@@ -126,7 +129,7 @@ final class CrucibleOffer {
         }
         if (center != null) {
             level.playSound(null, center, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 0.6f);
-            level.sendParticles(ParticleTypes.END_ROD, center.getX() + 0.5, center.getY() + 1.0, center.getZ() + 0.5, 40, 3.0, 1.5, 3.0, 0.02);
+            Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.END_ROD, center.getX() + 0.5, center.getY() + 1.0, center.getZ() + 0.5, 40, 3.0, 1.5, 3.0, 0.02);
         }
         return true;
     }
@@ -241,8 +244,8 @@ final class CrucibleOffer {
     /** The puff of dust where a relic crumbled (or was taken): a pedestal's floating relic hangs about 1.3 blocks above its block. */
     static void crumbleEffects(ServerLevel level, BlockPos pedestal) {
         Vec3 c = Vec3.atCenterOf(pedestal).add(0, 1.0, 0);
-        level.sendParticles(ParticleTypes.POOF, c.x, c.y, c.z, 14, 0.25, 0.3, 0.25, 0.05);
-        level.sendParticles(ParticleTypes.ASH, c.x, c.y, c.z, 30, 0.35, 0.45, 0.35, 0.02);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.POOF, c.x, c.y, c.z, 14, 0.25, 0.3, 0.25, 0.05);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.ASH, c.x, c.y, c.z, 30, 0.35, 0.45, 0.35, 0.02);
         level.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.FALLING_DUST, net.minecraft.world.level.block.Blocks.DEEPSLATE.defaultBlockState()),
                 c.x, c.y + 0.4, c.z, 36, 0.4, 0.4, 0.4, 0.0);
         level.playSound(null, pedestal, SoundEvents.DEEPSLATE_BRICKS_BREAK, SoundSource.BLOCKS, 1.0f, 0.7f);

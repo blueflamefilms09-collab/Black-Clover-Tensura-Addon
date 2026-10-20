@@ -16,7 +16,6 @@ import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.relics.order.UniqueLedger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +30,9 @@ import org.slf4j.Logger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: this is the line the whole Crucible stands on: "taking ONE relic forfeits the rest, and the maximum output is exactly one relic per region".
@@ -155,8 +157,8 @@ public final class CrucibleHook {
                 Vec3 at = Vec3.atCenterOf(pickedAt);
                 for (int i : r.crumble()) CrucibleOffer.crumbleEffects(level, slots.get(i));
                 if (delivered) {
-                    level.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 0.9, at.z, 24, 0.25, 0.25, 0.25, 0.04);
-                    level.sendParticles(ParticleTypes.ENCHANT, at.x, at.y + 1.2, at.z, 40, 0.4, 0.4, 0.4, 0.6);
+                    Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.END_ROD, at.x, at.y + 0.9, at.z, 24, 0.25, 0.25, 0.25, 0.04);
+                    Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.ENCHANT, at.x, at.y + 1.2, at.z, 40, 0.4, 0.4, 0.4, 0.6);
                     level.playSound(null, pickedAt, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.8f, 1.5f);
                     level.playSound(null, pickedAt, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6f, 1.0f);
                 }

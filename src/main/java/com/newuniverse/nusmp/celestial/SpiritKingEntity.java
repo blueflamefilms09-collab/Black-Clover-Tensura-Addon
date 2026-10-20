@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -43,6 +42,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Celestial Spirit King, ruler of the Spirit World and the boss of the Gate. He is built on the same shape as the Zogratis bosses and the Decennial bosses of the
@@ -238,7 +240,7 @@ public class SpiritKingEntity extends Monster implements BudgetedBoss {
             }
             runStrikes(sl, now);
             if (tickCount % 10 == 0) refreshBar();
-            if (tickCount % 5 == 0) sl.sendParticles(ParticleTypes.END_ROD, getX() + (random.nextDouble() - 0.5) * 2.0, getY() + random.nextDouble() * 3.2, getZ() + (random.nextDouble() - 0.5) * 2.0, 1, 0, 0.03, 0, 0.0);
+            if (tickCount % 5 == 0) Fx.spray(sl, FxThemes.BOSS_CELESTIAL, FxOld.END_ROD, getX() + (random.nextDouble() - 0.5) * 2.0, getY() + random.nextDouble() * 3.2, getZ() + (random.nextDouble() - 0.5) * 2.0, 1, 0, 0.03, 0, 0.0);
         } catch (RuntimeException e) {
             // an entity that throws in its tick would crash the server: the fight goes on without the extras
         }
@@ -348,7 +350,7 @@ public class SpiritKingEntity extends Monster implements BudgetedBoss {
 
     private void telegraph(ServerLevel sl, Vec3 at, double r, int ticks) {
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, at, at.add(0, 1, 0), 0xFFFFE27A, ticks, (float) Math.max(0.8, r / 2.5));
-        sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 0.2, at.z, 10, r * 0.4, 0.1, r * 0.4, 0.0);
+        Fx.spray(sl, FxThemes.BOSS_CELESTIAL, FxOld.END_ROD, at.x, at.y + 0.2, at.z, 10, r * 0.4, 0.1, r * 0.4, 0.0);
     }
 
     private void runStrikes(ServerLevel sl, long now) {

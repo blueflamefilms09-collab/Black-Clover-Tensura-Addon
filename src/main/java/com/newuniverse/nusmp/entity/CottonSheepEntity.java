@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.entity;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -17,6 +16,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * 0.52: Charmy's cotton sheep, drawn like the anime's: tall, upright, fluffy, with a pale long face, round pale eyes and curled
@@ -107,15 +109,15 @@ public class CottonSheepEntity extends PathfinderMob {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel sl)) {
-            if (tickCount % 4 == 0 && anim() == COOKING) level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, getX(), getY() + 2.2, getZ(), 0, 0.04, 0);
+            if (tickCount % 4 == 0 && anim() == COOKING) Fx.add(level(), FxThemes.MAGIC_COTTON, FxOld.CAMPFIRE_COSY_SMOKE, getX(), getY() + 2.2, getZ(), 0, 0.04, 0);
             return;
         }
         life++;
         if (role() != COOK) fly(sl);
         else { setYRot(facing); yBodyRot = facing; yHeadRot = facing; }
         if (life >= maxLife) {
-            sl.sendParticles(ParticleTypes.CLOUD, getX(), getY() + 1, getZ(), 14, 0.5, 0.7, 0.5, 0.04);
-            sl.sendParticles(ParticleTypes.POOF, getX(), getY() + 1, getZ(), 6, 0.4, 0.6, 0.4, 0.02);
+            Fx.spray(sl, FxThemes.MAGIC_COTTON, FxOld.CLOUD, getX(), getY() + 1, getZ(), 14, 0.5, 0.7, 0.5, 0.04);
+            Fx.spray(sl, FxThemes.MAGIC_COTTON, FxOld.POOF, getX(), getY() + 1, getZ(), 6, 0.4, 0.6, 0.4, 0.02);
             discard();
         }
     }
@@ -145,7 +147,7 @@ public class CottonSheepEntity extends PathfinderMob {
             if (role() == STRIKER) life = Math.max(life, maxLife - 10);                                     // lands, then pops
             else entityData.set(ANIM, HUG);
             sl.playSound(null, blockPosition(), SoundEvents.WOOL_PLACE, SoundSource.PLAYERS, 1.5f, 0.8f);
-            sl.sendParticles(ParticleTypes.CLOUD, to.x, to.y + 0.6, to.z, 12, 0.5, 0.4, 0.5, 0.05);
+            Fx.spray(sl, FxThemes.MAGIC_COTTON, FxOld.CLOUD, to.x, to.y + 0.6, to.z, 12, 0.5, 0.4, 0.5, 0.05);
             if (arrive != null) arrive.run();
         }
     }

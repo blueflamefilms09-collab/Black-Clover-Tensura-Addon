@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -41,6 +40,9 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the brief asks for "the custom capability allowing players to trigger D&amp;D-style Short/Long rests only when physically interacting
@@ -239,7 +241,7 @@ public final class RestEvents {
             return Step.DONE;
         }
         p.displayClientMessage(Component.translatable("message.nusmp.mega.safe.progress", RestRules.progressPercent(elapsed, ch.total)), true);
-        com.newuniverse.nusmp.perf.PerfParticles.send(level, ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.3, 0.4, 0.3, 0.01);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
+        com.newuniverse.nusmp.perf.PerfParticles.send(level, Fx.options(FxThemes.DUNGEON_SAFE, FxOld.END_ROD), p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.3, 0.4, 0.3, 0.01);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
         return Step.RESTING;
     }
 
@@ -298,12 +300,12 @@ public final class RestEvents {
                 if (!data.contains(LANDING_KEY) || sector.id > data.getInt(LANDING_KEY)) data.putInt(LANDING_KEY, sector.id);
             }
             say(p, "done_long");
-            level.sendParticles(ParticleTypes.HEART, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
+            Fx.spray(level, FxThemes.DUNGEON_SAFE, FxOld.HEART, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
         } else {
             st.shortRestsUsed++;
             say(p, "done_short", RestRules.shortRestsLeft(SafeConfig.get(SafeConfig.SHORT_REST_USES), st.shortRestsUsed));
         }
-        level.sendParticles(ParticleTypes.HAPPY_VILLAGER, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.5, 0.6, 0.5, 0.0);
+        Fx.spray(level, FxThemes.DUNGEON_SAFE, FxOld.HAPPY_VILLAGER, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.5, 0.6, 0.5, 0.0);
         level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 0.8f, 1.2f);
         try {
             NusmpEvents.fire(p, QUEST_RESTED, kind.id());

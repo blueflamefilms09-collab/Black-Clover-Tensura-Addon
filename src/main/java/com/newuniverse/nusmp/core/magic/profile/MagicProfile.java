@@ -5,8 +5,10 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.MagicType.HitEffect;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxTone;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -53,8 +55,11 @@ public interface MagicProfile {
     /** The magic's main colour, ARGB. */
     default int color() { return 0xFF000000 | com.newuniverse.nusmp.grimoire.BookPalette.glow(MagicKeys.enumKey(id())); }
 
-    /** A particle that exists in every game version of the mod's target; the final fallback is GLOW. */
-    default SimpleParticleType particle() { return com.newuniverse.nusmp.particle.rukh.RukhParticles.light(); }
+    /** The particle theme of the magic ({@code magic.FLAME}, ...): its own particles and colour in data/nusmp/particle_themes.json; an id without a theme gets the default one. */
+    default ThemeKey themeKey() { return ThemeKey.of("magic." + MagicKeys.enumKey(id())); }
+
+    /** The signature particle of the magic's theme (light or dark flavour); the final fallback is a vanilla glow. Never null. */
+    default ParticleOptions particle() { return Fx.options(themeKey(), FxTone.LIGHT); }
 
     /** The effect the magic's guard page grants; the final fallback is Resistance. */
     default Holder<MobEffect> guardEffect() { return MobEffects.DAMAGE_RESISTANCE; }

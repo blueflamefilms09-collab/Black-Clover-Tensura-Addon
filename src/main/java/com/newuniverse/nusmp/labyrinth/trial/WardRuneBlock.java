@@ -1,11 +1,13 @@
 package com.newuniverse.nusmp.labyrinth.trial;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: a floor tile that MARKS where a barrier column rises, instead of the archway storing door offsets in its NBT. Jigsaw rotates every
@@ -21,6 +23,6 @@ public final class WardRuneBlock extends Block {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rnd) {
         if (rnd.nextInt(12) != 0) return;
-        level.addParticle(ParticleTypes.ELECTRIC_SPARK, pos.getX() + 0.2 + rnd.nextDouble() * 0.6, pos.getY() + 1.05, pos.getZ() + 0.2 + rnd.nextDouble() * 0.6, 0.0, 0.02, 0.0);
+        Fx.add(level, FxThemes.DUNGEON_TRIAL, FxOld.ELECTRIC_SPARK, pos.getX() + 0.2 + rnd.nextDouble() * 0.6, pos.getY() + 1.05, pos.getZ() + 0.2 + rnd.nextDouble() * 0.6, 0.0, 0.02, 0.0);
     }
 }

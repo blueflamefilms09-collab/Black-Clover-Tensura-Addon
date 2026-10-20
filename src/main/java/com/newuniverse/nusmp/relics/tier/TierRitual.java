@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * The upgrade ritual: sneak and use a catalyst with the relic in the other hand (or sneak and use the relic with the catalyst in the other hand).
@@ -172,8 +173,8 @@ public final class TierRitual {
             com.newuniverse.nusmp.quests.QuestHooks.relicTier(p, to);
             Relics.invalidate(p);
             p.level().playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.4f);
-            Fx.ring(p.serverLevel(), p.position(), 1.8, to.rgb());
-            Fx.burst(p.serverLevel(), p.position(), to.rgb());
+            FxRelic.ring(p.serverLevel(), p.position(), 1.8, to.rgb());
+            FxRelic.burst(p.serverLevel(), p.position(), to.rgb());
             setCooldown(p, now + TierRules.SUCCESS_COOLDOWN_TICKS);
             say(p, Component.translatable("nusmp.tier.success", relic.getHoverName(), to.label()).withStyle(to.colour()));
             return new Result(Reason.SUCCESS, true, target);

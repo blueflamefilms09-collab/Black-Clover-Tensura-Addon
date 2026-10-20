@@ -5,8 +5,9 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.MagicType.HitEffect;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxTone;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 
@@ -43,9 +44,9 @@ public final class EnumMagicProfile implements MagicProfile {
     @Override public String soulType() { return type.soulType == null || type.soulType.isBlank() ? "EMPTY" : type.soulType; }
     @Override public HitEffect hit() { return type.hit == null ? HitEffect.PIERCE : type.hit; }
 
-    @Override public SimpleParticleType particle() {
-        SimpleParticleType p = type.rawParticle();
-        return p != null ? p : com.newuniverse.nusmp.particle.rukh.RukhParticles.light();
+    @Override public ParticleOptions particle() {
+        ParticleOptions p = type.rawParticle();
+        return p != null ? p : Fx.options(themeKey(), FxTone.LIGHT);
     }
 
     @Override public Holder<MobEffect> guardEffect() {

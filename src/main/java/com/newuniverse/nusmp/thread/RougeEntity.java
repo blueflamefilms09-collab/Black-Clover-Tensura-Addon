@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: in the anime Rouge is not a buff, she is a small red cat of thread that is <i>there</i>: she sits on Vanessa's shoulder, bolts
@@ -288,10 +290,10 @@ public class RougeEntity extends PathfinderMob {
     private void clientTrail() {
         int s = state();
         if (s == SCURRY || s == LEAP || s == HOP) {
-            if (random.nextInt(2) == 0) level().addParticle(new DustParticleOptions(new Vector3f(1f, 0.2f, 0.33f), 0.7f), getX() + (random.nextDouble() - 0.5) * 0.2,
+            if (random.nextInt(2) == 0) Fx.addDust(level(), FxThemes.MAGIC_THREAD, new Vector3f(1f, 0.2f, 0.33f), 0.7f, getX() + (random.nextDouble() - 0.5) * 0.2,
                     getY() + 0.15, getZ() + (random.nextDouble() - 0.5) * 0.2, 0, 0, 0);
         } else if (s == UNRAVEL || s == REKNIT) {
-            for (int i = 0; i < 2; i++) level().addParticle(new DustParticleOptions(new Vector3f(1f, 0.25f, 0.4f), 0.9f), getX() + (random.nextDouble() - 0.5) * 0.4,
+            for (int i = 0; i < 2; i++) Fx.addDust(level(), FxThemes.MAGIC_THREAD, new Vector3f(1f, 0.25f, 0.4f), 0.9f, getX() + (random.nextDouble() - 0.5) * 0.4,
                     getY() + 0.1 + random.nextDouble() * 0.4, getZ() + (random.nextDouble() - 0.5) * 0.4, 0, 0.02, 0);
         }
     }

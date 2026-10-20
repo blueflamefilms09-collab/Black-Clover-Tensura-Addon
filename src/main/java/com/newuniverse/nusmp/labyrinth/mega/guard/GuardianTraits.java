@@ -20,6 +20,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: what the nine theme traits DO in the world, kept out of the entity class so {@link LabyrinthGuardianEntity} stays a readable boss
@@ -111,8 +114,8 @@ final class GuardianTraits {
             p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, spec.duration(), 0));
         }
         sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_STARE, SoundSource.HOSTILE, 1.4f, 0.5f);
-        ring(sl, ParticleTypes.PORTAL, g.getX(), g.getY() + 0.3, g.getZ(), spec.range(), 40);
-        ring(sl, ParticleTypes.PORTAL, g.getX(), g.getY() + 0.3, g.getZ(), spec.range() * 0.5, 20);
+        ring(sl, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.PORTAL), g.getX(), g.getY() + 0.3, g.getZ(), spec.range(), 40);
+        ring(sl, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.PORTAL), g.getX(), g.getY() + 0.3, g.getZ(), spec.range() * 0.5, 20);
     }
 
     // ---------------------------------------------------------------- SPATIAL: a blink behind the target and a strike
@@ -130,12 +133,12 @@ final class GuardianTraits {
             if (sl.getBlockState(feet.below()).getCollisionShape(sl, feet.below()).isEmpty()) continue;       // no floor there
             if (!sl.noCollision(g, g.getBoundingBox().move(c.subtract(from)))) continue;                       // would be inside a wall
             if (!g.insideLeash(c.x, c.z)) continue;                                                            // never out of its hall
-            sl.sendParticles(ParticleTypes.REVERSE_PORTAL, from.x, from.y + 1.4, from.z, 30, 0.5, 1.2, 0.5, 0.1);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, from.x, from.y + 1.4, from.z, 30, 0.5, 1.2, 0.5, 0.1);
             sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.2f, 0.4f);
             g.teleportTo(c.x, c.y, c.z);
             g.getNavigation().stop();
             g.lookAt(p, 180f, 180f);
-            sl.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y + 1.4, c.z, 30, 0.5, 1.2, 0.5, 0.1);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, c.x, c.y + 1.4, c.z, 30, 0.5, 1.2, 0.5, 0.1);
             sl.playSound(null, feet, SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.2f, 0.4f);
             g.swing(InteractionHand.MAIN_HAND);
             p.hurt(g.damageSources().mobAttack(g), (float) (spec.power() * g.attackDamage()));
@@ -162,8 +165,8 @@ final class GuardianTraits {
             st.nextEmberAt = now + 6;
             for (int i = 0; i < st.trail.size(); i++) {
                 int[] c = st.trail.cell(i);
-                sl.sendParticles(ParticleTypes.FLAME, c[0] + 0.5, c[1] + 0.1, c[2] + 0.5, 2, 0.25, 0.05, 0.25, 0.01);
-                if ((i + (int) now) % 5 == 0) sl.sendParticles(ParticleTypes.LAVA, c[0] + 0.5, c[1] + 0.3, c[2] + 0.5, 1, 0.2, 0.05, 0.2, 0.0);
+                Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.FLAME, c[0] + 0.5, c[1] + 0.1, c[2] + 0.5, 2, 0.25, 0.05, 0.25, 0.01);
+                if ((i + (int) now) % 5 == 0) Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.LAVA, c[0] + 0.5, c[1] + 0.3, c[2] + 0.5, 1, 0.2, 0.05, 0.2, 0.0);
             }
         }
         if (now >= st.nextBurnAt) {
@@ -189,8 +192,8 @@ final class GuardianTraits {
             p.setTicksFrozen(Math.min(100, p.getTicksFrozen() + 30));
         }
         sl.playSound(null, g.blockPosition(), SoundEvents.PLAYER_HURT_FREEZE, SoundSource.HOSTILE, 0.8f, 0.6f);
-        ring(sl, ParticleTypes.SNOWFLAKE, g.getX(), g.getY() + 0.2, g.getZ(), spec.range(), 36);
-        sl.sendParticles(ParticleTypes.SNOWFLAKE, g.getX(), g.getY() + 1.5, g.getZ(), 30, 1.2, 1.4, 1.2, 0.02);
+        ring(sl, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SNOWFLAKE), g.getX(), g.getY() + 0.2, g.getZ(), spec.range(), 36);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.SNOWFLAKE, g.getX(), g.getY() + 1.5, g.getZ(), 30, 1.2, 1.4, 1.2, 0.02);
     }
 
     // ---------------------------------------------------------------- VERDANT: one root, one second, under the shared control lock
@@ -211,7 +214,7 @@ final class GuardianTraits {
         victim.hurtMarked = true;
         sl.playSound(null, victim.blockPosition(), SoundEvents.VINE_BREAK, SoundSource.HOSTILE, 1.4f, 0.6f);
         sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LEAVES.defaultBlockState()), victim.getX(), victim.getY() + 0.4, victim.getZ(), 30, 0.4, 0.5, 0.4, 0.05);
-        sl.sendParticles(ParticleTypes.COMPOSTER, victim.getX(), victim.getY() + 0.2, victim.getZ(), 16, 0.4, 0.3, 0.4, 0.02);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.COMPOSTER, victim.getX(), victim.getY() + 0.2, victim.getZ(), 16, 0.4, 0.3, 0.4, 0.02);
     }
 
     // ---------------------------------------------------------------- SHADOW: a short pulse of darkness, close in only
@@ -225,7 +228,7 @@ final class GuardianTraits {
         int ticks = Math.min(GuardianScaling.SHADOW_MAX_TICKS, spec.duration());
         for (Player p : in) p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks, 0));
         sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_STARE, SoundSource.HOSTILE, 1.2f, 0.7f);
-        for (double r = 1.5; r <= range; r += 1.5) ring(sl, ParticleTypes.SQUID_INK, g.getX(), g.getY() + 0.5, g.getZ(), r, (int) (r * 6));
+        for (double r = 1.5; r <= range; r += 1.5) ring(sl, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SQUID_INK), g.getX(), g.getY() + 0.5, g.getZ(), r, (int) (r * 6));
     }
 
     // ---------------------------------------------------------------- ASTRAL: stars fall on a ring round it, damage only
@@ -236,7 +239,7 @@ final class GuardianTraits {
             for (double[] p : TraitMath.starRing(g.getX(), g.getZ(), spec.range(), spec.count(), phase)) {
                 double floor = floorY(sl, p[0], g.getY() + 2.0, p[1]);
                 st.stars.add(new double[] {p[0], floor, p[1], now + spec.duration()});
-                sl.sendParticles(ParticleTypes.END_ROD, p[0], floor + 0.1, p[1], 4, 0.2, 0.05, 0.2, 0.01);
+                Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, p[0], floor + 0.1, p[1], 4, 0.2, 0.05, 0.2, 0.01);
             }
             sl.playSound(null, g.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.5f, 1.4f);
         }
@@ -247,7 +250,7 @@ final class GuardianTraits {
             double[] s = it.next();
             long left = (long) s[3] - now;
             if (left > 0) {
-                if (left % 2 == 0) sl.sendParticles(ParticleTypes.END_ROD, s[0], s[1] + left * 0.45, s[2], 1, 0.0, 0.0, 0.0, 0.0);
+                if (left % 2 == 0) Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, s[0], s[1] + left * 0.45, s[2], 1, 0.0, 0.0, 0.0, 0.0);
                 continue;
             }
             it.remove();
@@ -255,8 +258,8 @@ final class GuardianTraits {
                 double dx = p.getX() - s[0], dz = p.getZ() - s[2];
                 if (dx * dx + dz * dz <= 4.0 && Math.abs(p.getY() - s[1]) <= 3.0) p.hurt(g.damageSources().magic(), damage);      // no attacker: no push, damage only
             }
-            sl.sendParticles(ParticleTypes.FIREWORK, s[0], s[1] + 0.3, s[2], 14, 0.4, 0.3, 0.4, 0.12);
-            sl.sendParticles(ParticleTypes.FLASH, s[0], s[1] + 0.5, s[2], 1, 0.0, 0.0, 0.0, 0.0);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.FIREWORK, s[0], s[1] + 0.3, s[2], 14, 0.4, 0.3, 0.4, 0.12);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.FLASH, s[0], s[1] + 0.5, s[2], 1, 0.0, 0.0, 0.0, 0.0);
             sl.playSound(null, BlockPos.containing(s[0], s[1], s[2]), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.HOSTILE, 0.9f, 1.3f);
         }
     }
@@ -298,13 +301,13 @@ final class GuardianTraits {
         double cap = g.getMaxHealth() * spec.count() / 100.0;
         double gain = spec.power() * g.attackDamage();
         g.setAbsorptionAmount((float) Math.min(cap, g.getAbsorptionAmount() + gain));
-        sl.sendParticles(ParticleTypes.DAMAGE_INDICATOR, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 4, 0.25, 0.3, 0.25, 0.1);
-        sl.sendParticles(ParticleTypes.CRIMSON_SPORE, g.getX(), g.getY() + 1.6, g.getZ(), 6, 0.5, 0.8, 0.5, 0.02);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.DAMAGE_INDICATOR, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 4, 0.25, 0.3, 0.25, 0.1);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.CRIMSON_SPORE, g.getX(), g.getY() + 1.6, g.getZ(), 6, 0.5, 0.8, 0.5, 0.02);
     }
 
     // ---------------------------------------------------------------- particles
     /** A flat ring of {@code points} particles of one kind. */
-    private static void ring(ServerLevel sl, net.minecraft.core.particles.SimpleParticleType type, double cx, double cy, double cz, double radius, int points) {
+    private static void ring(ServerLevel sl, net.minecraft.core.particles.ParticleOptions type, double cx, double cy, double cz, double radius, int points) {
         for (int i = 0; i < points; i++) {
             double a = i * Math.PI * 2.0 / points;
             sl.sendParticles(type, cx + Math.cos(a) * radius, cy, cz + Math.sin(a) * radius, 1, 0.0, 0.05, 0.0, 0.0);
@@ -317,7 +320,7 @@ final class GuardianTraits {
         int n = Math.max(2, (int) (Math.sqrt(dx * dx + dy * dy + dz * dz) / 0.6));
         for (int i = 0; i <= n; i++) {
             double t = (double) i / n;
-            sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, x1 + dx * t, y1 + dy * t, z1 + dz * t, 2, 0.05, 0.05, 0.05, 0.0);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.ELECTRIC_SPARK, x1 + dx * t, y1 + dy * t, z1 + dz * t, 2, 0.05, 0.05, 0.05, 0.0);
         }
     }
 

@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.djinn.DjinnSources;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -34,6 +33,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Charybdis Spawn, the Deep Waterways' floor boss (section 2, Type B of the design): a floating, aquatic leviathan about five blocks long that
@@ -166,7 +168,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
         double y = CharybdisMath.riseY(riseFrom, riseLeft, riseTotal);
         setDeltaMovement(0, y - getY(), 0);
         if (getTarget() != null) setTarget(null);
-        if (tickCount % 3 == 0) sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.2, getZ(), 8, 1.4, 1.1, 1.4, 0.05);
+        if (tickCount % 3 == 0) Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, getX(), getY() + 1.2, getZ(), 8, 1.4, 1.1, 1.4, 0.05);
         if (riseLeft == riseTotal - 1) CharybdisVfx.surfacing(this, riseTotal);
         if (riseLeft == 0) {
             sl.playSound(null, blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 3f, 0.5f);
@@ -236,9 +238,9 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
             double[] p = swim().orbitPoint(swimTick + 40L * k);
             Vec3 to = new Vec3(p[0], p[1], p[2]);
             if (!sl.noCollision(this, getBoundingBox().move(to.subtract(position())))) continue;
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1, getZ(), 20, 1.2, 1.0, 1.2, 0.05);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, getX(), getY() + 1, getZ(), 20, 1.2, 1.0, 1.2, 0.05);
             teleportTo(to.x, to.y, to.z);
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, to.x, to.y + 1, to.z, 20, 1.2, 1.0, 1.2, 0.05);
+            Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, to.x, to.y + 1, to.z, 20, 1.2, 1.0, 1.2, 0.05);
             break;
         }
         swim().clearStuck();

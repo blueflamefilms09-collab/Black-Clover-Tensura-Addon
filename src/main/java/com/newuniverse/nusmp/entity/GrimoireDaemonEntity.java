@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -34,6 +33,9 @@ import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * 0.52: Zagred's Grimoire Daemons (docs/zagred_boss_gdd.md, section 5.1). One entity, four tiers:
@@ -322,10 +324,10 @@ public class GrimoireDaemonEntity extends Monster {
         var r = getRandom();
         double x = getX() + (r.nextDouble() - 0.5) * 0.8, y = getY() + r.nextDouble() * getBbHeight(), z = getZ() + (r.nextDouble() - 0.5) * 0.8;
         switch (tier()) {
-            case LESSER -> level().addParticle(ParticleTypes.ASH, x, y, z, 0, -0.01, 0);
-            case GREATER -> level().addParticle(variant == 0 ? ParticleTypes.SMOKE : ParticleTypes.SMALL_FLAME, x, y, z, 0, 0.02, 0);
-            case ARCH -> level().addParticle(ParticleTypes.PORTAL, x, y, z, (r.nextDouble() - 0.5), 0.2, (r.nextDouble() - 0.5));
-            default -> level().addParticle(ParticleTypes.ENCHANT, x, y, z, 0, 0.1, 0);
+            case LESSER -> Fx.add(level(), FxThemes.GRIMOIRE_DAEMON, FxOld.ASH, x, y, z, 0, -0.01, 0);
+            case GREATER -> level().addParticle(variant == 0 ? Fx.options(FxThemes.GRIMOIRE_DAEMON, FxOld.SMOKE) : Fx.options(FxThemes.GRIMOIRE_DAEMON, FxOld.SMALL_FLAME), x, y, z, 0, 0.02, 0);
+            case ARCH -> Fx.add(level(), FxThemes.GRIMOIRE_DAEMON, FxOld.PORTAL, x, y, z, (r.nextDouble() - 0.5), 0.2, (r.nextDouble() - 0.5));
+            default -> Fx.add(level(), FxThemes.GRIMOIRE_DAEMON, FxOld.ENCHANT, x, y, z, 0, 0.1, 0);
         }
     }
 

@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.AltarRules.State;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +25,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Guardian is spawned ON APPROACH by this block entity, not written into the template as an entity, for the reasons the Peak Altar
@@ -125,8 +127,8 @@ public class GuardianAltarBlockEntity extends BlockEntity {
         LabyrinthGuardianEntity g = LabyrinthGuardianEntity.create(sl, at, sector, worldPosition);
         if (g == null) return null;                                                        // nothing could be made: stay IDLE and try again next poll
         if (!sl.addFreshEntity(g)) return null;
-        sl.sendParticles(ParticleTypes.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
         sl.playSound(null, worldPosition, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0f, 0.6f);
         broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         boss = g.getUUID();
@@ -167,7 +169,7 @@ public class GuardianAltarBlockEntity extends BlockEntity {
             broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.no_sector").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         sl.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.5f, 1.0f);
-        sl.sendParticles(ParticleTypes.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
         setChanged();
     }
 
@@ -189,7 +191,7 @@ public class GuardianAltarBlockEntity extends BlockEntity {
         sl.addFreshEntity(core);
         lastForge = now;
         coreForged = true;
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, worldPosition.getX() + 0.5, worldPosition.getY() + 1.45, worldPosition.getZ() + 0.5, 50, 0.4, 0.6, 0.4, 0.08);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, worldPosition.getX() + 0.5, worldPosition.getY() + 1.45, worldPosition.getZ() + 0.5, 50, 0.4, 0.6, 0.4, 0.08);
         sl.playSound(null, worldPosition, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 1.4f, 0.8f);
         setChanged();
     }
@@ -253,7 +255,7 @@ public class GuardianAltarBlockEntity extends BlockEntity {
     // ---------------------------------------------------------------- ACTIVE -> IDLE (abandoned, or the boss vanished)
     private void reset(ServerLevel sl, Entity e, long now) {
         if (e != null) {
-            sl.sendParticles(ParticleTypes.REVERSE_PORTAL, e.getX(), e.getY() + 1.0, e.getZ(), 40, 0.6, 1.0, 0.6, 0.05);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, e.getX(), e.getY() + 1.0, e.getZ(), 40, 0.6, 1.0, 0.6, 0.05);
             e.discard();
         }
         boss = null;

@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 
 /**
  * Why: relics were a player thing: the once-a-second pass that turns a worn relic's passives into attribute modifiers and effects only ran for
@@ -154,7 +155,7 @@ public final class MobRelics {
         Relics.invalidate(mob);
         ServerLevel level = p.serverLevel();
         level.playSound(null, mob.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.NEUTRAL, 1.2f, 1.1f);
-        Fx.ring(level, mob.position(), 1.0, def.paletteGlow());
+        FxRelic.ring(level, mob.position(), 1.0, def.paletteGlow());
         tell(p, def.cardName() + (attuneNeeded ? " attunes to " : " is carried by ") + mob.getDisplayName().getString() + ".", ChatFormatting.GOLD);
         return true;
     }

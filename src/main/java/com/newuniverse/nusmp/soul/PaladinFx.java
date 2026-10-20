@@ -2,12 +2,14 @@ package com.newuniverse.nusmp.soul;
 
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the purification has to read as a soul being washed clean, in the same white-gold and teal the Soul grimoire and the Paladin's
@@ -35,9 +37,9 @@ final class PaladinFx {
         for (int arm = 0; arm < 2; arm++) {
             double a = phase + arm * Math.PI;
             double y = ((tick * 0.045) + arm * 0.5) % 1.0;
-            sl.sendParticles(ParticleTypes.END_ROD, target.getX() + Math.cos(a) * r, target.getY() + y * h, target.getZ() + Math.sin(a) * r, 1, 0, 0.02, 0, 0.0);
+            Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.END_ROD, target.getX() + Math.cos(a) * r, target.getY() + y * h, target.getZ() + Math.sin(a) * r, 1, 0, 0.02, 0, 0.0);
         }
-        if (tick % 6 == 0) sl.sendParticles(ParticleTypes.SOUL, target.getX(), target.getY() + h * 0.5, target.getZ(), 2, target.getBbWidth() * 0.3, h * 0.3, target.getBbWidth() * 0.3, 0.02);
+        if (tick % 6 == 0) Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.SOUL, target.getX(), target.getY() + h * 0.5, target.getZ(), 2, target.getBbWidth() * 0.3, h * 0.3, target.getBbWidth() * 0.3, 0.02);
         if (tick % 20 == 10) sl.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.NEUTRAL, 0.7f, 0.8f + tick / 120f);
     }
 
@@ -45,9 +47,9 @@ final class PaladinFx {
     static void success(ServerLevel sl, Entity target) {
         Vec3 c = target.position().add(0, target.getBbHeight() * 0.5, 0);
         double h = target.getBbHeight();
-        sl.sendParticles(ParticleTypes.END_ROD, c.x, c.y, c.z, 36, target.getBbWidth() * 0.5, h * 0.6, target.getBbWidth() * 0.5, 0.12);
-        sl.sendParticles(ParticleTypes.GLOW, c.x, c.y, c.z, 14, target.getBbWidth() * 0.5, h * 0.5, target.getBbWidth() * 0.5, 0.05);
-        sl.sendParticles(ParticleTypes.FIREWORK, c.x, c.y, c.z, 12, target.getBbWidth() * 0.4, h * 0.4, target.getBbWidth() * 0.4, 0.08);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.END_ROD, c.x, c.y, c.z, 36, target.getBbWidth() * 0.5, h * 0.6, target.getBbWidth() * 0.5, 0.12);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.GLOW, c.x, c.y, c.z, 14, target.getBbWidth() * 0.5, h * 0.5, target.getBbWidth() * 0.5, 0.05);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.FIREWORK, c.x, c.y, c.z, 12, target.getBbWidth() * 0.4, h * 0.4, target.getBbWidth() * 0.4, 0.08);
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, target.position(), target.position().add(0, 1, 0), GOLD, 22, (float) Math.max(1.0, Math.min(3.0, target.getBbWidth() * 1.4)));
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.BEACON_POWER_SELECT, SoundSource.NEUTRAL, 1.0f, 1.3f);
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.ALLAY_ITEM_GIVEN, SoundSource.NEUTRAL, 1.0f, 0.7f);
@@ -56,20 +58,20 @@ final class PaladinFx {
     /** The purification slips: the light gutters out in grey. */
     static void failure(ServerLevel sl, Entity target) {
         Vec3 c = target.position().add(0, target.getBbHeight() * 0.5, 0);
-        sl.sendParticles(ParticleTypes.SMOKE, c.x, c.y, c.z, 18, target.getBbWidth() * 0.4, target.getBbHeight() * 0.4, target.getBbWidth() * 0.4, 0.03);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.SMOKE, c.x, c.y, c.z, 18, target.getBbWidth() * 0.4, target.getBbHeight() * 0.4, target.getBbWidth() * 0.4, 0.03);
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.BEACON_DEACTIVATE, SoundSource.NEUTRAL, 0.8f, 1.2f);
     }
 
     /** A Paladin lets go (or comes back to its owner): a short fall of light. */
     static void released(ServerLevel sl, Entity paladin) {
         Vec3 c = paladin.position().add(0, paladin.getBbHeight() * 0.5, 0);
-        sl.sendParticles(ParticleTypes.END_ROD, c.x, c.y, c.z, 14, paladin.getBbWidth() * 0.4, paladin.getBbHeight() * 0.4, paladin.getBbWidth() * 0.4, 0.04);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.END_ROD, c.x, c.y, c.z, 14, paladin.getBbWidth() * 0.4, paladin.getBbHeight() * 0.4, paladin.getBbWidth() * 0.4, 0.04);
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.NEUTRAL, 0.8f, 0.9f);
     }
 
     /** The recall: a flash at the place a Paladin left and at the place it arrives. */
     static void recall(ServerLevel sl, Vec3 at, double height) {
-        sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y + height * 0.5, at.z, 10, 0.3, height * 0.4, 0.3, 0.05);
-        sl.sendParticles(ParticleTypes.ENCHANT, at.x, at.y + height * 0.5, at.z, 10, 0.4, height * 0.4, 0.4, 0.3);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.END_ROD, at.x, at.y + height * 0.5, at.z, 10, 0.3, height * 0.4, 0.3, 0.05);
+        Fx.spray(sl, FxThemes.SKILL_PALADIN, FxOld.ENCHANT, at.x, at.y + height * 0.5, at.z, 10, 0.4, height * 0.4, 0.4, 0.3);
     }
 }

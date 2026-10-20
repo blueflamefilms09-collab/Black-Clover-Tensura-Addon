@@ -10,7 +10,6 @@ import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,6 +25,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Devil Avatar's moves as plain static functions, and their telegraphs. The gravity moves (Ceiling Pull, Floor Crush, Inversion Field)
@@ -56,7 +58,7 @@ final class AvatarMoves {
                 sl.sendParticles(AvatarFx.dust(AvatarFx.rgb(boss), 1.3f), o.x + d.x * reach * s / 5, o.y, o.z + d.z * reach * s / 5, 1, 0.05, 0.1, 0.05, 0.0);
         }
         Vec3 mid = o.add(f.scale(reach * 0.6));
-        sl.sendParticles(ParticleTypes.SQUID_INK, mid.x, mid.y, mid.z, 12, 0.8, 0.3, 0.8, 0.02);
+        Fx.spray(sl, FxThemes.BOSS_AVATAR, FxOld.SQUID_INK, mid.x, mid.y, mid.z, 12, 0.8, 0.3, 0.8, 0.02);
         AvatarFx.sound(sl, boss.position(), SoundEvents.PLAYER_ATTACK_SWEEP, 1.4f, 0.5f);
         for (LivingEntity e : boss.foes(reach + 2)) {
             Vec3 to = e.position().subtract(boss.position());
@@ -149,7 +151,7 @@ final class AvatarMoves {
         AvatarVfx.stepStrike(boss);
         Vec3 at = boss.position();
         Tells.burst(sl, at.add(0, 1.2, 0), AvatarFx.accent(boss), 36);
-        sl.sendParticles(ParticleTypes.SQUID_INK, at.x, at.y + 1.2, at.z, 16, 1.0, 0.6, 1.0, 0.03);
+        Fx.spray(sl, FxThemes.BOSS_AVATAR, FxOld.SQUID_INK, at.x, at.y + 1.2, at.z, 16, 1.0, 0.6, 1.0, 0.03);
         AvatarFx.sound(sl, at, SoundEvents.PLAYER_ATTACK_SWEEP, 1.5f, 0.6f);
         for (LivingEntity e : boss.foes(AvatarMath.SHADOW_STRIKE_RADIUS + 2)) {
             Vec3 to = e.position().subtract(at);
@@ -258,7 +260,7 @@ final class AvatarMoves {
         }
         Tells.ring(sl, c, radius, AvatarFx.rgb(boss), 1.4f, (int) Math.min(96, 16 + radius * 5));
         Tells.ring(sl, c, Math.max(1.0, radius * left / Math.max(1, total)), AvatarFx.accent(boss), 1.1f, 36);
-        AvatarFx.motes(sl, ParticleTypes.REVERSE_PORTAL, c, radius, 16, 0.32);
+        AvatarFx.motes(sl, Fx.options(FxThemes.BOSS_AVATAR, FxOld.REVERSE_PORTAL), c, radius, 16, 0.32);
         Tells.gather(sl, c.add(0, boss.getBbHeight() * 0.8, 0), 0.9, AvatarFx.accent(boss), 5);
     }
 
@@ -331,7 +333,7 @@ final class AvatarMoves {
         for (Vec3 m : boss.marks) {
             Tells.ring(sl, m, AvatarMath.CRUSH_RADIUS, AvatarFx.WARN, 1.4f, 36);
             Tells.ring(sl, m, Math.max(0.5, AvatarMath.CRUSH_RADIUS * left / Math.max(1, total)), AvatarFx.accent(boss), 1.1f, 24);
-            AvatarFx.motes(sl, ParticleTypes.CRIMSON_SPORE, m, AvatarMath.CRUSH_RADIUS, 5, -0.25);
+            AvatarFx.motes(sl, Fx.options(FxThemes.BOSS_AVATAR, FxOld.CRIMSON_SPORE), m, AvatarMath.CRUSH_RADIUS, 5, -0.25);
             Tells.column(sl, m, 5, AvatarFx.rgb(boss));
         }
         Tells.gather(sl, boss.position().add(0, boss.getBbHeight() * 0.7, 0), 0.9, AvatarFx.accent(boss), 4);
@@ -364,7 +366,7 @@ final class AvatarMoves {
             Tells.burst(sl, c.add(0, 1, 0), dir > 0 ? AvatarFx.accent(boss) : AvatarFx.WARN, 24);
         }
         if (age % 6 == 0) Tells.ring(sl, c, r, dir > 0 ? AvatarFx.accent(boss) : AvatarFx.WARN, 1.3f, 40);
-        AvatarFx.motes(sl, dir > 0 ? ParticleTypes.REVERSE_PORTAL : ParticleTypes.CRIMSON_SPORE, c, r, 8, dir > 0 ? 0.25 : -0.3);
+        AvatarFx.motes(sl, dir > 0 ? Fx.options(FxThemes.BOSS_AVATAR, FxOld.REVERSE_PORTAL) : Fx.options(FxThemes.BOSS_AVATAR, FxOld.CRIMSON_SPORE), c, r, 8, dir > 0 ? 0.25 : -0.3);
         int seen = 0;
         for (LivingEntity e : boss.foesAround(c.add(0, 4, 0), Math.sqrt(r * r + 100) + 1)) {
             double dx = e.getX() - c.x, dz = e.getZ() - c.z, dy = e.getY() - c.y;
@@ -403,8 +405,8 @@ final class AvatarMoves {
         Vec3 m = boss.marks.get(0);
         Tells.ring(sl, m, AvatarMath.FIELD_RADIUS, AvatarFx.rgb(boss), 1.4f, 48);
         Tells.ring(sl, m, Math.max(0.6, AvatarMath.FIELD_RADIUS * left / Math.max(1, total)), AvatarFx.accent(boss), 1.1f, 28);
-        AvatarFx.motes(sl, ParticleTypes.REVERSE_PORTAL, m, AvatarMath.FIELD_RADIUS, 6, 0.25);
-        AvatarFx.motes(sl, ParticleTypes.CRIMSON_SPORE, m, AvatarMath.FIELD_RADIUS, 4, -0.3);
+        AvatarFx.motes(sl, Fx.options(FxThemes.BOSS_AVATAR, FxOld.REVERSE_PORTAL), m, AvatarMath.FIELD_RADIUS, 6, 0.25);
+        AvatarFx.motes(sl, Fx.options(FxThemes.BOSS_AVATAR, FxOld.CRIMSON_SPORE), m, AvatarMath.FIELD_RADIUS, 4, -0.3);
         Tells.column(sl, m, 6, AvatarFx.accent(boss));
     }
 
@@ -527,7 +529,7 @@ final class AvatarMoves {
         for (int k = 0; k < n; k++) {
             double a = base + Math.PI * 2 * k / n;
             for (int s = 1; s <= 4; s++)
-                sl.sendParticles(ParticleTypes.LAVA, c.x + Math.cos(a) * AvatarMath.ERUPT_LENGTH * s / 4, c.y + 0.3, c.z + Math.sin(a) * AvatarMath.ERUPT_LENGTH * s / 4, 1, 0.3, 0.2, 0.3, 0.0);
+                Fx.spray(sl, FxThemes.BOSS_AVATAR, FxOld.LAVA, c.x + Math.cos(a) * AvatarMath.ERUPT_LENGTH * s / 4, c.y + 0.3, c.z + Math.sin(a) * AvatarMath.ERUPT_LENGTH * s / 4, 1, 0.3, 0.2, 0.3, 0.0);
         }
         for (LivingEntity e : boss.foesAround(c, AvatarMath.ERUPT_LENGTH + 3)) {
             if (Math.abs(e.getY() - c.y) > 4.0 || !AvatarFx.pushable(e)) continue;
@@ -611,7 +613,7 @@ final class AvatarMoves {
         Tells.ring(sl, c, AvatarMath.ULT_PULL_RADIUS, AvatarFx.rgb(boss), 1.5f, 96);
         Tells.ring(sl, c, Math.max(1.5, AvatarMath.ULT_PULL_RADIUS * left / Math.max(1, total)), AvatarFx.accent(boss), 1.2f, 40);
         if (left % 6 == 0) Tells.ring(sl, c, AvatarMath.ULT_NOVA_REACH, AvatarFx.WARN, 1.1f, 64);
-        AvatarFx.motes(sl, ParticleTypes.REVERSE_PORTAL, c, AvatarMath.ULT_PULL_RADIUS, 24, 0.35);
+        AvatarFx.motes(sl, Fx.options(FxThemes.BOSS_AVATAR, FxOld.REVERSE_PORTAL), c, AvatarMath.ULT_PULL_RADIUS, 24, 0.35);
         Tells.gather(sl, c.add(0, boss.getBbHeight() + 1.6, 0), 2.0, AvatarFx.accent(boss), 8);
     }
 }

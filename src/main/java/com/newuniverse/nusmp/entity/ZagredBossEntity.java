@@ -57,6 +57,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * 0.47: Zagred, the devil of Kotodama, as a 4-phase boss. Off by default (server config zagredBossEnabled); ops start it with
@@ -625,11 +628,11 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         float yawRad = yBodyRot * net.minecraft.util.Mth.DEG_TO_RAD;
         double bx = getX() + Math.sin(yawRad) * 0.6, bz = getZ() - Math.cos(yawRad) * 0.6;
         for (int k = 0; k < 2; k++)                                             // black flakes shed off the shoulders and wings
-            level().addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.03f, 0.03f, 0.035f), 2.2f),
+            Fx.addDust(level(), FxThemes.BOSS_ZAGRED, new org.joml.Vector3f(0.03f, 0.03f, 0.035f), 2.2f,
                     bx + (r.nextDouble() - 0.5) * 3.6, getY() + 2.2 + r.nextDouble() * 1.4, bz + (r.nextDouble() - 0.5) * 3.6, 0, 0.015, 0);
-        if (r.nextInt(3) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
+        if (r.nextInt(3) == 0) Fx.add(level(), FxThemes.BOSS_ZAGRED, FxOld.LARGE_SMOKE,
                 bx + (r.nextDouble() - 0.5) * 2, getY() + 2.0 + r.nextDouble() * 1.6, bz + (r.nextDouble() - 0.5) * 2, 0, 0.01, 0);
-        if (clientState == STATE_CASTING && r.nextInt(2) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.WITCH,
+        if (clientState == STATE_CASTING && r.nextInt(2) == 0) Fx.add(level(), FxThemes.BOSS_ZAGRED, FxOld.WITCH,
                 getX() + (r.nextDouble() - 0.5), getY() + 2.4, getZ() + (r.nextDouble() - 0.5), 0, 0.05, 0);
     }
 

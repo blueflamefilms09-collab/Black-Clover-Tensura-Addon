@@ -11,8 +11,6 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.client.NUShaders;
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.vfx.client.VfxRenderContext;
 import com.newuniverse.nusmp.vfx.client.VfxTextures;
 import com.newuniverse.nusmp.vfx.client.layer.SpatialPortalLayer;
@@ -27,6 +25,9 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.Random;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: everything about the 3D gate that needs the running game (the shader, the screen copy, particles, sounds) lives here so the
@@ -37,7 +38,7 @@ import java.util.Random;
  *       through" effect). Within 3 blocks of a gate a faint full-screen warp ripple (config {@code spatial.warpStrength}) is drawn first.</li>
  *   <li>If the shader is missing, or a draw throws once, the hook stops drawing (logged once) and the layer uses its plain translucent
  *       buffer path; sounds and particles carry on.</li>
- *   <li>Rukh (dark near the core, light near the rim) is emitted at the event horizon through the budgeted {@link RukhClientFx}; no vanilla
+ *   <li>The Spatial magic's particles (dark flavour near the core, light near the rim) are emitted at the event horizon through the budgeted {@code Fx} facade; no vanilla
  *       particle types are used.</li>
  * </ul>
  * The copy target is created lazily and destroyed when the last gate closes.
@@ -90,7 +91,7 @@ public final class PortalClient implements SpatialPortalLayer.Client {
             double vx = (tx / tl * sp - Math.cos(a) * 0.008) * rx + depth * s.fx;
             double vy = ty / tl * sp * 0.8 + 0.004;
             double vz = (tx / tl * sp - Math.cos(a) * 0.008) * rz + depth * s.fz;
-            RukhClientFx.spray(mc.level, Alignment.of(rr < 0.7), s.x + rx * lx, cy + ly, s.z + rz * lx, 1, vx, vy, vz, 1.0);
+            Fx.spray(mc.level, FxThemes.MAGIC_SPATIAL, FxTone.of(rr < 0.7), s.x + rx * lx, cy + ly, s.z + rz * lx, 1, vx, vy, vz, 1.0);
         }
     }
 

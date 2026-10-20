@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -27,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the floor boss is spawned ON APPROACH by this block entity, not written into the template as an entity. An entity in a structure
@@ -100,8 +102,8 @@ public class PeakAltarBlockEntity extends BlockEntity {
         if (e == null && !BossRoster.FALLBACK.equals(id)) e = create(sl, BossRoster.FALLBACK);
         if (e == null) return;                                                             // nothing could be made: stay IDLE and try again next poll
         BlockPos at = worldPosition.above();
-        sl.sendParticles(ParticleTypes.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
+        Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
+        Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
         sl.playSound(null, worldPosition, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0f, 0.6f);
         broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.nusmp.peak_altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         boss = e.getUUID();
@@ -134,7 +136,7 @@ public class PeakAltarBlockEntity extends BlockEntity {
         boss = null;
         openBossDoors(sl);
         sl.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.5f, 1.0f);
-        sl.sendParticles(ParticleTypes.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
+        Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
         broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.nusmp.peak_altar.unseals").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
         setChanged();
     }
@@ -154,7 +156,7 @@ public class PeakAltarBlockEntity extends BlockEntity {
     // ---------------------------------------------------------------- ACTIVE -> IDLE (abandoned)
     private void reset(ServerLevel sl, Entity e) {
         if (e != null) {
-            sl.sendParticles(ParticleTypes.REVERSE_PORTAL, e.getX(), e.getY() + 1.0, e.getZ(), 40, 0.6, 1.0, 0.6, 0.05);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.REVERSE_PORTAL, e.getX(), e.getY() + 1.0, e.getZ(), 40, 0.6, 1.0, 0.6, 0.05);
             e.discard();
         }
         boss = null;

@@ -31,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Charybdis Spawn's megalodons (the "smaller megalodons" of the design): the real Tensura megalodon, looked up by id at run time (nothing
@@ -113,7 +116,7 @@ public final class CharybdisMinions {
         boss.announce(CharybdisText.megalodons());
         for (Vec3 s : spots) {
             level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.PRISMARINE_BRICKS.defaultBlockState()), s.x, s.y, s.z, 30, 0.6, 0.8, 0.6, 0.1);
-            level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 20, 0.7, 1.0, 0.7, 0.1);
+            Fx.spray(level, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 20, 0.7, 1.0, 0.7, 0.1);
             level.playSound(null, BlockPos.containing(s), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 2.0f, 0.5f);
             final Vec3 at = s;
             CharybdisVfx.summonStrike(boss, s);
@@ -142,7 +145,7 @@ public final class CharybdisMinions {
             m.setGlowingTag(true);
             m.getPersistentData().putString(KEY_BOSS, boss.getUUID().toString());
             aim(m, target);
-            level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, m.getX(), m.getY() + 0.5, m.getZ(), 16, 0.6, 0.6, 0.6, 0.1);
+            Fx.spray(level, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, m.getX(), m.getY() + 0.5, m.getZ(), 16, 0.6, 0.6, 0.6, 0.1);
             return m;
         }
         return null;
@@ -233,8 +236,8 @@ public final class CharybdisMinions {
 
     // ================================================================ sending them away
     private static void poof(ServerLevel level, Entity m) {
-        level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, m.getX(), m.getY() + 0.6, m.getZ(), 20, 0.6, 0.6, 0.6, 0.1);
-        level.sendParticles(ParticleTypes.SQUID_INK, m.getX(), m.getY() + 0.6, m.getZ(), 10, 0.5, 0.5, 0.5, 0.03);
+        Fx.spray(level, FxThemes.BOSS_CHARYBDIS, FxOld.BUBBLE_COLUMN_UP, m.getX(), m.getY() + 0.6, m.getZ(), 20, 0.6, 0.6, 0.6, 0.1);
+        Fx.spray(level, FxThemes.BOSS_CHARYBDIS, FxOld.SQUID_INK, m.getX(), m.getY() + 0.6, m.getZ(), 10, 0.5, 0.5, 0.5, 0.03);
     }
 
     /** The boss is gone (it fell, or its fight was abandoned): its megalodons go with it. */

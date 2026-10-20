@@ -12,7 +12,6 @@ import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -39,6 +38,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.Predicate;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Small tools shared by Lucius's moves, his clones and his Paladins: guarded zone steps (a step that throws stops, it never takes the
@@ -162,11 +164,11 @@ final class LuciusFx {
     }
 
     static void sparkle(ServerLevel sl, Vec3 at, int count, double spread) {
-        sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y, at.z, count, spread, spread, spread, 0.02);
+        Fx.spray(sl, FxThemes.BOSS_LUCIUS, FxOld.END_ROD, at.x, at.y, at.z, count, spread, spread, spread, 0.02);
     }
 
     static void souls(ServerLevel sl, Vec3 at, int count, double spread) {
-        sl.sendParticles(ParticleTypes.SOUL, at.x, at.y, at.z, count, spread, spread, spread, 0.03);
+        Fx.spray(sl, FxThemes.BOSS_LUCIUS, FxOld.SOUL, at.x, at.y, at.z, count, spread, spread, spread, 0.03);
     }
 
     /** A beam of dust from 'a' to 'b' with a soul mote every few blocks. */
@@ -177,7 +179,7 @@ final class LuciusFx {
         for (int i = 1; i < n; i++) {
             Vec3 p = a.add(v.scale(i / (double) n));
             sl.sendParticles(d, p.x, p.y, p.z, 1, 0.03, 0.03, 0.03, 0);
-            if (i % 5 == 0) sl.sendParticles(ParticleTypes.SOUL, p.x, p.y, p.z, 1, 0.08, 0.08, 0.08, 0.01);
+            if (i % 5 == 0) Fx.spray(sl, FxThemes.BOSS_LUCIUS, FxOld.SOUL, p.x, p.y, p.z, 1, 0.08, 0.08, 0.08, 0.01);
         }
     }
 
@@ -274,7 +276,7 @@ final class LuciusFx {
             }
             pos = next;
             com.newuniverse.nusmp.perf.PerfParticles.send(sl, dustOf(rgb, 1.0f), pos.x, pos.y, pos.z, 2, 0.05, 0.05, 0.05, 0);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
-            if (life % 2 == 0) com.newuniverse.nusmp.perf.PerfParticles.send(sl, ParticleTypes.END_ROD, pos.x, pos.y, pos.z, 1, 0.03, 0.03, 0.03, 0.0);
+            if (life % 2 == 0) com.newuniverse.nusmp.perf.PerfParticles.send(sl, Fx.options(FxThemes.BOSS_LUCIUS, FxOld.END_ROD), pos.x, pos.y, pos.z, 1, 0.03, 0.03, 0.03, 0.0);
             if (blocked || --life <= 0) {
                 burst(sl, pos);
                 done = true;

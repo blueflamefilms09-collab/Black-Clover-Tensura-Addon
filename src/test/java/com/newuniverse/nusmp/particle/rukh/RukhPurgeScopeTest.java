@@ -21,6 +21,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * still running the enforcing part is switched off: it only runs when the marker file {@code docs/rukh/purge_enforced} exists (the lead
  * creates it when the purge is done) or {@code -Dnusmp.rukh.enforce=true} is given, so CI stays green meanwhile. The scope-file parsing and the
  * glob rules are tested unconditionally.
+ * <p>
+ * 1.103.0: the purge itself stands (the scope still spawns no vanilla particle), but the allowed Rukh scope shrank: the Rukh now belong to the Djinn users and the dungeons ONLY, and every
+ * other effect in the purge scope (the relic waves, the worn relic FX, the magics, the songs, the skills, the corpses, the grimoires, the sword draws, the hero weapons) spawns the mod's own
+ * custom particles through {@code particle.fx.Fx} instead. {@link RukhExclusiveScopeTest} enforces that; {@code docs/rukh/exclusive.md} says why; the call-pattern test below is extended to accept
+ * the facade, which is not a raw {@code sendParticles}/{@code addParticle} call.
  */
 class RukhPurgeScopeTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
@@ -117,6 +122,13 @@ class RukhPurgeScopeTest {
         assertTrue(CALL.matcher("level.addParticle(new DustParticleOptions(c, 1f), x, y, z, 0, 0, 0);").find());
         assertTrue(CALL.matcher("level.sendParticles(FX.get(), x, y, z, 1, 0, 0, 0, 0);").find());
         assertTrue(BAD.matcher("level.addParticle(ParticleTypes.FLAME, x, y, z, 0, 0, 0);").find());
+    }
+
+    @Test
+    void theFacadeCallsOfTheCustomParticlesAreNotRawParticleCalls() {
+        assertFalse(CALL.matcher("Fx.spray(level, FxThemes.RELIC, FxTone.LIGHT, x, y, z, 1, 0, 0, 0, 0);").find());
+        assertFalse(BAD.matcher("Fx.options(FxThemes.RELIC, FxTone.DARK)").find());
+        assertTrue(Files.exists(ROOT.resolve("docs/rukh/exclusive.md")), "docs/rukh/exclusive.md (the 1.103.0 owner decision) is missing");
     }
 
     @Test

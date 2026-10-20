@@ -12,7 +12,6 @@ import io.github.manasmods.tensura.data.TensuraTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -35,6 +34,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.IntConsumer;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Spatial Mana Domination (Absolute Space): the cube in which Zenon Zogratis severs everyone else's connection to mana. While a
@@ -299,7 +301,7 @@ public final class SpellSeal {
                 case DomainCube.NORTH -> new double[]{g.cx() + u, g.cy() + v, g.minZ()};
                 default -> new double[]{g.cx() + u, g.cy() + v, g.maxZ()};
             };
-            sl.sendParticles(ParticleTypes.REVERSE_PORTAL, p[0], p[1], p[2], 2, 0.2, 0.2, 0.2, 0.05);
+            Fx.spray(sl, FxThemes.BOSS_LUCIUS, FxOld.REVERSE_PORTAL, p[0], p[1], p[2], 2, 0.2, 0.2, 0.2, 0.05);
         }
     }
 

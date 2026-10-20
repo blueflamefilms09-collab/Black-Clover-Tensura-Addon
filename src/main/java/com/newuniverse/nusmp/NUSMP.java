@@ -108,6 +108,7 @@ public class NUSMP {
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.particle.rukh.RukhParticles.init(modEventBus);                                               // 1.36.0: Dark and Light Rukh particle types
+        com.newuniverse.nusmp.particle.fx.FxBoot.init(modEventBus, modContainer);                                          // 1.103.0: the custom particle library (70 types), nusmp-particles-server.toml, /multiverse particles, self-test particles.custom
         com.newuniverse.nusmp.relics.forge.ForgeRegistry.init(modEventBus);                                                // 1.40.0: the Relic Forge (block item on NUItems.ITEMS: before its register)
         com.newuniverse.nusmp.labyrinth.LabyrinthSystem.init(modEventBus);                                                  // 1.35.0: the Labyrinth (blocks, gate, trials, seals, vault, processors; block items go on NUItems.ITEMS so this runs before its register)
         com.newuniverse.nusmp.celestial.CelestialSystem.init(modEventBus);                                                 // Celestial Spirit Magic: keys, the Spirit King, the Gate (before NUItems.ITEMS.register)
@@ -146,6 +147,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
             com.newuniverse.nusmp.client.compat.CompatCodexClient.init(modEventBus);                                           // 1.34.0
             com.newuniverse.nusmp.client.particle.rukh.RukhClient.init(modEventBus);                                          // 1.36.0
+            com.newuniverse.nusmp.client.particle.fx.FxClient.init(modEventBus, modContainer);                                 // 1.103.0: providers of the custom particles, nusmp-particles-client.toml
             com.newuniverse.nusmp.client.relics.forge.ForgeClient.init(modEventBus);                                         // 1.40.0
             modEventBus.addListener(com.newuniverse.nusmp.client.thread.ThreadClient::register);                          // 1.44.0: Rouge, thread traps
             com.newuniverse.nusmp.client.soul.PaladinClient.register(modEventBus);
