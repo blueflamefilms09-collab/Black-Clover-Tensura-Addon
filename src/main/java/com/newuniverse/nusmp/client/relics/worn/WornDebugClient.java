@@ -39,6 +39,8 @@ public final class WornDebugClient {
         String name = who == null ? target.toString() : who.getName().getString();
         out.add(t("client_title", "Worn relics of %s (client view, this machine)", name));
         out.add(t("layers", "Worn layer added to %s player renderers; refused: %s", RelicClient.layersAdded(), RelicClient.layersRefused().isEmpty() ? "-" : RelicClient.layersRefused()));
+        out.add(t("guard", "Renderers that got the layer from the first-frame guard instead of the event: %s (%s)", com.newuniverse.nusmp.client.relics.RelicLayerGuard.healedCount(),
+                com.newuniverse.nusmp.client.relics.RelicLayerGuard.lastHealed().isEmpty() ? "-" : com.newuniverse.nusmp.client.relics.RelicLayerGuard.lastHealed()));
         boolean atlas = mc.getResourceManager().getResource(WornLibDraw.ATLAS).isPresent(), shimmer = mc.getResourceManager().getResource(WornLibDraw.SHIMMER).isPresent();
         out.add(t("client_textures", "Atlas texture resolved: %s, shimmer: %s, white pixel registered: %s", yes(atlas), yes(shimmer), yes(RelicTextures.whiteRegistered())));
         out.add(t("sync", "Server lists received: %s (last %s ms ago)", WornSync.receivedCount(), WornSync.sinceLastReceived()));
@@ -53,8 +55,8 @@ public final class WornDebugClient {
             out.add(t("never", "LAYER NEVER REACHED for this wearer. Vanilla does not draw your own body in first person (press F5), the wearer may be out of view, or another renderer draws it."));
         } else {
             long age = gameNow - seen.tick;
-            out.add(t(age <= 40 ? "reached" : "stale", age <= 40 ? "Layer reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s)"
-                            : "Layer last reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s): the wearer is not being drawn right now", age, seen.frames, seen.layer, seen.view, yes(seen.slim)));
+            if (age <= 40) out.add(t("reached", "Layer reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s)", age, seen.frames, seen.layer, seen.view, yes(seen.slim)));
+            else out.add(t("stale", "Layer last reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s): the wearer is not being drawn right now", age, seen.frames, seen.layer, seen.view, yes(seen.slim)));
         }
         CuriosProbe.Report probe = CuriosProbe.probe(who);
         out.add(t("client_curios", "This client's own read of the Curios inventory: %s", probe.ok() ? t("ok", "every step passed") : t("broken", "A STEP FAILED, see below")));
@@ -67,7 +69,7 @@ public final class WornDebugClient {
             RelicDef d = l.def();
             n++;
             clientHas.add(d.id() + "|" + d.slot().name());
-            out.add(t("relic", "%s. %s: slot %s, found by this client in: %s", n, d.id(), d.slot().name(), l.where().name().toLowerCase()));
+            out.add(t("client_relic", "%s. %s: slot %s, found by this client in: %s", n, d.id(), d.slot().name(), l.where().name().toLowerCase()));
             if (d.slot().isHand()) {
                 out.add(lit("     " + WornPlan.Why.HELD_IN_HAND.text));
                 continue;

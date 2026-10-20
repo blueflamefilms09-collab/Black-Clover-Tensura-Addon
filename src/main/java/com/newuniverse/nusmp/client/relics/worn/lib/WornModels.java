@@ -23,20 +23,35 @@ public final class WornModels {
 
     static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
 
-    /** The catalog (read on first use after a reload; an empty one if the file is missing). */
+    private static final WornCatalog EMPTY = WornCatalog.parse(List.of());
+    private static long retryAt;
+
+    /** Was the catalog really read (so an empty answer for a relic means "no entry", not "not loaded yet")? */
+    public static boolean catalogLoaded() { return catalog != null; }
+
+    /**
+     * The catalog (read on first use after a reload). 1.99.0: a catalog that could not be read (the resource manager was not ready, the file is missing) is NOT kept: an empty one is
+     * answered, nothing is cached from it by the library, and the read is tried again after three seconds. It used to be kept for the rest of the session, which dressed no relic at all.
+     */
     public static WornCatalog catalog() {
         if (catalog != null) return catalog;
+        if (System.currentTimeMillis() < retryAt) return EMPTY;
         try {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("relic_worn/catalog.txt"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
                     catalog = WornCatalog.parse(in.lines().toList());
                 }
+            } else {
+                LogUtils.getLogger().error("[nusmp] the worn relic catalog assets/nusmp/relic_worn/catalog.txt is missing; relics keep their plain look");
             }
         } catch (Exception ex) {
             LogUtils.getLogger().error("[nusmp] the worn relic catalog could not be read; relics keep their plain look", ex);
         }
-        if (catalog == null) catalog = WornCatalog.parse(List.of());
+        if (catalog == null) {
+            retryAt = System.currentTimeMillis() + 3000L;
+            return EMPTY;
+        }
         return catalog;
     }
 
@@ -57,6 +72,7 @@ public final class WornModels {
         } catch (Exception ex) {
             LogUtils.getLogger().error("[nusmp] worn model {} failed to load", name, ex);
             mesh = null;
+            if (ex instanceof IllegalStateException || ex instanceof NullPointerException) return null;      // the resource manager was not ready: ask again next time
         }
         MESHES.put(name, Optional.ofNullable(mesh));
         return mesh;
@@ -66,5 +82,6 @@ public final class WornModels {
     public static void clear() {
         MESHES.clear();
         catalog = null;
+        retryAt = 0L;
     }
 }

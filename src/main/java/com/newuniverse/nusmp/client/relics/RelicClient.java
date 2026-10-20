@@ -37,6 +37,7 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener(RelicActKeys::onClientTick);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
+        NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                       // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onEntityTick);
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onClientTick);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn e) -> RelicTextures.registerAll());
@@ -64,6 +65,7 @@ public final class RelicClient {
             EntityRenderer<? extends Player> renderer = event.getSkin(skin);
             if (renderer instanceof PlayerRenderer r) {
                 r.addLayer(new RelicWornLayer(r));
+                RelicLayerGuard.known(r);
                 added++;
             } else {                                                                    // 1.99.0: said out loud; this used to be a silent "no worn relics on that skin type"
                 refused.append(skin).append('=').append(renderer == null ? "null" : renderer.getClass().getName()).append(' ');
