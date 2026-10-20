@@ -9,7 +9,7 @@
   "theme": "mind_hive",
   "creature": "aberration",
   "resist": [],
-  "signature": "void_hunger",
+  "signature": "void_craving",
   "phases": [
     {
       "name": "Elder Brain",

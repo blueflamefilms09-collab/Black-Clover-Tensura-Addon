@@ -170,7 +170,7 @@ FAMOUS_LEVEL = {
     "acererak": (-88, "forbidden_library", "undead"), "tiamat": (-91, "dragon_hoard_cavern", "dragon"), "asmodeus": (-94, "ruined_throne_room", "devil"), "vecna": (-96, "void_observatory", "undead"),
     "solar": (55, "celestial_court", "celestial"), "tarrasque": (77, "colosseum", "monstrosity"), "bahamut": (90, "sky_bridge", "dragon"),
 }
-FAMOUS_SIG = {"strahd": "sanguine_pact", "beholder": "void_hunger", "lich_king": "phylactery_ward", "mind_flayer_elder_brain": "void_hunger", "lolth": "web_of_fate", "dracolich": "dragon_pride",
+FAMOUS_SIG = {"strahd": "sanguine_pact", "beholder": "void_craving", "lich_king": "phylactery_ward", "mind_flayer_elder_brain": "void_craving", "lolth": "web_of_fate", "dracolich": "dragon_pride",
               "kraken": "tide_ward", "zariel": "devil_union", "demogorgon": "dread_presence", "orcus": "grave_tithe", "acererak": "phylactery_ward", "tiamat": "dragon_pride",
               "asmodeus": "infernal_contract", "vecna": "stolen_light", "solar": "radiant_ward", "tarrasque": "stone_covenant", "bahamut": "dragon_pride"}
 FAMOUS_SOUND = {"strahd": "vampire_hiss", "beholder": "aberrant_hum", "lich_king": "undead_whisper", "mind_flayer_elder_brain": "aberrant_hum", "lolth": "spider_chitter", "dracolich": "dragon_roar",
@@ -196,7 +196,7 @@ FAMOUS_LORE = {
     "demogorgon": "The Prince of Demons has two heads that do not agree with each other, and a madness that agrees with everything. The rift opens wherever he looks.",
     "orcus": "The Demon Prince of Undeath wields a wand that unmakes the living. Orcus keeps the graveyard because he likes the company of what is left.",
     "acererak": "A lich who built a tomb to feed on the souls of those who tried to rob it. Acererak has read every page of your life, and has not found it interesting.",
-    "tiamat": "Five heads, five breaths, and one hunger. Tiamat the Five-Headed Queen counts the hoard of her cavern in the lives of heroes.",
+    "tiamat": "Five heads, five breaths, and one craving. Tiamat the Five-Headed Queen counts the hoard of her cavern in the lives of heroes.",
     "asmodeus": "Lord of the Nine Hells, Asmodeus has never broken a contract, and has never needed to. The throne he sits on was made from the last person who argued.",
     "vecna": "The Whispered One lost a hand and an eye and gained the Hand and the Eye of Vecna. He is a god of secrets, and he knows yours.",
     "solar": "The Solar is the strongest of the angels, a bow of pure light in a hand that has never shaken. He is the judgement of the heavens, and you are the case.",

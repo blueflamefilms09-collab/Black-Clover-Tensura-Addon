@@ -34,7 +34,7 @@ Written by `tools/gen_decennial_roster.py`; do not edit by hand. Level L is floo
 | -73 | -730 | evil_073 | Ebonwyr the Smiling Debt | Archdevil of the Ledger-Halls | ruined_throne_room | archdevil | devil | 4 | legend | asmodeus |
 | -72 | -720 | evil_072 | Zhulgrim, Tyrant of Ten Gazes | Eye Tyrant of the Hall of Ten Windows | forbidden_library | eye_tyrant | aberration | 4 | legend | beholder |
 | -71 | -710 | evil_071 | Beelzebub | Devil of Space, Warden of the Fifth Gate | qliphoth_gate_5 | qliphoth | devil | 4 | legend | demogorgon |
-| -70 | -700 | evil_070 | Hexenmoor, Hunger Made Flesh | Demon Lord of the Teeth of the Abyss | volcanic_forge | demon_lord | demon | 3 | legend | balor |
+| -70 | -700 | evil_070 | Hexenmoor, Craving Made Flesh | Demon Lord of the Teeth of the Abyss | volcanic_forge | demon_lord | demon | 3 | legend | balor |
 | -69 | -690 | evil_069 | Yzmora, Who Rose From Below | Abyssal Horror of the Starless Abyss | mind_hive | abyssal_horror | aberration | 3 | legend | demogorgon |
 | -68 | -680 | evil_068 | The Kraken | Terror of the Black Tide | sunken_temple | famous:kraken | monstrosity | 3 | legend | kraken |
 | -67 | -670 | evil_067 | Shadowmere, Who Remembers You | Mind Flayer of the Thought-Cistern | void_observatory | mind_flayer | aberration | 3 | legend | elder_brain |
@@ -48,7 +48,7 @@ Written by `tools/gen_decennial_roster.py`; do not edit by hand. Level L is floo
 | -59 | -590 | evil_059 | Karnavar of the Black Water | Rot Wyrm of the Reed Throne | plague_swamp | rot_wyrm | dragon | 3 | legend | tiamat |
 | -58 | -580 | evil_058 | Zaelithar, Master of the Final Hour | Clockwork Tyrant of the Brass Cathedral | clockwork_vault | clockwork_tyrant | construct | 3 | legend | lich_king |
 | -57 | -570 | evil_057 | Astaroth | Devil of Time, Warden of the Fourth Gate | qliphoth_gate_4 | qliphoth | devil | 3 | legend | vecna |
-| -56 | -560 | evil_056 | Gorlach the Hunger Beneath | Drowned Leviathan of the Flooded Vault | plague_swamp | leviathan | monstrosity | 3 | legend | kraken |
+| -56 | -560 | evil_056 | Gorlach the Craving Beneath | Drowned Leviathan of the Flooded Vault | plague_swamp | leviathan | monstrosity | 3 | legend | kraken |
 | -55 | -550 | evil_055 | Vorgath of the Silken Chains | Sin Duchess of the Hall of Wanting | mirror_hall | sin_duchess | fiend | 3 | legend | zariel |
 | -54 | -540 | evil_054 | Gehennis, Who Remembers You | Mind Flayer of the Cerebral Deep | abyss_rift_ring | mind_flayer | aberration | 3 | legend | elder_brain |
 | -53 | -530 | evil_053 | Vashmorr, Tyrant of Ten Gazes | Eye Tyrant of the Gazing Deep | forbidden_library | eye_tyrant | aberration | 3 | legend | beholder |

@@ -12,7 +12,7 @@
     "magic",
     "physical"
   ],
-  "signature": "void_hunger",
+  "signature": "void_craving",
   "phases": [
     {
       "name": "The Rising",

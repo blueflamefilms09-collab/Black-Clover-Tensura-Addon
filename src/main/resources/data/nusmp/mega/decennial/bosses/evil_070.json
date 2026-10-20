@@ -2,7 +2,7 @@
   "id": "evil_070",
   "level": -70,
   "side": "evil",
-  "name": "Hexenmoor, Hunger Made Flesh",
+  "name": "Hexenmoor, Craving Made Flesh",
   "title": "Demon Lord of the Teeth of the Abyss",
   "lore": "Armies once held the gate of the Teeth of the Abyss. Hexenmoor wore their banners as a cape for a century.",
   "archetype": "demon_lord",
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "name": "Hunger Without End",
+      "name": "Craving Without End",
       "at": 0.33,
       "abilities": [
         "frightful_presence",

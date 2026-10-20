@@ -11,7 +11,7 @@
   "resist": [
     "magic"
   ],
-  "signature": "void_hunger",
+  "signature": "void_craving",
   "phases": [
     {
       "name": "Quiet Voice",

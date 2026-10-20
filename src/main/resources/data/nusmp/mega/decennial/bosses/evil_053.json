@@ -12,7 +12,7 @@
     "magic",
     "lightning"
   ],
-  "signature": "void_hunger",
+  "signature": "void_craving",
   "phases": [
     {
       "name": "The Watcher",

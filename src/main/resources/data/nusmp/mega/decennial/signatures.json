@@ -25,7 +25,7 @@
   "devil_union":        {"kind": "enrage", "power": 0.30, "period": 180, "text": "After three minutes the union deepens and it strikes harder."},
   "root_tithe":         {"kind": "add_tithe", "power": 0.02, "period": 0, "text": "The roots feed it a ward for every devil that falls."},
   "tide_ward":          {"kind": "shield_pulse", "power": 0.03, "period": 16, "text": "The tide closes a ward round it every sixteen seconds."},
-  "void_hunger":        {"kind": "mana_leech", "power": 0.03, "period": 3, "text": "The void drinks the magicules of those who stand close."},
+  "void_craving":        {"kind": "mana_leech", "power": 0.03, "period": 3, "text": "The void drinks the magicules of those who stand close."},
   "rime_shell":         {"kind": "frost_aura", "power": 0.0, "period": 3, "text": "A rime of frost spreads from it and slows what it touches."},
   "ember_heart":        {"kind": "scorch_aura", "power": 0.0, "period": 4, "text": "Its heart is a forge: whatever stands close is scorched."},
   "thorn_mantle":       {"kind": "thorns", "power": 0.04, "period": 0, "text": "A mantle of thorns bites those who strike it."},
