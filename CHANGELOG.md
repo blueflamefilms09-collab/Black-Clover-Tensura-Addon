@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.101.0] — Hidden dungeons fixed (one room, no switch), Djinn binding with Better Combat, relic damage locked behind attunement
+
+### NEW
+- **Hidden dungeons (rift pockets) work.** Cause found: the Dungeon Guard refused every block the pocket code turned into air, so doorways were never opened (every realm was ONE room: the arrival room), the bars and the treasury seal never lifted (NO SWITCH), and an expired rift stayed in the world. All pocket block writes now run inside the guard's internal span (a test keeps it so). The old realm has 5 rooms (a new **lever chamber** with a visible lever between two sea lanterns, a glowing sign and a sign over the bars), the 13 exclusive tombs have 14 to 21 rooms each with a seal **lever** in the key room (never behind the seal), a Sigil chest, signs at the seal, and a second exit rift in the treasury. The lever works at once when the master is dead, else after 120 s; the door opens by itself after 420 s so nobody is ever stuck. You are held at the tear with a progress percentage until the whole tomb is built; a watchdog repairs missing doorways. `/multiverse mega rift rooms|switch [open|tp|repair]` for testing. `docs/labyrinth/pocket_fix.md`.
+- **Djinn binding works with Better Combat.** Cause found in Better Combat's source: it makes the OFF HAND look empty whenever a two-handed weapon is held (23 of the 46 vessel weapons are two-handed), so the Seal could not see the vessel. The Seal, the Dark Rukh Shard, Holy Water, the Unbinding Seal and the admin grant now read the raw inventory; new ways to bind: click the Seal onto a relic in the inventory (either way round), `/djinn bind [main|off|slot <n>] [djinn]`, and the Djinn key (J). Refusals now say why. 30 missing Better Combat files for 15 Djinn weapons added. `docs/djinn_bc_fix.md`.
+- **Relic damage is locked behind attunement**: a relic that needs attunement deals about 20% of its power (melee and shots from relic bows and crossbows) to anyone it is not attuned to (`relics.unattunedPower`, `relics.attuneLock`); relics that need no attunement (Elsdocia), Djinn, Requip, hero weapons and loot gear are not affected; a tooltip line explains it and `/multiverse relic power [player]` shows the factor. `docs/relic_attune_lock.md`.
+
+### REPLACED
+- Unattuned relic swords no longer hit for full damage; an unattuned relic bow now draws at 20% instead of refusing.
+
+### KEPT
+- All pocket ids, saved pocket data, commands and loot tables; every Djinn rule, price and weapon file; the attunement ritual and the limit of three.
+
+### Honest notes
+- Nothing has been run in the game: the pocket, Djinn and relic fixes come from reading the code (and Better Combat 2.4.0's source) plus tests and the server smoke test. The off-hand Seal behind a two-handed main weapon stays impossible by Better Combat's design: use the other ways.
+
 ## [1.100.0] — Requip Magic abilities and the performance pass
 
 ### NEW
