@@ -21,6 +21,11 @@ public final class RelicTextures {
     /** The white texture the worn models are tinted from. */
     public static final ResourceLocation WHITE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "relic_white");
 
+    private static volatile boolean whiteRegistered;
+
+    /** Was the white pixel of the plain Curios boxes registered with the texture manager (set by {@link #registerAll}; for {@code /multiverse relic debug}). */
+    public static boolean whiteRegistered() { return whiteRegistered; }
+
     /** The ids of the armour relics whose glow channel is registered (drawn by the worn layer over the armour). */
     private static final java.util.Set<String> GLOW = new java.util.HashSet<>();
 
@@ -45,6 +50,7 @@ public final class RelicTextures {
             NativeImage white = new NativeImage(4, 4, true);
             for (int y = 0; y < 4; y++) for (int x = 0; x < 4; x++) white.setPixelRGBA(x, y, 0xFFFFFFFF);
             tm.register(WHITE, new DynamicTexture(white));
+            whiteRegistered = true;
             com.newuniverse.nusmp.client.relics.worn.lib.WornModels.clear();                   // the catalog decides below which armour boxes a 3D model replaces
             com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary.clear();
             GLOW.clear();

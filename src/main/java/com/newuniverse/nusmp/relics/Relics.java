@@ -88,6 +88,14 @@ public final class Relics {
     /** A relic that is equipped, with its def. */
     public record Worn(ItemStack stack, RelicDef def) {}
 
+    /** Where a worn relic was found: a hand, the armour slots, a Curios slot, the pack of a named mob, or only in the list the server sent ({@link WornSync}; client only). */
+    public enum Where { HAND, ARMOUR, CURIOS, PACK, SYNCED }
+
+    /** A worn relic with the place it was found in (for the worn layers and {@code /multiverse relic debug}); {@link #worn()} is the plain pair. */
+    public record Located(ItemStack stack, RelicDef def, Where where) {
+        public Worn worn() { return new Worn(stack, def); }
+    }
+
     /** One resistance a worn relic grants. */
     public record Resist(String id, double fraction) {}
 
@@ -96,7 +104,7 @@ public final class Relics {
         public static final Loadout EMPTY = new Loadout(List.of(), Set.of(), List.of(), 0.0);
     }
 
-    private record Cached(long tick, List<Worn> worn, Loadout loadout) {}
+    private record Cached(long tick, List<Worn> worn, List<Located> located, Loadout loadout) {}
 
     private static final Map<UUID, Cached> SERVER = new ConcurrentHashMap<>(), CLIENT = new ConcurrentHashMap<>();
 
@@ -104,6 +112,31 @@ public final class Relics {
 
     /** Every relic the entity has equipped (a hand for hand relics, the head/chest/feet slots, a Curios slot), working or not. Never null. */
     public static List<Worn> wornList(LivingEntity e) { return cached(e, false).worn(); }
+
+    /** Every equipped relic with where it was found (the same cached look as {@link #wornList}). Never null. */
+    public static List<Located> locatedList(LivingEntity e) { return cached(e, false).located(); }
+
+    /**
+     * Only what is carried OUTSIDE the vanilla equipment: the relics in the Curios slots and in a named mob's pack, read from this side's own data (the server's truth; on a client the pack
+     * is always empty because persistent data never leaves the server). What {@link WornSync} sends. Not cached.
+     */
+    public static List<Located> scanExtra(LivingEntity e) {
+        List<Located> out = new ArrayList<>(4);
+        for (ItemStack s : CuriosLink.equipped(e)) {
+            RelicDef d = defOf(s);
+            if (d != null && d.slot().isCurio()) out.add(new Located(s, d, Where.CURIOS));
+        }
+        for (ItemStack s : MobRelics.pack(e)) {
+            RelicDef d = defOf(s);
+            if (d != null) out.add(new Located(s, d, Where.PACK));
+        }
+        return out;
+    }
+
+    /** Forget the kept look at a client-side entity (the server's list for it just changed). */
+    public static void invalidateClient(UUID id) {
+        if (id != null) CLIENT.remove(id);
+    }
 
     /** What works on the entity (cached for {@link #TTL} ticks). Never null. 1.45.0: nothing works while the entity is relic-nullified ({@link RelicNullification}). */
     public static Loadout loadout(LivingEntity e) { return RelicNullification.isNullified(e) ? Loadout.EMPTY : cached(e, false).loadout(); }
@@ -141,33 +174,42 @@ public final class Relics {
         long now = e.level().getGameTime();
         Cached c = fresh ? null : cache.get(e.getUUID());
         if (c != null && now >= c.tick() && now - c.tick() < TTL) return c;
-        List<Worn> worn = scan(e);
-        Cached made = new Cached(now, worn, worn.isEmpty() ? Loadout.EMPTY : work(e, worn));
+        List<Located> located = scan(e);
+        List<Worn> worn = new ArrayList<>(located.size());
+        for (Located l : located) worn.add(l.worn());
+        Cached made = new Cached(now, worn, located, worn.isEmpty() ? Loadout.EMPTY : work(e, worn));
         if (cache.size() > 400) cache.clear();                                   // a mob-heavy world cannot make this grow without end
         cache.put(e.getUUID(), made);
         return made;
     }
 
-    private static List<Worn> scan(LivingEntity e) {
-        List<Worn> out = new ArrayList<>(4);
+    private static List<Located> scan(LivingEntity e) {
+        List<Located> out = new ArrayList<>(4);
         for (ItemStack s : new ItemStack[]{e.getMainHandItem(), e.getOffhandItem()}) {
             RelicDef d = defOf(s);
-            if (d != null && d.slot().isHand()) out.add(new Worn(s, d));
+            if (d != null && d.slot().isHand()) out.add(new Located(s, d, Where.HAND));
         }
         for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET}) {
             ItemStack s = e.getItemBySlot(slot);
             RelicDef d = defOf(s);
-            if (d != null && d.slot().isArmor()) out.add(new Worn(s, d));
+            if (d != null && d.slot().isArmor()) out.add(new Located(s, d, Where.ARMOUR));
         }
-        for (ItemStack s : CuriosLink.equipped(e)) {
-            RelicDef d = defOf(s);
-            if (d != null && d.slot().isCurio()) out.add(new Worn(s, d));
-        }
-        for (ItemStack s : MobRelics.pack(e)) {                                  // 1.50.0: the pack of a named mob (empty for players)
-            RelicDef d = defOf(s);
-            if (d != null) out.add(new Worn(s, d));
-        }
+        out.addAll(scanExtra(e));                                                // the Curios slots, then (1.50.0) the pack of a named mob (empty for players)
+        if (e.level().isClientSide()) addSynced(e, out);                         // 1.99.0: what the server says the wearer carries and this client's own look did not find
         return out;
+    }
+
+    /** Client side: adds the relics of the server's list ({@link WornSync}) that the client's own look missed (a mob's pack, or a Curios read that failed). */
+    private static void addSynced(LivingEntity e, List<Located> out) {
+        List<ItemStack> told = WornSync.client(e.getUUID());
+        if (told.isEmpty()) return;
+        List<String> found = new ArrayList<>(out.size());
+        for (Located l : out) if (l.where() != Where.HAND) found.add(WornSync.keyOf(l.stack()));
+        for (int i : WornMerge.missing(found, WornSync.keysOf(told))) {
+            ItemStack s = told.get(i);
+            RelicDef d = defOf(s);
+            if (d != null && !d.slot().isHand()) out.add(new Located(s, d, Where.SYNCED));
+        }
     }
 
     private static Loadout work(LivingEntity e, List<Worn> worn) {

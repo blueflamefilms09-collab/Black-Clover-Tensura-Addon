@@ -50,6 +50,10 @@ public final class RelicCommands {
                         .executes(ctx -> unattune(ctx.getSource(), ctx.getSource().getPlayerOrException())))
                 .then(Commands.literal("grade")
                         .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException())))
+                .then(Commands.literal("debug").requires(s -> s.hasPermission(2))                  // 1.99.0: why a worn relic is not drawn (server half here, the operator's client adds its half)
+                        .executes(ctx -> debug(ctx.getSource(), ctx.getSource().getPlayerOrException()))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(ctx -> debug(ctx.getSource(), EntityArgument.getPlayer(ctx, "player")))))
                 .then(com.newuniverse.nusmp.relics.socket.SocketCommands.node())                  // 1.30.0: socket list|cast|add|remove|core
                 .then(com.newuniverse.nusmp.relics.socket.SocketCommands.unsocketNode()));
     }
@@ -140,6 +144,14 @@ public final class RelicCommands {
         if (Attune.isMine(held, p)) return ok(src, d.cardName() + " was already attuned to you.");
         if (!Attune.bind(p, held)) return fail(src, "You already have " + AttuneRules.CAP + " relics attuned: let one go first.");
         return ok(src, d.cardName() + " is now attuned to you (" + Attune.carried(p, null) + " of " + AttuneRules.CAP + ").");
+    }
+
+    /** 1.99.0: {@code /multiverse relic debug [player]} (operators): the server's worn-relic report, then the operator's client is asked for its half ({@link WornDebugPayload}). */
+    private static int debug(CommandSourceStack src, ServerPlayer target) {
+        WornDebug.Report rep = WornDebug.build(target);
+        for (Component line : rep.lines()) src.sendSuccess(() -> line, false);
+        if (src.getEntity() instanceof ServerPlayer op) net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(op, new WornDebugPayload(target.getUUID(), rep.compact()));
+        return rep.compact().size() + 1;
     }
 
     private static int unattune(CommandSourceStack src, ServerPlayer p) {

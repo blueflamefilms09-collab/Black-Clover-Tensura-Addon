@@ -95,6 +95,15 @@ public final class WornLibDraw {
      */
     public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model,
                             boolean crouching, double distSq, float age, float limb, FxQuality q) {
+        draw(sets, pose, buffers, light, model, crouching, distSq, age, limb, q, 0f);
+    }
+
+    /**
+     * The same for a wearer with slim arms ({@code armInset} 0.5, see {@code WornPlan#SLIM_INSET}): every relic piece anchored on an arm is moved that many model pixels toward the
+     * body, because a slim arm is one pixel narrower on its outer side (an armour item's own pieces are made for the arm and are not moved). 0 for wide arms.
+     */
+    public static void draw(List<WornLibrary.Ensemble> sets, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<?> model,
+                            boolean crouching, double distSq, float age, float limb, FxQuality q, float armInset) {
         int n = Math.min(sets.size(), MAX_SETS);
         if (n == 0) return;
         boolean near = distSq <= WornFxPlan.EXTRAS_RANGE * WornFxPlan.EXTRAS_RANGE;
@@ -146,6 +155,9 @@ public final class WornLibDraw {
                 pose.popPose();
                 WornPlacer.Placement pl = e.exact ? WornPlacer.Placement.NONE      // an armour item or a mode: the garment's own size, where the garment stands
                         : WornPlacer.fit(r.anchor(), r.mesh().name).then(WornPlacer.place(e.slotKey, INDEX[i]));      // a relic: the smaller body fit, then the place among its slot-mates
+                if (!e.exact && armInset != 0f && (r.anchor() == WornAnchor.RIGHT_ARM || r.anchor() == WornAnchor.LEFT_ARM)) {      // slim arms: toward the body (+x for the right arm, -x for the left)
+                    pl = pl.then(new WornPlacer.Placement(r.anchor() == WornAnchor.RIGHT_ARM ? armInset : -armInset, 0f, 0f, 0f, 1f, false));
+                }
                 if (pl != WornPlacer.Placement.NONE) {
                     s.m.translate(pl.dx(), pl.dy(), pl.dz()).rotateY((float) Math.toRadians(pl.rotY())).scale(pl.scale());
                     s.n.rotateY((float) Math.toRadians(pl.rotY()));
@@ -287,7 +299,9 @@ public final class WornLibDraw {
                 float k = (f & WornMesh.HOT) != 0 ? hot : 0.9f;
                 int c = s.colors[m.slot[i]];
                 int r = Math.min(255, (int) ((c >> 16 & 255) * k)), gg = Math.min(255, (int) ((c >> 8 & 255) * k)), b = Math.min(255, (int) ((c & 255) * k));
-                for (int j = 0; j < 4; j++) vertex(vc, m, i, j, r, gg, b, 255, FULL, w ? gr : null, age);
+                // 1.99.0: RenderType.eyes culls back faces, and a mirrored piece (the left arm's copy of a right arm model) has its winding reversed by the x flip: its glowing parts
+                // were culled away entirely. Writing the corners in the other order turns them front again.
+                for (int j = 0; j < 4; j++) vertex(vc, m, i, WornMesh.corner(s.mirror, j), r, gg, b, 255, FULL, w ? gr : null, age);
             }
         }
     }

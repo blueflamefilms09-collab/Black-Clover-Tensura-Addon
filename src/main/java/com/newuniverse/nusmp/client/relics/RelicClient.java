@@ -43,14 +43,35 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             RelicClientState.clear();
             com.newuniverse.nusmp.client.relics.worn.WornCues.clear();
+            com.newuniverse.nusmp.client.relics.worn.WornTrace.clear();                    // 1.99.0: what the worn layer last did, and what the server said wearers carry
+            com.newuniverse.nusmp.relics.WornSync.clearClient();
             Relics.clearCaches();
         });
     }
 
+    /** How many player renderers got the worn layer in the last renderer (re)build, and which skins were refused (for {@code /multiverse relic debug}). */
+    private static volatile int layersAdded;
+    private static volatile String layersRefused = "";
+
+    public static int layersAdded() { return layersAdded; }
+
+    public static String layersRefused() { return layersRefused; }
+
     private static void addLayers(EntityRenderersEvent.AddLayers event) {
+        int added = 0;
+        StringBuilder refused = new StringBuilder();
         for (PlayerSkin.Model skin : event.getSkins()) {
             EntityRenderer<? extends Player> renderer = event.getSkin(skin);
-            if (renderer instanceof PlayerRenderer r) r.addLayer(new RelicWornLayer(r));
+            if (renderer instanceof PlayerRenderer r) {
+                r.addLayer(new RelicWornLayer(r));
+                added++;
+            } else {                                                                    // 1.99.0: said out loud; this used to be a silent "no worn relics on that skin type"
+                refused.append(skin).append('=').append(renderer == null ? "null" : renderer.getClass().getName()).append(' ');
+            }
         }
+        layersAdded = added;
+        layersRefused = refused.toString().trim();
+        if (refused.length() > 0) com.mojang.logging.LogUtils.getLogger().error("[nusmp] the worn relic layer was NOT added to: {} (only PlayerRenderer instances take it)", layersRefused);
+        else com.mojang.logging.LogUtils.getLogger().info("[nusmp] the worn relic layer was added to {} player renderers", added);
     }
 }

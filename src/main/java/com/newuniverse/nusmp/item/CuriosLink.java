@@ -61,29 +61,82 @@ public final class CuriosLink {
     private static boolean isBroken() { return System.currentTimeMillis() < brokenUntil; }
 
     // ---------------------------------------------------------------- reading the Curios inventory
+    private static volatile String lastFailure = "";
+    private static volatile int failures;
+
+    /** The last reason a read of the Curios inventory failed ("" if none did since the game started); for {@code /multiverse relic debug}. */
+    public static String lastFailure() { return lastFailure; }
+
+    /** How many reads failed since the game started. */
+    public static int failureCount() { return failures; }
+
+    /** Records a failure and logs it once per distinct reason (a failing read repeats every ten seconds; the log must not fill up with it). */
+    private static void noteFailure(String what, Throwable t) {
+        failures++;
+        String msg = what + ": " + t;
+        if (!msg.equals(lastFailure)) LOG.warn("[nusmp] Curios is present but its inventory could not be read ({}); relics worn in Curios slots may be invisible until this is fixed", msg);
+        lastFailure = msg;
+    }
+
     /** Every stack worn in a Curios slot of this entity (empty without Curios, or if its API is not what was expected). */
     public static List<ItemStack> equipped(LivingEntity e) {
         if (isBroken() || !loaded()) return List.of();
         try {
             // each method is looked up on its own: flags() fills getInventory first, and a shared "if getInventory == null" left getEquipped null (1.46.0 fix)
-            Method inv = getInventory, eq = getEquipped;
+            Method inv = getInventory;
             if (inv == null) inv = getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
-            if (eq == null) eq = getEquipped = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler").getMethod("getEquippedCurios");
             Object opt = inv.invoke(null, e);
             if (!(opt instanceof Optional<?> o) || o.isEmpty()) return List.of();
-            if (!(eq.invoke(o.get()) instanceof IItemHandler h)) return List.of();
-            List<ItemStack> out = new ArrayList<>();
-            for (int i = 0; i < h.getSlots(); i++) {
-                ItemStack s = h.getStackInSlot(i);
-                if (!s.isEmpty()) out.add(s);
+            Object handler = o.get();
+            try {                                                                   // the first road: the combined handler of every worn stack
+                Method eq = getEquipped;
+                if (eq == null) eq = getEquipped = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler").getMethod("getEquippedCurios");
+                if (eq.invoke(handler) instanceof IItemHandler h) return stacksOf(h);
+            } catch (ReflectiveOperationException | RuntimeException firstRoad) {
+                getEquipped = null;
+                noteFailure("getEquippedCurios", firstRoad);                        // 1.99.0: not the end of the read, the second road below still answers
+            }
+            List<ItemStack> out = new ArrayList<>();                                // the second road: each slot type's own stack handler (what the render toggles read)
+            initStackMethods();
+            if (getCurios.invoke(handler) instanceof Map<?, ?> map) {
+                for (Object sh : map.values()) if (getStacks.invoke(sh) instanceof IItemHandler h) out.addAll(stacksOf(h));
             }
             return out;
         } catch (Throwable t) {
             brokenUntil = System.currentTimeMillis() + 10_000L;
             getInventory = null; getEquipped = null;
-            LOG.warn("[nusmp] Curios is present but its inventory could not be read ({}); weapons worn in Curios slots give no passive", t.toString());
+            noteFailure("read", t);
             return List.of();
         }
+    }
+
+    private static List<ItemStack> stacksOf(IItemHandler h) {
+        List<ItemStack> out = new ArrayList<>();
+        for (int i = 0; i < h.getSlots(); i++) {
+            ItemStack s = h.getStackInSlot(i);
+            if (!s.isEmpty()) out.add(s);
+        }
+        return out;
+    }
+
+    private static boolean rendersChecked;
+
+    /** getCurios and getStacks are needed to read the worn stacks; getRenders (the eye icon) is optional: without it every worn stack counts as shown. */
+    private static void initStackMethods() throws ReflectiveOperationException {
+        if (getCurios != null && getStacks != null && rendersChecked) return;
+        Class<?> handler = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler");
+        Class<?> stacksHandler = Class.forName("top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler");
+        Method c = handler.getMethod("getCurios"), st = stacksHandler.getMethod("getStacks");
+        Method r = null;
+        try {
+            r = stacksHandler.getMethod("getRenders");
+        } catch (NoSuchMethodException noToggle) {
+            noteFailure("getRenders", noToggle);                                    // an API without the eye icon: everything is shown
+        }
+        getCurios = c;
+        getStacks = st;
+        getRenders = r;
+        rendersChecked = true;
     }
 
     // ---------------------------------------------------------------- the render toggles (the eye icon of the Curios screen)
@@ -103,20 +156,14 @@ public final class CuriosLink {
             if (getInventory == null) {
                 getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
             }
-            if (getCurios == null) {
-                Class<?> handler = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler");
-                Class<?> stacksHandler = Class.forName("top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler");
-                getCurios = handler.getMethod("getCurios");
-                getStacks = stacksHandler.getMethod("getStacks");
-                getRenders = stacksHandler.getMethod("getRenders");
-            }
+            initStackMethods();
             Object opt = getInventory.invoke(null, e);
             if (!(opt instanceof Optional<?> o) || o.isEmpty()) return List.of();
             if (!(getCurios.invoke(o.get()) instanceof Map<?, ?> map)) return List.of();
             List<RenderFlag> out = new ArrayList<>();
             for (Object sh : map.values()) {
                 if (!(getStacks.invoke(sh) instanceof IItemHandler h)) continue;
-                List<?> renders = getRenders.invoke(sh) instanceof List<?> l ? l : List.of();
+                List<?> renders = getRenders != null && getRenders.invoke(sh) instanceof List<?> l ? l : List.of();
                 for (int i = 0; i < h.getSlots(); i++) {
                     ItemStack s = h.getStackInSlot(i);
                     if (s.isEmpty()) continue;
@@ -127,8 +174,8 @@ public final class CuriosLink {
             return out;
         } catch (Throwable t) {
             flagsBrokenUntil = System.currentTimeMillis() + 10_000L;
-            getInventory = null; getCurios = null;
-            LOG.warn("[nusmp] the Curios render toggles could not be read ({}); every worn relic is drawn", t.toString());
+            getInventory = null; getCurios = null; getStacks = null; getRenders = null; rendersChecked = false;
+            noteFailure("render toggles", t);                                      // every worn relic is drawn while the toggles cannot be read
             return List.of();
         }
     }
