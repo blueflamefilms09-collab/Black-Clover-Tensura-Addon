@@ -1,0 +1,588 @@
+{
+  "slice": "god_melee_b",
+  "state": "baseline (before the upgrade; the repo at the start of release 1.102.0)",
+  "runtime_constants": {
+    "ambient_layers": 1,
+    "animations": 1,
+    "trail": 0,
+    "act_vfx": true
+  },
+  "items": [
+    {
+      "item": "aurliels_seraph_halberd",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, glaive, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/aurliels_seraph_halberd.txt",
+      "mesh": {
+        "quads_body": 1512,
+        "quads_void": 0,
+        "quads_glow_layer": 822,
+        "quads_full_detail": 1512,
+        "orbit_instances": 0,
+        "vertices_body": 6048,
+        "vertices_welded": 1499,
+        "vertices_full_detail": 6048,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/aurliels_seraph_halberd.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 61268
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/aurliels_seraph_halberd_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 26618
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 61268,
+        "painted_texels_all_maps": 87886
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "chronarchs_pendulum_sabre",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, sabre, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/chronarchs_pendulum_sabre.txt",
+      "mesh": {
+        "quads_body": 1351,
+        "quads_void": 0,
+        "quads_glow_layer": 366,
+        "quads_full_detail": 1351,
+        "orbit_instances": 0,
+        "vertices_body": 5404,
+        "vertices_welded": 1235,
+        "vertices_full_detail": 5404,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/chronarchs_pendulum_sabre.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 124120
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/chronarchs_pendulum_sabre_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 11916
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 124120,
+        "painted_texels_all_maps": 136036
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "deepwatch_harpoon",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, spear, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/deepwatch_harpoon.txt",
+      "mesh": {
+        "quads_body": 1492,
+        "quads_void": 0,
+        "quads_glow_layer": 728,
+        "quads_full_detail": 1492,
+        "orbit_instances": 0,
+        "vertices_body": 5968,
+        "vertices_welded": 1504,
+        "vertices_full_detail": 5968,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/deepwatch_harpoon.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 49254
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/deepwatch_harpoon_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 10793
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 49254,
+        "painted_texels_all_maps": 60047
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "orials_starfall_staff",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/orials_starfall_staff.txt",
+      "mesh": {
+        "quads_body": 858,
+        "quads_void": 0,
+        "quads_glow_layer": 374,
+        "quads_full_detail": 858,
+        "orbit_instances": 0,
+        "vertices_body": 3432,
+        "vertices_welded": 739,
+        "vertices_full_detail": 3432,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/orials_starfall_staff.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 42831
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/orials_starfall_staff_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 13617
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 42831,
+        "painted_texels_all_maps": 56448
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "reflected_kings_mirrorblade",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, longsword, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/reflected_kings_mirrorblade.txt",
+      "mesh": {
+        "quads_body": 774,
+        "quads_void": 0,
+        "quads_glow_layer": 84,
+        "quads_full_detail": 774,
+        "orbit_instances": 0,
+        "vertices_body": 3096,
+        "vertices_welded": 764,
+        "vertices_full_detail": 3096,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/reflected_kings_mirrorblade.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 81317
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/reflected_kings_mirrorblade_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 25062
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 81317,
+        "painted_texels_all_maps": 106379
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "rimeheart_greatblade",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, greatsword, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/rimeheart_greatblade.txt",
+      "mesh": {
+        "quads_body": 904,
+        "quads_void": 0,
+        "quads_glow_layer": 349,
+        "quads_full_detail": 904,
+        "orbit_instances": 0,
+        "vertices_body": 3616,
+        "vertices_welded": 876,
+        "vertices_full_detail": 3616,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/rimeheart_greatblade.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 124065
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/rimeheart_greatblade_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 68366
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 124065,
+        "painted_texels_all_maps": 192431
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "sanguine_wardens_cleaver",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, cleaver, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/sanguine_wardens_cleaver.txt",
+      "mesh": {
+        "quads_body": 791,
+        "quads_void": 0,
+        "quads_glow_layer": 138,
+        "quads_full_detail": 791,
+        "orbit_instances": 0,
+        "vertices_body": 3164,
+        "vertices_welded": 793,
+        "vertices_full_detail": 3164,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/sanguine_wardens_cleaver.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 172004
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/sanguine_wardens_cleaver_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 43010
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 172004,
+        "painted_texels_all_maps": 215014
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "valkarins_stormlance",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, spear, rift pocket boss weapon)",
+      "wave": "Wave78",
+      "mesh_file": "weapon_meshes/valkarins_stormlance.txt",
+      "mesh": {
+        "quads_body": 1616,
+        "quads_void": 0,
+        "quads_glow_layer": 938,
+        "quads_full_detail": 1616,
+        "orbit_instances": 0,
+        "vertices_body": 6464,
+        "vertices_welded": 1660,
+        "vertices_full_detail": 6464,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/valkarins_stormlance.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 31414
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/valkarins_stormlance_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 4882
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 31414,
+        "painted_texels_all_maps": 36296
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "paradox",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, artifact staff of the God of Time)",
+      "wave": "Wave30",
+      "mesh_file": "weapon_meshes/paradox.txt",
+      "mesh": {
+        "quads_body": 2028,
+        "quads_void": 0,
+        "quads_glow_layer": 676,
+        "quads_full_detail": 2028,
+        "orbit_instances": 0,
+        "vertices_body": 8112,
+        "vertices_welded": 1830,
+        "vertices_full_detail": 8112,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/paradox.png",
+          "size": [
+            512,
+            512
+          ],
+          "texels": 262144,
+          "painted": 167399
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/paradox_glow.png",
+            "size": [
+              512,
+              512
+            ],
+            "texels": 262144,
+            "painted": 65308
+          }
+        ],
+        "skin_size_texels": 262144,
+        "painted_skin_texels": 167399,
+        "painted_texels_all_maps": 232707
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 1,
+        "list": [
+          "grade_shimmer"
+        ]
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    }
+  ]
+}
