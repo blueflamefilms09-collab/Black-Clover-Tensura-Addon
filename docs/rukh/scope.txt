@@ -25,3 +25,8 @@ dungeon/nexus/relic/**    @p3
 !book/TimeBook.java
 !particle/rukh/**
 !client/particle/rukh/**
+# 1.105.0: the Tiny Djinn effects belong to the Djinn user (the one place the Rukh/magoi stay) and the visual-upgrade effect classes read their particle ids from per-item data
+# files (assets/nusmp/visual_upgrade/*.json); their vanilla defaults move to the custom particle facade with the next relic codemod run (tools/particles/codemod.py --include-relics).
+!client/relics/djinn/tiny/**
+!client/relics/vu/**
+!client/relics/item/vu/**
