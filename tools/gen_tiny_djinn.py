@@ -69,6 +69,11 @@ def write(spec):
     os.makedirs(GEODIR, exist_ok=True)
     os.makedirs(TEXDIR, exist_ok=True)
     c.m.save(None)
+    gp = os.path.join(GEODIR, "tinydjinn_%s.geo.json" % spec["id"])
+    with open(gp) as f:                                           # compact: 100 small cubes with per-face uvs are big when indented
+        g = json.load(f)
+    with open(gp, "w") as f:
+        json.dump(g, f, separators=(",", ":"))
     for tag, (img, glow) in textures(c, spec).items():
         img.save(os.path.join(TEXDIR, "tinydjinn_%s%s.png" % (spec["id"], tag)))
         glow.save(os.path.join(TEXDIR, "tinydjinn_%s%s_glow.png" % (spec["id"], tag)))

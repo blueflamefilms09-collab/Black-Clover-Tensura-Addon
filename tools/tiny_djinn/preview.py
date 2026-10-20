@@ -342,7 +342,7 @@ def figure_quads(did, clip_name="idle", seconds=0.0, dark=False):
 def sheet_cell(did, clip, secs, yaw, dark=False, size=(150, 190)):
     q, tex, glow = figure_quads(did, clip, secs, dark)
     # blocks -> a view where the figure fills the cell: 1 block = 16 model px at scale 1 (model px = 1/16 block)
-    scale = min(size[1] / (44.0 * PX), size[0] / (30.0 * PX))
+    scale = min(size[1] / (44.0 * PX), size[0] / (40.0 * PX))
     return render([(q, tex, glow, None)], size, scale, 0.0, 2.0 * PX, yaw)
 
 
@@ -382,8 +382,8 @@ def flat_tex(rgb):
 
 def scale_scene(did="alloces", path=None):
     """A player (32 px tall: head 8, body 12 x 8 x 4, arms and legs 4 x 12 x 4) seen from the front-right, Alloces hovering at the right shoulder at the size the layer draws it."""
-    parts = [((-4, 24, -4), (8, 8, 8), (214, 168, 132)), ((-4, 12, -2), (8, 12, 4), (60, 120, 170)), ((-8, 12, -2), (4, 12, 4), (60, 120, 170)),
-             ((4, 12, -2), (4, 12, 4), (60, 120, 170)), ((-4, 0, -2), (4, 12, 4), (50, 56, 110)), ((0, 0, -2), (4, 12, 4), (50, 56, 110))]
+    parts = [((-4, 24, -4), (8, 8, 8), (214, 168, 132)), ((-4, 12, -2), (8, 12, 4), (60, 120, 170)), ((-8, 12, -2), (4, 12, 4), (84, 140, 190)),
+             ((4, 12, -2), (4, 12, 4), (84, 140, 190)), ((-4, 0, -2), (4, 12, 4), (50, 56, 110)), ((0, 0, -2), (4, 12, 4), (50, 56, 110))]
     lst = []
     for o, s, col in parts:
         lst.append((box_quads(o, s), flat_tex(col), None, None))
@@ -395,9 +395,13 @@ def scale_scene(did="alloces", path=None):
     M[:3, :3] = np.eye(3) * k
     M[:3, 3] = (ax, ay, az)
     lst.append((q, tex, glow, M))
-    img = render(lst, (520, 520), 220.0, 0.0, 0.95, 28.0, 10.0, ss=2)
+    img = render(lst, (560, 560), 230.0, 0.0, 1.0, 28.0, 10.0, ss=2)
+    inset = sheet_cell(did, "idle", 1.5, 20.0, False, (190, 250))                 # the same figure, close
+    img.paste(inset, (360, 296))
     d = ImageDraw.Draw(img)
+    d.rectangle((360, 296, 549, 545), outline=(90, 90, 110))
     d.text((8, 6), "%s on the right shoulder: 0.45 block tall, a player is 2 blocks" % did.capitalize(), fill=(230, 230, 240))
+    d.text((366, 300), "close up", fill=(200, 200, 215))
     path = path or os.path.join(OUT, "%s_scale.png" % did)
     img.save(path)
     print("wrote", path)

@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.client.relics.djinn.tiny;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.newuniverse.nusmp.client.aura.AuraRender;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoModelData;
@@ -11,6 +10,7 @@ import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
@@ -64,9 +64,9 @@ public final class TinyDjinnPortrait {
                 GeoAnim.Clip clip = anims == null ? null : anims.clip("idle");
                 float seconds = ticks / 20f;
                 MultiBufferSource.BufferSource buffers = g.bufferSource();
-                GeoDraw.draw(ps, buffers.getBuffer(AuraRender.translucent(rl(TinyDjinnAssets.texture(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
+                GeoDraw.draw(ps, buffers.getBuffer(RenderType.entityTranslucent(rl(TinyDjinnAssets.texture(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
                         LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
-                GeoDraw.draw(ps, buffers.getBuffer(AuraRender.additive(rl(TinyDjinnAssets.glow(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
+                GeoDraw.draw(ps, buffers.getBuffer(RenderType.eyes(rl(TinyDjinnAssets.glow(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
                         LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xD0FFFFFF);
                 g.flush();
             } finally {

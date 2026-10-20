@@ -39,10 +39,11 @@ def _eyes(spec, P, face_px):
             at(0 if not mirror else 2, 0, (255, 250, 220), (255, 250, 220), 1.0)
         elif style == "sharp":
             for dx in range(3):
-                at(dx, 1, dark)
-                at(dx, 2, ec, ec, 1.0)
-            at(2 if not mirror else 0, 0, dark)                # the upswept lash
-            at(1, 2, (255, 255, 255), (255, 255, 255), 1.0)
+                at(dx, 1, ec, ec, 1.0)
+                at(dx, 2, mul(ec, 0.6), ec, 0.55)
+            at(0 if not mirror else 2, 0, dark)                # the upswept lash over the outer corner
+            at(1, 0, dark)
+            at(1 if not mirror else 1, 1, (255, 255, 255), (255, 255, 255), 1.0)
         elif style == "calm":
             for dx in range(3):
                 at(dx, 1, dark)
@@ -299,7 +300,7 @@ def hand_painter(spec):
 # ================================================================ the wisp tail
 def tail_painter(spec, seg):
     style = spec.get("tail", "smoke")
-    alpha_k = (1.0, 0.93, 0.78, 0.55)[seg]
+    alpha_k = (1.0, 0.93, 0.78, 0.55)[seg] if style in ("smoke", "water", "wind", "flame", "tendril") else (1.0, 1.0, 0.97, 0.92)[seg]
 
     def painter(T, P, rects, _spec=None):
         cloth, cloth2, glow, acc = P["cloth"], P["cloth2"], P["glow"], P["accent"]
@@ -328,9 +329,9 @@ def tail_painter(spec, seg):
                 if P["dark"]:
                     c = mix(c, (50, 40, 70), 0.6)
             elif style == "bolt":
-                c = mix(mix(cloth, (30, 24, 80), 0.2), (255, 255, 220), k * 0.8)
-                if (i + j) % 3 == 0:
-                    c = (255, 255, 210)
+                c = mix(mix(cloth, (18, 16, 56), 0.5), mix(cloth2, (120, 150, 255), 0.5), k)
+                if (i + 2 * j + seg * 3) % 6 == 0 or (hsh(i, j, seg + 9) > 0.93):
+                    c = (255, 255, 214)
                     g, gk = c, 1.0
             elif style == "ice":
                 c = mix((150, 210, 244), (244, 252, 255), k)

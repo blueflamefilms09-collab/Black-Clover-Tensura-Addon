@@ -213,7 +213,6 @@ public final class TinyDjinnLayer {
             if (owner == null) { D2[i] = Double.MAX_VALUE; continue; }
             boolean fp = thirdOrFirst && owner == camEntity;
             placeAnchor(h, owner, partial, fp);
-            float ownerYaw = fp ? Mth.rotLerp(partial, owner.yRotO, owner.getYRot()) : owner instanceof LivingEntity le ? Mth.rotLerp(partial, le.yBodyRotO, le.yBodyRot) : owner.getYRot();
             TinyDjinnActor a = h.actor;
             boolean fighting = a.state == TinyDjinnActor.State.CAST || a.state == TinyDjinnActor.State.ATTACK || a.state == TinyDjinnActor.State.HOP;
             if (fighting && h.foeId >= 0) {
@@ -225,7 +224,10 @@ public final class TinyDjinnLayer {
                     h.foeKnown = true;
                 }
             }
-            a.update(now, h.anchor, h.vessel, fighting && h.foeKnown ? h.foe : null, ownerYaw);
+            a.stiffness = fp ? 2.4f : 1f;
+            // at rest it faces the camera (in first person that is its owner); a cast and an attack face the foe (the actor decides)
+            float toCam = TinyDjinnMath.yawTo(cam.x - a.pos[0], cam.z - a.pos[2]);
+            a.update(now, h.anchor, h.vessel, fighting && h.foeKnown ? h.foe : null, toCam);
             int ev = a.takeEvents();
             if (ev != 0) events(mc, h, a, ev);
             if ((a.state == TinyDjinnActor.State.EXIT) && (frame & 1) == 0) TinyDjinnFx.spiralMote(mc.level, a.pos[0], a.pos[1], a.pos[2], h.light);

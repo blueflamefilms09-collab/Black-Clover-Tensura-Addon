@@ -101,7 +101,7 @@ class TinyDjinnAssetsTest {
             // the head carries the hair, the crown and the dark-only crest; the weapon bone holds the Djinn's weapon
             assertTrue(m.bones.get("weapon").cubes.size() >= 3, d.id() + ": an empty hand");
             assertTrue(m.bones.get("dark").cubes.size() >= 8, d.id() + ": the dark crest is missing");
-            assertEquals(1, m.bones.get("head").cubes.size() >= 1 ? 1 : 0, d.id() + ": no head");
+            assertTrue(m.bones.get("head").cubes.size() >= 1, d.id() + ": no head");
         }
     }
 
@@ -194,6 +194,9 @@ class TinyDjinnAssetsTest {
                 assertNotNull(tr, clip + " has no " + arm + " track, so it would pop out of the idle stance");
                 assertTrue(tr.has("rotation"), clip + "." + arm);
             }
+            JsonObject lids = anims.getAsJsonObject(clip).getAsJsonObject("bones").getAsJsonObject("lids");
+            assertNotNull(lids, clip + " does not say where the lids are, so the eyes would close when it starts");
+            assertTrue(lids.has("scale"), clip + ".lids");
         }
     }
 

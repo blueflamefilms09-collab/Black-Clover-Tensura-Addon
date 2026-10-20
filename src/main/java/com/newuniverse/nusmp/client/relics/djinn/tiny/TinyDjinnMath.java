@@ -58,7 +58,7 @@ public final class TinyDjinnMath {
     // ---------------------------------------------------------------- where it hovers
     /**
      * The shoulder anchor of a figure above its owner, written to {@code out[0..2]} (absolute coordinates): to the owner's right, a little behind, at shoulder height
-     * and above; a sneaking owner lowers it and draws it in. First person: lower and nearer the body, out to the right, so the little one sits at the edge of the view.
+     * and above; a sneaking owner lowers it and draws it in. First person: in front of the owner, low and out to the right, so the little one sits in the lower right of the view, clear of the crosshair.
      */
     public static void anchor(float[] out, double ox, double oy, double oz, float yawDeg, float bbHeight, boolean sneaking, boolean firstPerson) {
         double yaw = Math.toRadians(yawDeg);
@@ -66,9 +66,9 @@ public final class TinyDjinnMath {
         double rx = -Math.cos(yaw), rz = -Math.sin(yaw);             // the owner's right
         double right, fwd, up;
         if (firstPerson) {
-            right = 0.78;
-            fwd = 0.12;
-            up = bbHeight * 0.80 - (sneaking ? 0.2 : 0.0);
+            right = 0.62;                                           // inside the view's right edge (a camera at the eye sees it about 33 degrees out and 25 down)
+            fwd = 0.95;
+            up = bbHeight * 0.665 - (sneaking ? 0.2 : 0.0);
         } else {
             right = 0.50;
             fwd = -0.30 + (sneaking ? 0.14 : 0.0);

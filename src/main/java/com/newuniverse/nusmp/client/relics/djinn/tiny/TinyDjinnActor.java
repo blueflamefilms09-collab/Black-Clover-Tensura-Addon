@@ -27,6 +27,8 @@ public final class TinyDjinnActor {
     public final float[] pos = new float[3];
     public final float[] vel = new float[3];
     public float yaw;
+    /** 1 normally; the renderer raises it for the owner's own figure in first person so it keeps up with the turning view. */
+    public float stiffness = 1f;
     public State state = State.GONE;
     /** The entity id of the foe of the cast in progress, or -1. */
     public int targetId = -1;
@@ -98,7 +100,7 @@ public final class TinyDjinnActor {
      * @param anchor  where it hovers (see {@link TinyDjinnMath#anchor})
      * @param vessel  where it dissolves to when it leaves (the owner's chest)
      * @param foe     the foe's position while a cast or attack is on, or null
-     * @param faceYaw the yaw to face when idle (the owner's); a cast and an attack face the foe
+     * @param faceYaw the yaw to face when idle (towards the camera: in first person that is the owner); a cast and an attack face the foe
      */
     public void update(float now, float[] anchor, float[] vessel, float[] foe, float faceYaw) {
         if (state == State.GONE) return;
@@ -155,7 +157,7 @@ public final class TinyDjinnActor {
             default -> { }
         }
         if (state == State.IDLE && killPending) killPending = false;
-        TinyDjinnMath.spring(pos, vel, goal, omega, zeta, dtTicks / 20f);
+        TinyDjinnMath.spring(pos, vel, goal, omega * stiffness, zeta, dtTicks / 20f);
         yaw = TinyDjinnMath.turnToward(yaw, face, 22f * Math.max(dtTicks, 0.01f));
     }
 
