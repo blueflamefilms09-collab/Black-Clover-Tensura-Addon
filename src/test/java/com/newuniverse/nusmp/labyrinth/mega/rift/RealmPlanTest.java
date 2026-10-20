@@ -93,6 +93,13 @@ class RealmPlanTest {
         assertEquals(4, puzzle.all(RealmPlan.Type.PLATE).size());
         assertEquals(4, puzzle.all(RealmPlan.Type.ORDER).size());
         assertNull(puzzle.first(RealmPlan.Type.BOSS_SPAWN));
+        assertEquals(6, puzzle.all(RealmPlan.Type.LANTERN).size(), "two beside the lever, one beside each plate");
+        assertTrue(puzzle.all(RealmPlan.Type.SIGN).stream().anyMatch(s -> s.tag().endsWith(":plates")), "a sign says what the plates are");
+        java.util.Map<Long, RealmPlan.Mat> v = puzzle.voxels();
+        for (RealmPlan.Feature f : puzzle.all(RealmPlan.Type.LANTERN)) {
+            assertEquals(RealmPlan.Mat.AIR, v.get(RealmPlan.key(f.x(), f.y(), f.z())), "a lantern stands in air");
+            assertEquals(RealmPlan.Mat.FLOOR, v.get(RealmPlan.key(f.x(), f.y() - 1, f.z())), "on the floor");
+        }
         assertEquals(0, boss.all(RealmPlan.Type.PLATE).size());
         assertEquals(RealmPlan.HALL, boss.roomAt(boss.first(RealmPlan.Type.BOSS_SPAWN).x() + 0.5, boss.first(RealmPlan.Type.BOSS_SPAWN).z() + 0.5).id());
         for (RealmPlan.Feature f : puzzle.all(RealmPlan.Type.PLATE)) assertEquals(RealmPlan.HALL, puzzle.roomAt(f.x() + 0.5, f.z() + 0.5).id());

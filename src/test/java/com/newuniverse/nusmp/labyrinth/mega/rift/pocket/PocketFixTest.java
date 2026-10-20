@@ -131,6 +131,27 @@ class PocketFixTest {
         System.out.print("tombs and rooms:\n" + table);
     }
 
+    /** The harness's readable output (run the class and read the console): for each tomb and seed 1, every room with its centre, every door and what it leads to, and where the switch, the Sigil's chest and the signs stand. */
+    @Test
+    void printTheRoomsDoorsAndSwitchOfEveryTomb() throws IOException {
+        StringBuilder out = new StringBuilder();
+        for (PocketDef d : defs().values()) {
+            PocketLayout l = LayoutGen.generate(1L, params(d));
+            PocketPlan plan = PocketPlan.of(l);
+            out.append(d.id()).append(": ").append(l.rooms().size()).append(" rooms, ").append(l.doors().size()).append(" doors, ").append(plan.ops().size()).append(" fills, ").append(plan.volume()).append(" block placements\n");
+            for (PocketLayout.Room r : l.rooms()) {
+                StringBuilder doors = new StringBuilder();
+                for (PocketLayout.Door door : l.doors()) if (door.a() == r.id() || door.b() == r.id()) doors.append(' ').append(door.a() == r.id() ? door.b() : door.a()).append(door.sealed() ? "(SEALED)" : "");
+                out.append(String.format("    room %2d %-8s at (%4d,%4d) half %2d  doors to%s%n", r.id(), r.kind(), r.cx(l.grid()), r.cz(l.grid()), r.half(), doors));
+            }
+            PocketPlan.Feature lever = plan.first(PocketPlan.Type.SWITCH), chest = plan.first(PocketPlan.Type.SIGIL_CHEST), exit2 = plan.first(PocketPlan.Type.EXIT_SHORTCUT);
+            out.append(String.format("    SWITCH (lever) at (%d,%d,%d) facing %s in room %d (key room %d); Sigil chest (%d,%d,%d); treasury exit (%d,%d,%d); %d signs%n", lever.x(), lever.y(), lever.z(), lever.tag(),
+                    l.roomAt(lever.x() + 0.5, lever.z() + 0.5), l.keyId(), chest.x(), chest.y(), chest.z(), exit2.x(), exit2.y(), exit2.z(), plan.all(PocketPlan.Type.SIGN).size()));
+        }
+        System.out.print(out);
+        assertTrue(out.length() > 1000);
+    }
+
     @Test
     void theArrivalReachesEveryRoomButTheTreasuryUntilTheSealOpens() throws IOException {
         for (PocketDef d : defs().values())

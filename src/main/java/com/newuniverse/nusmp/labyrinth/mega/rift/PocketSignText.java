@@ -11,7 +11,7 @@ public final class PocketSignText {
     public static final int MAX_LINE = 16;
 
     /** The keys of every sign the builders place. */
-    public static final String[] KEYS = {"lever", "vault", "chamber", "seal", "tomb_lever", "sigil"};
+    public static final String[] KEYS = {"lever", "vault", "chamber", "seal", "tomb_lever", "sigil", "plates"};
 
     /** The four lines of a sign, by key. */
     public static String[] lines(String key) {
@@ -22,6 +22,7 @@ public final class PocketSignText {
             case "seal" -> new String[]{"THE SEAL", "Magic, Sigil,", "force or the", "KEY ROOM LEVER"};
             case "tomb_lever" -> new String[]{"SEAL LEVER", "Opens the door", "of the treasury", "Stiff at first."};
             case "sigil" -> new String[]{"THE SIGIL", "Press it to", "the seal. Spent", "when it opens."};
+            case "plates" -> new String[]{"THE PLATES", "Press the four", "in the order of", "the east wall."};
             default -> new String[]{key, "", "", ""};
         };
     }

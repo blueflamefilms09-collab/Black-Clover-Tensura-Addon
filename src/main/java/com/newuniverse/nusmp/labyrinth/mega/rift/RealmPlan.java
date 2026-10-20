@@ -158,6 +158,8 @@ public final class RealmPlan {
         } else {
             int[][] at = {{-6, -6}, {6, -6}, {-6, 6}, {6, 6}};
             for (int i = 0; i < 4; i++) p.features.add(new Feature(Type.PLATE, at[i][0], 0, at[i][1], String.valueOf(i)));
+            for (int i = 0; i < 4; i++) p.features.add(new Feature(Type.LANTERN, at[i][0] + (at[i][0] < 0 ? -1 : 1), 0, at[i][1], ""));      // a lit lantern beside each plate
+            p.features.add(new Feature(Type.SIGN, 11, 2, -2, "W:plates"));                  // what the plates are, beside the colours on the east wall
             int[] order = RiftRules.puzzleOrder(seed);
             for (int i = 0; i < 4; i++) p.features.add(new Feature(Type.ORDER, 11, 4, -3 + i * 2, String.valueOf(order[i])));
         }
