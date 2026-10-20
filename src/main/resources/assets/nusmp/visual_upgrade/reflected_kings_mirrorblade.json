@@ -1,0 +1,155 @@
+{
+  "item": "reflected_kings_mirrorblade",
+  "version": 1,
+  "mesh": "up/reflected_kings_mirrorblade",
+  "lod_mesh": "up/reflected_kings_mirrorblade_lod",
+  "orbit_mesh": "up/reflected_kings_mirrorblade_orbit",
+  "axis": {
+    "y0": -2.684,
+    "y1": 119.0,
+    "length_blocks": 1.634
+  },
+  "passes": [
+    "body",
+    "core_glow",
+    "vein_wave",
+    "halo_shell",
+    "orbit_pieces"
+  ],
+  "ambient_layers": [
+    "grade_shimmer",
+    "motes",
+    "halo_ring",
+    "edge_line",
+    "ground_cast",
+    "wrist_flare",
+    "light_shaft",
+    "accent_flare",
+    "orbit_pieces"
+  ],
+  "animations": [
+    "glow_pulse",
+    "core_flicker",
+    "vein_wave_flow",
+    "halo_shell_breath",
+    "orbit_revolve",
+    "orbit_piece_spin",
+    "orbit_bob"
+  ],
+  "palette": {
+    "core": "CFE8FF",
+    "accent": "FFFFFF",
+    "vein": "B4DCFF",
+    "halo": "E8EEF8"
+  },
+  "veins": {
+    "speed": 0.62,
+    "wavelength": 34.0,
+    "base": 0.1,
+    "peak": 1.0
+  },
+  "halo": {
+    "scale": 1.06,
+    "alpha": 60,
+    "breath": 0.03,
+    "speed": 0.09
+  },
+  "core": {
+    "flicker": 0.1,
+    "flicker_speed": 0.37
+  },
+  "orbiters": [
+    {
+      "count": 6,
+      "radius": 8.0,
+      "y_frac": 0.55,
+      "speed": 0.052,
+      "spin": 0.12,
+      "bob": 2.0,
+      "bob_speed": 0.06,
+      "tilt": 0.1,
+      "phase": 0.0,
+      "scale": 1.0,
+      "mesh": "up/reflected_kings_mirrorblade_orbit"
+    }
+  ],
+  "swing_trail": {
+    "rgb": "CFE8FF",
+    "ghosts": 3,
+    "lag_deg": 9.0,
+    "alpha": 88
+  },
+  "particles": {
+    "layers": [
+      {
+        "kind": "motes",
+        "particle": "minecraft:end_rod",
+        "rgb": "FFFFFF",
+        "rate": 1.0,
+        "speed": 0.01,
+        "size": 1.0
+      },
+      {
+        "kind": "halo_ring",
+        "particle": "dust",
+        "rgb": "CFE8FF",
+        "rate": 1.4,
+        "speed": 0.0,
+        "size": 0.9
+      },
+      {
+        "kind": "edge_line",
+        "particle": "minecraft:electric_spark",
+        "rgb": "E8F4FF",
+        "rate": 0.8,
+        "speed": 0.004,
+        "size": 1.0
+      },
+      {
+        "kind": "ground_cast",
+        "particle": "dust",
+        "rgb": "8AA8D8",
+        "rate": 1.0,
+        "speed": 0.0,
+        "size": 1.1
+      },
+      {
+        "kind": "wrist_flare",
+        "particle": "minecraft:glow",
+        "rgb": "E8F4FF",
+        "rate": 0.5,
+        "speed": 0.01,
+        "size": 1.0
+      },
+      {
+        "kind": "light_shaft",
+        "particle": "dust",
+        "rgb": "FFFFFF",
+        "rate": 1.2,
+        "speed": 0.03,
+        "size": 0.8
+      },
+      {
+        "kind": "accent_flare",
+        "particle": "minecraft:firework",
+        "rgb": "FFFFFF",
+        "rate": 0.14,
+        "speed": 0.02,
+        "size": 1.0
+      }
+    ],
+    "ground_radius": 1.1,
+    "shaft_height": 1.8
+  },
+  "lod": {
+    "near_blocks": 12.0,
+    "additive_blocks": 24.0,
+    "particle_blocks": 32.0
+  },
+  "budget": {
+    "body_quads": 2050,
+    "orbit_instances": 6,
+    "orbit_piece_quads": 36,
+    "lod_quads": 283
+  }
+}
