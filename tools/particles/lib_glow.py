@@ -38,7 +38,7 @@ def mote(c, i, n, rng):
 def mote_soft(c, i, n, rng):
     p = 1.0 + 0.1 * i
     inten = np.exp(-((c.r / (5.0 * p)) ** 2)) * 0.62
-    return glow(c, inten, WHITE, levels=3, amax=170, floor=0.12)
+    return glow(c, inten, WHITE, levels=6, amax=165, floor=0.08)
 
 
 @particle("glint", "glow", 6, group="light", tint=True, behaviour="A lens glint: a thin four-armed cross that swells and snaps shut, with a tilt; sits where it is spawned, additive.",
@@ -57,8 +57,8 @@ def glint(c, i, n, rng):
           size=[0.26, 0.05], gravity=-0.05, spin=0.0, life=[18, 30], anim="age", curve="linear", fade=[0.05, 0.4])
 def star4(c, i, n, rng):
     t = i / float(n)
-    R = 6.4 * (1.0 - 0.45 * t) * (1.0 + 0.1 * math.sin(i * 2.0))
-    sd = sd_star(c, 0, 0, 4, R, R * 0.28, ang=t * math.pi / 2)
+    R = 7.0 * (1.0 - 0.3 * t) * (1.0 + 0.08 * math.sin(i * 2.0))
+    sd = sd_star(c, 0, 0, 4, R, R * 0.42, ang=t * math.pi / 4)
     body = solid(c, sd, np.clip(1.0 - c.r / (R + 1), 0, 0.999), ramp("#aeb9d8", "#d6def2", "#f0f4ff", "#ffffff"), outline=None)
     halo = glow(c, np.exp(-((c.r / (R * 0.55)) ** 2)) * 0.5, WHITE, levels=3, amax=140)
     return over(halo, body)
