@@ -1,0 +1,116 @@
+{
+  "id": "evil_057",
+  "level": -57,
+  "side": "evil",
+  "name": "Astaroth",
+  "title": "Devil of Time, Warden of the Fourth Gate",
+  "lore": "Astaroth is always a moment ahead of you. By the time the roots of the fourth gate have closed on a hero, he has already gone on to the next.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_4",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "oathbreaker_charge",
+  "phases": [
+    {
+      "name": "A Moment Ahead",
+      "at": 1.0,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hours Slipping",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Last Second",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "root_burst",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.15
+    },
+    {
+      "id": "chain_pull",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.15
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "astaroth"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Astaroth",
+    "tier": 3
+  },
+  "look": "vecna",
+  "tint": "#D8C070",
+  "scale": 1.05,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4,
+  "devil": "ASTAROTH"
+}

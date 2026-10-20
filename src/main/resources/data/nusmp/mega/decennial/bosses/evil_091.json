@@ -1,0 +1,109 @@
+{
+  "id": "evil_091",
+  "level": -91,
+  "side": "evil",
+  "name": "Tiamat",
+  "title": "The Five-Headed Queen",
+  "lore": "Five heads, five breaths, and one craving. Tiamat the Five-Headed Queen counts the hoard of her cavern in the lives of heroes.",
+  "archetype": "famous:tiamat",
+  "theme": "dragon_hoard_cavern",
+  "creature": "dragon",
+  "resist": [],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Five-Headed Queen",
+      "at": 1.0,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Chromatic Mother",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "cave_spider",
+        "bogged"
+      ]
+    },
+    {
+      "name": "Queen of Evil Dragons",
+      "at": 0.33,
+      "abilities": [
+        "haki_pulse",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "cave_spider",
+        "bogged"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "lava_surge",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "pillar_fall",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "cave_spider",
+      "bogged"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "tiamat"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Tiamat",
+    "tier": 5
+  },
+  "look": "tiamat",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "dragon_roar",
+  "famous": "tiamat",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "acid",
+    "reflective": false
+  },
+  "band": 7
+}

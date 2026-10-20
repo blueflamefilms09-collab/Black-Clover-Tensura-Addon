@@ -1,0 +1,124 @@
+{
+  "id": "holy_091",
+  "level": 91,
+  "side": "holy",
+  "name": "Stellara of the Open Book",
+  "title": "Judgement Angel of the Ledger of Light",
+  "lore": "Stellara reads the book of the Ledger of Light aloud before every fight. Few interrupt, and fewer are interrupted.",
+  "archetype": "judgement_angel",
+  "theme": "colosseum",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "The Open Book",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Raised",
+      "at": 0.75,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sentence Pronounced",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Appeal",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "judgment_rings",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "judgement",
+      "angel",
+      "sword",
+      "verdict",
+      "scales"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Stellara",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#F2FFE0",
+  "scale": 1.14,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

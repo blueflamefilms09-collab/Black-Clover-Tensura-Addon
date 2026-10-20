@@ -1,0 +1,115 @@
+{
+  "id": "evil_014",
+  "level": -14,
+  "side": "evil",
+  "name": "Walgner",
+  "title": "Devil of Blood, Warden of the First Gate",
+  "lore": "Walgner drinks what he is given. The first gate of the Underworld Root opened for him, and the first thing he did was ask whose blood was nearest.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_1",
+  "creature": "devil",
+  "resist": [
+    "physical"
+  ],
+  "signature": "sanguine_pact",
+  "phases": [
+    {
+      "name": "Guest of the First Gate",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Blood Drunk",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Red Tide",
+      "at": 0.33,
+      "abilities": [
+        "blink",
+        "life_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.05
+    },
+    {
+      "id": "root_burst",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.05
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "walgner"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Walgner",
+    "tier": 1
+  },
+  "look": "vrock",
+  "tint": "#8A1C2C",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1,
+  "devil": "WALGNER"
+}

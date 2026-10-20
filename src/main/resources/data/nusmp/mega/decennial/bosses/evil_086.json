@@ -1,0 +1,125 @@
+{
+  "id": "evil_086",
+  "level": -86,
+  "side": "evil",
+  "name": "Kryptoth, Who Eats the Constellations",
+  "title": "Star-Eater of the Starless Dome",
+  "lore": "The stars over the Starless Dome go out one by one. Kryptoth is not hurrying; it has all night, and all the nights after.",
+  "archetype": "star_eater",
+  "theme": "abyss_rift_ring",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "The Dimming",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Stars Consumed",
+      "at": 0.75,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "Eclipse",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "Nothing Remains",
+      "at": 0.25,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "abyss_maw",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "endermite",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "star",
+      "void",
+      "eclipse",
+      "astral",
+      "craving"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kryptoth",
+    "tier": 5
+  },
+  "look": "beholder",
+  "tint": "#2D2040",
+  "scale": 1.14,
+  "sound_set": "abyssal_whisper",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

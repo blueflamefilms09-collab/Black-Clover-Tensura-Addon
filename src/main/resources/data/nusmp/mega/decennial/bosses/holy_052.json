@@ -1,0 +1,108 @@
+{
+  "id": "holy_052",
+  "level": 52,
+  "side": "holy",
+  "name": "Raphaela, Warden of the Last Minute",
+  "title": "Keeper of Hours of the Chamber of Pendulums",
+  "lore": "In the Chamber of Pendulums no hour is wasted, because Raphaela has already spent them all.",
+  "archetype": "time_keeper",
+  "theme": "void_observatory",
+  "creature": "construct",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Winder of Days",
+      "at": 1.0,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pendulum Swinging",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sand Run Out",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "void_collapse",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "time",
+      "hour",
+      "clock",
+      "keeper",
+      "sand"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Raphaela",
+    "tier": 3
+  },
+  "look": "lich_king",
+  "tint": "#D8C890",
+  "scale": 1.02,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "id": "holy_059",
+  "level": 59,
+  "side": "holy",
+  "name": "Seraphine the Sword of the Verdict",
+  "title": "Judgement Angel of the Judgment Floor",
+  "lore": "To be judged by Seraphine is no punishment. To be found wanting is.",
+  "archetype": "judgement_angel",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "The Open Book",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Raised",
+      "at": 0.66,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Appeal",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "falling_stars",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "judgement",
+      "angel",
+      "sword",
+      "verdict",
+      "scales"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Seraphine",
+    "tier": 3
+  },
+  "look": "solar",
+  "tint": "#FFFFE0",
+  "scale": 1.13,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

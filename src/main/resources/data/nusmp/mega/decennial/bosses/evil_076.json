@@ -1,0 +1,125 @@
+{
+  "id": "evil_076",
+  "level": -76,
+  "side": "evil",
+  "name": "Nightbriar the Bell That Tolls Once",
+  "title": "Doom Herald of the Last Gate",
+  "lore": "Messengers in the dungeon fear Nightbriar: he is the one they work for.",
+  "archetype": "doom_herald",
+  "theme": "bone_cathedral",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Herald at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Bell Tolls",
+      "at": 0.75,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Trumpet of Ruin",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Word",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "grave_hands",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "soul_fog",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "wither_skeleton",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "doom",
+      "herald",
+      "end",
+      "omen",
+      "bell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Nightbriar",
+    "tier": 4
+  },
+  "look": "orcus",
+  "tint": "#4A3060",
+  "scale": 1.06,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

@@ -1,0 +1,90 @@
+{
+  "id": "holy_010",
+  "level": 10,
+  "side": "holy",
+  "name": "Faelumine, Queen of Thorn and Bloom",
+  "title": "Verdant Archon of the Hanging Terraces",
+  "lore": "Everything in the Hanging Terraces grows because Faelumine wills it so. She has not yet decided whether you are a flower or a weed.",
+  "archetype": "verdant_archon",
+  "theme": "hanging_gardens",
+  "creature": "fey",
+  "resist": [
+    "poison",
+    "fire"
+  ],
+  "signature": "thorn_mantle",
+  "phases": [
+    {
+      "name": "Queen of Bloom",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Briar Crowned",
+      "at": 0.5,
+      "abilities": [
+        "eye_rays",
+        "counterspell",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "moonbeam",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "bow",
+    "keywords": [
+      "verdant",
+      "bloom",
+      "garden",
+      "thorn",
+      "grove"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Faelumine",
+    "tier": 1
+  },
+  "look": "bahamut",
+  "tint": "#CDF0B0",
+  "scale": 0.7,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "id": "evil_029",
+  "level": -29,
+  "side": "evil",
+  "name": "Moloch the Last Shadow",
+  "title": "Shadow Reaper of the Rift of Rest",
+  "lore": "Moloch arrives exactly on time, always. The fields of the Rift of Rest are well kept because of it.",
+  "archetype": "shadow_reaper",
+  "theme": "void_observatory",
+  "creature": "spirit",
+  "resist": [
+    "physical",
+    "freeze",
+    "magic"
+  ],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "The Appointment",
+      "at": 1.0,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scythe Raised",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Last Threshing",
+      "at": 0.33,
+      "abilities": [
+        "life_drain",
+        "frightful_presence"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "eye_beams",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 5,
+    "fight_cap": 16,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "reaper",
+      "shadow",
+      "harvest",
+      "death",
+      "void"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Moloch",
+    "tier": 2
+  },
+  "look": "vecna",
+  "tint": "#1B1830",
+  "scale": 1.04,
+  "sound_set": "wraith_wail",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 3
+}

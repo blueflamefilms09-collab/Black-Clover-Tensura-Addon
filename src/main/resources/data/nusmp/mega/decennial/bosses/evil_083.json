@@ -1,0 +1,129 @@
+{
+  "id": "evil_083",
+  "level": -83,
+  "side": "evil",
+  "name": "Embergaunt, Eater of Boats",
+  "title": "Rot Wyrm of the Fen of Teeth",
+  "lore": "Embergaunt sleeps in the black water of the Fen of Teeth with only her eyes above the mud. They never close.",
+  "archetype": "rot_wyrm",
+  "theme": "dragon_hoard_cavern",
+  "creature": "dragon",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Mire Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Acid Rain",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "The Drowned Scale",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "Venom Throne",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "hell_geysers",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "bogged",
+      "cave_spider",
+      "silverfish"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "wyrm",
+      "acid",
+      "swamp",
+      "dragon",
+      "rot"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Embergaunt",
+    "tier": 5
+  },
+  "look": "tiamat",
+  "tint": "#30503D",
+  "scale": 0.93,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "acid",
+    "reflective": false
+  },
+  "band": 6
+}

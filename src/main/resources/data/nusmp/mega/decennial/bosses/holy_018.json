@@ -1,0 +1,96 @@
+{
+  "id": "holy_018",
+  "level": 18,
+  "side": "holy",
+  "name": "Ignatia the Prism Unbroken",
+  "title": "Crystal Warden of the Singing Geode",
+  "lore": "Ignatia does not move often. When the Singing Geode rings, it is because Ignatia has shifted its weight.",
+  "archetype": "crystal_warden",
+  "theme": "frozen_keep",
+  "creature": "elemental",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Facet-Keeper",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Seven Facets",
+      "at": 0.5,
+      "abilities": [
+        "magic_drain",
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "holy_beams",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "armour",
+    "type": "shield",
+    "keywords": [
+      "crystal",
+      "warden",
+      "geode",
+      "amethyst",
+      "prism"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ignatia",
+    "tier": 1
+  },
+  "look": "bahamut",
+  "tint": "#D4C0F8",
+  "scale": 0.78,
+  "sound_set": "stone_guardian",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "holy_003",
+  "level": 3,
+  "side": "holy",
+  "name": "Gertrude of the Garden Gate",
+  "title": "Cherub Sentinel of the Terrace Gate",
+  "lore": "Gertrude is small, quick and entirely serious. the Terrace Gate has never been entered without its leave.",
+  "archetype": "cherub",
+  "theme": "hanging_gardens",
+  "creature": "celestial",
+  "resist": [
+    "projectile"
+  ],
+  "signature": "oath_of_dawn",
+  "phases": [
+    {
+      "name": "Small Sentinel",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Terrible Wing",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "eye_rays",
+        "counterspell"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "bow",
+    "keywords": [
+      "cherub",
+      "arrow",
+      "garden",
+      "guard",
+      "wing"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gertrude",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#D0FAFF",
+  "scale": 0.73,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

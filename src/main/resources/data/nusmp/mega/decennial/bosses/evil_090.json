@@ -1,0 +1,125 @@
+{
+  "id": "evil_090",
+  "level": -90,
+  "side": "evil",
+  "name": "Balthazek, Maw of the Rift",
+  "title": "Abyssal Horror of the Hollow Ocean",
+  "lore": "Balthazek is older than the dungeon, and the dungeon is older than anyone who walks it. the Hollow Ocean is only where it chose to rise.",
+  "archetype": "abyssal_horror",
+  "theme": "mind_hive",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "The Rising",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Many Limbs",
+      "at": 0.75,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Dark Opens",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "What Was Below",
+      "at": 0.25,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "spore_burst",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "void_collapse",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "endermite",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "abyss",
+      "horror",
+      "void",
+      "deep",
+      "tentacle"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Balthazek",
+    "tier": 5
+  },
+  "look": "demogorgon",
+  "tint": "#343060",
+  "scale": 1.03,
+  "sound_set": "abyssal_whisper",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

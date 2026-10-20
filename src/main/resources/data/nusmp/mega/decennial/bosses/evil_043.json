@@ -1,0 +1,110 @@
+{
+  "id": "evil_043",
+  "level": -43,
+  "side": "evil",
+  "name": "Dusksworn of the Thousand Veils",
+  "title": "Wraith King of the Veiled Barrow",
+  "lore": "The dead of the Veiled Barrow kneel to Dusksworn, and the living who hear them kneel too, if they stay long enough.",
+  "archetype": "wraith_king",
+  "theme": "graveyard",
+  "creature": "spirit",
+  "resist": [
+    "physical",
+    "poison",
+    "freeze"
+  ],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "Shrouded Lord",
+      "at": 1.0,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Veil Torn",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Crown of Grief",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "grave_hands",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "wraith",
+      "shroud",
+      "ghost",
+      "veil",
+      "soul"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Dusksworn",
+    "tier": 3
+  },
+  "look": "acererak",
+  "tint": "#4F5F8F",
+  "scale": 1.02,
+  "sound_set": "wraith_wail",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

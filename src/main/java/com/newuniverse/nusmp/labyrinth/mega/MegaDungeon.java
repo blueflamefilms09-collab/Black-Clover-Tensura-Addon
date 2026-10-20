@@ -53,8 +53,13 @@ public final class MegaDungeon {
     /** 1.55.0: the theme the sector after {@code previous} must wear because of the relic taken in {@code previous}, or null (no opinion, or no override registered). */
     public static RegionTheme themeOverride(Sector previous) {
         ThemeOverride t = themeOverride;
-        if (t == null || previous == null) return null;
-        try { return t.themeAfter(previous); } catch (RuntimeException e) { LOG.warn("theme override failed: {}", e.toString()); return null; }
+        if (previous == null) return null;
+        RegionTheme chosen = null;
+        if (t != null) {
+            try { chosen = t.themeAfter(previous); } catch (RuntimeException e) { LOG.warn("theme override failed: {}", e.toString()); }
+        }
+        if (chosen == null) chosen = com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialThemes.themeAfter(previous);       // 1.99.0: the relic wins; else the Underworld Root darkens the floors past each gate
+        return chosen;
     }
 
     /** 1.55.0: registers a floor listener (once, from a registry's init; never removed). */

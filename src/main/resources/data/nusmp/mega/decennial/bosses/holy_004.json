@@ -1,0 +1,91 @@
+{
+  "id": "holy_004",
+  "level": 4,
+  "side": "holy",
+  "name": "Kentigern of the Rune-Carved Brow",
+  "title": "Guardian Golem of the Gate Court",
+  "lore": "Kentigern was told to guard the Gate Court and has since forgotten what it is guarding. That has not changed its aim.",
+  "archetype": "guardian_golem",
+  "theme": "clockwork_vault",
+  "creature": "construct",
+  "resist": [
+    "physical",
+    "poison",
+    "fire"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Patient Stone",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Last Command",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet",
+        "gravity_crush",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "armour",
+    "type": "hammer",
+    "keywords": [
+      "golem",
+      "stone",
+      "guardian",
+      "rune",
+      "sentinel"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kentigern",
+    "tier": 1
+  },
+  "look": "tarrasque",
+  "tint": "#E0D1C0",
+  "scale": 0.83,
+  "sound_set": "stone_guardian",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

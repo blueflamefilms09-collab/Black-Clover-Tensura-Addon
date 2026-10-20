@@ -1,0 +1,109 @@
+{
+  "id": "evil_024",
+  "level": -24,
+  "side": "evil",
+  "name": "Wraithmere the Grey Lady",
+  "title": "Banshee Matriarch of the Weeping Court",
+  "lore": "When Wraithmere wails in the Weeping Court, someone in the world dies. She has never once been wrong.",
+  "archetype": "banshee_matriarch",
+  "theme": "graveyard",
+  "creature": "spirit",
+  "resist": [
+    "physical",
+    "freeze"
+  ],
+  "signature": "phylactery_ward",
+  "phases": [
+    {
+      "name": "The Grey Lady",
+      "at": 1.0,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Keening",
+      "at": 0.66,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Wail",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "grave_hands",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "banshee",
+      "wail",
+      "mourning",
+      "ghost",
+      "keen"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Wraithmere",
+    "tier": 2
+  },
+  "look": "vecna",
+  "tint": "#B0C7D0",
+  "scale": 0.89,
+  "sound_set": "wraith_wail",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

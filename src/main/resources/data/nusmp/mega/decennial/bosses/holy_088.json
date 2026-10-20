@@ -1,0 +1,120 @@
+{
+  "id": "holy_088",
+  "level": 88,
+  "side": "holy",
+  "name": "Elariel of the Last Ember",
+  "title": "Phoenix Avatar of the Cinder Spire",
+  "lore": "Elariel burns down to ash every night and rises at dawn. the Cinder Spire has learned to build around the pyre.",
+  "archetype": "phoenix_avatar",
+  "theme": "volcanic_forge",
+  "creature": "elemental",
+  "resist": [
+    "fire",
+    "lightning"
+  ],
+  "signature": "ember_heart",
+  "phases": [
+    {
+      "name": "Ember Waking",
+      "at": 1.0,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Aflame",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Ash and Dawn",
+      "at": 0.5,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Reborn",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "radiant_nova",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "lava_surge",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "bow",
+    "keywords": [
+      "phoenix",
+      "ash",
+      "rebirth",
+      "ember",
+      "sun"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Elariel",
+    "tier": 5
+  },
+  "look": "zariel",
+  "tint": "#FFF040",
+  "scale": 1.03,
+  "sound_set": "flame_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

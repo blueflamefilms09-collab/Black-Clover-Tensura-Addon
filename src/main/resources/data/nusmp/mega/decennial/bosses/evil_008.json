@@ -1,0 +1,92 @@
+{
+  "id": "evil_008",
+  "level": -8,
+  "side": "evil",
+  "name": "Ashkendor, Who Wears the Dead",
+  "title": "Wraith King of the Mourning Fields",
+  "lore": "Ashkendor is what remains when a king is mourned by too many: a crown of grief that walks the Mourning Fields and takes what it touches.",
+  "archetype": "wraith_king",
+  "theme": "abyss_rift_ring",
+  "creature": "spirit",
+  "resist": [
+    "physical",
+    "poison",
+    "freeze"
+  ],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "Shrouded Lord",
+      "at": 1.0,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Crown of Grief",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "frightful_presence",
+        "magic_drain"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "abyss_maw",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "wraith",
+      "shroud",
+      "ghost",
+      "veil",
+      "soul"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ashkendor",
+    "tier": 1
+  },
+  "look": "lich",
+  "tint": "#5F7C9F",
+  "scale": 1.07,
+  "sound_set": "wraith_wail",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

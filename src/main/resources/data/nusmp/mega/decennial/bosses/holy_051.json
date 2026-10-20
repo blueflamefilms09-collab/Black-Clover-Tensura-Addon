@@ -1,0 +1,108 @@
+{
+  "id": "holy_051",
+  "level": 51,
+  "side": "holy",
+  "name": "Aelfwyn the Radiant Hand",
+  "title": "Sun Priest of the Golden Stair",
+  "lore": "The priest of the Golden Stair keeps no secrets. The sun sees all, and he sees what the sun sees.",
+  "archetype": "sun_priest",
+  "theme": "cathedral",
+  "creature": "humanoid",
+  "resist": [
+    "fire",
+    "magic"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Keeper of Noon",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Disc Rises",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sun Unveiled",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "eye_rays"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "radiant_nova",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "judgment_rings",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 20,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "sun",
+      "priest",
+      "gold",
+      "ray",
+      "solar"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Aelfwyn",
+    "tier": 3
+  },
+  "look": "solar",
+  "tint": "#FFD060",
+  "scale": 0.87,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

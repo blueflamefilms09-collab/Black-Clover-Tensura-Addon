@@ -1,0 +1,130 @@
+{
+  "id": "evil_097",
+  "level": -97,
+  "side": "evil",
+  "name": "Ovrazel",
+  "title": "the Threshold Devil, Warden of the Seventh Gate",
+  "lore": "Ovrazel is the last door before the throne, and the only devil of the Root that was never given a name by men. She has kept the seventh gate since before there was a tree.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_7",
+  "creature": "devil",
+  "resist": [
+    "fire",
+    "magic",
+    "physical"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "The Last Door",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Gate Unsealed",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Threshold Burns",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "No Further",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.25
+    },
+    {
+      "id": "abyss_maw",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.25
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "ovrazel"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Ovrazel",
+    "tier": 5
+  },
+  "look": "balor",
+  "tint": "#201018",
+  "scale": 1.1,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

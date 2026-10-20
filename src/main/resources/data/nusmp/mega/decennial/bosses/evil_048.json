@@ -1,0 +1,112 @@
+{
+  "id": "evil_048",
+  "level": -48,
+  "side": "evil",
+  "name": "Tartarus, Smith of Endings",
+  "title": "Forge Tyrant of the Slagworks",
+  "lore": "The hammer of Tartarus has rung on the anvil of the Slagworks for so long the mountain hums to it.",
+  "archetype": "forge_tyrant",
+  "theme": "volcanic_forge",
+  "creature": "giant",
+  "resist": [
+    "fire",
+    "physical"
+  ],
+  "signature": "hellfire_aura",
+  "phases": [
+    {
+      "name": "Smith at the Anvil",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Furnace Opened",
+      "at": 0.66,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "blaze",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "The Last Blade",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "dragon_breath"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "hell_geysers",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "steam_vents",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "silverfish"
+    ],
+    "max_alive": 6,
+    "fight_cap": 20,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "forge",
+      "anvil",
+      "ember",
+      "smith",
+      "magma"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Tartarus",
+    "tier": 3
+  },
+  "look": "balor",
+  "tint": "#C06020",
+  "scale": 1.13,
+  "sound_set": "flame_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

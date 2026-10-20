@@ -1,0 +1,114 @@
+{
+  "id": "evil_051",
+  "level": -51,
+  "side": "evil",
+  "name": "Wrathgar the Unspoken Hymn",
+  "title": "Cult Prophet of the Cellar Congregation",
+  "lore": "The cult of the Cellar Congregation numbers thirteen. Wrathgar is the one who is not afraid.",
+  "archetype": "cult_prophet",
+  "theme": "bone_cathedral",
+  "creature": "cultist",
+  "resist": [
+    "magic"
+  ],
+  "signature": "stolen_light",
+  "phases": [
+    {
+      "name": "Hooded Herald",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Hymn Begins",
+      "at": 0.66,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "vex",
+        "witch"
+      ]
+    },
+    {
+      "name": "The Last Page",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "zombie",
+        "vex",
+        "witch"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "grave_hands",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "vex",
+      "witch"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "cult",
+      "prophet",
+      "rite",
+      "tome",
+      "doom"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Wrathgar",
+    "tier": 3
+  },
+  "look": "acererak",
+  "tint": "#A06080",
+  "scale": 0.92,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

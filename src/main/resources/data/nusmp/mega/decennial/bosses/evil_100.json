@@ -1,0 +1,131 @@
+{
+  "id": "evil_100",
+  "level": -100,
+  "side": "evil",
+  "name": "Lucifero",
+  "title": "Supreme Devil of Gravity, Ruler of the Underworld Root",
+  "lore": "Lucifero sits on the Root Throne. The Tree is his body, the Underworld his weight, and every gate you passed was a door he held open for you. The last Supreme Devil is the end of the road.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_root_throne",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "physical",
+    "fire"
+  ],
+  "signature": "infernal_contract",
+  "phases": [
+    {
+      "name": "Ruler of the Root",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Weight Falls",
+      "at": 0.75,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "All Seven Gates",
+      "at": 0.5,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Whole Underworld",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.25
+    },
+    {
+      "id": "abyss_maw",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.25
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "lucifero"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Lucifero",
+    "tier": 5
+  },
+  "look": "balor",
+  "tint": "#2A1A4A",
+  "scale": 1.3,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7,
+  "devil": "LUCIFERO"
+}

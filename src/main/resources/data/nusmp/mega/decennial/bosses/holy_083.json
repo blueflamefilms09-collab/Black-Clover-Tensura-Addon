@@ -1,0 +1,125 @@
+{
+  "id": "holy_083",
+  "level": 83,
+  "side": "holy",
+  "name": "Jophiel, Keeper of the First Star",
+  "title": "Platinum Wyrm of the Crystal Aerie",
+  "lore": "Jophiel is the oldest thing in the Crystal Aerie and the gentlest. It is also, as it will politely point out, the strongest.",
+  "archetype": "platinum_wyrm",
+  "theme": "frozen_keep",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "magic",
+    "lightning"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "The Pale Majesty",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Silver Wind",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Cold Benediction",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "First Star",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "frost_nova",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "pillar_fall",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "platinum",
+      "dragon",
+      "frost",
+      "star",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Jophiel",
+    "tier": 5
+  },
+  "look": "bahamut",
+  "tint": "#B0B5F0",
+  "scale": 1.03,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

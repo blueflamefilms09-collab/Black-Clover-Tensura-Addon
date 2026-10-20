@@ -1,0 +1,96 @@
+{
+  "id": "holy_013",
+  "level": 13,
+  "side": "holy",
+  "name": "Eirene, Who Guards the High Roost",
+  "title": "Griffon Lord of the High Roost",
+  "lore": "The griffon lord of the High Roost has the body of a lion and the temper of the sky. Eirene is both.",
+  "archetype": "griffon_lord",
+  "theme": "colosseum",
+  "creature": "beast",
+  "resist": [
+    "projectile",
+    "physical"
+  ],
+  "signature": "oath_of_dawn",
+  "phases": [
+    {
+      "name": "Lord of the Updraft",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Golden Mane",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet",
+        "blink",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "pillar_fall",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "griffon",
+      "lion",
+      "eagle",
+      "pride",
+      "talon"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Eirene",
+    "tier": 1
+  },
+  "look": "tarrasque",
+  "tint": "#E0B790",
+  "scale": 0.78,
+  "sound_set": "beast_roar",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

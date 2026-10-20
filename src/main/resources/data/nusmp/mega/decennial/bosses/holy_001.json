@@ -1,0 +1,89 @@
+{
+  "id": "holy_001",
+  "level": 1,
+  "side": "holy",
+  "name": "Solara of the First Light",
+  "title": "Paladin of the Dawn Bastion",
+  "lore": "Solara swore at sunrise to guard the Dawn Bastion until the last darkness was gone. It has not yet been gone.",
+  "archetype": "paladin",
+  "theme": "cathedral",
+  "creature": "humanoid",
+  "resist": [
+    "physical"
+  ],
+  "signature": "oath_of_dawn",
+  "phases": [
+    {
+      "name": "Sworn at Sunrise",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Light",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "counterspell",
+        "wing_buffet"
+      ],
+      "speed": 1.12,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "judgment_rings",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "dawn",
+      "oath",
+      "paladin",
+      "sun",
+      "vow"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Solara",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#E8C9A0",
+  "scale": 0.83,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "id": "evil_069",
+  "level": -69,
+  "side": "evil",
+  "name": "Yzmora, Who Rose From Below",
+  "title": "Abyssal Horror of the Starless Abyss",
+  "lore": "the Starless Abyss is not deep. It is merely the part of Yzmora that has come up so far.",
+  "archetype": "abyssal_horror",
+  "theme": "mind_hive",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "The Rising",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Many Limbs",
+      "at": 0.66,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "What Was Below",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "spore_burst",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "endermite",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "abyss",
+      "horror",
+      "void",
+      "deep",
+      "tentacle"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Yzmora",
+    "tier": 4
+  },
+  "look": "demogorgon",
+  "tint": "#303660",
+  "scale": 1.06,
+  "sound_set": "abyssal_whisper",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 5
+}

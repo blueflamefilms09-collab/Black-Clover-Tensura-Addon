@@ -1,0 +1,96 @@
+{
+  "id": "holy_015",
+  "level": 15,
+  "side": "holy",
+  "name": "Prudentia of the Quiet Forge",
+  "title": "Forge Saint of the Dawn-Forge",
+  "lore": "Prudentia forges the swords of the faithful in the Dawn-Forge, one a year, with a prayer for each blow.",
+  "archetype": "forge_saint",
+  "theme": "volcanic_forge",
+  "creature": "humanoid",
+  "resist": [
+    "fire",
+    "physical"
+  ],
+  "signature": "ember_heart",
+  "phases": [
+    {
+      "name": "Smith of the Dawn",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Mercy of the Hammer",
+      "at": 0.5,
+      "abilities": [
+        "cantrip",
+        "wing_buffet",
+        "dragon_breath"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "steam_vents",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "radiant_nova",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "forge",
+      "saint",
+      "smith",
+      "dawn",
+      "anvil"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Prudentia",
+    "tier": 1
+  },
+  "look": "zariel",
+  "tint": "#FFA270",
+  "scale": 0.97,
+  "sound_set": "flame_roar",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

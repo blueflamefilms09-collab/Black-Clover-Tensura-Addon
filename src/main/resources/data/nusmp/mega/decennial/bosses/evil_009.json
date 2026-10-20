@@ -1,0 +1,91 @@
+{
+  "id": "evil_009",
+  "level": -9,
+  "side": "evil",
+  "name": "Ichorane, Mistress of the Last Dance",
+  "title": "Sin Duchess of the Gilded Salon",
+  "lore": "Ichorane grants one wish to every guest of the Gilded Salon. The price is always the second wish, and then the third.",
+  "archetype": "sin_duchess",
+  "theme": "vampire_ballroom",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "Gracious Duchess",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "What You Wanted",
+      "at": 0.5,
+      "abilities": [
+        "mind_blast",
+        "blink",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "blood_rain",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "dagger",
+    "keywords": [
+      "sin",
+      "desire",
+      "silk",
+      "charm",
+      "fiend"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ichorane",
+    "tier": 1
+  },
+  "look": "strahd",
+  "tint": "#D060B8",
+  "scale": 0.93,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

@@ -1,0 +1,109 @@
+{
+  "id": "evil_021",
+  "level": -21,
+  "side": "evil",
+  "name": "Lilithra the Other You",
+  "title": "Mirror Duke of the Hall of Mirrors",
+  "lore": "Lilithra has been in every mirror of the Hall of Mirrors for longer than the mirrors have been glass.",
+  "archetype": "mirror_duke",
+  "theme": "mirror_hall",
+  "creature": "fey",
+  "resist": [
+    "magic",
+    "projectile"
+  ],
+  "signature": "mirror_veil",
+  "phases": [
+    {
+      "name": "The Reflection",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Shards",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Who Looks Back",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "mirror_shatter",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "eye_beams",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "mirror",
+      "glass",
+      "shadow",
+      "double",
+      "reflection"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lilithra",
+    "tier": 2
+  },
+  "look": "strahd",
+  "tint": "#B0B5C8",
+  "scale": 0.94,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

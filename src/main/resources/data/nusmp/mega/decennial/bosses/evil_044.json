@@ -1,0 +1,116 @@
+{
+  "id": "evil_044",
+  "level": -44,
+  "side": "evil",
+  "name": "Quartzmaw the Contract-Keeper",
+  "title": "Archdevil of the Court of Embers",
+  "lore": "A devil of the Court of Embers, Quartzmaw collects souls the way a banker collects interest: patiently, in full, and with a smile.",
+  "archetype": "archdevil",
+  "theme": "volcanic_forge",
+  "creature": "devil",
+  "resist": [
+    "fire",
+    "poison",
+    "physical"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Smiling Signatory",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Contract Enforced",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Final Clause",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "hell_geysers",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "steam_vents",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "devil",
+      "contract",
+      "hellfire",
+      "infernal",
+      "oath"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Quartzmaw",
+    "tier": 3
+  },
+  "look": "balor",
+  "tint": "#A03010",
+  "scale": 1.02,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

@@ -1,0 +1,90 @@
+{
+  "id": "holy_007",
+  "level": 7,
+  "side": "holy",
+  "name": "Kyrielle the Moonlit Elder",
+  "title": "Unicorn Elder of the Silver Glade",
+  "lore": "Kyrielle has walked the Silver Glade since before the first road. She does not want you to leave, and does not want you to stay.",
+  "archetype": "unicorn_elder",
+  "theme": "moonlit_glade",
+  "creature": "celestial",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Elder of the Glade",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Silver Light",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "cantrip",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "unicorn",
+      "horn",
+      "moon",
+      "glade",
+      "white"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kyrielle",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#E9E0FF",
+  "scale": 0.78,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

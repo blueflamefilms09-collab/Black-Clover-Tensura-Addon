@@ -1,0 +1,120 @@
+{
+  "id": "holy_087",
+  "level": 87,
+  "side": "holy",
+  "name": "Fortitudo the Lens of Dawn",
+  "title": "Star Oracle of the Dome of Maps",
+  "lore": "Fortitudo reads the stars of the Dome of Maps the way others read a letter. Most of what she sees she would rather not repeat.",
+  "archetype": "star_oracle",
+  "theme": "void_observatory",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "Patient Eye",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Stars Aligned",
+      "at": 0.75,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Constellations Burn",
+      "at": 0.5,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Chart",
+      "at": 0.25,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "star",
+      "oracle",
+      "constellation",
+      "astral",
+      "dream"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fortitudo",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#FCD0FF",
+  "scale": 0.98,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

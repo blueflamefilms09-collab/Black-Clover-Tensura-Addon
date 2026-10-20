@@ -1,0 +1,125 @@
+{
+  "id": "evil_087",
+  "level": -87,
+  "side": "evil",
+  "name": "Lamentis, Tyrant of Ten Gazes",
+  "title": "Eye Tyrant of the Starless Cell",
+  "lore": "Lamentis has never blinked. Nothing in the Starless Cell has been unobserved since the day it woke.",
+  "archetype": "eye_tyrant",
+  "theme": "forbidden_library",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "The Watcher",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Ten Gazes",
+      "at": 0.75,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "Eyes Unlidded",
+      "at": 0.5,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "The Last Sight",
+      "at": 0.25,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "tome_storm",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "endermite"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "eye",
+      "gaze",
+      "beholder",
+      "ray",
+      "mind"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lamentis",
+    "tier": 5
+  },
+  "look": "beholder",
+  "tint": "#509EA0",
+  "scale": 0.98,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

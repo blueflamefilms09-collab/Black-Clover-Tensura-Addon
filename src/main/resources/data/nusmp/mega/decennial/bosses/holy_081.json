@@ -1,0 +1,124 @@
+{
+  "id": "holy_081",
+  "level": 81,
+  "side": "holy",
+  "name": "Magnus the Tempest Crowned",
+  "title": "Thunder Seraph of the High Anvil",
+  "lore": "Thunder is the sound of Magnus arriving. the High Anvil has been without a quiet moment since.",
+  "archetype": "thunder_seraph",
+  "theme": "storm_spire",
+  "creature": "celestial",
+  "resist": [
+    "lightning",
+    "fire"
+  ],
+  "signature": "storm_charge",
+  "phases": [
+    {
+      "name": "Gale Rider",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Thunder",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Hundred Bolts",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Tempest Crowned",
+      "at": 0.25,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "radiant_nova",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "living_armor"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "thunder",
+      "storm",
+      "seraph",
+      "lightning",
+      "tempest"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Magnus",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#A0A0FF",
+  "scale": 1.14,
+  "sound_set": "storm_rumble",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

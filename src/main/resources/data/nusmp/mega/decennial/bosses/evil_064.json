@@ -1,0 +1,109 @@
+{
+  "id": "evil_064",
+  "level": -64,
+  "side": "evil",
+  "name": "Zombara the Face Behind",
+  "title": "Mirror Duke of the Silvered Gallery",
+  "lore": "Strike a reflection of Zombara and the real one flinches. Nobody has ever been able to tell which is which.",
+  "archetype": "mirror_duke",
+  "theme": "mirror_hall",
+  "creature": "fey",
+  "resist": [
+    "magic",
+    "projectile"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "The Reflection",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Shards",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Who Looks Back",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "mirror_shatter",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "eye_beams",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "mirror",
+      "glass",
+      "shadow",
+      "double",
+      "reflection"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zombara",
+    "tier": 4
+  },
+  "look": "strahd",
+  "tint": "#B0B0C8",
+  "scale": 0.99,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 5
+}

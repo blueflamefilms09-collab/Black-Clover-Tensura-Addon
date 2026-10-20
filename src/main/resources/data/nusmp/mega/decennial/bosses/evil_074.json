@@ -1,0 +1,106 @@
+{
+  "id": "evil_074",
+  "level": -74,
+  "side": "evil",
+  "name": "Zariel",
+  "title": "Archduchess of Avernus",
+  "lore": "Once an angel, now an archduchess of the Nine Hells in burnt plate and a broken halo. Zariel keeps her war going, and you are on the front line.",
+  "archetype": "famous:zariel",
+  "theme": "hell_pit",
+  "creature": "devil",
+  "resist": [],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Fallen Archangel",
+      "at": 1.0,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Archduchess",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex"
+      ]
+    },
+    {
+      "name": "Hellfire Sovereign",
+      "at": 0.33,
+      "abilities": [
+        "cantrip",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "hell_geysers",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "lava_surge",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "zariel"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zariel",
+    "tier": 4
+  },
+  "look": "zariel",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "famous": "zariel",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

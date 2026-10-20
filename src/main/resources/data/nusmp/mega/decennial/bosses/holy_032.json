@@ -1,0 +1,108 @@
+{
+  "id": "holy_032",
+  "level": 32,
+  "side": "holy",
+  "name": "Nikandra, Who Forgave the Fire",
+  "title": "Martyr of the Chapel of Embers",
+  "lore": "The relics of the Chapel of Embers work miracles. Nikandra is the miracle they were taken from.",
+  "archetype": "martyr",
+  "theme": "cathedral",
+  "creature": "humanoid",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Penitent",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Thorned Crown",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Last Mercy",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "radiant_nova",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "judgment_rings",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 5,
+    "fight_cap": 16,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "relic",
+    "type": "mace",
+    "keywords": [
+      "martyr",
+      "saint",
+      "mercy",
+      "relic",
+      "faith"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Nikandra",
+    "tier": 2
+  },
+  "look": "solar",
+  "tint": "#E0E8F0",
+  "scale": 0.86,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

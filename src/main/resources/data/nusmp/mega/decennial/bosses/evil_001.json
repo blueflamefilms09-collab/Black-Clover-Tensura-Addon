@@ -1,0 +1,95 @@
+{
+  "id": "evil_001",
+  "level": -1,
+  "side": "evil",
+  "name": "Jezreth the Undying Scholar",
+  "title": "Lich of the Weeping Graves",
+  "lore": "Jezreth traded breath for patience and has counted the dead of the Weeping Graves ever since; every name he reads aloud stands up.",
+  "archetype": "lich",
+  "theme": "graveyard",
+  "creature": "undead",
+  "resist": [
+    "freeze",
+    "poison"
+  ],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Grave Scholar",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Page",
+      "at": 0.5,
+      "abilities": [
+        "life_drain",
+        "counterspell",
+        "magic_drain"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "zombie",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "grave_hands",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "zombie",
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "staff",
+    "keywords": [
+      "tomb",
+      "grave",
+      "soul",
+      "phylactery",
+      "lich"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Jezreth",
+    "tier": 1
+  },
+  "look": "lich",
+  "tint": "#AB9FD8",
+  "scale": 1.02,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 1
+}

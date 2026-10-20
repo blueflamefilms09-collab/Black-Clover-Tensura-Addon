@@ -1,0 +1,106 @@
+{
+  "id": "evil_052",
+  "level": -52,
+  "side": "evil",
+  "name": "The Elder Brain",
+  "title": "Mind of the Illithid Colony",
+  "lore": "The Elder Brain floats in its jar of green ooze and thinks. Everything in the colony is a thought of it, and most of the thoughts are about you.",
+  "archetype": "famous:mind_flayer_elder_brain",
+  "theme": "mind_hive",
+  "creature": "aberration",
+  "resist": [],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "Elder Brain",
+      "at": 1.0,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Ulitharid",
+      "at": 0.66,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "endermite"
+      ]
+    },
+    {
+      "name": "Sovereign Mind",
+      "at": 0.33,
+      "abilities": [
+        "magic_drain",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "zombie",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "spore_burst",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "void_collapse",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "endermite"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "wand",
+    "keywords": [
+      "mind"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Elder Brain",
+    "tier": 3
+  },
+  "look": "elder_brain",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "aberrant_hum",
+  "famous": "mind_flayer_elder_brain",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 4
+}

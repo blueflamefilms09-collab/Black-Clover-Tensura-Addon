@@ -1,0 +1,112 @@
+{
+  "id": "evil_041",
+  "level": -41,
+  "side": "evil",
+  "name": "Nemain the Rime Crown",
+  "title": "Frost Tyrant of the Glacier Hall",
+  "lore": "The ice in the Glacier Hall is not water. It is the patience of Nemain, made solid.",
+  "archetype": "frost_tyrant",
+  "theme": "frozen_keep",
+  "creature": "giant",
+  "resist": [
+    "freeze",
+    "physical"
+  ],
+  "signature": "rime_shell",
+  "phases": [
+    {
+      "name": "Jarl of the Frost",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Long Winter",
+      "at": 0.66,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "stray",
+        "skeleton"
+      ]
+    },
+    {
+      "name": "Absolute Cold",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "stray",
+        "skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "frost_nova",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "stray",
+      "skeleton"
+    ],
+    "max_alive": 6,
+    "fight_cap": 20,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "frost",
+      "giant",
+      "winter",
+      "ice",
+      "tyrant"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Nemain",
+    "tier": 3
+  },
+  "look": "tarrasque",
+  "tint": "#B0D8F0",
+  "scale": 0.92,
+  "sound_set": "frost_howl",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 3
+}

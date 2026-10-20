@@ -1,0 +1,125 @@
+{
+  "id": "holy_099",
+  "level": 99,
+  "side": "holy",
+  "name": "Ciaran, Wyrm of the Silver Wind",
+  "title": "Platinum Wyrm of the High Winter",
+  "lore": "Ciaran asks one question of the dying: whether they would do it again. The answer decides everything.",
+  "archetype": "platinum_wyrm",
+  "theme": "crystal_sanctum",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "magic",
+    "lightning"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "The Pale Majesty",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Silver Wind",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Cold Benediction",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "First Star",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "moonbeam",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "platinum",
+      "dragon",
+      "frost",
+      "star",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ciaran",
+    "tier": 5
+  },
+  "look": "bahamut",
+  "tint": "#B0D0F0",
+  "scale": 1.07,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

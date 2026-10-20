@@ -1,0 +1,112 @@
+{
+  "id": "evil_039",
+  "level": -39,
+  "side": "evil",
+  "name": "Lamashu, Oathless",
+  "title": "Fallen King of the Burnt Court",
+  "lore": "Betrayed at his own coronation, Lamashu rules the Burnt Court as its fall: every pillar that cracks is a courtier who failed him.",
+  "archetype": "fallen_king",
+  "theme": "vampire_ballroom",
+  "creature": "undead",
+  "resist": [
+    "physical",
+    "freeze"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Sovereign of Ash",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "King Without a Kingdom",
+      "at": 0.66,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Last Audience",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "chain_pull",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "wither_skeleton"
+    ],
+    "max_alive": 5,
+    "fight_cap": 16,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "crown",
+      "king",
+      "throne",
+      "ruin",
+      "oath"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lamashu",
+    "tier": 2
+  },
+  "look": "lich_king",
+  "tint": "#A08F70",
+  "scale": 1.11,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 3
+}

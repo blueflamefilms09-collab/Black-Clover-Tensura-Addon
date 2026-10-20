@@ -1,0 +1,125 @@
+{
+  "id": "evil_079",
+  "level": -79,
+  "side": "evil",
+  "name": "Dolmaris, Swallower of Lanterns",
+  "title": "Star-Eater of the Eclipse Deep",
+  "lore": "Dolmaris swallowed a constellation for every name you have forgotten.",
+  "archetype": "star_eater",
+  "theme": "void_observatory",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "The Dimming",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Stars Consumed",
+      "at": 0.75,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "Eclipse",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "Nothing Remains",
+      "at": 0.25,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "endermite",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "star",
+      "void",
+      "eclipse",
+      "astral",
+      "craving"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Dolmaris",
+    "tier": 4
+  },
+  "look": "beholder",
+  "tint": "#272040",
+  "scale": 1.17,
+  "sound_set": "abyssal_whisper",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

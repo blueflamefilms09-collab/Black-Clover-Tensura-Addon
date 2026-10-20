@@ -1,0 +1,92 @@
+{
+  "id": "holy_008",
+  "level": 8,
+  "side": "holy",
+  "name": "Rhiannon, Who Holds the Drowned Door",
+  "title": "Tide Warden of the Pearl Gate",
+  "lore": "The god of the Pearl Gate sank with its temple. Rhiannon stayed, and has kept the lamps lit under the water.",
+  "archetype": "tide_warden",
+  "theme": "sunken_temple",
+  "creature": "humanoid",
+  "resist": [
+    "lightning",
+    "freeze"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Keeper of the Door",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Sea-Crowned",
+      "at": 0.5,
+      "abilities": [
+        "cantrip",
+        "gravity_crush",
+        "dragon_breath"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "drowned",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "drowned",
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "trident",
+    "keywords": [
+      "tide",
+      "warden",
+      "coral",
+      "sea",
+      "temple"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Rhiannon",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#A0E8E1",
+  "scale": 0.88,
+  "sound_set": "kraken_deep",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

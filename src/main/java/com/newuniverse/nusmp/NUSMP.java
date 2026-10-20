@@ -219,6 +219,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig.SPEC, "nusmp-labyrinth-mega-floors-server.toml");   // 1.55.0: floors and the Directional Lock
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.party.PartyConfig.SPEC, "nusmp-labyrinth-mega-party-server.toml");   // 1.58.0: parties and FTB Teams
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.guard.GuardConfig.SPEC, "nusmp-labyrinth-mega-guard-server.toml");   // 1.54.0: the Labyrinth Guardian, the Mana Core, the sector Gatekeeper
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialConfig.SPEC, "nusmp-labyrinth-mega-decennial-server.toml");   // 1.99.0: the 200 Decennial bosses and their halls
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.hub.HubConfig.SPEC, "nusmp-labyrinth-mega-hub-server.toml");   // 1.55.0: Floor 0, the Sanctuary Hub
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.rift.RiftConfig.SPEC, "nusmp-labyrinth-mega-rift-server.toml");   // 1.72.0: dimensional rifts, pocket realms, the waypoint
         com.newuniverse.nusmp.compat.maps.MapsCompat.init(modContainer);                                                              // compat-maps: Xaero's / FTB Chunks / JourneyMap compatibility (docs/compat/maps.md), soft

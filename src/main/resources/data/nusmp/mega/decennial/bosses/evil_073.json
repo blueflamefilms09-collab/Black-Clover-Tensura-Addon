@@ -1,0 +1,130 @@
+{
+  "id": "evil_073",
+  "level": -73,
+  "side": "evil",
+  "name": "Ebonwyr the Smiling Debt",
+  "title": "Archdevil of the Ledger-Halls",
+  "lore": "Ebonwyr will offer you a bargain. Count your fingers afterwards, and count the clauses you did not read.",
+  "archetype": "archdevil",
+  "theme": "ruined_throne_room",
+  "creature": "devil",
+  "resist": [
+    "fire",
+    "poison",
+    "physical"
+  ],
+  "signature": "hellfire_aura",
+  "phases": [
+    {
+      "name": "Smiling Signatory",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Contract Enforced",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Hellfire Ledger",
+      "at": 0.5,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Final Clause",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "devil",
+      "contract",
+      "hellfire",
+      "infernal",
+      "oath"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ebonwyr",
+    "tier": 4
+  },
+  "look": "asmodeus",
+  "tint": "#B03E20",
+  "scale": 1.06,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

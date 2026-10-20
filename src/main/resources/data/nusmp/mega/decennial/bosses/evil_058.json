@@ -1,0 +1,113 @@
+{
+  "id": "evil_058",
+  "level": -58,
+  "side": "evil",
+  "name": "Zaelithar, Master of the Final Hour",
+  "title": "Clockwork Tyrant of the Brass Cathedral",
+  "lore": "The great clock of the Brass Cathedral is not a clock. It is a machine for deciding how long you have left.",
+  "archetype": "clockwork_tyrant",
+  "theme": "clockwork_vault",
+  "creature": "construct",
+  "resist": [
+    "physical",
+    "poison",
+    "lightning"
+  ],
+  "signature": "bone_aegis",
+  "phases": [
+    {
+      "name": "Ticking Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Springs Wound",
+      "at": 0.66,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "The Final Hour",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "steam_vents",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "silverfish"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "armour",
+    "type": "hammer",
+    "keywords": [
+      "clock",
+      "gear",
+      "iron",
+      "construct",
+      "brass"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zaelithar",
+    "tier": 3
+  },
+  "look": "lich_king",
+  "tint": "#6F7F8F",
+  "scale": 1.02,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  },
+  "band": 5
+}

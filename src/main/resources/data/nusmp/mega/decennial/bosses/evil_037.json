@@ -1,0 +1,115 @@
+{
+  "id": "evil_037",
+  "level": -37,
+  "side": "evil",
+  "name": "Irongaunt the Undying Scholar",
+  "title": "Lich of the Drowned Ossuary",
+  "lore": "Bound to a phylactery sunk in the Drowned Ossuary, Irongaunt cannot be ended by blades alone: the grave itself answers for him.",
+  "archetype": "lich",
+  "theme": "forbidden_library",
+  "creature": "undead",
+  "resist": [
+    "freeze",
+    "poison"
+  ],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Grave Scholar",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Unquiet Dead",
+      "at": 0.66,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "zombie",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Page",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "zombie",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "eye_beams",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "zombie",
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "staff",
+    "keywords": [
+      "tomb",
+      "grave",
+      "soul",
+      "phylactery",
+      "lich"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Irongaunt",
+    "tier": 2
+  },
+  "look": "lich",
+  "tint": "#9FD8B0",
+  "scale": 1.01,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 3
+}

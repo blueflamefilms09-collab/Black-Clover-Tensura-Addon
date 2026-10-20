@@ -1,0 +1,126 @@
+{
+  "id": "evil_089",
+  "level": -89,
+  "side": "evil",
+  "name": "Charnel the Unwinding",
+  "title": "Clockwork Tyrant of the Gear-Choked Deep",
+  "lore": "Charnel counts the seconds until you stop. It has been counting since before the vault of the Gear-Choked Deep had a roof.",
+  "archetype": "clockwork_tyrant",
+  "theme": "clockwork_vault",
+  "creature": "construct",
+  "resist": [
+    "physical",
+    "poison",
+    "lightning"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Ticking Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Springs Wound",
+      "at": 0.75,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "Gears Unleashed",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "The Final Hour",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "steam_vents",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "pillar_fall",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "silverfish"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "armour",
+    "type": "hammer",
+    "keywords": [
+      "clock",
+      "gear",
+      "iron",
+      "construct",
+      "brass"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Charnel",
+    "tier": 5
+  },
+  "look": "tarrasque",
+  "tint": "#8F8A50",
+  "scale": 0.98,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  },
+  "band": 7
+}

@@ -1,0 +1,99 @@
+{
+  "id": "evil_015",
+  "level": -15,
+  "side": "evil",
+  "name": "Zerathul, Rider of the Last Charge",
+  "title": "Dread Knight of the Fallen March",
+  "lore": "Zerathul swore to hold the Fallen March until relieved. Nobody came, and he has kept the oath ever since, in the dark.",
+  "archetype": "dread_knight",
+  "theme": "ruined_throne_room",
+  "creature": "undead",
+  "resist": [
+    "physical",
+    "projectile"
+  ],
+  "signature": "oathbreaker_charge",
+  "phases": [
+    {
+      "name": "Sworn Sword",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hollow Banner",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "wing_buffet",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "wither_skeleton"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "knight",
+      "oath",
+      "iron",
+      "grave",
+      "dread"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zerathul",
+    "tier": 1
+  },
+  "look": "lich_king",
+  "tint": "#403033",
+  "scale": 0.93,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

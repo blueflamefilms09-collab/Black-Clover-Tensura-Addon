@@ -1,0 +1,98 @@
+{
+  "id": "evil_017",
+  "level": -17,
+  "side": "evil",
+  "name": "Ungoliar the Thought-Eater",
+  "title": "Mind Flayer of the Hive of Minds",
+  "lore": "Ungoliar does not speak. It does not need to. The thralls of the Hive of Minds already say what it thinks, and mean it.",
+  "archetype": "mind_flayer",
+  "theme": "mind_hive",
+  "creature": "aberration",
+  "resist": [
+    "magic"
+  ],
+  "signature": "void_craving",
+  "phases": [
+    {
+      "name": "Quiet Voice",
+      "at": 1.0,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "One Mind",
+      "at": 0.5,
+      "abilities": [
+        "cantrip",
+        "blink",
+        "magic_drain"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "void_collapse",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "eye_beams",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "endermite"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "mind",
+      "psion",
+      "flayer",
+      "thrall",
+      "brain"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ungoliar",
+    "tier": 1
+  },
+  "look": "elder_brain",
+  "tint": "#7360A0",
+  "scale": 0.97,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

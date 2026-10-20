@@ -1,0 +1,98 @@
+{
+  "id": "holy_016",
+  "level": 16,
+  "side": "holy",
+  "name": "Concordia, Messenger of the Throne",
+  "title": "Herald of the Gate of Trumpets",
+  "lore": "Concordia carries a message that is not for you. The difficulty is that you are in the way.",
+  "archetype": "herald",
+  "theme": "storm_spire",
+  "creature": "celestial",
+  "resist": [
+    "lightning",
+    "magic"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Messenger",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Proclamation",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "radiant_nova",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "herald",
+      "trumpet",
+      "divine",
+      "word",
+      "messenger"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Concordia",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#FFDBC0",
+  "scale": 1.02,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

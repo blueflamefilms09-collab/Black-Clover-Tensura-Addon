@@ -1,0 +1,111 @@
+{
+  "id": "holy_026",
+  "level": 26,
+  "side": "holy",
+  "name": "Radegund, Who Rides the Gale",
+  "title": "Thunder Seraph of the Storm Spire",
+  "lore": "Thunder is the sound of Radegund arriving. the Storm Spire has been without a quiet moment since.",
+  "archetype": "thunder_seraph",
+  "theme": "sky_bridge",
+  "creature": "celestial",
+  "resist": [
+    "lightning",
+    "fire"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "Gale Rider",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Thunder",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Tempest Crowned",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "dragon_breath"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "storm_bolts",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "living_armor"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "thunder",
+      "storm",
+      "seraph",
+      "lightning",
+      "tempest"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Radegund",
+    "tier": 2
+  },
+  "look": "solar",
+  "tint": "#A0DCFF",
+  "scale": 1.09,
+  "sound_set": "storm_rumble",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

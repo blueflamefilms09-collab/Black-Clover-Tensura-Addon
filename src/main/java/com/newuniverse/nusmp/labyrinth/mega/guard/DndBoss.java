@@ -65,6 +65,23 @@ final class DndBoss {
         execEndsAt = -1;
     }
 
+    /**
+     * 1.99.0: a Decennial boss moves to the D&D profile of its next phase (more legendary actions), or, after a wipe ({@code fresh}), back to the first with its resistances and phase given back. The
+     * Legendary Resistances left are kept across a phase shift: a shift is not a second life.
+     */
+    void swapProfile(DndProfile p, boolean fresh) {
+        profile = p == null ? DndProfile.DEFAULT : p;
+        points = DndRules.points(profile.legendaryPoints(), mythicUsed);
+        if (fresh) {
+            resistancesLeft = profile.resistances();
+            phase = 1;
+            fields.clear();
+            strikes.clear();
+            execTarget = null;
+            execEndsAt = -1;
+        }
+    }
+
     // ================================================================ queries
     int resistancesLeft() { return resistancesLeft; }
 
@@ -103,7 +120,7 @@ final class DndBoss {
     // ================================================================ the phases
     private void enterPhase(LabyrinthGuardianEntity g, ServerLevel sl, int to) {
         phase = to;
-        if (to == 2) say(sl, g, "phase_two", profile.name(), profile.form(2));
+        if (to == 2 && !profile.id().startsWith("dec:")) say(sl, g, "phase_two", profile.name(), profile.form(2));     // 1.99.0: a Decennial boss's phases are announced by its own layer
         g.refreshDndName(profile, phase);
     }
 

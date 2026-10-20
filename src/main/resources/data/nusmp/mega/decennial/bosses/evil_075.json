@@ -1,0 +1,121 @@
+{
+  "id": "evil_075",
+  "level": -75,
+  "side": "evil",
+  "name": "Mortuane the Slow Wave",
+  "title": "Drowned Leviathan of the Tide-Temple",
+  "lore": "Drowned priests still chant in the Tide-Temple. Mortuane is the god they pray to, and it answers.",
+  "archetype": "leviathan",
+  "theme": "sunken_temple",
+  "creature": "monstrosity",
+  "resist": [
+    "lightning",
+    "freeze"
+  ],
+  "signature": "tide_ward",
+  "phases": [
+    {
+      "name": "Tide Rising",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Flood",
+      "at": 0.75,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "drowned"
+      ]
+    },
+    {
+      "name": "Lord of Wrecks",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "drowned"
+      ]
+    },
+    {
+      "name": "Salt and Silence",
+      "at": 0.25,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "drowned"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "tide_surge",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "pillar_fall",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "drowned"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "kraken",
+      "tide",
+      "drowned",
+      "leviathan",
+      "deep"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Mortuane",
+    "tier": 4
+  },
+  "look": "kraken",
+  "tint": "#2F4E7F",
+  "scale": 1.06,
+  "sound_set": "kraken_deep",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  },
+  "band": 6
+}

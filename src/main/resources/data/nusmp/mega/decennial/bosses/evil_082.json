@@ -1,0 +1,109 @@
+{
+  "id": "evil_082",
+  "level": -82,
+  "side": "evil",
+  "name": "Orcus",
+  "title": "Demon Prince of Undeath",
+  "lore": "The Demon Prince of Undeath wields a wand that unmakes the living. Orcus keeps the graveyard because he likes the company of what is left.",
+  "archetype": "famous:orcus",
+  "theme": "graveyard",
+  "creature": "demon",
+  "resist": [],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Prince of Undeath",
+      "at": 1.0,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wand-Bearer",
+      "at": 0.66,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "zombie",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Death Incarnate",
+      "at": 0.33,
+      "abilities": [
+        "tail_sweep",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "skeleton",
+        "zombie",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "grave_hands",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "zombie",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "mace",
+    "keywords": [
+      "orcus"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Orcus",
+    "tier": 5
+  },
+  "look": "orcus",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "demon_growl",
+  "famous": "orcus",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 6
+}

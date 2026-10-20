@@ -1,0 +1,112 @@
+{
+  "id": "evil_034",
+  "level": -34,
+  "side": "evil",
+  "name": "Harrowgate, Rider of the Last Charge",
+  "title": "Dread Knight of the Black Vanguard",
+  "lore": "Once the finest blade of the Black Vanguard, Harrowgate broke his vow for a single night and has paid in iron for a thousand.",
+  "archetype": "dread_knight",
+  "theme": "colosseum",
+  "creature": "undead",
+  "resist": [
+    "physical",
+    "projectile"
+  ],
+  "signature": "oathbreaker_charge",
+  "phases": [
+    {
+      "name": "Sworn Sword",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Oath Unbound",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Hollow Banner",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "pillar_fall",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "wither_skeleton"
+    ],
+    "max_alive": 5,
+    "fight_cap": 16,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "knight",
+      "oath",
+      "iron",
+      "grave",
+      "dread"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Harrowgate",
+    "tier": 2
+  },
+  "look": "zariel",
+  "tint": "#303040",
+  "scale": 1.01,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 3
+}

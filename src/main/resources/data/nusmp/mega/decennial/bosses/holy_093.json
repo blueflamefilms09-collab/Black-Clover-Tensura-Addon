@@ -1,0 +1,124 @@
+{
+  "id": "holy_093",
+  "level": 93,
+  "side": "holy",
+  "name": "Taliesin, Who Sings Without Pause",
+  "title": "Seraph of the Altar of Hours",
+  "lore": "Six wings: two to cover the face, two to cover the feet, two to fly. Taliesin has been caught using none of them.",
+  "archetype": "seraph",
+  "theme": "sun_temple",
+  "creature": "celestial",
+  "resist": [
+    "fire",
+    "magic"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "The Burning One",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Six Wings Spread",
+      "at": 0.75,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Thrice-Holy Note",
+      "at": 0.5,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Light Without Shadow",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "sunburst",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "radiant_nova",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "seraph",
+      "flame",
+      "six",
+      "burning",
+      "song"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Taliesin",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#FFC990",
+  "scale": 1.21,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

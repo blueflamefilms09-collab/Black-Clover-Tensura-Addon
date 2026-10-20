@@ -1,0 +1,93 @@
+{
+  "id": "evil_006",
+  "level": -6,
+  "side": "evil",
+  "name": "Necrovane of the Chained Pack",
+  "title": "Hell Warden of the Ember Kennels",
+  "lore": "Necrovane was given the keys to the Ember Kennels for a single night, and has not given them back in ten thousand.",
+  "archetype": "hell_warden",
+  "theme": "hell_pit",
+  "creature": "fiend",
+  "resist": [
+    "fire",
+    "poison"
+  ],
+  "signature": "oathbreaker_charge",
+  "phases": [
+    {
+      "name": "Jailer at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pit Opened",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "dragon_breath",
+        "wing_buffet"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "lava_surge",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "hound",
+      "warden",
+      "infernal",
+      "chain",
+      "hell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Necrovane",
+    "tier": 1
+  },
+  "look": "hezrou",
+  "tint": "#A03038",
+  "scale": 0.97,
+  "sound_set": "demon_growl",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

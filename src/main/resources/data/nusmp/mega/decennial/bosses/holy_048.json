@@ -1,0 +1,108 @@
+{
+  "id": "holy_048",
+  "level": 48,
+  "side": "holy",
+  "name": "Valkyne, Lens-Bearer of the Hall",
+  "title": "Prism Sage of the Spectral Hall",
+  "lore": "A single white ray goes into the prism of the Spectral Hall; seven come out. Valkyne is responsible for all of them.",
+  "archetype": "prism_sage",
+  "theme": "mirror_hall",
+  "creature": "humanoid",
+  "resist": [
+    "magic",
+    "projectile"
+  ],
+  "signature": "mirror_veil",
+  "phases": [
+    {
+      "name": "Lecturer of Light",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Spectrum Split",
+      "at": 0.66,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "White Ray",
+      "at": 0.33,
+      "abilities": [
+        "blink",
+        "counterspell"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "mirror_shatter",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "prism",
+      "light",
+      "sage",
+      "spectrum",
+      "lens"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Valkyne",
+    "tier": 3
+  },
+  "look": "solar",
+  "tint": "#FFD0F0",
+  "scale": 0.87,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

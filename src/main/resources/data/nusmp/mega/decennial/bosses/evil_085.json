@@ -1,0 +1,130 @@
+{
+  "id": "evil_085",
+  "level": -85,
+  "side": "evil",
+  "name": "Liebe",
+  "title": "Devil of the Null, Warden of the Sixth Gate",
+  "lore": "Liebe does not fight magic. She does not allow it. At the sixth gate, every spell that reaches her is a thing that never happened.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_6",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "stolen_light",
+  "phases": [
+    {
+      "name": "Silence at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Magic Refused",
+      "at": 0.75,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Sixth Gate Stills",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Null",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "root_burst",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.25
+    },
+    {
+      "id": "abyss_maw",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.25
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "liebe"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Liebe",
+    "tier": 5
+  },
+  "look": "asmodeus",
+  "tint": "#C0C0C8",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6,
+  "devil": "LIEBE"
+}

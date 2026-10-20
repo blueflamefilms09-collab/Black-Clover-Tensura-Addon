@@ -1,0 +1,96 @@
+{
+  "id": "holy_017",
+  "level": 17,
+  "side": "holy",
+  "name": "Rosalind the Walking Monument",
+  "title": "Colossus of the Hall of Monuments",
+  "lore": "Rosalind stood as a statue in the Hall of Monuments for a thousand years before it was needed. It woke with considerable patience.",
+  "archetype": "stone_colossus",
+  "theme": "sunken_temple",
+  "creature": "giant",
+  "resist": [
+    "physical",
+    "explosion"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Monument",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Fallen Sky",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush",
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "holy_beams",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "colossus",
+      "stone",
+      "giant",
+      "titan",
+      "monument"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Rosalind",
+    "tier": 1
+  },
+  "look": "tarrasque",
+  "tint": "#B8CDD0",
+  "scale": 0.93,
+  "sound_set": "stone_guardian",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

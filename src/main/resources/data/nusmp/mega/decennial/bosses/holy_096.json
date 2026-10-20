@@ -1,0 +1,124 @@
+{
+  "id": "holy_096",
+  "level": 96,
+  "side": "holy",
+  "name": "Quintus the Sword of the Verdict",
+  "title": "Judgement Angel of the Gold Assize",
+  "lore": "To be judged by Quintus is no punishment. To be found wanting is.",
+  "archetype": "judgement_angel",
+  "theme": "cathedral",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "The Open Book",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Raised",
+      "at": 0.75,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sentence Pronounced",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Appeal",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "radiant_nova",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "judgement",
+      "angel",
+      "sword",
+      "verdict",
+      "scales"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Quintus",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#FFF8E0",
+  "scale": 1.16,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

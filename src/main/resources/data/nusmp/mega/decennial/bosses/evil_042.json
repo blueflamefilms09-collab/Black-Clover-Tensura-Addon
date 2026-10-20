@@ -1,0 +1,116 @@
+{
+  "id": "evil_042",
+  "level": -42,
+  "side": "evil",
+  "name": "Lilith",
+  "title": "Devil of Ice, Warden of the Third Gate",
+  "lore": "Lilith froze the sap of the third level into black glass, and walks on it. The roots here are brittle, and the silence is hers.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_3",
+  "creature": "devil",
+  "resist": [
+    "freeze",
+    "magic"
+  ],
+  "signature": "frost_heart",
+  "phases": [
+    {
+      "name": "Frost at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Glass Roots",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Black Ice",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "dragon_breath"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.15
+    },
+    {
+      "id": "frost_nova",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.15
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "lilith"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Lilith",
+    "tier": 3
+  },
+  "look": "zariel",
+  "tint": "#8FD8FF",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 3,
+  "devil": "LILITH"
+}

@@ -1,0 +1,112 @@
+{
+  "id": "evil_062",
+  "level": -62,
+  "side": "evil",
+  "name": "Reaverne the Black Omen",
+  "title": "Doom Herald of the Spire of Endings",
+  "lore": "He blows a horn, once. the Spire of Endings has not been the same since, and neither has the sky above it.",
+  "archetype": "doom_herald",
+  "theme": "hell_pit",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Herald at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Bell Tolls",
+      "at": 0.66,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Word",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "hell_geysers",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "wither_skeleton",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "doom",
+      "herald",
+      "end",
+      "omen",
+      "bell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Reaverne",
+    "tier": 4
+  },
+  "look": "orcus",
+  "tint": "#403060",
+  "scale": 1.04,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 5
+}

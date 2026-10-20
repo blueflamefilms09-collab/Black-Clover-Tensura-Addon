@@ -1,0 +1,100 @@
+{
+  "id": "evil_019",
+  "level": -19,
+  "side": "evil",
+  "name": "Corvane the Hooded Herald",
+  "title": "Cult Prophet of the Hidden Chapter",
+  "lore": "Corvane read the one book the Hidden Chapter was built to hide, and has been reading aloud ever since.",
+  "archetype": "cult_prophet",
+  "theme": "forbidden_library",
+  "creature": "cultist",
+  "resist": [
+    "magic"
+  ],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Hooded Herald",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Page",
+      "at": 0.5,
+      "abilities": [
+        "mind_blast",
+        "counterspell",
+        "death_touch"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "vex",
+        "witch"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "tome_storm",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "eye_beams",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "vex",
+      "witch"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "cult",
+      "prophet",
+      "rite",
+      "tome",
+      "doom"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Corvane",
+    "tier": 1
+  },
+  "look": "vecna",
+  "tint": "#60A093",
+  "scale": 0.88,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

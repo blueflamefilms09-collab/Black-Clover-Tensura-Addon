@@ -1,0 +1,92 @@
+{
+  "id": "evil_007",
+  "level": -7,
+  "side": "evil",
+  "name": "Phlegethor, Champion of the Sand",
+  "title": "Gladiator Revenant of the Bloodied Sand",
+  "lore": "Phlegethor won a thousand bouts and died on the thousand and first. The crowd of the Bloodied Sand never went home.",
+  "archetype": "gladiator_revenant",
+  "theme": "colosseum",
+  "creature": "undead",
+  "resist": [
+    "physical"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Champion of the Sand",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Last Laurel",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "skeleton",
+        "zombie"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "zombie"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "arena",
+      "gladiator",
+      "sand",
+      "champion",
+      "blood"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Phlegethor",
+    "tier": 1
+  },
+  "look": "orcus",
+  "tint": "#A06F50",
+  "scale": 0.93,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

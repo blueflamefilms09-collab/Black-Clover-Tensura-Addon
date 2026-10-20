@@ -1,0 +1,120 @@
+{
+  "id": "holy_075",
+  "level": 75,
+  "side": "holy",
+  "name": "Titania, King of the Cloud Meadow",
+  "title": "Griffon Lord of the Golden Eyrie",
+  "lore": "A single feather of Titania is worth a kingdom, and he is aware of the market.",
+  "archetype": "griffon_lord",
+  "theme": "hanging_gardens",
+  "creature": "beast",
+  "resist": [
+    "projectile",
+    "physical"
+  ],
+  "signature": "storm_charge",
+  "phases": [
+    {
+      "name": "Lord of the Updraft",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Spread",
+      "at": 0.75,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Proud Talon",
+      "at": 0.5,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Golden Mane",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "thorn_bloom",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "moonbeam",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 7,
+    "fight_cap": 24,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "griffon",
+      "lion",
+      "eagle",
+      "pride",
+      "talon"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Titania",
+    "tier": 4
+  },
+  "look": "tarrasque",
+  "tint": "#E0D990",
+  "scale": 0.85,
+  "sound_set": "beast_roar",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

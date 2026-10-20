@@ -1,0 +1,108 @@
+{
+  "id": "holy_024",
+  "level": 24,
+  "side": "holy",
+  "name": "Beatrix the Patient Pendulum",
+  "title": "Keeper of Hours of the Hour-Vault",
+  "lore": "Beatrix keeps the hours of the Hour-Vault. It will keep yours, if you stand still long enough.",
+  "archetype": "time_keeper",
+  "theme": "void_observatory",
+  "creature": "construct",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "Winder of Days",
+      "at": 1.0,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pendulum Swinging",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sand Run Out",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "void_collapse",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "time",
+      "hour",
+      "clock",
+      "keeper",
+      "sand"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Beatrix",
+    "tier": 2
+  },
+  "look": "lich_king",
+  "tint": "#D8B990",
+  "scale": 0.99,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

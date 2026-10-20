@@ -1,0 +1,130 @@
+{
+  "id": "evil_099",
+  "level": -99,
+  "side": "evil",
+  "name": "Zagred",
+  "title": "Supreme Devil of the Word",
+  "lore": "Zagred has only to say a thing for it to be true, and the roots of the Tree listen better than anyone. The second Supreme Devil speaks softly.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_root_throne",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "The Quiet Voice",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Words Made True",
+      "at": 0.75,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Roots Obey",
+      "at": 0.5,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Last Word",
+      "at": 0.25,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.25
+    },
+    {
+      "id": "void_collapse",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.25
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "staff",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "zagred"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Zagred",
+    "tier": 5
+  },
+  "look": "asmodeus",
+  "tint": "#3A2A6A",
+  "scale": 1.15,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7,
+  "devil": "ZAGRED"
+}

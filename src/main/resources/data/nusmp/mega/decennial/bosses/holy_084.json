@@ -1,0 +1,120 @@
+{
+  "id": "holy_084",
+  "level": 84,
+  "side": "holy",
+  "name": "Innocent the Law Made Bright",
+  "title": "Archon of the Law-Stair",
+  "lore": "Innocent holds court in the Law-Stair. Every sentence is final, and every one of them is fair, which is the difficulty.",
+  "archetype": "archon",
+  "theme": "colosseum",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Magistrate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Weighed",
+      "at": 0.75,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Verdict Pronounced",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sentence Passed",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "judgment_rings",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "archon",
+      "law",
+      "order",
+      "verdict",
+      "scale"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Innocent",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#F6F0FF",
+  "scale": 1.03,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

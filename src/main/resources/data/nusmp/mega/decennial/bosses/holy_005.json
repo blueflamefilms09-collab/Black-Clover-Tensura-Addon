@@ -1,0 +1,90 @@
+{
+  "id": "holy_005",
+  "level": 5,
+  "side": "holy",
+  "name": "Ysolde, Reader of Hearts",
+  "title": "Inquisitor of the Truth Chamber",
+  "lore": "Ysolde asks a single question of every traveller to the Truth Chamber, and listens to what the answer does not say.",
+  "archetype": "inquisitor",
+  "theme": "mirror_hall",
+  "creature": "humanoid",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "sacred_thorns",
+  "phases": [
+    {
+      "name": "The Question",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Final Word",
+      "at": 0.5,
+      "abilities": [
+        "counterspell",
+        "magic_drain",
+        "death_touch"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "mace",
+    "keywords": [
+      "inquisitor",
+      "seal",
+      "judge",
+      "truth",
+      "chain"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ysolde",
+    "tier": 1
+  },
+  "look": "lich_king",
+  "tint": "#F0E1D0",
+  "scale": 0.88,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}
