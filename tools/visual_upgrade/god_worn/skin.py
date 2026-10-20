@@ -309,7 +309,7 @@ def mat_frost(n=PERIOD):
     h = br * 0.6 + 0.05 * fbm(n, 143, 3, 2)
     v = 0.82 + 0.15 * br + 0.5 * (lit(h, 1.0) - 0.8)
     sparkle = (rng(144).random((n, n)) > 0.992).astype(float)
-    return np.clip(v + sparkle * 0.4, 0.5, 1.0), 0.35 * br ** 2 + sparkle
+    return np.clip(v + sparkle * 0.4, 0.5, 1.0), 0.22 * br ** 4 + sparkle
 
 
 def mat_glass(n=PERIOD):
@@ -333,12 +333,14 @@ def mat_crystal(n=PERIOD):
 
 
 def mat_vein(n=PERIOD):
-    a = 1.0 - np.abs(L.pnoise(n, n, 171, octaves=4, base=2))
-    b = 1.0 - np.abs(L.pnoise(n, n, 172, octaves=3, base=4))
-    v1 = np.clip(a ** 16 + 0.6 * b ** 18, 0, 1)
+    n1 = L.pnoise(n, n, 171, octaves=4, base=2)
+    n2 = L.pnoise(n, n, 172, octaves=3, base=4)
+    n1 = n1 / max(1e-6, np.abs(n1).max())
+    n2 = n2 / max(1e-6, np.abs(n2).max())
+    v1 = np.clip(np.exp(-(n1 / 0.035) ** 2) + 0.6 * np.exp(-(n2 / 0.03) ** 2), 0, 1)             # thin lines where the noise crosses zero: branching veins, about a tenth of the cell
     h = 0.5 * v1 + 0.1 * fbm(n, 173, 3, 3)
     v = 0.45 + 0.25 * fbm(n, 174, 3, 2) + 0.5 * (lit(h, 1.0) - 0.8)
-    return np.clip(v, 0.15, 1.0), np.clip(v1 * 0.85, 0, 1)
+    return np.clip(v, 0.15, 1.0), np.clip(v1 * 0.95, 0, 1)
 
 
 def mat_shadow(n=PERIOD):
@@ -356,7 +358,7 @@ def mat_slime(n=PERIOD):
     lv = lit(h, 2.4)
     spec = np.clip((lv - 1.0) * 3.0, 0, 1)
     v = 0.72 + 0.14 * blob + 0.3 * spec
-    return np.clip(v, 0.45, 1.0), 0.18 * blob + 0.5 * spec
+    return np.clip(v, 0.45, 1.0), 0.06 * blob + 0.5 * spec
 
 
 def mat_marble(n=PERIOD):

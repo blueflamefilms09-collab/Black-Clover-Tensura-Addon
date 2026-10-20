@@ -151,7 +151,13 @@ def build_all():
         ground("avalon_floor", 1.2, "dust", 0xA0FFD8, 6, 1.0),
         motes("mouth_glow", [0.3, 0.9, -0.15, 0.5, 1.0, 0.05], "minecraft:glow", 0xA0FFD8, 4, 0.006),
         ring("light_orbit", [0.42, 0.55, 0], 0.5, "minecraft:glow", 0xA0FFD8, 5, 0.4, "flat", kind="orbit"),
-        trail("fairy_trail", [0.45, 0.4, 0.2], "minecraft:happy_villager", 0xA0FFD8, 5, 1.0, 0.5)],
+        trail("fairy_trail", [0.45, 0.4, 0.2], "minecraft:happy_villager", 0xA0FFD8, 5, 1.0, 0.5),
+        motes("petal_fall", [-0.5, 0.9, -0.4, 0.6, 1.6, 0.4], "minecraft:cherry_leaves", 0xA0FFD8, 4, -0.01, 1.0, 1),
+        motes("spore_blossom", [0.1, 0.1, -0.3, 0.7, 1.0, 0.3], "minecraft:spore_blossom_air", 0xA0FFD8, 5, 0.004),
+        line("avalon_edge_b", [0.5, 0.95, 0.0], [0.62, 0.1, 0.12], "minecraft:glow", 0xA0FFD8, 8),
+        ring("belt_sparkle", [0, 0.8, 0], 0.36, "minecraft:end_rod", 0xD8C060, 7, 0.5, "flat"),
+        ground("outer_floor", 1.8, "minecraft:happy_villager", 0xD8C060, 4, 1.0),
+        ring("vertical_glory", [0.45, 0.6, 0.0], 0.5, "minecraft:glow", 0xA0FFD8, 6, 0.3, "vertical")],
         acts={"all_far_away": [act("ELF_CIRCLE", 0xA0FFD8, 30, 4.0, "feet", "minecraft:happy_villager", 60, 1.8), act("LIGHT_FLARE", 0xD8C060, 22, 3.0, "eye", "minecraft:end_rod", 36, 1.0)],
               "far_distant_utopia": [act("MAGIC_CIRCLE_EXPLOSION", 0xA0FFD8, 46, 6.0, "feet", "minecraft:end_rod", 100, 3.0), act("TREE_CANOPY", 0xD8C060, 40, 5.0, "feet", "minecraft:happy_villager", 70, 3.0)]})
     P["silvered_sash_of_reflections"] = dict(color=0xF0F8FF, layers=[
@@ -163,7 +169,12 @@ def build_all():
         ground("mirror_floor", 1.3, "dust", 0xF0F8FF, 6, 0.9),
         motes("tail_shards", [0.15, 0.1, -0.25, 0.45, 0.8, 0.0], "minecraft:glow", 0xF0F8FF, 4, -0.004),
         ring("shard_orbit", [0, 1.0, 0], 0.8, "minecraft:end_rod", 0xF0F8FF, 6, 0.35, "flat", kind="orbit"),
-        trail("silver_trail", [0, 0.8, 0.3], "minecraft:glow", 0xCFD8E8, 5, 1.0, 0.5)],
+        trail("silver_trail", [0, 0.8, 0.3], "minecraft:glow", 0xCFD8E8, 5, 1.0, 0.5),
+        motes("reflected_stars", [-0.5, 0.2, -0.4, 0.5, 1.7, 0.4], "minecraft:glow", 0xF0F8FF, 5, 0.003),
+        line("sash_gleam_b", [0.38, 0.85, 0.3], [-0.35, 1.45, 0.3], "minecraft:end_rod", 0xF0F8FF, 8),
+        ring("mirror_circle", [0, 0.05, 0], 1.3, "dust", 0xCFD8E8, 8, 0.2, "flat"),
+        motes("silver_drift", [-0.4, 0.1, -0.35, 0.4, 0.9, 0.35], "minecraft:wax_off", 0xCFD8E8, 4, 0.004),
+        ring("halo_vertical", [0, 1.1, 0.45], 0.6, "minecraft:glow", 0xF0F8FF, 6, -0.25, "vertical")],
         acts={"reflect": [act("MIRROR_FRAME", 0xF0F8FF, 24, 3.0, "feet", "minecraft:end_rod", 40, 1.2), act("MIRROR_DOUBLE", 0xCFD8E8, 20, 3.0, "feet", "minecraft:glow", 20, 1.0)],
               "mirrored_step": [act("MIRROR_STEP", 0xF0F8FF, 22, 3.0, "feet", "minecraft:end_rod", 50, 1.2), act("MIRROR_SHATTER", 0xCFD8E8, 22, 3.0, "aim", "minecraft:glow", 40, 1.2, 8.0)]})
     # ------------------------------------------------------------------ CHEST

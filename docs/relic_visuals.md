@@ -193,3 +193,7 @@ Ambient themes (`cat.theme`): helm_of_whispers, trickster_mask and death_knights
 ## Held forms (1.48.0)
 
 The worn library also draws every relic that is not a weapon as an object in the hand, on the ground and in an item frame (hold styles, hand models, garment bodies for chest relics): see `docs/relic_hand_models.md`.
+
+## God grade worn relics: the visual upgrade (1.102.0)
+
+Twenty-four God grade worn relics (eight cloaks and mantles, two belts, two chest pieces, the wind walker greaves, the White Whistle, four hands, six heads) wear much bigger models with their own skins, glow maps, LOD and held forms, and have ambient effects and act visuals of their own while the client option `visual.upgrade` is on. Nothing above changed: the old models, the atlas and `catalog.txt` stay, the flag off returns to them. Measured numbers, the cap table, the pipeline and the honest list of what could not be verified: `docs/visual_upgrade/god_worn.md`; pictures: `docs/previews/visual_upgrade/god_worn/`.

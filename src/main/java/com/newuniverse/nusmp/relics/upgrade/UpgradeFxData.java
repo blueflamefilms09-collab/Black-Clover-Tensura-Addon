@@ -111,6 +111,7 @@ public final class UpgradeFxData {
 
     // ---------------------------------------------------------------- the jar
     private static final Map<String, UpgradeFxData> CACHE = new HashMap<>();
+    private static volatile String lastError = "";
     private static final UpgradeFxData NONE = new UpgradeFxData("", List.of(), new LinkedHashMap<>());
 
     /** The table of a relic from the jar, or null if it has none (cached either way; read once, both sides). */
@@ -125,13 +126,16 @@ public final class UpgradeFxData {
                     }
                 }
             } catch (IOException | RuntimeException bad) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] the visual upgrade table of {} could not be read", relicId, bad);
+                lastError = relicId + ": " + bad;                                      // the callers log it; this class has no game or logging classes
                 d = NONE;
             }
             CACHE.put(relicId, d);
         }
         return d == NONE ? null : d;
     }
+
+    /** The last table that could not be read ("id: exception"), or an empty string. */
+    public static String lastError() { return lastError; }
 
     /** What is wrong with this table (empty = fine): unknown kinds, missing geometry, absurd rates. */
     public List<String> problems() {

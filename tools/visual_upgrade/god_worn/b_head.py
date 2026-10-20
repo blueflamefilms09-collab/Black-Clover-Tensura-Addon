@@ -10,7 +10,7 @@ import numpy as np
 import gen_worn_lib as L
 import mesh_lib as ml
 from mesh_lib import Part, loft, lathe, sweep, circle
-from gw_lib import MAIN, TRIM, GLOW, DARK, ACCENT, EMIT, SHELL, HOT, LIT, ADD
+from gw_lib import MAIN, TRIM, GLOW, DARK, ACCENT, NONE, EMIT, SHELL, HOT, LIT, ADD
 import kit as K
 from kit import A
 from b_back import crest_disc, hanging_tablets, gat
@@ -73,7 +73,7 @@ def eye_of_vecna(b, D):
             base = A((2.75 * math.cos(a), 6.3 + 2.25 * math.sin(a), -5.1))
             K.spike(sp, base, base + A((1.3 * math.cos(a), 1.2 * math.sin(a), -0.5)), 0.32, 4)
         gs.add(sp, TRIM, "gilt")
-        eyeball(gs, D, (0, 6.3, -5.35), 1.5, MAIN, GLOW, "vecna")
+        eyeball(gs, D, (0, 6.3, -5.35), 1.5, NONE, GLOW, "vecna")
         for sgn in (-1, 1):                                                              # the lids
             lid = Part("lid%d" % sgn)
             K.beam(lid, A((-2.2, 6.3 + sgn * 1.15, -5.9)), A((2.2, 6.3 + sgn * 1.15, -5.9)), 0.9, 0.4)
@@ -84,7 +84,7 @@ def eye_of_vecna(b, D):
             g = gs.group("eyelet%d" % k, "orbit", (0, 6.0, 0), 1.6 + 0.2 * k, 0.0, 0.0)
             a = 2 * math.pi * k / 5
             pos = (7.0 * math.cos(a), 6.0 + 1.5 * math.sin(k * 2.0), 7.0 * math.sin(a))
-            eyeball(gs, D, pos, 0.8, MAIN, GLOW, "eyelet%d" % k, facing=(-math.cos(a), 0, -math.sin(a)), group=g)
+            eyeball(gs, D, pos, 0.8, NONE, GLOW, "eyelet%d" % k, facing=(-math.cos(a), 0, -math.sin(a)), group=g)
         gt = gs.group("optic", "wave", (0, 6.5, -4.4), 2.0, 0.13, 0.5)
         for k in range(D.cnt(4, 2)):                                                      # the optic nerves: red cords streaming back from the plate
             a = (k - 1.5) * 0.5
@@ -142,7 +142,7 @@ def basilica_halo(b, D):
         for k in range(D.cnt(6, 3)):                                                      # shafts of light standing up from the halo
             a = 2 * math.pi * k / D.cnt(6, 3)
             bm = Part("shaft%d" % k)
-            K.beam(bm, A((6.0 * math.cos(a), 13.2, 6.0 * math.sin(a))), A((6.0 * math.cos(a), 24.0 + 3.0 * (k % 2), 6.0 * math.sin(a))), 0.8, 0.8)
+            K.beam(bm, A((6.0 * math.cos(a), 13.2, 6.0 * math.sin(a))), A((6.0 * math.cos(a), 20.0 + 3.0 * (k % 2), 6.0 * math.sin(a))), 0.45, 0.45)
             gs.add(bm, GLOW, "ember", EMIT | ADD | HOT, gs.group("shaft%d" % k, "pulse", (6.0 * math.cos(a), 18.0, 6.0 * math.sin(a)), 0.15, 0.06 + 0.01 * k, k), "fit")
         K.filigree(gs, D, (0, 7.6, 4.8), (0, 0, 1), 2.4, turns=1.5, r=0.1, segs=22, arms=3, name="backfil", plane_up=(0, 1, 0))
 
@@ -231,7 +231,7 @@ def limitless_blindfold(b, D):
             g = gs.group("watcher%d" % k, "orbit", (0, 5.0, 0), 1.4, 0.0, 0.0)
             a = 2 * math.pi * k / D.cnt(6, 3)
             pos = (6.2 * math.cos(a), 5.0 + 1.8 * math.sin(k * 2.2), 6.2 * math.sin(a))
-            eyeball(gs, D, pos, 0.75, MAIN, GLOW, "watcher%d" % k, facing=(-math.cos(a), 0, -math.sin(a)), group=g)
+            eyeball(gs, D, pos, 0.75, NONE, GLOW, "watcher%d" % k, facing=(-math.cos(a), 0, -math.sin(a)), group=g)
         for k, (R, sl) in enumerate(((9.0, TRIM), (9.0, ACCENT))):                          # blue and red: the two orbs of Hollow Purple, circling opposite each other
             g = gs.group("orb%d" % k, "orbit", (0, 7.0, 0), 3.0 * (1 if k == 0 else -1), 0.0, 0.0)
             ob = Part("orb%d" % k)
@@ -281,7 +281,7 @@ def odins_all_seeing_eye(b, D):
         sock = Part("socket")
         K.link(sock, A((0, 7.0, -5.2)), A((1, 0, 0)), A((0, 1, 0)), 2.2, 1.9, 0.34, D.dim(22, 8), 4)
         gs.add(sock, TRIM, "gilt")
-        eyeball(gs, D, (0, 7.0, -5.3), 1.8, MAIN, GLOW, "allseeing", iris_tile="iris")
+        eyeball(gs, D, (0, 7.0, -5.3), 1.8, NONE, GLOW, "allseeing", iris_tile="iris")
         for sgn in (-1, 1):
             lid = Part("lid%d" % sgn)
             pts = K.bezier(A((-2.4, 7.0, -5.4)), A((-1.2, 7.0 + sgn * 2.2, -5.9)), A((1.2, 7.0 + sgn * 2.2, -5.9)), A((2.4, 7.0, -5.4)), D.dim(8, 4))

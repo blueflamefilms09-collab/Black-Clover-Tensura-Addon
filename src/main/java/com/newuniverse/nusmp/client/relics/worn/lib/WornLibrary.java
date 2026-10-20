@@ -47,7 +47,7 @@ public final class WornLibrary {
         public final int lodVerts;
 
         /** Blocks beyond which an upgraded relic is drawn as its low detail models, and past which (see {@link #ADDITIVE_CUTOFF}) its additive passes are skipped. */
-        public static final double LOD_DISTANCE = 12.0, ADDITIVE_CUTOFF = 24.0;
+        public static final double LOD_DISTANCE = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.LOD_DISTANCE, ADDITIVE_CUTOFF = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.ADDITIVE_CUTOFF;
 
         Ensemble(RelicDef def, List<Resolved> pieces, FxTheme theme) {
             this(def, def.id(), def.slot().name(), false, WornPalette.slots(def.paletteMain(), def.paletteTrim(), def.paletteGlow()), def.grade().tier(), pieces, theme);
@@ -113,18 +113,18 @@ public final class WornLibrary {
         public int extraVerts(WornFxPlan plan) { return (plan.usesShell() ? shellVerts : 0) + plan.fxVertices(); }
     }
 
-    private static final Map<String, Optional<Ensemble>> CACHE = new HashMap<>();
+    private static final Map<String, Optional<Ensemble>> CACHE = new HashMap<>(), CACHE_UP = new HashMap<>();
 
     /** The models of a relic, or null if the library has none for it (the layer then draws the old plain look). */
     public static Ensemble of(RelicDef def) {
         boolean up = upgradeOf(def.id());
-        String key = up ? def.id() + "#up" : def.id();                                      // 1.102.0: the option decides which look is cached; both stay valid
-        Optional<Ensemble> e = CACHE.get(key);
+        Map<String, Optional<Ensemble>> cache = up ? CACHE_UP : CACHE;                       // 1.102.0: the option decides which look is cached; both stay valid (two maps: no string is built per frame)
+        Optional<Ensemble> e = cache.get(def.id());
         if (e == null) {
             Ensemble built = build(def, up);
             if (built == null && !WornModels.catalogLoaded()) return null;                  // 1.99.0: the catalog was not readable just now: do not remember "no model" for the session
             e = Optional.ofNullable(built);
-            CACHE.put(key, e);
+            cache.put(def.id(), e);
         }
         return e.orElse(null);
     }
@@ -305,6 +305,7 @@ public final class WornLibrary {
     /** Forgets everything built (a resource reload). */
     public static void clear() {
         CACHE.clear();
+        CACHE_UP.clear();
         ITEM_CACHE.clear();
     }
 }

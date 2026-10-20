@@ -24,16 +24,16 @@ public final class HandForms {
     /** What one relic is held as: the models (an ensemble the worn library can draw) and the style that places them. */
     public record Form(WornLibrary.Ensemble ensemble, HandTransforms.Style style, boolean signature) {}
 
-    private static final Map<String, Optional<Form>> CACHE = new HashMap<>();
+    private static final Map<String, Optional<Form>> CACHE = new HashMap<>(), CACHE_UP = new HashMap<>();
 
     /** The form of a relic, or null (its sprite is drawn). Built once per relic id. */
     public static Form of(RelicDef def) {
         boolean up = WornLibrary.upgradeOf(def.id());
-        String key = up ? def.id() + "#up" : def.id();                                       // 1.102.0: the visual upgrade option decides which form is cached
-        Optional<Form> f = CACHE.get(key);
+        Map<String, Optional<Form>> cache = up ? CACHE_UP : CACHE;                           // 1.102.0: the visual upgrade option decides which form is cached
+        Optional<Form> f = cache.get(def.id());
         if (f == null) {
             f = Optional.ofNullable(build(def, up));
-            CACHE.put(key, f);
+            cache.put(def.id(), f);
         }
         return f.orElse(null);
     }
@@ -69,5 +69,8 @@ public final class HandForms {
     }
 
     /** Forgets every form (a resource reload). */
-    public static void clear() { CACHE.clear(); }
+    public static void clear() {
+        CACHE.clear();
+        CACHE_UP.clear();
+    }
 }

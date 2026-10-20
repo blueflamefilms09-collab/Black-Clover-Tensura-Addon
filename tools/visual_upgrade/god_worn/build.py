@@ -5,6 +5,7 @@
 Adds files only: nothing of the old models, atlas or catalog is touched (rule 2). The shared generator tools/relics/gen_worn_all.py calls `main()` once at its end (one append-only
 hook line), so regenerating the worn library regenerates this too.
 """
+import hashlib
 import json
 import os
 import sys
@@ -109,6 +110,10 @@ def build_item(rid, builder, write=True, refit=False):
     """Builds the three levels of one relic. Returns {"full": [pieces], "held": [pieces], "lod": [pieces], "stats": {...}}."""
     res = {"stats": {}}
     scales = fitted_scales(rid, builder, refit)
+    if write:                                                                       # this build's own earlier files of this relic (a different split into files) are replaced, never anything else
+        for fn in os.listdir(G.WORN_DIR):
+            if fn.startswith("gw_%s_" % rid) and fn.endswith(".txt"):
+                os.remove(os.path.join(G.WORN_DIR, fn))
     for level, suffix in (("full", ""), ("held", "_held"), ("lod", "_lod")):
         D = G.Detail(level, scales[level])
         b = G.Item(rid, D)
@@ -131,13 +136,42 @@ def build_item(rid, builder, write=True, refit=False):
     return res
 
 
+STAMP = os.path.join(HERE, ".build_stamp")
+
+
+def source_stamp():
+    """A hash of everything the outputs depend on (this folder's generators and caches, the shared mesh library and the worn library kit), so the hook in gen_worn_all.py can skip an up to date build."""
+    h = hashlib.sha256()
+    skip = {"doc.py", "preview.py", "after.py", "baseline.py", "counts.py"}                  # tools that read the outputs do not change them
+    names = [os.path.join(HERE, f) for f in sorted(os.listdir(HERE)) if (f.endswith(".py") and f not in skip) or f == "scales.json"]
+    names += [os.path.join(HERE, "..", "..", "relics", f) for f in ("mesh_lib.py", "gen_worn_lib.py")]
+    names.append(os.path.join(M.ROOT, "docs", "visual_upgrade", "god_worn_baseline.json"))
+    for n in names:
+        h.update(os.path.basename(n).encode())
+        with open(n, "rb") as fh:
+            h.update(fh.read())
+    return h.hexdigest()
+
+
+def up_to_date():
+    try:
+        with open(STAMP, encoding="utf8") as fh:
+            return fh.read().strip() == source_stamp() and os.path.exists(os.path.join(UPG, "catalog.txt"))
+    except OSError:
+        return False
+
+
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
+    if not argv and up_to_date():
+        print("god_worn: the upgraded models, skins and effect tables are up to date (use --force to rebuild)")
+        return 0
     only = None
     for a in argv:
         if a.startswith("--ids"):
             only = (a.split("=", 1)[1] if "=" in a else argv[argv.index(a) + 1]).split(",")
     check = "--check" in argv
+    argv = [a for a in argv if a != "--force"]
     builders = all_builders()
     skins = all_skins()
     lines = ["# visual upgrade catalog (slice god_worn): written by tools/visual_upgrade/god_worn/build.py, do not edit.",
@@ -179,6 +213,11 @@ def main(argv=None):
                     lines.append(entries[(kind, rid)])
         with open(cat_path, "w", newline="\n") as fh:
             fh.write("\n".join(lines) + "\n")
+        if not only and ok:
+            import fx as _fx
+            _fx.write_all()
+            with open(STAMP, "w", encoding="utf8", newline="\n") as fh:
+                fh.write(source_stamp() + "\n")
     return 0 if ok else 1
 
 

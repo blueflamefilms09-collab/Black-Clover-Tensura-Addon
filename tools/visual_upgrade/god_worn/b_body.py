@@ -32,6 +32,18 @@ def hang_plate(gs, D, top, w, h, group, tile="plate", slot=MAIN, name="tasset", 
         gs.add(r, TRIM, "gilt", 0, group)
 
 
+def pendants(gs, D, n, tops, tiles, slot=TRIM, name="charm", swing=(10.0, 1.6), length=2.2, size=0.9, phase=0.6):
+    """Small charms (a teardrop on a short cord) that each swing from their own hinge: `tops` is a function k, n -> the hinge position."""
+    cnt = D.cnt(n, 3)
+    for k in range(cnt):
+        top = tops(k, cnt)
+        g = gs.group("%s%d" % (name, k), "swing", tuple(top), swing[0] + 2.0 * (k % 3), swing[1] + 0.2 * (k % 4), k * phase)
+        part = Part("%s%d" % (name, k))
+        K.tube(part, [tuple(top - A((0, length * i / 3.0, 0))) for i in range(4)], 0.14, D.sides(4, 3))
+        lathe(part, "y", tuple(top - A((0, length + size * 0.4, 0))), [(-size * 1.3, 0.0), (-size * 0.5, size * 0.55), (size * 0.2, size * 0.5), (size * 0.9, 0.0)], sides=D.sides(6, 4))
+        gs.add(part, slot if k % 2 == 0 else ACCENT, tiles[k % len(tiles)], SHELL, g, "tile")
+
+
 # ================================================================ BELT 1: Excalibur's Scabbard Avalon
 def excaliburs_scabbard_avalon(b, D):
     gs = b.set("body", "body")
@@ -50,7 +62,7 @@ def excaliburs_scabbard_avalon(b, D):
         crest_disc(gs, D, (0, -10.0, -3.9), 1.8, "crest", normal=(0, 0, -1), name="buckle")
         K.filigree(gs, D, (0, -10.0, -3.4), (0, 0, -1), 4.2, turns=1.4, r=0.17, segs=22, arms=2, name="buckle_vine", plane_up=(0, 1, 0))
     # the scabbard: a lofted sheath hung at the left hip, tilted outward, with gold bands, a chape and enamel panels
-    top, tip = A((6.2, -10.6, -0.4)), A((9.0, -33.0, 1.6))
+    top, tip = A((6.2, -10.6, -0.4)), A((8.6, -25.6, 1.4))
     axis = tip - top
     ln = float(np.linalg.norm(axis))
     secs = [(0.0, 1.0, 0.55), (ln * 0.04, 1.35, 0.7), (ln * 0.12, 1.15, 0.62), (ln * 0.5, 1.0, 0.55), (ln * 0.88, 0.62, 0.38), (ln, 0.0, 0.0)]
@@ -84,6 +96,14 @@ def excaliburs_scabbard_avalon(b, D):
             tp = Part("tassel%d" % k)
             K.tube(tp, [tuple(top + A((0.5, 0.4, -1.4 + 0.2 * k)) - A((0, 1.0 * i, 0))) for i in range(5)], 0.26, 4, taper=lambda t: 1.0 - 0.5 * t)
             gs.add(tp, TRIM, "silk", 0, tass)
+        pendants(gs, D, 12, lambda k, n: A((5.8 * math.sin(math.radians(-100 + 200 * k / max(1, n - 1))), -11.5, -3.3 * math.cos(math.radians(-100 + 200 * k / max(1, n - 1))))),
+                 ["feathery", "marble", "scale", "crystal", "pearl", "bone", "silk", "lace", "damask", "weave2", "horn", "glass"], name="leafcharm")
+        for k in range(D.cnt(8, 3)):                                                    # fairy lights: each a mote of its own bobbing at its own pace
+            cc = top + d * ln * (0.12 + 0.1 * k) + u * (1.2 + 0.4 * math.sin(k * 2.1)) + v * (-1.4 - 0.5 * (k % 3))
+            gb = gs.group("fairy%d" % k, "bob", tuple(cc), 0.9 + 0.12 * (k % 4), 0.07 + 0.012 * k, k * 0.9)
+            fp = Part("fairy%d" % k)
+            K.dia(fp, tuple(cc), 0.32, 0.5, 0.32)
+            gs.add(fp, GLOW, "spark", EMIT | HOT | ADD, gb, "fit")
         # Avalon: light that rings the scabbard
         cx = tuple(top + d * ln * 0.45)
         K.shards(gs, D, cx, 3.8, 10, 0.35, y_amp=7.0, kind="orbit", speed=2.4, tile="spark", groups=2, name="fairy")
@@ -131,7 +151,7 @@ def silvered_sash_of_reflections(b, D):
         for k in range(nt):
             top = A((3.6 + 0.8 * k * 0.5, -11.0, -3.4 + 0.9 * (k % 3)))
             g = gs.group("tail%d" % k, "swing", tuple(top), 8.0 + 2.0 * (k % 3), 1.4 + 0.2 * (k % 4), k * 0.7)
-            ln = 9.0 + 3.0 * ((k * 5) % 4)
+            ln = 4.0 + 1.6 * ((k * 5) % 4)
             K.chain_run(gs, D, [tuple(top), tuple(top - A((0, ln, 0)))], a=0.55, b=0.4, r=0.13, tile="chain", slot=TRIM, group=g, name="tailchain%d" % k, plane_hint=(1, 0, 0), spacing=0.85)
             sh = Part("tailshard%d" % k)
             K.crystal(sh, top - A((0, ln, 0)), (0, -1, 0), 2.4, 0.5, 4, tip=0.6)
@@ -144,6 +164,14 @@ def silvered_sash_of_reflections(b, D):
             K.dia(rp, A((6.5 * math.cos(k * 1.05), -2.0 - k * 1.8, 5.0 * math.sin(k * 1.05))), 0.3, 1.3, 0.3)
             gs.add(rp, GLOW, "spark", EMIT | HOT | ADD, ring, "fit")
         K.filigree(gs, D, (0, -10.0, -3.5), (0, 0, -1), 3.6, turns=1.6, r=0.14, segs=24, arms=3, tile="metal", name="engr")
+        for k in range(D.cnt(6, 3)):                                                    # glints that wander over the glass, each bobbing at its own pace
+            cc = A((4.6 * math.cos(k * 1.9), -2.0 - 1.4 * k, -3.9 if k % 2 == 0 else 3.9))
+            gb = gs.group("glint_b%d" % k, "bob", tuple(cc), 0.7 + 0.1 * k, 0.08 + 0.01 * k, k * 1.1)
+            gp = Part("glint_b%d" % k)
+            K.dia(gp, tuple(cc), 0.3, 0.55, 0.3)
+            gs.add(gp, GLOW, "spark", EMIT | HOT | ADD, gb, "fit")
+        pendants(gs, D, 10, lambda k, n: A((5.9 * math.cos(2 * math.pi * k / n), -11.5, 3.5 * math.sin(2 * math.pi * k / n))), ["glass", "crystal", "marble", "pearl", "lace", "stars", "hammered", "weave2"], slot=MAIN,
+                 name="mirrorcharm", swing=(8.0, 1.4), size=1.0)
 
 
 # ================================================================ CHEST helpers
@@ -265,47 +293,47 @@ def greaves_of_the_wind_walker(b, D):
     leg = b.set("leg", "rleg", pair="lleg")
     # shin guard: a lofted shell down the front of the leg, boot foot, calf plate, knee cop
     sh = Part("shin")
-    loft(sh, (0, -1, 0), (0, -3.8, -0.3), [(0.0, 1.0, 1.0), (3.0, 0.92, 1.0), (7.0, 0.78, 0.9), (8.6, 0.8, 0.9)], ml.ellipse(2.75, 2.7, D.sides(14, 6)), caps=(False, False))
+    loft(sh, (0, -1, 0), (0, -5.4, -0.3), [(0.0, 1.0, 1.0), (1.8, 0.95, 1.0), (4.2, 0.82, 0.92), (5.2, 0.8, 0.9)], ml.ellipse(2.75, 2.7, D.sides(14, 6)), caps=(False, False))
     leg.add(sh, MAIN, "plate", SHELL, 0, "tile", 6.0)
     boot = Part("boot")
     loft(boot, (0, 0, -1), (0, -10.6, 2.4), [(0.0, 1.0, 1.0), (3.0, 1.05, 1.05), (6.0, 0.95, 0.85), (7.0, 0.4, 0.5)], ml.ellipse(2.8, 1.7, D.sides(12, 6)), caps=(True, True))
     leg.add(boot, MAIN, "leather", SHELL)
     with leg.lvl(2):
         knee = Part("knee")
-        L.sph(knee, (0, -3.2, -2.6), 2.2, 4, D.sides(10, 6), squash=0.7)
+        L.sph(knee, (0, -4.7, -2.7), 2.1, 4, D.sides(10, 6), squash=0.7)
         leg.add(knee, TRIM, "gilt", SHELL)
-        for yy, rr in ((-4.4, 3.0), (-7.0, 2.95), (-9.6, 2.9)):                          # trim rings
+        for yy, rr in ((-5.8, 3.0), (-7.6, 2.95), (-9.4, 2.9)):                          # trim rings
             r = Part("ring%.0f" % -yy)
             L.torus(r, (0, yy, 0), rr, 0.24, D.dim(18, 8), 4)
             leg.add(r, TRIM, "gilt")
-        crest_disc(leg, D, (0, -6.4, -3.2), 1.6, "crest", normal=(0, 0, -1), name="windsigil")
+        crest_disc(leg, D, (0, -7.4, -3.2), 1.5, "crest", normal=(0, 0, -1), name="windsigil")
         band = Part("curse_band")                                                       # the cursed band: dark, cracked, lit
-        L.band(band, -8.4, -7.0, 2.95, 2.95, 0.3, D.dim(18, 8), 0.0, 0.0, 3.0)
+        L.band(band, -8.9, -8.0, 2.95, 2.95, 0.3, D.dim(18, 8), 0.0, 0.0, 3.0)
         leg.add(band, DARK, "vein", LIT, 0, "tile", 5.0)
     # wings: a fan of long feathers sweeping back from each ankle, and a smaller fan from the calf
     wg = leg.group("anklewing", "sway", (2.4, -9.0, 1.0), 5.0, 0.09, 0.0)
     K.feather_fan(leg, D, (2.6, -9.0, 0.6), (0.6, 0.15, 1.0), 8, 9.0, 1.3, 1.1, slot=ACCENT, tile="feather", group=wg, name="wingA", ranks=2, curl=0.15)
-    wg2 = leg.group("calfwing", "sway", (2.8, -5.5, 0.8), 6.0, 0.08, 1.2)
-    K.feather_fan(leg, D, (2.8, -5.5, 0.8), (0.9, 0.3, 0.7), 6, 6.0, 1.0, 0.9, slot=MAIN, tile="feather", group=wg2, name="wingB", ranks=2)
+    wg2 = leg.group("calfwing", "sway", (2.8, -6.6, 0.8), 6.0, 0.08, 1.2)
+    K.feather_fan(leg, D, (2.8, -6.6, 0.8), (0.9, 0.3, 0.7), 6, 6.0, 1.0, 0.9, slot=MAIN, tile="feather", group=wg2, name="wingB", ranks=2)
     wg3 = leg.group("heelwing", "sway", (-0.0, -10.4, 2.3), 4.0, 0.12, 2.0)
     K.feather_fan(leg, D, (0.0, -10.4, 2.3), (0.0, 0.2, 1.0), 5, 6.0, 0.9, 0.8, slot=ACCENT, tile="feather", group=wg3, name="wingC")
     with leg.lvl(3):
         for k in range(2):                                                              # spinning wind rings
-            g = leg.group("windring%d" % k, "spin", (0, -5.0 - 4.0 * k, 0), 7.0 * (1 if k == 0 else -1), 0.0, 0.0)
+            g = leg.group("windring%d" % k, "spin", (0, -6.4 - 3.0 * k, 0), 7.0 * (1 if k == 0 else -1), 0.0, 0.0)
             rp = Part("windring%d" % k)
-            L.torus(rp, (0, -5.0 - 4.0 * k, 0), 3.9 + 0.5 * k, 0.12, D.dim(26, 10), 4)
+            L.torus(rp, (0, -6.4 - 3.0 * k, 0), 3.9 + 0.5 * k, 0.12, D.dim(26, 10), 4)
             leg.add(rp, GLOW, "ring_glow", EMIT | HOT | ADD, g, "fit")
             sp = Part("windstreaks%d" % k)
             for j in range(D.cnt(4, 2)):
                 a = 2 * math.pi * j / D.cnt(4, 2)
-                pts = [(math.cos(a + 0.4 * i / 5) * (3.9 + 0.5 * k), -5.0 - 4.0 * k + 0.3 * math.sin(i), math.sin(a + 0.4 * i / 5) * (3.9 + 0.5 * k)) for i in range(6)]
+                pts = [(math.cos(a + 0.4 * i / 5) * (3.9 + 0.5 * k), -6.4 - 3.0 * k + 0.3 * math.sin(i), math.sin(a + 0.4 * i / 5) * (3.9 + 0.5 * k)) for i in range(6)]
                 K.tube(sp, pts, 0.2, 4, taper=lambda t: 1.0 - 0.9 * t)
             leg.add(sp, GLOW, "soft", EMIT | ADD, g, "fit")
         rb = leg.group("trail", "wave", (0, -9.0, 2.0), 1.6, 0.14, 0.45)
         for j in range(D.cnt(3, 2)):
             pts = [(-1.2 + 1.2 * j, -10.0 - 0.1 * i, 2.5 + 2.6 * i) for i in range(D.dim(6, 3))]
             K.ribbon(leg, D, pts, 1.4, GLOW, "soft", EMIT | ADD, rb, "trail%d" % j, side=(1, 0, 0))
-        K.filigree(leg, D, (0, -6.0, -3.0), (0, 0, -1), 2.6, turns=1.6, r=0.12, segs=20, arms=2, name="shinfil")
+        K.filigree(leg, D, (0, -7.2, -3.0), (0, 0, -1), 2.4, turns=1.6, r=0.12, segs=20, arms=2, name="shinfil")
         K.shards(leg, D, (0, -6.0, 0.0), 4.4, 5, 0.3, y_amp=3.0, kind="orbit", speed=3.2, tile="spark", groups=1, name="breeze")
 
 

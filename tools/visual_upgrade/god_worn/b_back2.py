@@ -157,7 +157,7 @@ def shadow_monarchs_mantle(b, D):
 def shadows_slime_cloak(b, D):
     gs = b.set("body", "body")
     blob = lambda u: -(1.0 + 3.8 * abs(math.sin(math.pi * 6 * u)) ** 0.6)
-    p = dict(w0=9.6, w1=17.0, length=22.0, folds=3.5, amp=0.7, folds2=6.0, amp2=0.18, flare=1.6, tile="slime", hem=blob, rows=4, cols=3, nu=21, nv=24, swing=(5.0, 16.0, 2.2), yoke_tile="slime",
+    p = dict(w0=9.6, w1=17.0, length=22.0, folds=3.5, amp=0.7, folds2=6.0, amp2=0.18, flare=1.6, tile="slime", hem=blob, rows=4, cols=3, nu=21, nv=24, swing=(5.0, 16.0, 2.2), yoke_tile="slime", slot=TRIM, yoke_slot=TRIM,
              hem_tile="trim", thick=-0.9)
     fn, groups = cloak_core(gs, D, p)
     with gs.lvl(2):

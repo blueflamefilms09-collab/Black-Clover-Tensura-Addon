@@ -20,7 +20,7 @@
   "lod": 0.08
  },
  "excaliburs_scabbard_avalon": {
-  "full": 1.415,
+  "full": 1.1081,
   "held": 0.9225,
   "lod": 2.453
  },
@@ -100,9 +100,9 @@
   "lod": 1.9209
  },
  "silvered_sash_of_reflections": {
-  "full": 0.7006,
+  "full": 0.7679,
   "held": 0.9225,
-  "lod": 0.7006
+  "lod": 0.7679
  },
  "six_faced_dragons_scale": {
   "full": 0.9225,

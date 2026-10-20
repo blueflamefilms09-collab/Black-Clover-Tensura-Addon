@@ -179,6 +179,66 @@ def sheet(rid, out_dir, level="up", views=None):
     return path
 
 
+CLOSE = {"BACK": (-11, 11, -6, 16), "BELT": (-9, 9, 0, 20), "CHEST": (-10, 10, -6, 14), "FEET": (-7, 7, 10, 26), "NECK": (-6, 6, -4, 12), "HANDS": (-13, 1, 2, 18), "HEAD": (-9, 9, -20, 4)}
+
+
+def bbox(pieces):
+    """The box {x0, x1, y0, y1} of the pieces in layer space (with the body scale and anchor offset), padded."""
+    lo = np.array([1e9, 1e9])
+    hi = np.array([-1e9, -1e9])
+    for (name, anchor, mirror) in pieces:
+        a, skin, quads, groups = parse_model(name)
+        a = anchor or a
+        off = np.array(PW.ANCHORS[a], float)
+        sc = 1.0 if a == HEAD else BODY_SCALE
+        for (g, slot, flags, P, UV, N) in quads:
+            xy = P[:, :2] * sc
+            if mirror:
+                xy = xy * np.array([-1, 1])
+            xy = xy + off[:2]
+            lo = np.minimum(lo, xy.min(axis=0))
+            hi = np.maximum(hi, xy.max(axis=0))
+    pad = 1.5
+    w, h = hi[0] - lo[0], hi[1] - lo[1]
+    side = max(w, h) / 2 + pad
+    cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
+    return (cx - side, cx + side, cy - side, cy + side)
+
+
+def detail_sheet(rid, out_dir):
+    """Second sheet: a close-up of the detail, the LOD form beyond 12 blocks, the held form (the object alone, as drawn in the hand, on the ground and in a frame) and the side view."""
+    rid_, name, slot, look, pal, _lore = IT.BY_ID[rid]
+    up = [parse_piece(p) for p in new_pieces(rid, "up")]
+    lod = [parse_piece(p) for p in new_pieces(rid, "lod")]
+    held = [parse_piece(p) for p in new_pieces(rid, "held")]
+    panel = (280, 320)
+    tiles, labels = [], []
+    close = CLOSE[slot]
+    w, h = close[1] - close[0], close[3] - close[2]
+    sc = min((panel[0] - 6) / w, (panel[1] - 6) / h)
+    ss = 2
+    def shot(pieces, yaw, pitch, crop, figure=True, glow_only=False):
+        cw, ch = crop[1] - crop[0], crop[3] - crop[2]
+        s2 = min((panel[0] - 6) / cw, (panel[1] - 6) / ch)
+        im = render(pieces, pal, yaw, pitch, crop, s2 * ss, (panel[0] * ss, panel[1] * ss), figure=figure, glow_only=glow_only)
+        return im.reshape(panel[1], ss, panel[0], ss, 3).mean(axis=(1, 3))
+    tiles.append(shot(up, *VIEWS["three" if slot not in ("BACK",) else "backthree"], close)); labels.append("close-up of the detail")
+    tiles.append(shot(lod, *VIEWS["three" if slot not in ("BACK",) else "backthree"], ZOOM[slot])); labels.append("LOD form (beyond 12 blocks)")
+    hb = bbox(held)
+    tiles.append(shot(held, 35 if slot not in ("BACK",) else 215, 12, hb, figure=False)); labels.append("held form (hand, ground, frame)")
+    tiles.append(shot(up, 90, 0, ZOOM[slot])); labels.append("side view")
+    row = np.concatenate(tiles, axis=1)
+    out = Image.new("RGB", (row.shape[1], row.shape[0] + 16), (20, 20, 24))
+    d = ImageDraw.Draw(out)
+    for i, lb in enumerate(labels):
+        d.text((6 + i * panel[0], 2), "%s: %s" % (name, lb), fill=(255, 255, 255))
+    out.paste(Image.fromarray((row * 255).astype(np.uint8)), (0, 16))
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, "%s_detail.png" % rid)
+    out.save(path)
+    return path
+
+
 def main(argv):
     import argparse
     ap = argparse.ArgumentParser()
@@ -189,6 +249,7 @@ def main(argv):
     ids = a.ids.split(",") if a.ids else IT.IDS
     for rid in ids:
         print(sheet(rid, a.out, a.level))
+        print(detail_sheet(rid, a.out))
 
 
 if __name__ == "__main__":

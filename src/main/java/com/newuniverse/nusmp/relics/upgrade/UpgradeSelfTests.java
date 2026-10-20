@@ -26,8 +26,8 @@ public final class UpgradeSelfTests {
     private UpgradeSelfTests() {}
 
     /** The God grade caps of the upgrade (the same numbers as tools/visual_upgrade/god_worn/caps.py; GodWornUpgradeTest checks the two agree). */
-    public static final int MODEL_VERTICES = 4800, ENSEMBLE_VERTICES = 16000, HELD_VERTICES = 2500;
-    public static final double LOD_FRACTION = 0.15;
+    public static final int MODEL_VERTICES = UpgradeCaps.GOD_MODEL_VERTICES, ENSEMBLE_VERTICES = UpgradeCaps.GOD_ENSEMBLE_VERTICES, HELD_VERTICES = UpgradeCaps.GOD_HELD_VERTICES;
+    public static final double LOD_FRACTION = UpgradeCaps.GOD_LOD_FRACTION;
 
     private static final String WORN = "/assets/nusmp/relic_worn/", UPG = "/assets/nusmp/visual_upgrade/", SKINS = "/assets/nusmp/textures/relic_worn/god/";
 
