@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.blackclover.Devil;
@@ -12,7 +11,6 @@ import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -35,6 +33,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Grimoire Magic (Black Clover). Granted with a grimoire; its magic type, leaf count and devil
@@ -165,7 +165,7 @@ public class GrimoireMagicSkill extends Skill {
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 1));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 1));
-                RukhFx.spray(level, RukhFx.Alignment.DARK, player.getX(), player.getY() + 1, player.getZ(), 150, 0.8, 1.2, 0.8, 0.05);
+                Fx.spray(level, FxThemes.SKILL, FxTone.DARK, player.getX(), player.getY() + 1, player.getZ(), 150, 0.8, 1.2, 0.8, 0.05);
                 level.playSound(null, player.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.7F, 0.6F);
                 player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(player.getName().getString()
                         + " has entered Devil Union with " + devil.displayName + "!").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
@@ -248,7 +248,7 @@ public class GrimoireMagicSkill extends Skill {
             }
         }
         if (devil == Devil.ASTAROTH) player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 2));
-        RukhFx.spray(level, RukhFx.Alignment.DARK, player.getX(), player.getY() + 0.2, player.getZ(), 8, 1.5, 0.1, 1.5, 0.0);
+        Fx.spray(level, FxThemes.SKILL, FxTone.DARK, player.getX(), player.getY() + 0.2, player.getZ(), 8, 1.5, 0.1, 1.5, 0.0);
     }
 
     @Override

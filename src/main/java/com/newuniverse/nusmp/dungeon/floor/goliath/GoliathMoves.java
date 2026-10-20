@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.IntConsumer;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Goliath's moves in the world (the glue over {@link GoliathMath}): ring waves that cross the floor and are jumped, a smash on a marked
@@ -88,7 +91,7 @@ final class GoliathMoves {
     /** A burst of stone from a point: the impact of a fist, a stomp, a falling rock. */
     static void burst(ServerLevel sl, Vec3 at, int count, double spread) {
         sl.sendParticles(chips(), at.x, at.y + 0.3, at.z, count, spread, 0.3, spread, 0.12);
-        sl.sendParticles(ParticleTypes.POOF, at.x, at.y + 0.2, at.z, Math.max(4, count / 4), spread, 0.1, spread, 0.05);
+        Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.POOF, at.x, at.y + 0.2, at.z, Math.max(4, count / 4), spread, 0.1, spread, 0.05);
     }
 
     static void sound(ServerLevel sl, Vec3 at, net.minecraft.sounds.SoundEvent ev, float volume, float pitch) {

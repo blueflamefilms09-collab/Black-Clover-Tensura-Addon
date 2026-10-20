@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.DndProfile;
 import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +24,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: this is the Decennial boss as a LAYER on the Labyrinth Guardian, the same way the D&D layer is: the Guardian already is the colossal sector boss (scaling, theme trait, leash, damage budget,
@@ -238,7 +240,7 @@ public final class DecennialLayer {
         if (shifting) {
             g.setTarget(null);
             g.getNavigation().stop();
-            if (now % 4 == 0) sl.sendParticles(ParticleTypes.END_ROD, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 8, 1.0 * g.getScale(), 1.2 * g.getScale(), 1.0 * g.getScale(), 0.1);
+            if (now % 4 == 0) Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.END_ROD, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 8, 1.0 * g.getScale(), 1.2 * g.getScale(), 1.0 * g.getScale(), 0.1);
         }
 
         if (fighting) {
@@ -267,7 +269,7 @@ public final class DecennialLayer {
                     for (Player p : players) p.sendSystemMessage(shout);
                 }
                 sl.playSound(null, g.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.4f, 0.6f);
-                sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 1, 0, 0, 0, 0);
+                Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.EXPLOSION_EMITTER, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 1, 0, 0, 0, 0);
                 if (hall != null) hall.lastNear = now;
             }
             case PHASE_END -> {
@@ -299,7 +301,7 @@ public final class DecennialLayer {
             Mob m = AddKinds.spawn(sl, kind, x, g.getY(), z, profile.depth(), g.getUUID(), target);
             if (m != null) {
                 addsAlive++;
-                sl.sendParticles(ParticleTypes.SOUL, m.getX(), m.getY() + 0.6, m.getZ(), 8, 0.3, 0.5, 0.3, 0.03);
+                Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL, m.getX(), m.getY() + 0.6, m.getZ(), 8, 0.3, 0.5, 0.3, 0.03);
             }
         }
         Component line = Component.translatableWithFallback("message.nusmp.mega.decennial.adds", "Something stirs in the ground!").withStyle(ChatFormatting.DARK_PURPLE);

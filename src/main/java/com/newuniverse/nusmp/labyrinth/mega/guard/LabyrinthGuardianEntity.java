@@ -12,7 +12,6 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.GuardianScaling.Trait;
 import com.newuniverse.nusmp.labyrinth.seal.FloorWardenEntity;
 import com.newuniverse.nusmp.labyrinth.seal.PeakAltarBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -34,6 +33,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the boss of a sector. It IS a Floor Warden (the Labyrinth's own mini-boss: same model, armour layer, melee AI, Ground Slam, Shadow
@@ -313,8 +315,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         phaseTwo = true;
         traits.restart(sl.getGameTime(), 40);
         com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.AGGRO);       // 1.99.0: the roar of its own family (a lich whispers, a dragon roars)
-        sl.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getY() + getBbHeight() * 0.5, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
-        sl.sendParticles(ParticleTypes.END_ROD, getX(), getY() + getBbHeight() * 0.5, getZ(), 60, 1.2, 1.6, 1.2, 0.12);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.SONIC_BOOM, getX(), getY() + getBbHeight() * 0.5, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, getX(), getY() + getBbHeight() * 0.5, getZ(), 60, 1.2, 1.6, 1.2, 0.12);
         for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) {
             p.displayClientMessage(Component.translatable("message.nusmp.mega.mgd.phase_two").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC), true);
         }
@@ -332,11 +334,11 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         if (anchor == null) return;
         boolean out = !insideLeash(getX(), getZ()) || Math.abs(getY() - anchor.getY()) > 20.0;
         if (!out) return;
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, getX(), getY() + 1.4, getZ(), 30, 0.5, 1.2, 0.5, 0.1);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, getX(), getY() + 1.4, getZ(), 30, 0.5, 1.2, 0.5, 0.1);
         teleportTo(anchor.getX() + 0.5, anchor.getY() + 1.0, anchor.getZ() + 0.5);
         getNavigation().stop();
         setTarget(null);
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, getX(), getY() + 1.4, getZ(), 30, 0.5, 1.2, 0.5, 0.1);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, getX(), getY() + 1.4, getZ(), 30, 0.5, 1.2, 0.5, 0.1);
         com.newuniverse.nusmp.audio.MobVoice.play(this, soundFamily(), com.newuniverse.nusmp.audio.Cue.CAST);
     }
 
@@ -383,7 +385,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level() instanceof ServerLevel shield && decennial.shielded(this, shield) && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-            shield.sendParticles(ParticleTypes.END_ROD, getX(), getY() + getBbHeight() * 0.6, getZ(), 2, 0.5, 0.6, 0.5, 0.02);     // 1.99.0: the two seconds of a shift, or a hall not built yet
+            Fx.spray(shield, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, getX(), getY() + getBbHeight() * 0.6, getZ(), 2, 0.5, 0.6, 0.5, 0.02);     // 1.99.0: the two seconds of a shift, or a hall not built yet
             return false;
         }
         float effective = divisor > 1.0 ? (float) (amount / divisor) : amount;                   // health the attribute cannot hold is paid as divided damage

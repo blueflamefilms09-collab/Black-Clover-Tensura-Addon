@@ -22,6 +22,9 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: this is where Rouge's fate rewrite actually happens. A protected ally's deadly or heavy blow arrives as a damage event, an
@@ -144,8 +147,8 @@ public final class RougeFateEvents {
     /** A burst of red dust and white glints where the fate was rewritten (the thread VFX itself comes from the tap). */
     private static void sparkle(LivingEntity victim) {
         if (!(victim.level() instanceof ServerLevel sl)) return;
-        sl.sendParticles(new DustParticleOptions(new Vector3f(1f, 0.2f, 0.33f), 1.0f), victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(),
+        Fx.sprayDust(sl, FxThemes.MAGIC_THREAD, new Vector3f(1f, 0.2f, 0.33f), 1.0f, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(),
                 18, 0.35, 0.5, 0.35, 0.02);
-        sl.sendParticles(net.minecraft.core.particles.ParticleTypes.END_ROD, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
+        Fx.spray(sl, FxThemes.MAGIC_THREAD, FxOld.END_ROD, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
     }
 }

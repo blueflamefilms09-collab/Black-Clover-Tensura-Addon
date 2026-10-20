@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.labyrinth.mega.lock;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the escape the owner asked for must be VISIBLE: "a clearly labelled exit rune". A rune is two vanilla entities and no new block, item or texture: an {@code interaction}
@@ -184,12 +186,12 @@ public final class LockRunes {
     }
 
     private static void glow(ServerLevel level, Vec3 pos, boolean exit) {
-        var ring = exit ? ParticleTypes.REVERSE_PORTAL : ParticleTypes.END_ROD;
+        var ring = exit ? Fx.options(FxThemes.DUNGEON_LOCK, FxOld.REVERSE_PORTAL) : Fx.options(FxThemes.DUNGEON_LOCK, FxOld.END_ROD);
         for (int i = 0; i < 12; i++) {
             double a = i * Math.PI * 2.0 / 12.0;
             level.sendParticles(ring, pos.x + Math.cos(a) * 0.9, pos.y + 0.1, pos.z + Math.sin(a) * 0.9, 1, 0.0, 0.4, 0.0, 0.03);
         }
-        level.sendParticles(ParticleTypes.ENCHANT, pos.x, pos.y + 1.6, pos.z, 10, 0.5, 0.6, 0.5, 0.2);
+        Fx.spray(level, FxThemes.DUNGEON_LOCK, FxOld.ENCHANT, pos.x, pos.y + 1.6, pos.z, 10, 0.5, 0.6, 0.5, 0.2);
     }
 
     /** All runes' keys (for the status command and the tests). */

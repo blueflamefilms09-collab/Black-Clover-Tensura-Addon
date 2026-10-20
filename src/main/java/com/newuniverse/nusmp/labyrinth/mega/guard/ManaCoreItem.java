@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -22,6 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Mana Core is the one thing a sector's Labyrinth Guardian leaves behind, and it is a KEY with three jobs: to be unmistakable
@@ -118,7 +120,7 @@ public class ManaCoreItem extends Item {
         if (!(entity.level() instanceof ServerLevel sl)) return false;
         try {
             long t = sl.getGameTime();
-            if (t % 10 == 0) sl.sendParticles(ParticleTypes.END_ROD, entity.getX(), entity.getY() + 0.3, entity.getZ(), 1, 0.15, 0.2, 0.15, 0.01);
+            if (t % 10 == 0) Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, entity.getX(), entity.getY() + 0.3, entity.getZ(), 1, 0.15, 0.2, 0.15, 0.01);
             if (t % 40 == 0 && Labyrinth.inMega(sl) && entity.getY() < MegaGrid.ORIGIN_Y - 6) rescue(sl, stack, entity);
         } catch (RuntimeException e) {
             GuardLog.failed("core update", e);                                             // an item entity that throws in its update would crash the tick
@@ -142,6 +144,6 @@ public class ManaCoreItem extends Item {
         if (at == null || !sl.isLoaded(at)) return;
         entity.setPos(at.getX() + 0.5, at.getY() + 0.4, at.getZ() + 0.5);
         entity.setDeltaMovement(Vec3.ZERO);
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 20, 0.3, 0.4, 0.3, 0.05);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 20, 0.3, 0.4, 0.3, 0.05);
     }
 }

@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.avatar.menu.AvatarMenus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
@@ -16,6 +15,9 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the one client entry point of the Avatar creation system (the Devil Avatar boss keeps its own {@code AvatarClient}; a second {@code register}
@@ -50,13 +52,13 @@ public final class PlayerAvatarClient {
             var r = level.random;
             float s = a.getScale();
             if (a.frenzied()) {
-                level.addParticle(ParticleTypes.LARGE_SMOKE, a.getX() + (r.nextDouble() - 0.5) * 0.8 * s, a.getY() + r.nextDouble() * 1.8 * s, a.getZ() + (r.nextDouble() - 0.5) * 0.8 * s, 0, 0.04, 0);
+                Fx.add(level, FxThemes.BOSS_AVATAR, FxOld.LARGE_SMOKE, a.getX() + (r.nextDouble() - 0.5) * 0.8 * s, a.getY() + r.nextDouble() * 1.8 * s, a.getZ() + (r.nextDouble() - 0.5) * 0.8 * s, 0, 0.04, 0);
                 if ((phase & 1) == 0)
-                    level.addParticle(new DustParticleOptions(new Vector3f(0.45f, 0.02f, 0.06f), 1.3f), a.getX() + (r.nextDouble() - 0.5) * s, a.getY() + r.nextDouble() * 1.9 * s,
+                    Fx.addDust(level, FxThemes.BOSS_AVATAR, new Vector3f(0.45f, 0.02f, 0.06f), 1.3f, a.getX() + (r.nextDouble() - 0.5) * s, a.getY() + r.nextDouble() * 1.9 * s,
                             a.getZ() + (r.nextDouble() - 0.5) * s, 0, 0.06, 0);
             } else if ((phase + a.getId()) % 8 == 0) {
                 int c = AvatarLooks.of(a).auraRgb();
-                level.addParticle(new DustParticleOptions(new Vector3f(((c >> 16) & 255) / 255f, ((c >> 8) & 255) / 255f, (c & 255) / 255f), 0.7f),
+                Fx.addDust(level, FxThemes.BOSS_AVATAR, new Vector3f(((c >> 16) & 255) / 255f, ((c >> 8) & 255) / 255f, (c & 255) / 255f), 0.7f,
                         a.getX() + (r.nextDouble() - 0.5) * 1.2 * s, a.getY() + 0.1, a.getZ() + (r.nextDouble() - 0.5) * 1.2 * s, 0, 0.03, 0);
             }
         }

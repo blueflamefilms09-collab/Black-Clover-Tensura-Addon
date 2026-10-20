@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.labyrinth.seal.ShadowKeyItem;
 import com.newuniverse.nusmp.quests.NusmpEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +21,9 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the new {@code kind=sector} of the Gatekeeper door answers to exactly one thing, the Mana Core of its own sector, and the code that
@@ -68,9 +70,9 @@ public final class SectorDoor {
         if (!player.isCreative()) stack.shrink(1);
         sl.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.2f, 0.5f);
         sl.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 1.4f);
-        sl.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 40, 1.2, 1.4, 0.8, 0.02);
-        sl.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 1.0, 1.4, 0.6, 0.04);
-        sl.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 60, 1.4, 1.6, 1.0, 0.8);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 40, 1.2, 1.4, 0.8, 0.02);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 1.0, 1.4, 0.6, 0.04);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 60, 1.4, 1.6, 1.0, 0.8);
         tell(player, "message.nusmp.mega.mgd.door_open");
         creditParty(sl, pos, player, sector.id);
         try {

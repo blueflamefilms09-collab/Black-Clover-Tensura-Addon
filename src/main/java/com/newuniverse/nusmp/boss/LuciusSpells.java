@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +19,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Lucius's three cast spells (see {@link LuciusSpellTable}): the code and the telegraph of each, looked up by move id from LuciusBoss.
@@ -106,7 +108,7 @@ public final class LuciusSpells {
             b.later(i * 4, () -> {
                 VfxSpawn.send(sl, VfxShape.FIRE_PILLAR, at, at.add(0, 3, 0), SUN_ARGB, 14, (float) LuciusNumbers.MEGIDDO_RADIUS);
                 ZogratisVfx.pillar(sl, at, LuciusNumbers.MEGIDDO_RADIUS, 18, FxMath.divine(b.power()), false);
-                sl.sendParticles(ParticleTypes.FLAME, at.x, at.y + 1, at.z, 30, 1.2, 1.5, 1.2, 0.05);
+                Fx.spray(sl, FxThemes.BOSS_LUCIUS, FxOld.FLAME, at.x, at.y + 1, at.z, 30, 1.2, 1.5, 1.2, 0.05);
                 sl.playSound(null, net.minecraft.core.BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 1.2f, 1.4f);
                 for (LivingEntity f : b.foesAround(at, LuciusNumbers.MEGIDDO_RADIUS)) {
                     if (budget.take(f.getUUID())) b.strike(f, LuciusNumbers.MEGIDDO_BLAST, true);

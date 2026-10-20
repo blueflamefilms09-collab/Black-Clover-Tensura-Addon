@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.celestial;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +18,9 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: a Celestial Key is a physical item (a Gold Zodiac key or a silver key), the only thing that lets Celestial Spirit Magic call its spirit. Holding the key and
@@ -69,7 +71,7 @@ public final class CelestialKeyItem extends Item {
         double a = done * 0.45, r = 1.6 - 1.2 * done / (double) CelestialRules.BIND_TICKS;
         for (int i = 0; i < 3; i++) {
             double ang = a + i * Math.PI * 2 / 3;
-            sl.sendParticles(ParticleTypes.END_ROD, p.getX() + Math.cos(ang) * r, p.getY() + 0.2 + done * 0.03, p.getZ() + Math.sin(ang) * r, 1, 0, 0, 0, 0);
+            Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, p.getX() + Math.cos(ang) * r, p.getY() + 0.2 + done * 0.03, p.getZ() + Math.sin(ang) * r, 1, 0, 0, 0, 0);
         }
         if (done % 20 == 0) sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.8f, 0.8f + done / 60f);
     }
@@ -82,7 +84,7 @@ public final class CelestialKeyItem extends Item {
             p.displayClientMessage(Component.translatableWithFallback("message.nusmp.celestial.bound", "A contract is sealed with %s.", key.spirit).withStyle(ChatFormatting.GOLD), true);
             ServerLevel sl = (ServerLevel) level;
             sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.9f, 1.6f);
-            sl.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1, p.getZ(), 40, 0.6, 0.8, 0.6, 0.05);
+            Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, p.getX(), p.getY() + 1, p.getZ(), 40, 0.6, 0.8, 0.6, 0.05);
         } else {
             p.displayClientMessage(refusal(r), true);
         }

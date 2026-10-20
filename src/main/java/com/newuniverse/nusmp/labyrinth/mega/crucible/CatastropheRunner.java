@@ -35,6 +35,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the three catastrophes of the Crucible (a collapse of falling dust, a toxic magicule flood, a Cursed Spirit) are one small tick-driven state
@@ -172,7 +175,7 @@ public final class CatastropheRunner {
         if (a == null || a.spirit == null || level == null) return;
         Entity e = level.getEntity(a.spirit);
         if (e != null) {
-            level.sendParticles(ParticleTypes.POOF, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
+            Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.POOF, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
             e.discard();
         }
     }
@@ -307,8 +310,8 @@ public final class CatastropheRunner {
     private static void impact(ServerLevel level, Active a, Debris d) {
         BlockPos at = BlockPos.containing(d.x(), d.y(), d.z());
         level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DEEPSLATE_BRICKS.defaultBlockState()), d.x(), d.y() + 0.2, d.z(), 36, 0.45, 0.2, 0.45, 0.14);
-        level.sendParticles(ParticleTypes.POOF, d.x(), d.y() + 0.3, d.z(), 8, 0.45, 0.2, 0.45, 0.05);
-        level.sendParticles(ParticleTypes.LARGE_SMOKE, d.x(), d.y() + 0.4, d.z(), 4, 0.35, 0.2, 0.35, 0.02);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.POOF, d.x(), d.y() + 0.3, d.z(), 8, 0.45, 0.2, 0.45, 0.05);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.LARGE_SMOKE, d.x(), d.y() + 0.4, d.z(), 4, 0.35, 0.2, 0.35, 0.02);
         level.playSound(null, at, SoundEvents.DEEPSLATE_BRICKS_BREAK, SoundSource.BLOCKS, 1.0f, 0.55f);
         level.playSound(null, at, d.harmful() ? SoundEvents.ANVIL_LAND : SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, d.harmful() ? 0.5f : 0.8f, 0.5f);
         if (!d.harmful()) return;
@@ -331,7 +334,7 @@ public final class CatastropheRunner {
     static float hit(ServerLevel level, int threat, LivingEntity victim, float allowance) {
         float dmg = Math.min(allowance, CrucibleRules.collapsePulseDamage(threat, ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE), ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE_PER_THREAT), victim.getMaxHealth()));
         if (dmg > 0f) victim.hurt(level.damageSources().generic(), dmg);
-        level.sendParticles(ParticleTypes.LARGE_SMOKE, victim.getX(), victim.getY() + 0.3, victim.getZ(), 12, 0.5, 0.2, 0.5, 0.04);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.LARGE_SMOKE, victim.getX(), victim.getY() + 0.3, victim.getZ(), 12, 0.5, 0.2, 0.5, 0.04);
         level.playSound(null, victim.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.7f, 0.4f);
         return Math.max(0f, dmg);
     }
@@ -379,7 +382,7 @@ public final class CatastropheRunner {
         for (int i = 0; i < 4; i++) {
             double x = c.getX() + 0.5 + (rng.nextDouble() - 0.5) * 20.0, z = c.getZ() + 0.5 + (rng.nextDouble() - 0.5) * 20.0;
             level.sendParticles(violet, x, c.getY() + 0.2, z, 6, 0.8, 0.3, 0.8, 0.0);
-            level.sendParticles(ParticleTypes.WITCH, x, c.getY() + 0.3, z, 0, 0.0, 1.0, 0.0, 0.12);
+            Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.WITCH, x, c.getY() + 0.3, z, 0, 0.0, 1.0, 0.0, 0.12);
         }
     }
 
@@ -417,7 +420,7 @@ public final class CatastropheRunner {
         }
         if (!CatastropheRules.spiritAbandoned(now, a.lastPlayerTick, ThemeConfig.get(ThemeConfig.SPIRIT_MINUTES))) return false;
         if (e != null) {                                                             // nobody came back: the spirit is let go
-            level.sendParticles(ParticleTypes.POOF, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
+            Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.POOF, e.getX(), e.getY() + 1.0, e.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
             e.discard();
         }
         return true;
@@ -444,8 +447,8 @@ public final class CatastropheRunner {
         double radius = 1.8 - 1.2 * Math.min(1.0, elapsed / (double) CatastropheRules.SPIRIT_SUMMON_TICKS);
         for (int i = 0; i < 10; i++) {
             double ang = (Math.PI * 2.0) * i / 10.0 + elapsed * 0.25;
-            level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, mob.getX() + Math.cos(ang) * radius, mob.getY() + 0.1, mob.getZ() + Math.sin(ang) * radius, 1, 0.0, 0.05, 0.0, 0.02);
+            Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.SOUL_FIRE_FLAME, mob.getX() + Math.cos(ang) * radius, mob.getY() + 0.1, mob.getZ() + Math.sin(ang) * radius, 1, 0.0, 0.05, 0.0, 0.02);
         }
-        level.sendParticles(ParticleTypes.SOUL, mob.getX(), mob.getY() + 1.0, mob.getZ(), 2, 0.3, 0.6, 0.3, 0.02);
+        Fx.spray(level, FxThemes.DUNGEON_CRUCIBLE, FxOld.SOUL, mob.getX(), mob.getY() + 1.0, mob.getZ(), 2, 0.3, 0.6, 0.3, 0.02);
     }
 }

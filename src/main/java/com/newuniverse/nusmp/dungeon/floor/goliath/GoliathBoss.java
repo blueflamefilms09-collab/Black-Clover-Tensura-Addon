@@ -36,6 +36,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The Goliath, a floor boss of the dungeon: a stone giant six blocks tall that can be born from a bedrock seal in the floor and
@@ -204,7 +207,7 @@ public class GoliathBoss extends ZogratisBoss {
         }
         if (age % 2 == 0) {
             sl.sendParticles(bedrockBits(), seal.x, seal.y + 0.3, seal.z, GoliathRise.crackBits(age), 3.0, 0.2, 3.0, 0.06);
-            if (age % 4 == 0) sl.sendParticles(ParticleTypes.POOF, seal.x, seal.y + 0.2, seal.z, 3, 3.0, 0.1, 3.0, 0.02);
+            if (age % 4 == 0) Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.POOF, seal.x, seal.y + 0.2, seal.z, 3, 3.0, 0.1, 3.0, 0.02);
         }
         if (age % 10 == 5) GoliathMoves.dustRing(sl, seal, 1.5 + 3.0 * age / GoliathRise.CRACK_TICKS, GoliathMoves.AMBER, 1.0f);
         if (age % 12 == 0) GoliathMoves.sound(sl, seal, SoundEvents.DEEPSLATE_BREAK, 2.5f, GoliathRise.crackPitch(age));
@@ -215,7 +218,7 @@ public class GoliathBoss extends ZogratisBoss {
         if (up == 0) emerge(sl, seal);
         if (up % 3 == 0) {
             sl.sendParticles(chips(), seal.x, seal.y + 0.2, seal.z, 14, 2.6, 0.3, 2.6, 0.1);
-            sl.sendParticles(ParticleTypes.POOF, seal.x, seal.y + 0.2, seal.z, 2, 2.6, 0.1, 2.6, 0.03);
+            Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.POOF, seal.x, seal.y + 0.2, seal.z, 2, 2.6, 0.1, 2.6, 0.03);
         }
         if (up % 10 == 0) GoliathMoves.sound(sl, seal, SoundEvents.STONE_BREAK, 2.2f, 0.4f + 0.3f * GoliathRise.progress(up));
     }
@@ -332,7 +335,7 @@ public class GoliathBoss extends ZogratisBoss {
         GoliathMoves.sound(sl, position(), SoundEvents.WARDEN_ROAR, 5.0f, 0.4f);
         GoliathMoves.burst(sl, position().add(0, 1.5, 0), 80, 1.6);
         GoliathVfx.fall(this, position());
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 2.0, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+        Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.EXPLOSION_EMITTER, getX(), getY() + 2.0, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         if (!Labyrinth.in(sl)) return;
         String who = killer == null ? null : killer.getName().getString();
         sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(GoliathText.slain(who)).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
@@ -356,8 +359,8 @@ public class GoliathBoss extends ZogratisBoss {
     /** The stone cracks of the Gates give off sparks and the odd drop of molten rock. */
     private void embers(ServerLevel sl) {
         Vec3 c = position().add(0, getBbHeight() * 0.55, 0);
-        sl.sendParticles(ParticleTypes.SMALL_FLAME, c.x, c.y, c.z, 3, 0.9, 1.6, 0.9, 0.01);
-        if (tickCount % 24 == 0) sl.sendParticles(ParticleTypes.LAVA, c.x, c.y + 0.5, c.z, 1, 0.8, 1.2, 0.8, 0.0);
+        Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.SMALL_FLAME, c.x, c.y, c.z, 3, 0.9, 1.6, 0.9, 0.01);
+        if (tickCount % 24 == 0) Fx.spray(sl, FxThemes.BOSS_GOLIATH, FxOld.LAVA, c.x, c.y + 0.5, c.z, 1, 0.8, 1.2, 0.8, 0.0);
     }
 
     // ================================================================ moves

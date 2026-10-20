@@ -29,6 +29,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.IntConsumer;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Zenon's Bone Magic and Beelzebub's Spatial Magic as plain static functions on any {@link ZogratisBoss}: Zenon uses them, and Lucius
@@ -95,7 +98,7 @@ public final class ZenonMoves {
         for (int i = 0; i < n; i++) {
             Vec3 g = growthWorld(boss, i, n);
             sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.BONE_BLOCK.defaultBlockState()), g.x, g.y, g.z, 5, 0.12, 0.12, 0.12, 0.02);
-            sl.sendParticles(ParticleTypes.CRIT, g.x, g.y, g.z, 2, 0.1, 0.1, 0.1, 0.05);
+            Fx.spray(sl, FxThemes.BOSS_ZENON, FxOld.CRIT, g.x, g.y, g.z, 2, 0.1, 0.1, 0.1, 0.05);
         }
         sl.playSound(null, boss.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.HOSTILE, 1.4f, 0.6f);
         for (int i = 0; i < n; i++) {
@@ -580,7 +583,7 @@ public final class ZenonMoves {
             Vec3 tail = pos.subtract(d.scale(0.7));
             sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.BONE_BLOCK.defaultBlockState()), pos.x, pos.y, pos.z, 2, 0.1, 0.1, 0.1, 0.0);
             sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.BONE_BLOCK.defaultBlockState()), tail.x, tail.y, tail.z, 1, 0.06, 0.06, 0.06, 0.0);
-            sl.sendParticles(new DustParticleOptions(new Vector3f(DevilStyle.red(ACCENT), DevilStyle.green(ACCENT), DevilStyle.blue(ACCENT)), 0.8f),
+            Fx.sprayDust(sl, FxThemes.BOSS_ZENON, new Vector3f(DevilStyle.red(ACCENT), DevilStyle.green(ACCENT), DevilStyle.blue(ACCENT)), 0.8f,
                     pos.x, pos.y, pos.z, 1, 0.04, 0.04, 0.04, 0.0);
         }
 

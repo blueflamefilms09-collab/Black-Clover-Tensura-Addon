@@ -6,12 +6,14 @@ import com.newuniverse.nusmp.item.ElsdociaRules;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * 1.29.0: faint crystalline glitter round Elsdocia while a player holds it (any player in view: the effect is the weapon's, not the owner's).
@@ -51,7 +53,7 @@ public final class ElsdociaGlitterClient {
                 double ox = (r.nextDouble() - 0.5) * 0.16, oz = (r.nextDouble() - 0.5) * 0.16, oy = (r.nextDouble() - 0.5) * 0.1;
                 Vec3 at = hand.add(dir.scale(along)).add(ox, oy, oz);
                 boolean spark = r.nextInt(5) == 0;
-                mc.level.addParticle(spark ? ParticleTypes.END_ROD : (r.nextBoolean() ? ICE : WHITE), at.x, at.y, at.z, 0, spark ? 0.01 : -0.005, 0);
+                mc.level.addParticle(spark ? Fx.options(FxThemes.BOSS_ELSDOCIA, FxOld.END_ROD) : (r.nextBoolean() ? ICE : WHITE), at.x, at.y, at.z, 0, spark ? 0.01 : -0.005, 0);
             }
         }
     }
@@ -72,6 +74,6 @@ public final class ElsdociaGlitterClient {
         Vec3 look = p.getLookAngle();
         Vec3 hand = new Vec3(p.getX() - Math.cos(yaw) * 0.36 + look.x * 0.2, p.getY() + 1.25 + 0.35 * Math.sin(ang * 0.7), p.getZ() - Math.sin(yaw) * 0.36 + look.z * 0.2);
         Vec3 at = hand.add(Math.cos(ang) * r, 0, Math.sin(ang) * r);
-        mc.level.addParticle(new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.8f), at.x, at.y, at.z, 0, 0.002, 0);
+        Fx.addDust(mc.level, FxThemes.BOSS_ELSDOCIA, new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.8f, at.x, at.y, at.z, 0, 0.002, 0);
     }
 }

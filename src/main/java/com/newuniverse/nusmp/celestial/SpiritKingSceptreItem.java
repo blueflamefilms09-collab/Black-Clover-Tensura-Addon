@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.celestial;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the unique item of the Spirit King's reward. A sceptre crowned with a star: using it pours "Starlight Mend" over the holder and every player and pet within 8
@@ -44,7 +46,7 @@ public final class SpiritKingSceptreItem extends Item {
             BalanceLaw.heal(e, heal);
             e.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 200, 1));
-            sl.sendParticles(ParticleTypes.END_ROD, e.getX(), e.getY() + 1, e.getZ(), 14, 0.4, 0.7, 0.4, 0.04);
+            Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, e.getX(), e.getY() + 1, e.getZ(), 14, 0.4, 0.7, 0.4, 0.04);
         }
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, 1.3f);
         p.displayClientMessage(Component.translatableWithFallback("message.nusmp.celestial.sceptre", "Starlight Mend.").withStyle(ChatFormatting.AQUA), true);

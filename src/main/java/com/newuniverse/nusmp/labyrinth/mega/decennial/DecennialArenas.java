@@ -9,7 +9,6 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
 import com.newuniverse.nusmp.labyrinth.seal.GatekeeperDoorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -32,6 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: a hall is not only blocks. It has a party in it, interactive parts the party may break (and the Dungeon Guard must let it), a seal on the entry that holds while the fight lasts, hazard
@@ -411,7 +413,7 @@ public final class DecennialArenas {
                 say(sl, l, "element." + (e.kind == BossArenaStructure.Kind.ROOT_NODE ? "root_node" : "tombstone"), e.kind == BossArenaStructure.Kind.ROOT_NODE
                         ? "The root node bursts: lesser devils pour out!" : "The tombstone cracks, and something answers.", ChatFormatting.DARK_PURPLE);
                 spawnAdds(sl, boss, at, e.adds, breaker);
-                sl.sendParticles(ParticleTypes.SOUL, at[0], at[1] + 0.5, at[2], 18, 0.5, 0.6, 0.5, 0.04);
+                Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL, at[0], at[1] + 0.5, at[2], 18, 0.5, 0.6, 0.5, 0.04);
             }
             case TOPPLE -> {
                 say(sl, l, "element.pillar", "The pillar breaks, and falls!", ChatFormatting.GRAY);
@@ -421,7 +423,7 @@ public final class DecennialArenas {
             }
             default -> {
                 if (boss != null) for (Player p : DecennialFx.near(sl, at[0], at[1], at[2], 3.5)) DecennialFx.hurt(boss, p, atk * 0.12, true);
-                sl.sendParticles(ParticleTypes.EXPLOSION, at[0], at[1] + 0.6, at[2], 2, 0.3, 0.3, 0.3, 0.0);
+                Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.EXPLOSION, at[0], at[1] + 0.6, at[2], 2, 0.3, 0.3, 0.3, 0.0);
                 sl.playSound(null, BlockPos.containing(at[0], at[1], at[2]), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.4f, 0.8f);
             }
         }
@@ -441,7 +443,7 @@ public final class DecennialArenas {
                 DecennialFx.push(p, (s[0] + s[2]) / 2, (s[1] + s[3]) / 2, 0.5, 0.3);
             }
         }
-        sl.sendParticles(ParticleTypes.CLOUD, (s[0] + s[2]) / 2, l.frame.y0() + 1.2, (s[1] + s[3]) / 2, 30, Math.max(0.5, (s[2] - s[0]) / 2), 0.3, Math.max(0.5, (s[3] - s[1]) / 2), 0.05);
+        Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.CLOUD, (s[0] + s[2]) / 2, l.frame.y0() + 1.2, (s[1] + s[3]) / 2, 30, Math.max(0.5, (s[2] - s[0]) / 2), 0.3, Math.max(0.5, (s[3] - s[1]) / 2), 0.05);
     }
 
     /** A lair action brings a pillar down. */
@@ -502,7 +504,7 @@ public final class DecennialArenas {
         Site s = l.site;
         s.defeated = true;
         for (Mob m : AddKinds.of(sl, new AABB(l.frame.cx() - l.plan.size, l.frame.y0() - 6, l.frame.cz() - l.plan.size, l.frame.cx() + l.plan.size, l.frame.y0() + l.plan.height, l.frame.cz() + l.plan.size), boss.getUUID())) {
-            sl.sendParticles(ParticleTypes.SOUL, m.getX(), m.getY() + 0.6, m.getZ(), 8, 0.2, 0.4, 0.2, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL, m.getX(), m.getY() + 0.6, m.getZ(), 8, 0.2, 0.4, 0.2, 0.02);
             m.discard();
         }
         if (s.sealed) openSeal(sl, l, "defeated");

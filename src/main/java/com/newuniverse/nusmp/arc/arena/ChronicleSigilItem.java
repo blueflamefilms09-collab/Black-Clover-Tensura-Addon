@@ -7,7 +7,6 @@ import com.newuniverse.nusmp.arena.HourglassRules;
 import com.newuniverse.nusmp.arena.ZogratisArena;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.multiverse.Squads;
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -30,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: a story boss answers only in its arena, so the players need a way to be carried there and back that is a deliberate act (hold right click, three seconds,
@@ -149,11 +151,11 @@ public class ChronicleSigilItem extends Item {
 
     /** A closing ring of Rukh light round the user (the mod's own particles, drawn by the server through the Rukh budget). */
     private static void ring(ServerLevel sl, Player p, double radius, int phase) {
-        RukhFx.Alignment light = RukhFx.Alignment.of(false);
+        FxTone light = FxTone.of(false);
         int n = 10;
         for (int i = 0; i < n; i++) {
             double a = Math.PI * 2 * i / n + phase * 0.12;
-            RukhFx.burst(sl, p.getX() + Math.cos(a) * radius, p.getY() + 0.15 + (phase % 16) * 0.12, p.getZ() + Math.sin(a) * radius, light, 1);
+            Fx.burst(sl, FxThemes.ARENA_CHRONICLE, p.getX() + Math.cos(a) * radius, p.getY() + 0.15 + (phase % 16) * 0.12, p.getZ() + Math.sin(a) * radius, light, 1);
         }
     }
 
@@ -182,7 +184,7 @@ public class ChronicleSigilItem extends Item {
         List<ServerPlayer> companions = new ArrayList<>();
         for (UUID id : chosen) if (sl.getPlayerByUUID(id) instanceof ServerPlayer sp) companions.add(sp);
         Vec3 at = user.position();
-        RukhFx.burst(sl, at.add(0, 1, 0), RukhFx.Alignment.of(false), 12, 1.2);
+        Fx.burst(sl, FxThemes.ARENA_CHRONICLE, at.add(0, 1, 0), FxTone.of(false), 12, 1.2);
         ArcArenaTravel.enter(user, companions, pick);
         return stack;
     }

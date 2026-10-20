@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.prop.MagicProps;
 import com.newuniverse.nusmp.skill.CelestialArts;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +18,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the server behaviour of the two props of Celestial Spirit Magic. {@code CELESTIAL_1} is a spirit: it steps out of its magic circle (14 ticks), casts its move
@@ -58,7 +60,7 @@ public final class CelestialProps {
                 Vec3 c = e.position().add(0, 1.0 * e.scale(), 0);
                 CelestialKey key = CelestialKey.byOrdinal(e.param() & 0xFF);
                 VfxSpawn.send(sl, VfxShape.STAR_MAGIC, c, c.add(0, 1.5, 0), 0xFF000000 | (key == null ? 0xFFFFFF : key.rgb), 24, 1.1f);
-                sl.sendParticles(ParticleTypes.END_ROD, c.x, c.y, c.z, 18, 0.4, 0.8, 0.4, 0.04);
+                Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, c.x, c.y, c.z, 18, 0.4, 0.8, 0.4, 0.04);
             }
         });
         MagicProps.register(com.newuniverse.nusmp.prop.PropKind.CELESTIAL_2, new MagicProps.Behavior() {
@@ -100,7 +102,7 @@ public final class CelestialProps {
         int sync = (e.param() & 0xFF) | (phase << PHASE_SHIFT) | (since << SINCE_SHIFT);
         if (sync != e.param()) e.setParam(sync);
         e.setDeltaMovement(Vec3.ZERO);
-        if (t % 6 == 0) sl.sendParticles(ParticleTypes.END_ROD, e.getX() + (e.getRandom().nextDouble() - 0.5) * e.scale(), e.getY() + e.getRandom().nextDouble() * 2 * e.scale(),
+        if (t % 6 == 0) Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, e.getX() + (e.getRandom().nextDouble() - 0.5) * e.scale(), e.getY() + e.getRandom().nextDouble() * 2 * e.scale(),
                 e.getZ() + (e.getRandom().nextDouble() - 0.5) * e.scale(), 1, 0, 0.05, 0, 0.01);
         if (t == 1) sl.playSound(null, e.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.2f, 0.9f);
     }
@@ -123,7 +125,7 @@ public final class CelestialProps {
     private static void gateTick(MagicPropEntity e, ServerLevel sl) {
         int t = e.life(), max = e.maxLife();
         Vec3 c = e.position().add(0, 1.8 * e.scale(), 0);
-        if (t % 4 == 0) sl.sendParticles(ParticleTypes.END_ROD, c.x + (e.getRandom().nextDouble() - 0.5) * 2, c.y + (e.getRandom().nextDouble() - 0.5) * 3 * e.scale(), c.z + (e.getRandom().nextDouble() - 0.5) * 2, 1, 0, 0.02, 0, 0.0);
+        if (t % 4 == 0) Fx.spray(sl, FxThemes.SKILL_CELESTIAL, FxOld.END_ROD, c.x + (e.getRandom().nextDouble() - 0.5) * 2, c.y + (e.getRandom().nextDouble() - 0.5) * 3 * e.scale(), c.z + (e.getRandom().nextDouble() - 0.5) * 2, 1, 0, 0.02, 0, 0.0);
         if (t == 1) {
             VfxSpawn.send(sl, VfxShape.DIVINE_PILLAR, c, c.add(0, 3, 0), 0xFFFFF3B0, 40, 2.2f);
             sl.playSound(null, e.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1.4f, 0.8f);

@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.entity;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -19,6 +18,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * 0.52: Charmy's cotton cloud, the one prop most of Cotton Magic's spells use (it replaces the old billboard sheep and puffs).
@@ -130,14 +132,14 @@ public class CottonCloudEntity extends Entity {
                 if (p instanceof LivingEntity l) l.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 120, 0));
             }
         }
-        sl.sendParticles(ParticleTypes.CLOUD, getX(), getY() + 0.5, getZ(), 16, 0.8 * cloudScale(), 0.3, 0.8 * cloudScale(), 0.03);
+        Fx.spray(sl, FxThemes.MAGIC_COTTON, FxOld.CLOUD, getX(), getY() + 0.5, getZ(), 16, 0.8 * cloudScale(), 0.3, 0.8 * cloudScale(), 0.03);
         discard();
     }
 
     private void fx() {
         if (tickCount % 3 != 0) return;
         float s = cloudScale();
-        level().addParticle(mode() == BURST ? ParticleTypes.POOF : ParticleTypes.CLOUD, getX() + (random.nextDouble() - 0.5) * 2.2 * s, getY() + 0.2 + random.nextDouble() * 0.6 * s,
+        level().addParticle(mode() == BURST ? Fx.options(FxThemes.MAGIC_COTTON, FxOld.POOF) : Fx.options(FxThemes.MAGIC_COTTON, FxOld.CLOUD), getX() + (random.nextDouble() - 0.5) * 2.2 * s, getY() + 0.2 + random.nextDouble() * 0.6 * s,
                 getZ() + (random.nextDouble() - 0.5) * 2.2 * s, 0, 0.01, 0);
     }
 

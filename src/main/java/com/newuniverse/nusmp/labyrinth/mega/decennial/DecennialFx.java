@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -16,6 +15,9 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the lair actions, the signature mechanics and the fight bookkeeping all need the same few small things (who is a legitimate target, how hard a share of the boss's attack really hits once the
@@ -129,22 +131,22 @@ final class DecennialFx {
     /** The game particle a table name means (the closed list of {@code DecennialVocab.PARTICLES}). */
     static ParticleOptions particle(String id) {
         return switch (id == null ? "" : id) {
-            case "soul" -> ParticleTypes.SOUL;
-            case "soul_fire_flame" -> ParticleTypes.SOUL_FIRE_FLAME;
-            case "flame" -> ParticleTypes.FLAME;
-            case "end_rod" -> ParticleTypes.END_ROD;
-            case "crit" -> ParticleTypes.CRIT;
-            case "portal" -> ParticleTypes.PORTAL;
-            case "witch" -> ParticleTypes.WITCH;
-            case "squid_ink" -> ParticleTypes.SQUID_INK;
-            case "sculk_soul" -> ParticleTypes.SCULK_SOUL;
-            case "cloud" -> ParticleTypes.CLOUD;
-            case "electric_spark" -> ParticleTypes.ELECTRIC_SPARK;
-            case "snowflake" -> ParticleTypes.SNOWFLAKE;
-            case "happy_villager" -> ParticleTypes.HAPPY_VILLAGER;
-            case "enchant" -> ParticleTypes.ENCHANT;
-            case "crimson_spore" -> ParticleTypes.CRIMSON_SPORE;
-            default -> ParticleTypes.SMOKE;
+            case "soul" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL);
+            case "soul_fire_flame" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL_FIRE_FLAME);
+            case "flame" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.FLAME);
+            case "end_rod" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.END_ROD);
+            case "crit" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.CRIT);
+            case "portal" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.PORTAL);
+            case "witch" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.WITCH);
+            case "squid_ink" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SQUID_INK);
+            case "sculk_soul" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SCULK_SOUL);
+            case "cloud" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.CLOUD);
+            case "electric_spark" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.ELECTRIC_SPARK);
+            case "snowflake" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SNOWFLAKE);
+            case "happy_villager" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.HAPPY_VILLAGER);
+            case "enchant" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.ENCHANT);
+            case "crimson_spore" -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.CRIMSON_SPORE);
+            default -> Fx.options(FxThemes.DUNGEON_DECENNIAL, FxOld.SMOKE);
         };
     }
 

@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.gate;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,6 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Labyrinth Gate ({@code nusmp:labyrinth_gate}) is a block you walk into, not one you click, so a party runs through the arch together
@@ -50,9 +52,9 @@ public class GateBlock extends Block {
             double a = t + i * 2.0944 + rnd.nextDouble() * 0.3, r = 0.65 - i * 0.06;
             double x = pos.getX() + 0.5 + Math.cos(a) * r, z = pos.getZ() + 0.5 + Math.sin(a) * r;
             double y = pos.getY() + 0.15 + rnd.nextDouble() * 0.7;
-            level.addParticle(ParticleTypes.PORTAL, x, y, z, -Math.cos(a) * 0.1, -0.05, -Math.sin(a) * 0.1);
+            Fx.add(level, FxThemes.DUNGEON_GATE, FxOld.PORTAL, x, y, z, -Math.cos(a) * 0.1, -0.05, -Math.sin(a) * 0.1);
         }
-        if (rnd.nextInt(4) == 0) level.addParticle(ParticleTypes.END_ROD, pos.getX() + 0.2 + rnd.nextDouble() * 0.6, pos.getY() + 0.2 + rnd.nextDouble() * 0.6, pos.getZ() + 0.2 + rnd.nextDouble() * 0.6, 0.0, 0.01, 0.0);
+        if (rnd.nextInt(4) == 0) Fx.add(level, FxThemes.DUNGEON_GATE, FxOld.END_ROD, pos.getX() + 0.2 + rnd.nextDouble() * 0.6, pos.getY() + 0.2 + rnd.nextDouble() * 0.6, pos.getZ() + 0.2 + rnd.nextDouble() * 0.6, 0.0, 0.01, 0.0);
         if (rnd.nextInt(100) == 0) level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.3f, 0.6f + rnd.nextFloat() * 0.3f, false);
     }
 }

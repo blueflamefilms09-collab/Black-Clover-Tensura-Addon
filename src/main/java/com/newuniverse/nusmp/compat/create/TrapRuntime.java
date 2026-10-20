@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -32,6 +31,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the part of a Create trap that hurts and moves things, run by the mod itself so a trap works whatever Create does with its own blocks. Create's saws, drills, pistons,
@@ -244,11 +246,11 @@ public final class TrapRuntime {
     /** Particles of a warning or a strike along the band. */
     private static void show(ServerLevel level, Live lv, Blueprint.Band band, boolean strike) {
         ParticleOptions p = switch (band.kind()) {
-            case SLASH -> strike ? ParticleTypes.SWEEP_ATTACK : ParticleTypes.CRIT;
-            case CRUSH -> strike ? ParticleTypes.LARGE_SMOKE : ParticleTypes.SMOKE;
-            case BORE -> strike ? ParticleTypes.CRIT : ParticleTypes.SMOKE;
-            case SCALD -> strike ? ParticleTypes.FALLING_LAVA : ParticleTypes.DRIPPING_LAVA;
-            case SHOCK -> ParticleTypes.ELECTRIC_SPARK;
+            case SLASH -> strike ? Fx.options(FxThemes.DUNGEON_TRAP, FxOld.SWEEP_ATTACK) : Fx.options(FxThemes.DUNGEON_TRAP, FxOld.CRIT);
+            case CRUSH -> strike ? Fx.options(FxThemes.DUNGEON_TRAP, FxOld.LARGE_SMOKE) : Fx.options(FxThemes.DUNGEON_TRAP, FxOld.SMOKE);
+            case BORE -> strike ? Fx.options(FxThemes.DUNGEON_TRAP, FxOld.CRIT) : Fx.options(FxThemes.DUNGEON_TRAP, FxOld.SMOKE);
+            case SCALD -> strike ? Fx.options(FxThemes.DUNGEON_TRAP, FxOld.FALLING_LAVA) : Fx.options(FxThemes.DUNGEON_TRAP, FxOld.DRIPPING_LAVA);
+            case SHOCK -> Fx.options(FxThemes.DUNGEON_TRAP, FxOld.ELECTRIC_SPARK);
         };
         double zMid = (band.zMin() + band.zMax()) / 2.0, xMid = (band.xMin() + band.xMax()) / 2.0;
         Vec3 c = lv.frame.point(xMid, zMid);

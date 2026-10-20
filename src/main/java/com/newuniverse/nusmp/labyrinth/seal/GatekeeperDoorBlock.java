@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.labyrinth.seal;
 import com.newuniverse.nusmp.dungeon.DungeonGuard;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -33,6 +32,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Labyrinth's sealed doors are a BLOCKSTATE MACHINE and not a block entity. A door is a column pair of ordinary blocks with three
@@ -116,8 +118,8 @@ public class GatekeeperDoorBlock extends Block {
         level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 0.6f);
         if (opened > 0 && player instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.quests.NusmpEvents.fire(sp, "labyrinth.seal_opened", "warden");
         if (level instanceof ServerLevel sl) {
-            sl.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 0.6, 0.9, 0.6, 0.02);
-            sl.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.5, 0.8, 0.5, 0.03);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 0.6, 0.9, 0.6, 0.02);
+            Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.5, 0.8, 0.5, 0.03);
         }
         tell(player, "message.nusmp.gatekeeper.warden_open");
         return opened > 0 ? ItemInteractionResult.CONSUME : ItemInteractionResult.FAIL;

@@ -17,10 +17,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
-import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -44,6 +41,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Draws carried grimoires (0.22):
@@ -549,16 +549,16 @@ public final class GrimoireFloatClient {
         if (mc.level == null) return;
         Vector4f v = m.transform(new Vector4f(x, y, z, 1f));
         double wx = cam.x + v.x(), wy = cam.y + v.y(), wz = cam.z + v.z();
-        Alignment type;
+        FxTone type;
         double vy = 0;
         switch (style) {
-            case ANTI -> { type = Alignment.DARK; vy = 0.01; }
-            case EMBER -> { type = Alignment.LIGHT; vy = 0.02; }
-            case DROPLET -> type = Alignment.LIGHT;
-            case GUST -> { type = Alignment.LIGHT; vy = 0.01; }
-            case DUST -> type = Alignment.DARK;                                    // earth dust: the dull flock
+            case ANTI -> { type = FxTone.DARK; vy = 0.01; }
+            case EMBER -> { type = FxTone.LIGHT; vy = 0.02; }
+            case DROPLET -> type = FxTone.LIGHT;
+            case GUST -> { type = FxTone.LIGHT; vy = 0.01; }
+            case DUST -> type = FxTone.DARK;                                    // earth dust: the dull flock
             default -> { return; }                                                 // plain parchment: just the rustle
         }
-        RukhClientFx.spray(mc.level, type, wx, wy, wz, 1, (RNG.nextFloat() - 0.5f) * 0.02, vy, (RNG.nextFloat() - 0.5f) * 0.02, 1.0);
+        Fx.spray(mc.level, FxThemes.SKILL_GRIMOIRE, type, wx, wy, wz, 1, (RNG.nextFloat() - 0.5f) * 0.02, vy, (RNG.nextFloat() - 0.5f) * 0.02, 1.0);
     }
 }

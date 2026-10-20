@@ -11,13 +11,15 @@ import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the Labyrinth Guardian used to wear the Floor Warden's armour whatever boss it was, so the lich, the beholder and the five-headed dragon all looked like the same suit of armour. This is the
@@ -143,7 +145,7 @@ public class AbyssalRenderer extends KitMobRenderer<LivingArmorEntity> {
         double h = e.getBbHeight(), w = Math.max(0.5, e.getBbWidth());
         for (int i = 0; i < 6; i++) {
             double x = e.getX() + (level.random.nextDouble() - 0.5) * w * 1.2, y = e.getY() + level.random.nextDouble() * h, z = e.getZ() + (level.random.nextDouble() - 0.5) * w * 1.2;
-            level.addParticle(i % 3 == 0 ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.ASH, x, y, z, 0.0, 0.03, 0.0);
+            level.addParticle(i % 3 == 0 ? Fx.options(FxThemes.BOSS_ABYSSAL, FxOld.SOUL_FIRE_FLAME) : Fx.options(FxThemes.BOSS_ABYSSAL, FxOld.ASH), x, y, z, 0.0, 0.03, 0.0);
         }
     }
 }

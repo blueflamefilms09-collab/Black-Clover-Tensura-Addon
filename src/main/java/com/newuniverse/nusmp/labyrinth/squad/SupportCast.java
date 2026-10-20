@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.squad;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -10,6 +9,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: what a squad's healer or buffer DOES to its friends, apart from where it stands. It heals the most wounded ally within ten blocks (below 70 percent) with the
@@ -61,7 +63,7 @@ final class SupportCast {
         float amount = (float) (ally.getMaxHealth() * SquadConfig.get(SquadConfig.HEAL_FRACTION));
         float healed = BalanceLaw.heal(ally, amount);
         if (healed <= 0.0F) return;
-        level.sendParticles(ParticleTypes.HEART, ally.getX(), ally.getY() + ally.getBbHeight() + 0.2, ally.getZ(), 4, 0.3, 0.2, 0.3, 0.02);
+        Fx.spray(level, FxThemes.DUNGEON_SQUAD, FxOld.HEART, ally.getX(), ally.getY() + ally.getBbHeight() + 0.2, ally.getZ(), 4, 0.3, 0.2, 0.3, 0.02);
         level.playSound(null, healer.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 0.7F, 1.5F);
         healer.getLookControl().setLookAt(ally, 30.0F, 30.0F);
     }
@@ -72,7 +74,7 @@ final class SupportCast {
             if (n >= 3) break;
             if (!Squad.healable(a) || a == healer || healer.distanceToSqr(a) > RANGE * RANGE) continue;
             a.addEffect(new MobEffectInstance(strength ? MobEffects.DAMAGE_BOOST : MobEffects.DAMAGE_RESISTANCE, 120, 0, true, true));
-            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, a.getX(), a.getY() + a.getBbHeight() * 0.6, a.getZ(), 3, 0.3, 0.3, 0.3, 0.02);
+            Fx.spray(level, FxThemes.DUNGEON_SQUAD, FxOld.HAPPY_VILLAGER, a.getX(), a.getY() + a.getBbHeight() * 0.6, a.getZ(), 3, 0.3, 0.3, 0.3, 0.02);
             n++;
         }
         if (n > 0) level.playSound(null, healer.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 0.6F, 1.2F);

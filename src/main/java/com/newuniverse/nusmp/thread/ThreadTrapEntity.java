@@ -27,6 +27,8 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: Vanessa's thread traps must act like real tripwires without touching the world: no blocks to place (worldgen and grief
@@ -146,12 +148,12 @@ public class ThreadTrapEntity extends Entity {
         } else {
             pr.discard();
         }
-        sl.sendParticles(new DustParticleOptions(new Vector3f(1f, 0.3f, 0.4f), 0.9f), pr.getX(), pr.getY(), pr.getZ(), 10, 0.2, 0.2, 0.2, 0.01);
+        Fx.sprayDust(sl, FxThemes.MAGIC_THREAD, new Vector3f(1f, 0.3f, 0.4f), 0.9f, pr.getX(), pr.getY(), pr.getZ(), 10, 0.2, 0.2, 0.2, 0.01);
         sl.playSound(null, getX(), getY(), getZ(), SoundEvents.WOOL_BREAK, SoundSource.PLAYERS, 0.8f, 1.8f);
         return true;
     }
 
     private void puff(ServerLevel sl, int n) {
-        sl.sendParticles(new DustParticleOptions(new Vector3f(1f, 0.2f, 0.33f), 0.8f), getX(), getY() + 0.4, getZ(), n, 0.5, 0.25, 0.5, 0.01);
+        Fx.sprayDust(sl, FxThemes.MAGIC_THREAD, new Vector3f(1f, 0.2f, 0.33f), 0.8f, getX(), getY() + 0.4, getZ(), n, 0.5, 0.25, 0.5, 0.01);
     }
 }

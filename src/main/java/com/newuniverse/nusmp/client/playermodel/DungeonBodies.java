@@ -14,7 +14,6 @@ import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryMobEntity;
 import com.newuniverse.nusmp.labyrinth.mega.guard.AbyssalLooks;
 import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
 import com.newuniverse.nusmp.labyrinth.seal.FloorWardenEntity;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,6 +21,9 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: what each humanoid of the dungeon tells the kit ({@link PlayerBody}) in phase 2 of the player-model conversion (docs/playermodel_phase2.md), one small class each, read straight from what
@@ -125,7 +127,7 @@ public final class DungeonBodies {
             double h = e.getBbHeight(), w = Math.max(0.5, e.getBbWidth());
             for (int i = 0; i < 6; i++) {
                 double x = e.getX() + (level.random.nextDouble() - 0.5) * w * 1.2, y = e.getY() + level.random.nextDouble() * h, z = e.getZ() + (level.random.nextDouble() - 0.5) * w * 1.2;
-                level.addParticle(i % 3 == 0 ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.ASH, x, y, z, 0.0, 0.03, 0.0);
+                level.addParticle(i % 3 == 0 ? Fx.options(FxThemes.DUNGEON_HUMANOID, FxOld.SOUL_FIRE_FLAME) : Fx.options(FxThemes.DUNGEON_HUMANOID, FxOld.ASH), x, y, z, 0.0, 0.03, 0.0);
             }
         }
     }

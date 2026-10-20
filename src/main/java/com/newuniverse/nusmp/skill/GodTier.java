@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.NUConfig;
 import net.minecraft.core.particles.ParticleOptions;
@@ -13,6 +12,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /** Helpers for the reality-warping skills. */
 final class GodTier {
@@ -58,7 +60,7 @@ final class GodTier {
         Vec3 step = to.subtract(from).normalize().scale(0.5);
         Vec3 p = from;
         for (int i = 0; i < from.distanceTo(to) * 2; i++) {
-            RukhFx.spray(level, RukhFx.Alignment.of(particle == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), p.x, p.y, p.z, 1, 0.03, 0.03, 0.03, 0.0);
+            Fx.spray(level, FxThemes.SKILL_GOD, FxTone.of(Fx.toneOf(particle) == FxTone.DARK), p.x, p.y, p.z, 1, 0.03, 0.03, 0.03, 0.0);
             p = p.add(step);
         }
     }

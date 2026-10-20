@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -36,6 +35,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the brain of a trial chamber, saved with its chunk. It keeps what the template wrote (the box, the mob list, the reset time), what
@@ -287,10 +289,10 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
             for (int i = 0; i < n; i++) spawnOne(level, m, spots.get(slot++ % spots.size()).above());
         }
         level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 0.8f);
-        level.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 60, 1.0, 1.0, 1.0, 0.5);
+        Fx.spray(level, FxThemes.DUNGEON_TRIAL, FxOld.ENCHANT, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 60, 1.0, 1.0, 1.0, 0.5);
         for (long c : barriers) {
             BlockPos b = BlockPos.of(c);
-            level.sendParticles(ParticleTypes.END_ROD, b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.02);
+            Fx.spray(level, FxThemes.DUNGEON_TRIAL, FxOld.END_ROD, b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.02);
         }
         Component msg = Component.translatable(MSG_SEALED).withStyle(ChatFormatting.AQUA);
         for (ServerPlayer p : inside) p.displayClientMessage(msg, false);
@@ -370,7 +372,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
         activatedTick = 0L;
         com.newuniverse.nusmp.labyrinth.mega.lock.LockBook.drop(level, lockKey());
         level.playSound(null, pos, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0f, 1.0f);
-        level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 40, 1.5, 1.0, 1.5, 0.05);
+        Fx.spray(level, FxThemes.DUNGEON_TRIAL, FxOld.END_ROD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 40, 1.5, 1.0, 1.5, 0.05);
         Component msg = Component.translatable(MSG_FADES).withStyle(ChatFormatting.GRAY);
         for (ServerPlayer p : playersInside(level, box, true)) p.displayClientMessage(msg, false);
     }

@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,6 +29,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the state of a Relic Pedestal: the one stack it holds, the loot table it still has to roll, the seed, and whether it was taken.
@@ -187,8 +189,8 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
         if (!player.getInventory().add(give) && !give.isEmpty()) Block.popResource(level, player.blockPosition(), give);
         sync();
         Vec3 c = Vec3.atCenterOf(worldPosition);
-        server.sendParticles(ParticleTypes.END_ROD, c.x, c.y + 0.9, c.z, 24, 0.25, 0.25, 0.25, 0.04);
-        server.sendParticles(ParticleTypes.ENCHANT, c.x, c.y + 1.2, c.z, 40, 0.4, 0.4, 0.4, 0.6);
+        Fx.spray(server, FxThemes.DUNGEON_VAULT, FxOld.END_ROD, c.x, c.y + 0.9, c.z, 24, 0.25, 0.25, 0.25, 0.04);
+        Fx.spray(server, FxThemes.DUNGEON_VAULT, FxOld.ENCHANT, c.x, c.y + 1.2, c.z, 40, 0.4, 0.4, 0.4, 0.6);
         level.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.8f, 1.5f);
         level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6f, 1.0f);
         player.displayClientMessage(Component.translatable("nusmp.relic_pedestal.taken", name), true);

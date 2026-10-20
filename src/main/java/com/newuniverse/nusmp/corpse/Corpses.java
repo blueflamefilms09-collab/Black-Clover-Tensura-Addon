@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.corpse;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import com.newuniverse.nusmp.skill.NUSkills;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,6 +43,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: this is the one place that knows what a Soul Corpse IS in the game. A body is any creature that carries the persistent-data
@@ -492,7 +494,7 @@ public final class Corpses {
     }
 
     private static void wisp(ServerLevel level, LivingEntity body, int stage) {
-        level.sendParticles(RukhParticles.dark(), body.getX(), body.getY() + body.getBbHeight() * 0.6, body.getZ(), 1 + stage / 2,
+        Fx.spray(level, FxThemes.CORPSE, FxTone.DARK, body.getX(), body.getY() + body.getBbHeight() * 0.6, body.getZ(), 1 + stage / 2,
                 body.getBbWidth() * 0.4, body.getBbHeight() * 0.35, body.getBbWidth() * 0.4, 0.01);
     }
 
@@ -528,7 +530,7 @@ public final class Corpses {
     static void crumble(Entity e) {
         if (e == null || e.isRemoved()) return;
         if (e.level() instanceof ServerLevel sl) {
-            sl.sendParticles(RukhParticles.dark(), e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), 14, e.getBbWidth() * 0.5, e.getBbHeight() * 0.4, e.getBbWidth() * 0.5, 0.04);
+            Fx.spray(sl, FxThemes.CORPSE, FxTone.DARK, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), 14, e.getBbWidth() * 0.5, e.getBbHeight() * 0.4, e.getBbWidth() * 0.5, 0.04);
             sl.playSound(null, e.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.NEUTRAL, 0.8f, 1.2f);
         }
         e.discard();

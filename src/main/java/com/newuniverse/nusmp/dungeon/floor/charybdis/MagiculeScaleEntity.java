@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import com.newuniverse.nusmp.item.MagebaneShieldArts;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,6 +28,9 @@ import org.joml.Vector3f;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * One magicule scale of the Charybdis Spawn: a small flat glowing shard that flies slowly through the water ({@link CharybdisTable#SCALE_SPEED}
@@ -111,7 +113,7 @@ public class MagiculeScaleEntity extends AbstractHurtingProjectile {
         life++;
         if (!isReturned() && getOwner() instanceof Player) entityData.set(RETURNED, true);   // another parry (the Magebane Shield's) turned it: it is the player's now
         if (life > CharybdisTable.SCALE_LIFE) {
-            if (level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.END_ROD, getX(), getY(), getZ(), 4, 0.1, 0.1, 0.1, 0.02);
+            if (level() instanceof ServerLevel sl) Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.END_ROD, getX(), getY(), getZ(), 4, 0.1, 0.1, 0.1, 0.02);
             discard();
         }
     }
@@ -150,7 +152,7 @@ public class MagiculeScaleEntity extends AbstractHurtingProjectile {
         }
         if (boss.strike(victim, CharybdisTable.SCALE, true))
             victim.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slowTicks, slowLevel));
-        sl.sendParticles(ParticleTypes.GLOW, getX(), getY(), getZ(), 8, 0.2, 0.2, 0.2, 0.05);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.GLOW, getX(), getY(), getZ(), 8, 0.2, 0.2, 0.2, 0.05);
         sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.0f, 1.4f);
         discard();
     }
@@ -159,7 +161,7 @@ public class MagiculeScaleEntity extends AbstractHurtingProjectile {
     protected void onHitBlock(BlockHitResult hit) {
         super.onHitBlock(hit);
         if (!(level() instanceof ServerLevel sl) || isRemoved()) return;
-        sl.sendParticles(ParticleTypes.GLOW, getX(), getY(), getZ(), 4, 0.1, 0.1, 0.1, 0.03);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.GLOW, getX(), getY(), getZ(), 4, 0.1, 0.1, 0.1, 0.03);
         discard();
     }
 
@@ -200,7 +202,7 @@ public class MagiculeScaleEntity extends AbstractHurtingProjectile {
         hurtMarked = true;
         passed.clear();
         life = Math.min(life, CharybdisTable.SCALE_LIFE - 60);          // at least three more seconds to reach it
-        sl.sendParticles(ParticleTypes.CRIT, getX(), getY(), getZ(), 10, 0.2, 0.2, 0.2, 0.25);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.CRIT, getX(), getY(), getZ(), 10, 0.2, 0.2, 0.2, 0.25);
         sl.playSound(null, blockPosition(), how == ParryRules.Deflect.PARRY ? SoundEvents.AMETHYST_BLOCK_CHIME : SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1.2f, how == ParryRules.Deflect.PARRY ? 1.6f : 1.3f);
     }
 
@@ -216,8 +218,8 @@ public class MagiculeScaleEntity extends AbstractHurtingProjectile {
             boss.invulnerableTime = 0;                                   // every scale of a volley counts, not just the first of a tick
             boss.hurt(sl.damageSources().indirectMagic(this, getOwner()), (float) got);
         }
-        sl.sendParticles(ParticleTypes.FLASH, getX(), getY(), getZ(), 1, 0, 0, 0, 0);
-        sl.sendParticles(ParticleTypes.GLOW, getX(), getY(), getZ(), 14, 0.5, 0.5, 0.5, 0.1);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.FLASH, getX(), getY(), getZ(), 1, 0, 0, 0, 0);
+        Fx.spray(sl, FxThemes.BOSS_CHARYBDIS, FxOld.GLOW, getX(), getY(), getZ(), 14, 0.5, 0.5, 0.5, 0.1);
         sl.playSound(null, blockPosition(), got > 0.01 ? SoundEvents.TRIDENT_HIT : SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.4f, 1.0f);
         discard();
     }

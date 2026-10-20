@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.server.level.ServerLevel;
@@ -8,6 +7,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: the mod purged vanilla particles from abilities; only Light and Dark Rukh may be spawned, through {@link RukhFx} (which caps every
@@ -21,19 +23,19 @@ final class SkillFx {
     /** A burst of Rukh (light or dark) at a point. */
     static void burst(ServerLevel level, Vec3 at, boolean dark, int count, double spread) {
         if (level == null || at == null) return;
-        RukhFx.burst(level, at, RukhFx.Alignment.of(dark), count, spread);
+        Fx.burst(level, FxThemes.SKILL, at, FxTone.of(dark), count, spread);
     }
 
     /** Rukh sprayed in a box around a point, like the old raw particle calls. */
     static void spray(ServerLevel level, boolean dark, Vec3 at, int count, double dx, double dy, double dz, double speed) {
         if (level == null || at == null) return;
-        RukhFx.spray(level, RukhFx.Alignment.of(dark), at.x, at.y, at.z, count, dx, dy, dz, speed);
+        Fx.spray(level, FxThemes.SKILL, FxTone.of(dark), at.x, at.y, at.z, count, dx, dy, dz, speed);
     }
 
     /** Rukh motes gathered around an entity (a buff, a charge). */
     static void aura(ServerLevel level, Entity e, boolean dark) {
         if (level == null || e == null) return;
-        RukhFx.aura(level, e, RukhFx.Alignment.of(dark));
+        Fx.aura(level, FxThemes.SKILL, e, FxTone.of(dark));
     }
 
     /** A line of Rukh from one point to another (a beam, a bolt), at most 24 samples so a long beam is cheap. */
@@ -45,7 +47,7 @@ final class SkillFx {
         Vec3 step = to.subtract(from).scale(1.0 / n);
         for (int i = 0; i <= n; i++) {
             Vec3 p = from.add(step.scale(i));
-            RukhFx.spray(level, RukhFx.Alignment.of(dark), p.x, p.y, p.z, 2, 0.08, 0.08, 0.08, 0.0);
+            Fx.spray(level, FxThemes.SKILL, FxTone.of(dark), p.x, p.y, p.z, 2, 0.08, 0.08, 0.08, 0.0);
         }
     }
 

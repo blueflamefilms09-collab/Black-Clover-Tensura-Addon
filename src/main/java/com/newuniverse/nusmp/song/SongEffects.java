@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.WikiBooks;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.mana.ManaLaw;
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -18,6 +17,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: this is what one pulse of a song actually does to the world. The ticker decides WHEN a pulse happens; here the mana is paid
@@ -140,6 +142,6 @@ public final class SongEffects {
         Vec3 c = p.position().add(0, 0.1, 0);
         VfxSpawn.send(level, VfxShape.SONG_RING, c, c, col, big ? 40 : 24, (float) radius);
         VfxSpawn.sendFollowing(level, VfxShape.SONG_NOTES, p, p.position().add(0, 1.6, 0), col, big ? 60 : 40, big ? 1.6f : 1.0f);
-        level.sendParticles(RukhParticles.light(), p.getX(), p.getY() + 1.4, p.getZ(), big ? 24 : 8, 0.6, 0.5, 0.6, 0.02);
+        Fx.spray(level, FxThemes.MAGIC_SONG, FxTone.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), big ? 24 : 8, 0.6, 0.5, 0.6, 0.02);
     }
 }

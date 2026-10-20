@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.entity.avatar;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.entity.zogratis.VanicaMoves;
 import com.newuniverse.nusmp.entity.zogratis.VolleyBudget;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +16,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * One volley of hex bolts: small, fast bolts of the Avatar's colour that leave the Avatar two ticks apart, bend a little towards the foe
@@ -135,7 +137,7 @@ final class HexVolley {
         Vec3 tail = b.pos.subtract(d.scale(0.7));
         sl.sendParticles(AvatarFx.dust(AvatarFx.accent(boss), 1.0f), b.pos.x, b.pos.y, b.pos.z, 2, 0.04, 0.04, 0.04, 0.0);
         sl.sendParticles(AvatarFx.dust(AvatarFx.rgb(boss), 1.3f), tail.x, tail.y, tail.z, 2, 0.06, 0.06, 0.06, 0.0);
-        if (b.life % 3 == 0) sl.sendParticles(ParticleTypes.SQUID_INK, tail.x, tail.y, tail.z, 1, 0.05, 0.05, 0.05, 0.01);
+        if (b.life % 3 == 0) Fx.spray(sl, FxThemes.BOSS_AVATAR, FxOld.SQUID_INK, tail.x, tail.y, tail.z, 1, 0.05, 0.05, 0.05, 0.01);
     }
 
     private void burst(ServerLevel sl, Vec3 at) {

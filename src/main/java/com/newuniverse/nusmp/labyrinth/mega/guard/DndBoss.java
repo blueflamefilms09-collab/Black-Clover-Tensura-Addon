@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -22,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: this is the multi-phase boss state machine of the Decennial bosses, written as a LAYER on the Labyrinth Guardian and not as a second boss entity. The Guardian already is the
@@ -141,8 +143,8 @@ final class DndBoss {
         fields.clear();
         nextExecAt = sl.getGameTime() + 200;
         sl.playSound(null, g.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.5f, 0.6f);
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 1, 0, 0, 0, 0);
-        sl.sendParticles(ParticleTypes.END_ROD, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 80, 1.5, 2.0, 1.5, 0.2);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.EXPLOSION_EMITTER, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 1, 0, 0, 0, 0);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, g.getX(), g.getY() + g.getBbHeight() * 0.5, g.getZ(), 80, 1.5, 2.0, 1.5, 0.2);
         say(sl, g, "mythic", profile.name(), profile.form(3));
         g.refreshDndName(profile, 3);
         return true;
@@ -161,7 +163,7 @@ final class DndBoss {
         lastResistAt = now;
         resistancesLeft--;
         sl.playSound(null, g.blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.HOSTILE, 1.4f, 1.6f);
-        sl.sendParticles(ParticleTypes.ENCHANT, g.getX(), g.getY() + g.getBbHeight() * 0.6, g.getZ(), 40, 0.8, 1.2, 0.8, 0.6);
+        Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.ENCHANT, g.getX(), g.getY() + g.getBbHeight() * 0.6, g.getZ(), 40, 0.8, 1.2, 0.8, 0.6);
         say(sl, g, "resist", resistancesLeft, profile.resistances() + (mythicUsed ? 2 : 0));
         return true;
     }
@@ -211,7 +213,7 @@ final class DndBoss {
                     p.hurt(g.damageSources().mobAttack(g), atk * 0.5f);
                     knock(g, p, 1.1);
                 }
-                ring(sl, c, 6.0, ParticleTypes.SWEEP_ATTACK);
+                ring(sl, c, 6.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SWEEP_ATTACK));
                 sl.playSound(null, g.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.6f, 0.5f);
             }
             case "cantrip" -> {
@@ -223,7 +225,7 @@ final class DndBoss {
                 double ang = sl.random.nextDouble() * Math.PI * 2, d = 5.0 + sl.random.nextDouble() * 4.0;
                 double tx = attacker.getX() + Math.cos(ang) * d, tz = attacker.getZ() + Math.sin(ang) * d;
                 if (g.insideLeash(tx, tz) && sl.noCollision(g, g.getBoundingBox().move(tx - g.getX(), 0, tz - g.getZ()))) {
-                    ring(sl, c, 2.0, ParticleTypes.REVERSE_PORTAL);
+                    ring(sl, c, 2.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL));
                     g.teleportTo(tx, g.getY(), tz);
                     g.getNavigation().stop();
                     sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.3f, 0.5f);
@@ -240,13 +242,13 @@ final class DndBoss {
                         fails++;
                     }
                 }
-                ring(sl, c, 10.0, ParticleTypes.SOUL);
+                ring(sl, c, 10.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SOUL));
                 sl.playSound(null, g.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 1.8f, 0.8f);
                 say(sl, g, "frightful", fails);
             }
             case "magic_drain" -> {
                 for (Player p : GuardianTraits.players(sl, g, 16.0)) drain(p, 0.2);
-                ring(sl, c, 8.0, ParticleTypes.SCULK_SOUL);
+                ring(sl, c, 8.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SCULK_SOUL));
                 sl.playSound(null, g.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 1.2f, 1.4f);
             }
             case "counterspell" -> {                                            // the boss snaps a spell back at whoever just hit it
@@ -273,7 +275,7 @@ final class DndBoss {
                         fails++;
                     }
                 }
-                ring(sl, c, 12.0, ParticleTypes.CRIMSON_SPORE);
+                ring(sl, c, 12.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.CRIMSON_SPORE));
                 sl.playSound(null, g.blockPosition(), SoundEvents.WARDEN_ROAR, SoundSource.HOSTILE, 1.6f, 1.0f);
                 say(sl, g, "haki", fails);
             }
@@ -285,7 +287,7 @@ final class DndBoss {
                     p.hurt(g.damageSources().mobAttack(g), atk * 0.2f);
                     p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 0));
                 }
-                ring(sl, c, 11.0, ParticleTypes.PORTAL);
+                ring(sl, c, 11.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.PORTAL));
                 sl.playSound(null, g.blockPosition(), SoundEvents.ENDERMAN_STARE, SoundSource.HOSTILE, 1.4f, 0.4f);
             }
             case "dragon_breath" -> {                                           // a telegraphed cone-ish blast ahead of it, towards whoever hit it; the breath names the rider effect
@@ -321,7 +323,7 @@ final class DndBoss {
                         fails++;
                     }
                 }
-                ring(sl, c, 9.0, ParticleTypes.WITCH);
+                ring(sl, c, 9.0, Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.WITCH));
                 sl.playSound(null, g.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 1.4f, 0.8f);
                 say(sl, g, "mind_blast", fails);
             }
@@ -399,7 +401,7 @@ final class DndBoss {
     private void runStrikes(LabyrinthGuardianEntity g, ServerLevel sl, long now) {
         for (Iterator<Strike> it = strikes.iterator(); it.hasNext(); ) {
             Strike s = it.next();
-            if ((s.at() - now) % 6 == 0) ring(sl, new Vec3(s.x(), s.y(), s.z()), s.r(), s.light() ? ParticleTypes.END_ROD : ParticleTypes.CRIT);     // the telegraph
+            if ((s.at() - now) % 6 == 0) ring(sl, new Vec3(s.x(), s.y(), s.z()), s.r(), s.light() ? Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD) : Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.CRIT));     // the telegraph
             if (now < s.at()) continue;
             it.remove();
             for (Player p : GuardianTraits.players(sl, g, 48.0)) {
@@ -419,7 +421,7 @@ final class DndBoss {
             Field f = it.next();
             if (now >= f.end()) { it.remove(); continue; }
             if (now % 20 == 0) {
-                ring(sl, new Vec3(f.x(), f.y(), f.z()), f.r(), f.mist() ? ParticleTypes.SQUID_INK : ParticleTypes.PORTAL);
+                ring(sl, new Vec3(f.x(), f.y(), f.z()), f.r(), f.mist() ? Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.SQUID_INK) : Fx.options(FxThemes.DUNGEON_GUARDIAN, FxOld.PORTAL));
                 for (Player p : GuardianTraits.players(sl, g, 48.0)) {
                     double dx = p.getX() - f.x(), dz = p.getZ() - f.z();
                     if (dx * dx + dz * dz > f.r() * f.r()) continue;
@@ -495,7 +497,7 @@ final class DndBoss {
         Vec3 a = g.position().add(0, g.getBbHeight() * 0.7, 0), b = to.position().add(0, 1.0, 0);
         for (int i = 0; i <= 12; i++) {
             Vec3 p = a.lerp(b, i / 12.0);
-            sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.x, p.y, p.z, 1, 0, 0, 0, 0);
+            Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.ELECTRIC_SPARK, p.x, p.y, p.z, 1, 0, 0, 0, 0);
         }
     }
 
