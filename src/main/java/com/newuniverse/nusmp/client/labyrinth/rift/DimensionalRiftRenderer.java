@@ -42,6 +42,10 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
 
     @Override
     public void render(DimensionalRiftBlockEntity be, float partial, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
+        if (be.isExclusive()) {                                                                   // 1.99.0: a mega-rare tear has a look of its own (MegaRiftRenderer); every other tear is drawn as before
+            MegaRiftRenderer.render(dispatcher, be, partial, pose, buffers);
+            return;
+        }
         float open = RiftRules.openness(be.age(), be.left());
         if (open <= 0.02f) return;
         float t = be.age() + partial;

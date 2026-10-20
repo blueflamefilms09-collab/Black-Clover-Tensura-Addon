@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.rift.pocket;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -19,6 +18,8 @@ public final class SoftSound {
 
     /** The vanilla sounds that stand in for the mod's own while they are absent. */
     public static final SoundEvent CRACKLE_FALLBACK = SoundEvents.AMETHYST_BLOCK_RESONATE;
+    /** The id of the ambient crackle of a mega-rare tear (the audio builder's list in docs/labyrinth/rift_pockets.md). */
+    public static final String CRACKLE = "nusmp:rift.crackle";
 
     /** The sound event of a registry id, or the fallback when the id is unknown or malformed. */
     public static SoundEvent resolve(String id, SoundEvent fallback) {
@@ -37,6 +38,13 @@ public final class SoftSound {
         if (e != null) level.playSound(null, at, e, source, volume, pitch);
     }
 
+    /** Plays a sound by id (or its fallback) at a block for the local player only (the client's own: the ambient crackle of a tear). Does nothing on a server level. */
+    public static void playLocal(net.minecraft.world.level.Level level, BlockPos at, String id, SoundEvent fallback, SoundSource source, float volume, float pitch) {
+        if (level == null || at == null || !level.isClientSide()) return;
+        SoundEvent e = resolve(id, fallback);
+        if (e != null) level.playLocalSound(at.getX() + 0.5, at.getY() + 1.5, at.getZ() + 0.5, e, source, volume, pitch, false);
+    }
+
     /** Plays a sound by vanilla id (a string of the element table) at a block. */
     public static void playVanilla(ServerLevel level, BlockPos at, String id, float volume, float pitch) { play(level, at, id, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, volume, pitch); }
 
@@ -44,11 +52,5 @@ public final class SoftSound {
     public static boolean known(String id) {
         ResourceLocation rl = id == null ? null : ResourceLocation.tryParse(id);
         return rl != null && BuiltInRegistries.SOUND_EVENT.containsKey(rl);
-    }
-
-    /** A holder is not needed by callers; kept so the registry lookup stays in one place. */
-    static Holder<SoundEvent> holder(String id) {
-        ResourceLocation rl = id == null ? null : ResourceLocation.tryParse(id);
-        return rl == null ? null : BuiltInRegistries.SOUND_EVENT.getHolder(rl).orElse(null);
     }
 }

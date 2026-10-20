@@ -173,6 +173,9 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         be.age++;
         if (level.isClientSide) {
             be.aura(level);
+            if (be.isExclusive() && be.age % 14 == 0 && RiftRules.openness(be.age, be.left) > 0.25f)                       // 1.99.0: a mega-rare tear crackles (sound id nusmp:rift.crackle, vanilla fallback until the audio builder supplies it)
+                com.newuniverse.nusmp.labyrinth.mega.rift.pocket.SoftSound.playLocal(level, pos, com.newuniverse.nusmp.labyrinth.mega.rift.pocket.SoftSound.CRACKLE, com.newuniverse.nusmp.labyrinth.mega.rift.pocket.SoftSound.CRACKLE_FALLBACK,
+                        net.minecraft.sounds.SoundSource.BLOCKS, 0.45f + 0.25f * level.random.nextFloat(), 0.7f + 0.5f * level.random.nextFloat());
             if (be.left > 0) be.left--;
             return;
         }
