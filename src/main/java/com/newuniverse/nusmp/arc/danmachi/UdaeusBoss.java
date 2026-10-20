@@ -67,9 +67,9 @@ public class UdaeusBoss extends DanMachiBoss {
     @Override protected double preferredRange(double suggested) { return Math.max(3.0, Math.min(10.0, suggested)); }
 
     // ================================================================ sounds
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.SKELETON_HURT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("skeleton"); }          // 1.99.0: the skeleton family of the bespoke audio engine
 
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.SKELETON_DEATH; }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("skeleton"); }
 
     @Override public float getVoicePitch() { return 0.55f + (random.nextFloat() - random.nextFloat()) * 0.08f; }
 

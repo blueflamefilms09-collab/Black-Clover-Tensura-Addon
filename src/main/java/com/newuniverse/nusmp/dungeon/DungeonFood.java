@@ -37,8 +37,8 @@ public final class DungeonFood {
 
     /** Hacked out with something blunt: ruined. */
     public static final DeferredItem<Item> RUINED_MEAT = NUItems.ITEMS.register("ruined_meat", () -> new Item(new Item.Properties().food(
-            new FoodProperties.Builder().nutrition(1).saturationModifier(0f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 400, 1), 1f)
-                    .effect(() -> new MobEffectInstance(DungeonEffects.MAGICULE_SICKNESS, 900, 1), 1f).build())));
+            new FoodProperties.Builder().nutrition(1).saturationModifier(0f)
+                    .effect(() -> new MobEffectInstance(DungeonEffects.MAGICULE_SICKNESS, 900, 1), 1f).build())));    // 1.99.0, the hunger ban: the Hunger effect it also gave is gone
 
     /** Raw meat made safe by holy water or honey: plain food, no buff. */
     public static final DeferredItem<Item> PURIFIED_MEAT = NUItems.ITEMS.register("purified_monster_meat", () -> new Item(new Item.Properties().food(

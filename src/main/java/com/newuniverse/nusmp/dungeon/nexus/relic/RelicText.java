@@ -27,7 +27,7 @@ final class RelicText {
 
     static String curse(Relic r) {
         return switch (r) {
-            case GLUTTONS_CHALICE -> "It is alive. Unfed for three in-game days, it drains your hunger and your magicules until it is fed.";
+            case GLUTTONS_CHALICE -> "It is alive. Unfed for three in-game days, it drains your magicules until it is fed.";
             case MANTLE_OF_THE_SCAVENGER -> "Your physical blows do nothing to tier 2 and 3 creatures. Taking it off leaves the Pheromone Mark for 30 s: "
                     + "every predator within 48 blocks comes for you.";
             case BAND_OF_THE_SPATIAL_ANCHOR -> null;

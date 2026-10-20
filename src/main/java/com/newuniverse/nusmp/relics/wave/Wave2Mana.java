@@ -20,6 +20,14 @@ final class Wave2Mana {
         ex.markDirty();
     }
 
+    /** True when the player has at least this fraction of their maximum magicules (nothing is taken). */
+    static boolean has(ServerPlayer p, double fraction) {
+        var ex = TensuraStorages.getExistenceFrom(p);
+        if (ex == null) return false;
+        double max = EnergyHelper.getMaxMagicule(p);
+        return max > 0 && ex.getMagicule() >= max * Math.max(0.0, fraction);
+    }
+
     /** Takes a fraction of the player's maximum magicules if they have that much; false (and nothing taken) otherwise. */
     static boolean take(ServerPlayer p, double fraction) {
         var ex = TensuraStorages.getExistenceFrom(p);

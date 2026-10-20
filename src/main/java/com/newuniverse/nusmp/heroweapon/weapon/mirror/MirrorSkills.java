@@ -239,6 +239,7 @@ final class MirrorSkills {
         List<MobEffectInstance> cleansed = Effects.strip(p, false, MirrorNumbers.REBOUND_CLEANSE);
         for (MobEffectInstance e : cleansed) {
             if (foe == null || !"minecraft".equals(Effects.namespace(e)) || !MirrorNumbers.returnable(Effects.path(e), e.getAmplifier())) continue;
+            if (com.newuniverse.nusmp.balance.HungerBan.refuses(e.getEffect(), foe)) continue;       // 1.99.0, the hunger ban: a player foe never receives Hunger back
             foe.addEffect(new MobEffectInstance(e.getEffect(), Effects.ticks(e, MirrorNumbers.REBOUND_RETURN_TICKS), Math.min(e.getAmplifier(), MirrorNumbers.REBOUND_RETURN_AMP), false, true));
             c.fx(VfxShape.MIRROR_RAY, p.getEyePosition(), foe.getBoundingBox().getCenter(), ICE, 12, 0.8f);
         }

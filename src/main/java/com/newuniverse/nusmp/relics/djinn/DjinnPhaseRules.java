@@ -151,9 +151,10 @@ public final class DjinnPhaseRules {
     }
 
     /**
-     * The cost of overusing the Djinn, as Tensura effects and a temporary attribute modifier, never a new bar: Slowness, Weakness, Nausea,
-     * Hunger (and Blindness when severe), plus a loss of maximum health ({@code healthLoss} hit points) that heals back linearly over
-     * {@code strainTicks} (Magi's shortened lifespan, made to fade).
+     * The cost of overusing the Djinn, as Tensura effects and a temporary attribute modifier, never a new bar: Slowness, Weakness, Nausea
+     * (and Blindness when severe), plus a loss of maximum health ({@code healthLoss} hit points) that heals back linearly over
+     * {@code strainTicks} (Magi's shortened lifespan, made to fade). The {@code hungerTicks} and {@code foodLoss} numbers stay in the record (they are tested
+     * data) but the engine ignores them since the 1.99.0 hunger ban.
      */
     public record Backlash(int slowTicks, int slowAmp, int weakTicks, int weakAmp, int nauseaTicks, int hungerTicks, int foodLoss,
                            int blindTicks, int healthLoss, int strainTicks) {

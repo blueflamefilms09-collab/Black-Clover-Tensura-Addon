@@ -193,15 +193,15 @@ public final class Wave6Acts {
     }
 
     // ================================================================ Suit of the Astral Overseer
-    /** Zero Gravity Movement: switches flight on or off. Flight costs hunger and ends when you are starving. */
+    /** Zero Gravity Movement: switches flight on or off. Flight costs magicules (never hunger, since the 1.99.0 hunger ban) and ends when they run dry. */
     public static void zeroGravity(ActCtx c) {
         ServerPlayer p = c.player();
         CompoundTag d = p.getPersistentData();
         boolean on = !d.getBoolean(K_FLY_ON);
-        if (on && p.getFoodData().getFoodLevel() <= Wave6Tune.FLIGHT_FOOD_MIN) { Fx.say(p, "Too hungry to leave the ground."); return; }
+        if (on && !Wave2Mana.has(p, Wave6Tune.FLIGHT_MANA_MIN)) { Fx.say(p, "Your magicules are too thin to leave the ground."); return; }
         d.putBoolean(K_FLY_ON, on);
         Fx.ring(p.serverLevel(), p.position().add(0, 0.1, 0), 1.5, 0xB070FF);
-        Fx.say(p, on ? "Gravity lets go of you. Flight costs hunger." : "Gravity takes hold again.");
+        Fx.say(p, on ? "Gravity lets go of you. Flight costs magicules." : "Gravity takes hold again.");
     }
 
     // ================================================================ Shadow Robes

@@ -290,15 +290,11 @@ final class Wave2Events {
             Fx.say(p, "The cloak feeds on your magicules at dawn.");
             return;
         }
-        int food = p.getFoodData().getFoodLevel();
-        Wave2Rules.Tax tax = Wave2Rules.hungerTax(food);
-        p.getFoodData().setFoodLevel(Math.max(0, food - tax.food()));
-        if (tax.health() > 0f && p.getHealth() > tax.health() + 1f) p.hurt(p.damageSources().starve(), tax.health());
-        if (tax.exhausted()) {
-            Fx.addEffect(p, "minecraft:weakness", 1200, 0);
-            Fx.addEffect(p, "minecraft:slowness", 1200, 0);
-        }
-        Fx.say(p, tax.food() > 0 ? "The cloak feeds on you at dawn." : "The cloak is hungry and takes what it can.");
+        // 1.99.0, THE HUNGER BAN: the cloak never takes food points or starves its wearer (Wave2Rules.hungerTax stays as tested data and is no longer applied);
+        // with no magicules to take it only weighs the wearer down for a minute
+        Fx.addEffect(p, "minecraft:weakness", 1200, 0);
+        Fx.addEffect(p, "minecraft:slowness", 1200, 0);
+        Fx.say(p, "The cloak is hungry and takes what it can.");
     }
 
     // ---------------------------------------------------------------- Cape of Nine Lives

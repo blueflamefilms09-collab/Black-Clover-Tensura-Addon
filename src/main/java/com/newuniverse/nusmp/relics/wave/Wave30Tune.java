@@ -40,6 +40,8 @@ final class Wave30Tune {
     static final double XRAY_RADIUS = 24.0;
     /** Food exhaustion one X-ray pulse costs when the pair is not complete (the card's exhaustion: "safe X-ray vision without exhaustion" is a set bonus). */
     static final float XRAY_EXHAUSTION = 0.12f;
+    /** 1.99.0, THE HUNGER BAN: the unpaired X-ray pulse costs this share of the maximum magicules (the exhaustion above is unused). */
+    static final double XRAY_MANA = 0.0015;
     /** Clairvoyance: the five nearest, within 96 blocks (the card's scrying), glowing for ten seconds. */
     static final int CLAIR_COUNT = 5, CLAIR_GLOW = 200, CLAIR_COOLDOWN = 1200;
     static final double CLAIR_RADIUS = 96.0;

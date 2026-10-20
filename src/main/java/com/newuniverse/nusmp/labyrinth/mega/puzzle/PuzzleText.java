@@ -156,7 +156,7 @@ public final class PuzzleText {
         p("common.penalty.dark", "The light dims round you.");
         p("common.penalty.drain", "Something drains your strength.");
         p("common.penalty.slow", "Your limbs grow heavy.");
-        p("common.penalty.hunger", "A hollow hunger takes you.");
+        p("common.penalty.hunger", "A hollow weariness takes you.");
         p("common.penalty.ambush", "Something stirs in the dark.");
         p("common.adminOn", "Puzzle %s started here.");
         p("common.adminNo", "No room for that puzzle here.");

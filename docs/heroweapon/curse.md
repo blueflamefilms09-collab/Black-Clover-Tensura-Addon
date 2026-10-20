@@ -1,5 +1,8 @@
 # The Curse Series of the hero weapons (1.62.0)
 
+> **1.99.0, THE HUNGER BAN.** Gluttony no longer drains the food bar: its downside is now a bite of the wielder's magicules (`sins.gluttonyExhaust` 0.4 = 0.2% of the pool a second at normal strength, never under the arena floor of 10%). The key `gluttonyFoodFloor` is kept but unused; kills still feed. See `docs/labyrinth/hunger_ban.md`.
+
+
 The owner's text: "*Curse Series: unlocked when the wielder suffers extreme emotional trauma or despair, tapping abilities tied to the seven deadly sins at a heavy
 physical or mental cost.*" This document is the WHY of everything the curse system does, its numbers, its config, its commands, and an honest list of what has not
 been run. The binding contract is `docs/heroweapon/design.md` section 7; where this file goes further, it says so.
@@ -148,7 +151,7 @@ the curse engine adds only the cost.
 | **Envy** (canon: Ressentiment, jealousy) | every 12 s it **takes one of the form's techniques for 6 s** (the dispatcher refuses it) and **eats one vanilla potion boon** | interval 12 s, lock 6 s | a technique returns after 6 s; only `minecraft:` beneficial effects are eaten (another mod's effect may be a skill's own state) | keep spare techniques, refresh boons |
 | **Greed** (canon: cannot hold anything of value) | **Treasure weighs you down**: carrying ingots, gems and blocks of gold, diamond, emerald and netherite slows the wielder by up to 25% (score 128 for the full burden; an ingot or gem 1, a block 9, netherite block 27, nether star 8); **every technique costs 50% more** magicules after the cast | max slow 0.25, surcharge 0.5 | slow clamped to 60%; the surcharge is paid only if the wielder can | leave the treasure at home |
 | **Sloth** (canon: lethargy, curse emanation) | **A slow body**: -20% movement speed, -15% attack speed; **a 1.5 s lock after each technique** | slow 0.20 / 0.15, lock 30 ticks | slow clamped to 60% | positional play; do not rely on dodging |
-| **Gluttony** (canon: cannot gain experience, kills for experience) | **Hunger drains fast** (+0.4 exhaustion a second, a food point per ten seconds); vanilla experience orbs are not picked up (they stay on the ground); **kills feed**: 2 food points and 4% of max health back (through the healing law) | exhaust 0.4, floor 3 food points | it never takes the stomach below 3 points, so it cannot starve the wielder | keep killing, bring food |
+| **Gluttony** (canon: cannot gain experience, kills for experience) | **Devours magicules** (0.4 = 0.2% of the pool a second; since 1.99.0 never the food bar); vanilla experience orbs are not picked up (they stay on the ground); **kills feed**: 2 food points and 4% of max health back (through the healing law) | bite 0.4 (key `gluttonyExhaust`) | it never takes the pool under 10%, and never touches the food bar | keep killing, bring food |
 
 Design notes. Greed was given "treasure weighs you down" instead of the first idea's "drops are pulled in": pulling loot toward the wielder is a convenience, not a cost. Envy's "copies" is the Mirror's
 own techniques (the Mirror builder's forms); the engine adds the loss. Wrath's "stronger blows" is the form's own stats. The three that need the dispatcher (Envy's lost technique, Greed's surcharge, Sloth's

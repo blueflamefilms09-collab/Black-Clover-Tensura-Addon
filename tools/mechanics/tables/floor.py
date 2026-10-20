@@ -127,7 +127,7 @@ BASES = [
          ctrs=[("lever", {}), ("pay_xp", dict(levels=3))]),
 
     base("meshi_hunger", "The Hunger of the Depths", "Dungeon Meshi",
-         "Everything on this floor is a little bit hungry, and so are you: the stomach gnaws faster the deeper the floor, and only a proper meal puts it right.",
+         "Everything on this floor is a little bit hungry, and it feeds on you: the deeper the floor, the more of your magicules it gnaws (your food bar is never touched), and only a proper meal laid out for it puts it right.",
          "Eat the monster. It is only polite.", "floor",
          T("timer", every=(400, -30)),
          [E("starve", amount=(3, 0.5)), E("effect", id="minecraft:hunger", secs=(10, 0.8), amp=0)],

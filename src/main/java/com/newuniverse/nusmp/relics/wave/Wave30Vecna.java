@@ -217,8 +217,7 @@ final class Wave30Vecna {
 
     /** Vecna's Whisper: a few seconds of Hunger and Mining Fatigue and a line in chat, the Hand's coercion towards an evil act. */
     static void whisper(ServerPlayer p) {
-        Fx.addEffect(p, "minecraft:hunger", Wave30Tune.WHISPER_TICKS, 1);
-        Fx.addEffect(p, "minecraft:mining_fatigue", Wave30Tune.WHISPER_TICKS, 0);
+        Fx.addEffect(p, "minecraft:mining_fatigue", Wave30Tune.WHISPER_TICKS, 0);                // 1.99.0, the hunger ban: the Hunger effect it also gave is gone
         String[] lines = {"\"Take it. They would never know.\"", "\"Why spare them? Mercy is for the weak.\"", "\"The hand wants what the hand wants.\"",
                 "\"Your friends are only waiting to be used.\""};
         Wave30Kit.shout(p, "Vecna whispers: " + lines[p.getRandom().nextInt(lines.length)], ChatFormatting.DARK_PURPLE);
@@ -290,7 +289,7 @@ final class Wave30Vecna {
             if (!p.hasLineOfSight(e)) hidden.add(e);
         }
         for (LivingEntity e : hidden) Fx.addEffect(e, "minecraft:glowing", Wave30Tune.XRAY_GLOW, 0);
-        if (!hidden.isEmpty() && !pair && !p.isCreative()) p.causeFoodExhaustion(Wave30Tune.XRAY_EXHAUSTION);
+        if (!hidden.isEmpty() && !pair && !p.isCreative()) Wave2Mana.take(p, Wave30Tune.XRAY_MANA);   // 1.99.0, the hunger ban: the unpaired X-ray costs a sliver of magicules, not exhaustion
     }
 
     /** The pair's gifts, once a second: poison and disease cleansed, the danger-sense and resistance skills lent, and a health every two seconds. */

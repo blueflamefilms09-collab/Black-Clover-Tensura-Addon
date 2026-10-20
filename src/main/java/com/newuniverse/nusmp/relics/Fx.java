@@ -63,6 +63,7 @@ public final class Fx {
     /** A mob effect by id ("minecraft:slowness", "tensura:fear"); no particles in the icon row. Skipped if the effect does not exist. */
     public static void addEffect(LivingEntity e, String mobEffectId, int ticks, int amp) {
         if (e == null || !e.isAlive() || e.isSpectator() || mobEffectId == null || ticks <= 0) return;
+        if (com.newuniverse.nusmp.balance.HungerBan.refuses(mobEffectId, e)) return;            // 1.99.0, the hunger ban: a player never receives the Hunger effect
         Optional<? extends net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>> h = effect(mobEffectId);
         if (h.isEmpty()) return;
         e.addEffect(new MobEffectInstance(h.get(), Math.min(ticks, MAX_TICKS), Mth.clamp(amp, 0, MAX_AMP)));

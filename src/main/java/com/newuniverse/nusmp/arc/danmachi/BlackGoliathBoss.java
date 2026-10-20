@@ -61,9 +61,9 @@ public class BlackGoliathBoss extends DanMachiBoss {
     @Override protected double preferredRange(double suggested) { return Math.max(3.0, Math.min(9.0, suggested)); }
 
     // ================================================================ sounds
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.WARDEN_HURT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("golem"); }          // 1.99.0: the golem family of the bespoke audio engine
 
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.WARDEN_DEATH; }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("golem"); }
 
     // ================================================================ the Black Hide
     /** A plain blow does half while the hide holds; three heavy ones within six seconds break it; a spell or a skill is never cut. */

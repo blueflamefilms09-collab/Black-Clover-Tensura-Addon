@@ -313,9 +313,10 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
     }
 
     // ---------------------------------------------------------------- sounds
-    @Override protected SoundEvent getAmbientSound() { return SoundEvents.ZOMBIE_AMBIENT; }
-    @Override protected SoundEvent getHurtSound(DamageSource s) { return SoundEvents.ZOMBIE_HURT; }
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.ZOMBIE_DEATH; }
-    @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) { playSound(SoundEvents.ZOMBIE_STEP, 0.15f, 0.8f); }
+    // 1.99.0 (docs/audio/mob_audio.md): a named corpse groans like a ghoul of the bespoke audio engine, not like a vanilla zombie
+    @Override protected SoundEvent getAmbientSound() { return com.newuniverse.nusmp.audio.MobVoice.ambient("ghoul"); }
+    @Override protected SoundEvent getHurtSound(DamageSource s) { return com.newuniverse.nusmp.audio.MobVoice.hurt("ghoul"); }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("ghoul"); }
+    @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) { playSound(com.newuniverse.nusmp.audio.MobVoice.event("ghoul", com.newuniverse.nusmp.audio.Cue.STEP), 0.5f, 0.8f); }
     @Override public float getVoicePitch() { return kind == NamedCorpses.ALFREDO ? 0.55f : kind == NamedCorpses.CARL ? 0.85f : 0.75f; }
 }

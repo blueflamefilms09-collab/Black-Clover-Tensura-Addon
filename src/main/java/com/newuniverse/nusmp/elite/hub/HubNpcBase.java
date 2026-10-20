@@ -47,6 +47,13 @@ public abstract class HubNpcBase extends PathfinderMob {
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 40.0).add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.FOLLOW_RANGE, 16.0).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
+    // 1.99.0 (docs/audio/mob_audio.md): the Hub's people hum and cry out with the "npc" voice of the bespoke audio engine
+    @Override protected net.minecraft.sounds.SoundEvent getAmbientSound() { return com.newuniverse.nusmp.audio.MobVoice.ambient("npc"); }
+
+    @Override protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("npc"); }
+
+    @Override protected net.minecraft.sounds.SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("npc"); }
+
     /** What a right click does on the server: open this NPC's screen for the player. */
     protected abstract void open(ServerPlayer player);
 

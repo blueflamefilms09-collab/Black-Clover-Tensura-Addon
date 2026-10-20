@@ -356,9 +356,9 @@ public final class Wave6Events {
         boolean want = worn && d.getBoolean(Wave6Acts.K_FLY_ON);
         Abilities ab = p.getAbilities();
         if (want) {
-            if (p.getFoodData().getFoodLevel() <= Wave6Tune.FLIGHT_FOOD_MIN) {
+            if (!Wave2Mana.has(p, Wave6Tune.FLIGHT_MANA)) {                                   // 1.99.0, the hunger ban: the suit runs on magicules, not on food
                 d.putBoolean(Wave6Acts.K_FLY_ON, false);
-                Fx.say(p, "Hunger pulls you back to the ground.");
+                Fx.say(p, "Your magicules run dry and gravity takes you back.");
                 revokeFlight(p);
                 return;
             }
@@ -366,7 +366,7 @@ public final class Wave6Events {
             if (!ab.mayfly) { ab.mayfly = true; d.putBoolean(Wave6Acts.K_FLY_GRANTED, true); changed = true; }
             if (d.getBoolean(Wave6Acts.K_FLY_GRANTED) && !d.getBoolean(K_FLY_SPEED)) { ab.setFlyingSpeed(Wave6Tune.FLY_SPEED); d.putBoolean(K_FLY_SPEED, true); changed = true; }
             if (changed) p.onUpdateAbilities();
-            if (ab.flying) p.causeFoodExhaustion(Wave6Tune.FLIGHT_EXHAUSTION);
+            if (ab.flying) Wave2Mana.take(p, Wave6Tune.FLIGHT_MANA);
         } else if (d.getBoolean(Wave6Acts.K_FLY_GRANTED) || d.getBoolean(K_FLY_SPEED)) {
             revokeFlight(p);
         }

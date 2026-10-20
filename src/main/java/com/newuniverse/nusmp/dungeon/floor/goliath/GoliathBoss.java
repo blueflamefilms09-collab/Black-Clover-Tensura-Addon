@@ -116,8 +116,8 @@ public class GoliathBoss extends ZogratisBoss {
     @Override public void announce(String text) { super.announce(GoliathText.rewrite(text)); }
 
     // ================================================================ sounds
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.IRON_GOLEM_HURT; }
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.IRON_GOLEM_DEATH; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("golem"); }          // 1.99.0: the golem family of the bespoke audio engine
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("golem"); }
     @Override protected float getSoundVolume() { return 2.0f; }
     @Override public float getVoicePitch() { return 0.5f + (random.nextFloat() - random.nextFloat()) * 0.08f; }
 

@@ -36,7 +36,7 @@ import java.util.Map;
  * counted once per pause and a tamed wolf is recognised as an ally who matters to its owner; an offer opens, and the Embrace takes 4 hearts, then 2, then 2 and the
  * maximum health never goes under four hearts (also for a wielder whose maximum is already small); corruption at 1000 starts an Overrun that LOCKS the wielder
  * ({@code HeroCurse.locked}), swings at the nearest living thing, and, when its time is up, releases, leaves 400 corruption and starts the weakness; the charm clears
- * the corruption and gives hearts back once; a finished rest clears half; every sin's downside stays inside its bounds (Wrath's floor, Gluttony's stomach, Sloth's
+ * the corruption and gives hearts back once; a finished rest clears half; every sin's downside stays inside its bounds (Wrath's floor, Gluttony's magicule bite that leaves the food bar alone, Sloth's
  * and Greed's slow, Lust's cliff check); and a technique with no curse form worn changes nothing. Everything the test changes is put back: the bond is released, the
  * entities removed, the attribute and the rest record restored.
  */
@@ -199,13 +199,15 @@ final class CurseSelfTests {
             fp.setHealth(fp.getMaxHealth());
             for (int i = 0; i < 400; i++) CurseEffects.second(fp, synthetic(Sin.WRATH, skills), Sin.WRATH, t, until + 1000 + i * 20L);
             check(fp.getHealth() >= SinMath.wrathFloor(fp.getMaxHealth(), t.wrathFloorShare) - 1.0e-3 && fp.getHealth() >= 2.0f, "Wrath stops at its floor: " + fp.getHealth());
-            fp.getFoodData().setFoodLevel(t.gluttonyFoodFloor);
-            fp.getFoodData().setExhaustion(0f);
-            CurseEffects.second(fp, synthetic(Sin.GLUTTONY, skills), Sin.GLUTTONY, t, until + 9000);
-            check(fp.getFoodData().getExhaustionLevel() == 0f, "Gluttony adds nothing at the stomach's floor");
+            // 1.99.0, the hunger ban: Gluttony devours magicules and never touches the food bar (food level, saturation and exhaustion stay exactly as they were)
             fp.getFoodData().setFoodLevel(15);
+            fp.getFoodData().setExhaustion(0f);
+            com.newuniverse.nusmp.balance.HungerBan.guard(fp);
+            CurseEffects.second(fp, synthetic(Sin.GLUTTONY, skills), Sin.GLUTTONY, t, until + 9000);
             CurseEffects.second(fp, synthetic(Sin.GLUTTONY, skills), Sin.GLUTTONY, t, until + 9020);
-            check(fp.getFoodData().getExhaustionLevel() > 0f, "Gluttony empties a full stomach");
+            check(com.newuniverse.nusmp.balance.HungerBan.guard(fp), "Gluttony leaves the food bar alone");
+            check(fp.getFoodData().getExhaustionLevel() == 0f && fp.getFoodData().getFoodLevel() == 15, "Gluttony adds no exhaustion and takes no food point");
+            com.newuniverse.nusmp.balance.HungerBan.disarm(fp);
             fp.getFoodData().setFoodLevel(20);
             fp.getFoodData().setExhaustion(0f);
             double speed = fp.getAttribute(Attributes.MOVEMENT_SPEED).getValue();

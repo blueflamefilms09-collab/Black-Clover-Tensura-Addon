@@ -488,7 +488,8 @@ public final class PuzzleInstance {
                 PuzzleBridge.effect(p, "minecraft:weakness", 60 * sev, 0);
             }
             case "slow" -> PuzzleBridge.effect(p, "minecraft:slowness", 60 * sev, 1);
-            case "hunger" -> PuzzleBridge.effect(p, "minecraft:hunger", 80 * sev, 0);
+            // 1.99.0, THE HUNGER BAN: the "hunger" kind keeps its id (the puzzles name it) but it is a hollow weariness now (Mining Fatigue), never the Hunger effect
+            case "hunger" -> PuzzleBridge.effect(p, "minecraft:mining_fatigue", 80 * sev, 0);
             case "ambush" -> {
                 int alive = 0;
                 for (UUID id : mobs) if (level.getEntity(id) != null) alive++;

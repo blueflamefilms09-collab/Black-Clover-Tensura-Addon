@@ -69,6 +69,8 @@ public final class Wave6Tune {
     public static final float FLY_SPEED = 0.10f, WALK_FLY_SPEED = 0.05f;
     public static final float FLIGHT_EXHAUSTION = 0.22f;      // per half second of flight (about the cost of sprinting)
     public static final int FLIGHT_FOOD_MIN = 4;
+    /** 1.99.0, THE HUNGER BAN: flight costs magicules now (the two constants above are the old food cost, unused). Share of the maximum pool per half second of flight (about 14 minutes from a full pool), and the share needed to take off. */
+    public static final double FLIGHT_MANA = 0.0006, FLIGHT_MANA_MIN = 0.01;
 
     // ---------------------------------------------------------------- Shadow Robes
     public static final int SHADOW_USES = 2, DIM_MAX = 7, SHADOW_RANGE = 12, SHADOW_MIN = 2;

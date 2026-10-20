@@ -124,11 +124,11 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
     }
 
     // ---- sounds: something old and vast
-    @Override protected SoundEvent getAmbientSound() { return SoundEvents.ELDER_GUARDIAN_AMBIENT; }
+    @Override protected SoundEvent getAmbientSound() { return com.newuniverse.nusmp.audio.MobVoice.ambient("aquatic"); }          // 1.99.0: the drowned family of the bespoke audio engine
 
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.ELDER_GUARDIAN_HURT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("aquatic"); }
 
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.ELDER_GUARDIAN_DEATH; }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("aquatic"); }
 
     // ================================================================ body: a floating water mob
     /** No walking goal and no floating goal (which would push it up): it only picks a target; it is steered by {@link #bossTick}. */

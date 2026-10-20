@@ -26,5 +26,1530 @@
   "zagred_phase": {
     "subtitle": "subtitles.entity.nusmp.zagred_phase",
     "sounds": [{ "name": "nusmp:entity/zagred/phase", "stream": true }]
+  },
+  "mob.goblin.ambient": {
+    "subtitle": "subtitles.nusmp.mob.goblin.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/ambient_1" },
+      { "name": "nusmp:mob/goblin/ambient_2" },
+      { "name": "nusmp:mob/goblin/ambient_3" }
+    ]
+  },
+  "mob.goblin.aggro": {
+    "subtitle": "subtitles.nusmp.mob.goblin.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/aggro_1" },
+      { "name": "nusmp:mob/goblin/aggro_2" }
+    ]
+  },
+  "mob.goblin.attack": {
+    "subtitle": "subtitles.nusmp.mob.goblin.attack",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/attack_1" },
+      { "name": "nusmp:mob/goblin/attack_2" },
+      { "name": "nusmp:mob/goblin/attack_3" }
+    ]
+  },
+  "mob.goblin.hurt": {
+    "subtitle": "subtitles.nusmp.mob.goblin.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/hurt_1" },
+      { "name": "nusmp:mob/goblin/hurt_2" },
+      { "name": "nusmp:mob/goblin/hurt_3" }
+    ]
+  },
+  "mob.goblin.death": {
+    "subtitle": "subtitles.nusmp.mob.goblin.death",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/death_1" },
+      { "name": "nusmp:mob/goblin/death_2" }
+    ]
+  },
+  "mob.goblin.step": {
+    "subtitle": "subtitles.nusmp.mob.goblin.step",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/step_1" },
+      { "name": "nusmp:mob/goblin/step_2" },
+      { "name": "nusmp:mob/goblin/step_3" }
+    ]
+  },
+  "mob.goblin.cast": {
+    "subtitle": "subtitles.nusmp.mob.goblin.cast",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/cast_1" },
+      { "name": "nusmp:mob/goblin/cast_2" }
+    ]
+  },
+  "mob.goblin.taunt": {
+    "subtitle": "subtitles.nusmp.mob.goblin.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/goblin/taunt_1" },
+      { "name": "nusmp:mob/goblin/taunt_2" },
+      { "name": "nusmp:mob/goblin/taunt_3" }
+    ]
+  },
+  "mob.orc.ambient": {
+    "subtitle": "subtitles.nusmp.mob.orc.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/orc/ambient_1" },
+      { "name": "nusmp:mob/orc/ambient_2" },
+      { "name": "nusmp:mob/orc/ambient_3" }
+    ]
+  },
+  "mob.orc.aggro": {
+    "subtitle": "subtitles.nusmp.mob.orc.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/orc/aggro_1" },
+      { "name": "nusmp:mob/orc/aggro_2" }
+    ]
+  },
+  "mob.orc.attack": {
+    "subtitle": "subtitles.nusmp.mob.orc.attack",
+    "sounds": [
+      { "name": "nusmp:mob/orc/attack_1" },
+      { "name": "nusmp:mob/orc/attack_2" },
+      { "name": "nusmp:mob/orc/attack_3" }
+    ]
+  },
+  "mob.orc.hurt": {
+    "subtitle": "subtitles.nusmp.mob.orc.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/orc/hurt_1" },
+      { "name": "nusmp:mob/orc/hurt_2" },
+      { "name": "nusmp:mob/orc/hurt_3" }
+    ]
+  },
+  "mob.orc.death": {
+    "subtitle": "subtitles.nusmp.mob.orc.death",
+    "sounds": [
+      { "name": "nusmp:mob/orc/death_1" },
+      { "name": "nusmp:mob/orc/death_2" }
+    ]
+  },
+  "mob.orc.step": {
+    "subtitle": "subtitles.nusmp.mob.orc.step",
+    "sounds": [
+      { "name": "nusmp:mob/orc/step_1" },
+      { "name": "nusmp:mob/orc/step_2" },
+      { "name": "nusmp:mob/orc/step_3" }
+    ]
+  },
+  "mob.orc.cast": {
+    "subtitle": "subtitles.nusmp.mob.orc.cast",
+    "sounds": [
+      { "name": "nusmp:mob/orc/cast_1" },
+      { "name": "nusmp:mob/orc/cast_2" }
+    ]
+  },
+  "mob.orc.taunt": {
+    "subtitle": "subtitles.nusmp.mob.orc.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/orc/taunt_1" },
+      { "name": "nusmp:mob/orc/taunt_2" },
+      { "name": "nusmp:mob/orc/taunt_3" }
+    ]
+  },
+  "mob.kobold.ambient": {
+    "subtitle": "subtitles.nusmp.mob.kobold.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/ambient_1" },
+      { "name": "nusmp:mob/kobold/ambient_2" },
+      { "name": "nusmp:mob/kobold/ambient_3" }
+    ]
+  },
+  "mob.kobold.aggro": {
+    "subtitle": "subtitles.nusmp.mob.kobold.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/aggro_1" },
+      { "name": "nusmp:mob/kobold/aggro_2" }
+    ]
+  },
+  "mob.kobold.attack": {
+    "subtitle": "subtitles.nusmp.mob.kobold.attack",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/attack_1" },
+      { "name": "nusmp:mob/kobold/attack_2" },
+      { "name": "nusmp:mob/kobold/attack_3" }
+    ]
+  },
+  "mob.kobold.hurt": {
+    "subtitle": "subtitles.nusmp.mob.kobold.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/hurt_1" },
+      { "name": "nusmp:mob/kobold/hurt_2" },
+      { "name": "nusmp:mob/kobold/hurt_3" }
+    ]
+  },
+  "mob.kobold.death": {
+    "subtitle": "subtitles.nusmp.mob.kobold.death",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/death_1" },
+      { "name": "nusmp:mob/kobold/death_2" }
+    ]
+  },
+  "mob.kobold.step": {
+    "subtitle": "subtitles.nusmp.mob.kobold.step",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/step_1" },
+      { "name": "nusmp:mob/kobold/step_2" },
+      { "name": "nusmp:mob/kobold/step_3" }
+    ]
+  },
+  "mob.kobold.cast": {
+    "subtitle": "subtitles.nusmp.mob.kobold.cast",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/cast_1" },
+      { "name": "nusmp:mob/kobold/cast_2" }
+    ]
+  },
+  "mob.kobold.taunt": {
+    "subtitle": "subtitles.nusmp.mob.kobold.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/kobold/taunt_1" },
+      { "name": "nusmp:mob/kobold/taunt_2" },
+      { "name": "nusmp:mob/kobold/taunt_3" }
+    ]
+  },
+  "mob.skeleton.ambient": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/ambient_1" },
+      { "name": "nusmp:mob/skeleton/ambient_2" },
+      { "name": "nusmp:mob/skeleton/ambient_3" }
+    ]
+  },
+  "mob.skeleton.aggro": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/aggro_1" },
+      { "name": "nusmp:mob/skeleton/aggro_2" }
+    ]
+  },
+  "mob.skeleton.attack": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.attack",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/attack_1" },
+      { "name": "nusmp:mob/skeleton/attack_2" },
+      { "name": "nusmp:mob/skeleton/attack_3" }
+    ]
+  },
+  "mob.skeleton.hurt": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/hurt_1" },
+      { "name": "nusmp:mob/skeleton/hurt_2" },
+      { "name": "nusmp:mob/skeleton/hurt_3" }
+    ]
+  },
+  "mob.skeleton.death": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.death",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/death_1" },
+      { "name": "nusmp:mob/skeleton/death_2" }
+    ]
+  },
+  "mob.skeleton.step": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.step",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/step_1" },
+      { "name": "nusmp:mob/skeleton/step_2" },
+      { "name": "nusmp:mob/skeleton/step_3" }
+    ]
+  },
+  "mob.skeleton.cast": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.cast",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/cast_1" },
+      { "name": "nusmp:mob/skeleton/cast_2" }
+    ]
+  },
+  "mob.skeleton.taunt": {
+    "subtitle": "subtitles.nusmp.mob.skeleton.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/skeleton/taunt_1" },
+      { "name": "nusmp:mob/skeleton/taunt_2" },
+      { "name": "nusmp:mob/skeleton/taunt_3" }
+    ]
+  },
+  "mob.ghoul.ambient": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/ambient_1" },
+      { "name": "nusmp:mob/ghoul/ambient_2" },
+      { "name": "nusmp:mob/ghoul/ambient_3" }
+    ]
+  },
+  "mob.ghoul.aggro": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/aggro_1" },
+      { "name": "nusmp:mob/ghoul/aggro_2" }
+    ]
+  },
+  "mob.ghoul.attack": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.attack",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/attack_1" },
+      { "name": "nusmp:mob/ghoul/attack_2" },
+      { "name": "nusmp:mob/ghoul/attack_3" }
+    ]
+  },
+  "mob.ghoul.hurt": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/hurt_1" },
+      { "name": "nusmp:mob/ghoul/hurt_2" },
+      { "name": "nusmp:mob/ghoul/hurt_3" }
+    ]
+  },
+  "mob.ghoul.death": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.death",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/death_1" },
+      { "name": "nusmp:mob/ghoul/death_2" }
+    ]
+  },
+  "mob.ghoul.step": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.step",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/step_1" },
+      { "name": "nusmp:mob/ghoul/step_2" },
+      { "name": "nusmp:mob/ghoul/step_3" }
+    ]
+  },
+  "mob.ghoul.cast": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.cast",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/cast_1" },
+      { "name": "nusmp:mob/ghoul/cast_2" }
+    ]
+  },
+  "mob.ghoul.taunt": {
+    "subtitle": "subtitles.nusmp.mob.ghoul.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/ghoul/taunt_1" },
+      { "name": "nusmp:mob/ghoul/taunt_2" },
+      { "name": "nusmp:mob/ghoul/taunt_3" }
+    ]
+  },
+  "mob.lich.ambient": {
+    "subtitle": "subtitles.nusmp.mob.lich.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/lich/ambient_1" },
+      { "name": "nusmp:mob/lich/ambient_2" },
+      { "name": "nusmp:mob/lich/ambient_3", "stream": true }
+    ]
+  },
+  "mob.lich.aggro": {
+    "subtitle": "subtitles.nusmp.mob.lich.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/lich/aggro_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/aggro_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.lich.attack": {
+    "subtitle": "subtitles.nusmp.mob.lich.attack",
+    "sounds": [
+      { "name": "nusmp:mob/lich/attack_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/attack_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/attack_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.lich.hurt": {
+    "subtitle": "subtitles.nusmp.mob.lich.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/lich/hurt_1" },
+      { "name": "nusmp:mob/lich/hurt_2" },
+      { "name": "nusmp:mob/lich/hurt_3" }
+    ]
+  },
+  "mob.lich.death": {
+    "subtitle": "subtitles.nusmp.mob.lich.death",
+    "sounds": [
+      { "name": "nusmp:mob/lich/death_1", "stream": true, "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/death_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.lich.step": {
+    "subtitle": "subtitles.nusmp.mob.lich.step",
+    "sounds": [
+      { "name": "nusmp:mob/lich/step_1" },
+      { "name": "nusmp:mob/lich/step_2" },
+      { "name": "nusmp:mob/lich/step_3" }
+    ]
+  },
+  "mob.lich.cast": {
+    "subtitle": "subtitles.nusmp.mob.lich.cast",
+    "sounds": [
+      { "name": "nusmp:mob/lich/cast_1", "stream": true, "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/cast_2", "stream": true, "attenuation_distance": 20 }
+    ]
+  },
+  "mob.lich.taunt": {
+    "subtitle": "subtitles.nusmp.mob.lich.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/lich/taunt_1", "stream": true, "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/taunt_2", "stream": true, "attenuation_distance": 20 },
+      { "name": "nusmp:mob/lich/taunt_3", "stream": true, "attenuation_distance": 20 }
+    ]
+  },
+  "mob.wraith.ambient": {
+    "subtitle": "subtitles.nusmp.mob.wraith.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/ambient_1", "stream": true },
+      { "name": "nusmp:mob/wraith/ambient_2", "stream": true },
+      { "name": "nusmp:mob/wraith/ambient_3" }
+    ]
+  },
+  "mob.wraith.aggro": {
+    "subtitle": "subtitles.nusmp.mob.wraith.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/aggro_1" },
+      { "name": "nusmp:mob/wraith/aggro_2" }
+    ]
+  },
+  "mob.wraith.attack": {
+    "subtitle": "subtitles.nusmp.mob.wraith.attack",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/attack_1" },
+      { "name": "nusmp:mob/wraith/attack_2" },
+      { "name": "nusmp:mob/wraith/attack_3" }
+    ]
+  },
+  "mob.wraith.hurt": {
+    "subtitle": "subtitles.nusmp.mob.wraith.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/hurt_1" },
+      { "name": "nusmp:mob/wraith/hurt_2" },
+      { "name": "nusmp:mob/wraith/hurt_3" }
+    ]
+  },
+  "mob.wraith.death": {
+    "subtitle": "subtitles.nusmp.mob.wraith.death",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/death_1", "stream": true },
+      { "name": "nusmp:mob/wraith/death_2", "stream": true }
+    ]
+  },
+  "mob.wraith.step": {
+    "subtitle": "subtitles.nusmp.mob.wraith.step",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/step_1" },
+      { "name": "nusmp:mob/wraith/step_2" },
+      { "name": "nusmp:mob/wraith/step_3" }
+    ]
+  },
+  "mob.wraith.cast": {
+    "subtitle": "subtitles.nusmp.mob.wraith.cast",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/cast_1", "stream": true },
+      { "name": "nusmp:mob/wraith/cast_2", "stream": true }
+    ]
+  },
+  "mob.wraith.taunt": {
+    "subtitle": "subtitles.nusmp.mob.wraith.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/wraith/taunt_1" },
+      { "name": "nusmp:mob/wraith/taunt_2", "stream": true },
+      { "name": "nusmp:mob/wraith/taunt_3", "stream": true }
+    ]
+  },
+  "mob.armor.ambient": {
+    "subtitle": "subtitles.nusmp.mob.armor.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/armor/ambient_1" },
+      { "name": "nusmp:mob/armor/ambient_2" },
+      { "name": "nusmp:mob/armor/ambient_3" }
+    ]
+  },
+  "mob.armor.aggro": {
+    "subtitle": "subtitles.nusmp.mob.armor.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/armor/aggro_1" },
+      { "name": "nusmp:mob/armor/aggro_2" }
+    ]
+  },
+  "mob.armor.attack": {
+    "subtitle": "subtitles.nusmp.mob.armor.attack",
+    "sounds": [
+      { "name": "nusmp:mob/armor/attack_1" },
+      { "name": "nusmp:mob/armor/attack_2" },
+      { "name": "nusmp:mob/armor/attack_3" }
+    ]
+  },
+  "mob.armor.hurt": {
+    "subtitle": "subtitles.nusmp.mob.armor.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/armor/hurt_1" },
+      { "name": "nusmp:mob/armor/hurt_2" },
+      { "name": "nusmp:mob/armor/hurt_3" }
+    ]
+  },
+  "mob.armor.death": {
+    "subtitle": "subtitles.nusmp.mob.armor.death",
+    "sounds": [
+      { "name": "nusmp:mob/armor/death_1" },
+      { "name": "nusmp:mob/armor/death_2" }
+    ]
+  },
+  "mob.armor.step": {
+    "subtitle": "subtitles.nusmp.mob.armor.step",
+    "sounds": [
+      { "name": "nusmp:mob/armor/step_1" },
+      { "name": "nusmp:mob/armor/step_2" },
+      { "name": "nusmp:mob/armor/step_3" }
+    ]
+  },
+  "mob.armor.cast": {
+    "subtitle": "subtitles.nusmp.mob.armor.cast",
+    "sounds": [
+      { "name": "nusmp:mob/armor/cast_1" },
+      { "name": "nusmp:mob/armor/cast_2" }
+    ]
+  },
+  "mob.armor.taunt": {
+    "subtitle": "subtitles.nusmp.mob.armor.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/armor/taunt_1" },
+      { "name": "nusmp:mob/armor/taunt_2" },
+      { "name": "nusmp:mob/armor/taunt_3" }
+    ]
+  },
+  "mob.golem.ambient": {
+    "subtitle": "subtitles.nusmp.mob.golem.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/golem/ambient_1" },
+      { "name": "nusmp:mob/golem/ambient_2" },
+      { "name": "nusmp:mob/golem/ambient_3" }
+    ]
+  },
+  "mob.golem.aggro": {
+    "subtitle": "subtitles.nusmp.mob.golem.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/golem/aggro_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/aggro_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.golem.attack": {
+    "subtitle": "subtitles.nusmp.mob.golem.attack",
+    "sounds": [
+      { "name": "nusmp:mob/golem/attack_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/attack_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/attack_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.golem.hurt": {
+    "subtitle": "subtitles.nusmp.mob.golem.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/golem/hurt_1" },
+      { "name": "nusmp:mob/golem/hurt_2" },
+      { "name": "nusmp:mob/golem/hurt_3" }
+    ]
+  },
+  "mob.golem.death": {
+    "subtitle": "subtitles.nusmp.mob.golem.death",
+    "sounds": [
+      { "name": "nusmp:mob/golem/death_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/death_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.golem.step": {
+    "subtitle": "subtitles.nusmp.mob.golem.step",
+    "sounds": [
+      { "name": "nusmp:mob/golem/step_1" },
+      { "name": "nusmp:mob/golem/step_2" },
+      { "name": "nusmp:mob/golem/step_3" }
+    ]
+  },
+  "mob.golem.cast": {
+    "subtitle": "subtitles.nusmp.mob.golem.cast",
+    "sounds": [
+      { "name": "nusmp:mob/golem/cast_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/cast_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.golem.taunt": {
+    "subtitle": "subtitles.nusmp.mob.golem.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/golem/taunt_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/taunt_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/golem/taunt_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.dragon.ambient": {
+    "subtitle": "subtitles.nusmp.mob.dragon.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/ambient_1" },
+      { "name": "nusmp:mob/dragon/ambient_2" },
+      { "name": "nusmp:mob/dragon/ambient_3" }
+    ]
+  },
+  "mob.dragon.aggro": {
+    "subtitle": "subtitles.nusmp.mob.dragon.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/aggro_1", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/aggro_2", "attenuation_distance": 40 }
+    ]
+  },
+  "mob.dragon.attack": {
+    "subtitle": "subtitles.nusmp.mob.dragon.attack",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/attack_1", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/attack_2", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/attack_3", "attenuation_distance": 40 }
+    ]
+  },
+  "mob.dragon.hurt": {
+    "subtitle": "subtitles.nusmp.mob.dragon.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/hurt_1" },
+      { "name": "nusmp:mob/dragon/hurt_2" },
+      { "name": "nusmp:mob/dragon/hurt_3" }
+    ]
+  },
+  "mob.dragon.death": {
+    "subtitle": "subtitles.nusmp.mob.dragon.death",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/death_1", "stream": true, "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/death_2", "stream": true, "attenuation_distance": 40 }
+    ]
+  },
+  "mob.dragon.step": {
+    "subtitle": "subtitles.nusmp.mob.dragon.step",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/step_1" },
+      { "name": "nusmp:mob/dragon/step_2" },
+      { "name": "nusmp:mob/dragon/step_3" }
+    ]
+  },
+  "mob.dragon.cast": {
+    "subtitle": "subtitles.nusmp.mob.dragon.cast",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/cast_1", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/cast_2", "attenuation_distance": 40 }
+    ]
+  },
+  "mob.dragon.taunt": {
+    "subtitle": "subtitles.nusmp.mob.dragon.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/dragon/taunt_1", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/taunt_2", "attenuation_distance": 40 },
+      { "name": "nusmp:mob/dragon/taunt_3", "attenuation_distance": 40 }
+    ]
+  },
+  "mob.drake.ambient": {
+    "subtitle": "subtitles.nusmp.mob.drake.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/drake/ambient_1" },
+      { "name": "nusmp:mob/drake/ambient_2" },
+      { "name": "nusmp:mob/drake/ambient_3" }
+    ]
+  },
+  "mob.drake.aggro": {
+    "subtitle": "subtitles.nusmp.mob.drake.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/drake/aggro_1" },
+      { "name": "nusmp:mob/drake/aggro_2" }
+    ]
+  },
+  "mob.drake.attack": {
+    "subtitle": "subtitles.nusmp.mob.drake.attack",
+    "sounds": [
+      { "name": "nusmp:mob/drake/attack_1" },
+      { "name": "nusmp:mob/drake/attack_2" },
+      { "name": "nusmp:mob/drake/attack_3" }
+    ]
+  },
+  "mob.drake.hurt": {
+    "subtitle": "subtitles.nusmp.mob.drake.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/drake/hurt_1" },
+      { "name": "nusmp:mob/drake/hurt_2" },
+      { "name": "nusmp:mob/drake/hurt_3" }
+    ]
+  },
+  "mob.drake.death": {
+    "subtitle": "subtitles.nusmp.mob.drake.death",
+    "sounds": [
+      { "name": "nusmp:mob/drake/death_1", "stream": true },
+      { "name": "nusmp:mob/drake/death_2" }
+    ]
+  },
+  "mob.drake.step": {
+    "subtitle": "subtitles.nusmp.mob.drake.step",
+    "sounds": [
+      { "name": "nusmp:mob/drake/step_1" },
+      { "name": "nusmp:mob/drake/step_2" },
+      { "name": "nusmp:mob/drake/step_3" }
+    ]
+  },
+  "mob.drake.cast": {
+    "subtitle": "subtitles.nusmp.mob.drake.cast",
+    "sounds": [
+      { "name": "nusmp:mob/drake/cast_1" },
+      { "name": "nusmp:mob/drake/cast_2" }
+    ]
+  },
+  "mob.drake.taunt": {
+    "subtitle": "subtitles.nusmp.mob.drake.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/drake/taunt_1" },
+      { "name": "nusmp:mob/drake/taunt_2" },
+      { "name": "nusmp:mob/drake/taunt_3" }
+    ]
+  },
+  "mob.slime.ambient": {
+    "subtitle": "subtitles.nusmp.mob.slime.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/slime/ambient_1" },
+      { "name": "nusmp:mob/slime/ambient_2" },
+      { "name": "nusmp:mob/slime/ambient_3" }
+    ]
+  },
+  "mob.slime.aggro": {
+    "subtitle": "subtitles.nusmp.mob.slime.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/slime/aggro_1" },
+      { "name": "nusmp:mob/slime/aggro_2" }
+    ]
+  },
+  "mob.slime.attack": {
+    "subtitle": "subtitles.nusmp.mob.slime.attack",
+    "sounds": [
+      { "name": "nusmp:mob/slime/attack_1" },
+      { "name": "nusmp:mob/slime/attack_2" },
+      { "name": "nusmp:mob/slime/attack_3" }
+    ]
+  },
+  "mob.slime.hurt": {
+    "subtitle": "subtitles.nusmp.mob.slime.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/slime/hurt_1" },
+      { "name": "nusmp:mob/slime/hurt_2" },
+      { "name": "nusmp:mob/slime/hurt_3" }
+    ]
+  },
+  "mob.slime.death": {
+    "subtitle": "subtitles.nusmp.mob.slime.death",
+    "sounds": [
+      { "name": "nusmp:mob/slime/death_1" },
+      { "name": "nusmp:mob/slime/death_2" }
+    ]
+  },
+  "mob.slime.step": {
+    "subtitle": "subtitles.nusmp.mob.slime.step",
+    "sounds": [
+      { "name": "nusmp:mob/slime/step_1" },
+      { "name": "nusmp:mob/slime/step_2" },
+      { "name": "nusmp:mob/slime/step_3" }
+    ]
+  },
+  "mob.slime.cast": {
+    "subtitle": "subtitles.nusmp.mob.slime.cast",
+    "sounds": [
+      { "name": "nusmp:mob/slime/cast_1" },
+      { "name": "nusmp:mob/slime/cast_2" }
+    ]
+  },
+  "mob.slime.taunt": {
+    "subtitle": "subtitles.nusmp.mob.slime.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/slime/taunt_1" },
+      { "name": "nusmp:mob/slime/taunt_2" },
+      { "name": "nusmp:mob/slime/taunt_3" }
+    ]
+  },
+  "mob.demon.ambient": {
+    "subtitle": "subtitles.nusmp.mob.demon.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/demon/ambient_1" },
+      { "name": "nusmp:mob/demon/ambient_2" },
+      { "name": "nusmp:mob/demon/ambient_3" }
+    ]
+  },
+  "mob.demon.aggro": {
+    "subtitle": "subtitles.nusmp.mob.demon.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/demon/aggro_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/aggro_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.demon.attack": {
+    "subtitle": "subtitles.nusmp.mob.demon.attack",
+    "sounds": [
+      { "name": "nusmp:mob/demon/attack_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/attack_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/attack_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.demon.hurt": {
+    "subtitle": "subtitles.nusmp.mob.demon.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/demon/hurt_1" },
+      { "name": "nusmp:mob/demon/hurt_2" },
+      { "name": "nusmp:mob/demon/hurt_3" }
+    ]
+  },
+  "mob.demon.death": {
+    "subtitle": "subtitles.nusmp.mob.demon.death",
+    "sounds": [
+      { "name": "nusmp:mob/demon/death_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/death_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.demon.step": {
+    "subtitle": "subtitles.nusmp.mob.demon.step",
+    "sounds": [
+      { "name": "nusmp:mob/demon/step_1" },
+      { "name": "nusmp:mob/demon/step_2" },
+      { "name": "nusmp:mob/demon/step_3" }
+    ]
+  },
+  "mob.demon.cast": {
+    "subtitle": "subtitles.nusmp.mob.demon.cast",
+    "sounds": [
+      { "name": "nusmp:mob/demon/cast_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/cast_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.demon.taunt": {
+    "subtitle": "subtitles.nusmp.mob.demon.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/demon/taunt_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/taunt_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/demon/taunt_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.imp.ambient": {
+    "subtitle": "subtitles.nusmp.mob.imp.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/imp/ambient_1" },
+      { "name": "nusmp:mob/imp/ambient_2" },
+      { "name": "nusmp:mob/imp/ambient_3" }
+    ]
+  },
+  "mob.imp.aggro": {
+    "subtitle": "subtitles.nusmp.mob.imp.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/imp/aggro_1" },
+      { "name": "nusmp:mob/imp/aggro_2" }
+    ]
+  },
+  "mob.imp.attack": {
+    "subtitle": "subtitles.nusmp.mob.imp.attack",
+    "sounds": [
+      { "name": "nusmp:mob/imp/attack_1" },
+      { "name": "nusmp:mob/imp/attack_2" },
+      { "name": "nusmp:mob/imp/attack_3" }
+    ]
+  },
+  "mob.imp.hurt": {
+    "subtitle": "subtitles.nusmp.mob.imp.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/imp/hurt_1" },
+      { "name": "nusmp:mob/imp/hurt_2" },
+      { "name": "nusmp:mob/imp/hurt_3" }
+    ]
+  },
+  "mob.imp.death": {
+    "subtitle": "subtitles.nusmp.mob.imp.death",
+    "sounds": [
+      { "name": "nusmp:mob/imp/death_1" },
+      { "name": "nusmp:mob/imp/death_2" }
+    ]
+  },
+  "mob.imp.step": {
+    "subtitle": "subtitles.nusmp.mob.imp.step",
+    "sounds": [
+      { "name": "nusmp:mob/imp/step_1" },
+      { "name": "nusmp:mob/imp/step_2" },
+      { "name": "nusmp:mob/imp/step_3" }
+    ]
+  },
+  "mob.imp.cast": {
+    "subtitle": "subtitles.nusmp.mob.imp.cast",
+    "sounds": [
+      { "name": "nusmp:mob/imp/cast_1" },
+      { "name": "nusmp:mob/imp/cast_2" }
+    ]
+  },
+  "mob.imp.taunt": {
+    "subtitle": "subtitles.nusmp.mob.imp.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/imp/taunt_1" },
+      { "name": "nusmp:mob/imp/taunt_2" },
+      { "name": "nusmp:mob/imp/taunt_3" }
+    ]
+  },
+  "mob.harpy.ambient": {
+    "subtitle": "subtitles.nusmp.mob.harpy.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/ambient_1" },
+      { "name": "nusmp:mob/harpy/ambient_2" },
+      { "name": "nusmp:mob/harpy/ambient_3" }
+    ]
+  },
+  "mob.harpy.aggro": {
+    "subtitle": "subtitles.nusmp.mob.harpy.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/aggro_1" },
+      { "name": "nusmp:mob/harpy/aggro_2" }
+    ]
+  },
+  "mob.harpy.attack": {
+    "subtitle": "subtitles.nusmp.mob.harpy.attack",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/attack_1" },
+      { "name": "nusmp:mob/harpy/attack_2" },
+      { "name": "nusmp:mob/harpy/attack_3" }
+    ]
+  },
+  "mob.harpy.hurt": {
+    "subtitle": "subtitles.nusmp.mob.harpy.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/hurt_1" },
+      { "name": "nusmp:mob/harpy/hurt_2" },
+      { "name": "nusmp:mob/harpy/hurt_3" }
+    ]
+  },
+  "mob.harpy.death": {
+    "subtitle": "subtitles.nusmp.mob.harpy.death",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/death_1" },
+      { "name": "nusmp:mob/harpy/death_2" }
+    ]
+  },
+  "mob.harpy.step": {
+    "subtitle": "subtitles.nusmp.mob.harpy.step",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/step_1" },
+      { "name": "nusmp:mob/harpy/step_2" },
+      { "name": "nusmp:mob/harpy/step_3" }
+    ]
+  },
+  "mob.harpy.cast": {
+    "subtitle": "subtitles.nusmp.mob.harpy.cast",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/cast_1" },
+      { "name": "nusmp:mob/harpy/cast_2" }
+    ]
+  },
+  "mob.harpy.taunt": {
+    "subtitle": "subtitles.nusmp.mob.harpy.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/harpy/taunt_1" },
+      { "name": "nusmp:mob/harpy/taunt_2" },
+      { "name": "nusmp:mob/harpy/taunt_3" }
+    ]
+  },
+  "mob.troll.ambient": {
+    "subtitle": "subtitles.nusmp.mob.troll.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/troll/ambient_1" },
+      { "name": "nusmp:mob/troll/ambient_2" },
+      { "name": "nusmp:mob/troll/ambient_3" }
+    ]
+  },
+  "mob.troll.aggro": {
+    "subtitle": "subtitles.nusmp.mob.troll.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/troll/aggro_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/aggro_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.troll.attack": {
+    "subtitle": "subtitles.nusmp.mob.troll.attack",
+    "sounds": [
+      { "name": "nusmp:mob/troll/attack_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/attack_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/attack_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.troll.hurt": {
+    "subtitle": "subtitles.nusmp.mob.troll.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/troll/hurt_1" },
+      { "name": "nusmp:mob/troll/hurt_2" },
+      { "name": "nusmp:mob/troll/hurt_3" }
+    ]
+  },
+  "mob.troll.death": {
+    "subtitle": "subtitles.nusmp.mob.troll.death",
+    "sounds": [
+      { "name": "nusmp:mob/troll/death_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/death_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.troll.step": {
+    "subtitle": "subtitles.nusmp.mob.troll.step",
+    "sounds": [
+      { "name": "nusmp:mob/troll/step_1" },
+      { "name": "nusmp:mob/troll/step_2" },
+      { "name": "nusmp:mob/troll/step_3" }
+    ]
+  },
+  "mob.troll.cast": {
+    "subtitle": "subtitles.nusmp.mob.troll.cast",
+    "sounds": [
+      { "name": "nusmp:mob/troll/cast_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/cast_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.troll.taunt": {
+    "subtitle": "subtitles.nusmp.mob.troll.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/troll/taunt_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/taunt_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/troll/taunt_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.ogre.ambient": {
+    "subtitle": "subtitles.nusmp.mob.ogre.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/ambient_1" },
+      { "name": "nusmp:mob/ogre/ambient_2" },
+      { "name": "nusmp:mob/ogre/ambient_3" }
+    ]
+  },
+  "mob.ogre.aggro": {
+    "subtitle": "subtitles.nusmp.mob.ogre.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/aggro_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/aggro_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.ogre.attack": {
+    "subtitle": "subtitles.nusmp.mob.ogre.attack",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/attack_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/attack_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/attack_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.ogre.hurt": {
+    "subtitle": "subtitles.nusmp.mob.ogre.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/hurt_1" },
+      { "name": "nusmp:mob/ogre/hurt_2" },
+      { "name": "nusmp:mob/ogre/hurt_3" }
+    ]
+  },
+  "mob.ogre.death": {
+    "subtitle": "subtitles.nusmp.mob.ogre.death",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/death_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/death_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.ogre.step": {
+    "subtitle": "subtitles.nusmp.mob.ogre.step",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/step_1" },
+      { "name": "nusmp:mob/ogre/step_2" },
+      { "name": "nusmp:mob/ogre/step_3" }
+    ]
+  },
+  "mob.ogre.cast": {
+    "subtitle": "subtitles.nusmp.mob.ogre.cast",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/cast_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/cast_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.ogre.taunt": {
+    "subtitle": "subtitles.nusmp.mob.ogre.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/ogre/taunt_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/taunt_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/ogre/taunt_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.beast.ambient": {
+    "subtitle": "subtitles.nusmp.mob.beast.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/beast/ambient_1" },
+      { "name": "nusmp:mob/beast/ambient_2" },
+      { "name": "nusmp:mob/beast/ambient_3" }
+    ]
+  },
+  "mob.beast.aggro": {
+    "subtitle": "subtitles.nusmp.mob.beast.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/beast/aggro_1" },
+      { "name": "nusmp:mob/beast/aggro_2" }
+    ]
+  },
+  "mob.beast.attack": {
+    "subtitle": "subtitles.nusmp.mob.beast.attack",
+    "sounds": [
+      { "name": "nusmp:mob/beast/attack_1" },
+      { "name": "nusmp:mob/beast/attack_2" },
+      { "name": "nusmp:mob/beast/attack_3" }
+    ]
+  },
+  "mob.beast.hurt": {
+    "subtitle": "subtitles.nusmp.mob.beast.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/beast/hurt_1" },
+      { "name": "nusmp:mob/beast/hurt_2" },
+      { "name": "nusmp:mob/beast/hurt_3" }
+    ]
+  },
+  "mob.beast.death": {
+    "subtitle": "subtitles.nusmp.mob.beast.death",
+    "sounds": [
+      { "name": "nusmp:mob/beast/death_1" },
+      { "name": "nusmp:mob/beast/death_2" }
+    ]
+  },
+  "mob.beast.step": {
+    "subtitle": "subtitles.nusmp.mob.beast.step",
+    "sounds": [
+      { "name": "nusmp:mob/beast/step_1" },
+      { "name": "nusmp:mob/beast/step_2" },
+      { "name": "nusmp:mob/beast/step_3" }
+    ]
+  },
+  "mob.beast.cast": {
+    "subtitle": "subtitles.nusmp.mob.beast.cast",
+    "sounds": [
+      { "name": "nusmp:mob/beast/cast_1" },
+      { "name": "nusmp:mob/beast/cast_2" }
+    ]
+  },
+  "mob.beast.taunt": {
+    "subtitle": "subtitles.nusmp.mob.beast.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/beast/taunt_1" },
+      { "name": "nusmp:mob/beast/taunt_2" },
+      { "name": "nusmp:mob/beast/taunt_3", "stream": true }
+    ]
+  },
+  "mob.insect.ambient": {
+    "subtitle": "subtitles.nusmp.mob.insect.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/insect/ambient_1" },
+      { "name": "nusmp:mob/insect/ambient_2" },
+      { "name": "nusmp:mob/insect/ambient_3" }
+    ]
+  },
+  "mob.insect.aggro": {
+    "subtitle": "subtitles.nusmp.mob.insect.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/insect/aggro_1" },
+      { "name": "nusmp:mob/insect/aggro_2" }
+    ]
+  },
+  "mob.insect.attack": {
+    "subtitle": "subtitles.nusmp.mob.insect.attack",
+    "sounds": [
+      { "name": "nusmp:mob/insect/attack_1" },
+      { "name": "nusmp:mob/insect/attack_2" },
+      { "name": "nusmp:mob/insect/attack_3" }
+    ]
+  },
+  "mob.insect.hurt": {
+    "subtitle": "subtitles.nusmp.mob.insect.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/insect/hurt_1" },
+      { "name": "nusmp:mob/insect/hurt_2" },
+      { "name": "nusmp:mob/insect/hurt_3" }
+    ]
+  },
+  "mob.insect.death": {
+    "subtitle": "subtitles.nusmp.mob.insect.death",
+    "sounds": [
+      { "name": "nusmp:mob/insect/death_1" },
+      { "name": "nusmp:mob/insect/death_2" }
+    ]
+  },
+  "mob.insect.step": {
+    "subtitle": "subtitles.nusmp.mob.insect.step",
+    "sounds": [
+      { "name": "nusmp:mob/insect/step_1" },
+      { "name": "nusmp:mob/insect/step_2" },
+      { "name": "nusmp:mob/insect/step_3" }
+    ]
+  },
+  "mob.insect.cast": {
+    "subtitle": "subtitles.nusmp.mob.insect.cast",
+    "sounds": [
+      { "name": "nusmp:mob/insect/cast_1" },
+      { "name": "nusmp:mob/insect/cast_2" }
+    ]
+  },
+  "mob.insect.taunt": {
+    "subtitle": "subtitles.nusmp.mob.insect.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/insect/taunt_1" },
+      { "name": "nusmp:mob/insect/taunt_2" },
+      { "name": "nusmp:mob/insect/taunt_3" }
+    ]
+  },
+  "mob.elemental.ambient": {
+    "subtitle": "subtitles.nusmp.mob.elemental.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/ambient_1" },
+      { "name": "nusmp:mob/elemental/ambient_2" },
+      { "name": "nusmp:mob/elemental/ambient_3" }
+    ]
+  },
+  "mob.elemental.aggro": {
+    "subtitle": "subtitles.nusmp.mob.elemental.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/aggro_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/aggro_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.elemental.attack": {
+    "subtitle": "subtitles.nusmp.mob.elemental.attack",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/attack_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/attack_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/attack_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.elemental.hurt": {
+    "subtitle": "subtitles.nusmp.mob.elemental.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/hurt_1" },
+      { "name": "nusmp:mob/elemental/hurt_2" },
+      { "name": "nusmp:mob/elemental/hurt_3" }
+    ]
+  },
+  "mob.elemental.death": {
+    "subtitle": "subtitles.nusmp.mob.elemental.death",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/death_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/death_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.elemental.step": {
+    "subtitle": "subtitles.nusmp.mob.elemental.step",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/step_1" },
+      { "name": "nusmp:mob/elemental/step_2" },
+      { "name": "nusmp:mob/elemental/step_3" }
+    ]
+  },
+  "mob.elemental.cast": {
+    "subtitle": "subtitles.nusmp.mob.elemental.cast",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/cast_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/cast_2", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.elemental.taunt": {
+    "subtitle": "subtitles.nusmp.mob.elemental.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/elemental/taunt_1", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/taunt_2", "attenuation_distance": 20 },
+      { "name": "nusmp:mob/elemental/taunt_3", "attenuation_distance": 20 }
+    ]
+  },
+  "mob.aquatic.ambient": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/ambient_1" },
+      { "name": "nusmp:mob/aquatic/ambient_2" },
+      { "name": "nusmp:mob/aquatic/ambient_3" }
+    ]
+  },
+  "mob.aquatic.aggro": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/aggro_1" },
+      { "name": "nusmp:mob/aquatic/aggro_2" }
+    ]
+  },
+  "mob.aquatic.attack": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.attack",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/attack_1" },
+      { "name": "nusmp:mob/aquatic/attack_2" },
+      { "name": "nusmp:mob/aquatic/attack_3" }
+    ]
+  },
+  "mob.aquatic.hurt": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/hurt_1" },
+      { "name": "nusmp:mob/aquatic/hurt_2" },
+      { "name": "nusmp:mob/aquatic/hurt_3" }
+    ]
+  },
+  "mob.aquatic.death": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.death",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/death_1" },
+      { "name": "nusmp:mob/aquatic/death_2" }
+    ]
+  },
+  "mob.aquatic.step": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.step",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/step_1" },
+      { "name": "nusmp:mob/aquatic/step_2" },
+      { "name": "nusmp:mob/aquatic/step_3" }
+    ]
+  },
+  "mob.aquatic.cast": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.cast",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/cast_1" },
+      { "name": "nusmp:mob/aquatic/cast_2" }
+    ]
+  },
+  "mob.aquatic.taunt": {
+    "subtitle": "subtitles.nusmp.mob.aquatic.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/aquatic/taunt_1" },
+      { "name": "nusmp:mob/aquatic/taunt_2" },
+      { "name": "nusmp:mob/aquatic/taunt_3" }
+    ]
+  },
+  "mob.cultist.ambient": {
+    "subtitle": "subtitles.nusmp.mob.cultist.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/ambient_1" },
+      { "name": "nusmp:mob/cultist/ambient_2" },
+      { "name": "nusmp:mob/cultist/ambient_3" }
+    ]
+  },
+  "mob.cultist.aggro": {
+    "subtitle": "subtitles.nusmp.mob.cultist.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/aggro_1" },
+      { "name": "nusmp:mob/cultist/aggro_2" }
+    ]
+  },
+  "mob.cultist.attack": {
+    "subtitle": "subtitles.nusmp.mob.cultist.attack",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/attack_1" },
+      { "name": "nusmp:mob/cultist/attack_2" },
+      { "name": "nusmp:mob/cultist/attack_3" }
+    ]
+  },
+  "mob.cultist.hurt": {
+    "subtitle": "subtitles.nusmp.mob.cultist.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/hurt_1" },
+      { "name": "nusmp:mob/cultist/hurt_2" },
+      { "name": "nusmp:mob/cultist/hurt_3" }
+    ]
+  },
+  "mob.cultist.death": {
+    "subtitle": "subtitles.nusmp.mob.cultist.death",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/death_1" },
+      { "name": "nusmp:mob/cultist/death_2" }
+    ]
+  },
+  "mob.cultist.step": {
+    "subtitle": "subtitles.nusmp.mob.cultist.step",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/step_1" },
+      { "name": "nusmp:mob/cultist/step_2" },
+      { "name": "nusmp:mob/cultist/step_3" }
+    ]
+  },
+  "mob.cultist.cast": {
+    "subtitle": "subtitles.nusmp.mob.cultist.cast",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/cast_1" },
+      { "name": "nusmp:mob/cultist/cast_2" }
+    ]
+  },
+  "mob.cultist.taunt": {
+    "subtitle": "subtitles.nusmp.mob.cultist.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/cultist/taunt_1" },
+      { "name": "nusmp:mob/cultist/taunt_2" },
+      { "name": "nusmp:mob/cultist/taunt_3" }
+    ]
+  },
+  "mob.vampire.ambient": {
+    "subtitle": "subtitles.nusmp.mob.vampire.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/ambient_1" },
+      { "name": "nusmp:mob/vampire/ambient_2" },
+      { "name": "nusmp:mob/vampire/ambient_3" }
+    ]
+  },
+  "mob.vampire.aggro": {
+    "subtitle": "subtitles.nusmp.mob.vampire.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/aggro_1" },
+      { "name": "nusmp:mob/vampire/aggro_2" }
+    ]
+  },
+  "mob.vampire.attack": {
+    "subtitle": "subtitles.nusmp.mob.vampire.attack",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/attack_1" },
+      { "name": "nusmp:mob/vampire/attack_2" },
+      { "name": "nusmp:mob/vampire/attack_3" }
+    ]
+  },
+  "mob.vampire.hurt": {
+    "subtitle": "subtitles.nusmp.mob.vampire.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/hurt_1" },
+      { "name": "nusmp:mob/vampire/hurt_2" },
+      { "name": "nusmp:mob/vampire/hurt_3" }
+    ]
+  },
+  "mob.vampire.death": {
+    "subtitle": "subtitles.nusmp.mob.vampire.death",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/death_1" },
+      { "name": "nusmp:mob/vampire/death_2" }
+    ]
+  },
+  "mob.vampire.step": {
+    "subtitle": "subtitles.nusmp.mob.vampire.step",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/step_1" },
+      { "name": "nusmp:mob/vampire/step_2" },
+      { "name": "nusmp:mob/vampire/step_3" }
+    ]
+  },
+  "mob.vampire.cast": {
+    "subtitle": "subtitles.nusmp.mob.vampire.cast",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/cast_1" },
+      { "name": "nusmp:mob/vampire/cast_2" }
+    ]
+  },
+  "mob.vampire.taunt": {
+    "subtitle": "subtitles.nusmp.mob.vampire.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/vampire/taunt_1" },
+      { "name": "nusmp:mob/vampire/taunt_2" },
+      { "name": "nusmp:mob/vampire/taunt_3" }
+    ]
+  },
+  "mob.celestial.ambient": {
+    "subtitle": "subtitles.nusmp.mob.celestial.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/ambient_1" },
+      { "name": "nusmp:mob/celestial/ambient_2" },
+      { "name": "nusmp:mob/celestial/ambient_3", "stream": true }
+    ]
+  },
+  "mob.celestial.aggro": {
+    "subtitle": "subtitles.nusmp.mob.celestial.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/aggro_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/aggro_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.celestial.attack": {
+    "subtitle": "subtitles.nusmp.mob.celestial.attack",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/attack_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/attack_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/attack_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.celestial.hurt": {
+    "subtitle": "subtitles.nusmp.mob.celestial.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/hurt_1" },
+      { "name": "nusmp:mob/celestial/hurt_2" },
+      { "name": "nusmp:mob/celestial/hurt_3" }
+    ]
+  },
+  "mob.celestial.death": {
+    "subtitle": "subtitles.nusmp.mob.celestial.death",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/death_1", "stream": true, "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/death_2", "stream": true, "attenuation_distance": 24 }
+    ]
+  },
+  "mob.celestial.step": {
+    "subtitle": "subtitles.nusmp.mob.celestial.step",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/step_1" },
+      { "name": "nusmp:mob/celestial/step_2" },
+      { "name": "nusmp:mob/celestial/step_3" }
+    ]
+  },
+  "mob.celestial.cast": {
+    "subtitle": "subtitles.nusmp.mob.celestial.cast",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/cast_1", "stream": true, "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/cast_2", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.celestial.taunt": {
+    "subtitle": "subtitles.nusmp.mob.celestial.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/celestial/taunt_1", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/taunt_2", "attenuation_distance": 24 },
+      { "name": "nusmp:mob/celestial/taunt_3", "attenuation_distance": 24 }
+    ]
+  },
+  "mob.npc.ambient": {
+    "subtitle": "subtitles.nusmp.mob.npc.ambient",
+    "sounds": [
+      { "name": "nusmp:mob/npc/ambient_1" },
+      { "name": "nusmp:mob/npc/ambient_2" },
+      { "name": "nusmp:mob/npc/ambient_3" }
+    ]
+  },
+  "mob.npc.aggro": {
+    "subtitle": "subtitles.nusmp.mob.npc.aggro",
+    "sounds": [
+      { "name": "nusmp:mob/npc/aggro_1" },
+      { "name": "nusmp:mob/npc/aggro_2" }
+    ]
+  },
+  "mob.npc.attack": {
+    "subtitle": "subtitles.nusmp.mob.npc.attack",
+    "sounds": [
+      { "name": "nusmp:mob/npc/attack_1" },
+      { "name": "nusmp:mob/npc/attack_2" },
+      { "name": "nusmp:mob/npc/attack_3" }
+    ]
+  },
+  "mob.npc.hurt": {
+    "subtitle": "subtitles.nusmp.mob.npc.hurt",
+    "sounds": [
+      { "name": "nusmp:mob/npc/hurt_1" },
+      { "name": "nusmp:mob/npc/hurt_2" },
+      { "name": "nusmp:mob/npc/hurt_3" }
+    ]
+  },
+  "mob.npc.death": {
+    "subtitle": "subtitles.nusmp.mob.npc.death",
+    "sounds": [
+      { "name": "nusmp:mob/npc/death_1" },
+      { "name": "nusmp:mob/npc/death_2" }
+    ]
+  },
+  "mob.npc.step": {
+    "subtitle": "subtitles.nusmp.mob.npc.step",
+    "sounds": [
+      { "name": "nusmp:mob/npc/step_1" },
+      { "name": "nusmp:mob/npc/step_2" },
+      { "name": "nusmp:mob/npc/step_3" }
+    ]
+  },
+  "mob.npc.cast": {
+    "subtitle": "subtitles.nusmp.mob.npc.cast",
+    "sounds": [
+      { "name": "nusmp:mob/npc/cast_1" },
+      { "name": "nusmp:mob/npc/cast_2" }
+    ]
+  },
+  "mob.npc.taunt": {
+    "subtitle": "subtitles.nusmp.mob.npc.taunt",
+    "sounds": [
+      { "name": "nusmp:mob/npc/taunt_1" },
+      { "name": "nusmp:mob/npc/taunt_2" },
+      { "name": "nusmp:mob/npc/taunt_3" }
+    ]
   }
 }

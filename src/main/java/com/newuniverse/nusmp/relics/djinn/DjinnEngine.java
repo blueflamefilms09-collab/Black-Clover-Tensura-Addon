@@ -42,7 +42,7 @@ import java.util.UUID;
  *
  * <p>Full Djinn Equip (Maso): attribute boosts, an EP spike (Tensura's max magicule and aura +25%: its EP follows both), and a bounded, safe flight
  * (the ability to fly is given only if the player did not already have it and taken back at the end, with Slow Falling so the landing is never
- * the backlash). At most 90 s; it ends in a backlash (Slowness, Weakness, Nausea, Hunger) and a lockout.
+ * the backlash). At most 90 s; it ends in a backlash (Slowness, Weakness, Nausea, and Blindness when severe; never Hunger since the 1.99.0 hunger ban) and a lockout.
  */
 public final class DjinnEngine {
     private DjinnEngine() {}
@@ -437,8 +437,8 @@ public final class DjinnEngine {
         if (b.slowTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, b.slowTicks(), b.slowAmp()));
         if (b.weakTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, b.weakTicks(), b.weakAmp()));
         if (b.nauseaTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.CONFUSION, b.nauseaTicks(), 0));
-        if (b.hungerTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.HUNGER, b.hungerTicks(), 1));
-        if (b.foodLoss() > 0) p.getFoodData().setFoodLevel(Math.max(1, p.getFoodData().getFoodLevel() - b.foodLoss()));
+        // 1.99.0, THE HUNGER BAN: the backlash no longer carries Hunger or a loss of food points (b.hungerTicks() and b.foodLoss() are ignored); Slowness, Weakness,
+        // Nausea, Blindness and the max-health strain are its cost
         if (b.blindTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, b.blindTicks(), 0));
         if (b.healthLoss() > 0) {
             DjinnState s = DjinnState.of(p);

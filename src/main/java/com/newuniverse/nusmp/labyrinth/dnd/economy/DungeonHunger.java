@@ -21,15 +21,17 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Why: the dungeon's passive resource clock (D&amp;D torches and rations): in the Labyrinth hunger runs faster and the dark hurts, which is
- * what turns the monster meat and the lantern from loot into necessities. It is a per-player server tick sampled once a second
- * ({@code PlayerTickEvent.Post}, {@code tickCount % 20}), not a per-tick cost, and it keeps each player's {@link GloomClock} in a map keyed
- * by UUID (cleared on logout and when the player leaves the dimension) instead of player NBT, so nothing is saved and a relog is a clean slate.
- * Hunger is a multiplier done with {@code causeFoodExhaustion} on the difference since the last sample (so it scales with what the player
- * actually did and never invents hunger for someone standing still); gloom is "block light at the eyes at or below the limit and no light in
- * either hand for N seconds", answered with vanilla Darkness and Weakness I refreshed every second (they expire by themselves five seconds
- * after the player steps into light, so there is no state to restore) and Slowness I at three shanks or fewer. Creative and spectator players
- * are never touched. Only vanilla effects with hidden particles are used: no particle is emitted here, so nothing needs the Rukh API.
+ * Why: the dungeon's passive resource clock (D&amp;D torches): in the Labyrinth the dark hurts, which is what turns the lantern from loot into a
+ * necessity. It is a per-player server tick sampled once a second ({@code PlayerTickEvent.Post}, {@code tickCount % 20}), not a per-tick cost, and it
+ * keeps each player's {@link GloomClock} in a map keyed by UUID (cleared on logout and when the player leaves the dimension) instead of player NBT, so
+ * nothing is saved and a relog is a clean slate.
+ * <p>1.99.0, THE HUNGER BAN (the owner's strict global exclusion): until 1.98.0 this class also made hunger run faster in the Labyrinth
+ * ({@code causeFoodExhaustion} on the difference since the last sample) and slowed a player at three shanks or fewer. Both are gone: the clock keeps its
+ * class, its id and its registration, and it no longer reads or writes the food bar at all (no exhaustion, no slowness for being hungry). Its only pressure
+ * left is the gloom, which is light-based. See {@code docs/labyrinth/hunger_ban.md}.
+ * <p>Gloom is "block light at the eyes at or below the limit and no light in either hand for N seconds", answered with vanilla Darkness and Weakness I
+ * refreshed every second (they expire by themselves five seconds after the player steps into light, so there is no state to restore). Creative and
+ * spectator players are never touched. Only vanilla effects with hidden particles are used: no particle is emitted here, so nothing needs the Rukh API.
  */
 public final class DungeonHunger {
     private DungeonHunger() {}
@@ -44,12 +46,12 @@ public final class DungeonHunger {
             return;
         }
         if (!DndConfig.get(DndConfig.GLOOM)) return;
-        GloomClock clock = CLOCKS.computeIfAbsent(p.getUUID(), k -> new GloomClock());
+        sample(p, level);
+    }
 
-        double drain = DndConfig.get(DndConfig.HUNGER_DRAIN);
-        float extra = clock.extraExhaustion(p.getFoodData().getExhaustionLevel(), drain);
-        if (extra > 0f) p.causeFoodExhaustion(extra);
-        clock.settle(p.getFoodData().getExhaustionLevel());
+    /** One second of the clock for a survival player in the Labyrinth: only the gloom (light) is judged; the food bar is never read or written (the hunger ban). */
+    public static void sample(ServerPlayer p, ServerLevel level) {
+        GloomClock clock = CLOCKS.computeIfAbsent(p.getUUID(), k -> new GloomClock());
 
         int light = level.getBrightness(LightLayer.BLOCK, BlockPos.containing(p.getEyePosition()));
         boolean dark = GloomClock.isDark(light, DndConfig.get(DndConfig.GLOOM_LIGHT), lightInHand(p));
@@ -64,10 +66,6 @@ public final class DungeonHunger {
             p.displayClientMessage(Component.translatable("message.nusmp.labyrinth_gloom"), true);
         } else if (clock.warningEdge(now, before)) {
             p.displayClientMessage(Component.translatable("message.nusmp.labyrinth_gloom_warning"), true);
-        }
-        if (GloomClock.starving(p.getFoodData().getFoodLevel())) {
-            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0, false, false, true));
-            if (p.tickCount % 200 == 0) p.displayClientMessage(Component.translatable("message.nusmp.labyrinth_hunger"), true);
         }
     }
 

@@ -113,6 +113,7 @@ public class NUSMP {
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
         com.newuniverse.nusmp.sound.NUSounds.SOUNDS.register(modEventBus);
+        com.newuniverse.nusmp.audio.ModSounds.SOUNDS.register(modEventBus);                                                // 1.99.0: the bespoke mob voices, 25 families x 8 cues
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
@@ -240,6 +241,8 @@ public class NUSMP {
                         ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WizardKing::onPlayerTick);            // 1.6.0: one Wizard King
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicEvents.register(NeoForge.EVENT_BUS);                                  // the five Relics
+        com.newuniverse.nusmp.audio.MobSoundRemap.register(NeoForge.EVENT_BUS);                                              // 1.99.0: vanilla mob voices in the dungeon become the family's cues
+        com.newuniverse.nusmp.audio.AudioSelfTests.register();                                                               // 1.99.0: self-test audio.mob_sounds
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);

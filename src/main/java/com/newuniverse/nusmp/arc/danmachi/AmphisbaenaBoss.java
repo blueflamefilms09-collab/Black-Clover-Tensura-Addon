@@ -76,9 +76,9 @@ public class AmphisbaenaBoss extends DanMachiBoss {
     public boolean redHeadCut() { return heads.cut(); }
 
     // ================================================================ sounds
-    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.ENDER_DRAGON_HURT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return com.newuniverse.nusmp.audio.MobVoice.hurt("dragon"); }          // 1.99.0: the dragon family of the bespoke audio engine
 
-    @Override protected SoundEvent getDeathSound() { return SoundEvents.ENDER_DRAGON_DEATH; }
+    @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("dragon"); }
 
     // ================================================================ the red head
     /** While the red head is reared, the blows count against it: physical once, anti-magic twice, spells not at all. */

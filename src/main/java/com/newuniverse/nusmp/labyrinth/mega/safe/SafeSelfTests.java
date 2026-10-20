@@ -187,10 +187,16 @@ final class SafeSelfTests {
             float max = p.getMaxHealth();
             p.setHealth(4f);
             boolean mana = RestMana.setMagiculeShare(p, 0.1);
+            p.getFoodData().setFoodLevel(13);                                            // 1.99.0, the hunger ban: a rest never feeds or starves
+            p.getFoodData().setSaturation(1.5f);
+            p.getFoodData().setExhaustion(2.0f);
             long[] end = new long[1];
             long t0 = c.level.getGameTime();
             RestEvents.Step step = restThrough(p, clicked, t0, RestKind.SHORT, end);
             if (step == null || step.phase() != RestEvents.Step.Phase.DONE) return SelfTests.Result.fail("the short rest did not finish: " + step);
+            if (p.getFoodData().getFoodLevel() != 13 || p.getFoodData().getSaturationLevel() != 1.5f || p.getFoodData().getExhaustionLevel() != 2.0f) {
+                return SelfTests.Result.fail("the short rest touched the food bar: " + com.newuniverse.nusmp.balance.HungerBan.read(p));
+            }
             float expected = Math.min(max, 4f + RestRules.healAmount(4f, max, RestRules.healthShare(RestKind.SHORT, SafeConfig.get(SafeConfig.SHORT_REST_HEALTH))));
             if (Math.abs(p.getHealth() - expected) > 0.05f) return SelfTests.Result.fail("health after the short rest is " + p.getHealth() + ", expected " + expected);
             if (st.shortRestsUsed != 1 || st.channel != null || st.lastRest != end[0]) {
@@ -237,10 +243,16 @@ final class SafeSelfTests {
             st.shortRestsUsed = RestRules.DEFAULT_SHORT_USES;
             boolean mana = RestMana.setMagiculeShare(p, 0.05);
             p.getPersistentData().remove(RestEvents.LANDING_KEY);
+            p.getFoodData().setFoodLevel(13);                                            // 1.99.0, the hunger ban: a rest never feeds or starves, the food bar is exactly as it was
+            p.getFoodData().setSaturation(1.5f);
+            p.getFoodData().setExhaustion(2.0f);
             long[] end = new long[1];
             long t0 = c.level.getGameTime();
             RestEvents.Step step = restThrough(p, foot, t0, RestKind.LONG, end);
             if (step == null || step.phase() != RestEvents.Step.Phase.DONE) return SelfTests.Result.fail("the long rest did not finish: " + step);
+            if (p.getFoodData().getFoodLevel() != 13 || p.getFoodData().getSaturationLevel() != 1.5f || p.getFoodData().getExhaustionLevel() != 2.0f) {
+                return SelfTests.Result.fail("the long rest touched the food bar: " + com.newuniverse.nusmp.balance.HungerBan.read(p));
+            }
             if (p.getHealth() < max - 0.05f) return SelfTests.Result.fail("health after the long rest is " + p.getHealth() + " of " + max);
             if (st.shortRestsUsed != 0) return SelfTests.Result.fail("the long rest did not refill the short rests (used=" + st.shortRestsUsed + ")");
             if (st.lastLongRest != end[0]) return SelfTests.Result.fail("lastLongRest=" + st.lastLongRest + ", expected " + end[0]);

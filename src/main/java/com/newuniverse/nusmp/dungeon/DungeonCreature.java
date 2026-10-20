@@ -1,12 +1,18 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.audio.Cue;
+import com.newuniverse.nusmp.audio.MobSoundSet;
+import com.newuniverse.nusmp.audio.MobVoice;
+import com.newuniverse.nusmp.audio.SoundFamilied;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -18,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * A creature of the dungeon's food web (docs/living_dungeon.md section 1, kept as history). Tier 1 are the slimes, tier 2 the Living
@@ -26,13 +33,14 @@ import net.minecraft.world.level.Level;
  * pays the stones and the meat). Until 1.58.0 it also left a Carcass block where it died and fed the chunk's ecosystem; both went with the
  * Living Dungeon.
  */
-public abstract class DungeonCreature extends PathfinderMob {
+public abstract class DungeonCreature extends PathfinderMob implements SoundFamilied {
     public static final int HUNGER_MAX = 100, HUNGRY = 40, FULL = 80;
 
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(DungeonCreature.class, EntityDataSerializers.BOOLEAN);
 
     protected int hunger = 70;
     private BlockPos home;
+    private int lastAggroTick = -1000;
 
     protected DungeonCreature(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -40,6 +48,46 @@ public abstract class DungeonCreature extends PathfinderMob {
 
     /** 1 = slime, 2 = Living Armor, 3 = Direwolf or Basilisk. */
     public abstract int tier();
+
+    /**
+     * 1.99.0 (the bespoke audio engine, docs/audio/mob_audio.md): the family of {@code audio/MobSoundSet} this creature sounds like. The Living Armor and the bosses built on it clank, the
+     * Direwolf growls, the Basilisk hisses, the slime squelches; no creature of the dungeon plays a vanilla zombie or skeleton sound.
+     */
+    @Override public String soundFamily() { return "armor"; }
+
+    @Override protected SoundEvent getAmbientSound() { return asleep() ? null : MobVoice.event(soundFamily(), Cue.AMBIENT); }
+
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return MobVoice.event(soundFamily(), Cue.HURT); }
+
+    @Override protected SoundEvent getDeathSound() { return MobVoice.event(soundFamily(), Cue.DEATH); }
+
+    @Override protected float getSoundVolume() { return MobSoundSet.family(soundFamily()).volume(); }
+
+    @Override public float getVoicePitch() { return MobVoice.pitch(this, soundFamily(), Cue.AMBIENT); }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        String f = soundFamily();
+        playSound(MobVoice.event(f, Cue.STEP), MobVoice.volume(f, Cue.STEP), MobVoice.pitch(this, f, Cue.STEP));
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        boolean hit = super.doHurtTarget(target);
+        if (hit) MobVoice.play(this, soundFamily(), Cue.ATTACK);
+        return hit;
+    }
+
+    /** The first time it notices a target (and at most every three seconds) it shouts its aggro cue. */
+    @Override
+    public void setTarget(LivingEntity target) {
+        LivingEntity before = getTarget();
+        super.setTarget(target);
+        if (target != null && before == null && !level().isClientSide && tickCount - lastAggroTick > 60) {
+            lastAggroTick = tickCount;
+            MobVoice.play(this, soundFamily(), Cue.AGGRO);
+        }
+    }
 
     /** Is this something it hunts? */
     public boolean isPrey(LivingEntity e) { return false; }

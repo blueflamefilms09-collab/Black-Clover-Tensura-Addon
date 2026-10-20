@@ -292,7 +292,7 @@ public final class RestEvents {
             st.shortRestsUsed = 0;
             st.lastLongRest = now;
             for (Holder<MobEffect> fx : FATIGUE) p.removeEffect(fx);
-            p.getFoodData().setExhaustion(0f);
+            // 1.99.0, THE HUNGER BAN: a rest recovers health, mana (and the effects above) only; it never feeds or starves, so the food bar's exhaustion is left alone
             if (sector != null) {
                 CompoundTag data = p.getPersistentData();
                 if (!data.contains(LANDING_KEY) || sector.id > data.getInt(LANDING_KEY)) data.putInt(LANDING_KEY, sector.id);

@@ -69,6 +69,7 @@ public record DndProfile(String id, String side, int tier, int variant, String n
             legendary.add(aid);
             costs.add(num(a, "cost", 1, 3));
         }
+        com.newuniverse.nusmp.audio.BossSoundSets.note(id, o);                                    // 1.99.0: the optional "sound_set" of the profile (audio/MobSoundSet), refused when it names no family
         List<String> lair = strings(o, "lair_actions");
         for (String l : lair) if (!DndRules.LAIR_IDS.contains(l)) throw new IllegalArgumentException(id + ": unknown lair action '" + l + "' (known: " + DndRules.LAIR_IDS + ")");
         return new DndProfile(id, side, tier, variant, name, strings(o, "anime"), strings(o, "dnd"), forms, DndRules.clampResistances(opt(o, "resistances", 3)),

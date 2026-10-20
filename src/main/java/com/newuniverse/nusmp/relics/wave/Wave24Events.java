@@ -200,8 +200,7 @@ final class Wave24Events {
             }
             case EXHAUSTED -> {
                 Wave24Util.give(p, "minecraft:weakness", 600, 1);
-                Wave24Util.give(p, "minecraft:slowness", 600, 1);
-                Wave24Util.give(p, "minecraft:hunger", 600, 1);
+                Wave24Util.give(p, "minecraft:slowness", 600, 1);                          // 1.99.0, the hunger ban: the Hunger effect it also gave is gone
             }
         }
         Vec3 c = p.position();
