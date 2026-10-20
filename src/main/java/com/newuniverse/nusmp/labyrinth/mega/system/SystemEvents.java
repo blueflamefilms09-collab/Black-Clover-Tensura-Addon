@@ -71,7 +71,18 @@ public final class SystemEvents {
     /** How often (ticks) the safety net looks at each player's stat bonus: every two seconds, offset so it does not share a tick with the quest work. */
     static final int RECONCILE_EVERY = 40;
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MEGA_SYSTEM_PLAYER = com.newuniverse.nusmp.perf.PerfProbe.section("s.mega.system_player");   // 1.99.0: performance probe (off by default: one flag read)
+
     static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MEGA_SYSTEM_PLAYER, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         try {
             if (e.getEntity() instanceof ServerPlayer p) {
                 if (p.tickCount % RECONCILE_EVERY == 11) SystemStats.reconcile(p);

@@ -49,9 +49,19 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     private static final double FAR2 = 48.0 * 48.0, DETAIL2 = 24.0 * 24.0;
     private static final ResourceLocation SILHOUETTE = DjinnMeshes.rl("textures/entity/djinn/djinn_silhouette.png");
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_C_DJINN_ARMOR_LAYER = com.newuniverse.nusmp.perf.PerfProbe.section("c.djinn.armor_layer");   // 1.99.0: performance probe (off by default: one flag read)
+
     @Override
-    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial,
-                       float age, float yawHead, float pitch) {
+    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float yawHead, float pitch) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            render0(pose, buffers, light, p, limbSwing, limbSwingAmount, partial, age, yawHead, pitch);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_C_DJINN_ARMOR_LAYER, t0);
+        }
+    }
+
+    private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float yawHead, float pitch) {
         if (p.isInvisible() || p.isSpectator()) return;
         Minecraft mc = Minecraft.getInstance();
         Snap s = DjinnClientState.of(p.getId());

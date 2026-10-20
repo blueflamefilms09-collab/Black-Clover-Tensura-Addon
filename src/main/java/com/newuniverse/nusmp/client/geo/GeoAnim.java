@@ -37,6 +37,33 @@ public final class GeoAnim {
             float[] a = value[i], b = value[i + 1];
             return new float[]{a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k};
         }
+
+        /**
+         * 1.99.0 (performance pass): the same value as {@link #sample}, written into {@code out[0..2]} instead of a new array (the drawing code sampled three tracks per bone per model per frame,
+         * and a keyframed pair allocated a float[3] each time). False when the track is empty (nothing was written). The arithmetic is the one of {@link #sample}.
+         */
+        public boolean sampleInto(float t, float[] out) {
+            int n = time.length;
+            if (n == 0) return false;
+            if (n == 1 || t <= time[0]) {
+                float[] v = value[0];
+                out[0] = v[0]; out[1] = v[1]; out[2] = v[2];
+                return true;
+            }
+            if (t >= time[n - 1]) {
+                float[] v = value[n - 1];
+                out[0] = v[0]; out[1] = v[1]; out[2] = v[2];
+                return true;
+            }
+            int i = 0;
+            while (i + 2 < n && t >= time[i + 1]) i++;
+            float span = time[i + 1] - time[i], k = span <= 1e-6f ? 0f : (t - time[i]) / span;
+            float[] a = value[i], b = value[i + 1];
+            out[0] = a[0] + (b[0] - a[0]) * k;
+            out[1] = a[1] + (b[1] - a[1]) * k;
+            out[2] = a[2] + (b[2] - a[2]) * k;
+            return true;
+        }
     }
 
     public static final class BoneAnim {

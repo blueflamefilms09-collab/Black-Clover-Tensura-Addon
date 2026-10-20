@@ -132,7 +132,18 @@ public final class ArmorEngravings {
     }
 
     /** Server player tick: once a second, engrave any of this mod's robe pieces and armour relics in the inventory that aren't yet. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_ENGRAVINGS_ARMOR = com.newuniverse.nusmp.perf.PerfProbe.section("s.engravings.armor");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_ENGRAVINGS_ARMOR, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         Player p = event.getEntity();
         if (!(p instanceof ServerPlayer sp) || sp.tickCount % 20 != 13) return;
         var inv = sp.getInventory();

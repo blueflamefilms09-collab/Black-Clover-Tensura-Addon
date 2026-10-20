@@ -212,8 +212,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (!mesh.layers[VOID].isEmpty()) {
             VertexConsumer vc = buffers.getBuffer(NURenderTypes.demonVoid());
             Matrix4f m = p.pose();
+            Vector3f q = SCRATCH_POS;
             for (float[] v : mesh.layers[VOID]) {
-                Vector3f q = m.transformPosition(v[0], v[1], v[2], new Vector3f());
+                m.transformPosition(v[0], v[1], v[2], q);
                 vc.addVertex(q.x, q.y, q.z);
             }
         }
@@ -239,13 +240,17 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         pose.popPose();
     }
 
+    /** 1.99.0 (performance pass): render-thread scratch vectors for {@link #emit} and the void pass. */
+    private static final Vector3f SCRATCH_POS = new Vector3f(), SCRATCH_NORMAL = new Vector3f();
+
     private static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int argb, int light, int overlay) {
         Matrix4f m = p.pose();
         Matrix3f nm = p.normal();
         int a = argb >>> 24, r = argb >> 16 & 255, g = argb >> 8 & 255, b = argb & 255;
+        Vector3f q = SCRATCH_POS, n = SCRATCH_NORMAL;                              // 1.99.0: two scratch vectors for the whole pass (two new vectors per vertex before); same maths, same order
         for (float[] v : verts) {
-            Vector3f q = m.transformPosition(v[0], v[1], v[2], new Vector3f());
-            Vector3f n = nm.transform(v[5], v[6], v[7], new Vector3f()).normalize();
+            m.transformPosition(v[0], v[1], v[2], q);
+            nm.transform(v[5], v[6], v[7], n).normalize();
             vc.addVertex(q.x, q.y, q.z).setColor(r, g, b, a).setUv(v[3] / 128f, v[4] / 128f).setOverlay(overlay).setLight(light).setNormal(n.x, n.y, n.z);
         }
     }

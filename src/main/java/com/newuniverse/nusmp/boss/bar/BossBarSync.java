@@ -85,7 +85,18 @@ public final class BossBarSync {
         for (ServerPlayer p : bar.getPlayers()) PacketDistributor.sendToPlayer(p, clear);
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOSS_BAR_SYNC = com.newuniverse.nusmp.perf.PerfProbe.section("s.boss.bar_sync");   // 1.99.0: performance probe (off by default: one flag read)
+
     private static void onServerTick(ServerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOSS_BAR_SYNC, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post event) {
         if (BARS.isEmpty()) return;
         Iterator<Entry> it = BARS.values().iterator();
         while (it.hasNext()) {

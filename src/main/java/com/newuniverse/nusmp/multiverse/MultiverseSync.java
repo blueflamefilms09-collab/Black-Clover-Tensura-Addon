@@ -36,7 +36,18 @@ public final class MultiverseSync {
     public static void markDirty(ServerPlayer p) { DIRTY.add(p.getUUID()); }
 
     /** Checks every 2 s (or the next tick when something marked it dirty). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_MULTIVERSE_SYNC = com.newuniverse.nusmp.perf.PerfProbe.section("s.multiverse.sync");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_MULTIVERSE_SYNC, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
         if (!DIRTY.remove(p.getUUID()) && p.tickCount % 40 != 0) return;
         CompoundTag now = summary(p);

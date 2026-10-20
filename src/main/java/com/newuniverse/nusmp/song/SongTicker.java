@@ -33,7 +33,18 @@ public final class SongTicker {
 
     private SongTicker() {}
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_SONG_TICKER = com.newuniverse.nusmp.perf.PerfProbe.section("s.song.ticker");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_SONG_TICKER, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         var data = p.getPersistentData();
         if (data.getInt(SongSkill.CACHE_MODE) == 0) return;                      // no mode: costs one int read per tick

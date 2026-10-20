@@ -146,7 +146,18 @@ public final class CreateTrapDirector implements SectorListener {
     }
 
     // ---------------------------------------------------------------- the tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_CREATE_TRAPS = com.newuniverse.nusmp.perf.PerfProbe.section("s.create.traps");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_CREATE_TRAPS, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post e) {
         if (!PartResolver.createLoaded()) return;
         MinecraftServer server = e.getServer();
         ServerLevel level = MegaDungeon.level(server);

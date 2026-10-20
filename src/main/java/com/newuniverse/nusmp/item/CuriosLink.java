@@ -246,7 +246,14 @@ public final class CuriosLink {
         put(Kind.HAND_OF_PROVIDENCE, Attributes.MAX_HEALTH, 4, add, "Providence: +4 health");
     }
 
-    private static ResourceLocation id(Kind k) { return ResourceLocation.fromNamespaceAndPath("nusmp", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT)); }
+    /** 1.99.0 (performance pass): the modifier id of each kind, built once. The once-a-second pass asked for one per kind per player (28 strings and locations per player per second). */
+    private static final ResourceLocation[] IDS = new ResourceLocation[Kind.values().length];
+
+    private static ResourceLocation id(Kind k) {
+        ResourceLocation r = IDS[k.ordinal()];
+        if (r == null) IDS[k.ordinal()] = r = ResourceLocation.fromNamespaceAndPath("nusmp", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT));
+        return r;
+    }
 
     /** The tooltip line of a weapon that can be worn. */
     static void tooltip(Kind k, List<Component> tip) {
@@ -256,7 +263,18 @@ public final class CuriosLink {
     }
 
     /** Every second: bring each weapon's carried bonus in line with what is worn (and not already in a hand, where its own modifiers apply). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_CURIOS_PASSIVES = com.newuniverse.nusmp.perf.PerfProbe.section("s.curios.passives");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_CURIOS_PASSIVES, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 13) return;
         Set<Kind> worn = EnumSet.noneOf(Kind.class);
         for (ItemStack s : equipped(p)) if (s.getItem() instanceof MagicWeaponItem w) worn.add(w.kind);

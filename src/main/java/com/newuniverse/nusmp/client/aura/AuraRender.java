@@ -19,7 +19,8 @@ import net.minecraft.resources.ResourceLocation;
 public final class AuraRender {
     private AuraRender() {}
 
-    public static ResourceLocation tex(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/" + path + ".png"); }
+    /** {@code nusmp:textures/<path>.png}. 1.99.0: built once per path (the painters that ask for a sprite while they paint did a string concatenation and a location per call, per frame). */
+    public static ResourceLocation tex(String path) { return com.newuniverse.nusmp.perf.RlCache.modTexture(path); }
 
     public static RenderType additive(ResourceLocation t) { return RenderType.eyes(t); }
     public static RenderType translucent(ResourceLocation t) { return RenderType.entityTranslucent(t); }

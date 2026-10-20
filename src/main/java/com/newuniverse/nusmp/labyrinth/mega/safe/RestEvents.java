@@ -239,7 +239,7 @@ public final class RestEvents {
             return Step.DONE;
         }
         p.displayClientMessage(Component.translatable("message.nusmp.mega.safe.progress", RestRules.progressPercent(elapsed, ch.total)), true);
-        level.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.3, 0.4, 0.3, 0.01);
+        com.newuniverse.nusmp.perf.PerfParticles.send(level, ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.3, 0.4, 0.3, 0.01);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
         return Step.RESTING;
     }
 

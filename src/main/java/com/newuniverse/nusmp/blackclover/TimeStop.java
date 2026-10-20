@@ -57,6 +57,7 @@ public final class TimeStop {
 
     /** Frozen entities skip their whole tick. */
     public static void onEntityTick(EntityTickEvent.Pre event) {
+        if (FROZEN.isEmpty()) return;                                    // 1.99.0: this runs for every entity of every level every tick, and nothing is frozen almost always: one read, no hashing
         if (!event.getEntity().level().isClientSide && FROZEN.containsKey(event.getEntity())) event.setCanceled(true);
     }
 
@@ -73,7 +74,18 @@ public final class TimeStop {
     public static void onUseItem(PlayerInteractEvent.RightClickItem event) { if (FROZEN.containsKey(event.getEntity())) event.setCanceled(true); }
 
     /** Pins frozen players and releases expired freezes. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_TIME_STOP_SERVER = com.newuniverse.nusmp.perf.PerfProbe.section("s.time_stop.server");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onServerTick(ServerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onServerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_TIME_STOP_SERVER, t0);
+        }
+    }
+
+    private static void onServerTick0(ServerTickEvent.Post event) {
         Iterator<Map.Entry<Entity, Frozen>> it = FROZEN.entrySet().iterator();
         while (it.hasNext()) {
             var en = it.next();

@@ -273,8 +273,8 @@ final class LuciusFx {
                 return;
             }
             pos = next;
-            sl.sendParticles(dustOf(rgb, 1.0f), pos.x, pos.y, pos.z, 2, 0.05, 0.05, 0.05, 0);
-            if (life % 2 == 0) sl.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y, pos.z, 1, 0.03, 0.03, 0.03, 0.0);
+            com.newuniverse.nusmp.perf.PerfParticles.send(sl, dustOf(rgb, 1.0f), pos.x, pos.y, pos.z, 2, 0.05, 0.05, 0.05, 0);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
+            if (life % 2 == 0) com.newuniverse.nusmp.perf.PerfParticles.send(sl, ParticleTypes.END_ROD, pos.x, pos.y, pos.z, 1, 0.03, 0.03, 0.03, 0.0);
             if (blocked || --life <= 0) {
                 burst(sl, pos);
                 done = true;

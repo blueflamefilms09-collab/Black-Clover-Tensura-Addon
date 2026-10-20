@@ -122,7 +122,18 @@ public final class GrimoireGuard {
     }
 
     /** Every 5 s: a grimoire skill the player was never given is taken back. */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_GRIMOIRE_GUARD = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.grimoire_guard");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(event);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_GRIMOIRE_GUARD, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p.tickCount % 100 != 37 || !enabled()) return;
         var skills = SkillAPI.getSkillsFrom(p);
         boolean has = false;

@@ -60,7 +60,18 @@ public final class AttributeEvents {
 
     public static void onDeath(LivingDeathEvent e) { run(DEATH, e, "death"); }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_BOOK_ATTRIBUTE_PLAYER = com.newuniverse.nusmp.perf.PerfProbe.section("s.book.attribute_player");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_BOOK_ATTRIBUTE_PLAYER, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (PLAYER_TICK.isEmpty() || !(e.getEntity() instanceof ServerPlayer p)) return;
         run(PLAYER_TICK, p, "playerTick");
     }

@@ -27,8 +27,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class Relics {
     private Relics() {}
 
-    /** How many ticks a look at a wearer stays good. */
+    /** How many ticks a look at a wearer stays good (by default; 1.99.0: the live value is {@link #ttl()}, set by {@code relicScanInterval} in nusmp-performance-common.toml). */
     public static final int TTL = 10;
+
+    /** How many ticks a look at a wearer stays good right now: the config's {@code relicScanInterval} (10 by default, as {@link #TTL}). */
+    public static int ttl() { return com.newuniverse.nusmp.perf.PerfSettings.relicScanInterval(); }
 
     private static volatile List<RelicDef> all = List.of();
     private static volatile Map<String, RelicDef> byId = Map.of();
@@ -107,6 +110,7 @@ public final class Relics {
     private record Cached(long tick, List<Worn> worn, List<Located> located, Loadout loadout) {}
 
     private static final Map<UUID, Cached> SERVER = new ConcurrentHashMap<>(), CLIENT = new ConcurrentHashMap<>();
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section SCAN_SERVER = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.scan"), SCAN_CLIENT = com.newuniverse.nusmp.perf.PerfProbe.section("c.relic.scan");
 
     private static Map<UUID, Cached> cacheFor(LivingEntity e) { return e.level().isClientSide() ? CLIENT : SERVER; }
 
@@ -173,13 +177,15 @@ public final class Relics {
         Map<UUID, Cached> cache = cacheFor(e);
         long now = e.level().getGameTime();
         Cached c = fresh ? null : cache.get(e.getUUID());
-        if (c != null && now >= c.tick() && now - c.tick() < TTL) return c;
+        if (c != null && now >= c.tick() && now - c.tick() < ttl()) return c;
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
         List<Located> located = scan(e);
         List<Worn> worn = new ArrayList<>(located.size());
         for (Located l : located) worn.add(l.worn());
         Cached made = new Cached(now, worn, located, worn.isEmpty() ? Loadout.EMPTY : work(e, worn));
         if (cache.size() > 400) cache.clear();                                   // a mob-heavy world cannot make this grow without end
         cache.put(e.getUUID(), made);
+        com.newuniverse.nusmp.perf.PerfProbe.end(e.level().isClientSide() ? SCAN_CLIENT : SCAN_SERVER, t0);
         return made;
     }
 

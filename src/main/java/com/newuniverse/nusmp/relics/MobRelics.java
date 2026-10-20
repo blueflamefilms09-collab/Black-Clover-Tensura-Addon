@@ -206,9 +206,19 @@ public final class MobRelics {
     }
 
     // ---------------------------------------------------------------- the pass: a mob wears its relics' numbers
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_RELIC_MOB_PACK = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.mob_pack");   // 1.99.0: performance probe (off by default: one flag read)
+
     private static void onTick(EntityTickEvent.Post ev) {
-        if (!(ev.getEntity() instanceof LivingEntity e) || e instanceof Player || e.level().isClientSide() || !MobRelicsConfig.enabled()) return;
-        if ((e.tickCount + e.getId()) % 20 != 0) return;
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onTick0(ev);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_RELIC_MOB_PACK, t0);
+        }
+    }
+
+    private static void onTick0(EntityTickEvent.Post ev) {
+        if (!(ev.getEntity() instanceof LivingEntity e) || e instanceof Player || (e.tickCount + e.getId()) % 20 != 0 || e.level().isClientSide() || !MobRelicsConfig.enabled()) return;      // 1.99.0: for every living entity every tick; the modulo first, the config read only one tick in twenty
         if (!carries(e)) { if (APPLIED.containsKey(e.getUUID())) clear(e); return; }
         Relics.Loadout lo = Relics.loadoutFresh(e);
         Map<ResourceLocation, Holder<Attribute>> keep = new HashMap<>();

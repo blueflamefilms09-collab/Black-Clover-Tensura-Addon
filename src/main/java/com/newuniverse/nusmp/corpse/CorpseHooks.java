@@ -60,7 +60,18 @@ public final class CorpseHooks {
         bus.addListener(CorpseHooks::onStopping);
     }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_CORPSE_TICK = com.newuniverse.nusmp.perf.PerfProbe.section("s.corpse.tick");   // 1.99.0: performance probe (off by default: one flag read)
+
     static void onTick(ServerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_CORPSE_TICK, t0);
+        }
+    }
+
+    private static void onTick0(ServerTickEvent.Post e) {
         Corpses.tick(e.getServer());
         Pacts.tick(e.getServer());
     }

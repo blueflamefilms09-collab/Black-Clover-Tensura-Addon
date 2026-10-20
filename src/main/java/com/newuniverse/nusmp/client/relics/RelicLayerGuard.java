@@ -22,6 +22,7 @@ public final class RelicLayerGuard {
     private RelicLayerGuard() {}
 
     private static final Set<Object> KNOWN = Collections.newSetFromMap(new WeakHashMap<>());
+    private static LivingEntityRenderer<?, ?> lastSeen;
     private static volatile int healed;
     private static volatile String lastHealed = "";
 
@@ -41,9 +42,11 @@ public final class RelicLayerGuard {
     public static void onPre(RenderLivingEvent.Pre<?, ?> e) {
         if (!(e.getEntity() instanceof AbstractClientPlayer)) return;
         LivingEntityRenderer<?, ?> r = e.getRenderer();
+        if (r == lastSeen) return;                                                       // 1.99.0: the renderer of the last player drawn is nearly always this one: no lock, no weak-map lookup per player per frame
         synchronized (KNOWN) {
             if (!KNOWN.add(r)) return;                                                   // already has it (the event added it, or the guard did)
         }
+        lastSeen = r;
         if (!(r.getModel() instanceof PlayerModel<?>)) {
             LogUtils.getLogger().warn("[nusmp] a player is drawn by {} whose model is not a PlayerModel: worn relics cannot be attached to it", r.getClass().getName());
             return;

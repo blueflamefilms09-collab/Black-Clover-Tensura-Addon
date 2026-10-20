@@ -39,6 +39,7 @@ public final class ElsdociaEvents {
     public static final String LEFT_YOU = "Elsdocia has left you and will not return to your hand";
     private static final String K_MSG = "nusmp_elsdocia_msg";
     private static final int SCAN_EVERY = 5;
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section SCAN_SECTION = com.newuniverse.nusmp.perf.PerfProbe.section("s.elsdocia.scan");
 
     public enum Result { CLAIMED, SAME, PASSED, BLOCKED }
 
@@ -74,8 +75,10 @@ public final class ElsdociaEvents {
     }
 
     static void onPlayerTick(PlayerTickEvent.Post e) {
-        if (!(e.getEntity() instanceof ServerPlayer p) || p.isSpectator() || p.tickCount % SCAN_EVERY != 0) return;
+        if (!(e.getEntity() instanceof ServerPlayer p) || p.isSpectator() || p.tickCount % com.newuniverse.nusmp.perf.PerfSettings.entityScanInterval() != 0) return;      // 1.99.0: SCAN_EVERY (5) is the default of entityScanInterval
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
         scan(p);
+        com.newuniverse.nusmp.perf.PerfProbe.end(SCAN_SECTION, t0);
     }
 
     /** Looks at everything the player carries and settles each Elsdocia found. */

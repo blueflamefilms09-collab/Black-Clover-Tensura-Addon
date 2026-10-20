@@ -58,7 +58,7 @@ final class ThemeAmbient {
                 mood(level, p, def.mood(), server.getTickCount() / 40);
                 SimpleParticleType type = particle(def.ambient());
                 if (type == null) continue;
-                level.sendParticles(type, p.getX(), p.getY() + 1.2, p.getZ(), COUNT, 4.5, 1.8, 4.5, 0.02);
+                com.newuniverse.nusmp.perf.PerfParticles.send(level, type, p.getX(), p.getY() + 1.2, p.getZ(), COUNT, 4.5, 1.8, 4.5, 0.02);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
             }
         } catch (RuntimeException ignored) {
             // an ambient particle must never disturb the tick

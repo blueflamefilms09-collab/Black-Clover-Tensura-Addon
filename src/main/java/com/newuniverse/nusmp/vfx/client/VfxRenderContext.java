@@ -13,8 +13,8 @@ public final class VfxRenderContext {
     public final Matrix4f modelView;
     public final float partialTick;
     public final ClientLevel level;
-    /** 1 = All particles, 0.5 = Decreased. Layers multiply segment counts by this. */
-    public final float detail;
+    /** 1 = All particles, 0.5 = Decreased. Layers multiply segment counts by this. 1.99.0: {@link VfxManager} sets it per effect before each draw (the particle setting times the distance level of detail), so it is no longer final; a layer must read it while it draws, never keep it. */
+    public float detail;
     /** Camera right/up in world space, for billboards and ribbons. */
     public final Vector3f camRight, camUp;
 

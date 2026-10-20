@@ -59,9 +59,19 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
 
     public RelicWornLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) { super(parent); }
 
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_C_RELIC_WORN_LAYER = com.newuniverse.nusmp.perf.PerfProbe.section("c.relic.worn_layer");   // 1.99.0: performance probe (off by default: one flag read)
+
     @Override
-    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount,
-                       float partial, float age, float netHeadYaw, float headPitch) {
+    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            render0(pose, buffers, light, p, limbSwing, limbSwingAmount, partial, age, netHeadYaw, headPitch);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_C_RELIC_WORN_LAYER, t0);
+        }
+    }
+
+    private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
         boolean slim = p.getSkin().model() == PlayerSkin.Model.SLIM;
         WornPlan.View view = WornExec.viewOf(p);
         long now = p.level().getGameTime();
@@ -258,12 +268,14 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         private static void quad(PoseStack.Pose pose, VertexConsumer vc, int light, int rgb, float shade, float nx, float ny, float nz,
                                  float ax, float ay, float az, float bx, float by, float bz, float cx, float cy, float cz, float dx, float dy, float dz) {
             int r = (int) ((rgb >> 16 & 255) * shade), g = (int) ((rgb >> 8 & 255) * shade), b = (int) ((rgb & 255) * shade);
-            float[] v = {ax, ay, az, bx, by, bz, cx, cy, cz, dx, dy, dz};
-            float[] uv = {0.1f, 0.1f, 0.9f, 0.1f, 0.9f, 0.9f, 0.1f, 0.9f};
-            for (int i = 0; i < 4; i++) {
-                vc.addVertex(pose, v[i * 3], v[i * 3 + 1], v[i * 3 + 2]).setColor(r, g, b, 255).setUv(uv[i * 2], uv[i * 2 + 1])
-                        .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, nx, ny, nz);
-            }
+            vertex(pose, vc, light, r, g, b, ax, ay, az, 0.1f, 0.1f, nx, ny, nz);          // 1.99.0: unrolled (no float[12] and float[8] per quad, six quads per box, boxes per relic per frame)
+            vertex(pose, vc, light, r, g, b, bx, by, bz, 0.9f, 0.1f, nx, ny, nz);
+            vertex(pose, vc, light, r, g, b, cx, cy, cz, 0.9f, 0.9f, nx, ny, nz);
+            vertex(pose, vc, light, r, g, b, dx, dy, dz, 0.1f, 0.9f, nx, ny, nz);
+        }
+
+        private static void vertex(PoseStack.Pose pose, VertexConsumer vc, int light, int r, int g, int b, float x, float y, float z, float u, float v, float nx, float ny, float nz) {
+            vc.addVertex(pose, x, y, z).setColor(r, g, b, 255).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, nx, ny, nz);
         }
     }
 }

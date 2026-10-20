@@ -84,7 +84,18 @@ public final class DjinnEngine {
             M_AURA = id("djinn_maso_aura"), M_ELEMENT = id("djinn_maso_element"), M_REGEN = id("djinn_maso_noregen");
 
     // ================================================================ the tick
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_DJINN_ENGINE = com.newuniverse.nusmp.perf.PerfProbe.section("s.djinn.engine");   // 1.99.0: performance probe (off by default: one flag read)
+
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_S_DJINN_ENGINE, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         int t = p.tickCount;
         if ((t & 3) != 0) return;

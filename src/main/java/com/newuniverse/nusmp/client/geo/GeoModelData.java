@@ -28,6 +28,46 @@ public final class GeoModelData {
         public float px, py, pz, rx, ry, rz;
         /** Per face {u1, v1, u2, v2} in texture pixels (order WEST, NORTH, EAST, SOUTH, TOP, BOTTOM); null = the face is not drawn. */
         public final float[][] uv = new float[6][];
+        /**
+         * 1.99.0 (performance pass): what {@link GeoDraw} works out from this cube once and keeps (the eight corners in the bone's frame and the texture coordinates of each face, normalised): they depend
+         * only on the cube, its bone's pivot and the texture size, none of which changes after parsing, yet the drawing rebuilt them (about forty arrays per cube) on every frame. Null until the cube is
+         * first drawn; a new parse makes new cubes, so a resource reload starts clean.
+         */
+        float[] drawCorners, drawUv;
+        int drawMask;
+
+        /**
+         * Works out, once, the eight corners of the box in its bone's frame ({@code x = bit 0, y = bit 1, z = bit 2} of the corner index, three floats each) and the normalised texture rectangle
+         * {u1, v1, u2, v2} of each face (four floats per face, in the face order of this class), and which faces exist ({@code drawMask}, one bit per face). The arithmetic is the one the drawing
+         * did on every frame; pure, so a unit test compares it with that formula.
+         */
+        void prepareDraw(GeoModelData model, Bone bone) {
+            float g = inflate;
+            float minX = ox - bone.px - g, maxX = ox - bone.px + sx + g;
+            float minY = -(oy + sy) + bone.py - g, maxY = -oy + bone.py + g;
+            float minZ = oz - bone.pz - g, maxZ = oz - bone.pz + sz + g;
+            if (mirror) { float tmp = maxX; maxX = minX; minX = tmp; }
+            float[] v = new float[24];
+            for (int i = 0; i < 8; i++) {
+                v[i * 3] = (i & 1) == 0 ? minX : maxX;
+                v[i * 3 + 1] = (i & 2) == 0 ? minY : maxY;
+                v[i * 3 + 2] = (i & 4) == 0 ? minZ : maxZ;
+            }
+            float[] t = new float[24];
+            int mask = 0;
+            for (int f = 0; f < 6; f++) {
+                float[] r = uv[f];
+                if (r == null) continue;
+                mask |= 1 << f;
+                t[f * 4] = r[0] / model.texW;
+                t[f * 4 + 1] = r[1] / model.texH;
+                t[f * 4 + 2] = r[2] / model.texW;
+                t[f * 4 + 3] = r[3] / model.texH;
+            }
+            drawUv = t;
+            drawMask = mask;
+            drawCorners = v;                                                  // last: a non-null corner table means the rest is ready
+        }
     }
 
     public static final class Bone {

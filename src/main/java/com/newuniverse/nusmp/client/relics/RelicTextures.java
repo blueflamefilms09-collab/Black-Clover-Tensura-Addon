@@ -31,8 +31,11 @@ public final class RelicTextures {
 
     /** The glow channel of an armour relic's worn layer (the pixels the painter drew in the glow colour), drawn full bright by {@code ArmorGlow}. */
     public static ResourceLocation armorGlow(String relicId) {
-        return ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "textures/models/armor/" + RelicArmorMaterials.name(relicId) + "_glow.png");
+        return GLOW_LOCATIONS.get(relicId, id -> ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "textures/models/armor/" + RelicArmorMaterials.name(id) + "_glow.png"));
     }
+
+    /** 1.99.0 (performance pass): the glow location of a relic, built once (the worn layer asked for it, with two string concatenations, for every armour relic of every wearer on every frame). */
+    private static final com.newuniverse.nusmp.perf.BoundedCache<String, ResourceLocation> GLOW_LOCATIONS = new com.newuniverse.nusmp.perf.BoundedCache<>(1024);
 
     /** Was a glow channel registered for this relic (not when a resource pack supplies the armour texture, nor when a 3D model replaces the armour box)? */
     public static boolean hasArmorGlow(String relicId) { return GLOW.contains(relicId); }
