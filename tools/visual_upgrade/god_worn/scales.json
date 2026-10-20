@@ -1,0 +1,122 @@
+{
+ "aerie_courier_gloves": {
+  "full": 0.443,
+  "held": 0.9225,
+  "lod": 0.08
+ },
+ "basilica_halo": {
+  "full": 0.9806,
+  "held": 0.9806,
+  "lod": 1.178
+ },
+ "berserker_armor_shard": {
+  "full": 0.8163,
+  "held": 0.5657,
+  "lod": 0.8163
+ },
+ "bloodbound_gauntlets": {
+  "full": 0.9225,
+  "held": 0.2127,
+  "lod": 0.08
+ },
+ "excaliburs_scabbard_avalon": {
+  "full": 1.415,
+  "held": 0.9225,
+  "lod": 2.453
+ },
+ "eye_of_vecna": {
+  "full": 1.0,
+  "held": 1.6998,
+  "lod": 3.1324
+ },
+ "flammes_founder_cloak": {
+  "full": 0.8163,
+  "held": 0.6392,
+  "lod": 1.5042
+ },
+ "godking_crown": {
+  "full": 1.2522,
+  "held": 0.9225,
+  "lod": 2.453
+ },
+ "greaves_of_the_wind_walker": {
+  "full": 1.178,
+  "held": 0.5657,
+  "lod": 3.1324
+ },
+ "hand_of_vecna": {
+  "full": 0.6392,
+  "held": 0.9225,
+  "lod": 0.08
+ },
+ "incinerator_arm": {
+  "full": 1.178,
+  "held": 1.5042,
+  "lod": 3.999
+ },
+ "limitless_blindfold": {
+  "full": 1.415,
+  "held": 1.5042,
+  "lod": 3.1324
+ },
+ "mantle_of_the_overlord": {
+  "full": 0.6392,
+  "held": 0.6392,
+  "lod": 1.5042
+ },
+ "odins_all_seeing_eye": {
+  "full": 1.1081,
+  "held": 1.1081,
+  "lod": 3.1324
+ },
+ "orsteds_dragon_god_armor": {
+  "full": 0.6392,
+  "held": 0.08,
+  "lod": 0.6392
+ },
+ "pactbreaker_shroud": {
+  "full": 0.8678,
+  "held": 0.8678,
+  "lod": 1.5042
+ },
+ "ras_dawn_crown": {
+  "full": 1.0,
+  "held": 1.0,
+  "lod": 1.5042
+ },
+ "shadow_monarchs_mantle": {
+  "full": 0.7224,
+  "held": 0.3469,
+  "lod": 1.5042
+ },
+ "shadows_slime_cloak": {
+  "full": 0.7679,
+  "held": 0.7679,
+  "lod": 1.5042
+ },
+ "silent_winter_mantle": {
+  "full": 0.9511,
+  "held": 0.5657,
+  "lod": 1.9209
+ },
+ "silvered_sash_of_reflections": {
+  "full": 0.7006,
+  "held": 0.9225,
+  "lod": 0.7006
+ },
+ "six_faced_dragons_scale": {
+  "full": 0.9225,
+  "held": 0.08,
+  "lod": 2.453
+ },
+ "urek_mazinos_chain_mantle": {
+  "full": 0.6392,
+  "held": 0.5657,
+  "lod": 2.453
+ },
+ "white_whistle": {
+  "full": 1.178,
+  "held": 1.6998,
+  "lod": 3.7628
+ }
+}

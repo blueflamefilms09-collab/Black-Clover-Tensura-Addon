@@ -1,0 +1,215 @@
+{
+ "id": "excaliburs_scabbard_avalon",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "avalon_lights",
+   "kind": "motes",
+   "particle": "minecraft:end_rod",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    0.25,
+    0.1,
+    -0.15,
+    0.55,
+    1.0,
+    0.2
+   ],
+   "speed": 0.012,
+   "max_per_tick": 2
+  },
+  {
+   "name": "fairy_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "A0FFD8",
+   "size": 0.8,
+   "per_second": 8,
+   "box": [
+    0.2,
+    0.2,
+    -0.2,
+    0.6,
+    0.9,
+    0.3
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "healing_ring",
+   "kind": "ring",
+   "particle": "minecraft:happy_villager",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0.4,
+    0.7,
+    0
+   ],
+   "radius": 0.4,
+   "spin": 0.3,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "utopia_circle",
+   "kind": "ring",
+   "particle": "minecraft:end_rod",
+   "color": "D8C060",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.4,
+    0
+   ],
+   "radius": 1.0,
+   "spin": 0.15,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "scabbard_edge",
+   "kind": "line",
+   "particle": "minecraft:end_rod",
+   "color": "D8C060",
+   "size": 1.0,
+   "per_second": 9,
+   "from": [
+    0.35,
+    0.95,
+    -0.05
+   ],
+   "to": [
+    0.55,
+    0.15,
+    0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "avalon_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.2,
+   "max_per_tick": 2
+  },
+  {
+   "name": "mouth_glow",
+   "kind": "motes",
+   "particle": "minecraft:glow",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 4,
+   "box": [
+    0.3,
+    0.9,
+    -0.15,
+    0.5,
+    1.0,
+    0.05
+   ],
+   "speed": 0.006,
+   "max_per_tick": 2
+  },
+  {
+   "name": "light_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:glow",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0.42,
+    0.55,
+    0
+   ],
+   "radius": 0.5,
+   "spin": 0.4,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "fairy_trail",
+   "kind": "trail",
+   "particle": "minecraft:happy_villager",
+   "color": "A0FFD8",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0.45,
+    0.4,
+    0.2
+   ],
+   "radius": 0.5,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "all_far_away": [
+   {
+    "shape": "ELF_CIRCLE",
+    "color": "A0FFD8",
+    "duration": 30,
+    "power": 4.0,
+    "at": "feet",
+    "particle": "minecraft:happy_villager",
+    "count": 60,
+    "spread": 1.8,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "LIGHT_FLARE",
+    "color": "D8C060",
+    "duration": 22,
+    "power": 3.0,
+    "at": "eye",
+    "particle": "minecraft:end_rod",
+    "count": 36,
+    "spread": 1.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "far_distant_utopia": [
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "A0FFD8",
+    "duration": 46,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 100,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "TREE_CANOPY",
+    "color": "D8C060",
+    "duration": 40,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:happy_villager",
+    "count": 70,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

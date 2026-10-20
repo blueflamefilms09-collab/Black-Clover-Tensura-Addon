@@ -12,8 +12,11 @@ import java.util.List;
  * Space: the model's own pixels in the layer space of the player model, relative to the pivot of its anchor part (y down, front is -z).
  */
 public final class WornMesh {
-    /** Quad flags. */
-    public static final int EMIT = 1, SHELL = 2, HOT = 4;
+    /**
+     * Quad flags. {@code LIT} (1.102.0, visual upgrade): the quad also glows where its glow map says so, in the glow slot colour; {@code ADD}: the quad is drawn only in the additive
+     * pass (a halo, a soft sprite), never in the lit solid pass. Both are only meaningful for a mesh that names a {@link #skin}; an older file never sets them.
+     */
+    public static final int EMIT = 1, SHELL = 2, HOT = 4, LIT = 8, ADD = 16;
     /** Colour slots. */
     public static final int MAIN = 0, TRIM = 1, GLOW = 2, DARK = 3, ACCENT = 4, NONE = 5, SLOTS = 6;
 
@@ -39,8 +42,18 @@ public final class WornMesh {
     /** Index 0 is null (the static base). */
     public final Group[] groups;
     public final int emitQuads, shellQuads;
+    /**
+     * The relic's own skin ({@code skin <id>} in the file): textures/relic_worn/god/&lt;id&gt;.png (albedo) and &lt;id&gt;_glow.png (emissive map), or null for the shared atlas.
+     * A skinned mesh samples its glow map in the additive pass.
+     */
+    public final String skin;
 
     private WornMesh(String name, WornAnchor anchor, float[] pos, float[] uv, float[] nrm, byte[] slot, byte[] flags, int[] groupStart, Group[] groups) {
+        this(name, anchor, pos, uv, nrm, slot, flags, groupStart, groups, null);
+    }
+
+    private WornMesh(String name, WornAnchor anchor, float[] pos, float[] uv, float[] nrm, byte[] slot, byte[] flags, int[] groupStart, Group[] groups, String skin) {
+        this.skin = skin;
         this.name = name;
         this.anchor = anchor;
         this.quads = slot.length;
@@ -53,7 +66,7 @@ public final class WornMesh {
         this.groups = groups;
         int e = 0, s = 0;
         for (byte f : flags) {
-            if ((f & EMIT) != 0) e++;
+            if ((f & (EMIT | LIT | ADD)) != 0) e++;
             if ((f & SHELL) != 0) s++;
         }
         this.emitQuads = e;
@@ -108,7 +121,7 @@ public final class WornMesh {
             np[3 * i + 1] = qy;
             np[3 * i + 2] = qz;
         }
-        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups);
+        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups, skin);
     }
 
     /**
@@ -132,6 +145,7 @@ public final class WornMesh {
      */
     public static WornMesh parse(String name, Iterable<String> lines) {
         WornAnchor anchor = WornAnchor.HEAD;
+        String skin = null;
         List<Group> groups = new ArrayList<>();
         groups.add(null);
         List<float[]> quadData = new ArrayList<>();
@@ -149,6 +163,7 @@ public final class WornMesh {
                         if (a == null) throw new IllegalArgumentException("unknown anchor " + v[1]);
                         anchor = a;
                     }
+                    case "skin" -> skin = v[1];
                     case "grp" -> {
                         int idx = Integer.parseInt(v[1]);
                         if (idx != groups.size()) throw new IllegalArgumentException("groups must be numbered 1, 2, 3 ... in order");
@@ -198,7 +213,7 @@ public final class WornMesh {
             slot[k] = (byte) m[1];
             flags[k] = (byte) m[2];
         }
-        return new WornMesh(name, anchor, pos, uv, nrm, slot, flags, start, groups.toArray(new Group[0]));
+        return new WornMesh(name, anchor, pos, uv, nrm, slot, flags, start, groups.toArray(new Group[0]), skin);
     }
 
     private static float f(String s) {

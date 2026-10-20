@@ -55,6 +55,32 @@ public final class WornModels {
         return catalog;
     }
 
+    private static UpgradeCatalog upgrade;
+
+    /**
+     * The catalog of the visual upgrade (assets/nusmp/visual_upgrade/catalog.txt), read on first use after a reload; empty when the file is missing or cannot be read (every relic then
+     * keeps its 1.101 look). A read that failed because the resource manager was not ready is not remembered.
+     */
+    public static UpgradeCatalog upgrade() {
+        if (upgrade != null) return upgrade;
+        try {
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("visual_upgrade/catalog.txt"));
+            if (res.isPresent()) {
+                try (BufferedReader in = res.get().openAsReader()) {
+                    upgrade = UpgradeCatalog.parse(in.lines().toList());
+                }
+            } else {
+                upgrade = UpgradeCatalog.EMPTY;
+            }
+        } catch (IllegalStateException | NullPointerException notReady) {
+            return UpgradeCatalog.EMPTY;
+        } catch (Exception ex) {
+            LogUtils.getLogger().error("[nusmp] the visual upgrade catalog could not be read; relics keep their 1.101 look", ex);
+            upgrade = UpgradeCatalog.EMPTY;
+        }
+        return upgrade;
+    }
+
     /** The model of this name, or null. */
     public static WornMesh mesh(String name) {
         Optional<WornMesh> cached = MESHES.get(name);
@@ -82,6 +108,7 @@ public final class WornModels {
     public static void clear() {
         MESHES.clear();
         catalog = null;
+        upgrade = null;
         retryAt = 0L;
     }
 }

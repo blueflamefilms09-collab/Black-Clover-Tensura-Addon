@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.relics.hand;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornCatalog;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornMesh;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornModels;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 
@@ -27,20 +28,26 @@ public final class HandForms {
 
     /** The form of a relic, or null (its sprite is drawn). Built once per relic id. */
     public static Form of(RelicDef def) {
-        Optional<Form> f = CACHE.get(def.id());
+        boolean up = WornLibrary.upgradeOf(def.id());
+        String key = up ? def.id() + "#up" : def.id();                                       // 1.102.0: the visual upgrade option decides which form is cached
+        Optional<Form> f = CACHE.get(key);
         if (f == null) {
-            f = Optional.ofNullable(build(def));
-            CACHE.put(def.id(), f);
+            f = Optional.ofNullable(build(def, up));
+            CACHE.put(key, f);
         }
         return f.orElse(null);
     }
 
-    private static Form build(RelicDef def) {
+    private static Form build(RelicDef def, boolean upgraded) {
         HandTransforms xf = HandModels.transforms();
         if (!xf.complete()) return null;
         HandTransforms.Style style = xf.styleFor(def.id(), def.slot().name(), def.look().name());
         if (style == null) return null;
         List<WornCatalog.Piece> sig = HandModels.catalog().sigFor(def.id());
+        if (upgraded) {                                                                   // 1.102.0: an upgraded relic is held as its held form (at most 2500 vertices), whatever it was held as before
+            List<WornCatalog.Piece> held = WornModels.upgrade().held(def.id());
+            if (!held.isEmpty()) sig = held;
+        }
         boolean signature = !sig.isEmpty();
         List<WornLibrary.Resolved> pieces = new ArrayList<>();
         if (signature) {

@@ -1,0 +1,257 @@
+{
+ "id": "eye_of_vecna",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "gold_motes",
+   "kind": "motes",
+   "particle": "minecraft:end_rod",
+   "color": "FFD84A",
+   "size": 1.0,
+   "per_second": 6,
+   "box": [
+    -0.4,
+    1.6,
+    -0.4,
+    0.4,
+    2.3,
+    0.4
+   ],
+   "speed": 0.008,
+   "max_per_tick": 2
+  },
+  {
+   "name": "crimson_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "E0245E",
+   "size": 0.9,
+   "per_second": 7,
+   "box": [
+    -0.45,
+    1.5,
+    -0.45,
+    0.45,
+    2.1,
+    0.45
+   ],
+   "speed": 0.005,
+   "max_per_tick": 2
+  },
+  {
+   "name": "optic_halo",
+   "kind": "ring",
+   "particle": "minecraft:glow",
+   "color": "FFD84A",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    2.15,
+    0
+   ],
+   "radius": 0.6,
+   "spin": 0.2,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "eyebite_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    1.9,
+    0
+   ],
+   "radius": 0.85,
+   "spin": -0.3,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "brow_line",
+   "kind": "line",
+   "particle": "minecraft:end_rod",
+   "color": "FFD84A",
+   "size": 1.0,
+   "per_second": 6,
+   "from": [
+    -0.25,
+    1.88,
+    -0.32
+   ],
+   "to": [
+    0.25,
+    1.88,
+    -0.32
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "seeing_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.2,
+   "max_per_tick": 2
+  },
+  {
+   "name": "tail_motes",
+   "kind": "motes",
+   "particle": "minecraft:witch",
+   "color": "E0245E",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    -0.15,
+    1.2,
+    0.3,
+    0.15,
+    1.9,
+    0.6
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "eyelet_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:end_rod",
+   "color": "FFD84A",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.9,
+    0
+   ],
+   "radius": 0.6,
+   "spin": 0.38,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "gaze_trail",
+   "kind": "trail",
+   "particle": "minecraft:glow",
+   "color": "FFD84A",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.8,
+    0.3
+   ],
+   "radius": 0.3,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "clairvoyance": [
+   {
+    "shape": "MAGIC_CIRCLE",
+    "color": "FFD84A",
+    "duration": 30,
+    "power": 3.0,
+    "at": "eye",
+    "particle": "minecraft:end_rod",
+    "count": 40,
+    "spread": 1.2,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FX_SPIRIT_AURA",
+    "color": "E0245E",
+    "duration": 36,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:glow",
+    "count": 20,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "crown_of_madness": [
+   {
+    "shape": "DEVIL_CIRCLE",
+    "color": "E0245E",
+    "duration": 30,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:witch",
+    "count": 50,
+    "spread": 1.8,
+    "radius": 5.0,
+    "height": 1.2
+   }
+  ],
+  "disintegrate": [
+   {
+    "shape": "LIGHTNING_SPEAR",
+    "color": "E0245E",
+    "duration": 22,
+    "power": 4.0,
+    "at": "eye",
+    "particle": "minecraft:crit",
+    "count": 60,
+    "spread": 0.6,
+    "radius": 12.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MIRROR_RAY",
+    "color": "FFD84A",
+    "duration": 20,
+    "power": 4.0,
+    "at": "eye",
+    "particle": "minecraft:end_rod",
+    "count": 40,
+    "spread": 0.6,
+    "radius": 12.0,
+    "height": 1.2
+   }
+  ],
+  "dominate_monster": [
+   {
+    "shape": "KOTO_AURA",
+    "color": "E0245E",
+    "duration": 32,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:witch",
+    "count": 50,
+    "spread": 1.6,
+    "radius": 5.0,
+    "height": 1.2
+   }
+  ],
+  "eyebite": [
+   {
+    "shape": "SEAL_TRINITY",
+    "color": "FFD84A",
+    "duration": 30,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:glow",
+    "count": 40,
+    "spread": 1.8,
+    "radius": 6.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

@@ -53,8 +53,23 @@ public final class WornLibDraw {
     }
 
     private static final Slot[] SLOTS = new Slot[POOL];
-    private static final int[] BASE = new int[MAX_SETS], EXTRA = new int[MAX_SETS], INDEX = new int[MAX_SETS];
-    private static final boolean[] DRAWN = new boolean[MAX_SETS], EXTRAS = new boolean[MAX_SETS], MOTES = new boolean[MAX_SETS];
+    private static final int[] BASE = new int[MAX_SETS], EXTRA = new int[MAX_SETS], INDEX = new int[MAX_SETS], BUDGET_BASE = new int[MAX_SETS];
+    private static final boolean[] DRAWN = new boolean[MAX_SETS], EXTRAS = new boolean[MAX_SETS], MOTES = new boolean[MAX_SETS], USE_LOD = new boolean[MAX_SETS], NO_ADD = new boolean[MAX_SETS];
+    /** The vertices a relic may cost the budget of the effects at most: the old per-ensemble cap, so an upgraded relic's big model does not starve the effects of its wearer's other relics. */
+    private static final int LEGACY_BUDGET = 2600;
+    private static final ResourceLocation[] DEFAULT_SKIN = {ATLAS, ATLAS};
+    private static final java.util.Map<String, ResourceLocation[]> SKINS = new java.util.HashMap<>();
+
+    /** The albedo texture {@code [0]} and the emissive glow map {@code [1]} a mesh samples: its own skin (1.102.0), else the shared atlas twice. Cached per skin name: no allocation per frame. */
+    static ResourceLocation[] skinOf(WornMesh m) {
+        if (m.skin == null) return DEFAULT_SKIN;
+        ResourceLocation[] t = SKINS.get(m.skin);
+        if (t == null) {
+            t = new ResourceLocation[]{WornModels.rl("textures/relic_worn/god/" + m.skin + ".png"), WornModels.rl("textures/relic_worn/god/" + m.skin + "_glow.png")};
+            SKINS.put(m.skin, t);
+        }
+        return t;
+    }
     private static final WornFxPlan[] PLAN_OF = new WornFxPlan[MAX_SETS];
     private static final WornFxPlan[][][] PLANS = new WornFxPlan[8][FxQuality.values().length][2];
     private static final Matrix4f SM = new Matrix4f();
@@ -107,11 +122,17 @@ public final class WornLibDraw {
         int n = Math.min(sets.size(), MAX_SETS);
         if (n == 0) return;
         boolean near = distSq <= WornFxPlan.EXTRAS_RANGE * WornFxPlan.EXTRAS_RANGE;
+        double lodSq = WornLibrary.Ensemble.LOD_DISTANCE * WornLibrary.Ensemble.LOD_DISTANCE, addSq = WornLibrary.Ensemble.ADDITIVE_CUTOFF * WornLibrary.Ensemble.ADDITIVE_CUTOFF;
         for (int i = 0; i < n; i++) {
             WornLibrary.Ensemble e = sets.get(i);
             WornFxPlan p = plan(e.tier, q, near);
             PLAN_OF[i] = p;
-            BASE[i] = e.baseVerts;
+            // 1.102.0: an upgraded relic is drawn as its low detail models beyond 12 blocks and at the low quality, and its additive passes stop beyond 24 blocks
+            boolean lod = e.upgraded && !e.lodPieces.isEmpty() && (distSq > lodSq || q == FxQuality.LOW);
+            USE_LOD[i] = lod;
+            NO_ADD[i] = e.upgraded && distSq > addSq;
+            BASE[i] = lod ? e.lodVerts : e.baseVerts;
+            BUDGET_BASE[i] = e.upgraded ? Math.min(BASE[i], LEGACY_BUDGET) : BASE[i];
             MOTES[i] = false;
             EXTRA[i] = (p.usesShell() ? e.shellVerts : 0);
         }
@@ -124,22 +145,23 @@ public final class WornLibDraw {
             ranked++;
         }
         int models = 0;
-        for (int i = 0; i < n; i++) models += BASE[i];
-        WornBudget.allocate(BASE, EXTRA, n, Math.max(q.vertexCap, models), DRAWN, EXTRAS);      // every relic's model is always drawn (none hides another); only the extras are budgeted
+        for (int i = 0; i < n; i++) models += BUDGET_BASE[i];
+        WornBudget.allocate(BUDGET_BASE, EXTRA, n, Math.max(q.vertexCap, models), DRAWN, EXTRAS);      // every relic's model is always drawn (none hides another); only the extras are budgeted
         for (int i = 0; i < n; i++) {                                                          // the place of each among the relics of its slot (by id: stable while grades change)
             int idx = 0;
             for (int j = 0; j < n; j++) if (j != i && sets.get(j).slotKey.equals(sets.get(i).slotKey) && sets.get(j).id.compareTo(sets.get(i).id) < 0) idx++;
             INDEX[i] = idx;
         }
 
-        // ---- pass 1: solid
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(ATLAS));
+        // ---- pass 1: solid (one buffer per skin: a relic with its own skin samples its own texture)
+        VertexConsumer vc;
         int used = 0;
         for (int i = 0; i < n && used < POOL; i++) {
             if (!DRAWN[i]) continue;
             WornLibrary.Ensemble e = sets.get(i);
-            for (int k = 0; k < e.pieces.size() && used < POOL; k++) {
-                WornLibrary.Resolved r = e.pieces.get(k);
+            List<WornLibrary.Resolved> pieces = USE_LOD[i] ? e.lodPieces : e.pieces;
+            for (int k = 0; k < pieces.size() && used < POOL; k++) {
+                WornLibrary.Resolved r = pieces.get(k);
                 Slot s = SLOTS[used++];
                 s.mesh = r.mesh();
                 s.mirror = r.mirror();
@@ -163,21 +185,26 @@ public final class WornLibDraw {
                     s.n.rotateY((float) Math.toRadians(pl.rotY()));
                     s.mirror ^= pl.mirror();
                 }
+                vc = buffers.getBuffer(RenderType.entityCutoutNoCull(skinOf(s.mesh)[0]));
                 solid(vc, s, light, age, limb, crouching);
             }
         }
         if (used == 0) return;
 
-        // ---- pass 2: emissive parts and the procedural effects
-        vc = buffers.getBuffer(RenderType.eyes(ATLAS));
+        // ---- pass 2: emissive parts (an upgraded relic samples its glow map) and the procedural effects
         float hot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
         boolean shell = false;
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             WornFxPlan p = PLAN_OF[s.set];
-            if (s.mesh.emitQuads > 0) glow(vc, s, age, limb, crouching, hot * (1f + p.pulse() * (float) Math.sin(age * 0.09f)));
+            if (NO_ADD[s.set]) continue;                                                        // beyond 24 blocks an upgraded relic draws no additive pass at all
+            if (s.mesh.emitQuads > 0) {
+                vc = buffers.getBuffer(RenderType.eyes(skinOf(s.mesh)[1]));
+                glow(vc, s, age, limb, crouching, hot * (1f + p.pulse() * (float) Math.sin(age * 0.09f)));
+            }
             if (EXTRAS[s.set]) {
                 if (s.first && MOTES[s.set]) {
+                    vc = buffers.getBuffer(RenderType.eyes(ATLAS));
                     int rgb = s.colors[WornMesh.GLOW];
                     if (p.motes() > 0) WornFxDraw.motes(vc, s.m, s.anchor, rgb, p.motes(), age, p.pulse());
                     if (p.runeRing()) WornFxDraw.ring(vc, s.m, s.anchor, rgb, age, p.pulse());
@@ -193,6 +220,7 @@ public final class WornLibDraw {
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             WornFxPlan p = PLAN_OF[s.set];
+            if (NO_ADD[s.set]) continue;
             if (EXTRAS[s.set] && p.usesShell() && s.mesh.shellQuads > 0) shellPass(vc, s, age, limb, crouching, p.rim(), p.shimmer());
         }
     }
@@ -215,7 +243,7 @@ public final class WornLibDraw {
     public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age) {
         if (e == null || e.pieces.isEmpty()) return;
         int used = 0;
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(ATLAS));
+        VertexConsumer vc;
         for (int k = 0; k < e.pieces.size() && used < POOL; k++) {
             WornLibrary.Resolved r = e.pieces.get(k);
             Slot s = SLOTS[used++];
@@ -231,11 +259,15 @@ public final class WornLibDraw {
             s.m.set(pose.last().pose());
             s.n.set(pose.last().normal());
             pose.popPose();
+            vc = buffers.getBuffer(RenderType.entityCutoutNoCull(skinOf(s.mesh)[0]));
             solid(vc, s, light, age, 0f, false);
         }
-        vc = buffers.getBuffer(RenderType.eyes(ATLAS));
         float hot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
-        for (int u = 0; u < used; u++) if (SLOTS[u].mesh.emitQuads > 0) glow(vc, SLOTS[u], age, 0f, false, hot);
+        for (int u = 0; u < used; u++) {
+            if (SLOTS[u].mesh.emitQuads <= 0) continue;
+            vc = buffers.getBuffer(RenderType.eyes(skinOf(SLOTS[u].mesh)[1]));
+            glow(vc, SLOTS[u], age, 0f, false, hot);
+        }
     }
 
     /**
@@ -278,6 +310,7 @@ public final class WornLibDraw {
             setup(s, gr, age, limb, crouching);
             boolean w = wave(gr);
             for (int i = q0; i < q1; i++) {
+                if ((m.flags[i] & WornMesh.ADD) != 0) continue;                                // 1.102.0: a halo or soft sprite exists only in the additive pass
                 int c = s.colors[m.slot[i]];
                 if ((m.flags[i] & WornMesh.EMIT) != 0) c = WornPalette.scale(c, 0.55f);        // a lit stone is dark glass until the glow pass adds its light
                 for (int k = 0; k < 4; k++) vertex(vc, m, i, k, c >> 16 & 255, c >> 8 & 255, c & 255, 255, light, w ? gr : null, age);
@@ -295,9 +328,9 @@ public final class WornLibDraw {
             boolean w = wave(gr);
             for (int i = q0; i < q1; i++) {
                 int f = m.flags[i];
-                if ((f & WornMesh.EMIT) == 0) continue;
+                if ((f & (WornMesh.EMIT | WornMesh.LIT | WornMesh.ADD)) == 0) continue;
                 float k = (f & WornMesh.HOT) != 0 ? hot : 0.9f;
-                int c = s.colors[m.slot[i]];
+                int c = s.colors[(f & (WornMesh.EMIT | WornMesh.ADD)) != 0 ? m.slot[i] : WornMesh.GLOW];       // 1.102.0: a lit-only quad (engraved runes, veins) glows in the glow colour
                 int r = Math.min(255, (int) ((c >> 16 & 255) * k)), gg = Math.min(255, (int) ((c >> 8 & 255) * k)), b = Math.min(255, (int) ((c & 255) * k));
                 // 1.99.0: RenderType.eyes culls back faces, and a mirrored piece (the left arm's copy of a right arm model) has its winding reversed by the x flip: its glowing parts
                 // were culled away entirely. Writing the corners in the other order turns them front again.

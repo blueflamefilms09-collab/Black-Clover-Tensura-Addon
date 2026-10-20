@@ -423,6 +423,7 @@ public final class RelicEngine {
         double previousPower = ActPower.begin(Tiers.multiplier(stack, def, TierRules.Stat.ACT_POWER));      // 1.29.0: Fx damage inside this act is scaled by the tier
         try {
             act.body().run(new ActCtx(p, stack, def, sneaking, chargeTicks));
+            com.newuniverse.nusmp.relics.upgrade.UpgradeActFx.after(p, def, act);          // 1.102.0: the act's own visual of an upgraded God relic (visual only)
         } catch (RuntimeException | LinkageError failed) {
             org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] relic {} act {} failed", def.id(), act.key(), failed);
         } finally {

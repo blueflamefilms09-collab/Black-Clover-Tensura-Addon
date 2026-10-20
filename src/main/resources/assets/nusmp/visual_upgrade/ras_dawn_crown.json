@@ -1,0 +1,227 @@
+{
+ "id": "ras_dawn_crown",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "dawn_motes",
+   "kind": "motes",
+   "particle": "minecraft:end_rod",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 9,
+   "box": [
+    -0.5,
+    1.6,
+    -0.5,
+    0.5,
+    2.8,
+    0.5
+   ],
+   "speed": 0.014,
+   "max_per_tick": 2
+  },
+  {
+   "name": "gold_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "FFF0C0",
+   "size": 0.9,
+   "per_second": 8,
+   "box": [
+    -0.5,
+    1.5,
+    -0.5,
+    0.5,
+    2.4,
+    0.5
+   ],
+   "speed": 0.008,
+   "max_per_tick": 2
+  },
+  {
+   "name": "sun_halo",
+   "kind": "ring",
+   "particle": "minecraft:flame",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 12,
+   "center": [
+    0,
+    2.1,
+    0.45
+   ],
+   "radius": 0.62,
+   "spin": 0.1,
+   "plane": "vertical",
+   "max_per_tick": 4
+  },
+  {
+   "name": "noon_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    0.1,
+    0
+   ],
+   "radius": 1.4,
+   "spin": 0.15,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "ray_line",
+   "kind": "line",
+   "particle": "minecraft:end_rod",
+   "color": "FFF0C0",
+   "size": 1.0,
+   "per_second": 10,
+   "from": [
+    0,
+    2.5,
+    0.35
+   ],
+   "to": [
+    0,
+    3.4,
+    0.35
+   ],
+   "speed": 0.02,
+   "max_per_tick": 2
+  },
+  {
+   "name": "dawn_floor",
+   "kind": "ground",
+   "particle": "minecraft:flame",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.8,
+   "max_per_tick": 3
+  },
+  {
+   "name": "cobra_sparks",
+   "kind": "motes",
+   "particle": "minecraft:glow",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 4,
+   "box": [
+    -0.1,
+    2.0,
+    -0.4,
+    0.1,
+    2.3,
+    -0.3
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "sun_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:flame",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    1.9,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.35,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "sunrise_trail",
+   "kind": "trail",
+   "particle": "minecraft:end_rod",
+   "color": "FFE080",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    1.8,
+    0.4
+   ],
+   "radius": 0.5,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "first_light": [
+   {
+    "shape": "LIGHT_FLARE",
+    "color": "FFE080",
+    "duration": 26,
+    "power": 3.5,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 60,
+    "spread": 2.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FIRE_PILLAR",
+    "color": "FFF0C0",
+    "duration": 22,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:flame",
+    "count": 40,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "noon": [
+   {
+    "shape": "FIRE_WILD",
+    "color": "FFE080",
+    "duration": 46,
+    "power": 8.0,
+    "at": "feet",
+    "particle": "minecraft:flame",
+    "count": 120,
+    "spread": 4.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "LIGHT_BLADE",
+    "color": "FFF0C0",
+    "duration": 38,
+    "power": 7.0,
+    "at": "eye",
+    "particle": "minecraft:end_rod",
+    "count": 90,
+    "spread": 4.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "FFE080",
+    "duration": 40,
+    "power": 7.0,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 80,
+    "spread": 4.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

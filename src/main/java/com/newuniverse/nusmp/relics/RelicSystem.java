@@ -32,5 +32,6 @@ public final class RelicSystem {
         RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
         WornSync.register(gameBus);                             // 1.99.0: the server tells every client what a wearer carries outside the vanilla equipment (Curios, a mob's pack)
         WornRender2SelfTests.register();                        // the self-test relic.worn_render2 (the plan, the sync codec, the Curios probe)
+        com.newuniverse.nusmp.relics.upgrade.UpgradeSelfTests.register();   // 1.102.0: the self-test visual.god_worn (the upgraded God relics: models, skins, effect tables, flag fallback)
     }
 }

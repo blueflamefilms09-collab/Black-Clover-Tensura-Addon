@@ -1,0 +1,215 @@
+{
+ "id": "berserker_armor_shard",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "rage_embers",
+   "kind": "motes",
+   "particle": "minecraft:flame",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.4,
+    0.8,
+    -0.35,
+    0.4,
+    1.7,
+    0.3
+   ],
+   "speed": 0.015,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blood_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "A82A2A",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.45,
+    0.6,
+    -0.3,
+    0.45,
+    1.5,
+    0.3
+   ],
+   "speed": 0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "rage_halo",
+   "kind": "ring",
+   "particle": "minecraft:angry_villager",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 4,
+   "center": [
+    0,
+    1.95,
+    0
+   ],
+   "radius": 0.42,
+   "spin": 0.2,
+   "plane": "flat",
+   "max_per_tick": 1
+  },
+  {
+   "name": "berserk_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    0.9,
+    0
+   ],
+   "radius": 1.0,
+   "spin": 0.25,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "crack_line",
+   "kind": "line",
+   "particle": "minecraft:flame",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 8,
+   "from": [
+    -0.25,
+    1.4,
+    -0.32
+   ],
+   "to": [
+    0.3,
+    0.8,
+    -0.32
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "scorch",
+   "kind": "ground",
+   "particle": "minecraft:flame",
+   "color": "A82A2A",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.3,
+   "max_per_tick": 2
+  },
+  {
+   "name": "shoulder_flames",
+   "kind": "motes",
+   "particle": "minecraft:lava",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    1.5,
+    -0.2,
+    0.6,
+    1.9,
+    0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blood_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:flame",
+   "color": "FF3A3A",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.1,
+    0
+   ],
+   "radius": 0.8,
+   "spin": 0.38,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "fury_trail",
+   "kind": "trail",
+   "particle": "minecraft:smoke",
+   "color": "A82A2A",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.9,
+    0.4
+   ],
+   "radius": 0.6,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "berserk": [
+   {
+    "shape": "BLOOD_FX1",
+    "color": "FF3A3A",
+    "duration": 30,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:flame",
+    "count": 60,
+    "spread": 1.4,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "FIRE_PILLAR",
+    "color": "A82A2A",
+    "duration": 24,
+    "power": 2.5,
+    "at": "feet",
+    "particle": "minecraft:lava",
+    "count": 20,
+    "spread": 1.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "blood_frenzy": [
+   {
+    "shape": "SLASH_SCYTHE",
+    "color": "FF3A3A",
+    "duration": 26,
+    "power": 5.0,
+    "at": "feet",
+    "particle": "minecraft:crit",
+    "count": 70,
+    "spread": 2.6,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "DEVIL_CIRCLE",
+    "color": "A82A2A",
+    "duration": 36,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "minecraft:angry_villager",
+    "count": 40,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

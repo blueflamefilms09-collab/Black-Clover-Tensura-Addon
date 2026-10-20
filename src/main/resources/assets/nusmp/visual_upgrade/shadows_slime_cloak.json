@@ -1,0 +1,215 @@
+{
+ "id": "shadows_slime_cloak",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "slime_bubbles",
+   "kind": "motes",
+   "particle": "minecraft:glow_squid_ink",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 5,
+   "box": [
+    -0.5,
+    0.2,
+    0.25,
+    0.5,
+    1.7,
+    0.8
+   ],
+   "speed": 0.012,
+   "max_per_tick": 2
+  },
+  {
+   "name": "drips",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "8A70FF",
+   "size": 0.9,
+   "per_second": 8,
+   "box": [
+    -0.5,
+    0.3,
+    0.3,
+    0.5,
+    0.9,
+    0.7
+   ],
+   "speed": -0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "slime_halo",
+   "kind": "ring",
+   "particle": "minecraft:glow",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    1.2,
+    0.45
+   ],
+   "radius": 0.45,
+   "spin": 0.15,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "jelly_ring",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "4A3AA8",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    0.8,
+    0
+   ],
+   "radius": 0.9,
+   "spin": 0.18,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "blade_pseudopod",
+   "kind": "line",
+   "particle": "minecraft:glow",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 7,
+   "from": [
+    -0.38,
+    0.75,
+    -0.12
+   ],
+   "to": [
+    -0.52,
+    0.2,
+    -0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "puddle",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "4A3AA8",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "nucleus_glow",
+   "kind": "motes",
+   "particle": "minecraft:end_rod",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    -0.15,
+    0.8,
+    0.3,
+    0.15,
+    1.2,
+    0.6
+   ],
+   "speed": 0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "blob_companions",
+   "kind": "orbit",
+   "particle": "minecraft:glow",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 4,
+   "center": [
+    0,
+    1.1,
+    0
+   ],
+   "radius": 0.75,
+   "spin": 0.3,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "goo_trail",
+   "kind": "trail",
+   "particle": "dust",
+   "color": "8A70FF",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    0.1,
+    0.4
+   ],
+   "radius": 0.6,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "slime_blade": [
+   {
+    "shape": "WIND_SLASH",
+    "color": "8A70FF",
+    "duration": 18,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:glow",
+    "count": 30,
+    "spread": 0.6,
+    "radius": 4.0,
+    "height": 1.2
+   },
+   {
+    "shape": "SLASH_BLADES",
+    "color": "4A3AA8",
+    "duration": 14,
+    "power": 2.5,
+    "at": "eye",
+    "particle": "minecraft:glow_squid_ink",
+    "count": 20,
+    "spread": 0.6,
+    "radius": 3.0,
+    "height": 1.2
+   }
+  ],
+  "i_am_atomic": [
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "8A70FF",
+    "duration": 44,
+    "power": 8.0,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 110,
+    "spread": 3.5,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "LIGHTNING_GOD",
+    "color": "8A70FF",
+    "duration": 30,
+    "power": 6.0,
+    "at": "aim",
+    "particle": "minecraft:glow",
+    "count": 60,
+    "spread": 2.0,
+    "radius": 12.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

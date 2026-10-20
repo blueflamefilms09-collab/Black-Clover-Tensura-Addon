@@ -38,7 +38,7 @@ WEIGHTS = {"mesh": 0.35, "texture": 0.20, "glow": 0.15, "ambient": 0.20, "animat
 # painted texel count of the old models (5120 x 4 = 20480): a score of 1.0 per term means "meets the floor"
 REFS = {"mesh": 900.0, "texture": 20480.0, "glow": 3.0, "ambient": 3.0, "animation": 3.0}
 
-EMIT, SHELL, HOT, LIT = 1, 2, 4, 8
+EMIT, SHELL, HOT, LIT, ADD = 1, 2, 4, 8, 16
 MOVING = ("orbit", "spin", "pulse", "bob")
 
 # painted armour layer of the two chest relics (64 x 32 ARGB, opaque pixels), counted by running ArmorPainter.paint for the def (tools/visual_upgrade/god_worn/README in
@@ -92,13 +92,13 @@ def model_stats(name, atlas_cell=32, atlas_w=128, atlas_h=256):
             elif v[0] == "q":
                 g, flags = int(v[1]), int(v[3])
                 quads += 1
-                if flags & EMIT:
+                if flags & (EMIT | ADD):
                     emit += 1
                 if flags & LIT:
                     lit += 1
                 if flags & SHELL:
                     shell += 1
-                if flags & (EMIT | LIT) and g:
+                if flags & (EMIT | LIT | ADD) and g:
                     emit_groups.add(g)
                 u = sum(float(v[4 + k * 8 + 3]) for k in range(4)) / 4.0
                 w = sum(float(v[4 + k * 8 + 4]) for k in range(4)) / 4.0

@@ -17,6 +17,8 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
     public static final ModConfigSpec.BooleanValue ROBE_ANIME;
     public static final ModConfigSpec.BooleanValue HAND_MODELS;
+    /** 1.102.0: {@code visual.upgrade}: the upgraded worn models, skins and ambient effects of the God grade relics (off = the 1.101 look, which stays on disk). */
+    public static final ModConfigSpec.BooleanValue UPGRADE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -38,6 +40,11 @@ public final class RelicFxOptions {
                         + "The inventory always shows the sprite.")
                 .define("handModels", true);
         b.pop();
+        b.push("visual");
+        UPGRADE = b.comment("The visual upgrade (1.102.0): God grade relics wear and are held as much more detailed models with their own skins and glow maps and have ambient effects of their own "
+                        + "(drifting motes, halos, energy lines, ground glow). Off = the look of 1.101 (the old files stay in the mod). Takes effect after a resource reload (F3+T) or a relog.")
+                .define("upgrade", true);
+        b.pop();
         SPEC = b.build();
     }
 
@@ -50,6 +57,9 @@ public final class RelicFxOptions {
     public static boolean particles() { return get(PARTICLES); }
 
     public static boolean models() { return get(MODELS); }
+
+    /** The client flag {@code visual.upgrade} (default on); true when the config is not loaded. */
+    public static boolean upgrade() { return get(UPGRADE); }
 
     /** True when the robe sets are worn as anime cloaks ({@code relicfx.robeAnime}, default on); true when the config is not loaded. */
     public static boolean robeAnime() { return get(ROBE_ANIME); }
