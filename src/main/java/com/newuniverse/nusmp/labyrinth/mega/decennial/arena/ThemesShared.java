@@ -319,8 +319,8 @@ final class ThemesShared {
         }
         // void shards: they burst into a rush of endermites
         for (int[] q : Parts.ringSpots(a, Math.min(16.0, c - 5.0), 6, 0.2)) {
-            Parts.single(a, Kind.CRYSTAL, Effect.SHATTER, 1, q[0], 1, q[1], b("obsidian"));
-            a.set(q[0], 2, q[1], b("crying_obsidian"));
+            Parts.single(a, Kind.CRYSTAL, Effect.SHATTER, 1, q[0], 1, q[1], b("black_concrete"));
+            a.set(q[0], 2, q[1], b("purple_stained_glass"));
             a.set(q[0], 3, q[1], b("end_rod"));
             a.zone("void", q[0], q[1], 4);
         }

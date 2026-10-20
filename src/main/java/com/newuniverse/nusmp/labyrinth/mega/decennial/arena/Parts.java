@@ -75,6 +75,7 @@ public final class Parts {
         for (int i = 2; i <= reach; i++) {
             int rx = x + dx * i, rz = z + dz * i;
             if (Math.abs(rx - a.c) <= 2 && Math.abs(rz - a.c) <= 2) continue;                           // never on the dais
+            if (a.solidAt(rx, 1, rz) || a.isElementCell(rx, 1, rz)) continue;                            // never on something that already stands there
             if ((i & 1) == 0 || i == reach) e.rubble.add(new Placed(rx, 1, rz, rubble));
         }
         a.zone("pillar", x, z, 3);
@@ -210,6 +211,11 @@ public final class Parts {
         String cur = a.get(x, y, z);
         if (cur != null && Solidity.solid(cur)) return false;
         return a.set(x, y, z, spec);
+    }
+
+    /** Takes the rubble out of every element that would now lie on something solid (a pillar built later stands where an earlier pillar's rubble was meant to fall). Run once at the end of a build. */
+    public static void pruneRubble(BossArenaStructure a) {
+        for (Element e : a.elements()) e.rubble.removeIf(r -> a.solidAt(r.x(), r.y(), r.z()) || a.isElementCell(r.x(), r.y(), r.z()));
     }
 
     /** Clamp. */

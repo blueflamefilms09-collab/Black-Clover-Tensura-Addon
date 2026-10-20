@@ -23,7 +23,12 @@ public final class ArenaThemes {
     private static final Map<String, Def> DEFS = new LinkedHashMap<>();
 
     private static void add(String id, String title, String side, int size, IntFunction<BossArenaStructure> builder) {
-        if (DEFS.put(id, new Def(id, title, side, size, builder)) != null) throw new IllegalStateException("duplicate arena theme " + id);
+        IntFunction<BossArenaStructure> finished = n -> {
+            BossArenaStructure plan = builder.apply(n);
+            Parts.pruneRubble(plan);
+            return plan;
+        };
+        if (DEFS.put(id, new Def(id, title, side, size, finished)) != null) throw new IllegalStateException("duplicate arena theme " + id);
     }
 
     static {

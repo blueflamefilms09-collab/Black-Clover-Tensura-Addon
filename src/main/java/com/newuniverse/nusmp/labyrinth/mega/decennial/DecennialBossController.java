@@ -80,8 +80,8 @@ public final class DecennialBossController {
 
     // ================================================================ the add budget
     /**
-     * How many of {@code wanted} adds the budget lets in now (a tombstone broken, a phase, a wave): at most the room left under the alive cap and under the cap of the whole fight, and at least
-     * zero. What it grants is counted as spent.
+     * How many of {@code wanted} adds the budget lets in now (a phase, a wave): at most the room left under the alive cap and under the cap of the whole fight, and at least zero. What it grants is
+     * counted as spent.
      */
     public int grantAdds(int wanted, int aliveNow) {
         DecennialProfile.AddsSpec a = profile.adds();
@@ -89,6 +89,23 @@ public final class DecennialBossController {
         int granted = Math.max(0, Math.min(Math.min(wanted, DecennialRules.MAX_ADDS_PER_WAVE), room));
         spent += granted;
         return granted;
+    }
+
+    /** The adds the phases still to come will bring: the part of the fight's cap that waves and broken tombstones must leave alone. */
+    public int reservedForPhases() {
+        int n = 0;
+        for (int i = phase + 1; i <= profile.phaseCount(); i++) n += profile.phase(i).addCount();
+        return n;
+    }
+
+    /**
+     * Like {@link #grantAdds} for adds that are not part of a phase's story (a wave, a broken tombstone, a root node): they may never eat the share of the fight's cap that the phases still to come
+     * need, so a party that breaks every tombstone early is not rewarded with a boss that has run out of reinforcements for its last form.
+     */
+    public int grantExtraAdds(int wanted, int aliveNow) {
+        DecennialProfile.AddsSpec a = profile.adds();
+        int free = Math.max(0, a.fightCap() - spent - reservedForPhases());
+        return grantAdds(Math.min(wanted, free), aliveNow);
     }
 
     // ================================================================ the tick
@@ -142,7 +159,7 @@ public final class DecennialBossController {
         if (a.wave() > 0 && a.waveEvery() > 0 && now >= nextWave) {
             nextWave = now + a.waveEvery() * 20L;
             if (addsAlive * 2 <= a.maxAlive()) {
-                int granted = grantAdds(a.wave(), addsAlive);
+                int granted = grantExtraAdds(a.wave(), addsAlive);
                 if (granted > 0) out.add(new Event(Kind.ADDS, phase, "wave", granted, 1.0));
             }
         }
