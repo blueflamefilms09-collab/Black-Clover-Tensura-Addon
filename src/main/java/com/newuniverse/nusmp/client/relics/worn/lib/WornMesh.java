@@ -14,12 +14,20 @@ import java.util.List;
 public final class WornMesh {
     /** Quad flags. */
     public static final int EMIT = 1, SHELL = 2, HOT = 4;
+    /**
+     * Quad flags of the visual upgrade models (a model that names its own skin, see {@link #skin}): GLOWMAP = the quad is redrawn additively with the glow map of the
+     * model, STAR = the quad belongs to the starfield / nebula pass (scrolling, additive, drawn with the star texture instead of the skin), HALO = the quad belongs to the
+     * additive halo / light shaft / portal pass (drawn with the shared fx texture, tinted by its colour slot).
+     */
+    public static final int GLOWMAP = 8, STAR = 16, HALO = 32;
     /** Colour slots. */
     public static final int MAIN = 0, TRIM = 1, GLOW = 2, DARK = 3, ACCENT = 4, NONE = 5, SLOTS = 6;
 
     /** How an animation group moves; its numbers are {@code a}, {@code b}, {@code c} (see {@link WornAnim}). */
     public enum Kind {
-        BOB, SPIN, SWING, SWAY, PULSE, WAVE, ORBIT;
+        BOB, SPIN, SWING, SWAY, PULSE, WAVE, ORBIT,
+        /** The visual upgrade: turn about all three axes, a degrees a tick about x, b about z, c about y (an orbiting shard, a gyroscope ring). */
+        TUMBLE;
 
         static Kind of(String s) {
             for (Kind k : values()) if (k.name().equalsIgnoreCase(s)) return k;
@@ -38,9 +46,21 @@ public final class WornMesh {
     public final int[] groupStart;
     /** Index 0 is null (the static base). */
     public final Group[] groups;
-    public final int emitQuads, shellQuads;
+    public final int emitQuads, shellQuads, glowMapQuads, starQuads, haloQuads;
+    /**
+     * The visual upgrade: textures of this model under assets/nusmp/textures/ (null for the library models, which share the atlas): {@code skin} (the painted skin, drawn
+     * instead of the atlas, no palette tint), {@code glowTex} (its emissive map, same UVs), {@code starTex} (the scrolling nebula of the STAR quads), and {@code lodName}, the
+     * model drawn instead of this one from far away (at most 15% of the vertices).
+     */
+    public final String skin, glowTex, starTex, lodName;
+    private WornMesh lodMesh;
 
     private WornMesh(String name, WornAnchor anchor, float[] pos, float[] uv, float[] nrm, byte[] slot, byte[] flags, int[] groupStart, Group[] groups) {
+        this(name, anchor, pos, uv, nrm, slot, flags, groupStart, groups, null, null, null, null);
+    }
+
+    private WornMesh(String name, WornAnchor anchor, float[] pos, float[] uv, float[] nrm, byte[] slot, byte[] flags, int[] groupStart, Group[] groups,
+                     String skin, String glowTex, String starTex, String lodName) {
         this.name = name;
         this.anchor = anchor;
         this.quads = slot.length;
@@ -51,13 +71,38 @@ public final class WornMesh {
         this.flags = flags;
         this.groupStart = groupStart;
         this.groups = groups;
-        int e = 0, s = 0;
+        int e = 0, s = 0, gm = 0, st = 0, ha = 0;
         for (byte f : flags) {
             if ((f & EMIT) != 0) e++;
             if ((f & SHELL) != 0) s++;
+            if ((f & GLOWMAP) != 0) gm++;
+            if ((f & STAR) != 0) st++;
+            if ((f & HALO) != 0) ha++;
         }
         this.emitQuads = e;
         this.shellQuads = s;
+        this.glowMapQuads = gm;
+        this.starQuads = st;
+        this.haloQuads = ha;
+        this.skin = skin;
+        this.glowTex = glowTex;
+        this.starTex = starTex;
+        this.lodName = lodName;
+    }
+
+    /** Does this model carry its own skin (a visual upgrade model) instead of using the shared atlas? */
+    public boolean custom() { return skin != null; }
+
+    /**
+     * The model to draw from far away: the model named by its {@code lod} record (read through {@link WornModels}), else this one. Resolved once and kept.
+     */
+    public WornMesh lod() {
+        if (lodName == null) return this;
+        if (lodMesh == null) {
+            WornMesh m = WornModels.mesh(lodName);
+            lodMesh = m == null ? this : m;
+        }
+        return lodMesh;
     }
 
     /**
@@ -108,7 +153,7 @@ public final class WornMesh {
             np[3 * i + 1] = qy;
             np[3 * i + 2] = qz;
         }
-        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups);
+        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups, skin, glowTex, starTex, lodName);
     }
 
     /**
@@ -125,7 +170,7 @@ public final class WornMesh {
     public int shellVertices() { return shellQuads * 4; }
 
     /** The most vertices the model costs in one frame with all its passes. */
-    public int totalVertices() { return solidVertices() + emitVertices(); }
+    public int totalVertices() { return solidVertices() + emitVertices() + glowMapQuads * 4; }
 
     /**
      * Parses a model file. Unknown record types are ignored (forward compatible); a malformed known record throws {@link IllegalArgumentException} with the line number.
@@ -136,6 +181,7 @@ public final class WornMesh {
         groups.add(null);
         List<float[]> quadData = new ArrayList<>();
         List<int[]> quadMeta = new ArrayList<>();
+        String skin = null, glowTex = null, starTex = null, lod = null;
         int ln = 0;
         for (String raw : lines) {
             ln++;
@@ -149,6 +195,10 @@ public final class WornMesh {
                         if (a == null) throw new IllegalArgumentException("unknown anchor " + v[1]);
                         anchor = a;
                     }
+                    case "skin" -> skin = v[1];
+                    case "glowtex" -> glowTex = v[1];
+                    case "startex" -> starTex = v[1];
+                    case "lod" -> lod = v[1];
                     case "grp" -> {
                         int idx = Integer.parseInt(v[1]);
                         if (idx != groups.size()) throw new IllegalArgumentException("groups must be numbered 1, 2, 3 ... in order");
@@ -198,7 +248,7 @@ public final class WornMesh {
             slot[k] = (byte) m[1];
             flags[k] = (byte) m[2];
         }
-        return new WornMesh(name, anchor, pos, uv, nrm, slot, flags, start, groups.toArray(new Group[0]));
+        return new WornMesh(name, anchor, pos, uv, nrm, slot, flags, start, groups.toArray(new Group[0]), skin, glowTex, starTex, lod);
     }
 
     private static float f(String s) {

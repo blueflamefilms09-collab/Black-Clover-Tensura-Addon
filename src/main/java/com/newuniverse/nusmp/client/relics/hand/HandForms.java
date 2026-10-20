@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.client.relics.hand;
 
+import com.newuniverse.nusmp.client.relics.vu.VuModels;
+import com.newuniverse.nusmp.client.relics.vu.VuOverrides;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornCatalog;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornMesh;
@@ -24,9 +26,15 @@ public final class HandForms {
     public record Form(WornLibrary.Ensemble ensemble, HandTransforms.Style style, boolean signature) {}
 
     private static final Map<String, Optional<Form>> CACHE = new HashMap<>();
+    private static int seenGeneration = -1;
 
     /** The form of a relic, or null (its sprite is drawn). Built once per relic id. */
     public static Form of(RelicDef def) {
+        int gen = VuModels.generation();                                               // the visual upgrade switched on or off, or the resources reloaded: build the forms again
+        if (gen != seenGeneration) {
+            CACHE.clear();
+            seenGeneration = gen;
+        }
         Optional<Form> f = CACHE.get(def.id());
         if (f == null) {
             f = Optional.ofNullable(build(def));
@@ -40,7 +48,10 @@ public final class HandForms {
         if (!xf.complete()) return null;
         HandTransforms.Style style = xf.styleFor(def.id(), def.slot().name(), def.look().name());
         if (style == null) return null;
-        List<WornCatalog.Piece> sig = HandModels.catalog().sigFor(def.id());
+        VuOverrides.Entry upgrade = VuModels.handEntry(def.id());                      // the visual upgrade: the override table of assets/nusmp/visual_upgrade (null: the older catalog)
+        List<WornCatalog.Piece> sig = VuModels.handPieces(def.id());
+        if (sig == null) sig = HandModels.catalog().sigFor(def.id());
+        else style = upgradeStyle(xf, style, upgrade);
         boolean signature = !sig.isEmpty();
         List<WornLibrary.Resolved> pieces = new ArrayList<>();
         if (signature) {
@@ -59,6 +70,16 @@ public final class HandForms {
         int only = style.fit().only();
         if (only > 0 && pieces.size() > only) pieces = new ArrayList<>(pieces.subList(0, only));
         return new Form(WornLibrary.ofPieces(def, pieces), style, signature);
+    }
+
+    /** The style of an upgraded relic: the style the override names (if any) and its own size (the upgraded model is bigger and more ornate than the one it replaces). */
+    private static HandTransforms.Style upgradeStyle(HandTransforms xf, HandTransforms.Style style, VuOverrides.Entry e) {
+        if (e == null) return style;
+        String named = e.options().get("style");
+        HandTransforms.Style s = named == null ? null : xf.style(named);
+        if (s == null) s = style;
+        float size = e.number("size", s.fit().size());
+        return size == s.fit().size() ? s : s.withSize(size);
     }
 
     /** Forgets every form (a resource reload). */

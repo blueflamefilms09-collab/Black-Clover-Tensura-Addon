@@ -428,6 +428,7 @@ public final class RelicEngine {
         } finally {
             ActPower.end(previousPower);
         }
+        com.newuniverse.nusmp.relics.vu.VuActVfx.fire(p, def, act);                    // visual upgrade: the signature effect of an upgraded relic's act (data/nusmp/visual_upgrade/act_vfx.txt)
         return true;
     }
 

@@ -129,6 +129,10 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
         try {
             pose.translate(0.5f, 0.5f, 0.5f);
             apply(pose, form.style().xf(hc));
+            if ((hc == HandTransforms.Ctx.FP_RIGHT || hc == HandTransforms.Ctx.FP_LEFT) && form.ensemble().custom()) {        // the draw animation of an upgraded relic: it swells into the hand
+                float k = 0.55f + 0.45f * com.newuniverse.nusmp.client.relics.vu.VuFxClient.equipProgress(mc.getTimer().getGameTimeDeltaPartialTick(false));
+                pose.scale(k, k, k);
+            }
             if (fit.prx() != 0f || fit.pry() != 0f || fit.prz() != 0f) pose.mulPose(Q.rotationXYZ(fit.prx() * DEG, fit.pry() * DEG, fit.prz() * DEG));
             if (inHand) {                                                              // the hold point and the sway are about the hand, so only in a hand
                 if (fit.sway() != 0f) pose.mulPose(Q.rotationZ(fit.sway() * DEG * (float) Math.sin(time * 0.11f)));

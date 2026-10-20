@@ -19,10 +19,14 @@ public final class WornLibClient {
                     WornLibrary.clear();
                     ArmorGlow.clear();
                     ArmorItems.clear();
+                    com.newuniverse.nusmp.client.relics.vu.VuModels.clear();           // visual upgrade: the override table
+                    com.newuniverse.nusmp.client.relics.vu.VuFxClient.clear();         // visual upgrade: the fx files
+                    WornLibDraw.clearCustom();                                         // visual upgrade: the texture locations
                 }));
         modBus.addListener(ArmorItemRenderer::registerExtensions);
         modBus.addListener(ArmorItemRenderer::registerModels);
         com.newuniverse.nusmp.client.relics.hand.HandClient.init(modBus);                  // 1.48.0: relics as held objects
         RelicFxClient.init();
+        com.newuniverse.nusmp.client.relics.vu.VuFxClient.init();                           // visual upgrade: the particle layers and the draw animation clock
     }
 }

@@ -61,7 +61,9 @@ public final class WornModels {
         if (cached != null) return cached.orElse(null);
         WornMesh mesh = null;
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("relic_worn/" + name + ".txt"));
+            // 1.102.0: a name starting with "vu/" is a visual upgrade model (assets/nusmp/visual_upgrade/models/<rest>.txt); every other name is a library model as before
+            String file = name.startsWith("vu/") ? "visual_upgrade/models/" + name.substring(3) : "relic_worn/" + name;
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl(file + ".txt"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
                     mesh = WornMesh.parse(name, in.lines().toList());
