@@ -50,6 +50,10 @@ public final class RelicCommands {
                         .executes(ctx -> unattune(ctx.getSource(), ctx.getSource().getPlayerOrException())))
                 .then(Commands.literal("grade")
                         .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException())))
+                .then(Commands.literal("power").requires(s -> s.hasPermission(2))                  // 1.104.0: needs attunement?, attuned to whom, the damage factor in force
+                        .executes(ctx -> power(ctx.getSource(), ctx.getSource().getPlayerOrException()))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(ctx -> power(ctx.getSource(), EntityArgument.getPlayer(ctx, "player")))))
                 .then(Commands.literal("debug").requires(s -> s.hasPermission(2))                  // 1.99.0: why a worn relic is not drawn (server half here, the operator's client adds its half)
                         .executes(ctx -> debug(ctx.getSource(), ctx.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player())
@@ -152,6 +156,13 @@ public final class RelicCommands {
         for (Component line : rep.lines()) src.sendSuccess(() -> line, false);
         if (src.getEntity() instanceof ServerPlayer op) net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(op, new WornDebugPayload(target.getUUID(), rep.compact()));
         return rep.compact().size() + 1;
+    }
+
+    /** 1.104.0: {@code /multiverse relic power [player]} (operators): per carried relic, whether it needs attunement, who it is attuned to and the damage factor in force. */
+    private static int power(CommandSourceStack src, ServerPlayer target) {
+        java.util.List<Component> lines = RelicPowerEvents.report(target);
+        for (Component line : lines) src.sendSuccess(() -> line, false);
+        return lines.size();
     }
 
     private static int unattune(CommandSourceStack src, ServerPlayer p) {
