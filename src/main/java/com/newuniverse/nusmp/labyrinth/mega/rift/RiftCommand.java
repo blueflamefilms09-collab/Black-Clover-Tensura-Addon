@@ -390,6 +390,7 @@ public final class RiftCommand {
         ServerLevel mega = MegaDungeon.level(s.getServer());
         PocketRealm.Pocket pk = PocketRealm.get(s.getServer()).at(slot);
         if (mega == null || pk == null) return fail(s, text("nosuch", "There is no pocket in slot %s.", slot));
+        if (pk.exclusive() && pk.phase == 0) return fail(s, text("forming", "The tomb in slot %s is still forming.", slot));         // 1.101.0: nobody is taken into a half-built tomb
         CompoundTag r = new CompoundTag();
         r.putString("Dim", p.level().dimension().location().toString());
         r.putDouble("X", p.getX());
