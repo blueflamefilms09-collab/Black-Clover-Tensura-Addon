@@ -1,0 +1,5 @@
+{
+  "tooltip.nusmp.relic.unattuned_power": "Unattuned: %s%% power. Hold sneak + use for 5 s to attune",
+  "tooltip.nusmp.relic.attuned_other": "Attuned to someone else: %s%% power. Hold sneak + use for 5 s to take it over",
+  "message.nusmp.relic.attune_lock.hit": "This relic only deals %s%% of its power until you attune it"
+}

@@ -21,7 +21,7 @@ import java.util.List;
  * <ul>
  *   <li>sneak + use fires the relic's act instead of drawing (the first act; the second needs the act key, see {@link RelicRangedSupport});
  *       the worn-relic key works as for every relic;</li>
- *   <li>a relic that needs attunement cannot be drawn until it is yours (sneak + use holds the five-second ritual).</li>
+ *   <li>a relic that needs attunement and is not yours is drawn all the same since 1.104.0, but its arrows deal only the unattuned fraction ({@link RelicPower}); sneak + use holds the five-second ritual (with the lock switched off in the config it cannot be drawn until it is yours, as before).</li>
  * </ul>
  * In hand it is a 3D mesh: the client picks &lt;id&gt;, &lt;id&gt;_pull1, _pull2, _pull3 by the draw (client/relics/item).
  */

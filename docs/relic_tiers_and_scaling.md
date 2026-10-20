@@ -221,3 +221,7 @@ com.newuniverse.nusmp.relics.scaling.ScalingSystem.registerGame(NeoForge.EVENT_B
 * `relics/RelicItemSupport.java`: `name(base, def, stack)` and `foil(stack, def)` (the old `name(base, def)` stays).
 * `relics/RelicWeaponItem.java`, `RelicGearItem.java`, `RelicArmorItem.java`: `getName` and `isFoil` call the two new helpers.
 * `client/relics/RelicTooltip.java`: the effective grade in the name colour, the frame, the grade row, a "Raised from" line, the act costs.
+
+## 1.104.0: the attune lock
+
+Tiers and grades set how strong a relic is for the player it is attuned to; since 1.104.0 that full strength belongs to that player alone. A relic that needs attunement (Legend and above) and is not attuned to its wielder deals 20% of its damage (melee, arrows, bolts), by one rule in `relics/RelicPower` applied at the damage event (`RelicPowerEvents`); acts and passives stay off while unattuned, and the tier act power is multiplied by the same factor. Config `relics.attuneLock` and `relics.unattunedPower`; see `docs/relic_attune_lock.md`.

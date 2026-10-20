@@ -23,7 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * What {@link RelicBowItem} and {@link RelicCrossbowItem} share. A drawn weapon has one use button, and drawing is what it means; the relic's acts
  * therefore go on <b>sneak + use</b> (and on the worn-relic key, which needs nothing from the item). A relic that needs attunement and is not yours
- * cannot be drawn at all: sneak + use holds the five-second ritual, plain use says so.
+ * is drawn at a fraction of its power since 1.104.0 ({@link RelicPower}); with {@code relics.attuneLock} off it cannot be drawn at all: sneak + use holds
+ * the five-second ritual, plain use says so.
  * <p>
  * "Act mode" tells the item's {@code onUseTick} / {@code releaseUsing} that the hold in progress is an act (or the ritual) and not a draw, so a long
  * hold does not loose an arrow when the button is let go. It is set in {@code use()} on both sides (the client needs it for the crossbow's use
@@ -55,6 +56,7 @@ public final class RelicRangedSupport {
         boolean sneak = player.isShiftKeyDown();
         setActMode(player, false);
         if (!unattuned && !(sneak && !def.acts().isEmpty())) return null;
+        if (unattuned && !sneak && RelicPowerConfig.lockOn()) return null;                                              // 1.104.0: drawn anyway, but its arrows deal only the unattuned fraction (RelicPowerEvents)
         if (unattuned && !sneak) {
             if (!level.isClientSide && player instanceof ServerPlayer p) RelicEngine.useHeld(p, stack, def, hand);      // tells the player to attune
             return InteractionResultHolder.fail(stack);

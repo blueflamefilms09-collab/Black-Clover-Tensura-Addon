@@ -96,6 +96,7 @@ public final class RelicEngine {
         bus.addListener(RelicEngine::onChangeTarget);
         bus.addListener(RelicEngine::onSummonLoad);
         MobRelics.register(bus);                                                       // 1.50.0: named mobs carry and attune relics
+        RelicPowerEvents.register(bus);                                                // 1.104.0: an unattuned relic deals only a fraction of its damage
     }
 
     /** A summon that comes back from disk (a crash, a chunk that held it) is not tracked any more: it goes, so none stays forever. */
@@ -420,7 +421,7 @@ public final class RelicEngine {
             if (def.acts().size() == 1 && !def.isAdopted() && !def.isRanged() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), cd);
         }
         p.displayClientMessage(Component.literal(act.displayName()).withStyle(def.grade().colour()), true);
-        double previousPower = ActPower.begin(Tiers.multiplier(stack, def, TierRules.Stat.ACT_POWER));      // 1.29.0: Fx damage inside this act is scaled by the tier
+        double previousPower = ActPower.begin(Tiers.multiplier(stack, def, TierRules.Stat.ACT_POWER) * RelicPowerEvents.actFactor(stack, p));      // 1.29.0: Fx damage inside this act is scaled by the tier
         try {
             act.body().run(new ActCtx(p, stack, def, sneaking, chargeTicks));
         } catch (RuntimeException | LinkageError failed) {
