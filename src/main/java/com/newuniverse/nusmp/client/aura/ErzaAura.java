@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
 import com.newuniverse.nusmp.requip.Armour;
 import com.newuniverse.nusmp.requip.ArmourSets;
+import com.newuniverse.nusmp.requip.PartialArmourMask;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -26,6 +27,9 @@ public final class ErzaAura {
     private static final int FB = PropDraw.FULL_BRIGHT;
 
     private static volatile WaterAuraRig.Set[] sets;
+
+    /** Partial armours (Equip Magic: Partial Armour): the rig set of an armour drawn with only some of its pieces, built once per style (the armour's ordinal and the mask of the pieces). */
+    private static final java.util.Map<Integer, WaterAuraRig.Set> SUBSETS = new java.util.concurrent.ConcurrentHashMap<>();
 
     private static WaterAuraRig.Set[] sets() {
         WaterAuraRig.Set[] s = sets;
@@ -50,8 +54,14 @@ public final class ErzaAura {
     }
 
     /** The rig set of an armour, from the table. */
-    static WaterAuraRig.Set build(Armour a) {
-        var pieces = ArmourSets.of(a);
+    static WaterAuraRig.Set build(Armour a) { return build(a, ArmourSets.of(a)); }
+
+    /** The rig set of an armour drawn with a subset of its pieces (a style that carries a mask above the ordinal). */
+    static WaterAuraRig.Set subset(Armour a, int mask, int style) {
+        return SUBSETS.computeIfAbsent(style, k -> build(a, PartialArmourMask.subset(a, mask)));
+    }
+
+    private static WaterAuraRig.Set build(Armour a, java.util.List<ArmourSets.Piece> pieces) {
         Piece[] out = new Piece[pieces.size()];
         for (int i = 0; i < out.length; i++) {
             ArmourSets.Piece p = pieces.get(i);
@@ -73,11 +83,12 @@ public final class ErzaAura {
     }
 
     private static void paint(AuraContext c) {
-        Armour a = Armour.byOrdinal(c.style());
+        Armour a = Armour.byOrdinal(PartialArmourMask.armourOf(c.style()));              // the low byte is the armour; the bits above it (if any) are the mask of a partial armour
         if (a == null || c.fade() <= 0.002f) return;
+        int mask = PartialArmourMask.maskOf(c.style());
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.21f) + 0.08f * Mth.sin(age * 0.67f);
         float forge = WaterAuraRig.forge(c, 0f);
-        WaterAuraRig.draw(c, sets()[a.ordinal()], a.glow(), 0.75f * pulse + 0.3f);
+        WaterAuraRig.draw(c, mask == PartialArmourMask.FULL ? sets()[a.ordinal()] : subset(a, mask, c.style()), a.glow(), 0.75f * pulse + 0.3f);
         extras(c, a, forge, pulse);
     }
 

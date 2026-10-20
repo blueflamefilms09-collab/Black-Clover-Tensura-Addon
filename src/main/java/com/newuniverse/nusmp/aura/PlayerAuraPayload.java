@@ -10,8 +10,8 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 public record PlayerAuraPayload(int entity, int aura, int ticks, int style) implements CustomPacketPayload {
     public static final Type<PlayerAuraPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "player_aura"));
     public static final StreamCodec<FriendlyByteBuf, PlayerAuraPayload> STREAM_CODEC = StreamCodec.of(
-            (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.aura()); buf.writeVarInt(p.ticks()); buf.writeByte(p.style()); },
-            buf -> new PlayerAuraPayload(buf.readVarInt(), buf.readByte(), buf.readVarInt(), buf.readByte()));
+            (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.aura()); buf.writeVarInt(p.ticks()); buf.writeVarInt(p.style()); },   // the style is a VarInt since the Equip Magic: Partial Armour carries a piece mask above the armour number (values under 128 are the same single byte as before)
+            buf -> new PlayerAuraPayload(buf.readVarInt(), buf.readByte(), buf.readVarInt(), buf.readVarInt()));
 
     @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
 

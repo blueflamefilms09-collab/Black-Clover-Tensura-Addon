@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.requip.Armour;
 import com.newuniverse.nusmp.requip.ArmourQuality;
 import com.newuniverse.nusmp.requip.ArmourSets;
 import com.newuniverse.nusmp.requip.RequipItems;
+import com.newuniverse.nusmp.requip.RequipMagicRules;
 import com.newuniverse.nusmp.requip.RequipRules;
 import com.newuniverse.nusmp.requip.RequipSystem;
 import io.github.manasmods.manascore.network.api.util.Changeable;
@@ -94,7 +95,8 @@ public final class ErzaSelfTests {
         ErzaRequipSkill s = NUSkills.ERZA_REQUIP.get();
         if (s.getType() != Skill.SkillType.ULTIMATE) return "not an Ultimate";
         ManasSkillInstance inst = s.createDefaultInstance();
-        if (s.getModes(inst) != Armour.values().length + 1) return "mode count " + s.getModes(inst);
+        if (s.getModes(inst) != RequipMagicRules.MODES) return "mode count " + s.getModes(inst);                  // the 14 armours, Dismiss, then the Equip Magic modes appended after them
+        if (RequipMagicRules.MODES < Armour.values().length + 1) return "the base modes were cut";
         Set<String> ids = new HashSet<>();
         for (int m = 0; m < s.getModes(inst); m++) {
             if (!ids.add(s.getModeId(inst, m))) return "duplicate mode id " + s.getModeId(inst, m);

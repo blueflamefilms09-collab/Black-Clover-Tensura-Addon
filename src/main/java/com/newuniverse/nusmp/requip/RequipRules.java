@@ -61,16 +61,20 @@ public final class RequipRules {
     }
 
     /** The attribute modifiers the armour puts on its wearer; mastery (0..1) strengthens the attack and defence ones by up to 25 percent. Zero entries are left out. */
-    public static List<Mod> modifiers(Armour a, double masteryFrac) {
+    public static List<Mod> modifiers(Armour a, double masteryFrac) { return modifiers(a, masteryFrac, 1.0); }
+
+    /** The same for a partial armour (Equip Magic): every amount is the share {@code fraction} (0..1) of the whole armour's. A whole armour is the plain overload. */
+    public static List<Mod> modifiers(Armour a, double masteryFrac, double fraction) {
         double k = 1.0 + 0.25 * Math.max(0.0, Math.min(1.0, masteryFrac));
+        double f = Double.isNaN(fraction) ? 1.0 : Math.max(0.0, Math.min(1.0, fraction));
         Armour.Stats s = a.stats();
         List<Mod> l = new ArrayList<>();
-        add(l, "movement_speed", Op.ADD_MULTIPLIED_BASE, s.speed());
-        add(l, "attack_damage", Op.ADD_VALUE, s.attack() * k);
-        add(l, "armor", Op.ADD_VALUE, s.armor() * k);
-        add(l, "armor_toughness", Op.ADD_VALUE, s.toughness() * k);
-        add(l, "attack_speed", Op.ADD_MULTIPLIED_BASE, s.attackSpeed());
-        add(l, "knockback_resistance", Op.ADD_VALUE, s.knockbackResistance());
+        add(l, "movement_speed", Op.ADD_MULTIPLIED_BASE, s.speed() * f);
+        add(l, "attack_damage", Op.ADD_VALUE, s.attack() * k * f);
+        add(l, "armor", Op.ADD_VALUE, s.armor() * k * f);
+        add(l, "armor_toughness", Op.ADD_VALUE, s.toughness() * k * f);
+        add(l, "attack_speed", Op.ADD_MULTIPLIED_BASE, s.attackSpeed() * f);
+        add(l, "knockback_resistance", Op.ADD_VALUE, s.knockbackResistance() * f);
         return l;
     }
 
@@ -88,8 +92,12 @@ public final class RequipRules {
     public static final double GUARD_BONUS = 0.30;
 
     /** The damage left of {@code amount} after the armour's resistance to {@code c} (and the guard stance's bonus). */
-    public static float afterResist(Armour a, Armour.DamageClass c, float amount, boolean guard) {
-        double r = Math.min(MAX_REDUCTION, a.resist().of(c) + (guard ? GUARD_BONUS : 0.0));
+    public static float afterResist(Armour a, Armour.DamageClass c, float amount, boolean guard) { return afterResist(a, c, amount, guard, 1.0); }
+
+    /** The same for a partial armour: the resistance is the share {@code fraction} of the whole armour's; the guard stance's bonus needs at least a quarter of the armour on. */
+    public static float afterResist(Armour a, Armour.DamageClass c, float amount, boolean guard, double fraction) {
+        double f = Double.isNaN(fraction) ? 1.0 : Math.max(0.0, Math.min(1.0, fraction));
+        double r = Math.min(MAX_REDUCTION, a.resist().of(c) * f + (guard && f >= 0.25 ? GUARD_BONUS : 0.0));
         return (float) Math.max(0.0, amount * (1.0 - r));
     }
 

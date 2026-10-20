@@ -56,6 +56,7 @@ public final class RequipSystem {
         NeoForge.EVENT_BUS.addListener(RequipSystem::onCommands);
         NeoForge.EVENT_BUS.addListener(RequipSystem::onLoot);
         ErzaSelfTests.register();                                          // the CI server smoke test runs skill.erza_requip
+        RequipMagic.init(modBus);                                          // the Equip Magic: the pocket Armoury, Loadouts, Blade / Barrage / Strike, Partial Armour, the finishers (self-test skill.requip_magic)
     }
 
     // ---------------------------------------------------------------- learning
