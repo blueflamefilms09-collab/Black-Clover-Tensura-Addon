@@ -65,6 +65,9 @@ final class GeoPreview {
                 glow == null ? null : ResourceLocation.parse(glow));
     }
 
+    /** 1.99.0: prop and aura scenes whose painter draws geo models (Flame / Water pieces, the Great Spirits) read them from disk too, whatever scene ran first. */
+    static void useDiskSource() { GeoModels.setSource(GeoPreview::source); }
+
     static void run(Map<String, Object> sc, Preview.Out out, String binDir) throws Exception {
         GeoModels.setSource(GeoPreview::source);
         final GeoSpec spec = specOf(sc);
