@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.103.0] — Custom boss bars for the dungeon bosses
+
+### NEW
+- **36 custom boss bar styles** for the dungeon bosses, drawn by the mod (a generated frame atlas per style with emissive glow, a scrolling fill effect, a name plate with the boss's name and title, and an emblem): Holy, Evil, Undead, Fire, Ice, Storm, Void, Forest, Water, Blood, Clockwork, Mirror, Underworld, Qliphoth gate, Devil, Supreme Devil, Dragon, Angel, Archon, Lich, Fallen King, Plague, the pocket tomb mega-bosses, the arc bosses (Zogratis, Midnight Sun, Seven Sins, Spade Kingdom, Magic Knights, DanMachi, Lucius) and Goliath, Charybdis, the Warden, the Spirit King, Zagred and the God of Order. The 200 Decennial bosses resolve onto 22 of them by archetype, hall theme and creature.
+- **What the bar shows:** a damage-lag ghost chip, phase notches with the phase number and name, a shield band, an invulnerable state (ice veil and chains, the title becomes Invulnerable), an enrage glow, the next lair action flashing with a countdown ring in its last 5 seconds, adds left, a healing wash, how many fighters, the boss's wind-up as a thin bar under the main bar, a low-HP pulse, an optional damage-per-second ticker, an entrance animation per style and a shatter or dissolve when the boss dies, plus a live portrait of the boss. Health is shown as a percentage (`bossbar.showHp` adds the numbers). Three or more bars at once are drawn compact.
+- **Config and commands:** client `bossbar.custom` (off = the old animated bar), `scale`, `showPhaseMarkers`, `showHp`, `portrait`, `showDps`; `/multiverse bossbar styles|preview <style> [hp%] [phase]` (OP) and the client twin `/nusmp bossbar ...` to see any style without a boss. `docs/boss_bars.md`.
+
+### REPLACED
+- Nothing. The 1.25.0 animated bar stays as the fallback and as the look of other mods' and vanilla bars.
+
+### KEPT
+- All boss logic; vanilla and other mods' boss bars keep their look.
+
+### Honest notes
+- Nothing has been run in the game: the art was only seen in a software mock-up with a different font, so some ornaments may touch the title line, and the live portrait and the entrance/death animations have never run. Julius's bar and the Lucius channel bar are not tracked yet.
+
 ## [1.102.0] — White squares under magic circles fixed, Dungeon Map screen fixed, first God weapon visual upgrade
 
 ### NEW
