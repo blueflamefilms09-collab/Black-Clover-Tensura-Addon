@@ -49,6 +49,8 @@ public final class AdminRegistry {
         DungeonAdminHooks.setBossHook(DungeonAdminHooks.BossHook.of(
                 (l, lv, p) -> com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialBosses.spawnBoss(l, lv, p) != null,
                 com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialBosses::killBosses));
+        // 1.99.0: the exclusive pocket dungeons and the shortcut rifts answer /dungeon rift spawn
+        DungeonAdminHooks.setRiftHook(com.newuniverse.nusmp.labyrinth.mega.rift.RiftAdmin::spawnRift);
     }
 
     private static void tick(MinecraftServer server) {
