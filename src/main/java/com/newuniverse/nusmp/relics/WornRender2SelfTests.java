@@ -73,8 +73,14 @@ public final class WornRender2SelfTests {
             return SelfTests.Result.fail("a far wearer still draws relics");
 
         // 2. the packets
-        ItemStack a = RelicCatalog.newStack(all.get(0)), b = RelicCatalog.newStack(all.get(all.size() - 1));
-        if (a.isEmpty() || b.isEmpty()) return SelfTests.Result.fail("a relic has no item to send");
+        ItemStack a = ItemStack.EMPTY, b = ItemStack.EMPTY;                                  // the first two relics that have an item of their own (an adopted one may not)
+        for (RelicDef d : all) {
+            ItemStack s = RelicCatalog.newStack(d);
+            if (s.isEmpty()) continue;
+            if (a.isEmpty()) a = s;
+            else if (!WornSync.keyOf(s).equals(WornSync.keyOf(a))) { b = s; break; }
+        }
+        if (a.isEmpty() || b.isEmpty()) return SelfTests.Result.fail("fewer than two relics have an item to send");
         UUID id = UUID.nameUUIDFromBytes("worn_render2".getBytes());
         RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), server.registryAccess());
         WornSync.STREAM_CODEC.encode(buf, new WornSync(id, List.of(a, b)));
