@@ -78,3 +78,7 @@ Both ride `PropKind.EARTH_CONSTRUCT` (one appended line in `PropKind`); behaviou
 ## 8. NOT verified
 
 Nothing was run in the game. The render and effect previews are re-implementations against stubs; lighting, the exact vertex order of the armour on a real skin, slim-arm fit, first-person hiding of the helm, the cage's hold on real mobs and the pounce's physics are unchecked. Page balance numbers are first estimates. The Black Clover wiki itself was not reachable, so the canon section rests on one search summary and on memory.
+
+## 1.99.0 armour policy
+
+Sandstone Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `EARTHFAM_ZONE` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

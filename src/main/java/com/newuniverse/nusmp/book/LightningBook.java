@@ -28,7 +28,7 @@ import java.util.List;
 /** Lightning Magic. */
 public class LightningBook extends GrimoireBook {
     // 1.93.0 (the Lightning rebuild, after Luck Voltia): the eight pages that existed keep their ids, order, names and cost tiers and are re-implemented in LightningArts (numbers kept; the
-    // thunderbird and the lance are models, the VFX are the new LIGHTNINGFX_* shapes, every cast puts the Lightning armour on for 5 s, the Fiend pages for 30 s); three pages are appended.
+    // thunderbird and the lance are models, the VFX are the new LIGHTNINGFX_* shapes, 1.99.0: no cast puts the Lightning armour on, only the Fiend pages and Raging Lightning do (book.ArmourPolicy)); three pages are appended.
     private final List<BookPage> pages = List.of(
             BookPage.starter("chain", "Chain Lightning", LightningArts::chain),
             BookPage.mid("thunder_boots", "Thunder God's Boots", LightningArts::boots),

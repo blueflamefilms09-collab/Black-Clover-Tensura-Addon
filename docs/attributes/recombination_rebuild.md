@@ -83,3 +83,7 @@ New: `book/RecombinationArts.java`, `RecombinationRules.java`, `book/ext/Recombi
 * The Bull's pathing (steps, walls, a roof above it), its ramming and cannon timing, and how big it feels at scale 1.1 to 1.9 were not run. The cockpit and the arcing beams of the Ultra Giant Bull are not built.
 * The chimney smoke is blocky (cubes with a scale animation), not a soft particle.
 * Bulwark's walls (`tempBlock`) and the rooms beside them may overlap on uneven ground.
+
+## 1.99.0 armour policy
+
+Recombination Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `RECOMBINATION_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

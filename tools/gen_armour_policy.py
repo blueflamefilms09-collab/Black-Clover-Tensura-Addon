@@ -25,24 +25,24 @@ OUT_MD = os.path.join(ROOT, 'docs/rebuild/armour_policy.md')
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 ARMOURED = {
     'FLAME': dict(
-        kind='FORM', name='Flame Armour', aura='FLAME', armour_pages={'flame_armour': 0}, form_pages=['spirit_dive'],
+        kind='FORM', name='Flame Armour', form_name='Spirit Dive: Salamander', aura='FLAME', armour_pages={'flame_armour': 0}, form_pages=['spirit_dive'],
         bonus=dict(cut=0.10, attack=0.08, ward='fire', upkeep=0.004),
         form_bonus=dict(cut=0.15, attack=0.25, speed=0.15, knockback=0.3, ward='fire', senses=True, absorb=0.012),
         canon="Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); "
               "Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."),
     'WATER': dict(
-        kind='FORM', name='Valkyrie Armour', aura='WATER', armour_pages={'valkyrie_dress': 1, 'scale_mail': 0}, form_pages=['spirit_dive'],
+        kind='FORM', name='Valkyrie Armour', form_name='Spirit Dive: Undine', aura='WATER', armour_pages={'valkyrie_dress': 1, 'scale_mail': 0}, form_pages=['spirit_dive'],
         bonus=dict(cut=0.12, attack=0.05, speed=0.08, knockback=0.1, upkeep=0.004),
         form_bonus=dict(cut=0.18, attack=0.18, speed=0.22, senses=True, absorb=0.012),
         canon="Noelle Silva's Valkyrie Armor / Valkyrie Dress (water armour of the Sea Dragon) and, with the water spirit Undine, the Saint Valkyrie Dress "
               "(feathered wing-like parts and a halo). Spirit Dive is the form; Valkyrie Dress and Sea Dragon's Scale Mail are the explicit armour pages."),
     'WIND': dict(
-        kind='FORM', name='Spirit of Zephyr', aura='', armour_pages={}, form_pages=['spirit_dive'], external_pages=['spirit_of_zephyr'],
+        kind='FORM', name='Spirit of Zephyr', form_name='Spirit Dive: Sylph', aura='', armour_pages={}, form_pages=['spirit_dive'], external_pages=['spirit_of_zephyr'],
         form_bonus=dict(cut=0.10, attack=0.15, speed=0.30, senses=True, absorb=0.012),
         canon="Yuno's Spirit Dive with the wind spirit Sylph (Spirit of Zephyr): the first dive transforms only the left half (one wing, half a crown, a ring "
               "round the wrist), the full dive has two wings and a full crown. Spirit Dive is the form; the Zephyr page is the older overlay (blackclover.ModeArmor)."),
     'EARTH': dict(
-        kind='FORM', name='Gnome Plate', aura='WIKI', form_aura=True, armour_pages={'earth_armor': 100}, form_pages=['spirit_dive'],
+        kind='FORM', name='Gnome Plate', form_name='Spirit Dive: the earth spirit', aura='WIKI', form_aura=True, armour_pages={'earth_armor': 100}, form_pages=['spirit_dive'],
         bonus=dict(cut=0.16, attack=0.04, knockback=0.4, upkeep=0.004),
         form_bonus=dict(cut=0.22, attack=0.20, speed=0.08, knockback=0.6, senses=True, absorb=0.012),
         canon="The earth spirit exists in the lore but its name, look and host were never shown, so the dive is a generic earth spirit dive (the mod calls the spirit "
@@ -172,6 +172,8 @@ def build():
         if key in ARMOURED:
             a = dict(ARMOURED[key])
             e = {'kind': a.pop('kind'), 'name': a.pop('name'), 'aura': a.pop('aura')}
+            if 'form_name' in a:
+                e['form_name'] = a.pop('form_name')
             if a.pop('form_aura', False):
                 e['form_aura'] = True
             e['armour_pages'] = a.pop('armour_pages')
@@ -225,8 +227,63 @@ def write_table(md):
         open(OUT_MD, 'w', encoding='utf-8').write(s)
 
 
+NOTE_MARK = '## 1.99.0 armour policy'
+
+
+def doc_note(key, display, e):
+    """The short append-only note for docs/attributes/<key>_rebuild.md."""
+    pol = 'See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).'
+    if e['kind'] == 'NONE':
+        look = ''
+        if e.get('shimmer'):
+            look = (' Where the armour carried the magic\'s look, every cast of a family page now sends a small `%s` glow that follows the caster instead '
+                    '(no armour piece is drawn).' % e['shimmer'])
+        return ('\n' + NOTE_MARK + '\n\n%s has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** '
+                '(policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and '
+                'registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour '
+                '(damage cut, thorns, resistance, constructs, effects) is unchanged.%s %s\n') % (display, look, pol)
+    pages = ', '.join('`%s`' % p for p in e.get('armour_pages', {}))
+    forms = ', '.join('`%s`' % p for p in e.get('form_pages', []))
+    parts = []
+    if pages:
+        parts.append('The armour is put on **only** by %s (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). '
+                     'It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; '
+                     'while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it.' % pages)
+    if forms:
+        parts.append('The form is %s: Spirit Dive. It is held as long as the mana upkeep is paid; the spirit\'s ambient intake pays most of it; speed, attack and senses are raised while it lasts.' % forms)
+    if e.get('external_pages'):
+        parts.append('The older form pages (%s) are left as they were; they are explicit pages that start the form overlay of `blackclover.ModeArmor`.' % ', '.join('`%s`' % p for p in e['external_pages']))
+    return ('\n' + NOTE_MARK + '\n\n%s is policy kind %s (%s). %s %s\n') % (display, e['kind'], e.get('name', ''), ' '.join(parts), pol)
+
+
+def append_notes(policy):
+    """Appends the note to every docs/attributes/*_rebuild.md that has none yet (append only; safe to run twice)."""
+    names = {n[0]: n[1] for n in magic_names()}
+    d = os.path.join(ROOT, 'docs/attributes')
+    n = 0
+    for f in sorted(os.listdir(d)):
+        if not f.endswith('_rebuild.md'):
+            continue
+        key = f[:-len('_rebuild.md')].upper()
+        if key not in policy['magics']:
+            print('no magic for', f)
+            continue
+        path = os.path.join(d, f)
+        s = open(path, encoding='utf-8').read()
+        if NOTE_MARK in s:
+            continue
+        if not s.endswith('\n'):
+            s += '\n'
+        open(path, 'w', encoding='utf-8').write(s + doc_note(key, names[key], policy['magics'][key]))
+        n += 1
+    print('notes appended to', n, 'docs')
+
+
 def main():
     policy = build()
+    if '--notes' in sys.argv:
+        append_notes(policy)
+        return 0
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     with open(OUT_JSON, 'w', encoding='utf-8') as f:
         json.dump(policy, f, indent=1, ensure_ascii=False)

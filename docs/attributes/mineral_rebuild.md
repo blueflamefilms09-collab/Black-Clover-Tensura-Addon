@@ -61,3 +61,7 @@ As the Sandstone doc (scenes `ef_mineral_close`, `efm_mineral_spire_*`, `efp_spi
 ## 8. NOT verified
 
 Nothing was run in the game. Specific to Mineral: the lance's pierce list (kept per prop id in a map, removed when the prop ends), the energy drain amounts on real Tensura mobs, the glow brightness of the crystals in daylight, how the crystal wings look from the first-person back view (they are behind the camera).
+
+## 1.99.0 armour policy
+
+Mineral Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `EARTHFAM_ZONE` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

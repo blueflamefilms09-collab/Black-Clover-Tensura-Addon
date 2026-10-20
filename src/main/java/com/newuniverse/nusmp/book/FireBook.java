@@ -28,7 +28,7 @@ import java.util.List;
 /** Fire Magic. Salamander spirit. */
 public class FireBook extends GrimoireBook {
     // 1.93.0 (the Flame rebuild, after the Vermillion family): the eight pages that existed keep their ids, order, names and cost tiers; the two shots stay Tensura shots, the rest are re-implemented in
-    // FlameArts (numbers kept; the lion and the phoenix are models, the VFX are the new FLAMEFX_* shapes, every cast puts the Flame armour on for 5 s); three pages are appended. The old methods below stay.
+    // FlameArts (numbers kept; the lion and the phoenix are models, the VFX are the new FLAMEFX_* shapes, 1.99.0: no cast puts the Flame armour on, only the Flame Armour page does (book.ArmourPolicy)); three pages are appended. The old methods below stay.
     private final List<BookPage> pages = List.of(
             BookPage.starter("exploding_fireball", "Exploding Fireball", TensuraShots.shot(TensuraShots.Shot.FIRE_BALL, 10, 1.6f, 0.6f, 80)),
             BookPage.mid("sol_linea", "Sol Linea", TensuraShots.shot(TensuraShots.Shot.FIRE_LANCE, 14, 2.4f, 0.8f, 100)),

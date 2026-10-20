@@ -94,6 +94,26 @@ public final class ArmourRules {
     /** Silver-Guardian-style poison: the wearer may pay {@code hpUpkeep} only above the floor and never in creative. */
     public static boolean hpUpkeepAllowed(float health, boolean creative, double hpUpkeep) { return hpUpkeep > 0.0 && !creative && health - hpUpkeep >= HP_FLOOR; }
 
+    // ------------------------------------------------------------------ the armour's boost to spells
+    /** Half of the armour's attack bonus also strengthens the spells of the magic the armour belongs to (an ordinary cast may USE the armour's boost, it never puts the armour on). */
+    public static float spellBoost(float attackBonus) { return 1f + Math.max(0f, attackBonus) * 0.5f; }
+
+    // ------------------------------------------------------------------ Devil Union (Asta and Liebe): the strict limit and the price
+    /** Default limit of Devil Union (Black Form): five minutes. */
+    public static final int DEVIL_LIMIT_SECONDS = 300;
+    /** Default time the user is incapacitated afterwards: thirty minutes. */
+    public static final int DEVIL_AFTERMATH_SECONDS = 1800;
+
+    public static long devilLimitTicks(int configSeconds) { return Math.max(20, configSeconds) * 20L; }
+
+    public static long devilAftermathTicks(int configSeconds) { return Math.max(0, configSeconds) * 20L; }
+
+    /** The union is over: it began at {@code since} (game time, 0 = not running) and has lasted the limit. */
+    public static boolean devilExpired(long since, long now, long limitTicks) { return since > 0 && now - since >= limitTicks; }
+
+    /** The user may not enter the union again while the aftermath lasts. */
+    public static boolean devilBlocked(long aftermathUntil, long now) { return now < aftermathUntil; }
+
     // ------------------------------------------------------------------ Spirit Dive stages
     /** The first dives of a mage are HALF dives (Yuno: only the left half transforms); the strength of the bonus grows to full after {@link #HALF_DIVES} dives or at mastery. */
     public static final int HALF_DIVES = 3;

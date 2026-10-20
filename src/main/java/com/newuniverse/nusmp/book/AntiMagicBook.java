@@ -153,6 +153,7 @@ public class AntiMagicBook extends ElementBook {
             return true;
         }
         if (inBlackForm(i)) { setForm(p, i, false); return true; }
+        if (DevilFormLimit.refuse(p)) return false;                                     // 1.99.0: the aftermath of a union that broke at the time limit
         if (!AntiMagicAura.pay(p, AntiMagicCosts.FORM_START, "hold Black Form")) return false;
         setForm(p, i, true);
         return true;
@@ -162,11 +163,13 @@ public class AntiMagicBook extends ElementBook {
         i.getOrCreateTag().putBoolean(K_FORM, on);
         i.markDirty();
         if (on) {
+            DevilFormLimit.begin(p);                                                    // 1.99.0: the union has a strict time limit (book.DevilFormLimit)
             p.displayClientMessage(Component.literal("Black Form.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD), true);
             ModeArmor.start(p, ModeArmor.Mode.DEMON, 45);
             VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), 0xFF1A1018, 60, 1.4f);
             VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, p.getEyePosition(), p.getEyePosition().add(p.getViewVector(1f).scale(3)), 0xFF2A0A30, 18, 2.0f);
         } else {
+            DevilFormLimit.clear(p);
             modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0, false);
             ModeArmor.stop(p, ModeArmor.Mode.DEMON);
         }
@@ -225,6 +228,11 @@ public class AntiMagicBook extends ElementBook {
             setForm(p, i, false);
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
             p.displayClientMessage(Component.literal("Your aura gives out. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        if (DevilFormLimit.expired(p)) {                                                // 1.99.0: the strict time limit: the union shatters and the user pays with muscle pain
+            setForm(p, i, false);
+            DevilFormLimit.shatter(p);
             return false;
         }
         if (ModeArmor.active(p) == ModeArmor.Mode.DEMON || ModeArmor.active(p) == ModeArmor.Mode.NONE) ModeArmor.start(p, ModeArmor.Mode.DEMON, 45);

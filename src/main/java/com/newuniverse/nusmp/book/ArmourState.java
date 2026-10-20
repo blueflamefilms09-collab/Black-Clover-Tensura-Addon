@@ -83,6 +83,19 @@ public final class ArmourState {
         return h != null && h.form() && h.magic().equals(m.name());
     }
 
+    /**
+     * The factor a spell of magic {@code m} gets from the armour the caster wears: while the armour (or the form) of THIS magic is on, half of its attack bonus strengthens the
+     * spell too. 1 when nothing of this magic is worn. Reading the armour never changes it: only an armour page puts it on.
+     */
+    public static float spellBoost(LivingEntity caster, MagicType m) {
+        ArmourRules.Held h = held(caster);
+        if (h == null || !h.magic().equals(m.name())) return 1f;
+        ArmourPolicy.Entry e = ArmourPolicy.get().entry(h.magic());
+        if (e == null) return 1f;
+        ArmourPolicy.Bonus b = h.form() ? e.formBonus() : e.bonus();
+        return ArmourRules.spellBoost(ArmourRules.scaled(b.attack(), stage(caster), ArmourConfig.bonusScale()));
+    }
+
     // ------------------------------------------------------------------ putting it on and off
     /** The armour page (or form page) of {@code e}'s magic is cast: puts the armour on. The caller has already applied {@link ArmourRules#armourPage} / {@link ArmourRules#formStart}. */
     public static void putOn(ServerPlayer p, ArmourPolicy.Entry e, int style, boolean form, float stage) {
@@ -99,7 +112,7 @@ public final class ArmourState {
         p.getPersistentData().put(KEY, a);
         applyBonus(p, e, form, stage);
         sync(p, held(p));
-        say(p, form ? "nusmp.armour.form_on" : "nusmp.armour.on", form ? "%s." : "%s forged.", e.name().isEmpty() ? e.magic() : e.name());
+        say(p, form ? "nusmp.armour.form_on" : "nusmp.armour.on", form ? "%s." : "%s forged.", form ? e.shownFormName() : e.name().isEmpty() ? e.magic() : e.name());
     }
 
     /** Takes the player's armour off (the pieces shatter out); no-op when nothing is worn. */
@@ -111,6 +124,7 @@ public final class ArmourState {
         if (h == null) return;
         p.getPersistentData().remove(KEY);
         removeBonus(p);
+        if (h.form()) SpiritDiveForm.stop(p, h.magic());                                    // a form that ends takes its dive with it
         if (!h.aura().isEmpty()) {
             Aura a = aura(h.aura());
             if (a != null) {
@@ -120,7 +134,7 @@ public final class ArmourState {
         }
         if (why == ArmourRules.Drop.DEATH) return;
         ArmourPolicy.Entry e = ArmourPolicy.get().entry(h.magic());
-        String name = e == null || e.name().isEmpty() ? h.magic() : e.name();
+        String name = e == null ? h.magic() : h.form() ? e.shownFormName() : e.name().isEmpty() ? h.magic() : e.name();
         switch (why) {
             case NO_MANA -> say(p, "nusmp.armour.dry", "Your mana gives out. The %s falls away.", name);
             case KNOCKED_OUT -> say(p, "nusmp.armour.knocked", "Knocked out. The %s shatters.", name);

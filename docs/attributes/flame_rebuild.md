@@ -89,3 +89,7 @@ Edited (additions only): `book/FireBook.java` (the page list, the import and the
 * Nothing ran in a game; preview tools only. The flames-as-sprites read pale in the preview (the additive white core); the real look against daylight is unseen.
 * Balance not play-tested. The lion's hit timing copies the old formula (cube-root ease) with the new run length of 22 ticks.
 * Self-test `magic.flame_rebuild` never ran in a real server.
+
+## 1.99.0 armour policy
+
+Flame Magic is policy kind FORM (Flame Armour). The armour is put on **only** by `flame_armour` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. The form is `spirit_dive`: Spirit Dive. It is held as long as the mana upkeep is paid; the spirit's ambient intake pays most of it; speed, attack and senses are raised while it lasts. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

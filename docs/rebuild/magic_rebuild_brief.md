@@ -44,3 +44,10 @@ local verification tools), `docs/magic_framework.md`, `docs/geo_models.md`, `doc
 * No model or assistant names in code, comments, docs or lang text.
 * Honest report at the end: what is built per magic, exact edits to existing files (keep them additions), lang fragment paths, new self-tests if any (register with
   `com.newuniverse.nusmp.labyrinth.mega.SelfTests.register("magic.<key>_rebuild", ...)`; the CI server smoke test runs them), and what could NOT be verified (everything visual).
+
+## 1.99.0: the temporary armour is no longer a side effect of a cast
+
+Part 2 above ("the 5 second armour after a cast") is superseded by the armour policy (`docs/rebuild/armour_policy.md`, `book.ArmourPolicy`, data `data/nusmp/armour_policy.json`): only
+the magics the table calls TOGGLE or FORM have an armour, and it is put on and taken off by its own explicit page (or by Spirit Dive), through `book.ArmourState`; no other page of any
+book equips anything. The armour painters, models and textures of the other magics stay on disk and in `AuraRegistry`. A new magic gets a row in `tools/gen_armour_policy.py`; a test
+fails until every `MagicType` has one.

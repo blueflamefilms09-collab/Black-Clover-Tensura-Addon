@@ -28,7 +28,7 @@ import java.util.List;
 /** Water Magic. Undine spirit. */
 public class WaterBook extends GrimoireBook {
     // 1.93.0 (the Water rebuild, after Noelle Silva): the six pages that existed keep their ids, order, names and cost tiers and are re-implemented in WaterArts (the sea dragon is a model, the
-    // javelin and the lance are models, the VFX are the new WATERFX_* shapes, every cast puts the Water armour on for 5 s); four pages are appended. The old static spell methods below stay.
+    // javelin and the lance are models, the VFX are the new WATERFX_* shapes, 1.99.0: no cast puts the Water armour on, only Valkyrie Dress and Sea Dragon's Scale Mail do (book.ArmourPolicy)); four pages are appended. The old static spell methods below stay.
     private final List<BookPage> pages = List.of(
             BookPage.starter("waterball", "Sea Dragon's Waterball", TensuraShots.shot(TensuraShots.Shot.WATER_BALL, 9, 1.4f, 1.2f, 0)),
             BookPage.signature("roar", "Sea Dragon's Roar", WaterArts::roar),

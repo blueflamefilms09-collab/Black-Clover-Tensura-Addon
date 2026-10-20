@@ -74,3 +74,7 @@ New: `book/SoulBook`, `SoulRules`; `prop/SoulRebuildProps`; `client/aura/SoulAur
 ## 9. Not verified
 No game run. Verified: type check with negative control, JUnit of `SoulRules`, geo checks, preview tools. Not seen in the real game: the ghost pieces' blending on top of a real skin and
 other layers, the wisps' movement against terrain, the real size of Spiritual Damage numbers against Tensura's spiritual health pools (the numbers are small and capped on purpose).
+
+## 1.99.0 armour policy
+
+Soul Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUL_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

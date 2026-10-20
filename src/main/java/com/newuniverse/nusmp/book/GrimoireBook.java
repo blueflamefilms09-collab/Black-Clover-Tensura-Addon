@@ -381,6 +381,7 @@ public abstract class GrimoireBook extends Skill {
         if (target == caster || target.isAlliedTo(caster)) return;
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
                 * buildUpMultiplier(i, caster)
+                * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)

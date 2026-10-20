@@ -91,3 +91,7 @@ The Time Magic VFX is untouched. At most about 220 vertices per instance (budget
 * Props: movement, the sentinel's walking over steps, the blades' lunges and the flowers (`tempBlock`) were not run; the prop state word and the blade slot packing are unit-tested only through the pure rules.
 * Numbers (damage, counts, cooldowns, the armour cut) are the author's choices; none was felt.
 * The canon of Grey's spells (section 2).
+
+## 1.99.0 armour policy
+
+Transmutation Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `TRANSMUTATION_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

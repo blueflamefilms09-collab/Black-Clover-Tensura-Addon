@@ -56,6 +56,7 @@ public final class ArmourPolicy {
     /**
      * One magic's entry.
      *
+     * @param formName    the name of the FORM (Spirit Dive: Salamander) where it differs from the armour's {@code name}
      * @param formAura    the FORM is drawn with the same render layer as the armour (Earth's Gnome Plate); false: the form's look is an older overlay (blackclover.ModeArmor) and the layer is not used
      * @param armourPages page id -> style: the pages that put the armour on (and, cast again while it is worn, take it off)
      * @param formPages   page ids that start the magic's FORM (Spirit Dive)
@@ -65,9 +66,11 @@ public final class ArmourPolicy {
      * @param shimmer     for a NONE magic that lost its armour: the VfxShape name of the light effect that carries its look now ("" = none)
      * @param newPages    page ids this release appended to the magic's book (empty: every armour page is an old page)
      */
-    public record Entry(String magic, Kind kind, String name, String aura, boolean formAura, Map<String, Integer> armourPages, List<String> formPages, List<String> externalPages,
+    public record Entry(String magic, Kind kind, String name, String formName, String aura, boolean formAura, Map<String, Integer> armourPages, List<String> formPages, List<String> externalPages,
                         String styleBy, Bonus bonus, Bonus formBonus, List<String> legacyAuras, String shimmer, List<String> newPages, String canon) {
         public boolean armoured() { return kind != Kind.NONE; }
+        /** The name shown when the form (not the armour page) is entered or left. */
+        public String shownFormName() { return formName.isEmpty() ? name : formName; }
         /** True when the policy engine (ArmourState) owns the armour layer of this magic. */
         public boolean engine() { return kind != Kind.NONE && (!aura.isEmpty() || !formPages.isEmpty()); }
     }
@@ -137,7 +140,7 @@ public final class ArmourPolicy {
             for (Map.Entry<String, JsonElement> pe : ap.entrySet()) pages.put(pe.getKey(), pe.getValue().getAsInt());
             Bonus bonus = o.has("bonus") ? bonus(obj(o, "bonus"), defToggle) : (kind == Kind.NONE ? Bonus.NONE : defToggle);
             Bonus formBonus = o.has("form_bonus") ? bonus(obj(o, "form_bonus"), defForm) : (o.has("form_pages") ? defForm : Bonus.NONE);
-            Entry e = new Entry(key, kind, str(o, "name", ""), str(o, "aura", ""), o.has("form_aura") && o.get("form_aura").getAsBoolean(), Collections.unmodifiableMap(pages),
+            Entry e = new Entry(key, kind, str(o, "name", ""), str(o, "form_name", ""), str(o, "aura", ""), o.has("form_aura") && o.get("form_aura").getAsBoolean(), Collections.unmodifiableMap(pages),
                     strings(o, "form_pages"), strings(o, "external_pages"), str(o, "style_by", "none"), bonus, formBonus, strings(o, "legacy_auras"), str(o, "shimmer", ""),
                     strings(o, "new_pages"), str(o, "canon", ""));
             if (out.put(key, e) != null) problems.add(key + ": listed twice");

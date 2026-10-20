@@ -69,6 +69,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BOSS_BUFF_MULTIPLIER;
     // 1.99.0: the armour policy (book.ArmourPolicy): how strong the worn armours and forms are and what they cost
     public static final ModConfigSpec.DoubleValue ARMOUR_UPKEEP_SCALE, ARMOUR_BONUS_SCALE, DIVE_ABSORB_SCALE;
+    public static final ModConfigSpec.IntValue DEVIL_FORM_LIMIT_SECONDS, DEVIL_FORM_AFTERMATH_SECONDS;
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
@@ -195,6 +196,9 @@ public final class NUConfig {
         ARMOUR_UPKEEP_SCALE = b.comment("Multiplies the magicule a worn armour or form costs every second (0 = free).").defineInRange("upkeepScale", 1.0, 0.0, 10.0);
         ARMOUR_BONUS_SCALE = b.comment("Multiplies the stat bonuses of a worn armour or form (damage cut, attack, speed).").defineInRange("bonusScale", 1.0, 0.0, 3.0);
         DIVE_ABSORB_SCALE = b.comment("Multiplies the ambient mana a Spirit Dive takes in every second (0 = none, the dive then only drains).").defineInRange("diveAbsorbScale", 1.0, 0.0, 5.0);
+        DEVIL_FORM_LIMIT_SECONDS = b.comment("Devil Union (the Anti-Magic Black Form): the strict time limit in seconds, then the form shatters (default 5 minutes).").defineInRange("devilFormLimitSeconds", 300, 20, 36000);
+        DEVIL_FORM_AFTERMATH_SECONDS = b.comment("How long the user is incapacitated by muscle pain after the limit broke the union (slowness, weakness, mining fatigue; never hunger). 0 = none.")
+                .defineInRange("devilFormAftermathSeconds", 1800, 0, 86400);
         b.pop();
 
         SPEC = b.build();

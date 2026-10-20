@@ -96,3 +96,7 @@ Nothing can be run in a game here. Checked: the type check of every new file aga
 `tools/geo_check.py` and a glow-size check, and the armour, the models, the VFX scenes by the preview tools, which are re-implementations of the render path. Not seen in the
 real game: the real light and blending of the armour, the pose of the pieces on every animation (sneaking, swimming, swinging), the slim-arm fit on a real skin, the network
 timing of the props, the choir's movement against real terrain. The page names are literal English strings in code (as the older pages are); the descriptions are in the lang fragment.
+
+## 1.99.0 armour policy
+
+Song Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SONG_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

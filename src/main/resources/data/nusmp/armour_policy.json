@@ -29,6 +29,7 @@
    "kind": "FORM",
    "name": "Flame Armour",
    "aura": "FLAME",
+   "form_name": "Spirit Dive: Salamander",
    "armour_pages": {
     "flame_armour": 0
    },
@@ -64,6 +65,7 @@
    "kind": "FORM",
    "name": "Valkyrie Armour",
    "aura": "WATER",
+   "form_name": "Spirit Dive: Undine",
    "armour_pages": {
     "valkyrie_dress": 1,
     "scale_mail": 0
@@ -113,6 +115,7 @@
    "kind": "FORM",
    "name": "Spirit of Zephyr",
    "aura": "",
+   "form_name": "Spirit Dive: Sylph",
    "armour_pages": {},
    "form_pages": [
     "spirit_dive"
@@ -141,6 +144,7 @@
    "kind": "FORM",
    "name": "Gnome Plate",
    "aura": "WIKI",
+   "form_name": "Spirit Dive: the earth spirit",
    "form_aura": true,
    "armour_pages": {
     "earth_armor": 100

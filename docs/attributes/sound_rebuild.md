@@ -74,3 +74,7 @@ New: `book/SoundBook`, `SoundResonance`; `prop/SoundRebuildProps`; `client/aura/
 No game run. Verified by type check (negative control), JUnit of the pure rules (`MagicRebuildRulesTest`), geo checks, the preview tools. Not seen in the real game: light and blending of the
 armour, how the speaker stacks sit on slopes, the jamming against real Tensura ultimate skills (the logic is `Nullification`'s, unchanged), network timing. The Tensura silence effect is
 looked up by id through `EnergyBridge.effect` and does nothing if Tensura has no effect of that id.
+
+## 1.99.0 armour policy
+
+Sound Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUND_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

@@ -68,3 +68,7 @@ All damage through `GrimoireBook.hurt` (balance law). Lang: `tools/lang/gravity_
 * The sword's orientation at launch (pitch from the aim point) and the bolt's wall stop are unplayed; the prop and the bolt follow the same path but are separate objects.
 * The regalia is about 190 cubes (about 8 600 vertices with glow): above the preview's soft budget note.
 * Canon: no wiki access; see above.
+
+## 1.99.0 armour policy
+
+Gravity Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `GRAVITY_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

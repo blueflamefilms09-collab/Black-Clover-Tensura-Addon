@@ -28,7 +28,7 @@ import java.util.List;
 /** Dark Magic (Yami). */
 public class DarkBook extends GrimoireBook {
     // 0.28: rebuilt after the wiki (Yami Sukehiro); page ids kept so unlocks and mastery carry over, new spells appended
-    // 1.93.0 (the Dark rebuild): the nine pages keep their ids, order, names and cost tiers and are re-implemented in DarkArts (numbers kept, new bodies and VFX, the Dark armour for 5 s per cast);
+    // 1.93.0 (the Dark rebuild): the nine pages keep their ids, order, names and cost tiers and are re-implemented in DarkArts (numbers kept, new bodies and VFX; 1.99.0: no cast puts the Dark armour on, only Dark Cloaked Guard does, book.ArmourPolicy);
     // three pages are appended. CanonSpells and the old static methods below stay.
     private final List<BookPage> pages = List.of(
             BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", DarkArts::avidyaSlash),

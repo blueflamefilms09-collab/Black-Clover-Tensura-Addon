@@ -297,6 +297,38 @@ class ArmourPolicyTest {
     }
 
     @Test
+    void aSpellOfAWornArmoursMagicBorrowsHalfOfItsAttackBonusAndNothingElseDoes() {
+        assertEquals(1f, ArmourRules.spellBoost(0f), 1e-6);
+        assertEquals(1.04f, ArmourRules.spellBoost(0.08f), 1e-6);
+        assertEquals(1f, ArmourRules.spellBoost(-0.5f), 1e-6, "never a penalty");
+    }
+
+    @Test
+    void devilUnionHasAStrictLimitAndAnAftermathThatBlocksTheNextUnion() {
+        long limit = ArmourRules.devilLimitTicks(ArmourRules.DEVIL_LIMIT_SECONDS);
+        assertEquals(6000L, limit, "five minutes");
+        assertEquals(36000L, ArmourRules.devilAftermathTicks(ArmourRules.DEVIL_AFTERMATH_SECONDS), "thirty minutes");
+        assertFalse(ArmourRules.devilExpired(0, 100000, limit), "a union that is not running never expires");
+        assertFalse(ArmourRules.devilExpired(1000, 1000 + limit - 1, limit));
+        assertTrue(ArmourRules.devilExpired(1000, 1000 + limit, limit));
+        assertTrue(ArmourRules.devilBlocked(5000, 4999));
+        assertFalse(ArmourRules.devilBlocked(5000, 5000));
+        assertFalse(ArmourRules.devilBlocked(0, 1), "no aftermath, no block");
+        assertEquals(400L, ArmourRules.devilLimitTicks(1), "a config below twenty seconds still gives the union twenty seconds");
+        assertEquals(0L, ArmourRules.devilAftermathTicks(0), "an aftermath of 0 switches the price off");
+    }
+
+    @Test
+    void theAftermathIsNeverAHungerEffect() throws IOException {
+        String src = Files.readString(BOOKS.resolve("DevilFormLimit.java"), StandardCharsets.UTF_8);
+        assertFalse(src.contains("HUNGER") || src.contains("getFoodData") || src.contains("causeFoodExhaustion"), "the global hunger ban: the aftermath must not touch the food bar");
+        for (String f : List.of("ArmourState.java", "ArmourCast.java", "SpiritDiveForm.java")) {
+            String s = Files.readString(BOOKS.resolve(f), StandardCharsets.UTF_8);
+            assertFalse(s.contains("HUNGER") || s.contains("getFoodData") || s.contains("causeFoodExhaustion") || s.contains("setFoodLevel"), f + " must not touch the food bar");
+        }
+    }
+
+    @Test
     void theBonusNumbersAreSmallEnoughToBalance() throws IOException {
         for (ArmourPolicy.Entry e : policy().entries().values()) {
             if (e.kind() == ArmourPolicy.Kind.NONE) continue;

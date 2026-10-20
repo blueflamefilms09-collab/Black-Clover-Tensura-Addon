@@ -38,3 +38,7 @@ FX1: charge spiral facing the shot, a drill of four spiral discs turning against
 
 ## Not verified
 Nothing was run in a game; previews are software re-implementations over stubs. The wiki could not be read. The funnel ignores terrain (it walks at its spawn height); pull strengths and the vertex cost of the rings are untested in play.
+
+## 1.99.0 armour policy
+
+Vortex Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `VORTEX_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

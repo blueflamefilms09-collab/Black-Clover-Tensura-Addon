@@ -81,3 +81,7 @@ New: `book/ModificationBook.java`, `ModificationArts.java`, `ModificationRules.j
 * Needles and the Frame's auto-needles that miss are only a visual prop flying on; the theatre's tendrils walk inward by the data the spell stores in the prop's server-side data, which was not run. The theatre's doors are two fixed directions (0 and 180 degrees from the aimed centre), not floor-aware as the boss's are.
 * The drag, the thread's pull and the shove were not felt; the numbers are the author's.
 * The paper-thin parts of the Frame (needles, scalpels, claws) are 0.4 to 0.8 px boxes and may flicker at distance.
+
+## 1.99.0 armour policy
+
+Modification Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `MODIFICATION_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).

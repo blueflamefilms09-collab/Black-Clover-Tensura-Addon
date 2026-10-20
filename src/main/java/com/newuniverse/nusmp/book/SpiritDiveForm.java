@@ -60,6 +60,26 @@ public final class SpiritDiveForm {
     }
 
     /**
+     * The form was ended from outside the dive (the wearer died, was knocked out, lost the book): the dive itself ends with it, so its renewal can not bring the form back and the
+     * overlay goes. Called by {@link ArmourState} when a form ends; it never starts the spirit lock (that belongs to a dive that was left on purpose or ran dry).
+     */
+    static void stop(ServerPlayer p, String magic) {
+        try {
+            com.newuniverse.nusmp.blackclover.MagicType m = com.newuniverse.nusmp.blackclover.MagicType.lookup(magic);
+            GrimoireBook book = m == null ? null : com.newuniverse.nusmp.skill.NUSkills.bookFor(m);
+            if (book == null) return;
+            long now = p.level().getGameTime();
+            io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p).getSkill(book.getRegistryName()).ifPresent(i -> {
+                if (now < i.getOrCreateTag().getLong("DiveUntil")) i.getOrCreateTag().putLong("DiveUntil", now);
+            });
+            ModeArmor.Mode overlay = book.diveArmor();
+            if (overlay != null) ModeArmor.stop(p, overlay);
+        } catch (RuntimeException | LinkageError ex) {
+            org.slf4j.LoggerFactory.getLogger("nusmp").warn("[nusmp] spirit dive: could not end the dive of {}", magic, ex);
+        }
+    }
+
+    /**
      * Once a second while the dive holds (its upkeep was paid): the ambient intake, and the renewal of the dive and of its overlay. Returns nothing; the caller already paid the upkeep.
      */
     public static void second(ServerPlayer p, GrimoireBook b, ManasSkillInstance i, long now) {

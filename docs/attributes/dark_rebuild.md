@@ -93,3 +93,7 @@ Edited (additions only): `book/DarkBook.java` (the page list and the lifesteal h
 * Nothing ran in a game; preview tools only (equip animation, forge / shatter, slim arms, budgets). Real translucency sorting of the black smoke and the additive violet on bright terrain are unseen.
 * Balance not play-tested. Black Hole's per-tick spell removal, the guard's lifesteal and the collapse need a real server to confirm.
 * Self-test `magic.dark_rebuild` never ran in a real server.
+
+## 1.99.0 armour policy
+
+Dark Magic is policy kind TOGGLE (Dark Cloaked). The armour is put on **only** by `dark_cloak` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).
