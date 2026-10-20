@@ -93,7 +93,7 @@ class ManaZoneWiringTest {
             assertTrue(i > at, s + " is appended in order after MUCUS_FX3");
             at = i;
         }
-        assertTrue(shapes.indexOf("GRAND_ZONE_ENV;") > 0, "the enum ends with the new shapes");
+        assertTrue(shapes.indexOf("GRAND_ZONE_ENV;") > 0 || shapes.indexOf("GRAND_ZONE_ENV,") > 0, "the enum ends with the new shapes (1.102.0: later releases append after them, e.g. UPGRADE_SIGNATURE)");
         assertTrue(src("vfx/client/VfxManager.java").contains("new com.newuniverse.nusmp.vfx.client.layer.ManaZoneLayer()"));
         assertTrue(src("NUSMP.java").contains("ManaZoneBoot.init(modEventBus, modContainer)"));
         assertTrue(src("multiverse/MultiverseCommands.java").contains("GrandZoneCommands.build()"));
