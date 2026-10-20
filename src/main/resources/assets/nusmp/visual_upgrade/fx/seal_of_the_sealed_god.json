@@ -1,0 +1,172 @@
+{
+ "id": "seal_of_the_sealed_god",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.seal_of_the_sealed_god",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "sealed god void",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "sealed_god",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "outer seal ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_ring_1",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "second seal ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_ring_2",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "third seal ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_ring_3",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "broken seal ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_ring_broken",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "anchor chains",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "anchor_chains",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shackle rings",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "shackle_rings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tomb smoke",
+   "kind": "geometry",
+   "type": "distortion",
+   "group": "tomb_smoke",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seal sigil",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_sigil",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "counter sigil",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "seal_sigil_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tomb ash",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "dust",
+   "count": 2,
+   "every": 3,
+   "radius": 0.55,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "6A3A9A"
+  },
+  {
+   "name": "seal sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.6,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "D8A8FF"
+  },
+  {
+   "name": "god glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 8,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

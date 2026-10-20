@@ -1,0 +1,157 @@
+{
+ "id": "the_reality_stone",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.the_reality_stone",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "aether heart",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "aether_heart",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "aether core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "aether_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tendril a",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "tendril_a",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tendril b",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "tendril_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tendril c",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "tendril_c",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "liquid ribbons",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "liquid_ribbons",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far ribbons",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "liquid_ribbons_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "droplets",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "droplets",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "reality distortion",
+   "kind": "geometry",
+   "type": "distortion",
+   "group": "distortion",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "aether motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "dust",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E03A3A"
+  },
+  {
+   "name": "rewrite glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 8,
+   "radius": 0.55,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

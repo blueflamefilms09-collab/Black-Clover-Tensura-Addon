@@ -69,6 +69,11 @@ public final class HandTransforms {
 
         public Fit fit() { return fit; }
 
+        /** The same style with another object size (the longest side in blocks); the visual upgrade models ask for their own. */
+        public Style withSize(float size) {
+            return new Style(name, new Fit(size, fit.hx(), fit.hy(), fit.hz(), fit.prx(), fit.pry(), fit.prz(), fit.sway(), fit.only()), xf);
+        }
+
         /** The display transform of a context: never null (a missing one is the identity). */
         public Xf xf(Ctx c) { return xf[c.ordinal()] == null ? Xf.IDENTITY : xf[c.ordinal()]; }
 

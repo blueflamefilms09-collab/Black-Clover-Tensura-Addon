@@ -11,6 +11,7 @@ package com.newuniverse.nusmp.client.relics.worn.lib;
  *   <li>SWAY: rock about the front axis, {@code a} degrees at {@code b} radians a tick, phase {@code c}.</li>
  *   <li>PULSE: grow and shrink by the fraction {@code a} at {@code b} radians a tick, phase {@code c}.</li>
  *   <li>WAVE: no transform; the draw loop bends each vertex sideways ({@link #waveOffset}).</li>
+ *   <li>TUMBLE (visual upgrade): turn about x by {@code a}, about z by {@code b} and about y by {@code c} degrees a tick.</li>
  * </ul>
  */
 public final class WornAnim {
@@ -35,6 +36,11 @@ public final class WornAnim {
             case SWING -> out.rx = (g.a() * Math.min(1f, Math.max(0f, limb)) + g.b() * (float) Math.sin(age * 0.09f) + (crouching ? 4f : 0f)) * DEG;
             case SWAY -> out.rz = g.a() * (float) Math.sin(age * g.b() + g.c()) * DEG;
             case PULSE -> out.s = 1f + g.a() * (float) Math.sin(age * g.b() + g.c());
+            case TUMBLE -> {
+                out.rx = age * g.a() * DEG;
+                out.rz = age * g.b() * DEG;
+                out.ry = age * g.c() * DEG;
+            }
             default -> { }
         }
     }

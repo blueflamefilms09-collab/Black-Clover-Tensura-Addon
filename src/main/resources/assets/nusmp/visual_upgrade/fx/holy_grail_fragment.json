@@ -1,0 +1,192 @@
+{
+ "id": "holy_grail_fragment",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.holy_grail_fragment",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "wish light pooled in the cup",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "wish_light",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "pillar of light",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_pillar",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "angel wings",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "angel_wings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cup shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "cup_shards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far cup shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "cup_shards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wish orbs",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "wish_orbs",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "angel halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "angel_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold vines",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "gold_vines",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "drifting feathers",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "drifting_feathers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ground seal circle",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "ground_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "grail rays",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "grail_rays",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wish ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "wish_ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rising wish motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 2,
+   "every": 3,
+   "radius": 0.5,
+   "rise": 0.03,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "holy glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 4,
+   "radius": 0.6,
+   "rise": 0.015,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFF0A0"
+  },
+  {
+   "name": "falling gold",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.6,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E8D070"
+  }
+ ]
+}

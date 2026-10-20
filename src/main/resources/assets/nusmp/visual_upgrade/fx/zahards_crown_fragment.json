@@ -1,0 +1,172 @@
+{
+ "id": "zahards_crown_fragment",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.zahards_crown_fragment",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "grand plan",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "grand_plan",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tower floor 1",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "tower_floor_1",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tower floor 2",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "tower_floor_2",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tower floor 3",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "tower_floor_3",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tower floor 4",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "tower_floor_4",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "children",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "children",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far children",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "children_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "jewel pendants",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "jewel_pendants",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ivory mantle",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "ivory_mantle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "king seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "king_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "royal motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 2,
+   "every": 3,
+   "radius": 0.6,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold dust",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.6,
+   "rise": -0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFE8A0"
+  },
+  {
+   "name": "tower glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "D8C8F8"
+  }
+ ]
+}

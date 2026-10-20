@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.relics.worn.lib;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.client.relics.fx.FxQuality;
+import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornBudget;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import net.minecraft.client.model.HumanoidModel;
@@ -38,6 +39,11 @@ public final class WornLibDraw {
     private WornLibDraw() {}
 
     public static final ResourceLocation ATLAS = WornModels.rl("textures/relic_worn/atlas.png"), SHIMMER = WornModels.rl("textures/relic_worn/shimmer.png");
+    /** The shared soft-light texture of the visual upgrade's halo, light shaft and portal quads (HALO flag): assets/nusmp/textures/visual_upgrade/vu_fx.png. */
+    public static final ResourceLocation FX = WornModels.rl("textures/visual_upgrade/vu_fx.png");
+    /** Visual upgrade models: beyond 12 blocks the lod model is drawn, beyond 24 blocks the additive passes are skipped (squared distances). */
+    public static final double LOD_SQ = 12.0 * 12.0, ADDITIVE_SQ = 24.0 * 24.0;
+    private static final java.util.Map<String, ResourceLocation> TEX = new java.util.HashMap<>();
     private static final float PX = 1f / 16f, PUSH = 0.18f;
     private static final int FULL = LightTexture.FULL_BRIGHT, MAX_SETS = 24, POOL = 72;
 
@@ -187,6 +193,9 @@ public final class WornLibDraw {
             }
         }
 
+        // ---- the visual upgrade models: own skin, glow map, nebula and halo passes (a model with a `skin` record draws only here)
+        customPasses(buffers, used, light, age, limb, crouching, distSq, q);
+
         // ---- pass 3: the rim glow and the shimmer
         if (!shell) return;
         vc = buffers.getBuffer(RenderType.entityTranslucentEmissive(SHIMMER));
@@ -212,7 +221,10 @@ public final class WornLibDraw {
      * Draws an ensemble as an object (an armour item in the hand, on the ground or in a frame): the pieces at the rest pose of the player model, solid and emissive, no
      * shell pass. {@code pose} must already be scaled so that one unit is one model pixel and centred on the ensemble ({@link #itemFit}).
      */
-    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age) {
+    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age) { drawItem(e, pose, buffers, light, age, false); }
+
+    /** The same; {@code near} forces the full model and every additive pass (an object drawn in a GUI slot, where the pose has no distance in blocks). */
+    public static void drawItem(WornLibrary.Ensemble e, PoseStack pose, MultiBufferSource buffers, int light, float age, boolean near) {
         if (e == null || e.pieces.isEmpty()) return;
         int used = 0;
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(ATLAS));
@@ -236,6 +248,10 @@ public final class WornLibDraw {
         vc = buffers.getBuffer(RenderType.eyes(ATLAS));
         float hot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
         for (int u = 0; u < used; u++) if (SLOTS[u].mesh.emitQuads > 0) glow(vc, SLOTS[u], age, 0f, false, hot);
+        Matrix4f at = pose.last().pose();                                                // where the object stands relative to the camera: the lod and additive distances of a held object
+        double distSq = (double) at.m30() * at.m30() + (double) at.m31() * at.m31() + (double) at.m32() * at.m32();
+        if (near) distSq = 0.0;
+        customPasses(buffers, used, light, age, 0f, false, distSq, RelicFxOptions.quality());
     }
 
     /**
@@ -271,6 +287,7 @@ public final class WornLibDraw {
 
     private static void solid(VertexConsumer vc, Slot s, int light, float age, float limb, boolean crouching) {
         WornMesh m = s.mesh;
+        if (m.custom()) return;                                                          // drawn by customPasses with its own skin
         for (int g = 0; g < m.groups.length; g++) {
             int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
             if (q0 == q1) continue;
@@ -287,6 +304,7 @@ public final class WornLibDraw {
 
     private static void glow(VertexConsumer vc, Slot s, float age, float limb, boolean crouching, float hot) {
         WornMesh m = s.mesh;
+        if (m.custom()) return;
         for (int g = 0; g < m.groups.length; g++) {
             int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
             if (q0 == q1) continue;
@@ -333,6 +351,133 @@ public final class WornLibDraw {
                 }
             }
         }
+    }
+
+    // ================================================================ the visual upgrade passes
+    private static ResourceLocation tex(String path) {
+        ResourceLocation r = TEX.get(path);
+        if (r == null) {
+            r = WornModels.rl("textures/" + path);
+            TEX.put(path, r);
+        }
+        return r;
+    }
+
+    /** Forgets the resolved texture locations (a resource reload). */
+    public static void clearCustom() { TEX.clear(); }
+
+    /**
+     * The models that carry their own skin (a visual upgrade model), drawn in up to four passes over the first {@code used} pieces: (1) the skin, lit, no palette tint; (2) the glow
+     * map, additive, pulsing; (3) the starfield / nebula of the STAR quads, additive and scrolling; (4) the HALO quads (rings, light shafts, portals) over the shared fx texture,
+     * tinted by their colour slot and breathing. Beyond {@link #LOD_SQ} the model's lod is drawn, beyond {@link #ADDITIVE_SQ} only the skin pass runs, and with the low quality option
+     * the nebula and halo passes are left out. Nothing is allocated: the scratch matrices and vectors of the other passes are reused.
+     */
+    private static void customPasses(MultiBufferSource buffers, int used, int light, float age, float limb, boolean crouching, double distSq, FxQuality q) {
+        boolean any = false;
+        for (int u = 0; u < used; u++) if (SLOTS[u].mesh.custom()) { any = true; break; }
+        if (!any) return;
+        boolean far = distSq > LOD_SQ, additive = distSq <= ADDITIVE_SQ;
+        boolean rich = additive && q != FxQuality.LOW;
+        for (int u = 0; u < used; u++) {
+            Slot s = SLOTS[u];
+            if (!s.mesh.custom()) continue;
+            WornMesh m = far ? s.mesh.lod() : s.mesh;
+            skinPass(buffers.getBuffer(RenderType.entityCutoutNoCull(tex(m.skin))), s, m, light, age, limb, crouching);
+        }
+        if (!additive) return;
+        float hot = 0.80f + 0.20f * (float) Math.sin(age * 0.14f);
+        for (int u = 0; u < used; u++) {
+            Slot s = SLOTS[u];
+            if (!s.mesh.custom()) continue;
+            WornMesh m = far ? s.mesh.lod() : s.mesh;
+            if (m.glowTex != null && m.glowMapQuads > 0) glowMapPass(buffers.getBuffer(RenderType.eyes(tex(m.glowTex))), s, m, age, limb, crouching, hot);
+        }
+        if (!rich) return;
+        for (int u = 0; u < used; u++) {
+            Slot s = SLOTS[u];
+            if (!s.mesh.custom()) continue;
+            WornMesh m = far ? s.mesh.lod() : s.mesh;
+            if (m.starTex != null && m.starQuads > 0) starPass(buffers.getBuffer(RenderType.eyes(tex(m.starTex))), s, m, age, limb, crouching);
+        }
+        for (int u = 0; u < used; u++) {
+            Slot s = SLOTS[u];
+            if (!s.mesh.custom()) continue;
+            WornMesh m = far ? s.mesh.lod() : s.mesh;
+            if (m.haloQuads > 0) haloPass(buffers.getBuffer(RenderType.eyes(FX)), s, m, age, limb, crouching);
+        }
+    }
+
+    private static void skinPass(VertexConsumer vc, Slot s, WornMesh m, int light, float age, float limb, boolean crouching) {
+        for (int g = 0; g < m.groups.length; g++) {
+            int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
+            if (q0 == q1) continue;
+            WornMesh.Group gr = m.groups[g];
+            setup(s, gr, age, limb, crouching);
+            boolean w = wave(gr);
+            for (int i = q0; i < q1; i++) {
+                if ((m.flags[i] & (WornMesh.STAR | WornMesh.HALO)) != 0) continue;
+                for (int k = 0; k < 4; k++) vertexUv(vc, m, i, k, 255, 255, 255, 255, light, w ? gr : null, age, 0f, 0f);
+            }
+        }
+    }
+
+    private static void glowMapPass(VertexConsumer vc, Slot s, WornMesh m, float age, float limb, boolean crouching, float hot) {
+        for (int g = 0; g < m.groups.length; g++) {
+            int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
+            if (q0 == q1) continue;
+            WornMesh.Group gr = m.groups[g];
+            setup(s, gr, age, limb, crouching);
+            boolean w = wave(gr);
+            for (int i = q0; i < q1; i++) {
+                int f = m.flags[i];
+                if ((f & WornMesh.GLOWMAP) == 0) continue;
+                int c = Math.min(255, (int) (255f * ((f & WornMesh.HOT) != 0 ? hot : 0.92f)));
+                for (int j = 0; j < 4; j++) vertexUv(vc, m, i, WornMesh.corner(s.mirror, j), c, c, c, 255, FULL, w ? gr : null, age, 0f, 0f);
+            }
+        }
+    }
+
+    private static void starPass(VertexConsumer vc, Slot s, WornMesh m, float age, float limb, boolean crouching) {
+        float du = age * 0.0021f, dv = age * 0.0013f;
+        for (int g = 0; g < m.groups.length; g++) {
+            int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
+            if (q0 == q1) continue;
+            WornMesh.Group gr = m.groups[g];
+            setup(s, gr, age, limb, crouching);
+            boolean w = wave(gr);
+            for (int i = q0; i < q1; i++) {
+                if ((m.flags[i] & WornMesh.STAR) == 0) continue;
+                for (int j = 0; j < 4; j++) vertexUv(vc, m, i, WornMesh.corner(s.mirror, j), 255, 255, 255, 255, FULL, w ? gr : null, age, du, dv);
+            }
+        }
+    }
+
+    private static void haloPass(VertexConsumer vc, Slot s, WornMesh m, float age, float limb, boolean crouching) {
+        for (int g = 0; g < m.groups.length; g++) {
+            int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
+            if (q0 == q1) continue;
+            WornMesh.Group gr = m.groups[g];
+            setup(s, gr, age, limb, crouching);
+            boolean w = wave(gr);
+            float breath = 0.78f + 0.22f * (float) Math.sin(age * 0.11f + g * 1.3f);
+            for (int i = q0; i < q1; i++) {
+                if ((m.flags[i] & WornMesh.HALO) == 0) continue;
+                int c = s.colors[m.slot[i]];
+                int r = Math.min(255, (int) ((c >> 16 & 255) * breath)), gg = Math.min(255, (int) ((c >> 8 & 255) * breath)), b = Math.min(255, (int) ((c & 255) * breath));
+                for (int j = 0; j < 4; j++) vertexUv(vc, m, i, WornMesh.corner(s.mirror, j), r, gg, b, 255, FULL, w ? gr : null, age, 0f, 0f);
+            }
+        }
+    }
+
+    /** {@link #vertex} with an offset added to the UV (the scrolling nebula). */
+    private static void vertexUv(VertexConsumer vc, WornMesh m, int i, int k, int r, int g, int b, int a, int light, WornMesh.Group wave, float age, float du, float dv) {
+        int o = i * 12 + k * 3;
+        float x = m.pos[o], y = m.pos[o + 1], z = m.pos[o + 2];
+        if (wave != null) z += WornAnim.waveOffset(wave, y, age);
+        SM.transformPosition(x, y, z, V);
+        SN.transform(m.nrm[o], m.nrm[o + 1], m.nrm[o + 2], NV).normalize();
+        vc.addVertex(V.x, V.y, V.z).setColor(r, g, b, a).setUv(m.uv[i * 8 + k * 2] + du, m.uv[i * 8 + k * 2 + 1] + dv)
+                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(NV.x, NV.y, NV.z);
     }
 
     /** One vertex of quad {@code i}, corner {@code k}, through the scratch matrices. */

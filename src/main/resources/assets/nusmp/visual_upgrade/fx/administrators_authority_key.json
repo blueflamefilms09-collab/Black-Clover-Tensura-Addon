@@ -1,0 +1,126 @@
+{
+ "id": "administrators_authority_key",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.administrators_authority_key",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "authority ring",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "authority_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "root core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "root_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "system panels",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "system_panels",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wireframe",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "wireframe",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "permission blocks",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "permission_blocks",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "command seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "command_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "data motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 4,
+   "radius": 0.45,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "command glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "electric_spark",
+   "count": 1,
+   "every": 9,
+   "radius": 0.5,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

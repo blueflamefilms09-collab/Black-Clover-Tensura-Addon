@@ -30,6 +30,7 @@ public final class RelicSystem {
         RelicCatalog.hooks();
         GradeDamageSelfTests.register();                        // the self-test relic.grade_damage (every relic weapon's damage is inside its grade range)
         RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
+        com.newuniverse.nusmp.relics.vu.VuSelfTests.register();       // the self-test visual.charms_genesis_worn (the upgraded charms, gauntlet, crowns and crest: models, textures, fx, act effects, fallback)
         WornSync.register(gameBus);                             // 1.99.0: the server tells every client what a wearer carries outside the vanilla equipment (Curios, a mob's pack)
         WornRender2SelfTests.register();                        // the self-test relic.worn_render2 (the plan, the sync codec, the Curios probe)
         RelicPowerSelfTests.register();                         // 1.104.0: the self-test relic.attune_lock (an unattuned relic deals a fifth of its damage)

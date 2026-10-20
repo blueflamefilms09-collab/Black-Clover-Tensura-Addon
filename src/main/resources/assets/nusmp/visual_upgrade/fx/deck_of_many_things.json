@@ -1,0 +1,107 @@
+{
+ "id": "deck_of_many_things",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.deck_of_many_things",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "card fan",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "card_fan",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fate cards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "fate_cards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far fate cards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "fate_cards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "starry sky",
+   "kind": "geometry",
+   "type": "starfield",
+   "group": "fate_sky",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fate seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "fate_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold dust",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "dust",
+   "count": 1,
+   "every": 4,
+   "radius": 0.45,
+   "rise": -0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFD27A"
+  },
+  {
+   "name": "fate glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 8,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

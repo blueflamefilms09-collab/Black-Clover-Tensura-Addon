@@ -1,0 +1,137 @@
+{
+ "id": "the_soul_stone",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.the_soul_stone",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "soul gem",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "soul_gem",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "bone hand",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "bone_hand",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "orbiting souls",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "souls",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far souls",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "souls_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul wisps",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "soul_wisps",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul wisps b",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "soul_wisps_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul smoke",
+   "kind": "geometry",
+   "type": "distortion",
+   "group": "soul_smoke",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul fire",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "soul_fire_flame",
+   "count": 1,
+   "every": 5,
+   "radius": 0.4,
+   "rise": 0.02,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ghost glints",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FF8A2A"
+  }
+ ]
+}

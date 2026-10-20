@@ -1,0 +1,117 @@
+{
+ "id": "the_power_stone",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.the_power_stone",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "raw power core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "power_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "crystal burst",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "shatter_crown",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rock chunks",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "rock_chunks",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far debris",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "rock_chunks_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lightning arcs",
+   "kind": "geometry",
+   "type": "energy_arcs",
+   "group": "lightning",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shock ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "shock_ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "power embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "dust",
+   "count": 2,
+   "every": 3,
+   "radius": 0.5,
+   "rise": 0.02,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "A04AF0"
+  },
+  {
+   "name": "arc sparks",
+   "kind": "particle",
+   "type": "arcs",
+   "particle": "electric_spark",
+   "count": 1,
+   "every": 6,
+   "radius": 0.6,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

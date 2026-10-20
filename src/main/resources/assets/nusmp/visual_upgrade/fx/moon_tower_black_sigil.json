@@ -1,0 +1,107 @@
+{
+ "id": "moon_tower_black_sigil",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.moon_tower_black_sigil",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "void disc",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "void_disc",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "moon phases",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "moon_phases",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shadow flames",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "shadow_flames",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sigil seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "sigil_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "counter seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "sigil_seal_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shadow motes",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "dust",
+   "count": 1,
+   "every": 4,
+   "radius": 0.55,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "8A6AE8"
+  },
+  {
+   "name": "unseen glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "witch",
+   "count": 1,
+   "every": 9,
+   "radius": 0.5,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

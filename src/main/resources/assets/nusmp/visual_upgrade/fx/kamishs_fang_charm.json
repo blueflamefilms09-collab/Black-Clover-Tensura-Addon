@@ -1,0 +1,111 @@
+{
+ "id": "kamishs_fang_charm",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.kamishs_fang_charm",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "dragon heart fire",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "heart_fire",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "scale shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "scale_shards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rising embers",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "rising_embers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fire ring",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "fire_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "flame",
+   "count": 1,
+   "every": 4,
+   "radius": 0.4,
+   "rise": 0.03,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ash",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.02,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FF5A2A"
+  },
+  {
+   "name": "heat sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "lava",
+   "count": 1,
+   "every": 12,
+   "radius": 0.4,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

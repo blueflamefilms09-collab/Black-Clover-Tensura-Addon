@@ -1,0 +1,140 @@
+{
+ "id": "the_infinity_gauntlet",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.the_infinity_gauntlet",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "stone glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "stone_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "stone motes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "stone_motes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "snap arcs",
+   "kind": "geometry",
+   "type": "energy_arcs",
+   "group": "snap_arcs",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "palm vortex",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "palm_vortex",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wrist ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "wrist_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wrist ring b",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "wrist_ring_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "finger flex",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "finger_flex",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "stone embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "dust",
+   "count": 2,
+   "every": 3,
+   "radius": 0.4,
+   "rise": 0.015,
+   "views": [
+    "hand"
+   ],
+   "color": "FFD27A"
+  },
+  {
+   "name": "stone sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "electric_spark",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "infinity glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 5,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

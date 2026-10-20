@@ -1,0 +1,127 @@
+{
+ "id": "the_time_stone_or_the_eye_of_agamotto",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.the_time_stone_or_the_eye_of_agamotto",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "eye of agamotto",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "eye",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "outer dial",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "dial_outer_turn",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "middle dial",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "dial_mid",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "inner dial",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "dial_inner",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "eyelids",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "eyelid_upper",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sun rays",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "sun_rays",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "time rings",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "time_rings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "future motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.008,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "green glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 7,
+   "radius": 0.55,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "3AE07A"
+  }
+ ]
+}

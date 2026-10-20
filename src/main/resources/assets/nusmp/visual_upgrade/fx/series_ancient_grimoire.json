@@ -1,0 +1,127 @@
+{
+ "id": "series_ancient_grimoire",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.series_ancient_grimoire",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "mana column",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "mana_column",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fluttering pages left",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "page_flutter_l",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fluttering pages right",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "page_flutter_r",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "floating runes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "floating_runes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "spell circle",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "spell_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "spell circle b",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "spell_circle_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "silver vines",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "silver_vines",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "mana motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.016,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "elven glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.55,
+   "rise": 0.008,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "D8B8FF"
+  }
+ ]
+}

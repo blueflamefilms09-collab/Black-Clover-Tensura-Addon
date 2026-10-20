@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.relics.worn.lib;
 import com.newuniverse.nusmp.client.relics.fx.FxTheme;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
+import com.newuniverse.nusmp.client.relics.vu.VuModels;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 
@@ -77,8 +78,10 @@ public final class WornLibrary {
                     default -> { }
                 }
                 float[] pos = r.mesh().pos;
+                byte[] flags = r.mesh().flags;
                 int n = r.mesh().quads * 12;
                 for (int i = 0; i + 2 < n; i += 3) {
+                    if ((flags[i / 12] & WornMesh.HALO) != 0) continue;                      // the soft light shapes of a visual upgrade model (rings, flares, shafts) do not size the object
                     float x = (r.mirror() ? -pos[i] : pos[i]) + ox, y = pos[i + 1] + oy, z = pos[i + 2];
                     b[0] = Math.min(b[0], x); b[3] = Math.max(b[3], x);
                     b[1] = Math.min(b[1], y); b[4] = Math.max(b[4], y);
@@ -90,14 +93,26 @@ public final class WornLibrary {
             return b;
         }
 
+        /** Does any of the models carry its own skin (a visual upgrade model)? */
+        public boolean custom() {
+            for (Resolved r : pieces) if (r.mesh().custom()) return true;
+            return false;
+        }
+
         /** Vertices the extras of a plan cost for this relic: the shell pass and the procedural motes, rings and halo. */
         public int extraVerts(WornFxPlan plan) { return (plan.usesShell() ? shellVerts : 0) + plan.fxVertices(); }
     }
 
     private static final Map<String, Optional<Ensemble>> CACHE = new HashMap<>();
+    private static int seenGeneration = -1;
 
     /** The models of a relic, or null if the library has none for it (the layer then draws the old plain look). */
     public static Ensemble of(RelicDef def) {
+        int gen = VuModels.generation();                                               // the visual upgrade switched on or off, or the resources reloaded: build again
+        if (gen != seenGeneration) {
+            CACHE.clear();
+            seenGeneration = gen;
+        }
         Optional<Ensemble> e = CACHE.get(def.id());
         if (e == null) {
             Ensemble built = build(def);
@@ -110,7 +125,8 @@ public final class WornLibrary {
 
     private static Ensemble build(RelicDef def) {
         WornCatalog cat = WornModels.catalog();
-        List<WornCatalog.Piece> wanted = cat.piecesFor(def.id(), def.slot().name(), def.look().name());
+        List<WornCatalog.Piece> wanted = VuModels.wornPieces(def.id());                // the visual upgrade's override table first (null: not upgraded or switched off)
+        if (wanted == null) wanted = cat.piecesFor(def.id(), def.slot().name(), def.look().name());
         if (wanted.isEmpty()) return null;
         List<Resolved> out = new ArrayList<>(wanted.size());
         for (WornCatalog.Piece p : wanted) {

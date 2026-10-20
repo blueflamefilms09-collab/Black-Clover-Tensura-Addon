@@ -1,0 +1,2004 @@
+{
+ "slice": "charms_genesis_worn",
+ "what": "measured from the files of the visual upgrade (tools/visual_upgrade/charms_genesis_worn/report.py), same code as the baseline",
+ "weights": {
+  "mesh": 0.35,
+  "texture": 0.2,
+  "passes": 0.15,
+  "ambient": 0.2,
+  "animation": 0.1
+ },
+ "summary": {
+  "GOD": {
+   "items": 18,
+   "V_after_mean": 13.01,
+   "V_after_min": 7.15,
+   "V_without_texture_mean": 3.83,
+   "V_without_texture_min": 2.3,
+   "meeting_target": 18,
+   "target": 5.0
+  },
+  "GENESIS": {
+   "items": 9,
+   "V_after_mean": 34.79,
+   "V_after_min": 28.7,
+   "V_without_texture_mean": 4.65,
+   "V_without_texture_min": 3.17,
+   "meeting_target": 9,
+   "target": 20.0
+  }
+ },
+ "items": [
+  {
+   "id": "the_space_stone_or_the_tesseract",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 476,
+    "vertices": 1904,
+    "passes": 4,
+    "painted_texels": 199939,
+    "glow_texels": 30431,
+    "emissive_quads": 136,
+    "shell_quads": 0,
+    "star_quads": 24,
+    "halo_quads": 18,
+    "groups": 11,
+    "group_kinds": 4,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/the_space_stone_or_the_tesseract.png"
+    ],
+    "pieces_named": [
+     "vu/the_space_stone_or_the_tesseract"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 12
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 476,
+    "vertices": 1904,
+    "passes": 4,
+    "painted_texels": 199939,
+    "glow_texels": 30431,
+    "emissive_quads": 136,
+    "shell_quads": 0,
+    "star_quads": 24,
+    "halo_quads": 18,
+    "groups": 11,
+    "group_kinds": 4,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/the_space_stone_or_the_tesseract.png"
+    ],
+    "pieces_named": [
+     "vu/the_space_stone_or_the_tesseract_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 19
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.08,
+    "texture": 65.08,
+    "passes": 2.0,
+    "ambient": 4.43,
+    "animation": 11.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.77,
+   "V_after": 16.03,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.38,
+    "worn": 4.18
+   },
+   "texel_ratio": {
+    "hand": 48.8,
+    "worn": 97.6
+   }
+  },
+  {
+   "id": "the_mind_stone",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 568,
+    "vertices": 2272,
+    "passes": 4,
+    "painted_texels": 175902,
+    "glow_texels": 6188,
+    "emissive_quads": 48,
+    "shell_quads": 0,
+    "star_quads": 18,
+    "halo_quads": 14,
+    "groups": 8,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/the_mind_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_mind_stone"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 9
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 568,
+    "vertices": 2272,
+    "passes": 4,
+    "painted_texels": 175902,
+    "glow_texels": 6188,
+    "emissive_quads": 48,
+    "shell_quads": 0,
+    "star_quads": 18,
+    "halo_quads": 14,
+    "groups": 8,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/the_mind_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_mind_stone_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 16
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.9,
+    "texture": 57.26,
+    "passes": 2.0,
+    "ambient": 3.57,
+    "animation": 16.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.54,
+   "V_after": 15.08,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.04,
+    "worn": 4.98
+   },
+   "texel_ratio": {
+    "hand": 42.9,
+    "worn": 85.9
+   }
+  },
+  {
+   "id": "the_power_stone",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 438,
+    "vertices": 1752,
+    "passes": 4,
+    "painted_texels": 208772,
+    "glow_texels": 13289,
+    "emissive_quads": 125,
+    "shell_quads": 0,
+    "star_quads": 16,
+    "halo_quads": 20,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 10,
+    "skin_pngs": [
+     "visual_upgrade/the_power_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_power_stone"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 10
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 438,
+    "vertices": 1752,
+    "passes": 4,
+    "painted_texels": 208772,
+    "glow_texels": 13289,
+    "emissive_quads": 125,
+    "shell_quads": 0,
+    "star_quads": 16,
+    "halo_quads": 20,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 10,
+    "skin_pngs": [
+     "visual_upgrade/the_power_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_power_stone_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 17
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.47,
+    "texture": 81.55,
+    "passes": 2.0,
+    "ambient": 3.86,
+    "animation": 18.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.67,
+   "V_after": 20.05,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.82,
+    "worn": 3.84
+   },
+   "texel_ratio": {
+    "hand": 68.0,
+    "worn": 101.9
+   }
+  },
+  {
+   "id": "the_time_stone_or_the_eye_of_agamotto",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 536,
+    "vertices": 2144,
+    "passes": 4,
+    "painted_texels": 176864,
+    "glow_texels": 5974,
+    "emissive_quads": 54,
+    "shell_quads": 0,
+    "star_quads": 40,
+    "halo_quads": 14,
+    "groups": 11,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/the_time_stone_or_the_eye_of_agamotto.png"
+    ],
+    "pieces_named": [
+     "vu/the_time_stone_or_the_eye_of_agamotto"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 11
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 536,
+    "vertices": 2144,
+    "passes": 4,
+    "painted_texels": 176864,
+    "glow_texels": 5974,
+    "emissive_quads": 54,
+    "shell_quads": 0,
+    "star_quads": 40,
+    "halo_quads": 14,
+    "groups": 11,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/the_time_stone_or_the_eye_of_agamotto.png"
+    ],
+    "pieces_named": [
+     "vu/the_time_stone_or_the_eye_of_agamotto_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 18
+   },
+   "acts": null,
+   "components": {
+    "mesh": 1.61,
+    "texture": 57.57,
+    "passes": 2.0,
+    "ambient": 4.14,
+    "animation": 22.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.87,
+   "V_after": 15.41,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 0.97,
+    "worn": 4.7
+   },
+   "texel_ratio": {
+    "hand": 43.2,
+    "worn": 86.4
+   }
+  },
+  {
+   "id": "the_reality_stone",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 447,
+    "vertices": 1788,
+    "passes": 4,
+    "painted_texels": 200274,
+    "glow_texels": 158676,
+    "emissive_quads": 138,
+    "shell_quads": 0,
+    "star_quads": 73,
+    "halo_quads": 20,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/the_reality_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_reality_stone"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 14
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 447,
+    "vertices": 1788,
+    "passes": 4,
+    "painted_texels": 200274,
+    "glow_texels": 158676,
+    "emissive_quads": 138,
+    "shell_quads": 0,
+    "star_quads": 73,
+    "halo_quads": 20,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/the_reality_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_reality_stone_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 21
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.33,
+    "texture": 65.19,
+    "passes": 2.0,
+    "ambient": 5.0,
+    "animation": 13.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.27,
+   "V_after": 16.45,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.66,
+    "worn": 3.92
+   },
+   "texel_ratio": {
+    "hand": 48.9,
+    "worn": 97.8
+   }
+  },
+  {
+   "id": "the_soul_stone",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 456,
+    "vertices": 1824,
+    "passes": 4,
+    "painted_texels": 198064,
+    "glow_texels": 122140,
+    "emissive_quads": 144,
+    "shell_quads": 0,
+    "star_quads": 50,
+    "halo_quads": 20,
+    "groups": 10,
+    "group_kinds": 3,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/the_soul_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_soul_stone"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 12
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 456,
+    "vertices": 1824,
+    "passes": 4,
+    "painted_texels": 198064,
+    "glow_texels": 122140,
+    "emissive_quads": 144,
+    "shell_quads": 0,
+    "star_quads": 50,
+    "halo_quads": 20,
+    "groups": 10,
+    "group_kinds": 3,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/the_soul_stone.png"
+    ],
+    "pieces_named": [
+     "vu/the_soul_stone_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 19
+   },
+   "acts": null,
+   "components": {
+    "mesh": 3.59,
+    "texture": 77.37,
+    "passes": 2.0,
+    "ambient": 4.43,
+    "animation": 10.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.3,
+   "V_after": 18.92,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 3.26,
+    "worn": 4.0
+   },
+   "texel_ratio": {
+    "hand": 64.5,
+    "worn": 96.7
+   }
+  },
+  {
+   "id": "deck_of_many_things",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 536,
+    "vertices": 2144,
+    "passes": 4,
+    "painted_texels": 200609,
+    "glow_texels": 16480,
+    "emissive_quads": 24,
+    "shell_quads": 0,
+    "star_quads": 36,
+    "halo_quads": 12,
+    "groups": 8,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/deck_of_many_things.png"
+    ],
+    "pieces_named": [
+     "vu/deck_of_many_things"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 9
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 536,
+    "vertices": 2144,
+    "passes": 4,
+    "painted_texels": 200609,
+    "glow_texels": 16480,
+    "emissive_quads": 24,
+    "shell_quads": 0,
+    "star_quads": 36,
+    "halo_quads": 12,
+    "groups": 8,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/deck_of_many_things.png"
+    ],
+    "pieces_named": [
+     "vu/deck_of_many_things_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 16
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.81,
+    "texture": 48.98,
+    "passes": 2.0,
+    "ambient": 3.57,
+    "animation": 16.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.5,
+   "V_after": 13.39,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.0,
+    "worn": 4.7
+   },
+   "texel_ratio": {
+    "hand": 32.7,
+    "worn": 98.0
+   }
+  },
+  {
+   "id": "warrens_key",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 574,
+    "vertices": 2296,
+    "passes": 3,
+    "painted_texels": 167180,
+    "glow_texels": 2400,
+    "emissive_quads": 8,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 20,
+    "groups": 8,
+    "group_kinds": 3,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/warrens_key.png"
+    ],
+    "pieces_named": [
+     "vu/warrens_key"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 9
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 574,
+    "vertices": 2296,
+    "passes": 3,
+    "painted_texels": 167180,
+    "glow_texels": 2400,
+    "emissive_quads": 8,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 20,
+    "groups": 8,
+    "group_kinds": 3,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/warrens_key.png"
+    ],
+    "pieces_named": [
+     "vu/warrens_key_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 16
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.68,
+    "texture": 65.3,
+    "passes": 1.5,
+    "ambient": 3.57,
+    "animation": 16.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.35,
+   "V_after": 16.54,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.83,
+    "worn": 5.04
+   },
+   "texel_ratio": {
+    "hand": 54.4,
+    "worn": 81.6
+   }
+  },
+  {
+   "id": "rose_petal",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 563,
+    "vertices": 2252,
+    "passes": 4,
+    "painted_texels": 76202,
+    "glow_texels": 6278,
+    "emissive_quads": 27,
+    "shell_quads": 0,
+    "star_quads": 36,
+    "halo_quads": 14,
+    "groups": 10,
+    "group_kinds": 3,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/rose_petal.png"
+    ],
+    "pieces_named": [
+     "vu/rose_petal"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 11
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 563,
+    "vertices": 2252,
+    "passes": 4,
+    "painted_texels": 76202,
+    "glow_texels": 6278,
+    "emissive_quads": 27,
+    "shell_quads": 0,
+    "star_quads": 36,
+    "halo_quads": 14,
+    "groups": 10,
+    "group_kinds": 3,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/rose_petal.png"
+    ],
+    "pieces_named": [
+     "vu/rose_petal_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 18
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.84,
+    "texture": 29.77,
+    "passes": 2.0,
+    "ambient": 4.14,
+    "animation": 10.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.9,
+   "V_after": 9.08,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.0,
+    "worn": 4.94
+   },
+   "texel_ratio": {
+    "hand": 24.8,
+    "worn": 37.2
+   }
+  },
+  {
+   "id": "administrators_authority_key",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 456,
+    "vertices": 1824,
+    "passes": 4,
+    "painted_texels": 193843,
+    "glow_texels": 70973,
+    "emissive_quads": 145,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 16,
+    "groups": 10,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/administrators_authority_key.png"
+    ],
+    "pieces_named": [
+     "vu/administrators_authority_key"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 11
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 456,
+    "vertices": 1824,
+    "passes": 4,
+    "painted_texels": 193843,
+    "glow_texels": 70973,
+    "emissive_quads": 145,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 16,
+    "groups": 10,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/administrators_authority_key.png"
+    ],
+    "pieces_named": [
+     "vu/administrators_authority_key_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 18
+   },
+   "acts": null,
+   "components": {
+    "mesh": 1.96,
+    "texture": 31.55,
+    "passes": 1.33,
+    "ambient": 4.14,
+    "animation": 10.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.39,
+   "V_after": 9.02,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.96,
+    "worn": 1.96
+   },
+   "texel_ratio": {
+    "hand": 31.5,
+    "worn": 31.5
+   }
+  },
+  {
+   "id": "archivists_starbound_codex",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 414,
+    "vertices": 1656,
+    "passes": 4,
+    "painted_texels": 208035,
+    "glow_texels": 32142,
+    "emissive_quads": 104,
+    "shell_quads": 0,
+    "star_quads": 12,
+    "halo_quads": 14,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 10,
+    "skin_pngs": [
+     "visual_upgrade/archivists_starbound_codex.png"
+    ],
+    "pieces_named": [
+     "vu/archivists_starbound_codex"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 10
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 414,
+    "vertices": 1656,
+    "passes": 4,
+    "painted_texels": 208035,
+    "glow_texels": 32142,
+    "emissive_quads": 104,
+    "shell_quads": 0,
+    "star_quads": 12,
+    "halo_quads": 14,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 10,
+    "skin_pngs": [
+     "visual_upgrade/archivists_starbound_codex.png"
+    ],
+    "pieces_named": [
+     "vu/archivists_starbound_codex_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 17
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.52,
+    "texture": 29.02,
+    "passes": 1.33,
+    "ambient": 3.86,
+    "animation": 4.5
+   },
+   "V_before": 1.0,
+   "V_without_texture": 2.88,
+   "V_after": 8.11,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.52,
+    "worn": 2.52
+   },
+   "texel_ratio": {
+    "hand": 29.0,
+    "worn": 29.0
+   }
+  },
+  {
+   "id": "behelit_egg",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 586,
+    "vertices": 2344,
+    "passes": 4,
+    "painted_texels": 199137,
+    "glow_texels": 6354,
+    "emissive_quads": 32,
+    "shell_quads": 0,
+    "star_quads": 42,
+    "halo_quads": 18,
+    "groups": 10,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/behelit_egg.png"
+    ],
+    "pieces_named": [
+     "vu/behelit_egg"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 11
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 586,
+    "vertices": 2344,
+    "passes": 4,
+    "painted_texels": 199137,
+    "glow_texels": 6354,
+    "emissive_quads": 32,
+    "shell_quads": 0,
+    "star_quads": 42,
+    "halo_quads": 18,
+    "groups": 10,
+    "group_kinds": 4,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/behelit_egg.png"
+    ],
+    "pieces_named": [
+     "vu/behelit_egg_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 18
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.55,
+    "texture": 64.82,
+    "passes": 2.0,
+    "ambient": 4.14,
+    "animation": 10.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.78,
+   "V_after": 15.98,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.55,
+    "worn": 2.55
+   },
+   "texel_ratio": {
+    "hand": 64.8,
+    "worn": 64.8
+   }
+  },
+  {
+   "id": "kamishs_fang_charm",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 480,
+    "vertices": 1920,
+    "passes": 4,
+    "painted_texels": 161423,
+    "glow_texels": 74507,
+    "emissive_quads": 105,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 16,
+    "groups": 8,
+    "group_kinds": 3,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/kamishs_fang_charm.png"
+    ],
+    "pieces_named": [
+     "vu/kamishs_fang_charm"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 9
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 480,
+    "vertices": 1920,
+    "passes": 4,
+    "painted_texels": 161423,
+    "glow_texels": 74507,
+    "emissive_quads": 105,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 16,
+    "groups": 8,
+    "group_kinds": 3,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/kamishs_fang_charm.png"
+    ],
+    "pieces_named": [
+     "vu/kamishs_fang_charm_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 16
+   },
+   "acts": null,
+   "components": {
+    "mesh": 1.94,
+    "texture": 26.27,
+    "passes": 2.0,
+    "ambient": 3.57,
+    "animation": 2.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 2.37,
+   "V_after": 7.15,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.94,
+    "worn": 1.94
+   },
+   "texel_ratio": {
+    "hand": 26.3,
+    "worn": 26.3
+   }
+  },
+  {
+   "id": "moon_tower_black_sigil",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 392,
+    "vertices": 1568,
+    "passes": 4,
+    "painted_texels": 156310,
+    "glow_texels": 74791,
+    "emissive_quads": 152,
+    "shell_quads": 0,
+    "star_quads": 30,
+    "halo_quads": 14,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/moon_tower_black_sigil.png"
+    ],
+    "pieces_named": [
+     "vu/moon_tower_black_sigil"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 9
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 392,
+    "vertices": 1568,
+    "passes": 4,
+    "painted_texels": 156310,
+    "glow_texels": 74791,
+    "emissive_quads": 152,
+    "shell_quads": 0,
+    "star_quads": 30,
+    "halo_quads": 14,
+    "groups": 9,
+    "group_kinds": 4,
+    "own_layers": 9,
+    "skin_pngs": [
+     "visual_upgrade/moon_tower_black_sigil.png"
+    ],
+    "pieces_named": [
+     "vu/moon_tower_black_sigil_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 16
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.2,
+    "texture": 38.16,
+    "passes": 2.0,
+    "ambient": 3.57,
+    "animation": 9.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.36,
+   "V_after": 10.32,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.2,
+    "worn": 2.2
+   },
+   "texel_ratio": {
+    "hand": 38.2,
+    "worn": 38.2
+   }
+  },
+  {
+   "id": "orrery_of_drowned_hours",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 463,
+    "vertices": 1852,
+    "passes": 4,
+    "painted_texels": 199860,
+    "glow_texels": 39851,
+    "emissive_quads": 84,
+    "shell_quads": 0,
+    "star_quads": 32,
+    "halo_quads": 20,
+    "groups": 15,
+    "group_kinds": 4,
+    "own_layers": 16,
+    "skin_pngs": [
+     "visual_upgrade/orrery_of_drowned_hours.png"
+    ],
+    "pieces_named": [
+     "vu/orrery_of_drowned_hours"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 16
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 463,
+    "vertices": 1852,
+    "passes": 4,
+    "painted_texels": 199860,
+    "glow_texels": 39851,
+    "emissive_quads": 84,
+    "shell_quads": 0,
+    "star_quads": 32,
+    "halo_quads": 20,
+    "groups": 15,
+    "group_kinds": 4,
+    "own_layers": 16,
+    "skin_pngs": [
+     "visual_upgrade/orrery_of_drowned_hours.png"
+    ],
+    "pieces_named": [
+     "vu/orrery_of_drowned_hours_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 23
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.6,
+    "texture": 48.79,
+    "passes": 2.0,
+    "ambient": 5.57,
+    "animation": 3.75
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.37,
+   "V_after": 12.46,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.6,
+    "worn": 2.6
+   },
+   "texel_ratio": {
+    "hand": 48.8,
+    "worn": 48.8
+   }
+  },
+  {
+   "id": "pocket_watch_of_return",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 550,
+    "vertices": 2200,
+    "passes": 3,
+    "painted_texels": 181166,
+    "glow_texels": 208,
+    "emissive_quads": 48,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 18,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/pocket_watch_of_return.png"
+    ],
+    "pieces_named": [
+     "vu/pocket_watch_of_return"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 12
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 550,
+    "vertices": 2200,
+    "passes": 3,
+    "painted_texels": 181166,
+    "glow_texels": 208,
+    "emissive_quads": 48,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 18,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/pocket_watch_of_return.png"
+    ],
+    "pieces_named": [
+     "vu/pocket_watch_of_return_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 19
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.16,
+    "texture": 44.23,
+    "passes": 1.5,
+    "ambient": 4.43,
+    "animation": 14.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.08,
+   "V_after": 12.11,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.16,
+    "worn": 2.16
+   },
+   "texel_ratio": {
+    "hand": 44.2,
+    "worn": 44.2
+   }
+  },
+  {
+   "id": "series_ancient_grimoire",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 476,
+    "vertices": 1904,
+    "passes": 4,
+    "painted_texels": 210558,
+    "glow_texels": 65401,
+    "emissive_quads": 102,
+    "shell_quads": 0,
+    "star_quads": 24,
+    "halo_quads": 14,
+    "groups": 10,
+    "group_kinds": 5,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/series_ancient_grimoire.png"
+    ],
+    "pieces_named": [
+     "vu/series_ancient_grimoire"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 11
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 476,
+    "vertices": 1904,
+    "passes": 4,
+    "painted_texels": 210558,
+    "glow_texels": 65401,
+    "emissive_quads": 102,
+    "shell_quads": 0,
+    "star_quads": 24,
+    "halo_quads": 14,
+    "groups": 10,
+    "group_kinds": 5,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/series_ancient_grimoire.png"
+    ],
+    "pieces_named": [
+     "vu/series_ancient_grimoire_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 18
+   },
+   "acts": null,
+   "components": {
+    "mesh": 1.83,
+    "texture": 29.37,
+    "passes": 1.33,
+    "ambient": 4.14,
+    "animation": 1.67
+   },
+   "V_before": 1.0,
+   "V_without_texture": 2.3,
+   "V_after": 7.71,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 1.83,
+    "worn": 1.83
+   },
+   "texel_ratio": {
+    "hand": 29.4,
+    "worn": 29.4
+   }
+  },
+  {
+   "id": "vaultmakers_pocketwatch",
+   "grade": "GOD",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 539,
+    "vertices": 2156,
+    "passes": 3,
+    "painted_texels": 179781,
+    "glow_texels": 22529,
+    "emissive_quads": 69,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 18,
+    "groups": 12,
+    "group_kinds": 4,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/vaultmakers_pocketwatch.png"
+    ],
+    "pieces_named": [
+     "vu/vaultmakers_pocketwatch"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 12
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 539,
+    "vertices": 2156,
+    "passes": 3,
+    "painted_texels": 179781,
+    "glow_texels": 22529,
+    "emissive_quads": 69,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 18,
+    "groups": 12,
+    "group_kinds": 4,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/vaultmakers_pocketwatch.png"
+    ],
+    "pieces_named": [
+     "vu/vaultmakers_pocketwatch_worn"
+    ],
+    "generic_layers": 7,
+    "ambient_layers": 19
+   },
+   "acts": null,
+   "components": {
+    "mesh": 3.25,
+    "texture": 35.11,
+    "passes": 1.0,
+    "ambient": 4.43,
+    "animation": 12.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.22,
+   "V_after": 10.39,
+   "target": 5.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 3.25,
+    "worn": 3.25
+   },
+   "texel_ratio": {
+    "hand": 35.1,
+    "worn": 35.1
+   }
+  },
+  {
+   "id": "holy_grail_fragment",
+   "grade": "GENESIS",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 1248,
+    "vertices": 4992,
+    "passes": 4,
+    "painted_texels": 518828,
+    "glow_texels": 146095,
+    "emissive_quads": 238,
+    "shell_quads": 0,
+    "star_quads": 72,
+    "halo_quads": 20,
+    "groups": 15,
+    "group_kinds": 5,
+    "own_layers": 17,
+    "skin_pngs": [
+     "visual_upgrade/holy_grail_fragment.png"
+    ],
+    "pieces_named": [
+     "vu/holy_grail_fragment"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 17
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1248,
+    "vertices": 4992,
+    "passes": 4,
+    "painted_texels": 518828,
+    "glow_texels": 146095,
+    "emissive_quads": 238,
+    "shell_quads": 0,
+    "star_quads": 72,
+    "halo_quads": 20,
+    "groups": 15,
+    "group_kinds": 5,
+    "own_layers": 17,
+    "skin_pngs": [
+     "visual_upgrade/holy_grail_fragment.png"
+    ],
+    "pieces_named": [
+     "vu/holy_grail_fragment_worn"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 25
+   },
+   "acts": null,
+   "components": {
+    "mesh": 5.72,
+    "texture": 126.67,
+    "passes": 2.0,
+    "ambient": 5.25,
+    "animation": 15.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 6.07,
+   "V_after": 30.19,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 5.72,
+    "worn": 5.72
+   },
+   "texel_ratio": {
+    "hand": 126.7,
+    "worn": 126.7
+   }
+  },
+  {
+   "id": "philosophers_stone_shard",
+   "grade": "GENESIS",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 897,
+    "vertices": 3588,
+    "passes": 4,
+    "painted_texels": 540739,
+    "glow_texels": 175091,
+    "emissive_quads": 396,
+    "shell_quads": 0,
+    "star_quads": 54,
+    "halo_quads": 26,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/philosophers_stone_shard.png"
+    ],
+    "pieces_named": [
+     "vu/philosophers_stone_shard"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 14
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 897,
+    "vertices": 3588,
+    "passes": 4,
+    "painted_texels": 540739,
+    "glow_texels": 175091,
+    "emissive_quads": 396,
+    "shell_quads": 0,
+    "star_quads": 54,
+    "halo_quads": 26,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/philosophers_stone_shard.png"
+    ],
+    "pieces_named": [
+     "vu/philosophers_stone_shard_worn"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 22
+   },
+   "acts": null,
+   "components": {
+    "mesh": 4.82,
+    "texture": 132.02,
+    "passes": 2.0,
+    "ambient": 4.5,
+    "animation": 13.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 5.23,
+   "V_after": 30.59,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 4.82,
+    "worn": 4.82
+   },
+   "texel_ratio": {
+    "hand": 132.0,
+    "worn": 132.0
+   }
+  },
+  {
+   "id": "prison_realm_cube",
+   "grade": "GENESIS",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 1114,
+    "vertices": 4456,
+    "passes": 4,
+    "painted_texels": 508589,
+    "glow_texels": 39071,
+    "emissive_quads": 56,
+    "shell_quads": 0,
+    "star_quads": 180,
+    "halo_quads": 18,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/prison_realm_cube.png"
+    ],
+    "pieces_named": [
+     "vu/prison_realm_cube"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 14
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1114,
+    "vertices": 4456,
+    "passes": 4,
+    "painted_texels": 508589,
+    "glow_texels": 39071,
+    "emissive_quads": 56,
+    "shell_quads": 0,
+    "star_quads": 180,
+    "halo_quads": 18,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/prison_realm_cube.png"
+    ],
+    "pieces_named": [
+     "vu/prison_realm_cube_worn"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 22
+   },
+   "acts": null,
+   "components": {
+    "mesh": 5.63,
+    "texture": 124.17,
+    "passes": 2.0,
+    "ambient": 4.5,
+    "animation": 7.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.84,
+   "V_after": 28.7,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 5.63,
+    "worn": 5.63
+   },
+   "texel_ratio": {
+    "hand": 124.2,
+    "worn": 124.2
+   }
+  },
+  {
+   "id": "seal_of_the_sealed_god",
+   "grade": "GENESIS",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 1208,
+    "vertices": 4832,
+    "passes": 4,
+    "painted_texels": 771663,
+    "glow_texels": 66137,
+    "emissive_quads": 209,
+    "shell_quads": 0,
+    "star_quads": 44,
+    "halo_quads": 20,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 15,
+    "skin_pngs": [
+     "visual_upgrade/seal_of_the_sealed_god.png"
+    ],
+    "pieces_named": [
+     "vu/seal_of_the_sealed_god"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 15
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1208,
+    "vertices": 4832,
+    "passes": 4,
+    "painted_texels": 771663,
+    "glow_texels": 66137,
+    "emissive_quads": 209,
+    "shell_quads": 0,
+    "star_quads": 44,
+    "halo_quads": 20,
+    "groups": 13,
+    "group_kinds": 5,
+    "own_layers": 15,
+    "skin_pngs": [
+     "visual_upgrade/seal_of_the_sealed_god.png"
+    ],
+    "pieces_named": [
+     "vu/seal_of_the_sealed_god_worn"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 23
+   },
+   "acts": null,
+   "components": {
+    "mesh": 5.35,
+    "texture": 188.39,
+    "passes": 2.0,
+    "ambient": 4.75,
+    "animation": 6.5
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.71,
+   "V_after": 41.45,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 5.35,
+    "worn": 5.35
+   },
+   "texel_ratio": {
+    "hand": 188.4,
+    "worn": 188.4
+   }
+  },
+  {
+   "id": "sukunas_twenty_fingers",
+   "grade": "GENESIS",
+   "slot": "CHARM",
+   "kind": "charm",
+   "hand": {
+    "pieces": 1,
+    "quads": 1018,
+    "vertices": 4072,
+    "passes": 4,
+    "painted_texels": 752755,
+    "glow_texels": 174769,
+    "emissive_quads": 214,
+    "shell_quads": 0,
+    "star_quads": 26,
+    "halo_quads": 20,
+    "groups": 11,
+    "group_kinds": 3,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/sukunas_twenty_fingers.png"
+    ],
+    "pieces_named": [
+     "vu/sukunas_twenty_fingers"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 14
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1018,
+    "vertices": 4072,
+    "passes": 4,
+    "painted_texels": 752755,
+    "glow_texels": 174769,
+    "emissive_quads": 214,
+    "shell_quads": 0,
+    "star_quads": 26,
+    "halo_quads": 20,
+    "groups": 11,
+    "group_kinds": 3,
+    "own_layers": 14,
+    "skin_pngs": [
+     "visual_upgrade/sukunas_twenty_fingers.png"
+    ],
+    "pieces_named": [
+     "vu/sukunas_twenty_fingers_worn"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 22
+   },
+   "acts": null,
+   "components": {
+    "mesh": 4.35,
+    "texture": 183.78,
+    "passes": 2.0,
+    "ambient": 4.5,
+    "animation": 2.75
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.75,
+   "V_after": 39.75,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 4.35,
+    "worn": 4.35
+   },
+   "texel_ratio": {
+    "hand": 183.8,
+    "worn": 183.8
+   }
+  },
+  {
+   "id": "the_infinity_gauntlet",
+   "grade": "GENESIS",
+   "slot": "HANDS",
+   "kind": "hands",
+   "hand": {
+    "pieces": 1,
+    "quads": 1250,
+    "vertices": 5000,
+    "passes": 4,
+    "painted_texels": 883852,
+    "glow_texels": 70110,
+    "emissive_quads": 105,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 24,
+    "groups": 10,
+    "group_kinds": 5,
+    "own_layers": 12,
+    "skin_pngs": [
+     "visual_upgrade/the_infinity_gauntlet.png"
+    ],
+    "pieces_named": [
+     "vu/the_infinity_gauntlet"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 12
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1250,
+    "vertices": 5000,
+    "passes": 4,
+    "painted_texels": 883852,
+    "glow_texels": 70110,
+    "emissive_quads": 105,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 24,
+    "groups": 10,
+    "group_kinds": 5,
+    "own_layers": 11,
+    "skin_pngs": [
+     "visual_upgrade/the_infinity_gauntlet.png"
+    ],
+    "pieces_named": [
+     "vu/the_infinity_gauntlet"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 19
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.63,
+    "texture": 191.81,
+    "passes": 1.6,
+    "ambient": 3.88,
+    "animation": 20.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.92,
+   "V_after": 42.3,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.01,
+    "worn": 3.81
+   },
+   "texel_ratio": {
+    "hand": 143.9,
+    "worn": 287.7
+   }
+  },
+  {
+   "id": "absolute_beings_crown_shard",
+   "grade": "GENESIS",
+   "slot": "HEAD",
+   "kind": "head",
+   "hand": {
+    "pieces": 1,
+    "quads": 1066,
+    "vertices": 4264,
+    "passes": 4,
+    "painted_texels": 870722,
+    "glow_texels": 322765,
+    "emissive_quads": 335,
+    "shell_quads": 0,
+    "star_quads": 50,
+    "halo_quads": 16,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 16,
+    "skin_pngs": [
+     "visual_upgrade/absolute_beings_crown_shard.png"
+    ],
+    "pieces_named": [
+     "vu/absolute_beings_crown_shard"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 16
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1066,
+    "vertices": 4264,
+    "passes": 4,
+    "painted_texels": 870722,
+    "glow_texels": 322765,
+    "emissive_quads": 335,
+    "shell_quads": 0,
+    "star_quads": 50,
+    "halo_quads": 16,
+    "groups": 14,
+    "group_kinds": 5,
+    "own_layers": 16,
+    "skin_pngs": [
+     "visual_upgrade/absolute_beings_crown_shard.png"
+    ],
+    "pieces_named": [
+     "vu/absolute_beings_crown_shard"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 24
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.94,
+    "texture": 170.06,
+    "passes": 2.0,
+    "ambient": 5.0,
+    "animation": 14.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.66,
+   "V_after": 37.74,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.94,
+    "worn": 2.94
+   },
+   "texel_ratio": {
+    "hand": 170.1,
+    "worn": 170.1
+   }
+  },
+  {
+   "id": "zahards_crown_fragment",
+   "grade": "GENESIS",
+   "slot": "HEAD",
+   "kind": "head",
+   "hand": {
+    "pieces": 1,
+    "quads": 1153,
+    "vertices": 4612,
+    "passes": 4,
+    "painted_texels": 870271,
+    "glow_texels": 188756,
+    "emissive_quads": 192,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 14,
+    "groups": 13,
+    "group_kinds": 4,
+    "own_layers": 15,
+    "skin_pngs": [
+     "visual_upgrade/zahards_crown_fragment.png"
+    ],
+    "pieces_named": [
+     "vu/zahards_crown_fragment"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 15
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1153,
+    "vertices": 4612,
+    "passes": 4,
+    "painted_texels": 870271,
+    "glow_texels": 188756,
+    "emissive_quads": 192,
+    "shell_quads": 0,
+    "star_quads": 8,
+    "halo_quads": 14,
+    "groups": 13,
+    "group_kinds": 4,
+    "own_layers": 15,
+    "skin_pngs": [
+     "visual_upgrade/zahards_crown_fragment.png"
+    ],
+    "pieces_named": [
+     "vu/zahards_crown_fragment"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 23
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.75,
+    "texture": 141.65,
+    "passes": 2.0,
+    "ambient": 4.75,
+    "animation": 3.25
+   },
+   "V_before": 1.0,
+   "V_without_texture": 3.17,
+   "V_after": 30.87,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.75,
+    "worn": 2.75
+   },
+   "texel_ratio": {
+    "hand": 141.6,
+    "worn": 141.6
+   }
+  },
+  {
+   "id": "gate_of_babylon_crest",
+   "grade": "GENESIS",
+   "slot": "BACK",
+   "kind": "back",
+   "hand": {
+    "pieces": 1,
+    "quads": 1350,
+    "vertices": 5400,
+    "passes": 3,
+    "painted_texels": 855749,
+    "glow_texels": 72468,
+    "emissive_quads": 87,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 38,
+    "groups": 15,
+    "group_kinds": 5,
+    "own_layers": 17,
+    "skin_pngs": [
+     "visual_upgrade/gate_of_babylon_crest.png"
+    ],
+    "pieces_named": [
+     "vu/gate_of_babylon_crest"
+    ],
+    "generic_layers": 0,
+    "ambient_layers": 17
+   },
+   "worn": {
+    "pieces": 1,
+    "quads": 1350,
+    "vertices": 5400,
+    "passes": 3,
+    "painted_texels": 855749,
+    "glow_texels": 72468,
+    "emissive_quads": 87,
+    "shell_quads": 0,
+    "star_quads": 0,
+    "halo_quads": 38,
+    "groups": 15,
+    "group_kinds": 5,
+    "own_layers": 17,
+    "skin_pngs": [
+     "visual_upgrade/gate_of_babylon_crest.png"
+    ],
+    "pieces_named": [
+     "vu/gate_of_babylon_crest"
+    ],
+    "generic_layers": 8,
+    "ambient_layers": 25
+   },
+   "acts": null,
+   "components": {
+    "mesh": 2.67,
+    "texture": 139.28,
+    "passes": 1.0,
+    "ambient": 5.25,
+    "animation": 15.0
+   },
+   "V_before": 1.0,
+   "V_without_texture": 4.54,
+   "V_after": 31.49,
+   "target": 20.0,
+   "meets_target": true,
+   "mesh_ratio": {
+    "hand": 2.67,
+    "worn": 2.67
+   },
+   "texel_ratio": {
+    "hand": 139.3,
+    "worn": 139.3
+   }
+  }
+ ]
+}

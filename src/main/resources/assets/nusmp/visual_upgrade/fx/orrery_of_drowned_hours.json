@@ -1,0 +1,177 @@
+{
+ "id": "orrery_of_drowned_hours",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.orrery_of_drowned_hours",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "drowned sun",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "drowned_sun",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ecliptic rings",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "ecliptic",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 1",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_1",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 2",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_2",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 3",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_3",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 4",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_4",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 5",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_5",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 6",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_6",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "planet 7",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "planet_7",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "bubbles",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "bubbles",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tide ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "tide_ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rising bubbles",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "bubble",
+   "count": 1,
+   "every": 4,
+   "radius": 0.45,
+   "rise": 0.03,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tide drips",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 7,
+   "radius": 0.5,
+   "rise": -0.015,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "3AC8D8"
+  }
+ ]
+}

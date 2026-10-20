@@ -1,0 +1,128 @@
+{
+ "id": "behelit_egg",
+ "grade": "GOD",
+ "ambient_sound": "nusmp:relic.ambient.behelit_egg",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "closed eyes",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "closed_eye",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "eclipse",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "eclipse",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "eclipse corona",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "corona",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "black feathers",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "black_feathers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "blood tears",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "blood_tears",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "hanging chain",
+   "kind": "geometry",
+   "type": "chains",
+   "group": "chain",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "eclipse embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.45,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFD870"
+  },
+  {
+   "name": "crimson drips",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "dust",
+   "count": 1,
+   "every": 12,
+   "radius": 0.3,
+   "rise": -0.02,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "B0102A"
+  }
+ ]
+}

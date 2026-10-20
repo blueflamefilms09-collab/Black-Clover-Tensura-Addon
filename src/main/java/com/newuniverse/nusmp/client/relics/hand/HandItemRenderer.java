@@ -99,7 +99,39 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
                 if (REPORTED.add(path)) LogUtils.getLogger().error("[nusmp] drawing the hand form of relic {} failed; its sprite is used", path, ex);
             }
         }
+        if (hc == null && ctx == ItemDisplayContext.GUI && stack.getItem() instanceof RelicBearer b && com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.guiModel()
+                && RelicFxOptions.models() && RelicFxOptions.handModels()) {                 // the visual upgrade's opt-in: the 3D model, tilted, in the slot instead of the sprite
+            try {
+                HandForms.Form gui = HandForms.of(b.relic());
+                if (gui != null && gui.ensemble().custom() && !gui.ensemble().pieces.isEmpty()) {
+                    drawGui(gui, pose, buffers);
+                    return;
+                }
+            } catch (RuntimeException ex) {
+                if (REPORTED.add(path + "#gui")) LogUtils.getLogger().error("[nusmp] drawing the gui model of relic {} failed; its sprite is used", path, ex);
+            }
+        }
         sprite(stack, hc, path, pose, buffers, light, overlay);
+    }
+
+    /** An upgraded relic in an inventory slot: the whole model, filling the slot, turned a little so its depth shows. */
+    private static void drawGui(HandForms.Form form, PoseStack pose, MultiBufferSource buffers) {
+        Minecraft mc = Minecraft.getInstance();
+        float time = mc.level == null ? 0f : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
+        float[] b = form.ensemble().bounds();
+        float ex = b[3] - b[0], ey = b[4] - b[1], ez = b[5] - b[2];
+        float sc = 0.9f / Math.max(0.001f, Math.max(ex, Math.max(ey, ez)));
+        pose.pushPose();
+        try {
+            pose.translate(0.5f, 0.5f, 0.5f);
+            pose.mulPose(Q.rotationXYZ(14f * DEG, -28f * DEG, 0f));
+            pose.mulPose(Axis.XP.rotationDegrees(180f));
+            pose.scale(sc, sc, sc);
+            pose.translate(-(b[0] + b[3]) * 0.5f, -(b[1] + b[4]) * 0.5f, -(b[2] + b[5]) * 0.5f);
+            WornLibDraw.drawItem(form.ensemble(), pose, buffers, net.minecraft.client.renderer.LightTexture.FULL_BRIGHT, time, true);
+        } finally {
+            pose.popPose();
+        }
     }
 
     /** The flat sprite: in the inventory as it is, anywhere else placed by the sprite style (the transforms a vanilla generated item has). */
@@ -129,6 +161,10 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
         try {
             pose.translate(0.5f, 0.5f, 0.5f);
             apply(pose, form.style().xf(hc));
+            if ((hc == HandTransforms.Ctx.FP_RIGHT || hc == HandTransforms.Ctx.FP_LEFT) && form.ensemble().custom()) {        // the draw animation of an upgraded relic: it swells into the hand
+                float k = 0.55f + 0.45f * com.newuniverse.nusmp.client.relics.vu.VuFxClient.equipProgress(mc.getTimer().getGameTimeDeltaPartialTick(false));
+                pose.scale(k, k, k);
+            }
             if (fit.prx() != 0f || fit.pry() != 0f || fit.prz() != 0f) pose.mulPose(Q.rotationXYZ(fit.prx() * DEG, fit.pry() * DEG, fit.prz() * DEG));
             if (inHand) {                                                              // the hold point and the sway are about the hand, so only in a hand
                 if (fit.sway() != 0f) pose.mulPose(Q.rotationZ(fit.sway() * DEG * (float) Math.sin(time * 0.11f)));
