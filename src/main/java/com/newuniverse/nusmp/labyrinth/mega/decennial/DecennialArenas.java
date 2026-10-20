@@ -98,6 +98,7 @@ public final class DecennialArenas {
         /** The pillars that can still be brought down. */
         List<BossArenaStructure.Element> pillars() {
             List<BossArenaStructure.Element> out = new ArrayList<>();
+            if (!DecennialConfig.get(DecennialConfig.ELEMENTS)) return out;
             for (BossArenaStructure.Element e : plan.elements()) {
                 if (e.kind == BossArenaStructure.Kind.PILLAR && e.effect == BossArenaStructure.Effect.TOPPLE && !e.locked && !site.broken.contains(e.id) && e.strip.length == 4) out.add(e);
             }
@@ -177,8 +178,16 @@ public final class DecennialArenas {
         if (l != null) for (long c : l.cells.keySet()) BreakableCells.serverRemove(c);
     }
 
-    /** Recounts the halls still to be built (at server start). */
-    static void recount(MinecraftServer server) { pendingBuilds = data(server).unfinished().size(); }
+    /** Recounts the halls still to be built (at server start). A hall an admin was standing up when the server stopped is forgotten (the facade builds those whole, so a half hall has no owner to finish it). */
+    static void recount(MinecraftServer server) {
+        DecennialData d = data(server);
+        int n = 0;
+        for (Site s : d.unfinished()) {
+            if (s.standalone) d.remove(s.key);
+            else n++;
+        }
+        pendingBuilds = n;
+    }
 
     /** One step of the build of one unfinished hall (called every server tick; free when nothing is pending). */
     static void stepBuilds(MinecraftServer server) {

@@ -151,7 +151,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     void syncLook() {
         DndProfile p = dnd.profile;
         entityData.set(LOOK, GuardConfig.get(GuardConfig.DND) ? AbyssalLooks.resolve(p.look(), theme.id(), p.side(), p.tier()) : "");
-        entityData.set(LOOK_PHASE, dnd.phase());
+        entityData.set(LOOK_PHASE, decennial.active() ? decennial.lookPhase() : dnd.phase());                // 1.99.0: a Decennial boss's look follows its own phase
     }
 
     // ---------------------------------------------------------------- creation
