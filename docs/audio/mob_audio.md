@@ -57,7 +57,7 @@ The cue columns say what the synthesiser makes of each cue; every family has all
 | npc | friendly hums and short exclamations | hummed voice, soft boots | bards, healers, scribes (26), the two Hub NPCs |
 
 Pitch and volume: `MobSoundSet.Family` gives every family a pitch centre and a spread (feet stray twice as far, a death 0.6 times) and a volume; the numbers are in the catalogue and in
-`MobSoundSetTest`. The synthesiser matches loudness per cue class (idle -25 dBFS RMS, steps -26, hurt and attack -20, deaths and taunts -21) and keeps every peak under -1 dBFS with a soft knee;
+`MobSoundSetTest`. The synthesiser matches loudness per cue class (idle -25 dBFS RMS, steps -26, hurt and attack -20, deaths and taunts -21) and keeps every peak under -2 dBFS before encoding with a soft knee (and re-encodes a file a little quieter if the decoded Vorbis still overshoots 0.97);
 every file is 0.3 to 3.0 s, mono, with a 3 ms fade in and a 25 to 60 ms fade out.
 
 ## How a mob gets its voice

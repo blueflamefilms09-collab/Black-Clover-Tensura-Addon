@@ -671,7 +671,7 @@
   "mob.drake.death": {
     "subtitle": "subtitles.nusmp.mob.drake.death",
     "sounds": [
-      { "name": "nusmp:mob/drake/death_1" },
+      { "name": "nusmp:mob/drake/death_1", "stream": true },
       { "name": "nusmp:mob/drake/death_2" }
     ]
   },

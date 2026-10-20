@@ -43,7 +43,8 @@ CUES = ['ambient', 'aggro', 'attack', 'hurt', 'death', 'step', 'cast', 'taunt']
 VARIANTS = {'ambient': 3, 'aggro': 2, 'attack': 3, 'hurt': 3, 'death': 2, 'step': 3, 'cast': 2, 'taunt': 3}
 # loudness target (dBFS, RMS of the active part) per cue: voices louder than steps and idle sounds
 LOUDNESS = {'ambient': -25.0, 'aggro': -19.0, 'attack': -19.0, 'hurt': -20.0, 'death': -21.0, 'step': -26.0, 'cast': -22.0, 'taunt': -21.0}
-PEAK_LIMIT = 0.89
+DECODED_PEAK_LIMIT = 0.97     # what the file may reach once decoded again
+PEAK_LIMIT = 0.80           # -2 dBFS: the Vorbis encoder overshoots a little, so a peak of 0.89 can come back as a clipped 1.0
 MAX_SECONDS = 3.0
 # families whose loud cues carry further than the default 16 blocks (attenuation_distance in sounds.json)
 ATTENUATION = {'dragon': 40, 'golem': 24, 'demon': 24, 'celestial': 24, 'lich': 20, 'ogre': 20, 'troll': 20, 'elemental': 20}
@@ -1590,7 +1591,7 @@ def seed_for(family, cue, index):
 
 
 def finalize(x, sr, cue):
-    """Trim, fade, filter out the infrasonic rumble, match the loudness of the cue, and keep the peak under -1 dBFS without clipping."""
+    """Trim, fade, filter out the infrasonic rumble, match the loudness of the cue, and keep the peak under -2 dBFS without clipping."""
     x = np.nan_to_num(np.asarray(x, dtype=np.float64))
     x = x - float(np.mean(x))
     x = hp(x, 28.0, sr, 1)
@@ -1600,7 +1601,7 @@ def finalize(x, sr, cue):
     idx = np.nonzero(np.abs(x) > pk * 10 ** (-50.0 / 20.0))[0]
     lo = max(0, int(idx[0]) - int(0.004 * sr))
     hi = min(len(x), int(idx[-1]) + 1 + int(0.02 * sr))
-    x = x[lo:hi]
+    x = np.concatenate([np.zeros(int(0.008 * sr)), x[lo:hi]])           # a few ms of silence first, so the encoder's pre-echo does not click
     limit = int(MAX_SECONDS * sr)
     if len(x) > limit:
         x = x[:limit]
@@ -1621,7 +1622,7 @@ def finalize(x, sr, cue):
     else:
         rms = math.sqrt(float((x ** 2).mean()))
     x = x * (10 ** (LOUDNESS[cue] / 20.0) / max(rms, 1e-6))
-    knee = 0.6
+    knee = 0.55
     span = PEAK_LIMIT - knee
     a = np.abs(x)
     over = a > knee
@@ -1652,6 +1653,13 @@ def encode(wav_path, ogg_path, sr, quality):
     os.makedirs(os.path.dirname(ogg_path), exist_ok=True)
     cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', wav_path, '-ac', '1', '-ar', str(sr), '-c:a', 'libvorbis', '-q:a', str(quality), '-map_metadata', '-1', '-fflags', '+bitexact', '-flags:a', '+bitexact', ogg_path]
     subprocess.run(cmd, check=True)
+
+
+def decoded_peak(ogg_path):
+    """The peak of what a player will hear: the file decoded again (a lossy encoder can overshoot the source on a sharp transient)."""
+    r = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', ogg_path, '-f', 's16le', '-ac', '1', '-'], capture_output=True, check=True)
+    y = np.frombuffer(r.stdout, dtype='<i2').astype(np.float64) / 32768.0
+    return float(np.max(np.abs(y))) if len(y) else 0.0
 
 
 def spectrogram_png(x, sr, path):
@@ -1703,9 +1711,13 @@ def generate(only=None, preview=None, quality=3):
             for i in range(1, VARIANTS[cue] + 1):
                 x, sr = render(fam, cue, i)
                 wav = os.path.join(tmp, '%s_%s_%d.wav' % (fam, cue, i))
-                write_wav(wav, x, sr)
                 ogg = os.path.join(SOUND_DIR, fam, '%s_%d.ogg' % (cue, i))
-                encode(wav, ogg, sr, quality)
+                for _attempt in range(6):
+                    write_wav(wav, x, sr)
+                    encode(wav, ogg, sr, quality)
+                    if decoded_peak(ogg) <= DECODED_PEAK_LIMIT:
+                        break
+                    x = x * 0.9                                           # the encoder overshot a transient: a little quieter, encode again
                 report[(fam, cue, i)] = (len(x) / sr, os.path.getsize(ogg))
                 if preview:
                     os.makedirs(preview, exist_ok=True)
