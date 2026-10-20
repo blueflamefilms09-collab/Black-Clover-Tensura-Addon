@@ -1,0 +1,2455 @@
+{
+ "version": 1,
+ "particles": [
+  {
+   "id": "ember",
+   "family": "fire",
+   "group": "fire",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A small glowing coal that flickers while it drifts up; gets hot-yellow in the middle, fades to red. Rises, light drag, additive, full-bright.",
+   "profile": {
+    "gravity": -0.12,
+    "drag": 0.95,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.004,
+    "size": [
+     0.17,
+     0.05
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.45
+    ],
+    "life": [
+     16,
+     30
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "cinder",
+   "family": "fire",
+   "group": "fire",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A burnt-out lump with glowing cracks that pulse; tumbles, falls slowly, translucent, lit by its own cracks.",
+   "profile": {
+    "gravity": 0.18,
+    "drag": 0.96,
+    "spin": 0.12,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.004,
+    "size": [
+     0.2,
+     0.12
+    ],
+    "curve": "linear",
+    "fade": [
+     0.04,
+     0.4
+    ],
+    "life": [
+     24,
+     40
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "flame_tongue",
+   "family": "fire",
+   "group": "fire",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A tongue of fire (red edge, orange body, white-yellow heart) that licks upwards and sways; rises, shrinks to nothing.",
+   "profile": {
+    "gravity": -0.16,
+    "drag": 0.95,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.003,
+    "size": [
+     0.28,
+     0.08
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.45
+    ],
+    "life": [
+     12,
+     22
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "flame_soul",
+   "family": "fire",
+   "group": "fire",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "The same tongue in pale spirit-fire (white body, tintable): a cold flame for souls, ghosts and blue fire; drifts up with a little sway.",
+   "profile": {
+    "gravity": -0.12,
+    "drag": 0.95,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.004,
+    "jitter": 0.004,
+    "size": [
+     0.28,
+     0.07
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.45
+    ],
+    "life": [
+     14,
+     24
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "spark",
+   "family": "fire",
+   "group": "fire",
+   "frames": 4,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A hot spark: a bright four-ray burst that shortens as it cools; flies fast, falls a little, drag.",
+   "profile": {
+    "gravity": 0.1,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.004,
+    "size": [
+     0.17,
+     0.04
+    ],
+    "curve": "linear",
+    "fade": [
+     0.0,
+     0.5
+    ],
+    "life": [
+     8,
+     16
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "ash_flake",
+   "family": "fire",
+   "group": "ash",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A thin grey ash flake that tumbles and flips as it sinks; matte, no glow.",
+   "profile": {
+    "gravity": 0.12,
+    "drag": 0.95,
+    "spin": 0.1,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.004,
+    "size": [
+     0.2,
+     0.15
+    ],
+    "curve": "hold",
+    "fade": [
+     0.05,
+     0.4
+    ],
+    "life": [
+     40,
+     70
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "soot_puff",
+   "family": "fire",
+   "group": "ash",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A dark soot puff that swells and thins out while rising slowly; dithered lumpy edge, translucent, never glows.",
+   "profile": {
+    "gravity": -0.03,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.004,
+    "size": [
+     0.28,
+     0.62
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.08,
+     0.7
+    ],
+    "life": [
+     26,
+     44
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "smoke_wisp",
+   "family": "fire",
+   "group": "ash",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A curling wisp of smoke (light grey, tintable); rises in an S shape that unwinds, translucent, fades.",
+   "profile": {
+    "gravity": -0.04,
+    "drag": 0.97,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.004,
+    "size": [
+     0.24,
+     0.5
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.1,
+     0.65
+    ],
+    "life": [
+     28,
+     48
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "mote",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "The basic light mote: a soft round glow with a hard white core that breathes; drifts, slowly rising, additive, the theme colour tints it.",
+   "profile": {
+    "gravity": -0.03,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.2,
+     0.06
+    ],
+    "curve": "linear",
+    "fade": [
+     0.12,
+     0.45
+    ],
+    "life": [
+     16,
+     28
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "mote_soft",
+   "family": "glow",
+   "group": "light",
+   "frames": 4,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A large dim glow without a core: an air-filling haze mote; very slow, long fade in and out, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.97,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.34,
+     0.5
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.3,
+     0.55
+    ],
+    "life": [
+     26,
+     44
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "glint",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A lens glint: a thin four-armed cross that swells and snaps shut, with a tilt; sits where it is spawned, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.3,
+     0.28
+    ],
+    "curve": "pop",
+    "fade": [
+     0.05,
+     0.4
+    ],
+    "life": [
+     10,
+     18
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "star4",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A solid four-point star that turns a quarter turn while it twinkles and shrinks; slow rise, additive.",
+   "profile": {
+    "gravity": -0.05,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.26,
+     0.05
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.4
+    ],
+    "life": [
+     18,
+     30
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "gem_sparkle",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A tiny cut gem with three shaded facets that flashes a cross glint at its brightest frame; hovers, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.24,
+     0.1
+    ],
+    "curve": "pop",
+    "fade": [
+     0.12,
+     0.45
+    ],
+    "life": [
+     14,
+     24
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "mana_mote",
+   "family": "glow",
+   "group": "light",
+   "frames": 8,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A mote of raw mana: a glow with a tiny satellite circling it; the satellite leaves a faint ring. Rises gently, additive.",
+   "profile": {
+    "gravity": -0.06,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.003,
+    "jitter": 0.002,
+    "size": [
+     0.22,
+     0.08
+    ],
+    "curve": "linear",
+    "fade": [
+     0.12,
+     0.45
+    ],
+    "life": [
+     20,
+     34
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "aura_wisp",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A comet-shaped aura wisp: a round head and a tail that waves; rises and bends, additive.",
+   "profile": {
+    "gravity": -0.1,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.04,
+    "sway": 0.008,
+    "jitter": 0.002,
+    "size": [
+     0.34,
+     0.1
+    ],
+    "curve": "linear",
+    "fade": [
+     0.12,
+     0.45
+    ],
+    "life": [
+     16,
+     28
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "spirit_firefly",
+   "family": "glow",
+   "group": "light",
+   "frames": 8,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A spirit firefly: a small warm body whose glow blinks on and off in a slow rhythm and whose wings flick; wanders on a lazy path, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.95,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.006,
+    "size": [
+     0.2,
+     0.16
+    ],
+    "curve": "hold",
+    "fade": [
+     0.15,
+     0.35
+    ],
+    "life": [
+     30,
+     54
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "dream_star",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A pastel five-point star with two tiny sparkles that trade places; floats up and sways, twinkles, additive. Native lavender-pink.",
+   "profile": {
+    "gravity": -0.05,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.002,
+    "size": [
+     0.24,
+     0.08
+    ],
+    "curve": "pulse",
+    "fade": [
+     0.2,
+     0.4
+    ],
+    "life": [
+     24,
+     40
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "holy_ray",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A sunburst of holy rays: eight shafts that turn slowly and breathe around a white core; stays in place, additive, long soft fade.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.9,
+     1.4
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.1,
+     0.6
+    ],
+    "life": [
+     14,
+     22
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "nebula_puff",
+   "family": "glow",
+   "group": "light",
+   "frames": 6,
+   "px": 32,
+   "tint": false,
+   "behaviour": "A cloud of star dust in violet, blue and pink: three drifting lobes of noise with bright pin stars; swells and thins, slow spin, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.97,
+    "spin": 0.02,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.5,
+     0.9
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.2,
+     0.6
+    ],
+    "life": [
+     30,
+     52
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 4,
+    "collide": false
+   }
+  },
+  {
+   "id": "void_speck",
+   "family": "glow",
+   "group": "light",
+   "frames": 4,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A speck of nothing: a black core with a thin violet rim that pulses; sucks slowly sideways, translucent so it stays dark.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.12,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.14,
+     0.06
+    ],
+    "curve": "linear",
+    "fade": [
+     0.1,
+     0.4
+    ],
+    "life": [
+     18,
+     30
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "soul_wisp",
+   "family": "glow",
+   "group": "light",
+   "frames": 8,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A ghostly wisp with a round head, two dark eyes that blink and a wavy tail; floats up with a lazy sway, additive.",
+   "profile": {
+    "gravity": -0.07,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.002,
+    "size": [
+     0.3,
+     0.16
+    ],
+    "curve": "hold",
+    "fade": [
+     0.2,
+     0.4
+    ],
+    "life": [
+     24,
+     40
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "ring_pulse",
+   "family": "pulse",
+   "group": "pulse",
+   "frames": 8,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A thin ring that leaves the spot and widens fast while it thins and fades: the shape of a pulse or a cast. Stays in place, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.5,
+     2.4
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.6
+    ],
+    "life": [
+     10,
+     16
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "halo_ring",
+   "family": "pulse",
+   "group": "pulse",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A halo: a thick glowing ring with a thin echo inside and eight sparkles on it; holds its size and pulses, then dims. Stays in place, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     1.2,
+     1.4
+    ],
+    "curve": "hold",
+    "fade": [
+     0.2,
+     0.45
+    ],
+    "life": [
+     22,
+     34
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "shock_ring",
+   "family": "pulse",
+   "group": "pulse",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A hard shock ring: a ragged thick band that races outward and thins to a line; the hit of a stomp or a blast. Stays in place, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.6,
+     2.6
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.5
+    ],
+    "life": [
+     8,
+     14
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "impact_burst",
+   "family": "pulse",
+   "group": "pulse",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A comic impact star: a ten-spike burst that flashes at full size and opens into a ring of spikes as it fades. Stays in place, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.04,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.8,
+     2.2
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.55
+    ],
+    "life": [
+     8,
+     14
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "circle_flash",
+   "family": "pulse",
+   "group": "pulse",
+   "frames": 8,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A magic circle that snaps open: two rings, a hexagram and tick marks that turn a little while they flash and fade. Lies where it is spawned, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     1.6,
+     1.9
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.55
+    ],
+    "life": [
+     12,
+     20
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "lightning_arc",
+   "family": "pulse",
+   "group": "storm",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A jagged bolt that cracks across the sprite and re-rolls its path every frame (flicker), with a short branch and a pale halo. Stays in place, additive, very short.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.9,
+     0.8
+    ],
+    "curve": "hold",
+    "fade": [
+     0.0,
+     0.3
+    ],
+    "life": [
+     4,
+     8
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_sol",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the sun glyph: a ringed dot with eight ticks. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_luna",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the moon glyph: a crescent with a star. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_eye",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the eye glyph: an almond with a pupil and a brow tick. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_wave",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the water glyph: three waves. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_flame",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the fire glyph: a triangle with a flame bar. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_leaf",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the life glyph: a leaf with a midrib. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_bolt",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the storm glyph: a zigzag bolt. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "rune_key",
+   "family": "rune",
+   "group": "rune",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "Rune glyph, the key glyph: a looped key with two teeth. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive.",
+   "profile": {
+    "gravity": -0.01,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.34
+    ],
+    "curve": "pop",
+    "fade": [
+     0.18,
+     0.4
+    ],
+    "life": [
+     24,
+     36
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "slash_streak",
+   "family": "combat",
+   "group": "combat",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A sword slash: a tapering crescent that sweeps open over the first frames and then thins out; white edge, pale body. Stays in place, additive, very short.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.92,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     1.0,
+     1.5
+    ],
+    "curve": "linear",
+    "fade": [
+     0.0,
+     0.5
+    ],
+    "life": [
+     5,
+     9
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "wind_swirl",
+   "family": "combat",
+   "group": "air",
+   "frames": 8,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A double-armed spiral of thin wind lines that turns while it opens up and fades. Stays in place, additive.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.92,
+    "spin": 0.12,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.9,
+     1.5
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.1,
+     0.55
+    ],
+    "life": [
+     14,
+     22
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "shard_ice",
+   "family": "shard",
+   "group": "shard",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A sliver of ice with three facets that spins end over end and flashes a glint on one frame; falls with a little bounce, translucent.",
+   "profile": {
+    "gravity": 0.3,
+    "drag": 0.97,
+    "spin": 0.24,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.22,
+     0.16
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.35
+    ],
+    "life": [
+     22,
+     38
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "shard_crystal",
+   "family": "shard",
+   "group": "shard",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A faceted crystal chunk (six-sided, light neutral facets so the theme colour reads) that turns slowly; drifts down, glints, translucent.",
+   "profile": {
+    "gravity": 0.16,
+    "drag": 0.97,
+    "spin": 0.12,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.24,
+     0.18
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.35
+    ],
+    "life": [
+     26,
+     44
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "shard_glass",
+   "family": "shard",
+   "group": "shard",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A broken pane fragment: a see-through triangle with bright edges and a diagonal shine that slides across it; tumbles and falls, translucent.",
+   "profile": {
+    "gravity": 0.34,
+    "drag": 0.97,
+    "spin": 0.26,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.24,
+     0.2
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.35
+    ],
+    "life": [
+     20,
+     34
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "feather_white",
+   "family": "feather",
+   "group": "feather",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A white feather that turns over as it sways down; flat shaded, a grey spine and finely notched barbs, slow fall.",
+   "profile": {
+    "gravity": 0.05,
+    "drag": 0.93,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.002,
+    "size": [
+     0.34,
+     0.3
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.35
+    ],
+    "life": [
+     36,
+     60
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "feather_black",
+   "family": "feather",
+   "group": "feather",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A black feather with a blue-violet sheen on the edge; same lazy sway and fall as the white one, never glows.",
+   "profile": {
+    "gravity": 0.05,
+    "drag": 0.93,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.002,
+    "size": [
+     0.34,
+     0.3
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.35
+    ],
+    "life": [
+     36,
+     60
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "feather_fire",
+   "family": "feather",
+   "group": "feather",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A feather of living fire (red edge, orange vane, yellow spine) that trails a soft glow; floats up with a flutter and burns out, additive.",
+   "profile": {
+    "gravity": -0.05,
+    "drag": 0.93,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.002,
+    "size": [
+     0.36,
+     0.14
+    ],
+    "curve": "linear",
+    "fade": [
+     0.08,
+     0.5
+    ],
+    "life": [
+     28,
+     46
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "petal",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A soft petal in a neutral light tone so the theme colour dyes it; flips as it flutters down, a gentle sway, translucent.",
+   "profile": {
+    "gravity": 0.06,
+    "drag": 0.94,
+    "spin": 0.05,
+    "swirl": 0.0,
+    "sway": 0.014,
+    "jitter": 0.002,
+    "size": [
+     0.26,
+     0.22
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     34,
+     56
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "petal_cherry",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A cherry blossom petal (pink, notched at the tip, darker at the base) that spins and sways down; the Cherry Blossom magic's own.",
+   "profile": {
+    "gravity": 0.06,
+    "drag": 0.94,
+    "spin": 0.05,
+    "swirl": 0.0,
+    "sway": 0.016,
+    "jitter": 0.002,
+    "size": [
+     0.26,
+     0.22
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     36,
+     62
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "leaf_green",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A green leaf with a pale midrib and veins; turns over as it tumbles down, quicker fall than a petal, translucent.",
+   "profile": {
+    "gravity": 0.1,
+    "drag": 0.94,
+    "spin": 0.05,
+    "swirl": 0.0,
+    "sway": 0.014,
+    "jitter": 0.002,
+    "size": [
+     0.3,
+     0.26
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     34,
+     56
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "leaf_autumn",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "An autumn leaf (red, orange and gold) with dark veins, same tumble as the green one but drier and slower.",
+   "profile": {
+    "gravity": 0.08,
+    "drag": 0.94,
+    "spin": 0.05,
+    "swirl": 0.0,
+    "sway": 0.014,
+    "jitter": 0.002,
+    "size": [
+     0.3,
+     0.26
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     34,
+     56
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "seed",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A winged tree seed (maple key): a seed and one long wing that whirls around the seed like a helicopter blade while it sinks.",
+   "profile": {
+    "gravity": 0.05,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.004,
+    "jitter": 0.002,
+    "size": [
+     0.3,
+     0.26
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     30,
+     52
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "spore",
+   "family": "flora",
+   "group": "flora",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A drifting spore: a pale yellow-green puff with a few dust specks orbiting it; floats up and wobbles, additive, soft.",
+   "profile": {
+    "gravity": -0.03,
+    "drag": 0.94,
+    "spin": 0.05,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.004,
+    "size": [
+     0.22,
+     0.12
+    ],
+    "curve": "hold",
+    "fade": [
+     0.2,
+     0.4
+    ],
+    "life": [
+     28,
+     48
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "bubble",
+   "family": "water",
+   "group": "water",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A soap bubble: a thin blue ring with a bright glint, wobbling and growing slightly; the last frame is the pop (a ring of droplets). Rises slowly, translucent.",
+   "profile": {
+    "gravity": -0.06,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.008,
+    "jitter": 0.002,
+    "size": [
+     0.2,
+     0.3
+    ],
+    "curve": "linear",
+    "fade": [
+     0.05,
+     0.12
+    ],
+    "life": [
+     22,
+     40
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "droplet",
+   "family": "water",
+   "group": "water",
+   "frames": 4,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A water drop: a teardrop that stretches as it falls and, on the last frame, flattens into a splash ring with two satellites. Falls fast, translucent.",
+   "profile": {
+    "gravity": 0.7,
+    "drag": 0.99,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.16,
+     0.16
+    ],
+    "curve": "hold",
+    "fade": [
+     0.0,
+     0.2
+    ],
+    "life": [
+     14,
+     26
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "water_splash",
+   "family": "water",
+   "group": "water",
+   "frames": 6,
+   "px": 32,
+   "tint": true,
+   "behaviour": "A splash crown: nine arcs of water that fly out and up from the spot with a bead at each tip, then fall back; a thin ring on the ground; stays at its spot, translucent, short.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.96,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.8,
+     1.5
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.5
+    ],
+    "life": [
+     10,
+     18
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "snowflake",
+   "family": "water",
+   "group": "water",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A six-armed snow crystal that turns slowly while it sinks, with a little sway; crisp white, translucent.",
+   "profile": {
+    "gravity": 0.05,
+    "drag": 0.95,
+    "spin": 0.04,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.002,
+    "size": [
+     0.24,
+     0.2
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     40,
+     70
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "sand_grain",
+   "family": "earth",
+   "group": "earth",
+   "frames": 4,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A pinch of sand grains that tumble: five to six single-texel specks in warm tans that swap places each frame; falls fast, collides, translucent.",
+   "profile": {
+    "gravity": 0.5,
+    "drag": 0.95,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.16,
+     0.12
+    ],
+    "curve": "linear",
+    "fade": [
+     0.0,
+     0.25
+    ],
+    "life": [
+     16,
+     28
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "earth_chip",
+   "family": "earth",
+   "group": "earth",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A chunk of dirt and rock with a light top and dark underside that tumbles; heavy, bounces on the ground, opaque.",
+   "profile": {
+    "gravity": 0.7,
+    "drag": 0.95,
+    "spin": 0.3,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.2,
+     0.15
+    ],
+    "curve": "linear",
+    "fade": [
+     0.0,
+     0.25
+    ],
+    "life": [
+     16,
+     28
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "bone_chip",
+   "family": "earth",
+   "group": "earth",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A sliver of bone: an off-white splinter with a knobbed end that tumbles; falls and bounces, opaque.",
+   "profile": {
+    "gravity": 0.55,
+    "drag": 0.95,
+    "spin": 0.28,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.0,
+    "size": [
+     0.22,
+     0.16
+    ],
+    "curve": "linear",
+    "fade": [
+     0.0,
+     0.25
+    ],
+    "life": [
+     18,
+     32
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": true
+   }
+  },
+  {
+   "id": "cog",
+   "family": "tool",
+   "group": "mechanism",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A brass cog with eight teeth and an axle hole that turns steadily; drifts down, translucent. The gear of clockwork and machines.",
+   "profile": {
+    "gravity": 0.08,
+    "drag": 0.94,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.26,
+     0.2
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     26,
+     44
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 2,
+    "collide": false
+   }
+  },
+  {
+   "id": "clock_tick",
+   "family": "tool",
+   "group": "mechanism",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A small brass clock face whose hand jumps one step each frame, with a brief ring pulse on every tick; hovers and fades, translucent. (The Time Magic effects are untouched; this is a plain tick glyph.)",
+   "profile": {
+    "gravity": -0.02,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.28
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     22,
+     36
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "card",
+   "family": "tool",
+   "group": "paper",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A playing card flipping through the air: front with a red diamond, back with a blue lattice; turns about its long axis, falls with a sway, translucent.",
+   "profile": {
+    "gravity": 0.1,
+    "drag": 0.94,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.26
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     30,
+     50
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "page",
+   "family": "tool",
+   "group": "paper",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A loose page: parchment with lines of script and a curling corner that flaps as it spirals down; slow, swaying, translucent.",
+   "profile": {
+    "gravity": 0.05,
+    "drag": 0.94,
+    "spin": 0.06,
+    "swirl": 0.0,
+    "sway": 0.016,
+    "jitter": 0.0,
+    "size": [
+     0.32,
+     0.28
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     36,
+     62
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "ink_splat",
+   "family": "tool",
+   "group": "ink",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A blot of black ink: starts as a dot, spreads into an irregular splat with satellite droplets and a drip, with a wet highlight; hardly moves, translucent, fades as it dries.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.85,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.2,
+     0.46
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.45
+    ],
+    "life": [
+     20,
+     36
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "paint_splat",
+   "family": "tool",
+   "group": "ink",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A splat of paint in a neutral light tone (the theme colour dyes it) with satellite drops and a drip; spreads and settles, translucent.",
+   "profile": {
+    "gravity": 0.02,
+    "drag": 0.85,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.22,
+     0.5
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.0,
+     0.45
+    ],
+    "life": [
+     20,
+     36
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "thread",
+   "family": "tool",
+   "group": "thread",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A loose thread: a thin curling strand with a bright edge that wriggles while it drifts; tintable, translucent.",
+   "profile": {
+    "gravity": 0.03,
+    "drag": 0.94,
+    "spin": 0.03,
+    "swirl": 0.0,
+    "sway": 0.01,
+    "jitter": 0.003,
+    "size": [
+     0.34,
+     0.3
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     28,
+     46
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "music_note",
+   "family": "tool",
+   "group": "music",
+   "frames": 6,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A music note (a single eighth on three frames, a beamed pair on three, picked at random per particle) that bobs while it floats up and fades; tintable, translucent.",
+   "profile": {
+    "gravity": -0.05,
+    "drag": 0.96,
+    "spin": 0.02,
+    "swirl": 0.0,
+    "sway": 0.012,
+    "jitter": 0.0,
+    "size": [
+     0.3,
+     0.28
+    ],
+    "curve": "hold",
+    "fade": [
+     0.12,
+     0.4
+    ],
+    "life": [
+     26,
+     44
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "random",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "chain_link",
+   "family": "tool",
+   "group": "mechanism",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "An iron chain link that turns about its long axis: a full oval ring, a narrow ring, then the edge-on bar; dark steel with a bright edge. Falls with a spin, translucent, hits the ground.",
+   "profile": {
+    "gravity": 0.45,
+    "drag": 0.94,
+    "spin": 0.18,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.26,
+     0.22
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     20,
+     34
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": true
+   }
+  },
+  {
+   "id": "blood_drop",
+   "family": "water",
+   "group": "blood",
+   "frames": 4,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A stylised blood drop: a deep-red teardrop with a wet highlight that falls fast and, on its last frame, flattens into a small splat with two satellites. Opaque look, translucent render.",
+   "profile": {
+    "gravity": 0.65,
+    "drag": 0.99,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.002,
+    "size": [
+     0.16,
+     0.16
+    ],
+    "curve": "hold",
+    "fade": [
+     0.0,
+     0.2
+    ],
+    "life": [
+     14,
+     26
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 1,
+    "collide": false
+   }
+  },
+  {
+   "id": "poison_cloud",
+   "family": "tool",
+   "group": "poison",
+   "frames": 6,
+   "px": 32,
+   "tint": false,
+   "behaviour": "A toxic cloud: lumpy green fog with rising bubbles and a sick yellow rim, billowing slowly; spreads while it thins, translucent but full-bright so it reads in the dark.",
+   "profile": {
+    "gravity": -0.02,
+    "drag": 0.97,
+    "spin": 0.01,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.5,
+     1.0
+    ],
+    "curve": "ease_out",
+    "fade": [
+     0.2,
+     0.6
+    ],
+    "life": [
+     28,
+     48
+    ],
+    "light": "full",
+    "blend": "translucent",
+    "anim": "age",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "shadow_tendril",
+   "family": "tool",
+   "group": "shadow",
+   "frames": 6,
+   "px": 32,
+   "tint": false,
+   "behaviour": "A curling tendril of shadow that reaches up from the bottom and coils at the tip, with a violet edge light; sways and retracts, translucent, never lit.",
+   "profile": {
+    "gravity": -0.03,
+    "drag": 0.93,
+    "spin": 0.1,
+    "swirl": 0.0,
+    "sway": 0.004,
+    "jitter": 0.0,
+    "size": [
+     0.6,
+     0.8
+    ],
+    "curve": "hold",
+    "fade": [
+     0.15,
+     0.4
+    ],
+    "life": [
+     20,
+     34
+    ],
+    "light": "normal",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "lava_blob",
+   "family": "tool",
+   "group": "fire",
+   "frames": 6,
+   "px": 16,
+   "tint": false,
+   "behaviour": "A bubble of molten rock: dark crust plates over a bright orange core with a yellow hot spot, swelling and cooling as it falls; lit by its own glow, translucent.",
+   "profile": {
+    "gravity": 0.35,
+    "drag": 0.97,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.006,
+    "jitter": 0.0,
+    "size": [
+     0.24,
+     0.16
+    ],
+    "curve": "hold",
+    "fade": [
+     0.08,
+     0.3
+    ],
+    "life": [
+     18,
+     32
+    ],
+    "light": "full",
+    "blend": "translucent",
+    "anim": "loop",
+    "loop": 3,
+    "collide": false
+   }
+  },
+  {
+   "id": "electric_orb",
+   "family": "glow",
+   "group": "storm",
+   "frames": 8,
+   "px": 16,
+   "tint": true,
+   "behaviour": "A small orb of static with short jagged arcs that jump to new places every frame; hovers and jitters, additive, very bright.",
+   "profile": {
+    "gravity": 0.0,
+    "drag": 0.9,
+    "spin": 0.0,
+    "swirl": 0.0,
+    "sway": 0.0,
+    "jitter": 0.012,
+    "size": [
+     0.26,
+     0.12
+    ],
+    "curve": "hold",
+    "fade": [
+     0.12,
+     0.45
+    ],
+    "life": [
+     8,
+     16
+    ],
+    "light": "full",
+    "blend": "add",
+    "anim": "loop",
+    "loop": 1,
+    "collide": false
+   }
+  }
+ ]
+}
