@@ -1,0 +1,323 @@
+{
+ "id": "hellblaze_the_demon_sin",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   255,
+   100,
+   40
+  ],
+  "secondary": [
+   255,
+   170,
+   80
+  ]
+ },
+ "maps": {
+  "skin": "up/hellblaze_the_demon_sin.png",
+  "glow": "up/hellblaze_the_demon_sin_glow.png",
+  "veins": "up/hellblaze_the_demon_sin_veins.png"
+ },
+ "lod": {
+  "mesh": "up/hellblaze_the_demon_sin_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/hellblaze_the_demon_sin_lod.png",
+  "glow": "up/hellblaze_the_demon_sin_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    255,
+    100,
+    40
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    170,
+    80
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "mid",
+   "particle": "flame",
+   "rgb": [
+    255,
+    110,
+    40
+   ],
+   "rate": 16,
+   "radius": 0.45,
+   "rise": 0.04
+  },
+  {
+   "type": "edge",
+   "anchor": "blade",
+   "particle": "smoke",
+   "rgb": [
+    40,
+    30,
+    50
+   ],
+   "rate": 12,
+   "radius": 0.1,
+   "from": 0.2,
+   "to": 1.0
+  },
+  {
+   "type": "ring",
+   "anchor": "mid",
+   "particle": "dust",
+   "rgb": [
+    255,
+    90,
+    40
+   ],
+   "rate": 14,
+   "radius": 0.5,
+   "speed": 0.3,
+   "size": 0.55,
+   "tilt": 0.0
+  },
+  {
+   "type": "drip",
+   "anchor": "tip",
+   "particle": "dripping_lava",
+   "rgb": [
+    255,
+    110,
+    40
+   ],
+   "rate": 6,
+   "radius": 0.3
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "flame",
+   "rgb": [
+    255,
+    100,
+    40
+   ],
+   "rate": 10,
+   "radius": 1.0,
+   "speed": 0.07,
+   "size": 0.5
+  },
+  {
+   "type": "arc",
+   "anchor": "tip",
+   "particle": "lava",
+   "rgb": [
+    255,
+    170,
+    80
+   ],
+   "rate": 4,
+   "radius": 0.5
+  }
+ ],
+ "hand": {
+  "length": 1.62,
+  "tilt": 26
+ },
+ "swing": {
+  "pattern": "flame",
+  "particle": "flame",
+  "rgb": [
+   255,
+   100,
+   40
+  ],
+  "rgb2": [
+   40,
+   30,
+   50
+  ],
+  "count": 5,
+  "size": 0.8,
+  "reach": 1.7
+ },
+ "acts": [
+  {
+   "act": "hellblaze_slash",
+   "id": 1778498801,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 1.6,
+     "rgb": [
+      255,
+      100,
+      40
+     ],
+     "tex": "flame_trail",
+     "dur": 14
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 8,
+     "len": 3.6,
+     "rgb": [
+      255,
+      170,
+      80
+     ],
+     "tex": "flame_trail",
+     "dur": 14
+    },
+    {
+     "t": "flash",
+     "at": "to",
+     "size": 3.0,
+     "rgb": [
+      255,
+      200,
+      120
+     ],
+     "dur": 6
+    }
+   ]
+  },
+  {
+   "act": "demon_mark",
+   "id": 854570833,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 6.0,
+     "rgb": [
+      255,
+      70,
+      40
+     ],
+     "tex": "devil_circle",
+     "dur": 44,
+     "spin": 0.06
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 7.0,
+     "rgb": [
+      255,
+      110,
+      40
+     ],
+     "dur": 26,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "column",
+     "at": "caster",
+     "h": 10.0,
+     "r": 0.9,
+     "rgb": [
+      255,
+      90,
+      40
+     ],
+     "dur": 24
+    }
+   ]
+  },
+  {
+   "act": "black_inferno",
+   "id": 1867767442,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 9.0,
+     "rgb": [
+      255,
+      70,
+      40
+     ],
+     "tex": "devil_circle",
+     "dur": 44,
+     "spin": -0.07
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 9.0,
+     "h": 12.0,
+     "n": 22,
+     "len": 4.0,
+     "rgb": [
+      255,
+      110,
+      40
+     ],
+     "tex": "flame_trail",
+     "dur": 40
+    },
+    {
+     "t": "burst",
+     "at": "caster",
+     "n": 12,
+     "len": 8.0,
+     "rgb": [
+      255,
+      170,
+      80
+     ],
+     "tex": "flame_trail",
+     "dur": 24
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 8.0,
+     "rgb": [
+      255,
+      200,
+      120
+     ],
+     "dur": 8
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.hellblaze_the_demon_sin.hum",
+ "note": "a demon sin: black flames turning round the blade, a thorn ring, the Sin's eye"
+}

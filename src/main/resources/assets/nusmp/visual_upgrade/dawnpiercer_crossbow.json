@@ -1,0 +1,315 @@
+{
+ "id": "dawnpiercer_crossbow",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   255,
+   214,
+   110
+  ],
+  "secondary": [
+   255,
+   246,
+   214
+  ]
+ },
+ "maps": {
+  "skin": "up/dawnpiercer_crossbow.png",
+  "glow": "up/dawnpiercer_crossbow_glow.png",
+  "veins": "up/dawnpiercer_crossbow_veins.png"
+ },
+ "lod": {
+  "mesh": "up/dawnpiercer_crossbow_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/dawnpiercer_crossbow_lod.png",
+  "glow": "up/dawnpiercer_crossbow_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    255,
+    214,
+    110
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    246,
+    214
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "mid",
+   "particle": "end_rod",
+   "rgb": [
+    255,
+    236,
+    160
+   ],
+   "rate": 14,
+   "radius": 0.45,
+   "rise": 0.03
+  },
+  {
+   "type": "ring",
+   "anchor": "mid",
+   "particle": "dust",
+   "rgb": [
+    255,
+    214,
+    110
+   ],
+   "rate": 16,
+   "radius": 0.5,
+   "speed": 0.22,
+   "size": 0.5,
+   "tilt": 90.0
+  },
+  {
+   "type": "shaft",
+   "anchor": "mid",
+   "particle": "end_rod",
+   "rgb": [
+    255,
+    246,
+    214
+   ],
+   "rate": 8,
+   "height": 2.4
+  },
+  {
+   "type": "edge",
+   "anchor": "tip",
+   "particle": "electric_spark",
+   "rgb": [
+    255,
+    236,
+    160
+   ],
+   "rate": 8,
+   "radius": 0.35,
+   "from": 0.0,
+   "to": 1.0
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    255,
+    214,
+    110
+   ],
+   "rate": 10,
+   "radius": 1.0,
+   "speed": 0.06,
+   "size": 0.5
+  },
+  {
+   "type": "arc",
+   "anchor": "mid",
+   "particle": "glow",
+   "rgb": [
+    255,
+    236,
+    160
+   ],
+   "rate": 4,
+   "radius": 0.5
+  }
+ ],
+ "hand": {
+  "length": 1.1,
+  "tilt": 10
+ },
+ "swing": {
+  "pattern": "ray",
+  "particle": "end_rod",
+  "rgb": [
+   255,
+   214,
+   110
+  ],
+  "rgb2": [
+   255,
+   246,
+   214
+  ],
+  "count": 3,
+  "size": 0.7,
+  "reach": 1.1
+ },
+ "acts": [
+  {
+   "act": "piercing_bolt",
+   "id": 1371930004,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 0.9,
+     "rgb": [
+      255,
+      246,
+      214
+     ],
+     "tex": "air_streak",
+     "dur": 10
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 0.7,
+     "h": 8.0,
+     "turns": 5,
+     "n": 18,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "dur": 12
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 10,
+     "len": 3.4,
+     "rgb": [
+      255,
+      236,
+      160
+     ],
+     "tex": "spark",
+     "dur": 12
+    }
+   ]
+  },
+  {
+   "act": "sunrise_volley",
+   "id": 1590925749,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 5.0,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "tex": "magic_circle",
+     "dur": 28,
+     "spin": 0.1
+    },
+    {
+     "t": "burst",
+     "at": "caster",
+     "n": 14,
+     "len": 7.0,
+     "rgb": [
+      255,
+      236,
+      160
+     ],
+     "tex": "air_streak",
+     "dur": 20
+    },
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 1.4,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "dur": 12
+    }
+   ]
+  },
+  {
+   "act": "dawns_net",
+   "id": 1797388980,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "to",
+     "r": 9.0,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "tex": "barrier_hex_grid",
+     "dur": 44,
+     "spin": 0.03
+    },
+    {
+     "t": "rain",
+     "at": "to",
+     "r": 9.0,
+     "h": 14.0,
+     "n": 22,
+     "len": 5.0,
+     "rgb": [
+      255,
+      236,
+      160
+     ],
+     "tex": "air_streak",
+     "dur": 36
+    },
+    {
+     "t": "ring",
+     "at": "to",
+     "r0": 1.0,
+     "r1": 10.0,
+     "rgb": [
+      255,
+      246,
+      214
+     ],
+     "dur": 24,
+     "tex": "rune_ring"
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.dawnpiercer_crossbow.hum",
+ "note": "a sun in a crossbow: a turning halo of sixteen rays, rays ribbed across the limbs"
+}

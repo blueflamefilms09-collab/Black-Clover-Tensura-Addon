@@ -1,0 +1,307 @@
+{
+ "id": "kusanagi_the_grass_cutter",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   110,
+   255,
+   190
+  ],
+  "secondary": [
+   255,
+   226,
+   120
+  ]
+ },
+ "maps": {
+  "skin": "up/kusanagi_the_grass_cutter.png",
+  "glow": "up/kusanagi_the_grass_cutter_glow.png",
+  "veins": "up/kusanagi_the_grass_cutter_veins.png"
+ },
+ "lod": {
+  "mesh": "up/kusanagi_the_grass_cutter_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/kusanagi_the_grass_cutter_lod.png",
+  "glow": "up/kusanagi_the_grass_cutter_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    110,
+    255,
+    190
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    226,
+    120
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "edge",
+   "anchor": "blade",
+   "particle": "cloud",
+   "rgb": [
+    200,
+    255,
+    230
+   ],
+   "rate": 14,
+   "radius": 0.12,
+   "from": 0.2,
+   "to": 1.0
+  },
+  {
+   "type": "motes",
+   "anchor": "mid",
+   "particle": "happy_villager",
+   "rgb": [
+    110,
+    255,
+    190
+   ],
+   "rate": 8,
+   "radius": 0.55,
+   "rise": 0.02
+  },
+  {
+   "type": "ring",
+   "anchor": "mid",
+   "particle": "dust",
+   "rgb": [
+    170,
+    255,
+    220
+   ],
+   "rate": 16,
+   "radius": 0.6,
+   "speed": 0.3,
+   "size": 0.45,
+   "tilt": 0.0
+  },
+  {
+   "type": "orbit",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    255,
+    226,
+    120
+   ],
+   "rate": 8,
+   "radius": 0.4,
+   "speed": 0.45,
+   "size": 0.4,
+   "tilt": 50.0
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    120,
+    240,
+    180
+   ],
+   "rate": 12,
+   "radius": 1.1,
+   "speed": 0.08,
+   "size": 0.5
+  },
+  {
+   "type": "arc",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    220,
+    255,
+    240
+   ],
+   "rate": 4,
+   "radius": 0.6
+  }
+ ],
+ "hand": {
+  "length": 1.62,
+  "tilt": 24
+ },
+ "swing": {
+  "pattern": "wind",
+  "particle": "cloud",
+  "rgb": [
+   200,
+   255,
+   230
+  ],
+  "rgb2": [
+   110,
+   255,
+   190
+  ],
+  "count": 4,
+  "size": 0.9,
+  "reach": 1.8
+ },
+ "acts": [
+  {
+   "act": "wind_cut",
+   "id": 1230517320,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 1.4,
+     "rgb": [
+      170,
+      255,
+      220
+     ],
+     "tex": "wind_slash",
+     "dur": 12
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 8,
+     "len": 3.2,
+     "rgb": [
+      200,
+      255,
+      230
+     ],
+     "tex": "wind_slash",
+     "dur": 12
+    }
+   ]
+  },
+  {
+   "act": "cloud_step",
+   "id": 1452542669,
+   "recipe": [
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 0.4,
+     "r1": 4.5,
+     "rgb": [
+      200,
+      255,
+      230
+     ],
+     "dur": 16,
+     "tex": "glow"
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 1.2,
+     "h": 3.0,
+     "turns": 2,
+     "n": 14,
+     "rgb": [
+      170,
+      255,
+      220
+     ],
+     "dur": 16
+    },
+    {
+     "t": "orbit",
+     "at": "caster",
+     "r": 1.6,
+     "n": 8,
+     "rgb": [
+      110,
+      255,
+      190
+     ],
+     "tex": "wind_slash",
+     "dur": 16,
+     "spin": 0.4,
+     "y": 0.8,
+     "size": 0.9
+    }
+   ]
+  },
+  {
+   "act": "eightfold_cut",
+   "id": 1213695756,
+   "recipe": [
+    {
+     "t": "burst",
+     "at": "caster",
+     "n": 8,
+     "len": 9.0,
+     "rgb": [
+      170,
+      255,
+      220
+     ],
+     "tex": "wind_slash",
+     "dur": 20
+    },
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 7.0,
+     "rgb": [
+      110,
+      255,
+      190
+     ],
+     "tex": "magic_circle",
+     "dur": 30,
+     "spin": 0.1
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 10.0,
+     "rgb": [
+      255,
+      226,
+      120
+     ],
+     "dur": 20,
+     "tex": "rune_ring"
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.kusanagi_the_grass_cutter.hum",
+ "note": "the sword of the serpent's tail: eight beads, three wind rings, a sacred rope"
+}

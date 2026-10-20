@@ -210,6 +210,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.playermodel.PlayerModelRegistry.init(modEventBus);                  // 1.94.0: the player-model kit: every person of the arcs, the Zogratis family, the Avatars and the Hub on the vanilla player model (registered after the remodel's, so it is the last renderer of those types)
             com.newuniverse.nusmp.client.perf.PerfClient.init(modEventBus, modContainer);                       // 1.99.0: performance pass: nusmp-performance-client.toml, /nusmp perf, the client probe
             com.newuniverse.nusmp.client.vupgrade.godb.GodBUpgrade.init(modEventBus, modContainer);              // 1.102.0: visual upgrade of the God melee weapons (slice god_melee_b): nusmp-visualupgrade-god_melee_b-client.toml, ambient particles
+            com.newuniverse.nusmp.client.upgrade.UpgradeClient.init(modEventBus, modContainer);                // 1.102.0: visual upgrade: nusmp-visual-upgrade-client.toml, ambient layers and swing trails of the upgraded weapons
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
@@ -367,6 +368,7 @@ public class NUSMP {
         com.newuniverse.nusmp.mana.zone.ManaZoneBoot.init(modEventBus, modContainer);                           // 1.99.0: the Mana Zone (late-game) and the Grand Magic Zones: config, packets, data, events, self-tests mana.zone_gate and mana.zone_core
         com.newuniverse.nusmp.perf.PerfBoot.init(modEventBus, modContainer);                                      // 1.99.0: performance pass: nusmp-performance-common.toml, /multiverse perf, the server probe, self-test perf.core
         com.newuniverse.nusmp.vupgrade.GodBSelfTests.register();                                                  // 1.102.0: self-test visual.god_melee_b (the upgraded God melee weapons: tables, meshes, skins, fallback, level of detail)
+        com.newuniverse.nusmp.relics.upgrade.UpgradeSelfTest.register();                                          // 1.102.0: visual upgrade: self-test visual.god_melee_a
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy

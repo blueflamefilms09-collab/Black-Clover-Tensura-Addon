@@ -1,0 +1,319 @@
+{
+ "id": "leviathans_crown_trident",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   80,
+   230,
+   235
+  ],
+  "secondary": [
+   255,
+   140,
+   110
+  ]
+ },
+ "maps": {
+  "skin": "up/leviathans_crown_trident.png",
+  "glow": "up/leviathans_crown_trident_glow.png",
+  "veins": "up/leviathans_crown_trident_veins.png"
+ },
+ "lod": {
+  "mesh": "up/leviathans_crown_trident_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/leviathans_crown_trident_lod.png",
+  "glow": "up/leviathans_crown_trident_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    80,
+    230,
+    235
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    140,
+    110
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "tip",
+   "particle": "bubble",
+   "rgb": [
+    200,
+    245,
+    255
+   ],
+   "rate": 14,
+   "radius": 0.6,
+   "rise": 0.03
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    80,
+    230,
+    235
+   ],
+   "rate": 18,
+   "radius": 0.7,
+   "speed": 0.25,
+   "size": 0.55,
+   "tilt": 0.0
+  },
+  {
+   "type": "drip",
+   "anchor": "tip",
+   "particle": "dripping_water",
+   "rgb": [
+    120,
+    220,
+    255
+   ],
+   "rate": 8,
+   "radius": 0.45
+  },
+  {
+   "type": "orbit",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    255,
+    140,
+    110
+   ],
+   "rate": 6,
+   "radius": 0.5,
+   "speed": -0.3,
+   "size": 0.4,
+   "tilt": 35.0
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "bubble_pop",
+   "rgb": [
+    120,
+    220,
+    255
+   ],
+   "rate": 10,
+   "radius": 1.0,
+   "speed": 0.07,
+   "size": 0.5
+  },
+  {
+   "type": "shaft",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    200,
+    250,
+    255
+   ],
+   "rate": 4,
+   "height": 1.8
+  }
+ ],
+ "hand": {
+  "length": 3.2,
+  "tilt": 14
+ },
+ "swing": {
+  "pattern": "wave",
+  "particle": "dust",
+  "rgb": [
+   80,
+   230,
+   235
+  ],
+  "rgb2": [
+   225,
+   250,
+   255
+  ],
+  "count": 4,
+  "size": 0.7,
+  "reach": 2.4
+ },
+ "acts": [
+  {
+   "act": "tidal_lance",
+   "id": 1106748678,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 1.0,
+     "rgb": [
+      80,
+      230,
+      235
+     ],
+     "tex": "water_splash",
+     "dur": 12
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 1.0,
+     "h": 6.0,
+     "turns": 4,
+     "n": 16,
+     "rgb": [
+      200,
+      245,
+      255
+     ],
+     "dur": 14
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 8,
+     "len": 3.0,
+     "rgb": [
+      120,
+      220,
+      255
+     ],
+     "tex": "water_splash",
+     "dur": 14
+    }
+   ]
+  },
+  {
+   "act": "maelstrom",
+   "id": 1311427017,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 7.0,
+     "rgb": [
+      80,
+      230,
+      235
+     ],
+     "tex": "spirit_spiral",
+     "dur": 44,
+     "spin": 0.3
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 8.0,
+     "rgb": [
+      200,
+      245,
+      255
+     ],
+     "dur": 26,
+     "tex": "water_splash"
+    },
+    {
+     "t": "orbit",
+     "at": "caster",
+     "r": 4.0,
+     "n": 8,
+     "rgb": [
+      120,
+      220,
+      255
+     ],
+     "tex": "glow",
+     "dur": 44,
+     "spin": 0.25,
+     "y": 0.8,
+     "size": 0.9
+    }
+   ]
+  },
+  {
+   "act": "sea_kings_wrath",
+   "id": 465466710,
+   "recipe": [
+    {
+     "t": "column",
+     "at": "caster",
+     "h": 14.0,
+     "r": 1.4,
+     "rgb": [
+      80,
+      230,
+      235
+     ],
+     "dur": 30
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 10.0,
+     "h": 14.0,
+     "n": 24,
+     "len": 3.0,
+     "rgb": [
+      200,
+      245,
+      255
+     ],
+     "tex": "water_splash",
+     "dur": 36
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 12.0,
+     "rgb": [
+      255,
+      140,
+      110
+     ],
+     "dur": 24,
+     "tex": "rune_ring"
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.leviathans_crown_trident.hum",
+ "note": "a sea king's crown: wave rings, bubbles, pearls, shells and kelp"
+}

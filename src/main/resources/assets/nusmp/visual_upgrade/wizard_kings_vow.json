@@ -1,0 +1,331 @@
+{
+ "id": "wizard_kings_vow",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   130,
+   255,
+   170
+  ],
+  "secondary": [
+   255,
+   224,
+   120
+  ]
+ },
+ "maps": {
+  "skin": "up/wizard_kings_vow.png",
+  "glow": "up/wizard_kings_vow_glow.png",
+  "veins": "up/wizard_kings_vow_veins.png"
+ },
+ "lod": {
+  "mesh": "up/wizard_kings_vow_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/wizard_kings_vow_lod.png",
+  "glow": "up/wizard_kings_vow_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    130,
+    255,
+    170
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    255,
+    224,
+    120
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "mid",
+   "particle": "happy_villager",
+   "rgb": [
+    130,
+    255,
+    170
+   ],
+   "rate": 9,
+   "radius": 0.5,
+   "rise": 0.02
+  },
+  {
+   "type": "edge",
+   "anchor": "blade",
+   "particle": "end_rod",
+   "rgb": [
+    200,
+    255,
+    220
+   ],
+   "rate": 12,
+   "radius": 0.06,
+   "from": 0.25,
+   "to": 1.0
+  },
+  {
+   "type": "ring",
+   "anchor": "mid",
+   "particle": "dust",
+   "rgb": [
+    255,
+    224,
+    120
+   ],
+   "rate": 14,
+   "radius": 0.55,
+   "speed": 0.25,
+   "size": 0.5,
+   "tilt": 0.0
+  },
+  {
+   "type": "orbit",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    130,
+    255,
+    170
+   ],
+   "rate": 8,
+   "radius": 0.3,
+   "speed": -0.4,
+   "size": 0.45,
+   "tilt": 70.0
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    120,
+    235,
+    150
+   ],
+   "rate": 10,
+   "radius": 1.1,
+   "speed": 0.05,
+   "size": 0.5
+  },
+  {
+   "type": "shaft",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    220,
+    255,
+    235
+   ],
+   "rate": 3,
+   "height": 1.2
+  }
+ ],
+ "hand": {
+  "length": 1.22,
+  "tilt": 28
+ },
+ "swing": {
+  "pattern": "clover",
+  "particle": "dust",
+  "rgb": [
+   130,
+   255,
+   170
+  ],
+  "rgb2": [
+   255,
+   224,
+   120
+  ],
+  "count": 4,
+  "size": 0.65,
+  "reach": 1.4
+ },
+ "acts": [
+  {
+   "act": "clover_thrust",
+   "id": 1769943273,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 0.5,
+     "rgb": [
+      200,
+      255,
+      220
+     ],
+     "dur": 10
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 0.9,
+     "h": 5.0,
+     "turns": 3,
+     "n": 14,
+     "rgb": [
+      130,
+      255,
+      170
+     ],
+     "dur": 14
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 5,
+     "len": 3.0,
+     "rgb": [
+      255,
+      224,
+      120
+     ],
+     "tex": "shard",
+     "dur": 12
+    }
+   ]
+  },
+  {
+   "act": "magic_zone",
+   "id": 1467235188,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 7.0,
+     "rgb": [
+      130,
+      255,
+      170
+     ],
+     "tex": "elf_circle",
+     "dur": 44,
+     "spin": 0.04
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 7.5,
+     "rgb": [
+      255,
+      224,
+      120
+     ],
+     "dur": 24,
+     "tex": "rune_ring"
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 6.5,
+     "h": 7.0,
+     "n": 14,
+     "len": 1.6,
+     "rgb": [
+      170,
+      255,
+      200
+     ],
+     "tex": "mana_mote",
+     "dur": 40
+    }
+   ]
+  },
+  {
+   "act": "kings_judgement",
+   "id": 1212067495,
+   "recipe": [
+    {
+     "t": "column",
+     "at": "caster",
+     "h": 16.0,
+     "r": 1.0,
+     "rgb": [
+      200,
+      255,
+      220
+     ],
+     "dur": 22
+    },
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 9.0,
+     "rgb": [
+      255,
+      224,
+      120
+     ],
+     "tex": "magic_circle",
+     "dur": 30,
+     "spin": -0.08
+    },
+    {
+     "t": "orbit",
+     "at": "caster",
+     "r": 3.0,
+     "n": 5,
+     "rgb": [
+      130,
+      255,
+      170
+     ],
+     "tex": "elf_circle",
+     "dur": 30,
+     "spin": 0.22,
+     "y": 2.2,
+     "size": 1.1
+    },
+    {
+     "t": "flash",
+     "at": "caster",
+     "size": 7.0,
+     "rgb": [
+      235,
+      255,
+      245
+     ],
+     "dur": 8
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.wizard_kings_vow.hum",
+ "note": "a Wizard King's rapier: mana petals, a five-leaf crest and the cape"
+}

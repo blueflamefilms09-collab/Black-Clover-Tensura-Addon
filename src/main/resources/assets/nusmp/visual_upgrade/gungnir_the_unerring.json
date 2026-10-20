@@ -1,0 +1,333 @@
+{
+ "id": "gungnir_the_unerring",
+ "version": 1,
+ "slice": "god_melee_a",
+ "grade": "god",
+ "palette": {
+  "primary": [
+   255,
+   226,
+   130
+  ],
+  "secondary": [
+   130,
+   180,
+   255
+  ]
+ },
+ "maps": {
+  "skin": "up/gungnir_the_unerring.png",
+  "glow": "up/gungnir_the_unerring_glow.png",
+  "veins": "up/gungnir_the_unerring_veins.png"
+ },
+ "lod": {
+  "mesh": "up/gungnir_the_unerring_lod",
+  "near": 12.0,
+  "glow_off": 24.0,
+  "skin": "up/gungnir_the_unerring_lod.png",
+  "glow": "up/gungnir_the_unerring_lod_glow.png"
+ },
+ "passes": [
+  "skin",
+  "glow_core",
+  "veins_flow",
+  "halo_shell"
+ ],
+ "pass_cfg": {
+  "veins": {
+   "rgb": [
+    255,
+    226,
+    130
+   ],
+   "speed": 0.55,
+   "wavelength": 26.0,
+   "min": 0.25,
+   "max": 1.0
+  },
+  "halo": {
+   "rgb": [
+    130,
+    180,
+    255
+   ],
+   "scale": 1.045,
+   "alpha_min": 18,
+   "alpha_max": 70,
+   "speed": 0.09
+  },
+  "flicker": {
+   "amount": 0.12,
+   "speed": 0.7
+  }
+ },
+ "idle": [
+  "glow_breath",
+  "orbit_parts",
+  "flow_veins",
+  "halo_breath",
+  "rune_flicker"
+ ],
+ "ambient": [
+  {
+   "type": "motes",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    255,
+    226,
+    130
+   ],
+   "rate": 14,
+   "radius": 0.5,
+   "rise": 0.03
+  },
+  {
+   "type": "ring",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    255,
+    226,
+    130
+   ],
+   "rate": 16,
+   "radius": 0.7,
+   "speed": 0.2,
+   "size": 0.55,
+   "tilt": 0.0
+  },
+  {
+   "type": "edge",
+   "anchor": "blade",
+   "particle": "electric_spark",
+   "rgb": [
+    255,
+    240,
+    190
+   ],
+   "rate": 12,
+   "radius": 0.08,
+   "from": 0.8,
+   "to": 1.0
+  },
+  {
+   "type": "orbit",
+   "anchor": "tip",
+   "particle": "dust",
+   "rgb": [
+    130,
+    180,
+    255
+   ],
+   "rate": 8,
+   "radius": 0.9,
+   "speed": -0.2,
+   "size": 0.45,
+   "tilt": 25.0
+  },
+  {
+   "type": "shaft",
+   "anchor": "tip",
+   "particle": "end_rod",
+   "rgb": [
+    255,
+    244,
+    200
+   ],
+   "rate": 5,
+   "height": 2.2
+  },
+  {
+   "type": "ground",
+   "anchor": "feet",
+   "particle": "dust",
+   "rgb": [
+    255,
+    214,
+    110
+   ],
+   "rate": 10,
+   "radius": 1.0,
+   "speed": 0.05,
+   "size": 0.5
+  }
+ ],
+ "hand": {
+  "length": 3.2,
+  "tilt": 14
+ },
+ "swing": {
+  "pattern": "thrust",
+  "particle": "end_rod",
+  "rgb": [
+   255,
+   226,
+   130
+  ],
+  "rgb2": [
+   130,
+   180,
+   255
+  ],
+  "count": 3,
+  "size": 0.7,
+  "reach": 2.4
+ },
+ "acts": [
+  {
+   "act": "unerring_cast",
+   "id": 323153856,
+   "recipe": [
+    {
+     "t": "beam",
+     "from": "caster",
+     "to": "to",
+     "w": 0.7,
+     "rgb": [
+      255,
+      236,
+      170
+     ],
+     "dur": 12
+    },
+    {
+     "t": "spiral",
+     "at": "caster",
+     "r": 0.8,
+     "h": 6.0,
+     "turns": 4,
+     "n": 16,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "dur": 14
+    },
+    {
+     "t": "burst",
+     "at": "to",
+     "n": 8,
+     "len": 4.0,
+     "rgb": [
+      255,
+      226,
+      130
+     ],
+     "tex": "spark",
+     "dur": 14
+    },
+    {
+     "t": "glyph",
+     "at": "to",
+     "r": 2.6,
+     "rgb": [
+      255,
+      214,
+      110
+     ],
+     "tex": "rune_ring",
+     "dur": 22,
+     "spin": 0.1
+    }
+   ]
+  },
+  {
+   "act": "allfathers_pledge",
+   "id": 911106568,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 6.0,
+     "rgb": [
+      255,
+      226,
+      130
+     ],
+     "tex": "magic_circle",
+     "dur": 44,
+     "spin": 0.05
+    },
+    {
+     "t": "column",
+     "at": "caster",
+     "h": 14.0,
+     "r": 0.8,
+     "rgb": [
+      255,
+      240,
+      190
+     ],
+     "dur": 30
+    },
+    {
+     "t": "orbit",
+     "at": "caster",
+     "r": 2.6,
+     "n": 2,
+     "rgb": [
+      40,
+      40,
+      60
+     ],
+     "tex": "glow",
+     "dur": 44,
+     "spin": 0.16,
+     "y": 3.0,
+     "size": 1.4
+    }
+   ]
+  },
+  {
+   "act": "valhalla_rain",
+   "id": 777814628,
+   "recipe": [
+    {
+     "t": "glyph",
+     "at": "caster",
+     "r": 9.0,
+     "rgb": [
+      255,
+      226,
+      130
+     ],
+     "tex": "magic_circle",
+     "dur": 44,
+     "spin": -0.06
+    },
+    {
+     "t": "rain",
+     "at": "caster",
+     "r": 10.0,
+     "h": 18.0,
+     "n": 26,
+     "len": 5.0,
+     "rgb": [
+      255,
+      236,
+      170
+     ],
+     "tex": "air_streak",
+     "dur": 40
+    },
+    {
+     "t": "ring",
+     "at": "caster",
+     "r0": 1.0,
+     "r1": 11.0,
+     "rgb": [
+      130,
+      180,
+      255
+     ],
+     "dur": 24,
+     "tex": "rune_ring"
+    }
+   ]
+  }
+ ],
+ "ambient_sound": "nusmp:item.upgrade.gungnir_the_unerring.hum",
+ "note": "Odin's spear: two ravens, nine rune stones, a head that carries its own name"
+}
