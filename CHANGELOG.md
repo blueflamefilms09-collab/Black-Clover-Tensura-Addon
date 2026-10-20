@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.100.0] — Requip Magic abilities and the performance pass
+
+### NEW
+- **Requip Magic itself** (new modes 15 to 27 of Requip: The Knight, appended after Dismiss, so every saved mode keeps its index): a **Requip Armoury** (pocket dimension, 54 cells, its own window and key, capacity grows with mastery and EP), **six Loadouts** swapped in one press (the old set goes into the Armoury, never to the ground), **Requip: Blade**, **Barrage** (8 to 24 spectral swords, damage from the weapon's grade, boss-capped, allies never hit), **Strike** (throw and recall), **Partial Armour** (wear only chosen piece groups of an Erza armour), **seven finishers** (Dimension Cut, Circle Sword, Blumenblatt, Titania's Rampage, Dance of the Swords, Sea of Swords, Moonlight Cross) and the passives Instant-Change, Pocket Capacity, Weapon Affinity and Requip Reflex. `docs/requip_magic.md`.
+- **Performance pass**: distance LOD, culling and a frame vertex budget for VFX; per-quad and per-cube allocations removed in the effect, weapon and geo renderers; cached locations and models in the aura, relic, Foundry and Abyssal renderers; effect-packet and particle budgets per tick; scan intervals as config; a probe (`/multiverse perf on|off|report`, client `/nusmp perf`) that shows which handler is slow. Defaults give the same result near the camera. Config: `nusmp-performance-common.toml` and `nusmp-performance-client.toml`. `docs/performance_1_99.md`.
+
+### REPLACED
+- The aura payload style field is now a VarInt (same single byte below 128) so the Partial Armour mask fits. Per-frame allocation chains in the renderers listed above (same output, checked bit for bit by tests).
+
+### KEPT
+- The 14 armours, their attacks, Dismiss, the six weapons, every saved mode index, the Time Magic VFX.
+
+### Honest notes
+- Nothing has been run in the game or profiled: every performance figure is a static estimate, and the LOD distances are reasoned defaults. The Requip Barrage swords are the mod's blade shape plus particles, not a 3D copy of the held weapon. The Spirit and Demon-Slayer renderers, the squad and rift code were not part of the performance pass (listed in the doc as a second pass).
+
 ## [1.99.0] — Dungeon overhaul: bosses and arenas, squads and loot, rift pockets, hunger ban, mob sounds, Mana Zone, armour policy, Erza remake, Great Spirits, player-model humanoids
 
 ### NEW
