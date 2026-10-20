@@ -229,6 +229,18 @@ class SpiritDivePiecesTest {
     }
 
     @Test
+    void thePainterOnlyNamesTexturesThatExist() throws IOException {
+        String src = Files.readString(Path.of("").toAbsolutePath().resolve("src/main/java/com/newuniverse/nusmp/client/aura/SpiritDiveAura.java"), StandardCharsets.UTF_8);
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("AuraRender\\.tex\\(\"([a-z0-9_/]+)\"\\)").matcher(src);
+        int n = 0;
+        while (m.find()) {
+            n++;
+            assertTrue(Files.isRegularFile(ASSETS.resolve("textures/" + m.group(1) + ".png")), "the painter names a texture that does not exist: " + m.group(1));
+        }
+        assertTrue(n >= 6, "the painter names its sprites with AuraRender.tex (found " + n + ")");
+    }
+
+    @Test
     void theNewClassesNeverTouchFoodOrHunger() throws IOException {
         String[] files = {"book/SpiritDivePieces.java", "book/SpiritDiveForm.java", "client/aura/SpiritDiveAura.java", "client/SpiritLooks.java", "client/GreatSpiritModels.java"};
         for (String f : files) {

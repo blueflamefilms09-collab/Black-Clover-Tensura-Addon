@@ -308,7 +308,7 @@ def mermaid():
         for i in range(nseg):
             name = "L%d_%d" % (k, i)
             sgn = 1.0 if x >= 0 else -1.0
-            rz = sgn * 7.0 * edge if i == 0 else 8.0 * math.cos(0.95 * i + k * 1.9) + sgn * 1.8 * edge * min(i, 6) / 3.0
+            rz = sgn * 7.0 * edge if i == 0 else 15.0 * math.cos(1.0 * i + k * 1.9) + sgn * 1.8 * edge * min(i, 6) / 3.0
             rx = 0.0 if i else 0.0
             p.bone(name, (x, py, depth), parent=prev, rotation=(rx, 0, rz))
             rest[name] = (rx, rz)
@@ -360,7 +360,7 @@ def mermaid():
     sine_rot(A, "move", "torso", L, 0, 3.0, 0.0, offset=(-10, 0, 0))
     sine_rot(A, "move", "head", L, 0, 2.0, 0.2, offset=(8, 0, 0))
     for i, n in enumerate(tails):
-        sine_rot(A, "move", n, L, 0, 9.0 + 0.5 * i, 0.07 * i, offset=(rest_tail[n], 0, 0))
+        sine_rot(A, "move", n, L, 0, 5.0 + 0.3 * i, 0.07 * i, offset=(rest_tail[n], 0, 0))
     for sx, tag in ((1, "l"), (-1, "r")):
         sine_rot(A, "move", "arm_" + tag, L, 0, 12.0, 0.0 if sx > 0 else 0.5, offset=(8, 0, sx * 30))
         A.rot("move", "arm_%s2" % tag, {0.0: (30, 0, sx * -8), L: (30, 0, sx * -8)})
@@ -378,7 +378,7 @@ def mermaid():
     A.rot("cast", "torso", {0.0: (5, 0, 0), 0.3: (-6, 0, 0), 0.8: (-2, 0, 0), L: (5, 0, 0)})
     for n in tails:
         b = rest_tail[n]
-        A.rot("cast", n, {0.0: (b, 0, 0), 0.3: (b - 12, 0, 0), 0.55: (b + 10, 0, 0), L: (b, 0, 0)})
+        A.rot("cast", n, {0.0: (b, 0, 0), 0.3: (b - 2.5, 0, 0), 0.55: (b + 2.0, 0, 0), L: (b, 0, 0)})
     for n in locks:
         i = hair_index(n)
         rx0, rz0 = rest[n]

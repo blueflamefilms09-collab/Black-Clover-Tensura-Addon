@@ -222,9 +222,9 @@ def wind_crown(part, out):
             ang = math.radians(phi)
             cx, cz = sg * R * math.sin(ang), -R * math.cos(ang)
             h = 6.2 if i % 2 == 0 else 4.4
-            stepped_spike(p, "halo", (cx, 32.6, cz), "+y", h, 1.7, W_LEAF if i % 2 else W_PLATE, steps=3, thick=1.1)
-        for i in range(9):
-            ang = math.radians(10 + i * 20.0)
+            stepped_spike(p, "halo", (cx, 32.6, cz), "+y", h, 1.7, W_LEAF if i % 2 else W_PLATE, steps=2, thick=1.1)
+        for i in range(8):
+            ang = math.radians(12 + i * 22.0)
             p.box("halo", (sg * R * math.sin(ang) - 1.0, 32.2, -R * math.cos(ang) - 1.0), (2.0, 0.8, 2.0), W_GOLD, d=3)
     else:
         stepped_spike(p, "halo", (0, 32.6, -R), "+y", 9.0, 2.0, W_LEAF, steps=4, thick=1.2)                  # the tall front leaf
@@ -246,10 +246,10 @@ def wind_ring(side, out):
     a.clip("idle", length=4.0, loop=True)
     cx = 6.0 if side else -6.0
     p.bone("ring", (cx, 14.4, 0), parent="root")
-    ring_of(p, "ring", cx, 14.4, 0.0, 4.6, 12, (2.2, 0.7, 2.2), W_GOLD)
-    ring_of(p, "ring", cx, 14.4, 0.0, 3.5, 8, (1.3, 0.5, 1.3), W_PLATE)
-    for i in range(4):
-        ang = i * TAU / 4
+    ring_of(p, "ring", cx, 14.4, 0.0, 4.6, 10, (2.8, 0.7, 2.8), W_GOLD)
+    ring_of(p, "ring", cx, 14.4, 0.0, 3.5, 6, (1.8, 0.5, 1.8), W_PLATE)
+    for i in range(3):
+        ang = i * TAU / 3
         p.box("ring", (cx + 5.2 * math.cos(ang) - 0.5, 14.4 - 0.2, 5.2 * math.sin(ang) - 0.5), (1.0, 2.6, 1.0), W_LEAF)
     spin_y(a, "idle", "ring", 4.0, turns=1, steps=8)
     p.save(a)

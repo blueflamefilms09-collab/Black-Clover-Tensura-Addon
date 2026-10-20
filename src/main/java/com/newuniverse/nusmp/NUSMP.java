@@ -353,6 +353,7 @@ public class NUSMP {
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy
+        com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TimeBook::passiveTick);                    // 0.49: Time Magic's passive every tick               // 0.48: book upkeep without relying on skill ticks
         // 0.53: the hook point of the 37 attributes (passives, buffs that last, damage rewrites; see book.ext.AttributeEvents)

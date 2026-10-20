@@ -55,6 +55,8 @@ public final class SpiritDiveAura {
     private static final ResourceLocation BIT_FIRE = AuraRender.tex("particle/flamefx_ember"), BIT_WATER = AuraRender.tex("particle/waterfx_drop"),
             BIT_EARTH = AuraRender.tex("particle/earthfam_rock_dust");
 
+    private static final ModelPart[] PARTS = new ModelPart[12];
+    private static final boolean[] WAS = new boolean[12];
     private static final Map<String, GeoSpec> SPECS = new HashMap<>();
     private static final Map<String, Def> DEFS = new HashMap<>();
 
@@ -96,8 +98,7 @@ public final class SpiritDiveAura {
 
     // ------------------------------------------------------------------ the painter
     private static void paint(AuraContext c) {
-        float f = c.fade();
-        if (f <= 0.002f) return;
+        if (c.left() <= 0.01f) return;                                                            // (no fade test: an upgrade restarts the clock, and the pieces fade by themselves)
         int style = c.style();
         Element el = SpiritDivePieces.element(style);
         Stage st = SpiritDivePieces.stage(style);
@@ -127,8 +128,10 @@ public final class SpiritDiveAura {
         String n = shellName(el);
         float age = c.age();
         PlayerModel<AbstractClientPlayer> m = c.model();
-        ModelPart[] all = {m.head, m.hat, m.body, m.jacket, m.rightArm, m.rightSleeve, m.leftArm, m.leftSleeve, m.rightLeg, m.rightPants, m.leftLeg, m.leftPants};
-        boolean[] was = new boolean[all.length];
+        ModelPart[] all = PARTS;                                                              // scratch arrays: the render thread is the only user and the method does not re-enter
+        all[0] = m.head; all[1] = m.hat; all[2] = m.body; all[3] = m.jacket; all[4] = m.rightArm; all[5] = m.rightSleeve;
+        all[6] = m.leftArm; all[7] = m.leftSleeve; all[8] = m.rightLeg; all[9] = m.rightPants; all[10] = m.leftLeg; all[11] = m.leftPants;
+        boolean[] was = WAS;
         for (int i = 0; i < all.length; i++) was[i] = all[i].visible;
         try {
             all[0].visible = false;                                                           // the face stays the player's own
@@ -225,7 +228,7 @@ public final class SpiritDiveAura {
 
     // ------------------------------------------------------------------ the ring on the ground, the mana flowing in and the bits rising
     private static void extras(AuraContext c, Element el, Stage st, float pulse) {
-        float f = WaterAuraRig.forge(c, 0f);
+        float f = st == Stage.UPGRADE ? EquipAnimation.alpha(EquipAnimation.assembled(1e4f, c.left(), 0f)) : WaterAuraRig.forge(c, 0f);          // an upgrade keeps the ring and the motes steady
         if (f <= 0.01f) return;
         float age = c.age();
         PoseStack pose = c.pose();
