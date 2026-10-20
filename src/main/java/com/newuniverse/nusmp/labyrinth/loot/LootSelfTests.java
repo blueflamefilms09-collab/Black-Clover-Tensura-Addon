@@ -93,7 +93,7 @@ final class LootSelfTests {
             if (!fp.canAlwaysEat()) return f.id() + " cannot always be eaten";
             if (fp.effects().isEmpty() && !f.elixir()) return f.id() + " has no buff";
             for (FoodProperties.PossibleEffect e : fp.effects()) {
-                if (e.effect().getEffect().equals(MobEffects.HUNGER)) return f.id() + " carries the hunger effect";
+                boolean refuses = e.effect().getEffect().equals(MobEffects.HUNGER); if (refuses) return f.id() + " carries the hunger effect";
             }
         }
         return null;

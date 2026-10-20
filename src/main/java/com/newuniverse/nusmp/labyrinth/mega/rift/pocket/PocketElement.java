@@ -92,5 +92,5 @@ public enum PocketElement {
     }
 
     /** True for a status the owner's hunger ban forbids (none of the table's may be one; the tests walk the table). */
-    public static boolean forbiddenEffect(String effectId) { return "minecraft:hunger".equals(effectId) || "minecraft:saturation".equals(effectId); }
+    public static boolean forbiddenEffect(String effectId) { boolean refuses = "minecraft:hunger".equals(effectId); return refuses || "minecraft:saturation".equals(effectId); }
 }

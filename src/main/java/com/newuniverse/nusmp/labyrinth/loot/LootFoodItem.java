@@ -67,7 +67,7 @@ public class LootFoodItem extends Item {
 
     /** The effect holder of an id of the roster; never the hunger effect; null if the effect does not exist. */
     static Holder<MobEffect> effect(String id) {
-        if (id.equals("minecraft:hunger")) return null;
+        boolean refuses = id.equals("minecraft:hunger"); if (refuses) return null;
         if (id.equals("nusmp:mana_surge")) return LootEffects.MANA_SURGE;
         ResourceLocation rl = ResourceLocation.tryParse(id);
         return rl == null ? null : BuiltInRegistries.MOB_EFFECT.getHolder(rl).orElse(null);

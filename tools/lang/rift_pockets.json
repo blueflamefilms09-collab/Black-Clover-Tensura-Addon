@@ -278,5 +278,18 @@
   "pocket.nusmp.verdant_reliquary.mob.thorn_stalker": "Thorn Stalker",
   "pocket.nusmp.verdant_reliquary.name": "Verdant Reliquary",
   "pocket.nusmp.verdant_reliquary.seal": "Plant",
-  "pocket.nusmp.verdant_reliquary.sigil": "Seed Sigil"
+  "pocket.nusmp.verdant_reliquary.sigil": "Seed Sigil",
+  "biome.nusmp.pocket_umbral_catacombs": "Umbral Catacombs",
+  "biome.nusmp.pocket_crimson_abattoir": "Crimson Abattoir",
+  "biome.nusmp.pocket_mirrored_halls": "Mirrored Halls",
+  "biome.nusmp.pocket_frozen_cathedral": "Frozen Cathedral",
+  "biome.nusmp.pocket_stormspire_aerie": "Stormspire Aerie",
+  "biome.nusmp.pocket_verdant_reliquary": "Verdant Reliquary",
+  "biome.nusmp.pocket_starfall_archive": "Starfall Archive",
+  "biome.nusmp.pocket_venom_hive": "Venom Hive",
+  "biome.nusmp.pocket_drowned_observatory": "Drowned Observatory",
+  "biome.nusmp.pocket_gilded_crypt": "Gilded Crypt",
+  "biome.nusmp.pocket_ember_sanctum": "Ember Sanctum",
+  "biome.nusmp.pocket_clockwork_vault": "Clockwork Vault",
+  "biome.nusmp.pocket_radiant_basilica": "Radiant Basilica"
 }
