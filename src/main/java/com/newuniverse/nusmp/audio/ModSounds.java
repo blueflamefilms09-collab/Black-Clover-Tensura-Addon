@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.audio;
 
 import com.newuniverse.nusmp.NUSMP;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -42,7 +43,8 @@ public final class ModSounds {
         return h.get();
     }
 
+    /** The registry holder of the event (what {@code PlayLevelSoundEvent#setSound} wants; the reference holder, so the packet carries a registry id, not a copy of the event). */
     public static Holder<SoundEvent> holder(String family, Cue cue) {
-        return EVENTS.get(MobSoundSet.eventId(MobSoundSet.has(family) ? family : MobSoundSet.DEFAULT_FAMILY, cue));
+        return BuiltInRegistries.SOUND_EVENT.wrapAsHolder(event(family, cue));
     }
 }

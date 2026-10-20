@@ -26,7 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *       central refusal; the Hunger effect may only ever be REMOVED;</li>
  *   <li>uses the config keys or helpers of the removed clocks ({@code HUNGER_DRAIN}, {@code hungerDrain}, {@code extraExhaustion}, {@code GloomClock.starving},
  *       {@code STARVING_FOOD}), in code or in the resources;</li>
- *   <li>hurts with the starve damage type outside the creature that has its own hunger meter, or feeds a negative amount.</li>
+ *   <li>hurts with the starve damage type outside the creature that has its own hunger meter, or feeds a negative amount;</li>
+ *   <li>ships a damage type whose {@code exhaustion} is above zero (every hit it lands would drain food).</li>
  * </ol>
  * Server self-tests ({@code *SelfTests.java}) may set a fake player's food as a fixture (they never ship a mechanic), but they too may not call the two exhaustion adders.
  * See {@code docs/labyrinth/hunger_ban.md}.
@@ -133,6 +134,18 @@ class NoHungerDrainTest {
             }
         }
         assertTrue(bad.isEmpty(), "the removed hunger clocks (and their config key) must not come back: " + bad);
+    }
+
+    @Test
+    void noDamageTypeOfTheModAddsExhaustion() throws IOException {
+        List<String> bad = new ArrayList<>();
+        try (Stream<Path> res = Files.walk(RES.resolve("data"))) {
+            for (Path f : (Iterable<Path>) res.filter(x -> x.toString().replace('\\', '/').contains("/damage_type/") && x.toString().endsWith(".json"))::iterator) {
+                Matcher m = Pattern.compile("\"exhaustion\"\\s*:\\s*([0-9.eE+-]+)").matcher(Files.readString(f));
+                if (m.find() && Double.parseDouble(m.group(1)) > 0.0) bad.add(f + ": exhaustion " + m.group(1));
+            }
+        }
+        assertTrue(bad.isEmpty(), "the hunger ban: a damage type's exhaustion is food drained by every hit it lands: " + bad);
     }
 
     @Test

@@ -74,7 +74,8 @@ Fey Honey, Wave 16 chalk and saturation, Wave 17 meals, Wave 18 top-up, Wave 22 
 * `NoHungerDrainTest` (a source scan of `src/main/java`, comments stripped): no `causeFoodExhaustion` / `addExhaustion` anywhere; `setFoodLevel`, `setSaturation` and
   `setExhaustion` only in an allowlist of files that RESTORE the bar, with a pinned call count per file and no subtraction in a food or saturation argument; the Hunger
   effect may only be removed, detected or refused; the removed clock's names and the `hungerDrain` key are gone from code and resources; starve damage only on the creature
-  with its own hunger meter; no negative meals. A new file that needs a food writer must be added to `WRITERS` with its reason.
+  with its own hunger meter; no negative meals; no shipped damage type with an `exhaustion` above zero (every hit it landed would drain food; `conceptual_severance` is 0.0). A new file that needs a
+  food writer must be added to `WRITERS` with its reason.
 * `dungeon.nohunger` (server self-test): sets a stand-in player's bar to food 12 / saturation 3.0 / exhaustion 1.25, arms `HungerBan.guard`, then drives 40 seconds of the gloom
   clock, a trap mechanic made of `starve` and an `effect` line for `minecraft:hunger`, the effect-by-id paths of puzzles, relics and skill lines, the raw-meat sickness effect
   and the monster-meat food components; after each step the guard says whether the bar got worse. The rest and curse triggers are asserted in `safe.rest_short`, `safe.rest_long`
