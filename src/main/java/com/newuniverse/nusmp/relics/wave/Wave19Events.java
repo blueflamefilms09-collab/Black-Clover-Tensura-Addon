@@ -102,7 +102,7 @@ final class Wave19Events {
         Wave19Util.say(p, "Wild magic: " + Wave19Surge.line(s));
     }
 
-    /** The flaws of the title: a voice in the bath, a clumsy hand on the wheel, a little hunger for all the volunteering. */
+    /** The flaws of the title: a voice in the bath, a clumsy hand on the wheel (and, since the 1.99.0 hunger ban, no hunger for all the volunteering). */
     private static void mugPass(ServerPlayer p, CompoundTag d) {
         long now = p.level().getGameTime();
         if (d.getLong(Wave19Goods.K_MUG) <= now) {
@@ -110,8 +110,7 @@ final class Wave19Events {
             Wave19Util.tell(p, "Mug of The Boss: the title fades. Back to being nobody in particular.", ChatFormatting.GRAY);
             return;
         }
-        p.causeFoodExhaustion(0.05f);
-        int second = p.tickCount / 20;
+        int second = p.tickCount / 20;                                          // 1.99.0, the hunger ban: the mug no longer adds a little hunger each tick
         ServerLevel sl = p.serverLevel();
         if (p.isInWater() && second % 4 == 0) {
             RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 2.3, p.getZ(), 3, 0.4, 0.2, 0.4, 1.0);

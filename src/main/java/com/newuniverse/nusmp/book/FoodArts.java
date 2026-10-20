@@ -48,9 +48,9 @@ public final class FoodArts {
         f.removeEffect(MobEffects.CONFUSION);
     }
 
-    /** Spoiled food on a target: hunger, poison, weakness (and nausea, except on bosses). */
+    /** Spoiled food on a target: sluggishness, poison, weakness (and nausea, except on bosses). 1.99.0, the hunger ban: the Hunger effect it gave is Mining Fatigue now. */
     static void spoil(LivingEntity t, int ticks) {
-        t.addEffect(new MobEffectInstance(MobEffects.HUNGER, ticks * 2, 2));
+        t.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, ticks * 2, 2));
         t.addEffect(new MobEffectInstance(MobEffects.POISON, ticks, 1));
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 0));
         if (!BalanceLaw.isBoss(t)) t.addEffect(new MobEffectInstance(MobEffects.CONFUSION, Math.min(ticks, 80), 0));

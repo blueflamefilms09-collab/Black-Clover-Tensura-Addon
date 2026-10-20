@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.dungeon.nexus.relic;
 
 /**
  * The Glutton's Chalice is alive (docs/living_dungeon.md section 7, Symbiotic Hunger): fed no biomass for three in-game days, it drinks from
- * its wearer, hunger first and magicules with it, until it is fed. This is its clock. Pure: times are game ticks.
+ * its wearer's magicules until it is fed (never the food bar since the 1.99.0 hunger ban). This is its clock. Pure: times are game ticks.
  */
 public final class HungerClock {
     private HungerClock() {}
@@ -11,7 +11,7 @@ public final class HungerClock {
     public static final long STARVE_AFTER = 72000L;
     /** Two days: the chalice stirs. Two and a half: it is hungry (a warning). Three: it feeds on its wearer. */
     public static final long STIRS_AT = 48000L, HUNGRY_AT = 60000L;
-    /** The wearer is looked at every {@code SWEEP} ticks; once starving it takes a food point every fourth sweep and a share of the pool every sweep. */
+    /** The wearer is looked at every {@code SWEEP} ticks; once starving it takes a share of the magicule pool every sweep ({@code FOOD_EVERY} is the old food cadence, unused since 1.99.0). */
     public static final int SWEEP = 20, FOOD_EVERY = 4;
     public static final double MAGICULE_SHARE = 0.005, MAGICULE_SHARE_LATE = 0.01;
     /** A day after it starts feeding it feeds harder. */
@@ -31,10 +31,11 @@ public final class HungerClock {
 
     public static Phase phase(long now, long fedAt) { return phase(since(now, fedAt)); }
 
-    /** Hunger points taken on this sweep. */
-    public static int foodLoss(long since) {
-        return since >= STARVE_AFTER && (since / SWEEP) % FOOD_EVERY == 0 ? 1 : 0;
-    }
+    /**
+     * Hunger points taken on this sweep: none, ever. The Chalice used to take a food point every fourth sweep once starving; the hunger ban (1.99.0) removed
+     * that, so its Symbiotic Hunger is magicules only ({@link #magiculeLoss}). The method stays so the clock keeps its shape.
+     */
+    public static int foodLoss(long since) { return 0; }
 
     /** The share of the maximum magicule pool taken on this sweep. */
     public static double magiculeLoss(long since) {

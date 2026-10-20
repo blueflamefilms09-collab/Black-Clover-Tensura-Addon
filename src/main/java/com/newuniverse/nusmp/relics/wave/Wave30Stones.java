@@ -403,7 +403,6 @@ final class Wave30Stones {
         Wave30Data.putLong(p, Wave30Data.SNAP_DAY, today + 1);
         Fx.addEffect(p, "minecraft:weakness", Wave30Tune.SNAP_TOLL_TICKS, 1);
         Fx.addEffect(p, "minecraft:mining_fatigue", Wave30Tune.SNAP_TOLL_TICKS, 1);
-        Fx.addEffect(p, "minecraft:hunger", Wave30Tune.SNAP_TOLL_TICKS, 1);
         Fx.ring(level, p.position(), 10.0, 0xFFD27A);
         Wave30Kit.shout(p, "THE SNAP: dust takes " + n + (n == 1 ? " foe" : " foes") + " by half. The Gauntlet's toll falls on you for thirty seconds.", ChatFormatting.GOLD);
     }

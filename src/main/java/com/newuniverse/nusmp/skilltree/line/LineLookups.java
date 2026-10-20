@@ -55,6 +55,7 @@ public final class LineLookups {
     public static boolean give(LivingEntity target, String word, int ticks, int amp, boolean particles) {
         Holder<MobEffect> e = effect(word);
         if (e == null || target == null || ticks <= 0) return false;
+        if (com.newuniverse.nusmp.balance.HungerBan.refuses(e, target)) return false;           // 1.99.0, the hunger ban: a player never receives the Hunger effect
         return target.addEffect(new net.minecraft.world.effect.MobEffectInstance(e, ticks, Math.max(0, Math.min(amp, 9)), !particles, particles, particles));
     }
 

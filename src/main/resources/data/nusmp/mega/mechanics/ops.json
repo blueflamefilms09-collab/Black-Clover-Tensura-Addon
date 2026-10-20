@@ -324,7 +324,7 @@
      "hi": 20
     }
    ],
-   "doc": "drain hunger"
+   "doc": "drain a small share of magicules (the hunger ban: never the food bar)"
   },
   "drain_mana": {
    "group": "creature",

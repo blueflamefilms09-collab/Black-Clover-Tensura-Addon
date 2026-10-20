@@ -127,7 +127,6 @@ final class Wave18Bags {
                 case COLD -> {                                                       // a level of exhaustion
                     Fx.addEffect(t, "minecraft:mining_fatigue", 400, 1);
                     Fx.addEffect(t, "minecraft:weakness", 400, 0);
-                    Fx.addEffect(t, "minecraft:hunger", 200, 1);
                 }
                 case POISON -> {                                                     // poisoned for an hour
                     Fx.addEffect(t, "minecraft:poison", 200, 0);

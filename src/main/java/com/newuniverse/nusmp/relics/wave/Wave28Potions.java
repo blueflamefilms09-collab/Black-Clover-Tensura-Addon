@@ -98,7 +98,6 @@ final class Wave28Potions {
         if (hit > 0f) p.hurt(p.damageSources().magic(), hit);
         Wave28Util.give(p, 400, 2, "minecraft:slowness");
         Wave28Util.give(p, 600, 1, "minecraft:weakness");
-        Wave28Util.give(p, 300, 0, "minecraft:hunger");
         Wave28Util.say(p, "The three hours are over and the head was not mended: your body gives out.", ChatFormatting.DARK_RED);
     }
 
@@ -193,8 +192,7 @@ final class Wave28Potions {
             }
             case CHAIR -> give(p, "minecraft:oak_stairs", 1);
             case NECROTIC_MUSH -> {
-                give(p, "minecraft:rotten_flesh", 3);
-                Wave28Util.give(p, 200, 0, "minecraft:hunger");
+                give(p, "minecraft:rotten_flesh", 3);                       // 1.99.0, the hunger ban: the Hunger effect it also gave is gone
             }
             case GLASS_BALL -> give(p, "minecraft:glass", 1);
             case CACTUS -> give(p, "minecraft:cactus", 2);

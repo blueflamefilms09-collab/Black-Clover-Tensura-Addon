@@ -23,6 +23,7 @@ final class PrimUtil {
     private PrimUtil() {}
 
     static boolean addEffect(LivingEntity e, String id, int ticks, int amp) {
+        if (com.newuniverse.nusmp.balance.HungerBan.refuses(id, e)) return false;               // 1.99.0, the hunger ban: the Hunger effect is never put on a player
         try {
             var h = BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.parse(id));
             if (h.isEmpty()) return false;

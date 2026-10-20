@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.heroweapon.curse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -70,27 +71,17 @@ class SinMathTest {
     }
 
     @Test
-    void gluttonyCannotStarveItsWielder() {
-        assertEquals(0f, SinMath.foodExhaust(3, 3, 0.4, 1.0), 1e-6f, "at the floor nothing is added");
-        assertEquals(0f, SinMath.foodExhaust(0, 3, 0.4, 1.0), 1e-6f);
-        assertEquals(0.4f, SinMath.foodExhaust(4, 3, 0.4, 1.0), 1e-6f);
-        assertEquals(0.8f, SinMath.foodExhaust(20, 3, 0.4, 2.0), 1e-6f);
-        assertEquals(0f, SinMath.foodExhaust(20, 3, 0.4, 0.0), 1e-6f);
+    void gluttonyDevoursMagiculesAndNeverTouchesTheStomach() {
+        assertEquals(0.002, SinMath.magiculeBite(0.4, 1.0), 1e-12, "0.4 at normal strength is 0.2% of the pool a second");
+        assertEquals(0.004, SinMath.magiculeBite(0.4, 2.0), 1e-12);
+        assertEquals(0.0, SinMath.magiculeBite(0.4, 0.0), 1e-12);
+        assertEquals(0.0, SinMath.magiculeBite(-1.0, 1.0), 1e-12);
+        assertEquals(0.006, SinMath.magiculeBite(0.4, 99.0), 1e-12, "intensity is clamped at 3");
         assertEquals(0, SinMath.feed(20, 2), "a full stomach takes nothing");
         assertEquals(1, SinMath.feed(19, 2));
         assertEquals(2, SinMath.feed(10, 2));
         assertEquals(0, SinMath.feed(10, -3));
-        // the whole walk: from a full stomach, second by second, the food never ends below the floor
-        int food = 20;
-        float exhaustion = 0f;
-        for (int second = 0; second < 5000; second++) {
-            exhaustion += SinMath.foodExhaust(food, 3, 0.4, 1.0);
-            while (exhaustion >= 4.0f) {
-                exhaustion -= 4.0f;
-                food = Math.max(0, food - 1);
-            }
-        }
-        assertEquals(3, food, "the curse stops at the floor and never reaches starvation");
+        for (java.lang.reflect.Method m : SinMath.class.getDeclaredMethods()) assertFalse(m.getName().toLowerCase().contains("exhaust"), "no food exhaustion helper may come back: " + m.getName());
     }
 
     @Test

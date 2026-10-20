@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Why: each of the seven sins takes something different from its wielder while a curse form is worn (Wrath burns their blood, Pride refuses their help, Lust drags
- * them at the nearest foe, Envy takes one of their techniques, Greed weighs them down with treasure, Gluttony empties their stomach, Sloth slows their hands), and
+ * them at the nearest foe, Envy takes one of their techniques, Greed weighs them down with treasure, Gluttony devours their magicules, Sloth slows their hands), and
  * the owner's rule is that every one of them is bounded and none of them can kill. The numbers behind that promise are here, as plain functions, so the promise
  * is a test and not a hope: a drain never goes below its floor, a slow never passes its clamp, a pull never points the wrong way or reaches past its range, a
  * heal is only ever reduced. The game glue ({@link CurseEffects}) reads the world, asks these functions, and applies the answer. No Minecraft types.
@@ -54,13 +54,16 @@ public final class SinMath {
     }
 
     // ------------------------------------------------------------------ Gluttony
+    /** Share of the maximum magicule pool one unit of the configured Gluttony amount takes each second (0.5%). */
+    public static final double BITE_PER_UNIT = 0.005;
+
     /**
-     * The food exhaustion Gluttony adds this second: the configured amount times the intensity, but nothing once the stomach is at the floor, so the curse can
-     * never starve its wielder.
+     * The share of the maximum magicule pool Gluttony devours this second: the configured amount times {@link #BITE_PER_UNIT} times the intensity. 1.99.0, THE HUNGER
+     * BAN: Gluttony used to add food exhaustion ("empties the stomach"); it now devours magicules instead and never touches the food bar. The caller keeps the pool above
+     * the arena floor ({@code StarvationMath}), so the curse can never black the wielder out.
      */
-    public static float foodExhaust(int foodLevel, int floor, double perSecond, double intensity) {
-        if (foodLevel <= Math.max(0, floor)) return 0f;
-        return (float) Math.max(0.0, perSecond * clamp(intensity, 0.0, 3.0));
+    public static double magiculeBite(double perSecond, double intensity) {
+        return Math.max(0.0, perSecond) * BITE_PER_UNIT * clamp(intensity, 0.0, 3.0);
     }
 
     /** The food points a kill gives back, without passing the full stomach of 20. */

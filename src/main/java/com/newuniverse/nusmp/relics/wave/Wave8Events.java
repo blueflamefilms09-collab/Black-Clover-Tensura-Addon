@@ -199,7 +199,7 @@ final class Wave8Events {
         Fx.addEffect(p, "minecraft:haste", 160, lv + 1);                                                  // the immediate action: it swings again, faster
         Fx.addEffect(p, "minecraft:speed", 160, lv);
         if (lv >= 2) Fx.addEffect(p, "minecraft:strength", 160, 0);
-        Fx.addEffect(p, "minecraft:hunger", 160, 0);                                                      // the smell of death makes the sword and its user go wild
+        Wave2Mana.take(p, 0.01);                                                                          // the smell of death makes the sword and its user go wild (1.99.0, the hunger ban: it costs 1% of the magicules, not hunger)
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) p.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.03);
         Wave8Util.tell(p, "Feeding Frenzy " + (lv + 1));
     }

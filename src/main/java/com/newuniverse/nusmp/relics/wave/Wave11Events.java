@@ -254,7 +254,7 @@ public final class Wave11Events {
         if (pd.getInt(K_GEAS) != 2 || pd.getLong(K_GEAS_DAY) != Wave11Pure.dayOf(p.level().getGameTime()) + 1) return;
         if (!e.getItem().has(DataComponents.FOOD)) return;
         Fx.addEffect(p, "minecraft:nausea", 200, 0);
-        Fx.addEffect(p, "minecraft:hunger", 200, 1);
+        Fx.addEffect(p, "minecraft:weakness", 200, 0);                                  // 1.99.0, the hunger ban: weakness where the Hunger effect was
         Fx.say(p, "You broke the fast and the spirit sickens you.");
     }
 

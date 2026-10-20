@@ -38,7 +38,7 @@ op("launch", "creature", [a("power", N, 1.0, 0, 4), a("who", S, "players", enum=
 op("dash", "creature", [a("power", N, 1.0, 0, 4), a("dir", S, "random", enum=["random", "toward", "away", "north", "south", "east", "west"]), a("who", S, "players", enum=WHO)], doc="a sideways shove")
 op("ignite", "creature", [a("secs", N, 4, 0.5, 30), a("who", S, "players", enum=WHO)], doc="set on fire")
 op("freeze", "creature", [a("secs", N, 5, 0.5, 30), a("who", S, "players", enum=WHO)], doc="powder-snow chill")
-op("starve", "creature", [a("amount", N, 4, 0, 20)], doc="drain hunger")
+op("starve", "creature", [a("amount", N, 4, 0, 20)], doc="drain a small share of magicules (the hunger ban: never the food bar)")
 op("drain_mana", "creature", [a("pct", N, 10, 0, 100)], channels=["mana"], doc="drain magicules")
 op("restore_mana", "creature", [a("pct", N, 20, 0, 100)], doc="restore magicules")
 op("xp", "creature", [a("levels", N, -1, -30, 30)], doc="give or take experience levels")

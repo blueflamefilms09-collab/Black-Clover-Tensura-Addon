@@ -27,7 +27,7 @@ import java.util.UUID;
  * The Glutton's Chalice (docs/living_dungeon.md section 7). Worn as a charm and attuned, it digests the Dungeon's raw monster meat into a
  * rich stew: no sickness, a full stomach and saturation, and for a few minutes ({@link DigestTable}) the thin air, the scorched floor and
  * the magicule radiation cannot touch the wearer. Its curse, Symbiotic Hunger ({@link HungerClock}): it is alive, and unfed for three
- * in-game days it drinks from its wearer, hunger first and magicules with it, until it is fed again. The wearer is warned at two days, at
+ * in-game days it drinks magicules from its wearer (since 1.99.0 never the food bar: the hunger ban) until it is fed again. The wearer is warned at two days, at
  * two and a half, and when it starts. The immunity ends the moment the chalice comes off, and on death, relog and a change of dimension.
  */
 final class ChaliceHandler {
@@ -122,12 +122,7 @@ final class ChaliceHandler {
             if (phase.ordinal() > before) announce(p, phase);
         }
         if (phase != HungerClock.Phase.STARVING || p.isCreative() || p.isSpectator()) return;
-        int loss = HungerClock.foodLoss(since);
-        if (loss > 0) {
-            FoodData food = p.getFoodData();
-            food.setFoodLevel(Math.max(0, food.getFoodLevel() - loss));
-            food.setSaturation(0f);
-        }
+        // 1.99.0, THE HUNGER BAN: the Chalice no longer takes food points from its wearer (HungerClock.foodLoss is 0); it drinks magicules only
         double share = HungerClock.magiculeLoss(since);
         var ex = TensuraStorages.getExistenceFrom(p);
         if (ex != null && share > 0) {

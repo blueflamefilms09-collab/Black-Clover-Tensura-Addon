@@ -32,6 +32,8 @@ final class PrimsCreature {
     private PrimsCreature() {}
 
     static final long FOREVER = Long.MAX_VALUE / 4;
+    /** The share of the maximum magicules one point of the old "starve" amount costs now (the hunger ban): 0.5%. */
+    static final double STARVE_MANA_SHARE = 0.005;
 
     static void register(Map<String, Prim> m) {
         m.put("effect", Prims.once(r -> {
@@ -93,8 +95,11 @@ final class PrimsCreature {
         m.put("freeze", Prims.once(r -> {
             for (LivingEntity t : r.targets("players")) t.setTicksFrozen(t.getTicksRequiredToFreeze() + r.ticks("secs"));
         }));
+        // 1.99.0, THE HUNGER BAN: "starve" keeps its id (the library's mechanics name it) but it no longer touches the food bar. Its cost is now a small share of the
+        // players' magicules (half a percent of the maximum per point of the old amount), the mana-based pressure the dungeon already has (see drain_mana).
         m.put("starve", Prims.once(r -> {
-            for (ServerPlayer p : r.players()) p.getFoodData().setFoodLevel(Math.max(0, p.getFoodData().getFoodLevel() - (int) Math.round(r.num("amount"))));
+            double share = Math.min(0.10, Math.max(0.0, r.num("amount")) * STARVE_MANA_SHARE);
+            if (share > 0.0) for (ServerPlayer p : r.players()) Mana.add(p, -share);
         }));
         m.put("drain_mana", Prims.once(r -> {
             for (ServerPlayer p : r.players()) Mana.add(p, -r.hard("pct") / 100.0);

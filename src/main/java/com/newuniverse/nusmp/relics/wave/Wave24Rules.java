@@ -174,7 +174,7 @@ public final class Wave24Rules {
     /** The six diseases of Contagion as effect lists ("id:amplifier"); the ids a world lacks are skipped by the caller. */
     public enum Disease {
         BLINDING_SICKNESS("Blinding Sickness", "minecraft:blindness:0", "minecraft:nausea:0"),
-        FILTH_FEVER("Filth Fever", "minecraft:weakness:1", "minecraft:hunger:1"),
+        FILTH_FEVER("Filth Fever", "minecraft:weakness:1", "minecraft:mining_fatigue:1"),       // 1.99.0, the hunger ban: fatigue where the Hunger effect was
         FLESH_ROT("Flesh Rot", "minecraft:wither:0", "tensura:fragility:0"),
         MINDFIRE("Mindfire", "minecraft:nausea:0", "tensura:confusion:0", "minecraft:slowness:0"),
         SEIZURE("Seizure", "minecraft:slowness:1", "minecraft:mining_fatigue:1"),

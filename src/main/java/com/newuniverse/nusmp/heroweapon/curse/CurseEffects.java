@@ -44,7 +44,7 @@ import java.util.UUID;
  * Why: this is where the seven sins take what they take, and the owner's rule is that it is bounded and never lethal. Wrath burns the wielder's blood each second
  * but never below a floor that is at least one heart; Lust drags the wielder toward the nearest foe (sneaking resists it, and it never pulls over a drop, into
  * lava, fire or a wall); Envy takes one of the wielder's techniques for a few seconds and eats one of their potion boons; Greed weighs them down with the
- * treasure they carry and charges extra for techniques; Gluttony empties their stomach, but stops at a floor so it can never starve them, and feeds on kills;
+ * treasure they carry and charges extra for techniques; Gluttony devours a little of their magicules (never below the arena floor; the food bar is never touched since the 1.99.0 hunger ban) and feeds on kills;
  * Sloth slows their body and holds the next technique back. Pride's downside (help does not heal) lives in the heal handler and its narrowed sight on the client.
  * The permanent tax of the Embrace is also applied here, as a max-health modifier that never leaves less than the configured hearts. Every number comes from
  * {@link SinMath} and {@link CurseTuning} (tested); this class reads the world, asks them, and applies the answer. Attribute modifiers are TRANSIENT (they are
@@ -181,9 +181,18 @@ final class CurseEffects {
         }
     }
 
+    /** 1.99.0, the hunger ban: Gluttony devours a little of the wielder's magicules each second (never below the arena floor) and leaves the food bar alone. */
     private static void gluttony(ServerPlayer p, CurseTuning t, double k) {
-        float add = SinMath.foodExhaust(p.getFoodData().getFoodLevel(), t.gluttonyFoodFloor, t.gluttonyExhaust, k);
-        if (add > 0f) p.causeFoodExhaustion(add);
+        double share = SinMath.magiculeBite(t.gluttonyExhaust, k);
+        if (share <= 0.0) return;
+        var ex = io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p);
+        if (ex == null) return;
+        double max = io.github.manasmods.tensura.util.EnergyHelper.getMaxMagicule(p);
+        double after = com.newuniverse.nusmp.boss.god.StarvationMath.apply(ex.getMagicule(), max, max * share);
+        if (after < ex.getMagicule()) {
+            ex.setMagicule(after);
+            ex.markDirty();
+        }
     }
 
     /** The techniques the form lists, once each, in the order of the input slots. */

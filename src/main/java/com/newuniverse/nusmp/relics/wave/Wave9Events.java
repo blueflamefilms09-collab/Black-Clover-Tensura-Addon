@@ -492,8 +492,7 @@ final class Wave9Events {
                     double hurt = Wave9Rules.gnaw(now, d.getLong(K_FED), d.getLong(K_GNAW), p.getHealth());
                     if (hurt > 0.0 && !p.isCreative()) {
                         d.putLong(K_GNAW, now);
-                        p.hurt(p.damageSources().magic(), (float) hurt);
-                        p.causeFoodExhaustion(1.0f);
+                        p.hurt(p.damageSources().magic(), (float) hurt);       // 1.99.0, the hunger ban: the gnaw bites health only, it no longer adds exhaustion
                         p.displayClientMessage(Component.literal("Hunger gnaws at you. Feed it.").withStyle(net.minecraft.ChatFormatting.DARK_RED), true);
                     }
                 }
@@ -558,7 +557,8 @@ final class Wave9Events {
 
     private static void exileCurse(ServerPlayer p, CompoundTag d) {
         if (p.isCreative() || !inExile(p)) return;
-        p.causeFoodExhaustion(Wave9Rules.exileExhaustion());                                   // "for every hour within the forbidden place, one point of exhaustion"
+        // 1.99.0, THE HUNGER BAN: "this axe wears you out" is Mining Fatigue now, refreshed every sweep, never exhaustion on the food bar (Wave9Rules.exileExhaustion is unused)
+        Fx.addEffect(p, "minecraft:mining_fatigue", Wave9Rules.EXILE_EVERY + 20, 0);
         if (!d.getBoolean(K_EXILE)) {
             d.putBoolean(K_EXILE, true);
             Fx.say(p, "The Exile's curse: within " + (int) Wave9Rules.HOME_RADIUS + " blocks of your bed (or the world spawn) this axe wears you out. Put it away, or walk far from home.");

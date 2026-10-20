@@ -8,7 +8,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -34,15 +33,12 @@ public final class DungeonEffects {
     public static final DeferredHolder<MobEffect, MobEffect> MAGICULE_POISONING = EFFECTS.register("magicule_poisoning", () -> new Plain(MobEffectCategory.HARMFUL, 0xE0B341)
             .addAttributeModifier(Attributes.MAX_HEALTH, id("magicule_poisoning_health"), -0.10, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
-    /** Raw monster meat: queasy and weak, hungry on top of it. */
+    /**
+     * Raw monster meat: queasy and weak. Until 1.98.0 it was "hungry on top of it" (a food exhaustion every second); the hunger ban (1.99.0) took that part out:
+     * the effect keeps its id and its attack penalty and no longer touches the food bar.
+     */
     public static final DeferredHolder<MobEffect, MobEffect> MAGICULE_SICKNESS = EFFECTS.register("magicule_sickness", () -> new MobEffect(MobEffectCategory.HARMFUL, 0x8E5BA8) {
-        @Override
-        public boolean applyEffectTick(LivingEntity e, int amplifier) {
-            if (e instanceof Player p) p.causeFoodExhaustion(0.35f * (amplifier + 1));
-            return true;
-        }
-
-        @Override public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return duration % 20 == 0; }
+        @Override public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return false; }
     }.addAttributeModifier(Attributes.ATTACK_DAMAGE, id("magicule_sickness_attack"), -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     /** An effect with nothing but attribute modifiers (MobEffect's constructor is protected). */

@@ -1,5 +1,8 @@
 # Landings, Safe Zones, resting and the mod-compat processor (builder SAFE, 1.54.0)
 
+> **1.99.0, THE HUNGER BAN.** A rest recovers health, mana and the debuffs only; it never feeds or starves: the long rest no longer resets the food exhaustion (`safe.rest_short` and `safe.rest_long` assert the food bar is exactly as it was). See `docs/labyrinth/hunger_ban.md`.
+
+
 Part of the Mega-Dungeon (`docs/labyrinth/mega.md`). This builder owns four things: the **mod-compat structure processor** `nusmp:mod_compat`, the
 **rest system** (short and long rests at the marked seats, hearths and beds), the **end of easy passive regeneration** outside the safe rooms, and the
 **eight templates** that every sector starts and rests in (two Landings and six Safe Zones).

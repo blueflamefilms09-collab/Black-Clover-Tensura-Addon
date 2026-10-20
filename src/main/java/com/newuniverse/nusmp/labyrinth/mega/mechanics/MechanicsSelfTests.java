@@ -53,6 +53,7 @@ public final class MechanicsSelfTests {
         SelfTests.register("mech.counters", MechanicsSelfTests::counters);
         SelfTests.register("mech.director", MechanicsSelfTests::director);
         SelfTests.register("mech.apply", MechanicsSelfTests::apply);
+        SelfTests.register("dungeon.nohunger", MechanicsSelfTests::noHunger);          // 1.99.0, the hunger ban
     }
 
     // ---------------------------------------------------------------- the scratch room
@@ -466,6 +467,86 @@ public final class MechanicsSelfTests {
             }
             return SelfTests.Result.ok("applied " + d.id() + " (blocks " + (changed ? "changed and restored" : "untouched") + ") and cleared it; no sector with a safe room to test the refusal");
         } finally {
+            wipe(level);
+        }
+    }
+
+    // ---------------------------------------------------------------- dungeon.nohunger (1.99.0, the hunger ban)
+    /**
+     * The owner's hunger ban, in the real game: a stand-in player's food bar is set to a known state and the guard is armed; then the OLD triggers are driven (forty seconds of the
+     * gloom clock in the dark, a trap mechanic made of the {@code starve} primitive and an {@code effect} line that names minecraft:hunger, the raw-meat sickness effect, the
+     * effect-by-id choke points of the relics, the skill lines and the puzzles) and after each the guard is asked whether the food level, the saturation or the exhaustion got worse.
+     * The two other old triggers have their own tests: {@code safe.rest_short} and {@code safe.rest_long} (a rest leaves the bar exactly as it was) and the curse self-test
+     * (Gluttony leaves the bar alone). The scratch room is cleaned up whatever happens.
+     */
+    private static SelfTests.Result noHunger(MinecraftServer server) {
+        ServerLevel level = SelfTests.mega(server);
+        if (level == null) return SelfTests.Result.fail("the Mega-Dungeon dimension is not loaded");
+        build(level);
+        ServerPlayer p = SelfTests.standIn(level, "nohunger", ORIGIN.getX() + 0.5, MegaGrid.FLOOR_Y + 1, ORIGIN.getZ() + 0.5);
+        List<String> done = new ArrayList<>();
+        try {
+            p.removeEffect(net.minecraft.world.effect.MobEffects.HUNGER);
+            p.getFoodData().setFoodLevel(12);
+            p.getFoodData().setSaturation(3.0f);
+            p.getFoodData().setExhaustion(1.25f);
+            com.newuniverse.nusmp.balance.HungerBan.disarm(p);
+            com.newuniverse.nusmp.balance.HungerBan.guard(p);                                   // arms the guard on the known bar
+
+            for (int i = 0; i < 40; i++) com.newuniverse.nusmp.labyrinth.dnd.economy.DungeonHunger.sample(p, level);   // the gloom clock (it used to multiply the hunger)
+            if (!com.newuniverse.nusmp.balance.HungerBan.guard(p)) return SelfTests.Result.fail("forty seconds of the gloom clock changed the food bar");
+            done.add("gloom clock");
+
+            MechanicDef trap = def("selftest.nohunger", "starve", Scope.ROOM, trig("floor_enter"), List.of(fx("starve"),
+                    new MechanicDef.Effect("effect", Args.of(java.util.Map.of("id", "minecraft:hunger", "secs", 10.0, "amp", 0.0)), 0, 1.0, 1, 20, "", "")), none(), "none");
+            Instance in = scratchInstance(level, trap);
+            long t0 = level.getGameTime();
+            try {
+                in.activate();
+                in.update(List.of(p), t0);
+                in.fire(t0);
+                for (int i = 1; i <= 45; i++) in.update(List.of(p), t0 + i);
+            } finally {
+                in.end();
+            }
+            wipeEntities(level);
+            if (in.errors > 0 || !in.brokenOps().isEmpty()) return SelfTests.Result.fail("the trap mechanic threw: " + in.brokenOps());
+            if (!com.newuniverse.nusmp.balance.HungerBan.guard(p)) return SelfTests.Result.fail("the starve primitive or the hunger effect line changed the food bar");
+            if (p.hasEffect(net.minecraft.world.effect.MobEffects.HUNGER)) return SelfTests.Result.fail("the trap mechanic put the Hunger effect on a player");
+            done.add("trap mechanic (starve + effect hunger)");
+
+            boolean puzzle = PuzzleBridge.effect(p, "minecraft:hunger", 200, 1);
+            com.newuniverse.nusmp.relics.Fx.addEffect(p, "minecraft:hunger", 200, 1);
+            boolean line = com.newuniverse.nusmp.skilltree.line.LineLookups.give(p, "hunger", 200, 1, false);
+            if (puzzle || line || p.hasEffect(net.minecraft.world.effect.MobEffects.HUNGER)) return SelfTests.Result.fail("an effect-by-id path put the Hunger effect on a player (puzzle=" + puzzle + ", line=" + line + ")");
+            done.add("effect-by-id choke points refuse Hunger");
+
+            net.minecraft.world.effect.MobEffect sickness = com.newuniverse.nusmp.dungeon.DungeonEffects.MAGICULE_SICKNESS.get();
+            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.newuniverse.nusmp.dungeon.DungeonEffects.MAGICULE_SICKNESS, 200, 1));
+            for (int i = 0; i < 40; i++) {
+                if (sickness.shouldApplyEffectTickThisTick(200 - i, 1)) sickness.applyEffectTick(p, 1);
+            }
+            p.removeEffect(com.newuniverse.nusmp.dungeon.DungeonEffects.MAGICULE_SICKNESS);
+            if (!com.newuniverse.nusmp.balance.HungerBan.guard(p)) return SelfTests.Result.fail("the raw-meat sickness changed the food bar");
+            done.add("raw-meat sickness");
+
+            for (net.minecraft.world.item.Item meat : new net.minecraft.world.item.Item[]{com.newuniverse.nusmp.dungeon.DungeonFood.RUINED_MEAT.get(), com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT.get()}) {
+                var food = new ItemStack(meat).get(net.minecraft.core.component.DataComponents.FOOD);
+                if (food == null) return SelfTests.Result.fail(meat + " has no food component");
+                for (var fx : food.effects()) {
+                    if (com.newuniverse.nusmp.balance.HungerBan.refuses(fx.effect().getEffect(), p)) return SelfTests.Result.fail(meat + " gives the Hunger effect when eaten");
+                }
+            }
+            done.add("monster meat gives no Hunger");
+
+            if (!com.newuniverse.nusmp.balance.HungerBan.guard(p)) return SelfTests.Result.fail("the food bar changed during the test");
+            return SelfTests.Result.ok(String.join(", ", done) + ": food 12, saturation 3.0 and exhaustion 1.25 never moved");
+        } finally {
+            p.removeEffect(net.minecraft.world.effect.MobEffects.HUNGER);
+            p.getFoodData().setFoodLevel(20);
+            p.getFoodData().setSaturation(5.0f);
+            p.getFoodData().setExhaustion(0.0f);
+            com.newuniverse.nusmp.balance.HungerBan.disarm(p);
             wipe(level);
         }
     }

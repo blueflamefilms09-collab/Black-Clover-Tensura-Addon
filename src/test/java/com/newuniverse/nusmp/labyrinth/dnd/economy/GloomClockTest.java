@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Why: the resource clock's balance (how long the dark is safe, how hunger scales) is checked as numbers: warning edge, recovery, wrap handling, no free hunger. */
+/** Why: the resource clock's balance (how long the dark is safe) is checked as numbers: warning edge, recovery, the cap; and since 1.99.0 that the hunger half stays removed. */
 class GloomClockTest {
     @Test void darkClimbsToWarningThenGloom() {
         GloomClock c = new GloomClock();
@@ -53,24 +53,11 @@ class GloomClockTest {
         assertFalse(GloomClock.isDark(0, 4, true));
     }
 
-    @Test void hungerExtraScalesWithSpendingAndNeverInventsAny() {
-        GloomClock c = new GloomClock();
-        assertEquals(0f, c.extraExhaustion(1.0f, 1.5));
-        assertEquals(0f, c.extraExhaustion(1.0f, 1.5));
-        assertEquals(0.1f, c.extraExhaustion(1.2f, 1.5), 1e-4f);
-        c.settle(1.3f);
-        assertEquals(0f, c.extraExhaustion(1.3f, 1.5));
-        assertEquals(0f, c.extraExhaustion(1.6f, 1.0), "drain 1.0 is vanilla");
-    }
-
-    @Test void hungerCounterWrapIsCounted() {
-        GloomClock c = new GloomClock();
-        c.extraExhaustion(3.8f, 2.0);
-        assertEquals(0.4f, c.extraExhaustion(0.2f, 2.0), 1e-4f);
-    }
-
-    @Test void starvingAtThreeShanks() {
-        assertTrue(GloomClock.starving(6));
-        assertFalse(GloomClock.starving(7));
+    /** 1.99.0, the hunger ban: the clock has no hunger meter any more (no exhaustion multiplier, no "starving" line); only the gloom is left. */
+    @Test void theHungerHalfIsGoneForGood() {
+        java.util.Set<String> names = new java.util.HashSet<>();
+        for (java.lang.reflect.Method m : GloomClock.class.getDeclaredMethods()) names.add(m.getName());
+        for (String banned : new String[]{"extraExhaustion", "settle", "starving"}) assertFalse(names.contains(banned), banned + " must not come back");
+        for (java.lang.reflect.Field f : GloomClock.class.getDeclaredFields()) assertFalse(f.getName().toLowerCase().contains("exhaust"), f.getName());
     }
 }

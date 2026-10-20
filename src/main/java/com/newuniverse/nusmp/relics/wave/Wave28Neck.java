@@ -240,8 +240,7 @@ final class Wave28Neck {
         d.putLong(F_UNTIL, 0L);
         if (price) {
             Wave28Util.give(p, Wave28Rules.FORM_PRICE_TICKS, 0, "minecraft:weakness");
-            Wave28Util.give(p, 200, 0, "minecraft:hunger");
-            Wave28Util.say(p, "The wolf lets go and takes its price: you are weak and hungry.", net.minecraft.ChatFormatting.DARK_RED);
+            Wave28Util.say(p, "The wolf lets go and takes its price: you are weak and spent.", net.minecraft.ChatFormatting.DARK_RED);
         } else {
             Wave28Util.tell(p, "You are yourself again.");
         }

@@ -1,5 +1,8 @@
 # F2: monster economy, dungeon hunger and gloom (1.36.0)
 
+> **1.99.0, THE HUNGER BAN.** The hunger half of this document (the `hungerDrain` multiplier, `extraExhaustion`, the Slowness at three shanks) was REMOVED on the owner's order: nothing in the mod may make the food bar drain faster or force the player to eat more often. The gloom (light) half is unchanged. See `docs/labyrinth/hunger_ban.md`.
+
+
 Package `labyrinth/dnd/economy/`. Nothing here was run in game; the pure classes are unit tested, the event classes were type-checked.
 
 ## Why this exists

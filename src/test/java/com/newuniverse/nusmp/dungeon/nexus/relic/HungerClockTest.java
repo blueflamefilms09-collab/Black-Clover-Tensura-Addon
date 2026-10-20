@@ -27,14 +27,14 @@ class HungerClockTest {
     }
 
     @Test
-    void onceStarvingItTakesFoodEveryFourthSweepAndMagiculesEverySweep() {
+    void onceStarvingItTakesMagiculesEverySweepAndNeverFood() {
         int food = 0;
         for (int sweep = 0; sweep < 100; sweep++) {
             long s = 72000L + sweep * 20L;
             food += HungerClock.foodLoss(s);
             assertEquals(HungerClock.MAGICULE_SHARE, HungerClock.magiculeLoss(s), 1e-12);
         }
-        assertEquals(25, food, "one point every four seconds");
+        assertEquals(0, food, "the hunger ban: the Chalice never takes a food point (1.99.0)");
     }
 
     @Test

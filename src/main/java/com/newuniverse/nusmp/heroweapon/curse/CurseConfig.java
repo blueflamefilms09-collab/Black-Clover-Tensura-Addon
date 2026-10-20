@@ -113,7 +113,7 @@ public final class CurseConfig {
         INT_ENVY = d(b, "Strength of Envy's downside (it takes a technique and a boon). 0 = off.", "intensityEnvy", CurseTuning.DEFAULT_INTENSITY, 0.0, 3.0);
         INT_GREED = d(b, "Strength of Greed's downside (treasure weighs you down, techniques cost more). 0 = off.", "intensityGreed", CurseTuning.DEFAULT_INTENSITY, 0.0, 3.0);
         INT_SLOTH = d(b, "Strength of Sloth's downside (slower body, slower techniques). 0 = off.", "intensitySloth", CurseTuning.DEFAULT_INTENSITY, 0.0, 3.0);
-        INT_GLUTTONY = d(b, "Strength of Gluttony's downside (hunger drains fast). 0 = off.", "intensityGluttony", CurseTuning.DEFAULT_INTENSITY, 0.0, 3.0);
+        INT_GLUTTONY = d(b, "Strength of Gluttony's downside (it devours magicules; the food bar is never touched). 0 = off.", "intensityGluttony", CurseTuning.DEFAULT_INTENSITY, 0.0, 3.0);
         WRATH_DRAIN_SHARE = d(b, "Wrath burns this share of maximum health each second (or wrathDrainMin, whichever is more).", "wrathDrainShare", CurseTuning.DEFAULT_WRATH_DRAIN_SHARE, 0.0, 0.2);
         WRATH_DRAIN_MIN = d(b, "Health points Wrath burns each second at least.", "wrathDrainMin", CurseTuning.DEFAULT_WRATH_DRAIN_MIN, 0.0, 10.0);
         WRATH_FLOOR_SHARE = d(b, "Wrath never burns the wielder under this share of maximum health (and never under one heart).", "wrathFloorShare", CurseTuning.DEFAULT_WRATH_FLOOR_SHARE, 0.0, 1.0);
@@ -128,8 +128,8 @@ public final class CurseConfig {
         GREED_FULL = i(b, "Treasure score (an ingot or gem is 1, a block 9) at which Greed's burden is complete.", "greedBurdenFull", CurseTuning.DEFAULT_GREED_BURDEN_FULL, 1, 4096);
         GREED_MAX_SLOW = d(b, "Share of speed a complete burden of treasure takes.", "greedMaxSlow", CurseTuning.DEFAULT_GREED_MAX_SLOW, 0.0, 0.6);
         GREED_SURCHARGE = d(b, "Extra share of a technique's cost Greed charges after the cast.", "greedSurcharge", CurseTuning.DEFAULT_GREED_SURCHARGE, 0.0, 3.0);
-        GLUTTONY_EXHAUST = d(b, "Hunger exhaustion Gluttony adds each second (4 exhaustion = 1 food point).", "gluttonyExhaust", CurseTuning.DEFAULT_GLUTTONY_EXHAUST, 0.0, 5.0);
-        GLUTTONY_FLOOR = i(b, "Gluttony never drains the stomach under this many food points, so the curse cannot starve its wielder.", "gluttonyFoodFloor", CurseTuning.DEFAULT_GLUTTONY_FOOD_FLOOR, 0, 20);
+        GLUTTONY_EXHAUST = d(b, "Gluttony devours this many half-percents of the maximum magicule pool each second (0.4 = 0.2% a second at normal strength; the hunger ban of 1.99.0 moved it off the food bar). The key keeps its old name so old configs load.", "gluttonyExhaust", CurseTuning.DEFAULT_GLUTTONY_EXHAUST, 0.0, 5.0);
+        GLUTTONY_FLOOR = i(b, "No longer used (the hunger ban of 1.99.0): Gluttony does not touch the stomach. Kept so old configs load.", "gluttonyFoodFloor", CurseTuning.DEFAULT_GLUTTONY_FOOD_FLOOR, 0, 20);
         GLUTTONY_KILL_FOOD = i(b, "Food points a kill gives back while Gluttony is worn.", "gluttonyKillFood", CurseTuning.DEFAULT_GLUTTONY_KILL_FOOD, 0, 20);
         GLUTTONY_KILL_HEAL = d(b, "Share of maximum health a kill heals while Gluttony is worn (through the healing law).", "gluttonyKillHeal", CurseTuning.DEFAULT_GLUTTONY_KILL_HEAL, 0.0, 0.25);
         GLUTTONY_XP = b.comment("Gluttony turns experience away: vanilla experience orbs are not picked up while it is worn (they stay on the ground).").define("gluttonyBlocksXp", CurseTuning.DEFAULT_GLUTTONY_BLOCKS_XP);

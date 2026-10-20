@@ -199,7 +199,6 @@ final class Wave30Paradox {
             p.fallDistance = 0;
         }
         Fx.addEffect(p, "minecraft:slowness", 100, 1);
-        Fx.addEffect(p, "minecraft:hunger", 200, 1);                                   // "one point of exhaustion"
         int roll = p.getRandom().nextInt(101);
         Wave30Rules.Madness m = Wave30Rules.madness(roll);
         int ticks = Wave30Rules.madnessTicks(m, p.getRandom().nextInt(10) + 1);

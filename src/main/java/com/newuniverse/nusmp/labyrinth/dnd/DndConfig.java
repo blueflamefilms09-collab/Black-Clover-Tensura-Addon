@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.labyrinth.dnd;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
- * Why: server config of the D&amp;D layer of the Labyrinth (traps, the monster economy, the dungeon's hunger and gloom, the Vital Strike),
+ * Why: server config of the D&amp;D layer of the Labyrinth (traps, the monster economy, the dungeon's gloom, the Vital Strike),
  * {@code nusmp-labyrinth-dnd-server.toml}, section {@code [dnd]}. Its own file (not more keys in {@code LabyrinthConfig}) so three builders could add
  * their switches without editing one spec, and so a server owner who wants only the anime half (Spire, seals, vault) flips one file's keys.
  * Every value is a plain {@code define} / {@code defineInRange} (never {@code defineInList}: a list-validated value throws while the server is
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class DndConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue TRAPS, PUZZLES, DROPS, NO_XP, GLOOM, HP_BUFFER, VITAL, VITAL_SHOWY;
-    public static final ModConfigSpec.DoubleValue PIT_DAMAGE, STONE_CHANCE, MEAT_CHANCE, HUNGER_DRAIN, HP_SCALE, VITAL_THRESHOLD, VITAL_EXECUTE;
+    public static final ModConfigSpec.DoubleValue PIT_DAMAGE, STONE_CHANCE, MEAT_CHANCE, HP_SCALE, VITAL_THRESHOLD, VITAL_EXECUTE;
     public static final ModConfigSpec.IntValue PUZZLE_RESET_SECONDS, GLOOM_LIGHT, GLOOM_SECONDS, VITAL_COOLDOWN_TICKS, VITAL_RELIC_GRADE;
 
     static {
@@ -26,10 +26,9 @@ public final class DndConfig {
         NO_XP = b.comment("Monsters of the Labyrinth drop no vanilla experience orbs (their value is in the stones and the meat).").define("noExperience", true);
         STONE_CHANCE = b.comment("Chance per death of the stone drop (scaled by the monster's toughness).").defineInRange("stoneChance", 0.85, 0.0, 1.0);
         MEAT_CHANCE = b.comment("Chance per death of a monster-meat drop.").defineInRange("meatChance", 0.45, 0.0, 1.0);
-        GLOOM = b.comment("The dungeon's hunger and gloom: standing in the dark without a light, and hunger, bite harder in the Labyrinth.").define("gloom", true);
+        GLOOM = b.comment("The dungeon's gloom: standing in the dark without a light bites harder in the Labyrinth (Darkness and Weakness). The food bar is never touched (the old Labyrinth hunger multiplier was removed in 1.99.0).").define("gloom", true);
         GLOOM_LIGHT = b.comment("Block light at or below this counts as dark.").defineInRange("gloomLight", 4, 0, 15);
         GLOOM_SECONDS = b.comment("Seconds in the dark (with no light in hand) before the gloom sets in.").defineInRange("gloomSeconds", 20, 1, 600);
-        HUNGER_DRAIN = b.comment("Multiplier of the hunger exhaustion in the Labyrinth (1.0 = vanilla).").defineInRange("hungerDrain", 1.5, 1.0, 5.0);
         HP_BUFFER = b.comment("Labyrinth monsters get a D&D-style health buffer (their maximum health is multiplied).").define("hpBuffer", true);
         HP_SCALE = b.comment("The multiplier of that buffer.").defineInRange("hpScale", 2.5, 1.0, 20.0);
         VITAL = b.comment("The Vital Strike: a heavy blow or a high-grade relic bypasses the buffer with a hyper-lethal execution.").define("vitalStrike", true);
