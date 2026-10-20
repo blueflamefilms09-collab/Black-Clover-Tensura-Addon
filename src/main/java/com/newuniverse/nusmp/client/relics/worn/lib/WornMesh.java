@@ -12,14 +12,14 @@ import java.util.List;
  * Space: the model's own pixels in the layer space of the player model, relative to the pivot of its anchor part (y down, front is -z).
  */
 public final class WornMesh {
-    /** Quad flags. */
-    public static final int EMIT = 1, SHELL = 2, HOT = 4;
     /**
-     * Quad flags of the visual upgrade models (a model that names its own skin, see {@link #skin}): GLOWMAP = the quad is redrawn additively with the glow map of the
-     * model, STAR = the quad belongs to the starfield / nebula pass (scrolling, additive, drawn with the star texture instead of the skin), HALO = the quad belongs to the
-     * additive halo / light shaft / portal pass (drawn with the shared fx texture, tinted by its colour slot).
+     * Quad flags; every flag has its own bit (a test checks it). The first three are the library's own. The next three belong to the Charms / Genesis visual upgrade models (a model that
+     * names its own skin, see {@link #skin}): GLOWMAP = the quad is redrawn additively with the glow map of the model, STAR = the quad belongs to the starfield / nebula pass (scrolling,
+     * additive, drawn with the star texture instead of the skin), HALO = the quad belongs to the additive halo / light shaft / portal pass (drawn with the shared fx texture, tinted by its
+     * colour slot). The last two belong to the God worn upgrade models (a {@code skin <id>} model, see {@link #tinted}): LIT = the quad also glows where its glow map says so, in the glow
+     * slot colour; ADD = the quad is drawn only in the additive pass (a halo, a soft sprite), never in the lit solid pass. An older file never sets any of the new flags.
      */
-    public static final int GLOWMAP = 8, STAR = 16, HALO = 32;
+    public static final int EMIT = 1, SHELL = 2, HOT = 4, GLOWMAP = 8, STAR = 16, HALO = 32, LIT = 64, ADD = 128;
     /** Colour slots. */
     public static final int MAIN = 0, TRIM = 1, GLOW = 2, DARK = 3, ACCENT = 4, NONE = 5, SLOTS = 6;
 
@@ -48,9 +48,11 @@ public final class WornMesh {
     public final Group[] groups;
     public final int emitQuads, shellQuads, glowMapQuads, starQuads, haloQuads;
     /**
-     * The visual upgrade: textures of this model under assets/nusmp/textures/ (null for the library models, which share the atlas): {@code skin} (the painted skin, drawn
-     * instead of the atlas, no palette tint), {@code glowTex} (its emissive map, same UVs), {@code starTex} (the scrolling nebula of the STAR quads), and {@code lodName}, the
-     * model drawn instead of this one from far away (at most 15% of the vertices).
+     * The visual upgrade: textures of this model under assets/nusmp/textures/ (null for the library models, which share the atlas). {@code skin} is the record {@code skin <v>} as written:
+     * a texture path ending in .png (Charms / Genesis models: painted skin, drawn instead of the atlas, no palette tint) or a bare id (God worn models: the skin is
+     * {@code relic_worn/god/<id>.png} and its glow map {@code relic_worn/god/<id>_glow.png}, a grey albedo tinted by the palette slots like the atlas, see {@link #tinted}).
+     * {@code glowTex} (its emissive map, same UVs), {@code starTex} (the scrolling nebula of the STAR quads) and {@code lodName} (the model drawn instead of this one from far away, at most 15%
+     * of the vertices) are the records of the same names.
      */
     public final String skin, glowTex, starTex, lodName;
     private WornMesh lodMesh;
@@ -73,7 +75,7 @@ public final class WornMesh {
         this.groups = groups;
         int e = 0, s = 0, gm = 0, st = 0, ha = 0;
         for (byte f : flags) {
-            if ((f & EMIT) != 0) e++;
+            if ((f & (EMIT | LIT | ADD)) != 0) e++;                   // the quads the lit-glow pass draws (an older file sets only EMIT)
             if ((f & SHELL) != 0) s++;
             if ((f & GLOWMAP) != 0) gm++;
             if ((f & STAR) != 0) st++;
@@ -92,6 +94,15 @@ public final class WornMesh {
 
     /** Does this model carry its own skin (a visual upgrade model) instead of using the shared atlas? */
     public boolean custom() { return skin != null; }
+
+    /** The God worn kind of skin (a bare id in the {@code skin} record): the albedo is grey and tinted by the palette slots like the atlas, and the LIT / ADD quads are drawn from the glow map. */
+    public boolean tinted() { return skin != null && !skin.endsWith(".png"); }
+
+    /** The albedo texture under assets/nusmp/textures/, or null for a library model. */
+    public String skinPath() { return skin == null ? null : tinted() ? "relic_worn/god/" + skin + ".png" : skin; }
+
+    /** The emissive map under assets/nusmp/textures/: the {@code glowtex} record, else (a tinted skin) {@code <id>_glow.png}, else null. */
+    public String glowPath() { return glowTex != null ? glowTex : tinted() ? "relic_worn/god/" + skin + "_glow.png" : null; }
 
     /**
      * The model to draw from far away: the lod model named by this model's {@code lod} record once {@link WornModels} has read it (it attaches it with {@link #attachLod}), else this one.

@@ -1,0 +1,215 @@
+{
+ "id": "mantle_of_the_overlord",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "courteous_gloom",
+   "kind": "motes",
+   "particle": "minecraft:smoke",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 6,
+   "box": [
+    -0.5,
+    0.3,
+    0.25,
+    0.5,
+    1.8,
+    0.8
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "crimson_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "9A2A3A",
+   "size": 1.0,
+   "per_second": 7,
+   "box": [
+    -0.45,
+    0.4,
+    0.3,
+    0.45,
+    1.6,
+    0.7
+   ],
+   "speed": 0.006,
+   "max_per_tick": 2
+  },
+  {
+   "name": "skull_halo",
+   "kind": "ring",
+   "particle": "minecraft:soul_fire_flame",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    1.35,
+    0.5
+   ],
+   "radius": 0.5,
+   "spin": -0.18,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "domination_circle",
+   "kind": "ring",
+   "particle": "dust",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.95,
+    0
+   ],
+   "radius": 1.05,
+   "spin": 0.15,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "collar_edge",
+   "kind": "line",
+   "particle": "minecraft:witch",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 4,
+   "from": [
+    -0.35,
+    1.9,
+    0.38
+   ],
+   "to": [
+    0.35,
+    1.9,
+    0.38
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "overlord_floor",
+   "kind": "ground",
+   "particle": "dust",
+   "color": "9A2A3A",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.4,
+   "max_per_tick": 2
+  },
+  {
+   "name": "shoulder_embers",
+   "kind": "motes",
+   "particle": "minecraft:flame",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    1.5,
+    -0.1,
+    0.6,
+    1.8,
+    0.2
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "watching_eyes",
+   "kind": "orbit",
+   "particle": "minecraft:witch",
+   "color": "FF5A7A",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.2,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.3,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "train_smoke",
+   "kind": "trail",
+   "particle": "minecraft:large_smoke",
+   "color": "9A2A3A",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.6,
+    0.5
+   ],
+   "radius": 0.7,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "overlords_gaze": [
+   {
+    "shape": "DEVIL_CIRCLE",
+    "color": "FF5A7A",
+    "duration": 26,
+    "power": 4.0,
+    "at": "feet",
+    "particle": "minecraft:witch",
+    "count": 40,
+    "spread": 1.5,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "ANTI_MAGIC_SLASH",
+    "color": "9A2A3A",
+    "duration": 16,
+    "power": 3.0,
+    "at": "aim",
+    "particle": "minecraft:soul_fire_flame",
+    "count": 24,
+    "spread": 1.0,
+    "radius": 6.0,
+    "height": 1.2
+   }
+  ],
+  "absolute_domination": [
+   {
+    "shape": "SEAL_CHAINS",
+    "color": "FF5A7A",
+    "duration": 40,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "minecraft:witch",
+    "count": 90,
+    "spread": 3.0,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "NIHILITY_ZONE",
+    "color": "9A2A3A",
+    "duration": 40,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "minecraft:smoke",
+    "count": 70,
+    "spread": 4.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

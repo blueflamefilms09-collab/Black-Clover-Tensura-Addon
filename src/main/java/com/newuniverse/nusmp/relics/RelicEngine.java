@@ -425,6 +425,7 @@ public final class RelicEngine {
         try {
             act.body().run(new ActCtx(p, stack, def, sneaking, chargeTicks));
             com.newuniverse.nusmp.relics.upgrade.UpgradeSignatures.afterAct(p, def, act);               // 1.102.0: the signature effect of an upgraded weapon's act
+            com.newuniverse.nusmp.relics.upgrade.UpgradeActFx.after(p, def, act);          // 1.102.0: the act's own visual of an upgraded God relic (visual only)
         } catch (RuntimeException | LinkageError failed) {
             org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] relic {} act {} failed", def.id(), act.key(), failed);
         } finally {

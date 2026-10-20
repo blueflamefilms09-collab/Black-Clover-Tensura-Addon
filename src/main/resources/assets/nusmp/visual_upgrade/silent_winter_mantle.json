@@ -1,0 +1,215 @@
+{
+ "id": "silent_winter_mantle",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "snowfall",
+   "kind": "motes",
+   "particle": "minecraft:snowflake",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 11,
+   "box": [
+    -0.6,
+    0.6,
+    -0.2,
+    0.6,
+    2.0,
+    0.8
+   ],
+   "speed": -0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "frost_dust",
+   "kind": "motes",
+   "particle": "dust",
+   "color": "9FE3FF",
+   "size": 0.8,
+   "per_second": 7,
+   "box": [
+    -0.5,
+    0.4,
+    0.25,
+    0.5,
+    1.6,
+    0.7
+   ],
+   "speed": 0.004,
+   "max_per_tick": 2
+  },
+  {
+   "name": "ice_crown",
+   "kind": "ring",
+   "particle": "minecraft:end_rod",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    1.7,
+    0
+   ],
+   "radius": 0.55,
+   "spin": 0.1,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "winter_circle",
+   "kind": "ring",
+   "particle": "minecraft:snowflake",
+   "color": "9FE3FF",
+   "size": 1.0,
+   "per_second": 8,
+   "center": [
+    0,
+    0.8,
+    0
+   ],
+   "radius": 1.1,
+   "spin": -0.15,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "icicle_edge",
+   "kind": "line",
+   "particle": "minecraft:end_rod",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 4,
+   "from": [
+    -0.5,
+    1.3,
+    0.1
+   ],
+   "to": [
+    0.5,
+    1.3,
+    0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "hoarfrost",
+   "kind": "ground",
+   "particle": "minecraft:snowflake",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.6,
+   "max_per_tick": 3
+  },
+  {
+   "name": "shoulder_frost",
+   "kind": "motes",
+   "particle": "minecraft:glow",
+   "color": "9FE3FF",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    1.4,
+    -0.1,
+    0.65,
+    1.8,
+    0.2
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "flake_orbit",
+   "kind": "orbit",
+   "particle": "minecraft:snowflake",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    1.1,
+    0
+   ],
+   "radius": 0.85,
+   "spin": 0.2,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "breath_trail",
+   "kind": "trail",
+   "particle": "minecraft:cloud",
+   "color": "CFF4FF",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.9,
+    0.4
+   ],
+   "radius": 0.6,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "hoarfrost_shroud": [
+   {
+    "shape": "WATER_RING",
+    "color": "9FE3FF",
+    "duration": 30,
+    "power": 4.0,
+    "at": "feet",
+    "particle": "minecraft:snowflake",
+    "count": 70,
+    "spread": 1.6,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MIRROR_DOUBLE",
+    "color": "CFF4FF",
+    "duration": 24,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "minecraft:end_rod",
+    "count": 30,
+    "spread": 1.0,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ],
+  "winters_breath": [
+   {
+    "shape": "WIND_RING",
+    "color": "CFF4FF",
+    "duration": 28,
+    "power": 5.0,
+    "at": "eye",
+    "particle": "minecraft:snowflake",
+    "count": 90,
+    "spread": 2.4,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "WATER_BURST",
+    "color": "9FE3FF",
+    "duration": 26,
+    "power": 4.0,
+    "at": "aim",
+    "particle": "minecraft:cloud",
+    "count": 50,
+    "spread": 1.6,
+    "radius": 5.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

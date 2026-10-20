@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.client.relics.fx.FxQuality;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornBudget;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
+import com.newuniverse.nusmp.relics.upgrade.UpgradeCaps;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -41,8 +42,11 @@ public final class WornLibDraw {
     public static final ResourceLocation ATLAS = WornModels.rl("textures/relic_worn/atlas.png"), SHIMMER = WornModels.rl("textures/relic_worn/shimmer.png");
     /** The shared soft-light texture of the visual upgrade's halo, light shaft and portal quads (HALO flag): assets/nusmp/textures/visual_upgrade/vu_fx.png. */
     public static final ResourceLocation FX = WornModels.rl("textures/visual_upgrade/vu_fx.png");
-    /** Visual upgrade models: beyond 12 blocks the lod model is drawn, beyond 24 blocks the additive passes are skipped (squared distances). */
-    public static final double LOD_SQ = 12.0 * 12.0, ADDITIVE_SQ = 24.0 * 24.0;
+    /**
+     * Visual upgrade models (both slices, one rule, see {@link UpgradeCaps}): beyond 12 blocks (and at the low quality) the lod model is drawn, beyond 24 blocks the additive passes are
+     * skipped, at the low quality the nebula and halo passes are left out (squared distances).
+     */
+    public static final double LOD_SQ = UpgradeCaps.LOD_DISTANCE * UpgradeCaps.LOD_DISTANCE, ADDITIVE_SQ = UpgradeCaps.ADDITIVE_CUTOFF * UpgradeCaps.ADDITIVE_CUTOFF;
     private static final java.util.Map<String, ResourceLocation> TEX = new java.util.HashMap<>();
     private static final float PX = 1f / 16f, PUSH = 0.18f;
     private static final int FULL = LightTexture.FULL_BRIGHT, MAX_SETS = 24, POOL = 72;
@@ -59,8 +63,10 @@ public final class WornLibDraw {
     }
 
     private static final Slot[] SLOTS = new Slot[POOL];
-    private static final int[] BASE = new int[MAX_SETS], EXTRA = new int[MAX_SETS], INDEX = new int[MAX_SETS];
-    private static final boolean[] DRAWN = new boolean[MAX_SETS], EXTRAS = new boolean[MAX_SETS], MOTES = new boolean[MAX_SETS];
+    private static final int[] BASE = new int[MAX_SETS], EXTRA = new int[MAX_SETS], INDEX = new int[MAX_SETS], BUDGET_BASE = new int[MAX_SETS];
+    private static final boolean[] DRAWN = new boolean[MAX_SETS], EXTRAS = new boolean[MAX_SETS], MOTES = new boolean[MAX_SETS], USE_LOD = new boolean[MAX_SETS], NO_ADD = new boolean[MAX_SETS];
+    /** The vertices an upgraded relic may cost the budget of the effects at most: the old per-ensemble cap, so a big upgraded model does not starve the effects of its wearer's other relics. */
+    private static final int LEGACY_BUDGET = UpgradeCaps.LEGACY_ENSEMBLE_VERTICES;
     private static final WornFxPlan[] PLAN_OF = new WornFxPlan[MAX_SETS];
     private static final WornFxPlan[][][] PLANS = new WornFxPlan[8][FxQuality.values().length][2];
     private static final Matrix4f SM = new Matrix4f();
@@ -113,11 +119,17 @@ public final class WornLibDraw {
         int n = Math.min(sets.size(), MAX_SETS);
         if (n == 0) return;
         boolean near = distSq <= WornFxPlan.EXTRAS_RANGE * WornFxPlan.EXTRAS_RANGE;
+        boolean lowQ = q == FxQuality.LOW, farLod = UpgradeCaps.useLod(distSq, lowQ), noAdd = !UpgradeCaps.additive(distSq);
         for (int i = 0; i < n; i++) {
             WornLibrary.Ensemble e = sets.get(i);
             WornFxPlan p = plan(e.tier, q, near);
             PLAN_OF[i] = p;
-            BASE[i] = e.baseVerts;
+            // an upgraded relic (either slice) is drawn as its low detail models beyond 12 blocks and at the low quality, and its additive passes stop beyond 24 blocks
+            boolean lod = e.upgraded && !e.lodPieces.isEmpty() && farLod;
+            USE_LOD[i] = lod;
+            NO_ADD[i] = e.upgraded && noAdd;
+            BASE[i] = lod ? e.lodVerts : e.baseVerts;
+            BUDGET_BASE[i] = e.upgraded ? Math.min(BASE[i], LEGACY_BUDGET) : BASE[i];
             MOTES[i] = false;
             EXTRA[i] = (p.usesShell() ? e.shellVerts : 0);
         }
@@ -130,8 +142,8 @@ public final class WornLibDraw {
             ranked++;
         }
         int models = 0;
-        for (int i = 0; i < n; i++) models += BASE[i];
-        WornBudget.allocate(BASE, EXTRA, n, Math.max(q.vertexCap, models), DRAWN, EXTRAS);      // every relic's model is always drawn (none hides another); only the extras are budgeted
+        for (int i = 0; i < n; i++) models += BUDGET_BASE[i];
+        WornBudget.allocate(BUDGET_BASE, EXTRA, n, Math.max(q.vertexCap, models), DRAWN, EXTRAS);      // every relic's model is always drawn (none hides another); only the extras are budgeted
         for (int i = 0; i < n; i++) {                                                          // the place of each among the relics of its slot (by id: stable while grades change)
             int idx = 0;
             for (int j = 0; j < n; j++) if (j != i && sets.get(j).slotKey.equals(sets.get(i).slotKey) && sets.get(j).id.compareTo(sets.get(i).id) < 0) idx++;
@@ -144,8 +156,9 @@ public final class WornLibDraw {
         for (int i = 0; i < n && used < POOL; i++) {
             if (!DRAWN[i]) continue;
             WornLibrary.Ensemble e = sets.get(i);
-            for (int k = 0; k < e.pieces.size() && used < POOL; k++) {
-                WornLibrary.Resolved r = e.pieces.get(k);
+            List<WornLibrary.Resolved> pieces = USE_LOD[i] ? e.lodPieces : e.pieces;
+            for (int k = 0; k < pieces.size() && used < POOL; k++) {
+                WornLibrary.Resolved r = pieces.get(k);
                 Slot s = SLOTS[used++];
                 s.mesh = r.mesh();
                 s.mirror = r.mirror();
@@ -181,6 +194,7 @@ public final class WornLibDraw {
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             WornFxPlan p = PLAN_OF[s.set];
+            if (NO_ADD[s.set]) continue;                                                        // beyond 24 blocks an upgraded relic draws no additive pass at all
             if (s.mesh.emitQuads > 0) glow(vc, s, age, limb, crouching, hot * (1f + p.pulse() * (float) Math.sin(age * 0.09f)));
             if (EXTRAS[s.set]) {
                 if (s.first && MOTES[s.set]) {
@@ -193,8 +207,8 @@ public final class WornLibDraw {
             }
         }
 
-        // ---- the visual upgrade models: own skin, glow map, nebula and halo passes (a model with a `skin` record draws only here)
-        customPasses(buffers, used, light, age, limb, crouching, distSq, q);
+        // ---- the visual upgrade models: own skin, glow map, lit glow, nebula and halo passes (a model with a `skin` record draws only here)
+        customPasses(buffers, used, light, age, limb, crouching, distSq, q, true);
 
         // ---- pass 3: the rim glow and the shimmer
         if (!shell) return;
@@ -202,6 +216,7 @@ public final class WornLibDraw {
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             WornFxPlan p = PLAN_OF[s.set];
+            if (NO_ADD[s.set]) continue;
             if (EXTRAS[s.set] && p.usesShell() && s.mesh.shellQuads > 0) shellPass(vc, s, age, limb, crouching, p.rim(), p.shimmer());
         }
     }
@@ -251,7 +266,9 @@ public final class WornLibDraw {
         Matrix4f at = pose.last().pose();                                                // where the object stands relative to the camera: the lod and additive distances of a held object
         double distSq = (double) at.m30() * at.m30() + (double) at.m31() * at.m31() + (double) at.m32() * at.m32();
         if (near) distSq = 0.0;
-        customPasses(buffers, used, light, age, 0f, false, distSq, RelicFxOptions.quality());
+        FxQuality dq = RelicFxOptions.quality();
+        if (near && dq == FxQuality.LOW) dq = FxQuality.MEDIUM;                           // a GUI slot has no distance: the low quality rule does not apply there
+        customPasses(buffers, used, light, age, 0f, false, distSq, dq, false);
     }
 
     /**
@@ -367,22 +384,25 @@ public final class WornLibDraw {
     public static void clearCustom() { TEX.clear(); }
 
     /**
-     * The models that carry their own skin (a visual upgrade model), drawn in up to four passes over the first {@code used} pieces: (1) the skin, lit, no palette tint; (2) the glow
-     * map, additive, pulsing; (3) the starfield / nebula of the STAR quads, additive and scrolling; (4) the HALO quads (rings, light shafts, portals) over the shared fx texture,
-     * tinted by their colour slot and breathing. Beyond {@link #LOD_SQ} the model's lod is drawn, beyond {@link #ADDITIVE_SQ} only the skin pass runs, and with the low quality option
-     * the nebula and halo passes are left out. Nothing is allocated: the scratch matrices and vectors of the other passes are reused.
+     * The models that carry their own skin (a visual upgrade model of either slice), drawn in up to five passes over the first {@code used} pieces: (1) the skin, lit (a Charms / Genesis
+     * skin as painted; a God worn skin, which is grey, tinted by the palette slots like the atlas, an EMIT quad dark until the glow adds its light); (2) the glow map of the GLOWMAP quads,
+     * additive, pulsing; (3) the lit glow of a God worn skin: the EMIT, LIT and ADD quads sampling its glow map in the slot or glow colour; (4) the starfield / nebula of the STAR quads,
+     * additive and scrolling; (5) the HALO quads (rings, light shafts, portals) over the shared fx texture, tinted by their colour slot and breathing. One rule for both slices
+     * ({@link UpgradeCaps}): beyond {@link #LOD_SQ} (and at the low quality) the model's lod is drawn, beyond {@link #ADDITIVE_SQ} only the skin pass runs, and with the low quality option
+     * the nebula and halo passes are left out. {@code worn} is false for an object in the hand or a frame (no plan: the lit glow pulses with the clock only). Nothing is allocated: the
+     * scratch matrices and vectors of the other passes are reused.
      */
-    private static void customPasses(MultiBufferSource buffers, int used, int light, float age, float limb, boolean crouching, double distSq, FxQuality q) {
+    private static void customPasses(MultiBufferSource buffers, int used, int light, float age, float limb, boolean crouching, double distSq, FxQuality q, boolean worn) {
         boolean any = false;
         for (int u = 0; u < used; u++) if (SLOTS[u].mesh.custom()) { any = true; break; }
         if (!any) return;
-        boolean far = distSq > LOD_SQ, additive = distSq <= ADDITIVE_SQ;
-        boolean rich = additive && q != FxQuality.LOW;
+        boolean lowQ = q == FxQuality.LOW;
+        boolean far = UpgradeCaps.useLod(distSq, lowQ), additive = UpgradeCaps.additive(distSq), rich = UpgradeCaps.rich(distSq, lowQ);
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             if (!s.mesh.custom()) continue;
             WornMesh m = far ? s.mesh.lod() : s.mesh;
-            skinPass(buffers.getBuffer(RenderType.entityCutoutNoCull(tex(m.skin))), s, m, light, age, limb, crouching);
+            skinPass(buffers.getBuffer(RenderType.entityCutoutNoCull(tex(m.skinPath()))), s, m, light, age, limb, crouching);
         }
         if (!additive) return;
         float hot = 0.80f + 0.20f * (float) Math.sin(age * 0.14f);
@@ -391,6 +411,15 @@ public final class WornLibDraw {
             if (!s.mesh.custom()) continue;
             WornMesh m = far ? s.mesh.lod() : s.mesh;
             if (m.glowTex != null && m.glowMapQuads > 0) glowMapPass(buffers.getBuffer(RenderType.eyes(tex(m.glowTex))), s, m, age, limb, crouching, hot);
+        }
+        float litHot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
+        for (int u = 0; u < used; u++) {
+            Slot s = SLOTS[u];
+            if (!s.mesh.tinted()) continue;
+            WornMesh m = far ? s.mesh.lod() : s.mesh;
+            if (m.emitQuads <= 0) continue;
+            float pulse = worn ? PLAN_OF[s.set].pulse() : 0f;
+            litPass(buffers.getBuffer(RenderType.eyes(tex(m.glowPath()))), s, m, age, limb, crouching, litHot * (1f + pulse * (float) Math.sin(age * 0.09f)));
         }
         if (!rich) return;
         for (int u = 0; u < used; u++) {
@@ -408,6 +437,7 @@ public final class WornLibDraw {
     }
 
     private static void skinPass(VertexConsumer vc, Slot s, WornMesh m, int light, float age, float limb, boolean crouching) {
+        boolean tint = m.tinted();
         for (int g = 0; g < m.groups.length; g++) {
             int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
             if (q0 == q1) continue;
@@ -415,8 +445,14 @@ public final class WornLibDraw {
             setup(s, gr, age, limb, crouching);
             boolean w = wave(gr);
             for (int i = q0; i < q1; i++) {
-                if ((m.flags[i] & (WornMesh.STAR | WornMesh.HALO)) != 0) continue;
-                for (int k = 0; k < 4; k++) vertexUv(vc, m, i, k, 255, 255, 255, 255, light, w ? gr : null, age, 0f, 0f);
+                int f = m.flags[i];
+                if ((f & (WornMesh.STAR | WornMesh.HALO | WornMesh.ADD)) != 0) continue;          // the nebula, the halos and the soft sprites exist only in their additive passes
+                int c = 0xFFFFFF;
+                if (tint) {
+                    c = s.colors[m.slot[i]];
+                    if ((f & WornMesh.EMIT) != 0) c = WornPalette.scale(c, 0.55f);                  // a lit stone is dark glass until the glow pass adds its light
+                }
+                for (int k = 0; k < 4; k++) vertexUv(vc, m, i, k, c >> 16 & 255, c >> 8 & 255, c & 255, 255, light, w ? gr : null, age, 0f, 0f);
             }
         }
     }
@@ -433,6 +469,26 @@ public final class WornLibDraw {
                 if ((f & WornMesh.GLOWMAP) == 0) continue;
                 int c = Math.min(255, (int) (255f * ((f & WornMesh.HOT) != 0 ? hot : 0.92f)));
                 for (int j = 0; j < 4; j++) vertexUv(vc, m, i, WornMesh.corner(s.mirror, j), c, c, c, 255, FULL, w ? gr : null, age, 0f, 0f);
+            }
+        }
+    }
+
+    /** The lit glow of a God worn skin: the EMIT, LIT and ADD quads over the glow map; a LIT-only quad (engraved runes, veins) glows in the glow colour, the others in their own slot colour. */
+    private static void litPass(VertexConsumer vc, Slot s, WornMesh m, float age, float limb, boolean crouching, float hot) {
+        for (int g = 0; g < m.groups.length; g++) {
+            int q0 = m.groupStart[g], q1 = m.groupStart[g + 1];
+            if (q0 == q1) continue;
+            WornMesh.Group gr = m.groups[g];
+            setup(s, gr, age, limb, crouching);
+            boolean w = wave(gr);
+            for (int i = q0; i < q1; i++) {
+                int f = m.flags[i];
+                if ((f & (WornMesh.EMIT | WornMesh.LIT | WornMesh.ADD)) == 0) continue;
+                float k = (f & WornMesh.HOT) != 0 ? hot : 0.9f;
+                int c = s.colors[(f & (WornMesh.EMIT | WornMesh.ADD)) != 0 ? m.slot[i] : WornMesh.GLOW];
+                int r = Math.min(255, (int) ((c >> 16 & 255) * k)), gg = Math.min(255, (int) ((c >> 8 & 255) * k)), b = Math.min(255, (int) ((c & 255) * k));
+                // RenderType.eyes culls back faces and a mirrored piece has its winding reversed by the x flip: write the corners in the other order (the 1.99.0 rule of the glow pass)
+                for (int j = 0; j < 4; j++) vertexUv(vc, m, i, WornMesh.corner(s.mirror, j), r, gg, b, 255, FULL, w ? gr : null, age, 0f, 0f);
             }
         }
     }

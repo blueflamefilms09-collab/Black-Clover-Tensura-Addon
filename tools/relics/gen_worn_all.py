@@ -229,7 +229,11 @@ def main(argv):
     if not check:
         cat.write()
     if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "visual_upgrade", "charms_genesis_worn", "build.py"), run_name="vu_charms_genesis_worn")      # visual upgrade, slice charms_genesis_worn: bakes its own files under assets/nusmp/visual_upgrade only
-    return 1 if over or bad else 0
+    # 1.102.0 (append-only hook): the God grade worn upgrade (models, skins, effect tables) lives in tools/visual_upgrade/god_worn and adds files only; it skips itself when up to date
+    sys.path.insert(0, os.path.join(HERE, "..", "visual_upgrade", "god_worn"))
+    import build as _god_worn_build  # noqa: E402
+    god_bad = _god_worn_build.main(["--check"] if check else [])
+    return 1 if over or bad or god_bad else 0
 
 
 if __name__ == "__main__":
