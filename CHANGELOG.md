@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.99.0] — Dungeon overhaul: bosses and arenas, squads and loot, rift pockets, hunger ban, mob sounds, Mana Zone, armour policy, Erza remake, Great Spirits, player-model humanoids
+
+### NEW
+- **200 Decennial bosses** (100 Holy at levels 1..100, 100 Evil at -1..-100; one per 10 floors) with 2-4 phases and lair actions, and **36 thematic boss halls** (graveyard with breakable tombstones that spawn adds, ruined throne room with destructible pillars, cathedral, forge, frozen keep, ...). The Evil side follows the Tree of Qliphoth: seven gate halls, devils stationed across the bands, three Supreme Devils at levels -98 to -100. `docs/labyrinth/decennial_bosses.md`.
+- **Squads of 5 to 8** in the Dungeon Master (tank, melee, flanker, ranged, support, leader) with `InterceptAttackGoal`, `FlankTargetGoal`, `SupportRetreatGoal`, formation and morale; `squads.enabled=false` brings the old spawning back. **Functional anime loot** by a global loot modifier: 30 buff foods and elixirs, 24 monster parts with recipes and anvil uses, 8 weapons, 8 armour pieces and 8 trinkets with pre-rolled stats, sold to the Hub merchant for Tensura coins. `docs/labyrinth/squads_and_loot.md`.
+- **Mega-rare rifts and 13 exclusive pocket dungeons** (own biome look, 4-5 exclusive mobs, a mega-boss, inverted gravity rooms, mana-sealed treasury, collapse when the relic is taken), 26 relics and 13 boss weapons that drop only there, a new space-tear renderer, rarity tiers with a pity counter. `docs/labyrinth/rift_pockets.md`.
+- **Admin `/dungeon` tree** (OP): `tp <floor>`, `skip`, `boss spawn <level>` / `boss kill`, `rift spawn <pocket|shortcut>`, `skill unlock`, `skill give_sp` (skill points were removed in 1.96.0: it adds mastery points and says so), `reset`, `debug wfc` / `debug info`. Merged into the player's existing `/dungeon`.
+- **Mob sound engine**: 25 mob families x 8 cues = 200 sound events, 525 generated ogg files, `sounds.json` entries, subtitles; dungeon mobs no longer use vanilla zombie or skeleton voices (`tools/gen_mob_sounds.py`, `docs/audio/mob_audio.md`).
+- **Mana Zone is late game** (2,000,000 EP, Senior 1st Class, mastery, 15 boss kills, dungeon floor 40 and an attunement inside a Grand Magic Zone). Mana Zone follows the canon: attacks from any point of the zone, sharper senses, pressurised protective spaces, footholds in mid air. **Grand Magic Zones are places**: five named regions (Seabed Temple, Witches' Forest, Ultime-Volcano, Gravito Rock Zone, Elysia) with chaotic gravity, currents, magma heat, storms. Optional True Magic page. `docs/mana/mana_zone_redesign.md`.
+- **Erza Requip armours remade at Djinn quality**: all 14 armours as full sets of 19-22 pieces with glow maps (`docs/erza_armour_remake.md`). **Great Spirits**: Sylph is a tiny winged fairy, Undine a giant mermaid, Salamander gets a flame layer; **Spirit Dive** looks: Wind half and full dive, Saint Valkyrie Dress, Fire draconic arms, Earth (`docs/rebuild/great_spirits.md`).
+- **Dungeon humanoids on the player model** (Foundry people, Living Armor, Warden, Guardian incl. D&D and Decennial bosses, Goliath, the named corpses) with 385 HD skins and appendages; `client.playermodel.dungeon=false` restores the old renderers. `docs/playermodel_phase2.md`.
+- **Relic rendering diagnostics**: `/multiverse relic debug` names why a relic does not draw; relic packs of NPCs and Avatars now reach clients (`docs/relic_visuals/worn_render_2.md`).
+
+### REPLACED
+- **Casting no longer equips armour.** Armour belongs to explicit forms: of 105 magics only 11 have one (Spirit Dive for Flame, Water, Wind, Earth, Devil Union for Anti-Magic, Shadow; toggles for Lightning, Dark, Mercury, Corundum, Beast); the rest are visual effects only. `docs/rebuild/armour_policy.md`.
+- **Hunger ban**: every hunger or exhaustion drain of this mod was removed or turned into a magicule cost (rests, gloom, traps, curses, relics, Djinn backlash); a test fails if one comes back. `docs/labyrinth/hunger_ban.md`.
+- Mana Zone's early toggle buff, the "Grand Magic Zone = dense biome" reading, the Erza armour pieces (same ids), the Sylph and Undine looks in the renderer (old models stay on disk).
+
+### KEPT
+- Every page id, mode, armour id, entity id, save data and the Time Magic VFX; all old renderers behind their config flags.
+
+### Honest notes
+- Nothing has been run in the game; models and arenas were checked by software previews, tests and the server smoke test only. The wiki pages could not be reached: Mana Zone, Grand Magic Zone, Spirit Dive and Qliphoth follow the canon text the owner supplied. The Tensura ability-menu injection and skill points from the spec were not rebuilt (skill books teach Unique skills directly since 1.96.0). Rests recover HP and mana but not ability cooldowns yet. Requip Magic abilities and the performance pass follow in 1.100.0.
+
 ## [1.98.0] — 35 new Legend, God and Genesis weapons
 
 ### NEW
