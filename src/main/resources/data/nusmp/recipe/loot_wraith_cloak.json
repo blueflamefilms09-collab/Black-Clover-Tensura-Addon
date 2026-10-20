@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "item": "nusmp:wraith_essence"
+    },
+    "C": {
+      "item": "nusmp:cursed_cloth"
+    }
+  },
+  "pattern": [
+    "WCW",
+    "CCC",
+    "C C"
+  ],
+  "result": {
+    "id": "nusmp:wraith_cloak",
+    "count": 1
+  }
+}

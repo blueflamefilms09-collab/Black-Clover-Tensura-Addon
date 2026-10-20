@@ -130,6 +130,20 @@
       "length_blocks": 1.091
     },
     {
+      "id": "bone_lance",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.26,
+      "first_person_translation_px": [
+        1.13,
+        2.27,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
+    },
+    {
       "id": "book_of_mispells",
       "action": "keep",
       "length_blocks": 1.091
@@ -340,6 +354,20 @@
       "fixed_scale": 0.817
     },
     {
+      "id": "delvers_longsword",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "demon_destroyer_sword",
       "action": "preset",
       "length_blocks": 2.0,
@@ -466,6 +494,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.217,
       "fixed_scale": 0.408
+    },
+    {
+      "id": "drakefang_greatsword",
+      "action": "preset",
+      "length_blocks": 3.118,
+      "first_person_scale": 0.313,
+      "first_person_translation_px": [
+        1.13,
+        2.36,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.256,
+      "fixed_scale": 0.481
     },
     {
       "id": "dream_glass",
@@ -643,6 +685,25 @@
       "id": "glutton_chalice",
       "action": "keep",
       "length_blocks": 0.95
+    },
+    {
+      "id": "goblin_fang_dagger",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
+      "id": "golem_maul",
+      "action": "preset",
+      "length_blocks": 1.882,
+      "first_person_scale": 0.524,
+      "first_person_translation_px": [
+        1.13,
+        2.77,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.424,
+      "fixed_scale": 0.796
     },
     {
       "id": "grimoire_chain",
@@ -1163,6 +1224,20 @@
       "fixed_scale": 0.505
     },
     {
+      "id": "orc_cleaver",
+      "action": "preset",
+      "length_blocks": 2.176,
+      "first_person_scale": 0.497,
+      "first_person_translation_px": [
+        1.13,
+        2.93,
+        0.88
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.367,
+      "fixed_scale": 0.689
+    },
+    {
       "id": "otherworld_trident",
       "action": "preset",
       "length_blocks": 3.671,
@@ -1420,6 +1495,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.269,
       "fixed_scale": 0.505
+    },
+    {
+      "id": "shadowsteel_katana",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.542,
+      "first_person_translation_px": [
+        1.13,
+        2.91,
+        0.85
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
     },
     {
       "id": "shroud_of_margins",
@@ -2272,6 +2361,20 @@
         1.13,
         2.92,
         0.72
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
+      "id": "wisp_staff",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.295,

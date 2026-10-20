@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "nusmp:ghoul_claw"
+    }
+  },
+  "pattern": [
+    "I",
+    "I",
+    "G"
+  ],
+  "result": {
+    "id": "nusmp:delvers_longsword",
+    "count": 1
+  }
+}

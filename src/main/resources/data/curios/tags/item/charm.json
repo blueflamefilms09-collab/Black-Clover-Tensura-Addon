@@ -689,6 +689,8 @@
     {
       "id": "nusmp:teleport_crystal",
       "required": false
-    }
+    },
+    "nusmp:goblin_ear_ward",
+    "nusmp:wisp_lantern"
   ]
 }

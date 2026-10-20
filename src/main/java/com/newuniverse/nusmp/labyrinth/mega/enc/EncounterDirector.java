@@ -9,6 +9,8 @@ import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryEncounters;
 import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
+import com.newuniverse.nusmp.labyrinth.squad.Squad;
+import com.newuniverse.nusmp.labyrinth.squad.SquadHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -406,6 +408,7 @@ public final class EncounterDirector {
         }
         List<EncounterRoll.Planned> plan = EncounterRoll.plan(entry, picks, v.factor(), budget, EncConfig.get(EncConfig.MAX_PER_ENCOUNTER), rnd);
         if (plan.isEmpty()) return new Outcome(Kind.TOO_SMALL, "entry '" + entry.id() + "': nothing of it fits a budget of " + String.format(java.util.Locale.ROOT, "%.1f", budget), List.of(), budget, 0.0, res, entry.id(), band, cells, min, max);
+        plan = SquadBridge.shape(level, plan, entry, band, v, sector.theme.id(), nativeFaction, table, factionOf, costOf, rnd);          // squads: 5 to 8 monsters with roles (squads.enabled; false = the plan as it is)
 
         // the monsters
         // 1.94.0: each monster has a budget of its own (the old single budget of twelve places for the whole encounter was spent by one bad cell), and when its cell and the
@@ -449,10 +452,12 @@ public final class EncounterDirector {
             }
         }
         if (made.isEmpty()) {
+            SquadHook.abort();
             return new Outcome(Kind.NO_PLACE, "entry '" + entry.id() + "': no position took a monster (" + triedPlaces + " places tried on rung '" + tier.name() + "' " + tier.range() + "; refused: " + EncounterSpawner.describe(rejects) + ")",
                     List.of(), budget, 0.0, res, entry.id(), band, cells, min, max);
         }
 
+        Squad squad = SquadHook.end(level, made);                                      // squads: the roles, the formation and the System line
         long hunt = entry.hunt() >= 0 ? entry.hunt() : band.huntTicks();
         for (Mob m : made) {
             if (TRACKED.size() < MAX_TRACKED) TRACKED.put(m.getUUID(), m.blockPosition().asLong());
@@ -464,7 +469,7 @@ public final class EncounterDirector {
         if (!entry.message().isEmpty()) for (ServerPlayer p : exposed) EncounterCue.tell(p, entry.message());
         String text = "'" + entry.id() + "' (" + band.label() + "): " + made.size() + " of " + totalCount + " monsters, " + String.format(java.util.Locale.ROOT, "%.1f of %.1f", spent, budget) + " budget, " + cells.size() + " places"
                 + (tier.index() > 0 ? ", rung '" + tier.name() + "' " + tier.range() : "") + (made.size() < totalCount ? ", refused: " + EncounterSpawner.describe(rejects) : "")
-                + (res == null ? "" : ", rolled " + describe(res, v));
+                + (res == null ? "" : ", rolled " + describe(res, v)) + (squad == null ? "" : ", squad " + squad.describe());
         return new Outcome(Kind.SPAWNED, text, made, budget, spent, res, entry.id(), band, cells, min, max);
     }
 
@@ -597,6 +602,7 @@ public final class EncounterDirector {
                 HUNTS.remove(id);
                 continue;
             }
+            if (SquadHook.followsLeader(m)) continue;                          // squads: only the leader is sent to find the party, the others keep formation behind it
             if (m.getTarget() instanceof Player t && t.isAlive() && !t.isSpectator()) {
                 if (m.hasLineOfSight(t) || !EncConfig.get(EncConfig.HUNT_BY_ROOMS)) continue;          // it found someone by itself, and sees them: its own goals take over
                 MobSteer.release(m);                                                                    // 1.94.0: a target behind a wall is a walk its own goals cannot make; the rooms can

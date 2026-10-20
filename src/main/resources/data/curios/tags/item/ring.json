@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "nusmp:orc_tusk_ring",
+    "nusmp:cultist_sigil_ring"
+  ]
 }

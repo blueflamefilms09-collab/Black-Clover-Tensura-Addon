@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "item": "nusmp:spirit_wisp"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " W ",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "id": "nusmp:wisp_staff",
+    "count": 1
+  }
+}

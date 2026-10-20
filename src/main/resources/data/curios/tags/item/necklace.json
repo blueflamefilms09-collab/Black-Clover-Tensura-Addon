@@ -256,6 +256,8 @@
     {
       "id": "nusmp:death_game_survivors_dog_tag",
       "required": false
-    }
+    },
+    "nusmp:lich_dust_pendant",
+    "nusmp:tide_pearl_amulet"
   ]
 }

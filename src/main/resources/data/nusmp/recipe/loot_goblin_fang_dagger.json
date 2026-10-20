@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "T": {
+      "item": "nusmp:goblin_tooth"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "T",
+    "T",
+    "S"
+  ],
+  "result": {
+    "id": "nusmp:goblin_fang_dagger",
+    "count": 1
+  }
+}

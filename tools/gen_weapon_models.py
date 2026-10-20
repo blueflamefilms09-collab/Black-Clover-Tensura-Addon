@@ -3319,6 +3319,10 @@ def write(item_id, mesh, atlas, extra, fit=False):
 
 
 def main(only=None):
+    if only and only[0] == "loot":                                 # 1.99.0: the dungeon loot weapons and trinkets are built by tools/gen_loot_models.py (same method, own file)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import gen_loot_models
+        return gen_loot_models.main(only[1:])
     if not only or "butcher_cleaver" in only:                      # 1.19.0: its sprite must exist before the mesh is placed on it
         _bc_write_icon()
     for fit, specs in ((False, SPECS), (True, RELICS)):

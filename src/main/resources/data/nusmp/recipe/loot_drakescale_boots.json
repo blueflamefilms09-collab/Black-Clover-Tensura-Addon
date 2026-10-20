@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "nusmp:drake_scale"
+    },
+    "C": {
+      "item": "nusmp:chitin_plate"
+    }
+  },
+  "pattern": [
+    "D D",
+    "C C"
+  ],
+  "result": {
+    "id": "nusmp:drakescale_boots",
+    "count": 1
+  }
+}

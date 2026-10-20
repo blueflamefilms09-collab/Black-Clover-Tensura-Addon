@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "W": {
+      "item": "nusmp:spirit_wisp"
+    }
+  },
+  "pattern": [
+    " I ",
+    "GWG",
+    " I "
+  ],
+  "result": {
+    "id": "nusmp:wisp_lantern",
+    "count": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "item": "minecraft:string"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "P": {
+      "item": "nusmp:tide_pearl"
+    }
+  },
+  "pattern": [
+    " W ",
+    "IPI",
+    " I "
+  ],
+  "result": {
+    "id": "nusmp:tide_pearl_amulet",
+    "count": 1
+  }
+}

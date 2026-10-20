@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "nusmp:drake_scale"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "DLD",
+    "D D",
+    "L L"
+  ],
+  "result": {
+    "id": "nusmp:drakescale_greaves",
+    "count": 1
+  }
+}

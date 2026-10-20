@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "H": {
+      "item": "nusmp:troll_hide"
+    },
+    "C": {
+      "item": "nusmp:golem_core"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "HCH",
+    "LLL"
+  ],
+  "result": {
+    "id": "nusmp:golem_core_belt",
+    "count": 1
+  }
+}

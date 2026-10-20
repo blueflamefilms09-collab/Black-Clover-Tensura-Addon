@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "nusmp:drake_scale"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "L L"
+  ],
+  "result": {
+    "id": "nusmp:drakescale_helm",
+    "count": 1
+  }
+}

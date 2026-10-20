@@ -736,6 +736,54 @@
   },
   "tidebreaker_chakram": {
    "class": "handaxe"
+  },
+  "goblin_fang_dagger": {
+   "class": "dagger"
+  },
+  "delvers_longsword": {
+   "class": "longsword"
+  },
+  "bone_lance": {
+   "class": "spear"
+  },
+  "orc_cleaver": {
+   "class": "battleaxe"
+  },
+  "shadowsteel_katana": {
+   "class": "katana"
+  },
+  "drakefang_greatsword": {
+   "class": "greatsword"
+  },
+  "wisp_staff": {
+   "class": "staff"
+  },
+  "golem_maul": {
+   "class": "hammer"
+  },
+  "goblin_ear_ward": {
+   "class": "handitem"
+  },
+  "orc_tusk_ring": {
+   "class": "handitem"
+  },
+  "lich_dust_pendant": {
+   "class": "handitem"
+  },
+  "wisp_lantern": {
+   "class": "handitem"
+  },
+  "golem_core_belt": {
+   "class": "handitem"
+  },
+  "wraith_cloak": {
+   "class": "handitem"
+  },
+  "cultist_sigil_ring": {
+   "class": "handitem"
+  },
+  "tide_pearl_amulet": {
+   "class": "handitem"
   }
  },
  "_excluded_was": {

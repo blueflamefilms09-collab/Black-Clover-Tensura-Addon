@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "nusmp:bone_shard"
+    },
+    "S": {
+      "item": "minecraft:bone"
+    }
+  },
+  "pattern": [
+    "  B",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "id": "nusmp:bone_lance",
+    "count": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "T": {
+      "item": "nusmp:orc_tusk"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "TIT",
+    "TS ",
+    " S "
+  ],
+  "result": {
+    "id": "nusmp:orc_cleaver",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nusmp:slime_gel"
+    },
+    {
+      "item": "nusmp:slime_gel"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "result": {
+    "id": "nusmp:slime_jelly_pudding",
+    "count": 2
+  }
+}
