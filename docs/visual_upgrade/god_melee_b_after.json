@@ -324,15 +324,15 @@
       "wave": "Wave78",
       "mesh_file": "weapon_meshes/up/orials_starfall_staff.txt",
       "mesh": {
-        "quads_body": 1688,
+        "quads_body": 1920,
         "quads_void": 0,
-        "quads_glow_layer": 1181,
-        "quads_full_detail": 2000,
+        "quads_glow_layer": 1413,
+        "quads_full_detail": 2232,
         "orbit_instances": 6,
-        "vertices_body": 6752,
-        "vertices_welded": 1460,
-        "vertices_full_detail": 8000,
-        "lod_vertices": 944
+        "vertices_body": 7680,
+        "vertices_welded": 1690,
+        "vertices_full_detail": 8928,
+        "lod_vertices": 1068
       },
       "texture": {
         "skin": {
@@ -342,7 +342,7 @@
             1024
           ],
           "texels": 1048576,
-          "painted": 284147
+          "painted": 287269
         },
         "emissive_maps": [
           {
@@ -352,7 +352,7 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 172038
+            "painted": 174503
           },
           {
             "file": "textures/entity/weapon/up/orials_starfall_staff_glow2.png",
@@ -361,12 +361,12 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 179401
+            "painted": 181814
           }
         ],
         "skin_size_texels": 1048576,
-        "painted_skin_texels": 284147,
-        "painted_texels_all_maps": 635586
+        "painted_skin_texels": 287269,
+        "painted_texels_all_maps": 643586
       },
       "swing_trail": true,
       "unique_act_vfx": true,
@@ -407,15 +407,15 @@
         ]
       },
       "ratios": {
-        "mesh": 2.331,
-        "texture": 11.26,
+        "mesh": 2.601,
+        "texture": 11.401,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
       "V_before": 1.0,
-      "V_after": 6.743,
-      "V_after_brief_weights": 5.943
+      "V_after": 6.826,
+      "V_after_brief_weights": 6.066
     },
     {
       "item": "reflected_kings_mirrorblade",
@@ -424,15 +424,15 @@
       "wave": "Wave78",
       "mesh_file": "weapon_meshes/up/reflected_kings_mirrorblade.txt",
       "mesh": {
-        "quads_body": 1962,
+        "quads_body": 2050,
         "quads_void": 0,
-        "quads_glow_layer": 1272,
-        "quads_full_detail": 2178,
+        "quads_glow_layer": 1360,
+        "quads_full_detail": 2266,
         "orbit_instances": 6,
-        "vertices_body": 7848,
-        "vertices_welded": 1802,
-        "vertices_full_detail": 8712,
-        "lod_vertices": 1072
+        "vertices_body": 8200,
+        "vertices_welded": 1868,
+        "vertices_full_detail": 9064,
+        "lod_vertices": 1132
       },
       "texture": {
         "skin": {
@@ -442,7 +442,7 @@
             1024
           ],
           "texels": 1048576,
-          "painted": 435082
+          "painted": 434896
         },
         "emissive_maps": [
           {
@@ -452,7 +452,7 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 221885
+            "painted": 232548
           },
           {
             "file": "textures/entity/weapon/up/reflected_kings_mirrorblade_glow2.png",
@@ -461,12 +461,12 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 141284
+            "painted": 156196
           }
         ],
         "skin_size_texels": 1048576,
-        "painted_skin_texels": 435082,
-        "painted_texels_all_maps": 798251
+        "painted_skin_texels": 434896,
+        "painted_texels_all_maps": 823640
       },
       "swing_trail": true,
       "unique_act_vfx": true,
@@ -507,15 +507,15 @@
         ]
       },
       "ratios": {
-        "mesh": 2.814,
-        "texture": 7.504,
+        "mesh": 2.928,
+        "texture": 7.743,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
       "V_before": 1.0,
-      "V_after": 6.089,
-      "V_after_brief_weights": 5.361
+      "V_after": 6.159,
+      "V_after_brief_weights": 5.448
     },
     {
       "item": "rimeheart_greatblade",
@@ -524,15 +524,15 @@
       "wave": "Wave78",
       "mesh_file": "weapon_meshes/up/rimeheart_greatblade.txt",
       "mesh": {
-        "quads_body": 1962,
+        "quads_body": 2384,
         "quads_void": 0,
-        "quads_glow_layer": 1302,
-        "quads_full_detail": 2142,
+        "quads_glow_layer": 1724,
+        "quads_full_detail": 2564,
         "orbit_instances": 6,
-        "vertices_body": 7848,
-        "vertices_welded": 1749,
-        "vertices_full_detail": 8568,
-        "lod_vertices": 1076
+        "vertices_body": 9536,
+        "vertices_welded": 2079,
+        "vertices_full_detail": 10256,
+        "lod_vertices": 1324
       },
       "texture": {
         "skin": {
@@ -542,7 +542,7 @@
             1024
           ],
           "texels": 1048576,
-          "painted": 625428
+          "painted": 600905
         },
         "emissive_maps": [
           {
@@ -552,7 +552,7 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 448799
+            "painted": 433671
           },
           {
             "file": "textures/entity/weapon/up/rimeheart_greatblade_glow2.png",
@@ -561,12 +561,12 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 244537
+            "painted": 252959
           }
         ],
         "skin_size_texels": 1048576,
-        "painted_skin_texels": 625428,
-        "painted_texels_all_maps": 1318764
+        "painted_skin_texels": 600905,
+        "painted_texels_all_maps": 1287535
       },
       "swing_trail": true,
       "unique_act_vfx": true,
@@ -607,15 +607,15 @@
         ]
       },
       "ratios": {
-        "mesh": 2.369,
-        "texture": 6.853,
+        "mesh": 2.836,
+        "texture": 6.691,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
       "V_before": 1.0,
-      "V_after": 5.87,
-      "V_after_brief_weights": 5.075
+      "V_after": 5.93,
+      "V_after_brief_weights": 5.206
     },
     {
       "item": "sanguine_wardens_cleaver",
@@ -624,15 +624,15 @@
       "wave": "Wave78",
       "mesh_file": "weapon_meshes/up/sanguine_wardens_cleaver.txt",
       "mesh": {
-        "quads_body": 1901,
+        "quads_body": 2057,
         "quads_void": 0,
-        "quads_glow_layer": 880,
-        "quads_full_detail": 2027,
+        "quads_glow_layer": 1036,
+        "quads_full_detail": 2183,
         "orbit_instances": 7,
-        "vertices_body": 7604,
-        "vertices_welded": 1871,
-        "vertices_full_detail": 8108,
-        "lod_vertices": 1060
+        "vertices_body": 8228,
+        "vertices_welded": 2017,
+        "vertices_full_detail": 8732,
+        "lod_vertices": 1148
       },
       "texture": {
         "skin": {
@@ -642,7 +642,7 @@
             1024
           ],
           "texels": 1048576,
-          "painted": 689083
+          "painted": 724771
         },
         "emissive_maps": [
           {
@@ -652,7 +652,7 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 234348
+            "painted": 210927
           },
           {
             "file": "textures/entity/weapon/up/sanguine_wardens_cleaver_glow2.png",
@@ -661,12 +661,12 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 232159
+            "painted": 308922
           }
         ],
         "skin_size_texels": 1048576,
-        "painted_skin_texels": 689083,
-        "painted_texels_all_maps": 1155590
+        "painted_skin_texels": 724771,
+        "painted_texels_all_maps": 1244620
       },
       "swing_trail": true,
       "unique_act_vfx": true,
@@ -707,15 +707,15 @@
         ]
       },
       "ratios": {
-        "mesh": 2.563,
-        "texture": 5.374,
+        "mesh": 2.76,
+        "texture": 5.789,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
       "V_before": 1.0,
-      "V_after": 5.612,
-      "V_after_brief_weights": 4.847
+      "V_after": 5.735,
+      "V_after_brief_weights": 4.999
     },
     {
       "item": "valkarins_stormlance",
@@ -958,50 +958,50 @@
     {
       "item": "orials_starfall_staff",
       "ratios": {
-        "mesh": 2.331,
-        "texture": 11.26,
+        "mesh": 2.601,
+        "texture": 11.401,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
-      "V_after": 6.743,
-      "V_after_brief_weights": 5.943
+      "V_after": 6.826,
+      "V_after_brief_weights": 6.066
     },
     {
       "item": "reflected_kings_mirrorblade",
       "ratios": {
-        "mesh": 2.814,
-        "texture": 7.504,
+        "mesh": 2.928,
+        "texture": 7.743,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
-      "V_after": 6.089,
-      "V_after_brief_weights": 5.361
+      "V_after": 6.159,
+      "V_after_brief_weights": 5.448
     },
     {
       "item": "rimeheart_greatblade",
       "ratios": {
-        "mesh": 2.369,
-        "texture": 6.853,
+        "mesh": 2.836,
+        "texture": 6.691,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
-      "V_after": 5.87,
-      "V_after_brief_weights": 5.075
+      "V_after": 5.93,
+      "V_after_brief_weights": 5.206
     },
     {
       "item": "sanguine_wardens_cleaver",
       "ratios": {
-        "mesh": 2.563,
-        "texture": 5.374,
+        "mesh": 2.76,
+        "texture": 5.789,
         "passes": 2.5,
         "ambient": 9.0,
         "animation": 7.0
       },
-      "V_after": 5.612,
-      "V_after_brief_weights": 4.847
+      "V_after": 5.735,
+      "V_after_brief_weights": 4.999
     },
     {
       "item": "valkarins_stormlance",

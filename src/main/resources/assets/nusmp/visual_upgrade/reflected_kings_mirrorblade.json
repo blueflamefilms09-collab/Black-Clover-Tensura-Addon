@@ -5,9 +5,9 @@
   "lod_mesh": "up/reflected_kings_mirrorblade_lod",
   "orbit_mesh": "up/reflected_kings_mirrorblade_orbit",
   "axis": {
-    "y0": -1.62,
+    "y0": -2.684,
     "y1": 119.0,
-    "length_blocks": 1.62
+    "length_blocks": 1.634
   },
   "passes": [
     "body",
@@ -147,9 +147,9 @@
     "particle_blocks": 32.0
   },
   "budget": {
-    "body_quads": 1962,
+    "body_quads": 2050,
     "orbit_instances": 6,
     "orbit_piece_quads": 36,
-    "lod_quads": 268
+    "lod_quads": 283
   }
 }

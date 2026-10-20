@@ -152,7 +152,25 @@ def score(before, after, weights):
     return {k: round(x, 3) for k, x in r.items()}, round(v, 3)
 
 
+def md_table():
+    """The before -> after table of docs/visual_upgrade/god_melee_b.md (markdown), from the two JSON files."""
+    b = {r["item"]: r for r in json.load(open(os.path.join(DOCS, SLICE + "_baseline.json"), encoding="utf-8"))["items"]}
+    a = json.load(open(os.path.join(DOCS, SLICE + "_after.json"), encoding="utf-8"))
+    print("| item | quads before -> after (full detail, orbit pieces included) | welded vertices after | LOD quads | painted texels before -> after, all maps | skin px | passes | ambient layers | idle animations | V (our weights) | V (brief's example weights) |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|")
+    for r in a["items"]:
+        i = r["item"]
+        x = b[i]
+        print("| %s | %d -> %d | %d | %d | %d -> %d (x%.1f) | %d -> %d | %d -> %d | %d -> %d | %d -> %d | %.2f | %.2f |" % (
+            i, x["mesh"]["quads_full_detail"], r["mesh"]["quads_full_detail"], r["mesh"]["vertices_welded"], r["mesh"]["lod_vertices"] // 4, x["texture"]["painted_texels_all_maps"],
+            r["texture"]["painted_texels_all_maps"], r["ratios"]["texture"], round(x["texture"]["skin_size_texels"] ** 0.5), round(r["texture"]["skin_size_texels"] ** 0.5), x["passes"]["count"],
+            r["passes"]["count"], x["ambient_layers"]["count"], r["ambient_layers"]["count"], x["idle_animations"]["count"], r["idle_animations"]["count"], r["V_after"], r["V_after_brief_weights"]))
+
+
 def main(mode):
+    if mode == "table":
+        md_table()
+        return
     os.makedirs(DOCS, exist_ok=True)
     if mode == "baseline":
         rows = [measure(i, i, False) for i in ITEMS]

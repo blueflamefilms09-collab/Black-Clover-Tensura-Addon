@@ -92,6 +92,20 @@ def geo_rimeheart(m):
     for y in (9.0, 17.0, 25.0):
         lib.nk.collar_ring(m, y, 1.85, 1.3, "silver", (150, 208, 240), name="frost_band_%d" % int(y), sides=8)
     lib.gem_ring(m, "pommel_gems", "crystal", 0.0, 7.0, 0.0, 2.3, 6, 0.45, 1.4, base=(130, 200, 255), glow=False, sides=4)
+    ic = []
+    for k in range(14):
+        y = 50.0 + k * 5.9
+        ic.append(((-5.15, y, 0.0), (-5.45 - 0.06 * (k % 3), y - 3.4 - 0.5 * (k % 4), 0.0)))
+    spike_row(m, "edge_icicles", "crystal", (206, 238, 255), ic, rad=0.5, sides=5)
+    cl = P(m, "heart_cluster", "crystal", base=(110, 180, 250), smooth=26)
+    for k in range(6):
+        a = 2 * math.pi * k / 6 + 0.3
+        ml.gem(cl, (6.4 * math.cos(a), L0 + 3.0 + 6.4 * math.sin(a), 1.4), 0.55, 1.9, 5, "y" if k % 2 else "x")
+    rn = P(m, "spine_runes", "crystal", base=(160, 214, 252), smooth=30)
+    for k in range(8):
+        y = 60.0 + k * 9.0
+        ml.bar(rn, (3.3, y, 1.0), (3.3, y + 3.2, 1.0), 0.35, 0.12, up=(0, 0, 1), taper=0.0)
+        ml.bar(rn, (3.0, y + 1.6, 1.0), (3.9, y + 1.6, 1.0), 0.3, 0.12, up=(0, 0, 1), taper=0.0)
     # the orbiting piece: an ice shard with a small companion
     o = P(m, "orbit_shard", "crystal", base=(190, 236, 255), smooth=25)
     ml.gem(o, (0, 0, 0), 0.9, 3.2, 6, "y")
@@ -102,8 +116,8 @@ def paint_rimeheart(m, atlas, g2):
     blade = m.part("blade")
     vines_on(atlas, g2, blade, (130, 215, 255), [(0.0, 1.6, 26.0, 0.0, 0.32, 52.0, 130.0), (0.0, 1.6, 26.0, math.pi, 0.32, 52.0, 130.0), (-3.2, 0.5, 14.0, 0.7, 0.22, 46.0, 120.0), (3.2, 0.5, 14.0, 2.4, 0.22, 46.0, 120.0)],
              core_rgb=(190, 235, 255))
-    core_glow(atlas, m, ["frost_ribs", "frost_shards", "heart_halo", "guard_gems", "pommel_gems", "orbit_shard"], (170, 225, 255), 0.7, 0.55)
-    vein_glow(atlas, g2, m, ["frost_ribs", "heart_halo", "ice_core", "heart_crystal", "guard_gems", "frost_shards"], (120, 205, 255), 0.95, 0.5)
+    core_glow(atlas, m, ["frost_ribs", "frost_shards", "heart_halo", "guard_gems", "pommel_gems", "orbit_shard", "edge_icicles", "heart_cluster", "spine_runes"], (170, 225, 255), 0.7, 0.55)
+    vein_glow(atlas, g2, m, ["frost_ribs", "heart_halo", "ice_core", "heart_crystal", "guard_gems", "frost_shards", "heart_cluster", "spine_runes", "edge_icicles"], (120, 205, 255), 0.95, 0.5)
     lib.paint_g2(atlas, g2, blade, lambda pc: pc.face and nl.put_glow(pc, nl.sm(pc.X - 0.0, 0.42) * (pc.Y > 50) * (pc.Y < 150), (110, 190, 255), 0.7, 0.5))
 
 
@@ -203,6 +217,14 @@ def geo_sanguine(m):
         sers.append(((x + 0.25, y, 0.0), (x - 1.5, y + 1.0, 0.0)))
     spike_row(m, "edge_serration", "iron", (150, 28, 34), sers, rad=0.55, sides=3)
     spike_row(m, "grip_spurs", "bone", (226, 218, 196), [((math.cos(a) * 1.9, 4.0 + 4.2 * i, math.sin(a) * 1.9), (math.cos(a) * 3.6, 5.2 + 4.2 * i, math.sin(a) * 3.6)) for i, a in enumerate(np.linspace(0, 6.3 * 2, 5))], rad=0.4, sides=4)
+    outline = [(-9.0, L0 + 1.0), (-14.5, L0 + 8.0), (-15.5, L0 + 30.0), (-15.0, L0 + 52.0), (-12.5, L0 + 60.0), (-3.5, L0 + 62.0), (6.5, L0 + 60.0), (9.5, L0 + 52.0), (9.5, L0 + 22.0), (7.5, L0 + 8.0), (5.0, L0 + 1.0)]
+    cxo = sum(p[0] for p in outline) / len(outline)
+    cyo = sum(p[1] for p in outline) / len(outline)
+    rg = P(m, "border_ridge", "iron", base=(110, 98, 104), smooth=30)
+    for sgn in (1, -1):
+        loop = [(cxo + 0.60 * (x - cxo), cyo + 0.60 * (y - cyo), sgn * 1.27) for (x, y) in outline]
+        loop.append(loop[0])
+        ml.sweep(rg, loop, ml.bevelled(2.0, 2.0, 0.45), scales=lambda t: (0.34, 0.12), up=(0, 0, sgn))
     o = P(m, "orbit_droplet", "crystal", base=(210, 20, 34), smooth=45)
     ml.lathe(o, "y", (0, 0, 0), [(-1.2, 0.0), (-0.2, 0.7), (0.7, 0.55), (1.8, 0.0)], sides=6)
 
@@ -227,6 +249,7 @@ def paint_sanguine(m, atlas, g2):
     core_glow(atlas, m, ["blood_vessels", "orbit_droplet", "edge_serration"], (255, 70, 70), 0.9, 0.5)
     core_glow(atlas, m, ["tally_marks"], (255, 150, 110), 0.35, 0.3)
     vein_glow(atlas, g2, m, ["blood_vessels", "blood_runnels", "edge_serration", "notches", "tally_marks", "spine_hole_rim"], (255, 60, 70), 0.95, 0.5)
+    vein_glow(atlas, g2, m, ["border_ridge"], (255, 50, 60), 0.35, 0.4)
 
 
 SPEC_SANGUINE = dict(
@@ -298,6 +321,7 @@ def geo_orial(m):
         pt = (2.3 * math.cos(a), y, 2.3 * math.sin(a))
         pts.append(pt)
         ml.gem(st, pt, 0.55, 1.3, 4, "y")
+    coil(m, "constellation_thread", "crystal", (230, 214, 255), 30.0, 182.0, 2.35, 8.0, 0.14, n=56, sides=4, phase=0.2)
     lib.tube_ring(m, "orrery_ring_a", "silver", 0.0, Y1 + 20.0, 0.0, 15.5, 0.26, n=22, plane="xy", base=(220, 214, 250), sides=5)
     lib.tube_ring(m, "orrery_ring_b", "silver", 0.0, Y1 + 20.0, 0.0, 12.5, 0.24, n=20, plane="yz", base=(220, 214, 250), sides=5)
     spike_row(m, "cradle_thorns", "silver", (222, 216, 250), [((14.8 * math.sin(a), Y1 + 14.0 + 12.0 * (1 - math.cos(a)), 0.0), (17.4 * math.sin(a), Y1 + 17.0 + 12.0 * (1 - math.cos(a)), 0.0)) for a in np.linspace(-1.8, 1.8, 9)], rad=0.6, sides=4)
@@ -312,8 +336,8 @@ def geo_orial(m):
 
 
 def paint_orial(m, atlas, g2):
-    core_glow(atlas, m, ["star_studs", "orrery_ring_a", "orrery_ring_b", "comet_tail", "orbit_star", "cradle_thorns"], (230, 214, 255), 0.8, 0.55)
-    vein_glow(atlas, g2, m, ["star_studs", "orrery_ring_a", "orrery_ring_b", "comet_tail", "star_script", "eye_gems", "falling_star", "star_tail", "cradle_thorns", "inlay_band_36", "inlay_band_92", "inlay_band_150", "inlay_band_186"],
+    core_glow(atlas, m, ["constellation_thread", "star_studs", "orrery_ring_a", "orrery_ring_b", "comet_tail", "orbit_star", "cradle_thorns"], (230, 214, 255), 0.8, 0.55)
+    vein_glow(atlas, g2, m, ["constellation_thread", "star_studs", "orrery_ring_a", "orrery_ring_b", "comet_tail", "star_script", "eye_gems", "falling_star", "star_tail", "cradle_thorns", "inlay_band_36", "inlay_band_92", "inlay_band_150", "inlay_band_186"],
               (190, 170, 255), 0.95, 0.5)
 
     def script(pc):                                                     # constellation lines wound round the shaft

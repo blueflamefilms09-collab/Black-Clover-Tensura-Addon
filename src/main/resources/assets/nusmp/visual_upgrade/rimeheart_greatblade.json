@@ -147,9 +147,9 @@
     "particle_blocks": 32.0
   },
   "budget": {
-    "body_quads": 1962,
+    "body_quads": 2384,
     "orbit_instances": 6,
     "orbit_piece_quads": 30,
-    "lod_quads": 269
+    "lod_quads": 331
   }
 }

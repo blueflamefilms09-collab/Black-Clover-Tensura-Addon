@@ -91,6 +91,13 @@ def geo_mirror(m):
     lib.tube_ring(m, "echo_ring_high", "silver", 0.0, 90.0, 0.0, 4.0, 0.18, n=20, plane="xz", base=(214, 228, 250), sides=5)
     for y in (11.0, 17.0):
         lib.gem_ring(m, "grip_gems_%d" % int(y), "crystal", 0.0, y, 0.0, 1.78, 6, 0.42, 1.3, base=(190, 220, 255), glow=False, sides=4)
+    sc = P(m, "pommel_shards", "silver", base=(226, 236, 252), smooth=30)
+    for k in range(5):
+        a = 2 * math.pi * k / 5 + 0.4
+        nl.spike(sc, (2.3 * math.cos(a), 3.0, 2.3 * math.sin(a)), (4.2 * math.cos(a), -2.8, 4.2 * math.sin(a)), 0.55, 4)
+    gp = P(m, "guard_panes", "silver", base=(214, 226, 248), smooth=30)
+    for sx in (-1, 1):
+        ml.box(gp, (sx * 4.6 - 0.9, L0 - 0.8, -0.7), (sx * 4.6 + 0.9, L0 + 0.8, 0.7), 0.15)
     o = P(m, "orbit_pane", "silver", base=(228, 238, 252), smooth=30)
     ml.box(o, (-0.9, -1.5, -0.1), (0.9, 1.5, 0.1), 0.08)
     fr = P(m, "orbit_pane_frame", "silver", base=(120, 136, 168), smooth=30)
@@ -107,8 +114,8 @@ def paint_mirror(m, atlas, g2):
         mk = nl.sm(((pc.Y * 0.55 + pc.X * 0.9) % 9.0) - 4.5, 1.1) * (pc.Y > 38) * (pc.Y < 112)
         nl.put_glow(pc, mk, (205, 232, 255), 0.5, 0.5)
     lib.paint_g2(atlas, g2, blade, sheen)
-    core_glow(atlas, m, ["blade_filigree", "echo_ring_low", "echo_ring_high", "frame_gems", "grip_gems_11", "grip_gems_17", "orbit_pane", "orbit_pane_frame", "mirror_panels"], (215, 238, 255), 0.55, 0.5)
-    vein_glow(atlas, g2, m, ["blade_filigree", "echo_ring_low", "echo_ring_high", "frame_gems", "mirror_pane", "frame_curls_f", "frame_curls_b", "guard_crown", "pommel_crystal", "grip_gems_11", "grip_gems_17", "orbit_pane_frame"], (195, 228, 255), 0.95, 0.5)
+    core_glow(atlas, m, ["blade_filigree", "echo_ring_low", "echo_ring_high", "frame_gems", "grip_gems_11", "grip_gems_17", "orbit_pane", "orbit_pane_frame", "mirror_panels", "pommel_shards", "guard_panes"], (215, 238, 255), 0.55, 0.5)
+    vein_glow(atlas, g2, m, ["blade_filigree", "echo_ring_low", "echo_ring_high", "frame_gems", "mirror_pane", "frame_curls_f", "frame_curls_b", "guard_crown", "pommel_crystal", "grip_gems_11", "grip_gems_17", "orbit_pane_frame", "pommel_shards", "guard_panes"], (195, 228, 255), 0.95, 0.5)
 
 
 SPEC_MIRROR = dict(

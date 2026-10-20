@@ -69,6 +69,7 @@ def main(only):
     print("built", n)
     subprocess.run([sys.executable, "-B", os.path.join(HERE, "..", "relics", "bow_vanilla.py")], check=False)
     presets(False, only)
+    subprocess.run([sys.executable, "-B", os.path.join(HERE, "..", "visual_upgrade", "god_melee_b", "build.py")] + sorted(only), check=False)     # 1.102.0 visual upgrade (slice god_melee_b): the upgraded twins of the God weapons, new files under up/ (the old ones stay)
 
 
 if __name__ == "__main__":
