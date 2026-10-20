@@ -94,5 +94,7 @@ public enum Aura {
     /** Fairy Tail skills: the temporary armour of the timed forms (Dragon Force, Ice Devil's Rage, Iron Dragon Scales ...); the style is the form index (fairytail.FtForms), drawn by client.aura.FairyTailAura */
     FAIRY_TAIL,
     /** Requip: The Knight (Erza Scarlet): the armour render layer; the style is the worn armour's ordinal in requip.Armour (client.aura.ErzaAura, pieces forged in by EquipAnimation) */
-    ERZA
+    ERZA,
+    /** 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth; the style is book.SpiritDivePieces.style(element, stage) (client.aura.SpiritDiveAura, pieces forged in by EquipAnimation) */
+    SPIRIT_DIVE
 }

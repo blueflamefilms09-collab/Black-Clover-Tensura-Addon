@@ -184,6 +184,8 @@ def build(scenes, need_geo):
             files.append(os.path.join(HERE, "examples", ex + ".java"))
         for dep in sc.get("exampleFiles", []):
             files.append(os.path.join(HERE, "examples", dep))
+        for real in sc.get("realFiles", []):                                     # 1.99.0: real mod sources (relative to src/main/java/com/newuniverse/nusmp) an example needs
+            files.append(os.path.join(SRC, real.replace("/", os.sep)))
     files = sorted(set(files))
     missing = [f for f in files if not os.path.isfile(f)]
     if missing:

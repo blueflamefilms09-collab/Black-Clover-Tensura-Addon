@@ -85,5 +85,6 @@ final class AuraRegistry {
         MucusAura.register();
         FairyTailAura.register();            // Fairy Tail skills: the armour of the timed forms
         ErzaAura.register();                 // Requip: The Knight (the fourteen armours, one set each, forged in by EquipAnimation)
+        SpiritDiveAura.register();           // 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth (half and full stages, the Saint Valkyrie Dress)
     }
 }

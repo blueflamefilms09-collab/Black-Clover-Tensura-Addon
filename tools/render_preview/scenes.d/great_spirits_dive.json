@@ -1,0 +1,23 @@
+{
+ "_comment": "1.99.0 Great Spirits: the Spirit Dive painter (client.aura.SpiritDiveAura). style = element + 4 * stage: element WIND 0, WATER 1, FIRE 2, EARTH 3; stage HALF 0, FULL 1, UPGRADE 2 (book.SpiritDivePieces.style).",
+ "dive_wind_half": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 0, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "left side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_wind_full": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 4, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "front", "yaw": 0, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_wind_upgrade": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 8, "total": 120, "ages": [2, 6, 10, 16, 40], "tile": [330, 460],
+  "views": [{"name": "back 3/4", "yaw": 150, "pitch": 10, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_water_half": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 1, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_water_saint": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 5, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "front", "yaw": 0, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_fire_half": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 2, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_fire_full": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 6, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "front", "yaw": 0, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_earth_half": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 3, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_earth_full": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 7, "total": 120, "ages": [50], "tile": [400, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "front", "yaw": 0, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 4.2}]},
+ "dive_shatter": {"kind": "aura", "attr": "SpiritDive", "realFiles": ["book/SpiritDivePieces.java"], "style": 4, "total": 120, "ages": [104, 108, 112, 117], "tile": [330, 460],
+  "views": [{"name": "wind full, shattering", "yaw": 150, "pitch": 10, "target": [0, 1.0, 0.1], "dist": 4.2}]}
+}

@@ -1,0 +1,220 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.spiritdive_arm_wind_wing_l",
+    "texture_width": 256,
+    "texture_height": 256,
+    "visible_bounds_width": 6,
+    "visible_bounds_height": 6,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "wings",
+     "pivot": [
+      0,
+      20.0,
+      2.6
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "wu",
+     "pivot": [
+      1.2,
+      20.4,
+      2.7
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0.48,
+        17.799999999999997,
+        2.7
+       ],
+       "size": [
+        24.0,
+        26.0,
+        0.5
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          2,
+          0
+         ],
+         "uv_size": [
+          96,
+          2
+         ]
+        },
+        "down": {
+         "uv": [
+          98,
+          0
+         ],
+         "uv_size": [
+          96,
+          2
+         ]
+        },
+        "east": {
+         "uv": [
+          0,
+          2
+         ],
+         "uv_size": [
+          2,
+          104
+         ]
+        },
+        "north": {
+         "uv": [
+          2,
+          2
+         ],
+         "uv_size": [
+          96,
+          104
+         ]
+        },
+        "west": {
+         "uv": [
+          98,
+          2
+         ],
+         "uv_size": [
+          2,
+          104
+         ]
+        },
+        "south": {
+         "uv": [
+          100,
+          2
+         ],
+         "uv_size": [
+          96,
+          104
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "wings",
+     "rotation": [
+      0,
+      -16.0,
+      0
+     ]
+    },
+    {
+     "name": "wd",
+     "pivot": [
+      1.2,
+      19.4,
+      2.7
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0.72,
+        6.499999999999998,
+        2.7
+       ],
+       "size": [
+        16.0,
+        15.0,
+        0.5
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          2,
+          106
+         ],
+         "uv_size": [
+          64,
+          2
+         ]
+        },
+        "down": {
+         "uv": [
+          66,
+          106
+         ],
+         "uv_size": [
+          64,
+          2
+         ]
+        },
+        "east": {
+         "uv": [
+          0,
+          108
+         ],
+         "uv_size": [
+          2,
+          60
+         ]
+        },
+        "north": {
+         "uv": [
+          2,
+          108
+         ],
+         "uv_size": [
+          64,
+          60
+         ]
+        },
+        "west": {
+         "uv": [
+          66,
+          108
+         ],
+         "uv_size": [
+          2,
+          60
+         ]
+        },
+        "south": {
+         "uv": [
+          68,
+          108
+         ],
+         "uv_size": [
+          64,
+          60
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "wings",
+     "rotation": [
+      0,
+      -22.0,
+      0
+     ]
+    }
+   ]
+  }
+ ]
+}

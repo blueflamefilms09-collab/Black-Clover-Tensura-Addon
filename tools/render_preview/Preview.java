@@ -813,6 +813,7 @@ public final class Preview {
         modAssets = str(job, "modAssets", "");
         previewDir = str(job, "previewDir", "");
         Out out = new Out();
+        try { Class.forName("GeoPreview").getDeclaredMethod("useDiskSource").invoke(null); } catch (ReflectiveOperationException ignored) { /* no geo scene in this run: nothing draws geo */ }
         for (Object o : list(job.get("scenes"))) {
             Map<String, Object> sc = map(o);
             String name = str(sc, "name", "scene");
