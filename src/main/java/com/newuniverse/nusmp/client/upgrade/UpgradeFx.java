@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.upgrade;
 
 import com.newuniverse.nusmp.perf.PerfBudgets;
+import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -47,7 +48,7 @@ public final class UpgradeFx {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         if (level == null || mc.player == null || mc.isPaused() || !UpgradeConfig.enabled()) return;
-        float density = UpgradeConfig.density();
+        float density = UpgradeConfig.density() * PerfSettings.vfxQuality().detail;            // the effect quality of the performance pass thins the layers (low 0.5, medium 0.75)
         boolean trails = UpgradeConfig.trails();
         long tick = level.getGameTime();
         int holders = 0;

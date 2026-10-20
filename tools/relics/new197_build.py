@@ -45,6 +45,8 @@ def main(only):
     subprocess.run([sys.executable, "-B", os.path.join(HERE, "bow_vanilla.py")], check=False)
     import new197_presets
     new197_presets.main(False)
+    # 1.102.0 (visual upgrade, slice god_melee_a): the upgraded meshes / skins / specs of the twelve God melee items are built ON TOP of the shipped ones (they read weapon_meshes/<id>.txt for their placement)
+    subprocess.run([sys.executable, "-B", os.path.join(HERE, "..", "visual_upgrade", "god_melee_a", "build.py")] + sorted(only), check=False)
 
 
 if __name__ == "__main__":

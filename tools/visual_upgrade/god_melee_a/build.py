@@ -58,6 +58,6 @@ def build_item(item_id):
 
 
 if __name__ == "__main__":
-    ids = sys.argv[1:] or C.IDS
+    ids = [i for i in (sys.argv[1:] or C.IDS) if i in ITEMS]                 # the entry hook of new197_build.py passes its own list: only the ids of this slice are built
     for i in ids:
         build_item(i)
