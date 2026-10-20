@@ -1,0 +1,126 @@
+{
+ "id": "rose_petal",
+ "ambient_sound": "nusmp:relic.ambient.rose_petal",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "bloom whorl outer",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "whorl_outer",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "bloom whorl mid",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "whorl_mid",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "bloom whorl heart",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "whorl_heart",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "thorn vine",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "thorn_vine",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "falling petals",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "falling_petals",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ghost halberd",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "ghost_halberd",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "drifting petals",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "cherry_leaves",
+   "count": 1,
+   "every": 7,
+   "radius": 0.5,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "spirit glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "2FBF8A"
+  }
+ ]
+}

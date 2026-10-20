@@ -21,7 +21,7 @@ def all_items():
     out = []
     import items_stones
     out += items_stones.ITEMS
-    for modname in ("items_god_a", "items_god_b", "items_genesis"):
+    for modname in ("items_stones2", "items_stones3", "items_god_a", "items_god_b", "items_god_c", "items_genesis", "items_genesis2", "items_genesis3"):
         try:
             mod = __import__(modname)
         except ImportError:

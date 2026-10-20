@@ -1,0 +1,106 @@
+{
+ "id": "warrens_key",
+ "ambient_sound": "nusmp:relic.ambient.warrens_key",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "labyrinth glow",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "maze_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "open door",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "door_ripples",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "door frame",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "door_frame",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lost keys",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "lost_keys",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "door dust",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.4,
+   "rise": 0.008,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E8D8A0"
+  },
+  {
+   "name": "lock sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "crit",
+   "count": 1,
+   "every": 10,
+   "radius": 0.4,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

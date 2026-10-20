@@ -1,0 +1,105 @@
+{
+ "id": "the_mind_stone",
+ "ambient_sound": "nusmp:relic.ambient.the_mind_stone",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "thought crystal",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "gem_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "thought arc a",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "thought_arcs",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "thought arc b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "thought_arcs_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "memory beads",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "memory_beads",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "mind rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "thought motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "whisper glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "glow",
+   "count": 1,
+   "every": 7,
+   "radius": 0.55,
+   "rise": 0.006,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

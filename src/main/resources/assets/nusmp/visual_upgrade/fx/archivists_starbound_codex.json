@@ -1,0 +1,116 @@
+{
+ "id": "archivists_starbound_codex",
+ "ambient_sound": "nusmp:relic.ambient.archivists_starbound_codex",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "star cover",
+   "kind": "geometry",
+   "type": "starfield",
+   "group": "star_cover",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "many eyes",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "many_eyes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "flying pages",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "flying_pages",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far pages",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "flying_pages_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "bookmark ribbons",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "bookmarks",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "zodiac ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "zodiac_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "star dust",
+   "kind": "particle",
+   "type": "stars",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ink glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.008,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "B9A3FF"
+  }
+ ]
+}

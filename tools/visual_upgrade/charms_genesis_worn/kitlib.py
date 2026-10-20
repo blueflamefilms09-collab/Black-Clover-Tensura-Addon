@@ -125,3 +125,35 @@ def cube_corners(vm, name, group, H, r, material, base, sides=4, lod=True):
             for dz in (-1, 1):
                 geo.merge(p, g, None, (dx * H, dy * H, dz * H))
     return p
+
+
+def orbs(vm, name, group, n, R, y, r, material, base, phase=0.0, lat=3, lon=5, slot=MAIN, lod=False, octa=True, wobble=0.0):
+    """n small jewels on a circle (souls, planets, pearls)."""
+    p = vm.P(name, material, group=group, base=base, slot=slot, lod=lod)
+    prim = geo.prim_octa(r, r * 1.15) if octa else geo.prim_sphere(r, lat, lon)
+    for i in range(n):
+        th = phase + 2 * math.pi * i / n
+        geo.merge(p, prim, None, (R * math.cos(th), y + wobble * math.sin(th * 2), R * math.sin(th)))
+    return p
+
+
+def gem_column(vm, name, group, r, h, sides=6, tip=0.42, material="crystal", base=(255, 220, 90), slot=GLOW, lod=True, y=0.0):
+    p = vm.P(name, material, group=group, base=base, slot=slot, lod=lod)
+    geo.merge(p, geo.prim_crystal(r, h, sides=vm.S(sides, 3), tip=tip), None, (0, y, 0))
+    return p
+
+
+def vertical_spiral_ridges(vm, name, group, n, R, y0, y1, r, material, base, twist=1.0, sides=3, segs=6, lod=False):
+    """n ridges (tubes) climbing a body of revolution from y0 to y1 with a twist (turns), radius R at y0 tapering."""
+    p = vm.P(name, material, group=group, base=base, slot=TRIM, lod=lod)
+    ns = vm.S(segs, 3)
+    for i in range(n):
+        ph = 2 * math.pi * i / n
+        pts = []
+        for k in range(ns + 1):
+            t = k / ns
+            a = ph + twist * 2 * math.pi * t
+            rr = R * (1 - 0.35 * t)
+            pts.append((rr * math.cos(a), y0 + (y1 - y0) * t, rr * math.sin(a)))
+        geo.tube_path(p, pts, r, sides=sides, caps=(False, True))
+    return p

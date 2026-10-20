@@ -1,0 +1,136 @@
+{
+ "id": "pocket_watch_of_return",
+ "ambient_sound": "nusmp:relic.ambient.pocket_watch_of_return",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "second hand backwards",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "second_hand_back",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "minute hand backwards",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "minute_hand_back",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "hour hand backwards",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "hour_hand_back",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gear a",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "gear_a_turn",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gear b",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "gear_b_turn",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rewind ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "rewind_rings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rewind ticks",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "rewind_rings_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "returning motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "silver glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "dust",
+   "count": 1,
+   "every": 7,
+   "radius": 0.5,
+   "rise": 0.008,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "F0D890"
+  }
+ ]
+}

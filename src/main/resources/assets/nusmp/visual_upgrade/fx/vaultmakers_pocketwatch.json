@@ -1,0 +1,136 @@
+{
+ "id": "vaultmakers_pocketwatch",
+ "ambient_sound": "nusmp:relic.ambient.vaultmakers_pocketwatch",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "great gear",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "gear_great",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "mid gear",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "gear_mid",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "small gear",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "gear_small",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "day hand",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "day_hand",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "hand behind the day",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "behind_hand",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "vault bolts",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "vault_bolts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "vault door seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "vault_door",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "brass sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "crit",
+   "count": 1,
+   "every": 7,
+   "radius": 0.45,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gold dust",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "dust",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E0A040"
+  }
+ ]
+}

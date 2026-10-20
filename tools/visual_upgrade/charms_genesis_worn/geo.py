@@ -129,10 +129,11 @@ def prim_sphere(r, lat=6, lon=10, squash=1.0):
     return p
 
 
-def prim_box(w, h, d, chamfer=0.0):
+def prim_box(w, h, d, chamfer=0.0, caps=True):
+    """A block (w along x, h along y, d along z), centred; caps=False leaves the top and bottom open (4 quads: for blocks stacked or buried in another part)."""
     p = new_part("box")
     sec = octagon(w, d, chamfer) if chamfer > 0 else rect_ring(w, d)
-    loft(p, "y", (0, 0, 0), [-h / 2, h / 2], sec)
+    loft(p, "y", (0, 0, 0), [-h / 2, h / 2], sec, caps=(caps, caps))
     return p
 
 
@@ -311,3 +312,77 @@ def bbox_of(parts):
     lo = np.min([p.bbox()[0] for p in parts if p.V], axis=0)
     hi = np.max([p.bbox()[1] for p in parts if p.V], axis=0)
     return lo, hi
+
+
+# ------------------------------------------------------------------ more primitives (gears, ribbons, spirals, fingers)
+def prim_gear(R, teeth, depth, thick, tooth_w=0.5):
+    """A flat gear in the xy plane (axis z), centred; teeth stand `depth` out of radius R."""
+    p = new_part("gear")
+    pts = []
+    for i in range(teeth):
+        a0 = 2 * math.pi * i / teeth
+        step = 2 * math.pi / teeth
+        for (da, rr) in ((0.0, R), (step * 0.5 * (1 - tooth_w), R + depth), (step * 0.5 * (1 + tooth_w), R + depth)):
+            pts.append(((R if rr == R else rr) * math.cos(a0 + da), (rr) * math.sin(a0 + da)))
+    loft(p, "z", (0, 0, 0), [-thick / 2, thick / 2], pts, caps=(True, True))
+    return p
+
+
+def ribbon(dst, path, width, thick=0.3, up=(0, 0, 1), taper=0.0):
+    """A flat ribbon along a polyline (a bookmark, a wisp, a streamer): two faces, `width` wide, tapering by `taper` toward the end."""
+    pts = [v3(q) for q in path]
+    n = len(pts)
+    left, right = [], []
+    for i in range(n):
+        t = unit(pts[min(i + 1, n - 1)] - pts[max(i - 1, 0)])
+        side = unit(np.cross(t, v3(up)))
+        if np.linalg.norm(side) < 1e-6:
+            side = np.array([1.0, 0.0, 0.0])
+        w = width * (1.0 - taper * i / max(1, n - 1)) / 2
+        left.append(tuple(pts[i] - side * w))
+        right.append(tuple(pts[i] + side * w))
+    return GL.quad_strip(dst, left, right, thick)
+
+
+def spiral_tube(dst, c, R, h, turns, r, n=24, sides=4, phase=0.0, taper=0.0, y_axis=True):
+    """A tube wound round the y axis (a wire on a shaft, a vine, a spiral ridge)."""
+    pts = helix_pts(c, R, h, turns, n, phase, taper)
+    return tube_path(dst, pts, r, sides=sides)
+
+
+def prim_finger(length, r, segs=3, curl=0.0, nail=True, sides=4):
+    """A finger / claw / talon along +y from the origin: `segs` tapering segments with knuckle bulges, curling toward +z by `curl` radians in total, a nail on the tip."""
+    p = new_part("finger")
+    pts = []
+    y, z = 0.0, 0.0
+    ang = 0.0
+    segl = length / segs
+    for s in range(segs):
+        for k in range(3):
+            t = k / 3
+            pts.append((0.0, y + math.cos(ang) * segl * t, z + math.sin(ang) * segl * t))
+        y += math.cos(ang) * segl
+        z += math.sin(ang) * segl
+        ang += curl / segs
+    pts.append((0.0, y, z))
+    sc = []
+    for i in range(len(pts)):
+        t = i / (len(pts) - 1)
+        knuckle = 1.18 if i % 3 == 0 and 0 < i < len(pts) - 1 else 1.0
+        sc.append(((1.0 - 0.45 * t) * knuckle,) * 2)
+    sc[-1] = (0.12, 0.12)
+    sweep(p, pts, circle(r, sides), scales=sc, caps=(True, True))
+    return p
+
+
+def prim_egg(r, h, sides=10, rings=5):
+    """An egg: widest below the middle, a narrower tip; centred, axis y."""
+    p = new_part("egg")
+    prof = []
+    for i in range(rings + 1):
+        t = i / rings
+        y = -h / 2 + h * t
+        rad = r * math.sin(math.pi * t) ** 0.85 * (1.0 - 0.28 * t)
+        prof.append((y, max(0.0, rad)))
+    lathe(p, "y", (0, 0, 0), prof, sides=sides, caps=(False, False))
+    return p

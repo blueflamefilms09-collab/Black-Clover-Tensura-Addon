@@ -132,6 +132,8 @@ def render(pieces, palette, yaw, pitch, crop, scale, size, t=0.0, figure=True, p
     def draw(Pm, UV, N, texture, tint, mode, bias=0.0):
         S = proj(Pm)
         Nv = N @ R.T
+        if mode == "add" and float(Nv[:, 2].mean()) > 0.05:                  # RenderType.eyes culls back faces
+            return
         for tri in ((0, 1, 2), (0, 2, 3)):
             ii = list(tri)
             PW._raster(img, zb, S[ii], UV[ii], Nv[ii], texture, tint, mode, bias)
