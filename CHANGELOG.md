@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.102.0] — White squares under magic circles fixed, Dungeon Map screen fixed, first God weapon visual upgrade
+
+### NEW
+- **The white / yellow SQUARE under magic circles and on spells is fixed.** Cause: the aura and prop effects (the Erza equip ring, the glow sprites on armour, 253 call sites through `AuraRender.additive`) were drawn with vanilla's `eyes` render type, which adds a texture's colour and ignores its alpha; it is made for textures that are black outside the shape. 251 of the 346 sprites the mod draws that way are painted the other way round (colour everywhere, alpha shapes the sprite), so every transparent texel lit up and the quad became a square. They are now drawn with an alpha-weighted additive type (`NURenderTypes.additiveAlpha`, chosen per texture by an audit; textures that are black under alpha keep the old type), every VFX batch sets its whole render state, and a missing or opaque ring/circle/glow texture is replaced by a generated soft disc. Config `vfx.safeBlend` (client) forces the safe path. Time Magic is untouched. `docs/vfx_square_bug.md`. The big pale polygons in the Dimension Slash screenshot look like vanilla clouds seen from below (not proven; try clouds off).
+- **The Dungeon Map screen is crisp.** It drew the map first and then let the game blur the whole frame over it. It now draws the background once, then the map under a clip, with a title bar, a Close button, a wrapping legend and keys: C centres on you, F fits the floor, + and - zoom, Esc closes; pan and zoom are limited and keep their state when the window is resized. Every other screen of the mod was scanned for the same mistake: none had it. `docs/dungeon_map_gui_fix.md`.
+- **God weapons, first slice (visual upgrade):** the eight pocket boss weapons (Aurliel's Seraph Halberd, Chronarch's Pendulum Sabre, Deepwatch Harpoon, Oriel's Starfall Staff, Reflected King's Mirrorblade, Rimeheart Greatblade, Sanguine Warden's Cleaver, Valkarin's Stormlance) and Paradox get new 1024 px skins with engravings and a separate vein glow, extra parts (filigree, crystals, rings, cogs, chains, ribbons), orbiting pieces, a breathing halo, swing ghosts, seven ambient particle layers, idle animations and a reduced-detail mesh for distance. Client option `visual.upgrade` (default on) brings the old look back. Measured against the baseline taken first (`docs/visual_upgrade/god_melee_b*.json`): painted texels 5.8x to 11.4x, glow passes 2 to 5, ambient layers 1 to 9, animations 1 to 7. The mesh quad count is only 1.3x to 2.9x because the old meshes were already big and the brief's own vertex cap would not allow more. `docs/visual_upgrade/god_melee_b.md`.
+
+### REPLACED
+- `AuraRender.additive` (was `RenderType.eyes`), the per-frame render state of `VfxVertexBuffer`, the draw order of the Dungeon Map screen.
+
+### KEPT
+- Every texture, effect and Time Magic as it was; the old weapon meshes and skins on disk; the Dungeon Map data and the `dungeon_map` GUI scale id.
+
+### Honest notes
+- Nothing has been run in the game. The square fix is a diagnosis from the screenshots, the code and a bit-for-bit comparison of the old and new vertex buffers; the performance pass is ruled out as the cause. The dark Djinn weapons (God grade) are not upgraded yet. The remaining God and Genesis items follow in later releases.
+
 ## [1.101.0] — Hidden dungeons fixed (one room, no switch), Djinn binding with Better Combat, relic damage locked behind attunement
 
 ### NEW
