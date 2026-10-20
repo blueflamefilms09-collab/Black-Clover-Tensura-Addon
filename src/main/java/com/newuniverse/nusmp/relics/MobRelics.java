@@ -83,6 +83,11 @@ public final class MobRelics {
     }
 
     // ---------------------------------------------------------------- the pack
+    /** Does the entity have a pack tag at all (written by this class, by the Avatar's trinket slots or by any code that puts relics in a mob's pack)? Cheap: no stack is parsed. 1.99.0: what {@link WornSync} looks for. */
+    public static boolean hasPack(LivingEntity e) {
+        return e != null && !(e instanceof Player) && e.getPersistentData().contains(PACK, Tag.TAG_LIST);
+    }
+
     /** The relics in the mob's pack (copies; never null). */
     public static List<ItemStack> pack(LivingEntity e) {
         if (e == null || e instanceof Player) return List.of();

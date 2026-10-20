@@ -111,6 +111,12 @@ public final class WornMesh {
         return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups);
     }
 
+    /**
+     * Which corner of a quad to write as the {@code j}-th vertex. A mirrored piece is drawn through a matrix with a negative determinant, which turns every quad inside out for a render
+     * type that culls back faces (RenderType.eyes does); writing the corners in the opposite order turns it front again. Not mirrored: the order of the file.
+     */
+    public static int corner(boolean mirrored, int j) { return mirrored ? 3 - j : j; }
+
     /** Vertices of the solid pass (every quad), of the emissive pass and of the shell pass. */
     public int solidVertices() { return quads * 4; }
 

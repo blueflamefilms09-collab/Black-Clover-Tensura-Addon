@@ -2,11 +2,15 @@ package com.newuniverse.nusmp.client.relics;
 
 import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
@@ -37,20 +41,68 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener(RelicActKeys::onClientTick);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
+        NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                       // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onEntityTick);
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onClientTick);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn e) -> RelicTextures.registerAll());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             RelicClientState.clear();
             com.newuniverse.nusmp.client.relics.worn.WornCues.clear();
+            com.newuniverse.nusmp.client.relics.worn.WornTrace.clear();                    // 1.99.0: what the worn layer last did, and what the server said wearers carry
+            com.newuniverse.nusmp.relics.WornSync.clearClient();
             Relics.clearCaches();
         });
     }
 
+    /** How many player renderers got the worn layer in the last renderer (re)build, and which skins were refused (for {@code /multiverse relic debug}). */
+    private static volatile int layersAdded;
+    private static volatile String layersRefused = "";
+
+    private static volatile int humanoidLayers;
+
+    public static int layersAdded() { return layersAdded; }
+
+    /** How many non-player humanoid renderers got {@link HumanoidRelicLayer} in the last renderer build. */
+    public static int humanoidLayers() { return humanoidLayers; }
+
+    private static <E extends Entity> boolean addHumanoid(EntityRenderersEvent.AddLayers event, EntityType<E> type) {
+        try {
+            if (event.getRenderer(type) instanceof LivingEntityRenderer<?, ?> r && !(r instanceof PlayerRenderer) && r.getModel() instanceof HumanoidModel<?>) {
+                attachHumanoid(r);
+                return true;
+            }
+        } catch (RuntimeException | LinkageError oddRenderer) {
+            // a renderer that cannot take a layer is left as it is
+        }
+        return false;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void attachHumanoid(LivingEntityRenderer renderer) { renderer.addLayer(new HumanoidRelicLayer(renderer)); }
+
+    public static String layersRefused() { return layersRefused; }
+
     private static void addLayers(EntityRenderersEvent.AddLayers event) {
+        int added = 0;
+        StringBuilder refused = new StringBuilder();
         for (PlayerSkin.Model skin : event.getSkins()) {
             EntityRenderer<? extends Player> renderer = event.getSkin(skin);
-            if (renderer instanceof PlayerRenderer r) r.addLayer(new RelicWornLayer(r));
+            if (renderer instanceof PlayerRenderer r) {
+                r.addLayer(new RelicWornLayer(r));
+                RelicLayerGuard.known(r);
+                added++;
+            } else {                                                                    // 1.99.0: said out loud; this used to be a silent "no worn relics on that skin type"
+                refused.append(skin).append('=').append(renderer == null ? "null" : renderer.getClass().getName()).append(' ');
+            }
         }
+        layersAdded = added;
+        layersRefused = refused.toString().trim();
+        int humanoids = 0;
+        for (EntityType<?> type : event.getEntityTypes()) {                           // 1.99.0: armour stands, zombies, skeletons, piglins, humanoid mobs of other mods: a relic helmet or pair of boots has a blank painted box, so they need this layer
+            if (type != EntityType.PLAYER && addHumanoid(event, type)) humanoids++;
+        }
+        humanoidLayers = humanoids;
+        if (refused.length() > 0) com.mojang.logging.LogUtils.getLogger().error("[nusmp] the worn relic layer was NOT added to: {} (only PlayerRenderer instances take it)", layersRefused);
+        else com.mojang.logging.LogUtils.getLogger().info("[nusmp] the worn relic layer was added to {} player renderers and {} humanoid renderers", added, humanoids);
     }
 }

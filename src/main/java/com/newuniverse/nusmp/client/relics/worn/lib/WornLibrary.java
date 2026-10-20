@@ -100,7 +100,9 @@ public final class WornLibrary {
     public static Ensemble of(RelicDef def) {
         Optional<Ensemble> e = CACHE.get(def.id());
         if (e == null) {
-            e = Optional.ofNullable(build(def));
+            Ensemble built = build(def);
+            if (built == null && !WornModels.catalogLoaded()) return null;                  // 1.99.0: the catalog was not readable just now: do not remember "no model" for the session
+            e = Optional.ofNullable(built);
             CACHE.put(def.id(), e);
         }
         return e.orElse(null);
@@ -139,7 +141,9 @@ public final class WornLibrary {
         String cacheKey = (anime ? "ANIME:" : "") + slot.key() + ":" + path;
         Optional<Ensemble> e = ITEM_CACHE.get(cacheKey);
         if (e == null) {
-            e = Optional.ofNullable(buildKey(anime ? key : path, slot.key(), slot, true));
+            Ensemble built = buildKey(anime ? key : path, slot.key(), slot, true);
+            if (built == null && !WornModels.catalogLoaded()) return null;                  // 1.99.0: not read yet: do not remember "nothing"
+            e = Optional.ofNullable(built);
             ITEM_CACHE.put(cacheKey, e);
         }
         return e.orElse(null);
@@ -150,7 +154,9 @@ public final class WornLibrary {
         if (key == null) return null;
         Optional<Ensemble> e = ITEM_CACHE.get("KEY:" + key);
         if (e == null) {
-            e = Optional.ofNullable(buildKey(key, "MODE", null, true));
+            Ensemble built = buildKey(key, "MODE", null, true);
+            if (built == null && !WornModels.catalogLoaded()) return null;
+            e = Optional.ofNullable(built);
             ITEM_CACHE.put("KEY:" + key, e);
         }
         return e.orElse(null);
@@ -165,7 +171,9 @@ public final class WornLibrary {
         Optional<Ensemble> e = ITEM_CACHE.get("CURIO:" + path);
         if (e == null) {
             String slot = WornModels.catalog().itemSlot(path);
-            e = Optional.ofNullable(slot == null ? null : buildKey(path, slot, null, false));
+            Ensemble built = slot == null ? null : buildKey(path, slot, null, false);
+            if (built == null && !WornModels.catalogLoaded()) return null;
+            e = Optional.ofNullable(built);
             ITEM_CACHE.put("CURIO:" + path, e);
         }
         return e.orElse(null);
