@@ -69,7 +69,7 @@ public final class GrandZones {
         int harmBucket = -1, boonBucket = -1;
         long nextSync;
         double harm, boon, fade, density;
-        boolean inRegion;
+        boolean inRegion, haven;
     }
 
     private static final Map<UUID, Track> TRACK = new HashMap<>();
@@ -190,6 +190,12 @@ public final class GrandZones {
         return t != null && t.inRegion;
     }
 
+    /** Is the player in a safe haven (a calm region)? Nothing is learned there: the attunement does not grow. */
+    public static boolean inHaven(Player p) {
+        Track t = TRACK.get(p.getUUID());
+        return t != null && t.inRegion && t.haven;
+    }
+
     public static double harmOf(Player p) {
         Track t = TRACK.get(p.getUUID());
         return t == null || !t.inRegion ? 0 : t.harm;
@@ -234,6 +240,7 @@ public final class GrandZones {
         if (t == null) { t = new Track(); TRACK.put(p.getUUID(), t); }
         if (entered) { t.id = r.id(); t.hash = hit.hash; t.n = 0; t.nextGravity = now + 40; t.harmBucket = -1; t.boonBucket = -1; t.gravityCount = 0; }
         t.inRegion = true;
+        t.haven = r.has(Effect.CALM);
         Exposure ex = exposure(p, r);
         t.harm = ex.harm() * ManaZoneConfig.harmScale();
         t.boon = ex.boon();

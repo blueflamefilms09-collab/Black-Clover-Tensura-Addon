@@ -554,7 +554,7 @@ public final class ManaZoneManager {
             boolean skin = false;
             var ex = TensuraStorages.getExistenceFrom(p);
             if (ex != null) skin = ex.getMagicule() >= EnergyHelper.getMaxMagicule(p) * 0.5;
-            double gain = ManaZoneGate.attuneGain(inRegion, density, skin, GrandZones.harmOf(p));
+            double gain = GrandZones.inHaven(p) ? 0.0 : ManaZoneGate.attuneGain(inRegion, density, skin, GrandZones.harmOf(p));        // a haven teaches nothing: the pressure is the teacher
             if (gain > 0) {
                 int need = ManaZoneGate.needAttune(ManaZoneData.gate(), ManaZoneConfig.strictness());
                 double before = ManaZonePlayer.attuneSeconds(p);

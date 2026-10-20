@@ -54,7 +54,7 @@ Pure and unit tested. All six must hold (the Wizard King is open by right of the
 | Mana skin | own grimoire mastery **100%** (Stage 0), **or** Reinforcement Magic at **60%** | `GrimoireBook.masteryFrac`; Mana Skin is the passive every grimoire has, Reinforcement is the mana skin school | none (data) |
 | Boss kills | **15** | quest counter `boss.defeated` (`NusmpEvents.count`) | 5 |
 | Dungeon depth | deepest floor **40** on either road | `PlayerQuestData.maxFloor` (the hub's shop tiers stop at floor 25) | 10 |
-| Attunement (the ritual) | **1,800 s (30 minutes)** inside a Grand Magic Zone region with the mana skin held (half the pool) and strong enough to stand it | `ManaZoneGate.attuneGain`; a naturally dense biome (density 1.8, deep sea, Nether, End) counts a quarter, so two hours; fires the quest event `mana_zone.attuned` | 300 s |
+| Attunement (the ritual) | **1,800 s (30 minutes)** inside a Grand Magic Zone region (not a haven: Elysia teaches nothing) with the mana skin held (half the pool) and strong enough to stand it (harm under 0.5) | `ManaZoneGate.attuneGain`; a naturally dense biome (density 1.8, deep sea, Nether, End) counts a quarter, so two hours; fires the quest event `mana_zone.attuned` | 300 s |
 
 A server may set `manaZone.gateStrictness` in `nusmp-mana-zone-server.toml` (0.5 to 4): it multiplies the EP, boss, depth and attunement numbers (the rank is a
 ladder and does not move) and can never take them under the floors. A datapack may override the whole file. The numbers were chosen so that, by the mod's own
