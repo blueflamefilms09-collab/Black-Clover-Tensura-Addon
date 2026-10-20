@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "nusmp:cultist_sigil"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " S ",
+    "G G",
+    " G "
+  ],
+  "result": {
+    "id": "nusmp:cultist_sigil_ring",
+    "count": 1
+  }
+}

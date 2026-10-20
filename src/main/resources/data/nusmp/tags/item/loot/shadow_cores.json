@@ -1,0 +1,9 @@
+{
+  "values": [
+    "nusmp:shadow_core_shard",
+    {
+      "id": "nusmp:shadow_core",
+      "required": false
+    }
+  ]
+}

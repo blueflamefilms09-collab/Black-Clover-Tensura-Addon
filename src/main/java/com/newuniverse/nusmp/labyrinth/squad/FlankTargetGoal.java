@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.labyrinth.squad;
 import com.newuniverse.nusmp.labyrinth.squad.RoleMotion.Kind;
 import com.newuniverse.nusmp.labyrinth.squad.RoleMotion.Move;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 import java.util.UUID;

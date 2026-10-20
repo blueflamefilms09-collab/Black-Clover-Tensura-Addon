@@ -36,6 +36,8 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.system.FloorInfoRegistry.init(modBus);  // 1.94.0: the System's floor report (theme, mechanics, depth) on every arrival, /dungeon floor
         com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.init(modBus);         // 1.94.0: the escape rules (timers, release rune, /dungeon unstuck) so nobody is locked in a room
         com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.init(modBus);     // 1.94.0 the puzzle rooms: 29 server-authoritative puzzles chosen by theme and depth (docs/labyrinth/puzzles_v2.md)
+        com.newuniverse.nusmp.labyrinth.squad.SquadRegistry.init(modBus);            // 1.99.0 coordinated 5 to 8 member squads for the Dungeon Master's encounters (docs/labyrinth/squads_and_loot.md)
+        com.newuniverse.nusmp.labyrinth.loot.LootRegistry.init(modBus);              // 1.99.0 functional anime loot: foods, gear with pre-rolled stats, monster parts (docs/labyrinth/squads_and_loot.md)
         var bus = NeoForge.EVENT_BUS;
         com.newuniverse.nusmp.labyrinth.mega.gen.MegaGenRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
@@ -59,5 +61,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.system.FloorInfoRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.squad.SquadRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.loot.LootRegistry.register(bus);
     }
 }

@@ -58,7 +58,7 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
             public BlockEntityWithoutLevelRenderer getCustomRenderer() { return instance(); }
         };
         List<Item> items = new ArrayList<>();
-        for (Item item : BuiltInRegistries.ITEM) if (candidate(item) && !(item instanceof GeoItem)) items.add(item);
+        for (Item item : BuiltInRegistries.ITEM) if (candidate(item) && !(item instanceof GeoItem) && !(item instanceof com.newuniverse.nusmp.labyrinth.loot.LootArmorItem)) items.add(item);       // 1.99.0: the dungeon armour registers its own extension (client/loot/LootClient), one per item
         if (!items.isEmpty()) e.registerItem(ext, items.toArray(new Item[0]));
     }
 

@@ -140,6 +140,10 @@
     {
       "id": "nusmp:lightning_flashs_rapier_sash",
       "required": false
-    }
+    },
+    "nusmp:golem_core_belt",
+    "nusmp:goblin_fang_dagger",
+    "nusmp:delvers_longsword",
+    "nusmp:shadowsteel_katana"
   ]
 }

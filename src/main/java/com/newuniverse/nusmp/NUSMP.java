@@ -152,6 +152,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
+            com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
             com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();                                                 // 1.55.0: the client side of the alignment sync
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
@@ -223,6 +224,8 @@ public class NUSMP {
         com.newuniverse.nusmp.compat.create.CreateCompat.init(modContainer);                                                          // compat-create: Create machinery in the Mega-Dungeon's traps (docs/compat/create.md), soft, inert without Create
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsConfig.SPEC, "nusmp-labyrinth-mega-mechanics-server.toml");   // the dungeon mechanics library
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryConfig.SPEC, "nusmp-labyrinth-mega-foundry-server.toml");   // the Mob Foundry: 400 custom dungeon mobs
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.squad.SquadConfig.SPEC, "nusmp-labyrinth-squad-server.toml");   // 1.99.0: coordinated 5 to 8 member squads (squads.enabled)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.loot.LootConfig.SPEC, "nusmp-labyrinth-loot-server.toml");   // 1.99.0: functional anime loot (drop rates)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.macro.MacroConfig.SPEC, "nusmp-labyrinth-mega-macro-server.toml");   // 1.55.0: the Hub terrain generator
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.theme.ThemeConfig.SPEC, "nusmp-labyrinth-mega-theme-server.toml");   // 1.54.0: region themes and the Crucible of Choice
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0

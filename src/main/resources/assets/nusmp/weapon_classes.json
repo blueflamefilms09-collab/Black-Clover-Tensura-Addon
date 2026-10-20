@@ -432,6 +432,22 @@
   "magic_emperors_black_halberd": "glaive",
   "starsplitter_hammer": "hammer",
   "sword_of_the_first_dawn": "longsword",
-  "tidebreaker_chakram": "handaxe"
+  "tidebreaker_chakram": "handaxe",
+  "goblin_fang_dagger": "dagger",
+  "delvers_longsword": "longsword",
+  "bone_lance": "spear",
+  "orc_cleaver": "battleaxe",
+  "shadowsteel_katana": "katana",
+  "drakefang_greatsword": "greatsword",
+  "wisp_staff": "staff",
+  "golem_maul": "hammer",
+  "goblin_ear_ward": "handitem",
+  "orc_tusk_ring": "handitem",
+  "lich_dust_pendant": "handitem",
+  "wisp_lantern": "handitem",
+  "golem_core_belt": "handitem",
+  "wraith_cloak": "handitem",
+  "cultist_sigil_ring": "handitem",
+  "tide_pearl_amulet": "handitem"
  }
 }

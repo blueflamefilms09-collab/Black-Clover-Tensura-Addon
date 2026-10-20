@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "nusmp:bone_shard"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    }
+  },
+  "pattern": [
+    "B",
+    "S",
+    "F"
+  ],
+  "result": {
+    "id": "nusmp:bone_arrow",
+    "count": 4
+  }
+}

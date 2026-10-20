@@ -122,7 +122,16 @@ public final class WeaponEngravings {
             Map.entry("lyra_key", List.of(e("restoration", 1))),                                                     // a soothing song
             Map.entry("nikora_key", List.of(e("swift", 1))),                                                         // the little dog is quick
             Map.entry("spirit_king_gate_key", List.of(e("holy_weapon", 2), e("barrier_piercing", 1), e("magic_interference", 1), e("magic_weapon", 1))),   // the key of the Celestial Gate
-            Map.entry("spirit_king_sceptre", List.of(e("holy_weapon", 2), e("restoration", 2), e("magic_protection", 1), e("elemental_boost", 1), e("magic_weapon", 1))));   // the sceptre of the Celestial Spirit King: holy, mending, warding
+            Map.entry("spirit_king_sceptre", List.of(e("holy_weapon", 2), e("restoration", 2), e("magic_protection", 1), e("elemental_boost", 1), e("magic_weapon", 1))),   // the sceptre of the Celestial Spirit King: holy, mending, warding
+            // 1.99.0: the monster-drop weapons of the dungeon loot (labyrinth/loot/roster.json lists the same engravings)
+            Map.entry("goblin_fang_dagger", List.of(e("swift", 1), e("severance", 1))),                                  // a quick stab that cuts clean
+            Map.entry("delvers_longsword", List.of(e("sturdy", 1), e("severance", 1))),                                  // the plain sword a delver trusts: hard to break, cuts clean
+            Map.entry("bone_lance", List.of(e("soul_eater", 1), e("enervation", 1), e("barrier_piercing", 1))),          // bone of the dead: takes a soul, saps, goes through wards
+            Map.entry("orc_cleaver", List.of(e("crushing", 2), e("sturdy", 1))),                                         // a slab of orc iron that breaks what it hits
+            Map.entry("shadowsteel_katana", List.of(e("severance", 2), e("swift", 1), e("barrier_piercing", 1))),        // dark steel: a fast clean cut that parts wards
+            Map.entry("drakefang_greatsword", List.of(e("elemental_boost", 1), e("crushing", 1), e("severance", 1))),    // a drake's fang: fire in a heavy edge
+            Map.entry("wisp_staff", List.of(e("magic_weapon", 1), e("magicule_absorption", 1), e("swift", 1))),          // a casting focus that drinks stray mana
+            Map.entry("golem_maul", List.of(e("crushing", 2), e("sturdy", 2), e("magic_interference", 1))));             // a golem's fist on a haft: heavy, hard, jams spells
 
     static final String FLAG = "NUEngraved";
 

@@ -1,0 +1,1825 @@
+{
+  "version": 1,
+  "families": [
+    "goblin",
+    "ogre",
+    "undead",
+    "beast",
+    "slime",
+    "construct",
+    "cultist",
+    "demon",
+    "elemental",
+    "aquatic",
+    "insect"
+  ],
+  "foods": [
+    {
+      "id": "dungeon_ration_stew",
+      "name": "Dungeon Ration Stew",
+      "kind": "food",
+      "nutrition": 8,
+      "saturation": 0.8,
+      "effects": [
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 10,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 20,
+      "lore": "Thick, salty and exactly what a delver needs after a long floor.",
+      "eat": 1.6
+    },
+    {
+      "id": "goblin_ear_jerky",
+      "name": "Goblin-Ear Jerky",
+      "kind": "food",
+      "nutrition": 4,
+      "saturation": 0.5,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 30,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "goblin",
+          "chance": 0.06,
+          "minBand": 0
+        }
+      ],
+      "value": 10,
+      "lore": "Dried, peppered and chewy. Tastes better than it sounds.",
+      "eat": 1.2
+    },
+    {
+      "id": "adventurers_hardtack",
+      "name": "Adventurer's Hardtack",
+      "kind": "food",
+      "nutrition": 5,
+      "saturation": 0.4,
+      "effects": [
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 60,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 8,
+      "lore": "Keeps for a year and breaks teeth for two.",
+      "eat": 1.2
+    },
+    {
+      "id": "slime_jelly_pudding",
+      "name": "Slime Jelly Pudding",
+      "kind": "food",
+      "nutrition": 4,
+      "saturation": 0.6,
+      "effects": [
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 12,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 30,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "slime",
+          "chance": 0.07,
+          "minBand": 0
+        }
+      ],
+      "value": 14,
+      "lore": "Wobbling, sweet and perfectly clear.",
+      "eat": 1.4
+    },
+    {
+      "id": "mandrake_stew",
+      "name": "Mandrake Stew",
+      "kind": "food",
+      "nutrition": 7,
+      "saturation": 0.8,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 60,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 24,
+      "lore": "The root screams only if you hurry the pot.",
+      "eat": 1.6
+    },
+    {
+      "id": "walking_mushroom_skewer",
+      "name": "Walking Mushroom Skewer",
+      "kind": "food",
+      "nutrition": 5,
+      "saturation": 0.6,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 45,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "insect",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 12,
+      "lore": "Caught on a floor with fungal gardens, grilled before it can wander off.",
+      "eat": 1.2
+    },
+    {
+      "id": "orc_haunch_roast",
+      "name": "Orc-Haunch Roast",
+      "kind": "food",
+      "nutrition": 10,
+      "saturation": 1.0,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 90,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.07,
+          "minBand": 0
+        }
+      ],
+      "value": 30,
+      "lore": "A big roast for a big appetite.",
+      "eat": 1.8
+    },
+    {
+      "id": "wyvern_steak",
+      "name": "Wyvern Steak",
+      "kind": "food",
+      "nutrition": 12,
+      "saturation": 1.2,
+      "effects": [
+        {
+          "effect": "minecraft:resistance",
+          "seconds": 60,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.05,
+          "minBand": 1
+        }
+      ],
+      "value": 60,
+      "lore": "Rare, red inside and worth the climb.",
+      "eat": 1.8
+    },
+    {
+      "id": "bone_broth",
+      "name": "Bone Broth",
+      "kind": "food",
+      "nutrition": 5,
+      "saturation": 0.5,
+      "effects": [
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 15,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.07,
+          "minBand": 0
+        }
+      ],
+      "value": 12,
+      "lore": "Simmered a full day from clean bones.",
+      "eat": 1.4
+    },
+    {
+      "id": "kraken_fritter",
+      "name": "Kraken Fritter",
+      "kind": "food",
+      "nutrition": 6,
+      "saturation": 0.6,
+      "effects": [
+        {
+          "effect": "minecraft:water_breathing",
+          "seconds": 120,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:speed",
+          "seconds": 20,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "aquatic",
+          "chance": 0.06,
+          "minBand": 0
+        }
+      ],
+      "value": 26,
+      "lore": "Golden outside, tender inside, salty like the deep.",
+      "eat": 1.4
+    },
+    {
+      "id": "dryad_honey_cake",
+      "name": "Dryad Honey Cake",
+      "kind": "food",
+      "nutrition": 6,
+      "saturation": 0.7,
+      "effects": [
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 90,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 6,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.04,
+          "minBand": 1
+        }
+      ],
+      "value": 34,
+      "lore": "Soft, sweet and warm from the grove.",
+      "eat": 1.4
+    },
+    {
+      "id": "frostbite_sorbet",
+      "name": "Frostbite Sorbet",
+      "kind": "food",
+      "nutrition": 3,
+      "saturation": 0.4,
+      "effects": [
+        {
+          "effect": "minecraft:fire_resistance",
+          "seconds": 90,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 18,
+      "lore": "So cold it fogs the bowl.",
+      "eat": 1.2
+    },
+    {
+      "id": "ember_chili",
+      "name": "Ember Chili",
+      "kind": "food",
+      "nutrition": 6,
+      "saturation": 0.6,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 45,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:fire_resistance",
+          "seconds": 45,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 22,
+      "lore": "One spoon and the floor feels cooler.",
+      "eat": 1.6
+    },
+    {
+      "id": "cave_mushroom_soup",
+      "name": "Cave Mushroom Soup",
+      "kind": "food",
+      "nutrition": 6,
+      "saturation": 0.7,
+      "effects": [
+        {
+          "effect": "minecraft:night_vision",
+          "seconds": 120,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 5,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "insect",
+          "chance": 0.05,
+          "minBand": 0
+        },
+        {
+          "family": "slime",
+          "chance": 0.03,
+          "minBand": 0
+        }
+      ],
+      "value": 16,
+      "lore": "Glows faintly. So does the eater's grin.",
+      "eat": 1.4
+    },
+    {
+      "id": "falna_cutlet",
+      "name": "Falna Cutlet",
+      "kind": "food",
+      "nutrition": 9,
+      "saturation": 0.9,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 60,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:resistance",
+          "seconds": 30,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.04,
+          "minBand": 1
+        }
+      ],
+      "value": 48,
+      "lore": "A breaded cutlet that the guild cooks serve to those who come back.",
+      "eat": 1.8
+    },
+    {
+      "id": "hearth_bread",
+      "name": "Hearth Bread",
+      "kind": "food",
+      "nutrition": 5,
+      "saturation": 0.6,
+      "effects": [
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 45,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 9,
+      "lore": "Baked at the Hub on a hearth that never goes out.",
+      "eat": 1.2
+    },
+    {
+      "id": "delvers_trail_mix",
+      "name": "Delver's Trail Mix",
+      "kind": "food",
+      "nutrition": 3,
+      "saturation": 0.3,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 20,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:haste",
+          "seconds": 30,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 9,
+      "lore": "Nuts, dried berries and a few things nobody asks about.",
+      "eat": 0.9
+    },
+    {
+      "id": "golem_stone_biscuit",
+      "name": "Golem-Stone Biscuit",
+      "kind": "food",
+      "nutrition": 4,
+      "saturation": 0.4,
+      "effects": [
+        {
+          "effect": "minecraft:resistance",
+          "seconds": 45,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.06,
+          "minBand": 0
+        }
+      ],
+      "value": 12,
+      "lore": "Hard as its name. Dip it.",
+      "eat": 1.2
+    },
+    {
+      "id": "spirit_tea",
+      "name": "Spirit Tea",
+      "kind": "food",
+      "nutrition": 2,
+      "saturation": 0.2,
+      "effects": [
+        {
+          "effect": "nusmp:mana_surge",
+          "seconds": 90,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 4,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.05,
+          "minBand": 0
+        },
+        {
+          "family": "cultist",
+          "chance": 0.03,
+          "minBand": 0
+        }
+      ],
+      "value": 28,
+      "lore": "Steeped in a wisp's glow.",
+      "eat": 1.4
+    },
+    {
+      "id": "mana_elixir",
+      "name": "Mana Elixir",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "nusmp:mana_surge",
+          "seconds": 20,
+          "amp": 0
+        }
+      ],
+      "mana": 25,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.04,
+          "minBand": 0
+        },
+        {
+          "family": "undead",
+          "chance": 0.03,
+          "minBand": 0
+        }
+      ],
+      "value": 40,
+      "lore": "Restores a quarter of your magicules.",
+      "eat": 1.0
+    },
+    {
+      "id": "greater_mana_elixir",
+      "name": "Greater Mana Elixir",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "nusmp:mana_surge",
+          "seconds": 40,
+          "amp": 0
+        }
+      ],
+      "mana": 50,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.02,
+          "minBand": 2
+        },
+        {
+          "family": "cultist",
+          "chance": 0.03,
+          "minBand": 2
+        }
+      ],
+      "value": 110,
+      "lore": "Restores half of your magicules.",
+      "eat": 1.0
+    },
+    {
+      "id": "aura_tonic",
+      "name": "Aura Tonic",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 20,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 40,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.03,
+          "minBand": 1
+        },
+        {
+          "family": "ogre",
+          "chance": 0.03,
+          "minBand": 1
+        }
+      ],
+      "value": 60,
+      "lore": "Restores two fifths of your aura.",
+      "eat": 1.0
+    },
+    {
+      "id": "wisp_draught",
+      "name": "Wisp Draught",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 40,
+          "amp": 0
+        }
+      ],
+      "mana": 15,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.04,
+          "minBand": 0
+        }
+      ],
+      "value": 34,
+      "lore": "A little magicule and a lot of lightness.",
+      "eat": 1.0
+    },
+    {
+      "id": "starlit_nectar",
+      "name": "Starlit Nectar",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 10,
+          "amp": 0
+        }
+      ],
+      "mana": 40,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.015,
+          "minBand": 3
+        },
+        {
+          "family": "cultist",
+          "chance": 0.015,
+          "minBand": 3
+        }
+      ],
+      "value": 180,
+      "lore": "Restores two fifths of your magicules and mends a little.",
+      "eat": 1.0
+    },
+    {
+      "id": "sages_elixir",
+      "name": "Sage's Elixir",
+      "kind": "elixir",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "nusmp:mana_surge",
+          "seconds": 60,
+          "amp": 0
+        }
+      ],
+      "mana": 70,
+      "aura": 30,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.01,
+          "minBand": 3
+        }
+      ],
+      "value": 320,
+      "lore": "Restores most of your magicules and some aura. Take it slowly.",
+      "eat": 1.2
+    },
+    {
+      "id": "healers_vial",
+      "name": "Healer's Vial",
+      "kind": "food",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:instant_health",
+          "seconds": 1,
+          "amp": 0
+        },
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 8,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.05,
+          "minBand": 0
+        }
+      ],
+      "value": 36,
+      "lore": "A mouthful of bright red restoration.",
+      "eat": 1.0
+    },
+    {
+      "id": "fortitude_flask",
+      "name": "Fortitude Flask",
+      "kind": "food",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 60,
+          "amp": 1
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.03,
+          "minBand": 1
+        },
+        {
+          "family": "slime",
+          "chance": 0.03,
+          "minBand": 1
+        }
+      ],
+      "value": 46,
+      "lore": "Two extra hearts of padding for a minute.",
+      "eat": 1.0
+    },
+    {
+      "id": "swiftfoot_tonic",
+      "name": "Swiftfoot Tonic",
+      "kind": "food",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 45,
+          "amp": 1
+        },
+        {
+          "effect": "minecraft:jump_boost",
+          "seconds": 45,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.03,
+          "minBand": 0
+        },
+        {
+          "family": "insect",
+          "chance": 0.03,
+          "minBand": 0
+        }
+      ],
+      "value": 38,
+      "lore": "Light feet and a spring in the step.",
+      "eat": 1.0
+    },
+    {
+      "id": "berserkers_draught",
+      "name": "Berserker's Draught",
+      "kind": "food",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 30,
+          "amp": 1
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.025,
+          "minBand": 2
+        },
+        {
+          "family": "ogre",
+          "chance": 0.025,
+          "minBand": 2
+        }
+      ],
+      "value": 70,
+      "lore": "Hits harder for half a minute, and tastes of iron.",
+      "eat": 1.0
+    },
+    {
+      "id": "bulwark_tonic",
+      "name": "Bulwark Tonic",
+      "kind": "food",
+      "nutrition": 1,
+      "saturation": 0.0,
+      "effects": [
+        {
+          "effect": "minecraft:resistance",
+          "seconds": 30,
+          "amp": 1
+        },
+        {
+          "effect": "minecraft:absorption",
+          "seconds": 30,
+          "amp": 0
+        }
+      ],
+      "mana": 0,
+      "aura": 0,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.025,
+          "minBand": 2
+        },
+        {
+          "family": "ogre",
+          "chance": 0.025,
+          "minBand": 2
+        }
+      ],
+      "value": 70,
+      "lore": "A wall in a bottle.",
+      "eat": 1.0
+    }
+  ],
+  "materials": [
+    {
+      "id": "goblin_ear",
+      "name": "Goblin Ear",
+      "family": "goblin",
+      "value": 6,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "goblin",
+          "chance": 0.16,
+          "minBand": 0
+        }
+      ],
+      "lore": "A clipped goblin ear, kept as proof of the kill."
+    },
+    {
+      "id": "goblin_tooth",
+      "name": "Goblin Tooth",
+      "family": "goblin",
+      "value": 8,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "goblin",
+          "chance": 0.12,
+          "minBand": 0
+        }
+      ],
+      "lore": "Small, yellow and sharper than it looks."
+    },
+    {
+      "id": "orc_tusk",
+      "name": "Orc Tusk",
+      "family": "ogre",
+      "value": 18,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.1,
+          "minBand": 0
+        }
+      ],
+      "lore": "A heavy curved tusk, good ivory for a smith."
+    },
+    {
+      "id": "troll_hide",
+      "name": "Troll Hide",
+      "family": "ogre",
+      "value": 32,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.07,
+          "minBand": 1
+        }
+      ],
+      "lore": "Thick grey hide that closes its own cuts."
+    },
+    {
+      "id": "bone_shard",
+      "name": "Bone Shard",
+      "family": "undead",
+      "value": 4,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.2,
+          "minBand": 0
+        }
+      ],
+      "lore": "A splinter of old bone, hard enough for an arrowhead."
+    },
+    {
+      "id": "ghoul_claw",
+      "name": "Ghoul Claw",
+      "family": "undead",
+      "value": 22,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.08,
+          "minBand": 0
+        }
+      ],
+      "lore": "A black hooked claw from something that dug its way out."
+    },
+    {
+      "id": "lich_dust",
+      "name": "Lich Dust",
+      "family": "undead",
+      "value": 46,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.05,
+          "minBand": 1
+        }
+      ],
+      "lore": "Grey dust that hums with leftover magicules."
+    },
+    {
+      "id": "wraith_essence",
+      "name": "Wraith Essence",
+      "family": "undead",
+      "value": 64,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.035,
+          "minBand": 2
+        }
+      ],
+      "lore": "A cold thread of a spirit that has not finished leaving."
+    },
+    {
+      "id": "slime_gel",
+      "name": "Slime Gel",
+      "family": "slime",
+      "value": 5,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "slime",
+          "chance": 0.2,
+          "minBand": 0
+        }
+      ],
+      "lore": "Clear, wobbling and safe to cook."
+    },
+    {
+      "id": "gel_core",
+      "name": "Gel Core",
+      "family": "slime",
+      "value": 26,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "slime",
+          "chance": 0.06,
+          "minBand": 1
+        }
+      ],
+      "lore": "The firm bead at the centre of a slime."
+    },
+    {
+      "id": "rusted_cog",
+      "name": "Rusted Cog",
+      "family": "construct",
+      "value": 12,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.14,
+          "minBand": 0
+        }
+      ],
+      "lore": "A toothed wheel from a construct's workings."
+    },
+    {
+      "id": "golem_core",
+      "name": "Golem Core",
+      "family": "construct",
+      "value": 84,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.03,
+          "minBand": 1
+        }
+      ],
+      "lore": "The warm stone that tells a golem to stand up."
+    },
+    {
+      "id": "cursed_cloth",
+      "name": "Cursed Cloth",
+      "family": "cultist",
+      "value": 20,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "cultist",
+          "chance": 0.1,
+          "minBand": 0
+        }
+      ],
+      "lore": "A rag from a cultist's robe that never quite stays still."
+    },
+    {
+      "id": "cultist_sigil",
+      "name": "Cultist Sigil",
+      "family": "cultist",
+      "value": 38,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "cultist",
+          "chance": 0.05,
+          "minBand": 1
+        }
+      ],
+      "lore": "A tin badge stamped with a ring of small runes."
+    },
+    {
+      "id": "imp_horn",
+      "name": "Imp Horn",
+      "family": "demon",
+      "value": 28,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.09,
+          "minBand": 0
+        }
+      ],
+      "lore": "A small red horn, warm to the touch."
+    },
+    {
+      "id": "shadow_core_shard",
+      "name": "Shadow Core Shard",
+      "family": "demon",
+      "value": 92,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.03,
+          "minBand": 2
+        }
+      ],
+      "lore": "A shard of a shadow's heart. The System's Shadow Core works in the same recipes."
+    },
+    {
+      "id": "spirit_wisp",
+      "name": "Spirit Wisp",
+      "family": "elemental",
+      "value": 42,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.06,
+          "minBand": 0
+        }
+      ],
+      "lore": "A drifting spark of nature spirit, held in a glass-like skin."
+    },
+    {
+      "id": "ember_heart",
+      "name": "Ember Heart",
+      "family": "elemental",
+      "value": 58,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.035,
+          "minBand": 1
+        }
+      ],
+      "lore": "A coal that is never quite out."
+    },
+    {
+      "id": "beast_fang",
+      "name": "Beast Fang",
+      "family": "beast",
+      "value": 14,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.14,
+          "minBand": 0
+        }
+      ],
+      "lore": "A long fang from a dungeon beast."
+    },
+    {
+      "id": "drake_scale",
+      "name": "Drake Scale",
+      "family": "beast",
+      "value": 52,
+      "tier": 3,
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.05,
+          "minBand": 1
+        }
+      ],
+      "lore": "A hand-sized scale, tougher than most steel plate."
+    },
+    {
+      "id": "tide_pearl",
+      "name": "Tide Pearl",
+      "family": "aquatic",
+      "value": 36,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "aquatic",
+          "chance": 0.06,
+          "minBand": 0
+        }
+      ],
+      "lore": "A pearl that stays wet."
+    },
+    {
+      "id": "kraken_ink",
+      "name": "Kraken Ink",
+      "family": "aquatic",
+      "value": 40,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "aquatic",
+          "chance": 0.05,
+          "minBand": 1
+        }
+      ],
+      "lore": "Blue-black ink in a sealed gland."
+    },
+    {
+      "id": "chitin_plate",
+      "name": "Chitin Plate",
+      "family": "insect",
+      "value": 16,
+      "tier": 1,
+      "drops": [
+        {
+          "family": "insect",
+          "chance": 0.14,
+          "minBand": 0
+        }
+      ],
+      "lore": "A curved plate of insect shell."
+    },
+    {
+      "id": "venom_sac",
+      "name": "Venom Sac",
+      "family": "insect",
+      "value": 24,
+      "tier": 2,
+      "drops": [
+        {
+          "family": "insect",
+          "chance": 0.08,
+          "minBand": 0
+        }
+      ],
+      "lore": "A tight gland of slow venom. Handle with a glove."
+    }
+  ],
+  "crafted": [
+    {
+      "id": "shadowsteel_ingot",
+      "name": "Shadowsteel Ingot",
+      "value": 140,
+      "lore": "Iron folded with a shard of shadow: dark, light and cold."
+    }
+  ],
+  "ammo": [
+    {
+      "id": "bone_arrow",
+      "name": "Bone Arrow",
+      "value": 1,
+      "lore": "An arrow with a bone-shard head. Hits a little harder than flint."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "goblin_fang_dagger",
+      "name": "Goblin-Fang Dagger",
+      "type": "dagger",
+      "speed": 2.2,
+      "durability": 320,
+      "value": 60,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "goblin",
+          "chance": 0.02,
+          "minBand": 0
+        }
+      ],
+      "lore": "Two goblin teeth for a point and a bad temper for an edge.",
+      "engravings": [
+        {
+          "id": "swift",
+          "level": 1
+        },
+        {
+          "id": "severance",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "delvers_longsword",
+      "name": "Delver's Longsword",
+      "type": "longsword",
+      "speed": 1.6,
+      "durability": 520,
+      "value": 90,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "any",
+          "chance": 0.015,
+          "minBand": 0
+        }
+      ],
+      "lore": "The plain blade of a hundred nameless delvers.",
+      "engravings": [
+        {
+          "id": "sturdy",
+          "level": 1
+        },
+        {
+          "id": "severance",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "bone_lance",
+      "name": "Bone Lance",
+      "type": "spear",
+      "speed": 1.3,
+      "durability": 420,
+      "value": 110,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.018,
+          "minBand": 0
+        }
+      ],
+      "lore": "A shaft tipped with a long splinter of grave bone.",
+      "engravings": [
+        {
+          "id": "soul_eater",
+          "level": 1
+        },
+        {
+          "id": "enervation",
+          "level": 1
+        },
+        {
+          "id": "barrier_piercing",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "orc_cleaver",
+      "name": "Orc Cleaver",
+      "type": "battleaxe",
+      "speed": 1.0,
+      "durability": 560,
+      "value": 140,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.018,
+          "minBand": 0
+        }
+      ],
+      "lore": "Heavy enough to ring a bell with the flat.",
+      "engravings": [
+        {
+          "id": "crushing",
+          "level": 2
+        },
+        {
+          "id": "sturdy",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "shadowsteel_katana",
+      "name": "Shadowsteel Katana",
+      "type": "katana",
+      "speed": 1.8,
+      "durability": 600,
+      "value": 260,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.012,
+          "minBand": 1
+        }
+      ],
+      "lore": "Folded with a shard of shadow; it drinks the light along its edge.",
+      "engravings": [
+        {
+          "id": "severance",
+          "level": 2
+        },
+        {
+          "id": "swift",
+          "level": 1
+        },
+        {
+          "id": "barrier_piercing",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "drakefang_greatsword",
+      "name": "Drakefang Greatsword",
+      "type": "greatsword",
+      "speed": 1.0,
+      "durability": 700,
+      "value": 300,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.012,
+          "minBand": 1
+        }
+      ],
+      "lore": "A slab of steel set with drake fang and scale.",
+      "engravings": [
+        {
+          "id": "elemental_boost",
+          "level": 1
+        },
+        {
+          "id": "crushing",
+          "level": 1
+        },
+        {
+          "id": "severance",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "wisp_staff",
+      "name": "Wisp Staff",
+      "type": "staff",
+      "speed": 1.4,
+      "durability": 360,
+      "value": 180,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.015,
+          "minBand": 0
+        }
+      ],
+      "lore": "A twisted staff that holds a spirit wisp like a lantern.",
+      "engravings": [
+        {
+          "id": "magic_weapon",
+          "level": 1
+        },
+        {
+          "id": "magicule_absorption",
+          "level": 1
+        },
+        {
+          "id": "swift",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "id": "golem_maul",
+      "name": "Golem Maul",
+      "type": "hammer",
+      "speed": 0.9,
+      "durability": 640,
+      "value": 220,
+      "primary": "attack_damage",
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.015,
+          "minBand": 0
+        }
+      ],
+      "lore": "A stone head on an iron haft, still faintly warm.",
+      "engravings": [
+        {
+          "id": "crushing",
+          "level": 2
+        },
+        {
+          "id": "sturdy",
+          "level": 2
+        },
+        {
+          "id": "magic_interference",
+          "level": 1
+        }
+      ]
+    }
+  ],
+  "armour_sets": {
+    "drakescale": {
+      "name": "Drake-Scale",
+      "repair": "drake_scale",
+      "toughness": 1.0,
+      "knockback": 0.0,
+      "enchant": 12,
+      "family": "beast",
+      "chance": 0.01,
+      "minBand": 1
+    },
+    "shadowsteel": {
+      "name": "Shadowsteel",
+      "repair": "shadowsteel_ingot",
+      "toughness": 2.0,
+      "knockback": 0.05,
+      "enchant": 16,
+      "family": "demon",
+      "chance": 0.008,
+      "minBand": 2
+    }
+  },
+  "armour": [
+    {
+      "id": "drakescale_helm",
+      "name": "Drake-Scale Helm",
+      "set": "drakescale",
+      "piece": "head",
+      "defense": 2,
+      "value": 90,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.01,
+          "minBand": 1
+        }
+      ],
+      "lore": "Overlapping scales over a leather cap."
+    },
+    {
+      "id": "drakescale_vest",
+      "name": "Drake-Scale Vest",
+      "set": "drakescale",
+      "piece": "chest",
+      "defense": 6,
+      "value": 180,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.01,
+          "minBand": 1
+        }
+      ],
+      "lore": "A vest of drake scales sewn in rows."
+    },
+    {
+      "id": "drakescale_greaves",
+      "name": "Drake-Scale Greaves",
+      "set": "drakescale",
+      "piece": "legs",
+      "defense": 5,
+      "value": 140,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.01,
+          "minBand": 1
+        }
+      ],
+      "lore": "Scale-plated leggings that do not rattle."
+    },
+    {
+      "id": "drakescale_boots",
+      "name": "Drake-Scale Boots",
+      "set": "drakescale",
+      "piece": "feet",
+      "defense": 2,
+      "value": 80,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "beast",
+          "chance": 0.01,
+          "minBand": 1
+        }
+      ],
+      "lore": "Scale-capped boots with chitin soles."
+    },
+    {
+      "id": "shadowsteel_helm",
+      "name": "Shadowsteel Helm",
+      "set": "shadowsteel",
+      "piece": "head",
+      "defense": 3,
+      "value": 200,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.008,
+          "minBand": 2
+        }
+      ],
+      "lore": "A dark helm with a slit that seems deeper than it should."
+    },
+    {
+      "id": "shadowsteel_cuirass",
+      "name": "Shadowsteel Cuirass",
+      "set": "shadowsteel",
+      "piece": "chest",
+      "defense": 8,
+      "value": 380,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.008,
+          "minBand": 2
+        }
+      ],
+      "lore": "A black cuirass that gives back no reflection."
+    },
+    {
+      "id": "shadowsteel_greaves",
+      "name": "Shadowsteel Greaves",
+      "set": "shadowsteel",
+      "piece": "legs",
+      "defense": 6,
+      "value": 300,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.008,
+          "minBand": 2
+        }
+      ],
+      "lore": "Light, dark and cold to the knee."
+    },
+    {
+      "id": "shadowsteel_sabatons",
+      "name": "Shadowsteel Sabatons",
+      "set": "shadowsteel",
+      "piece": "feet",
+      "defense": 3,
+      "value": 190,
+      "primary": "armor",
+      "drops": [
+        {
+          "family": "demon",
+          "chance": 0.008,
+          "minBand": 2
+        }
+      ],
+      "lore": "Footsteps in these make no echo."
+    }
+  ],
+  "trinkets": [
+    {
+      "id": "goblin_ear_ward",
+      "name": "Goblin Ear Ward",
+      "slot": "charm",
+      "primary": "max_health",
+      "value": 70,
+      "drops": [
+        {
+          "family": "goblin",
+          "chance": 0.01,
+          "minBand": 0
+        }
+      ],
+      "lore": "Three ears on a cord. Goblins are said to leave the wearer alone; they do not."
+    },
+    {
+      "id": "orc_tusk_ring",
+      "name": "Orc Tusk Ring",
+      "slot": "ring",
+      "primary": "crit_chance",
+      "value": 90,
+      "drops": [
+        {
+          "family": "ogre",
+          "chance": 0.01,
+          "minBand": 0
+        }
+      ],
+      "lore": "A ring carved from a tusk and bound in iron."
+    },
+    {
+      "id": "lich_dust_pendant",
+      "name": "Lich Dust Pendant",
+      "slot": "necklace",
+      "primary": "mana",
+      "value": 150,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.008,
+          "minBand": 1
+        }
+      ],
+      "lore": "A glass drop of lich dust on a chain."
+    },
+    {
+      "id": "wisp_lantern",
+      "name": "Wisp Lantern",
+      "slot": "charm",
+      "primary": "mana_regen",
+      "value": 130,
+      "drops": [
+        {
+          "family": "elemental",
+          "chance": 0.008,
+          "minBand": 0
+        }
+      ],
+      "lore": "A small lantern that keeps a wisp company."
+    },
+    {
+      "id": "golem_core_belt",
+      "name": "Golem Core Belt",
+      "slot": "belt",
+      "primary": "armor",
+      "value": 160,
+      "drops": [
+        {
+          "family": "construct",
+          "chance": 0.008,
+          "minBand": 1
+        }
+      ],
+      "lore": "A wide belt buckled round a golem core."
+    },
+    {
+      "id": "wraith_cloak",
+      "name": "Wraith Cloak",
+      "slot": "back",
+      "primary": "move_speed",
+      "value": 190,
+      "drops": [
+        {
+          "family": "undead",
+          "chance": 0.006,
+          "minBand": 2
+        }
+      ],
+      "lore": "A cloak of cursed cloth that moves a half-step ahead of you."
+    },
+    {
+      "id": "cultist_sigil_ring",
+      "name": "Cultist Sigil Ring",
+      "slot": "ring",
+      "primary": "mana",
+      "value": 110,
+      "drops": [
+        {
+          "family": "cultist",
+          "chance": 0.008,
+          "minBand": 1
+        }
+      ],
+      "lore": "A ring stamped with a cultist's runes."
+    },
+    {
+      "id": "tide_pearl_amulet",
+      "name": "Tide Pearl Amulet",
+      "slot": "necklace",
+      "primary": "max_health",
+      "value": 120,
+      "drops": [
+        {
+          "family": "aquatic",
+          "chance": 0.008,
+          "minBand": 0
+        }
+      ],
+      "lore": "A pearl on a silver wire; it is always cool."
+    }
+  ],
+  "boss": {
+    "materials": [
+      "lich_dust",
+      "wraith_essence",
+      "golem_core",
+      "shadow_core_shard",
+      "ember_heart",
+      "drake_scale"
+    ],
+    "foods": [
+      "greater_mana_elixir",
+      "starlit_nectar",
+      "sages_elixir",
+      "aura_tonic",
+      "healers_vial",
+      "bulwark_tonic",
+      "berserkers_draught"
+    ]
+  },
+  "codeUses": {
+    "shadow_core_shard": "Anvil: tempers a piece of loot gear with one extra stat line (once).",
+    "golem_core": "Anvil: fully repairs any damaged tool, weapon or armour.",
+    "venom_sac": "Anvil: coats a weapon so its next twenty strikes poison."
+  }
+}

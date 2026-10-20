@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": {
+      "item": "nusmp:beast_fang"
+    },
+    "D": {
+      "item": "nusmp:drake_scale"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " FD",
+    "FDF",
+    "IF "
+  ],
+  "result": {
+    "id": "nusmp:drakefang_greatsword",
+    "count": 1
+  }
+}

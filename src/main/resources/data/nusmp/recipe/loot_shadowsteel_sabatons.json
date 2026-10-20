@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "nusmp:shadowsteel_ingot"
+    }
+  },
+  "pattern": [
+    "S S",
+    "S S"
+  ],
+  "result": {
+    "id": "nusmp:shadowsteel_sabatons",
+    "count": 1
+  }
+}

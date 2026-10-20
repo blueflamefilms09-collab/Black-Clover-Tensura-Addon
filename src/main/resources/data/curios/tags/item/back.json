@@ -219,6 +219,12 @@
     {
       "id": "nusmp:ruined_castle_guild_banner",
       "required": false
-    }
+    },
+    "nusmp:wraith_cloak",
+    "nusmp:drakefang_greatsword",
+    "nusmp:orc_cleaver",
+    "nusmp:golem_maul",
+    "nusmp:bone_lance",
+    "nusmp:wisp_staff"
   ]
 }

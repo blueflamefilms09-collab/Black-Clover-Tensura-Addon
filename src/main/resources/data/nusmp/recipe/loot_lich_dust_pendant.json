@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "L": {
+      "item": "nusmp:lich_dust"
+    }
+  },
+  "pattern": [
+    " S ",
+    "G G",
+    " L "
+  ],
+  "result": {
+    "id": "nusmp:lich_dust_pendant",
+    "count": 1
+  }
+}

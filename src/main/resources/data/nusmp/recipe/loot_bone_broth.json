@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nusmp:bone_shard"
+    },
+    {
+      "item": "nusmp:bone_shard"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "id": "nusmp:bone_broth",
+    "count": 1
+  }
+}

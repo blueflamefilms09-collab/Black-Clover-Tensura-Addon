@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:katana",
+  "attributes": {
+    "range_bonus": 0.35
+  }
+}

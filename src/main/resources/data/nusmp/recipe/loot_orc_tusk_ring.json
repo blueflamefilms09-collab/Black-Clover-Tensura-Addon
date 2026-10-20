@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "T": {
+      "item": "nusmp:orc_tusk"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " T ",
+    "I I",
+    " I "
+  ],
+  "result": {
+    "id": "nusmp:orc_tusk_ring",
+    "count": 1
+  }
+}
