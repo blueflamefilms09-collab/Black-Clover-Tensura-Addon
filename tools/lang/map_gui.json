@@ -1,0 +1,18 @@
+{
+ "gui.nusmp.dungeon_map.close": "Close",
+ "gui.nusmp.dungeon_map.floor": "Floor %s",
+ "gui.nusmp.dungeon_map.counts": "%s rooms, %s doors, %s explored",
+ "gui.nusmp.dungeon_map.empty": "This floor has no rooms to show.",
+ "gui.nusmp.dungeon_map.hint": "Drag: move   Wheel / + -: zoom   C: centre on me   F: fit floor   Esc: close",
+ "gui.nusmp.dungeon_map.landing": "Landing",
+ "gui.nusmp.dungeon_map.safe": "Safe / stairs",
+ "gui.nusmp.dungeon_map.hall": "Hall",
+ "gui.nusmp.dungeon_map.trial": "Trial",
+ "gui.nusmp.dungeon_map.trap": "Trap",
+ "gui.nusmp.dungeon_map.treasure": "Treasure",
+ "gui.nusmp.dungeon_map.arena": "Arena",
+ "gui.nusmp.dungeon_map.corridor": "Corridor",
+ "gui.nusmp.dungeon_map.unexplored": "Unexplored",
+ "gui.nusmp.dungeon_map.start": "S arrival",
+ "gui.nusmp.dungeon_map.exit": "E way on"
+}
