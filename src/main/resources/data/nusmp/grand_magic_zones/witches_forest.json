@@ -1,0 +1,14 @@
+{
+  "_comment": "Witches' Forest: a secluded forest ruled by the Witch Queen; drifting witch-glow and disorientation. Placeholder position.",
+  "name": "Witches' Forest",
+  "dimension": "minecraft:overworld",
+  "shape": "sphere",
+  "centre": [3000, 70, -3400],
+  "radius": 200,
+  "theme": "forest",
+  "density": 2.2,
+  "recommended_ep": 800000,
+  "effects": ["witch_glow", "pressure"],
+  "tint": "#9CFF8A",
+  "border": false
+}

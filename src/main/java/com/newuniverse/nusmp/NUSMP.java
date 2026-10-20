@@ -350,6 +350,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onChat);                    // 0.47: Kotodama command words
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onIncomingDamage);          // 0.48: "Reverse"
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
+        com.newuniverse.nusmp.mana.zone.ManaZoneBoot.init(modEventBus, modContainer);                           // 1.99.0: the Mana Zone (late-game) and the Grand Magic Zones: config, packets, data, events, self-tests mana.zone_gate and mana.zone_core
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy

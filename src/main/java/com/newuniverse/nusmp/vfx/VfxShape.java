@@ -321,7 +321,16 @@ public enum VfxShape {
     MUD_FX3,
     MUCUS_FX1,
     MUCUS_FX2,
-    MUCUS_FX3;
+    MUCUS_FX3,
+    // 1.99.0 Mana Zone (vfx.client.layer.ManaZoneLayer). Protocol: to.x = ticks already elapsed since the start tick (the radius is computed from it, so a refresh does not restart the growth),
+    // to.y = style (ManaZoneGeometry.STYLE_*), to.z = growth ticks, power = the radius cap, seed = the zone's serial; SHELL = the sphere of ambient mana + its glow, GROUND = rings, footholds, motes, flow lines;
+    // BURST: to.x = 0 opening pulse, 1 collapse finisher; BUBBLE = a pressurised protective space (from = centre, power = radius); GRAND_ZONE_ENV = the weather and scenery of a Grand Magic Zone round the viewer
+    // (to.y = theme, to.z = effect mask, power = 0..1 intensity, colour = the zone's tint)
+    MANA_ZONE_SHELL,
+    MANA_ZONE_GROUND,
+    MANA_ZONE_BURST,
+    MANA_ZONE_BUBBLE,
+    GRAND_ZONE_ENV;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

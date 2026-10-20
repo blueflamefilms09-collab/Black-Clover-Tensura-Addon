@@ -1,0 +1,51 @@
+{
+  "_comment": "Mana Zone (docs/mana/mana_zone_redesign.md). A late-game technique: the gate numbers are floors, a server config multiplier can only make them stricter than the floors in ManaZoneGate (1,000,000 EP, Senior 5th Class). Datapack-overridable (data/nusmp/mana_zone.json).",
+  "gate": {
+    "min_ep": 2000000,
+    "min_knight_step": 14,
+    "min_boss_kills": 15,
+    "min_deepest_floor": 40,
+    "mana_skin": {
+      "grimoire_mastery": 1.0,
+      "or_reinforcement_mastery": 0.6
+    },
+    "attune_seconds": 1800
+  },
+  "zone": {
+    "grow_ticks": 60,
+    "base_radius": 14.0,
+    "max_radius": 40.0,
+    "radius_per_ep_decade": 8.0,
+    "max_duration_ticks": 4800,
+    "open_cost_percent": 5.0,
+    "start_min_percent": 25.0,
+    "upkeep_base_percent": 0.15,
+    "upkeep_per_block_percent": 0.02,
+    "cooldown_base_ticks": 600,
+    "cooldown_per_block_ticks": 20,
+    "exhaustion_base_ticks": 100,
+    "exhaustion_max_ticks": 400,
+    "cost_mult": 0.8,
+    "power_bonus": 0.25,
+    "power_density_bonus": 0.1,
+    "range_mult": 1.6,
+    "extra_targets": 3,
+    "speed_bonus": 0.2,
+    "predict_base": 0.15,
+    "predict_reinforced": 0.35,
+    "predict_boss_cap": 0.15,
+    "ally_pressure": 0.15,
+    "bubble_reduction": 0.45,
+    "bubble_radius": 5.0,
+    "bubble_ticks": 160,
+    "max_bubbles": 2,
+    "max_projectiles_per_scan": 6,
+    "boss_projectile_slow": 0.55,
+    "scan_interval": 4,
+    "refresh_interval": 100,
+    "volley_max_targets": 6,
+    "volley_bolts_per_target": 3,
+    "volley_damage": 6.0,
+    "volley_boss_damage_mult": 0.5
+  }
+}

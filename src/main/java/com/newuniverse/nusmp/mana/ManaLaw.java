@@ -35,7 +35,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  *   <li><b>Mana is life force.</b> Spend it to nothing and you collapse (and, if the server allows it, can die).</li>
  *   <li><b>Mage Stages 9 to 0, Arcane and Saint.</b> Power comes from <i>training</i> (rank, mastery), never from which magic you drew.</li>
  *   <li><b>Affinity</b> (loved / ordinary / hated by mana) is a balanced trade you may change at will, not a luck tier.</li>
- *   <li><b>Mana Zone:</b> tap the mana around you; the denser the place (a Grand Magic Zone) the stronger it is.</li>
+ *   <li><b>Mana Zone:</b> 1.99.0: a LATE-GAME technique (gate, rules and mechanics in mana.zone.*, docs/mana/mana_zone_redesign.md): command the natural mana of the surroundings; the denser the place the stronger it is.
+ *       The entry points below (toggleZone, forceZone, zoneActive) are kept and now delegate to {@link com.newuniverse.nusmp.mana.zone.ManaZoneManager}; the 1.5.0 data ({@code ZoneUntil}) stays on old saves, untouched and unused.</li>
  *   <li><b>Negative Mana (Forbidden Magic):</b> a Magic Stone amplifies everything and corrupts you; only an Arcane mage survives it.</li>
  * </ul>
  * Everything is stored on the player (persisted data) and is server-side; the client only shows a summary.
@@ -106,7 +107,7 @@ public final class ManaLaw {
     /** Multiplies a grimoire spell's mana cost. */
     public static double costMult(ServerPlayer p) {
         double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * Signature.cost(p) * com.newuniverse.nusmp.dungeon.MealBuffs.cost(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
-        if (zoneActive(p)) c *= 0.8;
+        c *= com.newuniverse.nusmp.mana.zone.ManaZoneManager.costMult(p);                    // 1.99.0: cheaper inside an open Mana Zone, dearer while exhausted after one
         if (negativeActive(p)) c *= 0.7;
         return c;
     }
@@ -118,7 +119,9 @@ public final class ManaLaw {
     public static double powerMult(LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return 1.0;
         double m = stage(p).power() * Heritage.powerMult(p) * Signature.power(p) * com.newuniverse.nusmp.dungeon.MealBuffs.power(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
-        if (zoneActive(p)) m *= 1.0 + 0.2 * Math.min(2.0, density(p.level(), p.blockPosition()));
+        if (zoneActive(p)) m *= com.newuniverse.nusmp.mana.zone.ManaZoneManager.powerMult(p, density(p.level(), p.blockPosition()));      // 1.99.0: the zone's bonus ramps in with its growth
+        double boon = com.newuniverse.nusmp.mana.zone.GrandZones.boonOf(p);                                                  // 1.99.0: a strong player is fed by a Grand Magic Zone
+        if (boon > 0) m *= com.newuniverse.nusmp.mana.zone.GrandZoneMath.powerMult(boon);
         if (negativeActive(p)) m *= 1.6;
         return m;
     }
@@ -134,46 +137,27 @@ public final class ManaLaw {
         if (biome.is(Biomes.DEEP_DARK)) d += 1.2;
         if (biome.is(BiomeTags.IS_END)) d += 1.0;
         if (pos.getY() > 190) d += 0.3;
+        d = Math.max(d, com.newuniverse.nusmp.mana.zone.GrandZones.densityAt(level, pos));        // 1.99.0: a Grand Magic Zone region (data/<ns>/grand_magic_zones) is as dense as it says
         return Math.min(3.0, d);
     }
 
-    public static boolean isGrandZone(Level level, BlockPos pos) { return density(level, pos) >= 1.8; }
+    public static boolean isGrandZone(Level level, BlockPos pos) { return density(level, pos) >= 1.8; }     // kept: "dense mana" (1.8 and over); the named Grand Magic Zones are the regions of mana.zone.GrandZones
 
     // ---------------------------------------------------------------- Mana Zone
-    public static boolean zoneActive(Player p) { return p.level().getGameTime() < data(p).getLong("ZoneUntil"); }
+    /** 1.99.0: true while the player's Mana Zone is open (mana.zone.ManaZoneManager; one tracked entry per caster). The 1.5.0 timer in the player data is no longer read. */
+    public static boolean zoneActive(Player p) { return com.newuniverse.nusmp.mana.zone.ManaZoneManager.active(p); }
 
-    /** A Mana Zone that costs nothing (the Wizard King's Crown of Mana). */
+    /** A Mana Zone that costs nothing (the Wizard King's Crown of Mana): no gate, no upkeep, for {@code ticks}. */
     public static void forceZone(ServerPlayer p, int ticks) {
-        ServerLevel sl = p.serverLevel();
-        data(p).putLong("ZoneUntil", sl.getGameTime() + ticks);
-        VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFFFFD86B, Math.min(200, ticks), 3.2f);
-        sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.4f, 1.2f);
+        com.newuniverse.nusmp.mana.zone.ManaZoneManager.startForced(p, ticks);
         p.displayClientMessage(Component.literal("Crown of Mana: the mana of the whole land answers you.").withStyle(ChatFormatting.GOLD), true);
     }
 
-    /** The Mana Zone page: tap all the mana around you for half a minute. Toggles. */
-    public static boolean toggleZone(ServerPlayer p) {
-        ServerLevel sl = p.serverLevel();
-        CompoundTag d = data(p);
-        if (zoneActive(p)) {
-            d.putLong("ZoneUntil", 0);
-            p.displayClientMessage(Component.literal("Your Mana Zone fades.").withStyle(ChatFormatting.GRAY), true);
-            return true;
-        }
-        var ex = TensuraStorages.getExistenceFrom(p);
-        if (ex != null && !p.isCreative() && ex.getMagicule() < EnergyHelper.getMaxMagicule(p) * 0.15) {
-            p.displayClientMessage(Component.literal("Not enough mana to open a Mana Zone.").withStyle(ChatFormatting.RED), true);
-            return false;
-        }
-        if (!p.isCreative() && ex != null) EnergyHelper.isOutOfMagiculeConsuming(p, EnergyHelper.getMaxMagicule(p) * 0.05);   // opening it costs 5%: Tensura deducts it (the 15% check above guarantees it is paid)
-        int ticks = (int) (600 * Mth.clamp(density(sl, p.blockPosition()), 1.0, 2.0));
-        d.putLong("ZoneUntil", sl.getGameTime() + ticks);
-        VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFF7A5CFF, Math.min(200, ticks), 2.4f);
-        sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.7f);
-        String where = isGrandZone(sl, p.blockPosition()) ? " The mana here is thick: a Grand Magic Zone." : "";
-        p.displayClientMessage(Component.literal("Mana Zone: the mana around you answers." + where).withStyle(ChatFormatting.LIGHT_PURPLE), true);
-        return true;
-    }
+    /**
+     * The Mana Zone page: toggles. 1.99.0: it is a LATE-GAME technique, so for anyone who has not met the gate (EP, rank, mana skin, bosses, depth and the
+     * attunement ritual; see mana.zone.ManaZoneGate) this refuses with the list of what is missing and opens nothing. Returns true when a zone was opened or closed.
+     */
+    public static boolean toggleZone(ServerPlayer p) { return com.newuniverse.nusmp.mana.zone.ManaZoneManager.toggle(p); }
 
     // ---------------------------------------------------------------- Negative Mana (Forbidden Magic)
     public static boolean negativeActive(Player p) { return p.level().getGameTime() < data(p).getLong("NegUntil"); }
@@ -303,26 +287,13 @@ public final class ManaLaw {
             EnergyHelper.gainMagicule(p, EnergyHelper.getMaxMagicule(p) * 0.015, EnergyHelper.GainType.NORMAL);      // Tensura's own gain path (respects its gain multipliers)
             if (p.getHealth() < p.getMaxHealth()) p.heal(0.5f);
         }
-        // Mana Zone: it drinks a little mana a second; its owner flies light on the mana around them
-        if (now < d.getLong("ZoneUntil")) {
-            if (!p.isCreative() && !com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
-                double max = EnergyHelper.getMaxMagicule(p);
-                // Tensura deducts the upkeep and floors the pool at 5%; a shortfall means the zone cannot be held any longer
-                double unpaid = EnergyHelper.isOutOfMagiculeConsuming(p, max * 0.012 / Math.max(1.0, density(sl, p.blockPosition())), max * 0.05);
-                if (unpaid > 0) {
-                    d.putLong("ZoneUntil", 0);
-                    p.displayClientMessage(Component.literal("The Mana Zone collapses: you have no mana left to hold it.").withStyle(ChatFormatting.GRAY), true);
-                    collapse(p);
-                }
-            }
-            p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, false, false));
-            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 0, false, false));
-        }
+        // 1.99.0: the Mana Zone's own upkeep runs in mana.zone.ManaZoneManager (once a second per open zone); here the gate, the attunement and the client's gate state
+        com.newuniverse.nusmp.mana.zone.ManaZoneManager.onSecond(p);
         // entering a Grand Magic Zone
         boolean grand = isGrandZone(sl, p.blockPosition());
         if (grand != d.getBoolean("InGrand")) {
             d.putBoolean("InGrand", grand);
-            if (grand) p.displayClientMessage(Component.literal("The mana here is thick: a Grand Magic Zone.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            if (grand) p.displayClientMessage(Component.literal("The mana here is thick.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
         }
         // corruption: it eats, and it slowly lets go
         float c = d.getFloat("Corruption");
@@ -350,15 +321,18 @@ public final class ManaLaw {
      */
     public static boolean manaStrike(GrimoireBook book, ServerPlayer p) {
         ServerLevel sl = p.serverLevel();
-        Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f), end = eye.add(look.scale(24));
+        double reach = com.newuniverse.nusmp.mana.zone.ManaZoneManager.strikeRange(p, 24);                   // 1.99.0: longer and wider inside an open Mana Zone
+        int maxHits = com.newuniverse.nusmp.mana.zone.ManaZoneManager.strikeTargets(p, 3);
+        Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f), end = eye.add(look.scale(reach));
         int hits = 0;
-        for (LivingEntity t : GrimoireBook.along(p, eye, end, 1.2)) {
+        double width = zoneActive(p) ? 1.8 : 1.2;                                                           // 1.99.0: and wider (the zone's "size")
+        for (LivingEntity t : GrimoireBook.along(p, eye, end, width)) {
             if (t == p || t.isAlliedTo(p)) continue;
             t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, 7f, 0.6));
             hits++;
-            if (hits >= 3) { end = t.getBoundingBox().getCenter(); break; }
+            if (hits >= maxHits) { end = t.getBoundingBox().getCenter(); break; }
         }
-        VfxSpawn.send(sl, VfxShape.LIGHT_BLADE, eye.add(0, -0.3, 0), end, book.color, 8, 1.0f);
+        VfxSpawn.send(sl, VfxShape.LIGHT_BLADE, eye.add(0, -0.3, 0), end, book.color, 8, (float) (width / 1.2));
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, end, end, book.color, 10, 0.5f);
         sl.playSound(null, p.blockPosition(), SoundEvents.ILLUSIONER_CAST_SPELL, SoundSource.PLAYERS, 1.2f, 1.3f);
         return true;
