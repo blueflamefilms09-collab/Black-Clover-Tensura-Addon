@@ -59,5 +59,6 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.system.FloorInfoRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.mega.admin.AdminRegistry.register(bus);      // 1.99.0: the /dungeon admin tree (tp, skip, boss, rift, skill, reset, debug), merged into the player's /dungeon
     }
 }
