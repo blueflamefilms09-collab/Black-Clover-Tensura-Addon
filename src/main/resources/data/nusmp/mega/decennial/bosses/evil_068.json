@@ -1,0 +1,103 @@
+{
+  "id": "evil_068",
+  "level": -68,
+  "side": "evil",
+  "name": "The Kraken",
+  "title": "Terror of the Black Tide",
+  "lore": "The Kraken has eaten the sea beneath the Sunken Temple and begun on what stands above it. Its eight arms are the only part of it you will ever see move.",
+  "archetype": "famous:kraken",
+  "theme": "sunken_temple",
+  "creature": "monstrosity",
+  "resist": [],
+  "signature": "tide_ward",
+  "phases": [
+    {
+      "name": "Kraken",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Storm Kraken",
+      "at": 0.66,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "drowned"
+      ]
+    },
+    {
+      "name": "Tidebreaker Ascendant",
+      "at": 0.33,
+      "abilities": [
+        "dragon_breath",
+        "wing_buffet"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "drowned"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "tide_surge",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "drowned"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "kraken"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kraken",
+    "tier": 4
+  },
+  "look": "kraken",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "kraken_deep",
+  "famous": "kraken",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  },
+  "band": 5
+}

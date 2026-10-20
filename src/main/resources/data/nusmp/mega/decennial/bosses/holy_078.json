@@ -1,0 +1,124 @@
+{
+  "id": "holy_078",
+  "level": 78,
+  "side": "holy",
+  "name": "Lucerna, Voice of the Furnace",
+  "title": "Seraph of the Hall of Flames",
+  "lore": "To look at Lucerna is to understand why the old texts say to look away.",
+  "archetype": "seraph",
+  "theme": "sun_temple",
+  "creature": "celestial",
+  "resist": [
+    "fire",
+    "magic"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "The Burning One",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Six Wings Spread",
+      "at": 0.75,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Thrice-Holy Note",
+      "at": 0.5,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Light Without Shadow",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "sunburst",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "radiant_nova",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "seraph",
+      "flame",
+      "six",
+      "burning",
+      "song"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lucerna",
+    "tier": 4
+  },
+  "look": "solar",
+  "tint": "#FFF790",
+  "scale": 1.22,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

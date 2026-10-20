@@ -1,0 +1,106 @@
+{
+  "id": "evil_094",
+  "level": -94,
+  "side": "evil",
+  "name": "Asmodeus",
+  "title": "Lord of the Nine Hells",
+  "lore": "Lord of the Nine Hells, Asmodeus has never broken a contract, and has never needed to. The throne he sits on was made from the last person who argued.",
+  "archetype": "famous:asmodeus",
+  "theme": "ruined_throne_room",
+  "creature": "devil",
+  "resist": [],
+  "signature": "infernal_contract",
+  "phases": [
+    {
+      "name": "Lord of Nine Hells",
+      "at": 1.0,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hellfire Archdevil",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Contract Absolute",
+      "at": 0.33,
+      "abilities": [
+        "death_touch",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "chain_pull",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "asmodeus"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Asmodeus",
+    "tier": 5
+  },
+  "look": "asmodeus",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "famous": "asmodeus",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

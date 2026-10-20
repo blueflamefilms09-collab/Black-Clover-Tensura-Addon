@@ -1,0 +1,112 @@
+{
+  "id": "holy_068",
+  "level": 68,
+  "side": "holy",
+  "name": "Eithne the Pale Majesty",
+  "title": "Platinum Wyrm of the Hall of Frozen Light",
+  "lore": "Eithne asks one question of the dying: whether they would do it again. The answer decides everything.",
+  "archetype": "platinum_wyrm",
+  "theme": "storm_spire",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "magic",
+    "lightning"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "The Pale Majesty",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Silver Wind",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "First Star",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "radiant_nova",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "platinum",
+      "dragon",
+      "frost",
+      "star",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Eithne",
+    "tier": 4
+  },
+  "look": "bahamut",
+  "tint": "#E0E5F0",
+  "scale": 1.11,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "holy_076",
+  "level": 76,
+  "side": "holy",
+  "name": "Gallio of the Bright Ledger",
+  "title": "Archivist of the Ledger Hall",
+  "lore": "Every footnote in the Ledger Hall is a small act of mercy. Gallio added all of them.",
+  "archetype": "archivist_angel",
+  "theme": "mirror_hall",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Scribe of the Shelves",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pages Turn",
+      "at": 0.75,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Index Opens",
+      "at": 0.5,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Last Footnote",
+      "at": 0.25,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "mirror_shatter",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "radiant_nova",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "living_armor"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "archive",
+      "book",
+      "scribe",
+      "ledger",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gallio",
+    "tier": 4
+  },
+  "look": "solar",
+  "tint": "#E1F0D0",
+  "scale": 0.9,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

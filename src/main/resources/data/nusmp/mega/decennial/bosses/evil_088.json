@@ -1,0 +1,106 @@
+{
+  "id": "evil_088",
+  "level": -88,
+  "side": "evil",
+  "name": "Acererak",
+  "title": "The Devourer of the Tomb",
+  "lore": "A lich who built a tomb to feed on the souls of those who tried to rob it. Acererak has read every page of your life, and has not found it interesting.",
+  "archetype": "famous:acererak",
+  "theme": "forbidden_library",
+  "creature": "undead",
+  "resist": [],
+  "signature": "phylactery_ward",
+  "phases": [
+    {
+      "name": "Demilich",
+      "at": 1.0,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Devourer",
+      "at": 0.66,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Eternal Lich",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "tome_storm",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "staff",
+    "keywords": [
+      "acererak"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Acererak",
+    "tier": 5
+  },
+  "look": "acererak",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "undead_whisper",
+  "famous": "acererak",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 7
+}

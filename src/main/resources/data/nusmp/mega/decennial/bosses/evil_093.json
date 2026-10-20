@@ -1,0 +1,126 @@
+{
+  "id": "evil_093",
+  "level": -93,
+  "side": "evil",
+  "name": "Kaldrith, Keeper of the Ninth Hoard",
+  "title": "Dracolich of the Gold-Choked Vault",
+  "lore": "Kaldrith died on its hoard and refused to leave it. The hoard of the Gold-Choked Vault has kept the dragon, and the dragon has kept the hoard.",
+  "archetype": "dracolich",
+  "theme": "frozen_keep",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "poison",
+    "physical"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Hoard-Wraith",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Bones Awake",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Breath of the Grave",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Gold and Ash",
+      "at": 0.25,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "frost_nova",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "pillar_fall",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "dragon",
+      "bone",
+      "hoard",
+      "lich",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kaldrith",
+    "tier": 5
+  },
+  "look": "dracolich",
+  "tint": "#70BEC0",
+  "scale": 1.03,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 7
+}

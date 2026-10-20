@@ -1,0 +1,106 @@
+{
+  "id": "evil_023",
+  "level": -23,
+  "side": "evil",
+  "name": "Strahd von Zarovich",
+  "title": "The Devil of Barovia",
+  "lore": "Strahd rules his ballroom the way he rules the mist: completely, and forever. The Devil of Barovia has outlived every family that ever feared him, and means to outlive yours.",
+  "archetype": "famous:strahd",
+  "theme": "vampire_ballroom",
+  "creature": "vampire",
+  "resist": [],
+  "signature": "sanguine_pact",
+  "phases": [
+    {
+      "name": "Vampire Lord",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Mist Sovereign",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "zombie"
+      ]
+    },
+    {
+      "name": "Lord of Barovia",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "zombie"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "blood_rain",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "zombie"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "strahd"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Strahd von Zarovich",
+    "tier": 2
+  },
+  "look": "strahd",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "vampire_hiss",
+  "famous": "strahd",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 2
+}

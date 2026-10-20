@@ -1,0 +1,98 @@
+{
+  "id": "holy_019",
+  "level": 19,
+  "side": "holy",
+  "name": "Heliodor, Scribe of the Unwritten",
+  "title": "Archivist of the Bright Archive",
+  "lore": "Heliodor has written down everything that ever happened in the Bright Archive, including the part that is about to happen to you.",
+  "archetype": "archivist_angel",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "Scribe of the Shelves",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Footnote",
+      "at": 0.5,
+      "abilities": [
+        "magic_drain",
+        "counterspell",
+        "eye_rays"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "falling_stars",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "archive",
+      "book",
+      "scribe",
+      "ledger",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Heliodor",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#EFF0D0",
+  "scale": 0.83,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

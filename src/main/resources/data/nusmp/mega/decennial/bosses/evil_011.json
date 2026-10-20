@@ -1,0 +1,92 @@
+{
+  "id": "evil_011",
+  "level": -11,
+  "side": "evil",
+  "name": "Fenrisca, Weaver of Fates",
+  "title": "Spider Queen of the Silk Warrens",
+  "lore": "Every thread in the Silk Warrens leads to Fenrisca. She feels you the moment you touch one, and waits.",
+  "archetype": "spider_queen",
+  "theme": "witch_hollow",
+  "creature": "monstrosity",
+  "resist": [
+    "poison"
+  ],
+  "signature": "hex_cauldron",
+  "phases": [
+    {
+      "name": "Patient Weaver",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Queen of Thread",
+      "at": 0.5,
+      "abilities": [
+        "tail_sweep",
+        "eye_rays",
+        "life_drain"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "cave_spider",
+        "spider"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "plague_cloud",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "cave_spider",
+      "spider"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "dagger",
+    "keywords": [
+      "spider",
+      "web",
+      "silk",
+      "venom",
+      "queen"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fenrisca",
+    "tier": 1
+  },
+  "look": "lolth",
+  "tint": "#303750",
+  "scale": 1.02,
+  "sound_set": "spider_chitter",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 1
+}

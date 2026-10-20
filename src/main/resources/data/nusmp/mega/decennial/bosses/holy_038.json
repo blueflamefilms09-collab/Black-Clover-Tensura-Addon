@@ -1,0 +1,108 @@
+{
+  "id": "holy_038",
+  "level": 38,
+  "side": "holy",
+  "name": "Sanctiel the Briar Crowned",
+  "title": "Verdant Archon of the Bloom Court",
+  "lore": "Sanctiel plants one seed for every hero who falls in the Bloom Court. The garden is very large.",
+  "archetype": "verdant_archon",
+  "theme": "moonlit_glade",
+  "creature": "fey",
+  "resist": [
+    "poison",
+    "fire"
+  ],
+  "signature": "thorn_mantle",
+  "phases": [
+    {
+      "name": "Queen of Bloom",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Thorns Awake",
+      "at": 0.66,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Briar Crowned",
+      "at": 0.33,
+      "abilities": [
+        "counterspell",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "moonbeam",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "bow",
+    "keywords": [
+      "verdant",
+      "bloom",
+      "garden",
+      "thorn",
+      "grove"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Sanctiel",
+    "tier": 2
+  },
+  "look": "bahamut",
+  "tint": "#C0F0B0",
+  "scale": 0.71,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

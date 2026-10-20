@@ -1,0 +1,116 @@
+{
+  "id": "evil_028",
+  "level": -28,
+  "side": "evil",
+  "name": "Nahamah",
+  "title": "Devil of Flame, Warden of the Second Gate",
+  "lore": "Nahamah burns the roots of the Tree to keep warm, and they grow back black so that she may burn them again. The second gate is the hottest room in the Underworld.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_2",
+  "creature": "devil",
+  "resist": [
+    "fire",
+    "physical"
+  ],
+  "signature": "hellfire_aura",
+  "phases": [
+    {
+      "name": "Ember at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Roots Alight",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Black Fire",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.1
+    },
+    {
+      "id": "hell_geysers",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.1
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "nahamah"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Nahamah",
+    "tier": 2
+  },
+  "look": "balor",
+  "tint": "#FF6A1A",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2,
+  "devil": "NAHAMAH"
+}

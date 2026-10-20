@@ -1,0 +1,90 @@
+{
+  "id": "holy_002",
+  "level": 2,
+  "side": "holy",
+  "name": "Thecla, High Priest of the Zenith",
+  "title": "Sun Priest of the Zenith Temple",
+  "lore": "Thecla opens the roof of the Zenith Temple at noon so the sun may look upon the faithful. It has not yet closed it.",
+  "archetype": "sun_priest",
+  "theme": "sun_temple",
+  "creature": "humanoid",
+  "resist": [
+    "fire",
+    "magic"
+  ],
+  "signature": "oath_of_dawn",
+  "phases": [
+    {
+      "name": "Keeper of Noon",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Sun Unveiled",
+      "at": 0.5,
+      "abilities": [
+        "counterspell",
+        "wing_buffet",
+        "eye_rays"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "sun",
+      "priest",
+      "gold",
+      "ray",
+      "solar"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Thecla",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#FFAF60",
+  "scale": 0.83,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

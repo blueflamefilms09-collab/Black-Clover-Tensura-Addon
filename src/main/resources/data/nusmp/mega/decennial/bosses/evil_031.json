@@ -1,0 +1,112 @@
+{
+  "id": "evil_031",
+  "level": -31,
+  "side": "evil",
+  "name": "Bloodmere the Black Omen",
+  "title": "Doom Herald of the Hall of Omens",
+  "lore": "Bloodmere brings news from the end of the world. It is a short announcement, and everyone in the Hall of Omens has heard it.",
+  "archetype": "doom_herald",
+  "theme": "bone_cathedral",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Herald at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Bell Tolls",
+      "at": 0.66,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Word",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "grave_hands",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "soul_fog",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "wither_skeleton",
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "doom",
+      "herald",
+      "end",
+      "omen",
+      "bell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Bloodmere",
+    "tier": 2
+  },
+  "look": "orcus",
+  "tint": "#363060",
+  "scale": 0.99,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 3
+}

@@ -1,0 +1,93 @@
+{
+  "id": "evil_010",
+  "level": -10,
+  "side": "evil",
+  "name": "Cindralor the Velvet Fang",
+  "title": "Vampire Lord of the Crimson Court",
+  "lore": "Cindralor gives a ball every century. the Crimson Court is the only hall in the world where the dancers never tire and the guests never leave.",
+  "archetype": "vampire_lord",
+  "theme": "blood_arena",
+  "creature": "vampire",
+  "resist": [
+    "physical",
+    "freeze"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "Gracious Host",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Beast in Velvet",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "frightful_presence",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "zombie"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "zombie"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "blood",
+      "fang",
+      "crimson",
+      "night",
+      "vampire"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Cindralor",
+    "tier": 1
+  },
+  "look": "strahd",
+  "tint": "#6540C0",
+  "scale": 1.02,
+  "sound_set": "vampire_hiss",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

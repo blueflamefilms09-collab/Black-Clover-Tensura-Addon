@@ -1,0 +1,95 @@
+{
+  "id": "evil_012",
+  "level": -12,
+  "side": "evil",
+  "name": "Fyrnoth the Slow Harvest",
+  "title": "Plague Lord of the Weeping Fen",
+  "lore": "Fyrnoth rings the bell of the Weeping Fen once for every soul the sickness takes. It has not stopped ringing in four hundred years.",
+  "archetype": "plague_lord",
+  "theme": "plague_swamp",
+  "creature": "undead",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Physician of the Wasting",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Harvest Home",
+      "at": 0.5,
+      "abilities": [
+        "life_drain",
+        "mind_blast",
+        "frightful_presence"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "bogged",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "spore_burst",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "bogged",
+      "silverfish"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "mace",
+    "keywords": [
+      "plague",
+      "rot",
+      "blight",
+      "pestilence",
+      "bell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fyrnoth",
+    "tier": 1
+  },
+  "look": "hezrou",
+  "tint": "#93A040",
+  "scale": 0.97,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 1
+}

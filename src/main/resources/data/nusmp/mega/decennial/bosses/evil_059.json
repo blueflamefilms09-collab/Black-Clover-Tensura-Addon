@@ -1,0 +1,115 @@
+{
+  "id": "evil_059",
+  "level": -59,
+  "side": "evil",
+  "name": "Karnavar of the Black Water",
+  "title": "Rot Wyrm of the Reed Throne",
+  "lore": "Whole villages sank into the Reed Throne so that Karnavar could rest. She remembers them as a pleasant meal.",
+  "archetype": "rot_wyrm",
+  "theme": "plague_swamp",
+  "creature": "dragon",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Mire Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Acid Rain",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "Venom Throne",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "spore_burst",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "root_burst",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "bogged",
+      "cave_spider",
+      "silverfish"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "wyrm",
+      "acid",
+      "swamp",
+      "dragon",
+      "rot"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Karnavar",
+    "tier": 3
+  },
+  "look": "tiamat",
+  "tint": "#305030",
+  "scale": 0.92,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "acid",
+    "reflective": false
+  },
+  "band": 5
+}

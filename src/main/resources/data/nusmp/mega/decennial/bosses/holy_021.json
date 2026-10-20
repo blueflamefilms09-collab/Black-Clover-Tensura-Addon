@@ -1,0 +1,108 @@
+{
+  "id": "holy_021",
+  "level": 21,
+  "side": "holy",
+  "name": "Eostre, Magistrate of the Court",
+  "title": "Archon of the Court of Scales",
+  "lore": "Eostre holds court in the Court of Scales. Every sentence is final, and every one of them is fair, which is the difficulty.",
+  "archetype": "archon",
+  "theme": "colosseum",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Magistrate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Weighed",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sentence Passed",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "judgment_rings",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "archon",
+      "law",
+      "order",
+      "verdict",
+      "scale"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Eostre",
+    "tier": 2
+  },
+  "look": "bahamut",
+  "tint": "#F0F3FF",
+  "scale": 0.79,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

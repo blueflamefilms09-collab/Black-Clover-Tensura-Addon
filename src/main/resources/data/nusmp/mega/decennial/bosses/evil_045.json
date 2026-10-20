@@ -1,0 +1,112 @@
+{
+  "id": "evil_045",
+  "level": -45,
+  "side": "evil",
+  "name": "Umbrakh, Who Eats the Constellations",
+  "title": "Star-Eater of the Dying Sky",
+  "lore": "Astronomers built the Dying Sky to watch the sky. They did not think to ask what watched back.",
+  "archetype": "star_eater",
+  "theme": "abyss_rift_ring",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_hunger",
+  "phases": [
+    {
+      "name": "The Dimming",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Stars Consumed",
+      "at": 0.66,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    },
+    {
+      "name": "Nothing Remains",
+      "at": 0.33,
+      "abilities": [
+        "gravity_crush",
+        "mind_blast"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "endermite",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "void_collapse",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "endermite",
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "star",
+      "void",
+      "eclipse",
+      "astral",
+      "hunger"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Umbrakh",
+    "tier": 3
+  },
+  "look": "beholder",
+  "tint": "#202040",
+  "scale": 1.13,
+  "sound_set": "abyssal_whisper",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

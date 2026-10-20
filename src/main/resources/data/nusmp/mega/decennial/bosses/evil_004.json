@@ -1,0 +1,95 @@
+{
+  "id": "evil_004",
+  "level": -4,
+  "side": "evil",
+  "name": "Alecto of the Boiling Hollow",
+  "title": "Hag of the Hollow Oak",
+  "lore": "Alecto asks one question of every traveller to the Hollow Oak. The wrong answer is a frog; the right answer is worse.",
+  "archetype": "hag",
+  "theme": "spider_den",
+  "creature": "hag",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "hex_cauldron",
+  "phases": [
+    {
+      "name": "Crone at the Pot",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Last Bargain",
+      "at": 0.5,
+      "abilities": [
+        "mind_blast",
+        "life_drain",
+        "counterspell"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "witch",
+        "cave_spider",
+        "bogged"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "web_snare",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "witch",
+      "cave_spider",
+      "bogged"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "hag",
+      "hex",
+      "cauldron",
+      "coven",
+      "swamp"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Alecto",
+    "tier": 1
+  },
+  "look": "lolth",
+  "tint": "#4F6F68",
+  "scale": 0.83,
+  "sound_set": "hag_cackle",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 1
+}

@@ -1,0 +1,120 @@
+{
+  "id": "holy_082",
+  "level": 82,
+  "side": "holy",
+  "name": "Cordelia the Even Tick",
+  "title": "Keeper of Hours of the Sandglass Hall",
+  "lore": "Cordelia keeps the hours of the Sandglass Hall. It will keep yours, if you stand still long enough.",
+  "archetype": "time_keeper",
+  "theme": "clockwork_vault",
+  "creature": "construct",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "star_pull",
+  "phases": [
+    {
+      "name": "Winder of Days",
+      "at": 1.0,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pendulum Swinging",
+      "at": 0.75,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Last Minute",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sand Run Out",
+      "at": 0.25,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "judgment_rings",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "steam_vents",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "time",
+      "hour",
+      "clock",
+      "keeper",
+      "sand"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Cordelia",
+    "tier": 5
+  },
+  "look": "lich_king",
+  "tint": "#CAD890",
+  "scale": 1.03,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

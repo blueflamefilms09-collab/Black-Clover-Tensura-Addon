@@ -1,0 +1,92 @@
+{
+  "id": "holy_011",
+  "level": 11,
+  "side": "holy",
+  "name": "Zenobia, Who Chooses the Fallen",
+  "title": "Sky Knight of the Cloud Road",
+  "lore": "Zenobia rides the wind over the Cloud Road and chooses who will fall. She has never been asked to choose twice.",
+  "archetype": "sky_knight",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "projectile",
+    "lightning"
+  ],
+  "signature": "storm_charge",
+  "phases": [
+    {
+      "name": "Rider of the Wind",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Cloud Road Closed",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "wing_buffet",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "judgment_rings",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "sky",
+      "knight",
+      "valkyrie",
+      "wind",
+      "lance"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zenobia",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#E0F7FF",
+  "scale": 0.88,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

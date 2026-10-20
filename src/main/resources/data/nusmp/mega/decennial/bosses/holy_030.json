@@ -1,0 +1,111 @@
+{
+  "id": "holy_030",
+  "level": 30,
+  "side": "holy",
+  "name": "Lorelei, Bearer of the Scales",
+  "title": "Judgement Angel of the Court of Last Appeal",
+  "lore": "Lorelei reads the book of the Court of Last Appeal aloud before every fight. Few interrupt, and fewer are interrupted.",
+  "archetype": "judgement_angel",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "The Open Book",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Raised",
+      "at": 0.66,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Appeal",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "judgment_rings",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "judgement",
+      "angel",
+      "sword",
+      "verdict",
+      "scales"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lorelei",
+    "tier": 2
+  },
+  "look": "solar",
+  "tint": "#FFF8E0",
+  "scale": 1.09,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

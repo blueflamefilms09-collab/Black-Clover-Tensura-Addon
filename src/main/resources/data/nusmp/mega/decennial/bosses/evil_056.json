@@ -1,0 +1,109 @@
+{
+  "id": "evil_056",
+  "level": -56,
+  "side": "evil",
+  "name": "Gorlach the Hunger Beneath",
+  "title": "Drowned Leviathan of the Flooded Vault",
+  "lore": "The tide that rises in the Flooded Vault is not water. It is Gorlach, breathing.",
+  "archetype": "leviathan",
+  "theme": "plague_swamp",
+  "creature": "monstrosity",
+  "resist": [
+    "lightning",
+    "freeze"
+  ],
+  "signature": "tide_ward",
+  "phases": [
+    {
+      "name": "Tide Rising",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Flood",
+      "at": 0.66,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "drowned"
+      ]
+    },
+    {
+      "name": "Salt and Silence",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "dragon_breath"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "drowned"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "root_burst",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "plague_cloud",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "drowned"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "kraken",
+      "tide",
+      "drowned",
+      "leviathan",
+      "deep"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gorlach",
+    "tier": 3
+  },
+  "look": "kraken",
+  "tint": "#406F5F",
+  "scale": 1.13,
+  "sound_set": "kraken_deep",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  },
+  "band": 4
+}

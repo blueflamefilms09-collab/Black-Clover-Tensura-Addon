@@ -1,0 +1,106 @@
+{
+  "id": "evil_078",
+  "level": -78,
+  "side": "evil",
+  "name": "Demogorgon",
+  "title": "Prince of Demons",
+  "lore": "The Prince of Demons has two heads that do not agree with each other, and a madness that agrees with everything. The rift opens wherever he looks.",
+  "archetype": "famous:demogorgon",
+  "theme": "abyss_rift_ring",
+  "creature": "demon",
+  "resist": [],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "Two-Headed Prince",
+      "at": 1.0,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Gaze of Madness",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "blaze"
+      ]
+    },
+    {
+      "name": "Prince of Demons Unbound",
+      "at": 0.33,
+      "abilities": [
+        "eye_rays",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "blaze"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "abyss_maw",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "blaze"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "demogorgon"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Demogorgon",
+    "tier": 4
+  },
+  "look": "demogorgon",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "demon_growl",
+  "famous": "demogorgon",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

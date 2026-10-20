@@ -1,0 +1,115 @@
+{
+  "id": "evil_046",
+  "level": -46,
+  "side": "evil",
+  "name": "Drakmor, Prince of the Howling Rift",
+  "title": "Demon Lord of the Slaughter-Deep",
+  "lore": "The rift at the Slaughter-Deep opened the day Drakmor woke, and it has never quite closed since.",
+  "archetype": "demon_lord",
+  "theme": "hell_pit",
+  "creature": "demon",
+  "resist": [
+    "fire",
+    "poison"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Gate-Breaker",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Fury Loosed",
+      "at": 0.66,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Hunger Without End",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "gravity_crush"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "hell_geysers",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "demon",
+      "fury",
+      "chaos",
+      "abyss",
+      "maw"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Drakmor",
+    "tier": 3
+  },
+  "look": "vrock",
+  "tint": "#A05030",
+  "scale": 1.08,
+  "sound_set": "demon_growl",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

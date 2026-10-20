@@ -1,0 +1,111 @@
+{
+  "id": "holy_050",
+  "level": 50,
+  "side": "holy",
+  "name": "Aurora, Voice of the Furnace",
+  "title": "Seraph of the Burning Court",
+  "lore": "Six wings: two to cover the face, two to cover the feet, two to fly. Aurora has been caught using none of them.",
+  "archetype": "seraph",
+  "theme": "sun_temple",
+  "creature": "celestial",
+  "resist": [
+    "fire",
+    "magic"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "The Burning One",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Six Wings Spread",
+      "at": 0.66,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Light Without Shadow",
+      "at": 0.33,
+      "abilities": [
+        "haki_pulse",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "sunburst",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "radiant_nova",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "seraph",
+      "flame",
+      "six",
+      "burning",
+      "song"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Aurora",
+    "tier": 3
+  },
+  "look": "solar",
+  "tint": "#FFE090",
+  "scale": 1.18,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

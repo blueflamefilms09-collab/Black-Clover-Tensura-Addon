@@ -1,0 +1,101 @@
+{
+  "id": "evil_018",
+  "level": -18,
+  "side": "evil",
+  "name": "Nergalis, Prince of the Howling Rift",
+  "title": "Demon Lord of the Howling Rift",
+  "lore": "Nergalis does not scheme. Schemes are for devils. He walks out of the Howling Rift and everything in front of him is on fire.",
+  "archetype": "demon_lord",
+  "theme": "abyss_rift_ring",
+  "creature": "demon",
+  "resist": [
+    "fire",
+    "poison"
+  ],
+  "signature": "hellfire_aura",
+  "phases": [
+    {
+      "name": "Gate-Breaker",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hunger Without End",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet",
+        "frightful_presence",
+        "gravity_crush"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "void_collapse",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "demon",
+      "fury",
+      "chaos",
+      "abyss",
+      "maw"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Nergalis",
+    "tier": 1
+  },
+  "look": "demogorgon",
+  "tint": "#5F4090",
+  "scale": 0.93,
+  "sound_set": "demon_growl",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

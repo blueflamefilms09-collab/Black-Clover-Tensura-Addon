@@ -1,0 +1,115 @@
+{
+  "id": "evil_070",
+  "level": -70,
+  "side": "evil",
+  "name": "Hexenmoor, Hunger Made Flesh",
+  "title": "Demon Lord of the Teeth of the Abyss",
+  "lore": "Armies once held the gate of the Teeth of the Abyss. Hexenmoor wore their banners as a cape for a century.",
+  "archetype": "demon_lord",
+  "theme": "volcanic_forge",
+  "creature": "demon",
+  "resist": [
+    "fire",
+    "poison"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Gate-Breaker",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Fury Loosed",
+      "at": 0.66,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Hunger Without End",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "gravity_crush"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "lava_surge",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "hell_geysers",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "demon",
+      "fury",
+      "chaos",
+      "abyss",
+      "maw"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Hexenmoor",
+    "tier": 4
+  },
+  "look": "balor",
+  "tint": "#803420",
+  "scale": 1.06,
+  "sound_set": "demon_growl",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 5
+}

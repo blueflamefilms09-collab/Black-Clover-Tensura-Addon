@@ -1,0 +1,112 @@
+{
+  "id": "evil_022",
+  "level": -22,
+  "side": "evil",
+  "name": "Nocturne the Sleepless Ruler",
+  "title": "Eye Tyrant of the Dream Vault",
+  "lore": "Nocturne has never blinked. Nothing in the Dream Vault has been unobserved since the day it woke.",
+  "archetype": "eye_tyrant",
+  "theme": "void_observatory",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "mirror_veil",
+  "phases": [
+    {
+      "name": "The Watcher",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Ten Gazes",
+      "at": 0.66,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "The Last Sight",
+      "at": 0.33,
+      "abilities": [
+        "magic_drain",
+        "mind_blast"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "eye_beams",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "endermite"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "eye",
+      "gaze",
+      "beholder",
+      "ray",
+      "mind"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Nocturne",
+    "tier": 2
+  },
+  "look": "beholder",
+  "tint": "#50A06F",
+  "scale": 0.94,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 2
+}

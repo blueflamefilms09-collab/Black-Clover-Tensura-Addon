@@ -1,0 +1,111 @@
+{
+  "id": "holy_054",
+  "level": 54,
+  "side": "holy",
+  "name": "Petronel, Sentinel of the White Bastion",
+  "title": "Frost Sentinel of the White Bastion",
+  "lore": "It remembers warmth as a rumour told by older ice. It guards the White Bastion for the sake of the rumour.",
+  "archetype": "frost_sentinel",
+  "theme": "frozen_keep",
+  "creature": "construct",
+  "resist": [
+    "freeze",
+    "physical"
+  ],
+  "signature": "rime_shell",
+  "phases": [
+    {
+      "name": "Pale Watch",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Frost Spreads",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "stray"
+      ]
+    },
+    {
+      "name": "The Silent Winter",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "stray"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "frost_nova",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "pillar_fall",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "stray"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "frost",
+      "sentinel",
+      "ice",
+      "pale",
+      "winter"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Petronel",
+    "tier": 3
+  },
+  "look": "tarrasque",
+  "tint": "#D8E8F8",
+  "scale": 0.92,
+  "sound_set": "frost_howl",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

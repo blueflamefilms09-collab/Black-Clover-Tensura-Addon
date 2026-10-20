@@ -1,0 +1,90 @@
+{
+  "id": "holy_006",
+  "level": 6,
+  "side": "holy",
+  "name": "Aldric, Who Forgave the Fire",
+  "title": "Martyr of the Kneeling Nave",
+  "lore": "Aldric was burned in the Kneeling Nave and forgave everyone in the crowd. The flames are still the best-tended in the world.",
+  "archetype": "martyr",
+  "theme": "crystal_sanctum",
+  "creature": "humanoid",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Penitent",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Mercy",
+      "at": 0.5,
+      "abilities": [
+        "counterspell",
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "moonbeam",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "mace",
+    "keywords": [
+      "martyr",
+      "saint",
+      "mercy",
+      "relic",
+      "faith"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Aldric",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#E0EBF0",
+  "scale": 0.83,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

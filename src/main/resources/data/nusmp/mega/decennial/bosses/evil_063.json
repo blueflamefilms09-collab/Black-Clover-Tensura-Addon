@@ -1,0 +1,106 @@
+{
+  "id": "evil_063",
+  "level": -63,
+  "side": "evil",
+  "name": "Lolth",
+  "title": "Queen of the Demonweb",
+  "lore": "Lolth is the Queen of the Demonweb: half dark elf, half spider, and entirely patient. She makes promises in silk, and silk keeps.",
+  "archetype": "famous:lolth",
+  "theme": "spider_den",
+  "creature": "monstrosity",
+  "resist": [],
+  "signature": "web_of_fate",
+  "phases": [
+    {
+      "name": "Spider Queen",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Demonweb Weaver",
+      "at": 0.66,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "cave_spider",
+        "spider"
+      ]
+    },
+    {
+      "name": "Queen of Spiders",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "cave_spider",
+        "spider"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "root_burst",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "web_snare",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "cave_spider",
+      "spider"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "dagger",
+    "keywords": [
+      "lolth"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Lolth",
+    "tier": 4
+  },
+  "look": "lolth",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "spider_chitter",
+  "famous": "lolth",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 5
+}

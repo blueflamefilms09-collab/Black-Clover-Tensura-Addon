@@ -1,0 +1,111 @@
+{
+  "id": "holy_063",
+  "level": 63,
+  "side": "holy",
+  "name": "Elowen, Herald of the Hour",
+  "title": "Archangel of the Burning Terrace",
+  "lore": "Fear of Elowen is the beginning of wisdom. Most never get further than the beginning.",
+  "archetype": "archangel",
+  "theme": "sun_temple",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "Captain of the Host",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Unfurled",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sword of the Last Hour",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "sunburst",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "angel",
+      "archangel",
+      "wing",
+      "host",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Elowen",
+    "tier": 4
+  },
+  "look": "solar",
+  "tint": "#C0D3FF",
+  "scale": 1.11,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

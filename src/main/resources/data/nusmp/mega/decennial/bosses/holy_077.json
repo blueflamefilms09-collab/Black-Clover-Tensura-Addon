@@ -1,0 +1,102 @@
+{
+  "id": "holy_077",
+  "level": 77,
+  "side": "holy",
+  "name": "The Tarrasque",
+  "title": "The Last Sleeper",
+  "lore": "The Last Sleeper wakes only when the world is already ending. The Tarrasque cannot be reasoned with, because it was never listening.",
+  "archetype": "famous:tarrasque",
+  "theme": "colosseum",
+  "creature": "monstrosity",
+  "resist": [],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Tarrasque",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Armoured Calamity",
+      "at": 0.66,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "End of Worlds",
+      "at": 0.33,
+      "abilities": [
+        "haki_pulse",
+        "gravity_crush"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "pillar_fall",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "tarrasque"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Tarrasque",
+    "tier": 4
+  },
+  "look": "tarrasque",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "stone_guardian",
+  "famous": "tarrasque",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

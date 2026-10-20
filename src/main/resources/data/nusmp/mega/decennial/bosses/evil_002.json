@@ -1,0 +1,93 @@
+{
+  "id": "evil_002",
+  "level": -2,
+  "side": "evil",
+  "name": "Quillothe the Hollow Crown",
+  "title": "Fallen King of the Shattered Hall",
+  "lore": "Quillothe lost a kingdom, then a name, then everything but the crown; the throne of the Shattered Hall still keeps his seat warm.",
+  "archetype": "fallen_king",
+  "theme": "ruined_throne_room",
+  "creature": "undead",
+  "resist": [
+    "physical",
+    "freeze"
+  ],
+  "signature": "crown_of_ruin",
+  "phases": [
+    {
+      "name": "Sovereign of Ash",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Last Audience",
+      "at": 0.5,
+      "abilities": [
+        "cantrip",
+        "frightful_presence",
+        "death_touch"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "skeleton",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "shadow_tendrils",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "wither_skeleton"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "crown",
+      "king",
+      "throne",
+      "ruin",
+      "oath"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Quillothe",
+    "tier": 1
+  },
+  "look": "zariel",
+  "tint": "#70404A",
+  "scale": 0.97,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

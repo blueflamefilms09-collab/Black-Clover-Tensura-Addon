@@ -1,0 +1,90 @@
+{
+  "id": "holy_012",
+  "level": 12,
+  "side": "holy",
+  "name": "Katharine the Bright Spear-Hand",
+  "title": "Commander of the Vanguard Court",
+  "lore": "Katharine commands a host that is no longer there. the Vanguard Court still marches to his orders, in perfect silence.",
+  "archetype": "knight_commander",
+  "theme": "sky_bridge",
+  "creature": "humanoid",
+  "resist": [
+    "physical",
+    "projectile"
+  ],
+  "signature": "oath_of_dawn",
+  "phases": [
+    {
+      "name": "Marshal of Morning",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Last Charge",
+      "at": 0.5,
+      "abilities": [
+        "blink",
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "knight",
+      "commander",
+      "banner",
+      "host",
+      "crusade"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Katharine",
+    "tier": 1
+  },
+  "look": "zariel",
+  "tint": "#F0E0C8",
+  "scale": 0.93,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

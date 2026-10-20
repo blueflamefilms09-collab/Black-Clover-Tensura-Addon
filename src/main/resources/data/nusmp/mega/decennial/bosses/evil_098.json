@@ -1,0 +1,130 @@
+{
+  "id": "evil_098",
+  "level": -98,
+  "side": "evil",
+  "name": "Megicula",
+  "title": "Supreme Devil of Curses",
+  "lore": "Megicula wears the curses of ten thousand years as a gown. The first of the three Supreme Devils receives the party at the root of the Tree, and is gracious about it.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_root_throne",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "hex_cauldron",
+  "phases": [
+    {
+      "name": "Gracious Hostess",
+      "at": 1.0,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Gown Unravels",
+      "at": 0.75,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Curses Called Home",
+      "at": 0.5,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Ten Thousand Years",
+      "at": 0.25,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.25
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.25
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "staff",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "megicula"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Megicula",
+    "tier": 5
+  },
+  "look": "strahd",
+  "tint": "#701050",
+  "scale": 1.15,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": true,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7,
+  "devil": "MEGICULA"
+}

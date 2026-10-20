@@ -1,0 +1,105 @@
+{
+  "id": "holy_090",
+  "level": 90,
+  "side": "holy",
+  "name": "Bahamut",
+  "title": "The Platinum Dragon",
+  "lore": "The Platinum Dragon, king of the good dragons, descended from his mountain of clouds to measure the heroes of the dungeon. He will be fair. He will not be gentle.",
+  "archetype": "famous:bahamut",
+  "theme": "sky_bridge",
+  "creature": "dragon",
+  "resist": [],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Platinum Dragon",
+      "at": 1.0,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Lord of the Wind",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Dragon God",
+      "at": 0.33,
+      "abilities": [
+        "tail_sweep",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "wind_gusts",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "bahamut"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Bahamut",
+    "tier": 5
+  },
+  "look": "bahamut",
+  "tint": "#FFFFFF",
+  "scale": 1.0,
+  "sound_set": "dragon_roar",
+  "famous": "bahamut",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

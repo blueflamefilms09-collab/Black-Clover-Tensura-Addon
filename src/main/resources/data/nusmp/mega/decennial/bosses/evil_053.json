@@ -1,0 +1,112 @@
+{
+  "id": "evil_053",
+  "level": -53,
+  "side": "evil",
+  "name": "Vashmorr, Tyrant of Ten Gazes",
+  "title": "Eye Tyrant of the Gazing Deep",
+  "lore": "Each eye of Vashmorr sees a different future of you. He prefers the one in which you are already dead.",
+  "archetype": "eye_tyrant",
+  "theme": "forbidden_library",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_hunger",
+  "phases": [
+    {
+      "name": "The Watcher",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Ten Gazes",
+      "at": 0.66,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "The Last Sight",
+      "at": 0.33,
+      "abilities": [
+        "magic_drain",
+        "mind_blast"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "tome_storm",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "eye_beams",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "endermite"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "eye",
+      "gaze",
+      "beholder",
+      "ray",
+      "mind"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Vashmorr",
+    "tier": 3
+  },
+  "look": "beholder",
+  "tint": "#A05080",
+  "scale": 1.02,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

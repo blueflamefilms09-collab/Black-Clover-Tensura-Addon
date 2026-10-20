@@ -1,0 +1,115 @@
+{
+  "id": "evil_026",
+  "level": -26,
+  "side": "evil",
+  "name": "Kharzul the Mire Sovereign",
+  "title": "Rot Wyrm of the Black Mere",
+  "lore": "Kharzul sleeps in the black water of the Black Mere with only her eyes above the mud. They never close.",
+  "archetype": "rot_wyrm",
+  "theme": "dragon_hoard_cavern",
+  "creature": "dragon",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Mire Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Acid Rain",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "Venom Throne",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "hell_geysers",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "bogged",
+      "cave_spider",
+      "silverfish"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "wyrm",
+      "acid",
+      "swamp",
+      "dragon",
+      "rot"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Kharzul",
+    "tier": 2
+  },
+  "look": "dracolich",
+  "tint": "#596F3F",
+  "scale": 1.04,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "acid",
+    "reflective": false
+  },
+  "band": 2
+}

@@ -1,0 +1,108 @@
+{
+  "id": "holy_023",
+  "level": 23,
+  "side": "holy",
+  "name": "Benedicta of the Ashen Dawn",
+  "title": "Phoenix Avatar of the Ashen Terrace",
+  "lore": "Benedicta burns down to ash every night and rises at dawn. the Ashen Terrace has learned to build around the pyre.",
+  "archetype": "phoenix_avatar",
+  "theme": "sun_temple",
+  "creature": "elemental",
+  "resist": [
+    "fire",
+    "lightning"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Ember Waking",
+      "at": 1.0,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Aflame",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "Reborn",
+      "at": 0.33,
+      "abilities": [
+        "blink",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "radiant_nova",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "falling_stars",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "bow",
+    "keywords": [
+      "phoenix",
+      "ash",
+      "rebirth",
+      "ember",
+      "sun"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Benedicta",
+    "tier": 2
+  },
+  "look": "solar",
+  "tint": "#FF6840",
+  "scale": 0.99,
+  "sound_set": "flame_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

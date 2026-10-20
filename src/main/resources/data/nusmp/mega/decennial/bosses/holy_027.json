@@ -1,0 +1,108 @@
+{
+  "id": "holy_027",
+  "level": 27,
+  "side": "holy",
+  "name": "Merewyn the Worn Giant",
+  "title": "Colossus of the Titan's Terrace",
+  "lore": "The monument of the Titan's Terrace was a god once. Merewyn remembers, and is not unhappy about the change.",
+  "archetype": "stone_colossus",
+  "theme": "colosseum",
+  "creature": "giant",
+  "resist": [
+    "physical",
+    "explosion"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Monument",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Titan Wakes",
+      "at": 0.66,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Fallen Sky",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "judgment_rings",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "holy_beams",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 5,
+    "fight_cap": 16,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "colossus",
+      "stone",
+      "giant",
+      "titan",
+      "monument"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Merewyn",
+    "tier": 2
+  },
+  "look": "tarrasque",
+  "tint": "#C8C0A8",
+  "scale": 1.01,
+  "sound_set": "stone_guardian",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

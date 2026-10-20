@@ -1,0 +1,120 @@
+{
+  "id": "holy_073",
+  "level": 73,
+  "side": "holy",
+  "name": "Selenia, Who Winds the Day",
+  "title": "Keeper of Hours of the Gilded Dial",
+  "lore": "Each pendulum swing is a verdict. The Keeper counts them in a very quiet voice.",
+  "archetype": "time_keeper",
+  "theme": "clockwork_vault",
+  "creature": "construct",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "gilded_ward",
+  "phases": [
+    {
+      "name": "Winder of Days",
+      "at": 1.0,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Pendulum Swinging",
+      "at": 0.75,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Last Minute",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sand Run Out",
+      "at": 0.25,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "judgment_rings",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "time",
+      "hour",
+      "clock",
+      "keeper",
+      "sand"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Selenia",
+    "tier": 4
+  },
+  "look": "lich_king",
+  "tint": "#D8D790",
+  "scale": 1.06,
+  "sound_set": "construct_grind",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

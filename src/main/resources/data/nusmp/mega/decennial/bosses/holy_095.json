@@ -1,0 +1,125 @@
+{
+  "id": "holy_095",
+  "level": 95,
+  "side": "holy",
+  "name": "Gwenhwyfar the Pale Majesty",
+  "title": "Platinum Wyrm of the Silver Cairn",
+  "lore": "Its scales are the colour of a star at dawn, and as hard as the dawn has ever been.",
+  "archetype": "platinum_wyrm",
+  "theme": "crystal_sanctum",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "magic",
+    "lightning"
+  ],
+  "signature": "rime_shell",
+  "phases": [
+    {
+      "name": "The Pale Majesty",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings of Silver Wind",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Cold Benediction",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "First Star",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "crystal_resonance",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "glaive",
+    "keywords": [
+      "platinum",
+      "dragon",
+      "frost",
+      "star",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gwenhwyfar",
+    "tier": 5
+  },
+  "look": "bahamut",
+  "tint": "#E0EBF0",
+  "scale": 1.11,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

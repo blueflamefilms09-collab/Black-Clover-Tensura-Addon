@@ -1,0 +1,108 @@
+{
+  "id": "holy_041",
+  "level": 41,
+  "side": "holy",
+  "name": "Oswin the Even Hand",
+  "title": "Archon of the Hall of Verdicts",
+  "lore": "The scales of the Hall of Verdicts have never tipped. Oswin has made certain that they never would.",
+  "archetype": "archon",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "Magistrate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scales Weighed",
+      "at": 0.66,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Sentence Passed",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "falling_stars",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "archon",
+      "law",
+      "order",
+      "verdict",
+      "scale"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Oswin",
+    "tier": 3
+  },
+  "look": "bahamut",
+  "tint": "#F0F0FF",
+  "scale": 0.82,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

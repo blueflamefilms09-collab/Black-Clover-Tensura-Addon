@@ -1,0 +1,125 @@
+{
+  "id": "evil_095",
+  "level": -95,
+  "side": "evil",
+  "name": "Orcanth the Bell That Tolls Once",
+  "title": "Doom Herald of the Bell Below",
+  "lore": "Orcanth brings news from the end of the world. It is a short announcement, and everyone in the Bell Below has heard it.",
+  "archetype": "doom_herald",
+  "theme": "bone_cathedral",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Herald at the Gate",
+      "at": 1.0,
+      "abilities": [
+        "counterspell"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Bell Tolls",
+      "at": 0.75,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Trumpet of Ruin",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Last Word",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "wither_skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "grave_hands",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "wither_skeleton",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "genesis",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "doom",
+      "herald",
+      "end",
+      "omen",
+      "bell"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Orcanth",
+    "tier": 5
+  },
+  "look": "asmodeus",
+  "tint": "#3D2040",
+  "scale": 1.03,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 7
+}

@@ -1,0 +1,108 @@
+{
+  "id": "holy_058",
+  "level": 58,
+  "side": "holy",
+  "name": "Swithun, Lord of the Vanguard",
+  "title": "Commander of the Silver Barracks",
+  "lore": "Never once has the banner of Swithun fallen in the Silver Barracks. Never once has he said it would not.",
+  "archetype": "knight_commander",
+  "theme": "colosseum",
+  "creature": "humanoid",
+  "resist": [
+    "physical",
+    "projectile"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "Marshal of Morning",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Host Musters",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Last Charge",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "frightful_presence"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "pillar_fall",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "judgment_rings",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "knight",
+      "commander",
+      "banner",
+      "host",
+      "crusade"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Swithun",
+    "tier": 3
+  },
+  "look": "solar",
+  "tint": "#E8E0C0",
+  "scale": 0.92,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

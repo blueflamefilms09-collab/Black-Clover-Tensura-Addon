@@ -1,0 +1,111 @@
+{
+  "id": "holy_031",
+  "level": 31,
+  "side": "holy",
+  "name": "Brigantia of the Shining Host",
+  "title": "Archangel of the Court of Wings",
+  "lore": "Brigantia descended from the the Court of Wings to deal with the dungeon, and finds it more troublesome than expected.",
+  "archetype": "archangel",
+  "theme": "storm_spire",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Captain of the Host",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Unfurled",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sword of the Last Hour",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "death_touch"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "wind_gusts",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "radiant_nova",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "angel",
+      "archangel",
+      "wing",
+      "host",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Brigantia",
+    "tier": 2
+  },
+  "look": "solar",
+  "tint": "#C0EDFF",
+  "scale": 1.04,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "id": "evil_054",
+  "level": -54,
+  "side": "evil",
+  "name": "Gehennis, Who Remembers You",
+  "title": "Mind Flayer of the Cerebral Deep",
+  "lore": "The Hive of the Cerebral Deep grows one mind wider with every traveller. Gehennis is the part that does the choosing.",
+  "archetype": "mind_flayer",
+  "theme": "abyss_rift_ring",
+  "creature": "aberration",
+  "resist": [
+    "magic"
+  ],
+  "signature": "stolen_light",
+  "phases": [
+    {
+      "name": "Quiet Voice",
+      "at": 1.0,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hive Awake",
+      "at": 0.66,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "endermite"
+      ]
+    },
+    {
+      "name": "One Mind",
+      "at": 0.33,
+      "abilities": [
+        "blink",
+        "magic_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "zombie",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "abyss_maw",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "void_collapse",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "endermite"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "mind",
+      "psion",
+      "flayer",
+      "thrall",
+      "brain"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gehennis",
+    "tier": 3
+  },
+  "look": "elder_brain",
+  "tint": "#B080C0",
+  "scale": 0.92,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

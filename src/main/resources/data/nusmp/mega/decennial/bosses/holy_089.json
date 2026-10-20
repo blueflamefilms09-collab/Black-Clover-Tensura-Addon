@@ -1,0 +1,124 @@
+{
+  "id": "holy_089",
+  "level": 89,
+  "side": "holy",
+  "name": "Fionnuala, Messenger of the Throne",
+  "title": "Herald of the Stair of Words",
+  "lore": "Fionnuala carries a message that is not for you. The difficulty is that you are in the way.",
+  "archetype": "herald",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "lightning",
+    "magic"
+  ],
+  "signature": "storm_charge",
+  "phases": [
+    {
+      "name": "Messenger",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Trumpet Raised",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Word Spoken",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Proclamation",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "falling_stars",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "herald",
+      "trumpet",
+      "divine",
+      "word",
+      "messenger"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fionnuala",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#FFFFFF",
+  "scale": 1.03,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

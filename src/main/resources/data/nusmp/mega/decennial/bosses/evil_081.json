@@ -1,0 +1,126 @@
+{
+  "id": "evil_081",
+  "level": -81,
+  "side": "evil",
+  "name": "Krampus, Who Reaps in Silence",
+  "title": "Shadow Reaper of the Pale Harvest",
+  "lore": "He does not take pleasure in it. He does not take anything else either.",
+  "archetype": "shadow_reaper",
+  "theme": "graveyard",
+  "creature": "spirit",
+  "resist": [
+    "physical",
+    "freeze",
+    "magic"
+  ],
+  "signature": "dread_presence",
+  "phases": [
+    {
+      "name": "The Appointment",
+      "at": 1.0,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Scythe Raised",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 1,
+      "add_kinds": [
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Harvest Begins",
+      "at": 0.5,
+      "abilities": [
+        "life_drain"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Last Threshing",
+      "at": 0.25,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "grave_hands",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 8,
+    "fight_cap": 28,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "reaper",
+      "shadow",
+      "harvest",
+      "death",
+      "void"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Krampus",
+    "tier": 5
+  },
+  "look": "vecna",
+  "tint": "#251830",
+  "scale": 1.13,
+  "sound_set": "wraith_wail",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

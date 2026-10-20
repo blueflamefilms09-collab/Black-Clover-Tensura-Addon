@@ -1,0 +1,92 @@
+{
+  "id": "evil_003",
+  "level": -3,
+  "side": "evil",
+  "name": "Belisarra the Third Cut",
+  "title": "Sanguine Prophet of the Red Altar",
+  "lore": "Belisarra preaches in the Red Altar that every death is a debt paid forward, and collects the interest in person.",
+  "archetype": "sanguine_prophet",
+  "theme": "blood_arena",
+  "creature": "cultist",
+  "resist": [
+    "poison"
+  ],
+  "signature": "hex_cauldron",
+  "phases": [
+    {
+      "name": "Preacher at the Altar",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Red Prophecy",
+      "at": 0.5,
+      "abilities": [
+        "vampiric_bite",
+        "mind_blast",
+        "counterspell"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "mace",
+    "keywords": [
+      "blood",
+      "rite",
+      "prophet",
+      "cult",
+      "crimson"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Belisarra",
+    "tier": 1
+  },
+  "look": "strahd",
+  "tint": "#A0205B",
+  "scale": 0.93,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 1
+}

@@ -1,0 +1,112 @@
+{
+  "id": "evil_032",
+  "level": -32,
+  "side": "evil",
+  "name": "Dreadmoor, Host of the Red Dance",
+  "title": "Vampire Lord of the Ballroom of Echoes",
+  "lore": "Dreadmoor drinks slowly and forgets nothing. He remembers the name of everyone who ever bled in the Ballroom of Echoes.",
+  "archetype": "vampire_lord",
+  "theme": "vampire_ballroom",
+  "creature": "vampire",
+  "resist": [
+    "physical",
+    "freeze"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "Gracious Host",
+      "at": 1.0,
+      "abilities": [
+        "vampiric_bite"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Hunger Unmasked",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex",
+        "zombie"
+      ]
+    },
+    {
+      "name": "Beast in Velvet",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "life_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "zombie"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "blood_rain",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "zombie"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "rapier",
+    "keywords": [
+      "blood",
+      "fang",
+      "crimson",
+      "night",
+      "vampire"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Dreadmoor",
+    "tier": 2
+  },
+  "look": "strahd",
+  "tint": "#C04050",
+  "scale": 1.01,
+  "sound_set": "vampire_hiss",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 3
+}

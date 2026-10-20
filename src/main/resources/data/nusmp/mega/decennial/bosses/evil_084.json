@@ -1,0 +1,129 @@
+{
+  "id": "evil_084",
+  "level": -84,
+  "side": "evil",
+  "name": "Ilvarune, Prince of the Howling Rift",
+  "title": "Demon Lord of the Ember Warrens",
+  "lore": "Ilvarune does not scheme. Schemes are for devils. He walks out of the Ember Warrens and everything in front of him is on fire.",
+  "archetype": "demon_lord",
+  "theme": "blood_arena",
+  "creature": "demon",
+  "resist": [
+    "fire",
+    "poison"
+  ],
+  "signature": "devil_union",
+  "phases": [
+    {
+      "name": "Gate-Breaker",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Fury Loosed",
+      "at": 0.75,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Roaring Maw",
+      "at": 0.5,
+      "abilities": [
+        "frightful_presence"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Hunger Without End",
+      "at": 0.25,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "chain_pull",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "blood_rain",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "axe",
+    "keywords": [
+      "demon",
+      "fury",
+      "chaos",
+      "abyss",
+      "maw"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ilvarune",
+    "tier": 5
+  },
+  "look": "balor",
+  "tint": "#804820",
+  "scale": 1.03,
+  "sound_set": "demon_growl",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

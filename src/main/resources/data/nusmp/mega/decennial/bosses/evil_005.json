@@ -1,0 +1,94 @@
+{
+  "id": "evil_005",
+  "level": -5,
+  "side": "evil",
+  "name": "Grimvaul the Patient Heir",
+  "title": "Necromancer of the Rotted Academy",
+  "lore": "Grimvaul was an apprentice who found that the dead take instruction better than the living, and opened a school in the Rotted Academy.",
+  "archetype": "necromancer",
+  "theme": "bone_cathedral",
+  "creature": "humanoid",
+  "resist": [
+    "poison"
+  ],
+  "signature": "grave_tithe",
+  "phases": [
+    {
+      "name": "Apprentice of Graves",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Final Lesson",
+      "at": 0.5,
+      "abilities": [
+        "life_drain",
+        "blink",
+        "counterspell"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "zombie",
+        "skeleton",
+        "drowned"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "zombie",
+      "skeleton",
+      "drowned"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "necro",
+      "bone",
+      "grave",
+      "ritual",
+      "tome"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Grimvaul",
+    "tier": 1
+  },
+  "look": "lich",
+  "tint": "#78A06F",
+  "scale": 0.88,
+  "sound_set": "undead_whisper",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "poison",
+    "reflective": false
+  },
+  "band": 1
+}

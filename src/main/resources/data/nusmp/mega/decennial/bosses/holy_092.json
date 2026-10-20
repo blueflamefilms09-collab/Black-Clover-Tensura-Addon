@@ -1,0 +1,124 @@
+{
+  "id": "holy_092",
+  "level": 92,
+  "side": "holy",
+  "name": "Baldric the Sword Unsheathed",
+  "title": "Archangel of the Gate of Trumpets",
+  "lore": "The host of the Gate of Trumpets sings, and Baldric is the first voice. When it falls silent, so does the sky.",
+  "archetype": "archangel",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "judgement_echo",
+  "phases": [
+    {
+      "name": "Captain of the Host",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Unfurled",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Choir Sings",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sword of the Last Hour",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 14,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "judgment_rings",
+      "every": 18,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 14,
+    "fight_cap": 48,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "angel",
+      "archangel",
+      "wing",
+      "host",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Baldric",
+    "tier": 5
+  },
+  "look": "solar",
+  "tint": "#C0EDFF",
+  "scale": 1.11,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 5,
+    "legendary_points": 5,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

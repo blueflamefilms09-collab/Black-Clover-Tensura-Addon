@@ -1,0 +1,99 @@
+{
+  "id": "evil_013",
+  "level": -13,
+  "side": "evil",
+  "name": "Ravenholt of the White Silence",
+  "title": "Frost Tyrant of the Frozen Keep",
+  "lore": "Ravenholt has ruled the Frozen Keep through ten thousand winters. Spring is a rumour he does not allow.",
+  "archetype": "frost_tyrant",
+  "theme": "frozen_keep",
+  "creature": "giant",
+  "resist": [
+    "freeze",
+    "physical"
+  ],
+  "signature": "rime_shell",
+  "phases": [
+    {
+      "name": "Jarl of the Frost",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Absolute Cold",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush",
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 1,
+      "add_kinds": [
+        "stray",
+        "skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "bone_spikes",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "frost_nova",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "stray",
+      "skeleton"
+    ],
+    "max_alive": 4,
+    "fight_cap": 12,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "frost",
+      "giant",
+      "winter",
+      "ice",
+      "tyrant"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Ravenholt",
+    "tier": 1
+  },
+  "look": "tarrasque",
+  "tint": "#B0E5F0",
+  "scale": 0.88,
+  "sound_set": "frost_howl",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 1
+}

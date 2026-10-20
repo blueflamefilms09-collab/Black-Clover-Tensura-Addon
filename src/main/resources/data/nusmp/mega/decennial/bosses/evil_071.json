@@ -1,0 +1,130 @@
+{
+  "id": "evil_071",
+  "level": -71,
+  "side": "evil",
+  "name": "Beelzebub",
+  "title": "Devil of Space, Warden of the Fifth Gate",
+  "lore": "Beelzebub folds the roots of the fifth level until no two of them are where they were. Nothing here is where you left it, including you.",
+  "archetype": "qliphoth",
+  "theme": "qliphoth_gate_5",
+  "creature": "devil",
+  "resist": [
+    "magic",
+    "physical"
+  ],
+  "signature": "infernal_contract",
+  "phases": [
+    {
+      "name": "Folded Gate",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Space Torn",
+      "at": 0.75,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.09,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "The Fifth Gate Opens",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.14,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    },
+    {
+      "name": "Where You Were",
+      "at": 0.25,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.21,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "blaze",
+        "vex",
+        "wither_skeleton"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "black_sap",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.2
+    },
+    {
+      "id": "void_collapse",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.2
+    }
+  ],
+  "adds": {
+    "pool": [
+      "blaze",
+      "vex",
+      "wither_skeleton"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "scythe",
+    "keywords": [
+      "devil",
+      "root",
+      "underworld",
+      "gate",
+      "beelzebub"
+    ]
+  },
+  "mana_core": {
+    "title": "Gate-Core of Beelzebub",
+    "tier": 4
+  },
+  "look": "demogorgon",
+  "tint": "#7060C0",
+  "scale": 1.0,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 5,
+  "devil": "BEELZEBUB"
+}

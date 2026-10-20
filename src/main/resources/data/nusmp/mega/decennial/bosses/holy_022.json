@@ -1,0 +1,111 @@
+{
+  "id": "holy_022",
+  "level": 22,
+  "side": "holy",
+  "name": "Amaranth of the Pale Watch",
+  "title": "Frost Sentinel of the Winter Gate",
+  "lore": "Amaranth stood guard on the Winter Gate through a winter that never ended. The ice has grown into the armour.",
+  "archetype": "frost_sentinel",
+  "theme": "frozen_keep",
+  "creature": "construct",
+  "resist": [
+    "freeze",
+    "physical"
+  ],
+  "signature": "frost_heart",
+  "phases": [
+    {
+      "name": "Pale Watch",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Frost Spreads",
+      "at": 0.66,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor",
+        "stray"
+      ]
+    },
+    {
+      "name": "The Silent Winter",
+      "at": 0.33,
+      "abilities": [
+        "wing_buffet",
+        "haki_pulse"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "stray"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "frost_nova",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "pillar_fall",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "stray"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "frost",
+      "sentinel",
+      "ice",
+      "pale",
+      "winter"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Amaranth",
+    "tier": 2
+  },
+  "look": "lich_king",
+  "tint": "#E0F7FF",
+  "scale": 0.99,
+  "sound_set": "frost_howl",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  }
+}

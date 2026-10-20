@@ -1,0 +1,96 @@
+{
+  "id": "holy_020",
+  "level": 20,
+  "side": "holy",
+  "name": "Wenceslas of the Nine Constellations",
+  "title": "Star Oracle of the Star Observatory",
+  "lore": "Wenceslas reads the stars of the Star Observatory the way others read a letter. Most of what she sees she would rather not repeat.",
+  "archetype": "star_oracle",
+  "theme": "void_observatory",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Patient Eye",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "The Last Chart",
+      "at": 0.5,
+      "abilities": [
+        "cantrip",
+        "magic_drain",
+        "gravity_crush"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "void_collapse",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "star",
+      "oracle",
+      "constellation",
+      "astral",
+      "dream"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Wenceslas",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#DED0FF",
+  "scale": 0.93,
+  "sound_set": "holy_bell",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}

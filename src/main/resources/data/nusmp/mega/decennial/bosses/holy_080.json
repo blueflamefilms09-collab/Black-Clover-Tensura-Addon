@@ -1,0 +1,124 @@
+{
+  "id": "holy_080",
+  "level": 80,
+  "side": "holy",
+  "name": "Fidelis of the Shining Host",
+  "title": "Archangel of the High Colonnade",
+  "lore": "Fidelis descended from the the High Colonnade to deal with the dungeon, and finds it more troublesome than expected.",
+  "archetype": "archangel",
+  "theme": "celestial_court",
+  "creature": "celestial",
+  "resist": [
+    "magic",
+    "fire"
+  ],
+  "signature": "radiant_ward",
+  "phases": [
+    {
+      "name": "Captain of the Host",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Wings Unfurled",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Choir Sings",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Sword of the Last Hour",
+      "at": 0.25,
+      "abilities": [
+        "death_touch"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "falling_stars",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "judgment_rings",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "longsword",
+    "keywords": [
+      "angel",
+      "archangel",
+      "wing",
+      "host",
+      "light"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fidelis",
+    "tier": 4
+  },
+  "look": "solar",
+  "tint": "#EDFFB0",
+  "scale": 1.12,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

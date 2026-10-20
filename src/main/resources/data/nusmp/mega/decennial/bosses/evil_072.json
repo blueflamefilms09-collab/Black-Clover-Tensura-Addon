@@ -1,0 +1,125 @@
+{
+  "id": "evil_072",
+  "level": -72,
+  "side": "evil",
+  "name": "Zhulgrim, Tyrant of Ten Gazes",
+  "title": "Eye Tyrant of the Hall of Ten Windows",
+  "lore": "the Hall of Ten Windows is not a lair. It is a lens, and Zhulgrim is the thing that looks through.",
+  "archetype": "eye_tyrant",
+  "theme": "forbidden_library",
+  "creature": "aberration",
+  "resist": [
+    "magic",
+    "lightning"
+  ],
+  "signature": "void_hunger",
+  "phases": [
+    {
+      "name": "The Watcher",
+      "at": 1.0,
+      "abilities": [
+        "eye_rays"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Ten Gazes",
+      "at": 0.75,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "Eyes Unlidded",
+      "at": 0.5,
+      "abilities": [
+        "magic_drain"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    },
+    {
+      "name": "The Last Sight",
+      "at": 0.25,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "vex",
+        "endermite"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "eye_beams",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "shadow_tendrils",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex",
+      "endermite"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "relic",
+    "type": "wand",
+    "keywords": [
+      "eye",
+      "gaze",
+      "beholder",
+      "ray",
+      "mind"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Zhulgrim",
+    "tier": 4
+  },
+  "look": "beholder",
+  "tint": "#50A091",
+  "scale": 1.01,
+  "sound_set": "aberrant_hum",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": true,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 6
+}

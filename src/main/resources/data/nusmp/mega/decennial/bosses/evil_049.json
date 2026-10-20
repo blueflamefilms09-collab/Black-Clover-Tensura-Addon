@@ -1,0 +1,113 @@
+{
+  "id": "evil_049",
+  "level": -49,
+  "side": "evil",
+  "name": "Gallowmere, Wyrm Beyond Death",
+  "title": "Dracolich of the Ashen Aerie",
+  "lore": "Every coin in the Ashen Aerie was paid for in lives. Gallowmere counts them nightly, one rib at a time.",
+  "archetype": "dracolich",
+  "theme": "dragon_hoard_cavern",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "poison",
+    "physical"
+  ],
+  "signature": "dragon_pride",
+  "phases": [
+    {
+      "name": "Hoard-Wraith",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Bones Awake",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Gold and Ash",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "hell_geysers",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "lava_surge",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "dragon",
+      "bone",
+      "hoard",
+      "lich",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Gallowmere",
+    "tier": 3
+  },
+  "look": "dracolich",
+  "tint": "#C0A070",
+  "scale": 1.08,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 4
+}

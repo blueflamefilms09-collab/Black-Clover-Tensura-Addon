@@ -1,0 +1,120 @@
+{
+  "id": "holy_071",
+  "level": 71,
+  "side": "holy",
+  "name": "Fiacre the Worn Giant",
+  "title": "Colossus of the Great Plinth",
+  "lore": "The ground shakes with every step of Fiacre, and the Great Plinth has stopped noticing.",
+  "archetype": "stone_colossus",
+  "theme": "sunken_temple",
+  "creature": "giant",
+  "resist": [
+    "physical",
+    "explosion"
+  ],
+  "signature": "stone_covenant",
+  "phases": [
+    {
+      "name": "Monument",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Titan Wakes",
+      "at": 0.75,
+      "abilities": [
+        "gravity_crush"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 1,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "The Slow Thunder",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    },
+    {
+      "name": "Fallen Sky",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 2,
+      "add_kinds": [
+        "living_armor"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "tide_surge",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor"
+    ],
+    "max_alive": 7,
+    "fight_cap": 24,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "hammer",
+    "keywords": [
+      "colossus",
+      "stone",
+      "giant",
+      "titan",
+      "monument"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Fiacre",
+    "tier": 4
+  },
+  "look": "tarrasque",
+  "tint": "#B8C3D0",
+  "scale": 1.01,
+  "sound_set": "stone_guardian",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": true
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "holy_072",
+  "level": 72,
+  "side": "holy",
+  "name": "Camael the Bright Proclamation",
+  "title": "Herald of the High Veranda",
+  "lore": "the High Veranda has been waiting for the herald, and Camael has been waiting for the hall to be ready.",
+  "archetype": "herald",
+  "theme": "storm_spire",
+  "creature": "celestial",
+  "resist": [
+    "lightning",
+    "magic"
+  ],
+  "signature": "storm_charge",
+  "phases": [
+    {
+      "name": "Messenger",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Trumpet Raised",
+      "at": 0.75,
+      "abilities": [
+        "blink"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "The Word Spoken",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    },
+    {
+      "name": "Proclamation",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "living_armor",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "radiant_nova",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "storm_bolts",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "living_armor",
+      "vex"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "herald",
+      "trumpet",
+      "divine",
+      "word",
+      "messenger"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Camael",
+    "tier": 4
+  },
+  "look": "solar",
+  "tint": "#FFFFFF",
+  "scale": 1.06,
+  "sound_set": "angelic_choir",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  }
+}

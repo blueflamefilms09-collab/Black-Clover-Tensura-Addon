@@ -1,0 +1,97 @@
+{
+  "id": "evil_020",
+  "level": -20,
+  "side": "evil",
+  "name": "Pazuron the Salt Throne",
+  "title": "Drowned Leviathan of the Sunken Nave",
+  "lore": "Ships once sailed over the Sunken Nave. Pazuron remembers each one by the sound it made when it broke.",
+  "archetype": "leviathan",
+  "theme": "sunken_temple",
+  "creature": "monstrosity",
+  "resist": [
+    "lightning",
+    "freeze"
+  ],
+  "signature": "tide_ward",
+  "phases": [
+    {
+      "name": "Tide Rising",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Salt and Silence",
+      "at": 0.5,
+      "abilities": [
+        "gravity_crush",
+        "wing_buffet",
+        "dragon_breath"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "drowned"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "tide_surge",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    },
+    {
+      "id": "pillar_fall",
+      "every": 26,
+      "from_phase": 2,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "drowned"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "rare",
+    "kind": "weapon",
+    "type": "spear",
+    "keywords": [
+      "kraken",
+      "tide",
+      "drowned",
+      "leviathan",
+      "deep"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Pazuron",
+    "tier": 1
+  },
+  "look": "kraken",
+  "tint": "#2F707F",
+  "scale": 0.97,
+  "sound_set": "kraken_deep",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "lightning",
+    "reflective": false
+  },
+  "band": 2
+}

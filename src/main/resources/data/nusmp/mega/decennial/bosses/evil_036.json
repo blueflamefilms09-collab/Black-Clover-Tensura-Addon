@@ -1,0 +1,113 @@
+{
+  "id": "evil_036",
+  "level": -36,
+  "side": "evil",
+  "name": "Mordrake, Wyrm Beyond Death",
+  "title": "Dracolich of the Hoard Under the Hill",
+  "lore": "Mordrake died on its hoard and refused to leave it. The hoard of the Hoard Under the Hill has kept the dragon, and the dragon has kept the hoard.",
+  "archetype": "dracolich",
+  "theme": "dragon_hoard_cavern",
+  "creature": "dragon",
+  "resist": [
+    "freeze",
+    "poison",
+    "physical"
+  ],
+  "signature": "phylactery_ward",
+  "phases": [
+    {
+      "name": "Hoard-Wraith",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Bones Awake",
+      "at": 0.66,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.06,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    },
+    {
+      "name": "Gold and Ash",
+      "at": 0.33,
+      "abilities": [
+        "frightful_presence",
+        "life_drain"
+      ],
+      "speed": 1.12,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "skeleton",
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "hell_geysers",
+      "every": 20,
+      "from_phase": 1,
+      "power": 1.08
+    },
+    {
+      "id": "lava_surge",
+      "every": 24,
+      "from_phase": 2,
+      "power": 1.08
+    }
+  ],
+  "adds": {
+    "pool": [
+      "skeleton",
+      "vex"
+    ],
+    "max_alive": 8,
+    "fight_cap": 30,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "unique",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "dragon",
+      "bone",
+      "hoard",
+      "lich",
+      "wyrm"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Mordrake",
+    "tier": 2
+  },
+  "look": "dracolich",
+  "tint": "#80B1D0",
+  "scale": 1.09,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "frost",
+    "reflective": false
+  },
+  "band": 3
+}

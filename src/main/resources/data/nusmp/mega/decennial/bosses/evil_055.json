@@ -1,0 +1,109 @@
+{
+  "id": "evil_055",
+  "level": -55,
+  "side": "evil",
+  "name": "Vorgath of the Silken Chains",
+  "title": "Sin Duchess of the Hall of Wanting",
+  "lore": "At the masque of the Hall of Wanting everyone wears a face but Vorgath. She wears yours.",
+  "archetype": "sin_duchess",
+  "theme": "mirror_hall",
+  "creature": "fiend",
+  "resist": [
+    "magic",
+    "poison"
+  ],
+  "signature": "sanguine_echo",
+  "phases": [
+    {
+      "name": "Gracious Duchess",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.04,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Mask Dropped",
+      "at": 0.66,
+      "abilities": [
+        "mind_blast"
+      ],
+      "speed": 1.1,
+      "damage": 1.1,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    },
+    {
+      "name": "What You Wanted",
+      "at": 0.33,
+      "abilities": [
+        "blink",
+        "life_drain"
+      ],
+      "speed": 1.16,
+      "damage": 1.25,
+      "add_count": 3,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "mirror_shatter",
+      "every": 18,
+      "from_phase": 1,
+      "power": 1.12
+    },
+    {
+      "id": "eye_beams",
+      "every": 22,
+      "from_phase": 2,
+      "power": 1.12
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 10,
+    "fight_cap": 38,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "legend",
+    "kind": "weapon",
+    "type": "dagger",
+    "keywords": [
+      "sin",
+      "desire",
+      "silk",
+      "charm",
+      "fiend"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Vorgath",
+    "tier": 3
+  },
+  "look": "zariel",
+  "tint": "#D04080",
+  "scale": 1.02,
+  "sound_set": "devil_laugh",
+  "dnd": {
+    "resistances": 3,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  },
+  "band": 4
+}

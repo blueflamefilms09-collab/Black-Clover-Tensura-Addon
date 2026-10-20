@@ -1,0 +1,129 @@
+{
+  "id": "evil_077",
+  "level": -77,
+  "side": "evil",
+  "name": "Dhurnak the Mire Sovereign",
+  "title": "Rot Wyrm of the Drowned Aerie",
+  "lore": "The air around Dhurnak is acid and rain. the Drowned Aerie is the only place in the world where it is always raining.",
+  "archetype": "rot_wyrm",
+  "theme": "plague_swamp",
+  "creature": "dragon",
+  "resist": [
+    "poison",
+    "magic"
+  ],
+  "signature": "hex_cauldron",
+  "phases": [
+    {
+      "name": "Mire Sovereign",
+      "at": 1.0,
+      "abilities": [
+        "tail_sweep"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Acid Rain",
+      "at": 0.75,
+      "abilities": [
+        "dragon_breath"
+      ],
+      "speed": 1.05,
+      "damage": 1.08,
+      "add_count": 3,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "The Drowned Scale",
+      "at": 0.5,
+      "abilities": [
+        "wing_buffet"
+      ],
+      "speed": 1.1,
+      "damage": 1.18,
+      "add_count": 4,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    },
+    {
+      "name": "Venom Throne",
+      "at": 0.25,
+      "abilities": [
+        "haki_pulse"
+      ],
+      "speed": 1.16,
+      "damage": 1.32,
+      "add_count": 4,
+      "add_kinds": [
+        "bogged",
+        "cave_spider",
+        "silverfish"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "plague_cloud",
+      "every": 16,
+      "from_phase": 1,
+      "power": 1.16
+    },
+    {
+      "id": "spore_burst",
+      "every": 20,
+      "from_phase": 2,
+      "power": 1.16
+    }
+  ],
+  "adds": {
+    "pool": [
+      "bogged",
+      "cave_spider",
+      "silverfish"
+    ],
+    "max_alive": 12,
+    "fight_cap": 46,
+    "wave": 2,
+    "wave_every": 45
+  },
+  "loot": {
+    "grade": "god",
+    "kind": "weapon",
+    "type": "greatsword",
+    "keywords": [
+      "wyrm",
+      "acid",
+      "swamp",
+      "dragon",
+      "rot"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Dhurnak",
+    "tier": 4
+  },
+  "look": "tiamat",
+  "tint": "#305037",
+  "scale": 0.95,
+  "sound_set": "dragon_roar",
+  "dnd": {
+    "resistances": 4,
+    "legendary_points": 4,
+    "anti_magic_aura": false,
+    "frightful_aura": true,
+    "absorb_magic": false,
+    "breath": "acid",
+    "reflective": false
+  },
+  "band": 6
+}

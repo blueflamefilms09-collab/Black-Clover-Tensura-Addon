@@ -1,0 +1,90 @@
+{
+  "id": "holy_009",
+  "level": 9,
+  "side": "holy",
+  "name": "Justitia the Pale Lamp",
+  "title": "Moon Priestess of the Moon Pool",
+  "lore": "Justitia lights no lamps in the Moon Pool. The moon is enough, and she sees by it better than you do.",
+  "archetype": "moon_priestess",
+  "theme": "crystal_sanctum",
+  "creature": "humanoid",
+  "resist": [
+    "magic",
+    "freeze"
+  ],
+  "signature": "mirror_veil",
+  "phases": [
+    {
+      "name": "Pale Lamp",
+      "at": 1.0,
+      "abilities": [
+        "cantrip"
+      ],
+      "speed": 1.0,
+      "damage": 1.0,
+      "add_count": 0,
+      "add_kinds": []
+    },
+    {
+      "name": "Waning Crown",
+      "at": 0.5,
+      "abilities": [
+        "counterspell",
+        "blink",
+        "eye_rays"
+      ],
+      "speed": 1.08,
+      "damage": 1.15,
+      "add_count": 2,
+      "add_kinds": [
+        "vex"
+      ]
+    }
+  ],
+  "lair_actions": [
+    {
+      "id": "holy_beams",
+      "every": 22,
+      "from_phase": 1,
+      "power": 1.04
+    }
+  ],
+  "adds": {
+    "pool": [
+      "vex"
+    ],
+    "max_alive": 6,
+    "fight_cap": 22,
+    "wave": 0,
+    "wave_every": 0
+  },
+  "loot": {
+    "grade": "special",
+    "kind": "relic",
+    "type": "staff",
+    "keywords": [
+      "moon",
+      "silver",
+      "priestess",
+      "tide",
+      "night"
+    ]
+  },
+  "mana_core": {
+    "title": "Core of Justitia",
+    "tier": 1
+  },
+  "look": "solar",
+  "tint": "#C8D8F0",
+  "scale": 0.83,
+  "sound_set": "fey_chime",
+  "dnd": {
+    "resistances": 2,
+    "legendary_points": 3,
+    "anti_magic_aura": false,
+    "frightful_aura": false,
+    "absorb_magic": false,
+    "breath": "fire",
+    "reflective": false
+  }
+}
