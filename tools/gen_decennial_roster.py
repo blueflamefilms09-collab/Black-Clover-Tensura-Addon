@@ -517,6 +517,9 @@ def lang_fragment(bosses):
         "message.nusmp.mega.decennial.loot": "%1$s lets go of %2$s.",
         "message.nusmp.mega.decennial.describe": "Level %1$s (floor %2$s): %3$s, %4$s. Hall: %5$s. Phases: %6$s.",
         "message.nusmp.mega.decennial.band": "Gate band %1$s of the Underworld Root.",
+        "message.nusmp.mega.decennial.core": "Core of %1$s",
+        "message.nusmp.mega.decennial.loot_none": "The boss has no %1$s item left to give: every one is already in the world.",
+        "message.nusmp.mega.decennial.signature.enrage": "%1$s is enraged!",
     })
     return out
 

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
@@ -70,7 +71,7 @@ final class ArenaPlacer {
         return y0 - BossArenaStructure.FOUNDATION >= sl.getMinBuildHeight() && y0 + plan.height <= sl.getMaxBuildHeight();
     }
 
-    /** How many steps a full build takes: one pass writing the cells and one pass joining the connecting blocks. */
+    /** How many steps a full build takes: one pass writing the cells (liquids excepted) and one pass that joins the connecting blocks and then sets the liquids. */
     static int total(BossArenaStructure plan) { return plan.raw().length * 2; }
 
     /**
@@ -84,13 +85,17 @@ final class ArenaPlacer {
         int size = plan.size, layer = size * size, n = 0, i = cursor, total = raw.length;
         int[] w = new int[3];
         BlockState[] states = new BlockState[palette.size()];
-        for (int k = 1; k < states.length; k++) states[k] = state(palette.get(k), f.rot());
+        boolean[] late = new boolean[states.length];                                  // liquids go in last: a liquid placed before its basin is closed would run into the old hall
+        for (int k = 1; k < states.length; k++) {
+            states[k] = state(palette.get(k), f.rot());
+            late[k] = k > 1 && states[k].getBlock() instanceof LiquidBlock;
+        }
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         DungeonGuard.begin();
         try {
             while (i < total && n < budget) {
                 short p = raw[i];
-                if (p != 0) {
+                if (p != 0 && !late[p]) {
                     f.world(i % size, i / layer - BossArenaStructure.FOUNDATION, (i / size) % size, w);
                     pos.set(w[0], w[1], w[2]);
                     sl.setBlock(pos, states[p], Block.UPDATE_CLIENTS);
@@ -102,7 +107,12 @@ final class ArenaPlacer {
                 int j = i - total;
                 while (j < total && n < budget) {
                     short p = raw[j];
-                    if (p > 1 && connects(states[p])) {
+                    if (p > 1 && late[p]) {
+                        f.world(j % size, j / layer - BossArenaStructure.FOUNDATION, (j / size) % size, w);
+                        pos.set(w[0], w[1], w[2]);
+                        sl.setBlock(pos, states[p], Block.UPDATE_CLIENTS);
+                        n++;
+                    } else if (p > 1 && connects(states[p])) {
                         f.world(j % size, j / layer - BossArenaStructure.FOUNDATION, (j / size) % size, w);
                         pos.set(w[0], w[1], w[2]);
                         BlockState now = sl.getBlockState(pos);
