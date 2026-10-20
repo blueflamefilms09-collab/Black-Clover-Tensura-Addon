@@ -24,8 +24,11 @@ import java.util.function.Function;
 public final class PlayerLookTables {
     private PlayerLookTables() {}
 
-    /** The tables, in the order they are merged; the first is required, the others are optional (a pack may drop one). */
-    public static final List<String> FILES = List.of("playermodel/looks.json", "playermodel/looks_abyssal.json", "playermodel/looks_dungeon.json");
+    /**
+     * The tables, in the order they are merged; the first is required, the others are optional (a pack may drop one). {@code looks_decennial.json} is reserved for the 200 Decennial bosses' own
+     * humanoid looks (the same {@code abyssal_<look>_p<phase>} ids, the same format): a builder of those bosses writes that file and the loader picks it up with no code change.
+     */
+    public static final List<String> FILES = List.of("playermodel/looks.json", "playermodel/looks_abyssal.json", "playermodel/looks_dungeon.json", "playermodel/looks_decennial.json");
 
     /** The merged table and what went wrong while it was made (an unreadable file, a duplicate id). */
     public record Merged(Map<String, PlayerLook> looks, List<String> problems) {}

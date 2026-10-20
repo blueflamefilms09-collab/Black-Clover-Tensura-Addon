@@ -27,6 +27,15 @@ class PlayerLodStanceTest {
     }
 
     @Test
+    void theHairPaletteCacheGivesTheSameTintAsTheComputationAndReusesIt() {
+        for (int rgb : new int[]{0x123456, 0xFFFFFF, 0x000000, 0xB02A2A, 0x1C1A22}) {
+            assertEquals(HairPalette.of(rgb), HairPalette.cached(rgb));
+            assertTrue(HairPalette.cached(rgb) == HairPalette.cached(rgb), "the cached tint is one object");
+        }
+        assertEquals(HairPalette.cached(0x123456), HairPalette.cached(0xFF123456), "the alpha byte is ignored");
+    }
+
+    @Test
     void whatEachLevelDraws() {
         assertTrue(PlayerLod.outerLayer(PlayerLod.FULL) && PlayerLod.hair(PlayerLod.FULL) && PlayerLod.glow(PlayerLod.FULL));
         assertFalse(PlayerLod.outerLayer(PlayerLod.NEAR) || PlayerLod.hair(PlayerLod.NEAR));

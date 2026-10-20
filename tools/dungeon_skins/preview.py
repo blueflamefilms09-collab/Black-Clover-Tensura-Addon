@@ -94,9 +94,35 @@ def contact(prefix, looks, out, per_page=40, cols=8, size=(120, 190)):
     return paths
 
 
+def abyssal(out, size=(170, 260)):
+    """The nine humanoid abyssal bosses in their three phases, from looks_abyssal.json (the table the game's loader merges in: client/playermodel/PlayerLookTables)."""
+    with open(os.path.join(CM.ASSETS, "playermodel", "looks_abyssal.json")) as f:
+        looks = json.load(f)["looks"]
+    names = []
+    for k in looks:
+        base = k[:-3]
+        if base not in names:
+            names.append(base)
+    page = Image.new("RGB", (size[0] * 6, size[1] * ((len(names) + 1) // 2)), (255, 255, 255))
+    for n, base in enumerate(names):
+        for p in range(3):
+            look = looks["%s_p%d" % (base, p + 1)]
+            s = look.get("scale", 1.0)
+            im = R.render(scene(look), size=size, yaw=20, pitch=6, center=(0, 12, 0), scale=4.2 / max(1.0, s * 0.9), floor=True)
+            ImageDraw.Draw(im).text((3, 3), "%s p%d" % (base.replace("abyssal_", ""), p + 1), fill=(0, 0, 0))
+            page.paste(im, ((n % 2) * size[0] * 3 + p * size[0], (n // 2) * size[1]))
+    os.makedirs(out, exist_ok=True)
+    path = os.path.join(out, "abyssal_humanoids.png")
+    page.save(path)
+    return path
+
+
 def main(argv):
-    looks = table()
     out = CM.DOCS_PREVIEW
+    if argv and argv[0] == "abyssal":
+        print(abyssal(out))
+        return
+    looks = table()
     if not argv or argv[0] == "sheets":
         dg = [k for k in looks if k.startswith("dg_")]
         for n, p in enumerate(range(0, len(dg), 8)):

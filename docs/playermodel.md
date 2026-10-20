@@ -124,3 +124,8 @@ Attributes, AI, sounds and triggers are untouched (client-only change).
 Nothing was run in a game. In particular: the exact look of every skin and of the extras on the vanilla rig at game lighting; the draw order of the layers against vanilla's armour; `TintedBuffers`
 with NeoForge's vertex consumers; the hair springs' tuning (the numbers are reasoned, not played); slim-arm fit of arm-anchored props; the translucent fade of armour (armour stays solid while the body fades);
 the CI smoke list. The type check reports only the stub artefacts (abstract classes the stubs cannot instantiate, `setupAnim` of the stubbed `HumanoidModel`).
+
+## 7. Phase 2 (1.99.0)
+
+The humanoids that section 1 lists as NOT converted (`living_armor`, `floor_warden`, `labyrinth_guardian` with the abyssal bosses, `goliath`, the `foundry_mob` people, the corpses Jimmy, Alfredo and Carl) are converted in
+phase 2: `docs/playermodel_phase2.md` (what was built, the flag `client.playermodel.dungeon` that gives the old renderers back, the 385 new looks, the skin generator `tools/gen_dungeon_skins.py`, the level of detail).

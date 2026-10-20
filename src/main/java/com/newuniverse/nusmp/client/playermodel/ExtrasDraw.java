@@ -26,12 +26,15 @@ public final class ExtrasDraw {
     }
 
     public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, Motion m, int light, int overlay, int argb, float glowLevel, int glowRgb) {
-        draw(pose, buffers, model, look, m.dead(), m.transforming(), m.cast(), m.swinging(), m.speed(), m.seconds(), m.progress(), light, overlay, argb, glowLevel, glowRgb);
+        draw(pose, buffers, model, look, m.dead(), m.transforming(), m.cast(), m.swinging(), m.speed(), m.seconds(), m.progress(), false, false, light, overlay, argb, glowLevel, glowRgb);
     }
 
-    /** The same without a {@link Motion} object (the entity renderer draws this every frame and allocates nothing for it). */
+    /**
+     * The same without a {@link Motion} object (the entity renderer draws this every frame and allocates nothing for it). {@code skipArmR} / {@code skipArmL}: the entity really holds an item in that
+     * hand, so the extras hung on that arm (the art kit's picture of its weapon) are not drawn: the real item is.
+     */
     public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, boolean dead, boolean transforming, int cast, boolean swinging, float speed,
-                            float clockSeconds, float progress, int light, int overlay, int argb, float glowLevel, int glowRgb) {
+                            float clockSeconds, float progress, boolean skipArmR, boolean skipArmL, int light, int overlay, int argb, float glowLevel, int glowRgb) {
         for (PlayerLook.Extra ex : look.extras()) {
             ExtraModels.Ready r = ExtraModels.of(ex.model());
             if (r.empty()) continue;
@@ -46,6 +49,7 @@ public final class ExtrasDraw {
             ResourceLocation glowTex = glow != 0 ? PlayerAssets.extraTexture(ex.texture(), true) : null;
             if (glowTex != null && !PlayerAssets.exists(glowTex)) glow = 0;
             for (var e : r.views.entrySet()) {
+                if ((skipArmR && e.getKey() == PlayerLook.Anchor.ARM_R) || (skipArmL && e.getKey() == PlayerLook.Anchor.ARM_L)) continue;
                 net.minecraft.client.model.geom.ModelPart part = model.part(e.getKey());
                 pose.pushPose();
                 part.translateAndRotate(pose);

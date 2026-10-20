@@ -15,7 +15,6 @@ import painter as P
 import recipes as RC
 import foundry_kit as FK
 import extract_extras as EX
-import characters as CH
 
 HOLD = {"arm_r": "hold_r", "arm_l": "hold_l"}
 

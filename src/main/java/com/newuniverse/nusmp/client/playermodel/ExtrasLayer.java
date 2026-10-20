@@ -5,6 +5,7 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
@@ -32,7 +33,9 @@ public class ExtrasLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMo
         int argb = opacity < 0.999f ? ((Math.round(opacity * 255f)) << 24) | 0xFFFFFF : 0xFFFFFFFF;
         int rgb = d.glowRgb >= 0 ? d.glowRgb : look.glowRgb();
         float glow = PlayerLod.glow(owner.lod()) ? d.glowLevel : 0f;                  // far away the additive pass of every extra is dropped
-        ExtrasDraw.draw(pose, buffers, owner.kit(), look, dead, d.transforming, d.cast, e.swinging, speed, age / 20f + (e.getId() & 15) * 0.37f, progress, light,
+        boolean mainRight = e.getMainArm() == HumanoidArm.RIGHT;                      // a real item in a hand replaces the art kit's picture of the weapon on that arm
+        boolean skipR = !(mainRight ? e.getMainHandItem() : e.getOffhandItem()).isEmpty(), skipL = !(mainRight ? e.getOffhandItem() : e.getMainHandItem()).isEmpty();
+        ExtrasDraw.draw(pose, buffers, owner.kit(), look, dead, d.transforming, d.cast, e.swinging, speed, age / 20f + (e.getId() & 15) * 0.37f, progress, skipR, skipL, light,
                 LivingEntityRenderer.getOverlayCoords(e, 0f), argb, glow, rgb);
     }
 }

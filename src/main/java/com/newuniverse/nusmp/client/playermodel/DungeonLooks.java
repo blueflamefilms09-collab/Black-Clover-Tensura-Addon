@@ -90,7 +90,7 @@ public final class DungeonLooks {
     /** The rule of the fallback flag: the kit draws an entity when the flag is on and the table has its look. */
     public static boolean usesKit(boolean flag, boolean hasLook) { return flag && hasLook; }
 
-    /** The ids of the abyssal looks that are humanoids (the kit draws them) among {@code lookIds}: used by the checks. */
+    /** Is this abyssal look a humanoid (the player-model kit draws it), as opposed to a creature that keeps its own geo model? False for an id the table does not have. */
     public static boolean isHumanoidAbyssal(String lookId) {
         AbyssalLooks.Look l = AbyssalLooks.get(lookId);
         return l != null && l.humanoid();

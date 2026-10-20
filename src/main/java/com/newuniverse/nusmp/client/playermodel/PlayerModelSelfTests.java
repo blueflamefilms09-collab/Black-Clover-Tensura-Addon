@@ -40,6 +40,9 @@ public final class PlayerModelSelfTests {
             for (String id : DungeonLooks.ENTITIES)
                 if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", id))) bad.add("the entity type nusmp:" + id + " is not registered");
             Map<String, PlayerLook> looks = PlayerLookTables.load(PlayerModelAudit::classpath).looks();
+            com.newuniverse.nusmp.arc.ArcCharacters.bootstrap();                      // the arcs' friendly characters are people the kit drew in phase 1: each needs its look, or it would wear the default skin
+            for (com.newuniverse.nusmp.arc.ArcCharacter c : com.newuniverse.nusmp.arc.ArcRoster.npcs())
+                if (!looks.containsKey(c.id())) bad.add("the ally " + c.id() + " has no look: it would be drawn with the default skin");
             int named = 0, humanoid = 0;
             for (DndProfile p : DndProfiles.all()) {
                 if (p.look().isEmpty()) continue;
