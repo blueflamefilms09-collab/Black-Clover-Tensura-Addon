@@ -87,6 +87,22 @@ public final class DungeonGuard {
 
     public static boolean inInternal() { return DEPTH.get().get() > 0; }
 
+    // ---------------------------------------------------------------- 1.99.0: the one explicit exception
+    private static volatile java.util.function.BiPredicate<Level, BlockPos> breakRule;
+
+    /**
+     * 1.99.0: registers the rule that names the blocks a person MAY break although the guard holds the dungeon: the interactive elements of the Decennial boss halls (tombstones, pillars, root
+     * nodes ...). The rule is asked on both sides (the client only to start the crack) and must be cheap; the mod that registers it does the actual removal itself, inside {@link #internal}.
+     */
+    public static void allowBreakWhere(java.util.function.BiPredicate<Level, BlockPos> rule) { breakRule = rule; }
+
+    /** Is this block one the registered rule lets a person break? False when no rule is registered. */
+    public static boolean breakAllowed(Level level, BlockPos pos) {
+        java.util.function.BiPredicate<Level, BlockPos> r = breakRule;
+        if (r == null || level == null || pos == null) return false;
+        try { return r.test(level, pos); } catch (RuntimeException e) { return false; }
+    }
+
     // ---------------------------------------------------------------- what is held
     /** Water, lava and the like (a bubble column too): a fluid with no block in it. */
     public static boolean isFluidOnly(BlockState s) { return s.getBlock() instanceof LiquidBlock || s.is(Blocks.BUBBLE_COLUMN); }
@@ -129,12 +145,14 @@ public final class DungeonGuard {
     // ---------------------------------------------------------------- mining: no crack, no break, no drops
     public static void onBreak(BlockEvent.BreakEvent e) {
         if (!(e.getLevel() instanceof Level level) || !on(level) || !isProtected(e.getState())) return;
+        if (breakAllowed(level, e.getPos())) return;                                                                 // 1.99.0: an element of a boss hall (its owner removes it and cancels the vanilla break)
         e.setCanceled(true);
         tell(e.getPlayer());
     }
 
     public static void onBreakSpeed(PlayerEvent.BreakSpeed e) {
         if (!watches(e.getEntity().level()) || !isProtected(e.getState())) return;
+        if (e.getPosition().isPresent() && breakAllowed(e.getEntity().level(), e.getPosition().get())) return;       // 1.99.0
         e.setNewSpeed(0f);
         e.setCanceled(true);
     }
@@ -142,6 +160,7 @@ public final class DungeonGuard {
     public static void onLeftClick(PlayerInteractEvent.LeftClickBlock e) {
         Level level = e.getLevel();
         if (!watches(level) || !isProtected(level.getBlockState(e.getPos()))) return;
+        if (breakAllowed(level, e.getPos())) return;                                                                 // 1.99.0
         e.setCanceled(true);
         tell(e.getEntity());
     }

@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.boss.budget.BudgetedBoss;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
+import com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialLayer;
+import com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialRules;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.guard.GuardianScaling.Trait;
 import com.newuniverse.nusmp.labyrinth.seal.FloorWardenEntity;
@@ -64,6 +66,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     public static final String SECTOR_KEY = "nusmp_sector";
     /** Half the width of the arena footprint (45 blocks) and the slack beyond its walls before the leash pulls. */
     private static final double HALL_HALF = 22.0, LEASH_SLACK = 3.0;
+    /** 1.99.0: half the width of the hall this Guardian is leashed to (22 for the 45-block hall of a floor; a Decennial boss in a bigger standalone hall sets its own). */
+    private double hallHalf = HALL_HALF;
 
     /**
      * 1.94.0: what the renderer needs to draw the boss as the creature it is (docs/labyrinth/abyssal_bosses.md): the id of its abyssal look ("" = the look the Guardian always had), the phase it is in (1 to 3:
@@ -73,11 +77,17 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     private static final EntityDataAccessor<Integer> LOOK_PHASE = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Long> CAST_AT = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<Integer> CAST_KIND = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
+    /** 1.99.0: the tint (0xRRGGBB) a Decennial boss's profile gives its look; 0xFFFFFF for every other Guardian. Written on the server, synced like any entity data, read by the renderer. */
+    private static final EntityDataAccessor<Integer> DEC_TINT = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
 
     private final BossBudget dpsBudget = new BossBudget();
     private final GuardianTraits.State traits = new GuardianTraits.State();
     /** 1.65.0: the D&D layer (legendary resistances and actions, lair actions, phases, mythic trait) of the boss of this floor. */
     private final DndBoss dnd = new DndBoss();
+    /** 1.99.0: the Decennial layer (one of the 200 bosses of the tenth floors: phases, lair actions, signature, loot); inactive for every Guardian without a profile. */
+    private final DecennialLayer decennial = new DecennialLayer();
+    /** 1.99.0: the Decennial level of the sector this Guardian is being configured for (0 = none); set by the public configure methods just before the private one reads it. */
+    private int decennialLevel;
     private int floorNo = 1;
     private int sectorId = -1, threat = 1;
     private RegionTheme theme = RegionTheme.GRAVITY;
@@ -116,6 +126,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         builder.define(LOOK_PHASE, 1);
         builder.define(CAST_AT, -1000L);
         builder.define(CAST_KIND, 0);
+        builder.define(DEC_TINT, 0xFFFFFF);
     }
 
     /** The id of the abyssal look it wears ("" = the look the Guardian always had); read on the client by the renderer. */
@@ -130,7 +141,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     public int castKind() { return entityData.get(CAST_KIND); }
 
     /** Server: it has just cast (a legendary action, a lair action, a change of phase): the cast clip plays for a second on every client. */
-    void noteCast(int kind) {
+    public void noteCast(int kind) {
         if (level().isClientSide) return;
         entityData.set(CAST_AT, level().getGameTime());
         entityData.set(CAST_KIND, kind);
@@ -162,6 +173,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     /** Makes this the boss of {@code sector} (null: a plain threat-1 test Guardian), calling from {@code anchor} (the altar, or null) and rescales it. */
     public void configure(Sector sector, BlockPos anchor) {
         floorNo = sector == null ? 1 : sector.lastFloor();
+        decennialLevel = sector == null ? 0 : DecennialRules.levelOfFloor(sector.lastFloor());                                // 1.99.0: the Decennial boss of this level, if the roster has one
         configure(sector == null ? -1 : sector.id, sector == null ? 1 : com.newuniverse.nusmp.labyrinth.mega.FloorMap.threat(sector.lastFloor()),   // 1.55.0: the decennial boss stands on the sector's LAST floor, so it is as tough as that floor's monsters and then some
                  sector == null ? RegionTheme.GRAVITY : sector.theme, anchor,
                 sector == null ? null : FloorMap.label(sector.lastFloor()));
@@ -173,12 +185,14 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
      */
     public void configureForFloor(int floor, RegionTheme theme) {
         floorNo = Math.max(1, Math.abs(floor));
+        decennialLevel = 0;                                                                                                   // 1.99.0: a rift's secret boss keeps the D&D bosses of 1.98.0
         configure(-1, FloorMap.threat(floor), theme, null, FloorMap.label(floor));
     }
 
     /** Sets which sector's boss this is (a bare id, for tests) and rescales it; the boss bar then names no floor. */
     public void configure(int sectorId, int threat, RegionTheme theme, BlockPos anchor) {
         floorNo = Math.max(1, threat);
+        decennialLevel = 0;
         configure(sectorId, threat, theme, anchor, null);
     }
 
@@ -191,7 +205,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         this.floorLabel = floorLabel;
         this.configured = true;
         stamp();
-        dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
+        DndProfile decennialProfile = decennial.bind(this, decennialLevel, sectorId);                                           // 1.99.0: a Decennial boss runs the D&D profile made from its own
+        dnd.configure(decennialProfile != null ? decennialProfile : DndProfiles.forBoss(floorNo, sectorId));
         syncLook();
         applyScaling();
     }
@@ -224,6 +239,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         setCustomName(floorLabel == null ? Component.translatable("entity.nusmp.labyrinth_guardian.bar", themeName)
                 : Component.translatable("entity.nusmp.labyrinth_guardian.bar_floor", floorLabel, themeName));
         setCustomNameVisible(false);
+        decennial.afterScaling(this);                                                         // 1.99.0: the Decennial boss's size, room for its shield, tint and sound set
         refreshDimensions();
         traits.restart(level().getGameTime(), 80);
         refreshDndName(dnd.profile, dnd.phase);
@@ -286,6 +302,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
             if (GuardConfig.get(GuardConfig.LEASH) && tickCount % 20 == 0) leash(sl);
             if (traitsOn()) GuardianTraits.tick(this, sl, traits, trait, phaseTwo);
             dnd.tick(this, sl);
+            decennial.tick(this, sl);                                                          // 1.99.0: phases, lair actions, signature, the hall's seal
         } catch (RuntimeException e) {
             GuardLog.failed("guardian tick", e);                                           // an entity that throws in its tick would crash the server: the fight goes on without the extras
         }
@@ -306,7 +323,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     /** Is a floor point inside the hall and its doorway tunnels (the altar's footprint plus a little)? Always true for a Guardian with no altar. */
     public boolean insideLeash(double x, double z) {
         if (anchor == null) return true;
-        double limit = HALL_HALF + LEASH_SLACK;
+        double limit = hallHalf + LEASH_SLACK;
         return Math.abs(x - (anchor.getX() + 0.5)) <= limit && Math.abs(z - (anchor.getZ() + 0.5)) <= limit;
     }
 
@@ -326,7 +343,9 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     // ---------------------------------------------------------------- blood: a shield fed by its own hits
     @Override
     public boolean doHurtTarget(Entity target) {
+        if (level() instanceof ServerLevel shift && decennial.cannotStrike(shift)) return false;               // 1.99.0: it does not strike while it shifts form
         boolean hit = super.doHurtTarget(target);
+        if (hit && level() instanceof ServerLevel dsl) decennial.afterMelee(this, dsl, target);
         if (hit && trait == Trait.BLOOD && traitsOn() && level() instanceof ServerLevel sl) GuardianTraits.onHit(this, sl, target, phaseTwo);
         return hit;
     }
@@ -351,10 +370,18 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (level() instanceof ServerLevel shield && decennial.shielded(this, shield) && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            shield.sendParticles(ParticleTypes.END_ROD, getX(), getY() + getBbHeight() * 0.6, getZ(), 2, 0.5, 0.6, 0.5, 0.02);     // 1.99.0: the two seconds of a shift, or a hall not built yet
+            return false;
+        }
         float effective = divisor > 1.0 ? (float) (amount / divisor) : amount;                   // health the attribute cannot hold is paid as divided damage
+        if (level() instanceof ServerLevel resisting) effective = decennial.incoming(this, resisting, source, effective);   // 1.99.0: resistances by damage category, the signature mechanic
         effective = dnd.incoming(this, source, effective);                                         // 1.65.0: magic eaten, the Word of Ending's concentration
         boolean hit = dpsBudget.hurt(this, source, effective, x -> super.hurt(source, x));
-        if (hit && level() instanceof ServerLevel sl && isAlive()) dnd.reacted(this, sl, source);  // a legendary action between the party's turns
+        if (hit && level() instanceof ServerLevel sl && isAlive()) {
+            dnd.reacted(this, sl, source);                                                         // a legendary action between the party's turns
+            decennial.afterHurt(this, sl, source, effective);                                      // 1.99.0: thorns
+        }
         return hit;
     }
 
@@ -363,6 +390,11 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     public void die(DamageSource source) {
         super.die(source);
         if (isAlive()) return;                                                                      // 1.65.0: the Mythic Trait cancelled the death (DndEvents): nothing to report
+        try {
+            if (level() instanceof ServerLevel dsl) decennial.onDeath(this, dsl, source);          // 1.99.0: the hall opens, the adds go, the loot of the level is paid
+        } catch (RuntimeException e) {
+            GuardLog.failed("decennial death", e);
+        }
         try {
             if (anchor != null && level() instanceof ServerLevel sl && sl.isLoaded(anchor) && sl.getBlockEntity(anchor) instanceof GuardianAltarBlockEntity altar) {
                 altar.onBossDied(getUUID());
@@ -383,6 +415,11 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     // ---------------------------------------------------------------- 1.65.0: the D&D layer
     /** The name over the boss bar: the profile's name and the form of the phase it is in, then the floor. Nothing changes while the profile is the default one. */
     void refreshDndName(DndProfile profile, int phase) {
+        if (decennial.active()) {                                                                  // 1.99.0: a Decennial boss shows its own form and look phase
+            phaseLook(decennial.lookPhase());
+            setCustomName(decennial.displayName(floorLabel));
+            return;
+        }
         phaseLook(phase);
         if (profile == DndProfile.DEFAULT || !GuardConfig.get(GuardConfig.DND)) return;
         setCustomName(Component.literal(profile.name() + " \u2014 " + profile.form(phase) + (floorLabel == null ? "" : " (Floor " + floorLabel + ")")));
@@ -410,10 +447,10 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     }
 
     /** Health put back without it counting as a heal (the budget lets it through). */
-    void restoreHealth(float health) { dpsBudget.bypass(() -> setHealth(health)); }
+    public void restoreHealth(float health) { dpsBudget.bypass(() -> setHealth(health)); }
 
     /** A shield of eaten magic: absorption up to the attribute's room. */
-    void addShield(float amount) { setAbsorptionAmount((float) Math.min(getAbsorptionAmount() + amount, Math.max(0.0, getAttributeValue(Attributes.MAX_ABSORPTION)))); }
+    public void addShield(float amount) { setAbsorptionAmount((float) Math.min(getAbsorptionAmount() + amount, Math.max(0.0, getAttributeValue(Attributes.MAX_ABSORPTION)))); }
 
     /** The death is about to happen: true when the Mythic Trait spends itself instead (the caller cancels the death). */
     boolean dndMythic(ServerLevel sl) { return dnd.tryMythic(this, sl); }
@@ -422,6 +459,35 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     boolean dndResist(ServerLevel sl, String effectId) { return dnd.resist(this, sl, effectId); }
 
     DndBoss dnd() { return dnd; }
+
+    // ---------------------------------------------------------------- 1.99.0: the Decennial layer
+    /** The Decennial layer (inactive for a Guardian that is not one of the 200 bosses). */
+    public DecennialLayer decennial() { return decennial; }
+
+    /** Swaps the D&D profile for the one of a new phase (or a wipe: {@code fresh} gives the resistances and the phase back). */
+    public void dndSwap(DndProfile profile, boolean fresh) {
+        dnd.swapProfile(profile, fresh);
+        syncLook();
+    }
+
+    /** The name and the look phase follow the layer's current phase. */
+    public void decennialRefresh() { refreshDndName(dnd.profile, dnd.phase); }
+
+    /** Half the width of the hall this boss is leashed to. */
+    public void setHallHalf(double half) { hallHalf = Math.max(HALL_HALF, half); }
+
+    /** The tint (0xRRGGBB) of its look; the renderer reads it. */
+    public int decennialTint() { return entityData.get(DEC_TINT); }
+
+    public void setDecennialTint(int rgb) { entityData.set(DEC_TINT, rgb & 0xFFFFFF); }
+
+    /** The admin's kill: it pays no loot and nothing the budget or the shield says can stop it. Returns whether it died. */
+    public boolean adminKill() {
+        decennial.markNoLoot();
+        dpsBudget.bypass(() -> hurt(damageSources().genericKill(), Float.MAX_VALUE));
+        if (isAlive()) discard();
+        return true;
+    }
 
     public int floorNo() { return floorNo; }
 
@@ -437,6 +503,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         tag.putBoolean("GuardPhaseTwo", phaseTwo);
         tag.putInt("GuardFloorNo", floorNo);
         dnd.save(tag);
+        decennial.save(tag);                                                                        // 1.99.0
     }
 
     @Override
@@ -452,7 +519,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         phaseTwo = tag.getBoolean("GuardPhaseTwo");
         divisor = GuardianScaling.damageDivisor(GuardConfig.get(GuardConfig.GUARDIAN_BASE_HEALTH), GuardConfig.get(GuardConfig.THREAT_HEALTH_SCALE), threat);
         floorNo = tag.contains("GuardFloorNo") ? tag.getInt("GuardFloorNo") : Math.max(1, threat);
-        dnd.configure(DndProfiles.forBoss(floorNo, sectorId));
+        DndProfile decennialProfile = decennial.load(this, tag);                                    // 1.99.0: a saved Decennial boss gets its profile back
+        dnd.configure(decennialProfile != null ? decennialProfile : DndProfiles.forBoss(floorNo, sectorId));
         dnd.load(tag);
         syncLook();                                                                                // 1.94.0: the look and the phase it was saved in
         stamp();                                                                                // loading clears and restores the tag list: both keys are written again
