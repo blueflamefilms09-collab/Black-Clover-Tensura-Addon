@@ -15203,5 +15203,16 @@
   "nusmp.bossbar.lair.tremor": "Tremor",
   "nusmp.bossbar.lair.anti_magic_field": "Anti Magic Field",
   "nusmp.bossbar.lair.searing_light": "Searing Light",
-  "nusmp.bossbar.lair.necrotic_mist": "Necrotic Mist"
+  "nusmp.bossbar.lair.necrotic_mist": "Necrotic Mist",
+  "nusmp.configuration.djinn": "Djinn (client)",
+  "nusmp.configuration.djinn.tinyModel": "Tiny Djinn figure",
+  "nusmp.configuration.djinn.tinyModel.tooltip": "The Lesser Summon is drawn as a real tiny Djinn, a small 3D figure of your Djinn at your shoulder. Off brings back the old translucent bust.",
+  "nusmp.configuration.djinn.tinyMax": "Most Tiny Djinn drawn",
+  "nusmp.configuration.djinn.tinyMax.tooltip": "The most Tiny Djinn drawn in one frame; the nearest ones are kept. 0 draws none.",
+  "nusmp.configuration.djinn.tinyNameTag": "Name over the figure",
+  "nusmp.configuration.djinn.tinyNameTag.tooltip": "Float the Djinn's name over its figure when you are within 16 blocks.",
+  "nusmp.configuration.djinn.tinyTimerBar": "Timer bar under the name",
+  "nusmp.configuration.djinn.tinyTimerBar.tooltip": "A thin bar under the name that shows the seconds the Lesser Summon has left.",
+  "nusmp.configuration.djinn.tinyPortrait": "Head in the Djinn panel",
+  "nusmp.configuration.djinn.tinyPortrait.tooltip": "Draw the figure's head in the circle of the Djinn panel during a Lesser Summon, instead of the silhouette."
 }

@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.104.0] — Tiny Djinn for the Lesser Summon, God weapons (second slice), charms and Genesis relics upgraded
+
+### NEW
+- **The Lesser Summon is a real tiny Djinn.** A 0.45 block chibi figure of the bearer's own Djinn (all 36 Djinn, each with a light and a Dark texture, wisp tail instead of legs, its crown, mane or ornaments in miniature) hovers at the right shoulder (low and small in first person), with a poof entrance, idle float with blinks, a cast pose that points at the foe, a dash attack, a hop after a kill, a spiral exit into the owner, a name tag and a timer bar. The Djinn panel's circle shows its head. A small visual-only packet (`DjinnNet.Cue`) tells clients 16 ticks before the Lesser Summon's bolt lands who it strikes. Client option `djinn.tinyModel=false` brings the old bust back. `docs/tiny_djinn.md`.
+- **God weapons, second slice (visual upgrade):** Staff of the Magi, Wizard King's Vow, Wand of the Wisdom King, Hammer of Thunderbolts, Gungnir, Kusanagi, Leviathan's Crown Trident, Calamity Wave Aegis, Hellblaze, Minotaur King's Labrys, Dragon Force Twin Fangs and Dawnpiercer Crossbow: new 1024 px skins (5.3x to 11x the painted detail) with engravings, lore parts (rings, shards, ravens, rune stones, magatama, kelp, flame tongues, twelve spectral axe heads...), orbiting parts, flowing energy veins, a halo shell, six ambient particle layers, swing trails, a signature effect on each act and a reduced-detail mesh from 12 blocks. `docs/visual_upgrade/god_melee_a.md`.
+- **God charms and Genesis relics (visual upgrade), 27 items:** the Infinity-style stones, Deck, Warren's Key, Rose Petal, Administrator's Key, Archivist's Codex, Behelit Egg, Kamish's Fang, Moon-Tower Sigil, Orrery, Pocket Watch of Return, Serie's Grimoire, Vaultmaker's Pocketwatch (God) and the Holy Grail fragment, Philosopher's Stone, Prison Cube, Seal of the Sealed God, Sukuna's Fingers, the Infinity Gauntlet, Absolute Being's and Zahard's crowns and the Gate of Babylon crest (Genesis): each with its own hand model and worn model (God 512 px skins, Genesis 1024 px), glow map, star/nebula pass, 9 to 17 ambient layers following its lore, act effects, a draw animation and a reduced-detail model. `docs/visual_upgrade/charms_genesis_worn.md`.
+- Visual upgrades share one switch: client `visual.upgrade` (default on); off gives the 1.101 look.
+
+### REPLACED
+- The translucent Djinn bust above the shoulder (visual only; kept behind `djinn.tinyModel=false`), and how the 12 Wave71 God weapons and 27 charms and Genesis relics are held and worn (old models kept on disk).
+
+### KEPT
+- Every id, stat, act, passive, engraving, Better Combat file, saved data; the Lesser Summon's bolt, price, duration and cooldown; Time Magic.
+
+### Honest notes
+- Nothing has been run in the game. "5x" and "20x" are measured proxies, not how it looks: for the 12 Wave71 God weapons the combined score rose 1.8x to 4.1x (the meshes were already large, so mesh detail grew 1.1x to 3.3x), and for the 27 charms and relics the score is dominated by the texture term (without it about 3 to 5x). The Genesis weapons, the worn God relics (cloaks, crowns, armour) and the dark Djinn weapons are still to come.
+
 ## [1.103.0] — Custom boss bars for the dungeon bosses
 
 ### NEW
