@@ -1,0 +1,28 @@
+{
+  "id": "storm",
+  "family": "theme",
+  "emblem": "bolt",
+  "fx": "sparks",
+  "entrance": "flash",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFF48A",
+    "fill_bottom": "#4A5AD8",
+    "glow": "#FFE84A",
+    "accent": "#FFF48A",
+    "ghost": "#FFFFFF",
+    "name": "#FFFBD8",
+    "title": "#B8C0FF",
+    "shadow": "#14123A",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFF48A",
+    "lair": "#FFB347",
+    "marker": "#E8ECFF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

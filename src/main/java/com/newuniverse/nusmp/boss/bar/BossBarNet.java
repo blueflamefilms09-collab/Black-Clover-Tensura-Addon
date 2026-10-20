@@ -51,6 +51,14 @@ public final class BossBarNet {
         r.playToClient(Style.TYPE, Style.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.gui.bossbar.BossBarClientState.receive(payload)));
         r.playToClient(Clear.TYPE, Clear.STREAM_CODEC,
-                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.gui.bossbar.BossBarClientState.receive(payload)));
+                (payload, ctx) -> ctx.enqueueWork(() -> {
+                    com.newuniverse.nusmp.client.gui.bossbar.BossBarClientState.receive(payload);
+                    com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.receive(payload);       // 1.106.0: the custom bar forgets it too (or plays its death animation)
+                }));
+        // 1.106.0: the custom boss bar (boss/bars): the state of a bar, and the preview of a style
+        r.playToClient(com.newuniverse.nusmp.boss.bars.BossBarStatePayload.TYPE, com.newuniverse.nusmp.boss.bars.BossBarStatePayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.receive(payload.state())));
+        r.playToClient(com.newuniverse.nusmp.boss.bars.BossBarStatePayload.Preview.TYPE, com.newuniverse.nusmp.boss.bars.BossBarStatePayload.Preview.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.preview(payload.style(), payload.hpPercent(), payload.phase(), payload.phases())));
     }
 }

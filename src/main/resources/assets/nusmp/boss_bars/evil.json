@@ -1,0 +1,28 @@
+{
+  "id": "evil",
+  "family": "theme",
+  "emblem": "thorn_crown",
+  "fx": "drip",
+  "entrance": "rise",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FF5A4A",
+    "fill_bottom": "#7A0C10",
+    "glow": "#FF2A2A",
+    "accent": "#FF5A4A",
+    "ghost": "#FFFFFF",
+    "name": "#FFE0DC",
+    "title": "#C86A64",
+    "shadow": "#0C0A0D",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FF5A4A",
+    "lair": "#FFB347",
+    "marker": "#8A7A80"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

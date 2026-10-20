@@ -1,0 +1,28 @@
+{
+  "id": "goliath",
+  "family": "boss",
+  "emblem": "anvil",
+  "fx": "embers",
+  "entrance": "slide",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#C8D0DC",
+    "fill_bottom": "#5A6270",
+    "glow": "#FF8A3A",
+    "accent": "#FFB060",
+    "ghost": "#FFFFFF",
+    "name": "#F0F4FA",
+    "title": "#9AA4B2",
+    "shadow": "#14161A",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFB060",
+    "lair": "#FFB347",
+    "marker": "#DDE4EE"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

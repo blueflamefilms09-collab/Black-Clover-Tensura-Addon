@@ -1,0 +1,28 @@
+{
+  "id": "zagred",
+  "family": "boss",
+  "emblem": "rune",
+  "fx": "runes",
+  "entrance": "flash",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#C898FF",
+    "fill_bottom": "#2A0E5A",
+    "glow": "#B070FF",
+    "accent": "#D8B0FF",
+    "ghost": "#FFFFFF",
+    "name": "#F4E8FF",
+    "title": "#A880E0",
+    "shadow": "#0A0414",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#D8B0FF",
+    "lair": "#FFB347",
+    "marker": "#E0C8FF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

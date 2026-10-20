@@ -168,6 +168,7 @@ public class SpiritKingEntity extends Monster implements BudgetedBoss {
         bar.setName(Component.literal("The Celestial Spirit King — " + FORMS[Math.max(1, Math.min(3, phase)) - 1]).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         bar.setProgress(Math.max(0f, Math.min(1f, getHealth() / Math.max(1f, getMaxHealth()))));
         bar.setColor(phase == 1 ? BossEvent.BossBarColor.YELLOW : phase == 2 ? BossEvent.BossBarColor.WHITE : BossEvent.BossBarColor.PURPLE);
+        com.newuniverse.nusmp.boss.bars.BossBarHub.track(this, bar);              // 1.106.0: the custom boss bar's state goes to the watchers
     }
 
     @Override public void startSeenByPlayer(ServerPlayer p) { super.startSeenByPlayer(p); bar.addPlayer(p); }

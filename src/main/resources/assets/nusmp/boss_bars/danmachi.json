@@ -1,0 +1,28 @@
+{
+  "id": "danmachi",
+  "family": "arc",
+  "emblem": "labyrinth",
+  "fx": "embers",
+  "entrance": "rise",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFB050",
+    "fill_bottom": "#8A3A10",
+    "glow": "#FF9A3A",
+    "accent": "#FFC070",
+    "ghost": "#FFFFFF",
+    "name": "#FFF0DC",
+    "title": "#C8A880",
+    "shadow": "#1A1410",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFC070",
+    "lair": "#FFB347",
+    "marker": "#F0D8B0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

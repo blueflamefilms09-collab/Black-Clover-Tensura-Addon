@@ -1,0 +1,28 @@
+{
+  "id": "undead",
+  "family": "theme",
+  "emblem": "skull",
+  "fx": "souls",
+  "entrance": "fade",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#9AFFB0",
+    "fill_bottom": "#1C8F4A",
+    "glow": "#7DFF9B",
+    "accent": "#4DDC7C",
+    "ghost": "#FFFFFF",
+    "name": "#EAF8E4",
+    "title": "#9AD8A8",
+    "shadow": "#1A1D14",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#4DDC7C",
+    "lair": "#FFB347",
+    "marker": "#F5F2DA"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

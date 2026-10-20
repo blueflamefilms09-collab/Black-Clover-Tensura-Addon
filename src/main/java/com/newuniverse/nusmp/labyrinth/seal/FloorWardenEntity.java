@@ -128,6 +128,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
         super.aiStep();
         if (level().isClientSide || !(level() instanceof ServerLevel sl)) return;
         bar.setProgress(Math.max(0f, Math.min(1f, getHealth() / getMaxHealth())));
+        com.newuniverse.nusmp.boss.bars.BossBarHub.track(this, bar);              // 1.106.0: the custom boss bar's state (Decennial phases, lair actions, adds ...) goes to the watchers
         if (slamCooldown > 0) slamCooldown--;
         if (stepCooldown > 0) stepCooldown--;
         if (!isAlive()) return;

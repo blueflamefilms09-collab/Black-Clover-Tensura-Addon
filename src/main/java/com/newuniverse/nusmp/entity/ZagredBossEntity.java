@@ -219,6 +219,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         frac = getHealth() / getMaxHealth();
         bar.setProgress(frac);
         bar.setName(barName(ph, t));
+        com.newuniverse.nusmp.boss.bars.BossBarHub.track(this, bar);              // 1.106.0: the custom boss bar's state goes to the watchers
         if (t % 60 == 0) VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), VIOLET, 70, 1.6f);
         if (ph >= 3 && t % 120 == 0) ZagredFx.corrupt(sl, position(), ph == 4 ? 9f : 6f, 60, ph == 4 ? ZagredFx.RED : VIOLET);     // 1.35.0: the air itself reads wrong
         recentDamage *= 0.97f;

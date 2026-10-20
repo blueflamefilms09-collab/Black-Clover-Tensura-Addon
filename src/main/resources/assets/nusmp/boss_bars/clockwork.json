@@ -1,0 +1,28 @@
+{
+  "id": "clockwork",
+  "family": "theme",
+  "emblem": "gear",
+  "fx": "sparks",
+  "entrance": "slide",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFD982",
+    "fill_bottom": "#9A6A1A",
+    "glow": "#FFCF5A",
+    "accent": "#FFE08A",
+    "ghost": "#FFFFFF",
+    "name": "#FFF4D4",
+    "title": "#D8B060",
+    "shadow": "#1C1408",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFE08A",
+    "lair": "#FFB347",
+    "marker": "#FFE6A0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

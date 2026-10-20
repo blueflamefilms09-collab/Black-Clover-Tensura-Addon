@@ -1,0 +1,28 @@
+{
+  "id": "fallen_king",
+  "family": "theme",
+  "emblem": "broken_crown",
+  "fx": "static",
+  "entrance": "fade",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#D8C070",
+    "fill_bottom": "#4A3A14",
+    "glow": "#C0A040",
+    "accent": "#E0C860",
+    "ghost": "#FFFFFF",
+    "name": "#F4ECD0",
+    "title": "#A89868",
+    "shadow": "#12100A",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#E0C860",
+    "lair": "#FFB347",
+    "marker": "#E8D890"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

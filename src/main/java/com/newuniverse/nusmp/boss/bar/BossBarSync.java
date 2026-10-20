@@ -48,6 +48,7 @@ public final class BossBarSync {
     public static void init() {
         NeoForge.EVENT_BUS.addListener(BossBarSync::onServerTick);
         NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> BARS.clear());
+        com.newuniverse.nusmp.boss.bars.BossBarHub.init();                // 1.106.0: the custom boss bar's server half (state packets, /multiverse bossbar, self-test boss.bars)
     }
 
     /** A Zogratis boss refreshed its bar: its devil, power and type decide the style. */
