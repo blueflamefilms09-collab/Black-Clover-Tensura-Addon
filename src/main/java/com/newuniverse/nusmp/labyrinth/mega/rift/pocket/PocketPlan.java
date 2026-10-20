@@ -205,10 +205,37 @@ public final class PocketPlan {
         else add(r.lateral() + l0, y0, t0, r.lateral() + l1, y1, t1, mat);
     }
 
+    private static int corridorHeight(PocketLayout.Room a, PocketLayout.Room b, boolean sealed) {
+        if (sealed) return PocketLayout.SEAL_HEIGHT;
+        if (!PocketLayout.tall(a, b)) return PocketLayout.DOOR_HEIGHT;
+        return Math.max(a.kind() == PocketLayout.Kind.INVERTED ? a.height() : 0, b.kind() == PocketLayout.Kind.INVERTED ? b.height() : 0);
+    }
+
+    /** The whole shell of the corridor of a door, floor to ceiling and wall to wall, end planes (the rooms' walls) left out, as {x0, y0, z0, x1, y1, z1} in local x and z. */
+    public int[] corridorBox(PocketLayout.Door d) {
+        PocketLayout.Room a = layout.room(d.a()), b = layout.room(d.b());
+        Run r = run(a, b);
+        int half = (d.sealed() ? PocketLayout.SEAL_WIDTH : PocketLayout.DOOR_WIDTH) / 2, hc = corridorHeight(a, b, d.sealed());
+        if (r.alongX()) return new int[]{r.first(), Y0 - 1, r.lateral() - half - 1, r.last(), Y0 + hc, r.lateral() + half + 1};
+        return new int[]{r.lateral() - half - 1, Y0 - 1, r.first(), r.lateral() + half + 1, Y0 + hc, r.last()};
+    }
+
+    /** The opening a door cuts in the wall of one of its two rooms, as {x0, y0, z0, x1, y1, z1} in local x and z (what a collapse walls up again on the side that stands). */
+    public int[] doorway(PocketLayout.Door d, int roomId) {
+        PocketLayout.Room a = layout.room(d.a()), b = layout.room(d.b());
+        Run r = run(a, b);
+        PocketLayout.Room side = layout.room(roomId);
+        boolean low = side == r.low();
+        int plane = low ? r.first() - 1 : r.last() + 1, half = (d.sealed() ? PocketLayout.SEAL_WIDTH : PocketLayout.DOOR_WIDTH) / 2, dh = d.sealed() ? PocketLayout.SEAL_HEIGHT : PocketLayout.DOOR_HEIGHT;
+        int y0 = side.kind() == PocketLayout.Kind.INVERTED && !d.sealed() ? Y0 + side.height() - dh : Y0;
+        if (r.alongX()) return new int[]{plane, y0, r.lateral() - half, plane, y0 + dh - 1, r.lateral() + half};
+        return new int[]{r.lateral() - half, y0, plane, r.lateral() + half, y0 + dh - 1, plane};
+    }
+
     private void corridor(PocketLayout.Room a, PocketLayout.Room b, boolean sealed) {
         Run r = run(a, b);
         int wd = sealed ? PocketLayout.SEAL_WIDTH : PocketLayout.DOOR_WIDTH, half = wd / 2;
-        int hc = sealed ? PocketLayout.SEAL_HEIGHT : PocketLayout.tall(a, b) ? Math.max(a.kind() == PocketLayout.Kind.INVERTED ? a.height() : 0, b.kind() == PocketLayout.Kind.INVERTED ? b.height() : 0) : PocketLayout.DOOR_HEIGHT;
+        int hc = corridorHeight(a, b, sealed);
         int f = r.first(), l = r.last();
         box(r, f, l, -half - 1, half + 1, Y0 - 1, Y0 - 1, Mat.FLOOR);
         box(r, f, l, -half - 1, half + 1, Y0 + hc, Y0 + hc, Mat.CEIL);
@@ -303,14 +330,15 @@ public final class PocketPlan {
                     lights(r, g, 3);
                 }
                 case INVERTED -> {
-                    // the floor of the room is the ceiling for those who walk on its ceiling: a river laid in it under glass, a garden of accent blocks, lights both sides
-                    add(cx - h + 1, Y0 - 1, cz - 1, cx + h - 1, Y0 - 1, cz + 1, Mat.GLASS);
-                    add(cx - h + 1, Y0 - 2, cz - 1, cx + h - 1, Y0 - 2, cz + 1, Mat.LIQUID);
+                    // the floor of the room is the ceiling for those who walk on its ceiling: a river laid in it under glass, a garden of accent blocks, lights both sides.
+                    // The trough's walls are placed BEFORE its water, so a source never meets air while it is being laid.
                     add(cx - h + 1, Y0 - 3, cz - 1, cx + h - 1, Y0 - 3, cz + 1, Mat.WALL);
                     add(cx - h + 1, Y0 - 2, cz - 2, cx + h - 1, Y0 - 2, cz - 2, Mat.WALL);
                     add(cx - h + 1, Y0 - 2, cz + 2, cx + h - 1, Y0 - 2, cz + 2, Mat.WALL);
                     add(cx - h, Y0 - 2, cz - 1, cx - h, Y0 - 2, cz + 1, Mat.WALL);
                     add(cx + h, Y0 - 2, cz - 1, cx + h, Y0 - 2, cz + 1, Mat.WALL);
+                    add(cx - h + 1, Y0 - 1, cz - 1, cx + h - 1, Y0 - 1, cz + 1, Mat.GLASS);
+                    add(cx - h + 1, Y0 - 2, cz - 1, cx + h - 1, Y0 - 2, cz + 1, Mat.LIQUID);
                     for (int i = -h + 2; i <= h - 2; i += 4) {
                         add(cx + i, Y0 - 1, cz + 3, cx + i, Y0 - 1, cz + 3, Mat.LIGHT);
                         add(cx + i, Y0 - 1, cz - 3, cx + i, Y0 - 1, cz - 3, Mat.LIGHT);

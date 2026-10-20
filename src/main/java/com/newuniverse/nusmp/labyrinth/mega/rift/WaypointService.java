@@ -166,7 +166,7 @@ public final class WaypointService {
         return true;
     }
 
-    static void say(ServerPlayer p, String key, String english, ChatFormatting colour, Object... args) {
+    public static void say(ServerPlayer p, String key, String english, ChatFormatting colour, Object... args) {
         if (p.connection == null) return;
         p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift." + key, english, args).withStyle(colour), true);
     }

@@ -29,6 +29,9 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
     private Polarity polarity = Polarity.HOLY;
     private boolean stable = true;
     private int nextExpand;
+    /** 1.99.0: a mega-rare rift leads to an exclusive pocket dungeon: its dungeon id ("" = an ordinary rift), the colour of its tear and of its skybox core (0xRRGGBB), synced to the client for the renderer. */
+    private String pocketId = "";
+    private int accent, sky;
     /** 1.94.0 (not saved): ticks this shortcut has waited for its floor to be built, and how many times its tick has failed. */
     private int waited, failures;
     private String lastError = "";
@@ -56,6 +59,22 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
 
     public int slot() { return slot; }
 
+    /** 1.99.0: the dungeon id of the exclusive pocket this rift leads to, or "" for an ordinary rift. */
+    public String pocketId() { return pocketId; }
+
+    public boolean isExclusive() { return !pocketId.isEmpty(); }
+
+    /** The colour of the tear (a mega-rare rift: its pocket's) and of the sky its core shows, 0xRRGGBB. */
+    public int accent() { return accent; }
+
+    public int sky() { return sky; }
+
+    /** 1.99.0: the rarity of this rift: a floor shortcut (and the return and exit tears) is COMMON, a pocket of the old kinds RARE, a tear to an exclusive tomb MEGA_RARE. */
+    public com.newuniverse.nusmp.labyrinth.mega.rift.pocket.RiftTier tier() {
+        if (type != RiftType.POCKET) return com.newuniverse.nusmp.labyrinth.mega.rift.pocket.RiftTier.COMMON;
+        return isExclusive() ? com.newuniverse.nusmp.labyrinth.mega.rift.pocket.RiftTier.MEGA_RARE : com.newuniverse.nusmp.labyrinth.mega.rift.pocket.RiftTier.RARE;
+    }
+
     /** Sets up a freshly placed rift (server). */
     public void init(RiftType type, long seed, int lifeTicks) {
         this.type = type;
@@ -63,6 +82,18 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         this.left = lifeTicks;
         this.age = 0;
         this.stable = type != RiftType.SHORTCUT;
+        this.pocketId = "";
+        this.accent = 0;
+        this.sky = 0;
+        sync();
+    }
+
+    /** 1.99.0: makes this pocket rift a MEGA-RARE one: it leads to the exclusive tomb {@code id}, is drawn in {@code accent} with {@code sky} in its core, and lives {@code lifeTicks} (server). */
+    public void aimExclusive(String id, int accent, int sky, int lifeTicks) {
+        this.pocketId = id == null ? "" : id;
+        this.accent = accent & 0xFFFFFF;
+        this.sky = sky & 0xFFFFFF;
+        this.left = Math.max(1, lifeTicks);
         sync();
     }
 
@@ -82,6 +113,22 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
 
     public void close() { left = Math.min(left, 1); }
 
+    /** 1.99.0: lets the rift live at least this many more ticks (the exit of an exclusive tomb outlives the ordinary pocket's, which is shorter). */
+    public void extendLife(int ticks) {
+        if (ticks > left) {
+            left = ticks;
+            sync();
+        }
+    }
+
+    /** 1.99.0: the rift lives at most this many more ticks (a tear that has opened a tomb stays a little while for the rest of the party, then closes: one tear, one tomb). */
+    public void limitLife(int ticks) {
+        if (ticks < left) {
+            left = Math.max(1, ticks);
+            sync();
+        }
+    }
+
     /** 1.94.0: a shortcut that waited long enough for a floor that is not built settles for a nearer floor that is (server). */
     public void retarget(int chain) {
         this.targetChain = chain;
@@ -94,7 +141,7 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
 
     void waited(int ticks) { this.waited = ticks; }
 
-    int failures() { return failures; }
+    public int failures() { return failures; }
 
     /** Counts one more failure of this rift's tick or of a step into it, remembers what it was (the self-test reports it), and returns how many there have been. */
     int failed(Throwable ex) {
@@ -102,7 +149,7 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         return ++failures;
     }
 
-    String lastError() { return lastError; }
+    public String lastError() { return lastError; }
 
     private void sync() {
         setChanged();
@@ -149,6 +196,10 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         if (open <= 0.05f) return;
         var rg = level.random;
         boolean dark = type == RiftType.POCKET;
+        if (isExclusive() && age % 6 == 0) {                                                // 1.99.0: a mega-rare tear spits sparks of its own colour
+            level.addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(((accent >> 16) & 255) / 255f, ((accent >> 8) & 255) / 255f, (accent & 255) / 255f), 1.4f),
+                    worldPosition.getX() + 0.5 + (rg.nextDouble() - 0.5) * 2.4 * open, worldPosition.getY() + 0.1 + rg.nextDouble() * 3.0 * open, worldPosition.getZ() + 0.5 + (rg.nextDouble() - 0.5) * 2.4 * open, 0, 0.03, 0);
+        }
         double x = worldPosition.getX() + 0.5 + (rg.nextDouble() - 0.5) * 1.6 * open, y = worldPosition.getY() + 0.2 + rg.nextDouble() * 2.4 * open, z = worldPosition.getZ() + 0.5 + (rg.nextDouble() - 0.5) * 1.6 * open;
         level.addParticle(dark ? RukhParticles.dark() : RukhParticles.light(), x, y, z, (rg.nextDouble() - 0.5) * 0.02, 0.01, (rg.nextDouble() - 0.5) * 0.02);
     }
@@ -167,6 +218,11 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         t.putInt("Slot", slot);
         t.putString("Road", polarity.id());
         t.putBoolean("Stable", stable);
+        if (!pocketId.isEmpty()) {                                                          // 1.99.0: only a mega-rare rift writes these, so an old rift's tag is as it was
+            t.putString("PocketId", pocketId);
+            t.putInt("Accent", accent);
+            t.putInt("Sky", sky);
+        }
     }
 
     @Override
@@ -182,6 +238,9 @@ public final class DimensionalRiftBlockEntity extends BlockEntity {
         slot = t.contains("Slot") ? t.getInt("Slot") : -1;
         polarity = "abyssal".equals(t.getString("Road")) ? Polarity.ABYSSAL : Polarity.HOLY;
         stable = !t.contains("Stable") || t.getBoolean("Stable");
+        pocketId = t.contains("PocketId") ? t.getString("PocketId") : "";
+        accent = t.getInt("Accent");
+        sky = t.getInt("Sky");
     }
 
     @Override

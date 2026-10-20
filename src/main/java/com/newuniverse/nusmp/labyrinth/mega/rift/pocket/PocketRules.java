@@ -64,6 +64,9 @@ public final class PocketRules {
         return Math.min(attackDamage, sealHp * 0.25);
     }
 
+    /** What holding the attack button on the seal adds each tick: a hundredth of the attack damage (a quarter of a second of holding is worth about a fortieth of one charged swing). */
+    public static double sealHold(double attackDamage) { return Math.max(0.0, attackDamage) * 0.01; }
+
     /** The crack stage (0 to 9) the seal shows at {@code left} points of strength out of {@code total}. */
     public static int crackStage(int left, int total) {
         if (total <= 0 || left >= total) return -1;
@@ -154,8 +157,32 @@ public final class PocketRules {
         return -1;
     }
 
-    /** The stat multiplier a monster gets on the deepest floor the pocket may stand for: the rift's floor, but never below the tomb's own minimum. */
+    /** The floor a tomb's monsters are made for: the rift's floor, but never below the tomb's own minimum. */
     public static int effectiveFloor(int riftFloor, int floorMin) { return Math.max(Math.max(1, Math.abs(riftFloor)), Math.max(1, floorMin)); }
+
+    /** Floors per tier of the monster tables (the Mob Foundry's), and the number of tiers. */
+    public static final int FLOORS_PER_TIER = 200, TIERS = 5;
+
+    /** The tier (1 to 5) of a floor, the same rule as the Foundry's. */
+    public static int tierOf(int floor) { return Math.min(TIERS, (Math.max(1, Math.abs(floor)) - 1) / FLOORS_PER_TIER + 1); }
+
+    /**
+     * How much a tomb's monster is stronger than its base would be: the tomb's monsters stand one tier above the floor (capped at the top tier), so the factor is the table's value at that tier over
+     * its value at the base's own tier, clamped to {@code 0.5 .. 8} so a datapack cannot ask for a monster that is a speck or a wall.
+     */
+    public static double tierFactor(double[] table, int baseTier, int floor) {
+        int target = Math.min(table.length, tierOf(floor) + 1), base = Math.max(1, Math.min(table.length, baseTier));
+        return Math.max(0.5, Math.min(8.0, table[target - 1] / table[base - 1]));
+    }
+
+    /** How many tiers of threat above its floor a tomb's mega-boss stands: it is a Decennial boss with a larger body and a harder hand. */
+    public static final int BOSS_THREAT_BONUS = 8;
+
+    /** The threat the mega-boss is scaled for (1 to 1000). */
+    public static int bossThreat(int effectiveFloor) { return Math.min(1000, Math.max(1, effectiveFloor) + BOSS_THREAT_BONUS); }
+
+    /** The most mega-bosses' court (adds) that may stand at once, however a profile asks. */
+    public static final int ADDS_CAP = 8;
 
     // ---------------------------------------------------------------- the hard gate of the relics
     /** The stage a loot table of a pocket is for: the boss's death, the treasury's pedestals and chests, or anywhere inside the tomb. */

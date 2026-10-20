@@ -36,12 +36,16 @@ public final class RiftRegistry {
     public static void init(IEventBus modBus) {
         BLOCKS.register(modBus);
         BLOCK_ENTITIES.register(modBus);
+        com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketLoot.init(modBus);                  // 1.99.0: the loot condition and entry of the exclusive tombs
         RiftSelfTests.register();
+        com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketSelfTests.register();
     }
 
     public static void register(IEventBus gameBus) {
         RiftService.register(gameBus);
         PocketEvents.register(gameBus);
+        com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusiveEvents.register(gameBus);        // 1.99.0: the exclusive tombs' events
+        gameBus.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketDefs()));
     }
 
     /** The {@code rift} admin node ({@code open | list | close | pocket | waypoint | status}); attached under {@code /multiverse mega}. */

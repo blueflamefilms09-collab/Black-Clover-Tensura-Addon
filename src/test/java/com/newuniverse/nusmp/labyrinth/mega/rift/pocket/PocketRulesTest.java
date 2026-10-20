@@ -161,4 +161,30 @@ class PocketRulesTest {
         Random r = new Random(1);
         assertEquals(-1, PocketRules.pickMob(List.of(), false, r));
     }
+
+    @Test
+    void theMonstersStandOneTierAboveTheFloorAndTheMegaBossAboveThem() {
+        double[] hp = {24.0, 40.0, 66.0, 110.0, 180.0};
+        assertEquals(40.0 / 24.0, PocketRules.tierFactor(hp, 1, 1), 1e-9, "a tier-1 body on floor 1 is made a tier-2 monster");
+        assertEquals(1.0, PocketRules.tierFactor(hp, 2, 1), 1e-9, "a tier-2 body on floor 1 already is one");
+        assertEquals(0.5, PocketRules.tierFactor(hp, 5, 1), 1e-9, "never below half");
+        assertEquals(8.0, PocketRules.tierFactor(new double[]{1.0, 100.0}, 1, 1), 1e-9, "never above eight times");
+        assertEquals(180.0 / 110.0, PocketRules.tierFactor(hp, 4, 900), 1e-9, "the top tier is the cap");
+        assertEquals(1, PocketRules.tierOf(0));
+        assertEquals(1, PocketRules.tierOf(200));
+        assertEquals(2, PocketRules.tierOf(201));
+        assertEquals(5, PocketRules.tierOf(-5000));
+        assertEquals(9, PocketRules.bossThreat(1));
+        assertEquals(1000, PocketRules.bossThreat(100000));
+        assertEquals(9, PocketRules.bossThreat(0), "a floor below 1 counts as 1");
+    }
+
+    @Test
+    void holdingTheButtonIsWorthLessThanASwingAndNoNumberIsNegative() {
+        assertEquals(0.0, PocketRules.sealHold(-3.0), 0.0);
+        assertEquals(0.2, PocketRules.sealHold(20.0), 1e-9);
+        double swingsPerSecond = 1.0 / 0.6, holdPerSecond = 20 * PocketRules.sealHold(20.0);
+        assertTrue(holdPerSecond < swingsPerSecond * 20.0, "a held button is slower than charged swings");
+        assertTrue(holdPerSecond > 0.0);
+    }
 }

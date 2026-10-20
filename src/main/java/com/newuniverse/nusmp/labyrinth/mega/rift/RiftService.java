@@ -113,8 +113,14 @@ public final class RiftService {
      * One roll for a new rift near {@code p}: with {@code forced == null} the natural roll (the chances of the config), else an admin's (that kind, at once). Returns null when a rift opened, else the
      * short reason it did not (a {@link RiftRules.RollGate} name in lower case, {@code chance}, {@code boss_floor}, {@code dead_end}, {@code no_spot}, {@code blocked}, {@code kind}).
      */
-    public static String rollNow(ServerLevel mega, ServerPlayer p, RiftType forced) {
-        boolean force = forced != null;
+    public static String rollNow(ServerLevel mega, ServerPlayer p, RiftType forced) { return rollNow(mega, p, forced, null); }
+
+    /**
+     * 1.99.0 (the exclusive tombs): the same roll with a way to ask for a MEGA-RARE rift. {@code megaPocket} is null for the roll the game makes (a rift that is going to open may be mega-rare by the
+     * table of {@code pocket/RiftTiers}: depth, Luck and the player's pity), "" for an admin's mega-rare rift to a random tomb, or the id of a tomb. Everything else is as before.
+     */
+    public static String rollNow(ServerLevel mega, ServerPlayer p, RiftType forced, String megaPocket) {
+        boolean force = forced != null || megaPocket != null;
         RiftRules.RollGate gate = gateFor(mega, p, force);
         if (gate != RiftRules.RollGate.OK) return gate.name().toLowerCase(Locale.ROOT);
         MegaData md = MegaData.get(mega.getServer());
@@ -122,8 +128,8 @@ public final class RiftService {
         var rnd = mega.getRandom();
         boolean pocket, shortcut;
         if (force) {
-            pocket = forced == RiftType.POCKET;
-            shortcut = forced == RiftType.SHORTCUT;
+            pocket = megaPocket != null || forced == RiftType.POCKET;
+            shortcut = megaPocket == null && forced == RiftType.SHORTCUT;
             if (!pocket && !shortcut) return "kind";
         } else {
             pocket = RiftConfig.get(RiftConfig.POCKETS) && RiftRules.rolls(RiftConfig.get(RiftConfig.POCKET_CHANCE), rnd.nextDouble());
@@ -137,10 +143,19 @@ public final class RiftService {
         }
         BlockPos at = findSpotNear(mega, s, p.getX(), p.getY(), p.getZ());
         if (at == null) return "no_spot";
-        DimensionalRiftBlockEntity be = open(mega, at, pocket ? RiftType.POCKET : RiftType.SHORTCUT, rnd.nextLong());
+        com.newuniverse.nusmp.labyrinth.mega.rift.pocket.PocketDef tomb = megaPocket != null ? com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts.pickForced(megaPocket, rnd)
+                : force ? null : com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts.rollNatural(p, s.firstFloor(), rnd);                  // 1.99.0: a rift that is going to open may lead to an exclusive tomb
+        if (megaPocket != null && tomb == null) return "unknown_pocket";
+        DimensionalRiftBlockEntity be = open(mega, at, pocket || tomb != null ? RiftType.POCKET : RiftType.SHORTCUT, rnd.nextLong());
         if (be == null) return "blocked";
-        if (!pocket) aimShortcut(md, s, be);
-        announce(mega, at, be.type(), p);
+        if (tomb != null) {
+            com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts.aim(be, tomb);
+            com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts.announce(mega, at, tomb, p);
+        } else {
+            if (!pocket) aimShortcut(md, s, be);
+            announce(mega, at, be.type(), p);
+        }
+        if (!force) com.newuniverse.nusmp.labyrinth.mega.rift.pocket.MegaRifts.opened(p, tomb != null);                                            // the pity moves only when a rift really opened
         return null;
     }
 
@@ -410,7 +425,7 @@ public final class RiftService {
         be.close();                                                         // a tear is used up by being used
     }
 
-    static void title(ServerPlayer p, Component title, Component subtitle) {
+    public static void title(ServerPlayer p, Component title, Component subtitle) {
         if (p.connection == null || p instanceof net.neoforged.neoforge.common.util.FakePlayer) return;
         p.connection.send(new ClientboundSetTitlesAnimationPacket(6, 30, 10));
         p.connection.send(new ClientboundSetTitleTextPacket(title.copy().withStyle(ChatFormatting.WHITE)));

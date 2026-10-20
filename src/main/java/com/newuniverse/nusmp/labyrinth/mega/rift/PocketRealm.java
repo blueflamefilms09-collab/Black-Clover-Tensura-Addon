@@ -63,6 +63,18 @@ public final class PocketRealm extends SavedData {
         public List<BlockPos> bars = new ArrayList<>();
         public BlockPos exit = BlockPos.ZERO, bossSpawn = BlockPos.ZERO, entry = BlockPos.ZERO;
         long lastLeft;
+        /**
+         * 1.99.0 (the exclusive tombs, docs/labyrinth/rift_pockets.md): the dungeon id of an EXCLUSIVE pocket ("" = a pocket of the old kinds, which every field above still describes), the
+         * phase it is in (0 forming, 1 open, 2 collapsing, 3 clearing), the points of force the seal of its treasury has left, whether the seal is open and whether the primary relic was taken,
+         * the rooms whose monsters have been woken (a bit each), the game time somebody was last inside and the collapse began, and the floor of the rift it was opened by.
+         */
+        public String pocketId = "";
+        public int phase, sealHp, originFloor;
+        public boolean sealOpen, relicTaken;
+        public long activated, lastOccupied = -1, collapseStart = -1;
+
+        /** Is this one of the exclusive tombs? */
+        public boolean exclusive() { return !pocketId.isEmpty(); }
 
         CompoundTag save() {
             CompoundTag t = new CompoundTag();
@@ -81,6 +93,17 @@ public final class PocketRealm extends SavedData {
             t.putLong("Entry", entry.asLong());
             t.putLongArray("Plates", java.util.Arrays.stream(plates).mapToLong(BlockPos::asLong).toArray());
             t.putLongArray("Bars", bars.stream().mapToLong(BlockPos::asLong).toArray());
+            if (exclusive()) {                                                                  // 1.99.0: only the exclusive tombs write these keys, so an old save and an old build read each other's
+                t.putString("Pocket", pocketId);
+                t.putInt("Phase", phase);
+                t.putInt("SealHp", sealHp);
+                t.putInt("OriginFloor", originFloor);
+                t.putBoolean("SealOpen", sealOpen);
+                t.putBoolean("RelicTaken", relicTaken);
+                t.putLong("Activated", activated);
+                t.putLong("LastOccupied", lastOccupied);
+                t.putLong("CollapseStart", collapseStart);
+            }
             return t;
         }
 
@@ -102,6 +125,17 @@ public final class PocketRealm extends SavedData {
             p.plates = java.util.Arrays.stream(t.getLongArray("Plates")).mapToObj(BlockPos::of).toArray(BlockPos[]::new);
             p.bars = new ArrayList<>();
             for (long l : t.getLongArray("Bars")) p.bars.add(BlockPos.of(l));
+            if (t.contains("Pocket")) {
+                p.pocketId = t.getString("Pocket");
+                p.phase = t.getInt("Phase");
+                p.sealHp = t.getInt("SealHp");
+                p.originFloor = t.getInt("OriginFloor");
+                p.sealOpen = t.getBoolean("SealOpen");
+                p.relicTaken = t.getBoolean("RelicTaken");
+                p.activated = t.getLong("Activated");
+                p.lastOccupied = t.contains("LastOccupied") ? t.getLong("LastOccupied") : -1;
+                p.collapseStart = t.contains("CollapseStart") ? t.getLong("CollapseStart") : -1;
+            }
             return p;
         }
 
@@ -149,6 +183,10 @@ public final class PocketRealm extends SavedData {
             WaypointService.say(p, "pocket.nodim", "The hidden realm has no ground to stand on: the dungeon's dimension is not loaded.", ChatFormatting.GRAY);
             return;
         }
+        if (rift.isExclusive()) {                                                                  // 1.99.0: a mega-rare rift leads to an exclusive tomb (docs/labyrinth/rift_pockets.md)
+            com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets.enter(from, p, rift);
+            return;
+        }
         Sector here = RiftService.inMega(from) ? MegaData.get(server).sectorAt(rift.getBlockPos()) : null;
         if (here != null && !MegaDungeon.mayEnter(p, here.polarity)) return;                    // the lock says why
         PocketRealm realm = get(server);
@@ -191,7 +229,7 @@ public final class PocketRealm extends SavedData {
      * Moves a player. A real player goes through {@code teleportTo} (which changes dimension); a stand-in of a self-test (a fake player has no connection, so cannot change dimension and is not moved by the
      * packet) is put down with {@code moveTo} when it is already in that level. False when it could not be moved.
      */
-    static boolean move(ServerPlayer p, ServerLevel to, double x, double y, double z, float yaw, float pitch) {
+    public static boolean move(ServerPlayer p, ServerLevel to, double x, double y, double z, float yaw, float pitch) {
         if (p instanceof net.neoforged.neoforge.common.util.FakePlayer || p.connection == null) {
             if (p.level() != to) return false;
             p.moveTo(x, y, z, yaw, pitch);
@@ -225,7 +263,7 @@ public final class PocketRealm extends SavedData {
     }
 
     /** Where a player is put down when they come out of a pocket, as {x, y, z}: where they stood going in, unless that is inside the tear they went through, then the nearest free spot on a ring round it. */
-    static double[] returnSpot(ServerLevel to, CompoundTag r) {
+    public static double[] returnSpot(ServerLevel to, CompoundTag r) {
         double x = r.getDouble("X"), y = r.getDouble("Y"), z = r.getDouble("Z");
         if (!r.contains("RX")) return new double[]{x, y, z};
         int rx = r.getInt("RX"), ry = r.getInt("RY"), rz = r.getInt("RZ");
@@ -249,7 +287,7 @@ public final class PocketRealm extends SavedData {
     public static void leaveForRescue(ServerLevel level, ServerPlayer p) { leave(level, p); }
 
     /** The exit: back to where the player came from; if that is gone, their waypoint; if that is gone too, Floor 0, and at the very last the labyrinth's own way out. */
-    static void leave(ServerLevel level, ServerPlayer p) {
+    public static void leave(ServerLevel level, ServerPlayer p) {
         MinecraftServer server = p.getServer();
         CompoundTag r = p.getPersistentData().getCompound(RETURN);
         p.getPersistentData().remove(RETURN);
@@ -278,6 +316,7 @@ public final class PocketRealm extends SavedData {
      * quest event fires. False when it was open already. Every way of clearing goes through here, so they all do the same.
      */
     public boolean clear(ServerLevel level, Pocket pocket, String how) {
+        if (pocket.exclusive()) return false;                                                   // 1.99.0: an exclusive tomb's vault is its sealed treasury (ExclusivePockets)
         if (pocket.bossDead || pocket.solved) return false;
         boolean boss = pocket.variantKind() == RiftRules.Variant.BOSS;
         if (boss) pocket.bossDead = true;
@@ -305,6 +344,15 @@ public final class PocketRealm extends SavedData {
             int warn = RiftRules.warnSeconds(left, p.lastLeft == 0 ? left + 20 : p.lastLeft);
             p.lastLeft = left;
             List<ServerPlayer> in = playersIn(mega, p.slot);
+            if (p.exclusive()) {                                                                // 1.99.0: the exclusive tombs keep their own clock, rooms and collapse
+                try {
+                    if (com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets.tick(mega, this, p, in, now, warn)) gone.add(p);
+                } catch (RuntimeException ex) {
+                    LOG.warn("[nusmp] The exclusive pocket in slot {} failed its tick (further detail at debug): {}", p.slot, ex.toString());
+                    LOG.debug("exclusive pocket tick", ex);
+                }
+                continue;
+            }
             if (warn > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn)
                     .withStyle(warn <= 10 ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE), true);
             if (!in.isEmpty()) watchBoss(mega, p, now);
@@ -317,12 +365,13 @@ public final class PocketRealm extends SavedData {
 
     /** A boss pocket with people in it but no secret boss in its arena (it never spawned, or something removed it): the vault opens, the delvers are not locked out of what they came for. */
     private void watchBoss(ServerLevel mega, Pocket p, long now) {
+        if (p.exclusive()) return;
         if (p.variantKind() != RiftRules.Variant.BOSS || p.bossDead || now - p.createdAt < 100) return;
         boolean alive = !mega.getEntitiesOfClass(LabyrinthGuardianEntity.class, PocketBuilder.bounds(p.slot), g -> g.isAlive() && g.getTags().contains(PocketBuilder.BOSS_TAG)).isEmpty();
         if (!alive) clear(mega, p, "boss_lost");
     }
 
-    static List<ServerPlayer> playersIn(ServerLevel mega, int slot) {
+    public static List<ServerPlayer> playersIn(ServerLevel mega, int slot) {
         List<ServerPlayer> out = new ArrayList<>();
         for (ServerPlayer m : mega.players()) if (RiftRules.slotAt(m.getX(), m.getZ()) == slot) out.add(m);
         return out;
@@ -330,6 +379,10 @@ public final class PocketRealm extends SavedData {
 
     /** Throws everybody out, clears the cell and frees the slot. */
     void collapse(ServerLevel mega, Pocket p) {
+        if (p.exclusive()) {                                                                    // 1.99.0: throws everybody out, then clears the tomb over the next ticks and frees the slot when it is clear
+            com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets.collapse(mega, this, p);
+            return;
+        }
         for (ServerPlayer m : playersIn(mega, p.slot)) {
             m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.gone", "The realm folds shut behind you.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
             leave(mega, m);
@@ -339,6 +392,13 @@ public final class PocketRealm extends SavedData {
         PocketBuilder.clear(mega, p.slot);
         pockets.remove(p.slot);
         setDirty();
+    }
+
+    /** 1.99.0: the pockets of the exclusive kind that are alive (the cap on concurrent tombs counts them). */
+    public int exclusiveCount() {
+        int n = 0;
+        for (Pocket p : pockets.values()) if (p.exclusive()) n++;
+        return n;
     }
 
     /** Collapses a pocket by slot (admin). */
