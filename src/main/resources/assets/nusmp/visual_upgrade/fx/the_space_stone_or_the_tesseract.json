@@ -1,0 +1,135 @@
+{
+ "id": "the_space_stone_or_the_tesseract",
+ "ambient_sound": "nusmp:relic.ambient.the_space_stone_or_the_tesseract",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "tesseract core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "folded cube",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "inner_cube",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gyroscope rune ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gyro ring a",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "gyro_a",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gyro ring b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "gyro_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "near shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "orbit_shards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "orbit_shards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "space ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "folded motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 5,
+   "radius": 0.45,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "blink sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "electric_spark",
+   "count": 1,
+   "every": 9,
+   "radius": 0.5,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

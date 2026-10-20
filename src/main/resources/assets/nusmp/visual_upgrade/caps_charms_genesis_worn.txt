@@ -1,0 +1,4 @@
+# per-grade caps of the visual upgrade models of the slice charms_genesis_worn (tests: VuCharmsBudgetTest). Documented in docs/visual_upgrade/charms_genesis_worn.md.
+# grade mesh_vertices drawn_vertices lod_percent
+GOD 2500 2500 15
+GENESIS 6000 6000 15
