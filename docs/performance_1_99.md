@@ -1181,7 +1181,8 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 
 ## 10. What could not be verified
 
-* **Nothing was run**: no game, no profiler, no benchmark. Every number in section 5 is a static model; the JIT may already remove part of the allocations, and the CPU figures are upper bounds.
+* **Tests**: 941 test classes were compiled and run one by one against a minimal JUnit shim: 873 passed, 0 failed, 68 could not be compiled without the real Minecraft / JUnit jars (they were not run, by me or before). The eight new classes (`perf/*Test`, `GeoDrawCacheTest`) are among the passing ones. `gradlew build` was not run.
+* **Nothing else was run**: no game, no profiler, no benchmark. Every number in section 5 is a static model; the JIT may already remove part of the allocations, and the CPU figures are upper bounds.
 * The type check is against API stubs (the five `RenderSystem.setShader` / `setShaderTexture` lines that the stub does not model are old lines, unchanged); `perf.core` and the commands have not run in a real server.
 * Command merging relies on Brigadier merging two registrations of the literal `multiverse` (documented behaviour of `CommandNode.addChild`); the `/nusmp perf` client command relies on `RegisterClientCommandsEvent`.
 * The config files rely on `ModConfigSpec` / `ModConfigEvent` of NeoForge 21.1 (stubs only); a safety refresh every 100 ticks copies the values even if no reload event arrives.
