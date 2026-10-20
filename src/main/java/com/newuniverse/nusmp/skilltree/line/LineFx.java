@@ -21,7 +21,7 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
 public final class LineFx {
     private LineFx() {}
 
-    /** The themes drawn with the Dark Rukh; every other theme gets the Light Rukh. */
+    /** The themes drawn in the dark flavour of the skill-tree particle theme; every other theme gets the light one. */
     private static final Set<String> DARK_THEMES = Set.of("void", "blood", "ruin", "iron", "storm");
 
     /** The opaque colour of the line, as the 0xAARRGGBB the effect packet takes. */
@@ -36,9 +36,9 @@ public final class LineFx {
         AbilityKit.fx(level, shape, from, to, argb(route), ticks, size);
     }
 
-    /** A few Rukh around a point, in the line's alignment. */
+    /** A few particles around a point, in the line's tone. */
     public static void rukh(ServerLevel level, SkillRoute route, Vec3 at, int count) { Fx.burst(level, FxThemes.SKILL_TREE, at, alignment(route), count); }
 
-    /** A few Rukh gathered on a creature, in the line's alignment. */
+    /** A few particles gathered on a creature, in the line's tone. */
     public static void rukh(ServerLevel level, SkillRoute route, Entity at, int count) { Fx.burst(level, FxThemes.SKILL_TREE, at, alignment(route), count); }
 }

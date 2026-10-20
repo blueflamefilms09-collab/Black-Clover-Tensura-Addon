@@ -38,7 +38,7 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
  *       through" effect). Within 3 blocks of a gate a faint full-screen warp ripple (config {@code spatial.warpStrength}) is drawn first.</li>
  *   <li>If the shader is missing, or a draw throws once, the hook stops drawing (logged once) and the layer uses its plain translucent
  *       buffer path; sounds and particles carry on.</li>
- *   <li>Rukh (dark near the core, light near the rim) is emitted at the event horizon through the budgeted {@link RukhClientFx}; no vanilla
+ *   <li>The Spatial magic's particles (dark flavour near the core, light near the rim) are emitted at the event horizon through the budgeted {@code Fx} facade; no vanilla
  *       particle types are used.</li>
  * </ul>
  * The copy target is created lazily and destroyed when the last gate closes.

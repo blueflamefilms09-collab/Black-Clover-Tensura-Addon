@@ -307,7 +307,7 @@ final class GuardianTraits {
 
     // ---------------------------------------------------------------- particles
     /** A flat ring of {@code points} particles of one kind. */
-    private static void ring(ServerLevel sl, net.minecraft.core.particles.SimpleParticleType type, double cx, double cy, double cz, double radius, int points) {
+    private static void ring(ServerLevel sl, net.minecraft.core.particles.ParticleOptions type, double cx, double cy, double cz, double radius, int points) {
         for (int i = 0; i < points; i++) {
             double a = i * Math.PI * 2.0 / points;
             sl.sendParticles(type, cx + Math.cos(a) * radius, cy, cz + Math.sin(a) * radius, 1, 0.0, 0.05, 0.0, 0.0);
