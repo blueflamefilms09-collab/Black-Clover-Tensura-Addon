@@ -242,6 +242,22 @@ def build_gauntlet(vm, info):
         gm = vm.P("stone_" + name, "crystal", group=g_stones, base=rgb_, slot=GLOW, lod=big)
         geo.merge(gm, geo.prim_octa(1.15 if big else 0.82, 1.35 if big else 0.95), geo.rot_matrix("z", 90), (px - 0.25, py, pz))
         gem_parts.append((gm, rgb_))
+    rivets = vm.P("vambrace_rivets", "gold", group=g_g, base=(255, 224, 130), slot=TRIM, lod=False)
+    for yy in (-3.1, -6.5, -9.0):
+        for i in range(8):
+            a_ = 2 * math.pi * i / 8 + 0.2
+            rr = 3.25 if yy > -4 else 3.2 if yy > -7 else 3.1
+            geo.merge(rivets, geo.prim_octa(0.28, 0.33), geo.align_y((math.cos(a_), 0, math.sin(a_))), (AX + rr * math.cos(a_), yy, rr * math.sin(a_)))
+    wires = vm.P("stone_wires", "gold", group=g_g, base=(250, 206, 100), slot=TRIM, lod=False)
+    for (p0, p1) in ((spots[0], spots[1]), (spots[0], spots[2]), (spots[0], spots[3]), (spots[0], spots[4]), (spots[1], spots[2]), (spots[3], spots[4]), (spots[5], spots[1])):
+        geo.tube_path(wires, [(p0[0] - 0.4, p0[1], p0[2]), ((p0[0] + p1[0]) / 2 - 0.9, (p0[1] + p1[1]) / 2, (p0[2] + p1[2]) / 2), (p1[0] - 0.4, p1[1], p1[2])], 0.14, sides=3, caps=(False, False))
+    spikes = vm.P("knuckle_spikes", "gold", group=g_fingers, base=(236, 190, 84), slot=TRIM, lod=False)
+    for zz in (-2.0, -0.67, 0.67, 2.0):
+        geo.merge(spikes, geo.prim_spike(0.45, 1.5, sides=4), geo.rot_matrix("z", 100), (AX - 1.5, -15.3, zz))
+    fins = vm.P("cuff_fins", "gold", group=g_g, base=(226, 180, 80), slot=TRIM, lod=False)
+    for i in range(5):
+        a_ = math.radians(-60 + 30 * i) + math.pi
+        geo.merge(fins, geo.prim_blade(2.6, 1.0, 0.3, tip=0.5), geo.align_y((math.cos(a_) * 0.7, -0.5, math.sin(a_) * 0.7)), (AX + 3.6 * math.cos(a_), -10.2, 3.6 * math.sin(a_)))
     vortex = vm.star("palm_vortex", g_palm)
     geo.merge(vortex, geo.prim_octa(1.8, 2.8), None, (AX + 1.9, -13.0, 0.0))
     orbs = vm.P("stone_motes", "crystal", group=g_orbit, base=(255, 240, 200), slot=GLOW, lod=False)

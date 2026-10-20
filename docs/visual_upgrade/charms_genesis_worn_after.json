@@ -11,15 +11,19 @@
  "summary": {
   "GOD": {
    "items": 18,
-   "V_after_mean": 12.85,
+   "V_after_mean": 13.01,
    "V_after_min": 7.15,
+   "V_without_texture_mean": 3.83,
+   "V_without_texture_min": 2.3,
    "meeting_target": 18,
    "target": 5.0
   },
   "GENESIS": {
    "items": 9,
-   "V_after_mean": 36.4,
-   "V_after_min": 30.01,
+   "V_after_mean": 34.79,
+   "V_after_min": 28.7,
+   "V_without_texture_mean": 4.65,
+   "V_without_texture_min": 3.17,
    "meeting_target": 9,
    "target": 20.0
   }
@@ -85,6 +89,7 @@
     "animation": 11.0
    },
    "V_before": 1.0,
+   "V_without_texture": 3.77,
    "V_after": 16.03,
    "target": 5.0,
    "meets_target": true,
@@ -157,6 +162,7 @@
     "animation": 16.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.54,
    "V_after": 15.08,
    "target": 5.0,
    "meets_target": true,
@@ -229,6 +235,7 @@
     "animation": 18.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.67,
    "V_after": 20.05,
    "target": 5.0,
    "meets_target": true,
@@ -301,6 +308,7 @@
     "animation": 22.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.87,
    "V_after": 15.41,
    "target": 5.0,
    "meets_target": true,
@@ -373,6 +381,7 @@
     "animation": 13.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.27,
    "V_after": 16.45,
    "target": 5.0,
    "meets_target": true,
@@ -445,6 +454,7 @@
     "animation": 10.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.3,
    "V_after": 18.92,
    "target": 5.0,
    "meets_target": true,
@@ -464,10 +474,10 @@
    "kind": "charm",
    "hand": {
     "pieces": 1,
-    "quads": 440,
-    "vertices": 1760,
+    "quads": 536,
+    "vertices": 2144,
     "passes": 4,
-    "painted_texels": 197389,
+    "painted_texels": 200609,
     "glow_texels": 16480,
     "emissive_quads": 24,
     "shell_quads": 0,
@@ -487,10 +497,10 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 440,
-    "vertices": 1760,
+    "quads": 536,
+    "vertices": 2144,
     "passes": 4,
-    "painted_texels": 197389,
+    "painted_texels": 200609,
     "glow_texels": 16480,
     "emissive_quads": 24,
     "shell_quads": 0,
@@ -510,23 +520,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 2.3,
-    "texture": 48.19,
+    "mesh": 2.81,
+    "texture": 48.98,
     "passes": 2.0,
     "ambient": 3.57,
     "animation": 16.0
    },
    "V_before": 1.0,
-   "V_after": 13.06,
+   "V_without_texture": 4.5,
+   "V_after": 13.39,
    "target": 5.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 1.64,
-    "worn": 3.86
+    "hand": 2.0,
+    "worn": 4.7
    },
    "texel_ratio": {
-    "hand": 32.1,
-    "worn": 96.4
+    "hand": 32.7,
+    "worn": 98.0
    }
   },
   {
@@ -589,6 +600,7 @@
     "animation": 16.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.35,
    "V_after": 16.54,
    "target": 5.0,
    "meets_target": true,
@@ -661,6 +673,7 @@
     "animation": 10.0
    },
    "V_before": 1.0,
+   "V_without_texture": 3.9,
    "V_after": 9.08,
    "target": 5.0,
    "meets_target": true,
@@ -733,6 +746,7 @@
     "animation": 10.0
    },
    "V_before": 1.0,
+   "V_without_texture": 3.39,
    "V_after": 9.02,
    "target": 5.0,
    "meets_target": true,
@@ -805,6 +819,7 @@
     "animation": 4.5
    },
    "V_before": 1.0,
+   "V_without_texture": 2.88,
    "V_after": 8.11,
    "target": 5.0,
    "meets_target": true,
@@ -824,11 +839,11 @@
    "kind": "charm",
    "hand": {
     "pieces": 1,
-    "quads": 454,
-    "vertices": 1816,
+    "quads": 586,
+    "vertices": 2344,
     "passes": 4,
-    "painted_texels": 172921,
-    "glow_texels": 9382,
+    "painted_texels": 199137,
+    "glow_texels": 6354,
     "emissive_quads": 32,
     "shell_quads": 0,
     "star_quads": 42,
@@ -847,11 +862,11 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 454,
-    "vertices": 1816,
+    "quads": 586,
+    "vertices": 2344,
     "passes": 4,
-    "painted_texels": 172921,
-    "glow_texels": 9382,
+    "painted_texels": 199137,
+    "glow_texels": 6354,
     "emissive_quads": 32,
     "shell_quads": 0,
     "star_quads": 42,
@@ -870,23 +885,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 1.97,
-    "texture": 56.29,
+    "mesh": 2.55,
+    "texture": 64.82,
     "passes": 2.0,
     "ambient": 4.14,
     "animation": 10.0
    },
    "V_before": 1.0,
-   "V_after": 14.08,
+   "V_without_texture": 3.78,
+   "V_after": 15.98,
    "target": 5.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 1.97,
-    "worn": 1.97
+    "hand": 2.55,
+    "worn": 2.55
    },
    "texel_ratio": {
-    "hand": 56.3,
-    "worn": 56.3
+    "hand": 64.8,
+    "worn": 64.8
    }
   },
   {
@@ -949,6 +965,7 @@
     "animation": 2.0
    },
    "V_before": 1.0,
+   "V_without_texture": 2.37,
    "V_after": 7.15,
    "target": 5.0,
    "meets_target": true,
@@ -1021,6 +1038,7 @@
     "animation": 9.0
    },
    "V_before": 1.0,
+   "V_without_texture": 3.36,
    "V_after": 10.32,
    "target": 5.0,
    "meets_target": true,
@@ -1093,6 +1111,7 @@
     "animation": 3.75
    },
    "V_before": 1.0,
+   "V_without_texture": 3.37,
    "V_after": 12.46,
    "target": 5.0,
    "meets_target": true,
@@ -1165,6 +1184,7 @@
     "animation": 14.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.08,
    "V_after": 12.11,
    "target": 5.0,
    "meets_target": true,
@@ -1184,12 +1204,12 @@
    "kind": "charm",
    "hand": {
     "pieces": 1,
-    "quads": 412,
-    "vertices": 1648,
+    "quads": 476,
+    "vertices": 1904,
     "passes": 4,
-    "painted_texels": 205696,
-    "glow_texels": 71940,
-    "emissive_quads": 101,
+    "painted_texels": 210558,
+    "glow_texels": 65401,
+    "emissive_quads": 102,
     "shell_quads": 0,
     "star_quads": 24,
     "halo_quads": 14,
@@ -1207,12 +1227,12 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 412,
-    "vertices": 1648,
+    "quads": 476,
+    "vertices": 1904,
     "passes": 4,
-    "painted_texels": 205696,
-    "glow_texels": 71940,
-    "emissive_quads": 101,
+    "painted_texels": 210558,
+    "glow_texels": 65401,
+    "emissive_quads": 102,
     "shell_quads": 0,
     "star_quads": 24,
     "halo_quads": 14,
@@ -1230,23 +1250,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 1.58,
-    "texture": 28.7,
+    "mesh": 1.83,
+    "texture": 29.37,
     "passes": 1.33,
     "ambient": 4.14,
     "animation": 1.67
    },
    "V_before": 1.0,
-   "V_after": 7.49,
+   "V_without_texture": 2.3,
+   "V_after": 7.71,
    "target": 5.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 1.58,
-    "worn": 1.58
+    "hand": 1.83,
+    "worn": 1.83
    },
    "texel_ratio": {
-    "hand": 28.7,
-    "worn": 28.7
+    "hand": 29.4,
+    "worn": 29.4
    }
   },
   {
@@ -1256,10 +1277,10 @@
    "kind": "charm",
    "hand": {
     "pieces": 1,
-    "quads": 475,
-    "vertices": 1900,
+    "quads": 539,
+    "vertices": 2156,
     "passes": 3,
-    "painted_texels": 173753,
+    "painted_texels": 179781,
     "glow_texels": 22529,
     "emissive_quads": 69,
     "shell_quads": 0,
@@ -1279,10 +1300,10 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 475,
-    "vertices": 1900,
+    "quads": 539,
+    "vertices": 2156,
     "passes": 3,
-    "painted_texels": 173753,
+    "painted_texels": 179781,
     "glow_texels": 22529,
     "emissive_quads": 69,
     "shell_quads": 0,
@@ -1302,23 +1323,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 2.86,
-    "texture": 33.94,
+    "mesh": 3.25,
+    "texture": 35.11,
     "passes": 1.0,
     "ambient": 4.43,
     "animation": 12.0
    },
    "V_before": 1.0,
-   "V_after": 10.02,
+   "V_without_texture": 4.22,
+   "V_after": 10.39,
    "target": 5.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 2.86,
-    "worn": 2.86
+    "hand": 3.25,
+    "worn": 3.25
    },
    "texel_ratio": {
-    "hand": 33.9,
-    "worn": 33.9
+    "hand": 35.1,
+    "worn": 35.1
    }
   },
   {
@@ -1381,6 +1403,7 @@
     "animation": 15.0
    },
    "V_before": 1.0,
+   "V_without_texture": 6.07,
    "V_after": 30.19,
    "target": 20.0,
    "meets_target": true,
@@ -1453,6 +1476,7 @@
     "animation": 13.0
    },
    "V_before": 1.0,
+   "V_without_texture": 5.23,
    "V_after": 30.59,
    "target": 20.0,
    "meets_target": true,
@@ -1472,16 +1496,16 @@
    "kind": "charm",
    "hand": {
     "pieces": 1,
-    "quads": 762,
-    "vertices": 3048,
+    "quads": 1114,
+    "vertices": 4456,
     "passes": 4,
-    "painted_texels": 824708,
-    "glow_texels": 68776,
-    "emissive_quads": 68,
+    "painted_texels": 508589,
+    "glow_texels": 39071,
+    "emissive_quads": 56,
     "shell_quads": 0,
     "star_quads": 180,
     "halo_quads": 18,
-    "groups": 12,
+    "groups": 14,
     "group_kinds": 5,
     "own_layers": 14,
     "skin_pngs": [
@@ -1495,16 +1519,16 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 762,
-    "vertices": 3048,
+    "quads": 1114,
+    "vertices": 4456,
     "passes": 4,
-    "painted_texels": 824708,
-    "glow_texels": 68776,
-    "emissive_quads": 68,
+    "painted_texels": 508589,
+    "glow_texels": 39071,
+    "emissive_quads": 56,
     "shell_quads": 0,
     "star_quads": 180,
     "halo_quads": 18,
-    "groups": 12,
+    "groups": 14,
     "group_kinds": 5,
     "own_layers": 14,
     "skin_pngs": [
@@ -1518,23 +1542,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 3.85,
-    "texture": 201.34,
+    "mesh": 5.63,
+    "texture": 124.17,
     "passes": 2.0,
     "ambient": 4.5,
-    "animation": 6.0
+    "animation": 7.0
    },
    "V_before": 1.0,
-   "V_after": 43.42,
+   "V_without_texture": 4.84,
+   "V_after": 28.7,
    "target": 20.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 3.85,
-    "worn": 3.85
+    "hand": 5.63,
+    "worn": 5.63
    },
    "texel_ratio": {
-    "hand": 201.3,
-    "worn": 201.3
+    "hand": 124.2,
+    "worn": 124.2
    }
   },
   {
@@ -1597,6 +1622,7 @@
     "animation": 6.5
    },
    "V_before": 1.0,
+   "V_without_texture": 4.71,
    "V_after": 41.45,
    "target": 20.0,
    "meets_target": true,
@@ -1669,6 +1695,7 @@
     "animation": 2.75
    },
    "V_before": 1.0,
+   "V_without_texture": 3.75,
    "V_after": 39.75,
    "target": 20.0,
    "meets_target": true,
@@ -1688,12 +1715,12 @@
    "kind": "hands",
    "hand": {
     "pieces": 1,
-    "quads": 894,
-    "vertices": 3576,
+    "quads": 1250,
+    "vertices": 5000,
     "passes": 4,
-    "painted_texels": 904871,
-    "glow_texels": 88862,
-    "emissive_quads": 109,
+    "painted_texels": 883852,
+    "glow_texels": 70110,
+    "emissive_quads": 105,
     "shell_quads": 0,
     "star_quads": 8,
     "halo_quads": 24,
@@ -1711,12 +1738,12 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 894,
-    "vertices": 3576,
+    "quads": 1250,
+    "vertices": 5000,
     "passes": 4,
-    "painted_texels": 904871,
-    "glow_texels": 88862,
-    "emissive_quads": 109,
+    "painted_texels": 883852,
+    "glow_texels": 70110,
+    "emissive_quads": 105,
     "shell_quads": 0,
     "star_quads": 8,
     "halo_quads": 24,
@@ -1734,23 +1761,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 1.88,
-    "texture": 196.37,
+    "mesh": 2.63,
+    "texture": 191.81,
     "passes": 1.6,
     "ambient": 3.88,
     "animation": 20.0
    },
    "V_before": 1.0,
-   "V_after": 42.95,
+   "V_without_texture": 4.92,
+   "V_after": 42.3,
    "target": 20.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 1.44,
-    "worn": 2.73
+    "hand": 2.01,
+    "worn": 3.81
    },
    "texel_ratio": {
-    "hand": 147.3,
-    "worn": 294.6
+    "hand": 143.9,
+    "worn": 287.7
    }
   },
   {
@@ -1813,6 +1841,7 @@
     "animation": 14.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.66,
    "V_after": 37.74,
    "target": 20.0,
    "meets_target": true,
@@ -1832,11 +1861,11 @@
    "kind": "head",
    "hand": {
     "pieces": 1,
-    "quads": 825,
-    "vertices": 3300,
+    "quads": 1153,
+    "vertices": 4612,
     "passes": 4,
-    "painted_texels": 852226,
-    "glow_texels": 210081,
+    "painted_texels": 870271,
+    "glow_texels": 188756,
     "emissive_quads": 192,
     "shell_quads": 0,
     "star_quads": 8,
@@ -1855,11 +1884,11 @@
    },
    "worn": {
     "pieces": 1,
-    "quads": 825,
-    "vertices": 3300,
+    "quads": 1153,
+    "vertices": 4612,
     "passes": 4,
-    "painted_texels": 852226,
-    "glow_texels": 210081,
+    "painted_texels": 870271,
+    "glow_texels": 188756,
     "emissive_quads": 192,
     "shell_quads": 0,
     "star_quads": 8,
@@ -1878,23 +1907,24 @@
    },
    "acts": null,
    "components": {
-    "mesh": 1.97,
-    "texture": 138.71,
+    "mesh": 2.75,
+    "texture": 141.65,
     "passes": 2.0,
     "ambient": 4.75,
     "animation": 3.25
    },
    "V_before": 1.0,
-   "V_after": 30.01,
+   "V_without_texture": 3.17,
+   "V_after": 30.87,
    "target": 20.0,
    "meets_target": true,
    "mesh_ratio": {
-    "hand": 1.97,
-    "worn": 1.97
+    "hand": 2.75,
+    "worn": 2.75
    },
    "texel_ratio": {
-    "hand": 138.7,
-    "worn": 138.7
+    "hand": 141.6,
+    "worn": 141.6
    }
   },
   {
@@ -1957,6 +1987,7 @@
     "animation": 15.0
    },
    "V_before": 1.0,
+   "V_without_texture": 4.54,
    "V_after": 31.49,
    "target": 20.0,
    "meets_target": true,

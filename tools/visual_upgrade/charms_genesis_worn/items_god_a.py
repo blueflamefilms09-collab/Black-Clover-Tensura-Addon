@@ -60,6 +60,10 @@ def build_deck(vm, info):
     # a starry sky behind the fan (the deck's wonders), and a seal circle above it
     sky = vm.star("sky", g_sky)
     geo.merge(sky, geo.prim_lathe([(-0.2, 9.0), (0.2, 9.0)], sides=vm.S(12, 6), caps=(True, True)), geo.rot_matrix("x", 90), (0, 3.0, 1.6))
+    studs = vm.P("case_rivets", "gold", group=g_case, base=(255, 226, 130), slot=TRIM, lod=False)
+    for i in range(6):
+        for sg in (-1, 1):
+            geo.merge(studs, geo.prim_octa(0.38, 0.42), geo.rot_matrix("x", 90), (sg * 4.1, -9.2 + 1.4 * i, -1.9))
     vm.fx_disc(g_seal, GLOW, (0, 3.0, 2.4), (0, 0, 1), 26.0, "seal")
     K.halo_set(vm, pal, y=3.0, R=9.0, rune=False, shaft_len=18.0)
     vm.deco(PT.deco_glyphs, case, glow, text="XXII FATE", rows=2, glow=False, seed=3)
@@ -370,6 +374,12 @@ def build_behelit(vm, info):
     # the eclipse behind: a black disc with a corona, and black feathers falling
     ecl = vm.star("eclipse", g_eclipse)
     geo.merge(ecl, geo.prim_lathe([(-0.2, 8.4), (0.2, 8.4)], sides=vm.S(14, 6), caps=(True, True)), geo.rot_matrix("x", 90), (0, 0, 3.6))
+    bands = vm.P("egg_bands", "gold", group=g_egg, base=(236, 196, 96), slot=TRIM, lod=False)
+    for yy, rr in ((-5.6, 5.0), (5.6, 4.8)):
+        geo.merge(bands, geo.prim_torus(rr, 0.3, n=vm.S(14, 6), m=3), None, (0, yy, 0))
+    for i in range(6):
+        a_ = math.pi + 0.55 * (i - 2.5)
+        geo.merge(bands, geo.prim_octa(0.4, 0.5), geo.rot_matrix("x", 90), (3.4 * math.sin(a_ + math.pi), -4.5 - 1.2 * abs(math.sin(a_)), -5.7))
     vm.fx_disc(g_corona, ACCENT, (0, 0, 3.3), (0, 0, 1), 30.0, "rays")
     vm.fx_disc(g_corona, GLOW, (0, 0, 3.2), (0, 0, 1), 22.0, "ring")
     fth = vm.P("black_feathers", "obsidian", group=g_feathers, base=(20, 6, 26), lod=False)

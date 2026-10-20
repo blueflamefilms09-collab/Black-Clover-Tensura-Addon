@@ -259,6 +259,23 @@ def build_prison(vm, info):
     for i in range(6):
         a = 2 * math.pi * i / 6
         geo.merge(tiny, geo.prim_box(1.5, 1.5, 1.5, caps=True), geo.rot_matrix("y", 25 * i) @ geo.rot_matrix("x", 18 * i), (11.0 * math.cos(a), 3.0 * math.sin(i * 1.6), 11.0 * math.sin(a)))
+    # a shimenawa: the twisted straw rope of a sealed place, once round the cube, with shide paper streamers and little bells
+    g_rope = vm.grp("shimenawa", "sway", (0, 0, 0), 1.0, 0.05, 0.0)
+    g_shide = vm.grp("shide_streamers", "sway", (0, H, 0), 6.0, 0.09, 0.5)
+    rope = vm.P("shimenawa", "leather", group=g_rope, base=(176, 150, 96), lod=False)
+    for k in range(2):
+        pts = [(math.cos(a_) * (H + 1.5), 0.0 + 0.55 * math.sin(a_ * 8 + k * math.pi), math.sin(a_) * (H + 1.5)) for a_ in [2 * math.pi * i / vm.S(40, 8) for i in range(vm.S(40, 8) + 1)]]
+        geo.tube_path(rope, pts, 0.42, sides=3, caps=(False, False))
+    shide = vm.P("shide_streamers", "bone", group=g_shide, base=(250, 246, 236), lod=False)
+    bells = vm.P("rope_bells", "gold", group=g_rope, base=(214, 176, 90), slot=TRIM, lod=False)
+    for i in range(8):
+        a_ = 2 * math.pi * i / 8 + 0.2
+        x, z = math.cos(a_) * (H + 1.6), math.sin(a_) * (H + 1.6)
+        zig = [(x, -0.6, z), (x + 0.4 * math.cos(a_ + 1.6), -2.2, z + 0.4 * math.sin(a_ + 1.6)), (x - 0.4 * math.cos(a_ + 1.6), -3.8, z - 0.4 * math.sin(a_ + 1.6)), (x + 0.3 * math.cos(a_ + 1.6), -5.4, z + 0.3 * math.sin(a_ + 1.6))]
+        geo.ribbon(shide, zig, 1.2, thick=0.1, up=(math.cos(a_), 0, math.sin(a_)), taper=0.3)
+        geo.merge(bells, geo.prim_octa(0.55, 0.7), None, (x, -6.0 if i % 2 else -0.3, z))
+    vm.deco(PT.deco_glyphs, shide, (255, 60, 40), text="SEAL", rows=2, glow=False, seed=8)
+    vm.deco(PT.deco_grain, rope, amount=0.22)
     vm.fx_disc(g_seal, GLOW, (0, 0, 0), (0, 1, 0), 34.0, "seal")
     vm.fx_disc(g_seal2, DARK, (0, 0, 0), (1, 0, 0), 30.0, "seal")
     K.halo_set(vm, pal, y=0.0, R=10.0, rune=True, shaft_len=30.0)

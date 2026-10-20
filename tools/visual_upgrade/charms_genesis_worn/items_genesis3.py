@@ -155,6 +155,19 @@ def build_zahard(vm, info):
             p3 = base_c + np.array([0, h, 0])
             geo.tube_path(arches, geo.bez3(tuple(p0), tuple(p1), tuple(p2), tuple(p3), vm.S(5, 3)), 0.42, sides=3, taper=(1.0, 0.7))
         geo.merge(apex, geo.prim_octa(0.9, 1.3), None, tuple(base_c + np.array([0, h + 0.8, 0])))
+    inner_arch = vm.P("inner_arches", "gold", group=g_crown, base=(236, 206, 126), slot=TRIM, lod=False)
+    for i in range(6):
+        a = math.radians(-125 + 250 * i / 5)
+        c, s_ = math.cos(a - math.pi / 2), math.sin(a - math.pi / 2)
+        side = np.array([-s_, 0, c])
+        base_c = np.array([3.6 * c, 9.8, 3.6 * s_])
+        for sg in (-1, 1):
+            p0 = base_c + side * sg * 1.3
+            geo.tube_path(inner_arch, geo.bez3(tuple(p0), tuple(p0 + (0, 3.4, 0)), tuple(base_c + side * sg * 0.5 + (0, 4.6, 0)), tuple(base_c + (0, 5.4, 0)), vm.S(4, 3)), 0.28, sides=3, taper=(1.0, 0.7))
+    spikes_r = vm.P("band_spikes", "gold", group=g_crown, base=(255, 232, 160), slot=TRIM, lod=False)
+    for i in range(14):
+        a = 2 * math.pi * i / 14
+        geo.merge(spikes_r, geo.prim_spike(0.5, 1.8, sides=4), geo.align_y((math.cos(a) * 0.4, 1, math.sin(a) * 0.4)), (5.3 * math.cos(a), 9.8, 5.3 * math.sin(a)))
     pend = vm.P("jewel_pendants", "crystal", group=g_pend, base=(255, 224, 140), slot=GLOW, lod=False)
     wire = vm.P("pendant_wire", "gold", group=g_pend, base=(240, 206, 120), slot=TRIM, lod=False)
     for i in range(7):

@@ -60,6 +60,11 @@ def build_grimoire(vm, info):
     for i in range(6):
         a = 2 * math.pi * i / 6
         geo.merge(runes, geo.prim_box(1.3, 1.3, 1.3, caps=True), geo.rot_matrix("y", 30 * i) @ geo.rot_matrix("x", 20 * i), (8.0 * math.cos(a), 7.0 + 2.5 * math.sin(i * 1.7), 8.0 * math.sin(a)))
+    bosses = vm.P("cover_bosses", "gold", group=g_book, base=(226, 206, 250), slot=TRIM, lod=False)
+    for sg in (-1, 1):
+        for (yy, zz) in ((4.4, -0.2), (-4.4, -0.2)):
+            geo.merge(bosses, geo.prim_octa(0.7, 0.45), geo.rot_matrix("z", sg * 24) @ geo.rot_matrix("x", 90), (sg * 5.7, yy, -0.7))
+            geo.merge(bosses, geo.prim_octa(0.5, 0.35), geo.rot_matrix("z", sg * 24) @ geo.rot_matrix("x", 90), (sg * 3.0, yy * 0.5, -0.9))
     vm.fx_disc(g_seal_h, GLOW, (0, 15.0, 0), (0, 1, 0), 22.0, "seal")
     vm.fx_disc(g_seal_v, DARK, (0, 8.0, 3.0), (0, 0, 1), 20.0, "rune")
     K.halo_set(vm, pal, y=6.0, R=9.0, rune=False, shaft_len=26.0)
@@ -123,6 +128,10 @@ def build_vaultwatch(vm, info):
     geo.merge(crown, geo.prim_torus(1.9, 0.4, n=vm.S(8, 6), m=3), geo.rot_matrix("x", 90), (0, 13.6, 0))
     chain = vm.P("chain", "bronze", group=g_chain, base=(190, 150, 70), lod=False)
     geo.chain(chain, [(0, 15.4, 0), (1.5, 19.0, 0), (4.0, 22.0, 0)], link_r=0.8, wire=0.2, n=6, m=3, every=3.0)
+    track = vm.P("minute_track", "gold", group=g_w, base=(255, 224, 140), slot=TRIM, lod=False)
+    for i in range(8):
+        a = 2 * math.pi * i / 8
+        geo.merge(track, geo.prim_octa(0.45, 0.55), geo.rot_matrix("x", 90), (8.2 * math.cos(a), 8.2 * math.sin(a), -2.0))
     vm.fx_disc(g_door, GLOW, (0, 0, 2.4), (0, 0, 1), 28.0, "seal")
     vm.fx_disc(g_door, DARK, (0, 0, 2.0), (0, 0, 1), 22.0, "ticks", rot=9)
     K.halo_set(vm, pal, y=0.0, R=9.0, rune=True, shaft_len=22.0)
