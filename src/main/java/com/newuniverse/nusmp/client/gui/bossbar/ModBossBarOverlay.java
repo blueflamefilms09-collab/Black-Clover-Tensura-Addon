@@ -88,4 +88,26 @@ public final class ModBossBarOverlay {
             if (!BossBarLayout.continues(y, height)) break;
         }
     }
+
+    // ---------------------------------------------------------------- 1.106.0: one bar for the custom overlay
+    /**
+     * The custom boss bar overlay ({@link CustomBarOverlay}) draws the bars it has no style for with the code above, one at a time, so its stack keeps vanilla's and the animated bar's looks for
+     * every other boss: the animated bar for a bar with a {@link BossBarNet.Style}, vanilla's look for the rest. Returns the height it used (the same step the loop in {@link #draw} takes).
+     */
+    static int drawFallback(GuiGraphics g, Minecraft mc, LerpingBossEvent ev, int y, long now, double time) {
+        Font font = mc.font;
+        int centre = g.guiWidth() / 2;
+        int x = centre - BossBarLayout.BAR_W / 2;
+        BossBarClientState.Entry en = BossBarClientState.get(ev.getId());
+        if (en != null && BossBarOptions.animations()) {
+            BossBarNet.Style st = en.style;
+            en.anim.update(now, ev.getProgress(), st.phase(), st.primary(), st.secondary(), st.rage());
+            en.anim.frame(time);
+            BossBarPainter.paintMod(g, font, ev, en, x, y, time, BossBarOptions.shake(), BossBarOptions.percent(), false);
+            return BossBarLayout.step(true);
+        }
+        BossBarPainter.paintVanilla(g, ev, x, y);
+        g.drawString(font, ev.getName(), centre - font.width(ev.getName()) / 2, y - 9, 0xFFFFFF);
+        return BossBarLayout.step(false);
+    }
 }

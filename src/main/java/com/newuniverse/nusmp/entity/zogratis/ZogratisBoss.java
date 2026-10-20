@@ -539,6 +539,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         tickRefill(sl);
         float frac = getHealth() / getMaxHealth();
         bar.setProgress(Math.max(0f, Math.min(1f, frac)));
+        com.newuniverse.nusmp.boss.bars.BossBarHub.track(this, bar);              // 1.106.0: the custom boss bar's state (phase, shield, cast ...) goes to the watchers
         int np = PowerCurve.next(powerHealth() / powerMaxHealth(), power());
         while (np > power() && transformLeft <= 0) raisePower(sl, Math.min(np, PowerCurve.stepUp(power())), null);   // one step at a time, each announced
         if (t % 20 == 0) upkeep(sl, t);
@@ -1045,6 +1046,9 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     /** The UUIDs of the players who are fighting this boss. */
     public Set<UUID> fighters() { return fighters; }
+
+    /** 1.106.0: the label of the move being wound up ("" = none); read by the custom boss bar's cast bar. */
+    public String castLabel() { return casting == null ? "" : casting.label(); }
 
     @Override
     public void die(DamageSource source) {

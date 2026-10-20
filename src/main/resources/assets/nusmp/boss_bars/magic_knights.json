@@ -1,0 +1,28 @@
+{
+  "id": "magic_knights",
+  "family": "arc",
+  "emblem": "knight",
+  "fx": "shimmer",
+  "entrance": "slide",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#9AC8FF",
+    "fill_bottom": "#2A5AC0",
+    "glow": "#70B0FF",
+    "accent": "#A0D0FF",
+    "ghost": "#FFFFFF",
+    "name": "#F0F8FF",
+    "title": "#A8C0E0",
+    "shadow": "#101A2A",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#A0D0FF",
+    "lair": "#FFB347",
+    "marker": "#FFFFFF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

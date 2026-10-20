@@ -1,0 +1,28 @@
+{
+  "id": "archon",
+  "family": "theme",
+  "emblem": "halo",
+  "fx": "shimmer",
+  "entrance": "flash",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFF6C0",
+    "fill_bottom": "#E0A020",
+    "glow": "#FFF0A0",
+    "accent": "#FFFFFF",
+    "ghost": "#FFFFFF",
+    "name": "#FFFBE8",
+    "title": "#F0D870",
+    "shadow": "#1A2A4A",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFFFFF",
+    "lair": "#FFB347",
+    "marker": "#FFFBE0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

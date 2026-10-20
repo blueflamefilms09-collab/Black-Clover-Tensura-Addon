@@ -78,6 +78,22 @@ public final class DecennialBossController {
 
     public boolean isFinalPhase() { return phase >= profile.phaseCount(); }
 
+    /** 1.106.0: the lair action that fires next ({@code id} and the game time {@code at}); read by the custom boss bar's warning. */
+    public record NextLair(String id, long at) {}
+
+    /** 1.106.0: the next lair action due, or null when the fight is not running, a shift is on, or the boss has none yet. Read only: it changes nothing. */
+    public NextLair nextLair() {
+        if (!fighting || cinematicEnd >= 0) return null;
+        NextLair best = null;
+        for (int i = 0; i < nextLair.length; i++) {
+            DecennialProfile.LairRef l = profile.lairs().get(i);
+            if (l.fromPhase() > phase) continue;
+            long at = Math.max(nextLair[i], nextAnyLair);
+            if (best == null || at < best.at()) best = new NextLair(l.id(), at);
+        }
+        return best;
+    }
+
     // ================================================================ the add budget
     /**
      * How many of {@code wanted} adds the budget lets in now (a phase, a wave): at most the room left under the alive cap and under the cap of the whole fight, and at least zero. What it grants is

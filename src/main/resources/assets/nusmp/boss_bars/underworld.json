@@ -1,0 +1,28 @@
+{
+  "id": "underworld",
+  "family": "theme",
+  "emblem": "root",
+  "fx": "veins",
+  "entrance": "rise",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FF6A8A",
+    "fill_bottom": "#4A0A22",
+    "glow": "#FF4A68",
+    "accent": "#FF7A90",
+    "ghost": "#FFFFFF",
+    "name": "#FFE0E8",
+    "title": "#C87888",
+    "shadow": "#0A0608",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FF7A90",
+    "lair": "#FFB347",
+    "marker": "#C06A78"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

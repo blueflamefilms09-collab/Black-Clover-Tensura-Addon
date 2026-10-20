@@ -1,0 +1,28 @@
+{
+  "id": "forest",
+  "family": "theme",
+  "emblem": "leaf",
+  "fx": "leaves",
+  "entrance": "rise",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#B6F06A",
+    "fill_bottom": "#2F7A24",
+    "glow": "#9AFF6A",
+    "accent": "#C8FF8A",
+    "ghost": "#FFFFFF",
+    "name": "#F0FFE0",
+    "title": "#9AD070",
+    "shadow": "#0D2410",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#C8FF8A",
+    "lair": "#FFB347",
+    "marker": "#D6F0A0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

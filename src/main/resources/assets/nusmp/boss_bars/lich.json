@@ -1,0 +1,28 @@
+{
+  "id": "lich",
+  "family": "theme",
+  "emblem": "lich",
+  "fx": "souls",
+  "entrance": "fade",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#9AFFC0",
+    "fill_bottom": "#3A1A7A",
+    "glow": "#6AFF9A",
+    "accent": "#8AFFB8",
+    "ghost": "#FFFFFF",
+    "name": "#EAFFF2",
+    "title": "#A898D8",
+    "shadow": "#0E0A16",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#8AFFB8",
+    "lair": "#FFB347",
+    "marker": "#D8CCFF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

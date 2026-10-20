@@ -1,0 +1,28 @@
+{
+  "id": "ice",
+  "family": "theme",
+  "emblem": "snowflake",
+  "fx": "frost",
+  "entrance": "fade",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#D8F6FF",
+    "fill_bottom": "#3B8FD0",
+    "glow": "#BFF0FF",
+    "accent": "#DFF8FF",
+    "ghost": "#FFFFFF",
+    "name": "#F0FBFF",
+    "title": "#A6D6F0",
+    "shadow": "#0B1F33",
+    "frame": "#FFFFFF",
+    "shield": "#FFFFFF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#DFF8FF",
+    "lair": "#FFB347",
+    "marker": "#EEFAFF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

@@ -168,6 +168,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
+            com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.init(modEventBus);                                          // 1.106.0: the custom boss bars (styles from assets/nusmp/boss_bars, overlay, /nusmp bossbar)
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compat.maps.MapsClientConfig.SPEC, "nusmp-compat-maps-client.toml");      // compat-maps: minimap size / avoidance
             // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)

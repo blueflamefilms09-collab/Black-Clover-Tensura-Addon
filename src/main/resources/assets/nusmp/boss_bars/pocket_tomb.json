@@ -1,0 +1,28 @@
+{
+  "id": "pocket_tomb",
+  "family": "theme",
+  "emblem": "ankh",
+  "fx": "shimmer",
+  "entrance": "rise",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFE27A",
+    "fill_bottom": "#B07814",
+    "glow": "#FFD860",
+    "accent": "#6AD0FF",
+    "ghost": "#FFFFFF",
+    "name": "#FFF6D8",
+    "title": "#F0C850",
+    "shadow": "#2A1A04",
+    "frame": "#FFFFFF",
+    "shield": "#6AD0FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#6AD0FF",
+    "lair": "#FFB347",
+    "marker": "#FFF0B0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

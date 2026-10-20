@@ -1,0 +1,28 @@
+{
+  "id": "void",
+  "family": "theme",
+  "emblem": "void_eye",
+  "fx": "static",
+  "entrance": "fade",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#C08BFF",
+    "fill_bottom": "#2A0E5A",
+    "glow": "#B06AFF",
+    "accent": "#D0A8FF",
+    "ghost": "#FFFFFF",
+    "name": "#F0E4FF",
+    "title": "#A88AE0",
+    "shadow": "#060410",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#D0A8FF",
+    "lair": "#FFB347",
+    "marker": "#B890FF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

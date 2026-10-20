@@ -1,0 +1,28 @@
+{
+  "id": "lucius",
+  "family": "arc",
+  "emblem": "crown",
+  "fx": "shimmer",
+  "entrance": "flash",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#FFE27A",
+    "fill_bottom": "#4A1A8A",
+    "glow": "#FFD24A",
+    "accent": "#FFF0A0",
+    "ghost": "#FFFFFF",
+    "name": "#FFF4C8",
+    "title": "#E8B923",
+    "shadow": "#140828",
+    "frame": "#FFFFFF",
+    "shield": "#9FE8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FFF0A0",
+    "lair": "#FFB347",
+    "marker": "#FFF0A0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}
