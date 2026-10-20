@@ -468,6 +468,7 @@ public abstract class GrimoireBook extends Skill {
 
     /** 0.38: the transformation armour this book's Spirit Dive puts on (null = none): Sylph's wind, Salamander's fire. */
     public com.newuniverse.nusmp.blackclover.ModeArmor.Mode diveArmor() {
+        if (SpiritDivePieces.LOOK) return null;                    // 1.99.0: the four dives draw Aura.SPIRIT_DIVE (client.aura.SpiritDiveAura); the older overlays below stay registered
         if (this instanceof WindBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.WIND_SPIRIT_DIVE;
         if (this instanceof FireBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.FIRE_SPIRIT_DIVE;
         if (this instanceof WaterBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.VALKYRIE;       // 1.99.0: Noelle's Valkyrie plates and avian water wings are Undine's dive
