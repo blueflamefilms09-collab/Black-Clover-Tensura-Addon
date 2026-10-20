@@ -165,17 +165,20 @@ public final class RequipMagicSelfTests {
         inv.items.set(22, made);
         if (!menu.quickMoveStack(p, RequipArmoury.Menu.PLAYER_FIRST + 13).isEmpty()) return "an armour's own weapon went into the pocket";
         inv.items.set(22, ItemStack.EMPTY);
-        // a full Armoury (capacity 18 for the stand-in) refuses and keeps the item
+        // a full Armoury refuses and keeps the item (the stand-in's capacity is what the rules give it; an operator stand-in would have all 54 cells)
+        int cap = ErzaRequipMagic.capacity(p);
+        if (cap < ArmouryRules.MIN_CAPACITY || cap > ArmouryRules.MAX_SLOTS) return "capacity " + cap;
         for (int i = 0; i < d.cells.size(); i++) d.cells.set(i, ItemStack.EMPTY);
-        for (int i = 0; i < 18; i++) d.cells.set(i, new ItemStack(Items.IRON_SWORD));
+        for (int i = 0; i < cap; i++) d.cells.set(i, new ItemStack(Items.IRON_SWORD));
         inv.items.set(23, new ItemStack(Items.GOLDEN_SWORD));
         Map<String, Integer> full = census(p);
         if (!menu.quickMoveStack(p, RequipArmoury.Menu.PLAYER_FIRST + 14).isEmpty()) return "a full Armoury took another sword";
         if (!inv.items.get(23).is(Items.GOLDEN_SWORD) || !census(p).equals(full)) return "a refused store lost the item";
         // a cell past the capacity still gives its item back
-        d.cells.set(18, ItemStack.EMPTY);
-        d.cells.set(40, new ItemStack(Items.DIAMOND, 5));
-        if (menu.quickMoveStack(p, 40).isEmpty() || !d.cells.get(40).isEmpty()) return "a cell past the capacity did not give its item back";
+        if (cap < ArmouryRules.MAX_SLOTS) {
+            d.cells.set(ArmouryRules.MAX_SLOTS - 1, new ItemStack(Items.DIAMOND, 5));
+            if (menu.quickMoveStack(p, ArmouryRules.MAX_SLOTS - 1).isEmpty() || !d.cells.get(ArmouryRules.MAX_SLOTS - 1).isEmpty()) return "a cell past the capacity did not give its item back";
+        }
         // the capacity follows the rules
         if (ArmouryRules.capacity(0.0, 25_000, false) != 18) return "capacity rule";
         reset(p);

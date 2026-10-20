@@ -246,7 +246,7 @@ public final class RequipArmoury {
             for (int r = 0; r < 3; r++)
                 for (int c = 0; c < 9; c++) addSlot(new Slot(inv, c + r * 9 + 9, X0 + c * 18, INV_Y + r * 18));
             for (int c = 0; c < 9; c++) addSlot(new Slot(inv, c, X0 + c * 18, INV_Y + 58));
-            if (player instanceof ServerPlayer sp) capacityFn = () -> SkillLink.of(sp);
+            if (player instanceof ServerPlayer sp) { capacityFn = () -> SkillLink.of(sp); refresh(); }
         }
 
         public int tab() { return tab.get(); }
@@ -268,17 +268,21 @@ public final class RequipArmoury {
             @Override public boolean isActive() { return tab.get() == TAB_POCKET; }
         }
 
+        /** Server: copies the saved numbers (the capacity, the loadouts, the settings) into the mirrored data slots. */
+        private void refresh() {
+            if (!(player instanceof ServerPlayer) || capacityFn == null) return;
+            Data d = data(player);
+            capacity.set(capacityFn.getAsInt());
+            int bits = 0;
+            for (int i = 0; i < LoadoutRules.MAX_LOADOUTS; i++) { if (d.loadouts.get(i).saved()) bits |= 1 << i; pieces[i].set(d.loadouts.get(i).pieces()); }
+            saved.set(bits);
+            active.set(d.active); reflex.set(d.reflex); mask.set(d.mask); partialOn.set(d.partialOn ? 1 : 0); selected.set(d.selected); blade.set(d.blade);
+        }
+
         /** Server: refreshes the mirrored numbers, then sends what changed. */
         @Override
         public void broadcastChanges() {
-            if (player instanceof ServerPlayer && capacityFn != null) {
-                Data d = data(player);
-                capacity.set(capacityFn.getAsInt());
-                int bits = 0;
-                for (int i = 0; i < LoadoutRules.MAX_LOADOUTS; i++) { if (d.loadouts.get(i).saved()) bits |= 1 << i; pieces[i].set(d.loadouts.get(i).pieces()); }
-                saved.set(bits);
-                active.set(d.active); reflex.set(d.reflex); mask.set(d.mask); partialOn.set(d.partialOn ? 1 : 0); selected.set(d.selected); blade.set(d.blade);
-            }
+            refresh();
             super.broadcastChanges();
         }
 

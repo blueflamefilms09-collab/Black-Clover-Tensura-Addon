@@ -255,7 +255,7 @@ public final class ErzaRequipMagic {
     // ---------------------------------------------------------------- Requip: Strike
     private static void strike(ServerPlayer p, ManasSkillInstance inst, Mode m, double mastery) {
         if (RequipWeapons.thrown(p)) {                                                              // pressed again: call it home now
-            RequipScripts.cancel(p);
+            RequipScripts.cancel(p, "strike");
             if (RequipWeapons.recall(p, capacity(p))) SkillUtil.actionbar(p, SkillMsg.t("erza.strike_back", "The weapon returns."));
             else SkillUtil.fail(p, SkillMsg.t("erza.strike_wait", "The weapon waits in the pocket for room."));
             return;
@@ -361,7 +361,7 @@ public final class ErzaRequipMagic {
     // ---------------------------------------------------------------- Weapon Affinity
     /** The damage factor of the melee hits of the weapon that Requip: Blade summoned: up to +40 percent with mastery. */
     static float affinityFactor(ServerPlayer p, double mastery) {
-        if (!p.hasData(RequipArmoury.DATA) || !RequipWeapons.bladeOut(p)) return 1.0f;
+        if (RequipScripts.hitting || !p.hasData(RequipArmoury.DATA) || !RequipWeapons.bladeOut(p)) return 1.0f;
         return (float) BarrageMath.affinity(mastery);
     }
 

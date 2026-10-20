@@ -90,7 +90,12 @@ final class RequipScripts {
             if (allowed <= 0.0) return 0f;
             t.invulnerableTime = 0;                                    // every sword and every pass lands
             float before = t.getHealth();
-            t.hurt(src, (float) allowed);
+            hitting = true;                                            // the Weapon Affinity bonus of a melee hit must not be applied again to a hit that already has it
+            try {
+                t.hurt(src, (float) allowed);
+            } finally {
+                hitting = false;
+            }
             float done = Math.max(0f, before - t.getHealth());
             dealt.merge(t.getUUID(), (double) done, Double::sum);
             hits++;
@@ -99,6 +104,9 @@ final class RequipScripts {
     }
 
     private static final List<Script> ACTIVE = new ArrayList<>();
+
+    /** True while a script is dealing a hit (read by the skill's damage hook). */
+    static boolean hitting;
 
     /** Starts a script (its first steps run at once). Returns false when there are too many already. */
     static boolean start(MinecraftServer server, Script s) {
@@ -119,6 +127,9 @@ final class RequipScripts {
     }
 
     static void cancel(ServerPlayer p) { ACTIVE.removeIf(s -> s.caster == p); }
+
+    /** Cancels one kind of script of a caster (pressing Strike again recalls the weapon without stopping a barrage that is running). */
+    static void cancel(ServerPlayer p, String kind) { ACTIVE.removeIf(s -> s.caster == p && s.kind.equals(kind)); }
 
     static void onServerTick(ServerTickEvent.Post e) {
         if (ACTIVE.isEmpty()) return;
