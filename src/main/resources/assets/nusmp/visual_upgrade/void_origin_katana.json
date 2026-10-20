@@ -1,0 +1,307 @@
+{
+ "id": "void_origin_katana",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "void_origin_katana",
+ "lod": {
+  "mesh": "void_origin_katana_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "void_flat",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "the dimensional void fills the flat of the blade along its whole length (reality shimmer)"
+  },
+  {
+   "id": "rift_rings",
+   "kind": "orbit_rings",
+   "group": "rifts",
+   "note": "three rings of torn space with gems turning round the blade"
+  },
+  {
+   "id": "rift_cards",
+   "kind": "halo_ring",
+   "group": "rift_rings",
+   "note": "rings of cyan light on the same heights, counter-turning"
+  },
+  {
+   "id": "afterimage",
+   "kind": "light_shafts",
+   "group": "afterimage",
+   "note": "a flickering afterimage of the cut along the blade"
+  },
+  {
+   "id": "tsuba_runes",
+   "kind": "halo_ring",
+   "group": "tsuba_disc",
+   "note": "a rune disc turning on the tsuba"
+  },
+  {
+   "id": "tears",
+   "kind": "energy_arcs",
+   "group": "tear",
+   "note": "four flickering tears of space round the blade"
+  },
+  {
+   "id": "blade_flares",
+   "kind": "lens_flare",
+   "flares": "kashira, point, hilt",
+   "note": "star flares on the kashira, the point and the hilt gem"
+  },
+  {
+   "id": "void_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "6AE0FF",
+   "where": "blade",
+   "rate": 0.6,
+   "radius": 1.8,
+   "note": "cyan motes falling out of the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "40C8FF",
+   "radius": 1.0,
+   "note": "a ring of cyan motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "hamon_flow",
+   "kind": "vein_wave",
+   "note": "light runs along the hamon and the edge"
+  },
+  {
+   "id": "rift_orbit",
+   "kind": "group_spin",
+   "group": "rifts"
+  },
+  {
+   "id": "ring_counter",
+   "kind": "group_spin",
+   "group": "rift_rings"
+  },
+  {
+   "id": "tsuba_turn",
+   "kind": "group_spin",
+   "group": "tsuba_disc"
+  },
+  {
+   "id": "afterimage_flicker",
+   "kind": "group_flicker",
+   "group": "afterimage"
+  },
+  {
+   "id": "tear_flicker",
+   "kind": "group_flicker",
+   "group": "tear"
+  },
+  {
+   "id": "ring_breath",
+   "kind": "group_breathe",
+   "group": "rift_rings"
+  }
+ ],
+ "draw": {
+  "ticks": 14,
+  "flash": "6AE0FF",
+  "groups": [
+   "rifts",
+   "tsuba_disc"
+  ],
+  "note": "a tear of space opens round the blade as it is drawn; the rings spiral in"
+ },
+ "swing": {
+  "trail": "dimension_cut",
+  "rgb": "6AE0FF",
+  "rgb2": "101828",
+  "length": 2.0,
+  "width": 0.4,
+  "life": 12,
+  "particles": "void_mote"
+ },
+ "acts": {
+  "dimension_cut": {
+   "burst": "dimension_cut",
+   "pattern": "line",
+   "rgb": "6AE0FF",
+   "ring": 7.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.void_origin.cut"
+  },
+  "void_step": {
+   "burst": "void_step",
+   "pattern": "inward",
+   "rgb": "40C8FF",
+   "ring": 4.0,
+   "particles": 36,
+   "sound": "nusmp:item.genesis.void_origin.step"
+  },
+  "world_sever": {
+   "burst": "world_sever",
+   "pattern": "nova",
+   "rgb": "BFF4FF",
+   "ring": 7.0,
+   "particles": 50,
+   "sound": "nusmp:item.genesis.void_origin.sever"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.void_origin.absence_loop",
+ "flares": 3,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.17,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "rifts": {
+   "pivot": [
+    0.0,
+    76.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 48.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.6,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 16
+   }
+  },
+  "rift_rings": {
+   "pivot": [
+    0.0,
+    76.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -35.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.75,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "6AE0FF",
+   "alpha": 0.85
+  },
+  "afterimage": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.1,
+     "max": 0.7,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "6AE0FF",
+   "alpha": 0.6
+  },
+  "tsuba_disc": {
+   "pivot": [
+    0.0,
+    26.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 25.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.75,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "6AE0FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.8
+  },
+  "tear": {
+   "pivot": [
+    0.0,
+    76.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 60.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "BFF4FF",
+   "alpha": 0.9
+  }
+ }
+}

@@ -1,0 +1,339 @@
+{
+ "id": "starsplitter_hammer",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "starsplitter_hammer",
+ "lod": {
+  "mesh": "starsplitter_hammer_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "meteor_orbit",
+   "kind": "orbit_shards",
+   "group": "meteors",
+   "note": "six rocks of fallen stars with comet tails circling the head"
+  },
+  {
+   "id": "starmap",
+   "kind": "halo_ring",
+   "group": "starmap",
+   "note": "a constellation map turning behind and before the head"
+  },
+  {
+   "id": "gravity_ring",
+   "kind": "halo_ring",
+   "group": "gravity",
+   "note": "a ring of gravity breathing round the head, horizontal"
+  },
+  {
+   "id": "face_glow",
+   "kind": "light_shafts",
+   "group": "face_glow",
+   "note": "the star-cracks glow and breathe on both striking faces"
+  },
+  {
+   "id": "void_cracks",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "the dimensional void shows through the star-split faces (reality shimmer)"
+  },
+  {
+   "id": "star_sparks",
+   "kind": "energy_arcs",
+   "group": "sparks",
+   "note": "five star sparks flickering round the head"
+  },
+  {
+   "id": "face_flares",
+   "kind": "lens_flare",
+   "flares": "faces",
+   "note": "star flares on both striking faces"
+  },
+  {
+   "id": "lanyard_sway",
+   "kind": "mesh_sway",
+   "group": "chain",
+   "note": "the chain lanyard swings"
+  },
+  {
+   "id": "star_dust",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "FFE070",
+   "where": "blade",
+   "rate": 0.5,
+   "radius": 1.6,
+   "note": "star dust falling off the head"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "FFE070",
+   "radius": 1.1,
+   "note": "a ring of star dust on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "rune_flow",
+   "kind": "vein_wave",
+   "note": "light runs through the cracks and the rune band"
+  },
+  {
+   "id": "meteor_orbit",
+   "kind": "group_spin",
+   "group": "meteors"
+  },
+  {
+   "id": "starmap_turn",
+   "kind": "group_spin",
+   "group": "starmap"
+  },
+  {
+   "id": "gravity_breath",
+   "kind": "group_breathe",
+   "group": "gravity"
+  },
+  {
+   "id": "face_breath",
+   "kind": "group_breathe",
+   "group": "face_glow"
+  },
+  {
+   "id": "spark_flicker",
+   "kind": "group_flicker",
+   "group": "sparks"
+  },
+  {
+   "id": "chain_sway",
+   "kind": "group_sway",
+   "group": "chain"
+  }
+ ],
+ "draw": {
+  "ticks": 18,
+  "flash": "FFE070",
+  "groups": [
+   "meteors",
+   "starmap"
+  ],
+  "note": "the meteors spiral in and the star map opens as the hammer is drawn"
+ },
+ "swing": {
+  "trail": "falling_star",
+  "rgb": "FFE070",
+  "rgb2": "3A2A5A",
+  "length": 1.8,
+  "width": 0.5,
+  "life": 12,
+  "particles": "star_dust"
+ },
+ "acts": {
+  "meteor_smash": {
+   "burst": "meteor_smash",
+   "pattern": "nova",
+   "rgb": "FFE070",
+   "ring": 6.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.starsplitter.smash"
+  },
+  "gravity_well": {
+   "burst": "gravity_well",
+   "pattern": "inward",
+   "rgb": "8C64E6",
+   "ring": 6.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.starsplitter.well"
+  },
+  "starsplit": {
+   "burst": "starsplit",
+   "pattern": "column",
+   "rgb": "FFF2B0",
+   "ring": 6.0,
+   "particles": 50,
+   "sound": "nusmp:item.genesis.starsplitter.split"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.starsplitter.night_loop",
+ "flares": 2,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.13,
+  "min": 0.4,
+  "max": 1.0
+ },
+ "groups": {
+  "chain": {
+   "pivot": [
+    4.2,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 8.0,
+     "period": 70.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 5.0,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true
+  },
+  "meteors": {
+   "pivot": [
+    0.0,
+    157.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 28.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 2.2,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 16
+   }
+  },
+  "starmap": {
+   "pivot": [
+    0.0,
+    157.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 6.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.25,
+     "max": 0.55,
+     "period": 150.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE070",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.6
+  },
+  "gravity": {
+   "pivot": [
+    0.0,
+    157.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.15,
+     "max": 0.6,
+     "period": 100.0
+    },
+    {
+     "kind": "pulse",
+     "amp": 0.06,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "8C64E6",
+   "alpha": 0.7
+  },
+  "face_glow": {
+   "pivot": [
+    0.0,
+    157.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.8,
+     "period": 75.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE070",
+   "alpha": 0.8
+  },
+  "sparks": {
+   "pivot": [
+    0.0,
+    157.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -45.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFF2B0",
+   "alpha": 0.9
+  }
+ }
+}

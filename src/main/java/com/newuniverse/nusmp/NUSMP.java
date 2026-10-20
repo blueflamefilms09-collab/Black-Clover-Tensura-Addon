@@ -168,6 +168,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.ui.GuiScale.init(modEventBus, modContainer);                                         // GUI Size: nusmp-gui-client.toml, key, config screen, screen and HUD hooks
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.SPEC, "nusmp-relicfx-client.toml");     // 1.30.0: relic effects quality
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.SPEC, "nusmp-visual-charms-client.toml");     // visual upgrade of the charms / Genesis worn relics: visual.upgrade
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.item.vu.VuOptions.SPEC, "nusmp-visual-upgrade-client.toml");     // 1.102.0: visual.upgrade and the other switches of the upgraded Genesis weapons
             com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
@@ -207,6 +208,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.geo.GeoModels.init(modEventBus);                                      // 0.53: geo.json models re-read on a resource reload
             com.newuniverse.nusmp.client.SwordDrawClient.init();                                              // 0.52: the draw animation
             com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D
+            com.newuniverse.nusmp.client.relics.item.vu.VuClient.init(modEventBus);                          // 1.102.0: the upgraded Genesis weapons (meshes, effects)
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::layers);                    // 0.49: Rouge's cat model
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
             com.newuniverse.nusmp.client.remodel.RemodelRenderers.init(modEventBus);                       // the art-kit renderers of every remodelled mob (lowest priority: they replace the old renderers above, which stay as legacy)
@@ -372,6 +374,7 @@ public class NUSMP {
         com.newuniverse.nusmp.perf.PerfBoot.init(modEventBus, modContainer);                                      // 1.99.0: performance pass: nusmp-performance-common.toml, /multiverse perf, the server probe, self-test perf.core
         com.newuniverse.nusmp.vupgrade.GodBSelfTests.register();                                                  // 1.102.0: self-test visual.god_melee_b (the upgraded God melee weapons: tables, meshes, skins, fallback, level of detail)
         com.newuniverse.nusmp.relics.upgrade.UpgradeSelfTest.register();                                          // 1.102.0: visual upgrade: self-test visual.god_melee_a
+        com.newuniverse.nusmp.visual.genesis.VuSelfTests.register();                                                // 1.102.0: self-test visual.genesis_weapons (assets of the upgraded Genesis weapons, the flag fallback)
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy

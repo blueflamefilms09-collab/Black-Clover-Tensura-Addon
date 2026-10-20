@@ -1,0 +1,285 @@
+{
+ "id": "cardinal_halo_chakram",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "cardinal_halo_chakram",
+ "lod": {
+  "mesh": "cardinal_halo_chakram_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "floating_halo",
+   "kind": "halo_ring",
+   "group": "halo",
+   "note": "a second ring with eight small suns turning about the weapon"
+  },
+  {
+   "id": "verdict_disc",
+   "kind": "halo_ring",
+   "group": "verdict",
+   "note": "a rune disc of the verdict turning in the ring, both faces"
+  },
+  {
+   "id": "glory",
+   "kind": "light_shafts",
+   "group": "glory",
+   "note": "a soft glow and a fan of rays behind the hub"
+  },
+  {
+   "id": "light_pillar",
+   "kind": "light_shafts",
+   "group": "pillar",
+   "note": "a pillar of light falling from the crown"
+  },
+  {
+   "id": "sparks",
+   "kind": "energy_arcs",
+   "group": "sparks",
+   "note": "six star sparks running round the inner ring"
+  },
+  {
+   "id": "stud_flares",
+   "kind": "lens_flare",
+   "flares": "studs",
+   "note": "star flares on the four cardinal studs and the hub"
+  },
+  {
+   "id": "sea_glass_motes",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "8AE8FF",
+   "where": "blade",
+   "rate": 0.6,
+   "note": "glints of cyan light off the ring"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "E8D8A0",
+   "radius": 1.0,
+   "note": "a ring of gold motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "vein_flow",
+   "kind": "vein_wave",
+   "note": "light flows round the sea-glass fuller"
+  },
+  {
+   "id": "halo_turn",
+   "kind": "group_spin",
+   "group": "halo"
+  },
+  {
+   "id": "verdict_turn",
+   "kind": "group_spin",
+   "group": "verdict"
+  },
+  {
+   "id": "sparks_run",
+   "kind": "group_spin",
+   "group": "sparks"
+  },
+  {
+   "id": "glory_breath",
+   "kind": "group_breathe",
+   "group": "glory"
+  },
+  {
+   "id": "flare_pulse",
+   "kind": "flare_pulse"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "8AE8FF",
+  "groups": [
+   "halo",
+   "verdict"
+  ],
+  "note": "the halo drops over the ring from above, the rune disc unfolds"
+ },
+ "swing": {
+  "trail": "halo_arc",
+  "rgb": "E8D8A0",
+  "rgb2": "2AA8D8",
+  "length": 1.1,
+  "width": 0.4,
+  "life": 10,
+  "particles": "gold_glint"
+ },
+ "acts": {
+  "halo_throw": {
+   "burst": "halo_ring_out",
+   "pattern": "ring",
+   "rgb": "E8D8A0",
+   "ring": 3.5,
+   "particles": 28,
+   "sound": "nusmp:item.genesis.cardinal_halo.throw"
+  },
+  "judgement_ring": {
+   "burst": "verdict_circle",
+   "pattern": "nova",
+   "rgb": "8AE8FF",
+   "ring": 5.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.cardinal_halo.judgement"
+  },
+  "cardinal_descent": {
+   "burst": "light_fall",
+   "pattern": "column",
+   "rgb": "FFF2C0",
+   "ring": 5.0,
+   "particles": 44,
+   "sound": "nusmp:item.genesis.cardinal_halo.descent"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.cardinal_halo.ring_loop",
+ "flares": 6,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.17,
+  "min": 0.5,
+  "max": 1.0
+ },
+ "groups": {
+  "halo": {
+   "pivot": [
+    0.0,
+    52.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 16.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "amp": 0.8,
+     "period": 110.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 1.6,
+    "delay": 0,
+    "ticks": 16
+   }
+  },
+  "verdict": {
+   "pivot": [
+    0.0,
+    52.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -11.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.35,
+     "max": 0.85,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "8AE8FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 4,
+    "ticks": 14
+   },
+   "alpha": 0.6
+  },
+  "glory": {
+   "pivot": [
+    0.0,
+    52.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.6,
+     "period": 80.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "BFF4FF",
+   "alpha": 0.5
+  },
+  "pillar": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.15,
+     "max": 0.5,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFF2C0",
+   "alpha": 0.7
+  },
+  "sparks": {
+   "pivot": [
+    0.0,
+    52.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 60.0
+    },
+    {
+     "kind": "flicker",
+     "min": 0.1,
+     "max": 1.0,
+     "rate": 4.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFFFFF",
+   "alpha": 0.9
+  }
+ }
+}

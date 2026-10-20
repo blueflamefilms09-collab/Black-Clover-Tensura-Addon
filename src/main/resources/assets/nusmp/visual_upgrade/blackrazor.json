@@ -1,0 +1,269 @@
+{
+ "id": "blackrazor",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "blackrazor",
+ "lod": {
+  "mesh": "blackrazor_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "soul_wisps",
+   "kind": "orbit_shards",
+   "group": "wisps",
+   "note": "eight teardrops of captured soul and ten glass shards circling the blade"
+  },
+  {
+   "id": "rune_disc",
+   "kind": "halo_ring",
+   "group": "rune_disc",
+   "note": "a rune circle and a hexagon turning behind the skull guard"
+  },
+  {
+   "id": "void_rifts",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "three rifts of the dimensional void through the glass (reality shimmer)"
+  },
+  {
+   "id": "blade_aura",
+   "kind": "light_shafts",
+   "group": "aura",
+   "note": "crossed shafts of violet light along the whole blade, breathing"
+  },
+  {
+   "id": "soul_arcs",
+   "kind": "energy_arcs",
+   "group": "arcs",
+   "note": "four flickering bolts round the blade"
+  },
+  {
+   "id": "eye_flares",
+   "kind": "lens_flare",
+   "flares": "eyes",
+   "note": "star flares in the skull eyes and the pommel eye"
+  },
+  {
+   "id": "soul_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "9A4AFF",
+   "where": "blade",
+   "rate": 0.5,
+   "note": "violet motes rising off the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "5A2A8A",
+   "radius": 0.9,
+   "note": "a ring of dark violet motes round the feet"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse",
+   "note": "core glow breathes 0.45 to 1.0"
+  },
+  {
+   "id": "vein_flow",
+   "kind": "vein_wave",
+   "speed": 0.35,
+   "freq": 0.06,
+   "note": "violet light flows up the blade's veins"
+  },
+  {
+   "id": "wisp_orbit",
+   "kind": "group_spin",
+   "group": "wisps",
+   "note": "souls and shards orbit and bob"
+  },
+  {
+   "id": "rune_turn",
+   "kind": "group_spin",
+   "group": "rune_disc",
+   "note": "the rune disc turns against the souls"
+  },
+  {
+   "id": "arc_flicker",
+   "kind": "group_flicker",
+   "group": "arcs"
+  },
+  {
+   "id": "aura_breath",
+   "kind": "group_breathe",
+   "group": "aura"
+  },
+  {
+   "id": "eye_pulse",
+   "kind": "flare_pulse"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "9A4AFF",
+  "groups": [
+   "wisps",
+   "rune_disc"
+  ],
+  "note": "the souls spiral out of the blade and the rune disc unfolds as it is drawn"
+ },
+ "swing": {
+  "trail": "violet_glass",
+  "rgb": "9A4AFF",
+  "rgb2": "0C0A12",
+  "length": 1.35,
+  "width": 0.34,
+  "life": 9,
+  "particles": "soul_wisp"
+ },
+ "acts": {
+  "devour_soul": {
+   "burst": "soul_drain",
+   "rgb": "9A4AFF",
+   "ring": 3.0,
+   "particles": 26,
+   "sound": "nusmp:item.genesis.blackrazor.devour"
+  },
+  "void_cleave": {
+   "burst": "void_rift_slash",
+   "rgb": "5A2A8A",
+   "ring": 4.5,
+   "particles": 34,
+   "sound": "nusmp:item.genesis.blackrazor.void_cleave"
+  },
+  "hunger_eternal": {
+   "burst": "souls_rise",
+   "rgb": "C890FF",
+   "ring": 5.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.blackrazor.hunger_eternal"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.blackrazor.hunger_loop",
+ "flares": 7,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.17,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "wisps": {
+   "pivot": [
+    0.0,
+    94.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 38.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.6,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 4,
+    "ticks": 14
+   }
+  },
+  "aura": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.25,
+     "max": 0.7,
+     "period": 70.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "8A3CFF",
+   "alpha": 0.8
+  },
+  "rune_disc": {
+   "pivot": [
+    0.0,
+    38.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -22.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.35,
+     "max": 0.85,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "B070FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 12
+   },
+   "alpha": 0.9
+  },
+  "arcs": {
+   "pivot": [
+    0.0,
+    94.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 55.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "C890FF",
+   "alpha": 0.95
+  }
+ }
+}

@@ -175,6 +175,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
                 : ItemStateVariants.resolve(stack, meshId(stack, id), ctx, m -> mesh(m) != null);
+        if (state != null && com.newuniverse.nusmp.client.relics.item.vu.VuRenderer.draw(stack, state.meshId(), ctx, pose, buffers, light, overlay)) return;      // 1.102.0 genesis_weapons upgrade: the upgraded mesh of this id (client flag visual.upgrade), else the old mesh below
+        if (state == null && com.newuniverse.nusmp.client.relics.item.vu.VuRenderer.drawGui(stack, id, pose, buffers, light, overlay)) return;      // the tilted 3D model in the inventory (client flag visual.guiModel, off by default)
         Mesh mesh = state == null ? null : mesh(state.meshId());
         int upTier = mesh == null ? -1 : GodMeleeBRender.tier(state.meshId(), pose);                                         // 1.102.0: the level of detail of an upgraded weapon (-1 = not one)
         if (upTier >= com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_LOD) mesh = GodMeleeBRender.lod(mesh, state.meshId());

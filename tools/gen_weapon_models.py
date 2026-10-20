@@ -3332,6 +3332,10 @@ def main(only=None):
             mesh, atlas = Mesh(), Atlas()
             extra = fn(mesh, atlas) or {}
             write(item_id, mesh, atlas, extra, fit)
+    if only and only[0] == "visual_upgrade_genesis_weapons":       # 1.102.0 (visual upgrade, slice genesis_weapons): python3 -B tools/gen_weapon_models.py visual_upgrade_genesis_weapons [--previews] [--only id,id]
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "visual_upgrade", "genesis_weapons"))
+        import build_all
+        build_all.main(only[1:])
 
 
 if __name__ == "__main__":

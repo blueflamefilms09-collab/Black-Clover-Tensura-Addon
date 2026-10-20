@@ -1,0 +1,292 @@
+{
+ "id": "starforged_aeon_bow",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "starforged_aeon_bow",
+ "lod": {
+  "mesh": "starforged_aeon_bow_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "orbit_stars",
+   "kind": "orbit_shards",
+   "group": "stars",
+   "note": "seven small stars and seven star plates circling the core"
+  },
+  {
+   "id": "core_rays",
+   "kind": "light_shafts",
+   "group": "core_halo",
+   "note": "a turning fan of rays and a glow round the star core, breathing"
+  },
+  {
+   "id": "zodiac",
+   "kind": "halo_ring",
+   "group": "zodiac",
+   "note": "a zodiac ring of runes turning behind the riser, both faces"
+  },
+  {
+   "id": "comet_tails",
+   "kind": "light_shafts",
+   "group": "comet_tails",
+   "note": "comet tails streaming off both limb tips, flickering"
+  },
+  {
+   "id": "twinkle",
+   "kind": "energy_arcs",
+   "group": "twinkle",
+   "note": "stars twinkling along the limbs"
+  },
+  {
+   "id": "tip_flares",
+   "kind": "lens_flare",
+   "flares": "core and tips",
+   "note": "star flares in the core and on both finials"
+  },
+  {
+   "id": "star_motes",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "A8D8FF",
+   "where": "blade",
+   "rate": 0.7,
+   "radius": 1.2,
+   "note": "glints of starlight drifting off the bow"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "A8D8FF",
+   "radius": 1.0,
+   "note": "a ring of pale blue stars on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "comet_flow",
+   "kind": "vein_wave",
+   "note": "light runs along the string and the constellations"
+  },
+  {
+   "id": "star_orbit",
+   "kind": "group_spin",
+   "group": "stars"
+  },
+  {
+   "id": "zodiac_turn",
+   "kind": "group_spin",
+   "group": "zodiac"
+  },
+  {
+   "id": "core_fan",
+   "kind": "group_spin",
+   "group": "core_halo"
+  },
+  {
+   "id": "tail_flicker",
+   "kind": "group_flicker",
+   "group": "comet_tails"
+  },
+  {
+   "id": "twinkle",
+   "kind": "group_flicker",
+   "group": "twinkle"
+  },
+  {
+   "id": "core_breath",
+   "kind": "group_breathe",
+   "group": "core_halo"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "A8D8FF",
+  "groups": [
+   "stars",
+   "zodiac"
+  ],
+  "note": "the stars drop into orbit and the zodiac opens behind the riser when the bow is drawn from the hand"
+ },
+ "swing": {
+  "trail": "comet",
+  "rgb": "A8D8FF",
+  "rgb2": "E8C040",
+  "length": 1.3,
+  "width": 0.3,
+  "life": 10,
+  "particles": "star_glint"
+ },
+ "acts": {
+  "meteor_arrow": {
+   "burst": "meteor_arrow",
+   "pattern": "line",
+   "rgb": "A8D8FF",
+   "ring": 7.0,
+   "particles": 36,
+   "sound": "nusmp:item.genesis.aeon_bow.meteor"
+  },
+  "constellation_volley": {
+   "burst": "constellation_volley",
+   "pattern": "cone",
+   "rgb": "E8F0FF",
+   "ring": 6.0,
+   "particles": 44,
+   "sound": "nusmp:item.genesis.aeon_bow.volley"
+  },
+  "starfall": {
+   "burst": "starfall",
+   "pattern": "column",
+   "rgb": "E8C040",
+   "ring": 6.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.aeon_bow.starfall"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.aeon_bow.starsong_loop",
+ "flares": 4,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.14,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "stars": {
+   "pivot": [
+    31.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 40.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "amp": 0.8,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 14
+   }
+  },
+  "core_halo": {
+   "pivot": [
+    31.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.8,
+     "period": 80.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -8.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "A8D8FF",
+   "alpha": 0.8
+  },
+  "zodiac": {
+   "pivot": [
+    31.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 11.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.65,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "E8F0FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.8
+  },
+  "comet_tails": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.35,
+     "max": 1.0,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "CFE6FF",
+   "alpha": 0.75
+  },
+  "twinkle": {
+   "pivot": [
+    31.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 4.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFFFFF",
+   "alpha": 0.9
+  }
+ }
+}

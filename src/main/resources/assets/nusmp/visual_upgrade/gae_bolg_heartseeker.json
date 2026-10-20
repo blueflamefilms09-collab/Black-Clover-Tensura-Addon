@@ -1,0 +1,332 @@
+{
+ "id": "gae_bolg_heartseeker",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "gae_bolg_heartseeker",
+ "lod": {
+  "mesh": "gae_bolg_heartseeker_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "thorn_crown",
+   "kind": "halo_ring",
+   "group": "crown",
+   "note": "a crown of eighteen thorns turning round the head"
+  },
+  {
+   "id": "blood_drops",
+   "kind": "orbit_shards",
+   "group": "drops",
+   "note": "nine drops of blood hanging and circling the head"
+  },
+  {
+   "id": "rope_hair",
+   "kind": "mesh_sway",
+   "group": "hair",
+   "note": "twelve ropes of crimson hair stream and sway from the socket"
+  },
+  {
+   "id": "heartbeat",
+   "kind": "light_shafts",
+   "group": "heartbeat",
+   "note": "the heart-core beats: a crossed glow pulsing at about 1.5 beats a second"
+  },
+  {
+   "id": "tip_beam",
+   "kind": "light_shafts",
+   "group": "tip_beam",
+   "note": "a thin beam of red light off the point"
+  },
+  {
+   "id": "wound_arcs",
+   "kind": "energy_arcs",
+   "group": "wound_arcs",
+   "note": "four flickering arcs of the wound that will not close"
+  },
+  {
+   "id": "heart_flares",
+   "kind": "lens_flare",
+   "flares": "heart",
+   "note": "star flares in the heart-core and on the point"
+  },
+  {
+   "id": "blood_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "FF2A4A",
+   "where": "blade",
+   "rate": 0.6,
+   "radius": 1.8,
+   "note": "red motes rising off the head"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "8A1A2A",
+   "radius": 1.0,
+   "note": "a ring of dark red motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "heartbeat",
+   "kind": "group_breathe",
+   "group": "heartbeat",
+   "note": "the core beats"
+  },
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "wound_flow",
+   "kind": "vein_wave",
+   "note": "a beat of light runs up the seams of the head"
+  },
+  {
+   "id": "crown_turn",
+   "kind": "group_spin",
+   "group": "crown"
+  },
+  {
+   "id": "drops_orbit",
+   "kind": "group_spin",
+   "group": "drops"
+  },
+  {
+   "id": "hair_sway",
+   "kind": "group_sway",
+   "group": "hair"
+  },
+  {
+   "id": "arc_flicker",
+   "kind": "group_flicker",
+   "group": "wound_arcs"
+  },
+  {
+   "id": "beam_breath",
+   "kind": "group_breathe",
+   "group": "tip_beam"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "FF2A4A",
+  "groups": [
+   "crown",
+   "drops"
+  ],
+  "note": "the crown of thorns snaps open and the drops fall into their orbit as the spear is drawn"
+ },
+ "swing": {
+  "trail": "blood_thorn",
+  "rgb": "FF2A4A",
+  "rgb2": "8A1A2A",
+  "length": 1.8,
+  "width": 0.3,
+  "life": 10,
+  "particles": "blood_mote"
+ },
+ "acts": {
+  "heart_thrust": {
+   "burst": "heart_thrust",
+   "pattern": "line",
+   "rgb": "FF2A4A",
+   "ring": 6.0,
+   "particles": 30,
+   "sound": "nusmp:item.genesis.gae_bolg.thrust"
+  },
+  "thirty_barbs": {
+   "burst": "thirty_barbs",
+   "pattern": "cone",
+   "rgb": "FF4A6A",
+   "ring": 7.0,
+   "particles": 30,
+   "sound": "nusmp:item.genesis.gae_bolg.barbs"
+  },
+  "wound_that_will_not_close": {
+   "burst": "open_wound",
+   "pattern": "inward",
+   "rgb": "8A1A2A",
+   "ring": 4.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.gae_bolg.wound"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.gae_bolg.heartbeat_loop",
+ "flares": 3,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.22,
+  "min": 0.4,
+  "max": 1.0
+ },
+ "groups": {
+  "hair": {
+   "pivot": [
+    0.0,
+    166.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 5.0,
+     "period": 70.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 4.0,
+     "period": 95.0,
+     "phase": 0.3
+    }
+   ],
+   "lodSkip": false
+  },
+  "crown": {
+   "pivot": [
+    0.0,
+    210.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 42.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.6,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 14
+   }
+  },
+  "drops": {
+   "pivot": [
+    0.0,
+    200.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -26.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 2.2,
+     "period": 80.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 5,
+    "ticks": 14
+   }
+  },
+  "heartbeat": {
+   "pivot": [
+    0.0,
+    177.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.15,
+     "max": 0.85,
+     "period": 40.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF2A4A",
+   "alpha": 0.85
+  },
+  "tip_beam": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.7,
+     "period": 70.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF4A6A",
+   "alpha": 0.8
+  },
+  "wound_arcs": {
+   "pivot": [
+    0.0,
+    220.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 70.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF6A8A",
+   "alpha": 0.9
+  }
+ }
+}

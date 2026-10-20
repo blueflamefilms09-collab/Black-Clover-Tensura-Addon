@@ -1,0 +1,348 @@
+{
+ "id": "sword_of_the_first_dawn",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "sword_of_the_first_dawn",
+ "lod": {
+  "mesh": "sword_of_the_first_dawn_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "dawn_halo",
+   "kind": "orbit_shards",
+   "group": "halo",
+   "note": "a ring of dawn with eight small suns turning round the blade"
+  },
+  {
+   "id": "sun_rays",
+   "kind": "light_shafts",
+   "group": "sun_rays",
+   "note": "a turning fan of rays behind and before the rising sun"
+  },
+  {
+   "id": "morning_shafts",
+   "kind": "light_shafts",
+   "group": "shafts",
+   "note": "eight shafts of morning light fanning from the sun, breathing"
+  },
+  {
+   "id": "dawn_glow",
+   "kind": "light_shafts",
+   "group": "dawn_glow",
+   "note": "a soft column of light along the whole blade"
+  },
+  {
+   "id": "sparkles",
+   "kind": "energy_arcs",
+   "group": "sparkles",
+   "note": "sparkles of daylight flickering up the blade"
+  },
+  {
+   "id": "sun_flares",
+   "kind": "lens_flare",
+   "flares": "sun",
+   "note": "star flares in the sun, at the point and in the pommel"
+  },
+  {
+   "id": "wing_sway",
+   "kind": "mesh_sway",
+   "group": "wing_l",
+   "note": "the guard wings sway"
+  },
+  {
+   "id": "daylight_motes",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "FFF4B0",
+   "where": "blade",
+   "rate": 0.8,
+   "radius": 2.0,
+   "note": "motes of daylight rising off the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "FFF4B0",
+   "radius": 1.0,
+   "note": "a ring of dawn light on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "dawn_flow",
+   "kind": "vein_wave",
+   "note": "light runs up the bar from the sun to the point"
+  },
+  {
+   "id": "halo_turn",
+   "kind": "group_spin",
+   "group": "halo"
+  },
+  {
+   "id": "rays_turn",
+   "kind": "group_spin",
+   "group": "sun_rays"
+  },
+  {
+   "id": "shaft_breath",
+   "kind": "group_breathe",
+   "group": "shafts"
+  },
+  {
+   "id": "glow_column",
+   "kind": "group_breathe",
+   "group": "dawn_glow"
+  },
+  {
+   "id": "sparkle_flicker",
+   "kind": "group_flicker",
+   "group": "sparkles"
+  },
+  {
+   "id": "wing_sway",
+   "kind": "group_sway",
+   "group": "wing_l"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "FFE49A",
+  "groups": [
+   "halo",
+   "sun_rays"
+  ],
+  "note": "the sun rises in the guard and the halo of dawn settles round the blade as the sword is drawn"
+ },
+ "swing": {
+  "trail": "dawnlight",
+  "rgb": "FFF4B0",
+  "rgb2": "E8C050",
+  "length": 1.8,
+  "width": 0.4,
+  "life": 11,
+  "particles": "daylight"
+ },
+ "acts": {
+  "dawnlight_cut": {
+   "burst": "dawnlight_cut",
+   "pattern": "cone",
+   "rgb": "FFF4B0",
+   "ring": 5.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.first_dawn.cut"
+  },
+  "first_light": {
+   "burst": "first_light",
+   "pattern": "nova",
+   "rgb": "FFE49A",
+   "ring": 5.5,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.first_dawn.light"
+  },
+  "daybreak": {
+   "burst": "daybreak",
+   "pattern": "column",
+   "rgb": "FFFFFF",
+   "ring": 6.0,
+   "particles": 50,
+   "sound": "nusmp:item.genesis.first_dawn.daybreak"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.first_dawn.choir_loop",
+ "flares": 4,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.2,
+  "min": 0.55,
+  "max": 1.0
+ },
+ "groups": {
+  "wing_l": {
+   "pivot": [
+    -4.5,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": -2.5,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": false
+  },
+  "wing_r": {
+   "pivot": [
+    4.5,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 2.5,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": false
+  },
+  "halo": {
+   "pivot": [
+    0.0,
+    74.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 22.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 2.0,
+     "period": 160.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 16
+   }
+  },
+  "sun_rays": {
+   "pivot": [
+    0.0,
+    26.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 9.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.35,
+     "max": 0.8,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE49A",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.55
+  },
+  "dawn_glow": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.55,
+     "period": 95.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFD890",
+   "alpha": 0.8
+  },
+  "shafts": {
+   "pivot": [
+    0.0,
+    26.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.6,
+     "period": 70.0,
+     "phase": 0.3
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -5.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFF0B8",
+   "alpha": 0.55
+  },
+  "sparkles": {
+   "pivot": [
+    0.0,
+    74.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 4.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 40.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFFFFF",
+   "alpha": 0.9
+  }
+ }
+}

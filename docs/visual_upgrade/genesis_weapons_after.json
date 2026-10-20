@@ -1,0 +1,2515 @@
+{
+  "slice": "genesis_weapons",
+  "mode": "after",
+  "note": "see tools/visual_upgrade/genesis_weapons/measure.py for the definitions",
+  "items": [
+    {
+      "id": "astralis_the_eye_of_the_universe",
+      "name": "Astralis - The Eye of the Universe",
+      "grade": "GENESIS",
+      "kind": "staff",
+      "meshes": {
+        "astralis_the_eye_of_the_universe": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
+          "quads": {
+            "body": 5360,
+            "void": 0,
+            "glow": 1577,
+            "veins": 1174,
+            "halo": 18,
+            "total": 8129
+          },
+          "welded_vertices_body": 4874,
+          "welded_vertices_all": 4910,
+          "submitted_corners_per_frame": 32516,
+          "named_parts": 38,
+          "flares": 3,
+          "animation_groups": 10,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
+            "quads": {
+              "body": 724,
+              "void": 0,
+              "glow": 298,
+              "veins": 359,
+              "halo": 0,
+              "total": 1381
+            },
+            "welded_vertices_body": 691,
+            "welded_vertices_all": 691,
+            "submitted_corners_per_frame": 5524,
+            "named_parts": 19,
+            "flares": 0,
+            "animation_groups": 5
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
+        "quads": {
+          "body": 5360,
+          "void": 0,
+          "glow": 1577,
+          "veins": 1174,
+          "halo": 18,
+          "total": 8129
+        },
+        "welded_vertices_body": 4874,
+        "welded_vertices_all": 4910,
+        "submitted_corners_per_frame": 32516,
+        "named_parts": 38,
+        "flares": 3,
+        "animation_groups": 10,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
+          "quads": {
+            "body": 724,
+            "void": 0,
+            "glow": 298,
+            "veins": 359,
+            "halo": 0,
+            "total": 1381
+          },
+          "welded_vertices_body": 691,
+          "welded_vertices_all": 691,
+          "submitted_corners_per_frame": 5524,
+          "named_parts": 19,
+          "flares": 0,
+          "animation_groups": 5
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3761918,
+        "detail_texels": 2347276
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 454504,
+        "detail_texels": 33811
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 88540,
+        "detail_texels": 59388
+      },
+      "ambient_layers": [
+        "armillary (orbit_rings)",
+        "star_shards (orbit_shards)",
+        "zodiac (halo_ring)",
+        "eye_aura (light_shafts)",
+        "starlight_pillar (light_shafts)",
+        "comets (energy_arcs)",
+        "eye_flares (lens_flare)",
+        "wing_sway (mesh_sway)",
+        "star_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "constellation_flow (vein_wave)",
+        "ring_a_turn (group_spin)",
+        "ring_b_turn (group_spin)",
+        "ring_c_turn (group_spin)",
+        "shard_orbit (group_spin)",
+        "zodiac_turn (group_spin)",
+        "wing_sway (group_sway)",
+        "eye_breath (group_breathe)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "astral_cast",
+        "astral_pick"
+      ],
+      "sound_loop": "nusmp:item.genesis.astralis.hum_loop",
+      "lod": {
+        "mesh": "astralis_the_eye_of_the_universe_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "blackrazor",
+      "name": "Blackrazor",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "meshes": {
+        "blackrazor": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor.txt",
+          "quads": {
+            "body": 4822,
+            "void": 42,
+            "glow": 879,
+            "veins": 1035,
+            "halo": 18,
+            "total": 6796
+          },
+          "welded_vertices_body": 4517,
+          "welded_vertices_all": 4649,
+          "submitted_corners_per_frame": 27184,
+          "named_parts": 33,
+          "flares": 7,
+          "animation_groups": 4,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor_lod.txt",
+            "quads": {
+              "body": 604,
+              "void": 12,
+              "glow": 90,
+              "veins": 95,
+              "halo": 0,
+              "total": 801
+            },
+            "welded_vertices_body": 573,
+            "welded_vertices_all": 609,
+            "submitted_corners_per_frame": 3204,
+            "named_parts": 15,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor.txt",
+        "quads": {
+          "body": 4822,
+          "void": 42,
+          "glow": 879,
+          "veins": 1035,
+          "halo": 18,
+          "total": 6796
+        },
+        "welded_vertices_body": 4517,
+        "welded_vertices_all": 4649,
+        "submitted_corners_per_frame": 27184,
+        "named_parts": 33,
+        "flares": 7,
+        "animation_groups": 4,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor_lod.txt",
+          "quads": {
+            "body": 604,
+            "void": 12,
+            "glow": 90,
+            "veins": 95,
+            "halo": 0,
+            "total": 801
+          },
+          "welded_vertices_body": 573,
+          "welded_vertices_all": 609,
+          "submitted_corners_per_frame": 3204,
+          "named_parts": 15,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 4010910,
+        "detail_texels": 1997130
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 309816,
+        "detail_texels": 29101
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 85144,
+        "detail_texels": 63861
+      },
+      "ambient_layers": [
+        "soul_wisps (orbit_shards)",
+        "rune_disc (halo_ring)",
+        "void_rifts (distortion)",
+        "blade_aura (light_shafts)",
+        "soul_arcs (energy_arcs)",
+        "eye_flares (lens_flare)",
+        "soul_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "vein_flow (vein_wave)",
+        "wisp_orbit (group_spin)",
+        "rune_turn (group_spin)",
+        "arc_flicker (group_flicker)",
+        "aura_breath (group_breathe)",
+        "eye_pulse (flare_pulse)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "devour_soul",
+        "hunger_eternal",
+        "void_cleave"
+      ],
+      "sound_loop": "nusmp:item.genesis.blackrazor.hunger_loop",
+      "lod": {
+        "mesh": "blackrazor_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "cardinal_halo_chakram",
+      "name": "Cardinal Halo Chakram",
+      "grade": "GENESIS",
+      "kind": "handaxe",
+      "meshes": {
+        "cardinal_halo_chakram": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram.txt",
+          "quads": {
+            "body": 4560,
+            "void": 0,
+            "glow": 1964,
+            "veins": 1018,
+            "halo": 24,
+            "total": 7566
+          },
+          "welded_vertices_body": 4490,
+          "welded_vertices_all": 4538,
+          "submitted_corners_per_frame": 30264,
+          "named_parts": 30,
+          "flares": 6,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
+            "quads": {
+              "body": 550,
+              "void": 0,
+              "glow": 236,
+              "veins": 208,
+              "halo": 0,
+              "total": 994
+            },
+            "welded_vertices_body": 523,
+            "welded_vertices_all": 523,
+            "submitted_corners_per_frame": 3976,
+            "named_parts": 12,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram.txt",
+        "quads": {
+          "body": 4560,
+          "void": 0,
+          "glow": 1964,
+          "veins": 1018,
+          "halo": 24,
+          "total": 7566
+        },
+        "welded_vertices_body": 4490,
+        "welded_vertices_all": 4538,
+        "submitted_corners_per_frame": 30264,
+        "named_parts": 30,
+        "flares": 6,
+        "animation_groups": 5,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
+          "quads": {
+            "body": 550,
+            "void": 0,
+            "glow": 236,
+            "veins": 208,
+            "halo": 0,
+            "total": 994
+          },
+          "welded_vertices_body": 523,
+          "welded_vertices_all": 523,
+          "submitted_corners_per_frame": 3976,
+          "named_parts": 12,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 2514468,
+        "detail_texels": 1779452
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 290140,
+        "detail_texels": 31809
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 15003,
+        "detail_texels": 10908
+      },
+      "ambient_layers": [
+        "floating_halo (halo_ring)",
+        "verdict_disc (halo_ring)",
+        "glory (light_shafts)",
+        "light_pillar (light_shafts)",
+        "sparks (energy_arcs)",
+        "stud_flares (lens_flare)",
+        "sea_glass_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "vein_flow (vein_wave)",
+        "halo_turn (group_spin)",
+        "verdict_turn (group_spin)",
+        "sparks_run (group_spin)",
+        "glory_breath (group_breathe)",
+        "flare_pulse (flare_pulse)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "cardinal_descent",
+        "halo_throw",
+        "judgement_ring"
+      ],
+      "sound_loop": "nusmp:item.genesis.cardinal_halo.ring_loop",
+      "lod": {
+        "mesh": "cardinal_halo_chakram_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "fairy_glitter_gauntlets",
+      "name": "Fairy Glitter Gauntlets",
+      "grade": "GENESIS",
+      "kind": "dagger",
+      "meshes": {
+        "fairy_glitter_gauntlets": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
+          "quads": {
+            "body": 5184,
+            "void": 0,
+            "glow": 1058,
+            "veins": 476,
+            "halo": 24,
+            "total": 6742
+          },
+          "welded_vertices_body": 4702,
+          "welded_vertices_all": 4750,
+          "submitted_corners_per_frame": 26968,
+          "named_parts": 47,
+          "flares": 2,
+          "animation_groups": 8,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
+            "quads": {
+              "body": 640,
+              "void": 0,
+              "glow": 98,
+              "veins": 114,
+              "halo": 0,
+              "total": 852
+            },
+            "welded_vertices_body": 638,
+            "welded_vertices_all": 638,
+            "submitted_corners_per_frame": 3408,
+            "named_parts": 16,
+            "flares": 0,
+            "animation_groups": 2
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
+        "quads": {
+          "body": 5184,
+          "void": 0,
+          "glow": 1058,
+          "veins": 476,
+          "halo": 24,
+          "total": 6742
+        },
+        "welded_vertices_body": 4702,
+        "welded_vertices_all": 4750,
+        "submitted_corners_per_frame": 26968,
+        "named_parts": 47,
+        "flares": 2,
+        "animation_groups": 8,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
+          "quads": {
+            "body": 640,
+            "void": 0,
+            "glow": 98,
+            "veins": 114,
+            "halo": 0,
+            "total": 852
+          },
+          "welded_vertices_body": 638,
+          "welded_vertices_all": 638,
+          "submitted_corners_per_frame": 3408,
+          "named_parts": 16,
+          "flares": 0,
+          "animation_groups": 2
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3841752,
+        "detail_texels": 2211394
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 334389,
+        "detail_texels": 19773
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 54500,
+        "detail_texels": 38287
+      },
+      "ambient_layers": [
+        "fairy_wings (mesh_sway)",
+        "glitter_orbit (orbit_shards)",
+        "star_bursts (light_shafts)",
+        "law_ring (halo_ring)",
+        "sparkle_veil (energy_arcs)",
+        "star_flares (lens_flare)",
+        "glitter_motes (motes)",
+        "shoulder_glow (shoulder_glow)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "vein_flow (vein_wave)",
+        "glitter_orbit_l (group_spin)",
+        "glitter_orbit_r (group_spin)",
+        "wing_sway (group_sway)",
+        "law_turn (group_spin)",
+        "burst_breath (group_breathe)",
+        "veil_flicker (group_flicker)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "fairy_glitter",
+        "glitter_barrage",
+        "law_of_the_guild"
+      ],
+      "sound_loop": "nusmp:item.genesis.fairy_glitter.shimmer_loop",
+      "lod": {
+        "mesh": "fairy_glitter_gauntlets_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "gae_bolg_heartseeker",
+      "name": "Gae Bolg, Heart-Seeker",
+      "grade": "GENESIS",
+      "kind": "spear",
+      "meshes": {
+        "gae_bolg_heartseeker": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker.txt",
+          "quads": {
+            "body": 3865,
+            "void": 0,
+            "glow": 1494,
+            "veins": 446,
+            "halo": 18,
+            "total": 5823
+          },
+          "welded_vertices_body": 3576,
+          "welded_vertices_all": 3608,
+          "submitted_corners_per_frame": 23292,
+          "named_parts": 22,
+          "flares": 3,
+          "animation_groups": 6,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
+            "quads": {
+              "body": 443,
+              "void": 0,
+              "glow": 150,
+              "veins": 126,
+              "halo": 0,
+              "total": 719
+            },
+            "welded_vertices_body": 438,
+            "welded_vertices_all": 438,
+            "submitted_corners_per_frame": 2876,
+            "named_parts": 8,
+            "flares": 0,
+            "animation_groups": 1
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker.txt",
+        "quads": {
+          "body": 3865,
+          "void": 0,
+          "glow": 1494,
+          "veins": 446,
+          "halo": 18,
+          "total": 5823
+        },
+        "welded_vertices_body": 3576,
+        "welded_vertices_all": 3608,
+        "submitted_corners_per_frame": 23292,
+        "named_parts": 22,
+        "flares": 3,
+        "animation_groups": 6,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
+          "quads": {
+            "body": 443,
+            "void": 0,
+            "glow": 150,
+            "veins": 126,
+            "halo": 0,
+            "total": 719
+          },
+          "welded_vertices_body": 438,
+          "welded_vertices_all": 438,
+          "submitted_corners_per_frame": 2876,
+          "named_parts": 8,
+          "flares": 0,
+          "animation_groups": 1
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 1579648,
+        "detail_texels": 1125334
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 99565,
+        "detail_texels": 38199
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 35647,
+        "detail_texels": 19666
+      },
+      "ambient_layers": [
+        "thorn_crown (halo_ring)",
+        "blood_drops (orbit_shards)",
+        "rope_hair (mesh_sway)",
+        "heartbeat (light_shafts)",
+        "tip_beam (light_shafts)",
+        "wound_arcs (energy_arcs)",
+        "heart_flares (lens_flare)",
+        "blood_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "heartbeat (group_breathe)",
+        "glow_breath (glow_pulse)",
+        "wound_flow (vein_wave)",
+        "crown_turn (group_spin)",
+        "drops_orbit (group_spin)",
+        "hair_sway (group_sway)",
+        "arc_flicker (group_flicker)",
+        "beam_breath (group_breathe)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "heart_thrust",
+        "thirty_barbs",
+        "wound_that_will_not_close"
+      ],
+      "sound_loop": "nusmp:item.genesis.gae_bolg.heartbeat_loop",
+      "lod": {
+        "mesh": "gae_bolg_heartseeker_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "magic_emperors_black_halberd",
+      "name": "Magic Emperor's Black Halberd",
+      "grade": "GENESIS",
+      "kind": "glaive",
+      "meshes": {
+        "magic_emperors_black_halberd": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd.txt",
+          "quads": {
+            "body": 3534,
+            "void": 28,
+            "glow": 1075,
+            "veins": 1149,
+            "halo": 20,
+            "total": 5806
+          },
+          "welded_vertices_body": 3616,
+          "welded_vertices_all": 3720,
+          "submitted_corners_per_frame": 23224,
+          "named_parts": 22,
+          "flares": 4,
+          "animation_groups": 4,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
+            "quads": {
+              "body": 462,
+              "void": 10,
+              "glow": 157,
+              "veins": 211,
+              "halo": 0,
+              "total": 840
+            },
+            "welded_vertices_body": 476,
+            "welded_vertices_all": 504,
+            "submitted_corners_per_frame": 3360,
+            "named_parts": 13,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd.txt",
+        "quads": {
+          "body": 3534,
+          "void": 28,
+          "glow": 1075,
+          "veins": 1149,
+          "halo": 20,
+          "total": 5806
+        },
+        "welded_vertices_body": 3616,
+        "welded_vertices_all": 3720,
+        "submitted_corners_per_frame": 23224,
+        "named_parts": 22,
+        "flares": 4,
+        "animation_groups": 4,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
+          "quads": {
+            "body": 462,
+            "void": 10,
+            "glow": 157,
+            "veins": 211,
+            "halo": 0,
+            "total": 840
+          },
+          "welded_vertices_body": 476,
+          "welded_vertices_all": 504,
+          "submitted_corners_per_frame": 3360,
+          "named_parts": 13,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 1570852,
+        "detail_texels": 962919
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 61385,
+        "detail_texels": 24265
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 63189,
+        "detail_texels": 48509
+      },
+      "ambient_layers": [
+        "dark_triad (orbit_shards)",
+        "clover_rune (halo_ring)",
+        "void_rifts (distortion)",
+        "edge_glare (light_shafts)",
+        "rift_arcs (energy_arcs)",
+        "gem_flares (lens_flare)",
+        "dark_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "inlay_flow (vein_wave)",
+        "triad_orbit (group_spin)",
+        "clover_turn (group_spin)",
+        "rift_flicker (group_flicker)",
+        "glare_breath (group_breathe)",
+        "gem_pulse (flare_pulse)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "dark_triad",
+        "dimensional_rift",
+        "emperors_sweep"
+      ],
+      "sound_loop": "nusmp:item.genesis.black_halberd.void_hum_loop",
+      "lod": {
+        "mesh": "magic_emperors_black_halberd_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "primordial_hearth_blade",
+      "name": "Primordial Hearth Blade",
+      "grade": "GENESIS",
+      "kind": "dagger",
+      "meshes": {
+        "primordial_hearth_blade": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade.txt",
+          "quads": {
+            "body": 3338,
+            "void": 0,
+            "glow": 1580,
+            "veins": 865,
+            "halo": 32,
+            "total": 5815
+          },
+          "welded_vertices_body": 3214,
+          "welded_vertices_all": 3278,
+          "submitted_corners_per_frame": 23260,
+          "named_parts": 23,
+          "flares": 3,
+          "animation_groups": 6,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
+            "quads": {
+              "body": 478,
+              "void": 0,
+              "glow": 126,
+              "veins": 78,
+              "halo": 0,
+              "total": 682
+            },
+            "welded_vertices_body": 463,
+            "welded_vertices_all": 463,
+            "submitted_corners_per_frame": 2728,
+            "named_parts": 9,
+            "flares": 0,
+            "animation_groups": 1
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade.txt",
+        "quads": {
+          "body": 3338,
+          "void": 0,
+          "glow": 1580,
+          "veins": 865,
+          "halo": 32,
+          "total": 5815
+        },
+        "welded_vertices_body": 3214,
+        "welded_vertices_all": 3278,
+        "submitted_corners_per_frame": 23260,
+        "named_parts": 23,
+        "flares": 3,
+        "animation_groups": 6,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
+          "quads": {
+            "body": 478,
+            "void": 0,
+            "glow": 126,
+            "veins": 78,
+            "halo": 0,
+            "total": 682
+          },
+          "welded_vertices_body": 463,
+          "welded_vertices_all": 463,
+          "submitted_corners_per_frame": 2728,
+          "named_parts": 9,
+          "flares": 0,
+          "animation_groups": 1
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 2249206,
+        "detail_texels": 1254950
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 175565,
+        "detail_texels": 27560
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 86761,
+        "detail_texels": 14157
+      },
+      "ambient_layers": [
+        "blade_flames (light_shafts)",
+        "hearth_glow (light_shafts)",
+        "falna_ring (halo_ring)",
+        "embers (orbit_shards)",
+        "ribbons (mesh_sway)",
+        "sparks (energy_arcs)",
+        "hearth_flares (lens_flare)",
+        "embers_up (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "falna_flow (vein_wave)",
+        "tongues_flicker (group_flicker)",
+        "falna_turn (group_spin)",
+        "ember_orbit (group_spin)",
+        "ribbon_sway (group_sway)",
+        "hearth_breath (group_breathe)",
+        "spark_flicker (group_flicker)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "falna_flurry",
+        "goddess_blessing",
+        "hearth_dash"
+      ],
+      "sound_loop": "nusmp:item.genesis.hearth_blade.fire_loop",
+      "lod": {
+        "mesh": "primordial_hearth_blade_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "starforged_aeon_bow",
+      "name": "Starforged Aeon Bow",
+      "grade": "GENESIS",
+      "kind": "bow",
+      "meshes": {
+        "starforged_aeon_bow": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow.txt",
+          "quads": {
+            "body": 4282,
+            "void": 0,
+            "glow": 2246,
+            "veins": 338,
+            "halo": 32,
+            "total": 6898
+          },
+          "welded_vertices_body": 4072,
+          "welded_vertices_all": 4136,
+          "submitted_corners_per_frame": 27592,
+          "named_parts": 35,
+          "flares": 4,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
+            "quads": {
+              "body": 411,
+              "void": 0,
+              "glow": 142,
+              "veins": 94,
+              "halo": 0,
+              "total": 647
+            },
+            "welded_vertices_body": 403,
+            "welded_vertices_all": 403,
+            "submitted_corners_per_frame": 2588,
+            "named_parts": 16,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        },
+        "starforged_aeon_bow_pull1": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull1.txt",
+          "quads": {
+            "body": 4426,
+            "void": 0,
+            "glow": 2270,
+            "veins": 364,
+            "halo": 32,
+            "total": 7092
+          },
+          "welded_vertices_body": 4185,
+          "welded_vertices_all": 4249,
+          "submitted_corners_per_frame": 28368,
+          "named_parts": 35,
+          "flares": 4,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull1_lod.txt",
+            "quads": {
+              "body": 522,
+              "void": 0,
+              "glow": 166,
+              "veins": 108,
+              "halo": 0,
+              "total": 796
+            },
+            "welded_vertices_body": 488,
+            "welded_vertices_all": 488,
+            "submitted_corners_per_frame": 3184,
+            "named_parts": 16,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        },
+        "starforged_aeon_bow_pull2": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull2.txt",
+          "quads": {
+            "body": 4426,
+            "void": 0,
+            "glow": 2270,
+            "veins": 364,
+            "halo": 32,
+            "total": 7092
+          },
+          "welded_vertices_body": 4185,
+          "welded_vertices_all": 4249,
+          "submitted_corners_per_frame": 28368,
+          "named_parts": 35,
+          "flares": 4,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull2_lod.txt",
+            "quads": {
+              "body": 522,
+              "void": 0,
+              "glow": 166,
+              "veins": 108,
+              "halo": 0,
+              "total": 796
+            },
+            "welded_vertices_body": 488,
+            "welded_vertices_all": 488,
+            "submitted_corners_per_frame": 3184,
+            "named_parts": 16,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        },
+        "starforged_aeon_bow_pull3": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull3.txt",
+          "quads": {
+            "body": 4426,
+            "void": 0,
+            "glow": 2270,
+            "veins": 364,
+            "halo": 32,
+            "total": 7092
+          },
+          "welded_vertices_body": 4185,
+          "welded_vertices_all": 4249,
+          "submitted_corners_per_frame": 28368,
+          "named_parts": 35,
+          "flares": 4,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull3_lod.txt",
+            "quads": {
+              "body": 522,
+              "void": 0,
+              "glow": 166,
+              "veins": 108,
+              "halo": 0,
+              "total": 796
+            },
+            "welded_vertices_body": 488,
+            "welded_vertices_all": 488,
+            "submitted_corners_per_frame": 3184,
+            "named_parts": 16,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow.txt",
+        "quads": {
+          "body": 4282,
+          "void": 0,
+          "glow": 2246,
+          "veins": 338,
+          "halo": 32,
+          "total": 6898
+        },
+        "welded_vertices_body": 4072,
+        "welded_vertices_all": 4136,
+        "submitted_corners_per_frame": 27592,
+        "named_parts": 35,
+        "flares": 4,
+        "animation_groups": 5,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
+          "quads": {
+            "body": 411,
+            "void": 0,
+            "glow": 142,
+            "veins": 94,
+            "halo": 0,
+            "total": 647
+          },
+          "welded_vertices_body": 403,
+          "welded_vertices_all": 403,
+          "submitted_corners_per_frame": 2588,
+          "named_parts": 16,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3804275,
+        "detail_texels": 2450234
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 624381,
+        "detail_texels": 27949
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 36944,
+        "detail_texels": 11159
+      },
+      "ambient_layers": [
+        "orbit_stars (orbit_shards)",
+        "core_rays (light_shafts)",
+        "zodiac (halo_ring)",
+        "comet_tails (light_shafts)",
+        "twinkle (energy_arcs)",
+        "tip_flares (lens_flare)",
+        "star_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "comet_flow (vein_wave)",
+        "star_orbit (group_spin)",
+        "zodiac_turn (group_spin)",
+        "core_fan (group_spin)",
+        "tail_flicker (group_flicker)",
+        "twinkle (group_flicker)",
+        "core_breath (group_breathe)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "constellation_volley",
+        "meteor_arrow",
+        "starfall"
+      ],
+      "sound_loop": "nusmp:item.genesis.aeon_bow.starsong_loop",
+      "lod": {
+        "mesh": "starforged_aeon_bow_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "starsplitter_hammer",
+      "name": "Starsplitter Hammer",
+      "grade": "GENESIS",
+      "kind": "hammer",
+      "meshes": {
+        "starsplitter_hammer": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer.txt",
+          "quads": {
+            "body": 4286,
+            "void": 28,
+            "glow": 482,
+            "veins": 307,
+            "halo": 24,
+            "total": 5127
+          },
+          "welded_vertices_body": 4577,
+          "welded_vertices_all": 4655,
+          "submitted_corners_per_frame": 20508,
+          "named_parts": 26,
+          "flares": 2,
+          "animation_groups": 6,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer_lod.txt",
+            "quads": {
+              "body": 447,
+              "void": 28,
+              "glow": 43,
+              "veins": 39,
+              "halo": 0,
+              "total": 557
+            },
+            "welded_vertices_body": 470,
+            "welded_vertices_all": 500,
+            "submitted_corners_per_frame": 2228,
+            "named_parts": 10,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer.txt",
+        "quads": {
+          "body": 4286,
+          "void": 28,
+          "glow": 482,
+          "veins": 307,
+          "halo": 24,
+          "total": 5127
+        },
+        "welded_vertices_body": 4577,
+        "welded_vertices_all": 4655,
+        "submitted_corners_per_frame": 20508,
+        "named_parts": 26,
+        "flares": 2,
+        "animation_groups": 6,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer_lod.txt",
+          "quads": {
+            "body": 447,
+            "void": 28,
+            "glow": 43,
+            "veins": 39,
+            "halo": 0,
+            "total": 557
+          },
+          "welded_vertices_body": 470,
+          "welded_vertices_all": 500,
+          "submitted_corners_per_frame": 2228,
+          "named_parts": 10,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3814485,
+        "detail_texels": 3152943
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 32343,
+        "detail_texels": 18957
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 66221,
+        "detail_texels": 18117
+      },
+      "ambient_layers": [
+        "meteor_orbit (orbit_shards)",
+        "starmap (halo_ring)",
+        "gravity_ring (halo_ring)",
+        "face_glow (light_shafts)",
+        "void_cracks (distortion)",
+        "star_sparks (energy_arcs)",
+        "face_flares (lens_flare)",
+        "lanyard_sway (mesh_sway)",
+        "star_dust (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "rune_flow (vein_wave)",
+        "meteor_orbit (group_spin)",
+        "starmap_turn (group_spin)",
+        "gravity_breath (group_breathe)",
+        "face_breath (group_breathe)",
+        "spark_flicker (group_flicker)",
+        "chain_sway (group_sway)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "gravity_well",
+        "meteor_smash",
+        "starsplit"
+      ],
+      "sound_loop": "nusmp:item.genesis.starsplitter.night_loop",
+      "lod": {
+        "mesh": "starsplitter_hammer_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "sword_of_the_first_dawn",
+      "name": "Sword of the First Dawn",
+      "grade": "GENESIS",
+      "kind": "longsword",
+      "meshes": {
+        "sword_of_the_first_dawn": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn.txt",
+          "quads": {
+            "body": 4388,
+            "void": 0,
+            "glow": 1956,
+            "veins": 622,
+            "halo": 36,
+            "total": 7002
+          },
+          "welded_vertices_body": 3889,
+          "welded_vertices_all": 3961,
+          "submitted_corners_per_frame": 28008,
+          "named_parts": 36,
+          "flares": 4,
+          "animation_groups": 7,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
+            "quads": {
+              "body": 546,
+              "void": 0,
+              "glow": 224,
+              "veins": 68,
+              "halo": 0,
+              "total": 838
+            },
+            "welded_vertices_body": 474,
+            "welded_vertices_all": 474,
+            "submitted_corners_per_frame": 3352,
+            "named_parts": 12,
+            "flares": 0,
+            "animation_groups": 2
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn.txt",
+        "quads": {
+          "body": 4388,
+          "void": 0,
+          "glow": 1956,
+          "veins": 622,
+          "halo": 36,
+          "total": 7002
+        },
+        "welded_vertices_body": 3889,
+        "welded_vertices_all": 3961,
+        "submitted_corners_per_frame": 28008,
+        "named_parts": 36,
+        "flares": 4,
+        "animation_groups": 7,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
+          "quads": {
+            "body": 546,
+            "void": 0,
+            "glow": 224,
+            "veins": 68,
+            "halo": 0,
+            "total": 838
+          },
+          "welded_vertices_body": 474,
+          "welded_vertices_all": 474,
+          "submitted_corners_per_frame": 3352,
+          "named_parts": 12,
+          "flares": 0,
+          "animation_groups": 2
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 2177585,
+        "detail_texels": 1249989
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 282185,
+        "detail_texels": 26484
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 67727,
+        "detail_texels": 17929
+      },
+      "ambient_layers": [
+        "dawn_halo (orbit_shards)",
+        "sun_rays (light_shafts)",
+        "morning_shafts (light_shafts)",
+        "dawn_glow (light_shafts)",
+        "sparkles (energy_arcs)",
+        "sun_flares (lens_flare)",
+        "wing_sway (mesh_sway)",
+        "daylight_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "dawn_flow (vein_wave)",
+        "halo_turn (group_spin)",
+        "rays_turn (group_spin)",
+        "shaft_breath (group_breathe)",
+        "glow_column (group_breathe)",
+        "sparkle_flicker (group_flicker)",
+        "wing_sway (group_sway)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "dawnlight_cut",
+        "daybreak",
+        "first_light"
+      ],
+      "sound_loop": "nusmp:item.genesis.first_dawn.choir_loop",
+      "lod": {
+        "mesh": "sword_of_the_first_dawn_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "void_origin_katana",
+      "name": "Void Origin Katana",
+      "grade": "GENESIS",
+      "kind": "katana",
+      "meshes": {
+        "void_origin_katana": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana.txt",
+          "quads": {
+            "body": 3302,
+            "void": 36,
+            "glow": 1776,
+            "veins": 1277,
+            "halo": 20,
+            "total": 6411
+          },
+          "welded_vertices_body": 3219,
+          "welded_vertices_all": 3335,
+          "submitted_corners_per_frame": 25644,
+          "named_parts": 26,
+          "flares": 3,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana_lod.txt",
+            "quads": {
+              "body": 442,
+              "void": 12,
+              "glow": 195,
+              "veins": 113,
+              "halo": 0,
+              "total": 762
+            },
+            "welded_vertices_body": 380,
+            "welded_vertices_all": 408,
+            "submitted_corners_per_frame": 3048,
+            "named_parts": 12,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana.txt",
+        "quads": {
+          "body": 3302,
+          "void": 36,
+          "glow": 1776,
+          "veins": 1277,
+          "halo": 20,
+          "total": 6411
+        },
+        "welded_vertices_body": 3219,
+        "welded_vertices_all": 3335,
+        "submitted_corners_per_frame": 25644,
+        "named_parts": 26,
+        "flares": 3,
+        "animation_groups": 5,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana_lod.txt",
+          "quads": {
+            "body": 442,
+            "void": 12,
+            "glow": 195,
+            "veins": 113,
+            "halo": 0,
+            "total": 762
+          },
+          "welded_vertices_body": 380,
+          "welded_vertices_all": 408,
+          "submitted_corners_per_frame": 3048,
+          "named_parts": 12,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 1987186,
+        "detail_texels": 1033984
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 259708,
+        "detail_texels": 31873
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 33733,
+        "detail_texels": 7501
+      },
+      "ambient_layers": [
+        "void_flat (distortion)",
+        "rift_rings (orbit_rings)",
+        "rift_cards (halo_ring)",
+        "afterimage (light_shafts)",
+        "tsuba_runes (halo_ring)",
+        "tears (energy_arcs)",
+        "blade_flares (lens_flare)",
+        "void_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "hamon_flow (vein_wave)",
+        "rift_orbit (group_spin)",
+        "ring_counter (group_spin)",
+        "tsuba_turn (group_spin)",
+        "afterimage_flicker (group_flicker)",
+        "tear_flicker (group_flicker)",
+        "ring_breath (group_breathe)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "dimension_cut",
+        "void_step",
+        "world_sever"
+      ],
+      "sound_loop": "nusmp:item.genesis.void_origin.absence_loop",
+      "lod": {
+        "mesh": "void_origin_katana_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "nekrathuls_pact_scythe",
+      "name": "Nekrathul's Pact Scythe",
+      "grade": "GENESIS",
+      "kind": "scythe",
+      "meshes": {
+        "nekrathuls_pact_scythe": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
+          "quads": {
+            "body": 4225,
+            "void": 40,
+            "glow": 754,
+            "veins": 572,
+            "halo": 18,
+            "total": 5609
+          },
+          "welded_vertices_body": 4366,
+          "welded_vertices_all": 4486,
+          "submitted_corners_per_frame": 22436,
+          "named_parts": 26,
+          "flares": 6,
+          "animation_groups": 6,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
+            "quads": {
+              "body": 489,
+              "void": 12,
+              "glow": 165,
+              "veins": 151,
+              "halo": 0,
+              "total": 817
+            },
+            "welded_vertices_body": 494,
+            "welded_vertices_all": 522,
+            "submitted_corners_per_frame": 3268,
+            "named_parts": 11,
+            "flares": 0,
+            "animation_groups": 1
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
+        "quads": {
+          "body": 4225,
+          "void": 40,
+          "glow": 754,
+          "veins": 572,
+          "halo": 18,
+          "total": 5609
+        },
+        "welded_vertices_body": 4366,
+        "welded_vertices_all": 4486,
+        "submitted_corners_per_frame": 22436,
+        "named_parts": 26,
+        "flares": 6,
+        "animation_groups": 6,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
+          "quads": {
+            "body": 489,
+            "void": 12,
+            "glow": 165,
+            "veins": 151,
+            "halo": 0,
+            "total": 817
+          },
+          "welded_vertices_body": 494,
+          "welded_vertices_all": 522,
+          "submitted_corners_per_frame": 3268,
+          "named_parts": 11,
+          "flares": 0,
+          "animation_groups": 1
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 1780973,
+        "detail_texels": 1094500
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 33123,
+        "detail_texels": 8343
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 68150,
+        "detail_texels": 49310
+      },
+      "ambient_layers": [
+        "souls (orbit_shards)",
+        "pact_seal (halo_ring)",
+        "void_blade (distortion)",
+        "edge_glow (light_shafts)",
+        "pact_arcs (energy_arcs)",
+        "contract_strips (mesh_sway)",
+        "pact_chain (mesh_sway)",
+        "mask_flares (lens_flare)",
+        "soul_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "clause_flow (vein_wave)",
+        "soul_orbit (group_spin)",
+        "seal_turn (group_spin)",
+        "arc_flicker (group_flicker)",
+        "edge_breath (group_breathe)",
+        "contract_sway (group_sway)",
+        "chain_sway (group_sway)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "pact_breaking_reap",
+        "soul_tithe"
+      ],
+      "sound_loop": "nusmp:item.genesis.pact_scythe.whisper_loop",
+      "lod": {
+        "mesh": "nekrathuls_pact_scythe_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    },
+    {
+      "id": "elsdocia",
+      "name": "Elsdocia",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "meshes": {
+        "elsdocia": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia.txt",
+          "quads": {
+            "body": 5014,
+            "void": 0,
+            "glow": 2666,
+            "veins": 1529,
+            "halo": 26,
+            "total": 9235
+          },
+          "welded_vertices_body": 4999,
+          "welded_vertices_all": 5051,
+          "submitted_corners_per_frame": 36940,
+          "named_parts": 31,
+          "flares": 4,
+          "animation_groups": 5,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia_lod.txt",
+            "quads": {
+              "body": 408,
+              "void": 0,
+              "glow": 162,
+              "veins": 154,
+              "halo": 0,
+              "total": 724
+            },
+            "welded_vertices_body": 367,
+            "welded_vertices_all": 367,
+            "submitted_corners_per_frame": 2896,
+            "named_parts": 11,
+            "flares": 0,
+            "animation_groups": 0
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia.txt",
+        "quads": {
+          "body": 5014,
+          "void": 0,
+          "glow": 2666,
+          "veins": 1529,
+          "halo": 26,
+          "total": 9235
+        },
+        "welded_vertices_body": 4999,
+        "welded_vertices_all": 5051,
+        "submitted_corners_per_frame": 36940,
+        "named_parts": 31,
+        "flares": 4,
+        "animation_groups": 5,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia_lod.txt",
+          "quads": {
+            "body": 408,
+            "void": 0,
+            "glow": 162,
+            "veins": 154,
+            "halo": 0,
+            "total": 724
+          },
+          "welded_vertices_body": 367,
+          "welded_vertices_all": 367,
+          "submitted_corners_per_frame": 2896,
+          "named_parts": 11,
+          "flares": 0,
+          "animation_groups": 0
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 5,
+      "emissive_passes": [
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3833232,
+        "detail_texels": 1765273
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 661416,
+        "detail_texels": 83337
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 113435,
+        "detail_texels": 46065
+      },
+      "ambient_layers": [
+        "crystal_shards (orbit_shards)",
+        "wizard_circle (halo_ring)",
+        "blade_light (light_shafts)",
+        "crack_light (light_shafts)",
+        "glints (energy_arcs)",
+        "gem_flares (lens_flare)",
+        "crystal_dust (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "crack_flow (vein_wave)",
+        "shard_orbit (group_spin)",
+        "circle_turn (group_spin)",
+        "column_breath (group_breathe)",
+        "lancet_flicker (group_flicker)",
+        "glint_flicker (group_flicker)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "legacy_gate",
+        "legacy_release"
+      ],
+      "sound_loop": "nusmp:item.genesis.elsdocia.crystal_hum_loop",
+      "lod": {
+        "mesh": "elsdocia_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    }
+  ],
+  "score": {
+    "weights": {
+      "mesh": 0.35,
+      "texture": 0.2,
+      "glow": 0.15,
+      "ambient": 0.2,
+      "anim": 0.1
+    },
+    "items": [
+      {
+        "id": "astralis_the_eye_of_the_universe",
+        "before": {
+          "mesh": 2124,
+          "texture": 196086,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 334760
+        },
+        "after": {
+          "mesh": 5360,
+          "texture": 2347276,
+          "glow": 4,
+          "ambient": 10,
+          "anim": 11,
+          "painted": 3761918
+        },
+        "ratios": {
+          "mesh": 2.52,
+          "texture": 11.97,
+          "glow": 2.0,
+          "ambient": 5.0,
+          "anim": 11.0
+        },
+        "painted_texel_ratio": 11.24,
+        "V_before": 1.0,
+        "V_after": 5.68,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 2.52,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "blackrazor",
+        "before": {
+          "mesh": 854,
+          "texture": 39138,
+          "glow": 3,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 121722
+        },
+        "after": {
+          "mesh": 4822,
+          "texture": 1997130,
+          "glow": 5,
+          "ambient": 8,
+          "anim": 9,
+          "painted": 4010910
+        },
+        "ratios": {
+          "mesh": 5.65,
+          "texture": 51.03,
+          "glow": 1.67,
+          "ambient": 4.0,
+          "anim": 9.0
+        },
+        "painted_texel_ratio": 32.95,
+        "V_before": 1.0,
+        "V_after": 14.13,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 5.65,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "cardinal_halo_chakram",
+        "before": {
+          "mesh": 1224,
+          "texture": 83238,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 189770
+        },
+        "after": {
+          "mesh": 4560,
+          "texture": 1779452,
+          "glow": 4,
+          "ambient": 8,
+          "anim": 9,
+          "painted": 2514468
+        },
+        "ratios": {
+          "mesh": 3.73,
+          "texture": 21.38,
+          "glow": 2.0,
+          "ambient": 4.0,
+          "anim": 9.0
+        },
+        "painted_texel_ratio": 13.25,
+        "V_before": 1.0,
+        "V_after": 7.58,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.73,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "fairy_glitter_gauntlets",
+        "before": {
+          "mesh": 1200,
+          "texture": 81490,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 202059
+        },
+        "after": {
+          "mesh": 5184,
+          "texture": 2211394,
+          "glow": 4,
+          "ambient": 9,
+          "anim": 10,
+          "painted": 3841752
+        },
+        "ratios": {
+          "mesh": 4.32,
+          "texture": 27.14,
+          "glow": 2.0,
+          "ambient": 4.5,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 19.01,
+        "V_before": 1.0,
+        "V_after": 9.14,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 4.32,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "gae_bolg_heartseeker",
+        "before": {
+          "mesh": 1202,
+          "texture": 28619,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 90584
+        },
+        "after": {
+          "mesh": 3865,
+          "texture": 1125334,
+          "glow": 4,
+          "ambient": 9,
+          "anim": 10,
+          "painted": 1579648
+        },
+        "ratios": {
+          "mesh": 3.22,
+          "texture": 39.32,
+          "glow": 2.0,
+          "ambient": 4.5,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 17.44,
+        "V_before": 1.0,
+        "V_after": 11.19,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.22,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "magic_emperors_black_halberd",
+        "before": {
+          "mesh": 823,
+          "texture": 14778,
+          "glow": 3,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 56548
+        },
+        "after": {
+          "mesh": 3534,
+          "texture": 962919,
+          "glow": 5,
+          "ambient": 8,
+          "anim": 9,
+          "painted": 1570852
+        },
+        "ratios": {
+          "mesh": 4.29,
+          "texture": 65.16,
+          "glow": 1.67,
+          "ambient": 4.0,
+          "anim": 9.0
+        },
+        "painted_texel_ratio": 27.78,
+        "V_before": 1.0,
+        "V_after": 16.48,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 4.29,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "primordial_hearth_blade",
+        "before": {
+          "mesh": 692,
+          "texture": 34372,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 114144
+        },
+        "after": {
+          "mesh": 3338,
+          "texture": 1254950,
+          "glow": 4,
+          "ambient": 9,
+          "anim": 10,
+          "painted": 2249206
+        },
+        "ratios": {
+          "mesh": 4.82,
+          "texture": 36.51,
+          "glow": 2.0,
+          "ambient": 4.5,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 19.7,
+        "V_before": 1.0,
+        "V_after": 11.19,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 4.82,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "starforged_aeon_bow",
+        "before": {
+          "mesh": 1100,
+          "texture": 82543,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 170261
+        },
+        "after": {
+          "mesh": 4282,
+          "texture": 2450234,
+          "glow": 4,
+          "ambient": 8,
+          "anim": 10,
+          "painted": 3804275
+        },
+        "ratios": {
+          "mesh": 3.89,
+          "texture": 29.68,
+          "glow": 2.0,
+          "ambient": 4.0,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 22.34,
+        "V_before": 1.0,
+        "V_after": 9.4,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.89,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "starsplitter_hammer",
+        "before": {
+          "mesh": 840,
+          "texture": 55080,
+          "glow": 3,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 104943
+        },
+        "after": {
+          "mesh": 4286,
+          "texture": 3152943,
+          "glow": 5,
+          "ambient": 10,
+          "anim": 10,
+          "painted": 3814485
+        },
+        "ratios": {
+          "mesh": 5.1,
+          "texture": 57.24,
+          "glow": 1.67,
+          "ambient": 5.0,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 36.35,
+        "V_before": 1.0,
+        "V_after": 15.48,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 5.1,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "sword_of_the_first_dawn",
+        "before": {
+          "mesh": 1368,
+          "texture": 36471,
+          "glow": 2,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 86160
+        },
+        "after": {
+          "mesh": 4388,
+          "texture": 1249989,
+          "glow": 4,
+          "ambient": 9,
+          "anim": 10,
+          "painted": 2177585
+        },
+        "ratios": {
+          "mesh": 3.21,
+          "texture": 34.27,
+          "glow": 2.0,
+          "ambient": 4.5,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 25.27,
+        "V_before": 1.0,
+        "V_after": 10.18,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.21,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "void_origin_katana",
+        "before": {
+          "mesh": 842,
+          "texture": 13755,
+          "glow": 3,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 74723
+        },
+        "after": {
+          "mesh": 3302,
+          "texture": 1033984,
+          "glow": 5,
+          "ambient": 9,
+          "anim": 10,
+          "painted": 1987186
+        },
+        "ratios": {
+          "mesh": 3.92,
+          "texture": 75.17,
+          "glow": 1.67,
+          "ambient": 4.5,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 26.59,
+        "V_before": 1.0,
+        "V_after": 18.56,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.92,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "nekrathuls_pact_scythe",
+        "before": {
+          "mesh": 1144,
+          "texture": 38434,
+          "glow": 3,
+          "ambient": 2,
+          "anim": 1,
+          "painted": 88489
+        },
+        "after": {
+          "mesh": 4225,
+          "texture": 1094500,
+          "glow": 5,
+          "ambient": 10,
+          "anim": 10,
+          "painted": 1780973
+        },
+        "ratios": {
+          "mesh": 3.69,
+          "texture": 28.48,
+          "glow": 1.67,
+          "ambient": 5.0,
+          "anim": 10.0
+        },
+        "painted_texel_ratio": 20.13,
+        "V_before": 1.0,
+        "V_after": 9.24,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 3.69,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      },
+      {
+        "id": "elsdocia",
+        "before": {
+          "mesh": 3896,
+          "texture": 184547,
+          "glow": 3,
+          "ambient": 3,
+          "anim": 1,
+          "painted": 715167
+        },
+        "after": {
+          "mesh": 5014,
+          "texture": 1765273,
+          "glow": 4,
+          "ambient": 8,
+          "anim": 9,
+          "painted": 3833232
+        },
+        "ratios": {
+          "mesh": 1.29,
+          "texture": 9.57,
+          "glow": 1.33,
+          "ambient": 2.67,
+          "anim": 9.0
+        },
+        "painted_texel_ratio": 5.36,
+        "V_before": 1.0,
+        "V_after": 4.0,
+        "V_ratio_ge_20": false,
+        "mesh_ratio": 1.29,
+        "mesh_cap_note": "bounded by the 6000 welded vertex cap",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      }
+    ],
+    "notes": []
+  }
+}
