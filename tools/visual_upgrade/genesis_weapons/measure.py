@@ -79,6 +79,8 @@ def mesh_block(path):
         "welded_vertices_all": welded_vertices(d["quads"]),
         "submitted_corners_per_frame": 4 * sum(q.values()),
         "named_parts": parts,
+        "flares": len(d["flares"]),
+        "animation_groups": len({g for (_l, g, _P, _u, _n) in d["quads"] if g and g != "-"}),
     }
 
 
@@ -140,6 +142,8 @@ def new_item(item_id):
         passes.append("energy_veins_translucent_wave")
     if rest["quads"]["halo"]:
         passes.append("halo_shafts_additive")
+    if rest.get("flares"):
+        passes.append("flare_billboards_additive")
     skin_name = load_skin_name(item_id)
     skin = texel_stats(os.path.join(VU_TEX, skin_name + ".png"))
     glow = texel_stats(os.path.join(VU_TEX, skin_name + "_glow.png"))

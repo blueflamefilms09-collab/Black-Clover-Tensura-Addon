@@ -1,0 +1,402 @@
+{
+ "id": "fairy_glitter_gauntlets",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "fairy_glitter_gauntlets",
+ "lod": {
+  "mesh": "fairy_glitter_gauntlets_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "fairy_wings",
+   "kind": "mesh_sway",
+   "group": "wing_l",
+   "note": "two pairs of feathered wings sway at the cuffs"
+  },
+  {
+   "id": "glitter_orbit",
+   "kind": "orbit_shards",
+   "group": "glitter_l",
+   "note": "a spiral of crystal glitter circling each fist, counter-rotating"
+  },
+  {
+   "id": "star_bursts",
+   "kind": "light_shafts",
+   "group": "burst_l",
+   "note": "a turning fan of rays behind each guild star"
+  },
+  {
+   "id": "law_ring",
+   "kind": "halo_ring",
+   "group": "law",
+   "note": "the Fairy Law: a rune ring over both fists"
+  },
+  {
+   "id": "sparkle_veil",
+   "kind": "energy_arcs",
+   "group": "veil",
+   "note": "a veil of sparkles flickering between the hands"
+  },
+  {
+   "id": "star_flares",
+   "kind": "lens_flare",
+   "flares": "stars",
+   "note": "star flares on both guild stars"
+  },
+  {
+   "id": "glitter_motes",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "FFE8A0",
+   "where": "blade",
+   "rate": 0.8,
+   "radius": 0.6,
+   "note": "glitter falling from the fists"
+  },
+  {
+   "id": "shoulder_glow",
+   "kind": "shoulder_glow",
+   "particle": "dust",
+   "rgb": "FFD070",
+   "rate": 0.4,
+   "note": "a warm glow at the shoulders"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "FFE8A0",
+   "radius": 1.0,
+   "note": "a ring of gold glitter on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "vein_flow",
+   "kind": "vein_wave",
+   "note": "light runs through the filigree of the vambraces"
+  },
+  {
+   "id": "glitter_orbit_l",
+   "kind": "group_spin",
+   "group": "glitter_l"
+  },
+  {
+   "id": "glitter_orbit_r",
+   "kind": "group_spin",
+   "group": "glitter_r"
+  },
+  {
+   "id": "wing_sway",
+   "kind": "group_sway",
+   "group": "wing_l"
+  },
+  {
+   "id": "law_turn",
+   "kind": "group_spin",
+   "group": "law"
+  },
+  {
+   "id": "burst_breath",
+   "kind": "group_breathe",
+   "group": "burst_l"
+  },
+  {
+   "id": "veil_flicker",
+   "kind": "group_flicker",
+   "group": "veil"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "FFE8A0",
+  "groups": [
+   "wing_l",
+   "wing_r",
+   "glitter_l",
+   "glitter_r",
+   "law"
+  ],
+  "note": "the wings unfold and the glitter spirals out as the gauntlets are drawn"
+ },
+ "swing": {
+  "trail": "glitter",
+  "rgb": "FFE8A0",
+  "rgb2": "FFFFFF",
+  "length": 0.8,
+  "width": 0.3,
+  "life": 8,
+  "particles": "glitter"
+ },
+ "acts": {
+  "glitter_barrage": {
+   "burst": "glitter_barrage",
+   "pattern": "cone",
+   "rgb": "FFE8A0",
+   "ring": 4.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.fairy_glitter.barrage"
+  },
+  "fairy_glitter": {
+   "burst": "fairy_glitter",
+   "pattern": "nova",
+   "rgb": "FFFFFF",
+   "ring": 5.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.fairy_glitter.glitter"
+  },
+  "law_of_the_guild": {
+   "burst": "guild_law",
+   "pattern": "ring",
+   "rgb": "FFD070",
+   "ring": 5.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.fairy_glitter.law"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.fairy_glitter.shimmer_loop",
+ "flares": 2,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.18,
+  "min": 0.5,
+  "max": 1.0
+ },
+ "groups": {
+  "wing_l": {
+   "pivot": [
+    -19.0,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": -3.5,
+     "period": 110.0,
+     "phase": -0.2
+    }
+   ],
+   "lodSkip": false,
+   "draw": {
+    "from_scale": 0.15,
+    "delay": 2,
+    "ticks": 14
+   }
+  },
+  "glitter_l": {
+   "pivot": [
+    -12.0,
+    34.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -70.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.4,
+     "period": 70.0,
+     "phase": -0.3
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 4,
+    "ticks": 14
+   }
+  },
+  "burst_l": {
+   "pivot": [
+    -12.0,
+    34.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.8,
+     "period": 70.0,
+     "phase": -0.25
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -14.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE8A0",
+   "alpha": 0.5
+  },
+  "wing_r": {
+   "pivot": [
+    19.0,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 3.5,
+     "period": 110.0,
+     "phase": 0.2
+    }
+   ],
+   "lodSkip": false,
+   "draw": {
+    "from_scale": 0.15,
+    "delay": 2,
+    "ticks": 14
+   }
+  },
+  "glitter_r": {
+   "pivot": [
+    12.0,
+    34.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 70.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.4,
+     "period": 70.0,
+     "phase": 0.3
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 4,
+    "ticks": 14
+   }
+  },
+  "burst_r": {
+   "pivot": [
+    12.0,
+    34.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.8,
+     "period": 70.0,
+     "phase": 0.25
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 14.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE8A0",
+   "alpha": 0.5
+  },
+  "law": {
+   "pivot": [
+    0.0,
+    33.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -12.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.7,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFD070",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 6,
+    "ticks": 14
+   },
+   "alpha": 0.8
+  },
+  "veil": {
+   "pivot": [
+    0.0,
+    30.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.1,
+     "max": 0.9,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFFFFF",
+   "alpha": 0.9
+  }
+ }
+}

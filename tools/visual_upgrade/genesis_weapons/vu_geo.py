@@ -219,7 +219,7 @@ def feather(it, p, root, direction, length, width, thick=0.25, curl=0.0, side=(0
     s = unit(np.asarray(side, float) - d * np.dot(side, d))
     r0 = np.asarray(root, float)
     pts = []
-    m = it.n(n, 4)
+    m = it.n(n, 3)
     for i in range(m + 1):
         t = i / m
         pts.append(tuple(r0 + d * length * t + s * curl * length * t * t))
@@ -292,6 +292,7 @@ def card(it, name, group, center, u_vec, v_vec, hw, hh, cell="glow", tint=None, 
         p = it.part(name, "steel", layer=4, group=group, smooth=0.0)
         p.cell = cell
         p.cardUV = []
+        p.ensure_outward = lambda: False                      # two crossed faces look closed to the winding check; a card must keep both windings as built
     c = np.asarray(center, float)
     uu, vv = unit(u_vec), unit(v_vec)
     corners = [c - uu * hw - vv * hh, c + uu * hw - vv * hh, c + uu * hw + vv * hh, c - uu * hw + vv * hh]

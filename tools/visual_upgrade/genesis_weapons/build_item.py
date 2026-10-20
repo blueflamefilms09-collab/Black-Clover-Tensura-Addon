@@ -42,26 +42,29 @@ def run(item_id, preview=False, quiet=False):
     states = getattr(mod, "STATES", [(item_id, "")])
     spec_groups, spec_extra = {}, {}
     results = []
-    rest_atlas_cache = None
+    rest = rest_lod = None
     for (mesh_id, state) in states:
         full = build_state(mod, item_id, mesh_id, state, False)
         nq = _quads(full)
-        # the level-of-detail mesh: a detail factor that brings it to <= 15 % of the full body quads (the LOD never has more than the cap)
         lod = None
-        for d in (0.16, 0.12, 0.09, 0.07, 0.055, 0.045):
-            lod = build_state(mod, item_id, mesh_id, state, True, d)
-            if _quads(lod) <= LOD_MAX_RATIO * nq:
-                break
-        skin = item_id if state == "" or len(states) == 1 else item_id
-        atlas = full.finish(None, None)
-        lod_atlas = lod.finish(None, None)
-        tag = item_id + ("" if mesh_id == item_id else mesh_id[len(item_id):])
-        # a state mesh (a bow's draw stage) shares the skin of the rest mesh; only the rest mesh writes textures
-        if mesh_id == item_id:
+        if rest is None:
+            for d in (0.16, 0.12, 0.09, 0.07, 0.055, 0.045):
+                lod = build_state(mod, item_id, mesh_id, state, True, d)
+                lod_d = d
+                if _quads(lod) <= LOD_MAX_RATIO * nq:
+                    break
+        else:
+            lod = build_state(mod, item_id, mesh_id, state, True, lod_d)          # a state mesh has the topology of the rest mesh, so the same detail level
+        if rest is None:                                                       # the rest mesh lays out and paints the skin; a state mesh (a draw stage) shares it
+            atlas = full.finish(None, None)
+            lod_atlas = lod.finish(None, None)
+            rest, rest_lod = full, lod
             vi.save_textures(atlas, VU_TEX, item_id)
             vi.save_textures(lod_atlas, VU_TEX, item_id + "_lod", half_glow=False)
-        place = full.old_place
-        ox, oy, ang, sc, ymin = place
+        else:
+            atlas = full.adopt_uv(rest)
+            lod_atlas = lod.adopt_uv(rest_lod)
+        ox, oy, ang, sc, ymin = full.old_place
         y0 = full.core[0] if full.core and full.core[0] is not None else ymin
         counts = vi.write_vu(full, atlas, os.path.join(VU_MESH, mesh_id + ".txt"), item_id, mesh_id + "_lod", (ox, oy, ang, sc, y0))
         lcounts = vi.write_vu(lod, lod_atlas, os.path.join(VU_MESH, mesh_id + "_lod.txt"), item_id + "_lod", None, (ox, oy, ang, sc, y0))

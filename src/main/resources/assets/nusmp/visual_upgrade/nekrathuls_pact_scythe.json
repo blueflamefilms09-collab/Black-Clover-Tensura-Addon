@@ -1,0 +1,339 @@
+{
+ "id": "nekrathuls_pact_scythe",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "nekrathuls_pact_scythe",
+ "lod": {
+  "mesh": "nekrathuls_pact_scythe_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "souls",
+   "kind": "orbit_shards",
+   "group": "souls",
+   "note": "seven souls circling inside the crescent"
+  },
+  {
+   "id": "pact_seal",
+   "kind": "halo_ring",
+   "group": "seal",
+   "note": "a seal circle of the pact (runes and a hexagon) turning behind the head, both faces"
+  },
+  {
+   "id": "void_blade",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "the void the Pact-Breaker opened runs through the blade (reality shimmer)"
+  },
+  {
+   "id": "edge_glow",
+   "kind": "light_shafts",
+   "group": "edge_glow",
+   "note": "a violet glow along the cutting edge, breathing"
+  },
+  {
+   "id": "pact_arcs",
+   "kind": "energy_arcs",
+   "group": "arcs",
+   "note": "four flickering arcs of pact-light round the crescent"
+  },
+  {
+   "id": "contract_strips",
+   "kind": "mesh_sway",
+   "group": "contracts",
+   "note": "five parchment contracts stream and sway from the collar"
+  },
+  {
+   "id": "pact_chain",
+   "kind": "mesh_sway",
+   "group": "chain",
+   "note": "the chain with its wax seal swings from the point"
+  },
+  {
+   "id": "mask_flares",
+   "kind": "lens_flare",
+   "flares": "mask eyes, point",
+   "note": "star flares in the devil's eyes and at the point"
+  },
+  {
+   "id": "soul_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "C070FF",
+   "where": "blade",
+   "rate": 0.6,
+   "radius": 2.0,
+   "note": "violet soul motes rising off the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "A04AFF",
+   "radius": 1.0,
+   "note": "a ring of violet motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "clause_flow",
+   "kind": "vein_wave",
+   "note": "light runs through the clauses on the snath and the blade"
+  },
+  {
+   "id": "soul_orbit",
+   "kind": "group_spin",
+   "group": "souls"
+  },
+  {
+   "id": "seal_turn",
+   "kind": "group_spin",
+   "group": "seal"
+  },
+  {
+   "id": "arc_flicker",
+   "kind": "group_flicker",
+   "group": "arcs"
+  },
+  {
+   "id": "edge_breath",
+   "kind": "group_breathe",
+   "group": "edge_glow"
+  },
+  {
+   "id": "contract_sway",
+   "kind": "group_sway",
+   "group": "contracts"
+  },
+  {
+   "id": "chain_sway",
+   "kind": "group_sway",
+   "group": "chain"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "C070FF",
+  "groups": [
+   "souls",
+   "seal"
+  ],
+  "note": "the seal circle unfolds behind the head and the souls spiral in as the scythe is drawn"
+ },
+ "swing": {
+  "trail": "reaping_arc",
+  "rgb": "C070FF",
+  "rgb2": "1C0E2C",
+  "length": 2.4,
+  "width": 0.5,
+  "life": 13,
+  "particles": "soul_mote"
+ },
+ "acts": {
+  "pact_breaking_reap": {
+   "burst": "pact_reap",
+   "pattern": "cone",
+   "rgb": "C070FF",
+   "ring": 7.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.pact_scythe.reap"
+  },
+  "soul_tithe": {
+   "burst": "soul_tithe",
+   "pattern": "inward",
+   "rgb": "A04AFF",
+   "ring": 4.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.pact_scythe.tithe"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.pact_scythe.whisper_loop",
+ "flares": 6,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.16,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "chain": {
+   "pivot": [
+    -62.0,
+    176.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 3.0,
+     "period": 90.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 4.0,
+     "period": 70.0
+    }
+   ],
+   "lodSkip": true
+  },
+  "contracts": {
+   "pivot": [
+    0.0,
+    200.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 6.0,
+     "period": 55.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 5.0,
+     "period": 80.0,
+     "phase": 0.4
+    }
+   ],
+   "lodSkip": false
+  },
+  "souls": {
+   "pivot": [
+    -30.0,
+    182.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 30.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "amp": 1.4,
+     "period": 110.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 14
+   }
+  },
+  "seal": {
+   "pivot": [
+    -30.0,
+    176.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -8.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.25,
+     "max": 0.6,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "B070FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.6
+  },
+  "edge_glow": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.6,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "C070FF",
+   "alpha": 0.7
+  },
+  "arcs": {
+   "pivot": [
+    -30.0,
+    198.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 40.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "D8A8FF",
+   "alpha": 0.9
+  }
+ }
+}

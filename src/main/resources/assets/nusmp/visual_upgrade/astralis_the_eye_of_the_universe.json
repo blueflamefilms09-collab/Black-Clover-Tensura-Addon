@@ -1,0 +1,418 @@
+{
+ "id": "astralis_the_eye_of_the_universe",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "astralis_the_eye_of_the_universe",
+ "lod": {
+  "mesh": "astralis_the_eye_of_the_universe_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "armillary",
+   "kind": "orbit_rings",
+   "group": "ring_a",
+   "note": "three rings of an armillary, each turning about its own axis, carrying planets"
+  },
+  {
+   "id": "star_shards",
+   "kind": "orbit_shards",
+   "group": "stars",
+   "note": "nineteen crystal stars spiralling round the staff"
+  },
+  {
+   "id": "zodiac",
+   "kind": "halo_ring",
+   "group": "zodiac",
+   "note": "a rune zodiac turning behind the eye"
+  },
+  {
+   "id": "eye_aura",
+   "kind": "light_shafts",
+   "group": "eye_aura",
+   "note": "a breathing aura and a fan of rays round the eye"
+  },
+  {
+   "id": "starlight_pillar",
+   "kind": "light_shafts",
+   "group": "pillar",
+   "note": "a pillar of starlight down the staff"
+  },
+  {
+   "id": "comets",
+   "kind": "energy_arcs",
+   "group": "comets",
+   "note": "three comet streaks circling the eye, flickering"
+  },
+  {
+   "id": "eye_flares",
+   "kind": "lens_flare",
+   "flares": "eye",
+   "note": "star flares in both faces of the eye"
+  },
+  {
+   "id": "wing_sway",
+   "kind": "mesh_sway",
+   "group": "wing_l",
+   "note": "the filigree wings sway"
+  },
+  {
+   "id": "star_motes",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "C48CFF",
+   "where": "head",
+   "rate": 0.6,
+   "note": "glints of starlight drifting off the head"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "7A3CC8",
+   "radius": 1.0,
+   "note": "a ring of purple stars on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "constellation_flow",
+   "kind": "vein_wave",
+   "note": "light runs through the star chart"
+  },
+  {
+   "id": "ring_a_turn",
+   "kind": "group_spin",
+   "group": "ring_a"
+  },
+  {
+   "id": "ring_b_turn",
+   "kind": "group_spin",
+   "group": "ring_b"
+  },
+  {
+   "id": "ring_c_turn",
+   "kind": "group_spin",
+   "group": "ring_c"
+  },
+  {
+   "id": "shard_orbit",
+   "kind": "group_spin",
+   "group": "stars"
+  },
+  {
+   "id": "zodiac_turn",
+   "kind": "group_spin",
+   "group": "zodiac"
+  },
+  {
+   "id": "wing_sway",
+   "kind": "group_sway",
+   "group": "wing_l"
+  },
+  {
+   "id": "eye_breath",
+   "kind": "group_breathe",
+   "group": "eye_aura"
+  }
+ ],
+ "draw": {
+  "ticks": 18,
+  "flash": "C48CFF",
+  "groups": [
+   "ring_a",
+   "ring_b",
+   "ring_c",
+   "stars",
+   "zodiac"
+  ],
+  "note": "the armillary opens ring by ring and the star shards spiral out when the staff is drawn"
+ },
+ "swing": {
+  "trail": "starlight",
+  "rgb": "C48CFF",
+  "rgb2": "7A3CC8",
+  "length": 1.0,
+  "width": 0.3,
+  "life": 9,
+  "particles": "glint"
+ },
+ "acts": {
+  "astral_cast": {
+   "burst": "blinding_stars",
+   "pattern": "nova",
+   "rgb": "E0E8FF",
+   "ring": 4.0,
+   "particles": 36,
+   "sound": "nusmp:item.genesis.astralis.cast"
+  },
+  "astral_pick": {
+   "burst": "constellation_ring",
+   "pattern": "ring",
+   "rgb": "C48CFF",
+   "ring": 2.5,
+   "particles": 22,
+   "sound": "nusmp:item.genesis.astralis.pick"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.astralis.hum_loop",
+ "flares": 3,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.14,
+  "min": 0.55,
+  "max": 1.0
+ },
+ "groups": {
+  "ring_a": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 18.0,
+     "phase": 0.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.2,
+    "delay": 0,
+    "ticks": 14
+   }
+  },
+  "ring_b": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -27.0,
+     "phase": 40.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.2,
+    "delay": 3,
+    "ticks": 14
+   }
+  },
+  "ring_c": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "dps": 35.0,
+     "phase": 80.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.2,
+    "delay": 6,
+    "ticks": 14
+   }
+  },
+  "wing_l": {
+   "pivot": [
+    -7.0,
+    166.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": -3.0,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": false
+  },
+  "wing_r": {
+   "pivot": [
+    7.0,
+    166.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 3.0,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": false
+  },
+  "stars": {
+   "pivot": [
+    0.0,
+    126.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 24.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.8,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 5,
+    "ticks": 14
+   }
+  },
+  "eye_aura": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.35,
+     "max": 0.9,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "B070FF",
+   "alpha": 0.85
+  },
+  "zodiac": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 9.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.4,
+     "max": 0.85,
+     "period": 140.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "C48CFF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.9
+  },
+  "pillar": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.15,
+     "max": 0.55,
+     "period": 110.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "9A7CFF",
+   "alpha": 0.7
+  },
+  "comets": {
+   "pivot": [
+    0.0,
+    170.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -50.0
+    },
+    {
+     "kind": "flicker",
+     "min": 0.2,
+     "max": 1.0,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "E0E8FF",
+   "alpha": 0.9
+  }
+ }
+}

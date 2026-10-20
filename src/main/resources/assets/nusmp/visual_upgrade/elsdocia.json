@@ -1,0 +1,279 @@
+{
+ "id": "elsdocia",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "elsdocia",
+ "lod": {
+  "mesh": "elsdocia_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "crystal_shards",
+   "kind": "orbit_shards",
+   "group": "shards",
+   "note": "twenty shards of crystal spiralling round the blade"
+  },
+  {
+   "id": "wizard_circle",
+   "kind": "halo_ring",
+   "group": "circle",
+   "note": "a rune circle of the Wizard Kings (runes and a hexagon) turning behind the guard, both faces"
+  },
+  {
+   "id": "blade_light",
+   "kind": "light_shafts",
+   "group": "blade_light",
+   "note": "a soft column of crystal light along the blade, breathing"
+  },
+  {
+   "id": "crack_light",
+   "kind": "light_shafts",
+   "group": "lancets",
+   "note": "lancets of light from the cracks, flickering"
+  },
+  {
+   "id": "glints",
+   "kind": "energy_arcs",
+   "group": "glints",
+   "note": "six glints of light running up the blade"
+  },
+  {
+   "id": "gem_flares",
+   "kind": "lens_flare",
+   "flares": "guard gem, pommel, point",
+   "note": "star flares in the guard gem, the pommel and at the point"
+  },
+  {
+   "id": "crystal_dust",
+   "kind": "motes",
+   "particle": "end_rod",
+   "rgb": "5EC8FF",
+   "where": "blade",
+   "rate": 0.6,
+   "radius": 2.0,
+   "note": "crystal dust falling off the blade (beside the held glitter of the learned magics)"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "5EC8FF",
+   "radius": 1.0,
+   "note": "a ring of crystal motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "crack_flow",
+   "kind": "vein_wave",
+   "note": "light runs through the cracks between the plates"
+  },
+  {
+   "id": "shard_orbit",
+   "kind": "group_spin",
+   "group": "shards"
+  },
+  {
+   "id": "circle_turn",
+   "kind": "group_spin",
+   "group": "circle"
+  },
+  {
+   "id": "column_breath",
+   "kind": "group_breathe",
+   "group": "blade_light"
+  },
+  {
+   "id": "lancet_flicker",
+   "kind": "group_flicker",
+   "group": "lancets"
+  },
+  {
+   "id": "glint_flicker",
+   "kind": "group_flicker",
+   "group": "glints"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "5EC8FF",
+  "groups": [
+   "shards",
+   "circle"
+  ],
+  "note": "the shards spiral out of the blade and the rune circle opens behind the guard as the sword is drawn"
+ },
+ "swing": {
+  "trail": "crystal_arc",
+  "rgb": "5EC8FF",
+  "rgb2": "DFF6FF",
+  "length": 2.3,
+  "width": 0.5,
+  "life": 12,
+  "particles": "crystal_glint"
+ },
+ "acts": {
+  "legacy_release": {
+   "burst": "legacy_release",
+   "pattern": "nova",
+   "rgb": "5EC8FF",
+   "ring": 6.0,
+   "particles": 46,
+   "sound": "nusmp:item.genesis.elsdocia.release"
+  },
+  "legacy_gate": {
+   "burst": "legacy_gate",
+   "pattern": "ring",
+   "rgb": "DFF6FF",
+   "ring": 4.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.elsdocia.gate"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.elsdocia.crystal_hum_loop",
+ "flares": 4,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.1,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "shards": {
+   "pivot": [
+    0.0,
+    92.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 30.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.8,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 16
+   }
+  },
+  "circle": {
+   "pivot": [
+    0.0,
+    33.4,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 10.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.7,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "5EC8FF",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.7
+  },
+  "blade_light": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.55,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "8AD8FF",
+   "alpha": 0.7
+  },
+  "glints": {
+   "pivot": [
+    0.0,
+    92.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 4.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 25.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFFFFF",
+   "alpha": 0.9
+  },
+  "lancets": {
+   "pivot": [
+    0.0,
+    92.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.1,
+     "max": 1.0,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "BFEAFF",
+   "alpha": 0.8
+  }
+ }
+}

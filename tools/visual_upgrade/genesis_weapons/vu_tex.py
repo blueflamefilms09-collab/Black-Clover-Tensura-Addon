@@ -438,5 +438,35 @@ def tint(ctx, rgb, k=1.0, mask=None):
     """Colours the skin toward `rgb` keeping its luminance."""
     lum = ctx.img[..., :3].mean(axis=2, keepdims=True) / 128.0
     tgt = np.clip(lum * np.array(rgb, np.float32)[None, None, :], 0, 255)
-    kk = k if mask is None else (np.clip(mask, 0, 1) * k)[..., None]
+    kk = np.asarray(k, np.float32) if mask is None else np.clip(mask, 0, 1) * np.asarray(k, np.float32)
+    if kk.ndim == 2:
+        kk = kk[..., None]
     ctx.img[..., :3] = ctx.img[..., :3] * (1 - kk) + tgt * kk
+
+
+def crack_star(ctx, center, radius, n=9, seed=0, width=0.35, branch=2, jag=0.28):
+    """A mask of cracks radiating from `center` (plane coordinates (a, b)) to `radius`: n main fissures as jagged random walks, each with side branches (a star-split face)."""
+    rng = np.random.default_rng(seed + ctx.seed)
+    m = np.zeros(ctx.shape, np.float32)
+
+    def walk(p0, ang, length, w, depth):
+        nonlocal m
+        pts = [p0]
+        steps = max(4, int(length / (radius * 0.07)))
+        a = ang
+        p = np.array(p0, float)
+        for _ in range(steps):
+            a += rng.uniform(-jag, jag)
+            p = p + np.array([math.cos(a), math.sin(a)]) * (length / steps)
+            pts.append((float(p[0]), float(p[1])))
+        m = np.maximum(m, mask_polyline(ctx, pts, w, 0.8))
+        if depth > 0:
+            for k in range(branch):
+                i = int(rng.integers(steps // 3, steps))
+                sa = ang + rng.choice([-1, 1]) * rng.uniform(0.4, 0.9)
+                walk(pts[i], sa, length * rng.uniform(0.25, 0.5), w * 0.6, depth - 1)
+
+    for k in range(n):
+        ang = 2 * math.pi * k / n + rng.uniform(-0.2, 0.2)
+        walk(tuple(center), ang, radius * rng.uniform(0.7, 1.0), width, 2)
+    return m

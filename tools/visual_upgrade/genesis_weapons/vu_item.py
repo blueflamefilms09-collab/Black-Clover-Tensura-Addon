@@ -28,6 +28,50 @@ HALO_CELLS = {"glow": 0, "ring": 1, "thick_ring": 2, "star": 3, "shaft": 4, "str
               "bolt": 10, "feather": 11, "flame": 12, "hex": 13, "sparkle": 14, "solid": 15}
 
 
+def pack_maxrects(sizes, W, H, pad):
+    """MaxRects best-short-side-fit packing of (w, h) boxes into W x H with `pad` px round each; returns [(x, y)] or None. Much tighter than mesh_lib's shelves for the mix of long strips and tiny pieces of a weapon."""
+    free = [(pad, pad, W - 2 * pad, H - 2 * pad)]
+    pos = [None] * len(sizes)
+    order = sorted(range(len(sizes)), key=lambda i: (-max(sizes[i]), -min(sizes[i])))
+    for i in order:
+        w, h = sizes[i]
+        w2, h2 = w + pad, h + pad
+        best = None
+        for (fx, fy, fw, fh) in free:
+            if w2 <= fw and h2 <= fh:
+                score = (min(fw - w2, fh - h2), max(fw - w2, fh - h2))
+                if best is None or score < best[0]:
+                    best = (score, fx, fy)
+        if best is None:
+            return None
+        _s, px, py = best
+        pos[i] = (px, py)
+        nf = []
+        for (fx, fy, fw, fh) in free:
+            if px >= fx + fw or px + w2 <= fx or py >= fy + fh or py + h2 <= fy:
+                nf.append((fx, fy, fw, fh))
+                continue
+            if px > fx:
+                nf.append((fx, fy, px - fx, fh))
+            if px + w2 < fx + fw:
+                nf.append((px + w2, fy, fx + fw - px - w2, fh))
+            if py > fy:
+                nf.append((fx, fy, fw, py - fy))
+            if py + h2 < fy + fh:
+                nf.append((fx, py + h2, fw, fy + fh - py - h2))
+        free = []
+        for a in nf:
+            if a[2] <= 0 or a[3] <= 0:
+                continue
+            free.append(a)
+        keep = []
+        for a in free:
+            if not any(b is not a and b[0] <= a[0] and b[1] <= a[1] and b[0] + b[2] >= a[0] + a[2] and b[1] + b[3] >= a[1] + a[3] for b in free):
+                keep.append(a)
+        free = keep
+    return pos
+
+
 class VuAtlas(ml.Atlas):
     """mesh_lib's atlas with a density per part (small ornaments and blade faces get more texels per cm than a haft), a vein layer and halo parts that take no skin space."""
 
@@ -50,7 +94,7 @@ class VuAtlas(ml.Atlas):
         best = None
         for _ in range(24):
             mid = ppu if ppu else (lo + hi) / 2
-            pos = ml.pack_shelf([g.px_size(mid * d) for g, d in zip(groups, dens)], self.size, self.size, self.pad)
+            pos = pack_maxrects([g.px_size(mid * d) for g, d in zip(groups, dens)], self.size, self.size, self.pad)
             if pos is not None:
                 best = (mid, pos)
                 if ppu:
@@ -102,7 +146,10 @@ class Item:
     # ---- detail scaling
     def n(self, k, lo=3):
         """A count (sides, stations, repeats) scaled by the detail level; full detail returns k."""
-        return int(k) if self.full else max(lo, int(round(k * self.D)))
+        if self.full:
+            return int(k)
+        lo_eff = lo if self.D >= 0.1 else max(2, lo // 2)                      # the smallest LODs take the smallest counts
+        return max(lo_eff, int(round(k * self.D)))
 
     # ---- parts
     def part(self, name, material="steel", layer=0, group="", base=None, glow=False, smooth=45.0, uv_mode=None, along=None, wear=0.5, density=1.0, mat=None, painters=None):
@@ -113,12 +160,13 @@ class Item:
         p.painters = list(painters or [])
         p.cell = None
         p.tint = None
+        p.skip_write = False
         self.mesh.add(p)
         return p
 
     def clone(self, src, name, matrix=None, offset=(0, 0, 0), group=None):
         c = src.transformed(matrix, offset, name)
-        for a in ("group", "density", "mat", "painters", "cell", "tint"):
+        for a in ("group", "density", "mat", "painters", "cell", "tint", "skip_write"):
             setattr(c, a, getattr(src, a))
         if group is not None:
             c.group = group
@@ -164,6 +212,20 @@ class Item:
         self.atlas = atlas
         return atlas
 
+    def adopt_uv(self, rest):
+        """A state mesh (a bow's draw stage) shares the skin of the rest mesh: every part takes the UVs of the part of the same name (the topology is the same by construction)."""
+        self.mesh.finish()
+        by = {p.name: p for p in rest.mesh.parts}
+        for p in self.mesh.parts:
+            r = by.get(p.name)
+            if r is None or [tuple(f) for f in r.F] != [tuple(f) for f in p.F]:
+                raise ValueError("state mesh part %s differs from the rest mesh" % p.name)
+            p.UV = [list(map(tuple, uv)) for uv in r.UV] if r.UV is not None else None
+            if hasattr(r, "cardUV"):
+                p.cardUV = [list(c) for c in r.cardUV]
+        self.atlas = rest.atlas
+        return rest.atlas
+
     def stats(self):
         q = {}
         for p in self.mesh.parts:
@@ -197,7 +259,7 @@ def write_vu(it, atlas, path, skin_name, lod_name=None, place=None, comment=""):
     for g in order:
         lines.append("g " + (g or "-"))
         for p in m.parts:
-            if p.group != g:
+            if p.group != g or getattr(p, "skip_write", False):
                 continue
             for f, idx in enumerate(p.F):
                 P = np.array([p.V[i] for i in idx])

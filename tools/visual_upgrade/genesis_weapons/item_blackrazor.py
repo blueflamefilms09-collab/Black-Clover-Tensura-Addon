@@ -158,10 +158,10 @@ def build(it, state=""):
     gp = it.part("grip", "leather", base=(26, 22, 34), smooth=50)
     G.rod(it, gp, Y_GRIP0 + 2.4, Y_GUARD - 1.6, 1.6, 1.8, sides=10, swell=[(0.5, 1.12)])
     ch = it.part("grip_chain", "iron", base=(120, 120, 140), smooth=50, uv_mode="loft", wear=0.8, density=1.2)
-    turns, r0 = 3.0, 2.15
+    turns, r0 = 2.6, 2.15
     helix = []
-    for i in range(it.n(26, 8) + 1):
-        t = i / it.n(26, 8)
+    for i in range(it.n(22, 8) + 1):
+        t = i / it.n(22, 8)
         a = turns * 2 * math.pi * t
         helix.append((r0 * math.cos(a), Y_GRIP0 + 4.0 + (Y_GUARD - 3.5 - Y_GRIP0 - 4.0) * t, r0 * math.sin(a)))
     G.chain(it, ch, helix, link_len=2.1, link_w=1.25, tube_r=0.24, sides=4, up=(0, 1, 0))

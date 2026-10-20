@@ -1,0 +1,268 @@
+{
+ "id": "magic_emperors_black_halberd",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "magic_emperors_black_halberd",
+ "lod": {
+  "mesh": "magic_emperors_black_halberd_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "dark_triad",
+   "kind": "orbit_shards",
+   "group": "triad",
+   "note": "three dark orbs with magenta rings circling the head"
+  },
+  {
+   "id": "clover_rune",
+   "kind": "halo_ring",
+   "group": "clover_rune",
+   "note": "a five-leaf rune disc turning behind the guard, both faces"
+  },
+  {
+   "id": "void_rifts",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "rifts of the dimensional void in the spear blade and the axe (reality shimmer)"
+  },
+  {
+   "id": "edge_glare",
+   "kind": "light_shafts",
+   "group": "edge_glare",
+   "note": "magenta glare along the axe edge and the spear blade, breathing"
+  },
+  {
+   "id": "rift_arcs",
+   "kind": "energy_arcs",
+   "group": "rift",
+   "note": "four flickering arcs of dark lightning round the head"
+  },
+  {
+   "id": "gem_flares",
+   "kind": "lens_flare",
+   "flares": "gem",
+   "note": "star flares in the gem and on the edges"
+  },
+  {
+   "id": "dark_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "C02A5A",
+   "where": "blade",
+   "rate": 0.5,
+   "radius": 2.0,
+   "note": "magenta motes drifting off the blades"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "14101C",
+   "radius": 1.0,
+   "note": "a ring of dark motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "inlay_flow",
+   "kind": "vein_wave",
+   "note": "magenta runs through the spiral inlays of the haft and the blades"
+  },
+  {
+   "id": "triad_orbit",
+   "kind": "group_spin",
+   "group": "triad"
+  },
+  {
+   "id": "clover_turn",
+   "kind": "group_spin",
+   "group": "clover_rune"
+  },
+  {
+   "id": "rift_flicker",
+   "kind": "group_flicker",
+   "group": "rift"
+  },
+  {
+   "id": "glare_breath",
+   "kind": "group_breathe",
+   "group": "edge_glare"
+  },
+  {
+   "id": "gem_pulse",
+   "kind": "flare_pulse"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "FF4A8A",
+  "groups": [
+   "triad",
+   "clover_rune"
+  ],
+  "note": "the three orbs spiral out from the socket and the clover opens behind the guard"
+ },
+ "swing": {
+  "trail": "dead_star",
+  "rgb": "FF4A8A",
+  "rgb2": "14101C",
+  "length": 2.2,
+  "width": 0.45,
+  "life": 11,
+  "particles": "dark_mote"
+ },
+ "acts": {
+  "emperors_sweep": {
+   "burst": "emperor_sweep",
+   "pattern": "cone",
+   "rgb": "FF4A8A",
+   "ring": 6.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.black_halberd.sweep"
+  },
+  "dimensional_rift": {
+   "burst": "dimension_rift",
+   "pattern": "column",
+   "rgb": "C02A5A",
+   "ring": 5.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.black_halberd.rift"
+  },
+  "dark_triad": {
+   "burst": "dark_triad",
+   "pattern": "spiral",
+   "rgb": "FF8ABA",
+   "ring": 4.5,
+   "particles": 45,
+   "sound": "nusmp:item.genesis.black_halberd.triad"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.black_halberd.void_hum_loop",
+ "flares": 4,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.16,
+  "min": 0.4,
+  "max": 1.0
+ },
+ "groups": {
+  "triad": {
+   "pivot": [
+    0.0,
+    182.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 75.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.2,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 14
+   }
+  },
+  "clover_rune": {
+   "pivot": [
+    0.0,
+    176.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 7.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.7,
+     "period": 150.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF4A8A",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.8
+  },
+  "edge_glare": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.25,
+     "max": 0.7,
+     "period": 85.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF4A8A",
+   "alpha": 0.7
+  },
+  "rift": {
+   "pivot": [
+    0.0,
+    196.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 4.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -40.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF8ABA",
+   "alpha": 0.9
+  }
+ }
+}

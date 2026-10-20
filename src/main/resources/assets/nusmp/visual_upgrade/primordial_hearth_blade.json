@@ -1,0 +1,325 @@
+{
+ "id": "primordial_hearth_blade",
+ "slice": "genesis_weapons",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "primordial_hearth_blade",
+ "lod": {
+  "mesh": "primordial_hearth_blade_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "blade_flames",
+   "kind": "light_shafts",
+   "group": "tongues",
+   "note": "four tongues of fire standing on the blade, flickering and swelling"
+  },
+  {
+   "id": "hearth_glow",
+   "kind": "light_shafts",
+   "group": "hearth_glow",
+   "note": "a crossed glow round the hearth orb, breathing"
+  },
+  {
+   "id": "falna_ring",
+   "kind": "halo_ring",
+   "group": "falna",
+   "note": "a ring of divine script turning round the hearth"
+  },
+  {
+   "id": "embers",
+   "kind": "orbit_shards",
+   "group": "embers",
+   "note": "seven embers circling the blade"
+  },
+  {
+   "id": "ribbons",
+   "kind": "mesh_sway",
+   "group": "ribbons",
+   "note": "the goddess's ribbons stream and sway behind the guard"
+  },
+  {
+   "id": "sparks",
+   "kind": "energy_arcs",
+   "group": "sparks",
+   "note": "five sparks flickering round the blade"
+  },
+  {
+   "id": "hearth_flares",
+   "kind": "lens_flare",
+   "flares": "hearth",
+   "note": "star flares in the hearth orb and on the point"
+  },
+  {
+   "id": "embers_up",
+   "kind": "motes",
+   "particle": "flame",
+   "rgb": "FFB04A",
+   "where": "blade",
+   "rate": 0.7,
+   "radius": 0.7,
+   "note": "fire motes rising off the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "FFB04A",
+   "radius": 0.8,
+   "note": "a ring of ember motes on the ground"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse"
+  },
+  {
+   "id": "falna_flow",
+   "kind": "vein_wave",
+   "note": "the blessing runs up the blade as a wave of light"
+  },
+  {
+   "id": "tongues_flicker",
+   "kind": "group_flicker",
+   "group": "tongues"
+  },
+  {
+   "id": "falna_turn",
+   "kind": "group_spin",
+   "group": "falna"
+  },
+  {
+   "id": "ember_orbit",
+   "kind": "group_spin",
+   "group": "embers"
+  },
+  {
+   "id": "ribbon_sway",
+   "kind": "group_sway",
+   "group": "ribbons"
+  },
+  {
+   "id": "hearth_breath",
+   "kind": "group_breathe",
+   "group": "hearth_glow"
+  },
+  {
+   "id": "spark_flicker",
+   "kind": "group_flicker",
+   "group": "sparks"
+  }
+ ],
+ "draw": {
+  "ticks": 12,
+  "flash": "FFB04A",
+  "groups": [
+   "embers",
+   "falna"
+  ],
+  "note": "the hearth flares as the knife is drawn and the embers spiral out"
+ },
+ "swing": {
+  "trail": "hearth_fire",
+  "rgb": "FFB04A",
+  "rgb2": "FF5A20",
+  "length": 0.6,
+  "width": 0.25,
+  "life": 7,
+  "particles": "ember"
+ },
+ "acts": {
+  "falna_flurry": {
+   "burst": "falna_flurry",
+   "pattern": "cone",
+   "rgb": "FFB04A",
+   "ring": 3.5,
+   "particles": 32,
+   "sound": "nusmp:item.genesis.hearth_blade.flurry"
+  },
+  "hearth_dash": {
+   "burst": "hearth_dash",
+   "pattern": "line",
+   "rgb": "FF8A30",
+   "ring": 5.0,
+   "particles": 30,
+   "sound": "nusmp:item.genesis.hearth_blade.dash"
+  },
+  "goddess_blessing": {
+   "burst": "goddess_blessing",
+   "pattern": "column",
+   "rgb": "FFD070",
+   "ring": 3.5,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.hearth_blade.blessing"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.hearth_blade.fire_loop",
+ "flares": 3,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.17,
+  "min": 0.45,
+  "max": 1.0
+ },
+ "groups": {
+  "ribbons": {
+   "pivot": [
+    0.0,
+    13.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 7.0,
+     "period": 60.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 5.0,
+     "period": 90.0,
+     "phase": 0.3
+    }
+   ],
+   "lodSkip": false
+  },
+  "embers": {
+   "pivot": [
+    0.0,
+    34.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 55.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.2,
+     "period": 60.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 3,
+    "ticks": 12
+   }
+  },
+  "tongues": {
+   "pivot": [
+    0.0,
+    36.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.35,
+     "max": 1.0,
+     "rate": 7.0
+    },
+    {
+     "kind": "pulse",
+     "amp": 0.08,
+     "period": 18.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFA030",
+   "alpha": 0.9
+  },
+  "hearth_glow": {
+   "pivot": [
+    0.0,
+    15.6,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.85,
+     "period": 50.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFA030",
+   "alpha": 0.8
+  },
+  "falna": {
+   "pivot": [
+    0.0,
+    15.6,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 30.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.7,
+     "period": 110.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFD070",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 12
+   },
+   "alpha": 0.85
+  },
+  "sparks": {
+   "pivot": [
+    0.0,
+    30.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FFE8A0",
+   "alpha": 0.9
+  }
+ }
+}

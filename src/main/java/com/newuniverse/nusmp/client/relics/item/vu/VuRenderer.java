@@ -66,8 +66,15 @@ public final class VuRenderer {
 
     private static final Entry MISSING = new Entry();
     private static final Map<String, Entry> CACHE = new HashMap<>();
-    /** The sightings of weapons per holder (entity id, -1 = none): {last seen tick, draw start tick}. */
-    private static final Map<Integer, long[]> SEEN = new HashMap<>();
+    /** The sightings of weapons per holder (entity id, -1 = none): the last tick it was drawn and the tick its draw began; a small table, no boxing. */
+    private static final int SEEN_SLOTS = 16;
+    private static final int[] SEEN_ID = new int[SEEN_SLOTS];
+    private static final long[] SEEN_LAST = new long[SEEN_SLOTS], SEEN_START = new long[SEEN_SLOTS];
+    private static int seenNext;
+
+    static {
+        java.util.Arrays.fill(SEEN_LAST, -1L);
+    }
 
     private static final Matrix4f GM = new Matrix4f(), ROT4 = new Matrix4f();
     private static final Matrix3f GN = new Matrix3f(), ROT3 = new Matrix3f(), INV = new Matrix3f();
@@ -76,7 +83,7 @@ public final class VuRenderer {
 
     public static void clear() {
         CACHE.clear();
-        SEEN.clear();
+        java.util.Arrays.fill(SEEN_LAST, -1L);
     }
 
     // ================================================================ loading
@@ -212,15 +219,22 @@ public final class VuRenderer {
         LivingEntity holder = HolderTracker.holderFor(ctx);
         int key = holder == null ? -1 : holder.getId();
         long now = (long) time;
-        long[] s = SEEN.get(key);
-        if (s == null) {
-            if (SEEN.size() > 64) SEEN.clear();
-            s = new long[]{-1L, now};
-            SEEN.put(key, s);
+        int slot = -1;
+        for (int i = 0; i < SEEN_SLOTS; i++) {
+            if (SEEN_LAST[i] >= 0L && SEEN_ID[i] == key) {
+                slot = i;
+                break;
+            }
         }
-        if (VuRules.newDraw(s[0], now, 6)) s[1] = now;
-        s[0] = now;
-        return time - s[1];
+        if (slot < 0) {                                                               // a holder not seen yet (or forgotten): the oldest slot is reused
+            slot = seenNext;
+            seenNext = (seenNext + 1) % SEEN_SLOTS;
+            SEEN_ID[slot] = key;
+            SEEN_LAST[slot] = -1L;
+        }
+        if (VuRules.newDraw(SEEN_LAST[slot], now, 6)) SEEN_START[slot] = now;
+        SEEN_LAST[slot] = now;
+        return time - SEEN_START[slot];
     }
 
     // ---------------------------------------------------------------- the passes

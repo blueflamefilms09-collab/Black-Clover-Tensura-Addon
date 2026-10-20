@@ -55,6 +55,10 @@ def place_matrix(place, extra_yaw=0.0):
 def load(mesh_id, base_dir, tex_dir, spec=None, t=0.0, lod=False):
     d = parse_mesh(os.path.join(base_dir, mesh_id + ".txt"))
     skin_name = d["skin"] or mesh_id
+    if not os.path.exists(os.path.join(tex_dir, skin_name + ".png")):                        # a state mesh (a bow's draw stage) shares the skin of its rest mesh
+        for suffix in ("_pull1", "_pull2", "_pull3", "_charged", "_spent"):
+            if skin_name.endswith(suffix):
+                skin_name = skin_name[:-len(suffix)]
     T = {"skin": tex(os.path.join(tex_dir, skin_name + ".png")), "glow": tex(os.path.join(tex_dir, skin_name + "_glow.png")),
          "veins": tex(os.path.join(tex_dir, skin_name + "_veins.png")), "halo": tex(os.path.join(tex_dir, "halo.png"))}
     groups = (spec or {}).get("groups", {})
@@ -178,7 +182,7 @@ def sheet(item_id, out_path, panel=(300, 540), focus=None, ss=2, t=0.0, quiet=Fa
     old_tiles = views_for(q0, T0, d0["glow"], g0, panel, focus, ss, layers=(0, 1, 2))
     rows.append(("before: " + NAMES.get(item_id, item_id), old_tiles))
     d1, q1, T1, g1 = load(item_id, VU_MESH, VU_TEX, spec, t)
-    new_tiles = views_for(q1, T1, d1["glow"], g1, panel, focus, ss)
+    new_tiles = views_for(q1, T1, d1["glow"], g1, panel, focus, ss, layers=(0, 1) if os.environ.get("VU_BODY_ONLY") else (0, 1, 2, 3, 4))
     rows.append(("after (static, t=%.0f ticks)" % t, new_tiles))
     gl = glow_only(q1, T1, d1["glow"], g1, panel, ss)
     lines = []
