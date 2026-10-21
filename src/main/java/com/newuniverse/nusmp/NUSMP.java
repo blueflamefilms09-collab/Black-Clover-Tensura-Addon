@@ -86,6 +86,7 @@ public class NUSMP {
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         com.newuniverse.nusmp.elite.EliteSystem.init(modEventBus, modContainer);                                           // 1.83.0: the EliteTensuraAddon systems and the Hub economy (docs/elite/plan.md)
         com.newuniverse.nusmp.requip.RequipSystem.init(modEventBus);                                                       // Requip: The Knight (Erza Scarlet's Ultimate skill, the book Titania's Requip, six weapons, the self-test skill.erza_requip)
+        com.newuniverse.nusmp.item.ShieldBoot.init();                                                                      // 1.110.0: shields are used like vanilla's: axes disable any shield, visual.shields self-tests
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);

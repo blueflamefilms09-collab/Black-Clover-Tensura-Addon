@@ -89,6 +89,10 @@ public class HeroWeaponItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (kind.style() == HeroStyle.BLOCK && hand == InteractionHand.OFF_HAND) {            // 1.110.0: a shield is raised from either hand, like vanilla's; the techniques stay on the main hand
+            player.startUsingItem(hand);
+            return InteractionResultHolder.consume(stack);
+        }
         if (hand != InteractionHand.MAIN_HAND) return InteractionResultHolder.pass(stack);
         boolean sneak = player.isShiftKeyDown();
         if (!level.isClientSide && player instanceof ServerPlayer sp) {

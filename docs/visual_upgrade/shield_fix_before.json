@@ -1,0 +1,1265 @@
+{
+ "aegis_of_the_abyss": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     90,
+     -25
+    ],
+    "scale": [
+     0.667,
+     0.667,
+     0.667
+    ],
+    "translation": [
+     1.13,
+     3.91,
+     -2.63
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -90,
+     25
+    ],
+    "scale": [
+     0.667,
+     0.667,
+     0.667
+    ],
+    "translation": [
+     1.13,
+     3.91,
+     -2.63
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     0.808,
+     0.808,
+     0.808
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.431,
+     0.431,
+     0.431
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.55,
+     0.55,
+     0.55
+    ],
+    "translation": [
+     0,
+     3,
+     1
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": {
+   "length_blocks": 1.855,
+   "rule": "tools/relics/display_presets.py",
+   "scale": 0.667
+  },
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/aegis_of_the_abyss"
+  }
+ },
+ "aegis_of_the_abyss_blocking": null,
+ "calamity_wave_aegis": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     90,
+     -25
+    ],
+    "scale": [
+     0.667,
+     0.667,
+     0.667
+    ],
+    "translation": [
+     1.13,
+     3.91,
+     -2.63
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -90,
+     25
+    ],
+    "scale": [
+     0.667,
+     0.667,
+     0.667
+    ],
+    "translation": [
+     1.13,
+     3.91,
+     -2.63
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     0.808,
+     0.808,
+     0.808
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.431,
+     0.431,
+     0.431
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.55,
+     0.55,
+     0.55
+    ],
+    "translation": [
+     0,
+     3,
+     1
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": "manual",
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/calamity_wave_aegis"
+  }
+ },
+ "calamity_wave_aegis_blocking": null,
+ "celestial_support": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     90,
+     -25
+    ],
+    "scale": [
+     0.372,
+     0.372,
+     0.372
+    ],
+    "translation": [
+     1.13,
+     2.09,
+     -1.35
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -90,
+     25
+    ],
+    "scale": [
+     0.372,
+     0.372,
+     0.372
+    ],
+    "translation": [
+     1.13,
+     2.09,
+     -1.35
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     0.808,
+     0.808,
+     0.808
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.431,
+     0.431,
+     0.431
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.55,
+     0.55,
+     0.55
+    ],
+    "translation": [
+     0,
+     3,
+     1
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": {
+   "length_blocks": 1.855,
+   "rule": "tools/relics/display_presets.py",
+   "scale": 0.372
+  },
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/celestial_support"
+  }
+ },
+ "celestial_support_blocking": null,
+ "heros_shield": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     90,
+     -25
+    ],
+    "scale": [
+     0.68,
+     0.68,
+     0.68
+    ],
+    "translation": [
+     1.13,
+     4.01,
+     -2.63
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -90,
+     25
+    ],
+    "scale": [
+     0.68,
+     0.68,
+     0.68
+    ],
+    "translation": [
+     1.13,
+     4.01,
+     -2.63
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     0.808,
+     0.808,
+     0.808
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.431,
+     0.431,
+     0.431
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.55,
+     0.55,
+     0.55
+    ],
+    "translation": [
+     0,
+     3,
+     1
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": {
+   "length_blocks": 1.855,
+   "rule": "tools/relics/display_presets.py",
+   "scale": 0.68
+  },
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/heros_shield"
+  }
+ },
+ "heros_shield_blocking": null,
+ "legendary_shield": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     -25,
+     8
+    ],
+    "scale": [
+     0.62,
+     0.62,
+     0.62
+    ],
+    "translation": [
+     2.0,
+     5.5,
+     0.5
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -25,
+     8
+    ],
+    "scale": [
+     0.62,
+     0.62,
+     0.62
+    ],
+    "translation": [
+     2.0,
+     5.5,
+     0.5
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.5,
+     0.5,
+     0.5
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_lefthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": "manual",
+  "overrides": [
+   {
+    "model": "nusmp:item/legendary_shield_blocking",
+    "predicate": {
+     "blocking": 1
+    }
+   }
+  ],
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/legendary_shield"
+  }
+ },
+ "legendary_shield_blocking": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "scale": [
+     0.9,
+     0.9,
+     0.9
+    ],
+    "translation": [
+     -5.5,
+     4.5,
+     -3.0
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "scale": [
+     0.9,
+     0.9,
+     0.9
+    ],
+    "translation": [
+     -5.5,
+     4.5,
+     -3.0
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.5,
+     0.5,
+     0.5
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_lefthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   }
+  },
+  "gui_light": "front",
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/legendary_shield"
+  }
+ },
+ "magebane_shield": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     -25,
+     8
+    ],
+    "scale": [
+     0.62,
+     0.62,
+     0.62
+    ],
+    "translation": [
+     2.0,
+     5.5,
+     0.5
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -25,
+     8
+    ],
+    "scale": [
+     0.62,
+     0.62,
+     0.62
+    ],
+    "translation": [
+     2.0,
+     5.5,
+     0.5
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.5,
+     0.5,
+     0.5
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_lefthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   }
+  },
+  "gui_light": "front",
+  "overrides": [
+   {
+    "model": "nusmp:item/magebane_shield_blocking",
+    "predicate": {
+     "blocking": 1
+    }
+   }
+  ],
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/magebane_shield"
+  }
+ },
+ "magebane_shield_blocking": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "scale": [
+     0.9,
+     0.9,
+     0.9
+    ],
+    "translation": [
+     -5.5,
+     4.5,
+     -3.0
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "scale": [
+     0.9,
+     0.9,
+     0.9
+    ],
+    "translation": [
+     -5.5,
+     4.5,
+     -3.0
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.5,
+     0.5,
+     0.5
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_lefthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     -90,
+     0,
+     180
+    ],
+    "scale": [
+     1.05,
+     1.05,
+     1.05
+    ],
+    "translation": [
+     2.5,
+     4.5,
+     3.0
+    ]
+   }
+  },
+  "gui_light": "front",
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/magebane_shield"
+  }
+ },
+ "thunder_shield": {
+  "display": {
+   "firstperson_lefthand": {
+    "rotation": [
+     0,
+     90,
+     -25
+    ],
+    "scale": [
+     0.551,
+     0.551,
+     0.551
+    ],
+    "translation": [
+     1.13,
+     3.42,
+     -2.28
+    ]
+   },
+   "firstperson_righthand": {
+    "rotation": [
+     0,
+     -90,
+     25
+    ],
+    "scale": [
+     0.551,
+     0.551,
+     0.551
+    ],
+    "translation": [
+     1.13,
+     3.42,
+     -2.28
+    ]
+   },
+   "fixed": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     0.808,
+     0.808,
+     0.808
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "ground": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.431,
+     0.431,
+     0.431
+    ],
+    "translation": [
+     0,
+     2,
+     0
+    ]
+   },
+   "gui": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     0,
+     0
+    ]
+   },
+   "head": {
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "translation": [
+     0,
+     13,
+     7
+    ]
+   },
+   "thirdperson_righthand": {
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     0.55,
+     0.55,
+     0.55
+    ],
+    "translation": [
+     0,
+     3,
+     1
+    ]
+   }
+  },
+  "gui_light": "front",
+  "nusmp_display_preset": {
+   "length_blocks": 1.855,
+   "rule": "tools/relics/display_presets.py",
+   "scale": 0.551
+  },
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+   "particle": "nusmp:item/thunder_shield"
+  }
+ },
+ "thunder_shield_blocking": null
+}

@@ -70,9 +70,14 @@ public class RelicWeaponItem extends SwordItem implements RelicBearer {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (shield() && def.acts().isEmpty() && (!def.needsAttunement() || Attune.isMine(stack, player))) {
-            player.startUsingItem(hand);
-            return InteractionResultHolder.consume(stack);
+        if (shield()) {                                                            // 1.110.0: a shield is a shield first: the plain click raises it (both sides, either hand), the relic's own click is the sneaking one
+            ShieldUseRules.Use use = ShieldUseRules.decide(player.isShiftKeyDown(), !def.acts().isEmpty(), def.needsAttunement(), Attune.isMine(stack, player));
+            if (use != ShieldUseRules.Use.RELIC_CLICK) {
+                if (use == ShieldUseRules.Use.BLOCK_HINT && !level.isClientSide && player instanceof ServerPlayer p)
+                    RelicEngine.tell(p, def.cardName() + " needs attunement: sneak and hold use for 5 seconds.", net.minecraft.ChatFormatting.LIGHT_PURPLE);
+                player.startUsingItem(hand);
+                return InteractionResultHolder.consume(stack);
+            }
         }
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         return switch (RelicEngine.useHeld(p, stack, def, hand)) {
