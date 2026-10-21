@@ -1,0 +1,182 @@
+{
+ "_doc": "assets/nusmp/weapon_grips.json, written by tools/weapon_grip/grip_table.py (docs/weapon_grip.md): classOf = grip class of weapons weapon_classes.json does not list; points = grip point (mesh space) of the upgraded meshes; fractions = per-weapon grip fraction (share of the length from the butt)",
+ "classOf": {
+  "demon_slayer_sword": "greatsword",
+  "djinn_weapon_agares": "spear",
+  "djinn_weapon_agares_dark": "spear",
+  "djinn_weapon_alloces": "longsword",
+  "djinn_weapon_alloces_dark": "longsword",
+  "djinn_weapon_amdusias": "rapier",
+  "djinn_weapon_amdusias_dark": "rapier",
+  "djinn_weapon_amon": "greatsword",
+  "djinn_weapon_amon_dark": "greatsword",
+  "djinn_weapon_andrealphus": "spear",
+  "djinn_weapon_andrealphus_dark": "spear",
+  "djinn_weapon_andromalius": "spear",
+  "djinn_weapon_andromalius_dark": "spear",
+  "djinn_weapon_baal": "spear",
+  "djinn_weapon_baal_dark": "spear",
+  "djinn_weapon_bael": "greatsword",
+  "djinn_weapon_bael_dark": "greatsword",
+  "djinn_weapon_balam": "trident",
+  "djinn_weapon_balam_dark": "trident",
+  "djinn_weapon_barbatos": "bow",
+  "djinn_weapon_barbatos_dark": "bow",
+  "djinn_weapon_belial": "greatsword",
+  "djinn_weapon_belial_dark": "greatsword",
+  "djinn_weapon_bifron": "glaive",
+  "djinn_weapon_bifron_dark": "glaive",
+  "djinn_weapon_buer": "staff",
+  "djinn_weapon_buer_dark": "staff",
+  "djinn_weapon_camio": "staff",
+  "djinn_weapon_camio_dark": "staff",
+  "djinn_weapon_crocell": "staff",
+  "djinn_weapon_crocell_dark": "staff",
+  "djinn_weapon_dantalion": "staff",
+  "djinn_weapon_dantalion_dark": "staff",
+  "djinn_weapon_decarabia": "handitem",
+  "djinn_weapon_decarabia_dark": "handitem",
+  "djinn_weapon_focalor": "glaive",
+  "djinn_weapon_focalor_dark": "glaive",
+  "djinn_weapon_furcas": "glaive",
+  "djinn_weapon_furcas_dark": "glaive",
+  "djinn_weapon_furfur": "club",
+  "djinn_weapon_furfur_dark": "club",
+  "djinn_weapon_glasya_labolas": "handitem",
+  "djinn_weapon_glasya_labolas_dark": "handitem",
+  "djinn_weapon_gusion": "rapier",
+  "djinn_weapon_gusion_dark": "rapier",
+  "djinn_weapon_haagenti": "cleaver",
+  "djinn_weapon_haagenti_dark": "cleaver",
+  "djinn_weapon_kimaris": "spear",
+  "djinn_weapon_kimaris_dark": "spear",
+  "djinn_weapon_marchosias": "handitem",
+  "djinn_weapon_marchosias_dark": "handitem",
+  "djinn_weapon_murmur": "mace",
+  "djinn_weapon_murmur_dark": "mace",
+  "djinn_weapon_paimon": "glaive",
+  "djinn_weapon_paimon_dark": "glaive",
+  "djinn_weapon_seere": "sabre",
+  "djinn_weapon_seere_dark": "sabre",
+  "djinn_weapon_shax": "handitem",
+  "djinn_weapon_shax_dark": "handitem",
+  "djinn_weapon_sitri": "bow",
+  "djinn_weapon_sitri_dark": "bow",
+  "djinn_weapon_valefor": "handitem",
+  "djinn_weapon_valefor_dark": "handitem",
+  "djinn_weapon_vassago": "glaive",
+  "djinn_weapon_vassago_dark": "glaive",
+  "djinn_weapon_vepar": "hammer",
+  "djinn_weapon_vepar_dark": "hammer",
+  "djinn_weapon_vinea": "trident",
+  "djinn_weapon_vinea_dark": "trident",
+  "djinn_weapon_zagan": "staff",
+  "djinn_weapon_zagan_dark": "staff",
+  "djinn_weapon_zepar": "battleaxe",
+  "djinn_weapon_zepar_dark": "battleaxe"
+ },
+ "fractions": {
+  "djinn_weapon_haagenti": 0.15,
+  "djinn_weapon_haagenti_dark": 0.15,
+  "elsdocia": 0.12,
+  "fairy_glitter_gauntlets": 0.45,
+  "fairy_heart_gauntlets": 0.45,
+  "gauches_hand_mirror": 0.18,
+  "glutton_chalice": 0.3,
+  "jade_xiphos": 0.09,
+  "rainbow_rapier": 0.08,
+  "spell_forged_rapier": 0.12,
+  "spirit_king_sceptre": 0.3,
+  "vassal_fan": 0.12,
+  "wavebreaker": 0.08,
+  "whirling_blades": 0.08
+ },
+ "points": {
+  "astralis_the_eye_of_the_universe": [
+   0.0,
+   73.23,
+   0.0
+  ],
+  "blackrazor": [
+   -0.009,
+   14.392,
+   0.16
+  ],
+  "cardinal_halo_chakram": [
+   0.0,
+   24.088,
+   0.0
+  ],
+  "demon_slayer_sword": [
+   0.0,
+   -12.0,
+   0.0
+  ],
+  "elsdocia": [
+   0.021,
+   14.462,
+   0.022
+  ],
+  "fairy_glitter_gauntlets": [
+   0.0,
+   21.175,
+   0.0
+  ],
+  "gae_bolg_heartseeker": [
+   0.0,
+   79.8,
+   -0.002
+  ],
+  "magic_emperors_black_halberd": [
+   0.0,
+   75.84,
+   0.0
+  ],
+  "nekrathuls_pact_scythe": [
+   0.0,
+   62.587,
+   0.0
+  ],
+  "primordial_hearth_blade": [
+   -0.01,
+   4.302,
+   0.008
+  ],
+  "starforged_aeon_bow": [
+   20.587,
+   0.0,
+   0.0
+  ],
+  "starforged_aeon_bow_pull1": [
+   24.246,
+   0.0,
+   0.0
+  ],
+  "starforged_aeon_bow_pull2": [
+   7.911,
+   0.0,
+   0.0
+  ],
+  "starforged_aeon_bow_pull3": [
+   2.437,
+   0.0,
+   0.0
+  ],
+  "starsplitter_hammer": [
+   0.0,
+   40.614,
+   0.0
+  ],
+  "sword_of_the_first_dawn": [
+   0.0,
+   8.006,
+   0.0
+  ],
+  "void_origin_katana": [
+   0.0,
+   11.539,
+   0.0
+  ]
+ },
+ "version": 1
+}

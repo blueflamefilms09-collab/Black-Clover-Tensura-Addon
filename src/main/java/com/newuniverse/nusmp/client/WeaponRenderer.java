@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
+import com.newuniverse.nusmp.visual.grip.GripState;
 import com.newuniverse.nusmp.client.relics.item.HandWrap;
 import com.newuniverse.nusmp.client.relics.item.ItemStateVariants;
 import com.newuniverse.nusmp.client.relics.item.OversizeGuard;
@@ -109,7 +110,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
-        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; WeaponGrip.clear(); ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ShieldClient::registerBlocking));      // 1.110.0: the same predicate on every shield-class item (below it stays for the Magebane Shield as before)
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
@@ -192,7 +193,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         float time = mc.level == null ? 0 : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         pose.pushPose();
+        int gripCtx = mesh.grip != null && mesh.shield == null ? WeaponGrip.index(ctx) : -1;
+        float[] gripShift = gripCtx < 0 ? null : mesh.grip.shift(gripCtx, mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin);      // null: the old placement (other contexts, a shield, no grip found, -Dnusmp.weaponGrip=off)
         HandWrap.Wrap wrap = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND ? HandWrap.of(id) : null;
+        if (wrap != null) gripShift = null;                                         // 1.111.0: a worn glove has its own origin
         if (wrap != null) {                                                        // 1.71.0: worn on the hand, not held (client/relics/item/HandWrap)
             pose.translate(0.5f, 0.5f, 0.5f);                                      // the hand's own origin; the layer has already moved to the grip point
             pose.translate(0f, -HandWrap.ORIGIN_FORWARD / 16f, (HandWrap.ORIGIN_DOWN_ARM - wrap.mouthPx()) / 16f);
@@ -202,15 +206,18 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         } else if (ctx.firstPerson() && mesh.shield == null) {                     // 1.110.0: a shield is held like vanilla's (its frame below), at vanilla's first-person size; 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
             float k = OversizeGuard.factor(mesh.length, pose.last().pose().getScale(new Vector3f()).x);
             if (k < 1f) {
-                pose.translate(mesh.gripX, mesh.gripY, 0.5f);
+                float[] gs = gripShift;                                            // 1.111.0: shrink about the point the hand holds (the grip lands there below), else about the old quarter point
+                float px = gs != null ? gs[3] : mesh.gripX, py = gs != null ? gs[4] : mesh.gripY, pz = gs != null ? gs[5] : 0.5f;
+                pose.translate(px, py, pz);
                 pose.scale(k, k, k);
-                pose.translate(-mesh.gripX, -mesh.gripY, -0.5f);
+                pose.translate(-px, -py, -pz);
             }
         }
         if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
             pose.translate(mesh.shield[1], mesh.shield[2], mesh.shield[3]);
             pose.scale(mesh.shield[0], mesh.shield[0], mesh.shield[0]);
         } else if (wrap == null) {
+            if (gripShift != null) pose.translate(gripShift[0], gripShift[1], gripShift[2]);       // 1.111.0 (docs/weapon_grip.md): the mesh's grip point lands on the hand (third person) / on a sword's hilt spot (first person)
             pose.translate(mesh.ox, mesh.oy, 0.5f);
             pose.mulPose(Axis.ZP.rotationDegrees(mesh.angle - 90f));
             pose.scale(mesh.scale, mesh.scale, mesh.scale);
@@ -273,6 +280,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
         float[] shield;                                                          // 1.110.0: {scale, tx, ty, tz} of a shield mesh on vanilla's shield frame (ShieldFrame.fit); null on every other mesh
+        String id;                                                               // 1.111.0: the mesh id (the model json and the grip table are found by it)
+        GripState grip;                                                          // 1.111.0: where the hand holds this mesh and the shifts that put it there (docs/weapon_grip.md); null = placed the old way
+        float[] explicitGrip;                                                    // 1.111.0: `gripxyz x y z`: the mesh states its grip point itself
+        boolean gripFlipped;                                                     // 1.111.0: the runtime turned the mesh over along its length (its `grip` line then counts from the other end)
         boolean manual;                                                          // 1.29.0: `orient manual`: hand-tuned, never normalised
         float orientRot, orientFlip;                                             // 1.29.0: `orient <rotZ> <flipX>`
         float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
@@ -326,6 +337,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
                 mesh.gripY = mesh.oy + along * (float) Math.sin(Math.toRadians(mesh.angle));
+                mesh.id = id;
+                if (mesh.shield == null && !HandWrap.isWrapped(id)) mesh.grip = WeaponGrip.resolve(id, mesh.layers[BODY].isEmpty() ? mesh.layers[GLOW] : mesh.layers[BODY], classes(), mesh.gripAt, mesh.gripFlipped, mesh.explicitGrip);      // 1.111.0
             }
         } catch (Exception ex) {
             LogUtils.getLogger().error("[nusmp] weapon mesh {} failed to load; its icon is used instead", id, ex);
@@ -364,7 +377,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */
-    private static WeaponClasses classes() {
+    static WeaponClasses classes() {
         if (classes != null) return classes;
         Map<String, WeaponClasses.Cls> table = new HashMap<>();
         Map<String, String> weapons = new HashMap<>();
@@ -427,6 +440,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     private static void applyOrient(Mesh mesh) {
         if (mesh.orientFlip == 0f && mesh.orientRot == 0f) return;
         if (mesh.orientFlip != 0f) for (List<float[]> layer : mesh.layers) WeaponOrientation.mirrorX(layer, 0.0);
+        if (Math.abs(Math.abs(mesh.orientRot) - 180f) < 1f) mesh.gripFlipped = !mesh.gripFlipped;                  // 1.111.0: a half turn puts the butt at the other end
         if (mesh.orientRot != 0f) {
             float lo = Float.MAX_VALUE, hi = -Float.MAX_VALUE;
             for (List<float[]> layer : mesh.layers) for (float[] v : layer) { lo = Math.min(lo, v[1]); hi = Math.max(hi, v[1]); }
@@ -447,7 +461,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             WeaponClasses c = classes();
             WeaponClasses.Cls cls = c.classOf(id);
             float[] place = {mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin};
+            float angle0 = mesh.angle;
             WeaponNormaliser.Result r = WeaponNormaliser.normalise(mesh.layers, place, cls.name(), cls, thirdPersonScale, mesh.gripAt);
+            if (r.gripFlipped() || (r.rotated() && place[2] == angle0)) mesh.gripFlipped = !mesh.gripFlipped;       // 1.111.0: the vertices were turned end for end (a turned place angle keeps the butt at low y)
             if (!r.changed()) return;
             mesh.ox = place[0];
             mesh.oy = place[1];
@@ -492,6 +508,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
             case "grip" -> {                                                         // 1.34.0: `grip <fraction>`; above 0.5 the mesh has its hilt at the far end (WeaponNormaliser turns it over)
                 if (v.length > 1) mesh.gripAt = Float.parseFloat(v[1]);
+            }
+            case "gripxyz" -> {                                                      // 1.111.0: `gripxyz <x> <y> <z>`: the mesh states its grip point (mesh space); valid for a mesh that is not turned over at load
+                if (v.length > 3) mesh.explicitGrip = new float[]{Float.parseFloat(v[1]), Float.parseFloat(v[2]), Float.parseFloat(v[3])};
             }
             case "glow" -> {
                 mesh.glowRgb = Integer.parseInt(v[1], 16);
