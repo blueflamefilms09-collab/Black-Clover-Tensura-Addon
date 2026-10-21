@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "facing=north,tier=0": {
+      "model": "nusmp:block/backpack_leather"
+    },
+    "facing=east,tier=0": {
+      "model": "nusmp:block/backpack_leather",
+      "y": 90
+    },
+    "facing=south,tier=0": {
+      "model": "nusmp:block/backpack_leather",
+      "y": 180
+    },
+    "facing=west,tier=0": {
+      "model": "nusmp:block/backpack_leather",
+      "y": 270
+    },
+    "facing=north,tier=1": {
+      "model": "nusmp:block/backpack_iron"
+    },
+    "facing=east,tier=1": {
+      "model": "nusmp:block/backpack_iron",
+      "y": 90
+    },
+    "facing=south,tier=1": {
+      "model": "nusmp:block/backpack_iron",
+      "y": 180
+    },
+    "facing=west,tier=1": {
+      "model": "nusmp:block/backpack_iron",
+      "y": 270
+    },
+    "facing=north,tier=2": {
+      "model": "nusmp:block/backpack_gold"
+    },
+    "facing=east,tier=2": {
+      "model": "nusmp:block/backpack_gold",
+      "y": 90
+    },
+    "facing=south,tier=2": {
+      "model": "nusmp:block/backpack_gold",
+      "y": 180
+    },
+    "facing=west,tier=2": {
+      "model": "nusmp:block/backpack_gold",
+      "y": 270
+    },
+    "facing=north,tier=3": {
+      "model": "nusmp:block/backpack_diamond"
+    },
+    "facing=east,tier=3": {
+      "model": "nusmp:block/backpack_diamond",
+      "y": 90
+    },
+    "facing=south,tier=3": {
+      "model": "nusmp:block/backpack_diamond",
+      "y": 180
+    },
+    "facing=west,tier=3": {
+      "model": "nusmp:block/backpack_diamond",
+      "y": 270
+    },
+    "facing=north,tier=4": {
+      "model": "nusmp:block/backpack_netherite"
+    },
+    "facing=east,tier=4": {
+      "model": "nusmp:block/backpack_netherite",
+      "y": 90
+    },
+    "facing=south,tier=4": {
+      "model": "nusmp:block/backpack_netherite",
+      "y": 180
+    },
+    "facing=west,tier=4": {
+      "model": "nusmp:block/backpack_netherite",
+      "y": 270
+    }
+  }
+}

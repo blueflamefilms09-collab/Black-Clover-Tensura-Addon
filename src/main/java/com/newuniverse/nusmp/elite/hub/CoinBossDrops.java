@@ -55,7 +55,7 @@ public final class CoinBossDrops {
         LootVictims.Site where = site != null ? site : LootVictims.guardianSite(level, dead);
         if (where == null) return 0;
         Dice d = dice != null ? dice : level.getRandom()::nextDouble;
-        long value = CoinLoot.roll(CoinLoot.Source.BOSS, where.floor(), 0, params, d);
+        long value = CoinLoot.roll(CoinLoot.Source.BOSS, where.floor(), 0, CoinLootModifier.luck(killer.getLuck()), CoinLootModifier.luckParams(), params, d);
         if (value <= 0) return 0;
         List<ItemStack> stacks = CoinWallet.stacksFor(value);
         for (ItemStack stack : stacks) {
