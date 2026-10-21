@@ -1,0 +1,2208 @@
+{
+  "slice": "djinn_dark_weapons",
+  "state": "baseline (before the upgrade; the repo at the start of release 1.108.0)",
+  "runtime_constants": {
+    "ambient_layers": 0,
+    "animations": 1,
+    "trail": 0,
+    "act_vfx": true
+  },
+  "items": [
+    {
+      "item": "djinn_weapon_baal_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, lance, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_baal_dark.txt",
+      "mesh": {
+        "quads_body": 239,
+        "quads_void": 0,
+        "quads_glow_layer": 70,
+        "quads_full_detail": 239,
+        "orbit_instances": 0,
+        "vertices_body": 956,
+        "vertices_welded": 245,
+        "vertices_full_detail": 956,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_baal_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 28577
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_baal_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 5096
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 28577,
+        "painted_texels_all_maps": 33673
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_amon_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, greatsword, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_amon_dark.txt",
+      "mesh": {
+        "quads_body": 308,
+        "quads_void": 0,
+        "quads_glow_layer": 150,
+        "quads_full_detail": 308,
+        "orbit_instances": 0,
+        "vertices_body": 1232,
+        "vertices_welded": 295,
+        "vertices_full_detail": 1232,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_amon_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 57431
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_amon_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 7667
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 57431,
+        "painted_texels_all_maps": 65098
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_vinea_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, trident, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_vinea_dark.txt",
+      "mesh": {
+        "quads_body": 388,
+        "quads_void": 0,
+        "quads_glow_layer": 51,
+        "quads_full_detail": 388,
+        "orbit_instances": 0,
+        "vertices_body": 1552,
+        "vertices_welded": 416,
+        "vertices_full_detail": 1552,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_vinea_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 34558
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_vinea_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 437
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 34558,
+        "painted_texels_all_maps": 34995
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_focalor_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, glaive, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_focalor_dark.txt",
+      "mesh": {
+        "quads_body": 307,
+        "quads_void": 0,
+        "quads_glow_layer": 135,
+        "quads_full_detail": 307,
+        "orbit_instances": 0,
+        "vertices_body": 1228,
+        "vertices_welded": 331,
+        "vertices_full_detail": 1228,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_focalor_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 27922
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_focalor_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3663
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 27922,
+        "painted_texels_all_maps": 31585
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_zagan_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_zagan_dark.txt",
+      "mesh": {
+        "quads_body": 381,
+        "quads_void": 0,
+        "quads_glow_layer": 40,
+        "quads_full_detail": 381,
+        "orbit_instances": 0,
+        "vertices_body": 1524,
+        "vertices_welded": 427,
+        "vertices_full_detail": 1524,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_zagan_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 37872
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_zagan_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3984
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 37872,
+        "painted_texels_all_maps": 41856
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_zepar_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, axe, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_zepar_dark.txt",
+      "mesh": {
+        "quads_body": 231,
+        "quads_void": 0,
+        "quads_glow_layer": 39,
+        "quads_full_detail": 231,
+        "orbit_instances": 0,
+        "vertices_body": 924,
+        "vertices_welded": 236,
+        "vertices_full_detail": 924,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_zepar_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 62476
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_zepar_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 5559
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 62476,
+        "painted_texels_all_maps": 68035
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_furfur_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, horn, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_furfur_dark.txt",
+      "mesh": {
+        "quads_body": 168,
+        "quads_void": 0,
+        "quads_glow_layer": 99,
+        "quads_full_detail": 168,
+        "orbit_instances": 0,
+        "vertices_body": 672,
+        "vertices_welded": 200,
+        "vertices_full_detail": 672,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_furfur_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 29707
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_furfur_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4836
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 29707,
+        "painted_texels_all_maps": 34543
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_marchosias_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, claws, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_marchosias_dark.txt",
+      "mesh": {
+        "quads_body": 185,
+        "quads_void": 0,
+        "quads_glow_layer": 79,
+        "quads_full_detail": 185,
+        "orbit_instances": 0,
+        "vertices_body": 740,
+        "vertices_welded": 203,
+        "vertices_full_detail": 740,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_marchosias_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 41314
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_marchosias_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 8548
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 41314,
+        "painted_texels_all_maps": 49862
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_sitri_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, bow, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_sitri_dark.txt",
+      "mesh": {
+        "quads_body": 257,
+        "quads_void": 0,
+        "quads_glow_layer": 68,
+        "quads_full_detail": 257,
+        "orbit_instances": 0,
+        "vertices_body": 1028,
+        "vertices_welded": 231,
+        "vertices_full_detail": 1028,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_sitri_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 27280
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_sitri_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4587
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 27280,
+        "painted_texels_all_maps": 31867
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_bifron_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, glaive, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_bifron_dark.txt",
+      "mesh": {
+        "quads_body": 213,
+        "quads_void": 0,
+        "quads_glow_layer": 55,
+        "quads_full_detail": 213,
+        "orbit_instances": 0,
+        "vertices_body": 852,
+        "vertices_welded": 252,
+        "vertices_full_detail": 852,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_bifron_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 27455
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_bifron_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3844
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 27455,
+        "painted_texels_all_maps": 31299
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_paimon_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, glaive, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_paimon_dark.txt",
+      "mesh": {
+        "quads_body": 212,
+        "quads_void": 0,
+        "quads_glow_layer": 71,
+        "quads_full_detail": 212,
+        "orbit_instances": 0,
+        "vertices_body": 848,
+        "vertices_welded": 230,
+        "vertices_full_detail": 848,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_paimon_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 33101
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_paimon_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4262
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 33101,
+        "painted_texels_all_maps": 37363
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_vassago_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, scythe, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_vassago_dark.txt",
+      "mesh": {
+        "quads_body": 247,
+        "quads_void": 0,
+        "quads_glow_layer": 85,
+        "quads_full_detail": 247,
+        "orbit_instances": 0,
+        "vertices_body": 988,
+        "vertices_welded": 290,
+        "vertices_full_detail": 988,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_vassago_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 33407
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_vassago_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3551
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 33407,
+        "painted_texels_all_maps": 36958
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_bael_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, claymore, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_bael_dark.txt",
+      "mesh": {
+        "quads_body": 334,
+        "quads_void": 0,
+        "quads_glow_layer": 133,
+        "quads_full_detail": 334,
+        "orbit_instances": 0,
+        "vertices_body": 1336,
+        "vertices_welded": 342,
+        "vertices_full_detail": 1336,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_bael_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 54618
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_bael_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 5670
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 54618,
+        "painted_texels_all_maps": 60288
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_agares_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, harpoon, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_agares_dark.txt",
+      "mesh": {
+        "quads_body": 372,
+        "quads_void": 0,
+        "quads_glow_layer": 90,
+        "quads_full_detail": 372,
+        "orbit_instances": 0,
+        "vertices_body": 1488,
+        "vertices_welded": 403,
+        "vertices_full_detail": 1488,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_agares_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 35593
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_agares_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2363
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 35593,
+        "painted_texels_all_maps": 37956
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_valefor_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, daggers, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_valefor_dark.txt",
+      "mesh": {
+        "quads_body": 326,
+        "quads_void": 0,
+        "quads_glow_layer": 208,
+        "quads_full_detail": 326,
+        "orbit_instances": 0,
+        "vertices_body": 1304,
+        "vertices_welded": 341,
+        "vertices_full_detail": 1304,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_valefor_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 40249
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_valefor_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 7526
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 40249,
+        "painted_texels_all_maps": 47775
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_barbatos_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, bow, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_barbatos_dark.txt",
+      "mesh": {
+        "quads_body": 341,
+        "quads_void": 0,
+        "quads_glow_layer": 38,
+        "quads_full_detail": 341,
+        "orbit_instances": 0,
+        "vertices_body": 1364,
+        "vertices_welded": 286,
+        "vertices_full_detail": 1364,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_barbatos_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 34313
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_barbatos_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2392
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 34313,
+        "painted_texels_all_maps": 36705
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_gusion_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, rapier, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_gusion_dark.txt",
+      "mesh": {
+        "quads_body": 331,
+        "quads_void": 0,
+        "quads_glow_layer": 112,
+        "quads_full_detail": 331,
+        "orbit_instances": 0,
+        "vertices_body": 1324,
+        "vertices_welded": 323,
+        "vertices_full_detail": 1324,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_gusion_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 32814
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_gusion_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4172
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 32814,
+        "painted_texels_all_maps": 36986
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_vepar_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, anchor, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_vepar_dark.txt",
+      "mesh": {
+        "quads_body": 285,
+        "quads_void": 0,
+        "quads_glow_layer": 82,
+        "quads_full_detail": 285,
+        "orbit_instances": 0,
+        "vertices_body": 1140,
+        "vertices_welded": 310,
+        "vertices_full_detail": 1140,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_vepar_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 41260
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_vepar_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3652
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 41260,
+        "painted_texels_all_maps": 44912
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_shax_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, fans, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_shax_dark.txt",
+      "mesh": {
+        "quads_body": 469,
+        "quads_void": 0,
+        "quads_glow_layer": 24,
+        "quads_full_detail": 469,
+        "orbit_instances": 0,
+        "vertices_body": 1876,
+        "vertices_welded": 480,
+        "vertices_full_detail": 1876,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_shax_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 80488
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_shax_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 240
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 80488,
+        "painted_texels_all_maps": 80728
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_buer_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_buer_dark.txt",
+      "mesh": {
+        "quads_body": 330,
+        "quads_void": 0,
+        "quads_glow_layer": 105,
+        "quads_full_detail": 330,
+        "orbit_instances": 0,
+        "vertices_body": 1320,
+        "vertices_welded": 335,
+        "vertices_full_detail": 1320,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_buer_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 39976
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_buer_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 994
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 39976,
+        "painted_texels_all_maps": 40970
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_andrealphus_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, lance, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_andrealphus_dark.txt",
+      "mesh": {
+        "quads_body": 437,
+        "quads_void": 0,
+        "quads_glow_layer": 69,
+        "quads_full_detail": 437,
+        "orbit_instances": 0,
+        "vertices_body": 1748,
+        "vertices_welded": 447,
+        "vertices_full_detail": 1748,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_andrealphus_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 39123
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_andrealphus_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 821
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 39123,
+        "painted_texels_all_maps": 39944
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_kimaris_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, lance, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_kimaris_dark.txt",
+      "mesh": {
+        "quads_body": 254,
+        "quads_void": 0,
+        "quads_glow_layer": 58,
+        "quads_full_detail": 254,
+        "orbit_instances": 0,
+        "vertices_body": 1016,
+        "vertices_welded": 263,
+        "vertices_full_detail": 1016,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_kimaris_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 31788
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_kimaris_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2148
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 31788,
+        "painted_texels_all_maps": 33936
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_amdusias_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, rapier, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_amdusias_dark.txt",
+      "mesh": {
+        "quads_body": 325,
+        "quads_void": 0,
+        "quads_glow_layer": 30,
+        "quads_full_detail": 325,
+        "orbit_instances": 0,
+        "vertices_body": 1300,
+        "vertices_welded": 361,
+        "vertices_full_detail": 1300,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_amdusias_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 39371
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_amdusias_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 284
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 39371,
+        "painted_texels_all_maps": 39655
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_belial_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, greatsword, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_belial_dark.txt",
+      "mesh": {
+        "quads_body": 262,
+        "quads_void": 0,
+        "quads_glow_layer": 62,
+        "quads_full_detail": 262,
+        "orbit_instances": 0,
+        "vertices_body": 1048,
+        "vertices_welded": 281,
+        "vertices_full_detail": 1048,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_belial_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 60244
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_belial_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 21866
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 60244,
+        "painted_texels_all_maps": 82110
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_decarabia_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, pincers, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_decarabia_dark.txt",
+      "mesh": {
+        "quads_body": 282,
+        "quads_void": 0,
+        "quads_glow_layer": 95,
+        "quads_full_detail": 282,
+        "orbit_instances": 0,
+        "vertices_body": 1128,
+        "vertices_welded": 312,
+        "vertices_full_detail": 1128,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_decarabia_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 32189
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_decarabia_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3103
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 32189,
+        "painted_texels_all_maps": 35292
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_seere_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, sabre, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_seere_dark.txt",
+      "mesh": {
+        "quads_body": 257,
+        "quads_void": 0,
+        "quads_glow_layer": 32,
+        "quads_full_detail": 257,
+        "orbit_instances": 0,
+        "vertices_body": 1028,
+        "vertices_welded": 293,
+        "vertices_full_detail": 1028,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_seere_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 27403
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_seere_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2526
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 27403,
+        "painted_texels_all_maps": 29929
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_dantalion_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_dantalion_dark.txt",
+      "mesh": {
+        "quads_body": 247,
+        "quads_void": 0,
+        "quads_glow_layer": 149,
+        "quads_full_detail": 247,
+        "orbit_instances": 0,
+        "vertices_body": 988,
+        "vertices_welded": 252,
+        "vertices_full_detail": 988,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_dantalion_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 52799
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_dantalion_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3471
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 52799,
+        "painted_texels_all_maps": 56270
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_andromalius_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, spear, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_andromalius_dark.txt",
+      "mesh": {
+        "quads_body": 248,
+        "quads_void": 0,
+        "quads_glow_layer": 94,
+        "quads_full_detail": 248,
+        "orbit_instances": 0,
+        "vertices_body": 992,
+        "vertices_welded": 258,
+        "vertices_full_detail": 992,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_andromalius_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 39085
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_andromalius_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3541
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 39085,
+        "painted_texels_all_maps": 42626
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_glasya_labolas_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, claws, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_glasya_labolas_dark.txt",
+      "mesh": {
+        "quads_body": 239,
+        "quads_void": 0,
+        "quads_glow_layer": 108,
+        "quads_full_detail": 239,
+        "orbit_instances": 0,
+        "vertices_body": 956,
+        "vertices_welded": 274,
+        "vertices_full_detail": 956,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_glasya_labolas_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 41964
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_glasya_labolas_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 3334
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 41964,
+        "painted_texels_all_maps": 45298
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_haagenti_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, cleaver, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_haagenti_dark.txt",
+      "mesh": {
+        "quads_body": 268,
+        "quads_void": 0,
+        "quads_glow_layer": 62,
+        "quads_full_detail": 268,
+        "orbit_instances": 0,
+        "vertices_body": 1072,
+        "vertices_welded": 285,
+        "vertices_full_detail": 1072,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_haagenti_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 60682
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_haagenti_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4531
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 60682,
+        "painted_texels_all_maps": 65213
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_crocell_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_crocell_dark.txt",
+      "mesh": {
+        "quads_body": 217,
+        "quads_void": 0,
+        "quads_glow_layer": 246,
+        "quads_full_detail": 217,
+        "orbit_instances": 0,
+        "vertices_body": 868,
+        "vertices_welded": 222,
+        "vertices_full_detail": 868,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_crocell_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 38467
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_crocell_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 19429
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 38467,
+        "painted_texels_all_maps": 57896
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_furcas_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, halberd, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_furcas_dark.txt",
+      "mesh": {
+        "quads_body": 307,
+        "quads_void": 0,
+        "quads_glow_layer": 38,
+        "quads_full_detail": 307,
+        "orbit_instances": 0,
+        "vertices_body": 1228,
+        "vertices_welded": 328,
+        "vertices_full_detail": 1228,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_furcas_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 42897
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_furcas_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2345
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 42897,
+        "painted_texels_all_maps": 45242
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_balam_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, trident, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_balam_dark.txt",
+      "mesh": {
+        "quads_body": 344,
+        "quads_void": 0,
+        "quads_glow_layer": 150,
+        "quads_full_detail": 344,
+        "orbit_instances": 0,
+        "vertices_body": 1376,
+        "vertices_welded": 361,
+        "vertices_full_detail": 1376,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_balam_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 38697
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_balam_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 4185
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 38697,
+        "painted_texels_all_maps": 42882
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_alloces_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, longsword, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_alloces_dark.txt",
+      "mesh": {
+        "quads_body": 288,
+        "quads_void": 0,
+        "quads_glow_layer": 142,
+        "quads_full_detail": 288,
+        "orbit_instances": 0,
+        "vertices_body": 1152,
+        "vertices_welded": 281,
+        "vertices_full_detail": 1152,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_alloces_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 44611
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_alloces_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 6032
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 44611,
+        "painted_texels_all_maps": 50643
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_camio_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, staff, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_camio_dark.txt",
+      "mesh": {
+        "quads_body": 303,
+        "quads_void": 0,
+        "quads_glow_layer": 62,
+        "quads_full_detail": 303,
+        "orbit_instances": 0,
+        "vertices_body": 1212,
+        "vertices_welded": 328,
+        "vertices_full_detail": 1212,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_camio_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 33650
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_camio_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 2033
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 33650,
+        "painted_texels_all_maps": 35683
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    },
+    {
+      "item": "djinn_weapon_murmur_dark",
+      "grade": "GOD",
+      "kind": "3D hand weapon (MAIN_HAND, mace, loaned by the dark Djinn Equip)",
+      "mesh_file": "weapon_meshes/djinn_weapon_murmur_dark.txt",
+      "mesh": {
+        "quads_body": 385,
+        "quads_void": 0,
+        "quads_glow_layer": 110,
+        "quads_full_detail": 385,
+        "orbit_instances": 0,
+        "vertices_body": 1540,
+        "vertices_welded": 415,
+        "vertices_full_detail": 1540,
+        "lod_vertices": null
+      },
+      "texture": {
+        "skin": {
+          "file": "textures/entity/weapon/djinn_weapon_murmur_dark.png",
+          "size": [
+            1024,
+            1024
+          ],
+          "texels": 1048576,
+          "painted": 64144
+        },
+        "emissive_maps": [
+          {
+            "file": "textures/entity/weapon/djinn_weapon_murmur_dark_glow.png",
+            "size": [
+              1024,
+              1024
+            ],
+            "texels": 1048576,
+            "painted": 6292
+          }
+        ],
+        "skin_size_texels": 1048576,
+        "painted_skin_texels": 64144,
+        "painted_texels_all_maps": 70436
+      },
+      "swing_trail": false,
+      "unique_act_vfx": true,
+      "passes": {
+        "count": 2,
+        "list": [
+          "body",
+          "core_glow"
+        ]
+      },
+      "ambient_layers": {
+        "count": 0,
+        "list": []
+      },
+      "idle_animations": {
+        "count": 1,
+        "list": [
+          "glow_pulse"
+        ]
+      }
+    }
+  ]
+}
