@@ -5,7 +5,6 @@ import com.newuniverse.nusmp.elite.hub.CoinLoot;
 import com.newuniverse.nusmp.elite.hub.CoinLootModifier;
 import com.newuniverse.nusmp.elite.hub.Currency;
 import com.newuniverse.nusmp.elite.hub.HubConfig;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackItem;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -36,8 +35,7 @@ import java.util.SplittableRandom;
 /**
  * Why: the Luck-scaled loot cannot be played by its author, so the CI server smoke test runs it in the real game, through the REAL pipeline (a loot table rolled with a chest's
  * parameters, so every global loot modifier of the game acts on it, ours among them): {@code dungeon.loot_luck} proves that the modifier type is registered and switched on, that a
- * made-up chest of four rotten flesh yields about four with no Luck and clearly more with a lot of it (never past a stack, never fewer), and that Luck makes a backpack show up
- * more often; {@code dungeon.loot_luck.coins} proves that the Tensura coin payout with no Luck is bit-for-bit the old roll and rises with Luck (amount and chance), through the pure
+ * made-up chest of four rotten flesh yields about four with no Luck and clearly more with a lot of it (never past a stack, never fewer); {@code dungeon.loot_luck.coins} proves that the Tensura coin payout with no Luck is bit-for-bit the old roll and rises with Luck (amount and chance), through the pure
  * roll and through the coin modifier itself; {@code dungeon.loot_luck.armour} proves that a lucky deep chest or boss yields randomised dungeon armour that carries a real roll
  * (lines, rarity, depth), that two rolls differ, and that the rarity follows the Luck. Nothing here touches the food bar.
  */
@@ -68,7 +66,7 @@ final class LuckLootSelfTests {
         return b.create(LootContextParamSets.CHEST);
     }
 
-    // ---------------------------------------------------------------- counts and backpacks
+    // ---------------------------------------------------------------- counts
     private static SelfTests.Result counts(MinecraftServer server) {
         if (!LuckLootModifier.TYPE.isBound()) return fail("the modifier type nusmp:luck_loot is not registered");
         try {
@@ -88,7 +86,7 @@ final class LuckLootSelfTests {
         LootTable table = madeUp();
         int rolls = 1500;
         double[] sums = new double[2];
-        int[] backpacks = new int[2], maxCount = new int[2], minCount = {Integer.MAX_VALUE, Integer.MAX_VALUE};
+        int[] maxCount = new int[2], minCount = {Integer.MAX_VALUE, Integer.MAX_VALUE};
         float[] lucks = {0f, 15f};
         RandomSource random = RandomSource.create(20260107L);
         for (int k = 0; k < 2; k++) {
@@ -97,7 +95,6 @@ final class LuckLootSelfTests {
                 int flesh = 0;
                 for (ItemStack s : table.getRandomItems(chest(mega, at, lucks[k], opener), random)) {
                     if (s.is(Items.ROTTEN_FLESH)) flesh += s.getCount();
-                    if (s.getItem() instanceof BackpackItem) backpacks[k]++;
                 }
                 if (flesh == 0) return fail("the four rotten flesh of the table vanished (luck " + lucks[k] + ")");
                 sums[k] += flesh;
@@ -112,8 +109,7 @@ final class LuckLootSelfTests {
         double depthMean = LuckGauss.mean(0.0, com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.floorAt(mega, at), LootConfig.luckItems());
         if (plain > 4.0 * (1.0 + 2.0 * depthMean) + 0.15) return fail("with no Luck the average count is " + String.format(java.util.Locale.ROOT, "%.2f", plain) + ", the table says 4 (depth term " + String.format(java.util.Locale.ROOT, "%.3f", depthMean) + ")");
         if (lucky < plain + 1.0) return fail("with Luck 15 the average count is only " + String.format(java.util.Locale.ROOT, "%.2f", lucky) + " (no Luck: " + String.format(java.util.Locale.ROOT, "%.2f", plain) + ")");
-        if (backpacks[1] <= backpacks[0]) return fail("Luck did not raise the backpack drops: " + backpacks[0] + " without, " + backpacks[1] + " with Luck 15");
-        return SelfTests.Result.ok(String.format(java.util.Locale.ROOT, "chest count %.2f -> %.2f with Luck 15 (max %d); backpacks %d -> %d in %d chests", plain, lucky, maxCount[1], backpacks[0], backpacks[1], rolls));
+        return SelfTests.Result.ok(String.format(java.util.Locale.ROOT, "chest count %.2f -> %.2f with Luck 15 (max %d) in %d chests", plain, lucky, maxCount[1], rolls));
     }
 
     // ---------------------------------------------------------------- coins

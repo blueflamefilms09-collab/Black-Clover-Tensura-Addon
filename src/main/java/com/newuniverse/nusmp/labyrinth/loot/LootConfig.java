@@ -12,9 +12,9 @@ public final class LootConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, OURS_OUTSIDE, SELL, CRITS, TRINKETS;
     public static final ModConfigSpec.DoubleValue DROP_RATE, GEAR_RATE, FOOD_RATE, BOSS_BONUS, SELL_FACTOR;
-    /** 1.107.0: Luck-scaled loot and the backpacks (section {@code [luck]} and {@code [backpack]}). */
-    public static final ModConfigSpec.BooleanValue LUCK_COUNTS, LUCK_COINS, LUCK_ARMOUR, BACKPACK_DROPS, BACKPACK_HAND, BACKPACK_PICKUP;
-    public static final ModConfigSpec.DoubleValue LUCK_GAIN, LUCK_DEPTH_GAIN, LUCK_MAX_FACTOR, LUCK_COIN_GAIN, LUCK_COIN_MAX, ARMOUR_RATE, BACKPACK_RATE;
+    /** 1.107.0: Luck-scaled loot (section {@code [luck]}). */
+    public static final ModConfigSpec.BooleanValue LUCK_COUNTS, LUCK_COINS, LUCK_ARMOUR;
+    public static final ModConfigSpec.DoubleValue LUCK_GAIN, LUCK_DEPTH_GAIN, LUCK_MAX_FACTOR, LUCK_COIN_GAIN, LUCK_COIN_MAX, ARMOUR_RATE;
     public static final ModConfigSpec.IntValue MAX_PER_KILL;
 
     static {
@@ -65,16 +65,6 @@ public final class LootConfig {
                 .defineInRange("armourRate", 1.0, 0.0, 20.0);
         b.pop();
 
-        b.push("backpack");
-        BACKPACK_DROPS = b.comment("Backpacks and backpack upgrades drop from the dungeon's loot, more often with Luck and depth.")
-                .define("drops", true);
-        BACKPACK_RATE = b.comment("Multiplies the chance of a backpack or an upgrade dropping.")
-                .defineInRange("dropRate", 1.0, 0.0, 20.0);
-        BACKPACK_HAND = b.comment("Using a backpack in the air opens its inventory without placing it.")
-                .define("openInHand", true);
-        BACKPACK_PICKUP = b.comment("Sneaking and using a placed backpack with an empty hand picks it up with its contents (only a backpack a player placed).")
-                .define("sneakPickup", true);
-        b.pop();
         SPEC = b.build();
     }
 

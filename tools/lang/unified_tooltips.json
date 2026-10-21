@@ -1,0 +1,17 @@
+{
+  "tooltip.nusmp.unified.cat.weapon": "Weapon",
+  "tooltip.nusmp.unified.cat.armour": "Armour",
+  "tooltip.nusmp.unified.cat.tool": "Tool",
+  "tooltip.nusmp.unified.cat.food": "Food",
+  "tooltip.nusmp.unified.cat.material": "Material",
+  "tooltip.nusmp.unified.cat.book": "Skill Book",
+  "tooltip.nusmp.unified.cat.grimoire": "Grimoire",
+  "tooltip.nusmp.unified.cat.key": "Key",
+  "tooltip.nusmp.unified.cat.core": "Core",
+  "tooltip.nusmp.unified.cat.charm": "Charm",
+  "tooltip.nusmp.unified.cat.hero_weapon": "Hero Weapon",
+  "tooltip.nusmp.unified.cat.djinn": "Djinn",
+  "tooltip.nusmp.unified.cat.block": "Block",
+  "tooltip.nusmp.unified.cat.currency": "Currency",
+  "tooltip.nusmp.unified.cat.misc": "Item"
+}

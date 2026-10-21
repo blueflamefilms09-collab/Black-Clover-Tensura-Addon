@@ -35,9 +35,6 @@ public final class LootCreative {
                     out.accept(item.getDefaultInstance());
                     if (item instanceof LootGear) out.accept(GearStacks.create(item, LootRarity.EPIC, id.hashCode() * 31L + 7L, 100));
                 }
-                for (com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackTier t : com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackTier.values())
-                    out.accept(com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackItem.of(t));                       // 1.107.0: a backpack of every tier, then the upgrades
-                for (var up : com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackRegistry.upgrades()) out.accept(up.get());
             })
             .build());
 

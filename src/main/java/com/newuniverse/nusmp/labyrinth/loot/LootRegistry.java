@@ -23,8 +23,7 @@ public final class LootRegistry {
         LootArmorMaterials.MATERIALS.register(modBus);
         LootItems.REGISTER.register(modBus);
         AnimeLootModifier.register(modBus);
-        LuckLootModifier.register(modBus);                                        // 1.107.0: the Luck-scaled counts, armour rolls and backpack drops (docs/labyrinth/luck_loot_backpack.md)
-        com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackRegistry.init(modBus);   // 1.107.0: the placeable, upgradable Backpack (block, block entity, menu, upgrades, recipe)
+        LuckLootModifier.register(modBus);                                        // 1.107.0: the Luck-scaled counts and armour rolls (docs/labyrinth/luck_loot_backpack.md)
         LuckLootSelfTests.register();
         LootCreative.TABS.register(modBus);
         LootSelfTests.register();

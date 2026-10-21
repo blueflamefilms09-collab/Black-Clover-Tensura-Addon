@@ -11,7 +11,7 @@ import com.newuniverse.nusmp.dungeon.sentient.Dice;
  * bit-for-bit what they were; (3) Luck is clamped to {@link #MAX_LUCK} and negative Luck counts as zero (a cursed player is not punished, they just are not rewarded); (4) the
  * extra is clamped to {@code maxFactor - 1} times the base and the result to the caller's cap (a stack never goes over its size); (5) the depth term is the saturating
  * {@code d / (d + 200)}, so deeper is richer but never without end (floor scaling stays the saturating curve on purpose). The same maths gives the coin multiplier (Luck only, the
- * floor already scales coins) and the chances of a backpack or a rolled piece of armour. Hunger is not a concept here. Pure: no Minecraft type.
+ * floor already scales coins) and the chance of a rolled piece of armour. Hunger is not a concept here. Pure: no Minecraft type.
  */
 public final class LuckGauss {
     private LuckGauss() {}
@@ -107,23 +107,6 @@ public final class LuckGauss {
     // ---------------------------------------------------------------- chances
     /** Extra chance that a coin-paying mob pays: 1 point per point of Luck, at most 15 points. */
     public static double coinChanceBonus(double luck) { return Math.min(0.15, 0.01 * luck(luck)); }
-
-    /**
-     * The chance that a kill or a chest also leaves a backpack (or an upgrade): a small base, a little more per point of Luck and per depth, a boss or a chest several times a
-     * common kill, never above {@code MAX_BACKPACK}.
-     */
-    public static double backpackChance(double luck, int floor, Kind kind) {
-        double base = switch (kind) {
-            case KILL -> 0.004;
-            case BOSS -> 0.12;
-            case CHEST -> 0.03;
-        };
-        double c = base * (1.0 + 0.25 * luck(luck)) * (1.0 + depthFactor(floor));
-        return Math.min(MAX_BACKPACK, c);
-    }
-
-    /** The hard ceiling on the backpack chance. */
-    public static final double MAX_BACKPACK = 0.35;
 
     /**
      * The chance that a kill or a chest also leaves a rolled piece of dungeon armour (on top of what the monster's own table gave): a base, +1.5 points per point of Luck, more

@@ -134,17 +134,11 @@ class LuckGaussTest {
     }
 
     @Test
-    void backpackAndArmourChancesRiseWithLuckAndDepthAndStayCapped() {
+    void armourChancesRiseWithLuckAndDepthAndStayCapped() {
         for (LuckGauss.Kind k : LuckGauss.Kind.values()) {
-            double c0 = LuckGauss.backpackChance(0, 0, k), c10 = LuckGauss.backpackChance(10, 0, k), cDeep = LuckGauss.backpackChance(10, 600, k);
-            assertTrue(c0 > 0 && c10 > c0 && cDeep >= c10, "backpack chance rises: " + k);
-            assertTrue(LuckGauss.backpackChance(1000, 100000, k) <= LuckGauss.MAX_BACKPACK);
             double a0 = LuckGauss.armourChance(0, 0, k), a10 = LuckGauss.armourChance(10, 0, k), aDeep = LuckGauss.armourChance(10, 600, k);
             assertTrue(a0 > 0 && a10 > a0 && aDeep >= a10, "armour chance rises: " + k);
             assertTrue(LuckGauss.armourChance(1000, 100000, k) <= LuckGauss.MAX_ARMOUR);
         }
-        assertTrue(LuckGauss.backpackChance(0, 0, LuckGauss.Kind.BOSS) > LuckGauss.backpackChance(0, 0, LuckGauss.Kind.CHEST));
-        assertTrue(LuckGauss.backpackChance(0, 0, LuckGauss.Kind.CHEST) > LuckGauss.backpackChance(0, 0, LuckGauss.Kind.KILL));
-        assertFalse(LuckGauss.backpackChance(0, 0, LuckGauss.Kind.KILL) >= 0.01, "an ordinary kill rarely leaves a backpack");
     }
 }

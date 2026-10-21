@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Why: the Luck-scaled loot has to apply to the loot that has ALREADY been rolled, whoever rolled it (a vanilla table, a Lootr chest, a mod's monster, a data pack's edit, a mob with
  * no table of its own), and a global loot modifier is the door for exactly that: it sees the list of stacks and the context, enlarges and adds beside what the table gave, and
- * replaces nothing (add the new, keep the old). The decisions are {@link LuckGauss}, {@link LuckArmour} and the backpack drop rules; the work on the context is {@link LuckLoot}; this
+ * replaces nothing (add the new, keep the old). The decisions are {@link LuckGauss}, and {@link LuckArmour}; the work on the context is {@link LuckLoot}; this
  * class is the shell, in the pattern of the anime loot modifier next to it. Registered on the mod bus as {@code nusmp:luck_loot} by {@link LootRegistry#init} and switched on by
  * the entry in {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}. The loot of the modifiers that run before or after it is also seen (the order is the loader's), so it
  * only enlarges what is eligible and never touches gear, coins or keys. A fault is logged once and the loot goes through unchanged: a loot roll must never fail because of a bonus.

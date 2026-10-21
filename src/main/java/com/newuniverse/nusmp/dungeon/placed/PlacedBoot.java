@@ -22,7 +22,6 @@ public final class PlacedBoot {
         modBus.addListener(PlacedNet::registerPayloads);
         PlacedEvents.register(NeoForge.EVENT_BUS);
         DungeonGuard.addBreakRule(PlayerPlaced::breakRule);
-        com.newuniverse.nusmp.labyrinth.loot.backpack.PlacedHook.install((lv, pos, by) -> PlayerPlaced.mark(lv, pos, by instanceof net.minecraft.server.level.ServerPlayer sp ? sp : null));
         PlacedSelfTests.register();
         if (FMLEnvironment.dist == Dist.CLIENT) PlacedClientBoot.init(NeoForge.EVENT_BUS);
     }
