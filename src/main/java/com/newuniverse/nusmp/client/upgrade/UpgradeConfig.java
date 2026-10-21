@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.client.upgrade;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
- * Why: the client switches of the visual upgrade (config/nusmp-visual-upgrade-client.toml, this machine only). {@code visual.upgrade = false} puts every upgraded weapon back on its old mesh, skin
+ * Why: the client switches of the visual upgrade (config/nusmp-visual-upgrade-god-client.toml (it was nusmp-visual-upgrade-client.toml in 1.102.0 to 1.107.0, a name the Genesis weapons also used), this machine only). {@code visual.upgrade = false} puts every upgraded weapon back on its old mesh, skin
  * and glow (the old files stay in the jar), switches off its extra passes, its ambient layers and its swing trail; the act signatures are drawn by the effect system and follow
  * {@code visual.signatures}. The other switches trim the cost: the density of the ambient layers (0 = none), the orbiting parts, the extra glow passes.
  * Reads never throw: before the file is loaded the defaults answer.
