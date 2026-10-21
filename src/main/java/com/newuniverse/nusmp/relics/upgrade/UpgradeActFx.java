@@ -1,11 +1,13 @@
 package com.newuniverse.nusmp.relics.upgrade;
 
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import com.newuniverse.nusmp.relics.Act;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -61,10 +62,21 @@ public final class UpgradeActFx {
         }
     }
 
-    /** The particle options a table entry names: "dust" or "" (coloured by {@code color}) or a simple particle type id; null when unknown. */
+    /**
+     * The particle options a table entry names, always one of the mod's own custom particles (1.108.0, {@code particle.fx}): "dust" or "" is a custom mote dyed with {@code color}
+     * ({@link FxRelic#dust}); a vanilla name is the particle that replaces it in the theme of the colour ({@link UpgradeParticleNames} decides which); an id of another namespace is the mod's own
+     * particle type from the registry (null when it is not a plain particle).
+     */
     public static ParticleOptions options(String particle, int color) {
-        if (particle == null || particle.isEmpty() || particle.equals("dust")) {
-            return new DustParticleOptions(new Vector3f((color >> 16 & 255) / 255f, (color >> 8 & 255) / 255f, (color & 255) / 255f), 1.0f);
+        if (UpgradeParticleNames.isDust(particle)) return FxRelic.dust(color, 1.0f);
+        if (UpgradeParticleNames.isVanilla(particle)) {
+            FxOld old;
+            try {
+                old = FxOld.valueOf(UpgradeParticleNames.oldName(particle));
+            } catch (IllegalArgumentException unknown) {
+                old = FxOld.valueOf(UpgradeParticleNames.DEFAULT);
+            }
+            return Fx.options(FxRelic.theme(color), old);
         }
         ResourceLocation id = ResourceLocation.tryParse(particle);
         if (id == null) return null;

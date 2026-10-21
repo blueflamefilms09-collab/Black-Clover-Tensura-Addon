@@ -507,6 +507,7 @@ def main(argv=None):
     if args.check and bad:
         print("out of date or missing:", ", ".join(bad[:20]), "..." if len(bad) > 20 else "")
         return 1
+    if not args.check: __import__("subprocess").call([sys.executable, "-B", os.path.join(ROOT, "tools", "visual_upgrade", "djinn_dark_weapons", "build.py")])  # 1.108.0: the upgraded dark weapons are built from the files written above, next to them (up/)
     return 0
 
 

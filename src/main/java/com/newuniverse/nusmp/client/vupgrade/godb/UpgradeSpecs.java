@@ -83,6 +83,9 @@ public final class UpgradeSpecs {
 
     /** The particle of a layer: "dust" is a vanilla dust mote in the layer's colour; anything else is looked up in the particle registry (a plain particle type), end rod when unknown. */
     static ParticleOptions options(UpgradeSpec.Layer l) {
+        if (l.particle().equals("fx")) {                                             // 1.108.0 (slice djinn_dark_weapons): the mod's own particle, themed and dyed by the layer's colour
+            return com.newuniverse.nusmp.particle.fx.FxRelic.dust(l.rgb(), Math.max(0.3f, l.size()));
+        }
         if (l.particle().equals("dust")) {
             return new DustParticleOptions(new Vector3f((l.rgb() >> 16 & 255) / 255f, (l.rgb() >> 8 & 255) / 255f, (l.rgb() & 255) / 255f), Math.max(0.3f, l.size()));
         }
