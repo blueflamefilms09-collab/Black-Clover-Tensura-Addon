@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.108.0] — Genesis Demon-Slayer upgraded, smaller textures, a config file clash fixed
+
+### NEW
+- **Genesis Demon-Slayer (visual upgrade):** a 4,296-quad blade and hilt with chipped slab, framed panel, fanged split, void holes with charred glowing rims, engraved lore text, a clover pommel, nine orbiting black-glass shards, hanging blade chips and five circling clover leaves; 2048 px skin with glow and vein maps; 16 ambient layers, 15 idle animations, a draw animation, a swing trail and a signature effect on all three acts. Black Meteorite still breaks the blade into four shards, Resonance still swells the clover, and the 1.6x growth of Black Divider is kept. Reduced-detail model beyond 12 blocks. `docs/visual_upgrade/demon_slayer.md`.
+- **Server-friendly rule and guard:** CLAUDE.md rule 9 and `ServerSafetyTest` (no client-only classes in common code, no `Minecraft.getInstance()` outside `client/`); `ConfigFileNamesTest` (no two config files may share a name).
+
+### FIXED
+- **Two settings files shared one name:** the Genesis weapons' and the God weapons' visual-upgrade options were both registered as `nusmp-visual-upgrade-client.toml` since 1.102.0. NeoForge keeps one config per file name, so this was a config conflict. The God weapons' options now use `nusmp-visual-upgrade-god-client.toml` (their old values reset to the defaults once). This may be behind the "Cannot get config value before config is loaded" crash reported against Tensura No Index, but that is not confirmed.
+
+### CHANGED
+- **Smaller jar:** every texture was recompressed losslessly (10,587 of 10,738 PNGs, 323.6 MB to 275.5 MB, every pixel checked identical, including the colour under transparent pixels). `tools/optimize_pngs.py` repeats it.
+
+### REPLACED
+- How the Demon-Slayer is drawn in hand (the old model, skins, icon and world effect stay on disk; `visual.upgrade=false` brings them back).
+
+### KEPT
+- Every id, stat, act, passive, engraving, Better Combat file, saved data; Time Magic.
+
+### Honest notes
+- Nothing has been run in the game. The Demon-Slayer's combined proxy score is dominated by the texture term (a 64 px skin against 2048 px); with every ratio capped at 20 it is 16.1, so it does not honestly reach "20x".
+- The dark Djinn weapons upgrade is still being built.
+
 ## [1.107.0] — Dungeon spec gaps: break what you place, Gorgon ban, poise and desperation, 7x7 clearance, themed music, weapon racks, Luck loot and backpacks, room lockdowns and ambushes
 
 ### NEW
