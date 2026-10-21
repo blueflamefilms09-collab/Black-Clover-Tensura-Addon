@@ -461,6 +461,14 @@
   "chronarchs_pendulum_sabre": "sabre",
   "reflected_kings_mirrorblade": "longsword",
   "aurliels_seraph_halberd": "glaive",
-  "nekrathuls_pact_scythe": "scythe"
+  "nekrathuls_pact_scythe": "scythe",
+  "apprentices_training_sword": "longsword",
+  "gate_scavengers_knife": "dagger",
+  "adventurers_handaxe": "handaxe",
+  "lizardman_scouts_spear": "spear",
+  "hedge_wizards_oak_staff": "staff",
+  "silvered_shortsword": "shortsword",
+  "hakurou_school_practice_katana": "katana",
+  "familia_smiths_mace": "hammer"
  }
 }

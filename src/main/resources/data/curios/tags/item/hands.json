@@ -289,6 +289,42 @@
     {
       "id": "nusmp:bloodbound_gauntlets",
       "required": false
+    },
+    {
+      "id": "nusmp:bandaged_training_wraps",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragon_slayer_apprentice_bracers",
+      "required": false
+    },
+    {
+      "id": "nusmp:e_rank_hunters_work_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:gate_raider_grip_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:guild_mark_armband",
+      "required": false
+    },
+    {
+      "id": "nusmp:mana_skin_wrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_minor_protection",
+      "required": false
+    },
+    {
+      "id": "nusmp:rope_climbers_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:weighted_training_wristbands",
+      "required": false
     }
   ]
 }

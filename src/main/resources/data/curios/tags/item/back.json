@@ -233,6 +233,26 @@
     {
       "id": "nusmp:silent_winter_mantle",
       "required": false
+    },
+    {
+      "id": "nusmp:adventurers_hooded_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:d_rank_raiders_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:desert_dancers_veil_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:great_jura_travelling_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:supporters_rucksack",
+      "required": false
     }
   ]
 }
