@@ -32,7 +32,8 @@ import java.util.function.Supplier;
  * always, the arena of the Final Hour. The rule itself is {@link DungeonGuardRules}. The events below stop the ordinary routes early and
  * cleanly (the crack never starts, no drops, the action bar says why); {@code mixin.LevelGuardMixin} (and the chunk mixin beside it) is the net
  * under them for every mod that calls the block writers directly. The mod's own builders (the sector generator, a door that opens) run inside
- * {@link #internal(Runnable)}, which the guard lets through. (Until 1.58.0 it also held the Living Dungeon, and told that dungeon's immune
+ * {@link #internal(Runnable)}, which the guard lets through. 1.107.0: the one exception is a block a PLAYER placed in the Labyrinth
+ * ({@code dungeon.placed.PlayerPlaced}): it can be broken and picked up again, and every block the dungeon generated is still held. (Until 1.58.0 it also held the Living Dungeon, and told that dungeon's immune
  * system about every blow at a wall; both went with the Living Dungeon.)
  */
 public final class DungeonGuard {
@@ -132,18 +133,31 @@ public final class DungeonGuard {
     /** Would {@code Level.setBlock} take a held block away (to air, a fluid or fire)? Cheap until it must look at the old state. */
     public static boolean refusesSet(Level level, BlockPos pos, BlockState to) {
         if (!on(level)) return false;
+        int depth = DEPTH.get().get();
+        if (depth > 0) {
+            com.newuniverse.nusmp.dungeon.placed.PlayerPlaced.forgetOnBuild(level, pos);                                // 1.107.0: the mod's own builder writes here (whatever it writes), so a player-placed mark on the spot is dropped (the stone is the dungeon's again)
+            return false;
+        }
         boolean air = to.isAir(), fluid = isFluidOnly(to), fire = isFire(to);
         if (!DungeonGuardRules.takesAway(air, fluid, fire)) return false;
-        int depth = DEPTH.get().get();
-        if (depth > 0) return false;
         BlockState from = level.getBlockState(pos);
-        return DungeonGuardRules.refusesChange(depth, from.isAir(), isFluidOnly(from), isFire(from), air, fluid, fire);
+        boolean refuse = DungeonGuardRules.refusesChange(depth, from.isAir(), isFluidOnly(from), isFire(from), air, fluid, fire);
+        return refuse && !com.newuniverse.nusmp.dungeon.placed.PlayerPlaced.isPlaced(level, pos);                       // 1.107.0: the one exception, a block a player placed may go (its mark is dropped once the write has gone through, see afterSet)
+    }
+
+    /**
+     * 1.107.0: called when {@code Level.setBlock} has succeeded (the mixin's RETURN): a player-placed block that was just taken away (air, a fluid, fire) loses its
+     * mark. Done after the write, not before, because one removal passes the guard twice (the world's writer, then the chunk's) and both must give the same answer.
+     */
+    public static void afterSet(Level level, BlockPos pos, BlockState to) {
+        if (!on(level) || !DungeonGuardRules.takesAway(to.isAir(), isFluidOnly(to), isFire(to))) return;
+        com.newuniverse.nusmp.dungeon.placed.PlayerPlaced.released(level, pos);
     }
 
     /** Would {@code Level.removeBlock} or {@code Level.destroyBlock} take the block here away? */
     public static boolean refusesRemoval(Level level, BlockPos pos) {
         if (!on(level) || inInternal()) return false;
-        return isProtected(level.getBlockState(pos));
+        return isProtected(level.getBlockState(pos)) && !com.newuniverse.nusmp.dungeon.placed.PlayerPlaced.isPlaced(level, pos);          // 1.107.0: a block a player placed may be removed
     }
 
     /** A player who tried is told, at most once every few seconds; anything else is ignored. */
