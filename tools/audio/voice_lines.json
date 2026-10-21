@@ -1,0 +1,722 @@
+[
+ {
+  "id": "system_floor_enter",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "System notice. You have entered a new floor."
+ },
+ {
+  "id": "system_floor_sealed",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Warning. The way ahead is sealed until every enemy has fallen."
+ },
+ {
+  "id": "system_lockdown_start",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Challenge room detected. The doors are locked."
+ },
+ {
+  "id": "system_lockdown_clear",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Challenge cleared. The doors are open."
+ },
+ {
+  "id": "system_ambush_warning",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Warning. Hostile squad approaching from ahead."
+ },
+ {
+  "id": "system_rest_safe",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Safe zone reached. You may rest."
+ },
+ {
+  "id": "system_boss_ahead",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Warning. A floor boss awaits beyond this door."
+ },
+ {
+  "id": "system_rift_open",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Notice. A rift has opened nearby."
+ },
+ {
+  "id": "system_floor_clear",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Floor cleared. The stairs are open."
+ },
+ {
+  "id": "system_low_health",
+  "role": "system",
+  "voice": "iBeucLPI8hr8MOJjjYTL",
+  "prompt": "Warning. Vital signs critical."
+ },
+ {
+  "id": "boss_holy_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[calm, resonant] Kneel, wanderer. The light has judged you, and found you wanting."
+ },
+ {
+  "id": "boss_holy_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[louder] The heavens themselves answer my call!"
+ },
+ {
+  "id": "boss_holy_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[fading] The light... forgives... even this."
+ },
+ {
+  "id": "boss_evil_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[low, slow] You climbed all this way, only to kneel before me. Come, mortal."
+ },
+ {
+  "id": "boss_evil_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[snarling] Enough games! Taste my true power!"
+ },
+ {
+  "id": "boss_evil_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[faltering] Impossible... I am... a god..."
+ },
+ {
+  "id": "boss_undead_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[hollow whisper] You will join us. All who enter here join us."
+ },
+ {
+  "id": "boss_undead_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[rattling] The dead rise at my word!"
+ },
+ {
+  "id": "boss_undead_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[rasping] Rest... at last..."
+ },
+ {
+  "id": "boss_fire_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[roaring] Burn! Everything you love will burn!"
+ },
+ {
+  "id": "boss_fire_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[furious] My flames are only beginning!"
+ },
+ {
+  "id": "boss_fire_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[dying] The fire... goes out..."
+ },
+ {
+  "id": "boss_ice_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[cold, measured] Silence, little spark. The cold will take you gently."
+ },
+ {
+  "id": "boss_ice_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[sharp] The frost does not forgive!"
+ },
+ {
+  "id": "boss_ice_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[softly] So cold... and so quiet..."
+ },
+ {
+  "id": "boss_storm_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[booming] Hear the thunder! It is my voice, and it speaks your end!"
+ },
+ {
+  "id": "boss_storm_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[shouting] Let the sky fall upon you!"
+ },
+ {
+  "id": "boss_storm_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[breathless] The storm... passes..."
+ },
+ {
+  "id": "boss_void_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[distant, echoing] There is nothing here. There was never anything here."
+ },
+ {
+  "id": "boss_void_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[unsettling] The void opens. Come inside."
+ },
+ {
+  "id": "boss_void_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[fading] Return... to nothing..."
+ },
+ {
+  "id": "boss_dragon_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[deep growl] Tiny creature. You dare enter my hoard?"
+ },
+ {
+  "id": "boss_dragon_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[thundering] Feel the fury of a dragon!"
+ },
+ {
+  "id": "boss_dragon_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[slow, weary] A worthy foe... farewell..."
+ },
+ {
+  "id": "boss_devil_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[silky, amused] Ah, a visitor. Let us make a bargain, you and I."
+ },
+ {
+  "id": "boss_devil_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[cackling] Now you see what a devil truly is!"
+ },
+ {
+  "id": "boss_devil_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[snarling] You will regret this contract!"
+ },
+ {
+  "id": "boss_angel_intro",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[serene] Be still. I will end your suffering swiftly."
+ },
+ {
+  "id": "boss_angel_phase2",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[radiant] Witness the wrath of the heavens!"
+ },
+ {
+  "id": "boss_angel_death",
+  "role": "boss",
+  "voice": "d3qrd1ge6zWDvUxIeXiH",
+  "prompt": "[gentle] I return to the light..."
+ },
+ {
+  "id": "npc_merchant_greet",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[warm, cheerful] Welcome back, adventurer! You made it out alive, and with loot, too."
+ },
+ {
+  "id": "npc_merchant_sell",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[friendly] Fine pieces, these. A fair price, as always."
+ },
+ {
+  "id": "npc_merchant_buy",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[pleased] Pleasure doing business with you!"
+ },
+ {
+  "id": "npc_merchant_farewell",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[warm] Come back soon, and stay alive down there!"
+ },
+ {
+  "id": "npc_quest_offer",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[earnest] I have a task for you, if you are brave enough."
+ },
+ {
+  "id": "npc_quest_done",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[delighted] You did it! Here is your reward, well earned."
+ },
+ {
+  "id": "npc_quest_farewell",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[kind] Be careful out there, adventurer."
+ },
+ {
+  "id": "npc_guide_greet",
+  "role": "npc",
+  "voice": "fV5vDeUO8ghvK7ntjiVC",
+  "prompt": "[friendly] First time in the dungeon? Stay close to the stairs and keep your wits about you."
+ },
+ {
+  "id": "djinn_baal_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, low] I am Baal, Lord of Thunder. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_baal_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, fierce] Feel the lightning of Baal!"
+ },
+ {
+  "id": "djinn_amon_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Amon, Sovereign of Flame. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_amon_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the heat of Amon!"
+ },
+ {
+  "id": "djinn_vinea_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Vinea, Queen of the Deep. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_vinea_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Vinea!"
+ },
+ {
+  "id": "djinn_focalor_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, low] I am Focalor, Warden of Gales. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_focalor_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, fierce] Feel the wind of Focalor!"
+ },
+ {
+  "id": "djinn_zagan_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Zagan, Keeper of Life. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_zagan_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the life of Zagan!"
+ },
+ {
+  "id": "djinn_zepar_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Zepar, Breaker of Giants. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_zepar_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the strength of Zepar!"
+ },
+ {
+  "id": "djinn_furfur_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Furfur, Voice of Ruin. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_furfur_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the sound of Furfur!"
+ },
+ {
+  "id": "djinn_marchosias_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Marchosias, Hunter of Embers. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_marchosias_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the heat of Marchosias!"
+ },
+ {
+  "id": "djinn_sitri_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, low] I am Sitri, Dawn's Radiance. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_sitri_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, fierce] Feel the light of Sitri!"
+ },
+ {
+  "id": "djinn_bifron_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, low] I am Bifron, Stormfang. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_bifron_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, fierce] Feel the lightning of Bifron!"
+ },
+ {
+  "id": "djinn_paimon_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, low] I am Paimon, Sovereign of the Sky. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_paimon_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, fierce] Feel the wind of Paimon!"
+ },
+ {
+  "id": "djinn_vassago_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Vassago, Lord of the Abyss. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_vassago_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Vassago!"
+ },
+ {
+  "id": "djinn_bael_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Bael, King of the First Throne. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_bael_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the strength of Bael!"
+ },
+ {
+  "id": "djinn_agares_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Agares, Rider of Crocodile Tides. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_agares_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Agares!"
+ },
+ {
+  "id": "djinn_valefor_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, low] I am Valefor, Thief of Storm-Hearts. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_valefor_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, fierce] Feel the lightning of Valefor!"
+ },
+ {
+  "id": "djinn_barbatos_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Barbatos, Hunter of the Wild Green. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_barbatos_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the life of Barbatos!"
+ },
+ {
+  "id": "djinn_gusion_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Gusion, Seer of the Tide Mirror. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_gusion_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Gusion!"
+ },
+ {
+  "id": "djinn_vepar_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Vepar, Mermaid Sovereign of Wrecks. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_vepar_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Vepar!"
+ },
+ {
+  "id": "djinn_shax_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Shax, Silencer of the Dove. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_shax_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the sound of Shax!"
+ },
+ {
+  "id": "djinn_buer_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Buer, Healer of the Wheel. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_buer_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the life of Buer!"
+ },
+ {
+  "id": "djinn_andrealphus_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, low] I am Andrealphus, Peacock of the Stars. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_andrealphus_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, fierce] Feel the light of Andrealphus!"
+ },
+ {
+  "id": "djinn_kimaris_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Kimaris, Rider of the Dark Steed. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_kimaris_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the strength of Kimaris!"
+ },
+ {
+  "id": "djinn_amdusias_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Amdusias, Maestro of the Unicorn Horn. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_amdusias_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the sound of Amdusias!"
+ },
+ {
+  "id": "djinn_belial_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Belial, Lord of Hollow Thrones. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_belial_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the heat of Belial!"
+ },
+ {
+  "id": "djinn_decarabia_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, low] I am Decarabia, Star Crab of the Deep. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_decarabia_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, fierce] Feel the light of Decarabia!"
+ },
+ {
+  "id": "djinn_seere_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, low] I am Seere, Swift Wind Prince. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_seere_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, fierce] Feel the wind of Seere!"
+ },
+ {
+  "id": "djinn_dantalion_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, low] I am Dantalion, Many-Faced Scholar. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_dantalion_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[radiant, fierce] Feel the light of Dantalion!"
+ },
+ {
+  "id": "djinn_andromalius_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, low] I am Andromalius, Seeker of Hidden Things. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_andromalius_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[crackling, fierce] Feel the lightning of Andromalius!"
+ },
+ {
+  "id": "djinn_glasya_labolas_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Glasya-Labolas, Hound of Slaughter. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_glasya_labolas_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the strength of Glasya-Labolas!"
+ },
+ {
+  "id": "djinn_haagenti_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Haagenti, Alchemist of the Winged Bull. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_haagenti_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the strength of Haagenti!"
+ },
+ {
+  "id": "djinn_crocell_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, low] I am Crocell, Frost Sage. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_crocell_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[flowing, fierce] Feel the water of Crocell!"
+ },
+ {
+  "id": "djinn_furcas_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, low] I am Furcas, Old Knight of the Ice Wind. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_furcas_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[sweeping, fierce] Feel the wind of Furcas!"
+ },
+ {
+  "id": "djinn_balam_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Balam, Three-Headed Prophet. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_balam_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the heat of Balam!"
+ },
+ {
+  "id": "djinn_alloces_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Alloces, Lion-Eyed Knight. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_alloces_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the heat of Alloces!"
+ },
+ {
+  "id": "djinn_camio_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Camio, Songbird of the Crows. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_camio_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the sound of Camio!"
+ },
+ {
+  "id": "djinn_murmur_summon",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, low] I am Murmur, Death Drummer. Speak your command, vessel."
+ },
+ {
+  "id": "djinn_murmur_attack",
+  "role": "djinn",
+  "voice": "QjEdRoRdZC2i3ncmFpNy",
+  "prompt": "[dark, fierce] Feel the sound of Murmur!"
+ }
+]
