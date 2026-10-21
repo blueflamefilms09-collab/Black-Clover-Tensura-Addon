@@ -106,9 +106,9 @@ add(Item("straw_hat_of_joy_boy", build_hat, dict(style="swirl", dark=(24, 16, 4)
                  PL("laughter notes", "motes", "nusmp:music_note", 0xFFF0B0, count=1, every=7, radius=0.55, rise=0.014),
                  PL("sun glints", "glints", "nusmp:star4", 0xFFF0B0, count=1, every=5, radius=0.5, rise=0.012),
                  PL("white puffs", "wisps", "nusmp:mote_soft", 0xFFFFFF, count=1, every=6, radius=0.6, rise=0.01)],
-         acts={"gear_fifth": [ST("WIND_ZEPHYR", 0xFFFFFF, 3.4, 80, "self"), ST("DIVINE_HALO", 0xFFF0B0, 3.4, 70, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 2.0, 16, "self")],
-               "rubber_bajrang": [ST("FIRE_BURST", 0xFFC040, 3.6, 40, "front"), ST("SLASH_WAVE", 0xFFF0B0, 3.4, 30, "front")],
-               "drums_of_liberation": [ST("SONG_RING", 0xFFF0B0, 4.0, 70, "ground"), ST("SONG_NOTES", 0xFFC040, 3.4, 60, "self"), ST("DIVINE_HALO", 0xFFF0B0, 3.6, 80, "sky")]}))
+         acts={"gear_fifth": [ST("WIND_RING", 0xFFFFFF, 3.4, 60, "ground"), ST("DIVINE_HALO", 0xFFF0B0, 3.4, 70, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 2.0, 16, "self")],
+               "rubber_bajrang": [ST("FIRE_BURST", 0xFFC040, 3.6, 40, "front"), ST("LIGHT_BLADE", 0xFFF0B0, 3.4, 30, "front")],
+               "drums_of_liberation": [ST("SONG_RING", 0xFFF0B0, 4.0, 70, "ground"), ST("MAGIC_CIRCLE", 0xFFC040, 3.4, 60, "ground"), ST("DIVINE_HALO", 0xFFF0B0, 3.6, 80, "sky")]}))
 
 
 # ====================================================================== LAW OF CYCLES GOWN (chest)
@@ -215,7 +215,7 @@ add(Item("law_of_cycles_gown", build_gown, dict(style="swirl", dark=(24, 4, 18),
                  PL("holy motes", "motes", "nusmp:holy_ray", 0xFFE0F0, count=1, every=6, radius=0.5, rise=0.012)],
          acts={"arrow_of_hope": [ST("LIGHT_BLADE", 0xFFC0E0, 3.2, 36, "front"), ST("DIVINE_RAY", 0xF080B8, 3.0, 50, "front")],
                "purify_despair": [ST("DIVINE_HALO", 0xFFC0E0, 3.6, 80, "sky"), ST("ELF_CIRCLE", 0xF080B8, 3.6, 60, "ground")],
-               "law_of_cycles": [ST("DIVINE_PILLAR", 0xFFC0E0, 4.6, 100, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF080B8, 4.8, 70, "ground"), ST("DIVINE_SIGIL", 0xFFE0F0, 3.8, 80, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 2.4, 20, "self")]}))
+               "law_of_cycles": [ST("DIVINE_PILLAR", 0xFFC0E0, 4.6, 100, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF080B8, 4.8, 70, "ground"), ST("DIVINE_SIGIL", 0xFFE0F0, 3.8, 80, "sky")]}))
 
 
 # ====================================================================== GREED ISLAND ORIGINAL BINDER (charm)
@@ -308,7 +308,7 @@ add(Item("greed_island_original_binder", build_binder, dict(style="swirl", dark=
                  PL("falling cards", "drips", "nusmp:card", None, count=1, every=7, radius=0.6, rise=-0.012),
                  PL("game glints", "glints", "nusmp:gem_sparkle", 0x90FFB0, count=1, every=5, radius=0.5, rise=0.012),
                  PL("leaf motes", "motes", "nusmp:leaf_green", None, count=1, every=8, radius=0.5, rise=0.01)],
-         acts={"spell_card_leave": [ST("SPACE_PORTAL", 0x90FFB0, 3.0, 40, "front"), ST("SPELL_CARD", 0xE0C060, 2.4, 40, "self")],
-               "spell_card_reflection": [ST("MIRROR_FRAME", 0x90FFB0, 3.2, 70, "front"), ST("BARRIER_FX1", 0xE0C060, 3.0, 60, "self")],
-               "spell_card_magnetic_force": [ST("GRAVITY_WELL", 0x90FFB0, 3.6, 70, "ground"), ST("SPELL_CARD", 0xE0C060, 2.6, 40, "self")]},
+         acts={"spell_card_leave": [ST("SPACE_PORTAL", 0x90FFB0, 3.0, 40, "front"), ST("LIGHT_FLARE", 0xE0C060, 2.0, 24, "self")],
+               "spell_card_reflection": [ST("MIRROR_FRAME", 0x90FFB0, 3.2, 70, "front"), ST("SEAL_TRINITY", 0xE0C060, 3.0, 60, "ground")],
+               "spell_card_magnetic_force": [ST("GRAVITY_WELL", 0x90FFB0, 3.6, 70, "ground"), ST("MAGIC_CIRCLE", 0xE0C060, 2.6, 40, "ground")]},
          worn_scale=0.36, worn_offset=(11.6, -9.0, 0.0)))

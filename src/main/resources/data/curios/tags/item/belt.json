@@ -148,6 +148,14 @@
     {
       "id": "nusmp:silvered_sash_of_reflections",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:seven_dragon_balls_of_shenron",
+      "required": false
     }
   ]
 }

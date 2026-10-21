@@ -102,9 +102,9 @@ add(Item("truth_seeking_orbs_of_the_sage", build_orbs, dict(style="void", dark=(
                  PL("black feathers falling", "drips", "nusmp:feather_black", None, count=1, every=8, radius=0.6, rise=-0.012),
                  PL("seeking wisps", "wisps", "nusmp:void_speck", 0xE0E0FF, count=1, every=5, radius=0.55, rise=0.012),
                  PL("truth glints", "glints", "nusmp:glint", 0xFFFFFF, count=1, every=6, radius=0.45, rise=0.01)],
-         acts={"truth_seeking_barrage": [ST("THREAD_LINE", 0xE0E0FF, 2.6, 30, "front"), ST("DARK_THRUST", 0x14141C, 3.0, 36, "front")],
-               "shinra_tensei": [ST("GRAVITY_IMPACT", 0xE0E0FF, 4.4, 50, "ground"), ST("WIND_RING", 0xFFFFFF, 4.0, 40, "ground")],
-               "chibaku_tensei": [ST("GRAVITY_WELL", 0xE0E0FF, 4.6, 90, "ground"), ST("DARK_BLACK_HOLE", 0x14141C, 3.8, 80, "sky"), ST("ASH_FORMATION", 0x8A8AA8, 3.6, 80, "ground")]}))
+         acts={"truth_seeking_barrage": [ST("LIGHT_BLADE", 0xE0E0FF, 2.6, 30, "front"), ST("SPACE_CRACK", 0x8A8AA8, 3.0, 36, "front")],
+               "shinra_tensei": [ST("GRAVITY_WELL", 0xE0E0FF, 4.4, 50, "ground"), ST("WIND_RING", 0xFFFFFF, 4.0, 40, "ground")],
+               "chibaku_tensei": [ST("GRAVITY_WELL", 0xE0E0FF, 4.6, 90, "ground"), ST("SPACE_TEAR", 0x8A8AA8, 3.8, 80, "sky"), ST("SHADOW_POOL", 0x14141C, 3.6, 80, "ground")]}))
 
 
 # ====================================================================== HOGYOKU, THE CRYSTAL OF DISSOLUTION (charm)
@@ -272,5 +272,5 @@ add(Item("seven_dragon_balls_of_shenron", build_balls, dict(style="lava", dark=(
                  PL("dragon sparks", "sparks", "nusmp:spark", 0xFFE070, count=1, every=7, radius=0.6, rise=0.0),
                  PL("star glints", "glints", "nusmp:star4", 0xFF6A40, count=1, every=6, radius=0.45, rise=0.012)],
          acts={"dragon_radar": [ST("COMPASS_ARRAY", 0xFFC040, 3.6, 70, "ground"), ST("STAR_MAGIC", 0xFF6A40, 2.6, 50, "self")],
-               "eternal_dragons_roar": [ST("LIGHTNING_SPEAR", 0xFFE070, 3.4, 40, "front"), ST("FIRE_SPEAR", 0xFFC040, 3.4, 40, "front"), ST("FLAMEFX_BURST", 0xFF6A40, 3.0, 40, "front")],
-               "shenrons_wish": [ST("DIVINE_PILLAR", 0xFFC040, 4.4, 100, "ground"), ST("LIGHTNING_GOD", 0xFFE070, 3.6, 70, "sky"), ST("DIVINE_HALO", 0xFF6A40, 3.6, 80, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 2.4, 20, "self")]}))
+               "eternal_dragons_roar": [ST("LIGHTNING_FIEND", 0xFFE070, 3.4, 40, "self"), ST("FIRE_BURST", 0xFFC040, 3.4, 40, "front"), ST("FIRE_WILD", 0xFF6A40, 3.0, 40, "ground")],
+               "shenrons_wish": [ST("DIVINE_PILLAR", 0xFFC040, 4.4, 100, "ground"), ST("LIGHTNING_GOD", 0xFFE070, 3.6, 70, "sky"), ST("DIVINE_HALO", 0xFF6A40, 3.6, 80, "sky")]}))

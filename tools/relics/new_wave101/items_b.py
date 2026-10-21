@@ -115,8 +115,8 @@ add(Item("millennium_eye", build_eye, dict(style="void", dark=(0, 6, 22), mid=(2
                  PL("watching eyes", "motes", "nusmp:rune_eye", None, count=1, every=9, radius=0.6, rise=0.012),
                  PL("truth glints", "glints", "nusmp:holy_ray", 0x58F0E8, count=1, every=5, radius=0.5, rise=0.012),
                  PL("brow sparks", "sparks", "nusmp:star4", 0xE8B040, count=1, every=7, radius=0.4, rise=0.01)],
-         acts={"mind_read": [ST("EYE_FX1", 0x58F0E8, 3.6, 70, "self"), ST("DIVINE_SIGIL", 0xE8B040, 3.0, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
-               "truth_gaze": [ST("MIRROR_RAY", 0x58F0E8, 3.4, 40, "front"), ST("DIVINE_RAY", 0xE8B040, 3.0, 50, "front"), ST("EYEBALL_FX1", 0x58F0E8, 2.6, 40, "front")]}))
+         acts={"mind_read": [ST("MIRROR_ARRAY", 0x58F0E8, 3.6, 70, "self"), ST("DIVINE_SIGIL", 0xE8B040, 3.0, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
+               "truth_gaze": [ST("LIGHT_BLADE", 0x58F0E8, 3.4, 40, "front"), ST("DIVINE_RAY", 0xE8B040, 3.0, 50, "front")]}))
 
 
 # ====================================================================== MILLENNIUM RING (hands: built for the right arm, worn on the left through the mirror)
@@ -150,6 +150,8 @@ def build_ring(vm, info):
     geo.merge(disc, geo.prim_lathe([(-0.2, 1.25), (0.15, 1.2), (0.4, 0.6), (0.5, 0.0)], sides=vm.S(12, 6), caps=(True, False)), geo.rot_matrix("x", -90), (AX, -6.9, CZ - 0.2))
     eye = wdjat(vm, g_eye, (AX, -6.9, CZ - 0.78), 1.0, lod=False)
     paint_wdjat(vm, eye, glow, trim)
+    core = vm.star("ring_core", g_eye)
+    geo.merge(core, geo.prim_octa(1.4, 1.9), None, (AX, -6.9, CZ + 0.9))
     nd = vm.P("needles", "gold", group=g_need, base=GOLD_HI, slot=TRIM, lod=False)
     tip = vm.P("needle_tips", "crystal", group=g_need, base=(255, 232, 150), slot=GLOW, lod=False)
     for k in range(5):
@@ -191,10 +193,10 @@ def build_ring(vm, info):
 
 add(Item("millennium_ring", build_ring, dict(style="swirl", dark=(8, 6, 0), mid=(150, 112, 24), hot=(255, 236, 170)), hand_size=0.95, hand_style="cuff", seed=103, worn="pieces",
          pieces=[("", "larm", True)], anchor="rarm",
-         layers=[GL("ring glow", "aura_shell", "ring_glow"), GL("needles", "aura_shell", "needles"), GL("dowsing needle", "aura_shell", "dowsing_needle"), GL("wrist halo", "halo_ring", "wrist_halo"),
+         layers=[GL("ring core", "nebula_core", "ring_glow"), GL("ring glow", "aura_shell", "ring_glow"), GL("needles", "aura_shell", "needles"), GL("dowsing needle", "aura_shell", "dowsing_needle"), GL("wrist halo", "halo_ring", "wrist_halo"),
                  GL("wrist halo b", "halo_ring", "wrist_halo_b"), GL("seeking needles", "orbit_shards", "seeking_needles"), GL("power motes", "orbit_shards", "power_motes"),
                  GL("dowsing ripple", "portal_ripples", "dowsing_ripple"), GL("cuff glints", "lens_flare", "cuff_glints"), GL("lens flare", "lens_flare", "lens_flare"), GL("light shafts", "light_shafts", "light_shafts"),
                  PL("drawn power", "motes", "nusmp:mana_mote", 0xFFD870, count=1, every=5, radius=0.5, rise=0.014),
                  PL("needle glints", "glints", "nusmp:gem_sparkle", 0xF2C860, count=1, every=7, radius=0.4, rise=0.01)],
-         acts={"dowsing_needles": [ST("COMPASS_ARRAY", 0xFFD870, 3.4, 70, "ground"), ST("EYE_FX1", 0xF2C860, 2.4, 40, "self")],
-               "draw_power": [ST("MANA_CHARGE", 0xFFD870, 3.4, 60, "self"), ST("ASH_FORMATION", 0xF2C860, 3.2, 70, "ground")]}))
+         acts={"dowsing_needles": [ST("COMPASS_ARRAY", 0xFFD870, 3.4, 70, "ground"), ST("SPIRIT_AURA", 0xF2C860, 2.4, 40, "self")],
+               "draw_power": [ST("MANA_CHARGE", 0xFFD870, 3.4, 60, "self"), ST("GRAVITY_WELL", 0xF2C860, 3.2, 70, "ground")]}))

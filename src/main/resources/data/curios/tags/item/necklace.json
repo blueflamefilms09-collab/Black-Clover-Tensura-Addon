@@ -266,6 +266,10 @@
     {
       "id": "nusmp:sun_eaters_locket",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_puzzle",
+      "required": false
     }
   ]
 }

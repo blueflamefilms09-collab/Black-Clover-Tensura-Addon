@@ -89,7 +89,7 @@ add(Item("millennium_key", build_key, dict(style="swirl", dark=(10, 6, 0), mid=(
                  GL("halo ring", "rune_ring", "halo_ring"), GL("lens flare", "lens_flare", "lens_flare"), GL("light shafts", "light_shafts", "light_shafts"),
                  PL("unlocked minds", "motes", "nusmp:rune_key", None, count=1, every=8, radius=0.5, rise=0.012),
                  PL("soul glints", "glints", "nusmp:gem_sparkle", 0xFFD060, count=1, every=5, radius=0.45, rise=0.012)],
-         acts={"open_the_soul_room": [ST("SPACE_PORTAL", 0xFFD060, 3.0, 70, "front"), ST("KEY_FX1", 0xE4AE3C, 3.2, 60, "front"), ST("EYE_FX1", 0x2C46A8, 2.6, 50, "self")],
+         acts={"open_the_soul_room": [ST("SPACE_PORTAL", 0xFFD060, 3.0, 70, "front"), ST("DIVINE_SIGIL", 0xE4AE3C, 3.2, 60, "ground"), ST("SPIRIT_AURA", 0x2C46A8, 2.6, 50, "self")],
                "mind_garden": [ST("DIVINE_HALO", 0xFFD060, 3.4, 80, "sky"), ST("MAGIC_CIRCLE", 0x2C46A8, 3.4, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")]}))
 
 
@@ -175,7 +175,7 @@ add(Item("millennium_scale", build_scale, dict(style="swirl", dark=(0, 14, 16), 
                  PL("falling feathers", "drips", "nusmp:feather_white", None, count=1, every=7, radius=0.6, rise=-0.012),
                  PL("verdict glints", "glints", "nusmp:gem_sparkle", 0x78F0D8, count=1, every=5, radius=0.5, rise=0.012),
                  PL("judging eyes", "motes", "nusmp:rune_eye", None, count=1, every=12, radius=0.5, rise=0.012)],
-         acts={"weigh_the_heart": [ST("MIRROR_PANE", 0x78F0D8, 3.0, 40, "front"), ST("DIVINE_SIGIL", 0xF4C85A, 3.0, 60, "ground")],
+         acts={"weigh_the_heart": [ST("MIRROR_FRAME", 0x78F0D8, 3.0, 40, "front"), ST("DIVINE_SIGIL", 0xF4C85A, 3.0, 60, "ground")],
                "ammits_verdict": [ST("SEAL_CHAINS", 0xF4C85A, 4.0, 80, "ground"), ST("DIVINE_PILLAR", 0x78F0D8, 3.6, 80, "ground"), ST("SOUL_VORTEX", 0xF4C85A, 3.0, 60, "self")]},
          worn_scale=0.38, worn_offset=(11.6, -9.0, 0.0)))
 
@@ -218,6 +218,8 @@ def build_necklace(vm, info):
     # the great eye at the middle, on a gold plate
     plate = vm.P("eye_plate", "gold", group=g_c, base=GOLD, slot=TRIM, lod=True)
     geo.merge(plate, geo.prim_lathe([(-0.15, 2.5), (0.0, 2.7), (0.3, 2.3), (0.45, 0.0)], sides=vm.S(16, 7), caps=(True, False)), geo.rot_matrix("x", -90), (0, -5.0, CZ - 0.1))
+    core = vm.star("time_core", g_eye)
+    geo.merge(core, geo.prim_octa(1.9, 2.5), None, (0, -5.0, CZ + 0.9))
     eye = wdjat(vm, g_eye, (0, -5.0, CZ - 0.75), 1.5, lod=True)
     paint_wdjat(vm, eye, glow, trim)
     # a counterweight behind the neck (the menat), vulture wings over the shoulders at the back
@@ -261,12 +263,12 @@ def build_necklace(vm, info):
 
 add(Item("millennium_necklace", build_necklace, dict(style="void", dark=(0, 8, 20), mid=(20, 100, 150), hot=(190, 255, 250)), hand_size=1.0, hand_style="garment", seed=106, worn="pieces",
          pieces=[("", "body", False)], anchor="body",
-         layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"), GL("collar drops", "aura_shell", "collar_drops"), GL("menat", "aura_shell", "menat"), GL("vulture wings", "petals", "vulture_wings"),
+         layers=[GL("time core", "nebula_core", "wdjat_glow"), GL("wdjat glow", "aura_shell", "wdjat_glow"), GL("collar drops", "aura_shell", "collar_drops"), GL("menat", "aura_shell", "menat"), GL("vulture wings", "petals", "vulture_wings"),
                  GL("visions", "orbit_shards", "visions"), GL("far visions", "orbit_shards", "visions_far"), GL("time ring", "halo_ring", "time_ring"), GL("time ring b", "halo_ring", "time_ring_b"),
                  GL("future panes", "portal_ripples", "future_panes"), GL("collar glints", "lens_flare", "collar_glints"), GL("halo ring", "rune_ring", "halo_ring"), GL("lens flare", "lens_flare", "lens_flare"),
                  GL("light shafts", "light_shafts", "light_shafts"),
                  PL("foreseen eyes", "motes", "nusmp:rune_eye", None, count=1, every=9, radius=0.55, rise=0.012),
                  PL("vision glints", "glints", "nusmp:star4", 0x62E6F0, count=1, every=5, radius=0.5, rise=0.012),
                  PL("collar gold", "glints", "nusmp:glint", 0xEBBB52, count=1, every=6, radius=0.45, rise=0.01)],
-         acts={"foresight": [ST("TIME_REWIND", 0x62E6F0, 3.0, 70, "self"), ST("EYE_FX1", 0xEBBB52, 2.8, 50, "self"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
-               "prophecy": [ST("TIME_CLOCK", 0x62E6F0, 3.0, 90, "ground"), ST("DIVINE_HALO", 0xEBBB52, 3.4, 80, "sky"), ST("MEMORY_FX1", 0x62E6F0, 3.0, 60, "self")]}))
+         acts={"foresight": [ST("MAGIC_CIRCLE", 0x62E6F0, 3.0, 70, "ground"), ST("SPIRIT_AURA", 0xEBBB52, 2.8, 50, "self"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
+               "prophecy": [ST("DIVINE_SIGIL", 0x62E6F0, 3.0, 90, "ground"), ST("DIVINE_HALO", 0xEBBB52, 3.4, 80, "sky"), ST("SPACE_RINGGATE", 0x62E6F0, 3.0, 60, "ground")]}))

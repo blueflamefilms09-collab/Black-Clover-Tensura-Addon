@@ -289,6 +289,10 @@
     {
       "id": "nusmp:bloodbound_gauntlets",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_ring",
+      "required": false
     }
   ]
 }

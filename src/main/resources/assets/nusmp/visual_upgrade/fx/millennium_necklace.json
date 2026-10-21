@@ -5,6 +5,16 @@
  "draw_ticks": 12,
  "layers": [
   {
+   "name": "time core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "wdjat_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
    "name": "wdjat glow",
    "kind": "geometry",
    "type": "aura_shell",

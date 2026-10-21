@@ -5,6 +5,16 @@
  "draw_ticks": 12,
  "layers": [
   {
+   "name": "ring core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "ring_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
    "name": "ring glow",
    "kind": "geometry",
    "type": "aura_shell",

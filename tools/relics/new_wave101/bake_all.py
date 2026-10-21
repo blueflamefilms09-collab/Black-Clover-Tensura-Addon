@@ -56,6 +56,24 @@ def write_fx(items):
             fh.write("\n")
 
 
+def check_act_shapes(items):
+    """The act table accepts only the shapes of VuActTable.SHAPES and at most MAX_STEPS steps per act (a test and the game's own parser say so): fail here, not in the build."""
+    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "vu", "VuActTable.java"), encoding="utf-8").read()
+    block = src[src.index("SHAPES = Set.of("):src.index("WHERE = Set.of")]
+    shapes = set(re.findall(r'"([A-Z_0-9]+)"', block))
+    maxsteps = int(re.search(r"MAX_STEPS = (\d+)", src).group(1))
+    bad = []
+    for it in items:
+        for key, steps in it.acts.items():
+            if len(steps) > maxsteps:
+                bad.append("%s/%s has %d steps (at most %d)" % (it.rid, key, len(steps), maxsteps))
+            for st in steps:
+                if st.split(":")[0] not in shapes:
+                    bad.append("%s/%s: %s is not an allowed shape" % (it.rid, key, st.split(":")[0]))
+    if bad:
+        raise SystemExit("act effects the game would refuse:\n  " + "\n  ".join(bad))
+
+
 def write_acts(items):
     path = os.path.join(MT.ROOT, "src", "main", "resources", "data", "nusmp", "visual_upgrade", "act_vfx.txt")
     text = open(path, encoding="utf-8").read()
@@ -91,6 +109,7 @@ def main(argv):
     only = [a for a in argv if not a.startswith("--")]
     items = all_items()
     verify(items)
+    check_act_shapes(items)
     if not os.path.exists(os.path.join(C.V.TEX_DIR, "vu_fx.png")):
         fxtex.save_fx(os.path.join(C.V.TEX_DIR, "vu_fx.png"))
     errors = []

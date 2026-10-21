@@ -233,6 +233,10 @@
     {
       "id": "nusmp:silent_winter_mantle",
       "required": false
+    },
+    {
+      "id": "nusmp:truth_seeking_orbs_of_the_sage",
+      "required": false
     }
   ]
 }

@@ -571,6 +571,11 @@
       "profile": "shortsword",
       "source": "relic"
     },
+    "ea_sword_of_rupture": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
     "efreetis_kusarigama": {
       "class": "scythe",
       "profile": "scythe",
@@ -811,6 +816,11 @@
       "profile": "katana",
       "source": "item"
     },
+    "millennium_rod": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
     "minotaur_kings_labrys": {
       "class": "battleaxe",
       "profile": "battleaxe",
@@ -929,6 +939,11 @@
     "reflected_kings_mirrorblade": {
       "class": "longsword",
       "profile": "longsword",
+      "source": "relic"
+    },
+    "requiem_stand_arrow": {
+      "class": "dagger",
+      "profile": "dagger",
       "source": "relic"
     },
     "returning_hand_axe": {

@@ -600,6 +600,20 @@
       "length_blocks": 1.318
     },
     {
+      "id": "ea_sword_of_rupture",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "efreetis_kusarigama",
       "action": "preset",
       "length_blocks": 2.635,
@@ -1224,6 +1238,20 @@
       "length_blocks": 1.235
     },
     {
+      "id": "millennium_rod",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
       "id": "minotaur_kings_labrys",
       "action": "preset",
       "length_blocks": 2.176,
@@ -1313,18 +1341,6 @@
       "fixed_scale": 0.505
     },
     {
-      "id": "orc_cleaver",
-      "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.497,
-      "first_person_translation_px": [
-        1.13,
-        2.93,
-        0.88
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689,
       "id": "orials_starfall_staff",
       "action": "preset",
       "length_blocks": 2.706,
@@ -1493,6 +1509,11 @@
       "tip_out_of_view": false,
       "ground_scale": 0.419,
       "fixed_scale": 0.787
+    },
+    {
+      "id": "requiem_stand_arrow",
+      "action": "keep",
+      "length_blocks": 0.706
     },
     {
       "id": "returning_hand_axe",

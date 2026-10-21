@@ -102,4 +102,4 @@ add(Item("millennium_puzzle", build_puzzle, dict(style="void", dark=(2, 4, 24), 
                  PL("golden sand", "glints", "nusmp:sand_grain", 0xFFE890, count=1, every=5, radius=0.5, rise=-0.01),
                  PL("soul glints", "glints", "nusmp:gem_sparkle", 0x6A8CFF, count=1, every=8, radius=0.45, rise=0.01)],
          acts={"other_me": [ST("SHADOW_UNITE", 0x2A4FC0, 3.2, 70, "self"), ST("DIVINE_HALO", 0xFFE890, 3.0, 60, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
-               "shadow_game": [ST("SHADOW_POOL", 0x2A4FC0, 5.0, 90, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF0C050, 4.6, 60, "ground"), ST("EYE_FX1", 0xFFE890, 3.0, 50, "front")]}))
+               "shadow_game": [ST("SHADOW_POOL", 0x2A4FC0, 5.0, 90, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF0C050, 4.6, 60, "ground"), ST("DIVINE_SIGIL", 0xFFE890, 3.0, 50, "sky")]}))

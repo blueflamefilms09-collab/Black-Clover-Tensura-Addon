@@ -67,33 +67,33 @@ act gate_of_babylon_crest shower_of_blades WEAPON_CONSTRUCTS:FFF0A0:3:70:self SP
 act gate_of_babylon_crest gate_fully_open SPACE_PORTAL:E8C850:4.6:90:front WEAPON_CONSTRUCTS:FFF0A0:4:90:self DIVINE_PILLAR:FFF0A0:3.6:80:ground
 # ---- wave 101 (genesis_new) begin ----
 act millennium_puzzle other_me SHADOW_UNITE:2A4FC0:3.2:70:self DIVINE_HALO:FFE890:3:60:sky LIGHT_FLARE:FFFFFF:1.8:16:self
-act millennium_puzzle shadow_game SHADOW_POOL:2A4FC0:5:90:ground MAGIC_CIRCLE_EXPLOSION:F0C050:4.6:60:ground EYE_FX1:FFE890:3:50:front
-act millennium_eye mind_read EYE_FX1:58F0E8:3.6:70:self DIVINE_SIGIL:E8B040:3:60:ground LIGHT_FLARE:FFFFFF:1.8:16:self
-act millennium_eye truth_gaze MIRROR_RAY:58F0E8:3.4:40:front DIVINE_RAY:E8B040:3:50:front EYEBALL_FX1:58F0E8:2.6:40:front
-act millennium_ring dowsing_needles COMPASS_ARRAY:FFD870:3.4:70:ground EYE_FX1:F2C860:2.4:40:self
-act millennium_ring draw_power MANA_CHARGE:FFD870:3.4:60:self ASH_FORMATION:F2C860:3.2:70:ground
-act millennium_key open_the_soul_room SPACE_PORTAL:FFD060:3:70:front KEY_FX1:E4AE3C:3.2:60:front EYE_FX1:2C46A8:2.6:50:self
+act millennium_puzzle shadow_game SHADOW_POOL:2A4FC0:5:90:ground MAGIC_CIRCLE_EXPLOSION:F0C050:4.6:60:ground DIVINE_SIGIL:FFE890:3:50:sky
+act millennium_eye mind_read MIRROR_ARRAY:58F0E8:3.6:70:self DIVINE_SIGIL:E8B040:3:60:ground LIGHT_FLARE:FFFFFF:1.8:16:self
+act millennium_eye truth_gaze LIGHT_BLADE:58F0E8:3.4:40:front DIVINE_RAY:E8B040:3:50:front
+act millennium_ring dowsing_needles COMPASS_ARRAY:FFD870:3.4:70:ground SPIRIT_AURA:F2C860:2.4:40:self
+act millennium_ring draw_power MANA_CHARGE:FFD870:3.4:60:self GRAVITY_WELL:F2C860:3.2:70:ground
+act millennium_key open_the_soul_room SPACE_PORTAL:FFD060:3:70:front DIVINE_SIGIL:E4AE3C:3.2:60:ground SPIRIT_AURA:2C46A8:2.6:50:self
 act millennium_key mind_garden DIVINE_HALO:FFD060:3.4:80:sky MAGIC_CIRCLE:2C46A8:3.4:60:ground LIGHT_FLARE:FFFFFF:1.8:16:self
-act millennium_scale weigh_the_heart MIRROR_PANE:78F0D8:3:40:front DIVINE_SIGIL:F4C85A:3:60:ground
+act millennium_scale weigh_the_heart MIRROR_FRAME:78F0D8:3:40:front DIVINE_SIGIL:F4C85A:3:60:ground
 act millennium_scale ammits_verdict SEAL_CHAINS:F4C85A:4:80:ground DIVINE_PILLAR:78F0D8:3.6:80:ground SOUL_VORTEX:F4C85A:3:60:self
-act millennium_necklace foresight TIME_REWIND:62E6F0:3:70:self EYE_FX1:EBBB52:2.8:50:self LIGHT_FLARE:FFFFFF:1.8:16:self
-act millennium_necklace prophecy TIME_CLOCK:62E6F0:3:90:ground DIVINE_HALO:EBBB52:3.4:80:sky MEMORY_FX1:62E6F0:3:60:self
-act truth_seeking_orbs_of_the_sage truth_seeking_barrage THREAD_LINE:E0E0FF:2.6:30:front DARK_THRUST:14141C:3:36:front
-act truth_seeking_orbs_of_the_sage shinra_tensei GRAVITY_IMPACT:E0E0FF:4.4:50:ground WIND_RING:FFFFFF:4:40:ground
-act truth_seeking_orbs_of_the_sage chibaku_tensei GRAVITY_WELL:E0E0FF:4.6:90:ground DARK_BLACK_HOLE:14141C:3.8:80:sky ASH_FORMATION:8A8AA8:3.6:80:ground
+act millennium_necklace foresight MAGIC_CIRCLE:62E6F0:3:70:ground SPIRIT_AURA:EBBB52:2.8:50:self LIGHT_FLARE:FFFFFF:1.8:16:self
+act millennium_necklace prophecy DIVINE_SIGIL:62E6F0:3:90:ground DIVINE_HALO:EBBB52:3.4:80:sky SPACE_RINGGATE:62E6F0:3:60:ground
+act truth_seeking_orbs_of_the_sage truth_seeking_barrage LIGHT_BLADE:E0E0FF:2.6:30:front SPACE_CRACK:8A8AA8:3:36:front
+act truth_seeking_orbs_of_the_sage shinra_tensei GRAVITY_WELL:E0E0FF:4.4:50:ground WIND_RING:FFFFFF:4:40:ground
+act truth_seeking_orbs_of_the_sage chibaku_tensei GRAVITY_WELL:E0E0FF:4.6:90:ground SPACE_TEAR:8A8AA8:3.8:80:sky SHADOW_POOL:14141C:3.6:80:ground
 act hogyoku_of_the_crystal_dissolution fusion SHADOW_UNITE:D8A0FF:3.4:70:self LIGHT_FLARE:FFFFFF:1.8:16:self
 act hogyoku_of_the_crystal_dissolution boundary_dissolution MAGIC_CIRCLE_EXPLOSION:D8A0FF:4.4:60:ground SPACE_RINGGATE:E8D8FF:3.6:60:ground
 act hogyoku_of_the_crystal_dissolution transcendence DIVINE_PILLAR:D8A0FF:4:90:ground DIVINE_HALO:E8D8FF:3.6:80:sky SOUL_VORTEX:D8A0FF:3.2:70:self
 act seven_dragon_balls_of_shenron dragon_radar COMPASS_ARRAY:FFC040:3.6:70:ground STAR_MAGIC:FF6A40:2.6:50:self
-act seven_dragon_balls_of_shenron eternal_dragons_roar LIGHTNING_SPEAR:FFE070:3.4:40:front FIRE_SPEAR:FFC040:3.4:40:front FLAMEFX_BURST:FF6A40:3:40:front
-act seven_dragon_balls_of_shenron shenrons_wish DIVINE_PILLAR:FFC040:4.4:100:ground LIGHTNING_GOD:FFE070:3.6:70:sky DIVINE_HALO:FF6A40:3.6:80:sky LIGHT_FLARE:FFFFFF:2.4:20:self
-act straw_hat_of_joy_boy gear_fifth WIND_ZEPHYR:FFFFFF:3.4:80:self DIVINE_HALO:FFF0B0:3.4:70:sky LIGHT_FLARE:FFFFFF:2:16:self
-act straw_hat_of_joy_boy rubber_bajrang FIRE_BURST:FFC040:3.6:40:front SLASH_WAVE:FFF0B0:3.4:30:front
-act straw_hat_of_joy_boy drums_of_liberation SONG_RING:FFF0B0:4:70:ground SONG_NOTES:FFC040:3.4:60:self DIVINE_HALO:FFF0B0:3.6:80:sky
+act seven_dragon_balls_of_shenron eternal_dragons_roar LIGHTNING_FIEND:FFE070:3.4:40:self FIRE_BURST:FFC040:3.4:40:front FIRE_WILD:FF6A40:3:40:ground
+act seven_dragon_balls_of_shenron shenrons_wish DIVINE_PILLAR:FFC040:4.4:100:ground LIGHTNING_GOD:FFE070:3.6:70:sky DIVINE_HALO:FF6A40:3.6:80:sky
+act straw_hat_of_joy_boy gear_fifth WIND_RING:FFFFFF:3.4:60:ground DIVINE_HALO:FFF0B0:3.4:70:sky LIGHT_FLARE:FFFFFF:2:16:self
+act straw_hat_of_joy_boy rubber_bajrang FIRE_BURST:FFC040:3.6:40:front LIGHT_BLADE:FFF0B0:3.4:30:front
+act straw_hat_of_joy_boy drums_of_liberation SONG_RING:FFF0B0:4:70:ground MAGIC_CIRCLE:FFC040:3.4:60:ground DIVINE_HALO:FFF0B0:3.6:80:sky
 act law_of_cycles_gown arrow_of_hope LIGHT_BLADE:FFC0E0:3.2:36:front DIVINE_RAY:F080B8:3:50:front
 act law_of_cycles_gown purify_despair DIVINE_HALO:FFC0E0:3.6:80:sky ELF_CIRCLE:F080B8:3.6:60:ground
-act law_of_cycles_gown law_of_cycles DIVINE_PILLAR:FFC0E0:4.6:100:ground MAGIC_CIRCLE_EXPLOSION:F080B8:4.8:70:ground DIVINE_SIGIL:FFE0F0:3.8:80:sky LIGHT_FLARE:FFFFFF:2.4:20:self
-act greed_island_original_binder spell_card_leave SPACE_PORTAL:90FFB0:3:40:front SPELL_CARD:E0C060:2.4:40:self
-act greed_island_original_binder spell_card_reflection MIRROR_FRAME:90FFB0:3.2:70:front BARRIER_FX1:E0C060:3:60:self
-act greed_island_original_binder spell_card_magnetic_force GRAVITY_WELL:90FFB0:3.6:70:ground SPELL_CARD:E0C060:2.6:40:self
+act law_of_cycles_gown law_of_cycles DIVINE_PILLAR:FFC0E0:4.6:100:ground MAGIC_CIRCLE_EXPLOSION:F080B8:4.8:70:ground DIVINE_SIGIL:FFE0F0:3.8:80:sky
+act greed_island_original_binder spell_card_leave SPACE_PORTAL:90FFB0:3:40:front LIGHT_FLARE:E0C060:2:24:self
+act greed_island_original_binder spell_card_reflection MIRROR_FRAME:90FFB0:3.2:70:front SEAL_TRINITY:E0C060:3:60:ground
+act greed_island_original_binder spell_card_magnetic_force GRAVITY_WELL:90FFB0:3.6:70:ground MAGIC_CIRCLE:E0C060:2.6:40:ground
 # ---- wave 101 (genesis_new) end ----
