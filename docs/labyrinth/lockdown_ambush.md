@@ -127,3 +127,50 @@ JUnit: `LockdownTableTest`, `LockdownMathTest`, `OpeningScanTest`, `AmbushRulesT
 * **Chunk edges.** A room spanning chunks whose master is in a chunk that unloads leaves its other barriers until the master loads again (they remove themselves within five seconds of that).
 * **Balance.** The bands, wave counts, chances and ambush numbers are first guesses; every one is in the data file or the config.
 * **Lang.** The text is English with fallbacks; other languages are not translated.
+
+## Integration with clearance7 (1.107.0)
+
+The two lanes were built in parallel and never tried together; the clearance lane reported three seams. The first two are in this lane's reach and are closed; the third is reported
+(see `clearance7.md`, section 11, "Integration with clearance7"). Everything below is keyed on `GenData.Stat.clear7` of the room's sector (`ClearanceSettings.sectorCut(server, sectorId)`:
+true only for a sector that was finished with `gen.clearance7` on) and changes nothing for a sector that was not cut, so `gen.clearance7 = false` gives the lockdown of before.
+
+**What was wrong with a cut doorway.** The clearance rule cuts every connected doorway 7 wide and 7 high through BOTH wall layers of the room (module centre +- 3, rows 9..15), plus a
+3-block apron inside. The director read the wall one layer deep (`wallDepth` 1), started two blocks from each corner (`u` from `min + 2`), and filled one layer. Three consequences: a doorway
+in the first or last module of a wall, whose outer column is one block from the corner (x 1 of 1..7), was missed, so the barrier left a one-block gap on one side (and the player-in-doorway
+test did not see the column either); the outer wall layer stayed open behind the barrier; and four such doorways are 196 cells but twelve are 588, over the default `maxCells` of 320.
+
+**What it does now (cut sector only).** `OpeningScan.scan` (pure, the world is a callback) reads the wall lines from one block off the corner, looks at least 7 rows high (`rows`, never
+fewer than the 7 of a doorway whatever `openHeight` says), and returns two lists: the *plane* (what `judge` counts, one cell per doorway cell of the inner layer, so a 7 x 7 doorway is 49) and the
+*fill* (the plane and the outer layer of the same lines, 98 cells per doorway). The director places barriers on the fill, so the whole cut is closed through both layers. `OpeningScan.limitsFor`
+lets twelve 7 x 7 doorways pass (`maxTotal` at least 12 x 49, `maxPerOpening` at least 63) and never lowers a configured limit; an opening that is still bigger than that, or a wall that is open
+along its whole length, is still an open-plan room. Two doorways at the same corner share a cell and form one L-shaped opening (91 cells); the cell is filled once.
+
+**The apron.** The 3 blocks of apron behind a doorway are inside the room and are not part of any barrier, but they are where a party arrives and where the barrier is next to. The wave
+(`WaveCells.pick` with the doorway cells) keeps the cells within `WaveCells.DOOR_CLEAR` (4) blocks of a barrier cell for the END of its list (the reserve the spawner falls back on), so the
+first group of the wave stands away from the way in and out when the room has room; a small room still gets its whole wave. The next waves (`LockdownBarrierBlockEntity.spawnWave`) pass the
+master's cells the same way.
+
+**Release and restore.** Unchanged and size-independent: every cell, in either layer, keeps the block it replaced, and the escape rules, the clear and the abandon paths give them back
+(`DungeonGuard.internal`). The master now holds up to 8 x 49 x 2 cells; the saved long array and the slaves' five-second check scale with that and were not changed.
+
+| | Before (integration) | Now, room of a cut sector | Now, any other room |
+|---|---|---|---|
+| wall line starts | 2 blocks from the corner | 1 block from the corner | 2 blocks (as before) |
+| rows looked at | `openHeight` (9) | at least 7 | `openHeight` |
+| cells filled per doorway | one layer | both layers | one layer |
+| limits | 320 / 96 / 12 | at least 588 / 96 / 12 | 320 / 96 / 12 |
+| wave placement | anywhere inside | out of the 4-block apron first | anywhere inside |
+
+**Sealed Archway (trial hall).** The hall's runes are three per doorway in the inner layer, the columns four high. `trial/ArchwayDoorways` (pure) turns the runes found in the archway's box
+into the columns of a cut doorway: each straight line of runes is widened to 7, the same columns are added in the outer layer (the side away from the archway), and `TrialMath.columnHeight(air, cap)`
+lets them rise 7 cells. A barrier is still only placed in a cell that is air, so a widening that meets wall places nothing. The doorway test that arms the trial uses the same columns. An
+uncut hall gets exactly its runes and the cap of 4.
+
+**Tests.** JUnit: `CutDoorwayTest` (the scan on a made-up 27 x 27 room with doorways cut the way `Clearance7.cuts` cuts them: outer columns, both layers, nothing solid taken, the shared corner,
+the old room read exactly as before, the limits, the wave's apron), `ArchwayDoorwaysTest`. Self-test `dungeon.lockdown` now also runs `OpeningScan.cutDoorwayCheck()` and, after a real lock,
+re-scans the room (no passable wall cell may remain) and, in a cut sector, counts the doorways of 7 x 7 or more it closed.
+
+**Not verified.** None of the game side ran; the scan is the same callback the pure tests use, with the world's collision shapes behind it. Whether the cut doorways of a real sector are
+exactly the rectangles the pure code assumes (rows 9..15, centre +- 3) is what `dungeon.lockdown` and `dungeon.clearance7` check in the game; a doorway with a block that is never cut
+(a chest in the apron's doorway line) reads as a smaller opening and is closed around the block. A room that is a cut piece but whose connected doors are all 3-wide door caps would read
+as before.

@@ -40,6 +40,20 @@ public final class ClearanceSettings {
 
     public static boolean lights() { return get(LIGHTS); }
 
+    /**
+     * Was sector {@code id} finished with the 7 x 7 clearance on (its saved statistics say so, {@link GenData.Stat#clear7})? This is the fact the doorway-closing systems (the room
+     * lockdown, the Sealed Archway, the {@code seal_doors} primitive) ask: it describes the sector as it stands in the world, so it stays true when the switch is flipped later, and an
+     * older sector, one made with the switch off, or one with no saved statistics answers false (the old 3 x 4 doorways).
+     */
+    public static boolean sectorCut(net.minecraft.server.MinecraftServer server, int id) {
+        try {
+            GenData.Stat st = server == null ? null : GenData.get(server).get(id);
+            return st != null && st.clear7;
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
     /** Registers the spec as {@code nusmp-labyrinth-mega-clearance-server.toml}; called once from {@code MegaGenRegistry.init} while the mod is being constructed. */
     static void register() {
         try {

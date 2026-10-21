@@ -164,15 +164,16 @@ public final class LockdownDirector {
         // the doorways
         BoundingBox b = room.box;
         if (!level.hasChunksAt(new BlockPos(b.minX(), b.minY(), b.minZ()), new BlockPos(b.maxX(), b.maxY(), b.maxZ()))) return ArmResult.no("the room's chunks are not all loaded");
-        List<OpeningScan.Cell> found = scanOpenings(level, room);
-        OpeningScan.Result judged = OpeningScan.judge(found, LockdownConfig.limits());
+        boolean cut = isCut(level, sector);                                                // 1.107.0: the doorways of this sector are 7 x 7 through both wall layers
+        OpeningScan.Scan scan = scanOpenings(level, room, cut);
+        OpeningScan.Result judged = OpeningScan.judge(scan.plane(), OpeningScan.limitsFor(LockdownConfig.limits(), cut));
         if (!judged.ok()) {
             REJECTED.put(key, judged.why());
             LOG.info("[nusmp] Lockdown: room {} of sector {} ({}) does not lock: {}", room.id, sector.id, room.template, judged.why());
             return ArmResult.no(judged.why());
         }
-        List<BlockPos> cells = new ArrayList<>(found.size());
-        for (OpeningScan.Cell c : found) cells.add(new BlockPos(c.x(), c.y(), c.z()));
+        List<BlockPos> cells = new ArrayList<>(scan.fill().size());
+        for (OpeningScan.Cell c : scan.fill()) cells.add(new BlockPos(c.x(), c.y(), c.z()));
         cells.sort((p, q) -> p.getX() != q.getX() ? Integer.compare(p.getX(), q.getX()) : p.getZ() != q.getZ() ? Integer.compare(p.getZ(), q.getZ()) : Integer.compare(p.getY(), q.getY()));
         for (ServerPlayer p : party) {                                                    // nobody is ever sealed inside a wall
             AABB bb = p.getBoundingBox();
@@ -194,7 +195,7 @@ public final class LockdownDirector {
         waves = event.getWaves();
 
         // the first wave, before anything is placed
-        LockdownWaves.Result wave = LockdownWaves.spawn(level, sector.id, room.id, party, band, RND);
+        LockdownWaves.Result wave = LockdownWaves.spawn(level, sector.id, room.id, party, band, RND, cells);
         if (wave.mobs().isEmpty()) {
             coolDownFor(sector.id, room.id, now, 400L);
             LOG.info("[nusmp] Lockdown: room {} of sector {} would lock but its wave could not be placed ({})", room.id, sector.id, wave.text());
@@ -268,35 +269,25 @@ public final class LockdownDirector {
      * room's box (the corners left out), from the floor up {@code openHeight} blocks; a cell counts when it AND every cell between it and the outside of the box, along the
      * same line, has no collision (a doorway; a niche behind a door cap has a back wall and is not one). Reads only loaded chunks.
      */
-    static List<OpeningScan.Cell> scanOpenings(ServerLevel level, Room room) {
+    static OpeningScan.Scan scanOpenings(ServerLevel level, Room room, boolean cut) {
         BoundingBox b = room.box;
         int depth = LockdownConfig.get(LockdownConfig.WALL_DEPTH), height = LockdownConfig.get(LockdownConfig.OPEN_HEIGHT);
-        int y0 = Math.max(b.minY() + 1, Math.min(b.minY() + MegaGrid.FLOOR_ROW + 1, b.maxY() - 2));
-        List<OpeningScan.Cell> out = new ArrayList<>();
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
-        for (int y = y0; y < y0 + height && y <= b.maxY(); y++) {
-            for (int u = b.minX() + 2; u <= b.maxX() - 2; u++) {                          // the north and south faces run along x
-                if (through(level, m, u, y, b.minZ(), 0, 1, depth)) out.add(new OpeningScan.Cell(u, y, b.minZ() + depth));
-                if (through(level, m, u, y, b.maxZ(), 0, -1, depth)) out.add(new OpeningScan.Cell(u, y, b.maxZ() - depth));
-            }
-            for (int u = b.minZ() + 2; u <= b.maxZ() - 2; u++) {                          // the west and east faces run along z
-                if (through(level, m, b.minX(), y, u, 1, 0, depth)) out.add(new OpeningScan.Cell(b.minX() + depth, y, u));
-                if (through(level, m, b.maxX(), y, u, -1, 0, depth)) out.add(new OpeningScan.Cell(b.maxX() - depth, y, u));
-            }
-        }
-        return out;
-    }
-
-    /** From the face cell (x, y, z) walking inwards by (dx, dz) for {@code depth + 1} cells: are they all loaded and free of collision? */
-    private static boolean through(ServerLevel level, BlockPos.MutableBlockPos m, int x, int y, int z, int dx, int dz, int depth) {
-        for (int k = 0; k <= depth; k++) {
-            m.set(x + dx * k, y, z + dz * k);
+        Block barrier = LockdownRegistry.LOCKDOWN_BARRIER.get();
+        OpeningScan.Free free = (x, y, z) -> {                                              // loaded, no collision, not one of our own barriers
+            m.set(x, y, z);
             if (!level.hasChunk(m.getX() >> 4, m.getZ() >> 4)) return false;
             BlockState s = level.getBlockState(m);
-            if (s.is(LockdownRegistry.LOCKDOWN_BARRIER.get()) || !s.getCollisionShape(level, m).isEmpty()) return false;
-        }
-        return true;
+            return !s.is(barrier) && s.getCollisionShape(level, m).isEmpty();
+        };
+        return OpeningScan.scan(b.minX(), b.minY(), b.minZ(), b.maxX(), b.maxY(), b.maxZ(), depth, height, MegaGrid.FLOOR_ROW, cut, free);
     }
+
+    /**
+     * Were the doorways of this room's sector cut to 7 x 7 through both wall layers ({@code gen.clearance7} was on when it was made)? Then the scan reads the wall one block closer to the
+     * corner, fills the whole depth of the doorway and takes the limits of {@link OpeningScan#limitsFor}; otherwise (the switch was off, an older sector) the lockdown works exactly as before.
+     */
+    static boolean isCut(ServerLevel level, Sector sector) { return com.newuniverse.nusmp.labyrinth.mega.gen.ClearanceSettings.sectorCut(level.getServer(), sector.id); }
 
     // ---------------------------------------------------------------- a room that is sealed already
     /** Does the room hold a trial chamber's keystone? (Such a room locks itself; it is a template of its own.) */

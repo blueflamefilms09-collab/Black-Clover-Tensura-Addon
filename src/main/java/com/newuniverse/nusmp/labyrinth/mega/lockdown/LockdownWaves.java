@@ -35,6 +35,14 @@ final class LockdownWaves {
     private static final int GROUP = 8, SPOTS = 24;
 
     static Result spawn(ServerLevel level, int sectorId, int roomId, List<ServerPlayer> party, Band band, Random rnd) {
+        return spawn(level, sectorId, roomId, party, band, rnd, List.of());
+    }
+
+    /**
+     * As above, with the barrier cells of the room's doorways. When the room's sector was cut to 7 x 7 ({@code gen.clearance7}) its doorways have an apron in front of them, and the
+     * wave is placed away from it when the room has room to (see {@link WaveCells#DOOR_CLEAR}); a room that was not cut ignores the cells, exactly as before.
+     */
+    static Result spawn(ServerLevel level, int sectorId, int roomId, List<ServerPlayer> party, Band band, Random rnd, List<BlockPos> doorCells) {
         Sector sector = MegaData.get(level.getServer()).sector(sectorId);
         Room room = sector == null ? null : sector.room(roomId);
         if (room == null) return new Result(List.of(), "the room is not in the floor plan");
@@ -45,7 +53,11 @@ final class LockdownWaves {
         List<double[]> players = new ArrayList<>();
         for (ServerPlayer p : party) players.add(new double[] {p.getX(), p.getY(), p.getZ()});
         SpawnLayout.RoomBox rb = new SpawnLayout.RoomBox(room.id, room.kind, room.box.minX(), room.box.minY(), room.box.minZ(), room.box.maxX(), room.box.maxY(), room.box.maxZ());
-        List<WaveCells.Cell> cells = WaveCells.pick(room.box.minX(), room.box.minZ(), room.box.maxX(), room.box.maxZ(), rb.standY(), spots, players, MIN_DIST, rnd);
+        List<int[]> doorways = new ArrayList<>();
+        if (!doorCells.isEmpty() && com.newuniverse.nusmp.labyrinth.mega.gen.ClearanceSettings.sectorCut(level.getServer(), sectorId)) {
+            for (BlockPos d : doorCells) doorways.add(new int[] {d.getX(), d.getZ()});
+        }
+        List<WaveCells.Cell> cells = WaveCells.pick(room.box.minX(), room.box.minZ(), room.box.maxX(), room.box.maxZ(), rb.standY(), spots, players, MIN_DIST, rnd, doorways);
         if (cells.isEmpty()) return new Result(List.of(), "the room has no cell " + (int) MIN_DIST + " blocks from the party");
         List<BlockPos> group = new ArrayList<>(), reserve = new ArrayList<>();
         for (int i = 0; i < cells.size() && i < SPOTS; i++) {

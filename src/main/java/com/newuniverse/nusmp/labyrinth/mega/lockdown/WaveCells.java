@@ -28,6 +28,18 @@ public final class WaveCells {
      * @param players eye or feet positions as {x, y, z}
      */
     public static List<Cell> pick(int minX, int minZ, int maxX, int maxZ, int standY, List<int[]> spots, List<double[]> players, double minDist, Random rnd) {
+        return pick(minX, minZ, maxX, maxZ, standY, spots, players, minDist, rnd, List.of());
+    }
+
+    /** The blocks in front of a doorway that a wave keeps clear when it can: the apron of the 7 x 7 clearance (3 blocks behind the two wall layers) and one more. */
+    public static final int DOOR_CLEAR = 4;
+
+    /**
+     * As {@link #pick(int, int, int, int, int, List, List, double, Random)}, for a room whose doorways are 7 x 7 (the sector was cut): {@code doorways} are the {x, z} of the barrier cells.
+     * A cell within {@link #DOOR_CLEAR} blocks of a doorway stands in the apron in front of a barrier, where the party arrives and a wave would be on top of the way in and the way out,
+     * so those cells go to the END of the list (the reserve), in the same order among themselves; the rest is exactly what the plain {@code pick} gives. With no doorways it IS the plain pick.
+     */
+    public static List<Cell> pick(int minX, int minZ, int maxX, int maxZ, int standY, List<int[]> spots, List<double[]> players, double minDist, Random rnd, List<int[]> doorways) {
         List<Cell> marked = new ArrayList<>(), grid = new ArrayList<>();
         for (int[] s : spots) {
             if (inside(minX, minZ, maxX, maxZ, s[0], s[2]) && farFromAll(players, s[0] + 0.5, s[2] + 0.5, minDist)) marked.add(new Cell(s[0], s[1], s[2]));
@@ -44,9 +56,23 @@ public final class WaveCells {
         Collections.shuffle(marked, rnd);
         Collections.shuffle(grid, rnd);
         List<Cell> out = new ArrayList<>(marked.size() + grid.size());
-        out.addAll(marked);
-        out.addAll(grid);
+        if (doorways.isEmpty()) {
+            out.addAll(marked);
+            out.addAll(grid);
+            return out;
+        }
+        List<Cell> near = new ArrayList<>();
+        for (List<Cell> group : List.of(marked, grid)) {
+            for (Cell c : group) (nearDoorway(doorways, c.x(), c.z()) ? near : out).add(c);
+        }
+        out.addAll(near);
         return out;
+    }
+
+    /** Is the cell within {@link #DOOR_CLEAR} blocks (either axis) of a doorway cell? */
+    public static boolean nearDoorway(List<int[]> doorways, int x, int z) {
+        for (int[] d : doorways) if (Math.abs(d[0] - x) <= DOOR_CLEAR && Math.abs(d[1] - z) <= DOOR_CLEAR) return true;
+        return false;
     }
 
     private static boolean inside(int minX, int minZ, int maxX, int maxZ, int x, int z) {

@@ -129,8 +129,11 @@ final class PrimsWorld {
             BlockState st = PrimUtil.block(r.str("block"));
             if (rm == null || st.isAir()) return;
             Journal j = journal(r, "doors", r.ticks("secs") > 0);
-            for (BlockPos col : doorColumns(r.level(), rm)) {
-                for (int dy = 0; dy < MegaGrid.DOOR_H; dy++) {
+            // 1.107.0: a sector cut to 7 x 7 (gen.clearance7) has doorways 7 high: the bar takes all 7 rows, not the 4 of the old doorway (see DoorSealing)
+            boolean cut = r.inst.sector != null && com.newuniverse.nusmp.labyrinth.mega.gen.ClearanceSettings.sectorCut(r.level().getServer(), r.inst.sector.id);
+            int rows = DoorSealing.rows(cut);
+            for (BlockPos col : doorColumns(r.level(), rm, cut)) {
+                for (int dy = 0; dy < rows; dy++) {
                     BlockPos p = col.above(dy);
                     if (PrimUtil.occupied(r.level(), p)) continue;
                     j.placeInAir(p, st);
@@ -291,7 +294,10 @@ final class PrimsWorld {
     }
 
     /** The bottom cell of every doorway column of a room: an air cell on the outermost wall layer that is open on the second layer too. */
-    static List<BlockPos> doorColumns(ServerLevel level, Room rm) {
+    static List<BlockPos> doorColumns(ServerLevel level, Room rm) { return doorColumns(level, rm, false); }
+
+    /** As above; {@code cut} is true for a room of a sector cut to 7 x 7, whose side may show more open columns before it is judged a cavern ({@link DoorSealing#sideLimit}). */
+    static List<BlockPos> doorColumns(ServerLevel level, Room rm, boolean cut) {
         List<BlockPos> out = new ArrayList<>();
         int y = FLOOR + 1;
         for (int side = 0; side < 4; side++) {
@@ -306,7 +312,8 @@ final class PrimsWorld {
                 if (!level.hasChunkAt(outer)) continue;
                 if (level.getBlockState(outer).isAir() && level.getBlockState(inner).isAir()) found.add(outer);
             }
-            if (found.size() <= 30) out.addAll(found);                    // a whole side that is open is a cavern, not a doorway
+            int length = xSide ? rm.box.maxX() - rm.box.minX() + 1 : rm.box.maxZ() - rm.box.minZ() + 1;
+            if (DoorSealing.isDoorways(cut, length, found.size())) out.addAll(found);   // a whole side that is open is a cavern, not a doorway (30 columns; more in a room cut to 7 x 7)
         }
         return out;
     }
