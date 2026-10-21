@@ -104,6 +104,7 @@ public final class QuestService {
         long reward = QuestRules.reward(def, HubConfig.get(HubConfig.REWARD_SCALE));
         if (reward > 0) Currency.give(sp, reward);
         tell(sp, "message.nusmp.hub.quest.complete", "Quest complete: %s. Reward: %s.", QuestText.title(def), CoinMath.describe(reward));
+        com.newuniverse.nusmp.audio.voice.Voice.npc(sp, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.QUEST_DONE, false);        // 1.110.0: spoken line
         return reward;
     }
 

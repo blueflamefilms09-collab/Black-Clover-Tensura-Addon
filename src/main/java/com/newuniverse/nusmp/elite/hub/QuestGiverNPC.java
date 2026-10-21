@@ -19,6 +19,7 @@ public class QuestGiverNPC extends HubNpcBase {
             return;
         }
         QuestService.fresh(player);
+        com.newuniverse.nusmp.audio.voice.Voice.npc(player, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.QUEST_OFFER, false);   // 1.110.0: spoken line (the dialogue opens as before)
         openMenu(player, (id, inv, p) -> new HubMenus.QuestMenu(id, getId()));
         QuestService.sendBoard(player);
     }

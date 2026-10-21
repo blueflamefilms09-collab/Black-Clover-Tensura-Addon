@@ -103,10 +103,12 @@ public final class FloorTracker {
         boolean newDeepest = AlignmentRules.isNewDeepest(a, floor);              // both questions are asked BEFORE the state learns of the move
         boolean clears = AlignmentRules.clearsPrevious(a, previous, floor);
         MegaDungeon.fireFloorEntered(p, floor, previous);
+        if (newDeepest) com.newuniverse.nusmp.audio.voice.Voice.say(p, com.newuniverse.nusmp.labyrinth.mega.FloorMap.isBossFloor(floor) ? "system_boss_ahead" : "system_floor_enter");   // 1.110.0: spoken line, the first time a depth is reached (a boss floor warns instead)
         boolean changed = AlignmentRules.onFloorEntered(a, floor);
         boolean locked = false;
         if (clears) {
             MegaDungeon.fireFloorCleared(p, previous);
+            if (!newDeepest) com.newuniverse.nusmp.audio.voice.Voice.say(p, "system_floor_clear");            // 1.110.0: spoken line (when the move is also a new depth, that depth's line plays instead)
             if (FloorsConfig.get(FloorsConfig.LOCK_ENABLED)) {
                 locked = AlignmentRules.onFloorCleared(a, previous, FloorsConfig.get(FloorsConfig.LOCK_AT_FLOOR), p.level().getGameTime());
             }

@@ -1,0 +1,482 @@
+{
+ "boss_angel_death": {
+  "bytes": 17963,
+  "seconds": 1.75
+ },
+ "boss_angel_intro": {
+  "bytes": 34216,
+  "seconds": 3.87
+ },
+ "boss_angel_phase2": {
+  "bytes": 24231,
+  "seconds": 2.65
+ },
+ "boss_devil_death": {
+  "bytes": 32963,
+  "seconds": 3.58
+ },
+ "boss_devil_intro": {
+  "bytes": 43096,
+  "seconds": 4.9
+ },
+ "boss_devil_phase2": {
+  "bytes": 38054,
+  "seconds": 4.4
+ },
+ "boss_dragon_death": {
+  "bytes": 28737,
+  "seconds": 3.31
+ },
+ "boss_dragon_intro": {
+  "bytes": 36501,
+  "seconds": 4.2
+ },
+ "boss_dragon_phase2": {
+  "bytes": 25018,
+  "seconds": 2.68
+ },
+ "boss_evil_death": {
+  "bytes": 33991,
+  "seconds": 3.75
+ },
+ "boss_evil_intro": {
+  "bytes": 56054,
+  "seconds": 6.7
+ },
+ "boss_evil_phase2": {
+  "bytes": 40556,
+  "seconds": 4.6
+ },
+ "boss_fire_death": {
+  "bytes": 24643,
+  "seconds": 2.65
+ },
+ "boss_fire_intro": {
+  "bytes": 34945,
+  "seconds": 4.0
+ },
+ "boss_fire_phase2": {
+  "bytes": 24037,
+  "seconds": 2.53
+ },
+ "boss_holy_death": {
+  "bytes": 29297,
+  "seconds": 3.24
+ },
+ "boss_holy_intro": {
+  "bytes": 49348,
+  "seconds": 5.7
+ },
+ "boss_holy_phase2": {
+  "bytes": 29545,
+  "seconds": 3.19
+ },
+ "boss_ice_death": {
+  "bytes": 28167,
+  "seconds": 3.11
+ },
+ "boss_ice_intro": {
+  "bytes": 39440,
+  "seconds": 4.5
+ },
+ "boss_ice_phase2": {
+  "bytes": 21219,
+  "seconds": 2.11
+ },
+ "boss_storm_death": {
+  "bytes": 22056,
+  "seconds": 2.28
+ },
+ "boss_storm_intro": {
+  "bytes": 44528,
+  "seconds": 5.1
+ },
+ "boss_storm_phase2": {
+  "bytes": 24257,
+  "seconds": 2.52
+ },
+ "boss_undead_death": {
+  "bytes": 26601,
+  "seconds": 2.88
+ },
+ "boss_undead_intro": {
+  "bytes": 41791,
+  "seconds": 4.9
+ },
+ "boss_undead_phase2": {
+  "bytes": 31231,
+  "seconds": 3.45
+ },
+ "boss_void_death": {
+  "bytes": 19945,
+  "seconds": 2.04
+ },
+ "boss_void_intro": {
+  "bytes": 36276,
+  "seconds": 4.2
+ },
+ "boss_void_phase2": {
+  "bytes": 30807,
+  "seconds": 3.4
+ },
+ "djinn_agares_attack": {
+  "bytes": 22390,
+  "seconds": 2.33
+ },
+ "djinn_agares_summon": {
+  "bytes": 51479,
+  "seconds": 5.8
+ },
+ "djinn_alloces_attack": {
+  "bytes": 22095,
+  "seconds": 2.34
+ },
+ "djinn_alloces_summon": {
+  "bytes": 47365,
+  "seconds": 5.4
+ },
+ "djinn_amdusias_attack": {
+  "bytes": 24464,
+  "seconds": 2.59
+ },
+ "djinn_amdusias_summon": {
+  "bytes": 54370,
+  "seconds": 6.4
+ },
+ "djinn_amon_attack": {
+  "bytes": 22125,
+  "seconds": 2.35
+ },
+ "djinn_amon_summon": {
+  "bytes": 50831,
+  "seconds": 5.8
+ },
+ "djinn_andrealphus_attack": {
+  "bytes": 25150,
+  "seconds": 2.69
+ },
+ "djinn_andrealphus_summon": {
+  "bytes": 52172,
+  "seconds": 6.0
+ },
+ "djinn_andromalius_attack": {
+  "bytes": 30781,
+  "seconds": 3.28
+ },
+ "djinn_andromalius_summon": {
+  "bytes": 61043,
+  "seconds": 7.0
+ },
+ "djinn_baal_attack": {
+  "bytes": 28114,
+  "seconds": 2.96
+ },
+ "djinn_baal_summon": {
+  "bytes": 56551,
+  "seconds": 6.5
+ },
+ "djinn_bael_attack": {
+  "bytes": 22507,
+  "seconds": 2.42
+ },
+ "djinn_bael_summon": {
+  "bytes": 49107,
+  "seconds": 5.5
+ },
+ "djinn_balam_attack": {
+  "bytes": 22544,
+  "seconds": 2.44
+ },
+ "djinn_balam_summon": {
+  "bytes": 49034,
+  "seconds": 5.5
+ },
+ "djinn_barbatos_attack": {
+  "bytes": 24625,
+  "seconds": 2.59
+ },
+ "djinn_barbatos_summon": {
+  "bytes": 54043,
+  "seconds": 6.3
+ },
+ "djinn_belial_attack": {
+  "bytes": 22347,
+  "seconds": 2.41
+ },
+ "djinn_belial_summon": {
+  "bytes": 52391,
+  "seconds": 6.2
+ },
+ "djinn_bifron_attack": {
+  "bytes": 30299,
+  "seconds": 3.25
+ },
+ "djinn_bifron_summon": {
+  "bytes": 52273,
+  "seconds": 5.9
+ },
+ "djinn_buer_attack": {
+  "bytes": 21437,
+  "seconds": 2.3
+ },
+ "djinn_buer_summon": {
+  "bytes": 46513,
+  "seconds": 5.3
+ },
+ "djinn_camio_attack": {
+  "bytes": 22039,
+  "seconds": 2.32
+ },
+ "djinn_camio_summon": {
+  "bytes": 49859,
+  "seconds": 5.7
+ },
+ "djinn_crocell_attack": {
+  "bytes": 21533,
+  "seconds": 2.32
+ },
+ "djinn_crocell_summon": {
+  "bytes": 42053,
+  "seconds": 4.7
+ },
+ "djinn_dantalion_attack": {
+  "bytes": 24390,
+  "seconds": 2.61
+ },
+ "djinn_dantalion_summon": {
+  "bytes": 51423,
+  "seconds": 5.7
+ },
+ "djinn_decarabia_attack": {
+  "bytes": 23820,
+  "seconds": 2.6
+ },
+ "djinn_decarabia_summon": {
+  "bytes": 53453,
+  "seconds": 6.1
+ },
+ "djinn_focalor_attack": {
+  "bytes": 23433,
+  "seconds": 2.52
+ },
+ "djinn_focalor_summon": {
+  "bytes": 46819,
+  "seconds": 5.3
+ },
+ "djinn_furcas_attack": {
+  "bytes": 22008,
+  "seconds": 2.35
+ },
+ "djinn_furcas_summon": {
+  "bytes": 51466,
+  "seconds": 6.0
+ },
+ "djinn_furfur_attack": {
+  "bytes": 22078,
+  "seconds": 2.32
+ },
+ "djinn_furfur_summon": {
+  "bytes": 48891,
+  "seconds": 5.7
+ },
+ "djinn_glasya_labolas_attack": {
+  "bytes": 28306,
+  "seconds": 3.08
+ },
+ "djinn_glasya_labolas_summon": {
+  "bytes": 52031,
+  "seconds": 6.1
+ },
+ "djinn_gusion_attack": {
+  "bytes": 21609,
+  "seconds": 2.25
+ },
+ "djinn_gusion_summon": {
+  "bytes": 47753,
+  "seconds": 5.4
+ },
+ "djinn_haagenti_attack": {
+  "bytes": 24306,
+  "seconds": 2.55
+ },
+ "djinn_haagenti_summon": {
+  "bytes": 53730,
+  "seconds": 6.1
+ },
+ "djinn_kimaris_attack": {
+  "bytes": 22710,
+  "seconds": 2.42
+ },
+ "djinn_kimaris_summon": {
+  "bytes": 50974,
+  "seconds": 5.9
+ },
+ "djinn_marchosias_attack": {
+  "bytes": 24332,
+  "seconds": 2.51
+ },
+ "djinn_marchosias_summon": {
+  "bytes": 49300,
+  "seconds": 5.6
+ },
+ "djinn_murmur_attack": {
+  "bytes": 23648,
+  "seconds": 2.54
+ },
+ "djinn_murmur_summon": {
+  "bytes": 42883,
+  "seconds": 4.8
+ },
+ "djinn_paimon_attack": {
+  "bytes": 22422,
+  "seconds": 2.39
+ },
+ "djinn_paimon_summon": {
+  "bytes": 47255,
+  "seconds": 5.5
+ },
+ "djinn_seere_attack": {
+  "bytes": 21492,
+  "seconds": 2.3
+ },
+ "djinn_seere_summon": {
+  "bytes": 43969,
+  "seconds": 4.9
+ },
+ "djinn_shax_attack": {
+  "bytes": 22964,
+  "seconds": 2.45
+ },
+ "djinn_shax_summon": {
+  "bytes": 49216,
+  "seconds": 5.6
+ },
+ "djinn_sitri_attack": {
+  "bytes": 21839,
+  "seconds": 2.29
+ },
+ "djinn_sitri_summon": {
+  "bytes": 46557,
+  "seconds": 5.3
+ },
+ "djinn_valefor_attack": {
+  "bytes": 29250,
+  "seconds": 3.12
+ },
+ "djinn_valefor_summon": {
+  "bytes": 59085,
+  "seconds": 6.8
+ },
+ "djinn_vassago_attack": {
+  "bytes": 21324,
+  "seconds": 2.2
+ },
+ "djinn_vassago_summon": {
+  "bytes": 47885,
+  "seconds": 5.6
+ },
+ "djinn_vepar_attack": {
+  "bytes": 20035,
+  "seconds": 2.13
+ },
+ "djinn_vepar_summon": {
+  "bytes": 48499,
+  "seconds": 5.4
+ },
+ "djinn_vinea_attack": {
+  "bytes": 20923,
+  "seconds": 2.18
+ },
+ "djinn_vinea_summon": {
+  "bytes": 44947,
+  "seconds": 5.1
+ },
+ "djinn_zagan_attack": {
+  "bytes": 22246,
+  "seconds": 2.41
+ },
+ "djinn_zagan_summon": {
+  "bytes": 45784,
+  "seconds": 5.2
+ },
+ "djinn_zepar_attack": {
+  "bytes": 22545,
+  "seconds": 2.39
+ },
+ "djinn_zepar_summon": {
+  "bytes": 47529,
+  "seconds": 5.4
+ },
+ "npc_guide_greet": {
+  "bytes": 39025,
+  "seconds": 4.4
+ },
+ "npc_merchant_buy": {
+  "bytes": 18820,
+  "seconds": 1.95
+ },
+ "npc_merchant_farewell": {
+  "bytes": 26731,
+  "seconds": 2.93
+ },
+ "npc_merchant_greet": {
+  "bytes": 39774,
+  "seconds": 4.6
+ },
+ "npc_merchant_sell": {
+  "bytes": 30874,
+  "seconds": 3.41
+ },
+ "npc_quest_done": {
+  "bytes": 34415,
+  "seconds": 4.1
+ },
+ "npc_quest_farewell": {
+  "bytes": 21047,
+  "seconds": 2.19
+ },
+ "npc_quest_offer": {
+  "bytes": 27818,
+  "seconds": 3.05
+ },
+ "system_ambush_warning": {
+  "bytes": 27946,
+  "seconds": 2.84
+ },
+ "system_boss_ahead": {
+  "bytes": 31306,
+  "seconds": 3.13
+ },
+ "system_floor_clear": {
+  "bytes": 22912,
+  "seconds": 2.39
+ },
+ "system_floor_enter": {
+  "bytes": 31651,
+  "seconds": 3.24
+ },
+ "system_floor_sealed": {
+  "bytes": 42076,
+  "seconds": 4.6
+ },
+ "system_lockdown_clear": {
+  "bytes": 24779,
+  "seconds": 2.66
+ },
+ "system_lockdown_start": {
+  "bytes": 29525,
+  "seconds": 3.18
+ },
+ "system_low_health": {
+  "bytes": 23917,
+  "seconds": 2.45
+ },
+ "system_rest_safe": {
+  "bytes": 26367,
+  "seconds": 2.57
+ },
+ "system_rift_open": {
+  "bytes": 28057,
+  "seconds": 2.82
+ }
+}

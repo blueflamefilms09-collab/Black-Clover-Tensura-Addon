@@ -190,6 +190,7 @@ public final class RestEvents {
         st.channel = new RestState.Channel(kind, now, total, p.position(), clicked.immutable(), sector.id, ambushAt);
         level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6f, 0.7f);
         say(p, kind == RestKind.LONG ? "start_long" : "start_short");
+        com.newuniverse.nusmp.audio.voice.Voice.say(p, "system_rest_safe");                                // 1.110.0: spoken line (the text above is shown as before)
         com.newuniverse.nusmp.compat.maps.MapShare.safeRoom(p, clicked);                                   // compat-maps: a clickable waypoint line for the safe room (once per anchor, opt-in, rate limited)
         return new Click(Click.Action.STARTED, RestRules.Refusal.NONE, kind);
     }

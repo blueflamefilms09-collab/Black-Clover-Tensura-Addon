@@ -119,6 +119,8 @@ public final class BossBarHub {
                 e.nextAt = now + PERIOD;
                 BossBarState next = snapshot(e, boss, now);
                 if (BossBarState.differs(e.last, e.lastTick, next, now)) {
+                    if (e.last == null) voice(boss, next, "intro");                                  // 1.110.0: spoken lines (audio/voice), the family follows the bar's style
+                    else if (next.phase() > e.last.phase()) voice(boss, next, "phase2");
                     e.last = next;
                     e.lastTick = now;
                     sendAll(e, next);
@@ -172,9 +174,17 @@ public final class BossBarHub {
             MinecraftServer server = dying.level().getServer();
             long now = server == null ? 0L : server.getTickCount();
             BossBarState s = snapshot(e, dying, now);
+            voice(dying, s, "death");                                                             // 1.110.0: spoken line
             e.last = s;
             e.lastTick = now;
             sendAll(e, s);
+        }
+    }
+
+    /** The boss speaks to the players around it: the voice family comes from the style id of its bar (the same resolution the bar uses). */
+    private static void voice(LivingEntity boss, BossBarState state, String event) {
+        if (boss.level() instanceof net.minecraft.server.level.ServerLevel sl && state != null) {
+            com.newuniverse.nusmp.audio.voice.Voice.boss(sl, boss.position(), state.style(), event);
         }
     }
 

@@ -261,6 +261,7 @@ public final class LockdownDirector {
         for (BlockPos b : cells) Fx.spray(level, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5, 3, 0.3, 0.3, 0.3, 0.02);
         LockdownMsg.tellAll(party, LockdownMsg.text(LockdownText.SEALED, 1, waves).withStyle(ChatFormatting.GOLD));
         LockdownMsg.toast(party, ToastKind.INFO, LockdownText.TOAST_SEALED, "1", Integer.toString(waves));
+        LockdownMsg.say(party, "system_lockdown_start");                                       // 1.110.0: spoken line
     }
 
     // ---------------------------------------------------------------- the doorways

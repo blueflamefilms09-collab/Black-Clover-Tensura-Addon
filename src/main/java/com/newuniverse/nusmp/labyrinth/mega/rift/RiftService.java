@@ -178,6 +178,7 @@ public final class RiftService {
                         RiftRules.compass(dx, dz)).withStyle(pocket ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.AQUA));
                 SystemSync.toast(q, ToastKind.INFO, SystemText.TOAST_RIFT_NEAR);
             }
+            com.newuniverse.nusmp.audio.voice.Voice.say(q, "system_rift_open");                            // 1.110.0: spoken line (the texts above are shown as before)
             com.newuniverse.nusmp.compat.maps.MapShare.rift(q, at, pocket);                                // compat-maps: a clickable waypoint line for the rift (opt-in, rate limited)
         }
         if (finder != null) NusmpEvents.fire(finder, "mega.rift", pocket ? "pocket" : "shortcut");
