@@ -49,6 +49,8 @@ final class SectorPlacer {
     private final SectorGenerator.Built built;
     private final boolean repair;
     private final Set<Long> ticketed = new HashSet<>();
+    /** 1.107.0: which sockets of which piece lead into another room (null until the first piece is placed): the 7 x 7 clearance cuts only those ({@link Clearance7}). */
+    private boolean[][] connected;
     private int next;
     private int failed;
 
@@ -71,14 +73,15 @@ final class SectorPlacer {
     int step(int maxPieces, long deadlineNanos) {
         int n = 0;
         while (!done() && n < maxPieces) {
-            placeOne(built.pieces().get(next++));
+            placeOne(built.pieces().get(next), next);
+            next++;
             n++;
             if (System.nanoTime() >= deadlineNanos) break;
         }
         return n;
     }
 
-    private void placeOne(PoolElementStructurePiece piece) {
+    private void placeOne(PoolElementStructurePiece piece, int index) {
         BoundingBox box = piece.getBoundingBox();
         try {
             hold(box);
@@ -88,9 +91,28 @@ final class SectorPlacer {
             final BlockPos pivot = sector.entry;
             DungeonGuard.internal(() -> RegionContext.run(sector, markers, () ->
                     piece.place(level, level.structureManager(), cache.getGenerator(), level.getRandom(), BoundingBox.infinite(), pivot, false)));
+            clearance(index);
         } catch (Throwable t) {
             failed++;
             LOG.error("[nusmp] Mega sector {}: piece {} at {} failed to place: {}", sector.id, piece.getElement(), piece.getPosition(), t.toString());
+        }
+    }
+
+    /**
+     * 1.107.0 (gen.clearance7): cuts the piece just placed to the 7 x 7 minimum clearance of every transition ({@link Clearance7}, {@link ClearanceCarver}). Inside the
+     * same guard span the placement used. A failure is logged and the piece keeps its old size; it never fails the placement.
+     */
+    private void clearance(int index) {
+        if (!ClearanceSettings.enabled()) return;
+        try {
+            Result r = built.planned().result();
+            if (r == null || index >= r.pieces.size()) return;
+            if (connected == null) connected = Clearance7.connected(r);
+            final Placed placed = r.pieces.get(index);
+            final boolean[] conn = connected[index];
+            DungeonGuard.internal(() -> ClearanceCarver.carve(level, placed, conn));
+        } catch (Throwable t) {
+            LOG.error("[nusmp] Mega sector {}: the 7 x 7 clearance of piece {} failed: {}", sector.id, index, t.toString());
         }
     }
 
@@ -128,6 +150,14 @@ final class SectorPlacer {
                 if (level.getBlockState(p).isAir()) continue;
                 level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
                 removed[0]++;
+            }
+            if (ClearanceSettings.enabled() && from.expansionPos != null && from.expansionFacing != null) {      // 1.107.0: the opened seal is as wide and high as the rest of the dungeon
+                try {
+                    Box wide = Clearance7.sealCut(SectorGenerator.vec(from.expansionPos), SectorGenerator.facing(from.expansionFacing), from.sealD);
+                    removed[0] += ClearanceCarver.carveSeal(level, wide).cleared();
+                } catch (Throwable t) {
+                    LOG.error("[nusmp] Mega sector {}: the 7 x 7 opening of the Way Onward failed: {}", from.id, t.toString());
+                }
             }
         });
         return removed[0];

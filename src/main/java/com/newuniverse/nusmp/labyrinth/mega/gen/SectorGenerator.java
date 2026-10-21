@@ -345,6 +345,7 @@ public final class SectorGenerator {
         st.fallback = p.solved().fallback();
         st.deadEnd = p.solved().deadEnd();
         st.millis = totalMillis;
+        st.clear7 = ClearanceSettings.enabled();                         // 1.107.0: the pieces of this sector were cut to 7 x 7 (read again here: the switch is not expected to flip mid-job)
         int link = 0;
         for (Placed x : r.pieces) if (x.link) link++;
         st.link = link;

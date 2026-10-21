@@ -121,6 +121,9 @@ final class CatalogSource implements PoolSource {
 
     int shapeCount() { return shapes.size(); }
 
+    /** 1.107.0: every shape of the catalog, in file order (the clearance tests walk all the real templates). */
+    java.util.Collection<Shape> allShapes() { return shapes.values(); }
+
     int poolCount() { return pools.size(); }
 
     @Override

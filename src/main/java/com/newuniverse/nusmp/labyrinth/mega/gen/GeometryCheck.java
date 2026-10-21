@@ -63,7 +63,14 @@ final class GeometryCheck {
      * Checks the plan against the game. {@code worldPieces} is how many pieces to look up in the world (0 = the plan-only checks, for a sector that is not
      * placed yet); the pieces are chosen to cover every kind of room, a door cap and the tunnel, then spread over the rest.
      */
-    static Report run(ServerLevel level, SectorGenerator.Built built, int worldPieces) {
+    static Report run(ServerLevel level, SectorGenerator.Built built, int worldPieces) { return run(level, built, worldPieces, false); }
+
+    /**
+     * {@link #run(ServerLevel, SectorGenerator.Built, int)} with the rule {@code clearance7} (1.107.0): when {@code clearance7} is true (the sector was finished with
+     * {@code gen.clearance7} on, see {@link GenData.Stat#clear7}) every doorway, corridor, chamber and staircase of the pieces read from the world must measure at least
+     * 7 wide and 7 high ({@link Clearance7#check}); a transition below that is a failure line like any other.
+     */
+    static Report run(ServerLevel level, SectorGenerator.Built built, int worldPieces, boolean clearance7) {
         StructureTemplateManager mgr = level.getStructureManager();
         Result r = built.planned().result();
         List<String> fails = new ArrayList<>();
@@ -86,12 +93,13 @@ final class GeometryCheck {
             }
         }
         int sampled = 0, found = 0, left = 0, checked = 0;
+        final boolean[][] connectedSockets = clearance7 ? Clearance7.connected(r) : null;
         if (worldPieces > 0) {
             for (int i : pick(r, worldPieces)) {
                 Placed p = r.pieces.get(i);
                 int[] w;
                 try {
-                    w = world(level, mgr, p);
+                    w = world(level, mgr, p, skipBoxes(clearance7 ? Clearance7.cuts(p, connectedSockets[p.index]) : List.of()));
                 } catch (Throwable t) {
                     if (fails.size() < MAX_LISTED) fails.add(label(p) + ": the world could not be read (" + t + ")");
                     else omitted++;
@@ -112,9 +120,43 @@ final class GeometryCheck {
                 if (fails.size() < MAX_LISTED) fails.add(msg);
                 else omitted++;
             }
+            if (clearance7) {
+                java.util.Set<Integer> read = new HashSet<>(pick(r, worldPieces));
+                for (String m : clearance7(level, r, read::contains)) {
+                    if (fails.size() < MAX_LISTED) fails.add(m);
+                    else omitted++;
+                }
+            }
         }
         if (omitted > 0) fails.add("and " + omitted + " more");
         return new Report(r.pieces.size(), boxes, jigsaws, markers, checked, sampled, found, left, fails);
+    }
+
+    /**
+     * The rule {@code clearance7}: the transitions of the chosen pieces read from the world, as {@link Clearance7#check} sees them (collision-free cells), plus the head
+     * room of the stairwells among them. Pure apart from the world reads; empty = the rule holds.
+     */
+    static List<String> clearance7(ServerLevel level, Result r, java.util.function.IntPredicate pieces) {
+        Clearance7.Space space = ClearanceCarver.space(level);
+        List<String> bad = new ArrayList<>(Clearance7.check(r, space, pieces, 4));
+        for (Placed p : r.pieces) {
+            if (p.shape.kind != RoomKind.STAIRWELL || !pieces.test(p.index)) continue;
+            List<Vec> stands = ClearanceCarver.standsOf(level, p.box);
+            int short7 = Clearance7.shortHeadroom(space, stands);
+            if (short7 > 0) bad.add("piece " + p.index + " (" + p.shape.id + "): " + short7 + " of " + stands.size() + " stair blocks have less than 7 free blocks above them");
+        }
+        return bad;
+    }
+
+    private static List<Box> skipBoxes(List<Clearance7.Cut> cuts) {
+        List<Box> out = new ArrayList<>(cuts.size());
+        for (Clearance7.Cut c : cuts) out.add(c.box());
+        return out;
+    }
+
+    private static boolean inAny(List<Box> boxes, Vec v) {
+        for (Box b : boxes) if (b.contains(v)) return true;
+        return false;
     }
 
     private static String label(Placed p) { return "piece " + p.index + " (" + p.shape.id + " r" + p.rot + " at " + p.origin + ")"; }
@@ -215,7 +257,7 @@ final class GeometryCheck {
     }
 
     /** {sampled, found non-air, jigsaws left} for one piece. */
-    private static int[] world(ServerLevel level, StructureTemplateManager mgr, Placed p) {
+    private static int[] world(ServerLevel level, StructureTemplateManager mgr, Placed p, List<Box> skip) {
         ResourceLocation id = ResourceLocation.tryParse(p.shape.id);
         Optional<StructureTemplate> t = id == null ? Optional.empty() : mgr.get(id);
         if (t.isEmpty()) return new int[] {0, 0, 0};
@@ -234,7 +276,9 @@ final class GeometryCheck {
             int state = b.getInt("state");
             if (state < 0 || state >= solidState.length || !solidState[state]) continue;
             ListTag pos = b.getList("pos", Tag.TAG_INT);
-            if (pos.size() == 3) solid.add(new int[] {pos.getInt(0), pos.getInt(1), pos.getInt(2)});
+            if (pos.size() != 3) continue;
+            if (!skip.isEmpty() && inAny(skip, p.world(new Vec(pos.getInt(0), pos.getInt(1), pos.getInt(2))))) continue;     // 1.107.0: a block the 7 x 7 cuts took away is not expected to stand
+            solid.add(new int[] {pos.getInt(0), pos.getInt(1), pos.getInt(2)});
         }
         int sampled = 0, found = 0;
         int step = Math.max(1, solid.size() / SAMPLES_PER_PIECE);

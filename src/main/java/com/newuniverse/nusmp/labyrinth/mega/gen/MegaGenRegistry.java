@@ -38,6 +38,8 @@ public final class MegaGenRegistry {
         StairSelfTests.register();                                    // 1.58.0: stairs.layout and stairs.travel
         CyclicSettings.register();                                    // 1.83.0: generation.cyclic and its knobs (nusmp-labyrinth-mega-gen-server.toml)
         CyclicSelfTests.register();                                   // 1.83.0: gen.cyclic
+        ClearanceSettings.register();                                 // 1.107.0: gen.clearance7 (nusmp-labyrinth-mega-clearance-server.toml)
+        ClearanceSelfTests.register();                                // 1.107.0: dungeon.clearance7
     }
 
     public static void register(IEventBus gameBus) {

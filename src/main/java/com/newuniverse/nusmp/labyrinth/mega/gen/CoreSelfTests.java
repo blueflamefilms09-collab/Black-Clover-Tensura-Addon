@@ -189,7 +189,7 @@ final class CoreSelfTests {
         SectorGenerator.Planned p = placed ? SectorGenerator.plan(level, data, s0) : SectorGenerator.probe(level, probeSeed(data, 0));
         if (!p.ok()) return fail("the plan cannot be made: " + p.failure());
         SectorGenerator.Built built = SectorGenerator.build(level, p);
-        GeometryCheck.Report r = GeometryCheck.run(level, built, placed ? 8 : 0);
+        GeometryCheck.Report r = GeometryCheck.run(level, built, placed ? 8 : 0, placed && ClearanceCarver.wasCut(server, s0.id));
         if (!r.ok()) return fail(String.join(", ", r.failures()));
         if (!placed) return ok("plan only (no placed first sector to read the world of): " + r.pieces() + " pieces, boxes " + r.boxes() + ", jigsaws " + r.jigsaws() + ", markers " + r.markers()
                 + " agree with the game");
