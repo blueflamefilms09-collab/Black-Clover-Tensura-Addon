@@ -1,0 +1,1438 @@
+{
+  "version": 1,
+  "comment": "Written by tools/franchise/gen_engravings.py: the franchises and the numbers of the franchise engravings (franchise/FranchiseData).",
+  "franchises": [
+    {
+      "id": "black_clover",
+      "name": "Black Clover",
+      "colour": "#E8C14A",
+      "theme": "magic.STAR",
+      "aliases": [
+        "black clover"
+      ],
+      "words": [
+        "asta",
+        "yami sukehiro",
+        "julius novachrono",
+        "magic knight",
+        "spade kingdom",
+        "clover kingdom",
+        "black bull",
+        "crimson lion",
+        "golden dawn",
+        "silver eagle",
+        "coral peacock",
+        "five-leaf"
+      ]
+    },
+    {
+      "id": "tensura",
+      "name": "That Time I Got Reincarnated as a Slime",
+      "colour": "#4FB8E8",
+      "theme": "magic.WATER",
+      "aliases": [
+        "slime",
+        "tensura"
+      ],
+      "words": [
+        "rimuru",
+        "veldora",
+        "milim",
+        "benimaru",
+        "great sage"
+      ]
+    },
+    {
+      "id": "magi",
+      "name": "Magi: The Labyrinth of Magic",
+      "colour": "#7C5CE8",
+      "theme": "relic.element.arcane",
+      "aliases": [
+        "magi"
+      ],
+      "words": [
+        "aladdin",
+        "alibaba",
+        "sinbad",
+        "magoi",
+        "djinn"
+      ]
+    },
+    {
+      "id": "solo_leveling",
+      "name": "Solo Leveling",
+      "colour": "#6A3FD0",
+      "theme": "magic.SHADOW",
+      "aliases": [
+        "solo leveling"
+      ],
+      "words": [
+        "jinwoo",
+        "shadow monarch",
+        "shadow soldier",
+        "igris",
+        "hunter rank"
+      ]
+    },
+    {
+      "id": "danmachi",
+      "name": "DanMachi",
+      "colour": "#F0A04A",
+      "theme": "relic.element.holy",
+      "aliases": [
+        "danmachi",
+        "is it wrong to try to pick up girls"
+      ],
+      "words": [
+        "bell cranel",
+        "falna",
+        "hestia",
+        "argonaut",
+        "familia"
+      ]
+    },
+    {
+      "id": "fairy_tail",
+      "name": "Fairy Tail",
+      "colour": "#F06A8A",
+      "theme": "skill.celestial",
+      "aliases": [
+        "fairy tail"
+      ],
+      "words": [
+        "natsu",
+        "erza",
+        "lucy",
+        "celestial spirit",
+        "requip",
+        "zodiac",
+        "titania"
+      ]
+    },
+    {
+      "id": "shield_hero",
+      "name": "The Rising of the Shield Hero",
+      "colour": "#4A8AD8",
+      "theme": "relic.element.holy",
+      "aliases": [
+        "shield hero"
+      ],
+      "words": [
+        "naofumi",
+        "raphtalia",
+        "legendary weapon",
+        "cardinal weapon",
+        "vassal weapon",
+        "waves of catastrophe"
+      ]
+    },
+    {
+      "id": "seven_deadly_sins",
+      "name": "The Seven Deadly Sins",
+      "colour": "#E0883A",
+      "theme": "magic.FLAME",
+      "aliases": [
+        "seven deadly sins"
+      ],
+      "words": [
+        "meliodas",
+        "escanor",
+        "holy knight",
+        "sacred treasure",
+        "lostvayne"
+      ]
+    },
+    {
+      "id": "dnd",
+      "name": "Dungeons and Dragons",
+      "colour": "#C84A3A",
+      "theme": "relic.wave.30",
+      "aliases": [
+        "dungeons and dragons",
+        "d&d",
+        "dungeons & dragons"
+      ],
+      "words": [
+        "forgotten realms",
+        "magic item compendium",
+        "vecna",
+        "bag of holding",
+        "dungeon master",
+        "beholder"
+      ]
+    },
+    {
+      "id": "rezero",
+      "name": "Re:Zero",
+      "colour": "#B8A8E8",
+      "theme": "relic.wave.31",
+      "aliases": [
+        "re:zero",
+        "rezero"
+      ],
+      "words": [
+        "subaru",
+        "emilia",
+        "witch factor",
+        "return by death"
+      ]
+    },
+    {
+      "id": "fate",
+      "name": "Fate",
+      "colour": "#D8B84A",
+      "theme": "relic.wave.35",
+      "aliases": [
+        "fate series",
+        "fate/"
+      ],
+      "words": [
+        "noble phantasm",
+        "holy grail",
+        "command seal",
+        "heroic spirit"
+      ]
+    },
+    {
+      "id": "overlord",
+      "name": "Overlord",
+      "colour": "#7A4AA8",
+      "theme": "relic.wave.37",
+      "aliases": [
+        "overlord"
+      ],
+      "words": [
+        "nazarick",
+        "ainz",
+        "sorcerer king",
+        "floor guardian"
+      ]
+    },
+    {
+      "id": "konosuba",
+      "name": "KonoSuba",
+      "colour": "#E86A5A",
+      "theme": "relic.wave.42",
+      "aliases": [
+        "konosuba"
+      ],
+      "words": [
+        "megumin",
+        "kazuma"
+      ]
+    },
+    {
+      "id": "mushoku_tensei",
+      "name": "Mushoku Tensei",
+      "colour": "#58B878",
+      "theme": "relic.wave.41",
+      "aliases": [
+        "mushoku tensei"
+      ],
+      "words": [
+        "rudeus",
+        "roxy",
+        "eris",
+        "paul greyrat"
+      ]
+    },
+    {
+      "id": "eminence_in_shadow",
+      "name": "The Eminence in Shadow",
+      "colour": "#3A4A8A",
+      "theme": "relic.wave.43",
+      "aliases": [
+        "eminence in shadow"
+      ],
+      "words": [
+        "cid kagenou",
+        "shadow garden",
+        "i am atomic"
+      ]
+    },
+    {
+      "id": "tower_of_god",
+      "name": "Tower of God",
+      "colour": "#58A8D8",
+      "theme": "relic.wave.44",
+      "aliases": [
+        "tower of god"
+      ],
+      "words": [
+        "shinsu",
+        "twenty-fifth bam"
+      ]
+    },
+    {
+      "id": "fullmetal_alchemist",
+      "name": "Fullmetal Alchemist",
+      "colour": "#C8B070",
+      "theme": "magic.REINFORCEMENT",
+      "aliases": [
+        "fullmetal alchemist"
+      ],
+      "words": [
+        "automail",
+        "philosopher's stone",
+        "transmutation circle",
+        "alchemist",
+        "equivalent exchange"
+      ]
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "colour": "#8A2A2A",
+      "theme": "relic.element.blood",
+      "aliases": [
+        "berserk"
+      ],
+      "words": [
+        "behelit",
+        "band of the hawk",
+        "berserker armour",
+        "dragonslayer",
+        "guts"
+      ]
+    },
+    {
+      "id": "sao_log_horizon",
+      "name": "Sword Art Online and Log Horizon",
+      "colour": "#58C8E8",
+      "theme": "relic.wave.46",
+      "aliases": [
+        "sword art online",
+        "log horizon"
+      ],
+      "words": [
+        "aincrad",
+        "kirito",
+        "asuna",
+        "elder tale",
+        "sword skill"
+      ]
+    },
+    {
+      "id": "jujutsu_kaisen",
+      "name": "Jujutsu Kaisen",
+      "colour": "#5A5AE8",
+      "theme": "relic.wave.34",
+      "aliases": [
+        "jujutsu kaisen"
+      ],
+      "words": [
+        "cursed energy",
+        "black flash",
+        "domain expansion",
+        "sukuna",
+        "gojo"
+      ]
+    },
+    {
+      "id": "frieren",
+      "name": "Frieren: Beyond Journey's End",
+      "colour": "#A8D8E8",
+      "theme": "relic.wave.38",
+      "aliases": [
+        "frieren"
+      ],
+      "words": [
+        "zoltraak",
+        "mana suppression",
+        "demon king's army"
+      ]
+    },
+    {
+      "id": "delicious_in_dungeon",
+      "name": "Delicious in Dungeon",
+      "colour": "#E8A858",
+      "theme": "relic.wave.39",
+      "aliases": [
+        "delicious in dungeon",
+        "dungeon meshi"
+      ],
+      "words": [
+        "laios",
+        "marcille",
+        "senshi",
+        "dungeon cooking",
+        "walking mushroom"
+      ]
+    },
+    {
+      "id": "made_in_abyss",
+      "name": "Made in Abyss",
+      "colour": "#D88A3A",
+      "theme": "relic.wave.32",
+      "aliases": [
+        "made in abyss"
+      ],
+      "words": [
+        "riko",
+        "reg",
+        "nanachi",
+        "white whistle",
+        "curse of the abyss"
+      ]
+    },
+    {
+      "id": "tomb_raider_king",
+      "name": "Tomb Raider King",
+      "colour": "#C8A84A",
+      "theme": "relic.wave.33",
+      "aliases": [
+        "tomb raider king"
+      ],
+      "words": [
+        "tomb raider"
+      ]
+    },
+    {
+      "id": "yu_gi_oh",
+      "name": "Yu-Gi-Oh!",
+      "colour": "#E8C84A",
+      "theme": "relic.element.dream",
+      "aliases": [
+        "yu-gi-oh",
+        "yugioh"
+      ],
+      "words": [
+        "duel disk",
+        "millennium puzzle",
+        "millennium item",
+        "duelist",
+        "heart of the cards"
+      ]
+    },
+    {
+      "id": "naruto",
+      "name": "Naruto",
+      "colour": "#F08A2A",
+      "theme": "magic.WIND",
+      "aliases": [
+        "naruto"
+      ],
+      "words": [
+        "chakra",
+        "sharingan",
+        "shadow clone",
+        "akatsuki",
+        "hokage"
+      ]
+    },
+    {
+      "id": "bleach",
+      "name": "Bleach",
+      "colour": "#E8E8F0",
+      "theme": "relic.element.soul",
+      "aliases": [
+        "bleach"
+      ],
+      "words": [
+        "zanpakuto",
+        "bankai",
+        "soul reaper",
+        "reiatsu"
+      ]
+    },
+    {
+      "id": "one_piece",
+      "name": "One Piece",
+      "colour": "#E85A4A",
+      "theme": "relic.element.water",
+      "aliases": [
+        "one piece"
+      ],
+      "words": [
+        "devil fruit",
+        "haki",
+        "straw hat",
+        "grand line"
+      ]
+    },
+    {
+      "id": "dragon_ball",
+      "name": "Dragon Ball",
+      "colour": "#F0B83A",
+      "theme": "magic.EXPLOSION",
+      "aliases": [
+        "dragon ball"
+      ],
+      "words": [
+        "saiyan",
+        "kamehameha",
+        "super saiyan",
+        "zenkai"
+      ]
+    },
+    {
+      "id": "hunter_x_hunter",
+      "name": "Hunter x Hunter",
+      "colour": "#58B858",
+      "theme": "relic.element.nature",
+      "aliases": [
+        "hunter x hunter",
+        "hunter × hunter"
+      ],
+      "words": [
+        "nen",
+        "hatsu",
+        "gon freecss",
+        "killua",
+        "hunter license"
+      ]
+    },
+    {
+      "id": "jojo",
+      "name": "JoJo's Bizarre Adventure",
+      "colour": "#C84AA8",
+      "theme": "relic.element.time",
+      "aliases": [
+        "jojo"
+      ],
+      "words": [
+        "stand user",
+        "gold experience",
+        "the world",
+        "stand rush"
+      ]
+    },
+    {
+      "id": "exiled_heavy_knight",
+      "name": "The Exiled Heavy Knight Knows How to Game the System",
+      "colour": "#8A9AA8",
+      "theme": "relic.element.metal",
+      "aliases": [
+        "exiled heavy knight"
+      ],
+      "words": [
+        "heavy knight",
+        "game the system"
+      ]
+    }
+  ],
+  "engravings": [
+    {
+      "id": "fr_grimoire_surge",
+      "franchise": "black_clover",
+      "name": "Grimoire Surge",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_refund",
+          "pct": 0.012,
+          "cd": 100
+        },
+        {
+          "kind": "spell_power",
+          "pct": 0.05,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_anti_magic_edge",
+      "franchise": "black_clover",
+      "name": "Anti-Magic Edge",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "anti_ward",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_wizard_kings_reserve",
+      "franchise": "black_clover",
+      "name": "Wizard King's Reserve",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "mana_trickle",
+          "pct": 0.004
+        }
+      ]
+    },
+    {
+      "id": "fr_great_sage_insight",
+      "franchise": "tensura",
+      "name": "Great Sage's Insight",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "first_strike",
+          "pct": 0.07,
+          "window": 200
+        }
+      ]
+    },
+    {
+      "id": "fr_predator_harvest",
+      "franchise": "tensura",
+      "name": "Predator's Harvest",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_heal",
+          "heal": 1.5,
+          "cd": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_magoi_overflow",
+      "franchise": "magi",
+      "name": "Magoi Overflow",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_refund",
+          "pct": 0.01,
+          "cd": 120
+        }
+      ]
+    },
+    {
+      "id": "fr_rukh_wings",
+      "franchise": "magi",
+      "name": "Wings of the Rukh",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.05,
+          "cd": 400
+        }
+      ]
+    },
+    {
+      "id": "fr_solomons_wisdom",
+      "franchise": "magi",
+      "name": "Solomon's Wisdom",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_power",
+          "pct": 0.06,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_shadow_extraction",
+      "franchise": "solo_leveling",
+      "name": "Shadow Extraction",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_ally",
+          "chance": 0.05,
+          "cd": 900,
+          "life": 400,
+          "entity": "minecraft:skeleton"
+        }
+      ]
+    },
+    {
+      "id": "fr_rank_breaker",
+      "franchise": "solo_leveling",
+      "name": "Rank Breaker",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "target_big",
+          "pct": 0.07
+        }
+      ]
+    },
+    {
+      "id": "fr_falna",
+      "franchise": "danmachi",
+      "name": "Falna",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_stacks",
+          "pct": 0.015,
+          "max": 5,
+          "decay": 1200
+        }
+      ]
+    },
+    {
+      "id": "fr_argonaut",
+      "franchise": "danmachi",
+      "name": "Argonaut",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "charge_hit",
+          "hits": 6,
+          "pct": 0.1
+        }
+      ]
+    },
+    {
+      "id": "fr_guild_bond",
+      "franchise": "fairy_tail",
+      "name": "Guild Bond",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ally_regen",
+          "radius": 8,
+          "interval": 40,
+          "dur": 80
+        }
+      ]
+    },
+    {
+      "id": "fr_dragon_force",
+      "franchise": "fairy_tail",
+      "name": "Dragon Force",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "self_wounded",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_celestial_contract",
+      "franchise": "fairy_tail",
+      "name": "Celestial Contract",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_refund",
+          "pct": 0.008,
+          "cd": 140
+        }
+      ]
+    },
+    {
+      "id": "fr_vassal_bond",
+      "franchise": "shield_hero",
+      "name": "Vassal Bond",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "shield_guard",
+          "pct": 0.06
+        }
+      ]
+    },
+    {
+      "id": "fr_tortoise_ward",
+      "franchise": "shield_hero",
+      "name": "Spirit Tortoise Ward",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "magic",
+          "pct": 0.06
+        }
+      ]
+    },
+    {
+      "id": "fr_waves_hunter",
+      "franchise": "shield_hero",
+      "name": "Waves Hunter",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "target_big",
+          "pct": 0.07
+        }
+      ]
+    },
+    {
+      "id": "fr_full_counter",
+      "franchise": "seven_deadly_sins",
+      "name": "Full Counter",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "counter",
+          "pct": 0.12,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_sunshine",
+      "franchise": "seven_deadly_sins",
+      "name": "Sunshine",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "day",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_natural_twenty",
+      "franchise": "dnd",
+      "name": "Natural Twenty",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "chance_roll",
+          "chance": 0.05,
+          "cd": 100,
+          "bonus": 0.15
+        }
+      ]
+    },
+    {
+      "id": "fr_sneak_attack",
+      "franchise": "dnd",
+      "name": "Sneak Attack",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "sneaking",
+          "pct": 0.1
+        }
+      ]
+    },
+    {
+      "id": "fr_saving_throw",
+      "franchise": "dnd",
+      "name": "Saving Throw",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.05,
+          "cd": 400
+        }
+      ]
+    },
+    {
+      "id": "fr_return_by_death",
+      "franchise": "rezero",
+      "name": "Return by Death",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "second_wind",
+          "threshold": 0.25,
+          "heal": 2.0,
+          "cd": 3600
+        }
+      ]
+    },
+    {
+      "id": "fr_unseen_hand",
+      "franchise": "rezero",
+      "name": "Unseen Hand",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "debuff",
+          "effect": "minecraft:slowness",
+          "chance": 0.12,
+          "dur": 40,
+          "cd": 100
+        }
+      ]
+    },
+    {
+      "id": "fr_noble_phantasm",
+      "franchise": "fate",
+      "name": "Noble Phantasm",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "charge_hit",
+          "hits": 8,
+          "pct": 0.12
+        }
+      ]
+    },
+    {
+      "id": "fr_command_seal",
+      "franchise": "fate",
+      "name": "Command Seal",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_refund",
+          "pct": 0.015,
+          "cd": 600
+        }
+      ]
+    },
+    {
+      "id": "fr_aura_of_despair",
+      "franchise": "overlord",
+      "name": "Aura of Despair",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "debuff",
+          "effect": "minecraft:weakness",
+          "chance": 0.15,
+          "dur": 60,
+          "cd": 100
+        }
+      ]
+    },
+    {
+      "id": "fr_supreme_magic",
+      "franchise": "overlord",
+      "name": "Supreme Magic",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_power",
+          "pct": 0.06,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_explosion",
+      "franchise": "konosuba",
+      "name": "Explosion!",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "charge_hit",
+          "hits": 10,
+          "pct": 0.15
+        }
+      ]
+    },
+    {
+      "id": "fr_steal_skill",
+      "franchise": "konosuba",
+      "name": "Steal",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "lifesteal",
+          "pct": 0.04,
+          "cap": 1.5,
+          "cd": 20
+        }
+      ]
+    },
+    {
+      "id": "fr_unrivalled_mage",
+      "franchise": "mushoku_tensei",
+      "name": "Unrivalled Mage",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_power",
+          "pct": 0.06,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_swordplay_rhythm",
+      "franchise": "mushoku_tensei",
+      "name": "Swordplay Rhythm",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "combo",
+          "pct": 0.02,
+          "max": 4,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_night_veil",
+      "franchise": "eminence_in_shadow",
+      "name": "Cloak of Night",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "night",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_shadow_garden",
+      "franchise": "eminence_in_shadow",
+      "name": "Shadow Garden",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.04,
+          "cd": 400
+        }
+      ]
+    },
+    {
+      "id": "fr_shinsu_flow",
+      "franchise": "tower_of_god",
+      "name": "Shinsu Flow",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "mana_trickle",
+          "pct": 0.004
+        }
+      ]
+    },
+    {
+      "id": "fr_floor_climber",
+      "franchise": "tower_of_god",
+      "name": "Floor Climber",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_haste",
+          "dur": 80,
+          "cd": 200
+        }
+      ]
+    },
+    {
+      "id": "fr_equivalent_exchange",
+      "franchise": "fullmetal_alchemist",
+      "name": "Equivalent Exchange",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "blood_price",
+          "cost": 1.0,
+          "min_hp": 8.0,
+          "pct": 0.12
+        }
+      ]
+    },
+    {
+      "id": "fr_automail_plating",
+      "franchise": "fullmetal_alchemist",
+      "name": "Automail Plating",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "projectile",
+          "pct": 0.06
+        }
+      ]
+    },
+    {
+      "id": "fr_dragonslayer_weight",
+      "franchise": "berserk",
+      "name": "Dragonslayer's Weight",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "target_big",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_strugglers_will",
+      "franchise": "berserk",
+      "name": "Struggler's Will",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "second_wind",
+          "threshold": 0.2,
+          "heal": 2.0,
+          "cd": 3600
+        }
+      ]
+    },
+    {
+      "id": "fr_sword_skill",
+      "franchise": "sao_log_horizon",
+      "name": "Sword Skill",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "combo",
+          "pct": 0.025,
+          "max": 4,
+          "window": 50
+        }
+      ]
+    },
+    {
+      "id": "fr_raid_chant",
+      "franchise": "sao_log_horizon",
+      "name": "Raid Chant",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_power",
+          "pct": 0.05,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_black_flash",
+      "franchise": "jujutsu_kaisen",
+      "name": "Black Flash",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "chance_roll",
+          "chance": 0.04,
+          "cd": 120,
+          "bonus": 0.15
+        }
+      ]
+    },
+    {
+      "id": "fr_domain_pressure",
+      "franchise": "jujutsu_kaisen",
+      "name": "Domain Pressure",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "debuff",
+          "effect": "minecraft:slowness",
+          "chance": 0.1,
+          "dur": 40,
+          "cd": 120
+        }
+      ]
+    },
+    {
+      "id": "fr_zoltraak",
+      "franchise": "frieren",
+      "name": "Zoltraak",
+      "scope": "held",
+      "effects": [
+        {
+          "kind": "spell_power",
+          "pct": 0.06,
+          "window": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_mana_suppression",
+      "franchise": "frieren",
+      "name": "Mana Suppression",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "magic",
+          "pct": 0.05
+        }
+      ]
+    },
+    {
+      "id": "fr_cooks_harvest",
+      "franchise": "delicious_in_dungeon",
+      "name": "Cook's Harvest",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_heal",
+          "heal": 1.5,
+          "cd": 60
+        }
+      ]
+    },
+    {
+      "id": "fr_hearty_party",
+      "franchise": "delicious_in_dungeon",
+      "name": "Hearty Party",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ally_regen",
+          "radius": 6,
+          "interval": 60,
+          "dur": 80
+        }
+      ]
+    },
+    {
+      "id": "fr_delvers_resolve",
+      "franchise": "made_in_abyss",
+      "name": "Delver's Resolve",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "fall",
+          "pct": 0.2
+        }
+      ]
+    },
+    {
+      "id": "fr_hunters_whistle",
+      "franchise": "made_in_abyss",
+      "name": "Hunter's Whistle",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "target_big",
+          "pct": 0.07
+        }
+      ]
+    },
+    {
+      "id": "fr_tomb_raiders_eye",
+      "franchise": "tomb_raider_king",
+      "name": "Tomb Raider's Eye",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "chance_roll",
+          "chance": 0.05,
+          "cd": 120,
+          "bonus": 0.15
+        }
+      ]
+    },
+    {
+      "id": "fr_relic_hunter",
+      "franchise": "tomb_raider_king",
+      "name": "Relic Hunter",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "first_strike",
+          "pct": 0.07,
+          "window": 200
+        }
+      ]
+    },
+    {
+      "id": "fr_heart_of_the_cards",
+      "franchise": "yu_gi_oh",
+      "name": "Heart of the Cards",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "chance_roll",
+          "chance": 0.07,
+          "cd": 100,
+          "bonus": 0.15,
+          "heal": 1.0,
+          "haste": 60,
+          "mana": 0.01
+        }
+      ]
+    },
+    {
+      "id": "fr_trap_card",
+      "franchise": "yu_gi_oh",
+      "name": "Trap Card",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.05,
+          "cd": 300
+        }
+      ]
+    },
+    {
+      "id": "fr_chakra_control",
+      "franchise": "naruto",
+      "name": "Chakra Control",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "mana_trickle",
+          "pct": 0.004
+        }
+      ]
+    },
+    {
+      "id": "fr_substitution_jutsu",
+      "franchise": "naruto",
+      "name": "Substitution Jutsu",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.06,
+          "cd": 600
+        }
+      ]
+    },
+    {
+      "id": "fr_bankai",
+      "franchise": "bleach",
+      "name": "Bankai",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "charge_hit",
+          "hits": 7,
+          "pct": 0.12
+        }
+      ]
+    },
+    {
+      "id": "fr_soul_burial",
+      "franchise": "bleach",
+      "name": "Soul Burial",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "hit_bonus",
+          "cond": "undead",
+          "pct": 0.12
+        }
+      ]
+    },
+    {
+      "id": "fr_armament_haki",
+      "franchise": "one_piece",
+      "name": "Armament Haki",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "melee",
+          "pct": 0.06
+        }
+      ]
+    },
+    {
+      "id": "fr_observation_haki",
+      "franchise": "one_piece",
+      "name": "Observation Haki",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "dodge",
+          "chance": 0.05,
+          "cd": 400
+        }
+      ]
+    },
+    {
+      "id": "fr_zenkai",
+      "franchise": "dragon_ball",
+      "name": "Zenkai",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "counter",
+          "pct": 0.1,
+          "window": 100
+        }
+      ]
+    },
+    {
+      "id": "fr_ki_control",
+      "franchise": "dragon_ball",
+      "name": "Ki Control",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "mana_trickle",
+          "pct": 0.004
+        }
+      ]
+    },
+    {
+      "id": "fr_nen_vow",
+      "franchise": "hunter_x_hunter",
+      "name": "Nen Vow",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "blood_price",
+          "cost": 1.0,
+          "min_hp": 10.0,
+          "pct": 0.1
+        }
+      ]
+    },
+    {
+      "id": "fr_gyo",
+      "franchise": "hunter_x_hunter",
+      "name": "Gyo",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "anti_ward",
+          "pct": 0.08
+        }
+      ]
+    },
+    {
+      "id": "fr_stand_rush",
+      "franchise": "jojo",
+      "name": "Stand Rush",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "combo",
+          "pct": 0.03,
+          "max": 4,
+          "window": 40
+        }
+      ]
+    },
+    {
+      "id": "fr_life_giver",
+      "franchise": "jojo",
+      "name": "Life Giver",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "lifesteal",
+          "pct": 0.03,
+          "cap": 1.5,
+          "cd": 20
+        }
+      ]
+    },
+    {
+      "id": "fr_heavy_plate_discipline",
+      "franchise": "exiled_heavy_knight",
+      "name": "Heavy Plate Discipline",
+      "scope": "any",
+      "effects": [
+        {
+          "kind": "ward",
+          "tag": "melee",
+          "pct": 0.07
+        }
+      ]
+    },
+    {
+      "id": "fr_game_the_system",
+      "franchise": "exiled_heavy_knight",
+      "name": "Game the System",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "first_strike",
+          "pct": 0.07,
+          "window": 200
+        }
+      ]
+    }
+  ]
+}
