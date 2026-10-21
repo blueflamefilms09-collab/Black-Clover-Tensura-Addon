@@ -15287,5 +15287,6 @@
   "music.nusmp.track.rift": "Seam of the World",
   "block.nusmp.weapon_rack": "Weapon Rack",
   "nusmp.weapon_rack.decor": "These are only for show.",
-  "nusmp.demon_slayer_vu.tooltip": "The clover, the rings and the drifting shards answer the Resonance; in Black Meteorite the blade breaks apart."
+  "nusmp.demon_slayer_vu.tooltip": "The clover, the rings and the drifting shards answer the Resonance; in Black Meteorite the blade breaks apart.",
+  "tooltip.nusmp.djinn_weapon.dark_look": "Its dark form is upgraded: energy veins run up the weapon and its own pieces orbit it (client option visual.upgrade)."
 }

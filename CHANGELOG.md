@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.109.0] — The 36 dark Djinn weapons upgraded
+
+### NEW
+- **Dark Djinn weapons (visual upgrade), all 36:** each keeps every part of its old model and gains the horns, wings, tail and halo of its Djinn, an affinity pack and a "dark rig" (grip bands, pommel thorns, an eye gem, a name plate with the Djinn's name engraved and lit, rune rings, a chain or thorn collar); a new 1024 px skin with a second lit glow map, six orbiting pieces of its own, a swing trail, seven ambient particle layers, and a reduced-detail model beyond 12 blocks. `docs/visual_upgrade/djinn_dark_weapons.md`.
+- The last two effect files that used coloured vanilla dust (`UpgradeFxClient`, `UpgradeActFx`) now use the mod's own particles.
+
+### REPLACED
+- How the 36 dark Djinn weapons are drawn in hand, on the ground and in frames (old meshes and skins stay on disk; `visual.upgrade=false` brings them back).
+
+### KEPT
+- Every id, stat, act, engraving, Better Combat file, the 36 light weapons, the inventory icons, Time Magic.
+
+### Honest notes
+- Nothing has been run in the game. Measured proxies: 5.0x to 10.2x the quads (5.0x for every weapon at least), 9.4x to 29.5x the painted texels; the combined score is 6.7 to 10.7 and is not a measure of how it looks. Orbit sizes and the placement of the added parts (placed from a measured frame, not by hand) are untuned.
+- The jar grows by about 75 MB of textures for this slice.
+
 ## [1.108.0] — Genesis Demon-Slayer upgraded, smaller textures, a config file clash fixed
 
 ### NEW
