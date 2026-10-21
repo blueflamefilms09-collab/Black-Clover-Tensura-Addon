@@ -86,7 +86,7 @@ public final class GodMeleeBRender {
         // ---- the energy veins: the second emissive map, brightness = a wave running up the weapon
         if (!glowQuads.isEmpty()) {
             UpgradeMath.waveTable(time, s.veinSpeed(), s.veinWavelength(), s.veinBase(), s.veinPeak(), s.axisY0(), s.axisY1(), TABLE);
-            emitWave(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(e.veinTexture)), glowQuads, s.axisY0(), s.axisY1());
+            emitWave(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(e.veinTexture)), glowQuads, s.axisY0(), s.axisY1());
         }
         // ---- the halo shell and the swing ghosts use the level-of-detail glow quads
         WeaponRenderer.Mesh lodMesh = drawn;
@@ -99,7 +99,7 @@ public final class GodMeleeBRender {
             int a = UpgradeMath.haloAlpha(s.haloAlpha(), time, s.haloBreath(), s.haloSpeed() * 7f);
             pose.pushPose();
             pose.scale(sc, 1f, sc);
-            WeaponRenderer.emit(pose.last(), buffers.getBuffer(RenderType.entityTranslucentEmissive(lodMesh.glowTex)), lodMesh.layers[WeaponRenderer.GLOW], a << 24 | s.coreRgb(), FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            WeaponRenderer.emit(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(lodMesh.glowTex)), lodMesh.layers[WeaponRenderer.GLOW], a << 24 | s.coreRgb(), FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
             pose.popPose();
             swing(s, ctx, pose, buffers, lodMesh, time);
         }
@@ -129,7 +129,7 @@ public final class GodMeleeBRender {
         PoseStack.Pose p = pose.last();
         WeaponRenderer.emit(p, buffers.getBuffer(RenderType.entityCutout(mesh.tex)), mesh.layers[WeaponRenderer.BODY], 0xFFFFFFFF, light, overlay);
         if (mesh.glowTex != null && !mesh.layers[WeaponRenderer.GLOW].isEmpty()) {
-            WeaponRenderer.emit(p, buffers.getBuffer(RenderType.eyes(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], 0xFFFFFFFF, FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            WeaponRenderer.emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], 0xFFFFFFFF, FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
         }
         pose.popPose();
         return true;
@@ -168,7 +168,7 @@ public final class GodMeleeBRender {
             q.pose().rotateZ(rad);
             q.normal().rotateZ(rad);
             pose.translate(0f, -pivot, 0f);
-            WeaponRenderer.emit(pose.last(), buffers.getBuffer(RenderType.entityTranslucentEmissive(lodMesh.glowTex)), lodMesh.layers[WeaponRenderer.GLOW], a << 24 | t.rgb(), FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            WeaponRenderer.emit(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(lodMesh.glowTex)), lodMesh.layers[WeaponRenderer.GLOW], a << 24 | t.rgb(), FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
             pose.popPose();
         }
     }
@@ -180,7 +180,7 @@ public final class GodMeleeBRender {
         if (om == null) return;
         for (int pass = 0; pass < 2; pass++) {
             if (pass == 1 && (om.glowTex == null || om.layers[WeaponRenderer.GLOW].isEmpty())) break;
-            VertexConsumer vc = pass == 0 ? buffers.getBuffer(RenderType.entityCutout(om.tex)) : buffers.getBuffer(RenderType.eyes(om.glowTex));
+            VertexConsumer vc = pass == 0 ? buffers.getBuffer(RenderType.entityCutout(om.tex)) : buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(om.glowTex));
             List<float[]> quads = om.layers[pass == 0 ? WeaponRenderer.BODY : WeaponRenderer.GLOW];
             for (UpgradeSpec.Orbiter ob : s.orbiters()) {
                 for (int i = 0; i < ob.count(); i++) {

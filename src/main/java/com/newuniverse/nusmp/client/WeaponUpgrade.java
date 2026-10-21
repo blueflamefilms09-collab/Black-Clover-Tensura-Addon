@@ -226,21 +226,21 @@ final class WeaponUpgrade {
                 pose.translate(-o.px, -o.py, -o.pz);
                 emitQuads(pose.last(), body, o.verts, 0xFFFFFFFF, light, overlay);
                 if (o.glow && mesh.glowTex != null && q != VfxQuality.LOW) {
-                    emitQuads(pose.last(), buffers.getBuffer(RenderType.eyes(mesh.glowTex)), o.verts, 0xFF000000 | g << 16 | g << 8 | g, 0xF000F0, OverlayTexture.NO_OVERLAY);
+                    emitQuads(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(mesh.glowTex)), o.verts, 0xFF000000 | g << 16 | g << 8 | g, 0xF000F0, OverlayTexture.NO_OVERLAY);
                 }
                 pose.popPose();
             }
         }
         if (!UpgradeConfig.extraPasses() || mesh.glowTex == null || mesh.layers[WeaponRenderer.GLOW].isEmpty()) return;
         if (s.idles("flow_veins") && d.veinsTex != null) {
-            emitWave(pose.last(), buffers.getBuffer(RenderType.eyes(d.veinsTex)), mesh.layers[WeaponRenderer.GLOW], s, time);
+            emitWave(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(d.veinsTex)), mesh.layers[WeaponRenderer.GLOW], s, time);
         }
         if (s.idles("halo_breath") && q != VfxQuality.LOW && q != VfxQuality.MEDIUM) {
             pose.pushPose();
             pose.scale(s.haloScale, 1f, s.haloScale);
             float t = 0.5f + 0.5f * sin(time * s.haloSpeed * 2f);
             int a = Math.round(s.haloAlphaMin + (s.haloAlphaMax - s.haloAlphaMin) * t);
-            emitQuads(pose.last(), buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], a << 24 | (s.haloRgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emitQuads(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], a << 24 | (s.haloRgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
             pose.popPose();
         }
     }

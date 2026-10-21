@@ -44,7 +44,7 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
             float time = entity.tickCount + partialTick;
             float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, 1.0f);
             int r = VariantRules.channel(mesh.glowRgb >> 16 & 255, k), g = VariantRules.channel(mesh.glowRgb >> 8 & 255, k), b = VariantRules.channel(mesh.glowRgb & 255, k);
-            emit(p, buffers.getBuffer(RenderType.eyes(CarriageMesh.GLOW)), mesh.glow, 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(CarriageMesh.GLOW)), mesh.glow, 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
         }
         pose.popPose();
         super.render(entity, entityYaw, partialTick, pose, buffers, light);

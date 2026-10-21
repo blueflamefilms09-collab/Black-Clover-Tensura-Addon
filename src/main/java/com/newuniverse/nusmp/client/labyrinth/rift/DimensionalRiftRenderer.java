@@ -71,7 +71,7 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
         // (3) the glow behind everything
         pose.pushPose();
         pose.translate(0, h * 0.5, -0.02);
-        glow(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), 1.2f * open, r, g, b, 0.34f * dim);
+        glow(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), 1.2f * open, r, g, b, 0.34f * dim);
         pose.popPose();
 
         // (1) the window onto another place
@@ -80,7 +80,7 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
         RiftParallax.render(pose, buffers, TearGeometry.lod(camDist2), w * 0.94f, h * 0.94f, 0.05f * h, camAngle, (float) camRel, t, r, g, b, 0.5f * open * dim);       // 1.107.0: two masked layers that slide with the viewing angle
 
         // (2) the rim and the arcs
-        VertexConsumer bolt = buffers.getBuffer(RenderType.lightning());
+        VertexConsumer bolt = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.lightning());
         Matrix4f m = pose.last().pose();
         rim(bolt, m, w, h, 0.05f * h, 0.045f, r, g, b, 0.9f * dim);
         RandomSource rnd = RandomSource.create(be.seed() * 31L + (long) (t / 3f));

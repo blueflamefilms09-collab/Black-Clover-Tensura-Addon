@@ -50,13 +50,13 @@ public final class ZenonSpatialRingRenderer implements WornRenderer {
         band(pose.last(), vc, c.light(), x0, x1, trim, main);
         pose.popPose();
 
-        vc = c.buffers().getBuffer(RenderType.entityTranslucentEmissive(RelicTextures.WHITE));
+        vc = c.buffers().getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(RelicTextures.WHITE));
         enter(pose, arm);
         WornDraw.diamond(pose.last(), vc, FULL, WornDraw.argb(glow, Math.min(1f, 0.6f + 0.2f * bright)), cx, WRIST_Y, -2.95f, 0.45f, 1.15f, 0.3f, 0f);
         pose.popPose();
         fragments(c, arm, vc, cx, spin, expand, bright, glow);
 
-        vc = c.buffers().getBuffer(RenderType.eyes(RelicTextures.WHITE));
+        vc = c.buffers().getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(RelicTextures.WHITE));
         rings(c, arm, vc, cx, spin, expand, bright, glow);
     }
 

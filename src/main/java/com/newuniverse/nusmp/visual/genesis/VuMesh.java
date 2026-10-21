@@ -111,6 +111,7 @@ public final class VuMesh {
                 default -> { }
             }
         }
+        VuCardLimits.clamp(m);                                                            // 1.110.0: no halo card taller than the weapon (docs/visual_upgrade/safe_additive.md)
         return m;
     }
 

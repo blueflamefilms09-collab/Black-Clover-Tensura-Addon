@@ -25,7 +25,7 @@ public final class AuraRender {
     /** 1.105.0: {@code RenderType.eyes} for a texture that is black under its transparent texels, the alpha-weighted additive type for one that carries a colour there (it would be a solid square otherwise); see {@link com.newuniverse.nusmp.client.AdditiveTypes}. */
     public static RenderType additive(ResourceLocation t) { return com.newuniverse.nusmp.client.AdditiveTypes.of(t); }
     public static RenderType translucent(ResourceLocation t) { return RenderType.entityTranslucent(t); }
-    public static RenderType emissive(ResourceLocation t) { return RenderType.entityTranslucentEmissive(t); }
+    public static RenderType emissive(ResourceLocation t) { return com.newuniverse.nusmp.client.SafeAdditive.emissive(t); }
     public static RenderType cutout(ResourceLocation t) { return RenderType.entityCutoutNoCull(t); }
 
     /** ARGB with the alpha scaled by k (0..1). */

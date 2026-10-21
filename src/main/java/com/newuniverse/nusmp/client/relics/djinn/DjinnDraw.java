@@ -40,7 +40,7 @@ final class DjinnDraw {
         }
         if (glow > 0.02f && alpha > 0.02f && m.glow.length > 0) {
             int v = (int) (255 * Math.min(1f, glow * alpha));
-            emit(buffers.getBuffer(RenderType.eyes(DjinnMeshes.glowSkin(d, m.kind))), pose.last(), m.glow, FULL, v, v, v, 255);
+            emit(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(DjinnMeshes.glowSkin(d, m.kind))), pose.last(), m.glow, FULL, v, v, v, 255);
         }
     }
 
@@ -53,7 +53,7 @@ final class DjinnDraw {
         DjinnMeshes.Data m = DjinnMeshes.get(d, piece, dark);
         if (m.glow.length == 0) return;
         int r = (int) (((rgb >> 16) & 255) * strength), g = (int) (((rgb >> 8) & 255) * strength), b = (int) ((rgb & 255) * strength);
-        emit(buffers.getBuffer(RenderType.eyes(DjinnMeshes.glowSkin(d, m.kind))), pose.last(), m.glow, FULL, Math.min(255, r), Math.min(255, g), Math.min(255, b), 255);
+        emit(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(DjinnMeshes.glowSkin(d, m.kind))), pose.last(), m.glow, FULL, Math.min(255, r), Math.min(255, g), Math.min(255, b), 255);
     }
 
     private static void emit(VertexConsumer vc, PoseStack.Pose last, float[] q, int light, int r, int g, int b, int a) {

@@ -129,7 +129,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private record Ctx(PoseStack pose, MultiBufferSource buffers, int light, float now, float k, float swing, boolean lib) {
         VertexConsumer solid(ResourceLocation t) { return buffers.getBuffer(RenderType.entityCutoutNoCull(t)); }
         VertexConsumer clear(ResourceLocation t) { return buffers.getBuffer(RenderType.entityTranslucent(t)); }
-        VertexConsumer glow(ResourceLocation t) { return buffers.getBuffer(RenderType.eyes(t)); }
+        VertexConsumer glow(ResourceLocation t) { return buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(t)); }
         int alpha(float a) { return (int) (255 * Mth.clamp(a * k, 0f, 1f)); }
     }
 

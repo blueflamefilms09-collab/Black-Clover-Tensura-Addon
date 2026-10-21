@@ -38,7 +38,7 @@ public final class RealityShards {
     public static void render(PoseStack pose, MultiBufferSource buffers, long seed, float tick, float cx, float cy, float cz, float rx, float ry, float r, float g, float b, float open, double distSq) {
         int n = ShardMath.count(TearGeometry.lod(distSq));
         if (n == 0 || open <= 0.05f) return;
-        VertexConsumer vc = buffers.getBuffer(RenderType.lightning());
+        VertexConsumer vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.lightning());
         Matrix4f m = pose.last().pose();
         for (int i = 0; i < n; i++) {
             if (!ShardMath.state(seed, i, tick, rx, ry, S)) continue;

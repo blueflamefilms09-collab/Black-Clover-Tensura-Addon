@@ -53,7 +53,7 @@ public final class ArmorGlow {
             default -> { return; }
         }
         int v = Math.min(255, Math.max(0, (int) (255f * k)));
-        model.renderToBuffer(pose, buffers.getBuffer(RenderType.eyes(glowTex)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xFF000000 | v << 16 | v << 8 | v);
+        model.renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(glowTex)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xFF000000 | v << 16 | v << 8 | v);
     }
 
     /** Forgets the baked model (a resource reload re-bakes the layers). */

@@ -139,7 +139,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
             float v = Math.min(1f, k * (0.75f + 0.25f * Mth.sin(now * 0.2f) + 0.5f * s.pulse(gt, partial)));
             if (v > 0.02f) {
                 int rgb = DjinnLook.scale(dark ? DjinnLook.darkGlow(d.color(), d.glow()) : d.glow(), v);
-                m.renderToBuffer(pose, buffers.getBuffer(RenderType.eyes(DjinnMeshes.rune(d, dark))), DjinnDraw.FULL, OverlayTexture.NO_OVERLAY, 0xFF000000 | rgb);
+                m.renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(DjinnMeshes.rune(d, dark))), DjinnDraw.FULL, OverlayTexture.NO_OVERLAY, 0xFF000000 | rgb);
             }
             if (s.phase() >= 3 && body > 0.05f && NUShaders.zagredAura() != null) {
                 int aa = (int) (255 * Math.min(1f, body * (0.6f + 0.4f * s.pulse(gt, partial) + 0.25f * (s.phase() >= 4 ? 1f : 0f))));

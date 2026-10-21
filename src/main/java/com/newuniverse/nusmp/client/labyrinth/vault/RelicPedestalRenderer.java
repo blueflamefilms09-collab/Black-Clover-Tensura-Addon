@@ -53,8 +53,8 @@ public final class RelicPedestalRenderer implements BlockEntityRenderer<RelicPed
         // the glow: a camera-facing quad behind the item
         pose.pushPose();
         if (dispatcher != null && dispatcher.camera != null) pose.mulPose(dispatcher.camera.rotation());
-        glow(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), 0.55f, r, g, b, pulse);
-        glow(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), 0.28f, r, g, b, pulse * 0.8f);
+        glow(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), 0.55f, r, g, b, pulse);
+        glow(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), 0.28f, r, g, b, pulse * 0.8f);
         pose.popPose();
 
         // the relic itself

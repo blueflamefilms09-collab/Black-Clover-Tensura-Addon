@@ -157,6 +157,13 @@ def build(path=None):
     path = path or os.path.join(VU_TEX, "halo.png")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     Image.fromarray(sheet.astype(np.uint8), "RGBA").save(path, optimize=True)
+    if path == os.path.join(VU_TEX, "halo.png"):                       # 1.110.0: soft card edges, no solid card, no colour under alpha 0 (tools/safe_additive/scan_textures.py)
+        import sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "safe_additive"))
+        import scan_textures
+        problems, px = scan_textures.scan("entity/weapon_vu/halo.png")
+        if problems:
+            scan_textures.fix("entity/weapon_vu/halo.png", px, problems)
     return path
 
 

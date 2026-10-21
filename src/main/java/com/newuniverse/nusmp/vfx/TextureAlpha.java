@@ -42,7 +42,25 @@ public final class TextureAlpha {
         }
         if (transparent == (long) w * h) return Kind.EMPTY;
         if (transparent == 0) return cornersBright(w, h, argb) ? Kind.OPAQUE_BRIGHT_EDGE : Kind.OPAQUE;
-        return coloured > transparent * (double) COLOUR_SHARE ? Kind.COLOUR_UNDER_ALPHA : Kind.BLACK_UNDER_ALPHA;
+        if (coloured > transparent * (double) COLOUR_SHARE) return Kind.COLOUR_UNDER_ALPHA;
+        return straightAlpha(w, h, argb) ? Kind.COLOUR_UNDER_ALPHA : Kind.BLACK_UNDER_ALPHA;
+    }
+
+    /** 1.110.0: a texel is "straight" when its colour is brighter than its own alpha (a premultiplied texel never is). */
+    public static final int STRAIGHT_MARGIN = 48;
+    /** The share of the semi-transparent texels that are straight from which the texture is not premultiplied (a white card with a soft alpha: ONE, ONE would light it fully). */
+    public static final float STRAIGHT_SHARE = 0.25f;
+
+    /** True when most of the semi-transparent texels (alpha above {@link #TRANSPARENT_MAX_ALPHA}, below 255) carry a colour much brighter than their alpha. */
+    public static boolean straightAlpha(int w, int h, int[] argb) {
+        long semi = 0, straight = 0;
+        for (int i = 0, n = w * h; i < n; i++) {
+            int p = argb[i], a = p >>> 24;
+            if (a <= TRANSPARENT_MAX_ALPHA || a >= 255) continue;
+            semi++;
+            if (brightest(p) > a + STRAIGHT_MARGIN) straight++;
+        }
+        return semi > 0 && straight > semi * (double) STRAIGHT_SHARE;
     }
 
     /** True when the four corner patches (a sixteenth of the side, at least one texel) are all transparent (alpha at most {@code maxAlpha}). */

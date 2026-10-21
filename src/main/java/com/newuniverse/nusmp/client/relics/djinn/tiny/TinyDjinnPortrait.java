@@ -66,7 +66,7 @@ public final class TinyDjinnPortrait {
                 MultiBufferSource.BufferSource buffers = g.bufferSource();
                 GeoDraw.draw(ps, buffers.getBuffer(RenderType.entityTranslucent(rl(TinyDjinnAssets.texture(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
                         LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
-                GeoDraw.draw(ps, buffers.getBuffer(RenderType.eyes(rl(TinyDjinnAssets.glow(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
+                GeoDraw.draw(ps, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(rl(TinyDjinnAssets.glow(d, dark)))), head, clip, seconds, GeoDraw.Space.PROP,
                         LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xD0FFFFFF);
                 g.flush();
             } finally {

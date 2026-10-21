@@ -67,7 +67,7 @@ public class MirrorDoubleRenderer extends LivingEntityRenderer<MirrorDoubleEntit
             int alpha = (int) (60 + 50 * pulse);
             int color = (alpha << 24) | 0xB89CFF;
             ResourceLocation tex = getTextureLocation(e);
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(tex)), 0xF000F0, OverlayTexture.NO_OVERLAY, color);
+            getParentModel().renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(tex)), 0xF000F0, OverlayTexture.NO_OVERLAY, color);
         }
     }
 }

@@ -188,7 +188,7 @@ public final class WornLibDraw {
         if (used == 0) return;
 
         // ---- pass 2: emissive parts and the procedural effects
-        vc = buffers.getBuffer(RenderType.eyes(ATLAS));
+        vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ATLAS));
         float hot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
         boolean shell = false;
         for (int u = 0; u < used; u++) {
@@ -212,7 +212,7 @@ public final class WornLibDraw {
 
         // ---- pass 3: the rim glow and the shimmer
         if (!shell) return;
-        vc = buffers.getBuffer(RenderType.entityTranslucentEmissive(SHIMMER));
+        vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(SHIMMER));
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             WornFxPlan p = PLAN_OF[s.set];
@@ -260,7 +260,7 @@ public final class WornLibDraw {
             pose.popPose();
             solid(vc, s, light, age, 0f, false);
         }
-        vc = buffers.getBuffer(RenderType.eyes(ATLAS));
+        vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ATLAS));
         float hot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
         for (int u = 0; u < used; u++) if (SLOTS[u].mesh.emitQuads > 0) glow(vc, SLOTS[u], age, 0f, false, hot);
         Matrix4f at = pose.last().pose();                                                // where the object stands relative to the camera: the lod and additive distances of a held object
@@ -410,7 +410,7 @@ public final class WornLibDraw {
             Slot s = SLOTS[u];
             if (!s.mesh.custom()) continue;
             WornMesh m = far ? s.mesh.lod() : s.mesh;
-            if (m.glowTex != null && m.glowMapQuads > 0) glowMapPass(buffers.getBuffer(RenderType.eyes(tex(m.glowTex))), s, m, age, limb, crouching, hot);
+            if (m.glowTex != null && m.glowMapQuads > 0) glowMapPass(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(tex(m.glowTex))), s, m, age, limb, crouching, hot);
         }
         float litHot = 0.78f + 0.22f * (float) Math.sin(age * 0.14f);
         for (int u = 0; u < used; u++) {
@@ -419,20 +419,20 @@ public final class WornLibDraw {
             WornMesh m = far ? s.mesh.lod() : s.mesh;
             if (m.emitQuads <= 0) continue;
             float pulse = worn ? PLAN_OF[s.set].pulse() : 0f;
-            litPass(buffers.getBuffer(RenderType.eyes(tex(m.glowPath()))), s, m, age, limb, crouching, litHot * (1f + pulse * (float) Math.sin(age * 0.09f)));
+            litPass(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(tex(m.glowPath()))), s, m, age, limb, crouching, litHot * (1f + pulse * (float) Math.sin(age * 0.09f)));
         }
         if (!rich) return;
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             if (!s.mesh.custom()) continue;
             WornMesh m = far ? s.mesh.lod() : s.mesh;
-            if (m.starTex != null && m.starQuads > 0) starPass(buffers.getBuffer(RenderType.eyes(tex(m.starTex))), s, m, age, limb, crouching);
+            if (m.starTex != null && m.starQuads > 0) starPass(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(tex(m.starTex))), s, m, age, limb, crouching);
         }
         for (int u = 0; u < used; u++) {
             Slot s = SLOTS[u];
             if (!s.mesh.custom()) continue;
             WornMesh m = far ? s.mesh.lod() : s.mesh;
-            if (m.haloQuads > 0) haloPass(buffers.getBuffer(RenderType.eyes(FX)), s, m, age, limb, crouching);
+            if (m.haloQuads > 0) haloPass(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(FX)), s, m, age, limb, crouching);
         }
     }
 

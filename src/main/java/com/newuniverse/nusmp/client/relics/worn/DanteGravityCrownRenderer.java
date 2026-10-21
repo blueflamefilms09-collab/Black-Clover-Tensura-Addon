@@ -51,13 +51,13 @@ public final class DanteGravityCrownRenderer implements WornRenderer {
         pose.popPose();
         shards(c, head, vc, age, turn, radius, bright, main, glow, 0);
 
-        vc = c.buffers().getBuffer(RenderType.entityTranslucentEmissive(RelicTextures.WHITE));
+        vc = c.buffers().getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(RelicTextures.WHITE));
         enter(pose, head);
         WornDraw.diamond(pose.last(), vc, FULL, WornDraw.argb(glow, Math.min(1f, 0.55f + 0.2f * bright)), 0f, -8.1f, -5.8f, 0.9f, 1.2f, 0.5f, 0f);
         pose.popPose();
         shards(c, head, vc, age, turn, radius, bright, main, glow, 1);
 
-        vc = c.buffers().getBuffer(RenderType.eyes(RelicTextures.WHITE));
+        vc = c.buffers().getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(RelicTextures.WHITE));
         lens(c, head, vc, age, turn, radius, bright, glow);
     }
 

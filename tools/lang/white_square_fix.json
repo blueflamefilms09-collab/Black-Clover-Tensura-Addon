@@ -1,0 +1,5 @@
+{
+  "nusmp.white_square_fix.title": "White squares fixed",
+  "nusmp.white_square_fix.body": "Every glow, halo card, flare and light shaft of the spell circles, relics and upgraded weapons now blends by its own transparency, so no white box is drawn behind them. If you still see one, set vfx.safeBlend = true in config/nusmp-vfx-client.toml.",
+  "nusmp.white_square_fix.config": "Force the safe blend for every additive and emissive pass (no white squares, a little dimmer edges)."
+}
