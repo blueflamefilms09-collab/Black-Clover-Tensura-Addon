@@ -1,0 +1,777 @@
+{
+ "id": "demon_slayer_sword",
+ "slice": "demon_slayer",
+ "grade": "genesis",
+ "version": 1,
+ "mesh": "demon_slayer_sword",
+ "lod": {
+  "mesh": "demon_slayer_sword_lod",
+  "near": 12.0,
+  "far": 24.0
+ },
+ "layers": [
+  {
+   "id": "anti_magic_shards",
+   "kind": "orbit_shards",
+   "group": "orbit",
+   "note": "nine shards of black glass with crimson hearts circling the blade"
+  },
+  {
+   "id": "guard_rune_ring",
+   "kind": "halo_ring",
+   "group": "ring_guard",
+   "note": "a rune disc turning behind the crossguard"
+  },
+  {
+   "id": "guard_rings",
+   "kind": "halo_ring",
+   "group": "ring_inner",
+   "note": "two crimson rings counter-turning on the guard"
+  },
+  {
+   "id": "absence_holes",
+   "kind": "distortion",
+   "layer": "void",
+   "note": "the dark spots and the split are holes into the absence (dimensional void shader, reality shimmer)"
+  },
+  {
+   "id": "blade_aura",
+   "kind": "light_shafts",
+   "group": "aura",
+   "note": "crossed shafts of crimson light along the blade, breathing"
+  },
+  {
+   "id": "void_arcs",
+   "kind": "energy_arcs",
+   "group": "arcs",
+   "note": "four flickering crimson bolts round the blade"
+  },
+  {
+   "id": "field_rings",
+   "kind": "halo_ring",
+   "group": "field",
+   "note": "the Nullification Field: two thin rings turning at the height of the blade"
+  },
+  {
+   "id": "field_floor",
+   "kind": "halo_ring",
+   "group": "field_low",
+   "note": "a dim ring below, counter-turning"
+  },
+  {
+   "id": "clover_leaves",
+   "kind": "orbit_shards",
+   "group": "leaves",
+   "note": "five clover leaves of black glass circling the pommel"
+  },
+  {
+   "id": "drifting_fragments",
+   "kind": "orbit_shards",
+   "group": "fragments",
+   "note": "six chips of the blade hanging in the air near the point, as if it were about to shatter"
+  },
+  {
+   "id": "torn_cloth",
+   "kind": "cloth",
+   "group": "rags",
+   "note": "four rags of cloth swaying from the guard"
+  },
+  {
+   "id": "pommel_bloom",
+   "kind": "halo_ring",
+   "group": "bloom",
+   "note": "the crimson bloom behind the clover; it grows and quickens with the Resonance"
+  },
+  {
+   "id": "blade_wake",
+   "kind": "light_shafts",
+   "group": "wake",
+   "note": "a flickering afterimage along the edge"
+  },
+  {
+   "id": "hot_flares",
+   "kind": "lens_flare",
+   "flares": "clover, stone, point, split, guard",
+   "note": "star flares on the clover, the stone, the point, the split and the guard ends"
+  },
+  {
+   "id": "absence_motes",
+   "kind": "motes",
+   "particle": "dust",
+   "rgb": "DC122E",
+   "where": "blade",
+   "rate": 0.55,
+   "radius": 1.6,
+   "note": "crimson motes snuffed out as they rise off the blade"
+  },
+  {
+   "id": "ground_cast",
+   "kind": "ground_glow",
+   "particle": "dust",
+   "rgb": "8A0A1E",
+   "radius": 1.2,
+   "note": "a ring of dark crimson motes where the field meets the floor"
+  }
+ ],
+ "idle": [
+  {
+   "id": "glow_breath",
+   "kind": "glow_pulse",
+   "note": "core glow breathes 0.4 to 1.0"
+  },
+  {
+   "id": "vein_flow",
+   "kind": "vein_wave",
+   "note": "crimson light flows up the cracks and the edge"
+  },
+  {
+   "id": "bloom_resonance",
+   "kind": "group_resonance",
+   "group": "bloom",
+   "note": "the bloom grows and quickens with the Resonance of the stack (0..4)"
+  },
+  {
+   "id": "clover_grows",
+   "kind": "group_resonance",
+   "group": "clover",
+   "note": "the clover in relief swells with the Resonance"
+  },
+  {
+   "id": "shard_orbit",
+   "kind": "group_spin",
+   "group": "orbit",
+   "note": "the shards orbit and bob"
+  },
+  {
+   "id": "leaf_orbit",
+   "kind": "group_spin",
+   "group": "leaves",
+   "note": "the leaves circle the pommel against the shards"
+  },
+  {
+   "id": "fragment_drift",
+   "kind": "group_bob",
+   "group": "fragments",
+   "note": "the chips hang and sway"
+  },
+  {
+   "id": "rag_sway",
+   "kind": "group_sway",
+   "group": "rags",
+   "note": "the cloth sways"
+  },
+  {
+   "id": "guard_ring_turn",
+   "kind": "group_spin",
+   "group": "ring_guard",
+   "note": "the rune disc turns"
+  },
+  {
+   "id": "inner_ring_turn",
+   "kind": "group_spin",
+   "group": "ring_inner",
+   "note": "the rings turn against it"
+  },
+  {
+   "id": "field_turn",
+   "kind": "group_spin",
+   "group": "field",
+   "note": "the field rings turn"
+  },
+  {
+   "id": "arc_flicker",
+   "kind": "group_flicker",
+   "group": "arcs"
+  },
+  {
+   "id": "aura_breath",
+   "kind": "group_breathe",
+   "group": "aura"
+  },
+  {
+   "id": "wake_flicker",
+   "kind": "group_flicker",
+   "group": "wake"
+  },
+  {
+   "id": "flare_pulse",
+   "kind": "flare_pulse"
+  }
+ ],
+ "draw": {
+  "ticks": 16,
+  "flash": "DC122E",
+  "groups": [
+   "orbit",
+   "leaves",
+   "ring_guard",
+   "field",
+   "rags",
+   "fragments"
+  ],
+  "note": "the shards and the leaves spiral out of the blade, the rune disc and the field unfold, the cloth drops; a crimson flash"
+ },
+ "swing": {
+  "trail": "absence_cut",
+  "rgb": "DC122E",
+  "rgb2": "070305",
+  "length": 2.2,
+  "width": 0.5,
+  "life": 11,
+  "particles": "void_mote"
+ },
+ "acts": {
+  "conceptual_severance": {
+   "burst": "severance",
+   "pattern": "line",
+   "rgb": "DC122E",
+   "ring": 6.0,
+   "particles": 40,
+   "sound": "nusmp:item.genesis.demon_slayer.severance"
+  },
+  "black_meteorite": {
+   "burst": "meteor_charge",
+   "pattern": "cone",
+   "rgb": "FF3A4A",
+   "ring": 7.0,
+   "particles": 52,
+   "sound": "nusmp:item.genesis.demon_slayer.meteorite"
+  },
+  "black_divider": {
+   "burst": "divider",
+   "pattern": "nova",
+   "rgb": "9A1028",
+   "ring": 5.5,
+   "particles": 44,
+   "sound": "nusmp:item.genesis.demon_slayer.divider"
+  }
+ },
+ "sound_loop": "nusmp:item.genesis.demon_slayer.absence_hum_loop",
+ "flares": 7,
+ "glow": {
+  "rgb": "FFFFFF",
+  "speed": 0.14,
+  "min": 0.4,
+  "max": 1.0
+ },
+ "groups": {
+  "clover": {
+   "pivot": [
+    0.0,
+    -24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "resonance",
+     "amp": 0.13,
+     "min": 0.3,
+     "max": 1.0,
+     "period": 60.0
+    }
+   ],
+   "lodSkip": false
+  },
+  "rags": {
+   "pivot": [
+    0.0,
+    -3.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 7.0,
+     "period": 70.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      1,
+      0,
+      0
+     ],
+     "deg": 5.0,
+     "period": 95.0,
+     "phase": 0.3
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   }
+  },
+  "orbit": {
+   "pivot": [
+    0.0,
+    26.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 24.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.4,
+     "period": 110.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 4,
+    "ticks": 14
+   }
+  },
+  "fragments": {
+   "pivot": [
+    0.0,
+    46.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.6,
+     "period": 100.0
+    },
+    {
+     "kind": "sway",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "deg": 9.0,
+     "period": 85.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 6,
+    "ticks": 14
+   }
+  },
+  "leaves": {
+   "pivot": [
+    0.0,
+    -24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -34.0
+    },
+    {
+     "kind": "bob",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "amp": 1.1,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   }
+  },
+  "ring_guard": {
+   "pivot": [
+    0.0,
+    -0.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": 16.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.4,
+     "max": 0.9,
+     "period": 120.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "DC122E",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 2,
+    "ticks": 14
+   },
+   "alpha": 0.9
+  },
+  "ring_inner": {
+   "pivot": [
+    0.0,
+    -0.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      0,
+      1
+     ],
+     "dps": -28.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.3,
+     "max": 0.8,
+     "period": 90.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF3A4A",
+   "alpha": 0.8
+  },
+  "bloom": {
+   "pivot": [
+    0.0,
+    -24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "resonance",
+     "amp": 0.34,
+     "min": 0.22,
+     "max": 1.0,
+     "period": 60.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "DC122E"
+  },
+  "aura": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.6,
+     "period": 80.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "DC122E",
+   "alpha": 0.7
+  },
+  "arcs": {
+   "pivot": [
+    0.0,
+    26.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.0,
+     "max": 1.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 50.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "FF3A4A",
+   "alpha": 0.95
+  },
+  "wake": {
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "flicker",
+     "min": 0.1,
+     "max": 0.65,
+     "rate": 3.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "DC122E",
+   "alpha": 0.6
+  },
+  "field": {
+   "pivot": [
+    0.0,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": 14.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.25,
+     "max": 0.7,
+     "period": 130.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "DC122E",
+   "draw": {
+    "from_scale": 0.0,
+    "delay": 6,
+    "ticks": 16
+   },
+   "alpha": 0.8
+  },
+  "field_low": {
+   "pivot": [
+    0.0,
+    24.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "spin",
+     "axis": [
+      0,
+      1,
+      0
+     ],
+     "dps": -22.0
+    },
+    {
+     "kind": "breathe",
+     "min": 0.2,
+     "max": 0.55,
+     "period": 100.0
+    }
+   ],
+   "lodSkip": true,
+   "tint": "8A0A1E",
+   "alpha": 0.7
+  },
+  "crack_1": {
+   "pivot": [
+    0.0,
+    11.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      -0.17879963496303788,
+      0.929758101807797,
+      0.3218393429334682
+     ],
+     "amp": 1.3982131454109563,
+     "deg": 0.0,
+     "rate": 0.0,
+     "period": 40.0,
+     "phase": 0.17
+    },
+    {
+     "kind": "fracture_glow",
+     "min": 0.0,
+     "max": 1.0,
+     "period": 12.0,
+     "phase": 0.31
+    }
+   ],
+   "lodSkip": false,
+   "tint": "DC122E"
+  },
+  "s1": {
+   "pivot": [
+    0.0,
+    16.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      -0.17879963496303788,
+      0.929758101807797,
+      0.3218393429334682
+     ],
+     "amp": 2.7964262908219126,
+     "deg": 6.0,
+     "rate": 5.0,
+     "period": 40.0,
+     "phase": 0.17
+    }
+   ],
+   "lodSkip": false
+  },
+  "crack_2": {
+   "pivot": [
+    0.0,
+    22.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      0.07667144694910719,
+      0.9967288103383934,
+      0.025557148983035734
+     ],
+     "amp": 3.9127995093027708,
+     "deg": 0.0,
+     "rate": 0.0,
+     "period": 40.0,
+     "phase": 0.34
+    },
+    {
+     "kind": "fracture_glow",
+     "min": 0.0,
+     "max": 1.0,
+     "period": 12.0,
+     "phase": 0.62
+    }
+   ],
+   "lodSkip": false,
+   "tint": "DC122E"
+  },
+  "s2": {
+   "pivot": [
+    0.0,
+    27.5,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      0.20518674556782507,
+      0.9699737063206275,
+      -0.1305733835431614
+     ],
+     "amp": 5.360970061472084,
+     "deg": -8.0,
+     "rate": -6.0,
+     "period": 40.0,
+     "phase": 0.34
+    }
+   ],
+   "lodSkip": false
+  },
+  "crack_3": {
+   "pivot": [
+    0.0,
+    33.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      0.03843198675647493,
+      0.9992316556683482,
+      -0.007686397351294984
+     ],
+     "amp": 6.504998078400946,
+     "deg": 0.0,
+     "rate": 0.0,
+     "period": 40.0,
+     "phase": 0.51
+    },
+    {
+     "kind": "fracture_glow",
+     "min": 0.0,
+     "max": 1.0,
+     "period": 12.0,
+     "phase": 0.9299999999999999
+    }
+   ],
+   "lodSkip": false,
+   "tint": "DC122E"
+  },
+  "s3": {
+   "pivot": [
+    0.0,
+    41.0,
+    0.0
+   ],
+   "anim": [
+    {
+     "kind": "fracture",
+     "axis": [
+      -0.07647191129018725,
+      0.9941348467724344,
+      0.07647191129018725
+     ],
+     "amp": 7.846018098373212,
+     "deg": 7.0,
+     "rate": 4.0,
+     "period": 40.0,
+     "phase": 0.51
+    }
+   ],
+   "lodSkip": false
+  }
+ },
+ "note": "The Genesis Demon-Slayer. Groups s1..s3 are the shards of Black Meteorite (anim `fracture`, driven by the stack's MeteorUntil); `clover` and `bloom` follow the stack's Resonance (anim `resonance`); the renderer is client/relics/item/vu/ds/DemonSlayerVu. Anim kinds `fracture`, `fracture_glow` and `resonance` are read by DsDynamics: fracture = drift along `axis` by `amp` x fracture, a turn of `deg` about z and `rate` about x, a shiver of the same period; fracture_glow = alpha follows the fracture; resonance = scale 1 + amp x resonance and alpha lerp(min, max, resonance / 4) pulsing faster with it."
+}

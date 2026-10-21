@@ -431,5 +431,6 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         int res = d == null ? 0 : d.copyTag().getInt("Resonance");
         if (res > 0) tip.add(Component.literal("Resonance " + "●".repeat(res) + "○".repeat(4 - res) + " — a great existence is near").withStyle(ChatFormatting.RED));
+        tip.add(Component.translatableWithFallback("nusmp.demon_slayer_vu.tooltip", "The clover, the rings and the drifting shards answer the Resonance; in Black Meteorite the blade breaks apart.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));   // 1.108.0
     }
 }

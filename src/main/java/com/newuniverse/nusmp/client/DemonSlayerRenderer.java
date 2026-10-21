@@ -61,6 +61,7 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
         modBus.addListener(DemonSlayerRenderer::registerExtensions);
         modBus.addListener(DemonSlayerRenderer::registerModels);
         modBus.addListener(NUShaders::register);
+        com.newuniverse.nusmp.client.relics.item.vu.DemonSlayerVu.init();                       // 1.108.0: the signature bursts and embers of the upgraded Demon-Slayer (client tick)
     }
 
     static void registerExtensions(RegisterClientExtensionsEvent e) {
@@ -79,6 +80,7 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         if (ctx == ItemDisplayContext.GUI) {                                    // the inventory keeps the old icon
+            if (com.newuniverse.nusmp.client.relics.item.vu.DemonSlayerVu.drawGui(stack, pose, buffers, light, overlay)) return;      // 1.108.0: visual.guiModel (off by default): the upgraded model, tilted
             BakedModel icon = mc.getModelManager().getModel(ICON);
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);                                    // render() translates by -0.5 again
@@ -86,6 +88,7 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
             pose.popPose();
             return;
         }
+        if (com.newuniverse.nusmp.client.relics.item.vu.DemonSlayerVu.draw(stack, ctx, pose, buffers, light, overlay)) return;      // 1.108.0 demon_slayer upgrade (client flag visual.upgrade), else the pixel model below
         float time = mc.level == null ? 0 : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
         CompoundTag data = cd == null ? new CompoundTag() : cd.copyTag();

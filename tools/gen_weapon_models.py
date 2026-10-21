@@ -3336,6 +3336,10 @@ def main(only=None):
         sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "visual_upgrade", "genesis_weapons"))
         import build_all
         build_all.main(only[1:])
+    if only and only[0] == "visual_upgrade_demon_slayer":          # 1.108.0 (visual upgrade, slice demon_slayer): python3 -B tools/gen_weapon_models.py visual_upgrade_demon_slayer [--measure] [--previews]
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "visual_upgrade", "demon_slayer"))
+        import ds_build
+        ds_build.main(only[1:])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,209 @@
+{
+  "slice": "demon_slayer",
+  "mode": "after",
+  "note": "see tools/visual_upgrade/demon_slayer/ds_measure.py for the definitions; same fields as genesis_weapons",
+  "items": [
+    {
+      "id": "demon_slayer_sword",
+      "name": "Demon-Slayer Sword (Genesis)",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "meshes": {
+        "demon_slayer_sword": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt",
+          "quads": {
+            "body": 4296,
+            "void": 88,
+            "glow": 2036,
+            "veins": 1496,
+            "halo": 48,
+            "total": 7964
+          },
+          "welded_vertices_body": 4013,
+          "welded_vertices_all": 4289,
+          "submitted_corners_per_frame": 31856,
+          "named_parts": 0,
+          "flares": 7,
+          "animation_groups": 19,
+          "lod": {
+            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword_lod.txt",
+            "quads": {
+              "body": 347,
+              "void": 44,
+              "glow": 191,
+              "veins": 161,
+              "halo": 0,
+              "total": 743
+            },
+            "welded_vertices_body": 373
+          }
+        }
+      },
+      "mesh": {
+        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt",
+        "quads": {
+          "body": 4296,
+          "void": 88,
+          "glow": 2036,
+          "veins": 1496,
+          "halo": 48,
+          "total": 7964
+        },
+        "welded_vertices_body": 4013,
+        "welded_vertices_all": 4289,
+        "submitted_corners_per_frame": 31856,
+        "named_parts": 0,
+        "flares": 7,
+        "animation_groups": 19,
+        "lod": {
+          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword_lod.txt",
+          "quads": {
+            "body": 347,
+            "void": 44,
+            "glow": 191,
+            "veins": 161,
+            "halo": 0,
+            "total": 743
+          },
+          "welded_vertices_body": 373
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "material_pass_count": 6,
+      "emissive_passes": [
+        "void_shader",
+        "core_glow_additive",
+        "energy_veins_translucent_wave",
+        "halo_shafts_additive",
+        "flare_billboards_additive"
+      ],
+      "skin": {
+        "size": 2048,
+        "painted_texels": 3848166,
+        "detail_texels": 2830750
+      },
+      "glow_skin": {
+        "size": 1024,
+        "painted_texels": 442612,
+        "detail_texels": 80636
+      },
+      "veins_skin": {
+        "size": 1024,
+        "painted_texels": 300142,
+        "detail_texels": 257929
+      },
+      "ambient_layers": [
+        "anti_magic_shards (orbit_shards)",
+        "guard_rune_ring (halo_ring)",
+        "guard_rings (halo_ring)",
+        "absence_holes (distortion)",
+        "blade_aura (light_shafts)",
+        "void_arcs (energy_arcs)",
+        "field_rings (halo_ring)",
+        "field_floor (halo_ring)",
+        "clover_leaves (orbit_shards)",
+        "drifting_fragments (orbit_shards)",
+        "torn_cloth (cloth)",
+        "pommel_bloom (halo_ring)",
+        "blade_wake (light_shafts)",
+        "hot_flares (lens_flare)",
+        "absence_motes (motes)",
+        "ground_cast (ground_glow)"
+      ],
+      "idle_animations": [
+        "glow_breath (glow_pulse)",
+        "vein_flow (vein_wave)",
+        "bloom_resonance (group_resonance)",
+        "clover_grows (group_resonance)",
+        "shard_orbit (group_spin)",
+        "leaf_orbit (group_spin)",
+        "fragment_drift (group_bob)",
+        "rag_sway (group_sway)",
+        "guard_ring_turn (group_spin)",
+        "inner_ring_turn (group_spin)",
+        "field_turn (group_spin)",
+        "arc_flicker (group_flicker)",
+        "aura_breath (group_breathe)",
+        "wake_flicker (group_flicker)",
+        "flare_pulse (flare_pulse)"
+      ],
+      "draw_animation": true,
+      "swing_trail": true,
+      "signature_act_vfx": [
+        "black_divider",
+        "black_meteorite",
+        "conceptual_severance"
+      ],
+      "sound_loop": "nusmp:item.genesis.demon_slayer.absence_hum_loop",
+      "lod": {
+        "mesh": "demon_slayer_sword_lod",
+        "near": 12.0,
+        "far": 24.0
+      }
+    }
+  ],
+  "score": {
+    "weights": {
+      "mesh": 0.35,
+      "texture": 0.2,
+      "glow": 0.15,
+      "ambient": 0.2,
+      "anim": 0.1
+    },
+    "items": [
+      {
+        "id": "demon_slayer_sword",
+        "before": {
+          "mesh": 61,
+          "texture": 2162,
+          "glow": 4,
+          "ambient": 1,
+          "anim": 1,
+          "painted": 2462
+        },
+        "after": {
+          "mesh": 4296,
+          "texture": 2830750,
+          "glow": 5,
+          "ambient": 16,
+          "anim": 17,
+          "painted": 3848166
+        },
+        "ratios": {
+          "mesh": 70.43,
+          "texture": 1309.32,
+          "glow": 1.25,
+          "ambient": 16.0,
+          "anim": 17.0
+        },
+        "painted_texel_ratio": 1563.02,
+        "V_before": 1.0,
+        "V_after": 291.6,
+        "V_ratio_ge_20": true,
+        "mesh_ratio": 70.43,
+        "mesh_cap_note": "",
+        "floors": {
+          "body_quads_ge_2500": true,
+          "welded_vertices_le_6000": true,
+          "lod_le_15_percent": true,
+          "skin_painted_texels_8x": true,
+          "emissive_passes_ge_2": true,
+          "ambient_layers_ge_6": true,
+          "draw_animation": true,
+          "swing_trail": true,
+          "signature_on_every_act": true,
+          "sound_loop_id": true
+        },
+        "floors_ok": true
+      }
+    ],
+    "notes": []
+  }
+}

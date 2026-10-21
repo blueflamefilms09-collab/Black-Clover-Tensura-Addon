@@ -1,0 +1,144 @@
+{
+  "slice": "demon_slayer",
+  "mode": "baseline",
+  "note": "see tools/visual_upgrade/demon_slayer/ds_measure.py for the definitions; same fields as genesis_weapons",
+  "items": [
+    {
+      "id": "demon_slayer_sword",
+      "name": "Demon-Slayer Sword (Genesis)",
+      "grade": "GENESIS",
+      "kind": "greatsword",
+      "source": "client/DemonSlayerMesh.java dumped with tools/item_preview/MeshDump.java (a pixel model in 1/64 block units, no weapon_meshes file)",
+      "meshes": {
+        "demon_slayer_sword": {
+          "quads": {
+            "body": 61,
+            "void": 23,
+            "clover": 2,
+            "bloom": 2,
+            "crack": 0,
+            "total": 88
+          },
+          "welded_vertices_body": 80,
+          "welded_vertices_all": 178,
+          "submitted_corners_per_frame": 352,
+          "file": "src/main/java/com/newuniverse/nusmp/client/DemonSlayerMesh.java",
+          "named_parts": 10
+        }
+      },
+      "mesh": {
+        "quads": {
+          "body": 61,
+          "void": 23,
+          "clover": 2,
+          "bloom": 2,
+          "crack": 0,
+          "total": 88
+        },
+        "welded_vertices_body": 80,
+        "welded_vertices_all": 178,
+        "submitted_corners_per_frame": 352,
+        "file": "src/main/java/com/newuniverse/nusmp/client/DemonSlayerMesh.java",
+        "named_parts": 10
+      },
+      "states": {
+        "rest": {
+          "quads": {
+            "body": 61,
+            "void": 23,
+            "clover": 2,
+            "bloom": 2,
+            "crack": 0,
+            "total": 88
+          },
+          "welded_vertices_body": 80,
+          "welded_vertices_all": 178,
+          "submitted_corners_per_frame": 352
+        },
+        "resonance_4": {
+          "quads": {
+            "body": 61,
+            "void": 23,
+            "clover": 2,
+            "bloom": 2,
+            "crack": 0,
+            "total": 88
+          },
+          "welded_vertices_body": 80,
+          "welded_vertices_all": 178,
+          "submitted_corners_per_frame": 352
+        },
+        "fractured": {
+          "quads": {
+            "body": 69,
+            "void": 23,
+            "clover": 2,
+            "bloom": 2,
+            "crack": 6,
+            "total": 102
+          },
+          "welded_vertices_body": 96,
+          "welded_vertices_all": 220,
+          "submitted_corners_per_frame": 408
+        }
+      },
+      "passes": [
+        "body_cutout",
+        "void_shader",
+        "clover_translucent",
+        "bloom_glow_additive",
+        "fracture_crack_additive (only while Black Meteorite runs)"
+      ],
+      "emissive_pass_list": [
+        "void_shader",
+        "bloom_glow_additive",
+        "fracture_crack_additive"
+      ],
+      "material_pass_count": 5,
+      "skin": {
+        "size": 64,
+        "painted_texels": 2462,
+        "detail_texels": 2162
+      },
+      "glow_skin": {
+        "size": 64,
+        "painted_texels": 2964,
+        "detail_texels": 0
+      },
+      "clover_skin": {
+        "size": 64,
+        "painted_texels": 1505,
+        "detail_texels": 287
+      },
+      "ambient_layers": [
+        "pommel_bloom_glow (DemonSlayerMesh#bloom: a crimson glow behind the clover, pulsing with the resonance)"
+      ],
+      "idle_animations": [
+        "bloom_pulse (DemonSlayerMesh#bloom: the glow breathes, faster with the resonance)"
+      ],
+      "draw_animation": false,
+      "swing_trail": false,
+      "signature_act_vfx": false,
+      "act_vfx_today": {
+        "acts": [
+          "conceptual_severance",
+          "black_meteorite",
+          "black_divider"
+        ],
+        "generic_shapes": [
+          "DEMON_METEOR",
+          "NIHILITY_ZONE"
+        ],
+        "by_act": {
+          "black_meteorite": "DEMON_METEOR + NIHILITY_ZONE (vfx/client/layer/DemonSlayerLayer, world effects, not on the item)"
+        }
+      },
+      "sound_loop": null,
+      "act_animations_today": [
+        "fracture (Black Meteorite: four shards drift apart and re-form)",
+        "bloom_growth (resonance 0..4)",
+        "blade_growth (Black Divider: the blade is drawn 1.6 times as large for 8 s)"
+      ]
+    }
+  ]
+}
