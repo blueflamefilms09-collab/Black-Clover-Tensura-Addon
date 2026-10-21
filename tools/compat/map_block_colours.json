@@ -29,6 +29,9 @@
     "pitfall_tile": "DEEPSLATE",
     "snuffer_glyph": "COLOR_BLACK",
     "sigil_plate": "COLOR_PURPLE",
-    "riddle_stone": "COLOR_BLACK"
+    "riddle_stone": "COLOR_BLACK",
+    "backpack": "COLOR_BROWN",
+    "lockdown_barrier": "GOLD",
+    "weapon_rack": "WOOD"
   }
 }

@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.107.0] — Dungeon spec gaps: break what you place, Gorgon ban, poise and desperation, 7x7 clearance, themed music, weapon racks, Luck loot and backpacks, room lockdowns and ambushes
+
+### NEW
+- **Player-placed blocks can be broken (dungeon protection exemption):** torches, sleeping bags, crafting stations and backpacks a player sets down in the dungeon can be broken and picked up again; every generated block stays unbreakable. The positions are kept per dimension (capped, oldest dropped first) and synced to clients so the crack animation works. `docs/labyrinth/guard_exemption.md`.
+- **Gorgon ban:** `iceandfire:gorgon` can never spawn in any dungeon dimension (natural, spawner, encounter director, saved chunks; operators' summons too unless allowed). Config list `spawn.blacklist` and tag `nusmp:dungeon/banned`. A floor-theme mob palette filter keeps factions to the themes they belong to.
+- **Poise and desperation:** elites and squad captains have a poise bar and super armor during telegraphed attacks until it breaks (stagger); under 30% HP they enter a desperation phase (faster, ultimate unlocked, cue effects). Attacks now show their hit area on the ground and freeze their aim late in the wind-up. `docs/labyrinth/poise_desperation.md`.
+- **One dungeon faction:** dungeon monsters no longer target or hurt each other (turf wars and faction wars are off by default; `foundry.poise.dungeonPassive=false` brings them back).
+- **7x7 clearance:** every doorway, corridor, bend, bridge, seal and stair is cut to a 7x7 free passage for the Tensura giant races, after the piece is placed, behind `gen.clearance7` (default on; `/multiverse mega clearance`). Stairs are 7 high but not 7 wide (they need new stairwell templates). `docs/labyrinth/clearance7.md`.
+- **Themed music engine:** the client crossfades between 25 original synthesised loops (10 theme families x explore/battle, plus boss, safe, hub, rift) by the floor's theme and what is happening; vanilla music is silenced while one plays; the music volume slider applies. Replace them with real tracks by shipping the same file names in a resource pack. `docs/audio/themed_music.md`.
+- **Weapon racks:** a real block with a block-entity renderer (up to five items, no entity, no tick) replaces the dungeon's armour stands (flag `props.rackInsteadOfArmourStand`), with themed loot variants.
+- **Rift shards and parallax:** floating, drifting, disintegrating reality shards around the space-time fractures and a two-layer masked parallax on the ordinary rift (not a true stencil).
+- **Luck-scaled loot and backpacks:** loot counts follow a bell curve that rises with Luck and depth, Tensura coins also scale with Luck, chests and lucky kills hand out rolled armour, and there is a placeable, upgradable Backpack (27 to 63 slots, five tiers) that keeps its contents when picked up.
+- **Room lockdowns and ambushes:** key challenge rooms seal with unbreakable barriers until their wave is dead (the escape rules still apply); a player who bypasses a room (leaving with live monsters, running through corridors, teleporting, escaping a lockdown) gets an ambush squad ahead. `/multiverse mega lockdown ...`. `docs/labyrinth/lockdown_ambush.md`.
+
+### REPLACED
+- The dungeon's armour stands (rack on by default, flag restores them); the old door, corridor and stair sizes (flag `gen.clearance7` restores them); turf wars and faction wars default to off; the Gorgon's entries in two dungeon mob tags (moved to the exclusion tag).
+
+### KEPT
+- Every id, stat, saved data, template, floor height, the saturating floor scaling, Time Magic.
+
+### Honest notes
+- Nothing has been run in the game; every new system has only pure-logic tests, type checks and CI self-tests. The numbers (poise, Luck curve, ambush heat, lockdown rooms) are first guesses and live in config or data files.
+- Not done: exponential floor scaling (the saturating curve is deliberate), the nested skill checkboxes (removed at the owner's request), a true stencil rift, 7-wide stairs, real OST music.
+
 ## [1.106.0] — Worn God relics upgraded, the Rukh kept for Djinn and dungeons only, CI fixes for 1.105.0
 
 ### NEW
