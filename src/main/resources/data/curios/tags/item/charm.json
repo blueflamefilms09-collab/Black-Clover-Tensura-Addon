@@ -771,6 +771,110 @@
     {
       "id": "nusmp:wanderers_waystone",
       "required": false
+    },
+    {
+      "id": "nusmp:aincrad_teleport_crystal_chip",
+      "required": false
+    },
+    {
+      "id": "nusmp:aladdins_flute_replica",
+      "required": false
+    },
+    {
+      "id": "nusmp:boar_hat_tavern_token",
+      "required": false
+    },
+    {
+      "id": "nusmp:capsule_corp_capsule_case",
+      "required": false
+    },
+    {
+      "id": "nusmp:command_spell_ink_vial",
+      "required": false
+    },
+    {
+      "id": "nusmp:cooked_mandrake_sprig",
+      "required": false
+    },
+    {
+      "id": "nusmp:cursed_talisman_strip",
+      "required": false
+    },
+    {
+      "id": "nusmp:dungeon_key_fragment",
+      "required": false
+    },
+    {
+      "id": "nusmp:elder_lich_apprentice_bone_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:explosion_fan_club_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:final_selection_wisteria_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:grimoire_page_scrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:hearth_warm_pocket_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_course_pass_tag",
+      "required": false
+    },
+    {
+      "id": "nusmp:himmels_statue_pebble",
+      "required": false
+    },
+    {
+      "id": "nusmp:linas_fireball_tassel",
+      "required": false
+    },
+    {
+      "id": "nusmp:log_pose_keychain",
+      "required": false
+    },
+    {
+      "id": "nusmp:merchants_weighing_coin",
+      "required": false
+    },
+    {
+      "id": "nusmp:millennium_puzzle_replica",
+      "required": false
+    },
+    {
+      "id": "nusmp:nen_water_divination_cup",
+      "required": false
+    },
+    {
+      "id": "nusmp:ninja_tool_pouch_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:roxys_water_drop_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:soul_reaper_academy_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:subarus_track_jacket_zipper",
+      "required": false
+    },
+    {
+      "id": "nusmp:telekinesis_club_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:wave_fragment_sliver",
+      "required": false
     }
   ]
 }

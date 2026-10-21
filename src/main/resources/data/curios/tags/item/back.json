@@ -253,6 +253,46 @@
     {
       "id": "nusmp:supporters_rucksack",
       "required": false
+    },
+    {
+      "id": "nusmp:bedroll_and_pack",
+      "required": false
+    },
+    {
+      "id": "nusmp:hage_village_patchwork_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_students_short_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:leaf_village_messenger_satchel",
+      "required": false
+    },
+    {
+      "id": "nusmp:magus_apprentices_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:navigators_waterproof_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:rain_catchers_reed_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:sealed_forest_wanderers_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:state_alchemists_long_coat",
+      "required": false
+    },
+    {
+      "id": "nusmp:travellers_roadside_cape",
+      "required": false
     }
   ]
 }

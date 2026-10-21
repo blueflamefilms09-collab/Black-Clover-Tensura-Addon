@@ -59,6 +59,11 @@
       "length_blocks": 0.686
     },
     {
+      "id": "apprentice_birch_wand",
+      "action": "keep",
+      "length_blocks": 1.176
+    },
+    {
       "id": "apprentices_training_sword",
       "action": "preset",
       "length_blocks": 1.906,
@@ -141,6 +146,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.5,
       "fixed_scale": 1.0
+    },
+    {
+      "id": "axel_frontier_club",
+      "action": "preset",
+      "length_blocks": 1.765,
+      "first_person_scale": 0.554,
+      "first_person_translation_px": [
+        1.13,
+        2.8,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.453,
+      "fixed_scale": 0.849
     },
     {
       "id": "bianca",
@@ -628,6 +647,20 @@
       "length_blocks": 1.318
     },
     {
+      "id": "east_blue_cutlass",
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.03,
+        0.85
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "efreetis_kusarigama",
       "action": "preset",
       "length_blocks": 2.635,
@@ -774,6 +807,11 @@
       "id": "gauches_hand_mirror",
       "action": "keep",
       "length_blocks": 1.093
+    },
+    {
+      "id": "genin_academy_kunai",
+      "action": "keep",
+      "length_blocks": 0.706
     },
     {
       "id": "giant_jawblade",
@@ -962,6 +1000,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.249,
       "fixed_scale": 0.467
+    },
+    {
+      "id": "hunter_exam_machete",
+      "action": "preset",
+      "length_blocks": 1.529,
+      "first_person_scale": 0.628,
+      "first_person_translation_px": [
+        1.13,
+        2.9,
+        0.82
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "hyperborean_crossbow",
@@ -1664,6 +1716,20 @@
       "id": "scimitar_of_the_seasons",
       "action": "keep",
       "length_blocks": 1.235
+    },
+    {
+      "id": "selection_hopefuls_bokken",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.527,
+      "first_person_translation_px": [
+        1.13,
+        2.82,
+        0.82
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
     },
     {
       "id": "serpant_head_staff",

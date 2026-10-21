@@ -847,6 +847,24 @@
     },
     "familia_smiths_mace": {
       "class": "hammer"
+    },
+    "selection_hopefuls_bokken": {
+      "class": "katana"
+    },
+    "genin_academy_kunai": {
+      "class": "dagger"
+    },
+    "east_blue_cutlass": {
+      "class": "sabre"
+    },
+    "axel_frontier_club": {
+      "class": "club"
+    },
+    "apprentice_birch_wand": {
+      "class": "wand"
+    },
+    "hunter_exam_machete": {
+      "class": "cleaver"
     }
   },
   "_excluded_was": {

@@ -180,6 +180,54 @@
     {
       "id": "nusmp:street_thiefs_sash",
       "required": false
+    },
+    {
+      "id": "nusmp:adventurers_money_pouch_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:adventurers_potion_holster",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunters_utility_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:kouhas_silk_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:kunai_holster_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:lucys_key_ring_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:ogre_village_rope_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:pilgrims_knotted_rope_cord",
+      "required": false
+    },
+    {
+      "id": "nusmp:servants_contract_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:straw_hat_crew_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:witch_cult_prayer_cord",
+      "required": false
+    },
+    {
+      "id": "nusmp:zanpakuto_sheath_sash",
+      "required": false
     }
   ]
 }

@@ -11,6 +11,11 @@
       "profile": "whip",
       "source": "relic"
     },
+    "apprentice_birch_wand": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
     "apprentices_training_sword": {
       "class": "longsword",
       "profile": "longsword",
@@ -39,6 +44,11 @@
     "axe_of_the_exile": {
       "class": "handaxe",
       "profile": "handaxe",
+      "source": "relic"
+    },
+    "axel_frontier_club": {
+      "class": "club",
+      "profile": "club",
       "source": "relic"
     },
     "black_wing_blade": {
@@ -581,6 +591,11 @@
       "profile": "shortsword",
       "source": "relic"
     },
+    "east_blue_cutlass": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
     "efreetis_kusarigama": {
       "class": "scythe",
       "profile": "scythe",
@@ -651,6 +666,11 @@
       "profile": "dagger",
       "source": "relic"
     },
+    "genin_academy_kunai": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
     "giant_jawblade": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -709,6 +729,11 @@
     "hunger": {
       "class": "greataxe",
       "profile": "greataxe",
+      "source": "relic"
+    },
+    "hunter_exam_machete": {
+      "class": "cleaver",
+      "profile": "cleaver",
       "source": "relic"
     },
     "ignareths_forge_hammer": {
@@ -1010,6 +1035,11 @@
       "class": "trident",
       "profile": "trident",
       "source": "table"
+    },
+    "selection_hopefuls_bokken": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
     },
     "serpant_head_staff": {
       "class": "staff",

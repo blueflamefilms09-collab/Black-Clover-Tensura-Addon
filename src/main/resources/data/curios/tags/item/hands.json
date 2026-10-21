@@ -325,6 +325,62 @@
     {
       "id": "nusmp:weighted_training_wristbands",
       "required": false
+    },
+    {
+      "id": "nusmp:breathing_practice_wristlets",
+      "required": false
+    },
+    {
+      "id": "nusmp:climbers_chalked_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:duel_disk_wrist_strap",
+      "required": false
+    },
+    {
+      "id": "nusmp:espers_plain_mitts",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_feather_falling_common",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_minor_mana_stillness",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_third_class_squire",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_wandering_sorceress",
+      "required": false
+    },
+    {
+      "id": "nusmp:rubber_grip_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:shadow_soldier_signet_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:sin_of_patience_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:slave_crest_hand_wrap",
+      "required": false
+    },
+    {
+      "id": "nusmp:swordsmans_grip_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:young_alchemists_chalk_gloves",
+      "required": false
     }
   ]
 }
