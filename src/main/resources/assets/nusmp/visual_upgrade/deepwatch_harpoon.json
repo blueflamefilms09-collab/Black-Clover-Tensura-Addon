@@ -83,7 +83,7 @@
     "layers": [
       {
         "kind": "motes",
-        "particle": "minecraft:bubble",
+        "particle": "nusmp:bubble",
         "rgb": "D8F4FF",
         "rate": 1.2,
         "speed": 0.03,
@@ -91,7 +91,7 @@
       },
       {
         "kind": "halo_ring",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "6AF0FF",
         "rate": 1.4,
         "speed": 0.0,
@@ -99,7 +99,7 @@
       },
       {
         "kind": "edge_line",
-        "particle": "minecraft:bubble_pop",
+        "particle": "nusmp:bubble",
         "rgb": "D8F4FF",
         "rate": 0.7,
         "speed": 0.004,
@@ -107,7 +107,7 @@
       },
       {
         "kind": "ground_cast",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "2A9AAA",
         "rate": 1.0,
         "speed": 0.0,
@@ -115,7 +115,7 @@
       },
       {
         "kind": "wrist_flare",
-        "particle": "minecraft:nautilus",
+        "particle": "nusmp:bubble",
         "rgb": "9AF4FF",
         "rate": 0.5,
         "speed": 0.01,
@@ -123,7 +123,7 @@
       },
       {
         "kind": "light_shaft",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "6AF0FF",
         "rate": 1.2,
         "speed": 0.03,
@@ -131,7 +131,7 @@
       },
       {
         "kind": "accent_flare",
-        "particle": "minecraft:dolphin",
+        "particle": "nusmp:bubble",
         "rgb": "FFFFFF",
         "rate": 0.1,
         "speed": 0.02,

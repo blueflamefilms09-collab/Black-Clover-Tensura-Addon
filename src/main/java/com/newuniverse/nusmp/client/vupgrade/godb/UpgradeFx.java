@@ -1,8 +1,7 @@
 package com.newuniverse.nusmp.client.vupgrade.godb;
 
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
-import com.newuniverse.nusmp.perf.PerfBudgets;
-import com.newuniverse.nusmp.perf.PerfSettings;
+import com.newuniverse.nusmp.client.upgrade.UpgradeGate;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -36,7 +35,7 @@ public final class UpgradeFx {
         Camera cam = mc.gameRenderer.getMainCamera();
         double cx = cam.getPosition().x, cy = cam.getPosition().y, cz = cam.getPosition().z;
         long tick = level.getGameTime();
-        float quality = UpgradeMath.qualityFactor(PerfSettings.vfxQuality().name());
+        if (!UpgradeGate.begin(mc, tick)) return;                                    // 1.110.0: paused, low frame rate, density 0: nothing
         RandomSource rnd = level.random;
         int holders = 0;
         List<AbstractClientPlayer> players = level.players();
@@ -49,15 +48,15 @@ public final class UpgradeFx {
             if (entry == null) continue;
             double dx = p.getX() - cx, dy = p.getY() - cy, dz = p.getZ() - cz;
             double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-            float factor = quality * UpgradeMath.distanceFactor(dist, entry.spec.lodNearBlocks(), entry.spec.particleBlocks());
+            float factor = UpgradeGate.scale(p) * UpgradeMath.distanceFactor(dist, entry.spec.lodNearBlocks(), entry.spec.particleBlocks());   // density x quality x fps x distance x view
             if (factor <= 0f) continue;
             holders++;
-            spawn(level, rnd, p, entry, tick, factor);
+            spawn(level, rnd, p, entry, tick, factor, BuiltInRegistries.ITEM.getId(held.getItem()));
         }
     }
 
     /** One tick of the seven layers of one holder. */
-    private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, UpgradeSpecs.Entry entry, long tick, float factor) {
+    private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, UpgradeSpecs.Entry entry, long tick, float factor, int itemKey) {
         UpgradeSpec s = entry.spec;
         double yaw = Math.toRadians(p.yBodyRot);
         double fx = -Math.sin(yaw), fz = Math.cos(yaw);                              // forward
@@ -77,7 +76,8 @@ public final class UpgradeFx {
             UpgradeSpec.Layer l = s.layers().get(li);
             int n = UpgradeMath.stochasticCount(l.rate() * factor, rnd.nextFloat());
             if (n <= 0) continue;
-            n = PerfBudgets.clientParticles(level.getGameTime(), n);
+            n = UpgradeGate.take(p, itemKey, n);                                    // the item bucket, the player bucket, the live cap, the client allowance
+            if (n <= 0) continue;
             for (int k = 0; k < n; k++) {
                 double x, y, z, mx = 0, my = 0, mz = 0;
                 switch (l.kind()) {
@@ -132,7 +132,7 @@ public final class UpgradeFx {
                         mz = (rnd.nextDouble() - 0.5) * l.speed() * 2.0;
                     }
                 }
-                level.addParticle(entry.particles[li], x, y, z, mx, my, mz);
+                UpgradeGate.add(level, entry.particles[li], x, y, z, mx, my, mz);
             }
         }
     }

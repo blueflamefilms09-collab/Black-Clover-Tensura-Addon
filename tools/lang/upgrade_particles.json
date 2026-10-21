@@ -1,0 +1,5 @@
+{
+  "nusmp.upgrade_particles.density": "Upgrade particle density",
+  "nusmp.upgrade_particles.density.tooltip": "How many particles the upgraded weapons and relics spawn: 0 none, 0.5 the default, 1 everything their tables ask for (client option particles.upgradeDensity). They are always the mod's own particles, capped per item, per player and in total.",
+  "nusmp.upgrade_particles.report": "Upgrade particles: %s"
+}

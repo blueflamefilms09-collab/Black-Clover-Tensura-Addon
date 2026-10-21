@@ -58,6 +58,10 @@ class UpgradeParticleNamesTest {
                     String n = m.group(1);
                     names++;
                     if (n.equals("fx") || UpgradeParticleNames.isDust(n)) continue;
+                    if (n.startsWith("nusmp:")) {                                          // 1.110.0: the shipped tables name the mod's own particles directly
+                        assertTrue(com.newuniverse.nusmp.particle.fx.FxCatalog.has(n.substring(6)), f.getFileName() + ": '" + n + "' is not a particle of the catalog");
+                        continue;
+                    }
                     assertTrue(UpgradeParticleNames.isVanilla(n), f.getFileName() + ": '" + n + "' names another namespace; the tables use vanilla names, dust or fx");
                     String old = UpgradeParticleNames.oldName(n);
                     assertTrue(constants.contains(old), f.getFileName() + ": particle '" + n + "' resolves to " + old + ", which FxOld does not have (add it to UpgradeParticleNames.ALIAS)");
@@ -72,8 +76,9 @@ class UpgradeParticleNamesTest {
         for (String f : new String[]{"client/relics/fx/UpgradeFxClient.java", "relics/upgrade/UpgradeActFx.java"}) {
             String src = Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/" + f), StandardCharsets.UTF_8);
             assertFalse(src.contains("DustParticleOptions"), f + " builds vanilla dust again");
-            assertTrue(src.contains("FxRelic.dust(") && src.contains("Fx.options("), f + " does not go through the custom particle facade");
-            assertTrue(src.contains("UpgradeParticleNames"), f);
+            // 1.110.0: both classes build their options through UpgradeParticleOptions (the alias table of UpgradeParticleAlias); UpgradeParticleNames stays as the 1.108.0 name decision
+            assertTrue(src.contains("UpgradeParticleOptions.of("), f + " does not go through the custom particle options");
+            assertFalse(src.contains("BuiltInRegistries.PARTICLE_TYPE"), f + " reads the vanilla particle registry");
         }
     }
 }

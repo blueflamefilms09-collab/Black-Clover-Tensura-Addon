@@ -63,6 +63,7 @@ def build(item_id, verbose=True):
         "budget": {"body_quads": nq, "orbit_instances": n_orbit_inst, "orbit_piece_quads": oq[0] + oq[1], "lod_quads": lq},
     }
     os.makedirs(lib.DATA_DIR, exist_ok=True)
+    __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](data)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
     json.dump(data, open(os.path.join(lib.DATA_DIR, item_id + ".json"), "w", encoding="utf-8", newline="\n"), indent=2)
     welded = lib.welded_count(path)
     full_welded = welded + n_orbit_inst * lib.welded_count(opath)

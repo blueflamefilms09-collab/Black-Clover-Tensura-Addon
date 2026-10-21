@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -55,7 +54,7 @@ public final class TinyDjinnLayer {
         final Djinn djinn;
         final boolean dark;
         final TinyDjinnActor actor;
-        final DustParticleOptions light;
+        final net.minecraft.core.particles.ParticleOptions light;
         final float[] anchor = new float[3], vessel = new float[3], foe = new float[3];
         int foeId = -1;
         boolean foeKnown;

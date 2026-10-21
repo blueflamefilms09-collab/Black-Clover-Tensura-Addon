@@ -96,6 +96,7 @@ def build(did, verbose=True, cap=TOTAL_QUAD_CAP):
     maxr = max(np.abs(np.concatenate([q["P"] for q in old.quads])[:, [0, 2]]).max(), max(np.abs(np.array(p.V)[:, [0, 2]]).max() for p in body_parts))
     data = I.json_table(sp, place[3], ymin, ymax, ORBIT_COUNT, maxr + 5.5, nq, noq, lq)
     os.makedirs(D.DATA_DIR, exist_ok=True)
+    __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](data)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
     json.dump(data, open(os.path.join(D.DATA_DIR, iid + ".json"), "w", encoding="utf-8", newline="\n"), indent=2)
     welded = gb.welded_count(path)
     full_welded = welded + ORBIT_COUNT * gb.welded_count(opath)

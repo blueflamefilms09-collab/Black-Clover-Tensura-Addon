@@ -72,7 +72,7 @@
   {
    "type": "motes",
    "anchor": "tip",
-   "particle": "enchant",
+   "particle": "nusmp:rune_sol",
    "rgb": [
     190,
     130,
@@ -85,7 +85,7 @@
   {
    "type": "ring",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     222,
@@ -100,7 +100,7 @@
   {
    "type": "ring",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     200,
     150,
@@ -115,7 +115,7 @@
   {
    "type": "arc",
    "anchor": "tip",
-   "particle": "electric_spark",
+   "particle": "nusmp:electric_orb",
    "rgb": [
     220,
     190,
@@ -127,7 +127,7 @@
   {
    "type": "shaft",
    "anchor": "tip",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     210,
     170,
@@ -139,7 +139,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     170,
     110,
@@ -157,7 +157,7 @@
  },
  "swing": {
   "pattern": "sigil",
-  "particle": "dust",
+  "particle": "fx",
   "rgb": [
    200,
    150,

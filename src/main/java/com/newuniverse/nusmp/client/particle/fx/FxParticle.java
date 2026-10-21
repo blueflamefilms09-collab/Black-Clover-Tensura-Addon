@@ -4,6 +4,10 @@ import com.newuniverse.nusmp.particle.fx.FxCatalog;
 import com.newuniverse.nusmp.particle.fx.FxMath;
 import com.newuniverse.nusmp.particle.fx.FxProfile;
 import com.newuniverse.nusmp.particle.fx.FxTint;
+import com.newuniverse.nusmp.particle.fx.ParticleNearCap;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
@@ -25,6 +29,8 @@ final class FxParticle extends TextureSheetParticle {
     private final float sizeJitter;
     private final float scale;
     private final float spinSign;
+    /** An ambient-sized particle (a mote, a flame, a spark) shrinks and vanishes near the camera and never covers more than a fraction of the view ({@link ParticleNearCap}, 1.110.0). */
+    private final boolean nearCapped;
 
     FxParticle(ClientLevel level, double x, double y, double z, double vx, double vy, double vz, SpriteSet sprites, FxCatalog.Def def, FxTint tint) {
         super(level, x, y, z);
@@ -37,6 +43,7 @@ final class FxParticle extends TextureSheetParticle {
         this.sizeJitter = 0.88f + this.random.nextFloat() * 0.24f;
         this.scale = tint.scale();
         this.spinSign = this.random.nextBoolean() ? 1f : -1f;
+        this.nearCapped = ParticleNearCap.applies(profile.sizeStart(), profile.sizeEnd());
         this.xd = FxMath.clampSpeed(vx);
         this.yd = FxMath.clampSpeed(vy);
         this.zd = FxMath.clampSpeed(vz);
@@ -109,7 +116,17 @@ final class FxParticle extends TextureSheetParticle {
     @Override
     public float getQuadSize(float partialTick) {
         float t = Math.min(1f, ((float) this.age + partialTick) / (float) this.lifetime);
-        return 0.5f * FxMath.sizeAt(profile.curve(), profile.sizeStart(), profile.sizeEnd(), t) * scale * sizeJitter;
+        float half = 0.5f * FxMath.sizeAt(profile.curve(), profile.sizeStart(), profile.sizeEnd(), t) * scale * sizeJitter;
+        return nearCapped ? ParticleNearCap.cap(half, cameraDistSq()) : half;
+    }
+
+    /** The squared distance from this particle to the camera (a huge number before the camera exists). */
+    private double cameraDistSq() {
+        Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
+        if (cam == null || !cam.isInitialized()) return Double.MAX_VALUE;
+        Vec3 c = cam.getPosition();
+        double dx = c.x - this.x, dy = c.y - this.y, dz = c.z - this.z;
+        return dx * dx + dy * dy + dz * dz;
     }
 
     @Override

@@ -78,6 +78,7 @@ public final class PerfClient {
                     PerfProbe.reset();
                     VfxStats.reset();
                     PerfBudgets.resetStats();
+                    com.newuniverse.nusmp.client.upgrade.UpgradeGate.budget().resetStats();
                     sayKey(ctx, "nusmp.perf.client.reset", "Client performance probe cleared.", ChatFormatting.GOLD);
                     return 1;
                 }))
@@ -97,6 +98,8 @@ public final class PerfClient {
         List<String> out = new ArrayList<>(PerfProbe.report(10, "c."));
         out.add(VfxStats.line());
         out.add(PerfCommands.budgetLine(PerfBudgets.CLIENT_PARTICLES));
+        net.minecraft.client.multiplayer.ClientLevel lv = net.minecraft.client.Minecraft.getInstance().level;     // 1.110.0: the shared budget of the upgraded items' particles
+        if (lv != null) out.add(com.newuniverse.nusmp.client.upgrade.UpgradeGate.budget().line(lv.getGameTime(), com.newuniverse.nusmp.perf.PerfSettings.vfxQuality(), com.newuniverse.nusmp.perf.PerfSettings.clientParticlesPerTick()) + ", fps " + com.newuniverse.nusmp.client.upgrade.UpgradeGate.fps());
         return out;
     }
 

@@ -13,7 +13,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -42,7 +41,17 @@ public final class DemonSlayerVu {
 
     public static final String ID = "demon_slayer_sword";
     private static final float GROWTH = 1.6f;
-    private static final ParticleOptions CRIMSON = new DustParticleOptions(new Vector3f(0.86f, 0.07f, 0.18f), 0.9f), EMBER = new DustParticleOptions(new Vector3f(1.0f, 0.23f, 0.29f), 0.8f);
+    private static ParticleOptions crimson, ember;                                    // 1.110.0: the mod's own particles, built on first use (the registry is bound by then)
+
+    private static ParticleOptions crimson() {
+        if (crimson == null) crimson = com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions.dust(0xDB122E, 0.8f);
+        return crimson;
+    }
+
+    private static ParticleOptions ember() {
+        if (ember == null) ember = com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions.dust(0xFF3B4A, 0.7f);
+        return ember;
+    }
     private static boolean inited;
     private static long seenMeteor, seenGrowth;
     private static boolean wasSwinging;
@@ -135,7 +144,9 @@ public final class DemonSlayerVu {
         boolean fractured = meteor > now && DemonSlayerMesh.fracture(meteor - now) > 0f;
         int want = (fractured ? 2 : 0) + (res > 0 && now % Math.max(1, 6 - res) == 0 ? 1 : 0);
         if (want <= 0) return;
-        want = PerfBudgets.clientParticles(now, Math.min(per, want));
+        if (!com.newuniverse.nusmp.client.upgrade.UpgradeGate.begin(mc, now)) return;      // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
+        want = com.newuniverse.nusmp.client.upgrade.UpgradeGate.count(Math.min(per, want) * com.newuniverse.nusmp.client.upgrade.UpgradeGate.scale(p), level.random);
+        want = com.newuniverse.nusmp.client.upgrade.UpgradeGate.take(p, ID.hashCode(), want);   // the item and player buckets, the live cap, the client allowance
         if (want <= 0) return;
         Vec3 look = p.getLookAngle();
         double yaw = Math.toRadians(p.yBodyRot), sin = Math.sin(yaw), cos = Math.cos(yaw);
@@ -143,7 +154,7 @@ public final class DemonSlayerVu {
         for (int i = 0; i < want; i++) {
             double len = fractured ? 0.2 + level.random.nextDouble() * 1.1 : -0.1 + level.random.nextDouble() * 0.25;
             double x = hx + look.x * len + (level.random.nextDouble() - 0.5) * 0.2, y = hy + look.y * len * 0.5 + 0.3 + level.random.nextDouble() * 0.4, z = hz + look.z * len + (level.random.nextDouble() - 0.5) * 0.2;
-            level.addParticle(fractured ? EMBER : CRIMSON, x, y, z, (level.random.nextDouble() - 0.5) * 0.03, 0.02 + 0.01 * res, (level.random.nextDouble() - 0.5) * 0.03);
+            com.newuniverse.nusmp.client.upgrade.UpgradeGate.add(level, fractured ? ember() : crimson(), x, y, z, (level.random.nextDouble() - 0.5) * 0.03, 0.02 + 0.01 * res, (level.random.nextDouble() - 0.5) * 0.03);
         }
     }
 }

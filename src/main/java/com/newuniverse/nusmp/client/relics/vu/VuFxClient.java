@@ -11,16 +11,13 @@ import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import org.joml.Vector3f;
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -28,9 +25,8 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.fx.FxOld;
-import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.client.upgrade.UpgradeGate;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 
 /**
  * Why: the ambient effect layers of an upgraded relic that are particles (idle motes, sparks, embers, arcs, drips, wisps) are spawned here, from the data of
@@ -45,6 +41,8 @@ public final class VuFxClient {
 
     private static boolean inited;
     private static int budget;
+    /** The relic being processed (the key of its per-item bucket); set before each {@link #spawn}. */
+    private static int itemKey;
     private static final Map<String, Optional<VuFx>> FX = new HashMap<>();
     private static final Map<VuFx.Layer, ParticleOptions> OPTS = new IdentityHashMap<>();
     private static String heldId;
@@ -109,6 +107,7 @@ public final class VuFxClient {
             heldSince = level.getGameTime();
         }
         if (!VuModels.enabled() || !RelicFxOptions.particles()) return;
+        if (!UpgradeGate.begin(mc, level.getGameTime())) return;                       // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
         FxQuality q = RelicFxOptions.quality();
         VfxQuality vq = PerfSettings.vfxQuality();
         int cap = q.particlesPerTick;
@@ -127,15 +126,18 @@ public final class VuFxClient {
             double dx = p.getX() - cp.x, dy = p.getEyeY() - cp.y, dz = p.getZ() - cp.z, d2 = dx * dx + dy * dy + dz * dz;
             if (d2 > 24.0 * 24.0) continue;
             if (d2 > 16.0 && dx * look.x + dy * look.y + dz * look.z < 0.15 * Math.sqrt(d2)) continue;
+            float gate = UpgradeGate.scale(p);                                          // density x quality x fps x distance (others: 16 blocks) x view direction
+            if (gate <= 0f) continue;
             looked++;
-            handLayers(level, p, p.getMainHandItem(), true, tick, rate, cap);
-            handLayers(level, p, p.getOffhandItem(), false, tick, rate, cap);
+            handLayers(level, p, p.getMainHandItem(), true, tick, rate * gate, cap);
+            handLayers(level, p, p.getOffhandItem(), false, tick, rate * gate, cap);
             List<Relics.Worn> worn = Relics.wornList(p);
             for (int i = 0; i < worn.size() && budget < cap; i++) {
                 RelicDef d = worn.get(i).def();
                 VuFx fx = fxOf(d.id());
                 if (fx == null) continue;
-                for (VuFx.Layer l : fx.layers) if (l.isParticle() && l.in("worn")) spawn(level, p, d.slot(), l, tick + i * 5L, rate, cap, false, true);
+                itemKey = d.id().hashCode();
+                for (VuFx.Layer l : fx.layers) if (l.isParticle() && l.in("worn")) spawn(level, p, d.slot(), l, tick + i * 5L, rate * gate, cap, false, true);
             }
         }
     }
@@ -151,19 +153,14 @@ public final class VuFxClient {
         if (id == null) return;
         VuFx fx = fxOf(id);
         if (fx == null) return;
+        itemKey = id.hashCode();
         for (VuFx.Layer l : fx.layers) if (l.isParticle() && l.in("hand")) spawn(level, p, RelicSlot.MAIN_HAND, l, tick, rate, cap, main, false);
     }
 
     private static ParticleOptions options(VuFx.Layer l) {
         ParticleOptions o = OPTS.get(l);
         if (o == null) {
-            if (l.particle.equals("dust")) {
-                int c = l.color < 0 ? 0xFFFFFF : l.color;
-                o = new DustParticleOptions(new Vector3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f), 0.9f);
-            } else {
-                var type = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.withDefaultNamespace(l.particle));
-                o = type instanceof ParticleOptions po ? po : Fx.options(FxThemes.RELIC, FxOld.END_ROD);
-            }
+            o = UpgradeParticleOptions.of(l.particle, l.color, 0.7f);                  // 1.110.0: always the mod's own particle (alias table for a vanilla name)
             OPTS.put(l, o);
         }
         return o;
@@ -171,8 +168,11 @@ public final class VuFxClient {
 
     /** One layer for one holder: every {@code layer.every / rate} ticks (staggered by the holder's id), {@code count} particles round the place the relic is at. */
     private static void spawn(ClientLevel level, AbstractClientPlayer p, RelicSlot slot, VuFx.Layer l, long tick, float rate, int cap, boolean mainHand, boolean worn) {
-        int every = Math.max(1, Math.round(l.every / Math.max(0.25f, rate)));
+        if (rate <= 0f) return;
+        int every = Math.max(1, Math.round(l.every / Math.max(0.1f, rate)));
         if ((tick + p.getId() * 7L) % every != 0) return;
+        int want = UpgradeGate.take(p, itemKey, Math.min(l.count, cap - budget));      // the item and player buckets, the live cap, the client allowance
+        if (want <= 0) return;
         double yaw = Math.toRadians(p.yBodyRot);
         double fx = -Math.sin(yaw), fz = Math.cos(yaw);                              // forward
         double rx = -fz, rz = fx;                                                     // to the wearer's left? (sign fixed per slot below)
@@ -187,7 +187,7 @@ public final class VuFxClient {
         }
         RandomSource r = level.random;
         ParticleOptions opts = options(l);
-        for (int k = 0; k < l.count && budget < cap; k++) {
+        for (int k = 0; k < want && budget < cap; k++) {
             double a = r.nextDouble() * Math.PI * 2, rad = l.radius * (0.4 + 0.6 * r.nextDouble());
             double x = p.getX() + fx * f + rx * side + Math.cos(a) * rad;
             double z = p.getZ() + fz * f + rz * side + Math.sin(a) * rad;
@@ -199,7 +199,7 @@ public final class VuFxClient {
             } else if (l.type.equals("drips")) {
                 vy = -Math.abs(l.rise);
             }
-            level.addParticle(opts, x, y, z, vx, vy, vz);
+            UpgradeGate.add(level, opts, x, y, z, vx, vy, vz);
             budget++;
         }
     }

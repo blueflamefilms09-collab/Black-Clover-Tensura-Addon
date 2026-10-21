@@ -5,7 +5,7 @@
   {
    "name": "glass_glints",
    "kind": "motes",
-   "particle": "minecraft:end_rod",
+   "particle": "nusmp:mote",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 8,
@@ -23,7 +23,7 @@
   {
    "name": "mirror_dust",
    "kind": "motes",
-   "particle": "dust",
+   "particle": "fx",
    "color": "CFD8E8",
    "size": 0.8,
    "per_second": 7,
@@ -41,7 +41,7 @@
   {
    "name": "reflected_halo",
    "kind": "ring",
-   "particle": "minecraft:glow",
+   "particle": "nusmp:mote_soft",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 7,
@@ -58,7 +58,7 @@
   {
    "name": "reflection_ring",
    "kind": "ring",
-   "particle": "minecraft:end_rod",
+   "particle": "nusmp:mote",
    "color": "CFD8E8",
    "size": 1.0,
    "per_second": 8,
@@ -75,7 +75,7 @@
   {
    "name": "bandolier_line",
    "kind": "line",
-   "particle": "minecraft:end_rod",
+   "particle": "nusmp:mote",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 9,
@@ -95,7 +95,7 @@
   {
    "name": "mirror_floor",
    "kind": "ground",
-   "particle": "dust",
+   "particle": "fx",
    "color": "F0F8FF",
    "size": 0.9,
    "per_second": 6,
@@ -110,7 +110,7 @@
   {
    "name": "tail_shards",
    "kind": "motes",
-   "particle": "minecraft:glow",
+   "particle": "nusmp:mote_soft",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 4,
@@ -128,7 +128,7 @@
   {
    "name": "shard_orbit",
    "kind": "orbit",
-   "particle": "minecraft:end_rod",
+   "particle": "nusmp:mote",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 6,
@@ -145,7 +145,7 @@
   {
    "name": "silver_trail",
    "kind": "trail",
-   "particle": "minecraft:glow",
+   "particle": "nusmp:mote_soft",
    "color": "CFD8E8",
    "size": 1.0,
    "per_second": 5,
@@ -160,7 +160,7 @@
   {
    "name": "reflected_stars",
    "kind": "motes",
-   "particle": "minecraft:glow",
+   "particle": "nusmp:mote_soft",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 5,
@@ -178,7 +178,7 @@
   {
    "name": "sash_gleam_b",
    "kind": "line",
-   "particle": "minecraft:end_rod",
+   "particle": "nusmp:mote",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 8,
@@ -198,7 +198,7 @@
   {
    "name": "mirror_circle",
    "kind": "ring",
-   "particle": "dust",
+   "particle": "fx",
    "color": "CFD8E8",
    "size": 1.0,
    "per_second": 8,
@@ -215,7 +215,7 @@
   {
    "name": "silver_drift",
    "kind": "motes",
-   "particle": "minecraft:wax_off",
+   "particle": "nusmp:glint",
    "color": "CFD8E8",
    "size": 1.0,
    "per_second": 4,
@@ -233,7 +233,7 @@
   {
    "name": "halo_vertical",
    "kind": "ring",
-   "particle": "minecraft:glow",
+   "particle": "nusmp:mote_soft",
    "color": "F0F8FF",
    "size": 1.0,
    "per_second": 6,
@@ -256,7 +256,7 @@
     "duration": 24,
     "power": 3.0,
     "at": "feet",
-    "particle": "minecraft:end_rod",
+    "particle": "nusmp:mote",
     "count": 40,
     "spread": 1.2,
     "radius": 2.0,
@@ -268,7 +268,7 @@
     "duration": 20,
     "power": 3.0,
     "at": "feet",
-    "particle": "minecraft:glow",
+    "particle": "nusmp:mote_soft",
     "count": 20,
     "spread": 1.0,
     "radius": 2.0,
@@ -282,7 +282,7 @@
     "duration": 22,
     "power": 3.0,
     "at": "feet",
-    "particle": "minecraft:end_rod",
+    "particle": "nusmp:mote",
     "count": 50,
     "spread": 1.2,
     "radius": 2.0,
@@ -294,7 +294,7 @@
     "duration": 22,
     "power": 3.0,
     "at": "aim",
-    "particle": "minecraft:glow",
+    "particle": "nusmp:mote_soft",
     "count": 40,
     "spread": 1.2,
     "radius": 8.0,

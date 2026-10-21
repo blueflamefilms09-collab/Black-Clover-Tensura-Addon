@@ -1,25 +1,19 @@
 package com.newuniverse.nusmp.client.relics.fx;
 
+import com.newuniverse.nusmp.client.upgrade.UpgradeGate;
 import com.newuniverse.nusmp.item.CuriosLink;
-import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.fx.FxOld;
-import com.newuniverse.nusmp.particle.fx.FxRelic;
-import com.newuniverse.nusmp.perf.PerfBudgets;
-import com.newuniverse.nusmp.perf.PerfSettings;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleAlias;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeFxData;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeFxMath;
-import com.newuniverse.nusmp.relics.upgrade.UpgradeParticleNames;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -61,25 +55,12 @@ public final class UpgradeFxClient {
     }
 
     /**
-     * The particle a data entry names, always one of the mod's own custom particles (1.108.0, {@code particle.fx}): "dust" is a custom mote dyed with the layer's colour
-     * ({@link FxRelic#dust}); a vanilla name ({@code minecraft:end_rod}, {@code flame}, ...) is the particle that replaces it in the theme of the layer's colour ({@link Fx#options(com.newuniverse.nusmp.particle.fx.ThemeKey, FxOld)},
-     * the name-to-constant decision is {@link UpgradeParticleNames}); an id of another namespace is the mod's own particle type, looked up in the registry (null when it is not a plain particle).
+     * The particle a data entry names, always one of the mod's own custom particles (1.110.0, {@link UpgradeParticleOptions}, decided by the pure {@link UpgradeParticleAlias}): "dust" and "fx" are
+     * the hue-themed custom mote dyed with the layer's colour, a catalog id ({@code nusmp:flame_tongue}) is itself, and a vanilla name ({@code minecraft:end_rod}, {@code flame}, ...) goes through
+     * the alias table to the nearest custom particle. Never a vanilla particle, never null.
      */
     public static ParticleOptions options(String particle, int color, float size) {
-        if (UpgradeParticleNames.isDust(particle)) return FxRelic.dust(color, Math.max(0.3f, size));
-        if (UpgradeParticleNames.isVanilla(particle)) {
-            FxOld old;
-            try {
-                old = FxOld.valueOf(UpgradeParticleNames.oldName(particle));
-            } catch (IllegalArgumentException unknown) {
-                old = FxOld.valueOf(UpgradeParticleNames.DEFAULT);
-            }
-            return Fx.options(FxRelic.theme(color), old);
-        }
-        ResourceLocation id = ResourceLocation.tryParse(particle);
-        if (id == null) return null;
-        ParticleType<?> t = BuiltInRegistries.PARTICLE_TYPE.getOptional(id).orElse(null);
-        return t instanceof ParticleOptions po ? po : null;
+        return UpgradeParticleOptions.of(particle, color, size);
     }
 
     private static Compiled compile(String relicId) {
@@ -103,7 +84,7 @@ public final class UpgradeFxClient {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         if (level == null || mc.player == null || mc.isPaused() || !RelicFxOptions.particles() || !RelicFxOptions.upgrade()) return;
-        float qf = UpgradeFxMath.qualityFactor(PerfSettings.vfxQuality().ordinal());
+        if (!UpgradeGate.begin(mc, level.getGameTime())) return;                                  // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
         Camera cam = mc.gameRenderer.getMainCamera();
         Vec3 cp = cam.getPosition();
         Vector3f look = cam.getLookVector();
@@ -114,7 +95,7 @@ public final class UpgradeFxClient {
             if (looked >= 8) break;
             if (p.isSpectator() || p.isInvisible()) continue;
             double dx = p.getX() - cp.x, dy = p.getEyeY() - cp.y, dz = p.getZ() - cp.z, d2 = dx * dx + dy * dy + dz * dz;
-            float df = UpgradeFxMath.distanceFactor(d2);
+            float df = UpgradeFxMath.distanceFactor(d2) * UpgradeGate.scale(p);                  // the table's distance falloff x the gate's density, quality, fps, 16-block and view scale
             if (df <= 0f) continue;
             if (d2 > 16.0 && dx * look.x + dy * look.y + dz * look.z < 0.15 * Math.sqrt(d2)) continue;          // behind the camera or far off to the side
             List<Relics.Worn> worn = Relics.wornList(p);
@@ -139,15 +120,15 @@ public final class UpgradeFxClient {
                 for (int li = 0; li < c.layers().size(); li++) {
                     CLayer cl = c.layers().get(li);
                     UpgradeFxData.Layer l = cl.layer();
-                    int n = UpgradeFxMath.emitCount(l.perSecond(), df, qf, rnd.nextDouble(), l.maxPerTick());
+                    int n = UpgradeFxMath.emitCount(l.perSecond(), df, 1f, rnd.nextDouble(), l.maxPerTick());
                     if (n <= 0) continue;
-                    n = PerfBudgets.clientParticles(tick, n);
+                    n = UpgradeGate.take(p, d.id().hashCode(), n);                                  // the item and player buckets, the live cap, the client allowance
                     for (int k = 0; k < n; k++) {
                         if (!UpgradeFxMath.point(l, tick, k, n, rnd.nextDouble(), rnd.nextDouble(), rnd.nextDouble(), speed, LOCAL)) break;
                         UpgradeFxMath.toWorld(yaw, LOCAL[0], LOCAL[1], LOCAL[2], WORLD);
                         double vy = l.kind().equals("motes") || l.kind().equals("line") ? l.speed() : 0.0;
                         ParticleOptions custom = cl.options();                                       // the mod's own particle of the layer (options() above)
-                        level.addParticle(custom, p.getX() + WORLD[0], p.getY() + WORLD[1], p.getZ() + WORLD[2], (rnd.nextDouble() - 0.5) * 0.004, vy, (rnd.nextDouble() - 0.5) * 0.004);
+                        UpgradeGate.add(level, custom, p.getX() + WORLD[0], p.getY() + WORLD[1], p.getZ() + WORLD[2], (rnd.nextDouble() - 0.5) * 0.004, vy, (rnd.nextDouble() - 0.5) * 0.004);
                     }
                 }
             }

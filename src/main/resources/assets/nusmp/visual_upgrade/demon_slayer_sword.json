@@ -97,7 +97,7 @@
   {
    "id": "absence_motes",
    "kind": "motes",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "DC122E",
    "where": "blade",
    "rate": 0.55,
@@ -107,7 +107,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "8A0A1E",
    "radius": 1.2,
    "note": "a ring of dark crimson motes where the field meets the floor"

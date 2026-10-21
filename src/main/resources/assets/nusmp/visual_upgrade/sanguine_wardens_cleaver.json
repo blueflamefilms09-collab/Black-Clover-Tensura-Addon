@@ -83,7 +83,7 @@
     "layers": [
       {
         "kind": "motes",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "C01818",
         "rate": 1.2,
         "speed": 0.01,
@@ -91,7 +91,7 @@
       },
       {
         "kind": "halo_ring",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "FF3A3A",
         "rate": 1.4,
         "speed": 0.0,
@@ -99,7 +99,7 @@
       },
       {
         "kind": "edge_line",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "FF5A5A",
         "rate": 1.0,
         "speed": 0.004,
@@ -107,7 +107,7 @@
       },
       {
         "kind": "ground_cast",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "8A1010",
         "rate": 1.0,
         "speed": 0.0,
@@ -115,7 +115,7 @@
       },
       {
         "kind": "wrist_flare",
-        "particle": "minecraft:crimson_spore",
+        "particle": "nusmp:spore",
         "rgb": "FF3A3A",
         "rate": 0.6,
         "speed": 0.01,
@@ -123,7 +123,7 @@
       },
       {
         "kind": "light_shaft",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "C01818",
         "rate": 1.2,
         "speed": 0.03,
@@ -131,7 +131,7 @@
       },
       {
         "kind": "accent_flare",
-        "particle": "minecraft:witch",
+        "particle": "nusmp:mana_mote",
         "rgb": "FFFFFF",
         "rate": 0.12,
         "speed": 0.02,

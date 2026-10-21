@@ -56,6 +56,7 @@ def run(quiet=False):
             "glow": {"rgb": full.glow[0], "speed": full.glow[1], "min": full.glow[2], "max": full.glow[3]}, "groups": full.groups}
     mod.spec(spec)
     os.makedirs(SPEC_DIR, exist_ok=True)
+    __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](spec)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
     with open(os.path.join(SPEC_DIR, ID + ".json"), "w", newline="\n") as fh:
         json.dump(spec, fh, indent=1)
         fh.write("\n")

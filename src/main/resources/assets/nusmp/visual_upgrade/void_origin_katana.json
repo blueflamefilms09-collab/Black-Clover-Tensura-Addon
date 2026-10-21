@@ -55,7 +55,7 @@
   {
    "id": "void_motes",
    "kind": "motes",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "6AE0FF",
    "where": "blade",
    "rate": 0.6,
@@ -65,7 +65,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "40C8FF",
    "radius": 1.0,
    "note": "a ring of cyan motes on the ground"

@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.client.relics.item.vu;
 
-import com.newuniverse.nusmp.perf.PerfBudgets;
+import com.newuniverse.nusmp.client.upgrade.UpgradeGate;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleAlias;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.perf.VfxQuality;
 import com.newuniverse.nusmp.visual.genesis.VuBurst;
@@ -9,11 +11,7 @@ import com.newuniverse.nusmp.visual.genesis.VuSpec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -29,9 +27,6 @@ import org.joml.Vector3f;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
-import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.fx.FxOld;
-import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The particle half of the upgraded Genesis weapons, a client tick (never a draw call): the ambient layers of the effect data that are particles (motes off the blade, a ring of
@@ -82,17 +77,16 @@ public final class VuFx {
         e = new Emitter[ls.size()];
         for (int i = 0; i < e.length; i++) {
             VuSpec.Layer l = ls.get(i);
-            int period = Math.max(1, Math.round(1f / Math.max(0.05f, l.rate() <= 0f ? 0.5f : l.rate())));
+            int period = Math.max(1, Math.round(1f / Math.max(0.05f, l.rate() <= 0f ? 0.5f : l.rate())));      // the table rate in ticks per particle; the gate thins it further (density, quality, fps, distance)
             e[i] = new Emitter(l, options(l.particle(), l.rgb()), period);
         }
         EMITTERS.put(spec, e);
         return e;
     }
 
+    /** 1.110.0: always the mod's own particle (the alias table of {@link UpgradeParticleAlias} for a vanilla name, the hue-themed custom mote for "dust" / "fx"); never a vanilla one. */
     private static ParticleOptions options(String name, int rgb) {
-        if (name == null || name.isEmpty() || name.equals("dust")) return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.9f);
-        ParticleType<?> t = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.parse(name.contains(":") ? name : "minecraft:" + name));
-        return t instanceof SimpleParticleType s ? s : Fx.options(com.newuniverse.nusmp.particle.fx.ThemeKey.of("relic.grade.GENESIS"), FxOld.END_ROD);
+        return UpgradeParticleOptions.of(name, rgb, 0.7f);
     }
 
     // ================================================================ the tick
@@ -106,6 +100,7 @@ public final class VuFx {
         long now = level.getGameTime();
         boolean particles = VuOptions.particles(), trails = VuOptions.trails();
         if (!particles && !trails) return;
+        if (!UpgradeGate.begin(mc, now)) return;                                    // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
         int holders = 0;
         RandomSource rng = level.random;
         for (AbstractClientPlayer p : level.players()) {
@@ -115,19 +110,22 @@ public final class VuFx {
             if (st.isEmpty()) continue;
             VuSpec spec = specFor(st.getItem());
             if (spec == null) continue;
+            float gate = UpgradeGate.scale(p);                                      // density x quality x fps x distance (others: 16 blocks) x view direction
+            if (gate <= 0f) continue;
+            int itemKey = BuiltInRegistries.ITEM.getId(st.getItem());
             holders++;
             int left = per;
             if (particles) {
                 Emitter[] em = emitters(spec);
                 for (int i = 0; i < em.length && left > 0; i++) {
                     if ((now + p.getId() * 3L + i) % em[i].period() != 0) continue;
-                    int want = Math.min(left, 1 + (q == VfxQuality.HIGH ? 1 : 0));
-                    int n = PerfBudgets.clientParticles(now, want);
+                    int want = UpgradeGate.count(Math.min(left, 1) * gate, rng);       // one particle per due layer (it was up to two), thinned by the gate's scale
+                    int n = UpgradeGate.take(p, itemKey, want);                    // the item and player buckets, the live cap, the client allowance
                     for (int k = 0; k < n; k++) ambient(level, p, em[i].layer(), em[i].options(), rng, now);
                     left -= n;
                 }
             }
-            if (trails && spec.swing != null) swingTrail(level, p, spec, rng, now, left);
+            if (trails && spec.swing != null) swingTrail(level, p, spec, rng, now, left, gate, itemKey);
         }
         if (!TIPS.isEmpty() && now % 40 == 0) TIPS.entrySet().removeIf(en -> now - (long) en.getValue()[3] > 20);
     }
@@ -163,11 +161,11 @@ public final class VuFx {
                 vz = (rng.nextDouble() - 0.5) * 0.01;
             }
         }
-        level.addParticle(opt, x, y, z, vx, vy, vz);
+        UpgradeGate.add(level, opt, x, y, z, vx, vy, vz);
     }
 
     // ================================================================ swing trail
-    private static void swingTrail(ClientLevel level, AbstractClientPlayer p, VuSpec spec, RandomSource rng, long now, int budget) {
+    private static void swingTrail(ClientLevel level, AbstractClientPlayer p, VuSpec spec, RandomSource rng, long now, int budget, float gate, int itemKey) {
         float progress = p.getAttackAnim(0f);
         if (!p.swinging || progress <= 0.02f || budget <= 0) {
             TIPS.remove(p.getId());
@@ -183,14 +181,14 @@ public final class VuFx {
             TIPS.put(p.getId(), new float[]{(float) tx, (float) ty, (float) tz, now});
             return;
         }
-        int steps = Math.min(budget, 4);
-        int n = PerfBudgets.clientParticles(now, steps);
+        int steps = UpgradeGate.count(Math.min(budget, 3) * gate, rng);               // up to three a tick (it was four), thinned by the gate's scale
+        int n = UpgradeGate.take(p, itemKey + 1, steps);                          // the same buckets as the ambient layers
         ParticleOptions a = dust(spec.swing.rgb()), b = dust(spec.swing.rgb2());
         for (int i = 0; i < n; i++) {
             double f = (i + 1.0) / n;
             double px = last[0] + (tx - last[0]) * f, py = last[1] + (ty - last[1]) * f, pz = last[2] + (tz - last[2]) * f;
-            level.addParticle(i % 2 == 0 ? a : b, px, py, pz, 0.0, 0.0, 0.0);
-            if (i == n - 1 && rng.nextInt(3) == 0) Fx.add(level, FxThemes.RELIC, FxOld.END_ROD, px, py, pz, (rng.nextDouble() - 0.5) * 0.02, 0.01, (rng.nextDouble() - 0.5) * 0.02);
+            UpgradeGate.add(level, i % 2 == 0 ? a : b, px, py, pz, 0.0, 0.0, 0.0);
+            if (i == n - 1 && rng.nextInt(3) == 0) UpgradeGate.add(level, glint(), px, py, pz, (rng.nextDouble() - 0.5) * 0.02, 0.01, (rng.nextDouble() - 0.5) * 0.02);
         }
         last[0] = (float) tx;
         last[1] = (float) ty;
@@ -199,12 +197,20 @@ public final class VuFx {
     }
 
     private static final Map<Integer, ParticleOptions> DUSTS = new HashMap<>();
+    private static ParticleOptions glint;
 
+    /** The mod's own light mote (the old end-rod spark of the trails). */
+    private static ParticleOptions glint() {
+        if (glint == null) glint = UpgradeParticleOptions.of("nusmp:mote", -1, 0.6f);
+        return glint;
+    }
+
+    /** The mod's own mote dyed {@code rgb} (the old coloured dust of the trails and bursts). */
     private static ParticleOptions dust(int rgb) {
         ParticleOptions d = DUSTS.get(rgb);
         if (d == null) {
             if (DUSTS.size() > 64) DUSTS.clear();
-            d = new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 1.0f);
+            d = UpgradeParticleOptions.dust(rgb, 0.8f);
             DUSTS.put(rgb, d);
         }
         return d;
@@ -225,13 +231,12 @@ public final class VuFx {
         Player p = mc.player;
         double yaw = Math.toRadians(p.getYRot()), fx = -Math.sin(yaw), fz = Math.cos(yaw), rx = -fz, rz = fx;
         ParticleOptions main = dust(act.rgb());
-        int n = Math.min(60, act.particles());
-        int allowed = PerfBudgets.clientParticles(now, n);
+        int allowed = UpgradeGate.burst(mc, Math.min(60, act.particles()));       // scaled by the density option, quality and frame rate, capped, under the live cap
         for (int i = 0; i < allowed; i++) {
             VuBurst.point(act.pattern(), i, allowed, act.ring(), (float) i / Math.max(1, allowed), OUT);
             double x = p.getX() + rx * OUT[0] + fx * OUT[2], y = p.getY() + 1.0 + OUT[1], z = p.getZ() + rz * OUT[0] + fz * OUT[2];
             double vx = rx * OUT[3] + fx * OUT[5], vz = rz * OUT[3] + fz * OUT[5];
-            mc.level.addParticle(i % 5 == 0 ? Fx.options(FxThemes.RELIC, FxOld.END_ROD) : main, x, y, z, vx, OUT[4], vz);
+            UpgradeGate.add(mc.level, i % 5 == 0 ? glint() : main, x, y, z, vx, OUT[4], vz);
         }
         if (!act.sound().isEmpty()) {
             ResourceLocation id = ResourceLocation.parse(act.sound());

@@ -367,6 +367,7 @@ def write_all(out_dir=None):
         raise SystemExit("no effect table for " + ", ".join(missing))
     for rid, d in P.items():
         data = {"id": rid, "grade": "GOD", "layers": d["layers"], "acts": d["acts"]}
+        __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](data)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
         with open(os.path.join(out_dir, rid + ".json"), "w", encoding="utf8", newline="\n") as fh:
             json.dump(data, fh, indent=1)
             fh.write("\n")

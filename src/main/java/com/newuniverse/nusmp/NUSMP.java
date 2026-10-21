@@ -392,6 +392,7 @@ public class NUSMP {
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
+        com.newuniverse.nusmp.vupgrade.UpgradeParticlesSelfTests.register();                                      // 1.110.0: self-test visual.upgrade_particles (the upgraded items spawn only the mod's own particles, the budget and the first-person size cap)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TimeBook::passiveTick);                    // 0.49: Time Magic's passive every tick               // 0.48: book upkeep without relying on skill ticks
         // 0.53: the hook point of the 37 attributes (passives, buffs that last, damage rewrites; see book.ext.AttributeEvents)
