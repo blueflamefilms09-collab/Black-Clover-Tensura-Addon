@@ -42,7 +42,7 @@ public final class ArmorPainter {
     /** A fully clear texture: the armour box of a relic whose 3D model replaces it draws nothing. */
     public static int[] blank() { return new int[W * H]; }
 
-    private static Canvas painted(Look look, RelicSlot slot, int main, int trim, int glow, long seed) {
+    static Canvas painted(Look look, RelicSlot slot, int main, int trim, int glow, long seed) {
         Canvas c = new Canvas(seed, glow);
         int m = 0xFF000000 | (main & 0xFFFFFF), t = 0xFF000000 | (trim & 0xFFFFFF), g = 0xFF000000 | (glow & 0xFFFFFF);
         if (slot == RelicSlot.HEAD) head(c, look, m, t, g);

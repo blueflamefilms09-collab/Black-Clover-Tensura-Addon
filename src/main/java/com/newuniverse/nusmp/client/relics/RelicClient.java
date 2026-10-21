@@ -41,7 +41,8 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener(RelicActKeys::onClientTick);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
-        NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                       // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.worn.WornDebugCommand::register);          // 1.110.0: /nusmp debug worn
+        NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                      // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onEntityTick);
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onClientTick);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn e) -> RelicTextures.registerAll());

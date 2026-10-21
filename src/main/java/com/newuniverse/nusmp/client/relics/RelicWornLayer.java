@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
+import com.newuniverse.nusmp.client.relics.worn.ArmorSlotPlan;
 import com.newuniverse.nusmp.client.relics.worn.WornCtx;
 import com.newuniverse.nusmp.client.relics.worn.WornExec;
 import com.newuniverse.nusmp.client.relics.worn.WornPlan;
@@ -72,6 +73,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     }
 
     private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float netHeadYaw, float headPitch) {
+        RelicTextures.refreshIfOptionChanged();                                        // 1.110.0: visual.upgrade flipped: the armour layers are repainted once
         boolean slim = p.getSkin().model() == PlayerSkin.Model.SLIM;
         WornPlan.View view = WornExec.viewOf(p);
         long now = p.level().getGameTime();
@@ -117,7 +119,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             for (WornPlan.Item it : plan.all()) {                                      // the emissive pass of the painted armour boxes
                 Relics.Located l = found.get(it.index());
                 RelicDef d = l.def();
-                if (l.where() == Relics.Where.ARMOUR && d.slot().isArmor() && it.why() != WornPlan.Why.ARMOUR_OPTION && RelicTextures.hasArmorGlow(d.id()))
+                if (l.where() == Relics.Where.ARMOUR && d.slot().isArmor() && ArmorSlotPlan.of(it).glow() && RelicTextures.hasArmorGlow(d.id()))      // 1.110.0: only over a painted layer (a model that replaces it carries its own glow)
                     ArmorGlow.draw(pose, buffers, model, d.slot(), RelicTextures.armorGlow(d.id()), 0.75f + 0.25f * (float) Math.sin(age * 0.09f));
             }
             boolean first = view == WornPlan.View.SELF_FIRST;
