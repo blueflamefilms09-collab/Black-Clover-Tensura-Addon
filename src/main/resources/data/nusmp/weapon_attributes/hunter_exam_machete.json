@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:axe",
+  "attributes": {
+    "range_bonus": -0.1
+  }
+}

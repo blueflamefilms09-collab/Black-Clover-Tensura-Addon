@@ -1410,6 +1410,36 @@
       "class": "rapier",
       "profile": "rapier",
       "source": "relic"
+    },
+    "apprentice_birch_wand": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
+    "axel_frontier_club": {
+      "class": "club",
+      "profile": "club",
+      "source": "relic"
+    },
+    "east_blue_cutlass": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
+    "genin_academy_kunai": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
+    "hunter_exam_machete": {
+      "class": "cleaver",
+      "profile": "cleaver",
+      "source": "relic"
+    },
+    "selection_hopefuls_bokken": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
     }
   },
   "excluded": {

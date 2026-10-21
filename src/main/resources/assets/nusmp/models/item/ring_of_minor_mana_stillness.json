@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/ring_of_minor_mana_stillness"
+  }
+}

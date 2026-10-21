@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/explosion_fan_club_pin"
+  }
+}

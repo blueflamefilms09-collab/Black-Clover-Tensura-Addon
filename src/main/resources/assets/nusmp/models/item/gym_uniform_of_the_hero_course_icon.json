@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/gym_uniform_of_the_hero_course"
+  }
+}

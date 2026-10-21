@@ -46,6 +46,7 @@ def all_rows():
         out += rows
     out += _wave105_rows()                          # 1.111.0: wave 105 (normal_c); its Java, sprites and lang come from new_normal_c/gen.py, the worn ornaments from gen_worn_all
     out += _wave103_rows()                          # 1.111.0: wave 103 (special_normal_a); its Java, sprites and lang come from new_special_normal_a/gen.py, the worn ornaments from gen_worn_all
+    out += _wave104_rows()                          # 1.111.0: wave 104 (normal_b); its Java, sprites and lang come from new_normal_b/gen.py, the worn ornaments from gen_worn_all
     return out
 
 
@@ -67,6 +68,16 @@ def _wave103_rows():
     for r in _r103.ROWS:
         r["series"] = "the everyday gear of many worlds"
     return list(_r103.ROWS)
+
+
+def _wave104_rows():
+    try:
+        from new_normal_b import rows as _r104
+    except ModuleNotFoundError:
+        return []
+    for r in _r104.ROWS:
+        r["series"] = "the everyday gear of many worlds"
+    return list(_r104.ROWS)
 
 
 def hexc(c):

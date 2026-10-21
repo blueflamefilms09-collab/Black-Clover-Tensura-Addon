@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/ring_of_the_wandering_sorceress"
+  }
+}

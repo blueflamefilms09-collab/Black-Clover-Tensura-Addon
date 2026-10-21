@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/guardians_gold_coin_necklace"
+  }
+}

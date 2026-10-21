@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/subarus_track_jacket_zipper"
+  }
+}

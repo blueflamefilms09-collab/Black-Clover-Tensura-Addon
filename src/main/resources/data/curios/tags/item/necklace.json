@@ -341,6 +341,51 @@
     },
     {
       "id": "nusmp:wings_of_freedom_pin",
+      "id": "nusmp:celestial_spirit_key_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_blood_talisman_chip",
+      "required": false
+    },
+    {
+      "id": "nusmp:djinn_vessel_replica_amulet",
+      "required": false
+    },
+    {
+      "id": "nusmp:four_leaf_clover_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:four_star_ball_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:goddess_blessing_medallion",
+      "required": false
+    },
+    {
+      "id": "nusmp:guardians_gold_coin_necklace",
+      "required": false
+    },
+    {
+      "id": "nusmp:prayer_bead_necklace",
+      "required": false
+    },
+    {
+      "id": "nusmp:rimurus_slime_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:spirit_mediums_salt_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:spirit_tortoise_scale_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:wolf_tooth_pendant",
       "required": false
     }
   ]

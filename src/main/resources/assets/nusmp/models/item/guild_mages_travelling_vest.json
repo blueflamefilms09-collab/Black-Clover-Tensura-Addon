@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/guild_mages_travelling_vest"
+  }
+}
