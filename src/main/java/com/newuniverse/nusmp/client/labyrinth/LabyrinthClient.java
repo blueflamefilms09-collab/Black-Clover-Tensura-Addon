@@ -17,5 +17,6 @@ public final class LabyrinthClient {
         com.newuniverse.nusmp.client.labyrinth.vault.VaultClient.init(modBus);                             // D: pedestal renderer
         com.newuniverse.nusmp.client.labyrinth.rift.RiftClient.init(modBus);                               // 1.72.0: the dimensional rift renderer
         com.newuniverse.nusmp.client.labyrinth.foundry.FoundryClient.init(modBus);                         // the Mob Foundry: the renderer of the 400 dungeon mobs
+        com.newuniverse.nusmp.client.labyrinth.props.PropsClient.init(modBus);                             // 1.107.0: the weapon rack renderer
     }
 }

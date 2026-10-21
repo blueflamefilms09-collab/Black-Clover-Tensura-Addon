@@ -241,6 +241,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryConfig.SPEC, "nusmp-labyrinth-mega-foundry-server.toml");   // the Mob Foundry: 400 custom dungeon mobs
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.squad.SquadConfig.SPEC, "nusmp-labyrinth-squad-server.toml");   // 1.99.0: coordinated 5 to 8 member squads (squads.enabled)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.loot.LootConfig.SPEC, "nusmp-labyrinth-loot-server.toml");   // 1.99.0: functional anime loot (drop rates)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.props.PropsConfig.SPEC, "nusmp-labyrinth-props-server.toml");   // 1.107.0: props.rackInsteadOfArmourStand (weapon racks in place of armour stands)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.macro.MacroConfig.SPEC, "nusmp-labyrinth-mega-macro-server.toml");   // 1.55.0: the Hub terrain generator
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.theme.ThemeConfig.SPEC, "nusmp-labyrinth-mega-theme-server.toml");   // 1.54.0: region themes and the Crucible of Choice
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0
