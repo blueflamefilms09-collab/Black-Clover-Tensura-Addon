@@ -226,7 +226,6 @@
       "required": false
     },
     {
-      "id": "nusmp:turtle_school_weighted_belt",
       "id": "nusmp:adventurers_money_pouch_belt",
       "required": false
     },
@@ -272,6 +271,14 @@
     },
     {
       "id": "nusmp:zanpakuto_sheath_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:adventurers_cooking_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:shinobi_tool_belt",
       "required": false
     }
   ]

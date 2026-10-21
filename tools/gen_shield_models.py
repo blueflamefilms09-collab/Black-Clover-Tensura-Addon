@@ -14,7 +14,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 M = os.path.join(ROOT, "src/main/resources/assets/nusmp/models/item")
 
-IDS = "magebane_shield legendary_shield aegis_of_the_abyss celestial_support heros_shield thunder_shield calamity_wave_aegis".split()
+IDS = "magebane_shield legendary_shield aegis_of_the_abyss celestial_support heros_shield thunder_shield calamity_wave_aegis hylian_hero_shield".split()
 
 
 def t(rot, tr, sc):

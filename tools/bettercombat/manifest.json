@@ -1440,6 +1440,41 @@
       "class": "katana",
       "profile": "katana",
       "source": "relic"
+    },
+    "ackerman_twin_blades": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
+    },
+    "anneal_blade": {
+      "class": "shortsword",
+      "profile": "shortsword",
+      "source": "relic"
+    },
+    "explosion_wizards_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "moonfang_zangetsu": {
+      "class": "greatsword",
+      "profile": "greatsword",
+      "source": "relic"
+    },
+    "rems_morning_star": {
+      "class": "club",
+      "profile": "club",
+      "source": "relic"
+    },
+    "ruyi_power_pole": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "thorn_princess_stiletto": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
     }
   },
   "excluded": {
@@ -1527,6 +1562,8 @@
     "wisp_lantern": "hand item / charm / book / key: not a weapon",
     "wraith_cloak": "hand item / charm / book / key: not a weapon",
     "written_consent": "hand item / charm / book / key: not a weapon",
-    "zogratis_hourglass": "hand item / charm / book / key: not a weapon"
+    "zogratis_hourglass": "hand item / charm / book / key: not a weapon",
+    "arashs_stella_bow": "ranged (bow): Better Combat only handles melee",
+    "hylian_hero_shield": "shield: no swing"
   }
 }

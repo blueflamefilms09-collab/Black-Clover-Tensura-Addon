@@ -877,6 +877,33 @@
     },
     "hunter_exam_machete": {
       "class": "cleaver"
+    },
+    "moonfang_zangetsu": {
+      "class": "greatsword"
+    },
+    "ruyi_power_pole": {
+      "class": "staff"
+    },
+    "ackerman_twin_blades": {
+      "class": "dagger"
+    },
+    "arashs_stella_bow": {
+      "class": "bow"
+    },
+    "hylian_hero_shield": {
+      "class": "shield"
+    },
+    "rems_morning_star": {
+      "class": "club"
+    },
+    "explosion_wizards_staff": {
+      "class": "staff"
+    },
+    "anneal_blade": {
+      "class": "shortsword"
+    },
+    "thorn_princess_stiletto": {
+      "class": "dagger"
     }
   },
   "_excluded_was": {

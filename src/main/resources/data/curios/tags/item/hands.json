@@ -371,7 +371,6 @@
       "required": false
     },
     {
-      "id": "nusmp:tournament_fist_wraps",
       "id": "nusmp:breathing_practice_wristlets",
       "required": false
     },
@@ -425,6 +424,14 @@
     },
     {
       "id": "nusmp:young_alchemists_chalk_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:e_rank_hunter_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:transmutation_circle_gloves",
       "required": false
     }
   ]

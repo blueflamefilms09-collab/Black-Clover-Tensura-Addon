@@ -18,7 +18,8 @@ public final class ShieldSet {
 
     /** The item ids (registry paths under nusmp:), in the order the previews and the doc list them. */
     public static final List<String> IDS = List.of(
-            "magebane_shield", "legendary_shield", "aegis_of_the_abyss", "celestial_support", "heros_shield", "thunder_shield", "calamity_wave_aegis");
+            "magebane_shield", "legendary_shield", "aegis_of_the_abyss", "celestial_support", "heros_shield", "thunder_shield", "calamity_wave_aegis",
+            "hylian_hero_shield");
 
     /** Ids the class table (assets/nusmp/weapon_classes.json) files under "shield" that are not held-up shields. */
     public static final Set<String> CLASS_ONLY = Set.of("vassal_mirror");

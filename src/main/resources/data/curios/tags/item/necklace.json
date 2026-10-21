@@ -340,7 +340,6 @@
       "required": false
     },
     {
-      "id": "nusmp:wings_of_freedom_pin",
       "id": "nusmp:celestial_spirit_key_pendant",
       "required": false
     },
@@ -386,6 +385,10 @@
     },
     {
       "id": "nusmp:wolf_tooth_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:revival_fluid_pendant",
       "required": false
     }
   ]

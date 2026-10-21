@@ -51,7 +51,7 @@ public final class Wave104 {
             "wandering_mages_mantle_cuirass", "rain_slick_oilskin_jacket", "ogre_village_rope_belt", "kouhas_silk_sash",
             "adventurers_potion_holster", "hunters_utility_belt", "lucys_key_ring_belt", "kunai_holster_strap",
             "straw_hat_crew_sash", "servants_contract_belt", "witch_cult_prayer_cord", "zanpakuto_sheath_sash",
-            "adventurers_money_pouch_belt", "pilgrims_knotted_rope_cord", "rimurus_slime_pendant", "four_leaf_clover_locket",
+            "adventurers_money_pouch_belt", "pilgrims_knotted_rope_cord", "rimurus_slime_pendant",
             "djinn_vessel_replica_amulet", "goddess_blessing_medallion", "celestial_spirit_key_pendant", "guardians_gold_coin_necklace",
             "spirit_tortoise_scale_charm", "four_star_ball_pendant", "spirit_mediums_salt_pouch", "prayer_bead_necklace",
             "wolf_tooth_pendant", "demon_blood_talisman_chip", "bedroll_and_pack", "sealed_forest_wanderers_cape",
@@ -402,11 +402,6 @@ public final class Wave104 {
                 .desc("A small pendant in the shape of a smiling slime, sold in a town that remembers who built it. It is soft to the touch and does not break.")
                 .passive(Passive.attr("minecraft:generic.max_health", 2.0, Operation.ADD_VALUE)));
 
-        out.accept(RelicDef.of("four_leaf_clover_locket", "Four-Leaf Clover Locket", Grade.NORMAL, RelicSlot.NECK)
-                .palette(0x38A05A, 0xF0E8C8, 0xB0FFC0).look(Look.LOCKET)
-                .desc("A locket with a pressed clover inside, given by a mother who hoped for the best. It opens on the first try, which is a kind of luck.")
-                .passive(Passive.attr("minecraft:generic.luck", 1.0, Operation.ADD_VALUE)));
-
         out.accept(RelicDef.of("djinn_vessel_replica_amulet", "Djinn Vessel Replica Amulet", Grade.NORMAL, RelicSlot.NECK)
                 .palette(0xC8A838, 0x7A2A58, 0xFFE888).look(Look.AMULET)
                 .desc("A cheap brass copy of a treasure that holds a great being, sold on the roads to those who want to feel they own a miracle. It is nice and heavy.")
@@ -695,7 +690,7 @@ public final class Wave104 {
                 .engrave("sturdy"));
     }
 
-    /** The in-game self-test {@code relic.normal_b}, run by the CI server smoke test: all 117 relics are registered with their grades and the files their looks need are in the jar. */
+    /** The in-game self-test {@code relic.normal_b}, run by the CI server smoke test: all 116 relics are registered with their grades and the files their looks need are in the jar. */
     public static void hooks() {
         SelfTests.register("relic.normal_b", server -> run());
     }
@@ -724,7 +719,7 @@ public final class Wave104 {
                 if (Wave104.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
         }
         if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
-        if (normal != 117 || special != 0) return SelfTests.Result.fail("grades " + normal + " Normal / " + special + " Special (wanted 117 / 0)");
+        if (normal != 116 || special != 0) return SelfTests.Result.fail("grades " + normal + " Normal / " + special + " Special (wanted 116 / 0)");
         return SelfTests.Result.ok(IDS.length + " relics: " + normal + " Normal, " + special + " Special");
     }
 }

@@ -291,7 +291,6 @@
       "required": false
     },
     {
-      "id": "nusmp:wayfaring_pedlars_wagon_cape",
       "id": "nusmp:bedroll_and_pack",
       "required": false
     },
@@ -329,6 +328,14 @@
     },
     {
       "id": "nusmp:travellers_roadside_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:boar_hat_tavern_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:butterfly_estate_haori",
       "required": false
     }
   ]

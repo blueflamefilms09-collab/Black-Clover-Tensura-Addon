@@ -63,6 +63,7 @@ public final class RelicCatalog {
         guard("Wave103", () -> com.newuniverse.nusmp.relics.wave.Wave103.defs(out));            // 1.111.0: 25 Special and 50 Normal relics (special_normal_a)
         guard("Wave105", () -> com.newuniverse.nusmp.relics.wave.Wave105.defs(out));            // 1.111.0: 121 Normal relics (normal_c)
         guard("Wave104", () -> com.newuniverse.nusmp.relics.wave.Wave104.defs(out));            // 1.111.0: 120 Normal relics (normal_b)
+        guard("Wave102", () -> com.newuniverse.nusmp.relics.wave.Wave102.defs(out));                  // 1.111.0: 9 God + 20 Special relics (docs/relics/god_special_new.md)
         guard("later waves", () -> WaveRegistry.defs(out));                 // 1.25.0: WaveBoss and Wave8 and up, found by name
         Set<String> taken = new HashSet<>();
         for (DeferredHolder<Item, ? extends Item> h : NUItems.ITEMS.getEntries()) taken.add(h.getId().getPath());
@@ -112,6 +113,7 @@ public final class RelicCatalog {
         guard("Wave103 hooks", com.newuniverse.nusmp.relics.wave.Wave103::hooks);
         guard("Wave105 hooks", com.newuniverse.nusmp.relics.wave.Wave105::hooks);
         guard("Wave104 hooks", com.newuniverse.nusmp.relics.wave.Wave104::hooks);
+        guard("Wave102 hooks", com.newuniverse.nusmp.relics.wave.Wave102::hooks);                      // 1.111.0: the weapons' passive rules and the self-test relic.god_special_new
         guard("later waves hooks", WaveRegistry::hooks);
         guard("pair hooks", com.newuniverse.nusmp.relics.pair.PairHooks::register);          // 1.29.0: the off-hand strike and the first-login left half
     }

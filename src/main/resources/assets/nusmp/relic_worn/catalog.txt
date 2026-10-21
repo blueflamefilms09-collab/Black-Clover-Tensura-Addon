@@ -651,7 +651,6 @@ relic hunter_exam_goggles circlet_gem uq_hunter_exam_goggles
 relic hero_costume_visor helm_horned uq_hero_costume_visor
 relic village_militia_kettle_helm helm_horned uq_village_militia_kettle_helm
 relic travellers_mage_cap hat_wizard uq_travellers_mage_cap
-relic hollow_mask_fragment helm_horned uq_hollow_mask_fragment
 relic sorceress_silver_tiara circlet_gem uq_sorceress_silver_tiara
 relic holy_knight_recruits_helm helm_horned uq_holy_knight_recruits_helm
 relic demon_slayer_corps_hairpin circlet_gem uq_demon_slayer_corps_hairpin
@@ -730,6 +729,25 @@ relic ring_of_the_wandering_sorceress bracelet_charms@rarm ring_gem@larm~ uq_rin
 relic ring_of_minor_mana_stillness bracelet_charms@rarm ring_gem@larm~ uq_ring_of_minor_mana_stillness@rarm uq_ring_of_minor_mana_stillness@larm~
 relic sin_of_patience_ring bracelet_charms@rarm ring_gem@larm~ uq_sin_of_patience_ring@rarm uq_sin_of_patience_ring@larm~
 relic climbers_chalked_gloves glove_cuffed@rarm glove_cuffed@larm~ uq_climbers_chalked_gloves@rarm uq_climbers_chalked_gloves@larm~
+relic perfect_susanoo_plate w102_susanoo_body w102_susanoo_pauldron@rarm w102_susanoo_pauldron@larm~
+relic joyboys_straw_hat w102_strawhat
+relic greed_island_binder w102_binder
+relic requiem_ladybug_brooch w102_ladybug
+relic revival_fluid_pendant pendant_drop uq_revival_fluid_pendant
+relic butterfly_estate_haori cape_short uq_butterfly_estate_haori
+relic boar_hat_tavern_cloak cloak_long uq_boar_hat_tavern_cloak
+relic shinobi_tool_belt belt_buckled uq_shinobi_tool_belt
+relic adventurers_cooking_belt belt_buckled uq_adventurers_cooking_belt
+relic e_rank_hunter_gloves glove_cuffed@rarm glove_cuffed@larm~ uq_e_rank_hunter_gloves@rarm uq_e_rank_hunter_gloves@larm~
+relic transmutation_circle_gloves glove_cuffed@rarm glove_cuffed@larm~ uq_transmutation_circle_gloves@rarm uq_transmutation_circle_gloves@larm~
+relic kuriboh_plush_charm charm_orbit uq_kuriboh_plush_charm
+relic pochita_pull_cord_charm charm_flask uq_pochita_pull_cord_charm
+relic flower_field_charm charm_beads uq_flower_field_charm
+relic magician_turban_circlet circlet_gem uq_magician_turban_circlet
+relic kijin_festival_mask helm_horned uq_kijin_festival_mask
+relic black_bulls_robe sleeves_flared@rarm sleeves_flared@larm~ uq_black_bulls_robe
+relic hestia_familia_leathers chest_straps pauldron_leather@rarm uq_hestia_familia_leathers
+relic weighted_training_boots greaves_plated@rleg greaves_plated@lleg uq_weighted_training_boots@rleg uq_weighted_training_boots@lleg
 relic arcane_conduction_armor chest_conduction coil_arm@rarm coil_arm@larm~
 relic armor_of_plot chest_plot pauldron_plate@rarm pauldron_plate@larm~ deco_halo_back
 relic armor_of_the_defiant_dawn chest_dawn pauldron_rays@rarm pauldron_rays@larm~
@@ -770,6 +788,10 @@ fx lifes_emergency ember
 fx amulet_of_the_sea_of_stars star
 fx cloak_mimic_tame wisp
 fx urn_of_black_pudding ember
+fx perfect_susanoo_plate wisp
+fx joyboys_straw_hat star
+fx greed_island_binder leaf
+fx requiem_ladybug_brooch star
 fx skycrystal_armor snow
 fx slime_armour wisp
 fx soul_armor wisp

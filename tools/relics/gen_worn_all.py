@@ -33,6 +33,7 @@ for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn
     BUILDERS.update(mod.MODELS)
 GENERATED_ROWS = gen_relic_waves.all_rows()                  # 1.70.0: the generated relic waves each wear a look plus an ornament of their own (gen_worn_unique.py)
 BUILDERS.update(gen_worn_unique.models_for(GENERATED_ROWS))
+sys.path.insert(0, os.path.join(HERE, "new_wave102")); import worn102 as _worn102; _worn102.register(BUILDERS)      # 1.111.0 (append-only hook, wave 102): the God signature models and the Special ornaments of tools/relics/new_wave102
 
 
 def catalog():
@@ -173,6 +174,7 @@ def catalog():
                     ("amulet_of_the_sea_of_stars", "star"), ("cloak_mimic_tame", "wisp"), ("urn_of_black_pudding", "ember")):
         cat.theme(rid, th)
     gen_worn_unique.catalog_generated(cat, GENERATED_ROWS)
+    _worn102.catalog(cat)                                    # 1.111.0 (append-only hook, wave 102): the worn entries of the 20 gear relics of Wave102
     gen_worn_armor_relics.catalog_relics(cat)              # the armour relics that only had the model of their look
     gen_worn_armor.catalog_items(cat)                      # the armour items (the robe sets)
     gen_worn_armor.catalog_anime(cat)                      # 1.48.0: the same robe sets as anime cloaks (`anime:<id>` keys, chosen by relicfx.robeAnime)
