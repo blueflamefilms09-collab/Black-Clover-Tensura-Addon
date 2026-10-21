@@ -1,0 +1,163 @@
+{
+ "id": "seven_dragon_balls_of_shenron",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.seven_dragon_balls_of_shenron",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "storm cloud",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "storm_cloud",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "dragon balls",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "dragon_balls",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shenron",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "shenron",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "star glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "star_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "pouch",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "pouch",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "radar",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "radar",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wish ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "wish_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lightning sparks",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "lightning_sparks",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ball glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "ball_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ball embers",
+   "kind": "particle",
+   "type": "embers",
+   "particle": "nusmp:ember",
+   "count": 1,
+   "every": 4,
+   "radius": 0.55,
+   "rise": 0.018,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFC040"
+  },
+  {
+   "name": "dragon sparks",
+   "kind": "particle",
+   "type": "sparks",
+   "particle": "nusmp:spark",
+   "count": 1,
+   "every": 7,
+   "radius": 0.6,
+   "rise": 0.0,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFE070"
+  },
+  {
+   "name": "star glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:star4",
+   "count": 1,
+   "every": 6,
+   "radius": 0.45,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FF6A40"
+  }
+ ]
+}

@@ -1,0 +1,171 @@
+{
+ "id": "greed_island_original_binder",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.greed_island_original_binder",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "game core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "game_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "clasp glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "clasp_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "card fan",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "card_fan",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "floating island",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "floating_island",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "palm",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "palm",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "waterfall",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "waterfall",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "spell cards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "spell_cards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far cards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "spell_cards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "game halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "game_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ground circle",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "ground_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "falling cards",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "nusmp:card",
+   "count": 1,
+   "every": 7,
+   "radius": 0.6,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "game glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:gem_sparkle",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "90FFB0"
+  },
+  {
+   "name": "leaf motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:leaf_green",
+   "count": 1,
+   "every": 8,
+   "radius": 0.5,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

@@ -56,6 +56,13 @@ public final class VuModels {
                             all.addAll(in2.lines().toList());
                         }
                     }
+                    // 1.111.0 (wave 101): the table of the twelve new Genesis relics, read last (an optional file; it names only relics of its own)
+                    Optional<Resource> extra2 = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides_genesis_new.txt"));
+                    if (extra2.isPresent()) {
+                        try (BufferedReader in3 = extra2.get().openAsReader()) {
+                            all.addAll(in3.lines().toList());
+                        }
+                    }
                     VuOverrides t = VuOverrides.parse(all);
                     for (String p : t.problems()) LogUtils.getLogger().error("[nusmp] visual_upgrade/overrides.txt: {}", p);
                     table = t;

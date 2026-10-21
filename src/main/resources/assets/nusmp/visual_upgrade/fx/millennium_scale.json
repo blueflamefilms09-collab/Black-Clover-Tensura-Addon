@@ -1,0 +1,161 @@
+{
+ "id": "millennium_scale",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.millennium_scale",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "heart glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "heart_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "feather light",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "feather_light",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "balance beam",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "balance_beam",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "truth star",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "truth_star",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "drifting feathers",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "drifting_feathers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "judgement halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "judgement_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "judgement halo b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "judgement_halo_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "verdict motes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "verdict_motes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "ground seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "ground_circle",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "falling feathers",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "nusmp:feather_white",
+   "count": 1,
+   "every": 7,
+   "radius": 0.6,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "verdict glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:gem_sparkle",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "78F0D8"
+  },
+  {
+   "name": "judging eyes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:rune_eye",
+   "count": 1,
+   "every": 12,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}
