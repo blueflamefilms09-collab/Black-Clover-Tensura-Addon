@@ -1551,5 +1551,80 @@
       { "name": "nusmp:mob/npc/taunt_2" },
       { "name": "nusmp:mob/npc/taunt_3" }
     ]
+  },
+  "music.stone.explore": {
+    "sounds": [{ "name": "nusmp:music/stone_explore", "stream": true }]
+  },
+  "music.stone.battle": {
+    "sounds": [{ "name": "nusmp:music/stone_battle", "stream": true }]
+  },
+  "music.storm.explore": {
+    "sounds": [{ "name": "nusmp:music/storm_explore", "stream": true }]
+  },
+  "music.storm.battle": {
+    "sounds": [{ "name": "nusmp:music/storm_battle", "stream": true }]
+  },
+  "music.blood.explore": {
+    "sounds": [{ "name": "nusmp:music/blood_explore", "stream": true }]
+  },
+  "music.blood.battle": {
+    "sounds": [{ "name": "nusmp:music/blood_battle", "stream": true }]
+  },
+  "music.flame.explore": {
+    "sounds": [{ "name": "nusmp:music/flame_explore", "stream": true }]
+  },
+  "music.flame.battle": {
+    "sounds": [{ "name": "nusmp:music/flame_battle", "stream": true }]
+  },
+  "music.frost.explore": {
+    "sounds": [{ "name": "nusmp:music/frost_explore", "stream": true }]
+  },
+  "music.frost.battle": {
+    "sounds": [{ "name": "nusmp:music/frost_battle", "stream": true }]
+  },
+  "music.verdant.explore": {
+    "sounds": [{ "name": "nusmp:music/verdant_explore", "stream": true }]
+  },
+  "music.verdant.battle": {
+    "sounds": [{ "name": "nusmp:music/verdant_battle", "stream": true }]
+  },
+  "music.spatial.explore": {
+    "sounds": [{ "name": "nusmp:music/spatial_explore", "stream": true }]
+  },
+  "music.spatial.battle": {
+    "sounds": [{ "name": "nusmp:music/spatial_battle", "stream": true }]
+  },
+  "music.holy.explore": {
+    "sounds": [{ "name": "nusmp:music/holy_explore", "stream": true }]
+  },
+  "music.holy.battle": {
+    "sounds": [{ "name": "nusmp:music/holy_battle", "stream": true }]
+  },
+  "music.deep.explore": {
+    "sounds": [{ "name": "nusmp:music/deep_explore", "stream": true }]
+  },
+  "music.deep.battle": {
+    "sounds": [{ "name": "nusmp:music/deep_battle", "stream": true }]
+  },
+  "music.crypt.explore": {
+    "sounds": [{ "name": "nusmp:music/crypt_explore", "stream": true }]
+  },
+  "music.crypt.battle": {
+    "sounds": [{ "name": "nusmp:music/crypt_battle", "stream": true }]
+  },
+  "music.boss.holy": {
+    "sounds": [{ "name": "nusmp:music/boss_holy", "stream": true }]
+  },
+  "music.boss.abyssal": {
+    "sounds": [{ "name": "nusmp:music/boss_abyssal", "stream": true }]
+  },
+  "music.safe": {
+    "sounds": [{ "name": "nusmp:music/safe", "stream": true }]
+  },
+  "music.hub": {
+    "sounds": [{ "name": "nusmp:music/hub", "stream": true }]
+  },
+  "music.rift": {
+    "sounds": [{ "name": "nusmp:music/rift", "stream": true }]
   }
 }

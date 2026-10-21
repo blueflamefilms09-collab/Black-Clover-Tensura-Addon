@@ -117,6 +117,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
         com.newuniverse.nusmp.sound.NUSounds.SOUNDS.register(modEventBus);
         com.newuniverse.nusmp.audio.ModSounds.SOUNDS.register(modEventBus);                                                // 1.99.0: the bespoke mob voices, 25 families x 8 cues
+        com.newuniverse.nusmp.audio.music.ThemedMusic.init(modEventBus);                                                   // 1.107.0: the themed dungeon music (25 sound events, the state payload)
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
@@ -161,6 +162,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
+            com.newuniverse.nusmp.client.music.ThemedMusicEngine.init(modEventBus, modContainer);                            // 1.107.0: the themed dungeon music engine, nusmp-music-client.toml (music.themed)
             com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();                                                 // 1.55.0: the client side of the alignment sync
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
@@ -260,6 +262,8 @@ public class NUSMP {
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicEvents.register(NeoForge.EVENT_BUS);                                  // the five Relics
         com.newuniverse.nusmp.audio.MobSoundRemap.register(NeoForge.EVENT_BUS);                                              // 1.99.0: vanilla mob voices in the dungeon become the family's cues
         com.newuniverse.nusmp.audio.AudioSelfTests.register();                                                               // 1.99.0: self-test audio.mob_sounds
+        com.newuniverse.nusmp.audio.music.ThemedMusic.register(NeoForge.EVENT_BUS);                                          // 1.107.0: the themed music's once-a-second server evaluation
+        com.newuniverse.nusmp.audio.music.MusicSelfTests.register();                                                         // 1.107.0: self-test dungeon.music
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
