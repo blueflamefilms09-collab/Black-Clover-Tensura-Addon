@@ -25,10 +25,16 @@ def main():
     after = load("djinn_dark_weapons_after.json")
     items = after["items"]
     mesh_r = [r["ratios"]["mesh"] for r in items]
+    body_r = [r["mesh"]["quads_body"] / base[r["item"]]["mesh"]["quads_body"] for r in items]
     tex_r = [r["ratios"]["texture"] for r in items]
     v_r = [r["V_after"] for r in items]
     vb_r = [r["V_after_brief_weights"] for r in items]
-    welded = [r["mesh"]["vertices_welded"] for r in items]
+    welded = []
+    for r in items:
+        spec_ = json.load(open(os.path.join(M.ASSETS, "visual_upgrade", r["item"] + ".json"), encoding="utf-8"))
+        orb_ = spec_["orbiters"][0]
+        orbit_pts = M.read_mesh(os.path.join(M.ASSETS, "weapon_meshes", orb_["mesh"] + ".txt"))[1]
+        welded.append(r["mesh"]["vertices_welded"] + orb_["count"] * M.welded(orbit_pts))
     quads_before = [base[r["item"]]["mesh"]["quads_full_detail"] for r in items]
     quads_after = [r["mesh"]["quads_full_detail"] for r in items]
     lod = [r["mesh"]["lod_vertices"] // 4 for r in items]
@@ -57,7 +63,7 @@ def main():
     table = buf.getvalue()
 
     text = TEMPLATE.format(
-        n=len(items), mesh_min=min(mesh_r), mesh_max=max(mesh_r), mesh_mean=statistics.mean(mesh_r), tex_min=min(tex_r), tex_max=max(tex_r), tex_mean=statistics.mean(tex_r),
+        n=len(items), body_min=min(body_r), body_max=max(body_r), mesh_min=min(mesh_r), mesh_max=max(mesh_r), mesh_mean=statistics.mean(mesh_r), tex_min=min(tex_r), tex_max=max(tex_r), tex_mean=statistics.mean(tex_r),
         v_min=min(v_r), v_max=max(v_r), v_mean=statistics.mean(v_r), vb_min=min(vb_r), vb_max=max(vb_r), vb_mean=statistics.mean(vb_r),
         wmin=min(welded), wmax=max(welded), qb_min=min(quads_before), qb_max=max(quads_before), qa_min=min(quads_after), qa_max=max(quads_after), lod_min=min(lod), lod_max=max(lod),
         under5=(", ".join(under5) if under5 else "none"), table=table, mb=mb, recipe_table=recipe_table)
@@ -84,7 +90,7 @@ two earlier God slices (`god_melee_a`: the twelve God weapons of Wave 71; `god_m
 | **NEW** | `vupgrade/DjinnDarkSelfTests` (self-test `visual.djinn_dark_weapons`), the pure `relics/upgrade/UpgradeParticleNames`, JUnit `DjinnDarkBudgetTest`, `DjinnDarkRatioTest`, `UpgradeParticleNamesTest`, `UpgradeFxPurgeScopeTest`; the lang fragment `tools/lang/djinn_dark_weapons.json` (one tooltip line) |
 | **REPLACED** | nothing was removed. In the hand, on the ground, in frames and on mobs a dark Djinn weapon is drawn from the NEW mesh instead of the old one while the client option `visual.upgrade` is on (that is the only replacement, and it is a switch). The upgraded mesh keeps **every old quad** (position, normal, shape: a test checks it) and adds to it, so the silhouette, the size and the placement in the hand (`place` line copied) are the old ones |
 | **KEPT** | the old meshes, skins, glow skins and 16 x 16 sprites (still the inventory icons), item models and display presets, item ids, stats, acts, passives, engravings (`DjinnWeaponRules`, `item/WeaponEngravings` rule 6 holds: no weapon was added or reworked in stats), the Djinn Equip, the loan, the Better Combat files; the 36 light weapons; the Time Magic VFX (`TimeMagicLayer`, `time_*` textures, `gen_time_vfx_textures.py`, the Time calls of `TimeBook`) were not read or edited |
-| **REPLACED (follow-up)** | `client/relics/fx/UpgradeFxClient` and `relics/upgrade/UpgradeActFx` built vanilla coloured `DustParticleOptions`; they now spawn the mod's own custom particles (section 6) and their two exclusion lines are gone from `docs/rukh/scope.txt` |
+| **REPLACED (follow-up)** | `client/relics/fx/UpgradeFxClient` and `relics/upgrade/UpgradeActFx` built vanilla coloured `DustParticleOptions`; they now spawn the mod's own custom particles (section 4) and their two exclusion lines are gone from `docs/rukh/scope.txt` |
 
 Rule 6 (engravings) and rule 7 (3D model, old sprite as the icon, glow / effects) hold. Rule 4 (version bump) was **not** applied: the brief of this release forbids touching the version files.
 
@@ -107,7 +113,7 @@ weapon looks.** The two ratios that mean something are the mesh and the texture 
 | painted-texel ratio (all maps) | {tex_min:.1f} | {tex_mean:.1f} | {tex_max:.1f} |
 | V (our weights) | {v_min:.2f} | {v_mean:.2f} | {v_max:.2f} |
 | V (brief's example weights) | {vb_min:.2f} | {vb_mean:.2f} | {vb_max:.2f} |
-| welded vertices at full detail (cap 2500) | {wmin} | | {wmax} |
+| welded vertices at full detail (body + 6 orbiting pieces; cap 2500) | {wmin} | | {wmax} |
 | quads before | {qb_min} | | {qb_max} |
 | quads after (full detail) | {qa_min} | | {qa_max} |
 | level-of-detail quads | {lod_min} | | {lod_max} |
@@ -116,7 +122,7 @@ Items whose mesh ratio is under 5.0: {under5}.
 
 {table}
 
-(`welded after` is the welded vertex count of the body mesh alone; the orbiting pieces are added for the cap: `DjinnDarkBudgetTest` applies the cap to body + 6 pieces.)
+(`welded after` in the table is the welded vertex count of the body mesh alone; `DjinnDarkBudgetTest` applies the cap of 2500 to the body plus its six orbiting pieces, the figure in the summary table.)
 
 ## 3. What was built
 
@@ -166,11 +172,15 @@ names for the facade. Not run in a game: how the custom particles of a theme loo
 ## 5. Decisions the brief did not settle (honest notes)
 
 1. **The cap read as welded vertices.** As in `god_melee_b`, the brief's "2500 vertices of one item in hand" is read as the welded vertices of the full-detail mesh including its six orbiting pieces. Every weapon is
-   at or under 2500 (`DjinnDarkBudgetTest`). The brief's "mesh >= 5x the baseline quads" is met for the items whose old mesh is small enough; the build sizes each mesh to 5.0x and never above the cap
-   (items under 5.0: see section 2). Emitted vertices per pass are 4 x quads, as the renderer writes them.
+   at or under 2500 (`DjinnDarkBudgetTest`). The brief's "mesh >= 5x the baseline quads" holds for all 36 only because the old meshes of this slice are small (168 to 469 quads, against 774 to 3170 in the
+   earlier God slices, where it could not be met); the build sizes each mesh to 5.0x (the smallest detail that reaches it) and the 2500 cap would stop it above that: the biggest, Shax (469 quads), reaches 5.17x at
+   at {wmax} welded vertices (the largest of the 36). Part of the ratio is the six orbiting pieces, counted as the brief's "multi-part orbiting pieces" at full detail (they are drawn six times); the body mesh alone grows {body_min:.1f}x to {body_max:.1f}x.
+   Emitted vertices per pass are 4 x quads, as the renderer writes them.
 2. **The old islands are enlarged, not repainted.** The old skins are the armour set's skin cut down to the weapon (28 000 to 80 000 painted texels in small scattered islands), so there is no source of a
    better painting of the old surfaces: they are enlarged and given grain / occlusion / bevel / the Djinn's colour. The new parts are painted fresh. The old surfaces will look softer than the new ones up close.
-3. **The painted-texel target (4x)** is met by the new parts' skin area and the glow maps; texels are counted as `alpha > 0`, as in the other slices. Video memory: a 1024 px RGBA map is 4 MB, the three maps of one
+3. **The painted-texel target (4x)** is met by the new parts' skin area and the glow maps; texels are counted as `alpha > 0`, as in the other slices. The ratios are large (about 9x to 30x) because the old
+   skins were the armour skin cut down to a few small islands (28 000 to 82 000 painted texels of 1 048 576) and the new skin is packed full: the texture ratio saturates against the skin's capacity and says
+   little beyond "more surface is painted, at a higher texel density". Video memory: a 1024 px RGBA map is 4 MB, the three maps of one
    weapon 12 MB, uploaded when a weapon is first drawn.
 4. **The baseline ambient layers are 0** (section 2), which makes the ambient component of V a plain count. Reported, not hidden.
 5. **A held weapon's own particles are placed from the holder's body yaw** (as in `god_melee_b`): close, never exact.
@@ -206,7 +216,9 @@ existing listing sees them.
 * How the vein wave, the halo shell, the orbiting pieces and the swing ghosts look and how fast they move is untuned; the direction the swing ghosts lag in follows the item's own axes and may be the wrong way round
   for some swings. The orbit radius is the widest extent of the weapon plus 5.5 units: for the wide weapons (fans, daggers) the pieces may look far off.
 * The motifs are placed from a measured frame of each old mesh (`frame.py`), not by hand: the preview sheets show them sitting plausibly on all 36, but a ring may cut through a wing of the old mesh or a ribbon
-  hang oddly for a weapon whose silhouette the frame measures badly (bows, claws, fans). The sheets are the software rasteriser's, with one light and no additive blending.
+  hang oddly for a weapon whose silhouette the frame measures badly (bows, claws, fans). The frame takes the low-y end as the butt and the high-y end as the head, so the two bows (Sitri, Barbatos) carry their
+  pommel crown, chain or tail on the lower limb tip and the head motifs on the upper limb: asymmetric, not mirrored; no per-weapon anchor override (`ditems.ANCHORS`, empty) was needed to keep a motif off the
+  weapon in the previews, but none was tuned either. The sheets are the software rasteriser's, with one light and no additive blending.
 * The enlarged old islands next to the fresh new parts: the difference in sharpness is only seen in the game. The core glow of the old weapon is kept; the veins on the old islands are procedural.
 * `visual.guiModel` (the tilted model in the inventory slot) was written for `god_melee_b` and never drawn for these weapons.
 * Frame time: the cost model is by construction (one extra pass over at most 700 glow quads for the veins, at most 330 level-of-detail quads for the halo and the ghosts, 6 small pieces), not measured; `/nusmp perf` was not run.

@@ -89,8 +89,9 @@ def build(did, verbose=True, cap=TOTAL_QUAD_CAP):
     lod_path = path.replace(".txt", "_lod.txt")
     lq, bq = D.make_lod(path, lod_path)
     D.save_textures(iid, atlas, g2)
-    all_y = np.concatenate([q["P"][:, 1] for q in old.quads if q["layer"] == 0] + [np.array([v[1] for p in body_parts for v in p.V])])
-    ymin, ymax = float(all_y.min()), float(all_y.max())
+    old_y = np.concatenate([q["P"][:, 1] for q in old.quads if q["layer"] == 0])
+    new_y = np.array([v[1] for p in body_parts for v in p.V])
+    ymin, ymax = float(old_y.min()), float(max(old_y.max(), new_y.max()))      # the axis of the table: from the old weapon's butt (the hand) to the highest new part; chains and tails that hang below the pommel do not count as length
     place = old.head["place"]
     maxr = max(np.abs(np.concatenate([q["P"] for q in old.quads])[:, [0, 2]]).max(), max(np.abs(np.array(p.V)[:, [0, 2]]).max() for p in body_parts))
     data = I.json_table(sp, place[3], ymin, ymax, ORBIT_COUNT, maxr + 5.5, nq, noq, lq)
