@@ -7,6 +7,11 @@
   "long_frame_blocks": 1.6,
   "weapons": [
     {
+      "id": "ackerman_twin_blades",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
       "id": "aegis_of_the_abyss",
       "action": "preset",
       "length_blocks": 1.855,
@@ -40,9 +45,28 @@
       "fixed_scale": 0.637
     },
     {
+      "id": "anneal_blade",
+      "action": "preset",
+      "length_blocks": 1.412,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.0,
+        0.84
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "anti_bird_charm",
       "action": "keep",
       "length_blocks": 0.686
+    },
+    {
+      "id": "arashs_stella_bow",
+      "action": "skip_manual",
+      "length_blocks": 1.2
     },
     {
       "id": "astralaria",
@@ -648,6 +672,20 @@
       "length_blocks": 1.353
     },
     {
+      "id": "explosion_wizards_staff",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
       "id": "fairy_glitter_gauntlets",
       "action": "keep",
       "length_blocks": 0.706
@@ -887,6 +925,11 @@
       "tip_out_of_view": false,
       "ground_scale": 0.249,
       "fixed_scale": 0.467
+    },
+    {
+      "id": "hylian_hero_shield",
+      "action": "skip_manual",
+      "length_blocks": 1.84
     },
     {
       "id": "hyperborean_crossbow",
@@ -1252,6 +1295,20 @@
       "fixed_scale": 0.849
     },
     {
+      "id": "moonfang_zangetsu",
+      "action": "preset",
+      "length_blocks": 3.118,
+      "first_person_scale": 0.313,
+      "first_person_translation_px": [
+        1.13,
+        2.36,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.256,
+      "fixed_scale": 0.481
+    },
+    {
       "id": "mountainguards_greataxe",
       "action": "preset",
       "length_blocks": 3.176,
@@ -1313,18 +1370,6 @@
       "fixed_scale": 0.505
     },
     {
-      "id": "orc_cleaver",
-      "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.497,
-      "first_person_translation_px": [
-        1.13,
-        2.93,
-        0.88
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689,
       "id": "orials_starfall_staff",
       "action": "preset",
       "length_blocks": 2.706,
@@ -1495,6 +1540,20 @@
       "fixed_scale": 0.787
     },
     {
+      "id": "rems_morning_star",
+      "action": "preset",
+      "length_blocks": 1.765,
+      "first_person_scale": 0.426,
+      "first_person_translation_px": [
+        1.13,
+        2.06,
+        0.58
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.453,
+      "fixed_scale": 0.85
+    },
+    {
       "id": "returning_hand_axe",
       "action": "preset",
       "length_blocks": 1.435,
@@ -1563,6 +1622,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.386,
       "fixed_scale": 0.724
+    },
+    {
+      "id": "ruyi_power_pole",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
     },
     {
       "id": "sanguine_wardens_cleaver",
@@ -2007,6 +2080,11 @@
       "id": "the_stabshroom",
       "action": "keep",
       "length_blocks": 0.647
+    },
+    {
+      "id": "thorn_princess_stiletto",
+      "action": "keep",
+      "length_blocks": 0.706
     },
     {
       "id": "thornblight",

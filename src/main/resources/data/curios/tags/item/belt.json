@@ -148,6 +148,14 @@
     {
       "id": "nusmp:silvered_sash_of_reflections",
       "required": false
+    },
+    {
+      "id": "nusmp:adventurers_cooking_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:shinobi_tool_belt",
+      "required": false
     }
   ]
 }

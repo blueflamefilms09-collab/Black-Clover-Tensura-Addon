@@ -289,6 +289,14 @@
     {
       "id": "nusmp:bloodbound_gauntlets",
       "required": false
+    },
+    {
+      "id": "nusmp:e_rank_hunter_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:transmutation_circle_gloves",
+      "required": false
     }
   ]
 }

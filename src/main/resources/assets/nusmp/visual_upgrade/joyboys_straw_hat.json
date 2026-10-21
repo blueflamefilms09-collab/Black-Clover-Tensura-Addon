@@ -1,0 +1,215 @@
+{
+ "id": "joyboys_straw_hat",
+ "grade": "GOD",
+ "layers": [
+  {
+   "name": "sun_motes",
+   "kind": "motes",
+   "particle": "nusmp:glint",
+   "color": "FFD870",
+   "size": 1.0,
+   "per_second": 8,
+   "box": [
+    -0.4,
+    1.4,
+    -0.1,
+    0.4,
+    2.1,
+    0.5
+   ],
+   "speed": 0.014,
+   "max_per_tick": 2
+  },
+  {
+   "name": "straw_dust",
+   "kind": "motes",
+   "particle": "fx",
+   "color": "E8C878",
+   "size": 0.8,
+   "per_second": 6,
+   "box": [
+    -0.5,
+    1.6,
+    -0.2,
+    0.5,
+    2.0,
+    0.3
+   ],
+   "speed": 0.006,
+   "max_per_tick": 2
+  },
+  {
+   "name": "sun_halo",
+   "kind": "ring",
+   "particle": "nusmp:halo_ring",
+   "color": "FFD870",
+   "size": 1.0,
+   "per_second": 9,
+   "center": [
+    0,
+    1.95,
+    0.45
+   ],
+   "radius": 0.6,
+   "spin": 0.2,
+   "plane": "vertical",
+   "max_per_tick": 3
+  },
+  {
+   "name": "drum_circle",
+   "kind": "ring",
+   "particle": "nusmp:rune_sol",
+   "color": "FFD870",
+   "size": 1.0,
+   "per_second": 7,
+   "center": [
+    0,
+    0.9,
+    0
+   ],
+   "radius": 1.0,
+   "spin": 0.14,
+   "plane": "flat",
+   "max_per_tick": 2
+  },
+  {
+   "name": "brim_edge",
+   "kind": "line",
+   "particle": "nusmp:mote",
+   "color": "FFF0A0",
+   "size": 1.0,
+   "per_second": 5,
+   "from": [
+    -0.55,
+    1.78,
+    -0.1
+   ],
+   "to": [
+    0.55,
+    1.78,
+    -0.1
+   ],
+   "speed": 0.0,
+   "max_per_tick": 2
+  },
+  {
+   "name": "laughing_floor",
+   "kind": "ground",
+   "particle": "nusmp:mote_soft",
+   "color": "E8C878",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0,
+    0
+   ],
+   "radius": 1.3,
+   "max_per_tick": 2
+  },
+  {
+   "name": "rubber_sparks",
+   "kind": "motes",
+   "particle": "nusmp:spark",
+   "color": "C03030",
+   "size": 1.0,
+   "per_second": 3,
+   "box": [
+    0.3,
+    0.8,
+    -0.15,
+    0.6,
+    1.4,
+    0.15
+   ],
+   "speed": 0.01,
+   "max_per_tick": 2
+  },
+  {
+   "name": "sun_orbit",
+   "kind": "orbit",
+   "particle": "nusmp:star4",
+   "color": "FFD870",
+   "size": 1.0,
+   "per_second": 5,
+   "center": [
+    0,
+    1.7,
+    0
+   ],
+   "radius": 0.7,
+   "spin": 0.35,
+   "plane": "flat",
+   "max_per_tick": 3
+  },
+  {
+   "name": "wind_wake",
+   "kind": "trail",
+   "particle": "nusmp:wind_swirl",
+   "color": "FFF0A0",
+   "size": 1.0,
+   "per_second": 6,
+   "center": [
+    0,
+    0.9,
+    0.4
+   ],
+   "radius": 0.7,
+   "max_per_tick": 3
+  }
+ ],
+ "acts": {
+  "rubber_dash": [
+   {
+    "shape": "WIND_GALE",
+    "color": "FFF0A0",
+    "duration": 22,
+    "power": 3.0,
+    "at": "feet",
+    "particle": "nusmp:wind_swirl",
+    "count": 40,
+    "spread": 1.2,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "WIND_SLASH",
+    "color": "FFD870",
+    "duration": 16,
+    "power": 2.5,
+    "at": "aim",
+    "particle": "nusmp:mote",
+    "count": 24,
+    "spread": 0.6,
+    "radius": 5.0,
+    "height": 1.2
+   }
+  ],
+  "sun_gods_laughter": [
+   {
+    "shape": "LIGHT_FLARE",
+    "color": "FFD870",
+    "duration": 30,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "nusmp:glint",
+    "count": 80,
+    "spread": 2.8,
+    "radius": 2.0,
+    "height": 1.2
+   },
+   {
+    "shape": "MAGIC_CIRCLE_EXPLOSION",
+    "color": "E8C878",
+    "duration": 38,
+    "power": 6.0,
+    "at": "feet",
+    "particle": "nusmp:rune_sol",
+    "count": 70,
+    "spread": 2.8,
+    "radius": 2.0,
+    "height": 1.2
+   }
+  ]
+ }
+}

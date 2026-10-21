@@ -266,6 +266,14 @@
     {
       "id": "nusmp:sun_eaters_locket",
       "required": false
+    },
+    {
+      "id": "nusmp:four_leaf_clover_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:revival_fluid_pendant",
+      "required": false
     }
   ]
 }

@@ -461,6 +461,15 @@
   "chronarchs_pendulum_sabre": "sabre",
   "reflected_kings_mirrorblade": "longsword",
   "aurliels_seraph_halberd": "glaive",
-  "nekrathuls_pact_scythe": "scythe"
+  "nekrathuls_pact_scythe": "scythe",
+  "moonfang_zangetsu": "greatsword",
+  "ruyi_power_pole": "staff",
+  "ackerman_twin_blades": "dagger",
+  "arashs_stella_bow": "bow",
+  "hylian_hero_shield": "shield",
+  "rems_morning_star": "club",
+  "explosion_wizards_staff": "staff",
+  "anneal_blade": "shortsword",
+  "thorn_princess_stiletto": "dagger"
  }
 }

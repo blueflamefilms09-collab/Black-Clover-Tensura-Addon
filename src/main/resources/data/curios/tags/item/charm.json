@@ -711,6 +711,26 @@
     {
       "id": "nusmp:vaultmakers_pocketwatch",
       "required": false
+    },
+    {
+      "id": "nusmp:flower_field_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:greed_island_binder",
+      "required": false
+    },
+    {
+      "id": "nusmp:kuriboh_plush_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:pochita_pull_cord_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:requiem_ladybug_brooch",
+      "required": false
     }
   ]
 }

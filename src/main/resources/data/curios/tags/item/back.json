@@ -233,6 +233,14 @@
     {
       "id": "nusmp:silent_winter_mantle",
       "required": false
+    },
+    {
+      "id": "nusmp:boar_hat_tavern_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:butterfly_estate_haori",
+      "required": false
     }
   ]
 }
