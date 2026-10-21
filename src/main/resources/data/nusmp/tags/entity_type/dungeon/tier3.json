@@ -54,10 +54,6 @@
       "required": false
     },
     {
-      "id": "iceandfire:gorgon",
-      "required": false
-    },
-    {
       "id": "iceandfire:cyclops",
       "required": false
     },

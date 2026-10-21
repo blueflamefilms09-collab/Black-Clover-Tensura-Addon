@@ -339,6 +339,8 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onToolUse);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onFarmlandTrample);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onEntityJoin);
+        com.newuniverse.nusmp.dungeon.placed.PlacedBoot.init(modEventBus, modContainer);                                                 // 1.107.0: blocks a player placed in the Labyrinth can be broken and picked up again (config, packet, events, self-tests)
+        com.newuniverse.nusmp.labyrinth.mega.spawnfilter.SpawnFilterBoot.init(modContainer);                                               // 1.107.0: the Gorgon ban, the spawn.blacklist and the themed palette filter of the dungeon (config, events, self-tests)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);
