@@ -111,6 +111,7 @@ final class WeaponUpgrade {
                     if (id.equals(base)) {
                         WeaponRenderer.Mesh lod = WeaponRenderer.read(id, "weapon_meshes/up/" + id + "_lod.txt", tex(spec.lodSkin), tex(spec.lodGlow));       // the low-detail mesh is classed and placed as its weapon
                         if (lod != null) {
+                            lod.grip = m.grip;                                           // 1.111.0: the level-of-detail mesh is held at the same spot as the full one (no jump when it takes over)
                             d.lod = lod;
                             d.lodDark = darkCopy(lod);
                         }
@@ -167,6 +168,7 @@ final class WeaponUpgrade {
         c.length = m.length;
         c.gripX = m.gripX;
         c.gripY = m.gripY;
+        c.grip = m.grip;                                                                  // 1.111.0 (docs/weapon_grip.md)
         c.manual = m.manual;
         c.glowSpeed = m.glowSpeed;
         c.glowMin = m.glowMin;

@@ -57,6 +57,7 @@ public final class VuRenderer {
     /** One weapon's loaded data: the meshes, the effect data and the texture locations (all built once). */
     static final class Entry {
         VuMesh mesh, lod;
+        com.newuniverse.nusmp.visual.grip.GripState grip, lodGrip;        // 1.111.0: where the hand holds the mesh (docs/weapon_grip.md); null = placed the old way
         VuSpec spec;
         ResourceLocation skin, glow, veins, lodSkin, lodGlow;
         Quaternionf turn;
@@ -117,6 +118,7 @@ public final class VuRenderer {
             e.glow = exists(mc, "textures/entity/weapon_vu/" + e.mesh.skin + "_glow.png") ? rl("textures/entity/weapon_vu/" + e.mesh.skin + "_glow.png") : null;
             e.veins = exists(mc, "textures/entity/weapon_vu/" + e.mesh.skin + "_veins.png") ? rl("textures/entity/weapon_vu/" + e.mesh.skin + "_veins.png") : null;
             e.turn = new Quaternionf(Axis.ZP.rotationDegrees(e.mesh.angle - 90f));
+            e.grip = com.newuniverse.nusmp.client.WeaponGrip.forVu(meshId, e.mesh, Float.NaN);                  // 1.111.0
             e.specOf = specs(e.mesh, e.spec);
             if (!e.mesh.lod.isEmpty()) {
                 Optional<Resource> lr = sized(mc, "weapon_meshes_vu/" + e.mesh.lod + ".txt");
@@ -125,6 +127,7 @@ public final class VuRenderer {
                     e.lodSkin = rl("textures/entity/weapon_vu/" + e.lod.skin + ".png");
                     e.lodGlow = exists(mc, "textures/entity/weapon_vu/" + e.lod.skin + "_glow.png") ? rl("textures/entity/weapon_vu/" + e.lod.skin + "_glow.png") : null;
                     e.lodSpecOf = specs(e.lod, e.spec);
+                    e.lodGrip = com.newuniverse.nusmp.client.WeaponGrip.forVu(meshId, e.lod, e.grip == null ? Float.NaN : e.grip.fraction);      // 1.111.0: the same spot on the level-of-detail mesh
                 }
             }
             return e;
@@ -181,7 +184,7 @@ public final class VuRenderer {
         boolean additive = !VuRules.additiveCulled(distSq, fp, far);
         VuMesh mesh = lodDraw ? e.lod : e.mesh;
         VuSpec.Group[] specOf = lodDraw ? e.lodSpecOf : e.specOf;
-        place(mesh, e, fp, pose);
+        place(mesh, e, fp, pose, lodDraw ? e.lodGrip : e.grip, com.newuniverse.nusmp.client.WeaponGrip.index(ctx));
         float time = mc.level == null ? 0f : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         float drawAge = lodDraw ? 1e9f : drawAge(ctx, mc, time);
         render(stack, mesh, e, specOf, lodDraw, additive, fp, pose, buffers, light, overlay, time, drawAge, lodDraw ? e.lodSkin : e.skin, lodDraw ? e.lodGlow : e.glow, lodDraw ? null : e.veins);
@@ -199,25 +202,32 @@ public final class VuRenderer {
         pose.mulPose(Axis.YP.rotationDegrees(-32f));
         pose.mulPose(Axis.XP.rotationDegrees(14f));
         pose.translate(-0.5f, -0.5f, -0.5f);
-        place(e.mesh, e, false, pose);
+        place(e.mesh, e, false, pose, null, -1);
         float time = Minecraft.getInstance().level == null ? 0f : Minecraft.getInstance().level.getGameTime();
         render(stack, e.mesh, e, e.specOf, false, true, false, pose, buffers, light, overlay, time, 1e9f, e.skin, e.glow, e.veins);
         pose.popPose();
         return true;
     }
 
-    private static void place(VuMesh mesh, Entry e, boolean fp, PoseStack pose) {
+    private static void place(VuMesh mesh, Entry e, boolean fp, PoseStack pose, com.newuniverse.nusmp.visual.grip.GripState grip, int gripCtx) {
+        float[] gs = grip == null || gripCtx < 0 ? null : grip.shift(gripCtx, mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin);      // 1.111.0: {shift xyz, hand point xyz} or null (the old placement)
         if (fp) {                                                                     // the oversize rule of WeaponRenderer: no weapon goes through the camera
             float len = mesh.length();
             float k = OversizeGuard.factor(len, pose.last().pose().getScale(SCALE).x);
             if (k < 1f) {
                 float along = OversizeGuard.GRIP_FRACTION * len;
-                float gx = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle)), gy = mesh.oy + along * (float) Math.sin(Math.toRadians(mesh.angle));
-                pose.translate(gx, gy, 0.5f);
+                float gx = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle)), gy = mesh.oy + along * (float) Math.sin(Math.toRadians(mesh.angle)), gz = 0.5f;
+                if (gs != null) {                                                     // 1.111.0: about the point the grip lands on
+                    gx = gs[3];
+                    gy = gs[4];
+                    gz = gs[5];
+                }
+                pose.translate(gx, gy, gz);
                 pose.scale(k, k, k);
-                pose.translate(-gx, -gy, -0.5f);
+                pose.translate(-gx, -gy, -gz);
             }
         }
+        if (gs != null) pose.translate(gs[0], gs[1], gs[2]);                           // 1.111.0: the grip point of the mesh lands on the hand
         pose.translate(mesh.ox, mesh.oy, 0.5f);
         pose.mulPose(e.turn);
         pose.scale(mesh.scale, mesh.scale, mesh.scale);

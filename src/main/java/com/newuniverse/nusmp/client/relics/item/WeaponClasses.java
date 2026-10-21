@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * when the resource is missing; {@link #guess} is the keyword guess for an id nobody has classified (the same keywords, in the same order, as
  * the Python tool).
  */
-public final class WeaponClasses {
+public final class WeaponClasses implements com.newuniverse.nusmp.visual.grip.GripTable.Classes {
     /** One class of the table. */
     public record Cls(String name, float min, float max, float headMin, float grip) {}
 
@@ -108,12 +108,23 @@ public final class WeaponClasses {
         return c != null ? c : guess(id);
     }
 
+    /** 1.111.0: true when the reviewed id to class map lists this id (or its base id); false = the class is only a keyword guess (GripTable asks, a data test wants no guess). */
+    public boolean isListed(String id) {
+        return weapons.containsKey(id) || weapons.containsKey(baseId(id));
+    }
+
     /** The class of an id; never null (an unknown name falls back to the keyword guess, then to "item"). */
     public Cls classOf(String id) {
         Cls c = table.get(className(id));
         if (c == null) c = table.get(guess(id));
         if (c == null) c = DEFAULTS.get("item");
         return c;
+    }
+
+    /** 1.111.0: the row of a class by its name (the built-in row of that name when the resource lacks it), null for an unknown name. */
+    public Cls named(String name) {
+        Cls c = table.get(name);
+        return c != null ? c : DEFAULTS.get(name);
     }
 
     /** A held item (class item or handitem) is measured by its largest dimension, not its length. */

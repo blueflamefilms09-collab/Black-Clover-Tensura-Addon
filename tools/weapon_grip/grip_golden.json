@@ -1,0 +1,5274 @@
+{
+ "adventurers_handaxe": {
+  "class": "handaxe",
+  "fraction": 0.29,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.815,
+  "z": 0.0
+ },
+ "aegis_of_the_abyss": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.228,
+  "z": 0.05
+ },
+ "amulet_of_the_juggernauts_blindness": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 13.395,
+  "z": 0.45
+ },
+ "anheteps_sunscourge": {
+  "class": "whip",
+  "fraction": 0.085,
+  "source": "directive",
+  "x": 0.0,
+  "y": 8.887,
+  "z": 0.0
+ },
+ "anti_bird_charm": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.25,
+  "y": -0.5,
+  "z": 0.0
+ },
+ "apprentice_birch_wand": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.831,
+  "z": 0.0
+ },
+ "apprentices_training_sword": {
+  "class": "longsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.666,
+  "z": 0.0
+ },
+ "aquarius_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "aries_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.09,
+  "z": 0.0
+ },
+ "astralaria": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 36.738,
+  "z": 0.0
+ },
+ "astralis_the_eye_of_the_universe": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 73.275,
+  "z": 0.0
+ },
+ "aurliels_seraph_halberd": {
+  "class": "glaive",
+  "fraction": 0.276,
+  "source": "directive",
+  "x": 0.0,
+  "y": 56.548,
+  "z": 0.0
+ },
+ "axe_of_the_crimson_saint": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 29.212,
+  "z": 0.0
+ },
+ "axe_of_the_exile": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 1.965,
+  "y": 4.685,
+  "z": 0.0
+ },
+ "axel_frontier_club": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 17.0,
+  "z": 0.0
+ },
+ "bianca": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 53.0,
+  "z": -4.723
+ },
+ "bianca_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 53.0,
+  "z": -3.766
+ },
+ "bianca_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 53.0,
+  "z": -4.723
+ },
+ "bianca_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 53.0,
+  "z": -4.723
+ },
+ "bianca_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 53.0,
+  "z": -4.723
+ },
+ "black_wing_blade": {
+  "class": "longsword",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -10.438,
+  "z": 0.0
+ },
+ "blackrazor": {
+  "class": "greatsword",
+  "fraction": 0.127,
+  "source": "directive",
+  "x": 0.0,
+  "y": 21.582,
+  "z": 0.0
+ },
+ "bloodbound_katana": {
+  "class": "katana",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.773,
+  "z": 0.0
+ },
+ "bolt_thrower": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.95,
+  "z": 0.78
+ },
+ "bolt_thrower_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.95,
+  "z": 0.78
+ },
+ "bolt_thrower_spent": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -2.4,
+  "y": 6.95,
+  "z": 0.78
+ },
+ "bond_thread": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 1.2,
+  "z": 0.0
+ },
+ "bone_lance": {
+  "class": "spear",
+  "fraction": 0.296,
+  "source": "directive",
+  "x": 0.0,
+  "y": 60.712,
+  "z": 0.0
+ },
+ "book_of_mispells": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.225,
+  "y": 9.7,
+  "z": 1.369
+ },
+ "bottle_blade": {
+  "class": "shortsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": 3.72,
+  "z": 0.08
+ },
+ "brooch_pin": {
+  "class": "dagger",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -25.386,
+  "z": 0.0
+ },
+ "broodqueens_stinger": {
+  "class": "dagger",
+  "fraction": 0.205,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.07,
+  "z": 0.0
+ },
+ "buster_sword": {
+  "class": "greatsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": -0.003,
+  "y": 15.234,
+  "z": -0.0
+ },
+ "butcher_cleaver": {
+  "class": "cleaver",
+  "fraction": 0.172,
+  "source": "handle",
+  "x": 0.0,
+  "y": -31.884,
+  "z": 0.171
+ },
+ "caesars_gladius": {
+  "class": "shortsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": 3.762,
+  "z": 0.405
+ },
+ "calamity_scythe": {
+  "class": "scythe",
+  "fraction": 0.43,
+  "source": "directive",
+  "x": 0.0,
+  "y": 90.073,
+  "z": 0.0
+ },
+ "calamity_wave_aegis": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.344,
+  "y": -1.605,
+  "z": 2.8
+ },
+ "cancer_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.09,
+  "z": 0.0
+ },
+ "capricorn_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "cardinal_halo_chakram": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 20.925,
+  "z": 0.348
+ },
+ "catstaff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.561,
+  "y": 69.047,
+  "z": -0.494
+ },
+ "celestial_spirit_magic_book": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.175,
+  "y": 5.4,
+  "z": -0.365
+ },
+ "celestial_support": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.762,
+  "z": -1.113
+ },
+ "chronarchs_pendulum_sabre": {
+  "class": "sabre",
+  "fraction": 0.329,
+  "source": "directive",
+  "x": 0.0,
+  "y": 22.593,
+  "z": 0.0
+ },
+ "chronicle_sigil": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 2.8,
+  "z": 0.0
+ },
+ "circlet_of_quickened_thought": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "club_of_rot": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -9.35,
+  "z": 0.0
+ },
+ "communication_magic_device": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "contingency_plan": {
+  "class": "dagger",
+  "fraction": 0.164,
+  "source": "handle",
+  "x": 0.0,
+  "y": 6.897,
+  "z": 0.0
+ },
+ "corpse_eater": {
+  "class": "katana",
+  "fraction": 0.188,
+  "source": "handle",
+  "x": 0.01,
+  "y": 21.081,
+  "z": -0.002
+ },
+ "crimson_lions_flame_lance": {
+  "class": "spear",
+  "fraction": 0.211,
+  "source": "directive",
+  "x": 0.0,
+  "y": 43.686,
+  "z": 0.0
+ },
+ "crossbow_of_swift_death": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 5.0,
+  "z": -0.9
+ },
+ "crossbow_of_swift_death_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 5.0,
+  "z": -0.9
+ },
+ "crossbow_of_swift_death_spent": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.0,
+  "z": -0.9
+ },
+ "crux_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "cultist_sigil_ring": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.003,
+  "y": 7.15,
+  "z": 0.044
+ },
+ "cyclone_rapier": {
+  "class": "rapier",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.328,
+  "z": 0.0
+ },
+ "dagger_of_betrayal": {
+  "class": "dagger",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.001,
+  "y": 7.828,
+  "z": 0.0
+ },
+ "dawnpiercer_crossbow": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.047,
+  "z": 2.7
+ },
+ "dawnpiercer_crossbow_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.5,
+  "z": 2.43
+ },
+ "dawnpiercer_crossbow_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.047,
+  "z": 2.7
+ },
+ "dawnpiercer_crossbow_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.047,
+  "z": 2.43
+ },
+ "dawnpiercer_crossbow_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.047,
+  "z": 2.43
+ },
+ "dead_blade": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 57.195,
+  "z": 0.0
+ },
+ "deepwatch_harpoon": {
+  "class": "spear",
+  "fraction": 0.264,
+  "source": "directive",
+  "x": 0.0,
+  "y": 52.512,
+  "z": 0.0
+ },
+ "deliverance": {
+  "class": "longsword",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": -0.001,
+  "y": 13.234,
+  "z": -0.005
+ },
+ "delvers_longsword": {
+  "class": "longsword",
+  "fraction": 0.128,
+  "source": "directive",
+  "x": 0.0,
+  "y": 15.562,
+  "z": 0.0
+ },
+ "delvers_pickaxe": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 15.625,
+  "z": 0.0
+ },
+ "demon_destroyer_sword": {
+  "class": "greatsword",
+  "fraction": 0.062,
+  "source": "handle",
+  "x": 0.0,
+  "y": -14.125,
+  "z": 0.0
+ },
+ "demon_dweller_sword": {
+  "class": "greatsword",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": -9.297,
+  "z": 0.0
+ },
+ "demon_shovel": {
+  "class": "club",
+  "fraction": 0.357,
+  "source": "directive",
+  "x": 0.0,
+  "y": 38.363,
+  "z": 0.0
+ },
+ "demon_slasher_katana": {
+  "class": "katana",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.775,
+  "z": 0.0
+ },
+ "devil_bound_sheath": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 30.1,
+  "z": 0.0
+ },
+ "devil_contract": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 23.02,
+  "y": 26.99,
+  "z": 0.689
+ },
+ "devil_contract_book": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "direwolf_fang_spear": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 55.735,
+  "z": 0.0
+ },
+ "disintegration_dagger": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.101,
+  "y": -3.612,
+  "z": 0.733
+ },
+ "divine_mercy": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 14.444,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "divine_mercy_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 24.05,
+  "y": 0.0,
+  "z": 1.217
+ },
+ "divine_mercy_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.75,
+  "y": 0.0,
+  "z": 1.217
+ },
+ "divine_mercy_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.25,
+  "y": 0.0,
+  "z": 1.217
+ },
+ "djinn_weapon_agares": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.215,
+  "y": 5.78,
+  "z": 0.82
+ },
+ "djinn_weapon_agares_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.215,
+  "y": 5.78,
+  "z": 0.82
+ },
+ "djinn_weapon_alloces": {
+  "class": "longsword",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.1,
+  "y": -3.569,
+  "z": 0.0
+ },
+ "djinn_weapon_alloces_dark": {
+  "class": "longsword",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.1,
+  "y": -3.569,
+  "z": 0.0
+ },
+ "djinn_weapon_amdusias": {
+  "class": "rapier",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 1.315,
+  "y": -4.892,
+  "z": 0.0
+ },
+ "djinn_weapon_amdusias_dark": {
+  "class": "rapier",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 1.315,
+  "y": -4.892,
+  "z": 0.0
+ },
+ "djinn_weapon_amon": {
+  "class": "greatsword",
+  "fraction": 0.094,
+  "source": "handle",
+  "x": 0.1,
+  "y": -4.559,
+  "z": 0.0
+ },
+ "djinn_weapon_amon_dark": {
+  "class": "greatsword",
+  "fraction": 0.094,
+  "source": "handle",
+  "x": 0.1,
+  "y": -4.559,
+  "z": 0.0
+ },
+ "djinn_weapon_andrealphus": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.105,
+  "y": 10.214,
+  "z": 0.0
+ },
+ "djinn_weapon_andrealphus_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.105,
+  "y": 10.214,
+  "z": 0.0
+ },
+ "djinn_weapon_andromalius": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.28,
+  "y": 9.038,
+  "z": -0.875
+ },
+ "djinn_weapon_andromalius_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.28,
+  "y": 9.038,
+  "z": -0.875
+ },
+ "djinn_weapon_baal": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 1.155,
+  "y": 8.135,
+  "z": 0.0
+ },
+ "djinn_weapon_baal_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 1.155,
+  "y": 8.135,
+  "z": 0.0
+ },
+ "djinn_weapon_bael": {
+  "class": "greatsword",
+  "fraction": 0.086,
+  "source": "handle",
+  "x": 1.465,
+  "y": -6.602,
+  "z": 0.0
+ },
+ "djinn_weapon_bael_dark": {
+  "class": "greatsword",
+  "fraction": 0.086,
+  "source": "handle",
+  "x": 1.465,
+  "y": -6.602,
+  "z": 0.0
+ },
+ "djinn_weapon_balam": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 10.631,
+  "z": 0.0
+ },
+ "djinn_weapon_balam_dark": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 10.631,
+  "z": 0.0
+ },
+ "djinn_weapon_barbatos": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.6,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "djinn_weapon_barbatos_dark": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.6,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "djinn_weapon_belial": {
+  "class": "greatsword",
+  "fraction": 0.148,
+  "source": "handle",
+  "x": 0.0,
+  "y": -9.216,
+  "z": 0.0
+ },
+ "djinn_weapon_belial_dark": {
+  "class": "greatsword",
+  "fraction": 0.148,
+  "source": "handle",
+  "x": 0.0,
+  "y": -9.216,
+  "z": 0.0
+ },
+ "djinn_weapon_bifron": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.1,
+  "y": -3.585,
+  "z": 0.0
+ },
+ "djinn_weapon_bifron_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.1,
+  "y": -3.585,
+  "z": 0.0
+ },
+ "djinn_weapon_buer": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.84,
+  "y": 11.16,
+  "z": 0.01
+ },
+ "djinn_weapon_buer_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.84,
+  "y": 11.16,
+  "z": 0.01
+ },
+ "djinn_weapon_camio": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -1.835,
+  "y": 11.8,
+  "z": 0.52
+ },
+ "djinn_weapon_camio_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -1.835,
+  "y": 11.8,
+  "z": 0.52
+ },
+ "djinn_weapon_crocell": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.98,
+  "z": 0.0
+ },
+ "djinn_weapon_crocell_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.98,
+  "z": 0.0
+ },
+ "djinn_weapon_dantalion": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 11.156,
+  "z": 0.0
+ },
+ "djinn_weapon_dantalion_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 11.156,
+  "z": 0.0
+ },
+ "djinn_weapon_decarabia": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.28,
+  "y": 9.815,
+  "z": 0.0
+ },
+ "djinn_weapon_decarabia_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.28,
+  "y": 9.815,
+  "z": 0.0
+ },
+ "djinn_weapon_focalor": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.47,
+  "z": 0.0
+ },
+ "djinn_weapon_focalor_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.47,
+  "z": 0.0
+ },
+ "djinn_weapon_furcas": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.11,
+  "y": 6.502,
+  "z": 0.0
+ },
+ "djinn_weapon_furcas_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.11,
+  "y": 6.502,
+  "z": 0.0
+ },
+ "djinn_weapon_furfur": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.345,
+  "y": 0.638,
+  "z": 0.0
+ },
+ "djinn_weapon_furfur_dark": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.345,
+  "y": 0.638,
+  "z": 0.0
+ },
+ "djinn_weapon_glasya_labolas": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.895,
+  "z": 0.0
+ },
+ "djinn_weapon_glasya_labolas_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.895,
+  "z": 0.0
+ },
+ "djinn_weapon_gusion": {
+  "class": "rapier",
+  "fraction": 0.164,
+  "source": "handle",
+  "x": 1.16,
+  "y": -12.438,
+  "z": 0.0
+ },
+ "djinn_weapon_gusion_dark": {
+  "class": "rapier",
+  "fraction": 0.164,
+  "source": "handle",
+  "x": 1.16,
+  "y": -12.438,
+  "z": 0.0
+ },
+ "djinn_weapon_haagenti": {
+  "class": "cleaver",
+  "fraction": 0.15,
+  "source": "override",
+  "x": -0.25,
+  "y": -9.05,
+  "z": 0.0
+ },
+ "djinn_weapon_haagenti_dark": {
+  "class": "cleaver",
+  "fraction": 0.15,
+  "source": "override",
+  "x": -0.25,
+  "y": -9.05,
+  "z": 0.0
+ },
+ "djinn_weapon_kimaris": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.271,
+  "z": 0.0
+ },
+ "djinn_weapon_kimaris_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.271,
+  "z": 0.0
+ },
+ "djinn_weapon_marchosias": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.345,
+  "y": 9.845,
+  "z": 0.0
+ },
+ "djinn_weapon_marchosias_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.345,
+  "y": 9.845,
+  "z": 0.0
+ },
+ "djinn_weapon_murmur": {
+  "class": "mace",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.11,
+  "y": 2.225,
+  "z": 0.0
+ },
+ "djinn_weapon_murmur_dark": {
+  "class": "mace",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.11,
+  "y": 2.225,
+  "z": 0.0
+ },
+ "djinn_weapon_paimon": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.666,
+  "z": 0.0
+ },
+ "djinn_weapon_paimon_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.666,
+  "z": 0.0
+ },
+ "djinn_weapon_seere": {
+  "class": "sabre",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.305,
+  "y": -20.858,
+  "z": 0.26
+ },
+ "djinn_weapon_seere_dark": {
+  "class": "sabre",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.305,
+  "y": -20.858,
+  "z": 0.26
+ },
+ "djinn_weapon_shax": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.07,
+  "y": -0.04,
+  "z": 0.425
+ },
+ "djinn_weapon_shax_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.07,
+  "y": -0.04,
+  "z": 0.425
+ },
+ "djinn_weapon_sitri": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.15,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "djinn_weapon_sitri_dark": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.15,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "djinn_weapon_valefor": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.31,
+  "y": -1.705,
+  "z": 0.0
+ },
+ "djinn_weapon_valefor_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.31,
+  "y": -1.705,
+  "z": 0.0
+ },
+ "djinn_weapon_vassago": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.105,
+  "y": 5.444,
+  "z": 0.0
+ },
+ "djinn_weapon_vassago_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.105,
+  "y": 5.444,
+  "z": 0.0
+ },
+ "djinn_weapon_vepar": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.125,
+  "y": -6.565,
+  "z": 0.0
+ },
+ "djinn_weapon_vepar_dark": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.125,
+  "y": -6.565,
+  "z": 0.0
+ },
+ "djinn_weapon_vinea": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.34,
+  "y": 7.996,
+  "z": 0.0
+ },
+ "djinn_weapon_vinea_dark": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.34,
+  "y": 7.996,
+  "z": 0.0
+ },
+ "djinn_weapon_zagan": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.845,
+  "y": 8.328,
+  "z": 0.0
+ },
+ "djinn_weapon_zagan_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.845,
+  "y": 8.328,
+  "z": 0.0
+ },
+ "djinn_weapon_zepar": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.155,
+  "y": -0.025,
+  "z": 0.0
+ },
+ "djinn_weapon_zepar_dark": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.155,
+  "y": -0.025,
+  "z": 0.0
+ },
+ "doom_hammer": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -36.0,
+  "z": 0.0
+ },
+ "dragon_force_twin_fangs": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.026,
+  "z": 0.0
+ },
+ "dragon_slayer": {
+  "class": "greatsword",
+  "fraction": 0.172,
+  "source": "directive",
+  "x": -0.3,
+  "y": 29.859,
+  "z": 0.0
+ },
+ "dragon_tooth_blade_red": {
+  "class": "katana",
+  "fraction": 0.2,
+  "source": "class",
+  "x": -0.008,
+  "y": 20.8,
+  "z": 0.0
+ },
+ "dragoons_halberd": {
+  "class": "glaive",
+  "fraction": 0.227,
+  "source": "directive",
+  "x": 0.0,
+  "y": 47.67,
+  "z": 0.0
+ },
+ "drakefang_greatsword": {
+  "class": "greatsword",
+  "fraction": 0.15,
+  "source": "directive",
+  "x": 0.0,
+  "y": 28.928,
+  "z": 0.0
+ },
+ "dream_glass": {
+  "class": "greatsword",
+  "fraction": 0.156,
+  "source": "handle",
+  "x": 0.0,
+  "y": 23.799,
+  "z": 0.0
+ },
+ "dreamcore_woven_wand": {
+  "class": "wand",
+  "fraction": 0.334,
+  "source": "directive",
+  "x": 0.0,
+  "y": 36.151,
+  "z": 0.0
+ },
+ "druidic_blade": {
+  "class": "shortsword",
+  "fraction": 0.086,
+  "source": "handle",
+  "x": 0.0,
+  "y": 6.553,
+  "z": 0.0
+ },
+ "duality_blade": {
+  "class": "shortsword",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.001,
+  "y": 8.312,
+  "z": -0.0
+ },
+ "dungeon_cooks_ladle": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 18.825,
+  "z": 0.0
+ },
+ "east_blue_cutlass": {
+  "class": "sabre",
+  "fraction": 0.147,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.87,
+  "z": 2.024
+ },
+ "efreetis_kusarigama": {
+  "class": "scythe",
+  "fraction": 0.49,
+  "source": "directive",
+  "x": 0.0,
+  "y": 76.559,
+  "z": 0.0
+ },
+ "elsdocia": {
+  "class": "greatsword",
+  "fraction": 0.12,
+  "source": "override",
+  "x": 0.0,
+  "y": 15.0,
+  "z": 0.0
+ },
+ "elsdocia_legacy": {
+  "class": "greatsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": -13.008,
+  "z": 0.0
+ },
+ "embrasure": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 11.925,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "embrasure_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 23.35,
+  "y": 0.0,
+  "z": 1.101
+ },
+ "embrasure_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.5,
+  "y": 0.0,
+  "z": 1.101
+ },
+ "embrasure_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.25,
+  "y": 0.0,
+  "z": 1.101
+ },
+ "encircled_blade": {
+  "class": "shortsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 7.92,
+  "z": 0.0
+ },
+ "eschaton": {
+  "class": "rapier",
+  "fraction": 0.094,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.781,
+  "z": 0.0
+ },
+ "fairy_glitter_gauntlets": {
+  "class": "dagger",
+  "fraction": 0.45,
+  "source": "override",
+  "x": -1.23,
+  "y": 22.925,
+  "z": -1.226
+ },
+ "fairy_heart_gauntlets": {
+  "class": "dagger",
+  "fraction": 0.45,
+  "source": "override",
+  "x": 0.0,
+  "y": 19.215,
+  "z": 0.0
+ },
+ "familia_smiths_mace": {
+  "class": "hammer",
+  "fraction": 0.256,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.258,
+  "z": 0.0
+ },
+ "flame_empress_blade": {
+  "class": "longsword",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.734,
+  "z": 0.0
+ },
+ "flamecutter": {
+  "class": "longsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.194,
+  "y": 15.473,
+  "z": 0.0
+ },
+ "fortune_die": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "frostbrand": {
+  "class": "sabre",
+  "fraction": 0.142,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.105,
+  "z": 0.0
+ },
+ "frostfang": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 2.721,
+  "y": 34.057,
+  "z": 0.0
+ },
+ "gae_bolg_heartseeker": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 79.8,
+  "z": 0.0
+ },
+ "gamblers_grimoire_page": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.025,
+  "y": -0.225,
+  "z": 0.55
+ },
+ "gate_scavengers_knife": {
+  "class": "dagger",
+  "fraction": 0.165,
+  "source": "directive",
+  "x": 0.0,
+  "y": 8.726,
+  "z": 0.0
+ },
+ "gauches_hand_mirror": {
+  "class": "handitem",
+  "fraction": 0.18,
+  "source": "override",
+  "x": 0.0,
+  "y": -13.11,
+  "z": 0.0
+ },
+ "gemini_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "genin_academy_kunai": {
+  "class": "dagger",
+  "fraction": 0.186,
+  "source": "directive",
+  "x": 0.0,
+  "y": 10.39,
+  "z": 0.0
+ },
+ "giant_jawblade": {
+  "class": "greatsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": 17.066,
+  "z": 0.0
+ },
+ "glutton_chalice": {
+  "class": "handitem",
+  "fraction": 0.3,
+  "source": "override",
+  "x": 0.073,
+  "y": 14.255,
+  "z": 0.095
+ },
+ "goblin_ear_ward": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 10.85,
+  "z": 0.4
+ },
+ "goblin_fang_dagger": {
+  "class": "dagger",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.444,
+  "z": 0.0
+ },
+ "golem_core_belt": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 2.0,
+  "z": 0.6
+ },
+ "golem_maul": {
+  "class": "hammer",
+  "fraction": 0.236,
+  "source": "directive",
+  "x": 0.0,
+  "y": 27.6,
+  "z": 0.0
+ },
+ "grimoire_chain": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 1.5,
+  "z": 0.0
+ },
+ "gungnir_the_unerring": {
+  "class": "spear",
+  "fraction": 0.306,
+  "source": "directive",
+  "x": 0.06,
+  "y": 68.052,
+  "z": 0.005
+ },
+ "hakurou_school_practice_katana": {
+  "class": "katana",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.953,
+  "z": 0.0
+ },
+ "hammer_of_thunderbolts": {
+  "class": "hammer",
+  "fraction": 0.24,
+  "source": "directive",
+  "x": 0.0,
+  "y": 28.715,
+  "z": 0.0
+ },
+ "hand_of_providence": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -2.9,
+  "z": 0.75
+ },
+ "heart_of_the_flame": {
+  "class": "greatsword",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": 18.561,
+  "z": 1.375
+ },
+ "hedge_wizards_oak_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 63.44,
+  "z": 0.0
+ },
+ "hellblaze_the_demon_sin": {
+  "class": "longsword",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 19.749,
+  "z": 0.0
+ },
+ "heros_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.411,
+  "y": 0.752,
+  "z": -0.975
+ },
+ "holy_avenger": {
+  "class": "longsword",
+  "fraction": 0.135,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.933,
+  "z": 0.0
+ },
+ "horologium_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "humbling_longsword": {
+  "class": "longsword",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": 13.759,
+  "z": 0.0
+ },
+ "hunger": {
+  "class": "greataxe",
+  "fraction": 0.28,
+  "source": "class",
+  "x": 0.492,
+  "y": 52.784,
+  "z": 0.0
+ },
+ "hunter_exam_machete": {
+  "class": "cleaver",
+  "fraction": 0.133,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.281,
+  "z": 0.0
+ },
+ "hyperborean_crossbow": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 39.242,
+  "z": 0.0
+ },
+ "hyperborean_crossbow_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 39.565,
+  "z": 0.0
+ },
+ "hyperborean_crossbow_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 38.0,
+  "z": 0.0
+ },
+ "hyperborean_crossbow_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 38.0,
+  "z": 0.0
+ },
+ "hyperborean_crossbow_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 38.0,
+  "z": 0.0
+ },
+ "ignareths_forge_hammer": {
+  "class": "hammer",
+  "fraction": 0.26,
+  "source": "directive",
+  "x": 0.0,
+  "y": 29.792,
+  "z": 0.0
+ },
+ "ilmare_gin_the_starlight_silver": {
+  "class": "katana",
+  "fraction": 0.206,
+  "source": "directive",
+  "x": 0.0,
+  "y": 21.63,
+  "z": 0.0
+ },
+ "jade_xiphos": {
+  "class": "shortsword",
+  "fraction": 0.09,
+  "source": "override",
+  "x": 0.0,
+  "y": 6.189,
+  "z": 0.0
+ },
+ "junglethorn_whip": {
+  "class": "coilwhip",
+  "fraction": 0.15,
+  "source": "class",
+  "x": 0.117,
+  "y": -1.289,
+  "z": -0.426
+ },
+ "katana_of_carnage": {
+  "class": "katana",
+  "fraction": 0.365,
+  "source": "directive",
+  "x": 0.0,
+  "y": 26.892,
+  "z": 0.0
+ },
+ "katana_of_the_crimson_shogun": {
+  "class": "katana",
+  "fraction": 0.195,
+  "source": "directive",
+  "x": 0.0,
+  "y": 21.45,
+  "z": 0.122
+ },
+ "krakeblade": {
+  "class": "greatsword",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": 17.907,
+  "z": 0.0
+ },
+ "kusanagi_the_grass_cutter": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.065,
+  "z": 0.0
+ },
+ "last_word": {
+  "class": "shortsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.15,
+  "z": 0.0
+ },
+ "legendary_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 16.83,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow_curse": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 16.78,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow_curse_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 31.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_bow_curse_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 13.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_bow_curse_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 3.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 31.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 13.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 3.25,
+  "y": 0.0,
+  "z": 0.062
+ },
+ "legendary_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 4.175
+ },
+ "legendary_shield_curse": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 5.236
+ },
+ "legendary_spear": {
+  "class": "spear",
+  "fraction": 0.224,
+  "source": "directive",
+  "x": 0.0,
+  "y": 73.92,
+  "z": 0.0
+ },
+ "legendary_spear_curse": {
+  "class": "spear",
+  "fraction": 0.224,
+  "source": "directive",
+  "x": 0.0,
+  "y": 73.92,
+  "z": 0.0
+ },
+ "legendary_sword": {
+  "class": "longsword",
+  "fraction": 0.084,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.6,
+  "z": 0.0
+ },
+ "legendary_sword_curse": {
+  "class": "longsword",
+  "fraction": 0.076,
+  "source": "directive",
+  "x": 0.0,
+  "y": 11.4,
+  "z": 0.0
+ },
+ "leo_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "leviathan_axe": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 22.252,
+  "z": 0.0
+ },
+ "leviathans_crown_trident": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 71.88,
+  "z": 0.0
+ },
+ "libra_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "lich_dust_pendant": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.002,
+  "y": 9.236,
+  "z": 0.0
+ },
+ "lich_wand": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 20.2,
+  "z": 0.0
+ },
+ "licht_destroyer_sword": {
+  "class": "greatsword",
+  "fraction": 0.062,
+  "source": "handle",
+  "x": 0.0,
+  "y": -14.125,
+  "z": 0.0
+ },
+ "licht_dweller_sword": {
+  "class": "greatsword",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": -9.297,
+  "z": 0.0
+ },
+ "lightning_empress_halberd": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -34.96,
+  "z": 0.0
+ },
+ "lightworkers_scepter": {
+  "class": "club",
+  "fraction": 0.287,
+  "source": "directive",
+  "x": 0.0,
+  "y": 45.164,
+  "z": 0.0
+ },
+ "liquid_sword": {
+  "class": "longsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": 9.541,
+  "z": 0.0
+ },
+ "lizardman_scouts_spear": {
+  "class": "spear",
+  "fraction": 0.303,
+  "source": "directive",
+  "x": 0.0,
+  "y": 50.889,
+  "z": 0.0
+ },
+ "luck_blade": {
+  "class": "shortsword",
+  "fraction": 0.145,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.227,
+  "z": 0.0
+ },
+ "lyra_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.492,
+  "y": 7.09,
+  "z": 0.0
+ },
+ "magebane_longsword": {
+  "class": "longsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.914,
+  "z": 0.0
+ },
+ "magebane_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.15,
+  "z": 0.15
+ },
+ "magic_emperors_black_halberd": {
+  "class": "glaive",
+  "fraction": 0.223,
+  "source": "directive",
+  "x": 0.0,
+  "y": 49.304,
+  "z": 0.0
+ },
+ "magic_tool_spear": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -22.18,
+  "z": 0.0
+ },
+ "magic_tool_sword": {
+  "class": "longsword",
+  "fraction": 0.156,
+  "source": "handle",
+  "x": 0.0,
+  "y": -6.281,
+  "z": 0.0
+ },
+ "mana_core": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "mana_method_rune_stone": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "marids_valor": {
+  "class": "sabre",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": 8.139,
+  "z": 0.0
+ },
+ "marids_valor_liquid": {
+  "class": "sabre",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": 7.476,
+  "z": 0.0
+ },
+ "miasma_infused_katana": {
+  "class": "katana",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.888,
+  "z": 0.0
+ },
+ "minotaur_kings_labrys": {
+  "class": "battleaxe",
+  "fraction": 0.277,
+  "source": "directive",
+  "x": 0.0,
+  "y": 40.99,
+  "z": 0.0
+ },
+ "mjolnir": {
+  "class": "hammer",
+  "fraction": 0.438,
+  "source": "directive",
+  "x": 0.0,
+  "y": 20.608,
+  "z": 0.0
+ },
+ "mountainguards_greataxe": {
+  "class": "greataxe",
+  "fraction": 0.28,
+  "source": "class",
+  "x": 0.0,
+  "y": 42.754,
+  "z": 0.0
+ },
+ "nakagami_edge": {
+  "class": "longsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -10.859,
+  "z": 0.0
+ },
+ "needler": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.797,
+  "z": 2.55
+ },
+ "needler_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.25,
+  "z": 1.615
+ },
+ "needler_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.797,
+  "z": 1.622
+ },
+ "needler_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.797,
+  "z": 1.622
+ },
+ "needler_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.797,
+  "z": 1.622
+ },
+ "nekrathuls_pact_scythe": {
+  "class": "scythe",
+  "fraction": 0.429,
+  "source": "directive",
+  "x": -2.758,
+  "y": 92.564,
+  "z": -1.553
+ },
+ "nikora_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "noon_cleaver": {
+  "class": "greataxe",
+  "fraction": 0.245,
+  "source": "directive",
+  "x": 0.0,
+  "y": 36.895,
+  "z": 0.0
+ },
+ "null_blade": {
+  "class": "greatsword",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": 15.25,
+  "z": 0.0
+ },
+ "orc_cleaver": {
+  "class": "battleaxe",
+  "fraction": 0.241,
+  "source": "directive",
+  "x": 0.0,
+  "y": 27.571,
+  "z": 0.0
+ },
+ "orc_tusk_cleaver": {
+  "class": "shortsword",
+  "fraction": 0.186,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.322,
+  "z": 0.0
+ },
+ "orc_tusk_ring": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.004,
+  "y": 8.4,
+  "z": 0.0
+ },
+ "orials_starfall_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 2.0,
+  "y": 93.448,
+  "z": 0.2
+ },
+ "otherworld_trident": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -29.57,
+  "z": 0.0
+ },
+ "overprotective_halberd": {
+  "class": "glaive",
+  "fraction": 0.065,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.0,
+  "z": 1.9
+ },
+ "palladion": {
+  "class": "longsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": -0.022,
+  "y": 14.062,
+  "z": -0.006
+ },
+ "paradox": {
+  "class": "staff",
+  "fraction": 0.462,
+  "source": "directive",
+  "x": 0.561,
+  "y": 87.381,
+  "z": 1.043
+ },
+ "permafrost_sabre": {
+  "class": "sabre",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": -11.356,
+  "z": 0.0
+ },
+ "phoenix_flame": {
+  "class": "glaive",
+  "fraction": 0.216,
+  "source": "directive",
+  "x": 0.0,
+  "y": 46.595,
+  "z": 0.0
+ },
+ "pisces_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.09,
+  "z": 0.0
+ },
+ "primal_chaos": {
+  "class": "rapier",
+  "fraction": 0.139,
+  "source": "directive",
+  "x": 0.573,
+  "y": 15.32,
+  "z": 0.73
+ },
+ "primordial_hearth_blade": {
+  "class": "dagger",
+  "fraction": 0.171,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.905,
+  "z": 0.0
+ },
+ "prism_blade": {
+  "class": "longsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.622,
+  "z": 0.0
+ },
+ "purgatory_mace": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -36.75,
+  "z": 0.0
+ },
+ "quicklings_ivy": {
+  "class": "rapier",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -2.0,
+  "y": -11.304,
+  "z": 0.0
+ },
+ "rainbow_rapier": {
+  "class": "rapier",
+  "fraction": 0.08,
+  "source": "override",
+  "x": 1.315,
+  "y": 8.96,
+  "z": 0.0
+ },
+ "random_axe_of_charity": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.504,
+  "y": 19.426,
+  "z": 0.0
+ },
+ "ravens_wing": {
+  "class": "glaive",
+  "fraction": 0.41,
+  "source": "directive",
+  "x": 0.496,
+  "y": 101.185,
+  "z": 0.791
+ },
+ "recovery_salve": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.5,
+  "z": 0.0
+ },
+ "reflected_kings_mirrorblade": {
+  "class": "longsword",
+  "fraction": 0.156,
+  "source": "directive",
+  "x": 0.0,
+  "y": 17.197,
+  "z": 0.0
+ },
+ "returning_hand_axe": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 17.072,
+  "z": 0.0
+ },
+ "rift_breaker": {
+  "class": "spear",
+  "fraction": 0.49,
+  "source": "directive",
+  "x": 0.0,
+  "y": 101.107,
+  "z": 0.0
+ },
+ "rimeheart_greatblade": {
+  "class": "greatsword",
+  "fraction": 0.152,
+  "source": "directive",
+  "x": 0.0,
+  "y": 26.833,
+  "z": 0.0
+ },
+ "rimeheart_runeblade": {
+  "class": "greatsword",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -11.57,
+  "z": 0.0
+ },
+ "rune_splitter": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.565,
+  "y": 50.734,
+  "z": 0.492
+ },
+ "sagittarius_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.491,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "sanguine_wardens_cleaver": {
+  "class": "cleaver",
+  "fraction": 0.125,
+  "source": "directive",
+  "x": 0.0,
+  "y": 8.4,
+  "z": 0.0
+ },
+ "scepter_of_the_double_moon": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.133,
+  "y": 95.74,
+  "z": 0.668
+ },
+ "scimitar_of_the_seasons": {
+  "class": "sabre",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": -1.526,
+  "y": 5.017,
+  "z": 0.0
+ },
+ "scorpio_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.491,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "sea_empress_trident": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -34.28,
+  "z": 0.0
+ },
+ "selection_hopefuls_bokken": {
+  "class": "katana",
+  "fraction": 0.165,
+  "source": "directive",
+  "x": 0.0,
+  "y": 15.677,
+  "z": 0.0
+ },
+ "serpant_head_staff": {
+  "class": "staff",
+  "fraction": 0.249,
+  "source": "directive",
+  "x": 0.0,
+  "y": 63.908,
+  "z": 0.0
+ },
+ "severing_greatsword": {
+  "class": "greatsword",
+  "fraction": 0.156,
+  "source": "handle",
+  "x": 0.0,
+  "y": -12.438,
+  "z": 0.0
+ },
+ "shadow_burn": {
+  "class": "greatsword",
+  "fraction": 0.094,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.128,
+  "z": 0.0
+ },
+ "shadowsteel_katana": {
+  "class": "katana",
+  "fraction": 0.176,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.351,
+  "z": 0.0
+ },
+ "shroud_of_margins": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.5,
+  "z": 0.25
+ },
+ "sidras_swearing_sword": {
+  "class": "shortsword",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": 8.203,
+  "z": 0.0
+ },
+ "silver_eagles_galewing_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 11.26,
+  "y": 0.0,
+  "z": 0.894
+ },
+ "silver_eagles_galewing_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 22.65,
+  "y": 0.0,
+  "z": 1.12
+ },
+ "silver_eagles_galewing_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.25,
+  "y": 0.0,
+  "z": 1.12
+ },
+ "silver_eagles_galewing_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.25,
+  "y": 0.0,
+  "z": 1.12
+ },
+ "silver_wind_mountain_glaive": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 79.54,
+  "z": 0.0
+ },
+ "silvered_shortsword": {
+  "class": "shortsword",
+  "fraction": 0.156,
+  "source": "directive",
+  "x": 0.0,
+  "y": 11.628,
+  "z": 0.0
+ },
+ "sorrows_edge": {
+  "class": "crescent",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 40.502,
+  "z": 0.0
+ },
+ "soul_shatter_blade": {
+  "class": "greatsword",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.0,
+  "y": 11.597,
+  "z": 0.0
+ },
+ "spell_forged_rapier": {
+  "class": "rapier",
+  "fraction": 0.12,
+  "source": "override",
+  "x": 0.0,
+  "y": -7.248,
+  "z": 0.0
+ },
+ "spider_sword": {
+  "class": "sabre",
+  "fraction": 0.123,
+  "source": "directive",
+  "x": -0.034,
+  "y": 6.074,
+  "z": -0.019
+ },
+ "spirit_charm": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 1.25,
+  "z": 0.0
+ },
+ "spirit_king_gate_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "spirit_king_sceptre": {
+  "class": "handitem",
+  "fraction": 0.3,
+  "source": "override",
+  "x": 0.0,
+  "y": 12.734,
+  "z": 0.0
+ },
+ "spotlight": {
+  "class": "shortsword",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.625,
+  "z": 0.0
+ },
+ "staff_of_blood_magic": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.051,
+  "y": 88.067,
+  "z": -0.451
+ },
+ "staff_of_ember_visions": {
+  "class": "staff",
+  "fraction": 0.489,
+  "source": "directive",
+  "x": 0.107,
+  "y": 104.789,
+  "z": 0.089
+ },
+ "staff_of_moonlight": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 7.185,
+  "y": 74.038,
+  "z": 0.005
+ },
+ "staff_of_the_apprentice": {
+  "class": "staff",
+  "fraction": 0.475,
+  "source": "directive",
+  "x": 0.155,
+  "y": 102.096,
+  "z": 0.209
+ },
+ "staff_of_the_magi": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.021,
+  "y": 89.496,
+  "z": 0.062
+ },
+ "starforged_aeon_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 15.623,
+  "y": 0.0,
+  "z": 0.897
+ },
+ "starforged_aeon_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 23.75,
+  "y": 0.0,
+  "z": 1.122
+ },
+ "starforged_aeon_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.0,
+  "y": 0.0,
+  "z": 1.122
+ },
+ "starforged_aeon_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.75,
+  "y": 0.0,
+  "z": 1.122
+ },
+ "starlight_whip": {
+  "class": "whip",
+  "fraction": 0.087,
+  "source": "directive",
+  "x": 0.0,
+  "y": 7.333,
+  "z": 0.0
+ },
+ "starsplitter_hammer": {
+  "class": "hammer",
+  "fraction": 0.246,
+  "source": "directive",
+  "x": 0.0,
+  "y": 39.677,
+  "z": 0.0
+ },
+ "stegosaurus_greatsword": {
+  "class": "greatsword",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.0,
+  "y": 15.172,
+  "z": 0.0
+ },
+ "stick_of_youth": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 1.17,
+  "y": 24.488,
+  "z": 0.68
+ },
+ "sun_gift": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.04,
+  "y": 65.66,
+  "z": -0.004
+ },
+ "sunsword": {
+  "class": "longsword",
+  "fraction": 0.111,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.613,
+  "z": 0.0
+ },
+ "superlunary_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 90.044,
+  "z": 0.0
+ },
+ "sword_crystal": {
+  "class": "shortsword",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.913,
+  "z": 0.0
+ },
+ "sword_of_the_first_dawn": {
+  "class": "longsword",
+  "fraction": 0.127,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.443,
+  "z": 0.0
+ },
+ "sz/bloodbound_katana": {
+  "class": "katana",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.773,
+  "z": 0.0
+ },
+ "sz/brooch_pin": {
+  "class": "dagger",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": -23.703,
+  "z": 0.0
+ },
+ "sz/broodqueens_stinger": {
+  "class": "dagger",
+  "fraction": 0.205,
+  "source": "directive",
+  "x": -0.001,
+  "y": 9.07,
+  "z": 0.0
+ },
+ "sz/contingency_plan": {
+  "class": "dagger",
+  "fraction": 0.164,
+  "source": "handle",
+  "x": 0.0,
+  "y": 6.897,
+  "z": 0.0
+ },
+ "sz/corpse_eater": {
+  "class": "katana",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.007,
+  "y": 14.933,
+  "z": 0.007
+ },
+ "sz/dagger_of_betrayal": {
+  "class": "dagger",
+  "fraction": 0.141,
+  "source": "handle",
+  "x": 0.0,
+  "y": 8.141,
+  "z": 0.001
+ },
+ "sz/demon_slasher_katana": {
+  "class": "katana",
+  "fraction": 0.125,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.775,
+  "z": 0.0
+ },
+ "sz/disintegration_dagger": {
+  "class": "dagger",
+  "fraction": 0.211,
+  "source": "handle",
+  "x": 0.073,
+  "y": 3.712,
+  "z": -0.005
+ },
+ "sz/dragon_force_twin_fangs": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.026,
+  "z": 0.0
+ },
+ "sz/dragon_tooth_blade_red": {
+  "class": "katana",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 1.797,
+  "y": 10.469,
+  "z": -0.021
+ },
+ "sz/gate_scavengers_knife": {
+  "class": "dagger",
+  "fraction": 0.165,
+  "source": "directive",
+  "x": 0.0,
+  "y": 8.726,
+  "z": 0.0
+ },
+ "sz/genin_academy_kunai": {
+  "class": "dagger",
+  "fraction": 0.186,
+  "source": "directive",
+  "x": 0.0,
+  "y": 10.39,
+  "z": 0.0
+ },
+ "sz/goblin_fang_dagger": {
+  "class": "dagger",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.444,
+  "z": 0.0
+ },
+ "sz/hakurou_school_practice_katana": {
+  "class": "katana",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.953,
+  "z": 0.0
+ },
+ "sz/ilmare_gin_the_starlight_silver": {
+  "class": "katana",
+  "fraction": 0.206,
+  "source": "directive",
+  "x": 0.0,
+  "y": 21.63,
+  "z": 0.0
+ },
+ "sz/katana_of_carnage": {
+  "class": "katana",
+  "fraction": 0.365,
+  "source": "directive",
+  "x": 0.0,
+  "y": 26.892,
+  "z": 0.0
+ },
+ "sz/katana_of_the_crimson_shogun": {
+  "class": "katana",
+  "fraction": 0.195,
+  "source": "directive",
+  "x": 0.0,
+  "y": 21.45,
+  "z": 0.131
+ },
+ "sz/kusanagi_the_grass_cutter": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.065,
+  "z": 0.0
+ },
+ "sz/miasma_infused_katana": {
+  "class": "katana",
+  "fraction": 0.133,
+  "source": "handle",
+  "x": 0.0,
+  "y": -8.888,
+  "z": 0.0
+ },
+ "sz/primordial_hearth_blade": {
+  "class": "dagger",
+  "fraction": 0.171,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.905,
+  "z": 0.0
+ },
+ "sz/selection_hopefuls_bokken": {
+  "class": "katana",
+  "fraction": 0.165,
+  "source": "directive",
+  "x": 0.0,
+  "y": 15.677,
+  "z": 0.0
+ },
+ "sz/shadowsteel_katana": {
+  "class": "katana",
+  "fraction": 0.176,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.351,
+  "z": 0.0
+ },
+ "sz/the_dagger_of_many_daggers": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.005,
+  "y": 1.598,
+  "z": 0.0
+ },
+ "sz/the_stabshroom": {
+  "class": "dagger",
+  "fraction": 0.156,
+  "source": "handle",
+  "x": -0.002,
+  "y": 5.781,
+  "z": 0.009
+ },
+ "sz/unicorn_dagger": {
+  "class": "dagger",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.565,
+  "y": 4.594,
+  "z": 0.121
+ },
+ "sz/vassal_katana": {
+  "class": "katana",
+  "fraction": 0.121,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.602,
+  "z": 0.0
+ },
+ "sz/vassal_projectile": {
+  "class": "dagger",
+  "fraction": 0.366,
+  "source": "directive",
+  "x": 0.0,
+  "y": 28.015,
+  "z": 0.0
+ },
+ "sz/void_origin_katana": {
+  "class": "katana",
+  "fraction": 0.15,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.05,
+  "z": 0.0
+ },
+ "sz_up/dragon_force_twin_fangs": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": -0.053,
+  "y": -9.094,
+  "z": -0.282
+ },
+ "sz_up/dragon_force_twin_fangs_lod": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.303,
+  "z": 0.0
+ },
+ "sz_up/kusanagi_the_grass_cutter": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.04,
+  "y": 0.285,
+  "z": 0.0
+ },
+ "sz_up/kusanagi_the_grass_cutter_lod": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.01,
+  "y": 18.065,
+  "z": 0.057
+ },
+ "taurus_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "the_bifrost": {
+  "class": "staff",
+  "fraction": 0.23,
+  "source": "directive",
+  "x": -0.326,
+  "y": 44.045,
+  "z": 1.994
+ },
+ "the_dagger_of_many_daggers": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.004,
+  "y": 1.598,
+  "z": 0.0
+ },
+ "the_dragons_spirit": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 11.138,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "the_dragons_spirit_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 24.45,
+  "y": 0.0,
+  "z": 1.129
+ },
+ "the_dragons_spirit_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.25,
+  "y": 0.0,
+  "z": 1.129
+ },
+ "the_dragons_spirit_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.75,
+  "y": 0.0,
+  "z": 1.129
+ },
+ "the_dragons_truth": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 1.099,
+  "z": 0.379
+ },
+ "the_last_horseman": {
+  "class": "scythe",
+  "fraction": 0.199,
+  "source": "directive",
+  "x": 0.0,
+  "y": 34.552,
+  "z": 0.0
+ },
+ "the_legacy": {
+  "class": "hammer",
+  "fraction": 0.376,
+  "source": "directive",
+  "x": 0.032,
+  "y": 50.698,
+  "z": -0.036
+ },
+ "the_librarians_maul": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 40.601,
+  "z": 0.0
+ },
+ "the_lumberjack": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": 24.508,
+  "z": 0.252
+ },
+ "the_reaver": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 12.382,
+  "y": 0.0,
+  "z": 1.025
+ },
+ "the_reaver_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 25.75,
+  "y": 0.0,
+  "z": 1.213
+ },
+ "the_reaver_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 10.0,
+  "y": 0.0,
+  "z": 1.213
+ },
+ "the_reaver_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.25,
+  "y": 0.0,
+  "z": 1.213
+ },
+ "the_stabshroom": {
+  "class": "dagger",
+  "fraction": 0.156,
+  "source": "handle",
+  "x": -0.002,
+  "y": 5.781,
+  "z": 0.009
+ },
+ "thornblight": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.49,
+  "y": 17.016,
+  "z": -0.048
+ },
+ "thornmothers_briar_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 10.61,
+  "y": 0.0,
+  "z": 1.258
+ },
+ "thornmothers_briar_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 21.65,
+  "y": 0.0,
+  "z": 1.258
+ },
+ "thornmothers_briar_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 7.25,
+  "y": 0.0,
+  "z": 1.258
+ },
+ "thornmothers_briar_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.75,
+  "y": 0.0,
+  "z": 1.258
+ },
+ "thunder_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.008,
+  "z": 1.378
+ },
+ "thundercleave": {
+  "class": "greatsword",
+  "fraction": 0.148,
+  "source": "handle",
+  "x": 0.0,
+  "y": -12.125,
+  "z": 0.0
+ },
+ "tide_pearl_amulet": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 10.604,
+  "z": -0.341
+ },
+ "tidebreaker_chakram": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -1.832,
+  "y": 20.567,
+  "z": 0.0
+ },
+ "time_bender_dadao": {
+  "class": "dadao",
+  "fraction": 0.234,
+  "source": "handle",
+  "x": 0.0,
+  "y": 30.515,
+  "z": 0.0
+ },
+ "time_hammer": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 1.028,
+  "y": 21.47,
+  "z": 0.0
+ },
+ "tripolar_sword": {
+  "class": "longsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.066,
+  "z": 0.0
+ },
+ "twin_hook_swords": {
+  "class": "shortsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.642,
+  "z": 0.0
+ },
+ "twin_hook_swords_left": {
+  "class": "shortsword",
+  "fraction": 0.102,
+  "source": "handle",
+  "x": 0.0,
+  "y": 10.642,
+  "z": 0.0
+ },
+ "twin_swords_of_deflection": {
+  "class": "shortsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": -16.467,
+  "z": 0.0
+ },
+ "twin_swords_of_deflection_left": {
+  "class": "shortsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": -16.467,
+  "z": 0.0
+ },
+ "unicorn_dagger": {
+  "class": "dagger",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.592,
+  "y": 4.594,
+  "z": 0.13
+ },
+ "up/aurliels_seraph_halberd": {
+  "class": "glaive",
+  "fraction": 0.276,
+  "source": "directive",
+  "x": 0.0,
+  "y": 56.548,
+  "z": 0.0
+ },
+ "up/aurliels_seraph_halberd_lod": {
+  "class": "glaive",
+  "fraction": 0.276,
+  "source": "directive",
+  "x": -0.245,
+  "y": 56.548,
+  "z": -0.321
+ },
+ "up/aurliels_seraph_halberd_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.136,
+  "z": 0.0
+ },
+ "up/calamity_wave_aegis": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.03,
+  "z": 2.662
+ },
+ "up/calamity_wave_aegis_lod": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.605,
+  "z": 0.0
+ },
+ "up/chronarchs_pendulum_sabre": {
+  "class": "sabre",
+  "fraction": 0.329,
+  "source": "directive",
+  "x": 0.0,
+  "y": 22.593,
+  "z": 0.0
+ },
+ "up/chronarchs_pendulum_sabre_lod": {
+  "class": "sabre",
+  "fraction": 0.329,
+  "source": "directive",
+  "x": 0.0,
+  "y": 22.827,
+  "z": 0.0
+ },
+ "up/chronarchs_pendulum_sabre_orbit": {
+  "class": "sabre",
+  "fraction": 0.234,
+  "source": "handle",
+  "x": -0.121,
+  "y": -0.845,
+  "z": 0.0
+ },
+ "up/dawnpiercer_crossbow": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.068,
+  "z": -6.03
+ },
+ "up/dawnpiercer_crossbow_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.614,
+  "z": -5.668
+ },
+ "up/dawnpiercer_crossbow_lod": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 5.0,
+  "z": 0.15
+ },
+ "up/dawnpiercer_crossbow_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.068,
+  "z": -6.03
+ },
+ "up/dawnpiercer_crossbow_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.068,
+  "z": -6.03
+ },
+ "up/dawnpiercer_crossbow_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.068,
+  "z": -6.03
+ },
+ "up/deepwatch_harpoon": {
+  "class": "spear",
+  "fraction": 0.264,
+  "source": "directive",
+  "x": 0.0,
+  "y": 52.512,
+  "z": 0.0
+ },
+ "up/deepwatch_harpoon_lod": {
+  "class": "spear",
+  "fraction": 0.264,
+  "source": "directive",
+  "x": 0.0,
+  "y": 52.593,
+  "z": -0.231
+ },
+ "up/deepwatch_harpoon_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.151,
+  "z": 0.0
+ },
+ "up/djinn_weapon_agares_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.178,
+  "y": -1.59,
+  "z": 0.541
+ },
+ "up/djinn_weapon_agares_dark_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.212,
+  "y": -1.397,
+  "z": 0.258
+ },
+ "up/djinn_weapon_agares_dark_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.922,
+  "z": 0.0
+ },
+ "up/djinn_weapon_alloces_dark": {
+  "class": "longsword",
+  "fraction": 0.078,
+  "source": "handle",
+  "x": -1.12,
+  "y": -20.427,
+  "z": -1.961
+ },
+ "up/djinn_weapon_alloces_dark_lod": {
+  "class": "longsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.077,
+  "y": -10.033,
+  "z": -1.47
+ },
+ "up/djinn_weapon_alloces_dark_orbit": {
+  "class": "longsword",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.738,
+  "z": 0.0
+ },
+ "up/djinn_weapon_amdusias_dark": {
+  "class": "rapier",
+  "fraction": 0.07,
+  "source": "handle",
+  "x": 0.415,
+  "y": -18.123,
+  "z": -0.043
+ },
+ "up/djinn_weapon_amdusias_dark_lod": {
+  "class": "rapier",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.101,
+  "y": -16.366,
+  "z": 1.191
+ },
+ "up/djinn_weapon_amdusias_dark_orbit": {
+  "class": "rapier",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.97,
+  "z": 0.0
+ },
+ "up/djinn_weapon_amon_dark": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.91,
+  "y": -15.954,
+  "z": -0.137
+ },
+ "up/djinn_weapon_amon_dark_lod": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": -14.074,
+  "z": 0.0
+ },
+ "up/djinn_weapon_amon_dark_orbit": {
+  "class": "greatsword",
+  "fraction": 0.22,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.651,
+  "z": 0.0
+ },
+ "up/djinn_weapon_andrealphus_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.325,
+  "y": 0.164,
+  "z": 0.0
+ },
+ "up/djinn_weapon_andrealphus_dark_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 1.223,
+  "y": 1.058,
+  "z": 0.0
+ },
+ "up/djinn_weapon_andrealphus_dark_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.01,
+  "z": 0.0
+ },
+ "up/djinn_weapon_andromalius_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.43,
+  "y": 0.998,
+  "z": 0.495
+ },
+ "up/djinn_weapon_andromalius_dark_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.902,
+  "y": 2.909,
+  "z": 1.076
+ },
+ "up/djinn_weapon_andromalius_dark_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.51,
+  "z": 0.0
+ },
+ "up/djinn_weapon_baal_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.104,
+  "y": -1.881,
+  "z": 0.0
+ },
+ "up/djinn_weapon_baal_dark_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.041,
+  "y": 3.479,
+  "z": -0.235
+ },
+ "up/djinn_weapon_baal_dark_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.929,
+  "z": 0.0
+ },
+ "up/djinn_weapon_bael_dark": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.042,
+  "y": -16.406,
+  "z": 0.0
+ },
+ "up/djinn_weapon_bael_dark_lod": {
+  "class": "greatsword",
+  "fraction": 0.22,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.704,
+  "z": 0.098
+ },
+ "up/djinn_weapon_bael_dark_orbit": {
+  "class": "greatsword",
+  "fraction": 0.22,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.84,
+  "z": 0.0
+ },
+ "up/djinn_weapon_balam_dark": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.145,
+  "y": 0.581,
+  "z": 0.0
+ },
+ "up/djinn_weapon_balam_dark_lod": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.114,
+  "y": 4.461,
+  "z": -0.183
+ },
+ "up/djinn_weapon_balam_dark_orbit": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.177,
+  "z": 0.0
+ },
+ "up/djinn_weapon_barbatos_dark": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -7.5,
+  "z": -0.092
+ },
+ "up/djinn_weapon_barbatos_dark_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -5.227,
+  "z": -0.358
+ },
+ "up/djinn_weapon_barbatos_dark_orbit": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.095,
+  "z": 0.0
+ },
+ "up/djinn_weapon_belial_dark": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": -0.663,
+  "y": -25.184,
+  "z": 0.2
+ },
+ "up/djinn_weapon_belial_dark_lod": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.007,
+  "y": -22.601,
+  "z": 0.033
+ },
+ "up/djinn_weapon_belial_dark_orbit": {
+  "class": "greatsword",
+  "fraction": 0.22,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.651,
+  "z": 0.0
+ },
+ "up/djinn_weapon_bifron_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.12,
+  "y": -10.955,
+  "z": 0.0
+ },
+ "up/djinn_weapon_bifron_dark_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.005,
+  "y": -10.955,
+  "z": -0.29
+ },
+ "up/djinn_weapon_bifron_dark_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.929,
+  "z": 0.0
+ },
+ "up/djinn_weapon_buer_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.487,
+  "y": 7.478,
+  "z": 0.444
+ },
+ "up/djinn_weapon_buer_dark_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.815,
+  "y": 8.228,
+  "z": 0.154
+ },
+ "up/djinn_weapon_buer_dark_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.217,
+  "y": -0.412,
+  "z": 0.0
+ },
+ "up/djinn_weapon_camio_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.999,
+  "y": 5.2,
+  "z": 0.074
+ },
+ "up/djinn_weapon_camio_dark_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.585,
+  "y": 5.754,
+  "z": -0.187
+ },
+ "up/djinn_weapon_camio_dark_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.449,
+  "z": 0.0
+ },
+ "up/djinn_weapon_crocell_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.1,
+  "y": 7.348,
+  "z": 0.002
+ },
+ "up/djinn_weapon_crocell_dark_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.115,
+  "y": 9.447,
+  "z": 0.002
+ },
+ "up/djinn_weapon_crocell_dark_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.672,
+  "z": 0.0
+ },
+ "up/djinn_weapon_dantalion_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.025,
+  "y": 5.966,
+  "z": 0.477
+ },
+ "up/djinn_weapon_dantalion_dark_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.024,
+  "y": 8.097,
+  "z": -0.158
+ },
+ "up/djinn_weapon_dantalion_dark_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.3,
+  "z": 0.0
+ },
+ "up/djinn_weapon_decarabia_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.383,
+  "y": 6.58,
+  "z": 0.006
+ },
+ "up/djinn_weapon_decarabia_dark_lod": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.383,
+  "y": 5.2,
+  "z": -1.021
+ },
+ "up/djinn_weapon_decarabia_dark_orbit": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.086,
+  "y": -0.315,
+  "z": 0.0
+ },
+ "up/djinn_weapon_focalor_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.057,
+  "y": -0.58,
+  "z": 0.0
+ },
+ "up/djinn_weapon_focalor_dark_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.04,
+  "y": 2.578,
+  "z": -0.236
+ },
+ "up/djinn_weapon_focalor_dark_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.4,
+  "y": -0.832,
+  "z": 0.0
+ },
+ "up/djinn_weapon_furcas_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.042,
+  "y": 0.706,
+  "z": 0.0
+ },
+ "up/djinn_weapon_furcas_dark_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 3.951,
+  "z": 0.0
+ },
+ "up/djinn_weapon_furcas_dark_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.922,
+  "z": 0.0
+ },
+ "up/djinn_weapon_furfur_dark": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.587,
+  "y": -7.318,
+  "z": 0.196
+ },
+ "up/djinn_weapon_furfur_dark_lod": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.211,
+  "y": -6.13,
+  "z": -0.047
+ },
+ "up/djinn_weapon_furfur_dark_orbit": {
+  "class": "club",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.712,
+  "z": 0.0
+ },
+ "up/djinn_weapon_glasya_labolas_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.324,
+  "y": -2.605,
+  "z": 0.006
+ },
+ "up/djinn_weapon_glasya_labolas_dark_lod": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.324,
+  "y": 1.395,
+  "z": -0.708
+ },
+ "up/djinn_weapon_glasya_labolas_dark_orbit": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.425,
+  "y": -0.071,
+  "z": 0.0
+ },
+ "up/djinn_weapon_gusion_dark": {
+  "class": "rapier",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.751,
+  "y": -28.093,
+  "z": 0.0
+ },
+ "up/djinn_weapon_gusion_dark_lod": {
+  "class": "rapier",
+  "fraction": 0.203,
+  "source": "handle",
+  "x": 1.998,
+  "y": -13.457,
+  "z": 0.907
+ },
+ "up/djinn_weapon_gusion_dark_orbit": {
+  "class": "rapier",
+  "fraction": 0.078,
+  "source": "handle",
+  "x": 0.0,
+  "y": -1.821,
+  "z": 0.0
+ },
+ "up/djinn_weapon_haagenti_dark": {
+  "class": "cleaver",
+  "fraction": 0.15,
+  "source": "override",
+  "x": 2.617,
+  "y": -21.8,
+  "z": 0.0
+ },
+ "up/djinn_weapon_haagenti_dark_lod": {
+  "class": "cleaver",
+  "fraction": 0.15,
+  "source": "override",
+  "x": -0.224,
+  "y": -12.97,
+  "z": -0.469
+ },
+ "up/djinn_weapon_haagenti_dark_orbit": {
+  "class": "cleaver",
+  "fraction": 0.15,
+  "source": "override",
+  "x": 0.0,
+  "y": -1.05,
+  "z": 0.0
+ },
+ "up/djinn_weapon_kimaris_dark": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.002,
+  "y": -0.779,
+  "z": 0.0
+ },
+ "up/djinn_weapon_kimaris_dark_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.163,
+  "y": 4.581,
+  "z": -0.547
+ },
+ "up/djinn_weapon_kimaris_dark_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.408,
+  "z": 0.046
+ },
+ "up/djinn_weapon_marchosias_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -2.513,
+  "y": 5.551,
+  "z": 0.006
+ },
+ "up/djinn_weapon_marchosias_dark_lod": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -3.553,
+  "y": 5.898,
+  "z": 0.255
+ },
+ "up/djinn_weapon_marchosias_dark_orbit": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.09,
+  "y": 0.556,
+  "z": 0.0
+ },
+ "up/djinn_weapon_murmur_dark": {
+  "class": "mace",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.143,
+  "y": -5.044,
+  "z": 0.0
+ },
+ "up/djinn_weapon_murmur_dark_lod": {
+  "class": "mace",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.067,
+  "y": 0.365,
+  "z": -0.085
+ },
+ "up/djinn_weapon_murmur_dark_orbit": {
+  "class": "mace",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.712,
+  "z": 0.0
+ },
+ "up/djinn_weapon_paimon_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.052,
+  "y": -2.384,
+  "z": 0.0
+ },
+ "up/djinn_weapon_paimon_dark_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.05,
+  "y": 2.551,
+  "z": -0.213
+ },
+ "up/djinn_weapon_paimon_dark_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.4,
+  "y": -0.832,
+  "z": 0.0
+ },
+ "up/djinn_weapon_seere_dark": {
+  "class": "sabre",
+  "fraction": 0.078,
+  "source": "handle",
+  "x": 1.269,
+  "y": -37.84,
+  "z": -0.515
+ },
+ "up/djinn_weapon_seere_dark_lod": {
+  "class": "sabre",
+  "fraction": 0.063,
+  "source": "handle",
+  "x": 1.954,
+  "y": -36.015,
+  "z": -0.184
+ },
+ "up/djinn_weapon_seere_dark_orbit": {
+  "class": "sabre",
+  "fraction": 0.117,
+  "source": "handle",
+  "x": 0.0,
+  "y": -1.995,
+  "z": 0.0
+ },
+ "up/djinn_weapon_shax_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -4.767,
+  "y": -4.599,
+  "z": 0.227
+ },
+ "up/djinn_weapon_shax_dark_lod": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -4.532,
+  "y": -3.964,
+  "z": 0.226
+ },
+ "up/djinn_weapon_shax_dark_orbit": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.452,
+  "y": 0.098,
+  "z": 0.0
+ },
+ "up/djinn_weapon_sitri_dark": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.485,
+  "y": -4.325,
+  "z": 0.083
+ },
+ "up/djinn_weapon_sitri_dark_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.15,
+  "y": -4.338,
+  "z": 0.047
+ },
+ "up/djinn_weapon_sitri_dark_orbit": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.345,
+  "z": 0.0
+ },
+ "up/djinn_weapon_valefor_dark": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.718,
+  "y": -9.205,
+  "z": -1.789
+ },
+ "up/djinn_weapon_valefor_dark_lod": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.219,
+  "y": -7.031,
+  "z": -0.191
+ },
+ "up/djinn_weapon_valefor_dark_orbit": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.177,
+  "y": 0.056,
+  "z": 0.029
+ },
+ "up/djinn_weapon_vassago_dark": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.245,
+  "y": -2.596,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vassago_dark_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.683,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vassago_dark_orbit": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.442,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vepar_dark": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.015,
+  "y": -15.565,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vepar_dark_lod": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.09,
+  "y": -9.266,
+  "z": -0.168
+ },
+ "up/djinn_weapon_vepar_dark_orbit": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.65,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vinea_dark": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.095,
+  "y": -0.044,
+  "z": 0.0
+ },
+ "up/djinn_weapon_vinea_dark_lod": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": -0.264,
+  "y": 4.09,
+  "z": -0.178
+ },
+ "up/djinn_weapon_vinea_dark_orbit": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.442,
+  "z": 0.0
+ },
+ "up/djinn_weapon_zagan_dark": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.095,
+  "y": 4.566,
+  "z": 0.421
+ },
+ "up/djinn_weapon_zagan_dark_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.137,
+  "y": 8.093,
+  "z": 0.03
+ },
+ "up/djinn_weapon_zagan_dark_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.217,
+  "y": -0.412,
+  "z": 0.0
+ },
+ "up/djinn_weapon_zepar_dark": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -8.275,
+  "z": 0.0
+ },
+ "up/djinn_weapon_zepar_dark_lod": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.052,
+  "y": -8.275,
+  "z": -0.199
+ },
+ "up/djinn_weapon_zepar_dark_orbit": {
+  "class": "battleaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": 0.0,
+  "y": -1.407,
+  "z": 0.0
+ },
+ "up/dragon_force_twin_fangs": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": -0.053,
+  "y": -9.094,
+  "z": -0.133
+ },
+ "up/dragon_force_twin_fangs_lod": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.303,
+  "z": 0.0
+ },
+ "up/gungnir_the_unerring": {
+  "class": "spear",
+  "fraction": 0.306,
+  "source": "directive",
+  "x": -0.036,
+  "y": 68.052,
+  "z": -0.158
+ },
+ "up/gungnir_the_unerring_lod": {
+  "class": "spear",
+  "fraction": 0.306,
+  "source": "directive",
+  "x": 0.0,
+  "y": 72.216,
+  "z": 0.0
+ },
+ "up/hammer_of_thunderbolts": {
+  "class": "hammer",
+  "fraction": 0.24,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.427,
+  "z": 0.0
+ },
+ "up/hammer_of_thunderbolts_lod": {
+  "class": "hammer",
+  "fraction": 0.24,
+  "source": "directive",
+  "x": 0.0,
+  "y": 34.867,
+  "z": 0.0
+ },
+ "up/hellblaze_the_demon_sin": {
+  "class": "longsword",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.146,
+  "y": 0.9,
+  "z": 0.0
+ },
+ "up/hellblaze_the_demon_sin_lod": {
+  "class": "longsword",
+  "fraction": 0.154,
+  "source": "directive",
+  "x": 0.0,
+  "y": 24.25,
+  "z": 0.0
+ },
+ "up/kusanagi_the_grass_cutter": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.0,
+  "y": 0.285,
+  "z": 0.0
+ },
+ "up/kusanagi_the_grass_cutter_lod": {
+  "class": "katana",
+  "fraction": 0.155,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.065,
+  "z": 0.0
+ },
+ "up/leviathans_crown_trident": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 71.88,
+  "z": 0.0
+ },
+ "up/leviathans_crown_trident_lod": {
+  "class": "trident",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 0.0,
+  "y": 75.9,
+  "z": 0.0
+ },
+ "up/minotaur_kings_labrys": {
+  "class": "battleaxe",
+  "fraction": 0.277,
+  "source": "directive",
+  "x": 0.0,
+  "y": 38.908,
+  "z": 0.0
+ },
+ "up/minotaur_kings_labrys_lod": {
+  "class": "battleaxe",
+  "fraction": 0.277,
+  "source": "directive",
+  "x": 0.0,
+  "y": 40.853,
+  "z": 0.0
+ },
+ "up/orials_starfall_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.155,
+  "y": 94.498,
+  "z": -0.104
+ },
+ "up/orials_starfall_staff_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.248,
+  "y": 94.474,
+  "z": -0.59
+ },
+ "up/orials_starfall_staff_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.0,
+  "y": -0.52,
+  "z": 0.0
+ },
+ "up/paradox": {
+  "class": "staff",
+  "fraction": 0.462,
+  "source": "directive",
+  "x": 0.083,
+  "y": 87.381,
+  "z": 0.315
+ },
+ "up/paradox_lod": {
+  "class": "staff",
+  "fraction": 0.462,
+  "source": "directive",
+  "x": 0.015,
+  "y": 85.533,
+  "z": 0.218
+ },
+ "up/paradox_orbit": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.32,
+  "z": 0.0
+ },
+ "up/reflected_kings_mirrorblade": {
+  "class": "longsword",
+  "fraction": 0.156,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.299,
+  "z": 0.0
+ },
+ "up/reflected_kings_mirrorblade_lod": {
+  "class": "longsword",
+  "fraction": 0.156,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.299,
+  "z": -0.246
+ },
+ "up/reflected_kings_mirrorblade_orbit": {
+  "class": "longsword",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.761,
+  "z": 0.0
+ },
+ "up/rimeheart_greatblade": {
+  "class": "greatsword",
+  "fraction": 0.152,
+  "source": "directive",
+  "x": 0.0,
+  "y": 26.833,
+  "z": 0.0
+ },
+ "up/rimeheart_greatblade_lod": {
+  "class": "greatsword",
+  "fraction": 0.152,
+  "source": "directive",
+  "x": -0.073,
+  "y": 26.833,
+  "z": -0.264
+ },
+ "up/rimeheart_greatblade_orbit": {
+  "class": "greatsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 0.0,
+  "y": -4.194,
+  "z": 0.0
+ },
+ "up/sanguine_wardens_cleaver": {
+  "class": "cleaver",
+  "fraction": 0.125,
+  "source": "directive",
+  "x": 2.257,
+  "y": -9.35,
+  "z": 0.0
+ },
+ "up/sanguine_wardens_cleaver_lod": {
+  "class": "cleaver",
+  "fraction": 0.125,
+  "source": "directive",
+  "x": 2.745,
+  "y": -8.817,
+  "z": -0.057
+ },
+ "up/sanguine_wardens_cleaver_orbit": {
+  "class": "cleaver",
+  "fraction": 0.078,
+  "source": "handle",
+  "x": 0.0,
+  "y": -0.966,
+  "z": 0.0
+ },
+ "up/staff_of_the_magi": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.02,
+  "y": 88.416,
+  "z": -0.0
+ },
+ "up/staff_of_the_magi_lod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 93.696,
+  "z": 0.0
+ },
+ "up/valkarins_stormlance": {
+  "class": "spear",
+  "fraction": 0.331,
+  "source": "directive",
+  "x": 0.009,
+  "y": 74.771,
+  "z": 0.012
+ },
+ "up/valkarins_stormlance_lod": {
+  "class": "spear",
+  "fraction": 0.331,
+  "source": "directive",
+  "x": 0.106,
+  "y": 74.771,
+  "z": -0.211
+ },
+ "up/valkarins_stormlance_orbit": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "class",
+  "x": 1.0,
+  "y": -0.983,
+  "z": 0.0
+ },
+ "up/wand_of_the_wisdom_king": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 5.316,
+  "z": 0.0
+ },
+ "up/wand_of_the_wisdom_king_lod": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.156,
+  "z": 0.0
+ },
+ "up/wizard_kings_vow": {
+  "class": "rapier",
+  "fraction": 0.141,
+  "source": "directive",
+  "x": 0.337,
+  "y": -2.578,
+  "z": 0.0
+ },
+ "up/wizard_kings_vow_lod": {
+  "class": "rapier",
+  "fraction": 0.141,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.439,
+  "z": 0.0
+ },
+ "valkarins_stormlance": {
+  "class": "spear",
+  "fraction": 0.331,
+  "source": "directive",
+  "x": 0.009,
+  "y": 74.771,
+  "z": 0.012
+ },
+ "vanguard_hammer": {
+  "class": "hammer",
+  "fraction": 0.248,
+  "source": "directive",
+  "x": -1.016,
+  "y": 27.288,
+  "z": -1.998
+ },
+ "vassal_axe": {
+  "class": "battleaxe",
+  "fraction": 0.282,
+  "source": "directive",
+  "x": 0.0,
+  "y": 46.092,
+  "z": 0.0
+ },
+ "vassal_book": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.94,
+  "y": 18.186,
+  "z": 1.152
+ },
+ "vassal_carriage": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -46.739,
+  "y": 59.864,
+  "z": 0.0
+ },
+ "vassal_chain": {
+  "class": "whip",
+  "fraction": 0.081,
+  "source": "directive",
+  "x": -5.659,
+  "y": 8.891,
+  "z": 0.0
+ },
+ "vassal_claw": {
+  "class": "shortsword",
+  "fraction": 0.119,
+  "source": "directive",
+  "x": 0.0,
+  "y": 19.992,
+  "z": 0.0
+ },
+ "vassal_fan": {
+  "class": "handitem",
+  "fraction": 0.12,
+  "source": "override",
+  "x": 0.7,
+  "y": -29.133,
+  "z": 0.0
+ },
+ "vassal_gauntlet": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.103,
+  "y": 38.838,
+  "z": 1.415
+ },
+ "vassal_hammer": {
+  "class": "hammer",
+  "fraction": 0.271,
+  "source": "directive",
+  "x": 0.062,
+  "y": 39.91,
+  "z": 0.105
+ },
+ "vassal_harpoon": {
+  "class": "staff",
+  "fraction": 0.243,
+  "source": "directive",
+  "x": 0.0,
+  "y": 67.797,
+  "z": 0.0
+ },
+ "vassal_instrument": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 13.635,
+  "z": 1.002
+ },
+ "vassal_katana": {
+  "class": "katana",
+  "fraction": 0.121,
+  "source": "directive",
+  "x": 0.0,
+  "y": 9.602,
+  "z": 0.0
+ },
+ "vassal_mirror": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.085,
+  "y": 34.377,
+  "z": -0.084
+ },
+ "vassal_projectile": {
+  "class": "dagger",
+  "fraction": 0.366,
+  "source": "directive",
+  "x": 0.0,
+  "y": 28.015,
+  "z": 0.0
+ },
+ "vassal_scythe": {
+  "class": "scythe",
+  "fraction": 0.137,
+  "source": "directive",
+  "x": 0.0,
+  "y": 31.984,
+  "z": 0.0
+ },
+ "vassal_sewing_set": {
+  "class": "rapier",
+  "fraction": 0.185,
+  "source": "directive",
+  "x": -30.109,
+  "y": 11.081,
+  "z": 0.0
+ },
+ "vassal_staff": {
+  "class": "staff",
+  "fraction": 0.401,
+  "source": "directive",
+  "x": 0.0,
+  "y": 104.13,
+  "z": 0.0
+ },
+ "vassal_whip": {
+  "class": "coilwhip",
+  "fraction": 0.171,
+  "source": "directive",
+  "x": -0.002,
+  "y": 22.969,
+  "z": 0.013
+ },
+ "viola_of_moonlit_spirits": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 4.061,
+  "y": 33.381,
+  "z": 2.076
+ },
+ "viper_whip": {
+  "class": "coilwhip",
+  "fraction": 0.15,
+  "source": "class",
+  "x": 0.0,
+  "y": 6.238,
+  "z": 0.0
+ },
+ "virgo_key": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.001,
+  "y": 7.581,
+  "z": 0.0
+ },
+ "void_origin_katana": {
+  "class": "katana",
+  "fraction": 0.15,
+  "source": "directive",
+  "x": 0.0,
+  "y": 18.05,
+  "z": 0.0
+ },
+ "vorpal_sword": {
+  "class": "longsword",
+  "fraction": 0.1,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.055,
+  "z": 0.0
+ },
+ "vu/astralis_the_eye_of_the_universe": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 73.23,
+  "z": 0.0
+ },
+ "vu/astralis_the_eye_of_the_universe_lod": {
+  "class": "staff",
+  "fraction": 0.41,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 73.23,
+  "z": 0.0
+ },
+ "vu/blackrazor": {
+  "class": "greatsword",
+  "fraction": 0.078,
+  "source": "gripxyz",
+  "x": -0.009,
+  "y": 14.392,
+  "z": 0.16
+ },
+ "vu/blackrazor_lod": {
+  "class": "greatsword",
+  "fraction": 0.078,
+  "source": "gripxyz",
+  "x": -0.009,
+  "y": 14.392,
+  "z": 0.16
+ },
+ "vu/cardinal_halo_chakram": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 24.088,
+  "z": 0.0
+ },
+ "vu/cardinal_halo_chakram_lod": {
+  "class": "handaxe",
+  "fraction": 0.289,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 24.088,
+  "z": 0.0
+ },
+ "vu/demon_slayer_sword": {
+  "class": "greatsword",
+  "fraction": 0.477,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": -12.0,
+  "z": 0.0
+ },
+ "vu/demon_slayer_sword_lod": {
+  "class": "greatsword",
+  "fraction": 0.441,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": -12.0,
+  "z": 0.0
+ },
+ "vu/elsdocia": {
+  "class": "greatsword",
+  "fraction": 0.12,
+  "source": "gripxyz",
+  "x": 0.021,
+  "y": 14.462,
+  "z": 0.022
+ },
+ "vu/elsdocia_lod": {
+  "class": "greatsword",
+  "fraction": 0.12,
+  "source": "gripxyz",
+  "x": 0.021,
+  "y": 14.462,
+  "z": 0.022
+ },
+ "vu/fairy_glitter_gauntlets": {
+  "class": "dagger",
+  "fraction": 0.45,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 21.175,
+  "z": 0.0
+ },
+ "vu/fairy_glitter_gauntlets_lod": {
+  "class": "dagger",
+  "fraction": 0.465,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 21.175,
+  "z": 0.0
+ },
+ "vu/gae_bolg_heartseeker": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 79.8,
+  "z": -0.002
+ },
+ "vu/gae_bolg_heartseeker_lod": {
+  "class": "spear",
+  "fraction": 0.33,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 79.8,
+  "z": -0.002
+ },
+ "vu/magic_emperors_black_halberd": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 75.84,
+  "z": 0.0
+ },
+ "vu/magic_emperors_black_halberd_lod": {
+  "class": "glaive",
+  "fraction": 0.33,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 75.84,
+  "z": 0.0
+ },
+ "vu/nekrathuls_pact_scythe": {
+  "class": "scythe",
+  "fraction": 0.3,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 62.587,
+  "z": 0.0
+ },
+ "vu/nekrathuls_pact_scythe_lod": {
+  "class": "scythe",
+  "fraction": 0.302,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 62.587,
+  "z": 0.0
+ },
+ "vu/primordial_hearth_blade": {
+  "class": "dagger",
+  "fraction": 0.125,
+  "source": "gripxyz",
+  "x": -0.01,
+  "y": 4.302,
+  "z": 0.008
+ },
+ "vu/primordial_hearth_blade_lod": {
+  "class": "dagger",
+  "fraction": 0.1,
+  "source": "gripxyz",
+  "x": -0.01,
+  "y": 4.302,
+  "z": 0.008
+ },
+ "vu/starforged_aeon_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 20.587,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 20.587,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 24.246,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull1_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 24.246,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 7.911,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull2_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 7.911,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 2.437,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starforged_aeon_bow_pull3_lod": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "gripxyz",
+  "x": 2.437,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "vu/starsplitter_hammer": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 40.614,
+  "z": 0.0
+ },
+ "vu/starsplitter_hammer_lod": {
+  "class": "hammer",
+  "fraction": 0.25,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 40.614,
+  "z": 0.0
+ },
+ "vu/sword_of_the_first_dawn": {
+  "class": "longsword",
+  "fraction": 0.07,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 8.006,
+  "z": 0.0
+ },
+ "vu/sword_of_the_first_dawn_lod": {
+  "class": "longsword",
+  "fraction": 0.067,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 8.006,
+  "z": 0.0
+ },
+ "vu/void_origin_katana": {
+  "class": "katana",
+  "fraction": 0.102,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 11.539,
+  "z": 0.0
+ },
+ "vu/void_origin_katana_lod": {
+  "class": "katana",
+  "fraction": 0.102,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 11.539,
+  "z": 0.0
+ },
+ "vu_sz/primordial_hearth_blade": {
+  "class": "dagger",
+  "fraction": 0.125,
+  "source": "gripxyz",
+  "x": -0.01,
+  "y": 4.302,
+  "z": 0.008
+ },
+ "vu_sz/primordial_hearth_blade_lod": {
+  "class": "dagger",
+  "fraction": 0.1,
+  "source": "gripxyz",
+  "x": -0.01,
+  "y": 4.302,
+  "z": 0.008
+ },
+ "vu_sz/void_origin_katana": {
+  "class": "katana",
+  "fraction": 0.102,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 11.539,
+  "z": 0.0
+ },
+ "vu_sz/void_origin_katana_lod": {
+  "class": "katana",
+  "fraction": 0.102,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 11.539,
+  "z": 0.0
+ },
+ "wand_o_wisp": {
+  "class": "wand",
+  "fraction": 0.238,
+  "source": "directive",
+  "x": 2.343,
+  "y": 23.8,
+  "z": 0.0
+ },
+ "wand_of_bubbles": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 1.991,
+  "y": 10.992,
+  "z": 0.592
+ },
+ "wand_of_spider_summoning": {
+  "class": "wand",
+  "fraction": 0.282,
+  "source": "directive",
+  "x": 0.018,
+  "y": 27.354,
+  "z": 0.044
+ },
+ "wand_of_the_wisdom_king": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 7.556,
+  "z": 0.0
+ },
+ "warlute": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.002,
+  "z": 1.512
+ },
+ "warlute_charged": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.0,
+  "z": 1.512
+ },
+ "warlute_pull1": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.0,
+  "z": 1.512
+ },
+ "warlute_pull2": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.0,
+  "z": 1.512
+ },
+ "warlute_pull3": {
+  "class": "crossbow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 4.0,
+  "z": 1.512
+ },
+ "warmages_longsword": {
+  "class": "longsword",
+  "fraction": 0.109,
+  "source": "handle",
+  "x": 0.0,
+  "y": 12.62,
+  "z": 0.0
+ },
+ "wavebreaker": {
+  "class": "longsword",
+  "fraction": 0.08,
+  "source": "override",
+  "x": 0.0,
+  "y": -4.919,
+  "z": 0.0
+ },
+ "weapon_of_resurgence": {
+  "class": "longsword",
+  "fraction": 0.06,
+  "source": "handle",
+  "x": 1.4,
+  "y": -21.2,
+  "z": 0.0
+ },
+ "whirling_blades": {
+  "class": "sabre",
+  "fraction": 0.08,
+  "source": "override",
+  "x": -0.007,
+  "y": 4.964,
+  "z": 0.0
+ },
+ "whirling_blades_left": {
+  "class": "sabre",
+  "fraction": 0.08,
+  "source": "override",
+  "x": 0.007,
+  "y": 4.964,
+  "z": 0.0
+ },
+ "white_whip_of_welting": {
+  "class": "whip",
+  "fraction": 0.15,
+  "source": "class",
+  "x": -1.361,
+  "y": -1.117,
+  "z": 0.0
+ },
+ "willbreaker": {
+  "class": "hammer",
+  "fraction": 0.127,
+  "source": "directive",
+  "x": -0.003,
+  "y": 18.785,
+  "z": 0.0
+ },
+ "windcutter": {
+  "class": "longsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.531,
+  "z": 0.0
+ },
+ "windwheel_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.0,
+  "y": 94.851,
+  "z": 0.0
+ },
+ "wisp_lantern": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 9.725,
+  "z": 0.0
+ },
+ "wisp_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 0.02,
+  "y": 82.6,
+  "z": 0.009
+ },
+ "wizard_kings_vow": {
+  "class": "rapier",
+  "fraction": 0.141,
+  "source": "directive",
+  "x": -0.003,
+  "y": 18.439,
+  "z": 0.0
+ },
+ "wraith_cloak": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 5.2,
+  "z": 0.0
+ },
+ "written_consent": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.2,
+  "z": 0.0
+ },
+ "zogratis_hourglass": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 1.0,
+  "z": 0.0
+ }
+}

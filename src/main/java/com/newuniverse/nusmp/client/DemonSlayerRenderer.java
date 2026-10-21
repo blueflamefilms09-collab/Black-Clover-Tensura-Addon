@@ -102,7 +102,15 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
             pose.scale(1.6f, 1.6f, 1.6f);
             pose.translate(-0.5f, -0.5f, -0.5f);
         }
+        int gripCtx = WeaponGrip.index(ctx);
+        com.newuniverse.nusmp.visual.grip.GripState grip = gripCtx < 0 ? null : WeaponGrip.demonSlayer();
+        pose.pushPose();
+        if (grip != null) {                                                       // 1.111.0 (docs/weapon_grip.md): the middle of the cloth grip lands on the hand
+            float[] gs = grip.shift(gripCtx, 0.516f, 0.523f, 45f, 0.98f / 64f, 11.75f);
+            pose.translate(gs[0], gs[1], gs[2]);
+        }
         DemonSlayerMesh.draw(sink, data.getInt("Resonance"), fracture, time);
+        pose.popPose();
         if (mc.level != null && growthUntil > time) pose.popPose();
         sink.flush(buffers, stack.hasFoil(), light, overlay);
     }
