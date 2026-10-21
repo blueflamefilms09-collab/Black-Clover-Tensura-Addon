@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+"""Writes wave 105 (1.111.0, key normal_c): 121 Normal grade relics (utility charms, badges, armour pieces, monster-drop trinkets, 4 weapons).
+
+    python3 -B tools/relics/new_normal_c/gen.py            # writes everything
+    python3 -B tools/relics/new_normal_c/gen.py --check    # exit 1 when a file on disk differs
+
+From rows.py (117 gear and trinkets) and weapons.py (4 melee weapons) it writes: relics/wave/Wave105.java, the sprites (textures/item/<id>.png) and item models of the 117 gear relics, the lang
+fragment tools/lang/normal_c.json (en_us.json is not touched), and the weapon class rows (assets/nusmp/weapon_classes.json and tools/relics/weapon_classes.json, appended).
+The worn ornaments (relic_worn/uq_<id>.txt) and the catalog lines come from gen_worn_all.py (the rows are fed to it by gen_relic_waves.all_rows), the Curios tags from gen_curios_tags.py,
+the meshes, skins and sprites of the weapons from models.py. Deterministic and re-runnable."""
+import hashlib
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REL = os.path.abspath(os.path.join(HERE, ".."))
+sys.path.insert(0, REL)
+import relic_icon_lib as ICONS  # noqa: E402
+import relic_rows_lib as RL  # noqa: E402
+from new_normal_c import rows as ROWS_MOD  # noqa: E402
+from new_normal_c import weapons as WEAPONS_MOD  # noqa: E402
+
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+WAVE = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave105.java")
+LANG = os.path.join(ROOT, "tools", "lang", "normal_c.json")
+ROWS = ROWS_MOD.ROWS
+WEAPONS = WEAPONS_MOD.WEAPONS
+LOOK_WEAPON = {"SWORD", "STAFF", "AXE", "HAMMER"}
+
+
+def hexc(c):
+    return "0x" + c.lstrip("#").upper()
+
+
+def const(w):
+    return "DMG_" + w["id"].upper()
+
+
+def gear_java(r):
+    chain = 'RelicDef.of("%s", "%s", Grade.%s, RelicSlot.%s)' % (r["id"], RL.jesc(r["name"]), r["grade"], r["slot"])
+    chain += "\n                .palette(%s, %s, %s).look(Look.%s)" % (hexc(r["pal"][0]), hexc(r["pal"][1]), hexc(r["pal"][2]), r["look"])
+    chain += '\n                .desc("%s")' % RL.jesc(r["desc"])
+    for tok in r["passives"].split():
+        chain += "\n                .passive(%s)" % RL.passive_java(tok)
+    for i, a in enumerate(r["acts"]):
+        chain += "\n                .act(%s)" % RL.act_java(a, i)
+    return "        out.accept(%s);\n" % chain
+
+
+def weapon_desc(w):
+    names = [a[0] for a in w["acts"]]
+    return "%s Use: %s." % (w["lore"], " and ".join(names))
+
+
+def weapon_java(w):
+    c = 'RelicDef.of("%s", "%s", Grade.%s, RelicSlot.MAIN_HAND).model3d()' % (w["id"], RL.jesc(w["name"]), w["grade"])
+    c += "\n                .look(Look.%s).palette(0x%06X, 0x%06X, 0x%06X)" % (w["look"], *w["pal"])
+    c += '\n                .desc("%s")' % RL.jesc(weapon_desc(w))
+    for tok in w["passives"].split():
+        c += "\n                .passive(%s)" % RL.passive_java(tok)
+    for i, a in enumerate(w["acts"]):
+        c += "\n                .act(%s)" % RL.act_java(a, i)
+    c += "\n                .melee(%s, %s)" % (const(w), repr(float(w["speed"])))
+    c += "\n                .engrave(%s)" % ", ".join('"%s"' % e for e in w["engr"])
+    return "        // ---------------------------------------------------------------- %s (%s, %s)\n        out.accept(%s);\n" % (w["name"], w["grade"].title(), w["world"], c)
+
+
+def wave_java():
+    gear = "\n".join(gear_java(r) for r in ROWS)
+    weap = "\n".join(weapon_java(w) for w in WEAPONS)
+    consts = "\n".join('    static final double %s = GradeDamage.damage("%s", "%s");' % (const(w), w["grade"].lower(), w["cls"]) for w in WEAPONS)
+    ids = [r["id"] for r in ROWS] + [w["id"] for w in WEAPONS]
+    idlines = "\n".join("            " + ", ".join('"%s"' % i for i in ids[k:k + 4]) + "," for k in range(0, len(ids), 4))
+    return '''package com.newuniverse.nusmp.relics.wave;
+
+import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
+import com.newuniverse.nusmp.relics.Act;
+import com.newuniverse.nusmp.relics.Grade;
+import com.newuniverse.nusmp.relics.GradeDamage;
+import com.newuniverse.nusmp.relics.Look;
+import com.newuniverse.nusmp.relics.Passive;
+import com.newuniverse.nusmp.relics.RelicDef;
+import com.newuniverse.nusmp.relics.RelicSlot;
+import com.newuniverse.nusmp.relics.Relics;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+/**
+ * Relics of Many Worlds, wave 105 (1.111.0, key normal_c): 121 Normal grade relics, the utility charms, tokens, guild and academy badges, tools of a trade, basic armour pieces and monster-drop
+ * trinkets of adventurers of about 35 worlds (Tensura, Black Clover, Magi, DanMachi, Fairy Tail, Solo Leveling, Naruto, One Piece, Attack on Titan and more), and four plain weapons. GENERATED by
+ * tools/relics/gen_relic_waves.py (java_for) through tools/relics/new_normal_c/gen.py from rows.py and weapons.py: edit the tables, not this file. Every ability is one of the shapes of
+ * {@link Wave31Acts}; the passives are attribute modifiers, resistances, standing effects and lent Tensura skills of the older waves' own kinds. Normal relics are cheap and small by design; the
+ * weapons deal the damage of the owner's table for their grade ({@link GradeDamage}) and carry Tensura engravings. Nothing here touches the food bar. Names and places are inspired
+ * by the works; the rules text is the mod's own.
+ */
+public final class Wave105 {
+    private Wave105() {}
+
+%s
+
+    /** The ids of this wave, in order (the self-test and the tests read them). */
+    public static final String[] IDS = {
+%s
+    };
+
+    public static void defs(Consumer<RelicDef> out) {
+%s
+%s    }
+
+    /** The in-game self-test {@code relic.normal_c}, run by the CI server smoke test: all 121 relics are registered with their grades and the files their looks need are in the jar. */
+    public static void hooks() {
+        SelfTests.register("relic.normal_c", server -> run());
+    }
+
+    static SelfTests.Result run() {
+        List<String> bad = new ArrayList<>();
+        int normal = 0, special = 0;
+        for (String id : IDS) {
+            RelicDef d = Relics.byId(id);
+            if (d == null) {
+                bad.add(id + " is not registered");
+                continue;
+            }
+            if (d.grade() == Grade.NORMAL) normal++;
+            else if (d.grade() == Grade.SPECIAL) special++;
+            else bad.add(id + " has the grade " + d.grade());
+            if (d.acts().isEmpty() && d.passives().isEmpty()) bad.add(id + " does nothing");
+            if (d.slot() == RelicSlot.MAIN_HAND) {
+                if (!d.hasModel3d() || d.engravings().isEmpty()) bad.add(id + " lacks its 3D model or engravings");
+                int[] range = GradeDamage.range(d.grade().name().toLowerCase(java.util.Locale.ROOT));
+                if (d.meleeDamage() < range[0] || d.meleeDamage() > range[1]) bad.add(id + " damage " + d.meleeDamage() + " is outside " + range[0] + "-" + range[1]);
+                for (String f : new String[]{"weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id + ".png"})
+                    if (Wave105.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+            } else if (Wave105.class.getResource("/assets/nusmp/relic_worn/uq_" + id + ".txt") == null) bad.add(id + ": its worn model is not in the jar");
+            for (String f : new String[]{"textures/item/" + id + ".png", "models/item/" + id + ".json", "models/item/" + id + "_icon.json"})
+                if (Wave105.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+        }
+        if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
+        if (normal != %d || special != %d) return SelfTests.Result.fail("grades " + normal + " Normal / " + special + " Special (wanted %d / %d)");
+        return SelfTests.Result.ok(IDS.length + " relics: " + normal + " Normal, " + special + " Special");
+    }
+}
+''' % (consts, idlines, gear, weap, N_NORMAL, N_SPECIAL, N_NORMAL, N_SPECIAL)
+
+
+N_NORMAL = sum(1 for r in ROWS if r["grade"] == "NORMAL") + sum(1 for w in WEAPONS if w["grade"] == "NORMAL")
+N_SPECIAL = sum(1 for r in ROWS if r["grade"] == "SPECIAL") + sum(1 for w in WEAPONS if w["grade"] == "SPECIAL")
+
+
+def write(path, data, check, binary=False):
+    mode = "rb" if binary else "r"
+    cur = None
+    if os.path.exists(path):
+        with open(path, mode, **({} if binary else {"encoding": "utf-8"})) as f:
+            cur = f.read()
+    if cur == data:
+        return 0
+    if check:
+        print("STALE", os.path.relpath(path, ROOT))
+        return 1
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "wb" if binary else "w", **({} if binary else {"encoding": "utf-8", "newline": "\n"})) as f:
+        f.write(data)
+    return 0
+
+
+def other_sprite_digests(mine):
+    out = set()
+    d = os.path.join(RES, "textures", "item")
+    for n in os.listdir(d):
+        if n.endswith(".png") and n[:-4] not in mine:
+            out.add(hashlib.sha256(open(os.path.join(d, n), "rb").read()).hexdigest())
+    return out
+
+
+def lang():
+    d = {}
+    for r in ROWS:
+        d["item.nusmp." + r["id"]] = r["name"]
+        d["item.nusmp." + r["id"] + ".card"] = "%s Grade. %s" % (r["grade"].title(), r["desc"])
+        d["item.nusmp." + r["id"] + ".desc"] = r["desc"]
+    for w in WEAPONS:
+        d["item.nusmp." + w["id"]] = w["name"]
+        d["item.nusmp." + w["id"] + ".desc"] = weapon_desc(w)
+        lines = ["%s Grade %s (%s damage, %g attacks a second)." % (w["grade"].title(), w["cls"], DAMAGE[w["id"]], w["speed"])]
+        for i, a in enumerate(w["acts"]):
+            bits = ["cooldown %d s" % a[1], "%d%% magicules" % a[2]]
+            lines.append("%s (%s; %s): %s" % (a[0], "sneak + use" if (len(a) > 6 and a[6]) else "use", ", ".join(bits), a[4]))
+        lines.append("Tensura engravings: " + ", ".join(e.replace("_", " ") for e in w["engr"]) + ".")
+        d["item.nusmp." + w["id"] + ".card"] = "\n".join(lines)
+    return json.dumps(d, indent=2, ensure_ascii=True) + "\n"
+
+
+def grade_damage(grade, cls):
+    rng = {"NORMAL": (20, 30), "SPECIAL": (35, 55)}[grade]
+    f = {"dagger": 0.0, "shortsword": 0.30, "longsword": 0.50, "katana": 0.45, "handaxe": 0.40, "staff": 0.45, "spear": 0.55, "hammer": 0.75}[cls]
+    v = rng[0] + f * (rng[1] - rng[0])
+    return round(v * 2) / 2.0
+
+
+DAMAGE = {w["id"]: ("%g" % grade_damage(w["grade"], w["cls"])) for w in WEAPONS}
+
+
+def class_rows(check):
+    bad = 0
+    pa = os.path.join(RES, "weapon_classes.json")
+    pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
+    a = json.load(open(pa, encoding="utf-8"))
+    t = json.load(open(pt, encoding="utf-8"))
+    for w in WEAPONS:
+        a["weapons"].setdefault(w["id"], w["cls"])
+        t["weapons"].setdefault(w["id"], {"class": w["cls"]})
+    raw_a = open(pa, encoding="utf-8").read()
+    raw_t = open(pt, encoding="utf-8").read()
+    bad += write(pa, json.dumps(a, indent=1, ensure_ascii=True) + ("\n" if raw_a.endswith("\n") else ""), check)
+    bad += write(pt, json.dumps(t, indent=2, ensure_ascii=True) + ("\n" if raw_t.endswith("\n") else ""), check)
+    return bad
+
+
+ATTR_NAME = {"luck": "luck", "speed": "movement speed", "hp": "max health", "armor": "armour", "tough": "toughness", "kb": "knockback resistance", "atk": "attack damage", "aspd": "attack speed",
+             "mp": "magicules", "reach": "reach", "sneak": "sneaking speed", "fall": "safe fall distance", "jump": "jump", "swim": "swim speed"}
+
+
+def passive_text(tokens):
+    out = []
+    for tok in tokens.split():
+        p = tok.split(":")
+        if p[0] == "a":
+            out.append("%s %s" % (p[2], ATTR_NAME[p[1]]))
+        elif p[0] == "r":
+            out.append("%d%% less %s damage" % (round(float(p[2]) * 100), p[1]))
+        elif p[0] == "e":
+            out.append("standing " + p[1].replace("_", " "))
+        elif p[0] == "s":
+            out.append("skill " + p[1].replace("_", " "))
+    return ", ".join(out) or "none"
+
+
+def act_text(acts):
+    return "; ".join("%s (%d s, %d%%%s)" % (a[0], a[1], a[2], ", sneak" if len(a) > 6 and a[6] else "") for a in acts) or "none"
+
+
+def write_doc(check):
+    worlds = sorted({r["world"] for r in ROWS} | {w["world"] for w in WEAPONS})
+    L = ["# Wave 105 (1.111.0, key normal_c): %d Normal relics\n" % N_NORMAL,
+         "Owner request: balance the grade pyramid by ADDING relics (Normal about 300); nothing is regraded, moved or removed. This wave adds **%d Normal** relics with a utility theme: "
+         "charms, tokens, seals, guild / academy / kingdom badges, pouches, lamps, compasses, keys, scroll cases and trade-tool charms (the smith's hammer, the healer's kit, the cook's ladle, "
+         "the miner's lamp, the scout's cloak), the basic HEAD / CHEST / FEET gear of the worlds, and trinkets made from monster drops (goblin teeth, orc tusks, lizardman scales, wolf fangs), "
+         "plus %d plain melee weapons (the limit was 12). Spread over %d worlds: %s.\n" % (N_NORMAL, len(WEAPONS), len(worlds), ", ".join(worlds)),
+         "Status: **NEW** (all %d). **REPLACED**: none. **KEPT**: every existing relic, id, grade and file. Built from `tools/relics/new_normal_c/` (`rows.py` gear, `weapons.py` weapons, `gen.py`, `models.py`, `presets.py`).\n" % N_NORMAL,
+         "Normal grade: one or two small passives or one simple act (1% magicules); weapons 20-30 damage. Every act is a shape of `Wave31Acts`; nothing touches the food bar. "
+         "Weapons carry Tensura engravings and are real 3D meshes with the old-style sprite as inventory icon, plus Better Combat files.\n",
+         "| id | name | grade | slot | world | passive | acts |", "|---|---|---|---|---|---|---|"]
+    for r in sorted(ROWS, key=lambda r: (r["slot"], r["id"])):
+        L.append("| `%s` | %s | %s | %s | %s | %s | %s |" % (r["id"], r["name"], r["grade"].title(), r["slot"], r["world"], passive_text(r["passives"]), act_text(r["acts"])))
+    for w in WEAPONS:
+        L.append("| `%s` | %s | %s | MAIN_HAND (%s, %s dmg, %g/s) | %s | %s | %s (engravings: %s) |" % (w["id"], w["name"], w["grade"].title(), w["cls"], DAMAGE[w["id"]], w["speed"], w["world"],
+                                                                                              passive_text(w["passives"]), act_text(w["acts"]), ", ".join(w["engr"])))
+    L += ["", "## Weapon models", ""] + ["* `%s`: %s" % (w["id"], w["doc"]) for w in WEAPONS]
+    n = len(ROWS)
+    L += ["", "## Files and hooks", "",
+          "* New: `relics/wave/Wave105.java` (defs, `IDS`, self-test `relic.normal_c`), `tools/lang/normal_c.json`, sprites and item models (`textures/item`, `models/item`), "
+          "worn ornaments `relic_worn/uq_<id>.txt` (%d), %d weapon meshes and skins, %d Better Combat files, `Wave105DefsTest`." % (n, len(WEAPONS), len(WEAPONS)),
+          "* Appended to shared files (append-only; other builders touch the same files, the lead regenerates them after merging): `RelicCatalog.java` (two `guard(...)` lines), "
+          "`relic_worn/catalog.txt` (%d `relic` lines, from `gen_worn_all.py`), the Curios tag files, both `weapon_classes.json` (%d rows), `tools/bettercombat/manifest.json`, "
+          "`tools/relics/display_presets_manifest.json`, and one hook in `tools/relics/gen_relic_waves.py` (`all_rows()` adds the %d rows so the worn library builds their ornaments)." % (n, len(WEAPONS), n),
+          "* Not touched: version, CHANGELOG, README, LIBRARIES, `en_us.json`, `.github`, the dungeon road table (`relic_themes.json`, a missing entry falls back to the id hash).",
+          "* Loot: reachable at their grade through the existing grade pools (`RelicLoot`); no new loot table.",
+          "", "## Not verified (nothing was run in a game)", "",
+          "* How the %d worn looks and %d hand models look in game (only the mesh previews of the weapons were rendered); the looks of Normal gear are deliberately simple." % (n, len(WEAPONS)),
+          "* The in-game self-test `relic.normal_c`, the act effects and their balance in play, the Better Combat swings of the %d weapons." % len(WEAPONS),
+          "* The client-class tests (`RelicHandCoverageTest`, `RelicRenderCoverageTest`, `WornCoverageTest`) need Minecraft client classes the offline shim lacks; their logic was checked through the catalog lines and files instead. "
+          "`RelicUniqueLooksTest` only reads waves 31-80; the same checks (unique sprite, ornament, palette) were run on this wave by script.",
+          "* `gen_worn_all.py` ends with the visual-upgrade step; check that it did not rewrite shared textures.",
+          "* Names of Wave 104 (built in parallel) are not visible to this wave; every name here is tied to a franchise place, guild or creature to avoid generic clashes.",
+          "* Grade pyramid note: no existing relic was reported as mis-graded by this wave."]
+    return write(os.path.join(ROOT, "docs", "relics", "normal_c.md"), "\n".join(L) + "\n", check)
+
+
+def main(check):
+    bad = 0
+    ids = {r["id"] for r in ROWS} | {w["id"] for w in WEAPONS}
+    if len(ids) != len(ROWS) + len(WEAPONS):
+        raise SystemExit("duplicate id in wave 105")
+    bad += write(WAVE, wave_java(), check)
+    taken = other_sprite_digests(ids)
+    for r in ROWS:
+        for bump in range(60):
+            icon = ICONS.render(r["icon"], r["pal"][0], r["pal"][1], r["pal"][2], r["id"], bump)
+            dig = hashlib.sha256(icon).hexdigest()
+            if dig not in taken:
+                break
+        else:
+            raise SystemExit("no distinct sprite for " + r["id"])
+        taken.add(dig)
+        bad += write(os.path.join(RES, "textures", "item", r["id"] + ".png"), icon, check, binary=True)
+        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        bad += write(os.path.join(RES, "models", "item", r["id"] + ".json"), model, check)
+        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        bad += write(os.path.join(RES, "models", "item", r["id"] + "_icon.json"), icon_model, check)
+    bad += write(LANG, lang(), check)
+    bad += class_rows(check)
+    bad += write_doc(check)
+    print("wave 105: %d gear relics, %d weapons (%d Normal, %d Special)" % (len(ROWS), len(WEAPONS), N_NORMAL, N_SPECIAL))
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main("--check" in sys.argv))

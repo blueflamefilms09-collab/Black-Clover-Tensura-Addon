@@ -286,6 +286,62 @@
     {
       "id": "nusmp:sindria_traders_scarf",
       "required": false
+    },
+    {
+      "id": "nusmp:ahjin_guild_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:blumund_adventurer_tag",
+      "required": false
+    },
+    {
+      "id": "nusmp:clover_kingdom_citizen_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:copper_adventurer_plate_of_e_rantel",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_merchant_guild_seal",
+      "required": false
+    },
+    {
+      "id": "nusmp:easton_academy_crest",
+      "required": false
+    },
+    {
+      "id": "nusmp:harpers_brooch_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_course_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:lugunica_royal_guard_crest",
+      "required": false
+    },
+    {
+      "id": "nusmp:magnoshutatt_academy_medal",
+      "required": false
+    },
+    {
+      "id": "nusmp:marine_recruit_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:seireitei_academy_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:tempest_federation_citizen_medal",
+      "required": false
+    },
+    {
+      "id": "nusmp:wings_of_freedom_pin",
+      "required": false
     }
   ]
 }

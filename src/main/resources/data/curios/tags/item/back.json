@@ -253,6 +253,46 @@
     {
       "id": "nusmp:supporters_rucksack",
       "required": false
+    },
+    {
+      "id": "nusmp:corps_foot_soldiers_haori",
+      "required": false
+    },
+    {
+      "id": "nusmp:deckhands_oilskin_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:dire_wolf_pelt_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_exam_travellers_poncho",
+      "required": false
+    },
+    {
+      "id": "nusmp:job_board_wanderers_duster",
+      "required": false
+    },
+    {
+      "id": "nusmp:priestella_gondoliers_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:rangers_moss_scout_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:silver_rank_plain_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:squad_trainees_mantle",
+      "required": false
+    },
+    {
+      "id": "nusmp:wayfaring_pedlars_wagon_cape",
+      "required": false
     }
   ]
 }
