@@ -130,6 +130,8 @@ public final class EncounterDirector {
     /** 1.94.0: every distinct failure is logged once with its stack; the count per kind and the latest are kept for {@code why}. */
     private static final Map<String, Integer> FAILURES = new LinkedHashMap<>();
     private static String lastFailure = "";
+    /** 1.107.0 (lockdown): the cells a caller of {@link #spawnAt} chose; set only for the duration of that call, server thread only. */
+    private static SpawnSearch.Found FIXED;
 
     // ---------------------------------------------------------------- the tick
     public static void onServerTick(ServerTickEvent.Post e) {
@@ -358,8 +360,8 @@ public final class EncounterDirector {
         }
         LevelSight sight = new LevelSight(level, exposed.get(0));
         // 1.94.0: the ladder of SpawnSearch (the ring, a wider ring, every room, a far place in view) from every member's eyes, instead of one ring round the party's centre
-        SpawnSearch.Found found = SpawnSearch.find(CellSource.layoutOf(sector), eyes, min, max, Math.max(1, entry.cells()), sight, SIGHT_CHECKS_PER_EYE,
-                EncConfig.get(EncConfig.SPAWN_WIDEN), EncConfig.get(EncConfig.RELAX_SIGHT_TIER) - 1, rnd);
+        SpawnSearch.Found found = FIXED != null ? FIXED : SpawnSearch.find(CellSource.layoutOf(sector), eyes, min, max, Math.max(1, entry.cells()), sight, SIGHT_CHECKS_PER_EYE,
+                EncConfig.get(EncConfig.SPAWN_WIDEN), EncConfig.get(EncConfig.RELAX_SIGHT_TIER) - 1, rnd);          // 1.107.0: FIXED = cells the lockdown / ambush directors chose (spawnAt); null = the ordinary search
         if (!found.ok()) {
             return new Outcome(Kind.NO_PLACE, "entry '" + entry.id() + "': no place found out of sight (" + String.join("; ", found.trace()) + ")", List.of(), budget, 0.0, res, entry.id(), band, List.of(), min, max);
         }
@@ -928,4 +930,64 @@ public final class EncounterDirector {
         out.add(EncGates.verdict(gates));
         return out;
     }
+
+    // ---------------------------------------------------------------- 1.107.0: the hooks of the lockdown rooms and the dynamic ambush (labyrinth/mega/lockdown)
+    /**
+     * Spawns one encounter of {@code band} on cells the CALLER chose (the inside of a locked room, the corridor ahead of a player who is running past the fight), through
+     * exactly the machinery of an ordinary encounter: the sector's table, the band's budget, the party and the depth scaling, the squad bridge (5 to 8 with roles), the
+     * spawner's checks of the ground, the Director's stamp and hunt orders. What differs is only that the place search is skipped and the cells given are used, nearest
+     * {@code minDist} blocks to any member of the party, with the sight rule off (a locked room's wave stands in plain view; an ambush ahead is allowed to be seen once it is
+     * {@code minDist} away). The Director's own cooldown is spent when {@code spendCooldown} (an ambush), left alone otherwise (a wave). Never throws; a failure is an Outcome.
+     */
+    public static Outcome spawnAt(ServerLevel level, List<? extends ServerPlayer> party, List<BlockPos> cells, List<BlockPos> reserve, double minDist, Band band, boolean spendCooldown, Random random) {
+        try {
+            if (!Labyrinth.inMega(level)) return Outcome.of(Kind.OUTSIDE, "this is not the Mega-Dungeon");
+            if (band == null || band == Band.NOTHING) return Outcome.of(Kind.QUIET, "no band asked for");
+            List<ServerPlayer> ps = new ArrayList<>();
+            for (ServerPlayer p : party) if (p.isAlive() && !p.isSpectator()) ps.add(p);
+            if (ps.isEmpty() || cells == null || cells.isEmpty()) return Outcome.of(Kind.NO_PARTY, "nobody to spawn for, or no cell given");
+            if (level.getDifficulty() == Difficulty.PEACEFUL) return Outcome.of(Kind.PEACEFUL, "the world is Peaceful: the monsters would vanish at once");
+            Sector sector = MegaDungeon.sectorAt(level, cells.get(0));
+            if (sector == null) return Outcome.of(Kind.OUTSIDE, "the cells are in no sector");
+            if (sector.state == Sector.State.GENERATING || sector.state == Sector.State.FAILED || sector.rooms.isEmpty()) return Outcome.of(Kind.NOT_READY, "sector " + sector.id + " is not ready");
+            EncounterTable table = EncData.table(sector.theme, sector.polarity);
+            if (table.entries().isEmpty()) return Outcome.of(Kind.NO_ENTRY, "the encounter table of " + sector.theme.id() + " is empty");
+            long now = level.getGameTime();
+            View v = view(level, sector, ps, table, now);
+            Random rnd = random != null ? random : new Random(level.getRandom().nextLong());
+            EncounterRoll.Choice choice = EncounterRoll.choose(table.entries(), band, v.threat(), v.size(), v.light().dark(), v.light().lit(), v.noisy(), e -> usable(e, table, v.threat()), rnd);
+            if (choice == null && band != Band.AMBUSH) {
+                EncounterRoll.Choice up = EncounterRoll.choose(table.entries(), band.up(), v.threat(), v.size(), v.light().dark(), v.light().lit(), v.noisy(), e -> usable(e, table, v.threat()), rnd);
+                if (up != null) choice = new EncounterRoll.Choice(up.entry(), band);
+            }
+            if (choice == null) return Outcome.of(Kind.NO_ENTRY, "the table of " + sector.theme.id() + " has no usable " + band.label() + " entry");
+            List<SpawnPicker.Cell> chosen = new ArrayList<>(cells.size()), spare = new ArrayList<>();
+            for (BlockPos c : cells) chosen.add(new SpawnPicker.Cell(c.getX(), c.getY(), c.getZ(), 1.0, -1, false));
+            if (reserve != null) for (BlockPos c : reserve) spare.add(new SpawnPicker.Cell(c.getX(), c.getY(), c.getZ(), 1.0, -1, false));
+            double min = Math.max(0.0, minDist);
+            FIXED = new SpawnSearch.Found(chosen, spare, new SpawnSearch.Tier(0, "given cells", min, 512.0, CellFinder.Mode.LEGACY, Math.max(0.001, min)), List.of("cells chosen by the caller"));
+            Outcome out;
+            try {
+                out = spawnEntry(level, sector, table, ps, choice.entry(), choice.band(), v, rnd, now, null);
+            } finally {
+                FIXED = null;
+            }
+            if (out.spawned() && spendCooldown) {
+                long cool = EncounterRoll.cooldown(EncConfig.get(EncConfig.BASE_COOLDOWN), EncConfig.get(EncConfig.MIN_COOLDOWN), v.noise());
+                for (ServerPlayer p : ps) {
+                    PlayerState st = state(p.getUUID());
+                    st.cooldownUntil = Math.max(st.cooldownUntil, now + cool);
+                    st.quietPasses = 0;                                                       // the tension is spent, as after any encounter
+                }
+            }
+            return out;
+        } catch (Throwable t) {
+            FIXED = null;
+            warn("spawnAt", t);
+            return Outcome.of(Kind.NO_PLACE, "the spawn failed: " + t);
+        }
+    }
+
+    /** 1.107.0: how many of the Director's monsters live within 64 blocks of any member of the party (the ambush director's crowd cap). */
+    public static int liveNearParty(ServerLevel level, List<? extends ServerPlayer> party) { return liveNear(level, party); }
 }

@@ -34,6 +34,7 @@ public final class MegaCommands {
         mega.then(com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.command());   // mechanic: the dungeon mechanics library (list, info, apply, clear, count, verify)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.lock.LockRegistry.command());          // lock: the escape rules (list, release, unstuck, cases, reach)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.puzzle.PuzzleRegistry.command());         // puzzle: the puzzle rooms (list, info, apply, status, plan, clear, reset, verify)
+        mega.then(com.newuniverse.nusmp.labyrinth.mega.lockdown.LockdownRegistry.command());   // lockdown: room lockdown and the ambush (status, rules, release, forget, ambush)
         mega.then(SelfTestCommand.command());                                               // selftest: the in-game self-tests the CI smoke test reads
         return mega;
     }

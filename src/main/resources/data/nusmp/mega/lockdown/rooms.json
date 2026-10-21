@@ -1,0 +1,41 @@
+{
+  "comment": "Which rooms of the Mega-Dungeon lock behind a party (1.107.0, docs/labyrinth/lockdown_ambush.md). A room's rule is its exact template, else the first matching 'patterns' entry (a fragment of the template's name), else its kind; a room nothing mentions does not lock. lock: closes at all; chance: the share of such rooms that lock (decided once per room from the sector seed); band: size of the wave (minor, standard, hard); waves: how many waves in a row (1 to 3); minFloor: the shallowest absolute floor that locks; minArea: the smallest footprint in blocks (a closet is not an arena). Depth raises the band and the waves by itself. Trial halls (their own Sealed Archway), puzzle rooms and trap rooms (their own mechanics) and caverns (no wall to close) never lock.",
+  "defaults": { "lock": true, "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 1, "minArea": 100 },
+  "kinds": {
+    "treasure": { "band": "standard", "waves": 1, "minFloor": 1, "note": "a guarded treasure room: nobody walks in, takes the chest and walks out" },
+    "set": { "band": "hard", "waves": 2, "minFloor": 1, "note": "a set-piece hall: the dungeon's big rooms are fights" },
+    "hall": { "chance": 0.35, "band": "standard", "waves": 1, "minFloor": 2, "note": "about a third of the ordinary halls from the second floor on" },
+    "trial": { "lock": false, "note": "a trial hall has its own Sealed Archway and wards" },
+    "puzzle": { "lock": false, "note": "a puzzle room has its own mechanic, which bars the doors itself" },
+    "trap": { "lock": false, "note": "a trap room is its own challenge" },
+    "cavern": { "lock": false, "note": "a cavern has no wall to close" },
+    "corridor": { "lock": false, "note": "a corridor is where the ambush director works" },
+    "junction": { "lock": false },
+    "link": { "lock": false },
+    "onward": { "lock": false },
+    "landing": { "lock": false },
+    "safe": { "lock": false },
+    "stairwell": { "lock": false },
+    "arena": { "lock": false, "note": "the Guardian's hall has its own scripted fight" },
+    "antechamber": { "lock": false },
+    "vault": { "lock": false }
+  },
+  "patterns": [
+    { "match": "barracks", "chance": 1.0, "band": "standard", "waves": 2, "minFloor": 2, "note": "soldiers: always a fight" },
+    { "match": "armory", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "guard_post", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "training_hall", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "dojo", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "great_hall", "chance": 1.0, "band": "hard", "waves": 2, "minFloor": 3, "note": "a great hall is a banquet of enemies" },
+    { "match": "grand_furnace", "chance": 1.0, "band": "hard", "waves": 2, "minFloor": 3 },
+    { "match": "hatchery", "chance": 1.0, "band": "standard", "waves": 2, "minFloor": 2 },
+    { "match": "beast_den", "chance": 1.0, "band": "standard", "waves": 2, "minFloor": 2 },
+    { "match": "torture", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "cell_block", "chance": 1.0, "band": "standard", "waves": 1, "minFloor": 2 },
+    { "match": "coffin_crypt", "chance": 1.0, "band": "hard", "waves": 1, "minFloor": 3 },
+    { "match": "mausoleum", "chance": 1.0, "band": "hard", "waves": 1, "minFloor": 3 },
+    { "match": "cocoon_larder", "chance": 1.0, "band": "standard", "waves": 2, "minFloor": 2 },
+    { "match": "drow_enclave", "chance": 1.0, "band": "standard", "waves": 2, "minFloor": 2 }
+  ],
+  "templates": {}
+}

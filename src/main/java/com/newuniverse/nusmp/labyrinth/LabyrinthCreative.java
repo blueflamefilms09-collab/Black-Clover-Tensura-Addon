@@ -27,7 +27,8 @@ public final class LabyrinthCreative {
             "pitfall_tile", "snuffer_glyph", "sigil_plate", "riddle_stone",
             "relic_forge",   // 1.36.0 traps and puzzles
             "shadow_core",   // 1.55.0: the Solo Leveling System's soul-extraction item
-            "mana_core", "guardian_altar");   // 1.54.0: the Mega-Dungeon Guardian's Mana Core and its altar
+            "mana_core", "guardian_altar",   // 1.54.0: the Mega-Dungeon Guardian's Mana Core and its altar
+            "lockdown_barrier");   // 1.107.0: the amber wall of a locked room
 
     /** Adds every registered Labyrinth item to the tab, in order; unknown ids are skipped. */
     public static void addTo(CreativeModeTab.Output output) {

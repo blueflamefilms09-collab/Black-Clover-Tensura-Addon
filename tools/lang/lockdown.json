@@ -1,0 +1,18 @@
+{
+  "block.nusmp.lockdown_barrier": "Lockdown Barrier",
+  "message.nusmp.mega.lockdown.sealed": "The doors seal behind you. Defeat every enemy in the room to open them (wave %1$s of %2$s).",
+  "message.nusmp.mega.lockdown.wave": "Wave %1$s of %2$s: more are coming.",
+  "message.nusmp.mega.lockdown.cleared": "The room is cleared. The seals fade.",
+  "message.nusmp.mega.lockdown.escaped": "The room was left uncleared. Something will be waiting for you.",
+  "message.nusmp.mega.system.lockdown.sealed": "ROOM SEALED: WAVE %1$s OF %2$s",
+  "message.nusmp.mega.system.lockdown.wave": "WAVE %1$s OF %2$s",
+  "message.nusmp.mega.system.lockdown.cleared": "ROOM CLEARED",
+  "message.nusmp.mega.lockdown.ambush": "You ran past the fight. Something was waiting in the way ahead.",
+  "message.nusmp.mega.system.lockdown.ambush": "AMBUSH AHEAD",
+  "message.nusmp.mega.lockdown.status.head": "Lockdown: %1$s rooms locked now, %2$s cleared rooms remembered, %3$s ambushes fired this session.",
+  "message.nusmp.mega.lockdown.status.room": "Your room (%1$s, %2$s): %3$s.",
+  "message.nusmp.mega.lockdown.status.none": "You are not in a room of the Mega-Dungeon.",
+  "message.nusmp.mega.lockdown.status.ambush": "Ambush ledger: heat %1$s of %2$s, cooldown %3$s s, %4$s fired in the window; verdict: %5$s.",
+  "message.nusmp.mega.lockdown.released": "Released %1$s locked room(s).",
+  "message.nusmp.mega.lockdown.forgot": "Forgot the cleared mark of %1$s room(s); they can lock again."
+}
