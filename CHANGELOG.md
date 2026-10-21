@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.110.0] — Voices, white squares fixed for good, custom particles with lag limits, bigger daggers and katanas, vanilla-style shields, duel-disk decks, relic armour, one tooltip for every item
+
+### NEW
+- **Spoken voices (ElevenLabs library voices):** 120 lines in 4 voices (David for the System announcer, Final Boss for boss taunts, Justin for the hub NPCs, Obsidian for the 36 Djinn): System floor, lockdown, ambush, rest, boss and rift lines; intro, phase 2 and death lines for 10 boss families; merchant and quest lines; a summon and an attack call for every Djinn. The server decides and sends the line to nearby players only (rate-limited per player); the client plays it in the Voice sound category. Client `voice.enabled` and `voice.volume`, server `voice.maxPerSecond`. The text of every message stays. About 4 MB of Ogg. `docs/audio/spoken_voices.md`. **Check each library voice's licence for commercial use before a public release.**
+- **One tooltip for every item:** every item of the mod gets the relic-style tooltip (grade-coloured name, grade banner with stars, type row, existing lines in the relic palette, footer, dark frame); relics keep their own. `docs/ui/unified_tooltips.md`.
+- **Duel-disk deck relics:** the Deck of Many Things and the Pact of the Deck are worn as a Yu-Gi-Oh duel disk on the left forearm (arm plate, blade fan with monster zones, spell zone, life-point strip, deck holder with a card stack) and held as a larger disk; the Deck keeps its floating golden cards. **Draw One Card** now plays a 2-second 3D card summon from the disk (card slides out, light streaks, slams onto a zone with a shockwave, flips, a column of light in the card's alignment colour, dissolves into sparks); client option `deck.summonEffect`. `docs/visual_upgrade/duel_disk.md`.
+- **Armour-slot relics always show:** the painted armour layer is now drawn whenever the 3D worn model is not, so a crown or boots can no longer be invisible; `/nusmp debug worn` lists every worn relic and how it is drawn. Relic armour layers are repainted (colour ramp, bevels, trim, chest emblem, brow gem, glow). `docs/visual_upgrade/armor_slot_relics.md`.
+- **Shields behave like the vanilla shield:** all 7 held shields use vanilla's shield display and blocking pose; right-click raises the Hero's Shield, the Calamity Wave Aegis and unattuned relic shields (their first act moved to sneak + use); the Legendary Shield works from the off hand; an axe hit disables the shield used. `docs/visual_upgrade/shield_fix.md`.
+- **Daggers and katanas are no longer slivers:** thickened copies of 24 dagger and katana meshes (blade at least 1/8 block wide in first person, real spine, grip and guard) and daggers about 0.68 blocks in third person and 0.62 in first person (some were 0.27). `docs/visual_upgrade/weapon_sizes.md`.
+- **Permanent fix for the white squares:** every glow, halo and flare pass of the weapons, relics and effects goes through one safe alpha-weighted blend (`SafeAdditive`); the shared halo texture and 326 others were cleaned of the hidden colour that made the boxes; tests fail the build if any class draws a glow type itself or any additive texture carries the defect. Elsdocia included. `docs/visual_upgrade/safe_additive.md`.
+- **Only the mod's own particles, and far fewer:** every particle of the upgraded weapons and relics is now a custom particle (577 vanilla tokens in 86 tables moved); default rates are halved (`particles.upgradeDensity` 0.5), with caps per item and per player and a live cap, thinned by frame rate and distance, none for others' items beyond 16 blocks; particles shrink near the camera so a flame can no longer fill the view. `docs/visual_upgrade/upgrade_particles.md`.
+
+### REMOVED (the owner asked)
+- The custom Backpack (block, items, upgrades, screen, recipes) and its drop roll. The player-placed-block exemption, Luck loot and Luck coins stay. A world that held an old backpack loses it.
+- The flat floating card picture of the Deck of Many Things (a test keeps it from coming back).
+
+### REPLACED
+- How the deck relics, the 7 shields, the daggers and katanas, and relic armour are drawn (old files stay on disk where possible; `visual.upgrade=false` brings the old look back for the visual changes).
+
+### KEPT
+- Every id, stat, act, passive, engraving, Better Combat file, saved data (except the removed backpack), the player-placed-block exemption, Time Magic.
+
+### Honest notes
+- Nothing has been run in the game and no voice has been listened to. Many numbers (particle caps, summon timing, shield display values written from memory of 1.21.1, ground-drop position, katana width) are first guesses.
+- The duel disk does not retract, and the card summon does not follow an arm swing or a sneak.
+
 ## [1.109.0] — The 36 dark Djinn weapons upgraded
 
 ### NEW
