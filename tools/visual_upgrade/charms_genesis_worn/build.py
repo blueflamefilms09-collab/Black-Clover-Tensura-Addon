@@ -59,8 +59,10 @@ def write_data(items):
             continue                                                                   # not baked yet (a partial run while developing)
         h, w = SP.hand_line(it)
         lines += [h, w]
+        _tbl = SP.fx_json(it)
+        __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](_tbl)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
         with open(os.path.join(MT.VU_FX, it.rid + ".json"), "w", newline="\n") as fh:
-            json.dump(SP.fx_json(it), fh, indent=1)
+            json.dump(_tbl, fh, indent=1)
             fh.write("\n")
         acts += SP.act_lines(it)
     with open(os.path.join(MT.VU_DIR, "overrides.txt"), "w", newline="\n") as fh:

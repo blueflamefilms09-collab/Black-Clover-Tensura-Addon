@@ -5,7 +5,10 @@ import com.newuniverse.nusmp.item.ElsdociaComponents;
 import com.newuniverse.nusmp.item.ElsdociaRules;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.particles.ParticleOptions;
+import com.newuniverse.nusmp.client.upgrade.UpgradeGate;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -25,8 +28,22 @@ import com.newuniverse.nusmp.particle.fx.FxThemes;
 public final class ElsdociaGlitterClient {
     private ElsdociaGlitterClient() {}
 
-    private static final DustParticleOptions ICE = new DustParticleOptions(new Vector3f(0.45f, 0.82f, 1.0f), 0.7f);
-    private static final DustParticleOptions WHITE = new DustParticleOptions(new Vector3f(0.9f, 0.97f, 1.0f), 0.55f);
+    private static ParticleOptions ice, white, spark;                                    // 1.110.0: the mod's own particles, built on first use (the registry is bound by then)
+
+    private static ParticleOptions ice() {
+        if (ice == null) ice = UpgradeParticleOptions.dust(0x73D1FF, 0.7f);
+        return ice;
+    }
+
+    private static ParticleOptions white() {
+        if (white == null) white = UpgradeParticleOptions.dust(0xE6F7FF, 0.55f);
+        return white;
+    }
+
+    private static ParticleOptions spark() {
+        if (spark == null) spark = UpgradeParticleOptions.of("nusmp:mote", 0xCFEFFF, 0.6f);
+        return spark;
+    }
 
     public static void init() {
         NeoForge.EVENT_BUS.addListener(ElsdociaGlitterClient::onTick);
@@ -35,13 +52,18 @@ public final class ElsdociaGlitterClient {
     static void onTick(ClientTickEvent.Post e) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.player == null || mc.isPaused()) return;
+        if (!UpgradeGate.begin(mc, mc.level.getGameTime())) return;                          // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
         int spent = 0;
         for (Player p : mc.level.players()) {
             if (!ElsdociaGlitter.budgetLeft(spent)) return;
             if (!(p.getMainHandItem().getItem() instanceof MagicWeaponItem w) || w.kind != MagicWeaponItem.Kind.ELSDOCIA) continue;
+            if (!(p instanceof AbstractClientPlayer cp)) continue;
+            float gate = UpgradeGate.scale(cp);                                               // density x quality x fps x distance (others: 16 blocks) x view direction
+            if (gate <= 0f) continue;
             var r = p.getRandom();
-            moteRing(mc, p, r.nextFloat());                                                       // 1.97.0: a small mote per learned ability
+            moteRing(mc, cp, r.nextFloat(), gate);                                            // 1.97.0: a small mote per learned ability
             int n = ElsdociaGlitter.count(p.distanceToSqr(mc.player), r.nextFloat());
+            n = UpgradeGate.take(cp, 0x45, UpgradeGate.count(n * gate, r));                    // the item and player buckets, the live cap, the client allowance
             if (n == 0) continue;
             double yaw = Math.toRadians(p.yBodyRot);
             Vec3 look = p.getLookAngle();
@@ -53,7 +75,7 @@ public final class ElsdociaGlitterClient {
                 double ox = (r.nextDouble() - 0.5) * 0.16, oz = (r.nextDouble() - 0.5) * 0.16, oy = (r.nextDouble() - 0.5) * 0.1;
                 Vec3 at = hand.add(dir.scale(along)).add(ox, oy, oz);
                 boolean spark = r.nextInt(5) == 0;
-                mc.level.addParticle(spark ? Fx.options(FxThemes.BOSS_ELSDOCIA, FxOld.END_ROD) : (r.nextBoolean() ? ICE : WHITE), at.x, at.y, at.z, 0, spark ? 0.01 : -0.005, 0);
+                UpgradeGate.add(mc.level, spark ? spark() : (r.nextBoolean() ? ice() : white()), at.x, at.y, at.z, 0, spark ? 0.01 : -0.005, 0);
             }
         }
     }
@@ -62,10 +84,10 @@ public final class ElsdociaGlitterClient {
      * 1.97.0: one mote per learned magic (at most {@link ElsdociaRules#MAX_MOTES}) circling the blade, tinted by that magic's soul; each mote spawns on a
      * roll, so a holder spends at most one particle per tick on motes. Reads the synced lineage component, no packets.
      */
-    private static void moteRing(Minecraft mc, Player p, float roll) {
+    private static void moteRing(Minecraft mc, AbstractClientPlayer p, float roll, float gate) {
         var lineage = ElsdociaComponents.get(p.getMainHandItem());
         int learned = Math.min(lineage.learned().size(), ElsdociaRules.MAX_MOTES);
-        if (learned == 0 || roll > 0.35f || p.distanceToSqr(mc.player) > 24 * 24) return;
+        if (learned == 0 || roll > 0.35f * gate || p.distanceToSqr(mc.player) > 24 * 24 || UpgradeGate.take(p, 0x46, 1) <= 0) return;
         int k = (int) (p.getRandom().nextFloat() * learned) % learned;
         var m = MagicType.lookup(lineage.learned().get(k));
         int rgb = m == null ? 0xFFFFFF : ElsdociaGlitter.moteColour(m.soulType);
@@ -74,6 +96,6 @@ public final class ElsdociaGlitterClient {
         Vec3 look = p.getLookAngle();
         Vec3 hand = new Vec3(p.getX() - Math.cos(yaw) * 0.36 + look.x * 0.2, p.getY() + 1.25 + 0.35 * Math.sin(ang * 0.7), p.getZ() - Math.sin(yaw) * 0.36 + look.z * 0.2);
         Vec3 at = hand.add(Math.cos(ang) * r, 0, Math.sin(ang) * r);
-        Fx.addDust(mc.level, FxThemes.BOSS_ELSDOCIA, new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.8f, at.x, at.y, at.z, 0, 0.002, 0);
+        UpgradeGate.add(mc.level, UpgradeParticleOptions.dust(rgb, 0.8f), at.x, at.y, at.z, 0, 0.002, 0);
     }
 }

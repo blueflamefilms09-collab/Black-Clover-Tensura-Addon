@@ -4,20 +4,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
-import org.joml.Vector3f;
 
 import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.fx.FxOld;
-import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The tables of the upgraded weapons, read from assets/nusmp/visual_upgrade/&lt;item id&gt;.json the first time an item is asked for and kept until the next resource reload
@@ -81,16 +75,11 @@ public final class UpgradeSpecs {
         }
     }
 
-    /** The particle of a layer: "dust" is a vanilla dust mote in the layer's colour; anything else is looked up in the particle registry (a plain particle type), end rod when unknown. */
+    /**
+     * The particle of a layer, always one of the mod's own custom particles (1.110.0): "fx" and "dust" are the hue-themed custom mote dyed with the layer's colour, a catalog id is itself,
+     * and a vanilla name goes through the alias table of {@link com.newuniverse.nusmp.particle.fx.UpgradeParticleAlias} to the nearest custom particle. Never a vanilla particle.
+     */
     static ParticleOptions options(UpgradeSpec.Layer l) {
-        if (l.particle().equals("fx")) {                                             // 1.108.0 (slice djinn_dark_weapons): the mod's own particle, themed and dyed by the layer's colour
-            return com.newuniverse.nusmp.particle.fx.FxRelic.dust(l.rgb(), Math.max(0.3f, l.size()));
-        }
-        if (l.particle().equals("dust")) {
-            return new DustParticleOptions(new Vector3f((l.rgb() >> 16 & 255) / 255f, (l.rgb() >> 8 & 255) / 255f, (l.rgb() & 255) / 255f), Math.max(0.3f, l.size()));
-        }
-        ResourceLocation id = ResourceLocation.tryParse(l.particle());
-        Object t = id == null ? null : BuiltInRegistries.PARTICLE_TYPE.get(id);
-        return t instanceof ParticleOptions po ? po : Fx.options(FxThemes.WORLD, FxOld.END_ROD);
+        return com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions.of(l.particle(), l.rgb(), l.size());
     }
 }

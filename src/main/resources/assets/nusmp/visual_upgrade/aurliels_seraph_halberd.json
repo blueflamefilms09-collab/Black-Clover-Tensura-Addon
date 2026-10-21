@@ -83,7 +83,7 @@
     "layers": [
       {
         "kind": "motes",
-        "particle": "minecraft:end_rod",
+        "particle": "nusmp:mote",
         "rgb": "FFF4C0",
         "rate": 1.3,
         "speed": 0.014,
@@ -91,7 +91,7 @@
       },
       {
         "kind": "halo_ring",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "FFE890",
         "rate": 1.6,
         "speed": 0.0,
@@ -99,7 +99,7 @@
       },
       {
         "kind": "edge_line",
-        "particle": "minecraft:glow",
+        "particle": "nusmp:mote_soft",
         "rgb": "FFF0B0",
         "rate": 0.9,
         "speed": 0.004,
@@ -107,7 +107,7 @@
       },
       {
         "kind": "ground_cast",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "E8B84A",
         "rate": 1.0,
         "speed": 0.0,
@@ -115,7 +115,7 @@
       },
       {
         "kind": "wrist_flare",
-        "particle": "minecraft:end_rod",
+        "particle": "nusmp:mote",
         "rgb": "FFF4C0",
         "rate": 0.5,
         "speed": 0.01,
@@ -123,7 +123,7 @@
       },
       {
         "kind": "light_shaft",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "FFE890",
         "rate": 1.5,
         "speed": 0.03,
@@ -131,7 +131,7 @@
       },
       {
         "kind": "accent_flare",
-        "particle": "minecraft:totem_of_undying",
+        "particle": "nusmp:glint",
         "rgb": "FFFFFF",
         "rate": 0.05,
         "speed": 0.02,

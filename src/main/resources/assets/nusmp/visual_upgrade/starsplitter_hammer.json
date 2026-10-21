@@ -61,7 +61,7 @@
   {
    "id": "star_dust",
    "kind": "motes",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": "FFE070",
    "where": "blade",
    "rate": 0.5,
@@ -71,7 +71,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "FFE070",
    "radius": 1.1,
    "note": "a ring of star dust on the ground"

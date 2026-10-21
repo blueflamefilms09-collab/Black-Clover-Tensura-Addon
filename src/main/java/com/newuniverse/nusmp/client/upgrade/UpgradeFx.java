@@ -1,36 +1,29 @@
 package com.newuniverse.nusmp.client.upgrade;
 
-import com.newuniverse.nusmp.perf.PerfBudgets;
-import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import com.newuniverse.nusmp.particle.fx.Fx;
-import com.newuniverse.nusmp.particle.fx.FxOld;
-import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 
 /**
  * Why: the ambient layers and the swing trail of the upgraded weapons, as client particles. Every upgraded weapon has, in its spec, six layers (rising motes, turning rings, sparks along the
  * edge, arcs, a light shaft, a glow on the ground ...) and a swing trail of its own pattern; this class runs them for whoever holds the weapon.
  * <p>
  * Strictly budgeted, all client side: only holders within {@link #RANGE} blocks, at most {@link #MAX_HOLDERS} per tick, density by distance (full to 12 blocks, then thinner; beyond 24 only the
- * ground layer) times the option {@code visual.ambientDensity}, and every spawn is taken from the client particle budget ({@link PerfBudgets#clientParticles}, the same allowance the other ambient
+ * ground layer) times the option {@code visual.ambientDensity}, and every spawn is taken from the shared upgrade budget ({@link UpgradeGate#take}: per item, per player, in total, then the client allowance of the performance pass, the same one the other ambient
  * emitters share). The particle options are built once per layer; the positions are computed in a few doubles kept between calls (no per-tick allocation but the particles themselves).
  */
 public final class UpgradeFx {
@@ -50,9 +43,10 @@ public final class UpgradeFx {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         if (level == null || mc.player == null || mc.isPaused() || !UpgradeConfig.enabled()) return;
-        float density = UpgradeConfig.density() * PerfSettings.vfxQuality().detail;            // the effect quality of the performance pass thins the layers (low 0.5, medium 0.75)
-        boolean trails = UpgradeConfig.trails();
         long tick = level.getGameTime();
+        if (!UpgradeGate.begin(mc, tick)) return;                                              // 1.110.0: paused, low frame rate, particles.upgradeDensity 0: nothing
+        float density = UpgradeConfig.density();                                               // visual.ambientDensity; the gate adds particles.upgradeDensity x quality x fps x distance x view
+        boolean trails = UpgradeConfig.trails();
         int holders = 0;
         List<AbstractClientPlayer> players = level.players();
         for (int i = 0; i < players.size() && holders < MAX_HOLDERS; i++) {
@@ -69,16 +63,18 @@ public final class UpgradeFx {
             }
             UpgradeSpec spec = UpgradeSpecs.get(id);
             if (spec == null) continue;
+            float gate = UpgradeGate.scale(p);                                                     // 0 = nothing for this holder (somebody else's item beyond 16 blocks, behind the camera, ...)
+            if (gate <= 0f) continue;
             holders++;
             float far = dist2 < 144.0 ? 1f : dist2 < 576.0 ? 0.45f : 0.2f;
             frame(p, spec);
             if (density > 0f) {
                 for (UpgradeSpec.Layer l : spec.ambient) {
                     if (dist2 >= 576.0 && !"ground".equals(l.type())) continue;
-                    layer(level, p, spec, l, tick, density * far);
+                    layer(level, p, spec, l, tick, density * far * gate);
                 }
             }
-            if (trails && spec.swing != null && p.swinging && dist2 < 900.0) swing(level, p, spec, tick);
+            if (trails && spec.swing != null && p.swinging && dist2 < 900.0) swing(level, p, spec, tick, gate);
         }
     }
 
@@ -108,7 +104,7 @@ public final class UpgradeFx {
         float want = l.rate() / 20f * k;
         int n = (int) want + (rnd.nextFloat() < want - (int) want ? 1 : 0);
         if (n <= 0) return;
-        n = PerfBudgets.clientParticles(tick, n);
+        n = UpgradeGate.take(p, spec.id.hashCode(), n);                                        // the item and player buckets, the live cap, PerfBudgets.clientParticles
         if (n <= 0) return;
         ParticleOptions opt = options(l);
         double len = spec.handLength;
@@ -126,7 +122,7 @@ public final class UpgradeFx {
                 boolean drip = "drip".equals(l.type());
                 for (int i = 0; i < n; i++) {
                     double ox = (rnd.nextDouble() - 0.5) * 2 * r, oy = (rnd.nextDouble() - 0.5) * 2 * r, oz = (rnd.nextDouble() - 0.5) * 2 * r;
-                    level.addParticle(opt, ax + ox, ay + oy, az + oz, (rnd.nextDouble() - 0.5) * 0.01, drip ? 0.0 : l.rise() + rnd.nextDouble() * 0.01, (rnd.nextDouble() - 0.5) * 0.01);
+                    UpgradeGate.add(level, opt, ax + ox, ay + oy, az + oz, (rnd.nextDouble() - 0.5) * 0.01, drip ? 0.0 : l.rise() + rnd.nextDouble() * 0.01, (rnd.nextDouble() - 0.5) * 0.01);
                 }
             }
             case "ring", "orbit" -> {
@@ -144,7 +140,7 @@ public final class UpgradeFx {
                     double vx = fx * ct, vy = st, vz = fz * ct;
                     double px = ax + rad * (ca * ux + sa * vx), py = ay + rad * (sa * vy), pz = az + rad * (ca * uz + sa * vz);
                     double tx = (-sa * ux + ca * vx) * 0.04 * sgn, ty = (ca * vy) * 0.04 * sgn, tz = (-sa * uz + ca * vz) * 0.04 * sgn;
-                    level.addParticle(opt, px, py, pz, tx, ty, tz);
+                    UpgradeGate.add(level, opt, px, py, pz, tx, ty, tz);
                 }
             }
             case "edge" -> {
@@ -160,29 +156,29 @@ public final class UpgradeFx {
                         py = hy + dy * len * t;
                         pz = hz + dz * len * t;
                     }
-                    level.addParticle(opt, px + (rnd.nextDouble() - 0.5) * r, py + (rnd.nextDouble() - 0.5) * r, pz + (rnd.nextDouble() - 0.5) * r,
+                    UpgradeGate.add(level, opt, px + (rnd.nextDouble() - 0.5) * r, py + (rnd.nextDouble() - 0.5) * r, pz + (rnd.nextDouble() - 0.5) * r,
                             (rnd.nextDouble() - 0.5) * 0.02, 0.005 + rnd.nextDouble() * 0.01, (rnd.nextDouble() - 0.5) * 0.02);
                 }
             }
             case "arc" -> {
-                for (int i = 0; i < Math.max(1, n); i++) {
+                for (int i = 0; i < (n + 3) / 4; i++) {                                 // four particles per arc: the budget counted particles
                     double x1 = ax + (rnd.nextDouble() - 0.5) * 2 * r, y1 = ay + (rnd.nextDouble() - 0.5) * 2 * r, z1 = az + (rnd.nextDouble() - 0.5) * 2 * r;
                     double x2 = ax + (rnd.nextDouble() - 0.5) * 2 * r, y2 = ay + (rnd.nextDouble() - 0.5) * 2 * r, z2 = az + (rnd.nextDouble() - 0.5) * 2 * r;
                     for (int s = 0; s <= 3; s++) {
                         double t = s / 3.0;
-                        level.addParticle(opt, Mth.lerp(t, x1, x2) + (rnd.nextDouble() - 0.5) * 0.06, Mth.lerp(t, y1, y2) + (rnd.nextDouble() - 0.5) * 0.06,
+                        UpgradeGate.add(level, opt, Mth.lerp(t, x1, x2) + (rnd.nextDouble() - 0.5) * 0.06, Mth.lerp(t, y1, y2) + (rnd.nextDouble() - 0.5) * 0.06,
                                 Mth.lerp(t, z1, z2) + (rnd.nextDouble() - 0.5) * 0.06, 0.0, 0.0, 0.0);
                     }
                 }
             }
             case "shaft" -> {
-                for (int i = 0; i < n; i++) level.addParticle(opt, ax + (rnd.nextDouble() - 0.5) * 0.08, ay + rnd.nextDouble() * 0.2, az + (rnd.nextDouble() - 0.5) * 0.08, 0.0, 0.03 + rnd.nextDouble() * 0.02, 0.0);
+                for (int i = 0; i < n; i++) UpgradeGate.add(level, opt, ax + (rnd.nextDouble() - 0.5) * 0.08, ay + rnd.nextDouble() * 0.2, az + (rnd.nextDouble() - 0.5) * 0.08, 0.0, 0.03 + rnd.nextDouble() * 0.02, 0.0);
             }
             case "ground" -> {
                 double a0 = tick * l.speed() + p.getId() * 1.3;
                 for (int i = 0; i < n; i++) {
                     double a = a0 + i * (6.2831853 / Math.max(2, n)) + rnd.nextDouble() * 0.4;
-                    level.addParticle(opt, ax + r * Math.cos(a), ay, az + r * Math.sin(a), 0.0, 0.01 + rnd.nextDouble() * 0.01, 0.0);
+                    UpgradeGate.add(level, opt, ax + r * Math.cos(a), ay, az + r * Math.sin(a), 0.0, 0.01 + rnd.nextDouble() * 0.01, 0.0);
                 }
             }
             default -> { }
@@ -190,13 +186,14 @@ public final class UpgradeFx {
     }
 
     // ---------------------------------------------------------------- the swing trail
-    private static void swing(ClientLevel level, AbstractClientPlayer p, UpgradeSpec spec, long tick) {
+    private static void swing(ClientLevel level, AbstractClientPlayer p, UpgradeSpec spec, long tick, float gate) {
         UpgradeSpec.Swing sw = spec.swing;
         int duration = 6;                                                        // the vanilla swing; the trail follows swingTime, so a slower swing simply lays more ticks of it
         float u = Mth.clamp((p.swingTime + 1f) / duration, 0f, 1f);
-        int n = PerfBudgets.clientParticles(tick, sw.count());
-        if (n <= 0) return;
         RandomSource rnd = level.random;
+        int n = UpgradeGate.count(sw.count() * gate, rnd);
+        n = UpgradeGate.take(p, spec.id.hashCode() + 1, n);                                    // the same budgets as the ambient layers
+        if (n <= 0) return;
         ParticleOptions opt = swingOptions(sw);
         double phi = Math.toRadians(Mth.lerp(u, 70f, -70f)), eps = Math.toRadians(Mth.lerp(u, 55f, -25f));
         double reach = sw.reach();
@@ -259,7 +256,7 @@ public final class UpgradeFx {
                 }
                 default -> { }
             }
-            level.addParticle(opt, px, py, pz, vx, vy, vz);
+            UpgradeGate.add(level, opt, px, py, pz, vx, vy, vz);
         }
     }
 
@@ -282,14 +279,12 @@ public final class UpgradeFx {
         return o;
     }
 
-    /** A coloured dust, or the named vanilla particle (end_rod when the name is unknown). */
+    /** The mod's own particle a table names (1.110.0): the hue-themed custom mote for "dust" / "fx", a catalog id as it is, a vanilla name through the alias table; never a vanilla particle. */
     static ParticleOptions build(String name, int rgb, float size) {
-        if ("dust".equals(name)) return new DustParticleOptions(new Vector3f(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f), Mth.clamp(size, 0.2f, 2f));
-        ParticleOptions known = PLAIN.get(name);
+        ParticleOptions known = PLAIN.get(name + '#' + rgb + '#' + size);
         if (known != null) return known;
-        Object t = BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.withDefaultNamespace(name));
-        known = t instanceof ParticleOptions po ? po : Fx.options(FxThemes.WORLD, FxOld.END_ROD);
-        PLAIN.put(name, known);
+        known = UpgradeParticleOptions.of(name, rgb, size);
+        PLAIN.put(name + '#' + rgb + '#' + size, known);
         return known;
     }
 

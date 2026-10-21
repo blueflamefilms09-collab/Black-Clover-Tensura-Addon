@@ -72,7 +72,7 @@
   {
    "type": "motes",
    "anchor": "mid",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     255,
     236,
@@ -85,7 +85,7 @@
   {
    "type": "ring",
    "anchor": "mid",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     214,
@@ -100,7 +100,7 @@
   {
    "type": "shaft",
    "anchor": "mid",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     255,
     246,
@@ -112,7 +112,7 @@
   {
    "type": "edge",
    "anchor": "tip",
-   "particle": "electric_spark",
+   "particle": "nusmp:electric_orb",
    "rgb": [
     255,
     236,
@@ -126,7 +126,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     214,
@@ -140,7 +140,7 @@
   {
    "type": "arc",
    "anchor": "mid",
-   "particle": "glow",
+   "particle": "nusmp:mote_soft",
    "rgb": [
     255,
     236,
@@ -156,7 +156,7 @@
  },
  "swing": {
   "pattern": "ray",
-  "particle": "end_rod",
+  "particle": "nusmp:mote",
   "rgb": [
    255,
    214,

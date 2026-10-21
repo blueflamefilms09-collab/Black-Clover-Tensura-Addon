@@ -61,7 +61,7 @@
   {
    "id": "star_motes",
    "kind": "motes",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": "C48CFF",
    "where": "head",
    "rate": 0.6,
@@ -70,7 +70,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "7A3CC8",
    "radius": 1.0,
    "note": "a ring of purple stars on the ground"

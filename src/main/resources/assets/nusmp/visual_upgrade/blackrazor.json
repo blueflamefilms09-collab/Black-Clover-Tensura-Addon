@@ -49,7 +49,7 @@
   {
    "id": "soul_motes",
    "kind": "motes",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "9A4AFF",
    "where": "blade",
    "rate": 0.5,
@@ -58,7 +58,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "5A2A8A",
    "radius": 0.9,
    "note": "a ring of dark violet motes round the feet"

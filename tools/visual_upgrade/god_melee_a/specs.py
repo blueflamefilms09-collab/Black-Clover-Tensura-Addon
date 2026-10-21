@@ -48,6 +48,7 @@ def build(item_id, *, rgb, rgb2, ambient, swing, acts, length, tilt, veins_cfg=N
 
 def write(spec):
     os.makedirs(C.SPEC_DIR, exist_ok=True)
+    __import__("runpy").run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "custom_particles.py"))["convert"](spec)   # 1.110.0: every particle token of the table becomes one of the mod's own (tools/visual_upgrade/custom_particles.py)
     path = os.path.join(C.SPEC_DIR, spec["id"] + ".json")
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(spec, fh, indent=1)

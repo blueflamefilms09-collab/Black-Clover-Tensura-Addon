@@ -83,7 +83,7 @@
     "layers": [
       {
         "kind": "motes",
-        "particle": "minecraft:electric_spark",
+        "particle": "nusmp:electric_orb",
         "rgb": "BFE0FF",
         "rate": 0.9,
         "speed": 0.02,
@@ -91,7 +91,7 @@
       },
       {
         "kind": "halo_ring",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "9ACBFF",
         "rate": 1.6,
         "speed": 0.0,
@@ -99,7 +99,7 @@
       },
       {
         "kind": "edge_line",
-        "particle": "minecraft:electric_spark",
+        "particle": "nusmp:electric_orb",
         "rgb": "FFFFFF",
         "rate": 1.0,
         "speed": 0.004,
@@ -107,7 +107,7 @@
       },
       {
         "kind": "ground_cast",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "5A78C0",
         "rate": 1.0,
         "speed": 0.0,
@@ -115,7 +115,7 @@
       },
       {
         "kind": "wrist_flare",
-        "particle": "minecraft:glow",
+        "particle": "nusmp:mote_soft",
         "rgb": "BFE0FF",
         "rate": 0.5,
         "speed": 0.01,
@@ -123,7 +123,7 @@
       },
       {
         "kind": "light_shaft",
-        "particle": "dust",
+        "particle": "fx",
         "rgb": "9ACBFF",
         "rate": 1.2,
         "speed": 0.03,
@@ -131,7 +131,7 @@
       },
       {
         "kind": "accent_flare",
-        "particle": "minecraft:firework",
+        "particle": "nusmp:glint",
         "rgb": "FFFFFF",
         "rate": 0.12,
         "speed": 0.02,

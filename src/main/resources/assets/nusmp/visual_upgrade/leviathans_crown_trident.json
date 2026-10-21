@@ -72,7 +72,7 @@
   {
    "type": "motes",
    "anchor": "tip",
-   "particle": "bubble",
+   "particle": "nusmp:bubble",
    "rgb": [
     200,
     245,
@@ -85,7 +85,7 @@
   {
    "type": "ring",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     80,
     230,
@@ -100,7 +100,7 @@
   {
    "type": "drip",
    "anchor": "tip",
-   "particle": "dripping_water",
+   "particle": "nusmp:droplet",
    "rgb": [
     120,
     220,
@@ -112,7 +112,7 @@
   {
    "type": "orbit",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     140,
@@ -127,7 +127,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "bubble_pop",
+   "particle": "nusmp:bubble",
    "rgb": [
     120,
     220,
@@ -141,7 +141,7 @@
   {
    "type": "shaft",
    "anchor": "tip",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     200,
     250,
@@ -157,7 +157,7 @@
  },
  "swing": {
   "pattern": "wave",
-  "particle": "dust",
+  "particle": "fx",
   "rgb": [
    80,
    230,

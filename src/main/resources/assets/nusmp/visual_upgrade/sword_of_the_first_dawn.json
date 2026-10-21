@@ -55,7 +55,7 @@
   {
    "id": "daylight_motes",
    "kind": "motes",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": "FFF4B0",
    "where": "blade",
    "rate": 0.8,
@@ -65,7 +65,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "FFF4B0",
    "radius": 1.0,
    "note": "a ring of dawn light on the ground"

@@ -72,7 +72,7 @@
   {
    "type": "ring",
    "anchor": "front",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     110,
     190,
@@ -87,7 +87,7 @@
   {
    "type": "motes",
    "anchor": "front",
-   "particle": "bubble",
+   "particle": "nusmp:bubble",
    "rgb": [
     200,
     235,
@@ -100,7 +100,7 @@
   {
    "type": "edge",
    "anchor": "front",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     225,
     245,
@@ -114,7 +114,7 @@
   {
    "type": "orbit",
    "anchor": "front",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     226,
@@ -129,7 +129,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     110,
     190,
@@ -143,7 +143,7 @@
   {
    "type": "drip",
    "anchor": "front",
-   "particle": "dripping_water",
+   "particle": "nusmp:droplet",
    "rgb": [
     120,
     200,
@@ -159,7 +159,7 @@
  },
  "swing": {
   "pattern": "wave",
-  "particle": "dust",
+  "particle": "fx",
   "rgb": [
    110,
    190,

@@ -15,9 +15,11 @@ public final class FxConfig {
     public static final ModConfigSpec SERVER;
 
     private static final ModConfigSpec.BooleanValue CLIENT_CUSTOM;
+    private static final ModConfigSpec.DoubleValue UPGRADE_DENSITY;
     private static final ModConfigSpec.BooleanValue SERVER_CUSTOM;
 
     private static volatile boolean clientCustom = true;
+    private static volatile float upgradeDensity = 0.5f;
     private static volatile boolean serverCustom = true;
     private static volatile Boolean clientForce;
     private static volatile Boolean serverForce;
@@ -27,6 +29,9 @@ public final class FxConfig {
         c.push("particles");
         CLIENT_CUSTOM = c.comment("Use the mod's own custom particles (embers, runes, feathers, ...). Off = the old vanilla particles they replaced. Applies to particles this client spawns and to the way it shows server particles.")
                 .define("custom", true);
+        UPGRADE_DENSITY = c.comment("How many particles the upgraded weapons and relics (ambient motes, swing trails, act bursts, tiny Djinn) spawn: 0.0 none, 0.5 the default (half of what the item tables ask for), 1.0 everything the tables ask for. "
+                        + "They are also capped per item, per player and in total, and scaled by the effect quality, the frame rate and the distance (see docs/visual_upgrade/upgrade_particles.md).")
+                .defineInRange("upgradeDensity", 0.5, 0.0, 1.0);
         c.pop();
         CLIENT = c.build();
         ModConfigSpec.Builder s = new ModConfigSpec.Builder();
@@ -45,6 +50,11 @@ public final class FxConfig {
             // not loaded yet
         }
         try {
+            upgradeDensity = (float) (double) UPGRADE_DENSITY.get();
+        } catch (IllegalStateException | NullPointerException ignored) {
+            // not loaded yet
+        }
+        try {
             serverCustom = SERVER_CUSTOM.get();
         } catch (IllegalStateException | NullPointerException ignored) {
             // not loaded yet
@@ -55,6 +65,11 @@ public final class FxConfig {
     public static boolean clientCustom() {
         Boolean f = clientForce;
         return f != null ? f : clientCustom;
+    }
+
+    /** {@code particles.upgradeDensity} (0 to 1, default 0.5): the share of the table rates the upgraded items may spawn. Client file; the default while the file is not loaded. */
+    public static float upgradeDensity() {
+        return upgradeDensity;
     }
 
     /** May the server send custom particles? */

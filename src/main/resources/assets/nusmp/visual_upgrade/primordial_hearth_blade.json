@@ -55,7 +55,7 @@
   {
    "id": "embers_up",
    "kind": "motes",
-   "particle": "flame",
+   "particle": "nusmp:flame_tongue",
    "rgb": "FFB04A",
    "where": "blade",
    "rate": 0.7,
@@ -65,7 +65,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "FFB04A",
    "radius": 0.8,
    "note": "a ring of ember motes on the ground"

@@ -133,10 +133,13 @@ class UpgradeCoreTest {
 
     @Test
     void theParticleBudgetIsTakenBeforeAnythingIsSpawned() throws IOException {
+        // 1.110.0: the budget is the shared UpgradeGate (per item, per player, total, then PerfBudgets.clientParticles inside it) and the spawn goes through UpgradeGate.add
         String layer = strip(body("client/upgrade/UpgradeFx.java", "private static void layer("));
-        assertTrue(layer.indexOf("PerfBudgets.clientParticles") > 0 && layer.indexOf("PerfBudgets.clientParticles") < layer.indexOf("level.addParticle"));
+        assertTrue(layer.indexOf("UpgradeGate.take") > 0 && layer.indexOf("UpgradeGate.take") < layer.indexOf("UpgradeGate.add"));
         String swing = strip(body("client/upgrade/UpgradeFx.java", "private static void swing("));
-        assertTrue(swing.indexOf("PerfBudgets.clientParticles") > 0 && swing.indexOf("PerfBudgets.clientParticles") < swing.indexOf("level.addParticle"));
+        assertTrue(swing.indexOf("UpgradeGate.take") > 0 && swing.indexOf("UpgradeGate.take") < swing.indexOf("UpgradeGate.add"));
+        assertFalse(layer.contains("level.addParticle") || swing.contains("level.addParticle"), "a raw addParticle skips the gate");
+        assertTrue(Files.readString(SRC.resolve("client/upgrade/UpgradeGate.java")).contains("PerfBudgets.clientParticles("), "the gate still asks the client allowance of the performance pass");
         List<String> must = List.of("MAX_HOLDERS", "RANGE");
         String src = Files.readString(SRC.resolve("client/upgrade/UpgradeFx.java"));
         for (String m : must) assertTrue(src.contains(m), m);

@@ -49,7 +49,7 @@
   {
    "id": "crystal_dust",
    "kind": "motes",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": "5EC8FF",
    "where": "blade",
    "rate": 0.6,
@@ -59,7 +59,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "5EC8FF",
    "radius": 1.0,
    "note": "a ring of crystal motes on the ground"

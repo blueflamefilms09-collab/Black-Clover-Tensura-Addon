@@ -72,7 +72,7 @@
   {
    "type": "motes",
    "anchor": "tip",
-   "particle": "flame",
+   "particle": "nusmp:flame_tongue",
    "rgb": [
     255,
     110,
@@ -85,7 +85,7 @@
   {
    "type": "ring",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     110,
@@ -100,7 +100,7 @@
   {
    "type": "edge",
    "anchor": "tip",
-   "particle": "lava",
+   "particle": "nusmp:lava_blob",
    "rgb": [
     255,
     150,
@@ -114,7 +114,7 @@
   {
    "type": "drip",
    "anchor": "tip",
-   "particle": "dripping_lava",
+   "particle": "nusmp:lava_blob",
    "rgb": [
     255,
     110,
@@ -126,7 +126,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "smoke",
+   "particle": "nusmp:smoke_wisp",
    "rgb": [
     60,
     50,
@@ -140,7 +140,7 @@
   {
    "type": "arc",
    "anchor": "tip",
-   "particle": "crit",
+   "particle": "nusmp:spark",
    "rgb": [
     255,
     200,
@@ -156,7 +156,7 @@
  },
  "swing": {
   "pattern": "crescent",
-  "particle": "dust",
+  "particle": "fx",
   "rgb": [
    255,
    110,

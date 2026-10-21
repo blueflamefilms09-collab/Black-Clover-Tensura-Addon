@@ -72,7 +72,7 @@
   {
    "type": "motes",
    "anchor": "mid",
-   "particle": "happy_villager",
+   "particle": "nusmp:gem_sparkle",
    "rgb": [
     130,
     255,
@@ -85,7 +85,7 @@
   {
    "type": "edge",
    "anchor": "blade",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     200,
     255,
@@ -99,7 +99,7 @@
   {
    "type": "ring",
    "anchor": "mid",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     255,
     224,
@@ -114,7 +114,7 @@
   {
    "type": "orbit",
    "anchor": "tip",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     130,
     255,
@@ -129,7 +129,7 @@
   {
    "type": "ground",
    "anchor": "feet",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": [
     120,
     235,
@@ -143,7 +143,7 @@
   {
    "type": "shaft",
    "anchor": "tip",
-   "particle": "end_rod",
+   "particle": "nusmp:mote",
    "rgb": [
     220,
     255,
@@ -159,7 +159,7 @@
  },
  "swing": {
   "pattern": "clover",
-  "particle": "dust",
+  "particle": "fx",
   "rgb": [
    130,
    255,

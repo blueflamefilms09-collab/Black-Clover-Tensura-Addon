@@ -55,7 +55,7 @@
   {
    "id": "blood_motes",
    "kind": "motes",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "FF2A4A",
    "where": "blade",
    "rate": 0.6,
@@ -65,7 +65,7 @@
   {
    "id": "ground_cast",
    "kind": "ground_glow",
-   "particle": "dust",
+   "particle": "fx",
    "rgb": "8A1A2A",
    "radius": 1.0,
    "note": "a ring of dark red motes on the ground"
