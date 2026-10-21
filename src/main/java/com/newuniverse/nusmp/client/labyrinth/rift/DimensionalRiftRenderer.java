@@ -54,12 +54,17 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
         int rgb = type.rgb();
         float r = (rgb >> 16 & 255) / 255f, g = (rgb >> 8 & 255) / 255f, b = (rgb & 255) / 255f;
 
+        double camDist2 = 1.0e9, camRel = 0.0;                                                    // 1.107.0: the viewer's distance and height, for the parallax layers and the shards
+        float camAngle = 0f;
         pose.pushPose();
         pose.translate(0.5, 0.0, 0.5);
         if (dispatcher != null && dispatcher.camera != null) {
             Vec3 cam = dispatcher.camera.getPosition();
             double dx = cam.x - (be.getBlockPos().getX() + 0.5), dz = cam.z - (be.getBlockPos().getZ() + 0.5);
-            pose.mulPose(Axis.YP.rotation((float) Math.atan2(dx, dz)));
+            camAngle = (float) Math.atan2(dx, dz);
+            camRel = cam.y - (be.getBlockPos().getY() + HEIGHT * 0.5);
+            camDist2 = dx * dx + dz * dz + camRel * camRel;
+            pose.mulPose(Axis.YP.rotation(camAngle));
         }
         float h = HEIGHT * open, w = WIDTH * open * (0.96f + 0.04f * (float) Math.sin(t * 0.3));
 
@@ -72,6 +77,7 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
         // (1) the window onto another place
         RenderType window = type == RiftType.POCKET ? NURenderTypes.demonVoid() : type == RiftType.SHORTCUT ? RenderType.endPortal() : RenderType.endGateway();
         lens(buffers.getBuffer(window), pose.last().pose(), w * 0.94f, h * 0.94f, 0.05f * h, 0f);
+        RiftParallax.render(pose, buffers, TearGeometry.lod(camDist2), w * 0.94f, h * 0.94f, 0.05f * h, camAngle, (float) camRel, t, r, g, b, 0.5f * open * dim);       // 1.107.0: two masked layers that slide with the viewing angle
 
         // (2) the rim and the arcs
         VertexConsumer bolt = buffers.getBuffer(RenderType.lightning());
@@ -80,6 +86,12 @@ public final class DimensionalRiftRenderer implements BlockEntityRenderer<Dimens
         RandomSource rnd = RandomSource.create(be.seed() * 31L + (long) (t / 3f));
         int arcs = be.stable() ? 7 : 3;
         for (int i = 0; i < arcs; i++) arc(bolt, m, rnd, w, h, 0.05f * h, r, g, b, dim, open);
+        pose.popPose();
+
+        // 1.107.0: reality shards, in the world frame (not turned to the camera): slivers torn loose by the tear that drift, turn, split and fade
+        pose.pushPose();
+        pose.translate(0.5, 0.0, 0.5);
+        RealityShards.render(pose, buffers, be.seed(), t, 0f, HEIGHT * 0.5f * open + 0.05f * h, 0f, 0.5f + WIDTH * open, HEIGHT * 0.5f * open, r, g, b, open * dim, camDist2);
         pose.popPose();
     }
 

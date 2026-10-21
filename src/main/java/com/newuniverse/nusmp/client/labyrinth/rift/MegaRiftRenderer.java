@@ -97,6 +97,8 @@ public final class MegaRiftRenderer {
             if (TearGeometry.shimmer(lod)) shimmer(buffers.getBuffer(RenderType.entityTranslucentEmissive(SHIMMER)), last, m, scale, t, sr, sg, sb, 0.2f * open);
             pose.popPose();
         }
+        // 1.107.0: reality shards drifting round the fracture (RealityShards: budgeted by the same level of detail, no allocation)
+        RealityShards.render(pose, buffers, be.seed(), t, 0f, TearGeometry.CENTRE_Y * scale, 0f, TearGeometry.RX * scale, TearGeometry.RY * scale, Math.min(1f, ar * 0.6f + 0.4f), Math.min(1f, ag * 0.6f + 0.4f), Math.min(1f, ab * 0.6f + 0.4f), open * flicker, wx * wx + wy * wy + wz * wz);
         pose.popPose();
     }
 
