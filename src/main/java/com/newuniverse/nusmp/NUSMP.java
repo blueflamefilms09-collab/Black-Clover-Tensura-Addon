@@ -388,6 +388,8 @@ public class NUSMP {
         com.newuniverse.nusmp.visual.genesis.VuSelfTests.register();                                                // 1.102.0: self-test visual.genesis_weapons (assets of the upgraded Genesis weapons, the flag fallback)
         com.newuniverse.nusmp.visual.sizes.WeaponSizesSelfTests.register();                                        // 1.110.0: self-test visual.weapon_sizes (thickened dagger and katana meshes inside their size ranges, the old meshes kept)
         com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                        // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
+        com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                            // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
+        com.newuniverse.nusmp.vfx.SafeAdditiveSelfTests.register();                                               // 1.110.0: self-test visual.safe_additive (the blend maths, the halo card sheet, Elsdocia's card caps)
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy

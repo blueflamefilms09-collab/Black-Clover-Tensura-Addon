@@ -62,7 +62,7 @@ public class GrimoireDaemonRenderer extends MobRenderer<GrimoireDaemonEntity, Gr
                            float partial, float age, float netHeadYaw, float headPitch) {
             float pulse = (e.castLeft() > 0 ? 0.9f : 0.6f) + 0.3f * Mth.sin(age * 0.12f);
             int v = (int) (255 * Math.min(1f, pulse));
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.eyes(GLOW[tierOf(e)])), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFF000000 | (v << 16) | (v << 8) | v);
+            getParentModel().renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(GLOW[tierOf(e)])), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFF000000 | (v << 16) | (v << 8) | v);
         }
     }
 }

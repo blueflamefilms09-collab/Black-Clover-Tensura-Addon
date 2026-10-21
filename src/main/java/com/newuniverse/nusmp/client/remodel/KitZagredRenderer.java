@@ -60,7 +60,7 @@ public class KitZagredRenderer extends KitMobRenderer<ZagredBossEntity> {
         Entity t = e.level().getEntity(e.clientTarget());
         if (t == null || !t.isAlive()) return;
         Vec3 off = t.getPosition(partial).subtract(e.getPosition(partial));
-        reticle(pose, buffers.getBuffer(RenderType.eyes(RING)), off, t.getBbWidth(), e.tickCount + partial, state == ZagredBossEntity.STATE_CASTING);
+        reticle(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(RING)), off, t.getBbWidth(), e.tickCount + partial, state == ZagredBossEntity.STATE_CASTING);
     }
 
     /** A turning rune ring at the target's feet; casting adds four marks closing in and a brighter, faster ring. */

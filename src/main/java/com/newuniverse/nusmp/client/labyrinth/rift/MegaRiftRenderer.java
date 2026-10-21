@@ -70,7 +70,7 @@ public final class MegaRiftRenderer {
         pose.pushPose();
         pose.mulPose(Axis.YP.rotation((float) Math.atan2(wx, wz)));
         pose.translate(0, TearGeometry.CENTRE_Y * scale, -0.05);
-        glowQuad(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), 2.3f * scale, ar, ag, ab, 0.42f * open * flicker);
+        glowQuad(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), 2.3f * scale, ar, ag, ab, 0.42f * open * flicker);
         pose.popPose();
 
         int planes = TearGeometry.planes(lod);
@@ -86,15 +86,15 @@ public final class MegaRiftRenderer {
             // (2) the core: up to three layers, deeper = shifted more by the view ray
             int layers = TearGeometry.layers(lod);
             for (int l = 0; l < layers; l++) {
-                VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucentEmissive(CORE));
+                VertexConsumer vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(CORE));
                 core(vc, last, m, g, scale, l, lx, ly, alz, t, sr, sg, sb, open * (0.92f - 0.2f * l) * flicker);
             }
             // (3) the rim and (4) the strands, with the crack texture's glow
-            VertexConsumer glow = buffers.getBuffer(RenderType.entityTranslucentEmissive(SPARK));
+            VertexConsumer glow = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(SPARK));
             if (TearGeometry.rim(lod)) rim(glow, last, m, g, scale, ar, ag, ab, open * flicker);
             strands(glow, last, m, g, lod, scale, tick2, ar, ag, ab, open);
             // (5) the shimmer
-            if (TearGeometry.shimmer(lod)) shimmer(buffers.getBuffer(RenderType.entityTranslucentEmissive(SHIMMER)), last, m, scale, t, sr, sg, sb, 0.2f * open);
+            if (TearGeometry.shimmer(lod)) shimmer(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(SHIMMER)), last, m, scale, t, sr, sg, sb, 0.2f * open);
             pose.popPose();
         }
         // 1.107.0: reality shards drifting round the fracture (RealityShards: budgeted by the same level of detail, no allocation)

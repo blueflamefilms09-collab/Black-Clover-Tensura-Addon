@@ -287,7 +287,7 @@ public final class VuRenderer {
         int rgb = mesh.glowRgb;
         int gr = VariantRules.channel(rgb >> 16 & 255, pulse + flash), gg = VariantRules.channel(rgb >> 8 & 255, pulse + flash), gb = VariantRules.channel(rgb & 255, pulse + flash);
         if (glowTex != null && mesh.quads(VuMesh.GLOW) > 0) {
-            VertexConsumer gv = buffers.getBuffer(RenderType.eyes(glowTex));
+            VertexConsumer gv = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(glowTex));
             int col = 0xFF000000 | gr << 16 | gg << 8 | gb;
             for (int i = 0; i < n; i++) {
                 VuMesh.Group g = mesh.groups.get(i);
@@ -298,7 +298,7 @@ public final class VuRenderer {
         }
         // 4 the energy veins: a wave of light flowing along the weapon
         if (veinTex != null && mesh.quads(VuMesh.VEINS) > 0) {
-            VertexConsumer ev = buffers.getBuffer(RenderType.eyes(veinTex));
+            VertexConsumer ev = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(veinTex));
             float speed = 0.012f * (1f + 0.5f * flash), freq = 0.045f;
             for (int i = 0; i < n; i++) {
                 VuMesh.Group g = mesh.groups.get(i);
@@ -309,7 +309,7 @@ public final class VuRenderer {
         }
         // 5 the halo cards and 6 the flares: medium quality and up
         if (VuRules.haloAllowed(q) && !lodDraw && e.spec != null && mesh.quads(VuMesh.HALO) > 0) {
-            VertexConsumer hv = buffers.getBuffer(RenderType.eyes(HALO));
+            VertexConsumer hv = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(HALO));
             for (int i = 0; i < n; i++) {
                 VuMesh.Group g = mesh.groups.get(i);
                 VuSpec.Group sg = specOf[i];
@@ -392,11 +392,11 @@ public final class VuRenderer {
         INV.transform(rx, ry, rz, V1).normalize();
         INV.transform(ux, uy, uz, V2).normalize();
         float rx2 = V1.x, ry2 = V1.y, rz2 = V1.z, ux2 = V2.x, uy2 = V2.y, uz2 = V2.z;
-        VertexConsumer fv = buffers.getBuffer(RenderType.eyes(HALO));
+        VertexConsumer fv = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(HALO));
         for (int i = 0, n = mesh.flares.size(); i < n; i++) {
             VuMesh.Flare f = mesh.flares.get(i);
             float k = 0.6f + 0.4f * f.pulse() * 2f * (0.5f + 0.5f * (float) Math.sin(time * 0.17f + f.phase() * 6.2831f));
-            float s = f.size() * (0.8f + 0.25f * k);
+            float s = f.size() * com.newuniverse.nusmp.visual.genesis.VuCardLimits.flareScale(mesh, f.size()) * (0.8f + 0.25f * k);
             int cr = VuRules.channel(f.rgb() >> 16 & 255, k), cg = VuRules.channel(f.rgb() >> 8 & 255, k), cb = VuRules.channel(f.rgb() & 255, k);
             float u0 = (f.cell() % 4) * 32f + 0.5f, v0 = (f.cell() / 4) * 32f + 0.5f, u1 = u0 + 31f, v1 = v0 + 31f;
             corner(fv, pm, f.x() - rx2 * s - ux2 * s, f.y() - ry2 * s - uy2 * s, f.z() - rz2 * s - uz2 * s, u0, v1, cr, cg, cb);

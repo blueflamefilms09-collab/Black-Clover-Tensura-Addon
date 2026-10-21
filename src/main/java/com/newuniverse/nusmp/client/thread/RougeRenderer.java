@@ -61,7 +61,7 @@ public class RougeRenderer extends EntityRenderer<RougeEntity> {
         pose.scale(-s, -s, s);
         pose.translate(0f, -1.501f, 0f);
         model.render(pose, buffers.getBuffer(RenderType.entityTranslucent(TEX)), light, OverlayTexture.NO_OVERLAY, (a << 24) | 0xFFFFFF);
-        model.render(pose, buffers.getBuffer(RenderType.eyes(TEX)), 0xF000F0, OverlayTexture.NO_OVERLAY, ((int) (a * 0.3f) << 24) | 0xFF8090);
+        model.render(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(TEX)), 0xF000F0, OverlayTexture.NO_OVERLAY, ((int) (a * 0.3f) << 24) | 0xFF8090);
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);                    // the name plate of a named Rouge
     }

@@ -28,7 +28,7 @@ public final class RiftParallax {
         if (layers == 0 || a <= 0.01f) return;
         PoseStack.Pose last = pose.last();
         Matrix4f m = last.pose();
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucentEmissive(MegaRiftRenderer.CORE));
+        VertexConsumer vc = buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(MegaRiftRenderer.CORE));
         int n = ParallaxMath.SEGMENTS;
         for (int l = 0; l < layers; l++) {
             float inset = ParallaxMath.inset(l), br = ParallaxMath.LIGHT[l], z = 0.004f * (l + 1);

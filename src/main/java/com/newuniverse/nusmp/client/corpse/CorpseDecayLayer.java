@@ -34,7 +34,7 @@ public final class CorpseDecayLayer<T extends LivingEntity, M extends EntityMode
 
     static {
         for (int i = 0; i < STAGES; i++) BODY[i] = RenderType.entityTranslucent(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/corpse_decay_" + i + ".png"));
-        WISP = RenderType.eyes(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/corpse_soul.png"));
+        WISP = com.newuniverse.nusmp.client.SafeAdditive.additive(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/corpse_soul.png"));
     }
 
     public CorpseDecayLayer(RenderLayerParent<T, M> parent) { super(parent); }

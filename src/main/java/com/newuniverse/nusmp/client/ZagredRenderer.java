@@ -75,7 +75,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
         Entity t = e.level().getEntity(e.clientTarget());
         if (t == null || !t.isAlive()) return;
         Vec3 off = t.getPosition(partial).subtract(e.getPosition(partial));
-        reticle(pose, buffers.getBuffer(RenderType.eyes(RING)), off, t.getBbWidth(), e.tickCount + partial, state == ZagredBossEntity.STATE_CASTING);
+        reticle(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(RING)), off, t.getBbWidth(), e.tickCount + partial, state == ZagredBossEntity.STATE_CASTING);
     }
 
     /** A turning rune ring at the target's feet; casting adds four marks closing in and a brighter, faster ring. */
@@ -113,7 +113,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
                            float partial, float age, float netHeadYaw, float headPitch) {
             float pulse = 0.65f + 0.35f * Mth.sin(age * (0.08f + 0.04f * e.phase()));
             int v = (int) (255 * pulse);                                    // eyes() is additive: dim by colour, not alpha
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.eyes(GLOW)), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFF000000 | (v << 16) | (v << 8) | v);
+            getParentModel().renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(GLOW)), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFF000000 | (v << 16) | (v << 8) | v);
         }
     }
 

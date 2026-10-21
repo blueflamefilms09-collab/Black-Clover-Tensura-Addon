@@ -46,12 +46,12 @@ public class SpiritOrbRenderer extends EntityRenderer<SpiritLordEntity> {
             pose.pushPose();
             pose.translate(Mth.cos(a) * 0.42, 0.12 * Mth.sin(age * 0.11f + i * 2), Mth.sin(a) * 0.42);
             pose.mulPose(entityRenderDispatcher.cameraOrientation());
-            quad(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), MOTE, r, g, b, 0.9f);
+            quad(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), MOTE, r, g, b, 0.9f);
             pose.popPose();
         }
         pose.mulPose(entityRenderDispatcher.cameraOrientation());
-        quad(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(GLOW)), HALO * pulse, dark ? 0.85f : r, dark ? 0.1f : g, dark ? 0.15f : b, 0.55f);
-        quad(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(ORB)), CORE * pulse, dark ? 0.12f : r, dark ? 0.08f : g, dark ? 0.12f : b, 1f);
+        quad(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(GLOW)), HALO * pulse, dark ? 0.85f : r, dark ? 0.1f : g, dark ? 0.15f : b, 0.55f);
+        quad(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(ORB)), CORE * pulse, dark ? 0.12f : r, dark ? 0.08f : g, dark ? 0.12f : b, 1f);
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);       // name tag
     }

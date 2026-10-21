@@ -6,7 +6,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * Why (docs/vfx_square_bug.md): the safe path of the square-bug fix can be forced from a file, without a new build. {@code vfx.safeBlend} in {@code config/nusmp-vfx-client.toml} (a CLIENT config).
  * Off (the default): only a texture that carries a colour under its transparent texels is drawn with the alpha-weighted additive blend, everything else exactly as before. On: every additive
  * aura sprite and glow map uses the alpha-weighted blend (the vertex alpha then fades it, as the painters were written to assume), and the VFX vertex buffer also swaps any additive flat sprite that
- * came out opaque for the generated soft circle.
+ * came out opaque for the generated soft circle. 1.110.0: the emissive passes of the weapons and relics ({@code SafeAdditive#emissive}) then also take the alpha-weighted additive type.
  */
 public final class VfxSafeBlendConfig {
     public static final ModConfigSpec SPEC;

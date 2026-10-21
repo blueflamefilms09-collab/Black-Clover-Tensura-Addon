@@ -139,9 +139,9 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
                 for (float[] v : layers[DemonSlayerMesh.VOID]) vc.addVertex(v[0], v[1], v[2]);
             }
             emit(buffers.getBuffer(RenderType.entityTranslucent(CLOVER)), layers[DemonSlayerMesh.CLOVER], 1, light, overlay);
-            emit(buffers.getBuffer(RenderType.eyes(BLOOM_GLOW)), layers[DemonSlayerMesh.BLOOM], 1, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emit(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(BLOOM_GLOW)), layers[DemonSlayerMesh.BLOOM], 1, 0xF000F0, OverlayTexture.NO_OVERLAY);
             if (!layers[DemonSlayerMesh.CRACK].isEmpty())
-                emit(buffers.getBuffer(RenderType.eyes(GLOW)), layers[DemonSlayerMesh.CRACK], 1, 0xF000F0, OverlayTexture.NO_OVERLAY);
+                emit(buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(GLOW)), layers[DemonSlayerMesh.CRACK], 1, 0xF000F0, OverlayTexture.NO_OVERLAY);
         }
 
         private static void emit(VertexConsumer vc, List<float[]> verts, float uvScale, int light, int overlay) {

@@ -113,7 +113,7 @@ public class PaintedConstructRenderer extends MobRenderer<PaintedConstructEntity
             pose.translate(0, 0.75, 0);
             pose.scale(1.05f, 1.03f, 1.05f);
             pose.translate(0, -0.75, 0);
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(parent.getTextureLocation(e))),
+            getParentModel().renderToBuffer(pose, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(parent.getTextureLocation(e))),
                     0xF000F0, OverlayTexture.NO_OVERLAY, color);
             pose.popPose();
         }
