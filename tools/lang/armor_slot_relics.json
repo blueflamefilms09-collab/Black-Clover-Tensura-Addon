@@ -1,0 +1,11 @@
+{
+  "message.nusmp.worn_debug.title": "Worn pieces of %s (armour slots and Curios, this machine, this frame)",
+  "message.nusmp.worn_debug.options": "relicfx.models=%s  relicfx.hideArmourRelics=%s  visual.upgrade=%s  armour layers painted by the %s painter",
+  "message.nusmp.worn_debug.curio": "%s (%s, found in %s): %s",
+  "message.nusmp.worn_debug.no_curios": "No relic is worn in a Curios slot (or Curios is not installed).",
+  "message.nusmp.worn_debug.empty": "%s: empty",
+  "message.nusmp.worn_debug.relic_wrong_slot": "%s: relic %s, but it is a %s relic: it is not drawn from this slot",
+  "message.nusmp.worn_debug.relic": "%s: relic %s (%s): library %s; plan %s (%s); vanilla layer draws %s",
+  "message.nusmp.worn_debug.item_library": "%s: %s: drawn by the model library (%s pieces); the older armour renderer draws nothing for a player",
+  "message.nusmp.worn_debug.item_vanilla": "%s: %s: the vanilla armour layer of its material (own layer_1 %s, layer_2 %s; a material may name another texture)"
+}

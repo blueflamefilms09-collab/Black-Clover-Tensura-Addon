@@ -26,6 +26,18 @@ public final class RelicTextures {
     /** Was the white pixel of the plain Curios boxes registered with the texture manager (set by {@link #registerAll}; for {@code /multiverse relic debug}). */
     public static boolean whiteRegistered() { return whiteRegistered; }
 
+    private static volatile boolean paintedUpgrade, painted;
+
+    /** Were the armour layers painted by the 1.110.0 painter (true) or the older one (false)? For {@code /nusmp debug worn}. */
+    public static boolean paintedWithUpgrade() { return paintedUpgrade; }
+
+    /** Called by the worn layer once per frame: repaints the layers once when {@code visual.upgrade} was flipped since they were painted (one boolean read otherwise). */
+    public static void refreshIfOptionChanged() {
+        if (!painted) return;
+        boolean now = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.upgrade();
+        if (now != paintedUpgrade) registerAll();
+    }
+
     /** The ids of the armour relics whose glow channel is registered (drawn by the worn layer over the armour). */
     private static final java.util.Set<String> GLOW = new java.util.HashSet<>();
 
@@ -49,6 +61,7 @@ public final class RelicTextures {
     public static void registerAll() {
         Minecraft mc = Minecraft.getInstance();
         TextureManager tm = mc.getTextureManager();
+        boolean v2 = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.upgrade();                 // 1.110.0: the cleaner layers while visual.upgrade is on, the older painter when it is off
         try {
             NativeImage white = new NativeImage(4, 4, true);
             for (int y = 0; y < 4; y++) for (int x = 0; x < 4; x++) white.setPixelRGBA(x, y, 0xFFFFFFFF);
@@ -61,15 +74,19 @@ public final class RelicTextures {
                 if (!d.slot().isArmor() || d.isAdopted()) continue;
                 ResourceLocation outer = armorLayer(d.id(), false);
                 if (mc.getResourceManager().getResource(outer).isPresent()) continue;      // an artist's PNG wins
-                boolean replaced = com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary.hidesArmor(d);   // a 3D head or boot model stands where the painted box would
-                int[] argb = replaced ? ArmorPainter.blank() : ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
+                // 1.110.0: the painted layer is ALWAYS registered (it used to be a blank texture when a 3D model was expected to replace it, so a model that was not drawn left the body bare).
+                // Whether the vanilla armour layer draws it or an empty model is decided on every frame ({@code ArmorSlotPlan}, {@code ArmorSlotClient}).
+                int[] argb = v2 ? ArmorPainterV2.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
+                        : ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
+                int[] glowPx = v2 ? ArmorPainterV2.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
+                        : ArmorPainter.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
                 tm.register(outer, new DynamicTexture(image(argb)));
                 tm.register(armorLayer(d.id(), true), new DynamicTexture(image(argb)));
-                if (!replaced) {
-                    tm.register(armorGlow(d.id()), new DynamicTexture(image(ArmorPainter.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode()))));
-                    GLOW.add(d.id());
-                }
+                tm.register(armorGlow(d.id()), new DynamicTexture(image(glowPx)));
+                GLOW.add(d.id());
             }
+            paintedUpgrade = v2;
+            painted = true;
         } catch (RuntimeException | LinkageError failed) {
             com.mojang.logging.LogUtils.getLogger().error("[nusmp] relic textures could not be painted", failed);
         }

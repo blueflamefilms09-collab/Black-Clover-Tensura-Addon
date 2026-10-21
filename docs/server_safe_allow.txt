@@ -38,6 +38,7 @@ relics/RelicSystem.java
 relics/RelicWornSelfTests.java
 relics/WornDebug.java
 relics/WornRender2SelfTests.java
+relics/ArmorSlotSelfTests.java
 relics/djinn/DjinnNet.java
 relics/djinn/TinyDjinnSelfTest.java
 relics/upgrade/UpgradeSelfTest.java

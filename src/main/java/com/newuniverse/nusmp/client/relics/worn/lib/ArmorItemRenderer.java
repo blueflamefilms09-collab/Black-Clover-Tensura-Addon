@@ -56,6 +56,13 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
         IClientItemExtensions ext = new IClientItemExtensions() {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() { return instance(); }
+
+            /** 1.110.0: a relic whose model (or own renderer) stands in for its painted layer draws an empty armour model, decided on every frame ({@link ArmorSlotClient}); never a blank texture. */
+            @Override
+            public net.minecraft.client.model.HumanoidModel<?> getHumanoidArmorModel(net.minecraft.world.entity.LivingEntity wearer, ItemStack stack,
+                                                                                    net.minecraft.world.entity.EquipmentSlot slot, net.minecraft.client.model.HumanoidModel<?> original) {
+                return ArmorSlotClient.hidesPainted(wearer, stack, slot) ? ArmorItems.emptyModel() : original;
+            }
         };
         List<Item> items = new ArrayList<>();
         for (Item item : BuiltInRegistries.ITEM) if (candidate(item) && !(item instanceof GeoItem) && !(item instanceof com.newuniverse.nusmp.labyrinth.loot.LootArmorItem)) items.add(item);       // 1.99.0: the dungeon armour registers its own extension (client/loot/LootClient), one per item
