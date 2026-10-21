@@ -771,6 +771,134 @@
     {
       "id": "nusmp:wanderers_waystone",
       "required": false
+    },
+    {
+      "id": "nusmp:boar_hat_tavern_token",
+      "required": false
+    },
+    {
+      "id": "nusmp:capsule_case_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:card_sleeve_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:chunin_exam_scroll_case_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:cracked_mana_crystal",
+      "required": false
+    },
+    {
+      "id": "nusmp:crimson_tassel_of_axel",
+      "required": false
+    },
+    {
+      "id": "nusmp:delvers_brass_lamp",
+      "required": false
+    },
+    {
+      "id": "nusmp:dungeon_cooks_ladle_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_smiths_hammer_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_vault_key_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:goblin_slayers_tooth_tally",
+      "required": false
+    },
+    {
+      "id": "nusmp:grand_line_berry_purse_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:half_senzu_bean_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:hell_butterfly_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:hobgoblin_warband_token",
+      "required": false
+    },
+    {
+      "id": "nusmp:hotbar_potion_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_exam_number_tag",
+      "required": false
+    },
+    {
+      "id": "nusmp:jujutsu_high_warding_strip",
+      "required": false
+    },
+    {
+      "id": "nusmp:lacrima_spark_lamp",
+      "required": false
+    },
+    {
+      "id": "nusmp:lizardman_marsh_scale_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:orario_delvers_compass",
+      "required": false
+    },
+    {
+      "id": "nusmp:orc_disaster_tusk_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:priests_poultice_kit_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:roxys_water_pearl",
+      "required": false
+    },
+    {
+      "id": "nusmp:shadow_garden_cipher_coin",
+      "required": false
+    },
+    {
+      "id": "nusmp:shinobi_smoke_pellet_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:soul_candy_pill_case",
+      "required": false
+    },
+    {
+      "id": "nusmp:spare_mana_gem",
+      "required": false
+    },
+    {
+      "id": "nusmp:starwolf_fang_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:state_alchemists_pocket_watch",
+      "required": false
+    },
+    {
+      "id": "nusmp:survey_corps_signal_flare_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:wisteria_incense_sachet",
+      "required": false
     }
   ]
 }

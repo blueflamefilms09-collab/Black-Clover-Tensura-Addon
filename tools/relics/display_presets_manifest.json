@@ -457,6 +457,20 @@
       "fixed_scale": 0.787
     },
     {
+      "id": "delvers_pickaxe",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.492,
+      "first_person_translation_px": [
+        1.13,
+        2.12,
+        0.58
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "demon_destroyer_sword",
       "action": "preset",
       "length_blocks": 2.0,
@@ -512,6 +526,20 @@
       "id": "devil_contract",
       "action": "keep",
       "length_blocks": 1.061
+    },
+    {
+      "id": "direwolf_fang_spear",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        2.26,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
     },
     {
       "id": "disintegration_dagger",
@@ -626,6 +654,20 @@
       "id": "duality_blade",
       "action": "keep",
       "length_blocks": 1.318
+    },
+    {
+      "id": "dungeon_cooks_ladle",
+      "action": "preset",
+      "length_blocks": 1.647,
+      "first_person_scale": 0.593,
+      "first_person_translation_px": [
+        1.13,
+        2.87,
+        0.82
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.485,
+      "fixed_scale": 0.91
     },
     {
       "id": "efreetis_kusarigama",
@@ -1400,6 +1442,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.269,
       "fixed_scale": 0.505
+    },
+    {
+      "id": "orc_tusk_cleaver",
+      "action": "preset",
+      "length_blocks": 1.412,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.0,
+        0.84
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "orials_starfall_staff",

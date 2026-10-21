@@ -469,6 +469,10 @@
   "hedge_wizards_oak_staff": "staff",
   "silvered_shortsword": "shortsword",
   "hakurou_school_practice_katana": "katana",
-  "familia_smiths_mace": "hammer"
+  "familia_smiths_mace": "hammer",
+  "orc_tusk_cleaver": "shortsword",
+  "direwolf_fang_spear": "spear",
+  "delvers_pickaxe": "handaxe",
+  "dungeon_cooks_ladle": "hammer"
  }
 }

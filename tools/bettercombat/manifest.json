@@ -161,6 +161,11 @@
       "profile": "longsword",
       "source": "table"
     },
+    "delvers_pickaxe": {
+      "class": "handaxe",
+      "profile": "handaxe",
+      "source": "relic"
+    },
     "demon_destroyer_sword": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -185,6 +190,11 @@
       "class": "greatsword",
       "profile": "genesis",
       "source": "item"
+    },
+    "direwolf_fang_spear": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "relic"
     },
     "disintegration_dagger": {
       "class": "dagger",
@@ -581,6 +591,11 @@
       "profile": "shortsword",
       "source": "relic"
     },
+    "dungeon_cooks_ladle": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "efreetis_kusarigama": {
       "class": "scythe",
       "profile": "scythe",
@@ -885,6 +900,11 @@
       "class": "battleaxe",
       "profile": "battleaxe",
       "source": "table"
+    },
+    "orc_tusk_cleaver": {
+      "class": "shortsword",
+      "profile": "shortsword",
+      "source": "relic"
     },
     "orials_starfall_staff": {
       "class": "staff",

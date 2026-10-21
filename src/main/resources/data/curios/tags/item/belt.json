@@ -180,6 +180,54 @@
     {
       "id": "nusmp:street_thiefs_sash",
       "required": false
+    },
+    {
+      "id": "nusmp:cave_raiders_rope_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:curse_tool_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:delvers_ration_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_smiths_tool_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:gathering_hunters_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_guild_utility_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:kunai_holster_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:marine_cutlass_baldric",
+      "required": false
+    },
+    {
+      "id": "nusmp:orc_hide_utility_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:regulars_shinsu_pouch_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:spell_component_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:turtle_school_weighted_belt",
+      "required": false
     }
   ]
 }

@@ -44,8 +44,19 @@ def all_rows():
         for r in rows:
             r["series"] = title
         out += rows
+    out += _wave105_rows()                          # 1.111.0: wave 105 (normal_c); its Java, sprites and lang come from new_normal_c/gen.py, the worn ornaments from gen_worn_all
     out += _wave103_rows()                          # 1.111.0: wave 103 (special_normal_a); its Java, sprites and lang come from new_special_normal_a/gen.py, the worn ornaments from gen_worn_all
     return out
+
+
+def _wave105_rows():
+    try:
+        from new_normal_c import rows as _r105
+    except ModuleNotFoundError:
+        return []
+    for r in _r105.ROWS:
+        r["series"] = "the utility charms, badges and gear of many worlds"
+    return list(_r105.ROWS)
 
 
 def _wave103_rows():
