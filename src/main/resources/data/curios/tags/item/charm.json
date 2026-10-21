@@ -711,6 +711,66 @@
     {
       "id": "nusmp:vaultmakers_pocketwatch",
       "required": false
+    },
+    {
+      "id": "nusmp:beatrices_doll_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:caravan_water_flask",
+      "required": false
+    },
+    {
+      "id": "nusmp:compass_of_true_north",
+      "required": false
+    },
+    {
+      "id": "nusmp:elf_village_herb_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:everburning_torch_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:familia_emblem_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:filo_feather_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:four_leaf_squires_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:happys_fish_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:hi_potion_vial_bandolier",
+      "required": false
+    },
+    {
+      "id": "nusmp:kobold_miners_lamp",
+      "required": false
+    },
+    {
+      "id": "nusmp:little_slime_charm",
+      "required": false
+    },
+    {
+      "id": "nusmp:quiet_mages_flower_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:spirit_whisper_bell",
+      "required": false
+    },
+    {
+      "id": "nusmp:wanderers_waystone",
+      "required": false
     }
   ]
 }

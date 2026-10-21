@@ -148,6 +148,38 @@
     {
       "id": "nusmp:silvered_sash_of_reflections",
       "required": false
+    },
+    {
+      "id": "nusmp:adventurers_mana_flask_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:alchemists_chalk_pouch",
+      "required": false
+    },
+    {
+      "id": "nusmp:duelists_deck_box_belt",
+      "required": false
+    },
+    {
+      "id": "nusmp:gate_scavengers_satchel",
+      "required": false
+    },
+    {
+      "id": "nusmp:guild_veterans_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:medicine_peddlers_satchel",
+      "required": false
+    },
+    {
+      "id": "nusmp:nazarick_pages_sash",
+      "required": false
+    },
+    {
+      "id": "nusmp:street_thiefs_sash",
+      "required": false
     }
   ]
 }

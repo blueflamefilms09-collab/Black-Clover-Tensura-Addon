@@ -266,6 +266,26 @@
     {
       "id": "nusmp:sun_eaters_locket",
       "required": false
+    },
+    {
+      "id": "nusmp:axel_adventurers_scarf",
+      "required": false
+    },
+    {
+      "id": "nusmp:familia_falna_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_exam_number_plate",
+      "required": false
+    },
+    {
+      "id": "nusmp:silver_guild_pendant",
+      "required": false
+    },
+    {
+      "id": "nusmp:sindria_traders_scarf",
+      "required": false
     }
   ]
 }

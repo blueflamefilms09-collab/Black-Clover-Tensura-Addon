@@ -823,6 +823,30 @@
     },
     "nekrathuls_pact_scythe": {
       "class": "scythe"
+    },
+    "apprentices_training_sword": {
+      "class": "longsword"
+    },
+    "gate_scavengers_knife": {
+      "class": "dagger"
+    },
+    "adventurers_handaxe": {
+      "class": "handaxe"
+    },
+    "lizardman_scouts_spear": {
+      "class": "spear"
+    },
+    "hedge_wizards_oak_staff": {
+      "class": "staff"
+    },
+    "silvered_shortsword": {
+      "class": "shortsword"
+    },
+    "hakurou_school_practice_katana": {
+      "class": "katana"
+    },
+    "familia_smiths_mace": {
+      "class": "hammer"
     }
   },
   "_excluded_was": {

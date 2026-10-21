@@ -7,6 +7,20 @@
   "long_frame_blocks": 1.6,
   "weapons": [
     {
+      "id": "adventurers_handaxe",
+      "action": "preset",
+      "length_blocks": 1.471,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.09,
+        0.87
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
+    },
+    {
       "id": "aegis_of_the_abyss",
       "action": "preset",
       "length_blocks": 1.855,
@@ -43,6 +57,20 @@
       "id": "anti_bird_charm",
       "action": "keep",
       "length_blocks": 0.686
+    },
+    {
+      "id": "apprentices_training_sword",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
     },
     {
       "id": "astralaria",
@@ -658,6 +686,20 @@
       "length_blocks": 0.706
     },
     {
+      "id": "familia_smiths_mace",
+      "action": "preset",
+      "length_blocks": 1.765,
+      "first_person_scale": 0.554,
+      "first_person_translation_px": [
+        1.13,
+        2.8,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.453,
+      "fixed_scale": 0.85
+    },
+    {
       "id": "flamecutter",
       "action": "preset",
       "length_blocks": 1.835,
@@ -724,6 +766,11 @@
       "length_blocks": 0.95
     },
     {
+      "id": "gate_scavengers_knife",
+      "action": "keep",
+      "length_blocks": 0.706
+    },
+    {
       "id": "gauches_hand_mirror",
       "action": "keep",
       "length_blocks": 1.093
@@ -786,6 +833,20 @@
       "fixed_scale": 0.398
     },
     {
+      "id": "hakurou_school_practice_katana",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.529,
+      "first_person_translation_px": [
+        1.13,
+        2.83,
+        0.83
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "hammer_of_thunderbolts",
       "action": "preset",
       "length_blocks": 1.882,
@@ -817,6 +878,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.269,
       "fixed_scale": 0.505
+    },
+    {
+      "id": "hedge_wizards_oak_staff",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.356,
+      "first_person_translation_px": [
+        1.13,
+        2.41,
+        0.73
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
     },
     {
       "id": "hellblaze_the_demon_sin",
@@ -1129,6 +1204,20 @@
       "fixed_scale": 0.817
     },
     {
+      "id": "lizardman_scouts_spear",
+      "action": "preset",
+      "length_blocks": 3.765,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        2.26,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.212,
+      "fixed_scale": 0.398
+    },
+    {
       "id": "luck_blade",
       "action": "preset",
       "length_blocks": 1.412,
@@ -1313,18 +1402,6 @@
       "fixed_scale": 0.505
     },
     {
-      "id": "orc_cleaver",
-      "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.497,
-      "first_person_translation_px": [
-        1.13,
-        2.93,
-        0.88
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689,
       "id": "orials_starfall_staff",
       "action": "preset",
       "length_blocks": 2.706,
@@ -1672,6 +1749,20 @@
       "tip_out_of_view": false,
       "ground_scale": 0.217,
       "fixed_scale": 0.408
+    },
+    {
+      "id": "silvered_shortsword",
+      "action": "preset",
+      "length_blocks": 1.412,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        3.0,
+        0.84
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "sorrows_edge",

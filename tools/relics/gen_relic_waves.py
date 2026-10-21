@@ -44,7 +44,18 @@ def all_rows():
         for r in rows:
             r["series"] = title
         out += rows
+    out += _wave103_rows()                          # 1.111.0: wave 103 (special_normal_a); its Java, sprites and lang come from new_special_normal_a/gen.py, the worn ornaments from gen_worn_all
     return out
+
+
+def _wave103_rows():
+    try:
+        from new_special_normal_a import rows as _r103
+    except ModuleNotFoundError:
+        return []
+    for r in _r103.ROWS:
+        r["series"] = "the everyday gear of many worlds"
+    return list(_r103.ROWS)
 
 
 def hexc(c):

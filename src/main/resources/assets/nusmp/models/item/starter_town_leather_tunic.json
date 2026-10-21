@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "nusmp:item/starter_town_leather_tunic"
+  }
+}
