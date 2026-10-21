@@ -31,6 +31,7 @@ mana/zone/ManaZoneBoot.java
 mana/zone/ManaZoneNet.java
 multiverse/MultiverseSync.java
 particle/fx/Fx.java
+relics/ArmorSlotSelfTests.java
 relics/GradeDamage.java
 relics/RelicHolderSync.java
 relics/RelicPayloads.java
@@ -38,11 +39,11 @@ relics/RelicSystem.java
 relics/RelicWornSelfTests.java
 relics/WornDebug.java
 relics/WornRender2SelfTests.java
-relics/ArmorSlotSelfTests.java
 relics/djinn/DjinnNet.java
 relics/djinn/TinyDjinnSelfTest.java
 relics/upgrade/UpgradeSelfTest.java
 relics/upgrade/UpgradeSelfTests.java
+relics/vu/DuelDiskSelfTests.java
 relics/vu/VuSelfTests.java
 relics/wave/WaveBossNet.java
 requip/RequipMagic.java
