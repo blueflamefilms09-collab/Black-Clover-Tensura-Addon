@@ -8,86 +8,69 @@
     "thirdperson_righthand": {
       "rotation": [
         0,
-        0,
+        90,
         0
       ],
       "translation": [
-        0,
-        3,
-        1
+        10,
+        6,
+        -4
       ],
       "scale": [
-        0.55,
-        0.55,
-        0.55
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "translation": [
+        10,
+        6,
+        12
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
       ]
     },
     "firstperson_righthand": {
       "rotation": [
         0,
-        -90,
-        25
+        180,
+        5
       ],
       "translation": [
-        1.13,
-        3.42,
-        -2.28
-      ],
-      "scale": [
-        0.551,
-        0.551,
-        0.551
-      ]
-    },
-    "ground": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
+        -10,
         2,
         0
       ],
       "scale": [
-        0.431,
-        0.431,
-        0.431
+        1.25,
+        1.25,
+        1.25
       ]
     },
-    "head": {
+    "firstperson_lefthand": {
       "rotation": [
         0,
         180,
-        0
+        5
       ],
       "translation": [
-        0,
-        13,
-        7
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    "fixed": {
-      "rotation": [
-        0,
-        180,
-        0
-      ],
-      "translation": [
-        0,
+        10,
         0,
         0
       ],
       "scale": [
-        0.808,
-        0.808,
-        0.808
+        1.25,
+        1.25,
+        1.25
       ]
     },
     "gui": {
@@ -102,32 +85,69 @@
         0
       ],
       "scale": [
-        1,
-        1,
-        1
+        1.0,
+        1.0,
+        1.0
       ]
     },
-    "firstperson_lefthand": {
+    "fixed": {
       "rotation": [
         0,
-        90,
-        -25
+        180,
+        0
       ],
       "translation": [
-        1.13,
-        3.42,
-        -2.28
+        -2,
+        4,
+        -5
       ],
       "scale": [
-        0.551,
-        0.551,
-        0.551
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        4,
+        4,
+        2
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "head": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
       ]
     }
   },
-  "nusmp_display_preset": {
-    "length_blocks": 1.855,
-    "scale": 0.551,
-    "rule": "tools/relics/display_presets.py"
-  }
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "nusmp:item/thunder_shield_blocking"
+    }
+  ]
 }

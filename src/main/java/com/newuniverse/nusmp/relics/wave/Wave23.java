@@ -109,7 +109,7 @@ public final class Wave23 {
                 .look(Look.SHIELD).palette(0xB8E0EC, 0xD8DCE4, 0x6FD8FF).melee(8.0, 1.2)
                 .engrave("holy_coat", "sturdy", "energy_protection", "magic_protection")
                 .desc("An ice-blue kite shield with a silver maze and a glowing gem. +3 armour, steadier on your feet, and nonmagical weapons strike you 25% softer. "
-                        + "Use it to hurl it at a foe (6 blocks, 18 at a disadvantage); it bashes hard in melee.")
+                        + "Hold use to raise it like a shield; sneak and use (or the worn-relic key) hurls it at a foe (6 blocks, 18 at a disadvantage); it bashes hard in melee.")
                 .passive(Passive.attr(ARMOR, Wave23Rules.HERO_ARMOR, Operation.ADD_VALUE))
                 .passive(Passive.attr(TOUGH, Wave23Rules.HERO_TOUGHNESS, Operation.ADD_VALUE))
                 .passive(Passive.attr(KB, Wave23Rules.HERO_KNOCKBACK, Operation.ADD_VALUE))

@@ -39,6 +39,7 @@ final class RelicItemSupport {
     static void onUseTick(Level level, LivingEntity user, ItemStack stack, int remaining, RelicDef def) {
         if (level.isClientSide || !(user instanceof ServerPlayer p)) return;
         int held = USE_TICKS - remaining;
+        if (def.look() == Look.SHIELD && !ShieldUseRules.ritualRuns(p.isShiftKeyDown())) return;      // 1.110.0: a raised shield is just a block unless the player sneaks (the ritual)
         if (def.needsAttunement() && !Attune.isMine(stack, p)) {
             RelicEngine.attuneTick(p, stack, def, held);
             return;
@@ -54,6 +55,7 @@ final class RelicItemSupport {
     /** The use button is let go. */
     static void releaseUsing(ItemStack stack, Level level, LivingEntity user, int remaining, RelicDef def) {
         if (level.isClientSide || !(user instanceof ServerPlayer p)) return;
+        if (def.look() == Look.SHIELD && !p.isShiftKeyDown()) return;                // 1.110.0: lowering a shield is not a broken ritual, and fires no held act
         if (def.needsAttunement() && !Attune.isMine(stack, p)) {
             RelicEngine.tell(p, "Attunement broken: hold sneak and use for the full five seconds.", ChatFormatting.GRAY);
             return;

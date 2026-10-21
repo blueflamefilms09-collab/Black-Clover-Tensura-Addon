@@ -111,6 +111,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         modBus.addListener(WeaponRenderer::registerModels);
         modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
+        modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ShieldClient::registerBlocking));      // 1.110.0: the same predicate on every shield-class item (below it stays for the Magebane Shield as before)
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
                 ResourceLocation.withDefaultNamespace("blocking"),
                 (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F)));
@@ -198,7 +199,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             if (ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) pose.mulPose(Axis.ZP.rotationDegrees(180f));          // item +x is the inside of the left arm: turn the same glove about the arm
             pose.mulPose(wrap.quaternion());
             pose.scale(wrap.sx(), wrap.sy(), wrap.sz());
-        } else if (ctx.firstPerson()) {                                            // 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
+        } else if (ctx.firstPerson() && mesh.shield == null) {                     // 1.110.0: a shield is held like vanilla's (its frame below), at vanilla's first-person size; 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
             float k = OversizeGuard.factor(mesh.length, pose.last().pose().getScale(new Vector3f()).x);
             if (k < 1f) {
                 pose.translate(mesh.gripX, mesh.gripY, 0.5f);
@@ -206,7 +207,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 pose.translate(-mesh.gripX, -mesh.gripY, -0.5f);
             }
         }
-        if (wrap == null) {
+        if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
+            pose.translate(mesh.shield[1], mesh.shield[2], mesh.shield[3]);
+            pose.scale(mesh.shield[0], mesh.shield[0], mesh.shield[0]);
+        } else if (wrap == null) {
             pose.translate(mesh.ox, mesh.oy, 0.5f);
             pose.mulPose(Axis.ZP.rotationDegrees(mesh.angle - 90f));
             pose.scale(mesh.scale, mesh.scale, mesh.scale);
@@ -268,6 +272,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static final class Mesh {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
+        float[] shield;                                                          // 1.110.0: {scale, tx, ty, tz} of a shield mesh on vanilla's shield frame (ShieldFrame.fit); null on every other mesh
         boolean manual;                                                          // 1.29.0: `orient manual`: hand-tuned, never normalised
         float orientRot, orientFlip;                                             // 1.29.0: `orient <rotZ> <flipX>`
         float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
@@ -315,7 +320,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
                 if (info[1] > 0f) mesh.manual = true;
                 applyOrient(mesh);
-                if (!mesh.manual && !HandWrap.isWrapped(id)) normalise(id, mesh, info[0]);                 // a wrapped weapon keeps its modelled axes (client/relics/item/HandWrap)
+                if (com.newuniverse.nusmp.visual.shields.ShieldSet.isShieldMesh(id)) mesh.shield = shieldFit(mesh);          // 1.110.0: a shield is framed like vanilla's, not normalised like a weapon on the sprite diagonal
+                else if (!mesh.manual && !HandWrap.isWrapped(id)) normalise(id, mesh, info[0]);                 // a wrapped weapon keeps its modelled axes (client/relics/item/HandWrap)
                 mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
@@ -326,6 +332,21 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             mesh = null;
         }
         return mesh;
+    }
+
+    /** 1.110.0: the shield frame fit of a mesh: its box over the body, void and glow layers (an orbiting piece of an upgraded mesh is not part of the shield). */
+    private static float[] shieldFit(Mesh mesh) {
+        float x0 = Float.MAX_VALUE, x1 = -Float.MAX_VALUE, y0 = Float.MAX_VALUE, y1 = -Float.MAX_VALUE, z1 = -Float.MAX_VALUE;
+        for (List<float[]> layer : mesh.layers) {
+            for (float[] v : layer) {
+                x0 = Math.min(x0, v[0]);
+                x1 = Math.max(x1, v[0]);
+                y0 = Math.min(y0, v[1]);
+                y1 = Math.max(y1, v[1]);
+                z1 = Math.max(z1, v[2]);
+            }
+        }
+        return com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1);
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */
