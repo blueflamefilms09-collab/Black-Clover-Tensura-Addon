@@ -90,8 +90,19 @@ public final class SquadHook {
         squad.assign(mobs, RoleFit.assign(wanted, traits));
         V2 at = new V2(mobs.get(0).getX(), mobs.get(0).getZ());
         SquadAnnounce.formed(level, squad, at);
+        try {
+            com.newuniverse.nusmp.labyrinth.mega.poise.PoiseSystem.considerAll(mobs);        // 1.107.0: the captain (and any elite) of the fresh squad gets its poise bar now
+        } catch (RuntimeException | LinkageError poiseFault) {
+            // the poise layer logs its own faults; a squad must form without it
+        }
         return squad;
     }
+
+    /** 1.107.0: adds a goal of another system (the poise layer's desperation shockwave) to a mob through the same reflective door the squad goals use; false when the goal list cannot be read. */
+    public static boolean addGoal(Mob mob, int priority, net.minecraft.world.entity.ai.goal.Goal goal) { return GoalInstaller.add(mob, priority, goal); }
+
+    /** 1.107.0: does the mob's goal list hold a goal of this class? (False too when the list cannot be read.) */
+    public static boolean hasGoal(Mob mob, Class<? extends net.minecraft.world.entity.ai.goal.Goal> type) { return GoalInstaller.has(mob, type); }
 
     /** What the role fit reads of a mob. A Mob Foundry mob says what it is; any other mob is read from its attributes, its weapon and the ranged-attack interfaces. */
     public static RoleFit.Traits traitsOf(Mob m) {

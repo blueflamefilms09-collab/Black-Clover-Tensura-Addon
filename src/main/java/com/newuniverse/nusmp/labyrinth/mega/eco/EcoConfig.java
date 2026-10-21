@@ -20,8 +20,8 @@ public final class EcoConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("eco");
-        TURF_WARS = b.comment("Monsters of rival factions in the Mega-Dungeon fight each other over territory when they cross paths (a goblin and an ogre in the same hall), and a monster never turns on its own faction or an ally. false = no quarrels, no target guard.")
-                .define("turfWarsEnabled", true);
+        TURF_WARS = b.comment("Monsters of rival factions in the Mega-Dungeon fight each other over territory when they cross paths (a goblin and an ogre in the same hall), and a monster never turns on its own faction or an ally. false = no quarrels, no target guard. Default OFF since 1.107.0 (the dungeon's monsters are one faction that hunts the player, see foundry.poise.dungeonPassive); a server whose config file already says true keeps true.")
+                .define("turfWarsEnabled", false);
         SCAN_EVERY = b.comment("Ticks between two looks for a rival by one monster (20 = once a second). Higher is cheaper and lazier.")
                 .defineInRange("scanEveryTicks", 20, 10, 200);
         RANGE = b.comment("Blocks within which a monster notices a rival, for a faction whose file has no aggro.range. A faction file's own number wins.")

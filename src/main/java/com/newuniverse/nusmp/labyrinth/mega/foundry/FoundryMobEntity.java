@@ -6,6 +6,8 @@ import com.newuniverse.nusmp.audio.MobVoice;
 import com.newuniverse.nusmp.audio.SoundFamilied;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
+import com.newuniverse.nusmp.labyrinth.mega.poise.PoiseAware;
+import com.newuniverse.nusmp.labyrinth.mega.poise.PoiseSystem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -43,7 +45,7 @@ import java.util.UUID;
  * It implements {@link Enemy} so every system that asks "is this hostile?" says yes. All state that matters survives a restart (identity, floor, owner); the cast, dash and aura
  * timers do not (a mob that reloads mid-cast simply starts over).
  */
-public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamilied {
+public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamilied, PoiseAware {
     private static final EntityDataAccessor<String> IDENTITY = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> CAST_LEFT = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CAST_MAX = SynchedEntityData.defineId(FoundryMobEntity.class, EntityDataSerializers.INT);
@@ -55,6 +57,8 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
     private int defVersion = -1;
     private String defId = "";
     private FoundryBrain mind = new FoundryBrain(java.util.List.of(), 30);
+    /** 1.107.0: in the desperation phase (an elite or captain under 30 percent health): faster rhythm, and the archetype's ultimate is in the ability list. Set by the poise layer. */
+    private boolean desperate;
     private int floor;
     private UUID owner;
     /** Timers of the abilities in progress (server side only). */
@@ -131,6 +135,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
         this.floor = floorNumber != 0 ? floorNumber : (d.tier() - 1) * FoundryScaling.FLOORS_PER_TIER + FoundryScaling.FLOORS_PER_TIER / 2;
         if (d.road() == Polarity.ABYSSAL && this.floor > 0) this.floor = -this.floor;
         applyStats(true);
+        if (!level().isClientSide) PoiseSystem.consider(this);        // 1.107.0: an elite (tier or above) gets its poise bar as soon as it is somebody
     }
 
     private void applyStats(boolean heal) {
@@ -147,6 +152,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
         this.xpReward = 4 + 6 * d.tier();
         mind = new FoundryBrain(FoundryData.abilitiesOf(d), a.abilityEvery());
         mind.reset(tickCount);
+        if (desperate) refreshBrain();
         if (heal) setHealth(getMaxHealth());
         refreshDimensions();
     }
@@ -155,6 +161,40 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
         AttributeInstance i = getAttribute(attribute);
         if (i != null) i.setBaseValue(value);
     }
+
+    /**
+     * 1.107.0: rebuilds the brain for the current phase: the abilities of the definition, plus (while desperate) the ultimate of the archetype, at the desperate pace; cooldowns already running
+     * are kept (matched by ability id), so a mob that turns desperate does not get a free volley of everything.
+     */
+    private void refreshBrain() {
+        FoundryDef d = def();
+        if (d == null) return;
+        FoundryArchetype a = FoundryData.archetypeOf(d);
+        java.util.List<FoundryAbility> list = new java.util.ArrayList<>(FoundryData.abilitiesOf(d));
+        if (desperate) {
+            FoundryAbility ultimate = PoiseSystem.telegraphs().ultimate(a.id());
+            if (ultimate != null && list.stream().noneMatch(x -> x.id().equals(ultimate.id()))) list.add(ultimate);
+        }
+        FoundryBrain next = new FoundryBrain(list, a.abilityEvery());
+        next.inherit(mind);
+        next.setPace(desperate ? PoiseSystem.tuning().pace() : 1.0);
+        mind = next;
+    }
+
+    @Override
+    public void poiseStaggered(int ticks) {
+        if (castLeft() > 0) setCast(0, 0);                              // whatever it was winding up is lost (the goal starts the cooldown when it notices)
+        getNavigation().stop();
+    }
+
+    @Override
+    public void poiseDesperate(boolean on) {
+        desperate = on;
+        refreshBrain();
+    }
+
+    /** Is this mob in its desperation phase? */
+    public boolean desperate() { return desperate; }
 
     /** Marks it as the minion of a summoner: no loot, no experience, and it remembers whose it is. */
     public void makeMinion(UUID ownerId) {
@@ -256,7 +296,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new FoundryGoals.AbilityGoal(this));
+        goalSelector.addGoal(1, FoundryConfig.get(FoundryConfig.TELEGRAPHS) ? new TelegraphedAttackGoal(this) : new FoundryGoals.AbilityGoal(this));       // 1.107.0: the warning version, unless switched off
         FoundryGoals.addStyleGoals(this, goalSelector);
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.7));
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 10.0f));
