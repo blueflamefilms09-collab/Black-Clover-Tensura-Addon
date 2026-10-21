@@ -108,6 +108,9 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
     private int lastAlive;
     // ---------------------------------------------------------------- the marker scan (not saved: found again after a reload)
     private List<BlockPos> runes, glyphs;
+    /** 1.107.0: the barrier columns of the doorways: the runes, and for a hall of a sector cut to 7 x 7 the runes widened to the full doorway ({@link ArchwayDoorways}); {@code colCap} is how high they rise. */
+    private List<BlockPos> cols;
+    private int colCap = TrialMath.MAX_COLUMN;
     private long scanTick = Long.MIN_VALUE;
 
     public SealedArchwayBlockEntity(BlockPos pos, BlockState state) { super(TrialRegistry.SEALED_ARCHWAY_BE.get(), pos, state); }
@@ -231,9 +234,9 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
 
     /** Is any of these players' hitboxes touching a cell a barrier column would fill? */
     private boolean anyInDoorway(ServerLevel level, List<ServerPlayer> inside) {
-        if (runes == null) return false;
-        for (BlockPos r : runes) {
-            int h = TrialMath.columnHeight(airAbove(level, r));
+        if (runes == null || cols == null) return false;
+        for (BlockPos r : cols) {
+            int h = TrialMath.columnHeight(airAbove(level, r, colCap), colCap);
             for (ServerPlayer p : inside) {
                 AABB bb = p.getBoundingBox();
                 if (TrialMath.overlapsColumn(r.getX(), r.getY(), r.getZ(), h, bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY, bb.maxZ)) return true;
@@ -260,13 +263,28 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
         }
         runes = r;
         glyphs = g;
+        boolean cut = false;                                                        // 1.107.0: a hall of a sector cut to 7 x 7 has doorways 7 wide and 7 high through both wall layers
+        try {
+            com.newuniverse.nusmp.labyrinth.mega.Sector sector = com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.sectorAt(level, worldPosition);
+            cut = sector != null && com.newuniverse.nusmp.labyrinth.mega.gen.ClearanceSettings.sectorCut(level.getServer(), sector.id);
+        } catch (RuntimeException ignored) {
+            // outside the Mega-Dungeon, or its data is not there: the old doorway
+        }
+        List<int[]> runeCells = new ArrayList<>(r.size());
+        for (BlockPos p : r) runeCells.add(new int[] {p.getX(), p.getY(), p.getZ()});
+        List<BlockPos> c = new ArrayList<>();
+        for (ArchwayDoorways.Col col : ArchwayDoorways.columns(runeCells, worldPosition.getX(), worldPosition.getZ(), cut)) c.add(new BlockPos(col.x(), col.y(), col.z()));
+        cols = c;
+        colCap = ArchwayDoorways.columnCap(cut);
         scanTick = now;
     }
 
     /** How many cells straight over a rune are air, up to the column cap. */
-    private static int airAbove(ServerLevel level, BlockPos rune) {
+    private static int airAbove(ServerLevel level, BlockPos rune) { return airAbove(level, rune, TrialMath.MAX_COLUMN); }
+
+    private static int airAbove(ServerLevel level, BlockPos rune, int cap) {
         int n = 0;
-        while (n < TrialMath.MAX_COLUMN && level.getBlockState(rune.above(n + 1)).isAir()) n++;
+        while (n < cap && level.getBlockState(rune.above(n + 1)).isAir()) n++;
         return n;
     }
 
@@ -274,8 +292,8 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
     private void activate(ServerLevel level, BlockPos pos, TrialMath.Box box, List<ServerPlayer> inside, long now) {
         scan(level, box, now);
         List<BlockPos> cells = new ArrayList<>();
-        for (BlockPos r : runes) {
-            int h = TrialMath.columnHeight(airAbove(level, r));
+        for (BlockPos r : cols) {
+            int h = TrialMath.columnHeight(airAbove(level, r, colCap), colCap);
             for (int i = 1; i <= h; i++) cells.add(r.above(i));
         }
         BlockState barrier = TrialRegistry.MAGIC_BARRIER.get().defaultBlockState();

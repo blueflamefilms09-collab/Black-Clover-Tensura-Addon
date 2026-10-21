@@ -68,6 +68,9 @@ public final class TrialMath {
     /** How many barrier cells a Ward Rune gets when {@code airAbove} consecutive cells over it are air: all of them, up to {@link #MAX_COLUMN}. */
     public static int columnHeight(int airAbove) { return Math.max(0, Math.min(MAX_COLUMN, airAbove)); }
 
+    /** As {@link #columnHeight(int)} with the cap given: 7 for a doorway cut to 7 x 7 ({@link ArchwayDoorways#columnCap}). */
+    public static int columnHeight(int airAbove, int cap) { return Math.max(0, Math.min(cap, airAbove)); }
+
     /** Is the block cell (px, py, pz) one of the {@code height} barrier cells over the rune at (rx, ry, rz)? */
     public static boolean inColumn(int rx, int ry, int rz, int height, int px, int py, int pz) {
         return height > 0 && px == rx && pz == rz && py > ry && py <= ry + height;

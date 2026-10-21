@@ -173,3 +173,33 @@ New: `labyrinth/mega/gen/{Clearance7, ClearanceGrid, ClearanceCarver, ClearanceS
 Edited (additions): `GeometryCheck` (rule `clearance7`, the 4-argument `run`, the cut-aware world sample), `SectorPlacer` (the cut after each piece, the seal widening), `GenData`
 (`Stat.clear7`), `SectorGenerator.stat` (one line), `CoreSelfTests.geometry` and `MegaCommand.verify` (pass whether the sector was cut), `MegaCommand.build` (one line), `MegaGenRegistry.init`
 (two lines), test `CatalogSource` (an accessor).
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+## 11. Integration with clearance7 (1.107.0: the lockdown, the Sealed Archway, seal_doors)
+
+Section 9 listed three things outside the lane that assumed a 3 x 4 doorway. The lockdown and the clearance were then merged and the seams closed, each keyed on the sector's saved
+`GenData.Stat.clear7` through one new public accessor, `ClearanceSettings.sectorCut(server, sectorId)` (true only for a sector finished with `gen.clearance7` on; it reads the sector as it
+stands in the world, so flipping the switch later does not make it lie). A sector that was not cut keeps the old behaviour byte for byte. Details and numbers in `lockdown_ambush.md`.
+
+| Seam | Result |
+|---|---|
+| Lockdown barrier (`LockdownDirector`, `OpeningScan`) | CLOSED. The barrier fills the whole cut doorway: wall lines read from one block off the corner (the outer column of a doorway in the first or last module was missed), at least 7 rows, both wall layers, limits for twelve 7 x 7 doorways; the wave stays out of the 4-block apron in front of the barriers; release and restore are per cell and unchanged. The room's cut is read from the world after the cut, not recomputed: the saved sector keeps rooms (boxes), not the plan, so `Clearance7.cuts` cannot be asked of a finished room. |
+| Sealed Archway (`labyrinth/trial`) | CLOSED. `ArchwayDoorways` widens each line of three Ward Runes to 7, doubles it into the outer wall layer and lets the columns rise 7 (was 3 wide, 4 high, one layer). |
+| `seal_doors` (`mechanics/PrimsWorld`) | CLOSED. `DoorSealing`: 7 rows in a cut sector (4 otherwise), and a side may show up to one 7-wide doorway per module before it is judged a cavern (30 columns before, which five 7-wide doorways exceed). The brief said "while the flag is on and the sector was cut"; the test is on the sector alone, because a sector cut earlier is still 7 high when the flag is off later. |
+| `rift/pocket` | NOT widened. See below. |
+
+**Why the rift pockets were not widened.** `PocketLayout.DOOR_WIDTH` (3), `SEAL_WIDTH` (5), `DOOR_HEIGHT` (4) and `SEAL_HEIGHT` (6) are read in `PocketPlan` by the corridor shell, the doorway
+boxes, the seal and its signs, the gravity zones of the inverted rooms and the collapse (which walls the doorways up again), and the plan is not stored: `PocketRuntime` rebuilds it from
+(seed, definition) every time it is needed. A switch read at that moment would give a pocket built with 3-wide doors a 7-wide plan after a restart or a flip (the collapse would wall a doorway
+that was never that wide, the seal blocks would be counted in cells that are wall), so a widening needs the choice saved with each pocket (`PocketRealm.Pocket`) and read from there. Beyond that,
+the Alcove room is 6 high (a 7-high doorway would cut its ceiling slab), the fixtures beside the doors assume the narrow doorway (the key room's lever falls back to 3 blocks off the wall centre,
+the lanterns keep 2 off the doorway, the seal's two signs hang 2 blocks outside the seal), `LayoutCheck` and `PocketPlanTest`/`PocketLayoutTest` pin the current sizes, and the lane that owns the
+pockets was merged in the same round. It is a change of that generator with its own saved flag and tests, not something to fold into an integration pass; the pockets stay 3 x 4 (the sealed
+treasury door 5 x 6).
+
+**Tests.** `CutDoorwayTest`, `DoorSealingTest`, `ArchwayDoorwaysTest` (JUnit, pure). `dungeon.clearance7` now also runs `OpeningScan.cutDoorwayCheck()`, `ArchwayDoorways.selfCheck()` and
+`DoorSealing.selfCheck()` (a barrier of each kind covers a cut 7 x 7 doorway completely), and `dungeon.lockdown` re-scans the locked room of the real sector after the barriers are in.
+
+**Not verified.** Nothing ran in the game. The pure sizing is proved on made-up rooms cut to the same boxes `Clearance7.cuts` produces; whether the placed rooms match them, and how the
+Sealed Archway and `seal_doors` behave on a placed hall, is what the two self-tests check in the CI game.

@@ -237,7 +237,9 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
             nextWaveAt = now + 20L;                                                  // nobody to fight right now: try again in a second (the abandoned rule ends the wait)
             return;
         }
-        LockdownWaves.Result r = LockdownWaves.spawn(level, sectorId, roomId, inside, band, RND);
+        List<BlockPos> doorCells = new ArrayList<>(cells.size());
+        for (long c : cells) doorCells.add(BlockPos.of(c));                           // 1.107.0: a room cut to 7 x 7 keeps its wave out of the apron in front of the barriers
+        LockdownWaves.Result r = LockdownWaves.spawn(level, sectorId, roomId, inside, band, RND, doorCells);
         for (Mob m : r.mobs()) spawned.add(new Spawned(m.getUUID(), m.blockPosition().asLong()));
         lastAlive = countAlive(level);
         lastHostileTick = now;

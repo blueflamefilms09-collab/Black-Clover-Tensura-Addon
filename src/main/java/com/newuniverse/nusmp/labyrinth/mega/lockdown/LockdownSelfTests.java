@@ -86,6 +86,9 @@ public final class LockdownSelfTests {
         if (AmbushRules.decide(new AmbushRules.Facts(true, false, true, true, true, false, 0L, 0, 0, cfg.threshold()), cfg) != AmbushRules.Why.SAFE) return fail("a safe room must never be ambushed");
         if (AmbushRules.decide(new AmbushRules.Facts(true, false, true, true, false, true, 0L, 0, 0, cfg.threshold()), cfg) != AmbushRules.Why.LOCKED_IN) return fail("a party locked in a room must not be ambushed on top");
         done.append("pure rules hold; ");
+        List<String> cutProblems = OpeningScan.cutDoorwayCheck();                           // 1.107.0: the barrier of a room cut to 7 x 7 covers a cut doorway completely
+        if (!cutProblems.isEmpty()) return fail("the barrier does not cover a cut 7 x 7 doorway: " + String.join("; ", cutProblems.subList(0, Math.min(3, cutProblems.size()))));
+        done.append("a barrier covers a cut 7x7 doorway completely (both wall layers, outer columns, twelve doorways); ");
 
         if (mega.getDifficulty() == Difficulty.PEACEFUL) return ok(done + "the live parts were skipped: the world is Peaceful (monsters would vanish at once)");
         Sector sector = MegaDungeon.data(server).sector(0);
@@ -122,6 +125,7 @@ public final class LockdownSelfTests {
         if (candidates.isEmpty()) return "FAIL sector 0 has no room that the room data locks";
         Room room = null;
         List<OpeningScan.Cell> cells = null;
+        boolean cut = LockdownDirector.isCut(mega, sector);
         List<String> why = new ArrayList<>();
         for (Room r : candidates) {
             if (why.size() >= 14) break;
@@ -130,11 +134,11 @@ public final class LockdownSelfTests {
                 why.add(r.template + ": has a seal of its own");
                 continue;
             }
-            List<OpeningScan.Cell> found = LockdownDirector.scanOpenings(mega, r);
-            OpeningScan.Result j = OpeningScan.judge(found, LockdownConfig.limits());
+            OpeningScan.Scan found = LockdownDirector.scanOpenings(mega, r, cut);
+            OpeningScan.Result j = OpeningScan.judge(found.plane(), OpeningScan.limitsFor(LockdownConfig.limits(), cut));
             if (j.ok()) {
                 room = r;
-                cells = found;
+                cells = found.fill();
                 break;
             }
             why.add(r.template + ": " + j.why());
@@ -149,6 +153,7 @@ public final class LockdownSelfTests {
             BlockPos bp = new BlockPos(c.x(), c.y(), c.z());
             before.put(bp, mega.getBlockState(bp));
         }
+        String cutNote = cut ? "" : ", sector not cut (old doorways)";
         List<RoomLockdownEvent> seen = new ArrayList<>();
         Consumer<RoomLockdownEvent> spy = seen::add;
         Consumer<RoomLockdownEvent> veto = e -> e.setCanceled(true);
@@ -193,6 +198,21 @@ public final class LockdownSelfTests {
             if (com.newuniverse.nusmp.labyrinth.mega.lock.LockConfig.enabled() && !LockBook.isLive(be.lockKey())) return "FAIL the locked room is not in the escape rules' book";
             if (LockdownDirector.verdict(mega, sector, room, List.of(p), mega.getGameTime()) == LockdownMath.Verdict.ARM) return "FAIL a locked room would be locked again";
 
+            // 1.107.0 (integration with the 7 x 7 clearance): with the barriers in, the walls of the room have NO passable line left, whatever size the doorways were; and in a
+            // sector that was cut, every doorway the barrier closed was read as a whole 7 x 7 (or larger) opening and the barrier took both wall layers of it
+            OpeningScan.Scan sealed = LockdownDirector.scanOpenings(mega, room, cut);
+            if (!sealed.plane().isEmpty()) return "FAIL the barrier leaves " + sealed.plane().size() + " passable wall cells open in room " + room.id + " (first at " + sealed.plane().get(0) + ")";
+            if (cut) {
+                int whole = 0, narrow = 0;
+                for (List<OpeningScan.Cell> opening : OpeningScan.openings(cells)) {
+                    int[] e = OpeningScan.extent(opening);
+                    if (e[0] >= com.newuniverse.nusmp.labyrinth.mega.gen.Clearance7.REQUIRED && e[1] >= com.newuniverse.nusmp.labyrinth.mega.gen.Clearance7.REQUIRED) whole++;
+                    else narrow++;
+                }
+                if (whole == 0) return "FAIL room " + room.id + " of a sector cut to 7 x 7 was closed without one doorway of 7 x 7 (" + narrow + " narrower openings): the barrier does not cover the cut doorways";
+                cutNote = ", " + whole + " doorway(s) of 7 x 7 or more closed through both wall layers by " + cells.size() + " cells (" + narrow + " narrower)";
+            }
+
             // the wave dies, the room clears
             for (Mob m : wave) m.discard();
             for (int i = 0; i < TO_CLEAR; i++) {
@@ -224,7 +244,7 @@ public final class LockdownSelfTests {
             for (Mob m : taggedMobs(mega, room)) if (m.isAlive()) return "FAIL a wave monster survived the opening of its room";
             LockdownMath.Verdict cooling = LockdownDirector.verdict(mega, sector, room, List.of(p), mega.getGameTime());
             if (cooling == LockdownMath.Verdict.ARM) return "FAIL an escaped room would lock again at once";
-            return "room " + room.id + " (" + room.template + ") locked " + before.size() + " doorway cells in " + armed.cells() + " barriers with a wave of " + armed.mobs() + ", a cancelling listener kept it open, the wave's death cleared it and every cell was given back, an escape through the rules opened it uncleared (verdict then " + cooling + ")";
+            return "room " + room.id + " (" + room.template + ") locked " + before.size() + " doorway cells in " + armed.cells() + " barriers with a wave of " + armed.mobs() + ", a cancelling listener kept it open, the wave's death cleared it and every cell was given back, an escape through the rules opened it uncleared (verdict then " + cooling + ")" + cutNote;
         } finally {
             NeoForge.EVENT_BUS.unregister(spy);
             NeoForge.EVENT_BUS.unregister(veto);

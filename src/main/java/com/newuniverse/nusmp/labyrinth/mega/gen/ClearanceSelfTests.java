@@ -53,6 +53,13 @@ final class ClearanceSelfTests {
         if (!rule.isEmpty()) return fail("the rule is wrong: " + String.join("; ", rule));
         boolean on = ClearanceSettings.enabled();
 
+        // ---- (1b) 1.107.0, the systems that CLOSE doorways must close a cut one completely: the lockdown barrier (inner and outer wall layer, the outer columns at the corner, the limits for
+        // twelve doorways), the Sealed Archway's columns (7 wide, two layers, 7 high) and the seal_doors bar (7 rows); the same checks run on the real sector in dungeon.lockdown
+        List<String> closing = new ArrayList<>(com.newuniverse.nusmp.labyrinth.mega.lockdown.OpeningScan.cutDoorwayCheck());
+        closing.addAll(com.newuniverse.nusmp.labyrinth.trial.ArchwayDoorways.selfCheck());
+        closing.addAll(com.newuniverse.nusmp.labyrinth.mega.mechanics.DoorSealing.selfCheck());
+        if (!closing.isEmpty()) return fail("a closing system does not cover a cut 7 x 7 doorway: " + String.join("; ", closing.subList(0, Math.min(3, closing.size()))));
+
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
         if (pools.poolIds().isEmpty()) return fail("no Mega pools are loaded");
@@ -128,7 +135,7 @@ final class ClearanceSelfTests {
         }
         String world = sectors == 0 ? "no finished sector made with the switch on yet to read the world of (" + older + " older sector(s) are untouched)"
                 : sectors + " finished sector(s) read in the world, " + checkedPieces + " pieces all at least 7x7 (" + older + " older sector(s) untouched)";
-        return ok(String.format(Locale.ROOT, "rule behaves; %d probe plans keep every module connected; %d real templates cut: %d doorways, %d corridor strips, %d chambers, %d stair head-room columns all measure 7x7 or better (%d blocked only by a block that is never cut: %d blocks left standing); %d blocks removed, %d roof blocks; %s; switch gen.clearance7=%s",
+        return ok(String.format(Locale.ROOT, "rule behaves; the lockdown barrier, the Sealed Archway columns and the seal_doors bar cover a cut 7x7 doorway completely; %d probe plans keep every module connected; %d real templates cut: %d doorways, %d corridor strips, %d chambers, %d stair head-room columns all measure 7x7 or better (%d blocked only by a block that is never cut: %d blocks left standing); %d blocks removed, %d roof blocks; %s; switch gen.clearance7=%s",
                 plans, templatesRead, doorways, corridors, chambers, stairColumns, blocked, kept, cleared, capped, world, on)
                 + (templatesMissing > 0 ? "; " + templatesMissing + " template(s) not loadable" : ""));
     }
