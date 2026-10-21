@@ -41,6 +41,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialRegistry.init(modBus);   // 1.99.0: the 200 Decennial bosses and their 36 halls (docs/labyrinth/decennial_bosses.md)
         com.newuniverse.nusmp.labyrinth.props.PropsRegistry.init(modBus);            // 1.107.0 the weapon rack (block, block entity, renderer's data) in place of armour stands (docs/labyrinth/weapon_racks.md)
         com.newuniverse.nusmp.labyrinth.mega.poise.PoiseRegistry.init(modBus);       // 1.107.0: poise / super armor, desperation, telegraphed attacks, the passive dungeon (docs/labyrinth/poise_desperation.md)
+        com.newuniverse.nusmp.labyrinth.mega.lockdown.LockdownRegistry.init(modBus);     // 1.107.0: room lockdown (unbreakable barriers until the wave is dead) and the dynamic ambush against bypassing (docs/labyrinth/lockdown_ambush.md)
         var bus = NeoForge.EVENT_BUS;
         com.newuniverse.nusmp.labyrinth.mega.gen.MegaGenRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
@@ -70,5 +71,6 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.props.PropsRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.poise.PoiseRegistry.register(bus);
+        com.newuniverse.nusmp.labyrinth.mega.lockdown.LockdownRegistry.register(bus);
     }
 }

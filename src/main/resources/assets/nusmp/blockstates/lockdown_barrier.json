@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "nusmp:block/lockdown_barrier"
+    }
+  }
+}

@@ -296,6 +296,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
         }
         Component msg = Component.translatable(MSG_SEALED).withStyle(ChatFormatting.AQUA);
         for (ServerPlayer p : inside) p.displayClientMessage(msg, false);
+        com.newuniverse.nusmp.labyrinth.mega.lockdown.LockdownDirector.trialSealed(level, pos, inside);          // 1.107.0: the event bus sees the trial hall as an entered challenge room too
         lastPlayerTick = now;
         activatedTick = now;
         lastAlive = spawned.size();
