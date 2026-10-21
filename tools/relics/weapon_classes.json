@@ -904,6 +904,15 @@
     },
     "thorn_princess_stiletto": {
       "class": "dagger"
+    },
+    "millennium_rod": {
+      "class": "staff"
+    },
+    "ea_sword_of_rupture": {
+      "class": "longsword"
+    },
+    "requiem_stand_arrow": {
+      "class": "dagger"
     }
   },
   "_excluded_was": {

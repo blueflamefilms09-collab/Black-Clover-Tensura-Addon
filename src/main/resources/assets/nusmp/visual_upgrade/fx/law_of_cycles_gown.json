@@ -1,0 +1,192 @@
+{
+ "id": "law_of_cycles_gown",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.law_of_cycles_gown",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "cosmic core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "cosmic_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul gem",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "soul_gem",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "collar bow",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "collar_bow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "skirt",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "skirt",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "train",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "train",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "hair ribbons",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "hair_ribbons",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cycle ring",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "cycle_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "cycle ring b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "cycle_ring_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "soul gems",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "soul_gems",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "hope bow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "hope_bow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "falling petals",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "falling_petals",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "gown glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "gown_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "petals of hope",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "nusmp:petal_cherry",
+   "count": 1,
+   "every": 6,
+   "radius": 0.6,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "law glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:gem_sparkle",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFC0E0"
+  },
+  {
+   "name": "holy motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:holy_ray",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFE0F0"
+  }
+ ]
+}

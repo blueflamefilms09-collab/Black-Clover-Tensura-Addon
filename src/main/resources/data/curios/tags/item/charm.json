@@ -1015,6 +1015,18 @@
     {
       "id": "nusmp:requiem_ladybug_brooch",
       "required": false
+    },
+    {
+      "id": "nusmp:greed_island_original_binder",
+      "required": false
+    },
+    {
+      "id": "nusmp:hogyoku_of_the_crystal_dissolution",
+      "required": false
+    },
+    {
+      "id": "nusmp:millennium_scale",
+      "required": false
     }
   ]
 }

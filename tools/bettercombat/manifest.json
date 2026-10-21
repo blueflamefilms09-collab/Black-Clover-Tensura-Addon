@@ -1475,6 +1475,21 @@
       "class": "dagger",
       "profile": "dagger",
       "source": "relic"
+    },
+    "ea_sword_of_rupture": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "relic"
+    },
+    "millennium_rod": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "requiem_stand_arrow": {
+      "class": "dagger",
+      "profile": "dagger",
+      "source": "relic"
     }
   },
   "excluded": {

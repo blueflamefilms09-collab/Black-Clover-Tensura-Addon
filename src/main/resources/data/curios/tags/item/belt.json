@@ -280,6 +280,14 @@
     {
       "id": "nusmp:shinobi_tool_belt",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:seven_dragon_balls_of_shenron",
+      "required": false
     }
   ]
 }

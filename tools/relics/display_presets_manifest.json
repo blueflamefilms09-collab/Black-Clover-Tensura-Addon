@@ -2845,6 +2845,39 @@
       "id": "thorn_princess_stiletto",
       "action": "keep",
       "length_blocks": 0.706
+    },
+    {
+      "id": "ea_sword_of_rupture",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
+      "id": "millennium_rod",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.361,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
+      "id": "requiem_stand_arrow",
+      "action": "keep",
+      "length_blocks": 0.706
     }
   ]
 }

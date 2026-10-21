@@ -1,0 +1,182 @@
+{
+ "id": "truth_seeking_orbs_of_the_sage",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.truth_seeking_orbs_of_the_sage",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "black core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "black_core",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "orb ring",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "orb_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tomoe ring",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "tomoe_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rinnegan seal",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "rinnegan_seal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rinnegan seal b",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "rinnegan_seal_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sage staff",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "sage_staff",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "staff rings",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "staff_rings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seeking motes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "seeking_motes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "black feathers",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "black_feathers",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tomoe collar",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "tomoe_collar",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "orb glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "orb_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "black feathers falling",
+   "kind": "particle",
+   "type": "drips",
+   "particle": "nusmp:feather_black",
+   "count": 1,
+   "every": 8,
+   "radius": 0.6,
+   "rise": -0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seeking wisps",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "nusmp:void_speck",
+   "count": 1,
+   "every": 5,
+   "radius": 0.55,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E0E0FF"
+  },
+  {
+   "name": "truth glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:glint",
+   "count": 1,
+   "every": 6,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFFFFF"
+  }
+ ]
+}

@@ -337,6 +337,10 @@
     {
       "id": "nusmp:butterfly_estate_haori",
       "required": false
+    },
+    {
+      "id": "nusmp:truth_seeking_orbs_of_the_sage",
+      "required": false
     }
   ]
 }

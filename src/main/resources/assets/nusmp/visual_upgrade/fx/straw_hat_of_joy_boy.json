@@ -1,0 +1,173 @@
+{
+ "id": "straw_hat_of_joy_boy",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.straw_hat_of_joy_boy",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "freedom cloud",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "freedom_cloud",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sun disc",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "sun_disc",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sun rays",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "sun_rays",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sun rays b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "sun_rays_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "laughing clouds",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "laughing_clouds",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far clouds",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "laughing_clouds_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "drum notes",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "drum_notes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "nika halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "nika_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "chin cord",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "chin_cord",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "brim",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "brim",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "sun glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "sun_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "laughter notes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:music_note",
+   "count": 1,
+   "every": 7,
+   "radius": 0.55,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFF0B0"
+  },
+  {
+   "name": "sun glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:star4",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFF0B0"
+  },
+  {
+   "name": "white puffs",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "nusmp:mote_soft",
+   "count": 1,
+   "every": 6,
+   "radius": 0.6,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFFFFF"
+  }
+ ]
+}

@@ -1,0 +1,192 @@
+{
+ "id": "millennium_necklace",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.millennium_necklace",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "time core",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "wdjat_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wdjat glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "wdjat_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "collar drops",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "collar_drops",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "menat",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "menat",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "vulture wings",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "vulture_wings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "visions",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "visions",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far visions",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "visions_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "time ring",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "time_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "time ring b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "time_ring_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "future panes",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "future_panes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "collar glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "collar_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "halo ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "foreseen eyes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:rune_eye",
+   "count": 1,
+   "every": 9,
+   "radius": 0.55,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "vision glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:star4",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "62E6F0"
+  },
+  {
+   "name": "collar gold",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:glint",
+   "count": 1,
+   "every": 6,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "EBBB52"
+  }
+ ]
+}

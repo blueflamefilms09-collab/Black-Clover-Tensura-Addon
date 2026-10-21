@@ -433,6 +433,10 @@
     {
       "id": "nusmp:transmutation_circle_gloves",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_ring",
+      "required": false
     }
   ]
 }

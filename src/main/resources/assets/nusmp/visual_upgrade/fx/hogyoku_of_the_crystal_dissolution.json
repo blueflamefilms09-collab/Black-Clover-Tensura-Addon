@@ -1,0 +1,173 @@
+{
+ "id": "hogyoku_of_the_crystal_dissolution",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.hogyoku_of_the_crystal_dissolution",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "soul swirl",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "soul_swirl",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "crystal shell",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "crystal",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "dissolve ring",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "dissolve_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "dissolve ring b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "dissolve_ring_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "dissolve ring c",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "dissolve_ring_c",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "reishi wings",
+   "kind": "geometry",
+   "type": "petals",
+   "group": "reishi_wings",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "crystal shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "crystal_shards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "far shards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "crystal_shards_far",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "boundary ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "boundary_ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lilac halo",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "lilac_halo",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "reishi motes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:mana_mote",
+   "count": 2,
+   "every": 4,
+   "radius": 0.5,
+   "rise": 0.014,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "D8A0FF"
+  },
+  {
+   "name": "soul wisps",
+   "kind": "particle",
+   "type": "wisps",
+   "particle": "nusmp:soul_wisp",
+   "count": 1,
+   "every": 6,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "E8D8FF"
+  },
+  {
+   "name": "crystal glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:gem_sparkle",
+   "count": 1,
+   "every": 5,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFFFFF"
+  }
+ ]
+}

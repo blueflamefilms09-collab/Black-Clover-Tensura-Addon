@@ -390,6 +390,10 @@
     {
       "id": "nusmp:revival_fluid_pendant",
       "required": false
+    },
+    {
+      "id": "nusmp:millennium_puzzle",
+      "required": false
     }
   ]
 }

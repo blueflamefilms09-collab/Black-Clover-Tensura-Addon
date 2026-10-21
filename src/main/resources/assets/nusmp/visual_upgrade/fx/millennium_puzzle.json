@@ -1,0 +1,162 @@
+{
+ "id": "millennium_puzzle",
+ "grade": "GENESIS",
+ "ambient_sound": "nusmp:relic.ambient.millennium_puzzle",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "second soul",
+   "kind": "geometry",
+   "type": "nebula_core",
+   "group": "second_soul",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "wdjat glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "wdjat_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "seven items",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "seven_motes",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fate wheel",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "fate_wheel",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "fate wheel b",
+   "kind": "geometry",
+   "type": "halo_ring",
+   "group": "fate_wheel_b",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "shadow ripple",
+   "kind": "geometry",
+   "type": "portal_ripples",
+   "group": "shadow_ripple",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "falling sand",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "falling_sand",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "tear glints",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "tear_glints",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "halo ring",
+   "kind": "geometry",
+   "type": "rune_ring",
+   "group": "halo_ring",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "lens flare",
+   "kind": "geometry",
+   "type": "lens_flare",
+   "group": "lens_flare",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "light shafts",
+   "kind": "geometry",
+   "type": "light_shafts",
+   "group": "light_shafts",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "rune eyes",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "nusmp:rune_eye",
+   "count": 1,
+   "every": 10,
+   "radius": 0.5,
+   "rise": 0.012,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "golden sand",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:sand_grain",
+   "count": 1,
+   "every": 5,
+   "radius": 0.5,
+   "rise": -0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFE890"
+  },
+  {
+   "name": "soul glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "nusmp:gem_sparkle",
+   "count": 1,
+   "every": 8,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "6A8CFF"
+  }
+ ]
+}
