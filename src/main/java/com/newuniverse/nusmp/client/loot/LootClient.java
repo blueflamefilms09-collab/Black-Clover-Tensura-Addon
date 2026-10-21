@@ -29,6 +29,20 @@ public final class LootClient {
 
     public static void init(IEventBus modBus) {
         modBus.addListener(LootClient::registerExtensions);
+        modBus.addListener(LootClient::registerBackpackScreen);                                                    // 1.107.0: the Backpack window
+        modBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent e) -> e.enqueueWork(LootClient::registerBackpackModels));
+    }
+
+    /** 1.107.0: the window of the Backpack for every tier. */
+    static void registerBackpackScreen(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent e) {
+        e.register(com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackRegistry.MENU.get(), BackpackScreen::new);
+    }
+
+    /** 1.107.0: the item property that lets the Backpack's item model pick its tier model (the overrides of {@code models/item/backpack.json}). */
+    static void registerBackpackModels() {
+        net.minecraft.client.renderer.item.ItemProperties.register(com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackRegistry.ITEM.get(),
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "backpack_tier"),
+                (stack, level, entity, seed) -> com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackItem.tierOf(stack).ordinal());
     }
 
     static void registerExtensions(RegisterClientExtensionsEvent e) {

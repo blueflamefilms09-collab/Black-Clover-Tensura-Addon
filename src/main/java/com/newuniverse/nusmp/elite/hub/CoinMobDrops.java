@@ -62,7 +62,7 @@ public final class CoinMobDrops {
         int floor = MegaDungeon.floorAt(level, dead.blockPosition());
         if (floor == 0 && foundry) floor = ((FoundryMobEntity) dead).floor();
         Dice d = dice != null ? dice : level.getRandom()::nextDouble;
-        long value = CoinLoot.roll(CoinLoot.Source.MOB, floor, CoinLootModifier.looting(level, killer), params, d);
+        long value = CoinLoot.roll(CoinLoot.Source.MOB, floor, CoinLootModifier.looting(level, killer), CoinLootModifier.luck(killer.getLuck()), CoinLootModifier.luckParams(), params, d);
         if (value <= 0) return 0;
         List<ItemStack> stacks = CoinWallet.stacksFor(value);
         for (ItemStack stack : stacks) event.getDrops().add(new ItemEntity(level, dead.getX(), dead.getY() + 0.3, dead.getZ(), stack));

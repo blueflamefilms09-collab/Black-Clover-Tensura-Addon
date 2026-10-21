@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.elite.hub;
 
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
+import com.newuniverse.nusmp.labyrinth.loot.LuckGauss;
 
 /**
  * Why: "coins must drop from dungeon mobs, chests and bosses", scaled by how deep the floor is, is a balance question, and a balance question belongs in a pure class that a unit test can pin:
@@ -81,16 +82,28 @@ public final class CoinLoot {
     /**
      * One payout in bronze coins (0 = nothing). A mob pays on its chance, a chest and a boss always. The amount is the expected value times a jitter (0.6 to 1.4 for mobs and chests, 0.9 to 1.1
      * for a boss) and times {@code 1 + lootingBonus x looting} (mobs and chests; a boss ignores Looting), rounded, at least 1 when a payout happens and the base is not zero.
+     * This is the roll with no Luck; {@link #roll(Source, int, int, double, LuckGauss.Params, Params, Dice)} is the same roll with Luck.
      */
     public static long roll(Source source, int floor, int looting, Params p, Dice dice) {
+        return roll(source, floor, looting, 0.0, LuckGauss.COINS, p, dice);
+    }
+
+    /**
+     * 1.107.0: the same roll with the payer's Luck. Luck adds to a mob's chance of paying (1 point per point, at most 15) and multiplies the amount by a Gaussian factor that is never
+     * below 1 ({@link LuckGauss#factor}, the Luck-only curve: the floor already scales the payout). With no Luck, or {@code luckParams} that do nothing, no extra random number is drawn,
+     * so the result is exactly the old roll's.
+     */
+    public static long roll(Source source, int floor, int looting, double luck, LuckGauss.Params luckParams, Params p, Dice dice) {
         if (floor == 0 || p.scale() <= 0.0) return 0;
-        if (source == Source.MOB && !dice.chance(mobChance(floor, looting, p))) return 0;
+        double l = LuckGauss.luck(luck);
+        if (source == Source.MOB && !dice.chance(Math.min(1.0, mobChance(floor, looting, p) + LuckGauss.coinChanceBonus(l)))) return 0;
         double mid = expected(source, floor, p);
         if (mid <= 0.0) return 0;
         double spread = source == Source.BOSS ? 0.1 : 0.4;
         double jitter = 1.0 - spread + 2.0 * spread * dice.next();
         double lootBoost = source == Source.BOSS ? 1.0 : 1.0 + p.lootingBonus() * Math.max(0, looting);
-        double v = mid * jitter * lootBoost;
+        double luckBoost = l > 0.0 && luckParams != null ? LuckGauss.factor(l, dice, luckParams) : 1.0;
+        double v = mid * jitter * lootBoost * luckBoost;
         if (v >= CoinMath.CAP) return CoinMath.CAP;
         return Math.max(1L, Math.round(v));
     }

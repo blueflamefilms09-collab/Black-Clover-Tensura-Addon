@@ -5,6 +5,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
+import com.newuniverse.nusmp.labyrinth.loot.LootConfig;
+import com.newuniverse.nusmp.labyrinth.loot.LuckGauss;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.rift.PocketRealm;
 import com.newuniverse.nusmp.labyrinth.mega.rift.RiftRules;
@@ -121,8 +123,14 @@ public final class CoinLootModifier extends LootModifier {
         if (killer == null) return 0;
         dead.addTag(CoinMobDrops.PAID_TAG);                      // decided: the death listener for table-less mobs must not roll a second time
         int floor = MegaDungeon.floorAt(level, dead.blockPosition());
-        return CoinLoot.roll(CoinLoot.Source.MOB, floor, looting(level, killer), params, d);
+        return CoinLoot.roll(CoinLoot.Source.MOB, floor, looting(level, killer), luck(killer.getLuck()), luckParams(), params, d);
     }
+
+    /** 1.107.0: the Luck that scales a payout: the payer's Luck attribute, or 0 when {@code luck.scaleCoins} is off. */
+    static double luck(double raw) { return LootConfig.get(LootConfig.LUCK_COINS) ? LuckGauss.luck(raw) : 0.0; }
+
+    /** 1.107.0: the coin Luck curve from the config. */
+    static LuckGauss.Params luckParams() { return LootConfig.luckCoins(); }
 
     /** The Looting level of the killer's main-hand weapon (0 if it has none or the enchantment is missing); the same read as the dungeon economy's. */
     static int looting(ServerLevel level, ServerPlayer killer) {
@@ -138,10 +146,10 @@ public final class CoinLootModifier extends LootModifier {
         if (slot >= 0) {
             PocketRealm.Pocket pocket = PocketRealm.get(level.getServer()).at(slot);
             if (pocket == null || pocket.floor == 0) return 0;
-            return CoinLoot.roll(CoinLoot.Source.RIFT_CHEST, pocket.floor, looting, params, d);
+            return CoinLoot.roll(CoinLoot.Source.RIFT_CHEST, pocket.floor, looting, luck(context.getLuck()), luckParams(), params, d);
         }
         int floor = MegaDungeon.floorAt(level, BlockPos.containing(origin));
-        return CoinLoot.roll(CoinLoot.Source.CHEST, floor, looting, params, d);
+        return CoinLoot.roll(CoinLoot.Source.CHEST, floor, looting, luck(context.getLuck()), luckParams(), params, d);
     }
 
     /** Takes the Magic Stone economy's items out of a chest roll (coins replace them). */
