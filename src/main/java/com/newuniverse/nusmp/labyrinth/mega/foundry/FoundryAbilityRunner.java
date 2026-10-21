@@ -49,6 +49,8 @@ public final class FoundryAbilityRunner {
         double dashPow, leapPow, leapRadius, thornPow;
         boolean dashHit;
         FoundryAbility aura;
+        /** 1.107.0: where the telegraphed attack was aimed when its aim froze (set by {@code TelegraphedAttackGoal} just before {@link #fire}, consumed by it); null = aim at the target's live position as before. */
+        Vec3 aim;
         long markedUntil;
         java.util.UUID marked;
     }
@@ -83,16 +85,18 @@ public final class FoundryAbilityRunner {
             RukhFx.Alignment al = RukhFx.Alignment.of(a.dark(m.road() == com.newuniverse.nusmp.labyrinth.mega.Polarity.ABYSSAL));
             double attack = m.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
             double dmg = a.damage(attack);
+            Vec3 aim = m.fx.aim;                       // 1.107.0: the frozen aim of a telegraphed attack (what the floor warned about is what gets hit)
+            m.fx.aim = null;
             switch (a.kind()) {
-                case DASH -> dash(m, a, target, dmg, false);
-                case DIVE -> dash(m, a, target, dmg, true);
-                case LEAP -> leap(m, a, target, dmg);
+                case DASH -> dash(m, a, target, dmg, false, aim);
+                case DIVE -> dash(m, a, target, dmg, true, aim);
+                case LEAP -> leap(m, a, target, dmg, aim);
                 case GUARD -> {
                     m.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, a.dur(), Math.max(0, a.amp())));
                     m.fx.guardLeft = a.dur();
                     RukhFx.gather(level, m, al, 8);
                 }
-                case VOLLEY -> volley(m, a, target, dmg, level);
+                case VOLLEY -> volley(m, a, target, dmg, level, aim);
                 case HEAL -> heal(m, a, level, al);
                 case SUMMON -> summon(m, a, level, al);
                 case DRAIN -> {
@@ -136,9 +140,9 @@ public final class FoundryAbilityRunner {
                         RukhFx.stream(level, m, target, al, 6);
                     }
                 }
-                case CLEAVE -> cleave(m, a, level, dmg, al);
+                case CLEAVE -> cleave(m, a, level, dmg, al, aim);
                 case CURSE -> {
-                    Vec3 at = target != null ? target.position() : m.position();
+                    Vec3 at = aim != null ? aim : target != null ? target.position() : m.position();
                     for (LivingEntity v : foesAround(level, m, at, Math.max(1.0, a.r()))) {
                         v.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, a.dur(), Math.max(0, a.amp())));
                         v.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, a.dur() / 2, 0));
@@ -209,9 +213,10 @@ public final class FoundryAbilityRunner {
     }
 
     // ================================================================ the kinds that need more than a line
-    private static void dash(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg, boolean vertical) {
+    private static void dash(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg, boolean vertical, Vec3 aim) {
         if (target == null) return;
-        Vec3 d = target.position().add(0, target.getBbHeight() * 0.4, 0).subtract(m.position().add(0, m.getBbHeight() * 0.4, 0));
+        Vec3 goal = aim != null ? aim : target.position();
+        Vec3 d = goal.add(0, target.getBbHeight() * 0.4, 0).subtract(m.position().add(0, m.getBbHeight() * 0.4, 0));
         if (!vertical) d = new Vec3(d.x, 0.0, d.z);
         if (d.lengthSqr() < 1.0E-4) return;
         m.fx.dashDir = d.normalize();
@@ -221,9 +226,9 @@ public final class FoundryAbilityRunner {
         m.getNavigation().stop();
     }
 
-    private static void leap(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg) {
+    private static void leap(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg, Vec3 aim) {
         if (target == null) return;
-        Vec3 d = target.position().subtract(m.position());
+        Vec3 d = (aim != null ? aim : target.position()).subtract(m.position());
         double dist = Math.sqrt(d.x * d.x + d.z * d.z);
         if (dist < 1.0E-3) return;
         double speed = Math.min(1.3, 0.35 + dist * 0.09);
@@ -235,8 +240,9 @@ public final class FoundryAbilityRunner {
         m.fx.leapRadius = Math.max(1.5, a.r());
     }
 
-    private static void volley(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg, ServerLevel level) {
+    private static void volley(FoundryMobEntity m, FoundryAbility a, LivingEntity target, double dmg, ServerLevel level, Vec3 aim) {
         if (target == null) return;
+        Vec3 centre = aim != null ? aim : target.position();
         boolean rain = a.n() >= 6;
         int n = Math.max(1, a.n());
         for (int i = 0; i < n; i++) {
@@ -245,7 +251,7 @@ public final class FoundryAbilityRunner {
             arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
             if (rain) {
                 double rx = (m.getRandom().nextDouble() - 0.5) * 6.0, rz = (m.getRandom().nextDouble() - 0.5) * 6.0;
-                arrow.setPos(target.getX() + rx, target.getY() + 9.0, target.getZ() + rz);
+                arrow.setPos(centre.x + rx, centre.y + 9.0, centre.z + rz);
                 arrow.shoot(0.0, -1.0, 0.0, 1.5f, 3.0f);
             } else {
                 double dx = target.getX() - m.getX(), dz = target.getZ() - m.getZ();
@@ -348,9 +354,13 @@ public final class FoundryAbilityRunner {
         return false;
     }
 
-    private static void cleave(FoundryMobEntity m, FoundryAbility a, ServerLevel level, double dmg, RukhFx.Alignment al) {
+    private static void cleave(FoundryMobEntity m, FoundryAbility a, ServerLevel level, double dmg, RukhFx.Alignment al, Vec3 aim) {
         m.swing(InteractionHand.MAIN_HAND);
         Vec3 look = m.getLookAngle();
+        if (aim != null) {                                    // the cone the floor showed points at the frozen aim, whichever way the body has turned since
+            double ax = aim.x - m.getX(), az = aim.z - m.getZ(), al2 = Math.sqrt(ax * ax + az * az);
+            if (al2 > 1.0E-3) look = new Vec3(ax / al2, 0.0, az / al2);
+        }
         double half = Math.toRadians(Math.max(20, Math.min(360, a.amp())) / 2.0);
         for (LivingEntity v : foesAround(level, m, m.position(), a.r())) {
             if (a.amp() < 360) {

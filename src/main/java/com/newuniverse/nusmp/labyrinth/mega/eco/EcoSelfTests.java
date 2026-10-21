@@ -88,7 +88,7 @@ public final class EcoSelfTests {
         ServerLevel level = SelfTests.mega(server);
         if (level == null) return fail("no mega dimension");
         if (sector0(server) == null) return fail("sector 0 does not exist: run /multiverse mega expand first");
-        if (turfWars && !EcoConfig.get(EcoConfig.TURF_WARS)) return ok("skipped: eco.turfWarsEnabled is false in the config");
+        if (turfWars && !com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.turfWarsRun()) return ok("skipped: the turf wars are off in this config (eco.turfWarsEnabled is false, or foundry.poise.dungeonPassive keeps the dungeon passive)");
         if (turfWars && level.getDifficulty() == Difficulty.PEACEFUL) return ok("skipped: the difficulty is peaceful, hostile mobs would be removed at once");
         return null;
     }

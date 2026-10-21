@@ -1,0 +1,44 @@
+{
+  "why": "How the EXISTING Mob Foundry abilities warn before they land, and which ULTIMATE each archetype unlocks when its elite or captain is desperate (under 30 percent health). The abilities themselves stay in ../foundry/_abilities.json; this file only adds the warning. kinds = the default per ability kind, overrides = a row for one ability id, abilities = the ultimate rows (exactly the format of _abilities.json), ultimates = archetype -> ability id. Row fields: shape (none, circle, ring, cone, line), armor (super armor during the wind-up and the swing), minWind (the shortest fair wind-up in ticks), target (the shape sits on the target, not on the mob), r / angle / width = fallbacks when the ability has no radius, arc or the line needs a width. A cleave draws its own arc (amp), a dash draws as far as it travels. Fields that are missing take the safe default.",
+  "kinds": {
+    "CLEAVE": {"shape": "cone", "armor": true, "minWind": 14, "r": 3.4, "angle": 120},
+    "SLAM": {"shape": "circle", "armor": true, "minWind": 18, "r": 4},
+    "BASH": {"shape": "cone", "armor": true, "minWind": 12, "r": 3.5, "angle": 70},
+    "LEAP": {"shape": "circle", "armor": true, "minWind": 16, "target": true, "r": 2.5},
+    "DASH": {"shape": "line", "armor": true, "minWind": 14, "width": 1.0},
+    "DIVE": {"shape": "line", "armor": true, "minWind": 14, "width": 1.1},
+    "AURA": {"shape": "ring", "armor": false, "minWind": 12, "r": 4},
+    "CURSE": {"shape": "circle", "armor": false, "minWind": 16, "target": true, "r": 3},
+    "PULL": {"shape": "line", "armor": false, "minWind": 14, "width": 0.8}
+  },
+  "overrides": {
+    "lunge": {"shape": "line", "armor": true, "minWind": 10, "width": 0.9},
+    "arrow_rain": {"shape": "circle", "armor": false, "minWind": 22, "target": true, "r": 3.5},
+    "final_volley": {"shape": "circle", "armor": false, "minWind": 18, "target": true, "r": 4.0},
+    "legion_call": {"shape": "ring", "armor": false, "minWind": 24, "r": 4.0}
+  },
+  "ultimates": {
+    "brute": "last_fury",
+    "skirmisher": "blade_storm",
+    "archer": "final_volley",
+    "caster": "ruin_nova",
+    "assassin": "killing_lunge",
+    "tank": "earthbreaker",
+    "support": "last_prayer",
+    "summoner": "legion_call",
+    "flier": "death_dive",
+    "charger": "rampage"
+  },
+  "abilities": [
+    {"id": "last_fury", "kind": "cleave", "cd": 160, "min": 0, "max": 5, "wind": 18, "pow": 2.0, "dur": 0, "n": 0, "r": 4.5, "amp": 360, "hp": 0, "align": "road", "snd": "minecraft:entity.ravager.roar"},
+    {"id": "blade_storm", "kind": "cleave", "cd": 140, "min": 0, "max": 5, "wind": 14, "pow": 1.7, "dur": 0, "n": 0, "r": 3.8, "amp": 360, "hp": 0, "align": "road", "snd": "minecraft:entity.player.attack.sweep"},
+    {"id": "final_volley", "kind": "volley", "cd": 180, "min": 5, "max": 26, "wind": 16, "pow": 0.9, "dur": 0, "n": 8, "r": 0, "amp": 0, "hp": 0, "align": "road", "snd": "minecraft:entity.arrow.shoot"},
+    {"id": "ruin_nova", "kind": "slam", "cd": 200, "min": 0, "max": 8, "wind": 22, "pow": 2.0, "dur": 0, "n": 0, "r": 6.5, "amp": 2, "hp": 0, "align": "dark", "snd": "minecraft:entity.generic.explode"},
+    {"id": "killing_lunge", "kind": "dash", "cd": 140, "min": 3, "max": 14, "wind": 12, "pow": 2.0, "dur": 10, "n": 0, "r": 0, "amp": 0, "hp": 0, "align": "dark", "snd": "minecraft:entity.player.attack.sweep"},
+    {"id": "earthbreaker", "kind": "slam", "cd": 200, "min": 0, "max": 6, "wind": 24, "pow": 1.8, "dur": 0, "n": 0, "r": 6.0, "amp": 3, "hp": 0, "align": "road", "snd": "minecraft:entity.iron_golem.attack"},
+    {"id": "last_prayer", "kind": "aura", "cd": 260, "min": 0, "max": 0, "wind": 18, "pow": 0.5, "dur": 160, "n": 0, "r": 6.0, "amp": 0, "hp": 0, "align": "light", "snd": "minecraft:block.beacon.activate"},
+    {"id": "legion_call", "kind": "summon", "cd": 260, "min": 0, "max": 24, "wind": 24, "pow": 1.0, "dur": 0, "n": 4, "r": 4.0, "amp": 0, "hp": 0, "align": "road", "snd": "minecraft:entity.evoker.prepare_summon"},
+    {"id": "death_dive", "kind": "dive", "cd": 150, "min": 4, "max": 16, "wind": 14, "pow": 2.0, "dur": 14, "n": 0, "r": 0, "amp": 0, "hp": 0, "align": "road", "snd": "minecraft:entity.phantom.swoop"},
+    {"id": "rampage", "kind": "dash", "cd": 150, "min": 4, "max": 16, "wind": 16, "pow": 2.2, "dur": 14, "n": 0, "r": 0, "amp": 0, "hp": 0, "align": "road", "snd": "minecraft:entity.ravager.step"}
+  ]
+}

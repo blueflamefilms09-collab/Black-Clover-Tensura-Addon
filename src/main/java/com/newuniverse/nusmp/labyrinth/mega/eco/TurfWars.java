@@ -83,7 +83,7 @@ public final class TurfWars {
         try {
             Level level = e.getLevel();
             if (level.isClientSide() || !(e.getEntity() instanceof Mob mob) || !Labyrinth.inMega(level)) return;
-            if (!EcoConfig.get(EcoConfig.TURF_WARS) || FactionRegistry.factionOf(mob.getType()) == null || !TurfEligibility.wild(mob)) return;
+            if (!com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.turfWarsRun() || FactionRegistry.factionOf(mob.getType()) == null || !TurfEligibility.wild(mob)) return;       // 1.107.0: the passive dungeon installs no quarrel goal
             install(mob);
         } catch (RuntimeException | LinkageError ex) {
             warnOnce("a mob could not be given the goal", ex);
@@ -94,7 +94,7 @@ public final class TurfWars {
         try {
             LivingEntity next = e.getNewAboutToBeSetTarget();
             if (next == null || next instanceof Player || !(e.getEntity() instanceof Mob mob) || !(next instanceof Mob other)) return;
-            if (mob.level().isClientSide() || !Labyrinth.inMega(mob.level()) || !EcoConfig.get(EcoConfig.TURF_WARS)) return;
+            if (mob.level().isClientSide() || !Labyrinth.inMega(mob.level()) || !com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.turfWarsRun()) return;
             String a = FactionRegistry.factionOf(mob.getType()), b = FactionRegistry.factionOf(other.getType());
             if (a == null || b == null || !FactionRegistry.graph().sameOrAllied(a, b)) return;
             if (TurfEligibility.wild(mob) && TurfEligibility.wild(other)) e.setCanceled(true);

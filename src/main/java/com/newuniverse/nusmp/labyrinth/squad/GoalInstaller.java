@@ -54,6 +54,14 @@ final class GoalInstaller {
         return true;
     }
 
+    /** 1.107.0: adds ONE goal of another system to a mob's goal list (the poise layer's desperation shockwave); false when the goal field cannot be read. */
+    static boolean add(Mob mob, int priority, Goal goal) {
+        GoalSelector goals = read(GOALS, mob);
+        if (goals == null) return false;
+        goals.addGoal(priority, goal);
+        return true;
+    }
+
     /** Does the mob have a goal of this class in its goal list (or, for the focus goal, its target list)? */
     static boolean has(Mob mob, Class<? extends Goal> type) {
         GoalSelector g = read(type == SquadFocusGoal.class ? TARGETS : GOALS, mob);

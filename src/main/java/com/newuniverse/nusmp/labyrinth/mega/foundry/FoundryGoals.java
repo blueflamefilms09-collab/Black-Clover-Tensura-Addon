@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.foundry;
 
 import com.newuniverse.nusmp.labyrinth.mega.eco.FactionDef;
 import com.newuniverse.nusmp.labyrinth.mega.eco.FactionRegistry;
+import com.newuniverse.nusmp.labyrinth.mega.poise.PoiseSystem;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -47,12 +48,15 @@ public final class FoundryGoals {
     static FoundryArchetype.Style styleOf(Goal g) { return g instanceof StyleGoal s ? s.style : null; }
 
     // ================================================================ the ability goal
-    /** Asks the brain, stands through the wind-up, fires. Holds MOVE and LOOK only while casting. */
-    static final class AbilityGoal extends Goal {
-        private final FoundryMobEntity m;
-        private final Random rnd = new Random();
-        private int pending = -1, active = -1;
-        private LivingEntity locked;
+    /**
+     * Asks the brain, stands through the wind-up, fires. Holds MOVE and LOOK only while casting. 1.107.0: no longer final, so {@link TelegraphedAttackGoal} (the version that draws the warning, grants
+     * super armor and freezes its aim) can extend it; with {@code foundry.poise.telegraphedAttacks} off this class is used as it always was.
+     */
+    static class AbilityGoal extends Goal {
+        final FoundryMobEntity m;
+        final Random rnd = new Random();
+        int pending = -1, active = -1;
+        LivingEntity locked;
 
         AbilityGoal(FoundryMobEntity m) {
             this.m = m;
@@ -61,7 +65,7 @@ public final class FoundryGoals {
 
         @Override
         public boolean canUse() {
-            if (m.level().isClientSide || !m.isAlive() || m.casting() || !FoundryConfig.get(FoundryConfig.ABILITIES)) return false;
+            if (m.level().isClientSide || !m.isAlive() || m.casting() || PoiseSystem.staggered(m) || !FoundryConfig.get(FoundryConfig.ABILITIES)) return false;
             long now = m.tickCount;
             if (!m.brain().due(now)) return false;
             pending = m.brain().choose(now, false, FoundryAbilityRunner.situation(m), rnd);
@@ -126,7 +130,7 @@ public final class FoundryGoals {
         }
 
         @Override
-        public boolean canUse() { return !m.level().isClientSide && m.isAlive() && !m.casting() && m.style() == style && target() != null; }
+        public boolean canUse() { return !m.level().isClientSide && m.isAlive() && !m.casting() && !PoiseSystem.staggered(m) && m.style() == style && target() != null; }
 
         @Override
         public boolean canContinueToUse() { return canUse(); }
@@ -142,7 +146,7 @@ public final class FoundryGoals {
         /** One swing: the arm animation on the client, the damage on the server. */
         boolean strike(LivingEntity t, int every) {
             if (cooldown > 0 || m.distanceToSqr(t) > reachSqr(t) || !m.hasLineOfSight(t)) return false;
-            cooldown = every;
+            cooldown = PoiseSystem.scale(m, every);                        // 1.107.0: a desperate elite or captain swings faster
             m.swing(InteractionHand.MAIN_HAND);
             m.doHurtTarget(t);
             return true;
@@ -229,7 +233,7 @@ public final class FoundryGoals {
                 m.getMoveControl().strafe(0.0f, 0.5f * side);
             }
             if (sees && d <= a.far() + 2.0 && cooldown <= 0) {
-                cooldown = 36;
+                cooldown = PoiseSystem.scale(m, 36);
                 if (a.id().equals("archer")) FoundryAbilityRunner.shootArrow(m, t);
                 else FoundryAbilityRunner.shootBolt(m, t);
             }
@@ -244,7 +248,7 @@ public final class FoundryGoals {
         Support(FoundryMobEntity m) { super(m, FoundryArchetype.Style.SUPPORT); }
 
         @Override
-        public boolean canUse() { return !m.level().isClientSide && m.isAlive() && !m.casting() && m.style() == style && (target() != null || anchor() != null); }
+        public boolean canUse() { return !m.level().isClientSide && m.isAlive() && !m.casting() && !PoiseSystem.staggered(m) && m.style() == style && (target() != null || anchor() != null); }
 
         private FoundryMobEntity anchor() {
             if (--look <= 0 || (anchor != null && !anchor.isAlive())) {
@@ -394,7 +398,7 @@ public final class FoundryGoals {
 
         @Override
         public boolean canUse() {
-            if (m.level().isClientSide || !FoundryConfig.get(FoundryConfig.FACTION_WARS) || m.faction() == null || m.isMinion()) return false;
+            if (m.level().isClientSide || !com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.factionWarsRun() || m.faction() == null || m.isMinion()) return false;
             if (m.tickCount < next) return false;
             next = m.tickCount + FoundryConfig.get(FoundryConfig.WAR_SCAN_TICKS) + m.getRandom().nextInt(8);
             LivingEntity cur = m.getTarget();

@@ -106,7 +106,7 @@ final class TurfWarGoal extends TargetGoal {
 
     /** The nearest mob this one may go for right now, or null. */
     private LivingEntity look() {
-        if (!EcoConfig.get(EcoConfig.TURF_WARS) || !(self.level() instanceof ServerLevel level) || !Labyrinth.inMega(level)) return null;
+        if (!com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.turfWarsRun() || !(self.level() instanceof ServerLevel level) || !Labyrinth.inMega(level)) return null;       // 1.107.0: off while the dungeon is passive
         String own = FactionRegistry.factionOf(self.getType());
         if (own == null || !TurfEligibility.wild(self)) return null;
         FactionGraph graph = FactionRegistry.graph();
@@ -142,7 +142,7 @@ final class TurfWarGoal extends TargetGoal {
 
     /** The periodic re-check of a running hunt: still allowed, still a rival, no player close, not out of sight for too long. */
     private boolean stillWorthIt(LivingEntity v) {
-        if (!EcoConfig.get(EcoConfig.TURF_WARS) || !(self.level() instanceof ServerLevel level) || !Labyrinth.inMega(level) || playerNear(level)) return false;
+        if (!com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.turfWarsRun() || !(self.level() instanceof ServerLevel level) || !Labyrinth.inMega(level) || playerNear(level)) return false;
         String own = FactionRegistry.factionOf(self.getType()), other = FactionRegistry.factionOf(v.getType());
         if (own == null || other == null || !TurfEligibility.wild(self) || !(v instanceof Mob victimMob) || !TurfEligibility.wild(victimMob)) return false;
         FactionGraph graph = FactionRegistry.graph();

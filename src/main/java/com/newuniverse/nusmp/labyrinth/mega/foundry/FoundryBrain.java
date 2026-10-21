@@ -15,6 +15,8 @@ public final class FoundryBrain {
     private final long[] readyAt;
     private final int every;
     private long nextRoll;
+    /** 1.107.0: the attack-speed factor of the desperation phase (1.0 = the old rhythm exactly; above 1 the cooldowns and the roll interval shrink by it). */
+    private double pace = 1.0;
 
     public FoundryBrain(List<FoundryAbility> abilities, int every) {
         this.abilities = List.copyOf(abilities);
@@ -23,6 +25,27 @@ public final class FoundryBrain {
     }
 
     public List<FoundryAbility> abilities() { return abilities; }
+
+    /** 1.107.0: sets the attack-speed factor (clamped to 1..3: a brain never slows down). */
+    public void setPace(double p) { pace = Double.isNaN(p) ? 1.0 : Math.max(1.0, Math.min(3.0, p)); }
+
+    public double pace() { return pace; }
+
+    private int paced(int ticks) { return pace == 1.0 || ticks <= 1 ? ticks : Math.max(1, (int) Math.round(ticks / pace)); }
+
+    /** 1.107.0: takes over the cooldowns and the roll time of an older brain for every ability both have (matched by id), so a rebuilt brain does not forget what is cooling down. */
+    public void inherit(FoundryBrain old) {
+        if (old == null) return;
+        for (int i = 0; i < abilities.size(); i++) {
+            for (int j = 0; j < old.abilities.size(); j++) {
+                if (old.abilities.get(j).id().equals(abilities.get(i).id())) {
+                    readyAt[i] = old.readyAt[j];
+                    break;
+                }
+            }
+        }
+        nextRoll = old.nextRoll;
+    }
 
     /** Is a roll due? (The AI checks this first so it builds the situation, which asks the world questions, only when the answer can matter.) */
     public boolean due(long now) { return now >= nextRoll; }
@@ -35,7 +58,7 @@ public final class FoundryBrain {
 
     /** Starts the cooldown of an ability used at {@code now}. */
     public void used(int index, long now) {
-        if (index >= 0 && index < readyAt.length) readyAt[index] = now + abilities.get(index).cd();
+        if (index >= 0 && index < readyAt.length) readyAt[index] = now + paced(abilities.get(index).cd());
     }
 
     /**
@@ -44,7 +67,7 @@ public final class FoundryBrain {
      */
     public int choose(long now, boolean casting, FoundryAbility.Situation s, Random rnd) {
         if (casting || abilities.isEmpty() || now < nextRoll) return -1;
-        nextRoll = now + every;
+        nextRoll = now + paced(every);
         int n = abilities.size();
         int start = n == 1 ? 0 : rnd.nextInt(n);
         for (int k = 0; k < n; k++) {
