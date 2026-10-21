@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.111.0] — Relic pyramid rebalanced by ADDING relics (Millennium Items, 287 new Normal), franchise engravings, armour relics never invisible
+
+### NEW
+- **Relic count balance, nothing removed or regraded:** 356 new relics (Normal 9 -> 296, Special 96 -> 141, God 51 -> 60, Genesis 20 -> 35; Rare, Unique and Legend unchanged). Docs: `docs/relics/special_normal_a.md`, `normal_b.md`, `normal_c.md`, `god_special_new.md`, `genesis_new.md`.
+- **15 new Genesis relics:** the seven Millennium Items (Puzzle, Eye, Ring, Rod, Key, Scale, Necklace; wearing 3 to 7 together gives a set bonus) plus Ea, the Requiem Arrow, the Orbs of the Sage, the Hogyoku, the Seven Dragon Balls, Joy Boy's Straw Hat, the Law of Cycles Gown and the Greed Island Binder.
+- **9 new God and 20 new Special relics** (Zangetsu, Ruyi Bong, Susanoo plate, Stella bow, Hylian shield, Black Bulls robe ...); and 25 more Special relics in the first Normal wave..
+- **287 new Normal relics** (everyday gear and trinkets of 35 worlds, 18 simple weapons, each with its own 3D worn model, sprite, passive or act).
+- **Franchise engravings:** 69 custom engravings for 32 franchises (Black Clover, Magi, Fairy Tail, Shield Hero, Yu-Gi-Oh, DanMachi, Solo Leveling, Fate, FMA ...), applied once to every item of that world (915 items mapped), with a "Franchise" tooltip line, server config `nusmp-franchise-server.toml`, caps on every effect (`docs/items/franchise_engravings.md`).
+- **Armour relics can no longer be invisible:** failsafe boxes when nothing of a worn head, chest or feet relic was drawn, every armour texture painted on its own and re-checked after reloads, truthful `/multiverse relic debug` per armour relic, self-test `relic.armor_visible` (`docs/relics/armor_visible.md`).
+
+### KEPT
+- Every existing relic, grade, model and engraving; nothing was replaced.
+
+### NOTES
+- Wave104 and Wave102/105 had clashing ids; the Wave105 and Wave102 versions were kept and 4 duplicate Normal relics were dropped from Wave104 (116 instead of 120).
+
 ## [1.110.0] — Voices, white squares fixed for good, custom particles with lag limits, bigger daggers and katanas, vanilla-style shields, duel-disk decks, relic armour, one tooltip for every item
 
 ### NEW
