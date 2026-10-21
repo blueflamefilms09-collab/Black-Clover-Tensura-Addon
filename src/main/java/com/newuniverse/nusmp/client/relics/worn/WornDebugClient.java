@@ -79,6 +79,7 @@ public final class WornDebugClient {
             out.add(t("client_model", "     model library: %s", e == null ? "NO MODEL LOADED (resources missing or the catalog has no entry): plain boxes or a floating charm" : e.pieces.size() + " pieces, " + e.baseVerts + " vertices, tier " + e.tier));
             WornPlan.Item item = seen == null || seen.plan == null ? null : find(seen.plan, d.id());
             out.add(t("client_plan", "     last decision: %s", item == null ? "-" : item.describe()));
+            if (l.where() == Relics.Where.ARMOUR && d.slot().isArmor()) armourLines(out, target, d);
         }
         if (found.isEmpty()) out.add(t("client_none", "This client found no worn relic on the wearer."));
         for (String s : serverLines) {                                                      // the server's list against this client's
@@ -86,6 +87,19 @@ public final class WornDebugClient {
             if (p.length >= 3 && !clientHas.contains(p[0] + "|" + p[1])) out.add(t("missing", "The server sees %s (%s, %s) but this client did not find it: it is not drawn on this machine.", p[0], p[1], p[2].toLowerCase()));
         }
         send(out);
+    }
+
+    /** 1.111.0: what the worn layer really did for an armour relic in its last frame: slot, which armour layer was chosen, whether a model was drawn, whether the painted texture is there, what the failsafe did. */
+    private static void armourLines(List<Component> out, UUID target, RelicDef d) {
+        ArmorTrace.Rec r = ArmorTrace.of(target, d.slot().name());
+        out.add(t("armour_texture", "     armour slot %s: painted layer texture present: %s (%s registered; %s)", d.slot().name(), yes(RelicTextures.paintedOk(d.id())), RelicTextures.paintedCount(), RelicTextures.lastVerify()));
+        if (r == null || !r.id.equals(d.id())) {
+            out.add(t("armour_never", "     armour record: the worn layer has not finished a frame for this piece yet (or never ran for this wearer)"));
+            return;
+        }
+        out.add(t("armour_layer", "     vanilla armour layer chosen: %s (plan %s / %s); asked for the painted layer last frame: %s", r.layer, r.kind, r.why.text, yes(r.paintedAsked)));
+        out.add(t("armour_drawn", "     model drawn: %s (%s pieces); own renderer ran: %s", yes(r.modelPieces > 0), r.modelPieces, yes(r.customRan)));
+        out.add(t("armour_result", "     result: %s; failsafe boxes drawn: %s", r.outcome, yes(r.failsafeDrawn)));
     }
 
     private static WornPlan.Item find(WornPlan.Plan plan, String id) {

@@ -38,6 +38,82 @@ public final class RelicTextures {
         if (now != paintedUpgrade) registerAll();
     }
 
+    /** 1.111.0: the armour relics whose painted layer is known to be there (registered by {@link #registerAll}, or shipped as a PNG by a resource pack): the worn layer's failsafe asks it. */
+    private static final java.util.Set<String> PAINTED_OK = new java.util.HashSet<>();
+    /** The armour relics whose layer this class registered itself (what {@link #verify} checks for). */
+    private static final java.util.Set<String> OWN_LAYERS = new java.util.HashSet<>();
+    private static int generation, verifiedGeneration = -1, heals;
+    private static long nextCheck;
+    private static volatile String lastVerify = "not run yet";
+
+    /** Is the painted layer of this armour relic registered and known to be non-empty (or supplied by a resource pack)? */
+    public static boolean paintedOk(String relicId) { return PAINTED_OK.contains(relicId); }
+
+    /** How many relic layers are known to be there, how often {@link #verify} had to register again, and what the last check found (for {@code /multiverse relic debug}). */
+    public static int paintedCount() { return PAINTED_OK.size(); }
+
+    public static int healCount() { return heals; }
+
+    public static String lastVerify() { return lastVerify; }
+
+    /**
+     * 1.111.0: checks that the layers registered by {@link #registerAll} are really in the texture manager and not empty (a resource reload, a pack toggle or another mod's texture reset can
+     * drop dynamic textures), and registers everything again when one is not. The first check after every registration looks at the pixels; later ones only at the presence.
+     * Returns the number of layers that were missing or empty before the repair (0: fine).
+     */
+    public static int verify() {
+        if (!painted) return 0;
+        Minecraft mc = Minecraft.getInstance();
+        TextureManager tm = mc.getTextureManager();
+        boolean deep = verifiedGeneration != generation;
+        int bad = 0;
+        String first = "";
+        for (String id : OWN_LAYERS) {
+            net.minecraft.client.renderer.texture.AbstractTexture t = tm.getTexture(armorLayer(id, false), null);
+            boolean ok = t instanceof DynamicTexture;
+            if (ok && deep) {
+                NativeImage img = ((DynamicTexture) t).getPixels();
+                ok = img != null && hasVisiblePixel(img);
+            }
+            if (!ok) {
+                bad++;
+                if (first.isEmpty()) first = id;
+            }
+        }
+        verifiedGeneration = generation;
+        if (bad > 0) {
+            heals++;
+            lastVerify = bad + " armour layer(s) were missing or empty (first: " + first + "); painted again (repair " + heals + ")";
+            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] {}", lastVerify);
+            registerAll();
+            verifiedGeneration = generation;
+        } else {
+            lastVerify = OWN_LAYERS.size() + " armour layers present" + (deep ? " and not empty" : "");
+        }
+        return bad;
+    }
+
+    private static boolean hasVisiblePixel(NativeImage img) {
+        for (int y = 0; y < img.getHeight(); y++) for (int x = 0; x < img.getWidth(); x++) if ((img.getPixelRGBA(x, y) >>> 24) != 0) return true;
+        return false;
+    }
+
+    /** Game bus, once per client tick: the first check as soon as a world is open after a (re)registration, then one every ten seconds; at most six repairs per session so a broken texture manager cannot loop. */
+    public static void onClientTick() {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || !painted) return;
+        long now = mc.level.getGameTime();
+        if (verifiedGeneration == generation && now < nextCheck) return;
+        nextCheck = now + 200;
+        if (heals >= 6) return;
+        try {
+            verify();
+        } catch (RuntimeException | LinkageError failed) {
+            lastVerify = "the check failed: " + failed;
+            com.mojang.logging.LogUtils.getLogger().error("[nusmp] the armour layer check failed", failed);
+        }
+    }
+
     /** The ids of the armour relics whose glow channel is registered (drawn by the worn layer over the armour). */
     private static final java.util.Set<String> GLOW = new java.util.HashSet<>();
 
@@ -70,21 +146,43 @@ public final class RelicTextures {
             com.newuniverse.nusmp.client.relics.worn.lib.WornModels.clear();                   // the catalog decides below which armour boxes a 3D model replaces
             com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary.clear();
             GLOW.clear();
+            PAINTED_OK.clear();
+            OWN_LAYERS.clear();
             for (RelicDef d : Relics.all()) {
                 if (!d.slot().isArmor() || d.isAdopted()) continue;
                 ResourceLocation outer = armorLayer(d.id(), false);
-                if (mc.getResourceManager().getResource(outer).isPresent()) continue;      // an artist's PNG wins
+                if (mc.getResourceManager().getResource(outer).isPresent()) { PAINTED_OK.add(d.id()); continue; }      // an artist's PNG wins
                 // 1.110.0: the painted layer is ALWAYS registered (it used to be a blank texture when a 3D model was expected to replace it, so a model that was not drawn left the body bare).
                 // Whether the vanilla armour layer draws it or an empty model is decided on every frame ({@code ArmorSlotPlan}, {@code ArmorSlotClient}).
-                int[] argb = v2 ? ArmorPainterV2.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
-                        : ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
-                int[] glowPx = v2 ? ArmorPainterV2.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
-                        : ArmorPainter.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
-                tm.register(outer, new DynamicTexture(image(argb)));
-                tm.register(armorLayer(d.id(), true), new DynamicTexture(image(argb)));
-                tm.register(armorGlow(d.id()), new DynamicTexture(image(glowPx)));
-                GLOW.add(d.id());
+                // 1.111.0: every relic is painted on its own: one that fails (or paints nothing) gets a plain layer in its colours and the others are still registered
+                // (before, the first failure ended the loop and every relic after it had no texture at all).
+                try {
+                    int[] argb = v2 ? ArmorPainterV2.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
+                            : ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
+                    if (!com.newuniverse.nusmp.client.relics.worn.ArmorVisible.nonEmpty(argb)) throw new IllegalStateException("the painter returned a fully transparent layer");
+                    int[] glowPx = v2 ? ArmorPainterV2.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode())
+                            : ArmorPainter.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
+                    tm.register(outer, new DynamicTexture(image(argb)));
+                    tm.register(armorLayer(d.id(), true), new DynamicTexture(image(argb)));
+                    tm.register(armorGlow(d.id()), new DynamicTexture(image(glowPx)));
+                    GLOW.add(d.id());
+                    OWN_LAYERS.add(d.id());
+                    PAINTED_OK.add(d.id());
+                } catch (RuntimeException | LinkageError failed) {
+                    com.mojang.logging.LogUtils.getLogger().error("[nusmp] the armour layer of relic {} could not be painted; a plain layer in its colours is used", d.id(), failed);
+                    try {
+                        int[] plain = com.newuniverse.nusmp.client.relics.worn.ArmorVisible.solidLayer(d.paletteMain(), d.paletteTrim());
+                        tm.register(outer, new DynamicTexture(image(plain)));
+                        tm.register(armorLayer(d.id(), true), new DynamicTexture(image(plain)));
+                        OWN_LAYERS.add(d.id());
+                        PAINTED_OK.add(d.id());
+                    } catch (RuntimeException | LinkageError worse) {
+                        com.mojang.logging.LogUtils.getLogger().error("[nusmp] not even the plain armour layer of relic {} could be registered", d.id(), worse);
+                    }
+                }
             }
+            generation++;
+            verifiedGeneration = -1;
             paintedUpgrade = v2;
             painted = true;
         } catch (RuntimeException | LinkageError failed) {

@@ -23,6 +23,8 @@ public final class WornTrace {
         public WornPlan.View view = WornPlan.View.OTHER;
         /** How many worn relics the layer found, and how many of them it drew (library, boxes, charms, own renderers). */
         public int found, drawn;
+        /** 1.111.0: how many relics the plan meant to draw ({@link #drawn} is what really was drawn, where the layer reports it). */
+        public int planned;
         /** The last plan (null when the wearer had no relic at all). */
         public WornPlan.Plan plan;
         /** Ensembles handed to the model library on the last frame (relics and the mod's own armour). */
@@ -46,8 +48,19 @@ public final class WornTrace {
         s.view = view;
         s.found = found;
         s.plan = plan;
-        s.drawn = plan == null ? 0 : plan.drawnCount();
+        s.planned = plan == null ? 0 : plan.drawnCount();
+        s.drawn = s.planned;
         s.ensembles = ensembles;
+    }
+
+    /**
+     * 1.111.0: the same, with the number of things REALLY drawn this frame (models with at least one piece, plain boxes, own renderers that ran, charms) in place of the planned count:
+     * {@code Seen.drawn} was the plan's count of relics it meant to draw, which says nothing about what reached the screen; {@code Seen.planned} keeps that number.
+     */
+    public static void reached(UUID wearer, long tick, String layer, boolean slim, WornPlan.View view, int found, WornPlan.Plan plan, int ensembles, int drawnReal) {
+        reached(wearer, tick, layer, slim, view, found, plan, ensembles);
+        Seen s = SEEN.get(wearer);
+        if (s != null) s.drawn = drawnReal;
     }
 
     /** What was last recorded for this wearer, or null if the layer never ran for it. */

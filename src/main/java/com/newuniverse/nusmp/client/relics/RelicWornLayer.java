@@ -6,6 +6,8 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import com.newuniverse.nusmp.client.relics.worn.ArmorSlotPlan;
+import com.newuniverse.nusmp.client.relics.worn.ArmorTrace;
+import com.newuniverse.nusmp.client.relics.worn.ArmorVisible;
 import com.newuniverse.nusmp.client.relics.worn.WornCtx;
 import com.newuniverse.nusmp.client.relics.worn.WornExec;
 import com.newuniverse.nusmp.client.relics.worn.WornPlan;
@@ -36,7 +38,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.PlayerSkin;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Draws the relics a player wears. Three tiers, best first:
@@ -99,6 +103,8 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         List<WornPlan.Entry> entries = WornExec.entries(found, flags, true);
         WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(slim, view, false, false, far, models, hideArmour, WornPlan.Fallback.BOXES), entries);
         PlayerModel<AbstractClientPlayer> model = getParentModel();
+        WornLibDraw.resetDrawRecord();                                                 // 1.111.0: from here on the library records what it really draws, for the armour failsafe below
+        CUSTOM_RAN.clear();
         if (!plan.isEmpty()) {
             VertexConsumer vc = null;
             for (WornPlan.Item it : plan.plain()) {                                    // the old plain boxes: a Curios relic the library cannot dress, or every relic with relicfx.models off
@@ -115,7 +121,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
                 else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine, pl);
             }
             WornExec.collect(plan, found, ENSEMBLES);                                  // the library models and the floating charms, best grade first
-            WornExec.draw(ENSEMBLES, pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, plan.armInset());
+            drawEnsembles(pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, plan.armInset());
             for (WornPlan.Item it : plan.all()) {                                      // the emissive pass of the painted armour boxes
                 Relics.Located l = found.get(it.index());
                 RelicDef d = l.def();
@@ -125,10 +131,115 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             boolean first = view == WornPlan.View.SELF_FIRST;
             for (WornPlan.Item it : plan.custom()) drawCustom(found.get(it.index()), pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first);
         } else if (!ENSEMBLES.isEmpty()) {                                             // only the mod's own armour pieces
-            WornExec.draw(ENSEMBLES, pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, plan.armInset());
+            drawEnsembles(pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, plan.armInset());
         }
-        WornTrace.reached(p.getUUID(), now, "player", slim, view, found.size(), plan, ENSEMBLES.size());
+        int rescued = armourFailsafe(pose, buffers, light, model, p, now, found, plan);   // 1.111.0: an armour relic is never invisible: if nothing of it was drawn by any path, its plain painted boxes are
+        WornTrace.reached(p.getUUID(), now, "player", slim, view, found.size(), plan, ENSEMBLES.size(), WornLibDraw.setsDrawn() + CUSTOM_RAN.size() + plan.plain().size() + rescued);
         ENSEMBLES.clear();
+    }
+
+    /** The relics whose own renderer ran without an error in the frame being drawn (the render thread draws one wearer at a time), and those whose renderer failed once (switched off for the session). */
+    private static final Set<String> CUSTOM_RAN = new HashSet<>(), CUSTOM_FAILED = new HashSet<>();
+    private static final Set<String> DRAW_FAILED = new HashSet<>();
+    /** Vanilla's plain white, for the failsafe boxes: it exists in every game, even when this mod's own white pixel was never registered. */
+    private static final net.minecraft.resources.ResourceLocation PLAIN = net.minecraft.resources.ResourceLocation.withDefaultNamespace("textures/misc/white.png");
+
+    /** The model library's draw, with the pose stack put back and the error logged (once) if it throws: what it did not draw is then caught by {@link #armourFailsafe}. */
+    private static void drawEnsembles(PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<AbstractClientPlayer> model, boolean crouching, double distSq, float age, float limb, float armInset) {
+        PoseStack.Pose before = pose.last();
+        try {
+            WornExec.draw(ENSEMBLES, pose, buffers, light, model, crouching, distSq, age, limb, armInset);
+        } catch (RuntimeException | LinkageError failed) {
+            for (int i = 0; i < 32 && pose.last() != before; i++) pose.popPose();
+            if (DRAW_FAILED.add(failed.getClass().getName())) LogUtils.getLogger().error("[nusmp] the worn model library threw while drawing a player; the armour relics fall back to their painted boxes", failed);
+        }
+    }
+
+    /**
+     * The last resort. After the plan has been carried out, every armour relic (head, chest, feet) of this wearer is checked against what was REALLY drawn this frame: model pieces by the
+     * library, an own renderer that ran, or the painted layer of the vanilla armour layer (asked for it by the item's armour-model hook, and its texture is registered and not empty).
+     * If none of these happened and the player did not switch armour visuals off, the plain painted boxes of the relic's palette are drawn here, and one warning per relic is logged.
+     */
+    private static int armourFailsafe(PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<AbstractClientPlayer> model, AbstractClientPlayer p, long now,
+                                      List<Relics.Located> found, WornPlan.Plan plan) {
+        VertexConsumer vc = null;
+        int rescued = 0;
+        for (WornPlan.Item it : plan.all()) {
+            Relics.Located l = found.get(it.index());
+            RelicDef d = l.def();
+            if (l.where() != Relics.Where.ARMOUR || !d.slot().isArmor()) continue;
+            String slot = d.slot().name();
+            ArmorSlotPlan.Verdict v = ArmorSlotPlan.of(it);
+            boolean asked = ArmorTrace.takePainted(p.getUUID(), slot);
+            boolean tex = RelicTextures.paintedOk(d.id());
+            ArmorVisible.Facts facts = new ArmorVisible.Facts(WornLibDraw.piecesDrawn(d.id()), CUSTOM_RAN.contains(d.id()), asked, tex, d.slot() == RelicSlot.CHEST);
+            ArmorVisible.Outcome o = ArmorVisible.resolve(v, facts);
+            ArmorTrace.Rec r = ArmorTrace.rec(p.getUUID(), slot);
+            r.id = d.id();
+            r.slot = slot;
+            r.kind = it.kind();
+            r.why = it.why();
+            r.layer = v.layer();
+            r.modelPieces = facts.modelPieces();
+            r.customRan = facts.customRan();
+            r.paintedAsked = asked;
+            r.textureOk = tex;
+            r.outcome = o;
+            r.tick = now;
+            r.failsafeDrawn = false;
+            if (o != ArmorVisible.Outcome.FAILSAFE) continue;
+            if (vc == null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(PLAIN));
+            try {
+                failsafeBoxes(pose, vc, light, model, d);
+                r.failsafeDrawn = true;
+                rescued++;
+            } catch (RuntimeException | LinkageError failed) {
+                LogUtils.getLogger().error("[nusmp] even the plain boxes of armour relic {} could not be drawn", d.id(), failed);
+            }
+            if (ArmorTrace.firstWarning(d.id()))
+                LogUtils.getLogger().warn("[nusmp] armour relic {} ({}) was worn but nothing of it was drawn (model pieces {}, own renderer {}, vanilla layer asked {}, painted texture {}; plan {} / {}): its plain painted boxes are drawn instead",
+                        d.id(), slot, facts.modelPieces(), facts.customRan(), asked, tex, it.kind(), it.why());
+        }
+        return rescued;
+    }
+
+    /** The plain painted look of an armour relic: a head box, a body with sleeves, or boots, in the palette of the relic, a little inside the vanilla armour layer so it never fights a layer that is there. */
+    private static void failsafeBoxes(PoseStack pose, VertexConsumer vc, int light, PlayerModel<AbstractClientPlayer> model, RelicDef d) {
+        int main = d.paletteMain(), trim = d.paletteTrim(), glow = d.paletteGlow();
+        RelicSlot slot = d.slot();
+        if (slot == RelicSlot.HEAD) {
+            pose.pushPose();
+            model.head.translateAndRotate(pose);
+            PoseStack.Pose q = pose.last();
+            Boxes.box(q, vc, light, -4.6f, -8.6f, -4.6f, 4.6f, 0.6f, 4.6f, main);              // the helm
+            Boxes.box(q, vc, light, -4.7f, -5.2f, -4.7f, 4.7f, -3.9f, 4.7f, trim);              // the band
+            Boxes.box(q, vc, FULL, -0.7f, -5.0f, -4.85f, 0.7f, -4.1f, -4.6f, glow);            // the stone at the brow
+            pose.popPose();
+        } else if (slot == RelicSlot.FEET) {
+            for (ModelPart leg : new ModelPart[]{model.rightLeg, model.leftLeg}) {
+                pose.pushPose();
+                leg.translateAndRotate(pose);
+                PoseStack.Pose q = pose.last();
+                Boxes.box(q, vc, light, -2.6f, 6.9f, -2.6f, 2.6f, 12.6f, 2.6f, main);          // the boot
+                Boxes.box(q, vc, light, -2.7f, 6.7f, -2.7f, 2.7f, 7.7f, 2.7f, trim);           // the cuff
+                pose.popPose();
+            }
+        } else {
+            pose.pushPose();
+            model.body.translateAndRotate(pose);
+            PoseStack.Pose q = pose.last();
+            Boxes.box(q, vc, light, -4.6f, -0.6f, -2.6f, 4.6f, 12.6f, 2.6f, main);             // the chest piece
+            Boxes.box(q, vc, light, -4.7f, 10.2f, -2.7f, 4.7f, 11.4f, 2.7f, trim);             // the hem band
+            Boxes.box(q, vc, FULL, -0.8f, 2.6f, -2.8f, 0.8f, 4.2f, -2.6f, glow);              // the stone at the breast
+            pose.popPose();
+            for (ModelPart arm : new ModelPart[]{model.rightArm, model.leftArm}) {
+                pose.pushPose();
+                arm.translateAndRotate(pose);
+                PoseStack.Pose a = pose.last();
+                Boxes.box(a, vc, light, -3.6f, -2.6f, -2.6f, 3.6f, 5.6f, 2.6f, main);          // the sleeve (a slim arm is a little narrower: the box covers both)
+                pose.popPose();
+            }
+        }
     }
 
     /** Best grade first, ties by id, so the order is the same every frame. */
@@ -166,7 +277,9 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         PoseStack.Pose before = pose.last();
         try {
             r.render(new WornCtx(w.stack(), pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first));
+            if (!CUSTOM_FAILED.contains(id)) CUSTOM_RAN.add(id);                       // 1.111.0: it ran without an error: a fact for the armour failsafe
         } catch (RuntimeException | LinkageError failed) {
+            CUSTOM_FAILED.add(id);
             for (int i = 0; i < 16 && pose.last() != before; i++) pose.popPose();
             WornRenderers.register(id, c -> { });                                      // draw nothing for this relic from now on
             LogUtils.getLogger().error("[nusmp] worn renderer of {} failed and is switched off", id, failed);

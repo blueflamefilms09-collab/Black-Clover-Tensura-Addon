@@ -45,7 +45,8 @@ public final class ArmorSlotPlan {
     /** The answer for one armour relic worn in {@code slot} ("HEAD", "CHEST", "FEET") in the given circumstances. */
     public static Verdict decide(String slot, boolean hasModel, boolean custom, boolean modelsOption, boolean hideArmourOption, WornPlan.View view, boolean tooFar) {
         WornPlan.Entry e = new WornPlan.Entry("armour_relic", slot, "", WornPlan.Source.ARMOUR, null, custom, hasModel, 3);
-        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(false, view, false, false, tooFar, modelsOption, hideArmourOption, WornPlan.Fallback.BOXES), List.of(e));
+        // 1.111.0: the player's switch is obeyed at any distance (a far wearer used to get the painted layer back, because "too far" outranks every other reason in the plan)
+        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(false, view, false, false, tooFar && !hideArmourOption, modelsOption, hideArmourOption, WornPlan.Fallback.BOXES), List.of(e));
         return of(plan.all().get(0));
     }
 }

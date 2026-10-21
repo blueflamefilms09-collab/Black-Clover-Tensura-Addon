@@ -68,6 +68,28 @@ public final class WornLibDraw {
     /** The vertices an upgraded relic may cost the budget of the effects at most: the old per-ensemble cap, so a big upgraded model does not starve the effects of its wearer's other relics. */
     private static final int LEGACY_BUDGET = UpgradeCaps.LEGACY_ENSEMBLE_VERTICES;
     private static final WornFxPlan[] PLAN_OF = new WornFxPlan[MAX_SETS];
+    /** 1.111.0: what the last {@link #draw} call really drew: the id of each ensemble and how many of its pieces went into the solid pass (a plan says what should be drawn, this says what was). */
+    private static final int[] RECORD_AT = new int[MAX_SETS];
+    private static final String[] DREW_ID = new String[MAX_SETS];
+    private static final int[] DREW_PIECES = new int[MAX_SETS];
+    private static int drewSets;
+
+    /** Forgets what the last draw call drew (the worn layer calls it before it draws a wearer, so an old frame never counts for a new one). */
+    public static void resetDrawRecord() { drewSets = 0; }
+
+    /** How many ensembles of the draw calls since {@link #resetDrawRecord} had at least one piece really drawn. */
+    public static int setsDrawn() {
+        int n = 0;
+        for (int i = 0; i < drewSets; i++) if (DREW_PIECES[i] > 0) n++;
+        return n;
+    }
+
+    /** How many pieces of the ensemble with this id the last draw call(s) since {@link #resetDrawRecord} really drew (0: none, or it was not given). */
+    public static int piecesDrawn(String ensembleId) {
+        int total = 0;
+        for (int i = 0; i < drewSets; i++) if (DREW_ID[i].equals(ensembleId)) total += DREW_PIECES[i];
+        return total;
+    }
     private static final WornFxPlan[][][] PLANS = new WornFxPlan[8][FxQuality.values().length][2];
     private static final Matrix4f SM = new Matrix4f();
     private static final Matrix3f SN = new Matrix3f();
@@ -141,6 +163,13 @@ public final class WornLibDraw {
             EXTRA[i] += PLAN_OF[i].fxVertices();
             ranked++;
         }
+        for (int i = 0; i < n; i++) {                                                         // 1.111.0: the record starts empty for these sets; pass 1 counts into it
+            RECORD_AT[i] = -1;
+            if (drewSets >= MAX_SETS) continue;
+            DREW_ID[drewSets] = sets.get(i).id;
+            DREW_PIECES[drewSets] = 0;
+            RECORD_AT[i] = drewSets++;
+        }
         int models = 0;
         for (int i = 0; i < n; i++) models += BUDGET_BASE[i];
         WornBudget.allocate(BUDGET_BASE, EXTRA, n, Math.max(q.vertexCap, models), DRAWN, EXTRAS);      // every relic's model is always drawn (none hides another); only the extras are budgeted
@@ -183,6 +212,7 @@ public final class WornLibDraw {
                     s.mirror ^= pl.mirror();
                 }
                 solid(vc, s, light, age, limb, crouching);
+                if (RECORD_AT[i] >= 0 && RECORD_AT[i] < MAX_SETS) DREW_PIECES[RECORD_AT[i]]++;
             }
         }
         if (used == 0) return;

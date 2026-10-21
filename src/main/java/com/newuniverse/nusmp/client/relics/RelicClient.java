@@ -39,6 +39,7 @@ public final class RelicClient {
         modBus.addListener((RegisterGuiLayersEvent e) ->
                 e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_hud"), (graphics, delta) -> RelicActKeys.renderHud(graphics)));
         NeoForge.EVENT_BUS.addListener(RelicActKeys::onClientTick);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.client.event.ClientTickEvent.Post e) -> RelicTextures.onClientTick());      // 1.111.0: the painted armour layers are checked at the first world frame and every ten seconds, and painted again when one is gone
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.worn.WornDebugCommand::register);          // 1.110.0: /nusmp debug worn
@@ -49,6 +50,7 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             RelicClientState.clear();
             com.newuniverse.nusmp.client.relics.worn.WornCues.clear();
+            com.newuniverse.nusmp.client.relics.worn.ArmorTrace.clear();                   // 1.111.0: what was really drawn for the armour relics
             com.newuniverse.nusmp.client.relics.worn.WornTrace.clear();                    // 1.99.0: what the worn layer last did, and what the server said wearers carry
             com.newuniverse.nusmp.relics.WornSync.clearClient();
             Relics.clearCaches();

@@ -26,5 +26,10 @@
   "message.nusmp.relic_debug.stale": "Layer last reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s): the wearer is not being drawn right now",
   "message.nusmp.relic_debug.sync": "Server lists received: %s (last %s ms ago)",
   "message.nusmp.relic_debug.textures": "Worn texture atlas in the jar: %s, shimmer: %s; catalog: %s",
-  "message.nusmp.relic_debug.title": "Worn relics of %s (server view)"
+  "message.nusmp.relic_debug.title": "Worn relics of %s (server view)",
+  "message.nusmp.relic_debug.armour_texture": "     armour slot %s: painted layer texture present: %s (%s registered; %s)",
+  "message.nusmp.relic_debug.armour_never": "     armour record: the worn layer has not finished a frame for this piece yet (or never ran for this wearer)",
+  "message.nusmp.relic_debug.armour_layer": "     vanilla armour layer chosen: %s (plan %s / %s); asked for the painted layer last frame: %s",
+  "message.nusmp.relic_debug.armour_drawn": "     model drawn: %s (%s pieces); own renderer ran: %s",
+  "message.nusmp.relic_debug.armour_result": "     result: %s; failsafe boxes drawn: %s"
 }
