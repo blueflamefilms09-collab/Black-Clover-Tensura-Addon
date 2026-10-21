@@ -544,5 +544,13 @@
  "written_consent": {
   "extent": 0.6,
   "note": "1.34.0: item 0.33 -> 0.60"
+ },
+ "delvers_pickaxe": {
+  "flip_x": true,
+  "note": "1.111.0: head faced the player, baked mirrored so the runtime normaliser has nothing to do"
+ },
+ "hunter_exam_machete": {
+  "flip_x": true,
+  "note": "1.111.0: head faced the player, baked mirrored so the runtime normaliser has nothing to do"
  }
 }

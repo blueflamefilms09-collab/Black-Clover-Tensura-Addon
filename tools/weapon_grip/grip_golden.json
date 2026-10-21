@@ -1,4 +1,12 @@
 {
+ "ackerman_twin_blades": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.83,
+  "z": 1.363
+ },
  "adventurers_handaxe": {
   "class": "handaxe",
   "fraction": 0.29,
@@ -29,6 +37,14 @@
   "source": "directive",
   "x": 0.0,
   "y": 8.887,
+  "z": 0.0
+ },
+ "anneal_blade": {
+  "class": "shortsword",
+  "fraction": 0.131,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.856,
   "z": 0.0
  },
  "anti_bird_charm": {
@@ -62,6 +78,38 @@
   "x": -0.001,
   "y": 7.581,
   "z": 0.0
+ },
+ "arashs_stella_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 12.15,
+  "y": 0.0,
+  "z": 0.796
+ },
+ "arashs_stella_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 22.35,
+  "y": 0.0,
+  "z": 1.122
+ },
+ "arashs_stella_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 7.5,
+  "y": 0.0,
+  "z": 1.122
+ },
+ "arashs_stella_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.75,
+  "y": 0.0,
+  "z": 1.122
  },
  "aries_key": {
   "class": "handitem",
@@ -1311,6 +1359,14 @@
   "y": 18.825,
   "z": 0.0
  },
+ "ea_sword_of_rupture": {
+  "class": "longsword",
+  "fraction": 0.108,
+  "source": "directive",
+  "x": 0.0,
+  "y": 11.594,
+  "z": 0.0
+ },
  "east_blue_cutlass": {
   "class": "sabre",
   "fraction": 0.147,
@@ -1389,6 +1445,14 @@
   "source": "handle",
   "x": 0.0,
   "y": 10.781,
+  "z": 0.0
+ },
+ "explosion_wizards_staff": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -1.775,
+  "y": 79.827,
   "z": 0.0
  },
  "fairy_glitter_gauntlets": {
@@ -1659,9 +1723,17 @@
   "class": "cleaver",
   "fraction": 0.133,
   "source": "directive",
-  "x": 0.0,
+  "x": 0.044,
   "y": 12.281,
   "z": 0.0
+ },
+ "hylian_hero_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -2.675,
+  "z": 2.275
  },
  "hyperborean_crossbow": {
   "class": "crossbow",
@@ -2079,6 +2151,14 @@
   "y": -8.888,
   "z": 0.0
  },
+ "millennium_rod": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": -0.026,
+  "y": 88.28,
+  "z": 0.026
+ },
  "minotaur_kings_labrys": {
   "class": "battleaxe",
   "fraction": 0.277,
@@ -2093,6 +2173,14 @@
   "source": "directive",
   "x": 0.0,
   "y": 20.608,
+  "z": 0.0
+ },
+ "moonfang_zangetsu": {
+  "class": "greatsword",
+  "fraction": 0.286,
+  "source": "directive",
+  "x": 0.0,
+  "y": 24.301,
   "z": 0.0
  },
  "mountainguards_greataxe": {
@@ -2351,6 +2439,22 @@
   "y": 17.197,
   "z": 0.0
  },
+ "rems_morning_star": {
+  "class": "club",
+  "fraction": 0.214,
+  "source": "directive",
+  "x": 0.0,
+  "y": 20.674,
+  "z": 0.0
+ },
+ "requiem_stand_arrow": {
+  "class": "dagger",
+  "fraction": 0.455,
+  "source": "directive",
+  "x": 0.009,
+  "y": 26.812,
+  "z": 0.018
+ },
  "returning_hand_axe": {
   "class": "handaxe",
   "fraction": 0.25,
@@ -2390,6 +2494,14 @@
   "x": 0.565,
   "y": 50.734,
   "z": 0.492
+ },
+ "ruyi_power_pole": {
+  "class": "staff",
+  "fraction": 0.4,
+  "source": "class",
+  "x": 2.5,
+  "y": 85.12,
+  "z": -0.6
  },
  "sagittarius_key": {
   "class": "handitem",
@@ -2911,6 +3023,14 @@
   "y": 9.905,
   "z": 0.0
  },
+ "sz/requiem_stand_arrow": {
+  "class": "dagger",
+  "fraction": 0.455,
+  "source": "directive",
+  "x": 0.017,
+  "y": 26.812,
+  "z": 0.018
+ },
  "sz/selection_hopefuls_bokken": {
   "class": "katana",
   "fraction": 0.165,
@@ -3142,6 +3262,14 @@
   "x": -0.002,
   "y": 5.781,
   "z": 0.009
+ },
+ "thorn_princess_stiletto": {
+  "class": "dagger",
+  "fraction": 0.161,
+  "source": "directive",
+  "x": 0.0,
+  "y": 11.237,
+  "z": -0.036
  },
  "thornblight": {
   "class": "handaxe",
