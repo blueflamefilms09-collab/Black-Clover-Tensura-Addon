@@ -40,6 +40,14 @@ public final class ArmorSlotClient {
     /** True when the painted layer of this relic must not be drawn (a model, an own renderer or the player's switch stands in for it). */
     public static boolean hidesPainted(LivingEntity wearer, ItemStack stack, EquipmentSlot slot) {
         ArmorSlotPlan.Verdict v = verdict(wearer, stack, slot);
-        return v != null && v.layer() == ArmorSlotPlan.Layer.EMPTY;
+        boolean hides = v != null && v.layer() == ArmorSlotPlan.Layer.EMPTY;
+        if (v != null && !hides) {                                                    // 1.111.0: a fact for the failsafe of the worn layer: the vanilla layer is about to draw the painted layer of this piece
+            try {
+                com.newuniverse.nusmp.client.relics.worn.ArmorTrace.markPainted(wearer.getUUID(), ((RelicBearer) stack.getItem()).relic().slot().name());
+            } catch (RuntimeException ignored) {
+                // the record is only a witness
+            }
+        }
+        return hides;
     }
 }

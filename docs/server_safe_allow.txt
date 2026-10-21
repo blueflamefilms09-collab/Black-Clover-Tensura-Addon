@@ -33,6 +33,7 @@ mana/zone/ManaZoneNet.java
 multiverse/MultiverseSync.java
 particle/fx/Fx.java
 relics/ArmorSlotSelfTests.java
+relics/ArmorVisibleSelfTests.java
 relics/GradeDamage.java
 relics/RelicHolderSync.java
 relics/RelicPayloads.java
