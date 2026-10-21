@@ -30,3 +30,8 @@
 
 Build: `gradlew.bat build` (JDK 21) -> `build/libs/multiverse-of-anime-<version>.jar`.
 Preview VFX without the game: `python tools/vfx_preview/preview.py`.
+9. **Always keep the mod multiplayer- and server-friendly.** Everything must work on a dedicated server and with several players at once: all game state and rules are decided on the server
+   (client code only draws and asks); never touch client-only classes (`net.minecraft.client`, `com.mojang.blaze3d`, `com.newuniverse.nusmp.client`) from common code except behind a side check or a
+   client-only holder class; per-player state is keyed by player UUID, never a static "current player"; no `Minecraft.getInstance()` outside `client/`; settings that change gameplay are SERVER
+   configs, settings that only change looks are CLIENT configs; every new packet validates its data and its sender on the server; effects are sent to nearby players only and go through the perf budgets;
+   new work is covered by the CI server smoke test (`SelfTests`). `ServerSafetyTest` guards the client-class rule (allow-list `docs/server_safe_allow.txt`).
