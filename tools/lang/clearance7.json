@@ -1,0 +1,9 @@
+{
+  "nusmp.mega.clearance7.status": "7x7 clearance: switch gen.clearance7 is %s (invisible ceiling lights %s). Since the server started the placer cut %s pieces: %s blocks removed, %s left standing (chests and mechanisms), %s roof blocks, %s light blocks, %s Way Onward seals opened wide.",
+  "nusmp.mega.clearance7.none": "No such sector, or the Mega-Dungeon is not loaded.",
+  "nusmp.mega.clearance7.unfinished": "Sector %s is not finished yet.",
+  "nusmp.mega.clearance7.old": "Sector %s was finished before the 7x7 clearance, or with the switch off: regenerate it to cut it.",
+  "nusmp.mega.clearance7.noplan": "Sector %s cannot be planned again: %s",
+  "nusmp.mega.clearance7.good": "Sector %s: the %s pieces read in the world are all at least 7x7.",
+  "nusmp.mega.clearance7.bad": "Sector %s: below 7x7: %s"
+}

@@ -83,6 +83,7 @@ public final class MegaCommand {
         root.then(Commands.literal("rooms").executes(ctx -> rooms(ctx.getSource(), -1))
                 .then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> rooms(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("pools").executes(ctx -> pools(ctx.getSource())));
+        root.then(ClearanceCommand.node());                           // 1.107.0: /multiverse mega clearance [sector]
         return root;
     }
 
@@ -263,7 +264,7 @@ public final class MegaCommand {
         SectorGenerator.Planned planned = SectorGenerator.plan(level, data, s);
         if (!planned.ok()) return no(src, "verify " + s.id + " FAIL: the sector cannot be planned: " + planned.failure());
         SectorGenerator.Built built = SectorGenerator.build(level, planned);
-        GeometryCheck.Report r = GeometryCheck.run(level, built, world);
+        GeometryCheck.Report r = GeometryCheck.run(level, built, world, world > 0 && ClearanceCarver.wasCut(server, s.id));
         List<String> failures = new ArrayList<>(r.failures());
         int roomsPlanned = planned.result().rooms().size();
         if (world > 0 && roomsPlanned != s.rooms.size()) {
