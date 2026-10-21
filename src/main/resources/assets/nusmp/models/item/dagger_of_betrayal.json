@@ -47,13 +47,13 @@
       ],
       "translation": [
         1.13,
-        3.2,
-        1.13
+        1.95,
+        0.26
       ],
       "scale": [
-        0.68,
-        0.68,
-        0.68
+        0.775,
+        0.775,
+        0.775
       ]
     },
     "firstperson_lefthand": {
@@ -64,13 +64,13 @@
       ],
       "translation": [
         1.13,
-        3.2,
-        1.13
+        1.95,
+        0.26
       ],
       "scale": [
-        0.68,
-        0.68,
-        0.68
+        0.775,
+        0.775,
+        0.775
       ]
     },
     "ground": {
@@ -141,5 +141,9 @@
         1
       ]
     }
+  },
+  "nusmp_weapon_sizes": {
+    "first_person_scale": 0.775,
+    "rule": "tools/relics/weapon_sizes.py"
   }
 }

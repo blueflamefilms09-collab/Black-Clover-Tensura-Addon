@@ -98,7 +98,7 @@ public final class VuRenderer {
     private static Entry load(String meshId) {
         try {
             Minecraft mc = Minecraft.getInstance();
-            Optional<Resource> res = mc.getResourceManager().getResource(rl("weapon_meshes_vu/" + meshId + ".txt"));
+            Optional<Resource> res = sized(mc, "weapon_meshes_vu/" + meshId + ".txt");             // 1.110.0: the thickened copy of a dagger / katana mesh when there is one
             if (res.isEmpty()) return null;
             Entry e = new Entry();
             try (BufferedReader in = res.get().openAsReader()) { e.mesh = VuMesh.parse(in); }
@@ -119,7 +119,7 @@ public final class VuRenderer {
             e.turn = new Quaternionf(Axis.ZP.rotationDegrees(e.mesh.angle - 90f));
             e.specOf = specs(e.mesh, e.spec);
             if (!e.mesh.lod.isEmpty()) {
-                Optional<Resource> lr = mc.getResourceManager().getResource(rl("weapon_meshes_vu/" + e.mesh.lod + ".txt"));
+                Optional<Resource> lr = sized(mc, "weapon_meshes_vu/" + e.mesh.lod + ".txt");
                 if (lr.isPresent()) {
                     try (BufferedReader in = lr.get().openAsReader()) { e.lod = VuMesh.parse(in); }
                     e.lodSkin = rl("textures/entity/weapon_vu/" + e.lod.skin + ".png");
@@ -138,6 +138,16 @@ public final class VuRenderer {
         VuSpec.Group[] out = new VuSpec.Group[m.groups.size()];
         for (int i = 0; i < out.length; i++) out[i] = s == null ? null : s.groups.get(m.groups.get(i).name);
         return out;
+    }
+
+    /** 1.110.0: a mesh file's thickened copy (weapon_meshes_vu_sz, tools/relics/weapon_sizes.py) when it exists, else the file. */
+    private static Optional<Resource> sized(Minecraft mc, String file) {
+        String sz = com.newuniverse.nusmp.visual.sizes.WeaponSizeRule.szPath(file);
+        if (sz != null) {
+            Optional<Resource> own = mc.getResourceManager().getResource(rl(sz));
+            if (own.isPresent()) return own;
+        }
+        return mc.getResourceManager().getResource(rl(file));
     }
 
     private static boolean exists(Minecraft mc, String path) {
