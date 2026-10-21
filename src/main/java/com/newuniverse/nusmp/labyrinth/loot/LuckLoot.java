@@ -4,11 +4,6 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.elite.hub.CoinKind;
 import com.newuniverse.nusmp.elite.hub.CoinLootModifier;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackDrops;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackItem;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackRegistry;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackTier;
-import com.newuniverse.nusmp.labyrinth.loot.backpack.BackpackUpgradeItem;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryMobEntity;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -30,19 +25,18 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
  * Why: this is the game side of the Luck-scaled loot, the part that touches a loot context. It does three things to the loot of a dungeon kill or a dungeon chest, in this order,
  * and each is a decision made by a pure class: (1) the COUNT of every ordinary stack is raised by the bell curve of {@link LuckGauss} (only ever raised, never past the stack size,
  * never for gear, coins, keys or any item of this mod that is not a part or a meal); (2) with the chance of {@link LuckGauss#armourChance}, ONE piece of dungeon armour with
- * randomised stat lines is added ({@link LuckArmour}), unless the loot already holds a piece of gear; (3) with the chance of {@link BackpackDrops}, ONE backpack or one backpack
- * upgrade is added. The Luck is the largest of the context's Luck and the killer's Luck attribute (the opener of a chest has no killer; the context already carries their Luck). The
+ * randomised stat lines is added ({@link LuckArmour}), unless the loot already holds a piece of gear; (the backpack roll of 1.107.0 was removed at the owner's request in 1.110.0). The Luck is the largest of the context's Luck and the killer's Luck attribute (the opener of a chest has no killer; the context already carries their Luck). The
  * place rules match the anime loot: a dimension of the mod that is not the Hub; a kill needs a PLAYER's last blow (a mob grinder with no player fighting drops nothing extra), the
  * victim is not a pet or a summoned minion; a chest is any table under {@code chests/}. Nothing here touches the food bar. Server side; any fault leaves the loot as it was.
  */
 public final class LuckLoot {
     private LuckLoot() {}
 
-    /** What was done to one loot roll: how many stacks were enlarged, whether an armour piece and whether a backpack item was added. */
-    public record Result(int enlarged, boolean armour, boolean backpack) {
-        public static final Result NONE = new Result(0, false, false);
+    /** What was done to one loot roll: how many stacks were enlarged, and whether an armour piece was added. */
+    public record Result(int enlarged, boolean armour) {
+        public static final Result NONE = new Result(0, false);
 
-        public boolean any() { return enlarged > 0 || armour || backpack; }
+        public boolean any() { return enlarged > 0 || armour; }
     }
 
     /** Applies the three steps to the loot of this context. */
@@ -78,8 +72,7 @@ public final class LuckLoot {
         int enlarged = 0;
         if (LootConfig.get(LootConfig.LUCK_COUNTS)) enlarged = enlarge(loot, dice, luck, floor);
         boolean armour = LootConfig.get(LootConfig.LUCK_ARMOUR) && addArmour(loot, dice, luck, floor, kind);
-        boolean backpack = LootConfig.get(LootConfig.BACKPACK_DROPS) && addBackpack(loot, dice, luck, floor, kind);
-        return new Result(enlarged, armour, backpack);
+        return new Result(enlarged, armour);
     }
 
     // ---------------------------------------------------------------- step 1: the counts
@@ -100,11 +93,10 @@ public final class LuckLoot {
         return n;
     }
 
-    /** May this stack's count follow the curve? Stackable, not gear, not a coin (coins have their own Luck), not a backpack, and of this mod only a monster part, a meal or an arrow. */
+    /** May this stack's count follow the curve? Stackable, not gear, not a coin (coins have their own Luck), and of this mod only a monster part, a meal or an arrow. */
     static boolean scalable(ItemStack s) {
         if (s.isEmpty() || s.getMaxStackSize() <= 1 || s.has(LootComponents.GEAR_ROLL.get())) return false;
         Item item = s.getItem();
-        if (item instanceof BackpackItem || item instanceof BackpackUpgradeItem) return false;
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
         if (id == null) return false;
         if (CoinKind.ofItemId(id.toString()) != null) return false;
@@ -123,22 +115,6 @@ public final class LuckLoot {
         if (item == null) return false;
         ItemStack stack = GearStacks.create(item, pick.rarity(), pick.seed(), Math.max(1, floor));
         if (stack.isEmpty()) return false;
-        loot.add(stack);
-        return true;
-    }
-
-    // ---------------------------------------------------------------- step 3: the backpack
-    static boolean addBackpack(ObjectArrayList<ItemStack> loot, Dice dice, double luck, int floor, LuckGauss.Kind kind) {
-        BackpackDrops.Drop drop = BackpackDrops.roll(dice, luck, floor, kind, LootConfig.get(LootConfig.BACKPACK_RATE));
-        if (!drop.any()) return false;
-        ItemStack stack;
-        if (drop.backpack()) {
-            stack = BackpackItem.of(BackpackTier.LEATHER);
-        } else {
-            Item up = BackpackRegistry.upgradeItem(drop.upgrade());
-            if (up == null) return false;
-            stack = new ItemStack(up);
-        }
         loot.add(stack);
         return true;
     }
