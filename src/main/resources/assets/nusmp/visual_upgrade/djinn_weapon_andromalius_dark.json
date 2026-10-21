@@ -1,0 +1,154 @@
+{
+  "item": "djinn_weapon_andromalius_dark",
+  "version": 1,
+  "mesh": "up/djinn_weapon_andromalius_dark",
+  "lod_mesh": "up/djinn_weapon_andromalius_dark_lod",
+  "orbit_mesh": "up/djinn_weapon_andromalius_dark_orbit",
+  "axis": {
+    "y0": -13.6,
+    "y1": 55.0,
+    "length_blocks": 3.2
+  },
+  "passes": [
+    "body",
+    "core_glow",
+    "vein_wave",
+    "halo_shell",
+    "orbit_pieces"
+  ],
+  "ambient_layers": [
+    "motes",
+    "halo_ring",
+    "edge_line",
+    "ground_cast",
+    "wrist_flare",
+    "light_shaft",
+    "accent_flare",
+    "orbit_pieces"
+  ],
+  "animations": [
+    "glow_pulse",
+    "core_flicker",
+    "vein_wave_flow",
+    "halo_shell_breath",
+    "orbit_revolve",
+    "orbit_piece_spin",
+    "orbit_bob"
+  ],
+  "palette": {
+    "core": "9CA8FF",
+    "accent": "FFFFFF",
+    "vein": "9CA8FF",
+    "halo": "2B2B6B"
+  },
+  "veins": {
+    "speed": 0.55,
+    "wavelength": 40.2,
+    "base": 0.18,
+    "peak": 1.0
+  },
+  "halo": {
+    "scale": 1.075,
+    "alpha": 60,
+    "breath": 0.03,
+    "speed": 0.05
+  },
+  "core": {
+    "flicker": 0.1,
+    "flicker_speed": 0.37
+  },
+  "orbiters": [
+    {
+      "count": 6,
+      "radius": 16.7,
+      "y_frac": 0.78,
+      "speed": 0.07,
+      "spin": 0.11,
+      "bob": 2.2,
+      "bob_speed": 0.05,
+      "tilt": 0.3,
+      "phase": 0.0,
+      "scale": 1.0,
+      "mesh": "up/djinn_weapon_andromalius_dark_orbit"
+    }
+  ],
+  "swing_trail": {
+    "rgb": "9CA8FF",
+    "ghosts": 4,
+    "lag_deg": 8.0,
+    "alpha": 84
+  },
+  "particles": {
+    "layers": [
+      {
+        "kind": "motes",
+        "particle": "fx",
+        "rgb": "9CA8FF",
+        "rate": 1.1,
+        "speed": 0.008,
+        "size": 1.0
+      },
+      {
+        "kind": "halo_ring",
+        "particle": "fx",
+        "rgb": "2B2B6B",
+        "rate": 1.3,
+        "speed": 0.0,
+        "size": 0.9
+      },
+      {
+        "kind": "edge_line",
+        "particle": "fx",
+        "rgb": "9CA8FF",
+        "rate": 0.9,
+        "speed": 0.02,
+        "size": 0.9
+      },
+      {
+        "kind": "ground_cast",
+        "particle": "fx",
+        "rgb": "2B2B6B",
+        "rate": 1.0,
+        "speed": 0.0,
+        "size": 1.1
+      },
+      {
+        "kind": "wrist_flare",
+        "particle": "fx",
+        "rgb": "9CA8FF",
+        "rate": 0.5,
+        "speed": 0.01,
+        "size": 1.0
+      },
+      {
+        "kind": "light_shaft",
+        "particle": "fx",
+        "rgb": "9CA8FF",
+        "rate": 1.1,
+        "speed": 0.03,
+        "size": 0.8
+      },
+      {
+        "kind": "accent_flare",
+        "particle": "fx",
+        "rgb": "FFFFFF",
+        "rate": 0.12,
+        "speed": 0.02,
+        "size": 1.0
+      }
+    ],
+    "ground_radius": 1.15,
+    "shaft_height": 1.9
+  },
+  "lod": {
+    "near_blocks": 12.0,
+    "additive_blocks": 24.0,
+    "particle_blocks": 32.0
+  },
+  "budget": {
+    "body_quads": 1142,
+    "orbit_instances": 6,
+    "orbit_piece_quads": 24,
+    "lod_quads": 159
+  }
+}

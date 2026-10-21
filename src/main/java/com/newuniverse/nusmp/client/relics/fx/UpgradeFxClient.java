@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.client.relics.fx;
 
 import com.newuniverse.nusmp.item.CuriosLink;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxRelic;
 import com.newuniverse.nusmp.perf.PerfBudgets;
 import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -8,11 +11,11 @@ import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeFxData;
 import com.newuniverse.nusmp.relics.upgrade.UpgradeFxMath;
+import com.newuniverse.nusmp.relics.upgrade.UpgradeParticleNames;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,10 +60,21 @@ public final class UpgradeFxClient {
         NeoForge.EVENT_BUS.addListener(UpgradeFxClient::onClientTick);
     }
 
-    /** The particle a data entry names: "dust" (coloured by the layer) or any simple particle type id; null for an unknown id. */
+    /**
+     * The particle a data entry names, always one of the mod's own custom particles (1.108.0, {@code particle.fx}): "dust" is a custom mote dyed with the layer's colour
+     * ({@link FxRelic#dust}); a vanilla name ({@code minecraft:end_rod}, {@code flame}, ...) is the particle that replaces it in the theme of the layer's colour ({@link Fx#options(com.newuniverse.nusmp.particle.fx.ThemeKey, FxOld)},
+     * the name-to-constant decision is {@link UpgradeParticleNames}); an id of another namespace is the mod's own particle type, looked up in the registry (null when it is not a plain particle).
+     */
     public static ParticleOptions options(String particle, int color, float size) {
-        if (particle == null || particle.isEmpty() || particle.equals("dust")) {
-            return new DustParticleOptions(new Vector3f((color >> 16 & 255) / 255f, (color >> 8 & 255) / 255f, (color & 255) / 255f), Math.max(0.3f, size));
+        if (UpgradeParticleNames.isDust(particle)) return FxRelic.dust(color, Math.max(0.3f, size));
+        if (UpgradeParticleNames.isVanilla(particle)) {
+            FxOld old;
+            try {
+                old = FxOld.valueOf(UpgradeParticleNames.oldName(particle));
+            } catch (IllegalArgumentException unknown) {
+                old = FxOld.valueOf(UpgradeParticleNames.DEFAULT);
+            }
+            return Fx.options(FxRelic.theme(color), old);
         }
         ResourceLocation id = ResourceLocation.tryParse(particle);
         if (id == null) return null;
@@ -132,7 +146,8 @@ public final class UpgradeFxClient {
                         if (!UpgradeFxMath.point(l, tick, k, n, rnd.nextDouble(), rnd.nextDouble(), rnd.nextDouble(), speed, LOCAL)) break;
                         UpgradeFxMath.toWorld(yaw, LOCAL[0], LOCAL[1], LOCAL[2], WORLD);
                         double vy = l.kind().equals("motes") || l.kind().equals("line") ? l.speed() : 0.0;
-                        level.addParticle(cl.options(), p.getX() + WORLD[0], p.getY() + WORLD[1], p.getZ() + WORLD[2], (rnd.nextDouble() - 0.5) * 0.004, vy, (rnd.nextDouble() - 0.5) * 0.004);
+                        ParticleOptions custom = cl.options();                                       // the mod's own particle of the layer (options() above)
+                        level.addParticle(custom, p.getX() + WORLD[0], p.getY() + WORLD[1], p.getZ() + WORLD[2], (rnd.nextDouble() - 0.5) * 0.004, vy, (rnd.nextDouble() - 0.5) * 0.004);
                     }
                 }
             }

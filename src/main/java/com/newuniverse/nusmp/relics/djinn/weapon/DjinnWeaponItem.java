@@ -88,6 +88,7 @@ public class DjinnWeaponItem extends Item {
         boolean admin = t == null || t.admin();
         tip.add(Component.translatable(admin ? "tooltip.nusmp.djinn_weapon.admin" : "tooltip.nusmp.djinn_weapon.temp", djinn.displayName()).withStyle(ChatFormatting.GRAY));
         if (dark) tip.add(Component.translatable("tooltip.nusmp.djinn_weapon.dark").withStyle(ChatFormatting.DARK_PURPLE));
+        if (dark) tip.add(Component.translatableWithFallback("tooltip.nusmp.djinn_weapon.dark_look", "Its dark form is upgraded: energy veins run up the weapon and its own pieces orbit it (client option visual.upgrade).").withStyle(ChatFormatting.DARK_GRAY));      // 1.108.0 djinn_dark_weapons
         tip.add(actLine(s, DjinnWeaponRules.ACT_ONE, "tooltip.nusmp.djinn_weapon.act1", color));
         tip.add(Component.translatable("djinn_weapon.act." + s.one().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
         tip.add(actLine(s, DjinnWeaponRules.ACT_TWO, "tooltip.nusmp.djinn_weapon.act2", color));

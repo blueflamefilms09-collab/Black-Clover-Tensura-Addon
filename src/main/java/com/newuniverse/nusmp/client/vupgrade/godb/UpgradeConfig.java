@@ -16,7 +16,7 @@ public final class UpgradeConfig {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("visual");
         UPGRADE = b.comment("Draw the upgraded God melee weapons (Aurliel's Seraph Halberd, Chronarch's Pendulum Sabre, Deepwatch Harpoon, Oriel's Starfall Staff, Reflected King's Mirrorblade, Rimeheart Greatblade, "
-                        + "Sanguine Warden's Cleaver, Valkarin's Stormlance, Paradox): new meshes, energy veins, halo shell, orbiting pieces, swing trail and particles. Off = the models of before 1.102.0.")
+                        + "Sanguine Warden's Cleaver, Valkarin's Stormlance, Paradox, and since 1.108.0 the 36 dark Djinn weapons): new meshes, energy veins, halo shell, orbiting pieces, swing trail and particles. Off = the models of before 1.102.0.")
                 .define("upgrade", true);
         GUI_MODEL = b.comment("Show the upgraded 3D model, tilted, in the inventory slot instead of the flat sprite (the sprite stays the default icon).")
                 .define("guiModel", false);
