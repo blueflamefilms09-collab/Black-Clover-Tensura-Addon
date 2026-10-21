@@ -1027,6 +1027,10 @@
     {
       "id": "nusmp:millennium_scale",
       "required": false
+    },
+    {
+      "id": "nusmp:wisteria_incense_sachet",
+      "required": false
     }
   ]
 }

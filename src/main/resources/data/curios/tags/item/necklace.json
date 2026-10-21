@@ -394,6 +394,10 @@
     {
       "id": "nusmp:millennium_puzzle",
       "required": false
+    },
+    {
+      "id": "nusmp:wings_of_freedom_pin",
+      "required": false
     }
   ]
 }

@@ -232,7 +232,7 @@ WAVE_ELEMENTS = ["fire", "storm", "ice", "nature", "holy", "arcane", "blood", "m
 
 def add_waves():
     """relic.wave.<N>: the relic waves (relics/wave/WaveN*.java) each get the particles of one element, so no two neighbouring waves look alike."""
-    for n in range(100):
+    for n in range(110):
         e = WAVE_ELEMENTS[n % len(WAVE_ELEMENTS)]
         g, p, c = OTHER["relic.element." + e]
         parts = p.split()

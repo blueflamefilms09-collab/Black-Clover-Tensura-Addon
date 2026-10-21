@@ -437,6 +437,10 @@
     {
       "id": "nusmp:millennium_ring",
       "required": false
+    },
+    {
+      "id": "nusmp:tournament_fist_wraps",
+      "required": false
     }
   ]
 }

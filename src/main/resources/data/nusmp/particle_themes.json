@@ -4844,6 +4844,176 @@
      "soot_puff"
     ]
    }
+  },
+  "relic.wave.100": {
+   "particles": [
+    "feather_white",
+    "mote",
+    "glint",
+    "smoke_wisp"
+   ],
+   "color": "#BFF5E0",
+   "dark": {
+    "particles": [
+     "feather_black",
+     "void_speck",
+     "soul_wisp",
+     "smoke_wisp"
+    ]
+   }
+  },
+  "relic.wave.101": {
+   "particles": [
+    "sand_grain",
+    "earth_chip",
+    "glint",
+    "ash_flake"
+   ],
+   "color": "#9A7A4E",
+   "dark": {
+    "particles": [
+     "earth_chip",
+     "void_speck",
+     "cinder",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.102": {
+   "particles": [
+    "cog",
+    "clock_tick",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#BFA4FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.103": {
+   "particles": [
+    "rune_key",
+    "mana_mote",
+    "glint",
+    "nebula_puff"
+   ],
+   "color": "#8F5BFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.104": {
+   "particles": [
+    "spirit_firefly",
+    "soul_wisp",
+    "void_speck",
+    "mote_soft"
+   ],
+   "color": "#9FE8FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.105": {
+   "particles": [
+    "mote",
+    "music_note",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#FFE08A",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "dream_star",
+     "soul_wisp",
+     "nebula_puff"
+    ]
+   }
+  },
+  "relic.wave.106": {
+   "particles": [
+    "bubble",
+    "spore",
+    "droplet",
+    "poison_cloud"
+   ],
+   "color": "#7BD13A",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.107": {
+   "particles": [
+    "soul_wisp",
+    "dream_star",
+    "star4",
+    "nebula_puff"
+   ],
+   "color": "#F5B8FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "dream_star",
+     "soul_wisp",
+     "nebula_puff"
+    ]
+   }
+  },
+  "relic.wave.108": {
+   "particles": [
+    "shard_crystal",
+    "gem_sparkle",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#FF6FB0",
+   "dark": {
+    "particles": [
+     "earth_chip",
+     "void_speck",
+     "cinder",
+     "soot_puff"
+    ]
+   }
+  },
+  "relic.wave.109": {
+   "particles": [
+    "void_speck",
+    "ember",
+    "flame_soul",
+    "soot_puff"
+   ],
+   "color": "#B03A5A",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
   }
  }
 }

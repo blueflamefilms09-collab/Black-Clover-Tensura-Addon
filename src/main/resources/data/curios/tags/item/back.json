@@ -341,6 +341,10 @@
     {
       "id": "nusmp:truth_seeking_orbs_of_the_sage",
       "required": false
+    },
+    {
+      "id": "nusmp:wayfaring_pedlars_wagon_cape",
+      "required": false
     }
   ]
 }
