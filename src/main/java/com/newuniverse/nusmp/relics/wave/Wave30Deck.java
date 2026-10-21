@@ -78,6 +78,7 @@ final class Wave30Deck {
             Wave30Kit.shout(p, "Card " + (first + i + 1) + " of 22: " + card.title.toUpperCase(java.util.Locale.ROOT), col);
             try {
                 play(p, level, card, seed, first + i);
+                Wave30Summon.send(p, level, card, i);
             } catch (RuntimeException | LinkageError failed) {
                 org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] deck card {} failed", card, failed);
                 Wave30Kit.say(p, "The card flickers and goes out.");

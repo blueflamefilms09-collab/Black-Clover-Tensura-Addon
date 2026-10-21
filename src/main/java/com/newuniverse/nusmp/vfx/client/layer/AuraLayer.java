@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
-import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.resources.ResourceLocation;
@@ -16,12 +15,12 @@ import java.util.Set;
  * Caster-attached effects (all follow the caster):
  * SPIRIT_AURA: glowing spirit spirals orbiting head and shoulders + a body glow (Spirit Dive look).
  * MANA_CHARGE: mana motes converging into the caster while chanting.
- * SPELL_CARD: a floating card showing the grimoire's icon in its frame.
+ * SPELL_CARD: removed on the owner's order (1.110.0): it drew a flat picture of a card in the world and nothing draws it any more (the enum constant stays for saves and ordinals).
  * WEAPON_CONSTRUCTS: spectral swords, axes and shields orbiting the caster.
  */
 public class AuraLayer extends AbstractVfxLayer {
-    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.SPIRIT_AURA, VfxShape.MANA_CHARGE, VfxShape.SPELL_CARD, VfxShape.WEAPON_CONSTRUCTS); }
-    @Override public int defaultDuration(VfxShape s) { return s == VfxShape.SPELL_CARD ? 30 : 160; }
+    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.SPIRIT_AURA, VfxShape.MANA_CHARGE, VfxShape.WEAPON_CONSTRUCTS); }
+    @Override public int defaultDuration(VfxShape s) { return 160; }
     @Override public int defaultColor(VfxShape s) { return 0xFF7FE8FF; }
     @Override public int vertexBudget(VfxShape s) { return 400; }
 
@@ -30,7 +29,6 @@ public class AuraLayer extends AbstractVfxLayer {
         switch (inst.shape) {
             case SPIRIT_AURA -> aura(inst, ctx, buf);
             case MANA_CHARGE -> charge(inst, ctx, buf);
-            case SPELL_CARD -> card(inst, ctx, buf);
             default -> constructs(inst, ctx, buf);
         }
     }
@@ -80,42 +78,6 @@ public class AuraLayer extends AbstractVfxLayer {
         VfxPose feet = VfxPose.ground(ctx.rel(c.add(0, -0.95, 0)));
         buf.plane(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD, feet.spin(age * 0.08f), 1.3f * VfxAnim.circleOpen(t), VfxVertexBuffer.withAlpha(col, 1 - t * 0.5f));
         VfxBloom.glow(ctx, buf, ctx.rel(c), 0.6f, col, 0.5f + 0.5f * t);
-    }
-
-    /** 1.99.0 (performance pass): the icon and badge locations of a spell card, built once per (magic, variant) instead of two strings and two locations per card per frame. */
-    private static final ResourceLocation[][] ICONS = new ResourceLocation[MagicType.values().length][3];
-    private static final ResourceLocation[] BADGES = new ResourceLocation[com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.values().length];
-
-    private static ResourceLocation icon(MagicType m, int seed, com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype archetype) {
-        int variant = com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.isUltimate(seed) ? 2
-                : archetype != null && archetype != com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.OFFENSE ? 1 : 0;       // the branches of SpellArchetype.iconPath
-        ResourceLocation rl = ICONS[m.ordinal()][variant];
-        if (rl == null) ICONS[m.ordinal()][variant] = rl = ResourceLocation.fromNamespaceAndPath("nusmp", com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.iconPath(m.name(), seed));
-        return rl;
-    }
-
-    private static ResourceLocation badge(com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype a) {
-        ResourceLocation rl = BADGES[a.ordinal()];
-        if (rl == null) BADGES[a.ordinal()] = rl = ResourceLocation.fromNamespaceAndPath("nusmp", a.texture());
-        return rl;
-    }
-
-    private void card(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
-        float t = inst.progress(ctx.partialTick), age = inst.ageTicks(ctx.partialTick);
-        float alpha = VfxAnim.fadeInOut(t, 0.15f, 0.3f);
-        Vector3f at = ctx.rel(inst.from(ctx).add(0, VfxAnim.easeOutCubic(t) * 0.5, 0));
-        MagicType[] all = MagicType.values();
-        int seed = (int) inst.seed;
-        MagicType m = all[Math.floorMod(com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.magicOf(seed), all.length)];
-        var archetype = com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.archetypeOf(seed);
-        // the magic's Active, Buff or Ultimate icon depending on the spell (0.23)
-        ResourceLocation icon = icon(m, seed, archetype);
-        float wob = 0.15f * Mth.sin(age * 0.2f);
-        VfxBloom.glow(ctx, buf, at, 0.6f, inst.color, alpha);
-        buf.billboard(ctx, icon, VfxBlend.ALPHA, at, 0.7f, wob, VfxVertexBuffer.withAlpha(0xFFFFFFFF, alpha));
-        if (archetype != null)   // the spell's archetype badge (offense / defense / buff / debuff) in the card's corner
-            buf.billboard(ctx, badge(archetype), VfxBlend.ALPHA, at, 0.7f, wob, VfxVertexBuffer.withAlpha(0xFFFFFFFF, alpha));
-        buf.billboard(ctx, VfxTextures.CARD_FRAME, VfxBlend.ADD, at, 0.82f, wob, VfxVertexBuffer.withAlpha(inst.color, alpha));
     }
 
     private void constructs(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {

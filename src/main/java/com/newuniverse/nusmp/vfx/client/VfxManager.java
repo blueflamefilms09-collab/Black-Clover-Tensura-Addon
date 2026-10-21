@@ -246,6 +246,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.MucusLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.ManaZoneLayer());              // 1.99.0: the Mana Zone and the Grand Magic Zones
         register(new com.newuniverse.nusmp.vfx.client.layer.UpgradeSignatureLayer());      // 1.102.0: the signature effects of the upgraded weapons' acts
+        register(new com.newuniverse.nusmp.vfx.client.layer.DeckSummonLayer());              // 1.110.0: the card summon of the Deck of Many Things
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

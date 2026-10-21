@@ -333,7 +333,9 @@ public enum VfxShape {
     GRAND_ZONE_ENV,
     // 1.102.0 visual upgrade (vfx.client.layer.UpgradeSignatureLayer): the signature effect of an act of an upgraded weapon. The packet's seed carries the signature id of (item, act) in its upper 32 bits
     // (relics.upgrade.UpgradeItems); from = the caster (the effect follows him), to = the point he looks at; the recipe is read from assets/nusmp/visual_upgrade/<item>.json
-    UPGRADE_SIGNATURE;
+    UPGRADE_SIGNATURE,
+    // 1.110.0 (vfx.client.layer.DeckSummonLayer): the card summon of the Deck of Many Things from the worn duel disk; the seed carries the card, the zone and the alignment (vfx.deck.DeckSummonGeometry.pack); follows the player
+    DECK_SUMMON;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

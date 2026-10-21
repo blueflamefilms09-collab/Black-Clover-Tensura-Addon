@@ -243,7 +243,7 @@ def build_all():
         trail("grave_trail", [0.45, 0.6, 0.2], "minecraft:smoke", 0xE0245E, 6, 1.0, 0.4)],
         acts={"touch_of_death": [act("SLASH_SCYTHE", 0xE0245E, 26, 4.0, "aim", "minecraft:soul", 40, 0.8, 3.0), act("BONE_FX1", 0x8E8A78, 22, 3.0, "aim", "minecraft:witch", 30, 1.0, 3.0)],
               "rimed_grasp": [act("WATER_RING", 0x9FE3FF, 28, 4.0, "aim", "minecraft:snowflake", 70, 1.6, 3.0)], "skeleton_to_jelly": [act("BODY_FX1", 0xE0245E, 30, 4.0, "aim", "minecraft:glow_squid_ink", 50, 1.0, 3.0)],
-              "choose_wish": [act("SPELL_CARD", 0xC9A24A, 20, 2.0, "eye", "minecraft:enchant", 20, 0.8)],
+              "choose_wish": [act("LIGHT_FLARE", 0xC9A24A, 20, 2.0, "eye", "minecraft:enchant", 20, 0.8)],
               "wish": [act("MAGIC_CIRCLE_EXPLOSION", 0xE0245E, 46, 7.0, "feet", "minecraft:witch", 90, 3.0), act("SEAL_TRINITY", 0xC9A24A, 40, 5.0, "feet", "minecraft:enchant", 60, 3.0)]})
     P["aerie_courier_gloves"] = dict(color=0xC8DCFF, layers=[
         motes("wind_wisps", [-0.6, 0.4, -0.2, 0.6, 1.1, 0.25], "minecraft:cloud", 0xC8DCFF, 8, 0.01),

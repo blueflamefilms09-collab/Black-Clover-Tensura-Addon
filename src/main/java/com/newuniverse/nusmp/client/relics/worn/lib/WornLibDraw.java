@@ -173,7 +173,7 @@ public final class WornLibDraw {
                 s.n.set(pose.last().normal());
                 pose.popPose();
                 WornPlacer.Placement pl = e.exact ? WornPlacer.Placement.NONE      // an armour item or a mode: the garment's own size, where the garment stands
-                        : WornPlacer.fit(r.anchor(), r.mesh().name).then(WornPlacer.place(e.slotKey, INDEX[i]));      // a relic: the smaller body fit, then the place among its slot-mates
+                        : WornPlacer.fit(r.anchor(), r.mesh().name).then(WornPlacer.place(e.slotKey, INDEX[i], r.mesh().name));      // a relic: the smaller body fit, then the place among its slot-mates
                 if (!e.exact && armInset != 0f && (r.anchor() == WornAnchor.RIGHT_ARM || r.anchor() == WornAnchor.LEFT_ARM)) {      // slim arms: toward the body (+x for the right arm, -x for the left)
                     pl = pl.then(new WornPlacer.Placement(r.anchor() == WornAnchor.RIGHT_ARM ? armInset : -armInset, 0f, 0f, 0f, 1f, false));
                 }

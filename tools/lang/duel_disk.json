@@ -1,0 +1,5 @@
+{
+  "duel_disk.option.name": "Duel disk look for deck relics",
+  "duel_disk.option.tooltip": "Deck relics (Deck of Many Things, Pact of the Deck) are worn as a card duel disk on the left forearm and held as a disk with a card stack. Off: the older look. Shares the switch visual.upgrade.",
+  "duel_disk.credit": "The duel disk is a third-party design used as a visual base only."
+}

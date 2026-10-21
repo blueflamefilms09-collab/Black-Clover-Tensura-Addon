@@ -78,10 +78,10 @@ add(Item("deck_of_many_things", build_deck, dict(style="swirl", dark=(4, 2, 12),
                  GL("fate seal", "rune_ring", "fate_seal"), GL("lens flare", "lens_flare", "lens_flare"), GL("light shafts", "light_shafts", "light_shafts"),
                  PL("gold dust", "motes", "dust", 0xFFD27A, count=1, every=4, radius=0.45, rise=-0.01),
                  PL("fate glints", "glints", "end_rod", None, count=1, every=8, radius=0.5, rise=0.01)],
-         acts={"draw_one": [ST("SPELL_CARD", 0xFFD27A, 1.6, 40, "front"), ST("LIGHT_FLARE", 0xFFD27A, 1.2, 14, "front")],
-               "draw_two": [ST("SPELL_CARD", 0xFFD27A, 1.6, 40, "front"), ST("MAGIC_CIRCLE", 0xFFD27A, 2.4, 40, "ground")],
-               "draw_three": [ST("SPELL_CARD", 0xFFD27A, 1.8, 40, "front"), ST("MAGIC_CIRCLE", 0xFFD27A, 3.0, 44, "ground"), ST("DIVINE_HALO", 0xFFE6A0, 2.2, 44, "self")],
-               "look": [ST("SPELL_CARD", 0xE6B94A, 1.2, 28, "front")]}))
+         acts={"draw_one": [ST("LIGHT_FLARE", 0xFFD27A, 1.2, 14, "front")],
+               "draw_two": [ST("LIGHT_FLARE", 0xFFD27A, 1.2, 14, "front"), ST("MAGIC_CIRCLE", 0xFFD27A, 2.4, 40, "ground")],
+               "draw_three": [ST("LIGHT_FLARE", 0xFFD27A, 1.2, 14, "front"), ST("MAGIC_CIRCLE", 0xFFD27A, 3.0, 44, "ground"), ST("DIVINE_HALO", 0xFFE6A0, 2.2, 44, "self")],
+               "look": [ST("LIGHT_FLARE", 0xE6B94A, 1.2, 28, "front")]}))
 
 
 # ====================================================================== WARREN'S KEY
@@ -272,7 +272,7 @@ add(Item("administrators_authority_key", build_admin, dict(style="grid", dark=(6
                  PL("data motes", "motes", "end_rod", None, count=1, every=4, radius=0.45, rise=0.012),
                  PL("command glints", "glints", "electric_spark", None, count=1, every=9, radius=0.5, rise=0.0)],
          acts={"change_the_rules": [ST("SEAL_TRINITY", 0xFFFFFF, 2.6, 50, "ground"), ST("MIRROR_ARRAY", 0xF0F0F8, 3.0, 50, "self"), ST("LIGHT_FLARE", 0xFFFFFF, 1.6, 14, "self")],
-               "system_call": [ST("SPELL_CARD", 0xFFFFFF, 1.8, 36, "front"), ST("LIGHT_FLARE", 0xF0F0F8, 1.2, 12, "front")]}))
+               "system_call": [ST("LIGHT_FLARE", 0xF0F0F8, 1.2, 12, "front")]}))
 
 
 # ====================================================================== ARCHIVIST'S STARBOUND CODEX
