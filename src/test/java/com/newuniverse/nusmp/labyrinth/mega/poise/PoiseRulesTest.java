@@ -168,17 +168,16 @@ public class PoiseRulesTest {
     }
 
     @Test
-    public void dungeonMonstersAreOneSideUnlessAnOldQuarrelSystemIsOn() {
-        // passive, both monsters, ordinary attacker: blocked unless the turf wars are on
-        assertTrue(PassivityRule.blocks(true, true, true, false, false, false));
-        assertFalse(PassivityRule.blocks(true, true, true, false, true, false), "turf wars on: the old quarrels run");
-        assertTrue(PassivityRule.blocks(true, true, true, false, false, true), "the foundry's faction wars do not free an ordinary monster");
-        // foundry attacker answers to the foundry switch
-        assertTrue(PassivityRule.blocks(true, true, true, true, true, false));
-        assertFalse(PassivityRule.blocks(true, true, true, true, false, true));
+    public void dungeonMonstersAreOneSideAndTheMasterSwitchBeatsAStaleQuarrelSwitch() {
+        assertTrue(PassivityRule.blocks(true, true, true));
         // never touches a player, a servant or a pet (they are not dungeon monsters), and the master switch off keeps the old game
-        assertFalse(PassivityRule.blocks(true, true, false, false, false, false));
-        assertFalse(PassivityRule.blocks(true, false, true, false, false, false));
-        assertFalse(PassivityRule.blocks(false, true, true, false, false, false));
+        assertFalse(PassivityRule.blocks(true, true, false));
+        assertFalse(PassivityRule.blocks(true, false, true));
+        assertFalse(PassivityRule.blocks(false, true, true));
+        // the old quarrel systems (turf wars, rival goal) run only with the master switch off AND their own switch on: a config file written by an older version that still says true does not revive them
+        assertFalse(PassivityRule.quarrelsRun(true, true));
+        assertFalse(PassivityRule.quarrelsRun(true, false));
+        assertTrue(PassivityRule.quarrelsRun(false, true));
+        assertFalse(PassivityRule.quarrelsRun(false, false));
     }
 }

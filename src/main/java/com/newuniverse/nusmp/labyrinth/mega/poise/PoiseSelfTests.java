@@ -106,9 +106,16 @@ public final class PoiseSelfTests {
             made.add(z);
             z.moveTo(4.5, 200.0, 0.5, 0f, 0f);
             if (PoiseSystem.consider(z) != null) return fail("a plain zombie got a poise bar");
+            long nowZ = level.getGameTime();
             z.addTag(PoiseBearers.ELITE_TAG);
             PoiseData zd = PoiseSystem.consider(z);
             if (zd == null || zd.kind != PoiseBearers.Kind.ELITE) return fail("a zombie tagged " + PoiseBearers.ELITE_TAG + " got no elite bar");
+            z.swinging = true;
+            z.tickCount = 0;
+            PoiseSystem.step(z, nowZ);
+            if (!PoiseSystem.armored(z, nowZ)) return fail("a swinging bearer has no super armor");
+            z.swinging = false;
+            PoiseSystem.dropArmor(z);
             String two = cycle(z, zd, t);
             if (two != null) return fail("tagged zombie: " + two);
 
@@ -238,7 +245,6 @@ public final class PoiseSelfTests {
         if (!Passivity.enabled()) return ok("skipped: foundry.poise.dungeonPassive is false in the config");
         List<Mob> made = new ArrayList<>();
         try {
-            boolean turf = EcoConfig.get(EcoConfig.TURF_WARS), wars = FoundryConfig.get(FoundryConfig.FACTION_WARS);
             Zombie a = EntityType.ZOMBIE.create(level), b = EntityType.ZOMBIE.create(level), servant = EntityType.ZOMBIE.create(level);
             FoundryMobEntity f1 = elite(level), f2 = elite(level);
             if (a == null || b == null || servant == null || f1 == null || f2 == null) return fail("a test mob could not be made");
@@ -251,15 +257,14 @@ public final class PoiseSelfTests {
             servant.addTag("nusmp_servant");
             if (!Passivity.dungeonMob(a) || !Passivity.dungeonMob(f1)) return fail("a dungeon monster is not seen as one");
             if (Passivity.dungeonMob(servant)) return fail("a servant is seen as a dungeon monster");
-            if (Passivity.blocks(a, b) != !turf) return fail("monster against monster: blocks=" + Passivity.blocks(a, b) + " with turf wars " + turf);
-            if (Passivity.blocks(f1, f2) != !wars) return fail("foundry against foundry: blocks=" + Passivity.blocks(f1, f2) + " with faction wars " + wars);
+            if (!Passivity.blocks(a, b)) return fail("a monster is not stopped from going for another monster");
+            if (!Passivity.blocks(f1, f2)) return fail("a foundry mob is not stopped from going for another foundry mob");
+            if (Passivity.turfWarsRun() || Passivity.factionWarsRun()) return fail("an old quarrel system still runs while the dungeon is passive");
             if (Passivity.blocks(a, servant) || Passivity.blocks(servant, a)) return fail("a servant is blocked from, or protected from, the dungeon");
             a.setTarget(b);
-            if (!turf && a.getTarget() != null) return fail("a monster still took another monster as its target (the target event did not stop it)");
-            if (turf && a.getTarget() != b) return fail("the turf wars are on but the monster could not take its rival as a target");
-            a.setTarget(null);
+            if (a.getTarget() != null) return fail("a monster still took another monster as its target (the target event did not stop it)");
             f1.setTarget(f2);
-            if (!wars && f1.getTarget() != null) return fail("a foundry mob still took another foundry mob as its target");
+            if (f1.getTarget() != null) return fail("a foundry mob still took another foundry mob as its target");
             f1.setTarget(null);
             FakePlayer p = SelfTests.player(level, "poise_passive", 0.5, 200.0, 0.5);
             a.setTarget(p);
@@ -268,15 +273,14 @@ public final class PoiseSelfTests {
             DamageSource hit = level.damageSources().mobAttack(a);
             LivingIncomingDamageEvent friendly = new LivingIncomingDamageEvent(b, new DamageContainer(hit, 5f));
             Passivity.onIncomingDamage(friendly);
-            if (friendly.isCanceled() == turf) return fail("friendly fire: canceled=" + friendly.isCanceled() + " with turf wars " + turf);
+            if (!friendly.isCanceled()) return fail("friendly fire between two monsters was not cancelled");
             LivingIncomingDamageEvent onPlayer = new LivingIncomingDamageEvent(p, new DamageContainer(hit, 5f));
             Passivity.onIncomingDamage(onPlayer);
             if (onPlayer.isCanceled()) return fail("a monster's blow on a player was cancelled");
             LivingIncomingDamageEvent onServant = new LivingIncomingDamageEvent(servant, new DamageContainer(hit, 5f));
             Passivity.onIncomingDamage(onServant);
             if (onServant.isCanceled()) return fail("a monster's blow on a servant was cancelled");
-            return ok("monsters " + (turf ? "may quarrel (eco.turfWarsEnabled is on in this config)" : "cannot target or hurt each other") + "; foundry mobs " + (wars ? "may quarrel" : "cannot target each other")
-                    + "; players and servants are untouched by the rule");
+            return ok("monsters and foundry mobs cannot target or hurt each other, the old quarrel systems are off; players and servants are untouched by the rule");
         } finally {
             for (Mob m : made) m.discard();
         }

@@ -20,8 +20,8 @@ import org.slf4j.Logger;
  * Why: the unified dungeon faction. The owner's design is that the dungeon's monsters exist to hunt the player; two of them fighting each other while the party stands in the next room, or a
  * skeleton's arrow killing the zombie in front of it, only makes the dungeon quieter and the loot cheaper. So while {@code foundry.poise.dungeonPassive} is on, a monster of the dungeon
  * cannot TARGET another monster of the dungeon ({@link LivingChangeTargetEvent} is cancelled) and cannot HURT one (friendly fire: arrows, blasts, abilities, a charge through the line are
- * cancelled at {@link LivingIncomingDamageEvent}). The old systems are kept behind their switches: {@code eco.turfWarsEnabled} brings the turf wars (and the old target guard) back for ordinary
- * monsters, {@code foundry.factionWars} the foundry's {@code RivalGoal} for foundry mobs, and {@code dungeonPassive=false} turns this class off entirely. A monster of the dungeon is one that is
+ * cancelled at {@link LivingIncomingDamageEvent}). The old systems are kept behind their switches and run again only with {@code dungeonPassive=false}: {@code eco.turfWarsEnabled}
+ * (the turf wars and the old target guard, ordinary monsters) and {@code foundry.factionWars} (the foundry's {@code RivalGoal}); both now default to false. A monster of the dungeon is one that is
  * an {@link Enemy}, a monster by category, a foundry mob, or tagged by the Dungeon Master, inside the Labyrinth's dimensions and NOT a servant of a player (a tamed or owned creature, a
  * shadow, a relic's summon): servants and pets are never protected from the dungeon and never blocked from fighting it. A player is never involved: the rule only ever sees mob against mob.
  */
@@ -32,6 +32,12 @@ public final class Passivity {
     private static boolean warned;
 
     public static boolean enabled() { return FoundryConfig.get(FoundryConfig.DUNGEON_PASSIVE); }
+
+    /** Do the eco turf wars run? Off while the dungeon is passive, whatever the old switch says; then the old switch decides. */
+    public static boolean turfWarsRun() { return PassivityRule.quarrelsRun(enabled(), EcoConfig.get(EcoConfig.TURF_WARS)); }
+
+    /** Does the foundry's rival goal run? Same rule. */
+    public static boolean factionWarsRun() { return PassivityRule.quarrelsRun(enabled(), FoundryConfig.get(FoundryConfig.FACTION_WARS)); }
 
     /** Is this entity one of the dungeon's monsters (one side with every other)? */
     public static boolean dungeonMob(Entity e) {
@@ -44,8 +50,7 @@ public final class Passivity {
     public static boolean blocks(Entity attacker, Entity victim) {
         if (attacker == victim || !enabled()) return false;
         if (!(attacker instanceof Mob) || !(victim instanceof Mob)) return false;
-        boolean a = dungeonMob(attacker), v = dungeonMob(victim);
-        return PassivityRule.blocks(true, a, v, attacker instanceof FoundryMobEntity, EcoConfig.get(EcoConfig.TURF_WARS), FoundryConfig.get(FoundryConfig.FACTION_WARS));
+        return PassivityRule.blocks(true, dungeonMob(attacker), dungeonMob(victim));
     }
 
     public static void onChangeTarget(LivingChangeTargetEvent e) {

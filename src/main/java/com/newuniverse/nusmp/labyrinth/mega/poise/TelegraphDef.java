@@ -34,8 +34,9 @@ public record TelegraphDef(TelegraphShape shape, boolean armor, int minWind, boo
 
     /** The length of a line for this ability: how far a dash or dive travels (about one block per tick), never past the ability's own range. */
     public double lengthFor(FoundryAbility a) {
-        double travel = Math.max(3.0, a.dur() * 1.05);
-        return a.max() > 0.0 ? Math.min(travel, a.max()) : travel;
+        double travel = a.dur() > 0 ? a.dur() * 1.05 : a.max() > 0.0 ? a.max() : 3.0;      // a dash is as long as it travels; a beam (a pull) as long as its range
+        travel = Math.max(3.0, travel);
+        return a.max() > 0.0 ? Math.min(travel, Math.max(3.0, a.max())) : travel;
     }
 
     /** Does a point at local {@code (f, s)} fall on the ground this attack hits? (The same test that draws it.) */

@@ -27,7 +27,7 @@ public final class FoundryConfig {
                 .defineInRange("weight", 60, 0, 100);
         ABILITIES = b.comment("Foundry mobs use their abilities. false = they only walk and hit (a quick way to see whether an ability is what is hurting).")
                 .define("abilities", true);
-        FACTION_WARS = b.comment("Foundry mobs of rival factions fight each other when no player is near (the turf wars of the eco package, for the foundry's single entity type). Default OFF since 1.107.0: the dungeon's monsters are one side and hunt the player; true brings the old quarrels back.")
+        FACTION_WARS = b.comment("Foundry mobs of rival factions fight each other when no player is near (the turf wars of the eco package, for the foundry's single entity type). Default OFF since 1.107.0: the dungeon's monsters are one side and hunt the player. It also needs foundry.poise.dungeonPassive = false to run.")
                 .define("factionWars", false);
         WAR_SCAN_TICKS = b.comment("Ticks between two looks for a rival of a foundry mob.")
                 .defineInRange("warScanTicks", 40, 10, 400);
@@ -54,7 +54,7 @@ public final class FoundryConfig {
                 .defineInRange("armorReduction", 0.35, 0.0, 0.9);
         STAGGER_TICKS = b.comment("How long a broken poise bar leaves the bearer helpless, in ticks (20 = one second).")
                 .defineInRange("staggerTicks", 50, 10, 200);
-        DUNGEON_PASSIVE = b.comment("The dungeon's monsters are one faction: none of them targets or hurts another (arrows, blasts, abilities included), unless the old quarrel switch of that monster is on (eco.turfWarsEnabled for ordinary monsters, foundry.factionWars for foundry mobs). Servants and pets of players are not affected. false = the old game.")
+        DUNGEON_PASSIVE = b.comment("The dungeon's monsters are one faction: none of them targets or hurts another (arrows, blasts, abilities included), and the old quarrels (eco.turfWarsEnabled, foundry.factionWars) do not run, whatever those two say. Servants and pets of players are not affected. false = the old game: those two switches decide again (both default to false).")
                 .define("dungeonPassive", true);
         b.pop();
         b.pop();

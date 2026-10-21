@@ -398,7 +398,7 @@ public final class FoundryGoals {
 
         @Override
         public boolean canUse() {
-            if (m.level().isClientSide || !FoundryConfig.get(FoundryConfig.FACTION_WARS) || m.faction() == null || m.isMinion()) return false;
+            if (m.level().isClientSide || !com.newuniverse.nusmp.labyrinth.mega.poise.Passivity.factionWarsRun() || m.faction() == null || m.isMinion()) return false;
             if (m.tickCount < next) return false;
             next = m.tickCount + FoundryConfig.get(FoundryConfig.WAR_SCAN_TICKS) + m.getRandom().nextInt(8);
             LivingEntity cur = m.getTarget();

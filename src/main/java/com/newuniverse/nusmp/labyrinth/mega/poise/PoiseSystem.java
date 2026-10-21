@@ -54,6 +54,8 @@ public final class PoiseSystem {
     private static boolean warned;
     private static volatile PoiseTuning tuning = PoiseTuning.DEFAULT;
     private static final Set<Mob> TRACKED = Collections.newSetFromMap(new WeakHashMap<>());
+    /** How long a swing or a drawn weapon keeps the super armor up (a vanilla swing lasts about 6 ticks). */
+    static final int ATTACK_ARMOR_TICKS = 10;
     static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "poise_desperate_speed");
 
     // ================================================================ what the rest of the mod asks
@@ -274,6 +276,7 @@ public final class PoiseSystem {
         if (d == null) return;
         PoiseTuning t = tuning;
         d.state.tick(now, 1, t);
+        if ((m.swinging || m.isUsingItem()) && !d.state.armored(now)) d.state.raiseArmor(now, ATTACK_ARMOR_TICKS);       // super armor during ANY attack: a swing, a drawn bow (telegraphed wind-ups raise it themselves)
         if (d.state.staggered(now) && !(m instanceof PoiseAware)) m.getNavigation().stop();
         if (m.tickCount % 5 != 0) return;
         float max = m.getMaxHealth();
