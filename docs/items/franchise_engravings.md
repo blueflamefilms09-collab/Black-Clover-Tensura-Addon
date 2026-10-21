@@ -42,7 +42,7 @@ Derived from: the relic waves (the class comment of a generated wave says what i
 | Delicious in Dungeon | 20 | 6 | Cook's Harvest, Hearty Party |
 | Made in Abyss | 21 | 11 | Delver's Resolve, Hunter's Whistle |
 | Tomb Raider King | 18 | 0 | Tomb Raider's Eye, Relic Hunter |
-| Yu-Gi-Oh! | 0 | 0 | Heart of the Cards, Trap Card |
+| Yu-Gi-Oh! | 1 | 0 | Heart of the Cards, Trap Card |
 | Naruto | 0 | 3 | Chakra Control, Substitution Jutsu |
 | Bleach | 0 | 4 | Bankai, Soul Burial |
 | One Piece | 0 | 5 | Armament Haki, Observation Haki |
@@ -51,9 +51,9 @@ Derived from: the relic waves (the class comment of a generated wave says what i
 | JoJo's Bizarre Adventure | 0 | 0 | Stand Rush, Life Giver |
 | The Exiled Heavy Knight Knows How to Game the System | 0 | 0 | Heavy Plate Discipline, Game the System |
 
-Total mapped items: 915 in 24 franchises (the map is `data/nusmp/relics/franchise_map.json`).
+Total mapped items: 916 in 25 franchises (the map is `data/nusmp/relics/franchise_map.json`).
 
-**Franchises with engravings but no mapped item yet (8):** Yu-Gi-Oh!, Naruto, Bleach, One Piece, Dragon Ball, Hunter x Hunter, JoJo's Bizarre Adventure, The Exiled Heavy Knight Knows How to Game the System. They appear in the owner's list and in skills / the labyrinth foundry, but no relic, weapon or armour of the mod comes from them today, so their engravings exist (anvil, Tensura's engraving screen, commands) and are put on automatically the day an item is mapped (add it to `tools/relics/franchise_overrides.json` or a wave that says `inspired by <work>`, then re-run the tool).
+**Franchises with engravings but no mapped item yet (7):** Naruto, Bleach, One Piece, Dragon Ball, Hunter x Hunter, JoJo's Bizarre Adventure, The Exiled Heavy Knight Knows How to Game the System. They appear in the owner's list and in skills / the labyrinth foundry, but no relic, weapon or armour of the mod comes from them today, so their engravings exist (anvil, Tensura's engraving screen, commands) and are put on automatically the day an item is mapped (add it to `tools/relics/franchise_overrides.json` or a wave that says `inspired by <work>`, then re-run the tool).
 
 **Works seen only as labyrinth mobs (no item, no engraving):** Akame ga Kill (1), Attack on Titan (7), Bloodborne (3), Chainsaw Man (1), Dark Souls (11), Demon Slayer (1), Dragon Quest (7), Elden Ring (4), Final Fantasy (2), Fire Force (7), Goblin Slayer (3), Monster Hunter (3), My Hero Academia (1), Princess Mononoke (7), Record of Ragnarok (5), Saint Seiya (4), Soul Eater (1), Spirited Away (5), Zelda (3). Items of unknown origin get no franchise.
 
@@ -356,6 +356,6 @@ Append-only edits to shared files: `NUSMP.java` (one line: `FranchiseBoot.init`)
 * `Fx.summon` allies are vanilla skeletons driven by the relic-summon sweep; their behaviour was not watched.
 * Items worn only in a Curios slot are engraved when they sit in the inventory (as every older engraving): an item that never touched an inventory after this release stays unengraved until it does.
 * The map is as good as the wave headers, the roster `src` fields and the overrides: the D&D default for waves 0 to 30 is the documented origin of those cards, not checked card by card; the manual overrides (the Black Clover swords, the Fairy Tail keys, Wave 45's two works) are the author's reading of the names. Wrong ones are fixed in `franchise_overrides.json`.
-* 8 franchises have no mapped item (above), so their engravings are untested on a real item.
+* 7 franchises have no mapped item (above), so their engravings are untested on a real item.
 * Balance numbers are first estimates against the grade tables; nothing was played.
 

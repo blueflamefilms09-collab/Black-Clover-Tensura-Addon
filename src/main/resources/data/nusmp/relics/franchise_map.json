@@ -25,7 +25,8 @@
   "solo_leveling": 19,
   "tensura": 3,
   "tomb_raider_king": 18,
-  "tower_of_god": 18
+  "tower_of_god": 18,
+  "yu_gi_oh": 1
  },
  "prefixes": {
   "black_bull_robe": "black_clover",
@@ -402,6 +403,7 @@
   "druidic_blade": "dnd",
   "dryads_wedding_band": "dnd",
   "duality_blade": "dnd",
+  "duel_disk_wrist_strap": "yu_gi_oh",
   "dwarfs_knife_roll": "delicious_in_dungeon",
   "echidnas_tea_set": "rezero",
   "efreetis_kusarigama": "dnd",

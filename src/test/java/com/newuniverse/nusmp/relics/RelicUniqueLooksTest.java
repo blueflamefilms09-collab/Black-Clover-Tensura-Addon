@@ -28,7 +28,7 @@ class RelicUniqueLooksTest {
 
     private static List<String> generatedIds(Map<String, String> palettes) throws IOException {
         List<String> ids = new ArrayList<>();
-        for (int n = 31; n < 81; n++) {
+        for (int n = 31; n < 106; n++) {
             Path p = WAVES.resolve("Wave" + n + ".java");
             if (!Files.exists(p)) continue;
             String t = Files.readString(p);
