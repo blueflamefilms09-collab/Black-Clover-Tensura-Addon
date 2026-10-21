@@ -77,6 +77,8 @@ public final class UnifiedTooltip {
                 if (c != 0) els.set(i, Either.left(line.copy().withColor(c & 0xFFFFFF)));
             }
             els.add(Math.min(1, els.size()), Either.right(new Data(HEAD, style.banner(), style.typeLine(), style.rgb(), maxWidth)));
+            Component franchise = com.newuniverse.nusmp.franchise.FranchiseEngravings.tooltipLine(stack);                // 1.111.0: the franchise line under the engraving list
+            if (franchise != null) els.add(Either.left(franchise));
             els.add(Either.right(new Data(FOOT, style.footer(), "", style.rgb(), maxWidth)));
         } catch (RuntimeException | LinkageError failed) {                                            // never drop the tooltip: the vanilla lines stay
             if (!warned) {

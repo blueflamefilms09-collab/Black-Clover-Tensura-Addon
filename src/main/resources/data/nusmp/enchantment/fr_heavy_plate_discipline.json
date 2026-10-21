@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.nusmp.fr_heavy_plate_discipline"
+  },
+  "supported_items": "#minecraft:enchantable/durability",
+  "weight": 1,
+  "max_level": 3,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 0
+  },
+  "anvil_cost": 1,
+  "slots": [
+    "any"
+  ],
+  "effects": {}
+}

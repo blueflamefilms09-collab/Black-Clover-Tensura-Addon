@@ -109,7 +109,8 @@ public class NUSMP {
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.particle.rukh.RukhParticles.init(modEventBus);                                               // 1.36.0: Dark and Light Rukh particle types
-        com.newuniverse.nusmp.particle.fx.FxBoot.init(modEventBus, modContainer);                                          // 1.103.0: the custom particle library (70 types), nusmp-particles-server.toml, /multiverse particles, self-test particles.custom
+        com.newuniverse.nusmp.franchise.FranchiseBoot.init(modEventBus, modContainer);                                     // 1.111.0: the franchise engravings (nusmp-franchise-server.toml, handlers, self-test item.franchise_engravings)
+        com.newuniverse.nusmp.particle.fx.FxBoot.init(modEventBus, modContainer);                                         // 1.103.0: the custom particle library (70 types), nusmp-particles-server.toml, /multiverse particles, self-test particles.custom
         com.newuniverse.nusmp.relics.forge.ForgeRegistry.init(modEventBus);                                                // 1.40.0: the Relic Forge (block item on NUItems.ITEMS: before its register)
         com.newuniverse.nusmp.labyrinth.LabyrinthSystem.init(modEventBus);                                                  // 1.35.0: the Labyrinth (blocks, gate, trials, seals, vault, processors; block items go on NUItems.ITEMS so this runs before its register)
         com.newuniverse.nusmp.celestial.CelestialSystem.init(modEventBus);                                                 // Celestial Spirit Magic: keys, the Spirit King, the Gate (before NUItems.ITEMS.register)

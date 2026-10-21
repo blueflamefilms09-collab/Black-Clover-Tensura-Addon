@@ -353,6 +353,7 @@ public abstract class GrimoireBook extends Skill {
         DreamWorld.onCast(player, castMagic);                                     // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts
+        com.newuniverse.nusmp.franchise.FranchiseEvents.onSpellCast(player);        // 1.111.0: franchise engravings of the held book (mana back, spell power)
         exhaustion(player);
         instance.markDirty();
     }

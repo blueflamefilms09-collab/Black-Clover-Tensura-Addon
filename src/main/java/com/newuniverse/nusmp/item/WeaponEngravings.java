@@ -173,6 +173,9 @@ public final class WeaponEngravings {
         Player p = e.getEntity();
         if (!(p instanceof ServerPlayer sp) || sp.tickCount % 20 != 7) return;
         var inv = sp.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); i++) engrave(inv.getItem(i), sp.registryAccess());
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            engrave(inv.getItem(i), sp.registryAccess());
+            com.newuniverse.nusmp.franchise.FranchiseEngravings.engrave(inv.getItem(i), sp.registryAccess());      // 1.111.0: the franchise engravings (own marker "NUFranchise")
+        }
     }
 }
