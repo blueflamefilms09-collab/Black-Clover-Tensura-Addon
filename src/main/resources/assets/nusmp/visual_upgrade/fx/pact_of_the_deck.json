@@ -1,0 +1,77 @@
+{
+ "id": "pact_of_the_deck",
+ "grade": "SPECIAL",
+ "ambient_sound": "nusmp:relic.ambient.pact_of_the_deck",
+ "draw_ticks": 10,
+ "layers": [
+  {
+   "name": "card fan",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "card_fan",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "pact cards",
+   "kind": "geometry",
+   "type": "orbit_shards",
+   "group": "pact_cards",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "life points",
+   "kind": "geometry",
+   "type": "pulse_glow",
+   "group": "life_points",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "deck top card",
+   "kind": "geometry",
+   "type": "ribbons",
+   "group": "deck_top_card",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "pact dust",
+   "kind": "particle",
+   "type": "motes",
+   "particle": "dust",
+   "count": 1,
+   "every": 6,
+   "radius": 0.4,
+   "rise": -0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "FFF3C0"
+  },
+  {
+   "name": "pact glints",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "end_rod",
+   "count": 1,
+   "every": 10,
+   "radius": 0.45,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ]
+  }
+ ]
+}

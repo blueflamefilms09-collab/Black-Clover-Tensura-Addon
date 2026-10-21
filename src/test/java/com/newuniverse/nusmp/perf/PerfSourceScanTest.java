@@ -137,7 +137,6 @@ class PerfSourceScanTest {
 
     @Test
     void auraLayerCardAndRuneTexturesAreCached() throws IOException {
-        assertFalse(BUILDS_LOCATION.matcher(code(method("vfx/client/layer/AuraLayer.java", "card").body())).find(), "the spell card builds locations per frame again");
         String rune = code(method("client/grimoire/GrimoireFloatClient.java", "runeTexture").body());
         assertTrue(rune.contains("PerfEpoch.get()") && rune.contains("RUNE_TEXTURES["), "the rune texture lookup lost its cache");
         String tex = code(method("client/aura/AuraRender.java", "tex").body());

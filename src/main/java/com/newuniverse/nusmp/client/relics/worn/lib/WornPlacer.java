@@ -65,6 +65,17 @@ public final class WornPlacer {
         }
     }
 
+    /**
+     * 1.110.0 (duel disk): a model made for one place on an arm (the disk of a deck relic and the cards that float beside it) is drawn where its file puts it, whatever its index among
+     * the relics of its slot: the hip and back places of {@link #place} are for models that hang on the body.
+     */
+    public static boolean armMounted(String model) {
+        return model != null && (model.contains("duel_disk") || model.endsWith("_cards_worn"));
+    }
+
+    /** The place of a model among the relics of its slot: {@link #place} for a model that hangs on the body, none for an {@link #armMounted} one. */
+    public static Placement place(String slot, int index, String model) { return armMounted(model) ? Placement.NONE : place(slot, index); }
+
     /** Shoulder, pauldron, bracer and gauntlet pieces sit on the arms: they are pulled toward the body. */
     public static boolean hugsBody(String model) {
         if (model == null) return false;

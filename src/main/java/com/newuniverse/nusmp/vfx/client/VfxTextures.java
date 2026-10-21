@@ -21,11 +21,12 @@ public final class VfxTextures {
     public static final ResourceLocation SPARK = t("spark");
     public static final ResourceLocation SHARD = t("shard");
     public static final ResourceLocation SPIRIT_SPIRAL = t("spirit_spiral");
-    public static final ResourceLocation CARD_FRAME = t("card_frame");
     public static final ResourceLocation CONSTRUCT_SWORD = t("construct_sword");
     public static final ResourceLocation CONSTRUCT_AXE = t("construct_axe");
     public static final ResourceLocation CONSTRUCT_SHIELD = t("construct_shield");
     public static final ResourceLocation MANA_MOTE = t("mana_mote");
+    /** 1.110.0: the atlas of the Deck of Many Things summon (22 card faces, back, rim, streak, ring, column; 8 x 4 cells). */
+    public static final ResourceLocation DECK_SUMMON = t("deck_summon");
 
     /** Lookup by short name (used by vfx/effects.json). */
     public static ResourceLocation byName(String name) { return t(name); }

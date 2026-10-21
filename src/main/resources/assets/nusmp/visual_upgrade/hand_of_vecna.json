@@ -215,7 +215,7 @@
   ],
   "choose_wish": [
    {
-    "shape": "SPELL_CARD",
+    "shape": "LIGHT_FLARE",
     "color": "C9A24A",
     "duration": 20,
     "power": 2.0,

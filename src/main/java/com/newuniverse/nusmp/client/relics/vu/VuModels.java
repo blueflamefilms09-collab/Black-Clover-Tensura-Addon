@@ -48,7 +48,15 @@ public final class VuModels {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides.txt"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
-                    VuOverrides t = VuOverrides.parse(in.lines().toList());
+                    List<String> all = new ArrayList<>(in.lines().toList());
+                    // 1.110.0 (duel disk): the table of the deck relics is read after the first one, so its lines win for the relics it names (an optional file)
+                    Optional<Resource> extra = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides_duel_disk.txt"));
+                    if (extra.isPresent()) {
+                        try (BufferedReader in2 = extra.get().openAsReader()) {
+                            all.addAll(in2.lines().toList());
+                        }
+                    }
+                    VuOverrides t = VuOverrides.parse(all);
                     for (String p : t.problems()) LogUtils.getLogger().error("[nusmp] visual_upgrade/overrides.txt: {}", p);
                     table = t;
                 }
