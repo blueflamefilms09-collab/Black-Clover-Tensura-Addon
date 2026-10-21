@@ -1199,3 +1199,7 @@ islot charter_grimoire_lucius CHARM
 islot charter_grimoire_devil_avatar CHARM
 islot charter_grimoire_goliath CHARM
 islot charter_grimoire_charybdis_spawn CHARM
+relic straw_hat_of_joy_boy w102_strawhat
+relic millennium_eye circlet_gem
+relic millennium_necklace chest_collar pauldron_plate@rarm pauldron_plate@larm~
+relic law_of_cycles_gown sleeves_flared@rarm sleeves_flared@larm~

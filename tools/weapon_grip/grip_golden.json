@@ -2863,6 +2863,14 @@
   "y": 16.443,
   "z": 0.0
  },
+ "sz/ackerman_twin_blades": {
+  "class": "dagger",
+  "fraction": 0.06,
+  "source": "directive",
+  "x": 0.0,
+  "y": 3.83,
+  "z": 1.362
+ },
  "sz/bloodbound_katana": {
   "class": "katana",
   "fraction": 0.133,
@@ -3062,6 +3070,14 @@
   "x": -0.002,
   "y": 5.781,
   "z": 0.009
+ },
+ "sz/thorn_princess_stiletto": {
+  "class": "dagger",
+  "fraction": 0.161,
+  "source": "directive",
+  "x": 0.0,
+  "y": 11.237,
+  "z": -0.473
  },
  "sz/unicorn_dagger": {
   "class": "dagger",
