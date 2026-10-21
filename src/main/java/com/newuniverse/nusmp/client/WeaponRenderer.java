@@ -302,7 +302,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static Mesh read(String id, String file, ResourceLocation tex, ResourceLocation glowTex) {
         Mesh mesh = null;
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl(file));
+            Optional<Resource> res = sizedResource(file);                            // 1.110.0: the thickened copy of a dagger / katana mesh (weapon_meshes_sz*), else the file itself
             if (res.isPresent()) {
                 mesh = new Mesh();
                 mesh.tex = tex != null ? tex : skin(id, "");
@@ -326,6 +326,20 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             mesh = null;
         }
         return mesh;
+    }
+
+    /**
+     * 1.110.0 (docs/visual_upgrade/weapon_sizes.md): the resource of a mesh file, preferring its thickened copy ({@link com.newuniverse.nusmp.visual.sizes.WeaponSizeRule#szPath}: daggers and katanas
+     * whose blade was a sliver); every other mesh, and a pack without the copies, reads the old file as before.
+     */
+    static Optional<Resource> sizedResource(String file) {
+        net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
+        String sz = com.newuniverse.nusmp.visual.sizes.WeaponSizeRule.szPath(file);
+        if (sz != null) {
+            Optional<Resource> own = rm.getResource(DemonSlayerRenderer.rl(sz));
+            if (own.isPresent()) return own;
+        }
+        return rm.getResource(DemonSlayerRenderer.rl(file));
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */

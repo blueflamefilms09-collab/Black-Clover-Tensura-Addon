@@ -1,0 +1,4 @@
+{
+  "weapon_sizes.selftest.ok": "Dagger and katana sizes: every blade is thick enough to see in the hand.",
+  "weapon_sizes.selftest.fail": "A dagger or katana mesh is outside its size range."
+}

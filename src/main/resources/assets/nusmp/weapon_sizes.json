@@ -1,0 +1,23 @@
+{
+  "_doc": "1.110.0 in-hand size rule of daggers and katanas (tools/relics/weapon_sizes.py builds the assets/nusmp/weapon_meshes_sz* copies from it; the Java class visual/sizes/WeaponSizeRule and its tests read it). Lengths and widths are apparent blocks in the hand (mesh size times the display scale of the model json); a vanilla sword is about 1.0 block long and its blade about 2.5 pixels (0.16 block) wide.",
+  "classes": {
+    "dagger": {
+      "len3p": 0.68, "k_len_max": 1.4, "len1p": 0.62, "fp_scale_max": 0.95, "grip": 0.20,
+      "bw_min_1p": 0.125, "bw_min_3p": 0.11, "bd_min": 0.05, "k_blade_max": 8.0,
+      "handle_min": 0.10, "k_handle_max": 3.5, "guard_min": 0.20, "guard_over_blade": 1.25, "k_guard_max": 2.6, "k_guard_z_max": 2.6,
+      "guard_default": 0.28, "ramp": 0.03
+    },
+    "katana": {
+      "len3p": null, "k_len_max": 1.0, "len1p": null, "fp_scale_max": 0.0, "grip": 0.20,
+      "bw_min_1p": 0.125, "bw_min_3p": 0.11, "bd_min": 0.06, "k_blade_max": 8.0,
+      "handle_min": 0.11, "k_handle_max": 3.5, "guard_min": 0.24, "guard_over_blade": 1.25, "k_guard_max": 2.6, "k_guard_z_max": 2.6,
+      "guard_default": 0.20, "ramp": 0.03
+    }
+  },
+  "tests": {
+    "dagger": { "len3p_min": 0.62, "len3p_max": 0.76, "len1p_min": 0.50, "len1p_max": 0.76, "bw_1p_min": 0.115, "bw_3p_min": 0.10, "bd_min": 0.045, "bw_1p_max": 0.40, "bd_max": 0.22 },
+    "katana": { "len3p_min": 1.40, "len3p_max": 1.80, "len1p_min": 0.85, "len1p_max": 1.55, "bw_1p_min": 0.115, "bw_3p_min": 0.10, "bd_min": 0.055, "bw_1p_max": 0.40, "bd_max": 0.22 }
+  },
+  "excluded": ["fairy_glitter_gauntlets", "fairy_heart_gauntlets"],
+  "sword_reference": { "length_3p": 1.0, "blade_width_px": 2.5 }
+}

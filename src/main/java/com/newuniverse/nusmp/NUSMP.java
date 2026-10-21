@@ -384,7 +384,8 @@ public class NUSMP {
         com.newuniverse.nusmp.vupgrade.DjinnDarkSelfTests.register();                                             // 1.108.0: self-test visual.djinn_dark_weapons (the 36 upgraded dark Djinn weapons: tables, meshes, skins, fallback)
         com.newuniverse.nusmp.relics.upgrade.UpgradeSelfTest.register();                                          // 1.102.0: visual upgrade: self-test visual.god_melee_a
         com.newuniverse.nusmp.visual.genesis.VuSelfTests.register();                                                // 1.102.0: self-test visual.genesis_weapons (assets of the upgraded Genesis weapons, the flag fallback)
-        com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                            // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
+        com.newuniverse.nusmp.visual.sizes.WeaponSizesSelfTests.register();                                        // 1.110.0: self-test visual.weapon_sizes (thickened dagger and katana meshes inside their size ranges, the old meshes kept)
+        com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                        // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy
