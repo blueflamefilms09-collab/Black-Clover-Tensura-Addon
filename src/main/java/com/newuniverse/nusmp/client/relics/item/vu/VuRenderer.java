@@ -333,6 +333,7 @@ public final class VuRenderer {
             return false;
         }
         VuPose ps = animate ? POSE.eval(sg, time, drawAge) : POSE.eval(sg, 0f, 1e9f);            // without animation (low quality, the LOD mesh) a group rests in its first pose
+        com.newuniverse.nusmp.visual.demonslayer.DsDynamics.apply(sg, ps, time);                // 1.108.0 demon_slayer: the stack-driven kinds (fracture, resonance) of the Genesis Demon-Slayer; a no-op for every other weapon
         if (ps.identity()) return false;
         float[] r = ps.r;
         ROT4.set(r[0], r[3], r[6], 0f, r[1], r[4], r[7], 0f, r[2], r[5], r[8], 0f, 0f, 0f, 0f, 1f);
