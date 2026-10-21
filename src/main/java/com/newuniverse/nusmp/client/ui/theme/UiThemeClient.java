@@ -16,5 +16,6 @@ public final class UiThemeClient {
         TensuraScreenTheme.init();
         com.newuniverse.nusmp.client.ui.codex.CodexClient.init(modBus);                  // 1.37.0: the data-driven Codex reloads with the resource packs
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.RelicTooltip::onColor);
+        com.newuniverse.nusmp.client.ui.tooltip.UnifiedTooltip.init(modBus);              // 1.110.0: every item of the mod gets the relic tooltip's layout (docs/ui/unified_tooltips.md)
     }
 }
