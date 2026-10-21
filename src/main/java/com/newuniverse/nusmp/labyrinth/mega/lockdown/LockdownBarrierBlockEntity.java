@@ -247,6 +247,7 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
         Component msg = LockdownMsg.text(LockdownText.WAVE, wave, waves).withStyle(ChatFormatting.GOLD);
         LockdownMsg.tellAll(inside, msg);
         LockdownMsg.toast(inside, com.newuniverse.nusmp.labyrinth.mega.system.ToastKind.INFO, LockdownText.TOAST_WAVE, Integer.toString(wave), Integer.toString(waves));
+        if (wave == 2) LockdownMsg.say(inside, "system_floor_sealed");                       // 1.110.0: spoken line ("sealed until every enemy has fallen"), said when the second wave comes
         Vec3 c = centre();
         level.playSound(null, c.x, c.y, c.z, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 1.0f, 0.7f);
     }
@@ -298,6 +299,7 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
         Fx.spray(level, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, c.x, c.y + 1.0, c.z, 40, 2.0, 1.0, 2.0, 0.05);
         LockdownMsg.tellAll(inside, LockdownMsg.text(LockdownText.CLEARED).withStyle(ChatFormatting.GREEN));
         LockdownMsg.toast(inside, com.newuniverse.nusmp.labyrinth.mega.system.ToastKind.SUCCESS, LockdownText.TOAST_CLEARED);
+        LockdownMsg.say(inside, "system_lockdown_clear");                                      // 1.110.0: spoken line
         NeoForge.EVENT_BUS.post(new RoomLockdownClearedEvent(level, sid, rid, w, sealed, inside));
     }
 

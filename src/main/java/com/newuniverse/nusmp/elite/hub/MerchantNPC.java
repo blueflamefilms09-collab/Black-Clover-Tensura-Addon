@@ -18,6 +18,7 @@ public class MerchantNPC extends HubNpcBase {
             ShopService.tellOff(player);
             return;
         }
+        com.newuniverse.nusmp.audio.voice.Voice.npc(player, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.GREET, true);   // 1.110.0: spoken greeting (the shop opens as before)
         openMenu(player, (id, inv, p) -> new HubMenus.ShopMenu(id, getId()));
         ShopService.sendState(player);
     }

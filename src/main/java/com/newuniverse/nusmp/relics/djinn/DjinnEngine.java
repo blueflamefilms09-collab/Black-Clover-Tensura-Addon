@@ -371,6 +371,7 @@ public final class DjinnEngine {
                 DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
                 l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.4f, 1.3f);
                 p.displayClientMessage(Component.literal(d.displayName() + " answers: a small shape of " + d.affinity().label.toLowerCase() + " at your shoulder.").withColor(d.color()), true);
+                com.newuniverse.nusmp.audio.voice.Voice.djinn(p, d.name(), "summon");                                                       // 1.110.0: the Djinn speaks (spoken line; the text above is shown as before)
             }
             case DjinnPhaseRules.HALF -> {
                 s.setPhase(DjinnPhaseRules.HALF);
@@ -393,6 +394,7 @@ public final class DjinnEngine {
                 l.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1.6f, 1.2f);
                 DjinnFx.bar(p, 48, p.getName().getString() + " becomes " + d.formName() + ".", d.glow());
                 p.sendSystemMessage(Component.literal("Full Djinn Equip: " + d.formName() + ". Ninety seconds. Fly with the jump key twice.").withColor(d.color()));
+                com.newuniverse.nusmp.audio.voice.Voice.djinn(p, d.name(), "summon");                                                       // 1.110.0: the Djinn speaks
             }
             case DjinnPhaseRules.EXTREME -> beginExtreme(p, s, r, d, now);
             default -> { }
@@ -700,6 +702,7 @@ public final class DjinnEngine {
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 3.0f, 0.5f);
         DjinnFx.bar(p, 64, d.extreme().name(), d.glow());
         p.sendSystemMessage(Component.literal("Extreme Magic: " + d.extreme().name() + ". " + d.extreme().blurb() + " Three seconds.").withColor(d.color()));
+        com.newuniverse.nusmp.audio.voice.Voice.djinn(p, d.name(), "attack");                                                           // 1.110.0: the Djinn calls the first attack of the cast
         DjinnMagic.telegraph(p, r, 0);
     }
 

@@ -1,0 +1,8 @@
+{
+  "nusmp.voice.role.system": "The System",
+  "nusmp.voice.role.boss": "Boss",
+  "nusmp.voice.role.npc": "Hub NPC",
+  "nusmp.voice.role.djinn": "Djinn",
+  "nusmp.voice.config.enabled": "Spoken voice lines",
+  "nusmp.voice.config.volume": "Spoken voice volume"
+}

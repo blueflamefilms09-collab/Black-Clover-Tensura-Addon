@@ -5,6 +5,7 @@ NUSMP.java
 anim/CastAnimPayload.java
 anim/SwordDrawPayload.java
 audio/music/MusicNet.java
+audio/voice/VoiceNet.java
 aura/PlayerAuraPayload.java
 avatar/net/AvatarNet.java
 blackclover/GrimoireSlot.java

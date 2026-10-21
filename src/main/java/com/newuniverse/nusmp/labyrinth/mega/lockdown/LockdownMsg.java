@@ -28,6 +28,11 @@ final class LockdownMsg {
         for (ServerPlayer p : ps) tell(p, c);
     }
 
+    /** The System announcer says a spoken line (audio/voice) to real players; the text is shown as before. */
+    static void say(List<ServerPlayer> ps, String voiceLine) {
+        for (ServerPlayer p : ps) com.newuniverse.nusmp.audio.voice.Voice.say(p, voiceLine);
+    }
+
     /** A System pop-up (a lang key under {@code message.nusmp.mega.system.lockdown}) for real players. */
     static void toast(List<ServerPlayer> ps, ToastKind kind, String key, String... args) {
         for (ServerPlayer p : ps) if (SystemSync.hasConnection(p)) SystemSync.toast(p, kind, key, args);

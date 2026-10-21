@@ -193,6 +193,7 @@ public final class DynamicAmbushDirector {
         lastText = o.text();
         LockdownMsg.tellAll(party, LockdownMsg.text(LockdownText.AMBUSH).withStyle(ChatFormatting.RED));
         LockdownMsg.toast(party, ToastKind.INFO, LockdownText.TOAST_AMBUSH);
+        LockdownMsg.say(party, "system_ambush_warning");                                       // 1.110.0: spoken line
         LOG.info("[nusmp] Ambush for {}: {} ({} monsters ahead, strikes before {})", p.getGameProfile().getName(), band.label(), o.mobs().size(), ledger.strikes(now, cfg) - 1);
         return new Result(AmbushRules.Why.FIRE, true, o.mobs().size(), band, o.text());
     }

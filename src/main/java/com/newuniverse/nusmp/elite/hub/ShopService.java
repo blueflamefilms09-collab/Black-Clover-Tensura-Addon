@@ -51,6 +51,7 @@ public final class ShopService {
         if (!sp.getInventory().add(goods) && !goods.isEmpty()) sp.drop(goods, false);
         d.recordPurchase(offer.id(), day, 1);
         QuestService.tell(sp, "message.nusmp.hub.shop.bought", "Bought %s x%s for %s.", new ItemStack(item).getHoverName(), offer.count(), CoinMath.describe(price));
+        com.newuniverse.nusmp.audio.voice.Voice.npc(sp, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.BUY, true);               // 1.110.0: spoken line
         return v;
     }
 
