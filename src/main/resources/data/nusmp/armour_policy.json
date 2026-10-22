@@ -182,6 +182,7 @@
   },
   "LIGHT": {
    "kind": "NONE",
+   "new_pages": ["bright_judgment_whip", "heaven_splitting_flash", "arrows_of_judgment", "avior_lamp", "absolute_monarch"],
    "canon": "Light Magic is rays, swords and healing (repo wiki: Healing Ray of Light, Light Sword of Judgment). The Light spirit form exists only as a spirit lord summon in this mod; a future Light Spirit Dive would be a FORM (follow-up), there is no worn armour to put on today."
   },
   "LIGHTNING": {
@@ -296,6 +297,7 @@
   },
   "BONE": {
    "kind": "NONE",
+   "new_pages": ["demon_sword_dainsleif", "spatial_rupture"],
    "legacy_auras": [
     "BONE"
    ],

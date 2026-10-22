@@ -48,8 +48,28 @@ public class LightBook extends GrimoireBook {
             BookPage.signature("lamp_of_avior", "Lamp of Avior Gloria", LightBook::lamp).withCooldown(900),
             BookPage.mid("light_speed", "Light Speed", LightBook::lightSpeed).withCooldown(60)), com.newuniverse.nusmp.book.ext.LightExt.pages());
 
+    /**
+     * 1.99.0 (the remake after the Black Clover wiki, {@link LightBoneJa}): the old five page ids at their old places (the same spells swapped for the new casts of {@link LightJaArts}, Light
+     * Speed kept), then the pages that are new. Shown while {@code magic.lightBoneJa} is on (the default); with it off the old pages above are shown (the old code stays).
+     */
+    private final List<BookPage> pagesJaAll = com.newuniverse.nusmp.book.ext.Ext.join(swapAll(pages), List.of(
+            BookPage.mid("bright_judgment_whip", "Bright Judgment Whip", LightJaArts.whip()).withAnim("sweep"),
+            BookPage.zone("heaven_splitting_flash", "Heaven-Splitting Flash", LightJaArts.flash()).withAnim("out"),
+            BookPage.zone("arrows_of_judgment", "Arrows of Judgment", LightJaArts.arrows()).withAnim("up"),
+            BookPage.mid("avior_lamp", "Lamp of Avior", LightJaArts.lamp()).withAnim("up"),
+            BookPage.signature("absolute_monarch", "Absolute Monarch of Divine Brilliance", LightJaArts.monarch()).withCooldown(1800).withAnim("signature")));
+
+    /** The old pages with the four spells of the wiki swapped for their new casts (same id, same place, same cost and cooldown); Light Speed stays as it was. */
+    private static List<BookPage> swapAll(List<BookPage> old) {
+        List<BookPage> l = LightBoneJaKit.swap(old, "judgment", "Light Sword of Judgment", LightJaArts.sword(), "out");
+        l = LightBoneJaKit.swap(l, "divine_punishment", "Light Shaft of Divine Punishment", LightJaArts.shaft(), "slam");
+        l = LightBoneJaKit.swap(l, "healing_ray", "Healing Ray of Light", LightJaArts.healingRay(), null);
+        return LightBoneJaKit.swap(l, "lamp_of_avior", "Lamp of Avior Gloria", LightJaArts.gloria(), "signature");
+    }
+
     public LightBook() { super(MagicType.LIGHT, 0xFFFFF2A8); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    @Override protected List<BookPage> familyPages() { return LightBoneJaKit.enabled() ? pagesJaAll : pages; }
+    @Override protected int pagesVersion() { return LightBoneJaKit.enabled() ? 1 : 0; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.LIGHT_ELEMENTAL; }
 
     /** A light hit: armour ignored, the spirit cut, held back only by an Aura barrier. */

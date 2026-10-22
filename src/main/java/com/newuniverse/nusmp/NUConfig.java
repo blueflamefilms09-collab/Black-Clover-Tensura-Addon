@@ -65,6 +65,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
+    public static final ModConfigSpec.BooleanValue LIGHT_BONE_JA;           // 1.99.0: Light and Bone Magic after the Black Clover wiki (book.LightBoneJa); false = the old pages
     public static final ModConfigSpec.BooleanValue BOSS_GLOBAL_BUFFS;                    // 1.25.0: Mod Boss Global Buff Engine
     public static final ModConfigSpec.DoubleValue BOSS_BUFF_MULTIPLIER;
     // 1.99.0: the armour policy (book.ArmourPolicy): how strong the worn armours and forms are and what they cost
@@ -161,6 +162,11 @@ public final class NUConfig {
                 .defineInRange("spellCooldownPercent", 60, 1, 1000);
         BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players: see pvpHitCapPercent).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
+        b.pop();
+
+        b.push("magic");
+        LIGHT_BONE_JA = b.comment("Light Magic and Bone Magic follow the Black Clover wiki spell lists (the remake): Light gets the Bright Judgment Whip, Heaven-Splitting Flash, Arrows of Judgment, Lamp of Avior and the Absolute Monarch of Divine Brilliance, Bone gets Bone Bullets, Eternal Fangs, Demon Sword Dainsleif and Spatial Rupture.",
+                "false = the old pages of both books (every old page id stays either way).").define("lightBoneJa", true);
         b.pop();
 
         b.push("magic_gear");

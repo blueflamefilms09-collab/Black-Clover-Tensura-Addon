@@ -135,14 +135,20 @@ public final class ElementBooks {
                 zone("pack_hunt", "Pack Hunt", constructs(6, 4, 160)))).plus(com.newuniverse.nusmp.book.ext.BeastExt.pages());
     }
 
+    /** 1.99.0: Bone Magic is now {@link BoneBook}: the old pages below (unchanged) plus the remake after the Black Clover wiki, switched by {@code magic.lightBoneJa}. */
     public static GrimoireBook bone() {
-        return new ElementBook(MagicType.BONE, 0xFFE8E0C8, TensuraDamageTypes.MAGIC_GENERIC, List.of(
+        return new BoneBook(com.newuniverse.nusmp.book.ext.Ext.join(legacyBonePages(), com.newuniverse.nusmp.book.ext.BoneExt.pages()));
+    }
+
+    /** The Bone Magic pages as they were before the remake (kept; shown while {@code magic.lightBoneJa} is off, and Bone Armor, Rib Cage and Bone Rain are reused by the remake). */
+    static List<BookPage> legacyBonePages() {
+        return List.of(
                 starter("bone_spear", "Bone Spear", bolt(9, 1.8, 0.5, 16, true, 0, VfxShape.THREAD_LINE, null, NONE)),
                 mid("bone_armor", "Bone Armor", empower(240, 0, true, VfxShape.WEAPON_CONSTRUCTS, () -> new MobEffectInstance(MobEffects.ABSORPTION, 240, 1))),
                 signature("ossuary", "Ossuary", line(14, 10, 1.4, VfxShape.EARTH_SPIKES, lift(0.6))),
                 // 0.49 (appended)
                 starter("rib_cage", "Rib Cage", bind(6, 14, false, VfxShape.EARTH_SPIKES, NONE)),
-                zone("bone_rain", "Bone Rain", field(4, 4.5, 80, 15, true, VfxShape.THREAD_LINE, NONE)))).plus(com.newuniverse.nusmp.book.ext.BoneExt.pages());
+                zone("bone_rain", "Bone Rain", field(4, 4.5, 80, 15, true, VfxShape.THREAD_LINE, NONE)));
     }
 
     public static GrimoireBook blood() {
