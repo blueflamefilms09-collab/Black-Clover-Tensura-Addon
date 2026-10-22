@@ -3,13 +3,19 @@ package com.newuniverse.nusmp.client.prop;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.client.aura.AuraRender;
+import com.newuniverse.nusmp.client.particle.fx.FxClientLod;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.RecombAnimeRules;
+import com.newuniverse.nusmp.perf.PerfProbe;
+import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.prop.RecombAnimeRules.Clip;
 import com.newuniverse.nusmp.vfx.client.RecombAnimeFx;
 import com.newuniverse.nusmp.vfx.client.VfxShake;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -17,9 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Recombination Magic, the anime look ({@code visual.recombAnime}, {@link RecombAnimeOptions}): how the constructs of the magic house are drawn when it is on. {@link RecombinationPropPainter} hands its
@@ -41,7 +44,7 @@ import java.util.Map;
 public final class RecombAnimePainter {
     private RecombAnimePainter() {}
 
-    private static final GeoSpec GOLEM = GeoSpec.of("recombanime", "golem"), HOUSE = GeoSpec.of("recombanime", "house"), RING = GeoSpec.of("recombanime", "ring"), DRILL = GeoSpec.of("recombanime", "drill");
+    private static final GeoSpec GOLEM = GeoSpec.of("recombanime", "golem"), GOLEM_LOD = GeoSpec.of("recombanime", "golem_lod"), HOUSE = GeoSpec.of("recombanime", "house"), RING = GeoSpec.of("recombanime", "ring"), DRILL = GeoSpec.of("recombanime", "drill");
     private static ResourceLocation shadow;
 
     private static ResourceLocation shadowTex() {
@@ -66,14 +69,31 @@ public final class RecombAnimePainter {
         long seen;
     }
 
-    private static final Map<Integer, St> STATES = new HashMap<>();
+    /** Keyed by the prop's int id with no boxing (fastutil): looked up once per frame per prop. */
+    private static final Int2ObjectOpenHashMap<St> STATES = new Int2ObjectOpenHashMap<>();
+    private static final RecombAnimeRules.FrameBudget FULL_BUDGET = new RecombAnimeRules.FrameBudget();
+    private static final Quaternionf TURN = new Quaternionf();                          // scratch for the drill (render thread only): nothing is allocated per frame
+    private static final PerfProbe.Section PROBE = PerfProbe.section("c.recomb.paint");
+
+    /** Squared distance from the camera to a prop (0 when there is no camera yet): the level of detail and the culling ask it once per frame. */
+    private static double camDistSq(MagicPropEntity e) {
+        try {
+            Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
+            if (cam == null || !cam.isInitialized()) return 0.0;
+            Vec3 c = cam.getPosition();
+            double dx = c.x - e.getX(), dy = c.y - e.getY(), dz = c.z - e.getZ();
+            return dx * dx + dy * dy + dz * dz;
+        } catch (RuntimeException ex) {
+            return 0.0;
+        }
+    }
 
     private static St state(MagicPropEntity e) {
         St s = STATES.get(e.getId());
         long now = e.level().getGameTime();
         if (s == null) {
             if (STATES.size() >= RecombAnimeRules.STATE_CAP) {
-                for (Iterator<St> it = STATES.values().iterator(); it.hasNext(); ) if (now - it.next().seen > RecombAnimeRules.STATE_STALE_TICKS) it.remove();
+                STATES.values().removeIf(old -> now - old.seen > RecombAnimeRules.STATE_STALE_TICKS);
                 if (STATES.size() >= RecombAnimeRules.STATE_CAP) STATES.clear();                        // many golems at once: start the table again rather than grow it
             }
             s = new St();
@@ -87,6 +107,15 @@ public final class RecombAnimePainter {
 
     // ------------------------------------------------------------------------------------------------ the golem
     public static void golem(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
+        long t0 = PerfProbe.begin();
+        try {
+            golem0(e, partial, age, pose, buffers, light);
+        } finally {
+            PerfProbe.end(PROBE, t0);
+        }
+    }
+
+    private static void golem0(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
         Level level = e.level();
         float maxL = Math.max(1f, e.maxLife());
         int p = e.param();
@@ -94,6 +123,9 @@ public final class RecombAnimePainter {
         boolean big = RecombAnimeRules.ultra(p);
         float grow = big ? smooth((RecombAnimeRules.ultraSince(p, now) + partial) / 16f) : 0f;
         float sc = RecombAnimeRules.renderScale(e.scale(), grow);
+        double dsq = camDistSq(e);
+        int lod = RecombAnimeRules.lod(dsq, PerfSettings.auraLodNear(), PerfSettings.vfxQuality().detail, sc);
+        if (lod == RecombAnimeRules.LOD_FULL && !FULL_BUDGET.take(RecombAnimeRules.frameKey(now, partial), RecombAnimeRules.FULL_GOLEMS_PER_FRAME)) lod = RecombAnimeRules.LOD_LOW;       // at most 3 full golems a frame
         St st = state(e);
         int st3 = RecombAnimeRules.state(p), since = RecombAnimeRules.since(p, now);
         int tick = e.tickCount;
@@ -107,19 +139,21 @@ public final class RecombAnimePainter {
             float prev = st.phase;
             if (st.still < 4) st.phase = RecombAnimeRules.advancePhase(st.phase, Math.min(dist, 4.0), sc);
             st.tick = tick;
-            events(e, level, st, sc, tick, elapsed, st3, since, maxL, prev);
+            if (dsq <= RecombAnimeRules.EVENT_RANGE_SQ) events(e, level, st, sc, tick, elapsed, st3, since, maxL, prev);       // far away nothing is spawned (the particles would be dropped anyway)
         }
         boolean moving = st.still < 4;
         float phaseNow = st.still < 4 ? RecombAnimeRules.advancePhase(st.phase, st.speed * partial, sc) : st.phase;
         Clip clip = RecombAnimeRules.clip(st3, since, age, maxL, moving);
         float secs = RecombAnimeRules.clipSeconds(clip, since + partial, age, maxL, phaseNow);
         float sinkOut = clip == Clip.COLLAPSE ? 1f - smooth((age - (maxL - RecombAnimeRules.COLLAPSE_TICKS)) / RecombAnimeRules.COLLAPSE_TICKS) : 1f;
+        if (lod == RecombAnimeRules.LOD_CULL) return;                                    // too far to see: the state above still advanced, nothing is drawn
         shade(pose, buffers, 3.9f * sc * (0.4f + 0.6f * sinkOut), 0.42f * sinkOut, light);
         float eyes = (0.72f + 0.28f * Mth.sin(age * 0.2f)) * (1f + 0.5f * grow);
         if (clip == Clip.PUNCH || clip == Clip.FIRE_VOLLEY || big) eyes = 1f;
         pose.pushPose();
         pose.scale(sc, sc, sc);
-        GeoDraw.paint(pose, buffers, GOLEM, clip.id, secs, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, AuraRender.alpha(0xFFFFFFFF, Math.min(1f, eyes)));
+        if (lod == RecombAnimeRules.LOD_FULL) GeoDraw.paint(pose, buffers, GOLEM, clip.id, secs, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, AuraRender.alpha(0xFFFFFFFF, Math.min(1f, eyes)));
+        else GeoDraw.paint(pose, buffers, GOLEM_LOD, clip.id, secs, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);                    // low poly, no glow pass
         pose.popPose();
     }
 
@@ -171,6 +205,7 @@ public final class RecombAnimePainter {
     // ------------------------------------------------------------------------------------------------ the house
     public static void house(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
         float s = Math.max(0.3f, e.scale()), maxL = Math.max(1f, e.maxLife());
+        boolean far = RecombAnimeRules.cullSmall(camDistSq(e), PerfSettings.auraLodFar(), PerfSettings.vfxQuality().detail);
         boolean swap = e.param() == 1;
         String clip = age < 10f ? (swap ? "swap" : "rise") : "idle";
         float sink = smooth((maxL - age) / 8f);
@@ -184,6 +219,7 @@ public final class RecombAnimePainter {
                 if ((e.tickCount + e.seed()) % 12 == 0) RecombAnimeFx.chimneySmoke(e.level(), e.getX() + 0.45 * s, e.getY() + 2.5 * s, e.getZ(), 0.8f * s);
             }
         }
+        if (far) return;
         float k = 1.25f * s;
         shade(pose, buffers, 1.2f * k * sink, 0.3f * sink, light);
         pose.pushPose();
@@ -197,7 +233,7 @@ public final class RecombAnimePainter {
     public static void ring(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
         float s = Math.max(0.4f, e.scale()), maxL = Math.max(1f, e.maxLife());
         float k = smooth(age / 6f) * smooth((maxL - age) / 8f);
-        if (k <= 0.01f) return;
+        if (k <= 0.01f || RecombAnimeRules.cullSmall(camDistSq(e), PerfSettings.auraLodFar(), PerfSettings.vfxQuality().detail)) return;
         pose.pushPose();
         pose.translate(0f, -1.4f * s * 0.65f + 0.2f * Mth.sin(age * 0.2f), 0f);
         float sc = s * 0.65f;
@@ -210,11 +246,11 @@ public final class RecombAnimePainter {
     public static void drill(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
         float maxL = Math.max(1f, e.maxLife());
         float k = smooth(age / 3f) * smooth((maxL - age) / 3f);
-        if (k <= 0.01f) return;
+        if (k <= 0.01f || RecombAnimeRules.cullSmall(camDistSq(e), PerfSettings.auraLodFar(), PerfSettings.vfxQuality().detail)) return;
         double vx = e.getX() - e.xo, vy = e.getY() - e.yo, vz = e.getZ() - e.zo;
         pose.pushPose();
         pose.translate(0f, 0.3f, 0f);
-        if (vx * vx + vy * vy + vz * vz > 1.0e-4) pose.mulPose(new Quaternionf().rotationTo(0f, 1f, 0f, (float) vx, (float) vy, (float) vz));
+        if (vx * vx + vy * vy + vz * vz > 1.0e-4) pose.mulPose(TURN.rotationTo(0f, 1f, 0f, (float) vx, (float) vy, (float) vz));
         pose.translate(0f, -0.4f, 0f);
         float s = 0.9f * k;
         pose.scale(s, s, s);

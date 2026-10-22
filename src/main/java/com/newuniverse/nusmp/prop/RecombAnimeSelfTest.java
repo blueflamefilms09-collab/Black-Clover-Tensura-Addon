@@ -91,9 +91,17 @@ public final class RecombAnimeSelfTest {
             if (RecombAnimeRules.clip(0, 0, 1190f, 1200f, true) != RecombAnimeRules.Clip.COLLAPSE) return SelfTests.Result.fail("the rules do not collapse at the end");
             if (RecombAnimeRules.cycleBlocks(0.84f) <= 0.5f) return SelfTests.Result.fail("the stride is too short");
             if (RecombAnimeRules.footfalls(0.2f, 0.3f) != 1 || RecombAnimeRules.footfalls(0.7f, 0.8f) != 2) return SelfTests.Result.fail("the footfalls are not at 0.25 and 0.75 of the cycle");
+            // no lag (rule 11): the caps hold against a crowd and the oldest construct is the one handed back to end
+            var ledger = new com.newuniverse.nusmp.book.RecombinationBudget.Ledger<Integer>(com.newuniverse.nusmp.book.RecombinationBudget.GOLEMS_PER_OWNER, com.newuniverse.nusmp.book.RecombinationBudget.GOLEMS_PER_LEVEL);
+            for (int i = 0; i < 100; i++) {
+                var out = ledger.add("caster" + (i % 30), i);
+                if (ledger.size() > com.newuniverse.nusmp.book.RecombinationBudget.GOLEMS_PER_LEVEL) return SelfTests.Result.fail("the golem ledger holds " + ledger.size());
+                if (out.contains(i)) return SelfTests.Result.fail("the ledger evicted the construct just added");
+            }
+            if (RecombAnimeRules.lod(10.0, 48, 1f, 0.84f) != RecombAnimeRules.LOD_FULL || RecombAnimeRules.lod(1.0e6, 48, 1f, 0.84f) != RecombAnimeRules.LOD_CULL) return SelfTests.Result.fail("the level of detail does not cull far golems");
         } catch (IOException | RuntimeException e) {
             return SelfTests.Result.fail(String.valueOf(e));
         }
-        return SelfTests.Result.ok("4 anime models, 4 older models kept, " + RecombAnimeRules.PARTICLE_IDS.length + " particle ids, 4 behaviours");
+        return SelfTests.Result.ok(RecombAnimeRules.MODELS.length + " anime models (with the low-poly golem), 4 older models kept, " + RecombAnimeRules.PARTICLE_IDS.length + " particle ids, 4 behaviours, ledgers and level of detail");
     }
 }

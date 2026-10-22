@@ -135,8 +135,8 @@ def counter(a, clip, foot, parents):
 
 
 # ================================================================================================================================ the golem
-def golem():
-    sh = Sheet(KEY, "golem", tex_w=2048, K=3.4, seed=7)
+def golem(lod=False):
+    sh = Sheet(KEY, "golem_lod" if lod else "golem", tex_w=1024 if lod else 2048, K=2.0 if lod else 3.4, seed=7)
     sh.bone("root", pivot=(0, 0, 0))
     sh.bone("hips", "root", (0, 46, 0))
     sh.bone("leg_l", "hips", (14, 46, 0))
@@ -156,99 +156,142 @@ def golem():
     sh.bone("chimney", "torso", (27, 108, -5))
     sh.bone("treetop", "torso", (-22, 106, 0))
 
-    # ---- pelvis: a stone platform on arches
-    sh.cube("hips", (-28, 46, -16), (56, 6, 32), base=stone(base=(150, 144, 134), blk=9.0, row=3.0, moss="bottom"), faces={
-        "north": stone(windows=[(14, 3.2, 4.4, 4.2, "dark"), (28, 3.2, 4.4, 4.2, "dark"), (42, 3.2, 4.4, 4.2, "dark")], base=(150, 144, 134), blk=9.0, row=3.0)},
-        hide=("bottom", "top"))
-
-    # ---- legs: thick pillars of stone and timber on stone slabs
-    for sx, n in ((1, "l"), (-1, "r")):
-        cx = 14 * sx
-        leg, shin, foot = "leg_" + n, "shin_" + n, "foot_" + n
-        sh.cube(foot, (cx - 13, 0, -17), (26, 5, 30), base=stone(base=(168, 162, 150), blk=9.0, row=2.6, moss="bottom"), faces={"top": ("grass", {"cover": 0.5})}, hide=("bottom",))
-        sh.cube(shin, (cx - 9.5, 5, -9.5), (19, 17, 19), base=brick(bw=6.0, bh=3.0, base=(168, 100, 72), moss="bottom"), faces={"top": stone()}, hide=("top", "bottom"))
-        sh.cube(shin, (cx - 10.4, 9.5, -10.4), (20.8, 2.2, 20.8), base=("iron", {}), hide=("top", "bottom"))
-        sh.cube(leg, (cx - 11.5, 22, -11.5), (23, 4, 23), base=stone(base=(176, 170, 158), blk=8.0, row=2.2), hide=("bottom",))
-        sh.cube(leg, (cx - 10, 26, -10), (20, 20, 20), base=timber(bay=20.0, rails=[], windows=[(10, 10, 5.5, 9, "lit" if sx > 0 else "dark")]), faces={
-            "north": timber(windows=[(10, 9.5, 6, 9.5, "lit")], bay=20.0, rails=[], shutters=True), "south": stone(base=(160, 154, 144), moss="top"),
-            "west": stone(windows=[(10, 10, 5, 8, "dark")], base=(160, 154, 144), moss="top"), "east": stone(windows=[(10, 10, 5, 8, "dark")], base=(160, 154, 144), moss="top")},
+    def full_cubes():
+        # ---- pelvis: a stone platform on arches
+        sh.cube("hips", (-28, 46, -16), (56, 6, 32), base=stone(base=(150, 144, 134), blk=9.0, row=3.0, moss="bottom"), faces={
+            "north": stone(windows=[(14, 3.2, 4.4, 4.2, "dark"), (28, 3.2, 4.4, 4.2, "dark"), (42, 3.2, 4.4, 4.2, "dark")], base=(150, 144, 134), blk=9.0, row=3.0)},
             hide=("bottom", "top"))
 
-    # ---- belly: a plastered house with a door, under a slate cornice
-    sh.cube("torso", (-22, 52, -14), (44, 16, 28), base=timber(bay=14.0, rails=[], windows=[(7, 7.5, 5, 7.5, "lit"), (37, 7.5, 5, 7.5, "lit")], door=(22, 7.2, 11.5)), faces={
-        "north": timber(bay=14.0, rails=[], windows=[(7, 7.5, 5, 7.5, "lit"), (37, 7.5, 5, 7.5, "lit")], door=(22, 7.2, 11.5)),
-        "south": timber(bay=14.0, rails=[], windows=[(11, 7.5, 5, 7.5, "lit"), (33, 7.5, 5, 7.5, "dark")]),
-        "west": timber(bay=14.0, rails=[], windows=[(14, 7.5, 5, 7.5, "lit")]), "east": timber(bay=14.0, rails=[], windows=[(14, 7.5, 5, 7.5, "dark")])},
-        hide=("bottom", "top"))
-    sh.cube("torso", (-26, 68, -18), (52, 3, 36), base=roof("tile", across=True), faces={"top": ("slate", {"tone": "tile", "across": True})}, hide=("bottom",))
+        # ---- legs: thick pillars of stone and timber on stone slabs
+        for sx, n in ((1, "l"), (-1, "r")):
+            cx = 14 * sx
+            leg, shin, foot = "leg_" + n, "shin_" + n, "foot_" + n
+            sh.cube(foot, (cx - 13, 0, -17), (26, 5, 30), base=stone(base=(168, 162, 150), blk=9.0, row=2.6, moss="bottom"), faces={"top": ("grass", {"cover": 0.5})}, hide=("bottom",))
+            sh.cube(shin, (cx - 9.5, 5, -9.5), (19, 17, 19), base=brick(bw=6.0, bh=3.0, base=(168, 100, 72), moss="bottom"), faces={"top": stone()}, hide=("top", "bottom"))
+            sh.cube(shin, (cx - 10.4, 9.5, -10.4), (20.8, 2.2, 20.8), base=("iron", {}), hide=("top", "bottom"))
+            sh.cube(leg, (cx - 11.5, 22, -11.5), (23, 4, 23), base=stone(base=(176, 170, 158), blk=8.0, row=2.2), hide=("bottom",))
+            sh.cube(leg, (cx - 10, 26, -10), (20, 20, 20), base=timber(bay=20.0, rails=[], windows=[(10, 10, 5.5, 9, "lit" if sx > 0 else "dark")]), faces={
+                "north": timber(windows=[(10, 9.5, 6, 9.5, "lit")], bay=20.0, rails=[], shutters=True), "south": stone(base=(160, 154, 144), moss="top"),
+                "west": stone(windows=[(10, 10, 5, 8, "dark")], base=(160, 154, 144), moss="top"), "east": stone(windows=[(10, 10, 5, 8, "dark")], base=(160, 154, 144), moss="top")},
+                hide=("bottom", "top"))
 
-    # ---- chest: stone base and a timber-framed storey of arched windows
-    sh.cube("torso", (-32, 71, -17), (64, 7, 34), base=stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom"), faces={
-        "north": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom", windows=[(10, 3.5, 4.4, 4.6, "dark"), (54, 3.5, 4.4, 4.6, "dark")]),
-        "west": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom"), "east": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom")}, hide=("bottom", "top"))
-    chest_front = timber(bay=12.8, windows=[(6.4, 10.5, 6, 10.5, "lit"), (19.2, 10.5, 6, 10.5, "dark"), (32, 10.5, 7, 11.5, "lit"), (44.8, 10.5, 6, 10.5, "dark"), (57.6, 10.5, 6, 10.5, "lit")], shutters=True, moss="top")
-    chest_back = timber(bay=12.8, windows=[(6.4, 10.5, 6, 10.5, "dark"), (19.2, 10.5, 6, 10.5, "lit"), (32, 10.5, 7, 11.5, "dark"), (44.8, 10.5, 6, 10.5, "lit"), (57.6, 10.5, 6, 10.5, "dark")], moss="top")
-    chest_side = timber(bay=17.0, windows=[(8.5, 10.5, 6, 10.5, "lit"), (25.5, 10.5, 6, 10.5, "lit")], moss="top")
-    sh.cube("torso", (-32, 78, -17), (64, 20, 34), base=chest_front, faces={"north": chest_front, "south": chest_back, "west": chest_side, "east": chest_side}, hide=("bottom", "top"))
-    sh.cube("torso", (-33.5, 77.3, -18.5), (67, 1.6, 37), base=("iron", {}), hide=("bottom",), faces={"top": ("iron", {})})
+        # ---- belly: a plastered house with a door, under a slate cornice
+        sh.cube("torso", (-22, 52, -14), (44, 16, 28), base=timber(bay=14.0, rails=[], windows=[(7, 7.5, 5, 7.5, "lit"), (37, 7.5, 5, 7.5, "lit")], door=(22, 7.2, 11.5)), faces={
+            "north": timber(bay=14.0, rails=[], windows=[(7, 7.5, 5, 7.5, "lit"), (37, 7.5, 5, 7.5, "lit")], door=(22, 7.2, 11.5)),
+            "south": timber(bay=14.0, rails=[], windows=[(11, 7.5, 5, 7.5, "lit"), (33, 7.5, 5, 7.5, "dark")]),
+            "west": timber(bay=14.0, rails=[], windows=[(14, 7.5, 5, 7.5, "lit")]), "east": timber(bay=14.0, rails=[], windows=[(14, 7.5, 5, 7.5, "dark")])},
+            hide=("bottom", "top"))
+        sh.cube("torso", (-26, 68, -18), (52, 3, 36), base=roof("tile", across=True), faces={"top": ("slate", {"tone": "tile", "across": True})}, hide=("bottom",))
 
-    # ---- shoulder houses: gabled roofs, a chimney on the left, a small tree on the right
-    gable_roof(sh, "torso", 22, 98, 10, 34, 9.5, tone="slate", moss="top", wall=timber(bay=20.0, rails=[], windows=[(10, 1.4, 3, 2.2, "lit")]))
-    gable_roof(sh, "torso", -22, 98, 10, 34, 9.5, tone="tile", moss="top", wall=timber(bay=20.0, rails=[], windows=[(10, 1.4, 3, 2.2, "lit")]))
-    sh.cube("chimney", (24.5, 102, -8), (6, 15, 6), base=("chimney", {}), faces={"top": stone(base=(80, 72, 70))}, hide=("bottom",))
-    sh.cube("chimney", (23.7, 116.4, -8.8), (7.6, 2.0, 7.6), base=stone(base=(176, 170, 158), blk=5.0, row=2.0), hide=("bottom",))
-    sh.cube("treetop", (-23.6, 104, -1.6), (3.2, 9, 3.2), base=WOOD, hide=("bottom",), faces={"top": WOOD})
-    sh.cube("treetop", (-29, 111, -6), (14, 6, 12), base=LEAVES, hide=("bottom",))
-    sh.cube("treetop", (-27, 116.5, -4.5), (10, 5, 9), base=LEAVES, hide=("bottom",))
-    sh.cube("treetop", (-25, 120.8, -3), (6, 4, 6), base=LEAVES, hide=("bottom",))
+        # ---- chest: stone base and a timber-framed storey of arched windows
+        sh.cube("torso", (-32, 71, -17), (64, 7, 34), base=stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom"), faces={
+            "north": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom", windows=[(10, 3.5, 4.4, 4.6, "dark"), (54, 3.5, 4.4, 4.6, "dark")]),
+            "west": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom"), "east": stone(base=(150, 144, 134), blk=9.0, row=3.5, moss="bottom")}, hide=("bottom", "top"))
+        chest_front = timber(bay=12.8, windows=[(6.4, 10.5, 6, 10.5, "lit"), (19.2, 10.5, 6, 10.5, "dark"), (32, 10.5, 7, 11.5, "lit"), (44.8, 10.5, 6, 10.5, "dark"), (57.6, 10.5, 6, 10.5, "lit")], shutters=True, moss="top")
+        chest_back = timber(bay=12.8, windows=[(6.4, 10.5, 6, 10.5, "dark"), (19.2, 10.5, 6, 10.5, "lit"), (32, 10.5, 7, 11.5, "dark"), (44.8, 10.5, 6, 10.5, "lit"), (57.6, 10.5, 6, 10.5, "dark")], moss="top")
+        chest_side = timber(bay=17.0, windows=[(8.5, 10.5, 6, 10.5, "lit"), (25.5, 10.5, 6, 10.5, "lit")], moss="top")
+        sh.cube("torso", (-32, 78, -17), (64, 20, 34), base=chest_front, faces={"north": chest_front, "south": chest_back, "west": chest_side, "east": chest_side}, hide=("bottom", "top"))
+        sh.cube("torso", (-33.5, 77.3, -18.5), (67, 1.6, 37), base=("iron", {}), hide=("bottom",), faces={"top": ("iron", {})})
 
-    # ---- the terrace between the shoulders carries the head
-    sh.cube("torso", (-12, 97.6, -17), (24, 2.4, 34), base=stone(base=(168, 162, 150), blk=8.0, row=2.2), faces={"top": GRASS}, hide=("bottom",))
+        # ---- shoulder houses: gabled roofs, a chimney on the left, a small tree on the right
+        gable_roof(sh, "torso", 22, 98, 10, 34, 9.5, tone="slate", moss="top", wall=timber(bay=20.0, rails=[], windows=[(10, 1.4, 3, 2.2, "lit")]))
+        gable_roof(sh, "torso", -22, 98, 10, 34, 9.5, tone="tile", moss="top", wall=timber(bay=20.0, rails=[], windows=[(10, 1.4, 3, 2.2, "lit")]))
+        sh.cube("chimney", (24.5, 102, -8), (6, 15, 6), base=("chimney", {}), faces={"top": stone(base=(80, 72, 70))}, hide=("bottom",))
+        sh.cube("chimney", (23.7, 116.4, -8.8), (7.6, 2.0, 7.6), base=stone(base=(176, 170, 158), blk=5.0, row=2.0), hide=("bottom",))
+        sh.cube("treetop", (-23.6, 104, -1.6), (3.2, 9, 3.2), base=WOOD, hide=("bottom",), faces={"top": WOOD})
+        sh.cube("treetop", (-29, 111, -6), (14, 6, 12), base=LEAVES, hide=("bottom",))
+        sh.cube("treetop", (-27, 116.5, -4.5), (10, 5, 9), base=LEAVES, hide=("bottom",))
+        sh.cube("treetop", (-25, 120.8, -3), (6, 4, 6), base=LEAVES, hide=("bottom",))
 
-    # ---- head: a stone block with a slit-eyed visor, a brow roof, and two towers for horns
-    sh.cube("head", (-10, 100, -10), (20, 16, 20), base=stone(base=(132, 126, 118), blk=6.0, row=3.0, moss="bottom"), faces={"north": ("visor", {}), "top": stone()}, hide=("bottom",))
-    sh.cube("head", (-11.5, 99, -11.5), (23, 3, 23), base=("iron", {}), hide=("bottom", "top"))
-    sh.cube("head", (-12, 108, -9), (2.6, 9, 18), base=stone(base=(150, 144, 134), blk=6.0, row=3.0), hide=("bottom",))
-    sh.cube("head", (9.4, 108, -9), (2.6, 9, 18), base=stone(base=(150, 144, 134), blk=6.0, row=3.0), hide=("bottom",))
-    sh.cube("head", (-11.5, 115.4, -11.5), (23, 2.6, 23), base=roof("slate", moss="top", across=True), hide=("bottom",))
-    sh.cube("head", (-8, 118, -8), (16, 2.2, 16), base=roof("slate", across=True), hide=("bottom",))
-    for sx, n in ((1, "l"), (-1, "r")):
-        bone = "horn_" + n
-        px = 9.5 * sx
-        rot = (0, 0, -20 * sx)
-        pv = (px, 114, 0)
-        sh.cube(bone, (px - 4.2, 114, -4.2), (8.4, 20, 8.4), base=("tower", {"slits": [(4.2, 9, 1.1, 5), (4.2, 15.5, 1.1, 3)]}), hide=("bottom",), rot=rot, pv=pv)
-        sh.cube(bone, (px - 5.6, 134, -5.6), (11.2, 3.2, 11.2), base=stone(base=(150, 144, 134), blk=4.0, row=1.6), hide=("bottom",), rot=rot, pv=pv)
-        for mx in (-1, 1):
-            for mz in (-1, 1):
-                sh.cube(bone, (px + mx * 3.8 - 1.5, 137.2, mz * 3.8 - 1.5), (3, 2.6, 3), base=stone(base=(176, 170, 158), blk=3.0, row=1.5), hide=("bottom",), rot=rot, pv=pv)
-        for i, (w, h) in enumerate(((9.0, 3.2), (6.8, 3.2), (4.6, 3.2), (2.4, 4.0))):
-            y = 137.2 + sum(hh for _, hh in ((9.0, 3.2), (6.8, 3.2), (4.6, 3.2), (2.4, 4.0))[:i])
-            sh.cube(bone, (px - w / 2, y, -w / 2), (w, h, w), base=roof("slate", across=True, row=2.4, sw=2.4), hide=("bottom",), rot=rot, pv=pv)
-        sh.cube(bone, (px - 0.25, 150.2, -0.25), (0.5, 5, 0.5), base=IRONBAND, hide=("bottom",), rot=rot, pv=pv)
+        # ---- the terrace between the shoulders carries the head
+        sh.cube("torso", (-12, 97.6, -17), (24, 2.4, 34), base=stone(base=(168, 162, 150), blk=8.0, row=2.2), faces={"top": GRASS}, hide=("bottom",))
 
-    # ---- arms: stacked house segments ending in brick fists
-    for sx, n in ((1, "l"), (-1, "r")):
-        cx = 42 * sx
-        arm, fore = "arm_" + n, "fore_" + n
-        sh.cube(arm, (cx - 12, 91.2, -13), (24, 2.8, 26), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", moss="top", across=True)})
-        sh.cube(arm, (cx - 8, 94, -9), (16, 3, 18), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", moss="top", across=True)})
-        sh.cube(arm, (cx - 4, 97, -5), (8, 3, 10), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", across=True, ridge=True)})
-        sh.cube(arm, (cx - 10, 63, -11), (20, 28.2, 22), base=timber(bay=20.0, rails=[], windows=[(10, 9, 5.5, 9.5, "lit")], shutters=True), faces={
-            "north": timber(bay=20.0, rails=[14.0], windows=[(10, 8, 5.5, 9.5, "lit")], shutters=True), "south": timber(bay=20.0, rails=[], windows=[(10, 9, 5.5, 9.5, "dark")]),
-            "west": stone(windows=[(11, 9, 5, 9, "lit")], moss="top"), "east": stone(windows=[(11, 9, 5, 9, "lit")], moss="top")}, hide=("bottom", "top"))
-        sh.cube(arm, (cx - 11, 61.4, -12), (22, 2.4, 24), base=("iron", {}), hide=("top",))
-        sh.cube(fore, (cx - 9, 53, -10), (18, 9.4, 20), base=stone(base=(150, 144, 134), blk=7.0, row=3.0, moss="top"), hide=("bottom", "top"))
-        sh.cube(fore, (cx - 3 * sx - 2.5, 62.2, 3.6), (5, 8, 5), base=("chimney", {}), hide=("bottom",))
-        sh.cube(fore, (cx - 9.5, 32, -10.5), (19, 21.2, 21), base=timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "lit")]), faces={
-            "north": timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "dark")]), "west": timber(bay=21.0, rails=[], windows=[(10.5, 10, 5, 8.5, "lit")]),
-            "east": timber(bay=21.0, rails=[], windows=[(10.5, 10, 5, 8.5, "lit")]), "south": timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "lit")])}, hide=("bottom", "top"))
-        sh.cube(fore, (cx - 11, 29.4, -12), (22, 3.4, 24), base=("iron", {}), hide=("top",))
-        # the fist: one big block of brick, with knuckle blocks on its front
-        sh.cube(fore, (cx - 15, 3.4, -16), (30, 27.6, 32), base=brick(bw=8.0, bh=4.0, soft=True, ao=0.26), faces={"top": brick(bw=8.0, bh=4.0, soft=True, ao=0.26, moss="top")}, hide=())
-        for i in range(4):
-            sh.cube(fore, (cx - 13.4 + i * 6.8, 17, -19), (6.2, 9.4, 3.2), base=brick(bw=5.0, bh=3.0, soft=True, ao=0.3), hide=("south",))
-        sh.cube(fore, (cx - 13.5 - 2.6 * (1 if sx < 0 else 0) + (0 if sx > 0 else 0), 18, -4), (2.6, 9, 9), base=brick(bw=5.0, bh=3.0, soft=True), hide=())
+        # ---- head: a stone block with a slit-eyed visor, a brow roof, and two towers for horns
+        sh.cube("head", (-10, 100, -10), (20, 16, 20), base=stone(base=(132, 126, 118), blk=6.0, row=3.0, moss="bottom"), faces={"north": ("visor", {}), "top": stone()}, hide=("bottom",))
+        sh.cube("head", (-11.5, 99, -11.5), (23, 3, 23), base=("iron", {}), hide=("bottom", "top"))
+        sh.cube("head", (-12, 108, -9), (2.6, 9, 18), base=stone(base=(150, 144, 134), blk=6.0, row=3.0), hide=("bottom",))
+        sh.cube("head", (9.4, 108, -9), (2.6, 9, 18), base=stone(base=(150, 144, 134), blk=6.0, row=3.0), hide=("bottom",))
+        sh.cube("head", (-11.5, 115.4, -11.5), (23, 2.6, 23), base=roof("slate", moss="top", across=True), hide=("bottom",))
+        sh.cube("head", (-8, 118, -8), (16, 2.2, 16), base=roof("slate", across=True), hide=("bottom",))
+        for sx, n in ((1, "l"), (-1, "r")):
+            bone = "horn_" + n
+            px = 9.5 * sx
+            rot = (0, 0, -20 * sx)
+            pv = (px, 114, 0)
+            sh.cube(bone, (px - 4.2, 114, -4.2), (8.4, 20, 8.4), base=("tower", {"slits": [(4.2, 9, 1.1, 5), (4.2, 15.5, 1.1, 3)]}), hide=("bottom",), rot=rot, pv=pv)
+            sh.cube(bone, (px - 5.6, 134, -5.6), (11.2, 3.2, 11.2), base=stone(base=(150, 144, 134), blk=4.0, row=1.6), hide=("bottom",), rot=rot, pv=pv)
+            for mx in (-1, 1):
+                for mz in (-1, 1):
+                    sh.cube(bone, (px + mx * 3.8 - 1.5, 137.2, mz * 3.8 - 1.5), (3, 2.6, 3), base=stone(base=(176, 170, 158), blk=3.0, row=1.5), hide=("bottom",), rot=rot, pv=pv)
+            for i, (w, h) in enumerate(((9.0, 3.2), (6.8, 3.2), (4.6, 3.2), (2.4, 4.0))):
+                y = 137.2 + sum(hh for _, hh in ((9.0, 3.2), (6.8, 3.2), (4.6, 3.2), (2.4, 4.0))[:i])
+                sh.cube(bone, (px - w / 2, y, -w / 2), (w, h, w), base=roof("slate", across=True, row=2.4, sw=2.4), hide=("bottom",), rot=rot, pv=pv)
+            sh.cube(bone, (px - 0.25, 150.2, -0.25), (0.5, 5, 0.5), base=IRONBAND, hide=("bottom",), rot=rot, pv=pv)
+
+        # ---- arms: stacked house segments ending in brick fists
+        for sx, n in ((1, "l"), (-1, "r")):
+            cx = 42 * sx
+            arm, fore = "arm_" + n, "fore_" + n
+            sh.cube(arm, (cx - 12, 91.2, -13), (24, 2.8, 26), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", moss="top", across=True)})
+            sh.cube(arm, (cx - 8, 94, -9), (16, 3, 18), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", moss="top", across=True)})
+            sh.cube(arm, (cx - 4, 97, -5), (8, 3, 10), base=roof("tile", across=True), hide=("bottom",), faces={"top": roof("tile", across=True, ridge=True)})
+            sh.cube(arm, (cx - 10, 63, -11), (20, 28.2, 22), base=timber(bay=20.0, rails=[], windows=[(10, 9, 5.5, 9.5, "lit")], shutters=True), faces={
+                "north": timber(bay=20.0, rails=[14.0], windows=[(10, 8, 5.5, 9.5, "lit")], shutters=True), "south": timber(bay=20.0, rails=[], windows=[(10, 9, 5.5, 9.5, "dark")]),
+                "west": stone(windows=[(11, 9, 5, 9, "lit")], moss="top"), "east": stone(windows=[(11, 9, 5, 9, "lit")], moss="top")}, hide=("bottom", "top"))
+            sh.cube(arm, (cx - 11, 61.4, -12), (22, 2.4, 24), base=("iron", {}), hide=("top",))
+            sh.cube(fore, (cx - 9, 53, -10), (18, 9.4, 20), base=stone(base=(150, 144, 134), blk=7.0, row=3.0, moss="top"), hide=("bottom", "top"))
+            sh.cube(fore, (cx - 3 * sx - 2.5, 62.2, 3.6), (5, 8, 5), base=("chimney", {}), hide=("bottom",))
+            sh.cube(fore, (cx - 9.5, 32, -10.5), (19, 21.2, 21), base=timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "lit")]), faces={
+                "north": timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "dark")]), "west": timber(bay=21.0, rails=[], windows=[(10.5, 10, 5, 8.5, "lit")]),
+                "east": timber(bay=21.0, rails=[], windows=[(10.5, 10, 5, 8.5, "lit")]), "south": timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "lit")])}, hide=("bottom", "top"))
+            sh.cube(fore, (cx - 11, 29.4, -12), (22, 3.4, 24), base=("iron", {}), hide=("top",))
+            # the fist: one big block of brick, with knuckle blocks on its front
+            sh.cube(fore, (cx - 15, 3.4, -16), (30, 27.6, 32), base=brick(bw=8.0, bh=4.0, soft=True, ao=0.26), faces={"top": brick(bw=8.0, bh=4.0, soft=True, ao=0.26, moss="top")}, hide=())
+            for i in range(4):
+                sh.cube(fore, (cx - 13.4 + i * 6.8, 17, -19), (6.2, 9.4, 3.2), base=brick(bw=5.0, bh=3.0, soft=True, ao=0.3), hide=("south",))
+            sh.cube(fore, (cx - 13.5 - 2.6 * (1 if sx < 0 else 0) + (0 if sx > 0 else 0), 18, -4), (2.6, 9, 9), base=brick(bw=5.0, bh=3.0, soft=True), hide=())
+
+
+    def lod_cubes():
+        """The low-poly golem (recombanime_golem_lod): the same bones and clips with about 30 cubes, for far away and for crowds (client/prop/RecombAnimePainter chooses it by the distance)."""
+        for sx, n in ((1, "l"), (-1, "r")):
+            cx = 14 * sx
+            sh.cube("foot_" + n, (cx - 13, 0, -17), (26, 5, 30), base=stone(base=(168, 162, 150), blk=9.0, row=2.6), hide=("bottom",))
+            sh.cube("shin_" + n, (cx - 9.5, 5, -9.5), (19, 17, 19), base=brick(bw=6.0, bh=3.0, base=(168, 100, 72)), hide=("top", "bottom"))
+            sh.cube("leg_" + n, (cx - 10, 22, -10), (20, 24, 20), base=timber(bay=20.0, rails=[], windows=[(10, 12, 6, 9.5, "lit")]), hide=("bottom", "top"))
+            arm, fore, ax = "arm_" + n, "fore_" + n, 42 * sx
+            sh.cube(arm, (ax - 12, 91.2, -13), (24, 5.8, 26), base=roof("tile", across=True), hide=("bottom",))
+            sh.cube(arm, (ax - 10, 63, -11), (20, 28.2, 22), base=timber(bay=20.0, rails=[], windows=[(10, 9, 5.5, 9.5, "lit")]), hide=("bottom", "top"))
+            sh.cube(fore, (ax - 9.5, 32, -10.5), (19, 30.4, 21), base=timber(bay=19.0, rails=[], windows=[(9.5, 10, 5, 8.5, "lit")]), hide=("bottom", "top"))
+            sh.cube(fore, (ax - 15, 3.4, -16), (30, 27.6, 32), base=brick(bw=8.0, bh=4.0, soft=True, ao=0.26), hide=("bottom",))
+        sh.cube("hips", (-28, 46, -16), (56, 6, 32), base=stone(base=(150, 144, 134), blk=9.0, row=3.0), hide=("bottom", "top"))
+        sh.cube("torso", (-22, 52, -14), (44, 16, 28), base=timber(bay=14.0, rails=[], windows=[(7, 7.5, 5, 7.5, "lit"), (37, 7.5, 5, 7.5, "lit")], door=(22, 7.2, 11.5)), hide=("bottom", "top"))
+        sh.cube("torso", (-26, 68, -18), (52, 3, 36), base=roof("tile", across=True), hide=("bottom",))
+        chest = timber(bay=12.8, windows=[(6.4, 10.5, 6, 10.5, "lit"), (19.2, 10.5, 6, 10.5, "dark"), (32, 10.5, 7, 11.5, "lit"), (44.8, 10.5, 6, 10.5, "dark"), (57.6, 10.5, 6, 10.5, "lit")], moss="top")
+        sh.cube("torso", (-32, 71, -17), (64, 7, 34), base=stone(base=(150, 144, 134), blk=9.0, row=3.5), hide=("bottom", "top"))
+        sh.cube("torso", (-32, 78, -17), (64, 20, 34), base=chest, hide=("bottom", "top"))
+        for sx, tone in ((1, "slate"), (-1, "tile")):                                   # the shoulder roofs: two slabs and a ridge each, no stepped gable
+            cx, half, rise, over, thick = 22 * sx, 10, 9.5, 2.2, 1.6
+            ang, length = math.degrees(math.atan2(rise, half + over)), math.hypot(half + over, rise)
+            for sg in (1, -1):
+                o = (cx, 98 + rise - thick, -17 - over) if sg == 1 else (cx - length, 98 + rise - thick, -17 - over)
+                sh.cube("torso", o, (length, thick, 34 + 2 * over), base=roof(tone, across=True), hide=("bottom",), rot=(0, 0, -ang if sg == 1 else ang), pv=(cx, 98 + rise, 0))
+        sh.cube("chimney", (24.5, 102, -8), (6, 15, 6), base=("chimney", {}), hide=("bottom",))
+        sh.cube("treetop", (-29, 104, -6), (14, 18, 12), base=LEAVES, hide=("bottom",))
+        sh.cube("torso", (-12, 97.6, -17), (24, 2.4, 34), base=stone(base=(168, 162, 150), blk=8.0, row=2.2), faces={"top": GRASS}, hide=("bottom",))
+        sh.cube("head", (-10, 100, -10), (20, 16, 20), base=stone(base=(132, 126, 118), blk=6.0, row=3.0), faces={"north": ("visor", {})}, hide=("bottom",))
+        sh.cube("head", (-11.5, 115.4, -11.5), (23, 2.6, 23), base=roof("slate", across=True), hide=("bottom",))
+        for sx, n in ((1, "l"), (-1, "r")):
+            bone, px = "horn_" + n, 9.5 * sx
+            rot, pv = (0, 0, -20 * sx), (px, 114, 0)
+            sh.cube(bone, (px - 4.2, 114, -4.2), (8.4, 22, 8.4), base=("tower", {"slits": [(4.2, 9, 1.1, 5)]}), hide=("bottom",), rot=rot, pv=pv)
+            sh.cube(bone, (px - 4.6, 136, -4.6), (9.2, 8, 9.2), base=roof("slate", across=True, row=2.4, sw=2.4), hide=("bottom",), rot=rot, pv=pv)
+            sh.cube(bone, (px - 2.0, 144, -2.0), (4.0, 8, 4.0), base=roof("slate", across=True, row=2.4, sw=2.4), hide=("bottom",), rot=rot, pv=pv)
+
+    if lod:
+        lod_cubes()
+    else:
+        full_cubes()
 
     # ---------------------------------------------------------------------------------------------- animations
     a = Anim()
@@ -462,7 +505,7 @@ def drill():
     return sh
 
 
-ALL = {"golem": golem, "house": house, "ring": ring, "drill": drill}
+ALL = {"golem": golem, "golem_lod": lambda: golem(True), "house": house, "ring": ring, "drill": drill}
 
 if __name__ == "__main__":
     which = sys.argv[1:] or list(ALL)

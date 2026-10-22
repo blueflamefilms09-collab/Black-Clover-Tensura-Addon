@@ -157,6 +157,56 @@ class RecombAnimeRulesTest {
     }
 
     @Test
+    void levelOfDetailStepsWithDistanceAndQuality() {
+        float sc = RecombAnimeRules.renderScale(1.2f, 0f);                                  // 0.84: below 1, so the near distance is the plain 48 at full quality
+        assertEquals(RecombAnimeRules.LOD_FULL, RecombAnimeRules.lod(10 * 10, 48, 1f, sc));
+        assertEquals(RecombAnimeRules.LOD_FULL, RecombAnimeRules.lod(48 * 48, 48, 1f, sc));
+        assertEquals(RecombAnimeRules.LOD_LOW, RecombAnimeRules.lod(49 * 49, 48, 1f, sc));
+        assertEquals(RecombAnimeRules.LOD_LOW, RecombAnimeRules.lod(150 * 150, 48, 1f, sc));
+        assertEquals(RecombAnimeRules.LOD_CULL, RecombAnimeRules.lod(160 * 160, 48, 1f, sc));
+        assertEquals(RecombAnimeRules.LOD_LOW, RecombAnimeRules.lod(30 * 30, 48, 0.5f, sc), "low video quality halves the distance of the full model");
+        assertEquals(RecombAnimeRules.LOD_CULL, RecombAnimeRules.lod(100 * 100, 48, 0.5f, sc), "and the culling distance never falls under 96 times the quality: 48 here");
+        assertEquals(RecombAnimeRules.LOD_LOW, RecombAnimeRules.lod(40 * 40, 48, 0.5f, sc));
+        float ultra = RecombAnimeRules.renderScale(1.2f, 1f);                                // 1.34: a bigger golem keeps its detail further out
+        assertEquals(RecombAnimeRules.LOD_FULL, RecombAnimeRules.lod(60 * 60, 48, 1f, ultra));
+        double prev = 0;
+        int last = 0;
+        for (int d = 0; d < 400; d += 3) {                                                    // only ever FULL, then LOW, then CULL, never back
+            int l = RecombAnimeRules.lod((double) d * d, 48, 1f, sc);
+            assertTrue(l >= last, "the level never goes back at " + d);
+            last = l;
+        }
+        assertEquals(RecombAnimeRules.LOD_CULL, last);
+    }
+
+    @Test
+    void smallConstructsAreCulledFar() {
+        assertFalse(RecombAnimeRules.cullSmall(90 * 90, 96, 1f));
+        assertTrue(RecombAnimeRules.cullSmall(97 * 97, 96, 1f));
+        assertTrue(RecombAnimeRules.cullSmall(60 * 60, 96, 0.5f), "low quality culls at 48");
+        assertFalse(RecombAnimeRules.cullSmall(10, 0, 1f), "a nonsense far distance still draws what is near");
+    }
+
+    @Test
+    void onlyThreeFullGolemsAreDrawnInAFrame() {
+        RecombAnimeRules.FrameBudget b = new RecombAnimeRules.FrameBudget();
+        long frame = RecombAnimeRules.frameKey(1000, 0.25f);
+        int full = 0;
+        for (int golem = 0; golem < 10; golem++) if (b.take(frame, RecombAnimeRules.FULL_GOLEMS_PER_FRAME)) full++;
+        assertEquals(RecombAnimeRules.FULL_GOLEMS_PER_FRAME, full, "ten golems in view cost three full models and seven low-poly ones");
+        long next = RecombAnimeRules.frameKey(1000, 0.5f);
+        assertTrue(b.take(next, 3), "the next frame starts afresh");
+        assertTrue(RecombAnimeRules.frameKey(1000, 0.25f) != RecombAnimeRules.frameKey(1001, 0.25f));
+        assertTrue(RecombAnimeRules.frameKey(1000, 0.25f) != RecombAnimeRules.frameKey(1000, 0.5f));
+    }
+
+    @Test
+    void eventsAreOnlyWorkedOutNearTheCamera() {
+        assertTrue(RecombAnimeRules.EVENT_RANGE_SQ <= 96.0 * 96.0 + 1);
+        assertTrue(RecombAnimeRules.STATE_CAP <= 64 && RecombAnimeRules.STATE_STALE_TICKS <= 600);
+    }
+
+    @Test
     void numbersAgreeWithTheGeneratorsFile() throws Exception {
         JsonObject n = json(new File("tools/recomb/golem_numbers.json"));
         assertEquals(n.get("height_px").getAsFloat(), RecombAnimeRules.HEIGHT_PX, 0.01);

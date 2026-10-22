@@ -66,6 +66,45 @@ class RecombAnimeAssetsTest {
         assertTrue(faces < 6 * d.cubeCount(), "some faces are not drawn");
     }
 
+    private static int faces(GeoModelData d) {
+        int faces = 0;
+        for (GeoModelData.Bone b : d.bones.values()) for (GeoModelData.Cube c : b.cubes) for (float[] uv : c.uv) if (uv != null) faces++;
+        return faces;
+    }
+
+    @Test
+    void theLowPolyGolemKeepsTheBonesAndClipsAtAFractionOfTheQuads() throws Exception {
+        GeoModelData full = model("golem"), low = model("golem_lod");
+        assertEquals(full.bones.keySet(), low.bones.keySet(), "the low-poly golem has every bone of the full one, so the same pose fits both");
+        assertTrue(faces(full) <= RecombAnimeRules.FULL_QUADS_MAX, "the full golem is " + faces(full) + " quads a pass");
+        assertTrue(faces(low) <= RecombAnimeRules.LOW_QUADS_MAX, "the low-poly golem is " + faces(low) + " quads a pass");
+        assertTrue(faces(low) * 2.5 < faces(full), "the low-poly golem is at most 40 percent of the full one's quads (" + faces(low) + " of " + faces(full) + ")");
+        GeoAnim a = GeoAnim.parse(json(new File(ASSETS, "animations/entity/recombanime_golem.animation.json"))), b = GeoAnim.parse(json(new File(ASSETS, "animations/entity/recombanime_golem_lod.animation.json")));
+        assertEquals(a.names(), b.names());
+        // the two share the model's outline: the same unturned extremes within a few pixels
+        assertEquals(0f, minY(low), 0.01f);
+        assertEquals(maxY(full), maxY(low), 30f, "the same height class");
+    }
+
+    private static float minY(GeoModelData d) {
+        float m = Float.MAX_VALUE;
+        for (GeoModelData.Bone b : d.bones.values()) for (GeoModelData.Cube c : b.cubes) if (!c.hasRot) m = Math.min(m, c.oy);
+        return m;
+    }
+
+    private static float maxY(GeoModelData d) {
+        float m = -Float.MAX_VALUE;
+        for (GeoModelData.Bone b : d.bones.values()) for (GeoModelData.Cube c : b.cubes) if (!c.hasRot) m = Math.max(m, c.oy + c.sy);
+        return m;
+    }
+
+    @Test
+    void theSmallModelsStayCheap() throws Exception {
+        assertTrue(faces(model("house")) <= 100, "a house is " + faces(model("house")) + " quads a pass");
+        assertTrue(faces(model("ring")) <= 60);
+        assertTrue(faces(model("drill")) <= 120);
+    }
+
     @Test
     void texturesAndGlowMapsMatchTheModels() throws Exception {
         for (String name : RecombAnimeRules.MODELS) {

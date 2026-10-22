@@ -23,6 +23,8 @@ the mana drill), so they are REPLACED as the default look, but by rule 2 the old
 | Dust bursts under every step and the rise, the orange impact flash with spark lines when the fist lands, thrown bricks, chimney smoke, a small camera shake, all as custom particles | NEW | `vfx/client/RecombAnimeFx`; custom particles (particle/fx) only |
 | Dust and bricks at a zone laid out (FX2) and at an impact (FX3) | NEW | `RecombinationLayer.onSpawn` (the layer's drawing is unchanged) |
 | Pure rules `prop/RecombAnimeRules`, self-test `magic.recomb_anime`, tests | NEW | section 7 |
+| The low-poly golem `recombanime_golem_lod` (34 cubes), the caps and ledgers (`book/RecombinationBudget`), the owner check, the batched Bulwark | NEW | section 6 |
+| The golem's foe scan every tick while it had no target | REPLACED | now on the shared scan interval (5 ticks); everything else of its behaviour is KEPT |
 | Game rules: hit box, ram, cannons, state word, cooldowns, page ids and order, prop kinds, packets | KEPT | nothing on the server changed except one self-test registration line |
 | The four-legged bull, the oak room, the boards, the drill, the 11 armour pieces, the layers and textures of 1.93.0 | KEPT | |
 | Lang text of the Bull and the book (`tools/lang/recomb_anime.json`) | REPLACED (text) | three existing keys get new text (the old text still described the armour that policy 1.99.0 stopped using) |
@@ -93,20 +95,52 @@ Ids used: `smoke_wisp`, `soot_puff`, `sand_grain`, `earth_chip`, `ash_flake`, `i
 
 `docs/previews/recomb_anime/fx_impact.png` and `fx_footfall.png` show the effect from the real sprites and profiles of the catalog (a re-implementation of the spawn code and the particle update, side view).
 
-## 6. Performance and server rules (CLAUDE.md rule 9)
+## 6. No lag, server and multiplayer rules (CLAUDE.md rules 9 and 11)
 
-* Everything new is client side. The server decides every rule; the only change near it is one line in `RecombinationProps.init` registering the self-test. The state the painter keeps (walk phase, last tick) is per prop ENTITY ID in a client table
-  capped at 48 golems that forgets one not drawn for 400 ticks; nothing is a static "current player"; `Minecraft.getInstance()` is used only in `vfx/client` and `client/`.
-* Common classes (`prop/RecombAnimeRules`, `prop/RecombAnimeSelfTest`) touch no client class (`ServerSafetyTest` passes). The setting only changes looks, so it is a CLIENT config.
-* Perf: the golem is 93 cubes, 1792 vertices a pass (3584 with the glow pass; the preview tool's note for a prop is 6000); the house 536 in both passes, the ring 368, the drill 800. Particle counts are capped per event (at most 28 + 30 + 14) and go through the client budget.
-  Effects are drawn by the clients near the golem only (a client far away spawns nothing: distance detail 0).
-* Hit box: the server's hit box of the Bull (2.2 x 3.0 blocks times scale) is unchanged, so the drawn giant is far larger than its hit box; props are never culled by their box (`MagicPropRenderer.shouldRender` is true).
+Everything new is client side or bounded; the server decides every rule. The state the painter keeps (walk phase, last tick) is per prop ENTITY ID in a client table (fastutil, no boxing) capped at 48 golems that forgets one not drawn
+for 400 ticks; nothing is a static "current player"; `Minecraft.getInstance()` is used only in `client/` and `vfx/client`; the common classes (`prop/RecombAnimeRules`, `prop/RecombAnimeSelfTest`, `book/RecombinationBudget`) touch no client
+class (`ServerSafetyTest` passes). The look is a CLIENT config; the caps below are not configurable (they are rules of the server).
+
+### Server
+
+| Guard | Where | What it bounds |
+| --- | --- | --- |
+| One golem per caster, at most 12 per dimension; rooms 8 per caster / 48 per dimension; rings of boards 3 / 24; drills 3 / 24 | `book/RecombinationBudget.Ledger`, `RecombinationProps.track` (called from every construct's `init`, so it covers every spawn: the pages and the book's effects) | entities; the OLDEST construct over a cap ends (as if its time ran out); done once per spawn, never per tick; a key whose entity vanished some other way is forgotten at the next spawn |
+| The golem's foe scan | `RecombinationProps.Bull.tick0` | one `getEntitiesOfClass` every `entityScanInterval` ticks (5, the shared config), staggered by the entity id, instead of every tick while it had no target (that was a per tick scan before this change); at most the nearest 16 foes are kept; a volley hits at most 5 and a ram 6; both are rate limited by their cooldowns (120 / 40 and 50 ticks) |
+| Cleanup | `Bull.tick0`, `RecombinationProps.orphaned` | a golem whose caster logged out, died or left the dimension ends on the next tick; a room, a ring of boards or a drill ends within 10 ticks (a hash lookup every 10 ticks, staggered); props are never saved, so nothing survives a restart |
+| Bulwark's blocks | `RecombinationArts.bulwark`, `RecombinationBudget.BlockLedger` | at most 32 blocks a cast (read first, only air and replaceable spots), placed at most 8 a tick over the next 3 ticks (`SpellRuntime.later`), removed by the spell runtime after 200 ticks; at most 64 standing per caster and 512 on the server (a cast over the cap is refused with a message, like "No room for walls"); the check is made at cast time only |
+| Page cooldowns | the book (unchanged) | corkscrew 80, bulwark 160, room swap 300, Bull 2400, Ultra 4800, plank snare 300, room rebuild 400 ticks |
+| Timing | `PerfProbe` section `s.recomb.golem` | the golem's tick shows in `/multiverse perf report` |
+
+### Network
+
+No new packet. The effects the golem sends are the existing `VfxSpawn` ones: they go to players near the point only (`sendToPlayersNear`) and through the effect-packet budget (`maxEffectPacketsPerTick`, 160 a tick).
+Worst case per golem: a volley of 5 shots is 5 flights and 5 impacts (10 packets) every 40 ticks in the Ultra form (5 a second), 3 + 3 every 120 ticks normally, a ram impact every 50 ticks: about 5.4 packets a second at most; 12 golems on one
+dimension about 65 packets a second in the worst imaginable case, each to nearby players only. The prop's synced state word changes twice per blow. The particles of the anime look are spawned by the clients; the server sends none.
+
+### Client draw
+
+| Guard | Where | Numbers |
+| --- | --- | --- |
+| Quads (a face of a cube; each is 4 vertices; the glow pass draws the same quads again) | the models | full golem 93 cubes, 448 quads a pass, 896 with the glow pass; LOW-POLY golem (`recombanime_golem_lod`, same bones and clips) 34 cubes, 158 quads, no glow pass; house 67 (134), ring 46 (92), drill 100 (200) |
+| Level of detail by distance | `RecombAnimeRules.lod`, `RecombAnimePainter.golem0` | the full model up to `auraLodNear` (48, the shared aura LOD distance) times the video quality's detail factor (1, 0.75, 0.5) times the golem's size (when above 1); the low-poly one up to 3.2 times that and never less than 96 blocks times the quality; nothing beyond (the state still advances, nothing is drawn) |
+| At most 3 full golems a frame | `RecombAnimeRules.FrameBudget` | the 4th and further golems in view use the low-poly model: 12 golems in view cost 3 x 896 + 9 x 158 = 4110 quads, not 12 x 896 = 10752 |
+| Houses, rings, drills far away | `RecombAnimeRules.cullSmall` | not drawn beyond `auraLodFar` (96) times the quality (at most 48 houses in a dimension; 48 x 134 = 6432 quads if all were in view) |
+| Particles | `RecombAnimeFx`, `RecombAnimeRules.EVENT_RANGE_SQ` | a golem's tick events are worked out only within 96 blocks; every spawn is counted against the client particle budget (`clientParticlesPerTick`, 400) and thinned by the quality level and the distance (`FxClientLod`), at most 12 + 28 + 30 + 14 particles an impact (before the thinning); `particles.custom` or `visual.recombAnimeParticles` off spawns none |
+| No per frame allocation | `RecombAnimePainter` | the walk table is keyed by the int id (no boxing), the drill's turn uses one static scratch quaternion, the clips are constants; the only allocations are on a game tick that has an event (a few arrays and a `Vec3` for the camera shake) and once per prop when it first appears |
+| Timing | `PerfProbe` section `c.recomb.paint` | the golem's paint time |
+
+`RecombinationPerfScanTest` pins these guards by reading the source (the foe scan interval, the ledger calls, the owner check, the batches, no allocation in the painter, the level of detail, the culling, the budgets of the particle helper);
+`RecombinationBudgetTest` plays a crowd of 100 casters against the ledgers; `RecombAnimeRulesTest` pins the level of detail, the frame budget and the culling; `RecombAnimeAssetsTest` pins the quad counts of the models.
+
+Worst-case summary: server, at most 12 golems + 48 rooms + 24 rings + 24 drills + 512 temporary blocks per dimension, about 61 entity queries a second for 12 golems, about 65 effect packets a second (nearby players only); client, at most 4110 quads a frame
+for 12 golems in view plus whatever small constructs are within 96 blocks.
 
 ## 7. Files
 
-New: `tools/recomb/recomb_kit.py`, `gen_recomb_anime.py`, `golem_numbers.json`, `preview_fx.py`; 4 geo models, 4 animation files, 8 textures (`recombanime_*`); `prop/RecombAnimeRules`, `prop/RecombAnimeSelfTest`,
-`client/prop/RecombAnimeOptions`, `RecombAnimePainter`, `vfx/client/RecombAnimeFx`; tests `RecombAnimeRulesTest` (12), `RecombAnimeAssetsTest` (7); `tools/render_preview/scenes.d/recomb_anime.json`; `tools/lang/recomb_anime.json`; this file; previews.
-Edited (additions): `RecombinationPropPainter` (four one-line dispatches to the anime painters when `visual.recombAnime` is on), `RecombinationLayer` (`onSpawn`), `RecombinationProps` (one self-test line), `NUSMP` (one config registration line),
+New: `tools/recomb/recomb_kit.py`, `gen_recomb_anime.py`, `golem_numbers.json`, `preview_fx.py`; 5 geo models (golem, low-poly golem, house, ring, drill), 5 animation files, 10 textures (`recombanime_*`); `book/RecombinationBudget`; `prop/RecombAnimeRules`, `prop/RecombAnimeSelfTest`,
+`client/prop/RecombAnimeOptions`, `RecombAnimePainter`, `vfx/client/RecombAnimeFx`; tests `RecombAnimeRulesTest` (16), `RecombAnimeAssetsTest` (9), `RecombinationBudgetTest` (9), `RecombinationPerfScanTest` (7); `tools/render_preview/scenes.d/recomb_anime.json`; `tools/lang/recomb_anime.json`; this file; previews.
+Edited: `RecombinationProps` (ledgers, owner checks, the scan interval, a probe), `RecombinationArts` (Bulwark placed in batches under the caps); additions: `RecombinationPropPainter` (four one-line dispatches to the anime painters when `visual.recombAnime` is on), `RecombinationLayer` (`onSpawn`), `RecombinationProps` (one self-test line), `NUSMP` (one config registration line),
 `tools/render_preview` stubs (`perf`, `AdditiveTypes`, `SafeAdditive`, `EntityRenderDispatcher.distanceToSqr`: the preview tool no longer compiled against the 1.99.0 performance classes and now does).
 Self-test: `magic.recomb_anime`.
 
@@ -114,12 +148,13 @@ Redo: `python3 -B tools/recomb/gen_recomb_anime.py` (models), `python3 -B tools/
 
 ## 8. Checked and NOT verified
 
-Checked: `geo_check` (4 models OK); the type check of the new and edited Java (0 errors in them, a deliberate wrong call was caught); JUnit `RecombAnimeRulesTest`, `RecombAnimeAssetsTest`, `GeoAssetsTest`, `ConfigFileNamesTest`,
-`ServerSafetyTest`, `SafeAdditiveSourceScanTest`, `SafeAdditiveTextureScanTest`, `RecombinationRulesTest` (39 pass); previews of every model and clip rendered through the repo's `render_preview` tool (the real `GeoDraw` and `GeoModelData` over stubs) and looked at, iterated until the golem read as a house-golem
+Checked: `geo_check` (4 models OK); the type check of the new and edited Java (0 errors in them, a deliberate wrong call was caught); JUnit `RecombAnimeRulesTest`, `RecombAnimeAssetsTest`, `RecombinationBudgetTest`, `RecombinationPerfScanTest`, `PerfSourceScanTest`, `GeoAssetsTest`, `ConfigFileNamesTest`,
+`ServerSafetyTest`, `SafeAdditiveSourceScanTest`, `SafeAdditiveTextureScanTest`, `RecombinationRulesTest` (passing); previews of every model and clip rendered through the repo's `render_preview` tool (the real `GeoDraw` and `GeoModelData` over stubs) and looked at, iterated until the golem read as a house-golem
 (the clip signs of the torso and head were wrong in the first render and were fixed from the previews).
 
 Not verified:
 * Nothing ran in the game. The previews are a software rasteriser over stubs: no real lighting, mipmaps or render types; the glow pass in the previews is always full white, in game it pulses with the painter.
+* The caps, the ledgers and the level of detail were unit-tested as pure code and pinned by source scans; their effect on a real server and a real frame rate was not measured (nothing could be profiled), and the thresholds (3 full golems a frame, 48 / 96 blocks, caps of 12 / 48 / 24) are reasoned, not measured.
 * `RecombAnimePainter`, `RecombAnimeFx` and the layer hook were type-checked only; the walk-phase bookkeeping, the tick events, the camera shake and the particle spawns have not been seen. The particle preview is a re-implementation.
 * The proportions come from a verbal description of the anime frames, not from the frames; the owner should compare the golem with them. The brick fists are cubes (the anime's are blocky but a little softer).
 * The server's hit box and ramming circle (3.6 x scale) are those of the old four-legged bull: the drawn fist lands about 4.5 blocks ahead, the ram hits within 3.6 x scale of the golem's centre, so against a foe at the edge of that circle the fist lands slightly past or short of the foe.

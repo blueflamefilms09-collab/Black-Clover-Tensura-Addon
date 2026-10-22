@@ -25,10 +25,11 @@ public final class RecombAnimeRules {
     public static final float[] EYE_PX = {5.4f, 108f, -10f};
 
     /** The models (assets/nusmp/geo/entity/recombanime_*.geo.json) and the clips each must carry; a test and the self-test read them. */
-    public static final String[] MODELS = {"golem", "house", "ring", "drill"};
-    public static final String[][] CLIPS = {{"idle", "walk", "punch", "fire", "assemble", "collapse", "stomp"}, {"idle", "rise", "swap"}, {"idle"}, {"idle"}};
-    /** The most cubes a model may have (perf budget of a prop: at most about 130 x 5 faces x 4 vertices per pass, twice with the glow pass). */
-    public static final int[] MAX_CUBES = {140, 30, 24, 28};
+    public static final String[] MODELS = {"golem", "house", "ring", "drill", "golem_lod"};
+    public static final String[][] CLIPS = {{"idle", "walk", "punch", "fire", "assemble", "collapse", "stomp"}, {"idle", "rise", "swap"}, {"idle"}, {"idle"},
+            {"idle", "walk", "punch", "fire", "assemble", "collapse", "stomp"}};
+    /** The most cubes a model may have (perf budget of a prop: at most about 130 x 5 faces x 4 vertices per pass, twice with the glow pass); the low-poly golem has about a third. */
+    public static final int[] MAX_CUBES = {140, 30, 24, 28, 40};
 
     /** The custom particles (particle/fx catalog ids) the anime look spawns; nothing else is ever spawned by it. */
     public static final String[] PARTICLE_IDS = {"smoke_wisp", "soot_puff", "sand_grain", "earth_chip", "ash_flake", "impact_burst", "shock_ring", "spark", "ember", "flame_tongue"};
@@ -153,6 +154,51 @@ public final class RecombAnimeRules {
     public static int chimneyPuffEvery() { return 8; }
 
     private static int clampInt(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+    // ------------------------------------------------------------------ no lag: level of detail and the draw budget of a frame (client)
+    public static final int LOD_FULL = 0, LOD_LOW = 1, LOD_CULL = 2;
+    /** At most this many golems are drawn with the full model in one frame (the rest use the low-poly one): with N golems in view the cost is bounded, not N times the full model. */
+    public static final int FULL_GOLEMS_PER_FRAME = 3;
+    /** A golem's tick events (dust, flash, smoke) are worked out only within 96 blocks of the camera (squared); beyond that the particles would be dropped by their distance detail anyway. */
+    public static final double EVENT_RANGE_SQ = 96.0 * 96.0;
+    /** Quads of one pass of the full golem and of the low-poly golem (the glow pass is drawn for the full one only): the numbers the doc quotes; a test pins them to the files. */
+    public static final int FULL_QUADS_MAX = 480, LOW_QUADS_MAX = 170;
+
+    /**
+     * Which model a golem is drawn with at a squared distance from the camera: the full one up to {@code near * quality * max(1, renderScale)} blocks (near is the aura level-of-detail distance, 48 by
+     * default; quality is the video quality's detail factor 1, 0.75 or 0.5), the low-poly one up to 3.2 times that (and never less than 96 blocks times the quality), nothing beyond.
+     */
+    public static int lod(double distSq, double near, float quality, float renderScale) {
+        double q = Math.max(0.25f, Math.min(1f, quality));
+        double nearEff = Math.max(8.0, near) * q * Math.max(1f, renderScale);
+        double cull = Math.max(96.0 * q, nearEff * 3.2);
+        if (distSq > cull * cull) return LOD_CULL;
+        return distSq <= nearEff * nearEff ? LOD_FULL : LOD_LOW;
+    }
+
+    /** True when a small construct (a house, the ring, the drill) is too far to draw: beyond {@code far * quality} blocks. */
+    public static boolean cullSmall(double distSq, double far, float quality) {
+        double d = Math.max(16.0, far) * Math.max(0.25f, Math.min(1f, quality));
+        return distSq > d * d;
+    }
+
+    /** The count of full-model golems drawn in the current frame; the key is anything that differs from frame to frame (the game time and the partial tick). Render thread only, no allocation. */
+    public static final class FrameBudget {
+        private long key = Long.MIN_VALUE;
+        private int used;
+
+        public boolean take(long frameKey, int cap) {
+            if (frameKey != key) {
+                key = frameKey;
+                used = 0;
+            }
+            if (used >= cap) return false;
+            used++;
+            return true;
+        }
+    }
+
+    public static long frameKey(long gameTime, float partial) { return gameTime * 1_000_003L + Float.floatToRawIntBits(partial); }
 
     // ------------------------------------------------------------------ caps and housekeeping
     /** The most golems whose walk state the painter keeps (a golem that was not drawn for {@link #STATE_STALE_TICKS} ticks is forgotten). */
