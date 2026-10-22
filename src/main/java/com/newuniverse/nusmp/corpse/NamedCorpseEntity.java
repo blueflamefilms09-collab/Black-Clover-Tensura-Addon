@@ -82,7 +82,7 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
     public static AttributeSupplier.Builder createAttributes(NamedCorpses k) {
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, k.health).add(Attributes.ATTACK_DAMAGE, k.attack)
                 .add(Attributes.MOVEMENT_SPEED, k.speed).add(Attributes.ARMOR, k.armor).add(Attributes.KNOCKBACK_RESISTANCE, k.knockbackResistance)
-                .add(Attributes.FOLLOW_RANGE, 32).add(Attributes.ATTACK_KNOCKBACK, k.role == NamedCorpses.Role.BRUISER ? 1.5 : k.role == NamedCorpses.Role.ELITE ? 0.8 : 0.4);
+                .add(Attributes.FOLLOW_RANGE, 24).add(Attributes.ATTACK_KNOCKBACK, k.role == NamedCorpses.Role.BRUISER ? 1.5 : k.role == NamedCorpses.Role.ELITE ? 0.8 : 0.4);
     }
 
     public NamedCorpses kind() { return kind; }
@@ -374,7 +374,7 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
             me.getLookControl().setLookAt(o, 30f, 30f);
             if (me.distanceToSqr(o) > 28 * 28) { me.teleportTo(o.getX() + 1.5, o.getY(), o.getZ() + 1.5); me.getNavigation().stop(); return; }
             if (--repath > 0) return;
-            repath = 8;
+            repath = SoulZombieRules.REPATH_TICKS;
             me.getNavigation().moveTo(o, 1.2);
         }
     }

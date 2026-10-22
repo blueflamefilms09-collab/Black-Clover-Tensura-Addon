@@ -50,5 +50,12 @@ public final class CorpseRoster<O, K> {
 
     public boolean isEmpty() { return byOwner.isEmpty(); }
 
+    /** Live bodies of every owner together (the global cap). */
+    public int total() {
+        int n = 0;
+        for (ArrayDeque<K> d : byOwner.values()) n += d.size();
+        return n;
+    }
+
     public void clear() { byOwner.clear(); }
 }

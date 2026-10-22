@@ -36,7 +36,7 @@ public final class SoulZombies {
         ServerLevel level = owner.serverLevel();
         UUID id = owner.getUUID();
         int cap = CorpseConfig.zombieCap();
-        int make = SoulZombieRules.fit(Corpses.ZOMBIES.count(id), n, cap)[0];
+        int make = SoulZombieRules.fitGlobal(Corpses.ZOMBIES.count(id), n, cap, Corpses.ZOMBIES.total(), CorpseConfig.zombieGlobalCap())[0];
         int life = Math.max(SoulZombieRules.MIN_LIFE, Math.min(SoulZombieRules.MAX_LIFE, lifeTicks));
         for (int k = 0; k < make; k++) {
             SoulZombieEntity z = CorpseEntities.SOUL_ZOMBIE.get().create(level);

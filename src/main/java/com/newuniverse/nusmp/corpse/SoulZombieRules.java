@@ -34,6 +34,23 @@ public final class SoulZombieRules {
         return Math.max(MIN_LIFE, Math.min(MAX_LIFE, (int) (baseTicks * f)));
     }
 
+    /** Default most zombies on the whole server at once (config {@code corpse.zombieGlobalCap}), and most numbered undead (config {@code corpse.namedGlobalCap}): the server's work stays bounded however many casters there are. */
+    public static final int GLOBAL_CAP_DEFAULT = 60, NAMED_GLOBAL_CAP_DEFAULT = 30;
+    /** Half a second: the zombies of one owner share one scan for foes per this many ticks, and a follower re-paths at most once per second. */
+    public static final int SCAN_EVERY_TICKS = 10, REPATH_TICKS = 20;
+    /** Most candidate foes one scan keeps (the nearest to the owner). */
+    public static final int MAX_FOES_KEPT = 40;
+
+    /**
+     * {@link #fit} under a global cap too: 'total' is the number of bodies of every owner standing now (this owner's included). Returns {made, dismissed}: the dismissals of this owner free
+     * room first, then the made count is cut to what is left under 'globalCap'.
+     */
+    public static int[] fitGlobal(int live, int wanted, int cap, int total, int globalCap) {
+        int[] f = fit(live, wanted, cap);
+        int room = Math.max(0, globalCap - Math.max(0, total - f[1]));
+        return new int[]{Math.min(f[0], room), f[1]};
+    }
+
     /** How many of 'wanted' may be made now and how many of the caster's oldest must go so that the live count never passes the cap. {made, dismissed}. */
     public static int[] fit(int live, int wanted, int cap) {
         int c = Math.max(1, cap);

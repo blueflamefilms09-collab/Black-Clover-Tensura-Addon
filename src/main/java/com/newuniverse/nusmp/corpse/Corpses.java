@@ -152,7 +152,10 @@ public final class Corpses {
         return out;
     }
 
-    static void forget(UUID player) { LEDGERS.remove(player); }
+    static void forget(UUID player) {
+        LEDGERS.remove(player);
+        FOES.remove(player);
+    }
 
     /** A creature died: write it into the ledger of every Soul Corpse mage within the ledger radius. */
     static void recordDeath(LivingEntity dead) {
@@ -375,6 +378,7 @@ public final class Corpses {
             Entity e = find(owner.getServer(), id);
             if (e instanceof NamedCorpseEntity n && n.kind() == kind) { crumble(n); NAMED.remove(owner.getUUID(), id); }
         }
+        if (NAMED.total() >= CorpseConfig.namedGlobalCap() && NAMED.count(owner.getUUID()) < NamedCorpses.MAX_AT_ONCE) return null;      // the server-wide cap (an owner at their own cap replaces their oldest)
         NamedCorpseEntity n = CorpseEntities.type(kind).create(level);
         if (n == null) return null;
         n.setPersistenceRequired();
@@ -445,7 +449,8 @@ public final class Corpses {
 
     /** Vanilla only sends an effect to a tracker when the entity is first seen; an update is sent here so the look changes at once. */
     private static void broadcast(LivingEntity e, MobEffectInstance inst) {
-        if (e.level() instanceof ServerLevel sl) sl.getChunkSource().broadcastAndSend(e, new ClientboundUpdateMobEffectPacket(e.getId(), inst, false));
+        if (e.level() instanceof ServerLevel sl && com.newuniverse.nusmp.perf.PerfBudgets.effectPacket(sl.getGameTime()))      // few small packets: the effect budget of the tick (a missed one is repeated every 5 s)
+            sl.getChunkSource().broadcastAndSend(e, new ClientboundUpdateMobEffectPacket(e.getId(), inst, false));
     }
 
     // ================================================================ foes
@@ -474,11 +479,46 @@ public final class Corpses {
                 || (owner.getLastHurtMob() == e && owner.tickCount - owner.getLastHurtMobTimestamp() < 200);
     }
 
-    /** The nearest foe of the owner within 16 blocks of the body, or null. */
+    /** One scan for the owner's foes, shared by every body of that owner (see {@link #foesOf}). */
+    private record FoeScan(long tick, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim, List<LivingEntity> foes) {}
+
+    private static final Map<UUID, FoeScan> FOES = new HashMap<>();
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_FOES = com.newuniverse.nusmp.perf.PerfProbe.section("s.corpse.foes");
+
+    /**
+     * The owner's candidate foes (at most {@link SoulZombieRules#MAX_FOES_KEPT}, the nearest to the owner) in a box round the owner, scanned ONCE per owner per half second and shared by all
+     * of that owner's bodies (before, every body scanned its own box twice a second: six zombies and three named undead were nine scans of the world). Server only, per owner UUID.
+     */
+    private static List<LivingEntity> foesOf(ServerPlayer owner, ServerLevel sl) {
+        long now = sl.getGameTime();
+        FoeScan f = FOES.get(owner.getUUID());
+        if (f != null && f.dim() == sl.dimension() && now - f.tick() < SoulZombieRules.SCAN_EVERY_TICKS && now >= f.tick()) return f.foes();
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            List<LivingEntity> found = sl.getEntitiesOfClass(LivingEntity.class, owner.getBoundingBox().inflate(36, 12, 36), e -> isFoe(owner, e));
+            if (found.size() > SoulZombieRules.MAX_FOES_KEPT) {
+                found.sort(Comparator.comparingDouble(e -> e.distanceToSqr(owner)));
+                found = new ArrayList<>(found.subList(0, SoulZombieRules.MAX_FOES_KEPT));
+            }
+            FOES.put(owner.getUUID(), new FoeScan(now, sl.dimension(), found));
+            return found;
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_FOES, t0);
+        }
+    }
+
+    /** The nearest foe of the owner within 16 blocks of the body, or null (from the owner's shared scan). */
     static LivingEntity pickFoe(ServerPlayer owner, LivingEntity body) {
         if (owner == null || !owner.isAlive() || !(body.level() instanceof ServerLevel sl) || owner.level() != sl) return null;
-        List<LivingEntity> found = sl.getEntitiesOfClass(LivingEntity.class, body.getBoundingBox().inflate(16, 6, 16), e -> e != body && isFoe(owner, e));
-        return found.stream().min(Comparator.comparingDouble(e -> e.distanceToSqr(body))).orElse(null);
+        AABB reach = body.getBoundingBox().inflate(16, 6, 16);
+        LivingEntity best = null;
+        double bd = Double.MAX_VALUE;
+        for (LivingEntity e : foesOf(owner, sl)) {
+            if (e == body || !e.isAlive() || !reach.intersects(e.getBoundingBox())) continue;
+            double d = e.distanceToSqr(body);
+            if (d < bd) { bd = d; best = e; }
+        }
+        return best;
     }
 
     // ================================================================ the sweep
@@ -579,6 +619,7 @@ public final class Corpses {
         for (UUID id : NAMED.bodies(owner)) crumbleById(server, id);
         for (UUID id : ZOMBIES.bodies(owner)) crumbleById(server, id);
         for (UUID id : ZOMBIES.bodies(owner)) ZOMBIES.remove(owner, id);
+        FOES.remove(owner);
         for (UUID id : RAISED.bodies(owner)) RAISED.remove(owner, id);
         for (UUID id : NAMED.bodies(owner)) NAMED.remove(owner, id);
     }
@@ -591,6 +632,7 @@ public final class Corpses {
         RAISED.clear();
         NAMED.clear();
         ZOMBIES.clear();
+        FOES.clear();
         LEDGERS.clear();
         Pacts.clear();
     }

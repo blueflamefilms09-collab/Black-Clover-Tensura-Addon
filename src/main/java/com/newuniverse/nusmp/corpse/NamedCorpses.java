@@ -16,7 +16,7 @@ public enum NamedCorpses {
     /** No.3, the huge stitched bruiser: the slowest and the heaviest, a wall of health, and a ground slam every 8 seconds; it stays only 135 seconds. */
     DAVID("corpse_david", "David", Role.BRUISER, 380, 15.0, 0.17, 12, 1.0, 1.5f, 3.4f, 0.0, 3, Signature.GROUND_SLAM, 0.75),
     /** No.0, the elite: the strongest blow and the fastest feet, a soul barrage every 10 seconds; one at a time, it stays only 90 seconds. */
-    MICHAEL_CAESAL("corpse_michael_caesal", "Michael Caesal", Role.ELITE, 210, 18.0, 0.34, 6, 0.60, 0.62f, 2.05f, 0.0, 0, Signature.SOUL_BARRAGE, 0.5);
+    MICHAEL_CAESAL("corpse_michael_caesal", "Michael Caesal", Role.ELITE, 210, 18.0, 0.38, 6, 0.60, 0.62f, 2.05f, 0.0, 0, Signature.SOUL_BARRAGE, 0.5);
 
     /** Appended after the three old roles. */
     public enum Role { BRAWLER, BRUISER, CASTER, ELITE }

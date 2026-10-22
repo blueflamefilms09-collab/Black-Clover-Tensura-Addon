@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class CorpseConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.IntValue ZOMBIE_CAP;
+    public static final ModConfigSpec.IntValue ZOMBIE_CAP, ZOMBIE_GLOBAL_CAP, NAMED_GLOBAL_CAP;
     public static final ModConfigSpec.BooleanValue ZOMBIES_INSTEAD_OF_PUPPETS;
     public static final ModConfigSpec.IntValue LEDGER_MAX, RAISE_MAX, MAX_ACTIVE, LIFE_SECONDS, NAMED_LIFE_SECONDS, TRUE_COOLDOWN_SECONDS,
             PACT_MINUTES, REVIVE_DECAY_SECONDS, PET_WINDOW_SECONDS, PACT_RANGE, LEDGER_RADIUS, REVIVE_MANA_PERCENT;
@@ -67,6 +67,10 @@ public final class CorpseConfig {
                 .define("zombiesInsteadOfPuppets", true);
         ZOMBIE_CAP = b.comment("Most summoned zombies one caster owns at once, over every page; summoning more dismisses the oldest.")
                 .defineInRange("zombieCap", 6, 1, 16);
+        ZOMBIE_GLOBAL_CAP = b.comment("Most summoned zombies on the whole server at once, all casters together (a new summon is cut to what is left).")
+                .defineInRange("zombieGlobalCap", SoulZombieRules.GLOBAL_CAP_DEFAULT, 4, 512);
+        NAMED_GLOBAL_CAP = b.comment("Most of Rades's numbered undead (Jimmy, David, Alfredo, Carl, Michael Caesal) on the whole server at once.")
+                .defineInRange("namedGlobalCap", SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT, 3, 256);
         b.pop();
         SPEC = b.build();
     }
@@ -86,6 +90,8 @@ public final class CorpseConfig {
     }
 
     public static boolean zombiesInsteadOfPuppets() { return getb(ZOMBIES_INSTEAD_OF_PUPPETS, true); }
+    public static int zombieGlobalCap() { return geti(ZOMBIE_GLOBAL_CAP, SoulZombieRules.GLOBAL_CAP_DEFAULT); }
+    public static int namedGlobalCap() { return geti(NAMED_GLOBAL_CAP, SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT); }
     public static int zombieCap() { return geti(ZOMBIE_CAP, SoulZombieRules.CAP_DEFAULT); }
     public static boolean conjure() { return getb(CONJURE, true); }
     public static boolean conjureTensura() { return getb(CONJURE_TENSURA, true); }

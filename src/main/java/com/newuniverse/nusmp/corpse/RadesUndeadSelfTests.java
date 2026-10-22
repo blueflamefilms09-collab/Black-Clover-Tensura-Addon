@@ -84,6 +84,7 @@ public final class RadesUndeadSelfTests {
             SoulZombies.summon(owner, cap + 3, 400, 1.0, null);
             int now = SoulZombies.count(owner.getUUID());
             if (now > cap) return Result.fail("the zombie cap " + cap + " was passed: " + now);
+            if (Corpses.ZOMBIES.total() > CorpseConfig.zombieGlobalCap()) return Result.fail("the server-wide zombie cap was passed: " + Corpses.ZOMBIES.total());
             if (!first.stream().allMatch(e -> e.isRemoved() || e.isAlive())) return Result.fail("a zombie is in an odd state");
             sb.append("zombies ").append(now).append("/").append(cap).append(" sun-safe; ");
             Corpses.crumbleAllOf(server, owner.getUUID());

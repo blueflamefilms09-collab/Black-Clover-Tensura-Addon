@@ -35,7 +35,7 @@ public final class CorpseEntities {
 
     private static DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> named(NamedCorpses k) {
         return ENTITIES.register(k.id, () -> EntityType.Builder.<NamedCorpseEntity>of((t, l) -> new NamedCorpseEntity(t, l, k), MobCategory.MISC)
-                .sized(k.width, k.height).clientTrackingRange(10).build(k.id));
+                .sized(k.width, k.height).clientTrackingRange(8).build(k.id));
     }
 
     /** Loads this class before the registry event; call it from the NUSMP constructor. */

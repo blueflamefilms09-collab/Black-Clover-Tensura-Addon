@@ -46,7 +46,7 @@ public class SoulZombieEntity extends Zombie implements OwnableEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Zombie.createAttributes().add(Attributes.MAX_HEALTH, SoulZombieRules.BASE_HEALTH).add(Attributes.ATTACK_DAMAGE, SoulZombieRules.BASE_ATTACK)
-                .add(Attributes.MOVEMENT_SPEED, SoulZombieRules.SPEED).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0).add(Attributes.FOLLOW_RANGE, 32.0);
+                .add(Attributes.MOVEMENT_SPEED, SoulZombieRules.SPEED).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0).add(Attributes.FOLLOW_RANGE, 24.0);
     }
 
     @Override public UUID getOwnerUUID() { return ownerId; }
@@ -176,7 +176,7 @@ public class SoulZombieEntity extends Zombie implements OwnableEntity {
             me.getLookControl().setLookAt(o, 30f, 30f);
             if (me.distanceToSqr(o) > 28 * 28) { me.teleportTo(o.getX() + 1.5, o.getY(), o.getZ() + 1.5); me.getNavigation().stop(); return; }
             if (--repath > 0) return;
-            repath = 8;
+            repath = SoulZombieRules.REPATH_TICKS;
             me.getNavigation().moveTo(o, 1.2);
         }
     }
