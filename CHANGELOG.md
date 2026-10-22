@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.0] — Shishou, the Akashic Relic sword (new): a talking, flying, levelling sword with 31 skills; new version numbering from 2.0.0
+
+### NEW
+- **Shishou (Teacher), "Reincarnated as a Sword", as an Akashic Relic (Grade: EX-Singularity):** one-of-a-kind sentient sword (hard cap of ONE per world, recoverable, never duplicable). A flying entity hunts hostile mobs, eats their drops into EXP, and goes dormant standing in the ground; right-click it to claim it (soulbound to your UUID). Non-owners get Slowness X and Wither and "Let go of me, you aren't my wielder." and lose it after 10 seconds. Throw / recall key H, cast key J, next skill K, a movable Appraisal HUD, `/multiverse shishou ...` admin commands, rare natural appearance (config).
+- **31 skills with Tensura names** (all from the sword's own mana, with cooldowns, caps and a server config switch each): Telekinesis, Thought Communication, Ultra-Speed Regeneration, Stat Concealment, Skill Eater, Skill Sharing, Wielder Registration, Appraisal, Multilayer Barrier, Stomach (27-slot storage that survives death), Elemental Synthesis, Sword Arts Mastery, Magic Sense, Black Flame (new effect), Stealth, Vibration Magic, Spatial Motion, Demon Lord's Haki, Divine Sword Release, Black Lightning, Spatial Blade, Doppelganger, and absorbed Fire, Wind, Earth, Water-Ice, Darkness, Healing, Purification, Poison Coat. Tensura engravings, a new franchise "Reincarnated as a Sword" with 2 engravings.
+- **3D model built from your reference image** (about 4,965 quads, level of detail, four animation states idle / aggro / attack / dormant), glow skin, inventory icon, trail particle theme (`docs/items/shishou.md`).
+- **Voice pipeline for Shishou (no audio yet):** 41 lines manifest, generate and convert scripts, speech gate (owner and players within 32 blocks, one line per listener per 4 s); until the voice is made he speaks through action-bar text.
+- **New version numbering:** from 2.0.0 on the mod uses MAJOR.MINOR.PATCH (feature release = minor, fixes = patch); CLAUDE.md rule 4 updated.
+
+### REPLACED
+- Nothing.
+
+### KEPT
+- Everything from 1.113.0.
+
+### Not done / caveats
+- Not run in a real game before this release (CI build and server smoke are the first runs); balance numbers are first guesses (every cap is a config value).
+- GeckoLib replaced by the mod's own animation system; no real Tensura API calls; Skill Sharing is a small speed bonus (no mana sync); no wall-placing spells; Rukh particles replaced by a custom theme (repo rules forbid Rukh outside the Djinn and dungeons).
+- Wiki: the English and Japanese wiki hosts could not be fetched from the build environment; skill facts come from the owner's documents and Japanese web-search snippets. "Sword Lord's Haki" and "Elemental Synthesis" are owner design, not canon-checked.
+
 ## [1.113.0] — Spirit Lords remade (Salamander, Sylph, Undine, Gnome) and new Spirits of Darkness, Light and Space; Vermillion/Magna casting styles and Scale Magic; movable GUIs; dungeon rooms rebuilt; Engravement Codex; smaller jar
 
 ### NEW

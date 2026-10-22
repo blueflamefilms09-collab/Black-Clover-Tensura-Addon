@@ -11,7 +11,7 @@
 3. **Do not touch the Time Magic VFX** (`vfx/client/layer/TimeMagicLayer.java`, `textures/particle/time_*.png`,
    `tools/gen_time_vfx_textures.py`, the Time VFX calls in `book/TimeBook.java`). They are the quality standard the other
    effects are built to.
-4. **Bump the version on every change: +0.1.0** (e.g. 0.21.0 -> 0.22.0) in `gradle.properties` (`mod_version`) and
+4. **Bump the version on every change, as MAJOR.MINOR.PATCH** (from 2.0.0 on; before that it was +0.1.0 per change, ending at 1.113.0): a **minor** release for a feature or content release (2.0.0 -> 2.1.0), a **patch** release for fixes only (2.0.0 -> 2.0.1), a **major** release only for a big milestone the owner names (2.x -> 3.0.0). Change it in `gradle.properties` (`mod_version`) and
    `src/main/resources/META-INF/neoforge.mods.toml` (`version`), and update the jar name in README / LIBRARIES.
 5. **Always check whether a request is fully new or a replacement.** Before building anything from a new spec or file, compare
    it with what the mod already has: if it covers something that exists (same feature, same asset, same mechanic), it is a
