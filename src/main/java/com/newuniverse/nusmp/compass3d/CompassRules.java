@@ -22,6 +22,23 @@ public final class CompassRules {
     public static final int LINGER = 160, FADE = 14, FADE_IN = 10;
     /** Caps per player: living arrow-needles, seal discs, turn discs and routes. The totals can never pile up however fast the spells are cast. */
     public static final int CAP_NEEDLES = 24, CAP_SEALS = 10, CAP_TURNS = 6, CAP_ROUTES = 2;
+    /**
+     * 1.112.0 (lag audit): caps for the whole server, whatever the number of casters. The per-player caps above bound one caster; a hundred players casting at once would still be thousands of
+     * moving props, each a position packet per tick to everyone who tracks it and a model on every client. A spell that finds the server-wide cap full still works, it just has no model that time.
+     */
+    public static final int GLOBAL_NEEDLES = 96, GLOBAL_SEALS = 48, GLOBAL_TURNS = 24, GLOBAL_ROUTES = 12;
+
+    /** The server-wide cap of a COMPASS_2 variant (0 for an unknown one). */
+    public static int globalCap(int variant) {
+        return switch (variant) {
+            case V_NEEDLE -> GLOBAL_NEEDLES;
+            case V_SEAL -> GLOBAL_SEALS;
+            case V_TURN -> GLOBAL_TURNS;
+            case V_ROUTE -> GLOBAL_ROUTES;
+            default -> 0;
+        };
+    }
+
     /** Radius of the compass in blocks at prop scale 1 (the mesh has radius 1): a disc a little over one block and a half across. */
     public static final float MAIN_SCALE = 0.72f;
     /** How far a seal disc flies from the compass to its foe's feet, in ticks. */
@@ -35,6 +52,21 @@ public final class CompassRules {
         int pitch = Math.max(0, Math.min(127, Math.round((aimPitchDeg + 90f) / 180f * 127f)));
         int fade = fadeLeft <= 0 ? 0 : Math.min(63, fadeLeft + 1);
         return (yaw << 8) | (pitch << 16) | ((mode & 3) << 23) | (fade << 25);
+    }
+
+    /** The bits of the compass word that hold the aim (yaw and pitch): they change with every turn of the caster's head. */
+    public static final int AIM_MASK = 0x7FFF00;
+    /** The fewest ticks between two sends of a word that differs only in the aim (a head turned fast changed it every tick: a data packet to every watcher each time). */
+    public static final int AIM_RESEND_TICKS = 3;
+
+    /**
+     * Whether the server should write the new compass word now: never when nothing changed; at once when the mode or the fade changed; for an aim-only change at most once every
+     * {@link #AIM_RESEND_TICKS} ticks (the client's needle is a spring and does not need the aim every tick).
+     */
+    public static boolean shouldSetWord(int current, int next, long now, long lastSet) {
+        if (current == next) return false;
+        if (((current ^ next) & ~AIM_MASK) != 0) return true;
+        return now - lastSet >= AIM_RESEND_TICKS;
     }
 
     public static int variant(int word) { return word & 0xFF; }
@@ -104,10 +136,19 @@ public final class CompassRules {
 
     /** The start and end of dash k as fractions of the route (0..1), marching toward the target as 'ticks' grows: {start, end}; a dash wraps round to the start. */
     public static float[] dash(int k, int n, float ticks) {
+        return new float[]{dashStart(k, n, ticks), dashEnd(k, n, ticks)};
+    }
+
+    /** The start of dash k as a fraction of the route (what {@link #dash} puts first); no allocation, for the painter that asks for every dash of every route in every frame. */
+    public static float dashStart(int k, int n, float ticks) {
         float slot = 1f / n, phase = (ticks * 0.035f) % 1f;
-        float s = ((k * slot + phase * slot) % 1f);
-        float e = s + slot * 0.55f;
-        return new float[]{s, Math.min(1f, e)};
+        return (k * slot + phase * slot) % 1f;
+    }
+
+    /** The end of dash k (what {@link #dash} puts second). */
+    public static float dashEnd(int k, int n, float ticks) {
+        float slot = 1f / n;
+        return Math.min(1f, dashStart(k, n, ticks) + slot * 0.55f);
     }
 
     // ---------------------------------------------------------------- the flight of a seal disc

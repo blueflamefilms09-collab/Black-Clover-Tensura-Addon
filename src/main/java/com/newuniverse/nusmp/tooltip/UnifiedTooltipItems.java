@@ -44,9 +44,41 @@ public final class UnifiedTooltipItems {
 
     /** The style of this stack; {@code categoryLabel} is the translated label of its category (null = English). */
     public static UnifiedTooltipRules.Style styleOf(ItemStack stack, String categoryLabel) {
-        return UnifiedTooltipRules.style(hintsOf(stack.getItem()), stack.getRarity().ordinal(), categoryLabel);
+        Kept k = kept(stack.getItem());
+        int r = Math.max(0, Math.min(k.styles.length - 1, stack.getRarity().ordinal()));
+        UnifiedTooltipRules.Style s = k.styles[r];
+        if (s == null || !java.util.Objects.equals(k.labels[r], categoryLabel)) {              // first use, or the language changed
+            s = UnifiedTooltipRules.style(k.category, r, categoryLabel);
+            k.styles[r] = s;
+            k.labels[r] = categoryLabel;
+        }
+        return s;
     }
 
     /** The category of an item (for the self-test). */
-    public static UnifiedTooltipRules.Category categoryOf(Item item) { return UnifiedTooltipRules.classify(hintsOf(item)); }
+    public static UnifiedTooltipRules.Category categoryOf(Item item) { return kept(item).category; }
+
+    /**
+     * 1.112.0 (lag audit): what the tooltip works out for an item, kept. The tooltip of a hovered stack is gathered (and its frame coloured) on every frame; each time it walked the item's class
+     * chain, joined and lower-cased the names, made an item stack to look for the food component and built three strings. The category depends on the item alone, the style on the item,
+     * its rarity and the language of the label, so both are kept per item (one entry per registered item at most, filled when it is first hovered).
+     */
+    private static final class Kept {
+        final UnifiedTooltipRules.Category category;
+        final UnifiedTooltipRules.Style[] styles = new UnifiedTooltipRules.Style[8];
+        final String[] labels = new String[8];
+
+        Kept(UnifiedTooltipRules.Category category) { this.category = category; }
+    }
+
+    private static final java.util.Map<Item, Kept> KEPT = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static Kept kept(Item item) {
+        Kept k = KEPT.get(item);
+        if (k == null) {
+            k = new Kept(UnifiedTooltipRules.classify(hintsOf(item)));
+            KEPT.put(item, k);
+        }
+        return k;
+    }
 }

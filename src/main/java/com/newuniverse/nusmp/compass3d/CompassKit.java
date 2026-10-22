@@ -44,7 +44,7 @@ public final class CompassKit {
     /** The state of one caster's compass. */
     private static final class Main {
         MagicPropEntity prop;
-        long until;
+        long until, lastWord;
         int mode;
         UUID target;
     }
@@ -121,7 +121,11 @@ public final class CompassKit {
             Vec3 look = owner.getViewVector(1f);
             float aimYaw = (float) Math.toDegrees(Math.atan2(-look.x, look.z)), aimPitch = (float) -Math.toDegrees(Math.asin(Mth.clamp(look.y, -1, 1)));
             int word = CompassRules.packMain(aimYaw, aimPitch, m.mode, left <= CompassRules.FADE ? (int) left : 0);
-            if (word != e.param()) e.setParam(word);
+            long now = sl.getGameTime();
+            if (CompassRules.shouldSetWord(e.param(), word, now, m.lastWord)) {            // 1.112.0: an aim-only change is sent at most every third tick
+                e.setParam(word);
+                m.lastWord = now;
+            }
         }
 
         @Override public void end(MagicPropEntity e, ServerLevel sl) {
@@ -195,10 +199,54 @@ public final class CompassKit {
             oldest.expire();
             list.remove(oldest);
         }
+        if (globalLive(variant, level.getGameTime()) >= CompassRules.globalCap(variant)) return null;          // 1.112.0: the server-wide cap
         if (budgeted && !PerfBudgets.effectPacket(level.getGameTime())) return null;
         MagicPropEntity e = MagicProps.spawn(level, PropKind.COMPASS_2, at, 0f, scale, Math.max(2, life), CompassRules.packProp(variant, index), p);
-        if (e != null) list.add(e);
+        if (e != null) {
+            list.add(e);
+            if (variant >= 0 && variant < COUNT.length) COUNT[variant]++;
+        }
         return e;
+    }
+
+    /** Living spell props of each variant on the whole server, counted at most once per tick (and kept up to date within the tick by {@link #spawn}). */
+    private static final int[] COUNT = new int[4];
+    private static boolean registered;
+    private static long countTick = Long.MIN_VALUE;
+
+    private static int globalLive(int variant, long now) {
+        if (variant < 0 || variant >= COUNT.length) return Integer.MAX_VALUE;
+        if (now != countTick) {
+            countTick = now;
+            java.util.Arrays.fill(COUNT, 0);
+            for (List<MagicPropEntity> l : LIVE.values()) {
+                for (MagicPropEntity x : l) {
+                    if (x.isRemoved()) continue;
+                    int v = CompassRules.variant(x.param());
+                    if (v >= 0 && v < COUNT.length) COUNT[v]++;
+                }
+            }
+        }
+        return COUNT[variant];
+    }
+
+    /** Server-wide living spell props of a variant (tests and {@code /multiverse perf}). */
+    public static int liveEverywhere(int variant, long now) { return globalLive(variant, now); }
+
+    /**
+     * 1.112.0 (lag audit): the housekeeping the first version left out. The per-caster tables are keyed by player UUID and were only emptied by {@link #forget} (a self-test) or when the same
+     * player cast again, so a player who left kept a list of finished props (and the level they were in) for the rest of the server's life. Now they go when the player logs out and when the
+     * server stops. Called once from {@code prop.CompassProps.init}.
+     */
+    public static synchronized void register() {
+        if (registered) return;
+        registered = true;
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e) -> forget(e.getEntity().getUUID()));
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> {
+            MAIN.clear();
+            LIVE.clear();
+            BOLTS.clear();
+        });
     }
 
     private static void orient(MagicPropEntity e, Vec3 dir) {

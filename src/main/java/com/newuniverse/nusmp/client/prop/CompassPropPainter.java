@@ -2,7 +2,9 @@ package com.newuniverse.nusmp.client.prop;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.newuniverse.nusmp.client.compass.CompassFrame;
 import com.newuniverse.nusmp.client.compass.CompassRender;
+import com.newuniverse.nusmp.compass3d.CompassLod;
 import com.newuniverse.nusmp.compass3d.CompassRules;
 import com.newuniverse.nusmp.compass3d.CompassVisualConfig;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
@@ -10,7 +12,6 @@ import com.newuniverse.nusmp.prop.PropKind;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -26,6 +27,9 @@ import java.util.WeakHashMap;
  *       needle swinging at the shooter whose shot was bent back. Variant 3: a route of marching 3D dashes and arrow heads from the compass to the charted foe.</li>
  * </ul>
  * Everything is skipped when {@code visual.compass3d} is off (the old flat effects show instead). Pass order: solid model passes first, then the glass, then the additive passes.
+ * <p>
+ * 1.112.0 (lag audit, docs/perf/lag_audit_1.md): every prop asks {@link CompassFrame} for a level of detail first (by distance from the camera, culled when wholly behind it, charged to a
+ * per-frame quad budget), and the per-frame vectors of the old code are plain doubles now.
  */
 public final class CompassPropPainter {
     private CompassPropPainter() {}
@@ -36,16 +40,31 @@ public final class CompassPropPainter {
 
     /** Called once on the client by PropPainterRegistry. */
     public static void register() {
+        CompassFrame.init();
         PropPainters.register(PropKind.COMPASS_1, CompassPropPainter::main);
         PropPainters.register(PropKind.COMPASS_2, CompassPropPainter::spell);
     }
 
     // ================================================================ the caster's compass
+    /** 1.112.0 (lag audit): the cost of painting the compasses and what comes out of them, one section (off by default: a flag read; {@code /nusmp perf on}). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_PAINT = com.newuniverse.nusmp.perf.PerfProbe.section("c.compass.paint");
+
     private static void main(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            main0(e, partial, age, pose, buf, light);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_PAINT, t0);
+        }
+    }
+
+    private static void main0(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {
         if (!CompassVisualConfig.compass3d()) return;
         int word = e.param();
         float k = CompassRules.opacity(age, word, partial);
         if (k <= 0.01f) return;
+        int lod = CompassFrame.main(e);
+        if (lod >= CompassLod.CULLED) return;                                                  // too far, behind the camera, or the frame's quad budget is spent on nearer ones
         float pop = CompassRules.popIn(age, CompassRules.FADE_IN);
         float s = e.scale() * Math.max(0.05f, pop) * (0.8f + 0.2f * k);
         float bob = 0.07f * Mth.sin(age * 0.09f), sway = 11f * Mth.sin(age * 0.031f), roll = 2.5f * Mth.sin(age * 0.05f + 1f);
@@ -56,16 +75,15 @@ public final class CompassPropPainter {
         pose.mulPose(Axis.ZP.rotationDegrees(roll));
         // the needle: toward the charted foe, else toward where the caster looks, a spring with a little overshoot
         float yaw = Mth.rotLerp(partial, e.yRotO, e.getYRot());
-        float want = needleGoal(e, word, partial, bob, yaw - sway, age);
-        float angle = spring(e, want, age);
+        float angle = lod >= CompassLod.LOW ? 0f : spring(e, needleGoal(e, word, partial, bob, yaw - sway, age), age);        // the far compass has no needle to swing
         pose.scale(s, s, s);
         SealDraw.camera(pose);
         float guard = mode == CompassRules.MODE_GUARD ? 1f : 0f, chart = mode == CompassRules.MODE_CHART ? 1f : 0f, attack = mode == CompassRules.MODE_ATTACK ? 1f : 0f;
         float glow = 1f + 0.35f * attack + 0.25f * chart + 0.3f * guard + 0.12f * Mth.sin(age * 0.2f);
-        CompassRender.compass(pose, buf, light, angle, k, glow, true, true);
+        CompassRender.compass(pose, buf, light, angle, k, glow, true, true, lod);
         if (CompassVisualConfig.aura()) {
             CompassRender.aura(pose, buf, age, k, 1f + 0.35f * attack + 0.5f * chart + 0.25f * guard);
-            CompassRender.glint(pose, buf, age, k);
+            if (lod == CompassLod.FULL) CompassRender.glint(pose, buf, age, k);
         }
         if (guard > 0f) {                                                                      // Willful Compass: a turning field ring round the compass
             pose.pushPose();
@@ -86,10 +104,10 @@ public final class CompassPropPainter {
     private static float needleGoal(MagicPropEntity e, int word, float partial, float bob, float worldYaw, float age) {
         double dx, dy, dz;
         Entity t = e.target();
-        Vec3 from = e.getPosition(partial).add(0, 0.0, 0);
-        if (t != null) {
-            Vec3 c = t.getPosition(partial).add(0, t.getBbHeight() * 0.5, 0);
-            dx = c.x - from.x; dy = c.y - from.y; dz = c.z - from.z;
+        if (t != null) {                                                                       // plain doubles: the positions were two Vec3 per compass per frame
+            dx = Mth.lerp(partial, t.xo, t.getX()) - Mth.lerp(partial, e.xo, e.getX());
+            dy = Mth.lerp(partial, t.yo, t.getY()) + t.getBbHeight() * 0.5 - Mth.lerp(partial, e.yo, e.getY());
+            dz = Mth.lerp(partial, t.zo, t.getZ()) - Mth.lerp(partial, e.zo, e.getZ());
         } else {
             double yw = Math.toRadians(CompassRules.aimYaw(word)), pt = Math.toRadians(CompassRules.aimPitch(word));
             dx = -Math.sin(yw) * Math.cos(pt); dy = -Math.sin(pt); dz = Math.cos(yw) * Math.cos(pt);
@@ -112,6 +130,15 @@ public final class CompassPropPainter {
 
     // ================================================================ what comes out of it
     private static void spell(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            spell0(e, partial, age, pose, buf, light);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_PAINT, t0);
+        }
+    }
+
+    private static void spell0(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {
         if (!CompassVisualConfig.compass3d()) return;
         switch (CompassRules.variant(e.param())) {
             case CompassRules.V_NEEDLE -> arrow(e, partial, age, pose, buf, light);
@@ -130,6 +157,8 @@ public final class CompassPropPainter {
     private static void arrow(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {
         float k = fadeOut(e, partial, 2f) * Mth.clamp(age / 2f, 0f, 1f);
         if (k <= 0.01f) return;
+        int lod = CompassFrame.arrow(e);
+        if (lod >= CompassLod.CULLED) return;
         float grow = CompassRules.popIn(age, 5f);
         float s = 0.5f * e.scale() * Math.max(0.1f, grow);
         pose.pushPose();
@@ -140,7 +169,7 @@ public final class CompassPropPainter {
         pose.pushPose();
         pose.mulPose(Axis.ZP.rotationDegrees(age * 16f));
         pose.scale(s, s, s);
-        CompassRender.arrow(pose, buf, light, k, 1f);
+        CompassRender.arrow(pose, buf, light, k, 1f, lod);
         pose.popPose();
         pose.popPose();
     }
@@ -151,6 +180,8 @@ public final class CompassPropPainter {
         float in = CompassRules.popIn(life, 6f), out = fadeOut(e, partial, 8f);
         float k = Mth.clamp(life / 3f, 0f, 1f) * out;
         if (k <= 0.01f) return;
+        int lod = CompassFrame.small(e);
+        if (lod >= CompassLod.CULLED) return;
         float landed = Mth.clamp((life - CompassRules.SEAL_FLIGHT + 2f) / 4f, 0f, 1f);
         float s = 0.5f * e.scale() * Math.max(0.1f, in) * (0.7f + 0.3f * out);
         pose.pushPose();
@@ -169,7 +200,7 @@ public final class CompassPropPainter {
         pose.mulPose(Axis.XP.rotationDegrees(-90f + tilt));
         pose.mulPose(Axis.ZP.rotationDegrees(age * 5f + CompassRules.index(e.param()) * 40f));
         pose.scale(s, s, s);
-        CompassRender.compass(pose, buf, light, age * 11f, k, 1.3f, true, false);
+        CompassRender.compass(pose, buf, light, age * 11f, k, 1.3f, true, false, lod);
         pose.popPose();
     }
 
@@ -179,6 +210,8 @@ public final class CompassPropPainter {
         float in = CompassRules.popIn(life, 4f), out = fadeOut(e, partial, 6f);
         float k = Mth.clamp(life / 2f, 0f, 1f) * out;
         if (k <= 0.01f) return;
+        int lod = CompassFrame.small(e);
+        if (lod >= CompassLod.CULLED) return;
         float s = 0.42f * e.scale() * 2f * Math.max(0.1f, in);
         pose.pushPose();
         pose.translate(0f, 0.0f, 0f);
@@ -188,13 +221,15 @@ public final class CompassPropPainter {
         Entity t = e.target();
         float want = 0f;
         if (t != null) {
-            Vec3 d = t.getPosition(partial).add(0, t.getBbHeight() * 0.5, 0).subtract(e.getPosition(partial));
-            want = CompassRules.needleAngle(d.x, d.y, d.z, (float) -Math.toDegrees(theta));
+            double dx = Mth.lerp(partial, t.xo, t.getX()) - Mth.lerp(partial, e.xo, e.getX());
+            double dy = Mth.lerp(partial, t.yo, t.getY()) + t.getBbHeight() * 0.5 - Mth.lerp(partial, e.yo, e.getY());
+            double dz = Mth.lerp(partial, t.zo, t.getZ()) - Mth.lerp(partial, e.zo, e.getZ());
+            want = CompassRules.needleAngle(dx, dy, dz, (float) -Math.toDegrees(theta));
         }
         float angle = CompassRules.needleSwing(want + 150f, want, life);
         pose.scale(s, s, s);
         SealDraw.camera(pose);
-        CompassRender.compass(pose, buf, light, angle, k, 1.4f, true, true);
+        CompassRender.compass(pose, buf, light, angle, k, 1.4f, true, true, lod);
         float p = Mth.clamp(life / 12f, 0f, 1f);
         CompassRender.ring(pose, buf, 1.1f + 1.3f * p, life * 0.2f, 0.6f * k * (1f - p), CompassRender.GOLD);
         CompassRender.softGlow(pose, buf, 0f, 0f, 0.1f, 1.6f, 0.4f * k * (1f - 0.5f * p), CompassRender.GOLD);
@@ -208,35 +243,40 @@ public final class CompassPropPainter {
         float life = e.life() + partial;
         float k = Mth.clamp(life / 8f, 0f, 1f) * fadeOut(e, partial, 12f);
         if (k <= 0.01f) return;
-        Vec3 from = e.getPosition(partial), to = t.getPosition(partial).add(0, t.getBbHeight() * 0.5, 0);
-        Vec3 d = to.subtract(from);
-        double len = d.length();
+        double fx = Mth.lerp(partial, e.xo, e.getX()), fy = Mth.lerp(partial, e.yo, e.getY()), fz = Mth.lerp(partial, e.zo, e.getZ());
+        double dx = Mth.lerp(partial, t.xo, t.getX()) - fx, dy = Mth.lerp(partial, t.yo, t.getY()) + t.getBbHeight() * 0.5 - fy, dz = Mth.lerp(partial, t.zo, t.getZ()) - fz;
+        double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
         if (len < 1.6) return;
-        Vec3 u = d.scale(1.0 / len);
-        Vec3 a = from.add(u.scale(0.9)), b = to.subtract(u.scale(0.5));                  // it leaves the compass's edge and stops short of the foe
-        double span = a.distanceTo(b);
+        double ux = dx / len, uy = dy / len, uz = dz / len;
+        double span = len - 1.4;                                                          // it leaves the compass's edge (0.9 out) and stops short of the foe (0.5 before it)
         if (span < 0.6) return;
         int n = CompassRules.dashes(span);
-        float yaw = (float) Math.toDegrees(Math.atan2(u.x, u.z)), pitch = (float) -Math.toDegrees(Math.asin(Mth.clamp((float) u.y, -1f, 1f)));
+        int lod = CompassFrame.route(e, n);
+        if (lod >= CompassLod.CULLED) return;
+        float yaw = (float) Math.toDegrees(Math.atan2(ux, uz)), pitch = (float) -Math.toDegrees(Math.asin(Mth.clamp((float) uy, -1f, 1f)));
         SealDraw.camera(pose);
-        CompassRender.trail(pose, buf, (float) (a.x - from.x), (float) (a.y - from.y), (float) (a.z - from.z), (float) (b.x - from.x), (float) (b.y - from.y), (float) (b.z - from.z), 0.05f, 0.22f * k, CompassRender.GOLD);
-        for (int i = 0; i < n; i++) {
-            float[] f = CompassRules.dash(i, n, life);
-            float edge = Math.min(Mth.clamp(f[0] * 6f, 0f, 1f), Mth.clamp((1f - f[1]) * 6f + 0.3f, 0f, 1f));      // dashes fade in at the compass and out near the foe
-            Vec3 p0 = a.add(b.subtract(a).scale(f[0])), p1 = a.add(b.subtract(a).scale(f[1]));
-            double seg = p0.distanceTo(p1);
+        double ax = ux * 0.9, ay = uy * 0.9, az = uz * 0.9;                                 // where the line starts, from the compass
+        CompassRender.trail(pose, buf, (float) ax, (float) ay, (float) az, (float) (ax + ux * span), (float) (ay + uy * span), (float) (az + uz * span), 0.05f, 0.22f * k, CompassRender.GOLD);
+        int shown = CompassLod.routeDashes(n, lod);
+        int step = shown >= n || shown <= 0 ? 1 : Math.max(1, n / shown);                    // a lower level draws every second dash
+        boolean twin = lod == CompassLod.FULL;
+        for (int i = 0, drawn = 0; i < n && drawn < shown; i += step, drawn++) {
+            float f0 = CompassRules.dashStart(i, n, life), f1 = CompassRules.dashEnd(i, n, life);
+            float edge = Math.min(Mth.clamp(f0 * 6f, 0f, 1f), Mth.clamp((1f - f1) * 6f + 0.3f, 0f, 1f));      // dashes fade in at the compass and out near the foe
+            double seg = span * (f1 - f0);
             if (seg < 0.05) continue;
+            double off = 0.9 + span * f0;
             pose.pushPose();
-            pose.translate(p0.x - from.x, p0.y - from.y, p0.z - from.z);
+            pose.translate(ux * off, uy * off, uz * off);
             pose.mulPose(Axis.YP.rotationDegrees(yaw));
             pose.mulPose(Axis.XP.rotationDegrees(pitch));
             pose.pushPose();
             pose.scale(0.07f, 0.07f, (float) seg);
-            CompassRender.routePiece(pose, buf, false, k * edge);
+            CompassRender.routePiece(pose, buf, false, k * edge, twin);
             pose.popPose();
             pose.translate(0f, 0f, (float) seg);
             pose.scale(0.17f, 0.17f, 0.26f);
-            CompassRender.routePiece(pose, buf, true, k * edge);
+            CompassRender.routePiece(pose, buf, true, k * edge, twin);
             pose.popPose();
         }
     }

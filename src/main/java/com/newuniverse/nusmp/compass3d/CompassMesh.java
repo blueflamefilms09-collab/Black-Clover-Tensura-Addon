@@ -52,24 +52,44 @@ public final class CompassMesh {
 
     // ---------------------------------------------------------------- baked parts
     private static final float[] BODY_RIM, BODY_FACE, BODY_STAR, NEEDLE_Q, GLASS_Q, ARROW_Q, BAR_Q, CHEVRON_Q;
+    /**
+     * 1.112.0 (lag audit, docs/perf/lag_audit_1.md): the same parts at fewer segments for the compasses that are far from the camera. Level 0 is the model above (the arrays before this change,
+     * unchanged); level 1 keeps every part with a third of the segments; level 2 is only the dial disc (the caller adds a ring card). The parts are baked once, like the full ones.
+     */
+    private static final float[] RIM_1, FACE_1, STAR_1, NEEDLE_1, FACE_2, ARROW_1;
+    /** The number of levels of detail ({@link #body(Sink, int)} and friends take 0 .. LODS - 1). */
+    public static final int LODS = 3;
 
     static {
         Baker rim = new Baker(), face = new Baker(), star = new Baker();
-        buildRim(rim);
-        buildFace(face);
+        buildRim(rim, SEGS, true);
+        buildFace(face, 4, SEGS);
         buildStar(star);
         BODY_RIM = rim.done();
         BODY_FACE = face.done();
         BODY_STAR = star.done();
         Baker n = new Baker();
-        buildNeedle(n);
+        buildNeedle(n, 14, 16);
         NEEDLE_Q = n.done();
         Baker g = new Baker();
-        buildGlass(g);
+        buildGlass(g, 4, 32);
         GLASS_Q = g.done();
         Baker a = new Baker();
-        buildArrow(a);
+        buildArrow(a, true);
         ARROW_Q = a.done();
+        Baker r1 = new Baker(), f1 = new Baker(), s1 = new Baker(), n1 = new Baker(), f2 = new Baker(), a1 = new Baker();
+        buildRim(r1, 16, true);
+        buildFace(f1, 2, 16);
+        buildStar(s1);
+        buildNeedle(n1, 8, 8);
+        buildFace(f2, 1, 16);
+        buildArrow(a1, false);
+        RIM_1 = r1.done();
+        FACE_1 = f1.done();
+        STAR_1 = s1.done();
+        NEEDLE_1 = n1.done();
+        FACE_2 = f2.done();
+        ARROW_1 = a1.done();
         Baker b = new Baker();
         buildBar(b);
         BAR_Q = b.done();
@@ -80,20 +100,74 @@ public final class CompassMesh {
 
     // ---------------------------------------------------------------- the public parts
     /** The rim, back dome and lugs (layer RIM), the dial (FACE) and the compass rose (STAR). */
-    public static void body(Sink s) {
-        emit(s, RIM, BODY_RIM);
-        emit(s, FACE, BODY_FACE);
-        emit(s, STAR, BODY_STAR);
+    public static void body(Sink s) { body(s, 0); }
+
+    /** The same at a level of detail (0 full, 1 a third of the segments, 2 only the dial disc: no rim, no rose). */
+    public static void body(Sink s, int lod) {
+        if (lod <= 0) {
+            emit(s, RIM, BODY_RIM);
+            emit(s, FACE, BODY_FACE);
+            emit(s, STAR, BODY_STAR);
+        } else if (lod == 1) {
+            emit(s, RIM, RIM_1);
+            emit(s, FACE, FACE_1);
+            emit(s, STAR, STAR_1);
+        } else {
+            emit(s, FACE, FACE_2);
+        }
+    }
+
+    /** Only the quads of one layer (RIM, FACE or STAR) of the body at a level of detail: the renderer draws the layers one render type at a time and used to walk all three arrays for each. */
+    public static void bodyLayer(Sink s, int lod, int layer) {
+        float[] q;
+        if (lod <= 0) q = layer == RIM ? BODY_RIM : layer == FACE ? BODY_FACE : layer == STAR ? BODY_STAR : null;
+        else if (lod == 1) q = layer == RIM ? RIM_1 : layer == FACE ? FACE_1 : layer == STAR ? STAR_1 : null;
+        else q = layer == FACE ? FACE_2 : null;
+        if (q != null) emit(s, layer, q);
     }
 
     /** The needle (layer NEEDLE), pointing +y; the caller rotates it about z. */
-    public static void needle(Sink s) { emit(s, NEEDLE, NEEDLE_Q); }
+    public static void needle(Sink s) { needle(s, 0); }
+
+    /** The needle at a level of detail (nothing at level 2). */
+    public static void needle(Sink s, int lod) {
+        if (lod <= 0) emit(s, NEEDLE, NEEDLE_Q);
+        else if (lod == 1) emit(s, NEEDLE, NEEDLE_1);
+    }
 
     /** The glass dome (layer GLASS). */
-    public static void glass(Sink s) { emit(s, GLASS, GLASS_Q); }
+    public static void glass(Sink s) { glass(s, 0); }
+
+    /** The glass dome at a level of detail (only at level 0: from level 1 on it is a faint sheet on a thing too far to see through, and a translucent draw call of its own). */
+    public static void glass(Sink s, int lod) {
+        if (lod <= 0) emit(s, GLASS, GLASS_Q);
+    }
 
     /** A flying arrow-needle along +z, tip at z = 1.0, tail ring near z = -0.72 (layer NEEDLE). */
-    public static void arrow(Sink s) { emit(s, NEEDLE, ARROW_Q); }
+    public static void arrow(Sink s) { arrow(s, 0); }
+
+    /** The arrow-needle at a level of detail: 0 the whole model, 1 head, shaft and fins without the tail ring and neck, nothing from 2 (the caller draws only its light streak). */
+    public static void arrow(Sink s, int lod) {
+        if (lod <= 0) emit(s, NEEDLE, ARROW_Q);
+        else if (lod == 1) emit(s, NEEDLE, ARROW_1);
+    }
+
+    /** The quads the solid passes of body + needle + glass cost at this level of detail (what the frame budget is charged). */
+    public static int compassQuads(int lod, boolean needle, boolean glass) {
+        if (lod <= 0) return bodyQuads() + (needle ? quads(NEEDLE_Q) : 0) + (glass ? quads(GLASS_Q) : 0);
+        if (lod == 1) return quads(RIM_1) + quads(FACE_1) + quads(STAR_1) + (needle ? quads(NEEDLE_1) : 0);
+        return quads(FACE_2);
+    }
+
+    /** The quads of the arrow-needle model at this level of detail. */
+    public static int arrowQuads(int lod) { return lod <= 0 ? quads(ARROW_Q) : lod == 1 ? quads(ARROW_1) : 0; }
+
+    /** The quads of the additive glow passes (dial lines, rose, needle) at this level of detail: level 1 keeps only the dial lines, level 2 none. */
+    public static int glowQuads(int lod, boolean needle) {
+        if (lod <= 0) return quads(BODY_FACE) + quads(BODY_STAR) + (needle ? quads(NEEDLE_Q) : 0);
+        if (lod == 1) return quads(FACE_1);
+        return 0;
+    }
 
     /** A unit segment of a route, along +z from 0 to 1, half width 0.5 (layer NEEDLE). */
     public static void bar(Sink s) { emit(s, NEEDLE, BAR_Q); }
@@ -126,9 +200,10 @@ public final class CompassMesh {
     }
 
     // ================================================================ builders
-    private static void buildRim(Baker b) {
+    private static void buildRim(Baker b, int segs, boolean lugs) {
         float[] u = {1, 0, 0}, v = {0, 1, 0}, n = {0, 0, 1};
-        for (float[] r : RIM_ROWS) lathe(b, 0, 0, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], SEGS, 0f, 1f);
+        for (float[] r : RIM_ROWS) lathe(b, 0, 0, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], segs, 0f, 1f);
+        if (!lugs) return;
         // four lugs on the outer wall (north is the larger crown lug)
         for (int k = 0; k < 4; k++) {
             double a = Math.PI / 2 - k * Math.PI / 2;
@@ -139,12 +214,12 @@ public final class CompassMesh {
         }
     }
 
-    private static void buildFace(Baker b) {
-        disc(b, FACE_R, 4, SEGS, (r, th) -> FACE_Z);
+    private static void buildFace(Baker b, int rings, int segs) {
+        disc(b, FACE_R, rings, segs, (r, th) -> FACE_Z);
     }
 
-    private static void buildGlass(Baker b) {
-        disc(b, FACE_R, 4, 32, (r, th) -> {
+    private static void buildGlass(Baker b, int rings, int segs) {
+        disc(b, FACE_R, rings, segs, (r, th) -> {
             float q = r / FACE_R;
             return GLASS_EDGE_Z + GLASS_DOME_H * (1 - q * q);
         });
@@ -193,7 +268,7 @@ public final class CompassMesh {
         tri(b, h, t, corner, um, 0.0f, um, 1.0f, light ? r[0] : r[1], 0.30f, nrm[0], nrm[1], nrm[2]);
     }
 
-    private static void buildNeedle(Baker b) {
+    private static void buildNeedle(Baker b, int hubSegs, int ringSegs) {
         float sh = NEEDLE_SHOULDER_HALF;
         float[] tip = {0, NEEDLE_TIP, NEEDLE_TIP_Z}, tail = {0, -NEEDLE_TAIL, NEEDLE_TIP_Z * 0.95f}, c = {0, 0, NEEDLE_RIDGE_Z};
         float[] sl = {-sh, 0, NEEDLE_SHOULDER_Z}, sr = {sh, 0, NEEDLE_SHOULDER_Z};
@@ -204,10 +279,10 @@ public final class CompassMesh {
         // the hub cap and the small ring at the tail
         float[] u = {1, 0, 0}, v = {0, 1, 0}, n = {0, 0, 1};
         float[][] hub = {{NEEDLE_HUB_R, 0.10f, NEEDLE_HUB_R, 0.145f, 0.2f, 0.45f}, {NEEDLE_HUB_R, 0.145f, 0.035f, 0.172f, 0.45f, 0.7f}, {0.035f, 0.172f, 0f, 0.18f, 0.7f, 0.9f}};
-        for (float[] r : hub) lathe(b, 0, 0, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], 14, TEX_U_LIGHT[0], TEX_U_LIGHT[1]);
+        for (float[] r : hub) lathe(b, 0, 0, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], hubSegs, TEX_U_LIGHT[0], TEX_U_LIGHT[1]);
         float ro = NEEDLE_RING_OUTER, ri = NEEDLE_RING_INNER;
         float[][] ring = {{ro, NEEDLE_RING_Z0, ro, NEEDLE_RING_Z1, 0.2f, 0.4f}, {ro, NEEDLE_RING_Z1, ri, NEEDLE_RING_Z1, 0.4f, 0.6f}, {ri, NEEDLE_RING_Z1, ri, NEEDLE_RING_Z0, 0.6f, 0.8f}};
-        for (float[] r : ring) lathe(b, 0, NEEDLE_RING_Y, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], 16, TEX_U_LIGHT[0], TEX_U_LIGHT[1]);
+        for (float[] r : ring) lathe(b, 0, NEEDLE_RING_Y, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], ringSegs, TEX_U_LIGHT[0], TEX_U_LIGHT[1]);
     }
 
     private static void needleFacet(Baker b, float[] a, float[] bb, float[] c) {
@@ -220,7 +295,7 @@ public final class CompassMesh {
     }
 
     /** The flying arrow-needle (along +z): a four sided head, a tapering shaft, a ring at the tail, four fins. */
-    private static void buildArrow(Baker b) {
+    private static void buildArrow(Baker b, boolean tail) {
         float hh = 0.065f, hs = 0.045f, hs2 = 0.028f;
         float zb = 0.25f, zt = 1.0f, ze = -0.62f;
         float[][] base = {{-hh, -hh, zb}, {hh, -hh, zb}, {hh, hh, zb}, {-hh, hh, zb}};
@@ -258,6 +333,7 @@ public final class CompassMesh {
             tri(b, p0, p1, p2, um, 0.0f, um, 0.6f, um, 1.0f, nrm[0], nrm[1], nrm[2]);
             tri(b, p0, p2, p1, um, 0.0f, um, 1.0f, um, 0.6f, -nrm[0], -nrm[1], -nrm[2]);
         }
+        if (!tail) return;                                              // the level of detail without the tail ring and its neck
         // the small ring at the tail, in the plane through the axis (axis of the ring along x)
         float[] ru = {0, 1, 0}, rv = {0, 0, 1}, rn = {1, 0, 0};
         float ro = 0.115f, ri = 0.065f, rz = 0.022f;

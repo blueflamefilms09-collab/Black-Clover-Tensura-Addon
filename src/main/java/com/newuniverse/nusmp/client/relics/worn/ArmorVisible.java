@@ -42,11 +42,19 @@ public final class ArmorVisible {
      * ({@code bodyNeedsPaint}): without the painted layer (or an own renderer) the failsafe draws the body.
      */
     public static Outcome resolve(ArmorSlotPlan.Verdict plan, Facts f) {
+        return resolve(plan, f.modelPieces(), f.customRan(), f.paintedLayer(), f.textureOk(), f.bodyNeedsPaint());
+    }
+
+    /**
+     * The same decision from the plain facts. 1.112.0 (lag audit): the worn layer asks this once per armour relic per wearer per frame, and {@link Facts} was a record made for every ask;
+     * this form allocates nothing ({@link #resolve(ArmorSlotPlan.Verdict, Facts)} is this, called with the record's fields).
+     */
+    public static Outcome resolve(ArmorSlotPlan.Verdict plan, int modelPieces, boolean customRan, boolean paintedLayer, boolean textureOk, boolean bodyNeedsPaint) {
         if (plan.why() == WornPlan.Why.ARMOUR_OPTION || plan.why() == WornPlan.Why.FIRST_PERSON_HEAD) return Outcome.OFF_ON_PURPOSE;
         if (plan.why() == WornPlan.Why.TOO_FAR) return Outcome.OUT_OF_RANGE;
-        if (f.modelPieces() > 0 && !f.bodyNeedsPaint()) return Outcome.MODEL;
-        if (f.customRan()) return Outcome.CUSTOM;
-        if (f.painted()) return f.modelPieces() > 0 ? Outcome.MODEL : Outcome.PAINTED;
+        if (modelPieces > 0 && !bodyNeedsPaint) return Outcome.MODEL;
+        if (customRan) return Outcome.CUSTOM;
+        if (paintedLayer && textureOk) return modelPieces > 0 ? Outcome.MODEL : Outcome.PAINTED;
         return Outcome.FAILSAFE;
     }
 

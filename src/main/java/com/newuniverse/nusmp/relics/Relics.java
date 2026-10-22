@@ -183,19 +183,35 @@ public final class Relics {
         List<Worn> worn = new ArrayList<>(located.size());
         for (Located l : located) worn.add(l.worn());
         Cached made = new Cached(now, worn, located, worn.isEmpty() ? Loadout.EMPTY : work(e, worn));
-        if (cache.size() > 400) cache.clear();                                   // a mob-heavy world cannot make this grow without end
+        if (cache.size() > MAX_CACHED) evict(cache, now);                        // a mob-heavy world cannot make this grow without end
         cache.put(e.getUUID(), made);
         com.newuniverse.nusmp.perf.PerfProbe.end(e.level().isClientSide() ? SCAN_CLIENT : SCAN_SERVER, t0);
         return made;
     }
 
+    /** How many entities' looks are kept at most. */
+    static final int MAX_CACHED = 1024;
+
+    /**
+     * 1.112.0 (lag audit): makes room in a full table. It used to clear the whole table at 400 entries, which on a server with 100+ players (plus whatever mobs asked) made every player
+     * rescan on the same tick, again and again. Now only the looks that are no longer good are dropped (older than the lifetime, or from a game time in the future after a world switch);
+     * the table is cleared only if that was not enough.
+     */
+    private static void evict(Map<UUID, Cached> cache, long now) {
+        cache.values().removeIf(c -> now < c.tick() || now - c.tick() >= ttl());
+        if (cache.size() > MAX_CACHED) cache.clear();
+    }
+
+    private static final EquipmentSlot[] ARMOUR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET};
+
     private static List<Located> scan(LivingEntity e) {
         List<Located> out = new ArrayList<>(4);
-        for (ItemStack s : new ItemStack[]{e.getMainHandItem(), e.getOffhandItem()}) {
-            RelicDef d = defOf(s);
-            if (d != null && d.slot().isHand()) out.add(new Located(s, d, Where.HAND));
-        }
-        for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET}) {
+        ItemStack main = e.getMainHandItem(), off = e.getOffhandItem();            // 1.112.0: no array per look
+        RelicDef dm = defOf(main);
+        if (dm != null && dm.slot().isHand()) out.add(new Located(main, dm, Where.HAND));
+        RelicDef dof = defOf(off);
+        if (dof != null && dof.slot().isHand()) out.add(new Located(off, dof, Where.HAND));
+        for (EquipmentSlot slot : ARMOUR_SLOTS) {
             ItemStack s = e.getItemBySlot(slot);
             RelicDef d = defOf(s);
             if (d != null && d.slot().isArmor()) out.add(new Located(s, d, Where.ARMOUR));

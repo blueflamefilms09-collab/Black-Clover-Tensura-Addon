@@ -19,9 +19,22 @@ final class Wave101Set {
     /** How many different Millennium Items are worn and working for this player right now (0 to 7). */
     static int count(ServerPlayer p) {
         if (p == null) return 0;
-        Set<String> seen = new HashSet<>();
-        for (Relics.Worn w : Relics.loadout(p).active()) if (Wave101Rules.inSet(w.def().id())) seen.add(w.def().id());
-        return seen.size();
+        java.util.List<Relics.Worn> active = Relics.loadout(p).active();
+        if (active.isEmpty()) return 0;                                              // 1.112.0 (lag audit): most players wear none of the seven: no set, no allocation
+        int n = 0;
+        String first = null, second = null, third = null;                           // at most seven different ids: a handful of comparisons instead of a HashSet per question
+        java.util.Set<String> more = null;
+        for (Relics.Worn w : active) {
+            String id = w.def().id();
+            if (!Wave101Rules.inSet(id)) continue;
+            if (id.equals(first) || id.equals(second) || id.equals(third) || (more != null && more.contains(id))) continue;
+            if (first == null) first = id;
+            else if (second == null) second = id;
+            else if (third == null) third = id;
+            else (more == null ? more = new HashSet<>() : more).add(id);
+            n++;
+        }
+        return n;
     }
 
     /** The factor of the damage and healing of a Millennium act for this player: 1.0 alone, up to 1.3 with the whole set. */

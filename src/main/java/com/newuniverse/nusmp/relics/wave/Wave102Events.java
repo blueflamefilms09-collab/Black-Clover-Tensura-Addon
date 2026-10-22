@@ -23,19 +23,39 @@ final class Wave102Events {
 
     static void register() { NeoForge.EVENT_BUS.addListener(Wave102Events::onIncoming); }
 
+    /** 1.112.0 (lag audit): the cost of this wave's damage handler (off by default: a flag read). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.w102");
+
+    /** The flag key of each weapon with a rule, built once (a string concatenation per swing before). */
+    private static final java.util.Map<String, String> FLAGS = new java.util.HashMap<>();
+
+    static {
+        for (String id : Wave102Passives.RULES.keySet()) FLAGS.put(id, "w102_" + id);
+    }
+
     static void onIncoming(LivingIncomingDamageEvent e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onIncoming0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE, t0);
+        }
+    }
+
+    private static void onIncoming0(LivingIncomingDamageEvent e) {
         if (Wave71Acts.running()) return;                                              // the blows of an act are the act's own: no passive on top
         LivingEntity victim = e.getEntity();
         if (victim.level().isClientSide()) return;
         DamageSource src = e.getSource();
         if (!(src.getEntity() instanceof ServerPlayer atk)) return;
+        if (!Wave102Passives.RULES.containsKey(Wave20Util.heldId(atk))) return;       // 1.112.0 (lag audit): a player who does not hold one of these weapons costs one map lookup, no closure, no guard
         SafeCast.tick("relic.w102.events", () -> apply(e, atk, victim, src));
     }
 
     private static void apply(LivingIncomingDamageEvent e, ServerPlayer atk, LivingEntity victim, DamageSource src) {
         String id = Wave20Util.heldId(atk);
         Wave71Rules.Rule rule = Wave102Passives.RULES.get(id);
-        if (rule == null || !RelicFlags.has(atk, "w102_" + id)) return;
+        if (rule == null || !RelicFlags.has(atk, FLAGS.get(id))) return;
         boolean ranged = Wave71Rules.isRangedId(id);
         boolean melee = src.getDirectEntity() == atk && !src.is(DamageTypeTags.IS_PROJECTILE);
         boolean arrow = src.getDirectEntity() instanceof AbstractArrow;

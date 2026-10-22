@@ -110,6 +110,33 @@ public final class CuriosLink {
         }
     }
 
+    /** One kept read of a wearer's Curios slots: the entity's own tick count when it was made, and the stacks. */
+    private record Seen(int tick, List<ItemStack> stacks) {}
+
+    private static final Map<java.util.UUID, Seen> SEEN = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /**
+     * 1.112.0 (lag audit): {@link #equipped} for code that asks once a second or so (the franchise engravings, the sheathed passives below): the answer of the last read is reused for up to
+     * {@code maxAgeTicks} of the entity's own ticks, so two once-a-second passes of one player that are a few ticks apart share ONE reflective read (which builds a combined handler and a list each
+     * time). The stacks are the live ones, so what is inside them is always current; only which slots hold something can be up to {@code maxAgeTicks} old. A server of a hundred players made
+     * three of these reads per player per second before.
+     */
+    public static List<ItemStack> equippedCached(LivingEntity e, int maxAgeTicks) {
+        if (e == null) return List.of();
+        int now = e.tickCount;
+        Seen s = SEEN.get(e.getUUID());
+        if (s != null && now >= s.tick() && now - s.tick() < maxAgeTicks) return s.stacks();
+        List<ItemStack> fresh = equipped(e);
+        if (SEEN.size() > 512) SEEN.clear();                                         // players who left are never asked again; this keeps the table small without a log-out hook
+        SEEN.put(e.getUUID(), new Seen(now, fresh));
+        return fresh;
+    }
+
+    /** Forgets the kept read of this entity (log out, server stop). */
+    public static void forget(java.util.UUID id) { if (id != null) SEEN.remove(id); }
+
+    public static void clearCaches() { SEEN.clear(); }
+
     private static List<ItemStack> stacksOf(IItemHandler h) {
         List<ItemStack> out = new ArrayList<>();
         for (int i = 0; i < h.getSlots(); i++) {
@@ -277,8 +304,9 @@ public final class CuriosLink {
     private static void onPlayerTick0(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 13) return;
         Set<Kind> worn = EnumSet.noneOf(Kind.class);
-        for (ItemStack s : equipped(p)) if (s.getItem() instanceof MagicWeaponItem w) worn.add(w.kind);
-        for (ItemStack s : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem()}) if (s.getItem() instanceof MagicWeaponItem w) worn.remove(w.kind);
+        for (ItemStack s : equippedCached(p, 5)) if (s.getItem() instanceof MagicWeaponItem w) worn.add(w.kind);        // 1.112.0 (lag audit): shares the read of the franchise pass
+        if (p.getMainHandItem().getItem() instanceof MagicWeaponItem w1) worn.remove(w1.kind);
+        if (p.getOffhandItem().getItem() instanceof MagicWeaponItem w2) worn.remove(w2.kind);
         for (Map.Entry<Kind, Pass> e : PASSIVES.entrySet()) {
             AttributeInstance inst = p.getAttribute(e.getValue().attr());
             if (inst == null) continue;

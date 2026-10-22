@@ -41,7 +41,7 @@ public final class RelicTextures {
     /** 1.111.0: the armour relics whose painted layer is known to be there (registered by {@link #registerAll}, or shipped as a PNG by a resource pack): the worn layer's failsafe asks it. */
     private static final java.util.Set<String> PAINTED_OK = new java.util.HashSet<>();
     /** The armour relics whose layer this class registered itself (what {@link #verify} checks for). */
-    private static final java.util.Set<String> OWN_LAYERS = new java.util.HashSet<>();
+    private static final java.util.Map<String, ResourceLocation> OWN_LAYERS = new java.util.LinkedHashMap<>();      // 1.112.0 (lag audit): id -> the outer layer's location, built once at registration (verify() used to build ~400 locations from strings every ten seconds)
     private static int generation, verifiedGeneration = -1, heals;
     private static long nextCheck;
     private static volatile String lastVerify = "not run yet";
@@ -68,8 +68,9 @@ public final class RelicTextures {
         boolean deep = verifiedGeneration != generation;
         int bad = 0;
         String first = "";
-        for (String id : OWN_LAYERS) {
-            net.minecraft.client.renderer.texture.AbstractTexture t = tm.getTexture(armorLayer(id, false), null);
+        for (java.util.Map.Entry<String, ResourceLocation> own : OWN_LAYERS.entrySet()) {
+            String id = own.getKey();
+            net.minecraft.client.renderer.texture.AbstractTexture t = tm.getTexture(own.getValue(), null);
             boolean ok = t instanceof DynamicTexture;
             if (ok && deep) {
                 NativeImage img = ((DynamicTexture) t).getPixels();
@@ -166,7 +167,7 @@ public final class RelicTextures {
                     tm.register(armorLayer(d.id(), true), new DynamicTexture(image(argb)));
                     tm.register(armorGlow(d.id()), new DynamicTexture(image(glowPx)));
                     GLOW.add(d.id());
-                    OWN_LAYERS.add(d.id());
+                    OWN_LAYERS.put(d.id(), outer);
                     PAINTED_OK.add(d.id());
                 } catch (RuntimeException | LinkageError failed) {
                     com.mojang.logging.LogUtils.getLogger().error("[nusmp] the armour layer of relic {} could not be painted; a plain layer in its colours is used", d.id(), failed);
@@ -174,7 +175,7 @@ public final class RelicTextures {
                         int[] plain = com.newuniverse.nusmp.client.relics.worn.ArmorVisible.solidLayer(d.paletteMain(), d.paletteTrim());
                         tm.register(outer, new DynamicTexture(image(plain)));
                         tm.register(armorLayer(d.id(), true), new DynamicTexture(image(plain)));
-                        OWN_LAYERS.add(d.id());
+                        OWN_LAYERS.put(d.id(), outer);
                         PAINTED_OK.add(d.id());
                     } catch (RuntimeException | LinkageError worse) {
                         com.mojang.logging.LogUtils.getLogger().error("[nusmp] not even the plain armour layer of relic {} could be registered", d.id(), worse);

@@ -283,6 +283,10 @@ class PerfSourceScanTest {
         PROBES.put("client/relics/RelicWornLayer.java", "c.relic.worn_layer");
         PROBES.put("client/relics/djinn/DjinnArmorLayer.java", "c.djinn.armor_layer");
         PROBES.put("client/labyrinth/foundry/FoundryRenderer.java", "c.foundry.render");
+        PROBES.put("franchise/FranchiseEvents.java", "s.franchise.hit");                    // 1.112.0 (lag audit): the new handlers are measurable
+        PROBES.put("relics/wave/Wave101Events.java", "s.relic.w101");
+        PROBES.put("relics/wave/Wave102Events.java", "s.relic.w102");
+        PROBES.put("client/prop/CompassPropPainter.java", "c.compass.paint");
     }
 
     @Test
@@ -329,5 +333,156 @@ class PerfSourceScanTest {
         String text = Files.readString(p).trim();
         assertTrue(text.startsWith("{") && text.endsWith("}"));
         assertEquals(-1, text.indexOf('{', 1), "the fragment must be flat (key -> text)");
+    }
+
+    // ================================================================ lag audit 1 (docs/perf/lag_audit_1.md): the patterns it fixed
+    private static List<Method> methodsNamed(String rel, String name) throws IOException {
+        List<Method> out = new ArrayList<>();
+        for (Method m : methods(read(rel), rel)) if (m.name().equals(name)) out.add(m);
+        assertFalse(out.isEmpty(), rel + " has no method " + name);
+        return out;
+    }
+
+    private static final Pattern NEW_OBJECT = Pattern.compile("\\bnew\\s+[A-Z\\w.<>]+\\s*[(\\[]");
+    private static final Pattern ENTITY_SCAN = Pattern.compile("getEntitiesOfClass\\(|getEntities\\(|getNearbyEntities\\(|getEntitiesOfClass");
+    private static final Pattern THROTTLE = Pattern.compile("% 20|% 10|% 200|% 5\\b|tickCount %|PerfMath\\.due|dueFor\\(|entityScanInterval");
+
+    @Test
+    void noUnthrottledEntityScanInATickMethodOfTheNewPackages() throws IOException {
+        List<String> bad = new ArrayList<>();
+        for (Path f : javaFiles()) {
+            String rel = SRC.relativize(f).toString().replace('\\', '/');
+            boolean mine = rel.startsWith("franchise/") || rel.startsWith("compass3d/") || rel.startsWith("client/compass/") || rel.matches("relics/wave/Wave10[1-5].*\\.java");
+            if (!mine) continue;
+            String src = Files.readString(f);
+            if (!ENTITY_SCAN.matcher(src).find()) continue;
+            for (Method m : methods(src, rel)) {
+                String body = code(m.body());
+                if (PER_FRAME_OR_TICK.matcher(m.name()).matches() && ENTITY_SCAN.matcher(body).find() && !THROTTLE.matcher(body).find()) bad.add(rel + " " + m.name());
+            }
+        }
+        assertTrue(bad.isEmpty(), "an entity scan in a per-tick or per-frame method without a throttle (a modulo of the tick count or PerfMath.due): " + bad);
+    }
+
+    @Test
+    void theFranchiseHotPathsDoNotRebuildCopyOrConcatenate() throws IOException {
+        String ev = code(read("franchise/FranchiseEvents.java"));
+        String actives = code(method("franchise/FranchiseEvents.java", "actives").body());
+        assertTrue(actives.contains("st.cache != null") && actives.contains("st.cacheMain == main") && actives.contains("st.cacheWorn == worn"), "the active list is no longer kept per player");
+        assertTrue(actives.indexOf("main.isEmpty()") >= 0 && actives.indexOf("main.isEmpty()") < actives.indexOf("new LinkedHashMap"), "a player with no engraving must cost no allocation");
+        assertTrue(ev.contains("record Active(Engraving eng, Effect fx, int level, String key)"), "the cooldown key is built per call again");
+        assertFalse(ev.contains("String key() {"), "Active#key builds a string per call again");
+        String tick = code(method("franchise/FranchiseEvents.java", "tick").body());
+        assertEquals(1, Pattern.compile("regenAround\\(").matcher(tick).results().count(), "the ally pulse must scan once per second per player, however many auras are worn");
+        String regen = code(method("franchise/FranchiseEvents.java", "regenAround").body());
+        assertTrue(regen.contains("MAX_AURA_TARGETS") && regen.contains("players().size()"), "the ally pulse lost its target cap or its no-one-else shortcut");
+        String worn = code(method("franchise/FranchiseEvents.java", "readWorn").body());
+        assertTrue(worn.contains("equippedCached(") && !worn.contains("CuriosLink.equipped("), "the franchise pass must share the Curios read");
+        assertFalse(worn.contains("new LinkedHashMap") || worn.contains("new HashMap"), "readWorn allocates for a player with nothing");
+        String hit = code(method("franchise/FranchiseEvents.java", "onIncoming0").body());
+        assertTrue(hit.indexOf("instanceof ServerPlayer") >= 0 && hit.indexOf("instanceof ServerPlayer") < hit.indexOf("BYPASSES_INVULNERABILITY"), "onIncoming must leave the hits no player is part of before it looks at tags");
+        String eng = code(read("franchise/FranchiseEngravings.java"));
+        assertFalse(eng.contains("copyTag()"), "the franchise pass copies the custom data tag again");
+        assertTrue(eng.contains("BY_ITEM.get(") && eng.contains("LINES.get("), "the item and tooltip caches are gone");
+        assertFalse(code(method("franchise/FranchiseEngravings.java", "tooltipLine").body()).contains("FranchiseData.table().franchise(fid);\n        if (f == null) return null;\n        Component name"), "the tooltip line is built per call again");
+        for (String rel : new String[]{"item/WeaponEngravings.java", "item/ArmorEngravings.java"})
+            assertFalse(code(method(rel, "engrave").body()).contains("copyTag()"), rel + " copies the tag of every stack every second again");
+        assertTrue(code(method("item/ArmorEngravings.java", "forItem").body()).contains("FOR_ITEM"), "the armour engraving lookup lost its cache");
+        String style = code(method("tooltip/UnifiedTooltipItems.java", "styleOf").body());
+        assertTrue(style.contains("kept(") && !style.contains("hintsOf("), "the tooltip style is worked out from the item's class chain on every frame again");
+        assertTrue(code(method("tooltip/UnifiedTooltipItems.java", "categoryOf").body()).contains("kept("));
+    }
+
+    @Test
+    void theCuriosReadIsSharedByTheOncePerSecondPasses() throws IOException {
+        String passives = code(method("item/CuriosLink.java", "onPlayerTick0").body());
+        assertTrue(passives.contains("equippedCached(") && !passives.contains(" equipped(p)"), "the sheathed-weapon pass reads Curios on its own again");
+        String cached = code(method("item/CuriosLink.java", "equippedCached").body());
+        assertTrue(cached.contains("tickCount") && cached.contains("SEEN.size() >"), "the shared Curios read lost its age test or its size bound");
+    }
+
+    @Test
+    void theNewWaveListenersLeaveTheHitsOfMobsBeforeAnyClosure() throws IOException {
+        String w101 = code(method("relics/wave/Wave101Events.java", "onIncoming0").body());
+        assertTrue(w101.indexOf("instanceof ServerPlayer") >= 0 && w101.indexOf("instanceof ServerPlayer") < w101.indexOf("SafeCast.tick"), "Wave101Events.onIncoming builds a guard for hits no player is part of");
+        String w102 = code(method("relics/wave/Wave102Events.java", "onIncoming0").body());
+        assertTrue(w102.indexOf("containsKey(") >= 0 && w102.indexOf("containsKey(") < w102.indexOf("SafeCast.tick"), "Wave102Events.onIncoming builds a guard for players who hold none of its weapons");
+        String tick = code(method("relics/wave/Wave101Events.java", "onPlayerTick0").body());
+        assertTrue(tick.indexOf("active().isEmpty()") >= 0 && tick.indexOf("active().isEmpty()") < tick.indexOf("SafeCast.tick"), "Wave101Events.onPlayerTick works for players without a working relic");
+        assertTrue(tick.indexOf("% 20") >= 0 && tick.indexOf("% 20") < tick.indexOf("Relics.loadout"), "Wave101Events.onPlayerTick lost its once-a-second stagger");
+        String wearer = code(method("relics/wave/Wave101Events.java", "wearer").body());
+        assertTrue(wearer.indexOf("flags().isEmpty()") >= 0 && wearer.indexOf("flags().isEmpty()") < wearer.indexOf("RelicFlags.has"), "the wearer's side asks flags one by one for players with none");
+        for (String rel : new String[]{"relics/wave/Wave101Events.java", "relics/wave/Wave102Events.java"})
+            assertEquals(1, Pattern.compile("\"w10[12]_\"\\s*\\+").matcher(code(read(rel))).results().count(), rel + " builds a flag key by concatenation outside its FLAGS table");
+        String set = code(method("relics/wave/Wave101Set.java", "count").body());
+        assertFalse(set.contains("new HashSet<>();\n        for") && set.indexOf("isEmpty()") < 0, "the Millennium set count allocates for everyone");
+        assertTrue(set.contains("active.isEmpty()"));
+        assertFalse(code(method("relics/wave/Wave20Util.java", "heldId").body()).contains("Optional") || code(method("relics/wave/Wave20Util.java", "heldId").body()).contains(".map("), "heldId makes an Optional per swing again");
+    }
+
+    @Test
+    void theRelicLookEvictsOnlyWhatIsStaleAndAllocatesNoArrays() throws IOException {
+        String cached = code(method("relics/Relics.java", "cached").body());
+        assertTrue(cached.contains("evict(cache, now)") && !cached.contains("cache.clear()"), "a full relic table is cleared whole again (every player rescans on the same tick)");
+        String scan = code(method("relics/Relics.java", "scan").body());
+        assertFalse(scan.contains("new ItemStack[]") || scan.contains("new EquipmentSlot[]"), "the relic scan allocates arrays per look again");
+    }
+
+    @Test
+    void theArmourFailsafeAndTheLayerCheckAllocateAndBuildNothingPerFrame() throws IOException {
+        String fs = code(method("client/relics/RelicWornLayer.java", "armourFailsafe").body());
+        assertFalse(fs.contains("new ArmorVisible.Facts"), "the failsafe makes a Facts record per armour relic per wearer per frame again");
+        assertFalse(fs.contains("ArmorSlotPlan.decide(") || fs.contains("toLowerCase") || fs.contains("+ \"_\""), "the failsafe builds plans or strings per frame");
+        String verify = code(method("client/relics/RelicTextures.java", "verify").body());
+        assertFalse(verify.contains("armorLayer("), "verify builds a location from strings for every armour relic every ten seconds again");
+        assertTrue(verify.contains("OWN_LAYERS.entrySet()"));
+        assertTrue(code(method("client/relics/RelicTextures.java", "onClientTick").body()).contains("nextCheck"), "the layer check lost its interval");
+        String resolve = code(read("client/relics/worn/ArmorVisible.java"));
+        assertTrue(resolve.contains("public static Outcome resolve(ArmorSlotPlan.Verdict plan, int modelPieces"), "the allocation-free resolve is gone");
+    }
+
+    @Test
+    void theWeaponGripCostsOneArrayReadPerFrame() throws IOException {
+        String shift = code(method("visual/grip/GripState.java", "shift").body());
+        assertTrue(shift.indexOf("cache[ctx]") >= 0 && shift.indexOf("cache[ctx]") < shift.indexOf("new float"), "GripState.shift must answer from its cache before it works anything out");
+        assertFalse(code(method("client/WeaponGrip.java", "index").body()).contains("new "), "WeaponGrip.index allocates");
+        String render = code(read("client/WeaponRenderer.java"));
+        assertTrue(render.contains("mesh.grip.shift(gripCtx"), "the renderer no longer asks the cached shift");
+        assertTrue(code(method("client/WeaponGrip.java", "displays").body()).contains("DISPLAYS.get(id)"), "the hand display entries are read from the resource manager per call again");
+    }
+
+    @Test
+    void theCompassHasLevelsOfDetailABudgetAndNoPerFrameAllocation() throws IOException {
+        // the painter asks for a level before it draws anything
+        for (String name : new String[]{"main0", "arrow", "seal", "turn", "route"}) {
+            String body = code(methodsNamed("client/prop/CompassPropPainter.java", name).get(0).body());
+            assertTrue(body.contains("CompassFrame.") && body.contains("CompassLod.CULLED"), "CompassPropPainter." + name + " draws without a level of detail");
+            assertFalse(body.contains("new Vec3") || body.contains(".getPosition(") || body.contains(".add(") || body.contains(".subtract("), "CompassPropPainter." + name + " allocates vectors per frame");
+        }
+        String painter = code(read("client/prop/CompassPropPainter.java"));
+        assertFalse(painter.contains("CompassRules.dash("), "the painter allocates a float[2] per dash per frame again");
+        // the renderer: no allocation, scratch sinks
+        for (String name : new String[]{"compass", "arrow", "routePiece", "aura", "glint", "ring", "softGlow", "trail"})
+            for (Method m : methodsNamed("client/compass/CompassRender.java", name)) assertFalse(NEW_OBJECT.matcher(code(m.body())).find(), "CompassRender." + name + " allocates per frame");
+        // the frame helper: one answer per prop per frame, no allocation, the budget is the shared one
+        for (String name : new String[]{"main", "small", "arrow", "route", "level"})
+            for (Method m : methodsNamed("client/compass/CompassFrame.java", name)) assertFalse(NEW_OBJECT.matcher(code(m.body())).find(), "CompassFrame." + name + " allocates per frame");
+        String frame = code(read("client/compass/CompassFrame.java"));
+        assertTrue(frame.contains("PerfBudgets.COMPASS_QUADS") && frame.contains("CHOSEN.getOrDefault") && frame.contains("RenderLevelStageEvent.Stage.AFTER_SKY"), "the compass frame budget or its once-per-frame roll is gone");
+        // the mesh keeps its lower levels and the render path asks them
+        String render = code(read("client/compass/CompassRender.java"));
+        assertTrue(render.contains("bodyLayer(") && render.contains("CompassLod.LOW") && render.contains("static final PoseSink SOLID"), "CompassRender lost its levels of detail or its scratch sinks");
+        assertTrue(code(read("compass3d/CompassMesh.java")).contains("RIM_1") && code(read("compass3d/CompassMesh.java")).contains("FACE_2"), "the compass mesh lost its lower levels");
+    }
+
+    @Test
+    void theCompassServerSideIsCappedThrottledAndCleanedUp() throws IOException {
+        String kit = code(read("compass3d/CompassKit.java"));
+        assertTrue(code(method("compass3d/CompassKit.java", "spawn").body()).contains("globalLive("), "the server-wide cap of the compass props is gone");
+        assertTrue(kit.contains("CompassRules.shouldSetWord("), "the compass word is written on every aim change again");
+        assertTrue(kit.contains("PlayerLoggedOutEvent") && kit.contains("ServerStoppingEvent"), "the per-caster tables are not dropped on log out and server stop");
+        assertTrue(code(read("prop/CompassProps.java")).contains("CompassKit.register()"));
+        String rules = code(read("compass3d/CompassRules.java"));
+        assertTrue(rules.contains("GLOBAL_NEEDLES") && rules.contains("AIM_RESEND_TICKS"));
     }
 }

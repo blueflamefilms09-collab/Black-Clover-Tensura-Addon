@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.client.aura.AuraRender;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
+import com.newuniverse.nusmp.compass3d.CompassLod;
 import com.newuniverse.nusmp.compass3d.CompassMesh;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -28,17 +29,25 @@ public final class CompassRender {
             SOFT = AuraRender.tex("particle/glow");
     private static final ResourceLocation[] LAYER_TEX = {RIM, FACE, STAR, NEEDLE, GLASS};
     public static final int FB = PropDraw.FULL_BRIGHT, GOLD = 0xFFC94A, PALE = 0xFFF0B0;
+    private static final PoseSink SOLID = new PoseSink(), GLOW = new PoseSink();
 
     /**
      * Writes the quads of ONE layer into ONE vertex consumer through the pose stack's current transform. One consumer at a time on purpose: the shared buffer source ends the batch of the
      * render type it held before when another type is asked for, so a consumer must be written to right after it was fetched and never kept for later.
      */
     private static final class PoseSink implements CompassMesh.Sink {
-        final PoseStack pose;
+        PoseStack pose;
         VertexConsumer vc;
         int only, argb = 0xFFFFFFFF, light;
 
-        PoseSink(PoseStack pose, int light, int argb) { this.pose = pose; this.light = light; this.argb = argb; }
+        /** 1.112.0 (lag audit): the two sinks below are reused (the render thread draws one compass at a time); a new sink per pass was 3 to 4 objects per compass per frame. */
+        PoseSink init(PoseStack pose, int light, int argb) {
+            this.pose = pose;
+            this.light = light;
+            this.argb = argb;
+            this.vc = null;
+            return this;
+        }
 
         PoseSink use(VertexConsumer c, int layer) { this.vc = c; this.only = layer; return this; }
 
@@ -60,14 +69,30 @@ public final class CompassRender {
      * (below 1 the solid passes are alpha blended); glow 0..2 scales the glow passes. Passes in order: rim, dial, rose, needle (solid), the glow passes (additive), the glass (translucent).
      */
     public static void compass(PoseStack pose, MultiBufferSource buf, int light, float needleDeg, float alpha, float glow, boolean needle, boolean glass) {
-        if (alpha <= 0.01f) return;
+        compass(pose, buf, light, needleDeg, alpha, glow, needle, glass, CompassLod.FULL);
+    }
+
+    /**
+     * The same at a level of detail ({@link CompassLod}): FULL is the pass list above; MEDIUM has a third of the segments, no glass and only the dial's lines glowing (7 render types instead
+     * of 11); LOW is the dial disc and a gold ring card standing for the rim (2 render types); CULLED draws nothing.
+     */
+    public static void compass(PoseStack pose, MultiBufferSource buf, int light, float needleDeg, float alpha, float glow, boolean needle, boolean glass, int lod) {
+        if (alpha <= 0.01f || lod >= CompassLod.CULLED) return;
         boolean blend = alpha < 0.98f;
-        PoseSink s = new PoseSink(pose, SealDraw.lift(light, 7), SealDraw.argb(alpha, 0xFFFFFF));
-        for (int l = CompassMesh.RIM; l <= CompassMesh.STAR; l++) CompassMesh.body(s.use(buf.getBuffer(blend ? AuraRender.translucent(LAYER_TEX[l]) : AuraRender.cutout(LAYER_TEX[l])), l));
+        PoseSink s = SOLID.init(pose, SealDraw.lift(light, 7), SealDraw.argb(alpha, 0xFFFFFF));
+        if (lod >= CompassLod.LOW) {
+            CompassMesh.bodyLayer(s.use(buf.getBuffer(blend ? AuraRender.translucent(FACE) : AuraRender.cutout(FACE)), CompassMesh.FACE), lod, CompassMesh.FACE);
+            pose.pushPose();
+            pose.translate(0f, 0f, 0.02f);
+            ring(pose, buf, 1.02f, 0f, 0.55f * alpha, GOLD);
+            pose.popPose();
+            return;
+        }
+        for (int l = CompassMesh.RIM; l <= CompassMesh.STAR; l++) CompassMesh.bodyLayer(s.use(buf.getBuffer(blend ? AuraRender.translucent(LAYER_TEX[l]) : AuraRender.cutout(LAYER_TEX[l])), l), lod, l);
         if (needle) {
             pose.pushPose();
             pose.mulPose(Axis.ZP.rotationDegrees(needleDeg));
-            CompassMesh.needle(s.use(buf.getBuffer(blend ? AuraRender.translucent(NEEDLE) : AuraRender.cutout(NEEDLE)), CompassMesh.NEEDLE));
+            CompassMesh.needle(s.use(buf.getBuffer(blend ? AuraRender.translucent(NEEDLE) : AuraRender.cutout(NEEDLE)), CompassMesh.NEEDLE), lod);
             pose.popPose();
         }
         // glow passes: the dial's gold lines shine, the rose and the needle a little (full bright, additive)
@@ -75,38 +100,48 @@ public final class CompassRender {
         if (g > 0.02f) {
             pose.pushPose();
             pose.translate(0f, 0f, 0.004f);
-            PoseSink a = new PoseSink(pose, FB, SealDraw.argb(Mth.clamp(0.85f * g, 0f, 1f), 0xFFFFFF));
-            CompassMesh.body(a.use(buf.getBuffer(SafeAdditive.additive(FACE_GLOW)), CompassMesh.FACE));
-            a.argb = SealDraw.argb(Mth.clamp(0.20f * g, 0f, 1f), 0xFFFFFF);
-            CompassMesh.body(a.use(buf.getBuffer(SafeAdditive.additive(STAR)), CompassMesh.STAR));
-            if (needle) {
-                a.argb = SealDraw.argb(Mth.clamp(0.28f * g, 0f, 1f), 0xFFFFFF);
-                pose.mulPose(Axis.ZP.rotationDegrees(needleDeg));
-                CompassMesh.needle(a.use(buf.getBuffer(SafeAdditive.additive(NEEDLE)), CompassMesh.NEEDLE));
+            PoseSink a = GLOW.init(pose, FB, SealDraw.argb(Mth.clamp(0.85f * g, 0f, 1f), 0xFFFFFF));
+            CompassMesh.bodyLayer(a.use(buf.getBuffer(SafeAdditive.additive(FACE_GLOW)), CompassMesh.FACE), lod, CompassMesh.FACE);
+            if (lod == CompassLod.FULL) {                                                // the rose and the needle only glow while the compass is near
+                a.argb = SealDraw.argb(Mth.clamp(0.20f * g, 0f, 1f), 0xFFFFFF);
+                CompassMesh.bodyLayer(a.use(buf.getBuffer(SafeAdditive.additive(STAR)), CompassMesh.STAR), lod, CompassMesh.STAR);
+                if (needle) {
+                    a.argb = SealDraw.argb(Mth.clamp(0.28f * g, 0f, 1f), 0xFFFFFF);
+                    pose.mulPose(Axis.ZP.rotationDegrees(needleDeg));
+                    CompassMesh.needle(a.use(buf.getBuffer(SafeAdditive.additive(NEEDLE)), CompassMesh.NEEDLE), lod);
+                }
             }
             pose.popPose();
         }
-        if (glass) CompassMesh.glass(new PoseSink(pose, SealDraw.lift(light, 7), SealDraw.argb(alpha, 0xFFFFFF)).use(buf.getBuffer(AuraRender.translucent(GLASS)), CompassMesh.GLASS));
+        if (glass && lod == CompassLod.FULL)
+            CompassMesh.glass(SOLID.init(pose, SealDraw.lift(light, 7), SealDraw.argb(alpha, 0xFFFFFF)).use(buf.getBuffer(AuraRender.translucent(GLASS)), CompassMesh.GLASS), lod);
     }
 
     /** A flying arrow-needle along +z at the pose's origin (model units; scale the pose): solid, plus a soft additive pass of the same shape. */
-    public static void arrow(PoseStack pose, MultiBufferSource buf, int light, float alpha, float glow) {
-        if (alpha <= 0.01f) return;
-        PoseSink s = new PoseSink(pose, SealDraw.lift(light, 9), SealDraw.argb(alpha, 0xFFFFFF));
-        CompassMesh.arrow(s.use(buf.getBuffer(alpha < 0.98f ? AuraRender.translucent(NEEDLE) : AuraRender.cutout(NEEDLE)), CompassMesh.NEEDLE));
-        if (glow > 0.02f) {
-            PoseSink a = new PoseSink(pose, FB, SealDraw.argb(Mth.clamp(0.35f * glow * alpha, 0f, 1f), 0xFFFFFF));
-            CompassMesh.arrow(a.use(buf.getBuffer(SafeAdditive.additive(NEEDLE)), CompassMesh.NEEDLE));
+    public static void arrow(PoseStack pose, MultiBufferSource buf, int light, float alpha, float glow) { arrow(pose, buf, light, alpha, glow, CompassLod.FULL); }
+
+    /** The arrow-needle at a level of detail: FULL the whole model and its additive twin; MEDIUM the model without its tail ring and no twin; LOW nothing (the painter's streak stands for it). */
+    public static void arrow(PoseStack pose, MultiBufferSource buf, int light, float alpha, float glow, int lod) {
+        if (alpha <= 0.01f || lod >= CompassLod.LOW) return;
+        PoseSink s = SOLID.init(pose, SealDraw.lift(light, 9), SealDraw.argb(alpha, 0xFFFFFF));
+        CompassMesh.arrow(s.use(buf.getBuffer(alpha < 0.98f ? AuraRender.translucent(NEEDLE) : AuraRender.cutout(NEEDLE)), CompassMesh.NEEDLE), lod);
+        if (glow > 0.02f && lod == CompassLod.FULL) {
+            PoseSink a = GLOW.init(pose, FB, SealDraw.argb(Mth.clamp(0.35f * glow * alpha, 0f, 1f), 0xFFFFFF));
+            CompassMesh.arrow(a.use(buf.getBuffer(SafeAdditive.additive(NEEDLE)), CompassMesh.NEEDLE), lod);
         }
     }
 
     /** A unit route segment ({@link CompassMesh#bar}) or arrow head ({@link CompassMesh#chevron}) at the pose, with a faint additive twin. */
-    public static void routePiece(PoseStack pose, MultiBufferSource buf, boolean chevron, float alpha) {
+    public static void routePiece(PoseStack pose, MultiBufferSource buf, boolean chevron, float alpha) { routePiece(pose, buf, chevron, alpha, true); }
+
+    /** The same; {@code twin} false leaves the additive twin out (a route drawn at a lower level of detail). */
+    public static void routePiece(PoseStack pose, MultiBufferSource buf, boolean chevron, float alpha, boolean twin) {
         if (alpha <= 0.01f) return;
-        PoseSink s = new PoseSink(pose, FB, SealDraw.argb(alpha, 0xFFFFFF));
+        PoseSink s = SOLID.init(pose, FB, SealDraw.argb(alpha, 0xFFFFFF));
         s.use(buf.getBuffer(AuraRender.translucent(NEEDLE)), CompassMesh.NEEDLE);
         if (chevron) CompassMesh.chevron(s); else CompassMesh.bar(s);
-        PoseSink a = new PoseSink(pose, FB, SealDraw.argb(0.4f * alpha, 0xFFFFFF));
+        if (!twin) return;
+        PoseSink a = GLOW.init(pose, FB, SealDraw.argb(0.4f * alpha, 0xFFFFFF));
         a.use(buf.getBuffer(SafeAdditive.additive(NEEDLE)), CompassMesh.NEEDLE);
         if (chevron) CompassMesh.chevron(a); else CompassMesh.bar(a);
     }

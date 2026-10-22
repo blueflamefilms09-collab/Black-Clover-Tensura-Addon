@@ -28,7 +28,8 @@ final class Wave20Util {
 
     static String heldId(ServerPlayer p) {
         ItemStack s = p.getMainHandItem();
-        return s.isEmpty() ? "" : Relics.of(s).map(RelicDef::id).orElse("");
+        RelicDef d = s.isEmpty() ? null : Relics.defOf(s);                          // 1.112.0 (lag audit): no Optional and no lambda per swing
+        return d == null ? "" : d.id();
     }
 
     /** The registry path of an entity's type ("ender_dragon"). */

@@ -141,7 +141,11 @@ public final class UnifiedTooltipRules {
     // ---------------------------------------------------------------- the style
     /** The whole style of an item. {@code categoryLabel} is the (translated) label of the category; null means the English one. */
     public static Style style(Hints h, int vanillaRarityOrdinal, String categoryLabel) {
-        Category c = classify(h);
+        return style(classify(h), vanillaRarityOrdinal, categoryLabel);
+    }
+
+    /** The same for a category that was already worked out (1.112.0, lag audit: {@code UnifiedTooltipItems} keeps the category and the finished style per item, the tooltip is gathered every frame). */
+    public static Style style(Category c, int vanillaRarityOrdinal, String categoryLabel) {
         Grade g = grade(c, vanillaRarityOrdinal);
         String label = categoryLabel == null || categoryLabel.isBlank() ? c.label() : categoryLabel;
         return new Style(c, g, banner(g), typeLine(label), footer(label));

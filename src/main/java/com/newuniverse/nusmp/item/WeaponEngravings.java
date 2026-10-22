@@ -143,7 +143,7 @@ public final class WeaponEngravings {
         List<Engraving> list = ENGRAVINGS.get(key.getPath());
         if (list == null) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
-        if (cd != null && cd.copyTag().getBoolean(FLAG)) return false;
+        if (cd != null && cd.contains(FLAG)) return false;                      // 1.112.0 (lag audit): the marker is only ever set to true; no copy of the whole tag every second
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         for (Engraving g : list) {
             ResourceLocation id = g.id().contains(":") ? ResourceLocation.parse(g.id())
