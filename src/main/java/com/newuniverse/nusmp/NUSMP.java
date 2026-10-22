@@ -181,6 +181,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.deck.DeckSummonOptions.SPEC, "nusmp-deck-summon-client.toml");     // 1.110.0: deck.summonEffect (the Deck of Many Things card summon)
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.SPEC, "nusmp-visual-charms-client.toml");     // visual upgrade of the charms / Genesis worn relics: visual.upgrade
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.item.vu.VuOptions.SPEC, "nusmp-visual-upgrade-client.toml");     // 1.102.0: visual.upgrade and the other switches of the upgraded Genesis weapons
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.prop.RecombAnimeOptions.SPEC, "nusmp-recomb-anime-client.toml");     // Recombination Magic anime look: visual.recombAnime (default on), visual.recombAnimeParticles
             com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");

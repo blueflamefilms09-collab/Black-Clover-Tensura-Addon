@@ -2,6 +2,10 @@ package com.newuniverse.nusmp.prop;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.RecombinationArts;
+import com.newuniverse.nusmp.book.RecombinationBudget;
+import com.newuniverse.nusmp.perf.PerfMath;
+import com.newuniverse.nusmp.perf.PerfProbe;
+import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.book.RecombinationRules;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -21,6 +25,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
 
 /**
  * Recombination Magic (Henry Legolant), 1.93.0 rebuild: the server behaviours of the magic house's constructs (the old ones were two floating plank props).
@@ -48,6 +55,7 @@ public final class RecombinationProps {
         MagicProps.register(PropKind.RECOMBINATION_3, new Bull());
         MagicProps.register(PropKind.RECOMBINATION_4, new Drill());
         SelfTests.register("magic.recombination_rebuild", RecombinationProps::selfTest);
+        RecombAnimeSelfTest.register();                                                  // magic.recomb_anime: the anime look's assets, the older look kept, the rules
     }
 
     // ------------------------------------------------------------------ the synced state word
@@ -72,7 +80,39 @@ public final class RecombinationProps {
     private static List<LivingEntity> foes(MagicPropEntity e, LivingEntity owner, ServerLevel sl, double range) {
         List<LivingEntity> list = new ArrayList<>(sl.getEntitiesOfClass(LivingEntity.class, new AABB(e.position(), e.position()).inflate(range, 5, range), t -> hostile(owner, t)));
         list.sort((a, b) -> Double.compare(a.distanceToSqr(e), b.distanceToSqr(e)));
+        if (list.size() > RecombinationBudget.FOE_SCAN_MAX) list.subList(RecombinationBudget.FOE_SCAN_MAX, list.size()).clear();       // no lag: a crowd is looked at only as far as the nearest 16
         return list;
+    }
+
+    // ------------------------------------------------------------------ the ledgers (no lag on a public server): caps per caster and per dimension, the oldest construct ends first
+    private static final Map<ServerLevel, RecombinationBudget.Ledger<UUID>[]> LEDGERS = new WeakHashMap<>();
+
+    @SuppressWarnings("unchecked")
+    private static RecombinationBudget.Ledger<UUID> ledger(ServerLevel sl, int kind) {
+        RecombinationBudget.Ledger<UUID>[] set = LEDGERS.get(sl);
+        if (set == null) {
+            set = new RecombinationBudget.Ledger[4];
+            for (int k = 0; k < 4; k++) set[k] = new RecombinationBudget.Ledger<>(RecombinationBudget.perOwner(k), RecombinationBudget.perLevel(k));
+            LEDGERS.put(sl, set);
+        }
+        return set[kind];
+    }
+
+    /** Called from every construct's init(): counts it and ends the oldest ones over the caps. Runs once per spawn (a cast), never per tick. */
+    private static void track(MagicPropEntity e, ServerLevel sl, int kind) {
+        var l = ledger(sl, kind);
+        l.retain(u -> sl.getEntity(u) instanceof MagicPropEntity m && !m.isRemoved());
+        for (UUID old : l.add(e.ownerId(), e.getUUID())) if (sl.getEntity(old) instanceof MagicPropEntity m) m.expire();
+    }
+
+    private static void untrack(MagicPropEntity e, ServerLevel sl, int kind) { ledger(sl, kind).remove(e.getUUID()); }
+
+    /** A construct whose caster is gone (logged out, died, left the dimension) ends; checked every 10 ticks (a hash lookup), staggered by the entity id. Nobody's constructs (no owner id) are left alone. */
+    private static boolean orphaned(MagicPropEntity e) {
+        if (e.ownerId() == null || !PerfMath.dueFor(e.life(), RecombinationBudget.OWNER_CHECK_TICKS, e.getId())) return false;
+        if (e.owner() != null) return false;
+        e.expire();
+        return true;
     }
 
     private static void hit(MagicPropEntity e, ServerLevel sl, LivingEntity owner, LivingEntity t, float raw) {
@@ -113,15 +153,20 @@ public final class RecombinationProps {
         public void init(MagicPropEntity e, ServerLevel sl) {
             e.setSize(1.4f * e.scale(), 1.6f * e.scale());
             e.setNoGravity(true);
+            track(e, sl, RecombinationBudget.ROOM);
         }
 
-        @Override public void tick(MagicPropEntity e, ServerLevel sl) { e.setDeltaMovement(Vec3.ZERO); }
+        @Override public void tick(MagicPropEntity e, ServerLevel sl) { if (!orphaned(e)) e.setDeltaMovement(Vec3.ZERO); }
+
+        @Override public void end(MagicPropEntity e, ServerLevel sl) { untrack(e, sl, RecombinationBudget.ROOM); }
     }
 
     private static final class Boards implements MagicProps.Behavior {
-        @Override public void init(MagicPropEntity e, ServerLevel sl) { e.setNoGravity(true); }
+        @Override public void init(MagicPropEntity e, ServerLevel sl) { e.setNoGravity(true); track(e, sl, RecombinationBudget.BOARDS); }
 
-        @Override public void tick(MagicPropEntity e, ServerLevel sl) { e.setDeltaMovement(Vec3.ZERO); }
+        @Override public void tick(MagicPropEntity e, ServerLevel sl) { if (!orphaned(e)) e.setDeltaMovement(Vec3.ZERO); }
+
+        @Override public void end(MagicPropEntity e, ServerLevel sl) { untrack(e, sl, RecombinationBudget.BOARDS); }
     }
 
     // ------------------------------------------------------------------ the drill
@@ -130,7 +175,10 @@ public final class RecombinationProps {
         public void init(MagicPropEntity e, ServerLevel sl) {
             e.setSize(0.6f, 0.6f);
             e.setNoGravity(true);
+            track(e, sl, RecombinationBudget.DRILL);
         }
+
+        @Override public void end(MagicPropEntity e, ServerLevel sl) { untrack(e, sl, RecombinationBudget.DRILL); }
 
         @Override
         public void tick(MagicPropEntity e, ServerLevel sl) {
@@ -148,16 +196,28 @@ public final class RecombinationProps {
             float s = e.scale();
             e.setSize(2.2f * s, 3.0f * s);
             setState(e, IDLE);
+            track(e, sl, RecombinationBudget.GOLEM);
         }
 
         private static float size(MagicPropEntity e) {
             return e.scale() * (ultra(e.param()) ? 1.6f : 1f);
         }
 
+        private static final PerfProbe.Section PROBE = PerfProbe.section("s.recomb.golem");
+
         @Override
         public void tick(MagicPropEntity e, ServerLevel sl) {
+            long t0 = PerfProbe.begin();
+            try {
+                tick0(e, sl);
+            } finally {
+                PerfProbe.end(PROBE, t0);
+            }
+        }
+
+        private void tick0(MagicPropEntity e, ServerLevel sl) {
             LivingEntity owner = e.owner();
-            if (owner == null) { e.expire(); return; }
+            if (owner == null) { e.expire(); return; }                                   // the caster logged out, died or left the dimension: the golem ends at once
             long now = sl.getGameTime();
             int param = e.param();
             if (ultra(param) && ultraSince(param, now) > RecombinationRules.ULTRA_TICKS) {                       // the Ultra form wears off
@@ -171,7 +231,7 @@ public final class RecombinationProps {
             if (e.life() < 26 || e.maxLife() - e.life() < 24) { e.setDeltaMovement(Vec3.ZERO); return; }           // assembling or collapsing
             float s = size(e);
             float dmgScale = Math.max(0.5f, e.getPersistentData().getFloat("nusmp_bull_dmg"));
-            List<LivingEntity> foes = (e.life() + e.seed()) % 6 == 0 || e.target() == null ? foes(e, owner, sl, 22) : List.of();
+            List<LivingEntity> foes = PerfMath.dueFor(e.life(), PerfSettings.entityScanInterval(), e.getId()) ? foes(e, owner, sl, 22) : List.of();       // no lag: one scan per entityScanInterval ticks (5), staggered, never every tick
             if (!foes.isEmpty()) e.setTarget(foes.get(0));
             LivingEntity target = e.target() instanceof LivingEntity l && l.isAlive() && hostile(owner, l) ? l : null;
             // the cannons: a volley at the nearest foes
@@ -223,6 +283,7 @@ public final class RecombinationProps {
 
         @Override
         public void end(MagicPropEntity e, ServerLevel sl) {
+            untrack(e, sl, RecombinationBudget.GOLEM);
             VfxSpawn.send(sl, VfxShape.RECOMBINATION_FX3, e.position().add(0, 0.5, 0), e.position().add(0, 2, 0), RecombinationArts.ORANGE, 30, 1.6f);
         }
     }

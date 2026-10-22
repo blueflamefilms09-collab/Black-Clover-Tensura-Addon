@@ -43,6 +43,8 @@ public final class RecombinationArts {
     public static final int ORANGE = 0xFFFF9A3C;
     private static final String ARMOUR_UNTIL = "nusmp_house_until", ARMOUR_CUT = "nusmp_house_cut";
     private static boolean hooked;
+    /** The temporary blocks of Bulwark that stand now (server thread only; cast time only): 64 per caster and 512 on the server (RecombinationBudget). */
+    private static final RecombinationBudget.BlockLedger BULWARK_BLOCKS = new RecombinationBudget.BlockLedger();
 
     /** Registers the damage hook of the House Armour. Called once from RecombinationProps.init(). */
     public static synchronized void hooks() {
@@ -99,12 +101,23 @@ public final class RecombinationArts {
     public static boolean bulwark(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         ServerLevel level = p.serverLevel();
         BlockPos c = p.blockPosition();
-        int placed = 0;
+        // no lag on a public server: the ring is at most 32 blocks, read first (only air and replaceable spots count), then placed at most 8 blocks a tick over the next ticks (RecombinationBudget)
+        java.util.List<BlockPos> spots = new java.util.ArrayList<>(RecombinationBudget.BULWARK_MAX_BLOCKS);
         for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) {
             if (Math.max(Math.abs(dx), Math.abs(dz)) != 2) continue;
-            for (int y = 0; y < 2; y++) if (SpellRuntime.tempBlock(level, c.offset(dx, y, dz), Blocks.DARK_OAK_PLANKS.defaultBlockState(), 200)) placed++;
+            for (int y = 0; y < 2 && spots.size() < RecombinationBudget.BULWARK_MAX_BLOCKS; y++) {
+                BlockPos at = c.offset(dx, y, dz);
+                var now = level.getBlockState(at);
+                if (now.isAir() || now.canBeReplaced()) spots.add(at);
+            }
         }
-        if (placed == 0) { GrimoireBook.fail(p, "No room for walls."); return false; }
+        if (spots.isEmpty()) { GrimoireBook.fail(p, "No room for walls."); return false; }
+        if (!BULWARK_BLOCKS.tryAdd(p.getUUID(), level.getGameTime(), spots.size(), 205)) { GrimoireBook.fail(p, "The house cannot raise more walls right now."); return false; }       // caps: 64 per caster, 512 on the server
+        for (int from = 0, batch = 0; from < spots.size(); from += RecombinationBudget.BULWARK_BLOCKS_PER_TICK, batch++) {
+            final java.util.List<BlockPos> part = spots.subList(from, Math.min(spots.size(), from + RecombinationBudget.BULWARK_BLOCKS_PER_TICK));
+            Runnable place = () -> { for (BlockPos at : part) SpellRuntime.tempBlock(level, at, Blocks.DARK_OAK_PLANKS.defaultBlockState(), 200); };
+            if (batch == 0) place.run(); else SpellRuntime.later(level, batch, place);
+        }
         b.castCircle(p, 0.9f);
         for (int sx = -1; sx <= 1; sx += 2) for (int sz = -1; sz <= 1; sz += 2)
             MagicProps.spawn(level, PropKind.RECOMBINATION_1, ground(level, p.position().add(sx * 3.4, 0, sz * 3.4)), (sx * sz > 0 ? 45f : -45f), 0.85f, 200, 0, p);
