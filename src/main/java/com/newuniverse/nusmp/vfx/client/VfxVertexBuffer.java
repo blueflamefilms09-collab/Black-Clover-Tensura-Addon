@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.newuniverse.nusmp.vfx.FlatProps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -47,10 +48,13 @@ public final class VfxVertexBuffer {
         float[] data = new float[6 * 64];
         int size;
         boolean listed;
+        /** the texture is one of the flat object cut-outs ({@link FlatProps}): its quads are dropped while {@code visual.flatProps} is off. */
+        final boolean flat;
 
         Batch(ResourceLocation texture, VfxBlend blend) {
             this.texture = texture;
             this.blend = blend;
+            this.flat = FlatProps.isFlat(texture.getPath());
         }
 
         void add(float x, float y, float z, float u, float v, int argb) {
@@ -136,8 +140,9 @@ public final class VfxVertexBuffer {
                          float x0, float y0, float z0, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3,
                          float u0, float v0, float u1, float v1, int c0, int c1) {
         if (!hasBudget(4)) return;
-        activationVertices += 4;
         Batch b = batch(tex, blend);
+        if (b.flat && !FlatProps.drawFlat()) return;                       // the flat sword / axe / shield / paper-figure sprites are not drawn (docs/visual/flat_props.md)
+        activationVertices += 4;
         b.add(x0, y0, z0, u0, v1, c0);
         b.add(x1, y1, z1, u1, v1, c0);
         b.add(x2, y2, z2, u1, v0, c1);

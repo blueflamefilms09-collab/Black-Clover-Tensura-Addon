@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
+import com.newuniverse.nusmp.vfx.FlatProps;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.resources.ResourceLocation;
@@ -170,8 +171,13 @@ public class MirrorLayer extends AbstractVfxLayer {
         }
         // the double, fading in out of the light
         float show = Mth.clamp((t - 0.2f) / 0.5f, 0, 1);
-        stand(ctx, buf, SILHOUETTE, VfxBlend.ALPHA, new Vector3f(g).add(0, 0.02f, 0), 0.95f, h, VfxVertexBuffer.withAlpha(GLASS_TINT, 0.6f * show * fade));
-        stand(ctx, buf, SILHOUETTE, VfxBlend.ADD, new Vector3f(g).add(0, 0.02f, 0), 1.0f, h * 1.02f, VfxVertexBuffer.withAlpha(inst.color, 0.5f * fade));
+        if (FlatProps.drawFlat()) {                                                  // the old paper figure, only when visual.flatProps is on
+            stand(ctx, buf, SILHOUETTE, VfxBlend.ALPHA, new Vector3f(g).add(0, 0.02f, 0), 0.95f, h, VfxVertexBuffer.withAlpha(GLASS_TINT, 0.6f * show * fade));
+            stand(ctx, buf, SILHOUETTE, VfxBlend.ADD, new Vector3f(g).add(0, 0.02f, 0), 1.0f, h * 1.02f, VfxVertexBuffer.withAlpha(inst.color, 0.5f * fade));
+        } else {                                                                     // a solid glass figure (about 15 quads), facing the viewer
+            Vector3f foot = new Vector3f(g.x, g.y + 0.02f, g.z);
+            SolidModels.figure(buf, foot, (float) Mth.atan2(-g.x, -g.z), h / 1.7f, 0.8f * show * fade, GLASS_TINT);
+        }
         buf.ring(VfxTextures.GLOW, VfxBlend.ADD, VfxPose.ground(new Vector3f(g).add(0, 0.04f, 0)), 0.4f, 1.1f, ctx.seg(14, 8), 1, 0, VfxVertexBuffer.withAlpha(inst.color, 0.6f * fade));
         VfxBloom.glow(ctx, buf, new Vector3f(g).add(0, h * 0.5f, 0), 1.6f, inst.color, 0.6f * fade * (1 - t));
     }

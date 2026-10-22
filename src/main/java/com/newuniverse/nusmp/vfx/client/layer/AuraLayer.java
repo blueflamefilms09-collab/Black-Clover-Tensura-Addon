@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
+import com.newuniverse.nusmp.vfx.FlatProps;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.resources.ResourceLocation;
@@ -85,6 +86,10 @@ public class AuraLayer extends AbstractVfxLayer {
         float alpha = VfxAnim.fadeInOut(t, 0.08f, 0.15f);
         Vec3 c = inst.from(ctx);
         int col = inst.color;
+        if (!FlatProps.drawFlat()) {                                           // the default: real solid models, never the flat white cut-outs (docs/visual/flat_props.md)
+            solidConstructs(inst, ctx, buf, t, age, alpha, c, col);
+            return;
+        }
         ResourceLocation[] tex = {VfxTextures.CONSTRUCT_SWORD, VfxTextures.CONSTRUCT_AXE, VfxTextures.CONSTRUCT_SHIELD};
         int n = ctx.seg(6, 3);
         float r = 1.6f * inst.power;
@@ -97,5 +102,35 @@ public class AuraLayer extends AbstractVfxLayer {
         }
         VfxPose feet = VfxPose.ground(ctx.rel(c.add(0, -0.95, 0))).spin(age * 0.04f);
         buf.plane(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD, feet, r * 1.1f, VfxVertexBuffer.withAlpha(col, alpha * 0.6f));
+    }
+
+    /**
+     * The solid constructs: a sword, an axe and a shield (then a sword again) circling the caster as shaded low-poly models, leaning and turning, a small glow on each and the rune circle underfoot.
+     * Worst case about 4 models x 19 quads + 4 glows (8 vertices each) + the circle: under 330 vertices, inside the 400 of an effect; a model that no longer fits is skipped whole, one further than 40
+     * blocks is not built, and nothing is allocated per model.
+     */
+    private static final Vector3f SCRATCH = new Vector3f();                // render thread only
+
+    private void solidConstructs(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf, float t, float age, float alpha, Vec3 c, int col) {
+        int n = ctx.seg(4, 3);
+        float r = 1.6f * inst.power;
+        float grow = alpha >= 1f ? 1f : alpha;                                  // appear and vanish by growing and shrinking, so the solids never turn see-through
+        float s = Mth.clamp(1.15f * inst.power, 0.7f, 1.9f) * grow;
+        Vector3f mid = ctx.rel(c);                                              // one conversion; each weapon position is a scratch vector (nothing allocated per weapon)
+        Vector3f q = SCRATCH;
+        for (int i = 0; i < n; i++) {
+            float a = VfxAnim.runeOrbit(i, n, age, 0.8f);
+            q.set(mid.x + Mth.cos(a) * r, mid.y + 0.2f + 0.25f * Mth.sin(age * 0.1f + i), mid.z + Mth.sin(a) * r);
+            int kind = i % 3;
+            boolean ok = switch (kind) {
+                case 0 -> SolidModels.sword(buf, q, age * 0.05f + i, 0.35f, s, 1f, col);
+                case 1 -> SolidModels.axe(buf, q, age * 0.05f + i, -0.3f, s, 1f, col);
+                default -> SolidModels.shield(buf, q, Mth.HALF_PI - a, 0.12f, s * 0.95f, 1f, col);
+            };
+            if (ok) VfxBloom.glow(ctx, buf, q, 0.3f, col, alpha * 0.4f);
+        }
+        float r2 = r * 1.1f;
+        VfxPose feet = VfxPose.ground(new Vector3f(mid.x, mid.y - 0.95f, mid.z)).spin(age * 0.04f);
+        buf.plane(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD, feet, r2, VfxVertexBuffer.withAlpha(col, alpha * 0.6f));
     }
 }

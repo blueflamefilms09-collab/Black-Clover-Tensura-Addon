@@ -163,6 +163,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.VfxSafeBlendConfig.SPEC, "nusmp-vfx-client.toml");      // 1.105.0: vfx.safeBlend (the square bug fix)
+            com.newuniverse.nusmp.vfx.client.FlatPropsConfig.init(modEventBus, modContainer);                                  // visual.flatProps (CLIENT, default off): the flat sword / axe / shield / paper-figure cut-outs stay hidden
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
@@ -393,6 +394,7 @@ public class NUSMP {
         com.newuniverse.nusmp.visual.sizes.WeaponSizesSelfTests.register();                                        // 1.110.0: self-test visual.weapon_sizes (thickened dagger and katana meshes inside their size ranges, the old meshes kept)
         com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                        // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
         com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                            // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
+        com.newuniverse.nusmp.vfx.FlatPropsSelfTests.register();                                                  // self-test visual.flat_props (the flat list, the gate decision, the solid sheet; pure)
         com.newuniverse.nusmp.vfx.SafeAdditiveSelfTests.register();                                               // 1.110.0: self-test visual.safe_additive (the blend maths, the halo card sheet, Elsdocia's card caps)
         com.newuniverse.nusmp.visual.grip.WeaponGripSelfTests.register();                                          // 1.111.0: self-test item.weapon_grip (the hand holds the grip of every weapon: grip table, finder, hand maths; docs/weapon_grip.md)
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)

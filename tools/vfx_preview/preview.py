@@ -45,16 +45,20 @@ def patched_vertex_buffer(src):
     src = re.sub(r"import com\.mojang[^\n]*\n|import net\.minecraft\.client[^\n]*\n", "", src)
     a = src.index("    // ------------------------------------------------------------------ flush")
     b = src.index("    // ------------------------------------------------------------------ color helpers")
-    drain = '''    // preview: hand the collected quads out instead of drawing them
+    drain = '''    // preview: hand the collected quads out instead of drawing them (the batches are the ones of the 1.99 buffer: one per texture and blend, kept in the order of their first quad)
     public List<Object[]> drain() {
         List<Object[]> out = new ArrayList<>();
-        for (Map.Entry<Key, Batch> e : batches.entrySet()) {
-            Batch bt = e.getValue();
+        for (Batch bt : order) {
             for (int i = 0; i + 24 <= bt.size; i += 24) {
-                out.add(new Object[]{e.getKey().texture().getPath(), e.getKey().blend().name(), e.getKey().blend().order, Arrays.copyOfRange(bt.data, i, i + 24)});
+                out.add(new Object[]{bt.texture.getPath(), bt.blend.name(), bt.blend.order, Arrays.copyOfRange(bt.data, i, i + 24)});
             }
+            bt.size = 0;
+            bt.listed = false;
         }
-        batches.clear();
+        order.clear();
+        lastTex = null;
+        lastBlend = null;
+        lastBatch = null;
         return out;
     }
 
@@ -82,8 +86,9 @@ def build(layers):
     pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "vfx")
     os.makedirs(os.path.join(pkg, "client", "layer"), exist_ok=True)
     shutil.copy(os.path.join(VFX, "VfxShape.java"), pkg)
+    shutil.copy(os.path.join(VFX, "FlatProps.java"), pkg)                  # the pure switch of the flat object cut-outs (the vertex buffer asks it)
     shutil.copy(os.path.join(VFX, "EarthFxStyle.java"), pkg)               # 1.93.0: the pure palette table of the earth-family layer (colour -> magic identity)
-    for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures"):
+    for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures", "SolidParts", "SolidModels"):
         shutil.copy(os.path.join(VFX, "client", name + ".java"), os.path.join(pkg, "client"))
     with open(os.path.join(VFX, "client", "VfxVertexBuffer.java"), encoding="utf-8") as f:
         vb = patched_vertex_buffer(f.read())
@@ -93,7 +98,7 @@ def build(layers):
         bl = patched_blend(f.read())
     with open(os.path.join(pkg, "client", "VfxBlend.java"), "w", encoding="utf-8") as f:
         f.write(bl)
-    for layer in sorted(set(layers) | {"ElementFx"} | ({"TreeFx"} if {"TreeLayer", "VineLayer", "PlantLayer", "PoisonPlantLayer", "MudLayer", "MucusLayer"} & set(layers) else set()) | ({"ArcaneSpellLayer"} if {"ArcaneSpellLayer2", "DreamPaintLayer", "MirrorLayer", "PaintStudioLayer", "SlashCompassMercuryLayer", "LightTreeLayer", "DiceLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())
+    for layer in sorted(set(layers) | {"ElementFx"} | ({"TreeFx"} if {"TreeLayer", "VineLayer", "PlantLayer", "PoisonPlantLayer", "MudLayer", "MucusLayer"} & set(layers) else set()) | ({"ArcaneSpellLayer", "ArcaneSpellSealFx"} if {"ArcaneSpellLayer2", "DreamPaintLayer", "MirrorLayer", "PaintStudioLayer", "SlashCompassMercuryLayer", "LightTreeLayer", "DiceLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())
                         | ({"DreamPaintLayer"} if {"PaintStudioLayer", "LightTreeLayer", "DiceLayer", "SlashCompassMercuryLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())):     # shared helpers used by the element layers
         shutil.copy(os.path.join(VFX, "client", "layer", layer.split(".")[-1] + ".java"), os.path.join(pkg, "client", "layer"))
     # 0.53: an attribute's helper classes (<Name>*.java next to <Name>Layer.java) travel with its layer
@@ -261,6 +266,8 @@ def run_scene(name, scene, classes):
             "--detail", str(scene.get("detail", 1)), "--out", out_json]
     if "budget" in scene:
         args += ["--budget", str(scene["budget"])]
+    if scene.get("flat"):
+        args += ["--flat", "1"]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         data = json.load(f)

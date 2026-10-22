@@ -1,0 +1,313 @@
+{
+ "_comment": "Flat-props before / after scenes (docs/visual/flat_props.md): *_flat draws the old cut-outs (visual.flatProps on), the *_solid ones the solid models (the default).",
+ "constructs_flat": {
+  "layer": "AuraLayer",
+  "shape": "WEAPON_CONSTRUCTS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.33,
+  "duration": 160,
+  "color": "FFE8E0C8",
+  "cam": [
+   0,
+   2.2,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   30,
+   60,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "flat": true
+ },
+ "constructs_close_flat": {
+  "layer": "AuraLayer",
+  "shape": "WEAPON_CONSTRUCTS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.33,
+  "duration": 160,
+  "color": "FFE8E0C8",
+  "cam": [
+   0,
+   1.8,
+   -4.2
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   30,
+   60,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "flat": true
+ },
+ "double_flat": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "MIRROR_DOUBLE",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3.0,
+  "duration": 200,
+  "color": "FFB8A0FF",
+  "cam": [
+   0,
+   2.4,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   40,
+   80,
+   120
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "flat": true
+ },
+ "step_flat": {
+  "layer": "MirrorLayer",
+  "shape": "MIRROR_STEP",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   3
+  ],
+  "power": 1.8,
+  "duration": 20,
+  "color": "FFB8A0FF",
+  "cam": [
+   3,
+   2.0,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   10,
+   14
+  ],
+  "figures": [],
+  "flat": true
+ },
+ "constructs_solid": {
+  "layer": "AuraLayer",
+  "shape": "WEAPON_CONSTRUCTS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.33,
+  "duration": 160,
+  "color": "FFE8E0C8",
+  "cam": [
+   0,
+   2.2,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   30,
+   60,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "constructs_close_solid": {
+  "layer": "AuraLayer",
+  "shape": "WEAPON_CONSTRUCTS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.33,
+  "duration": 160,
+  "color": "FFE8E0C8",
+  "cam": [
+   0,
+   1.8,
+   -4.2
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   30,
+   60,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "double_solid": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "MIRROR_DOUBLE",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3.0,
+  "duration": 200,
+  "color": "FFB8A0FF",
+  "cam": [
+   0,
+   2.4,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   40,
+   80,
+   120
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "step_solid": {
+  "layer": "MirrorLayer",
+  "shape": "MIRROR_STEP",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   3
+  ],
+  "power": 1.8,
+  "duration": 20,
+  "color": "FFB8A0FF",
+  "cam": [
+   3,
+   2.0,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   10,
+   14
+  ],
+  "figures": []
+ }
+}
