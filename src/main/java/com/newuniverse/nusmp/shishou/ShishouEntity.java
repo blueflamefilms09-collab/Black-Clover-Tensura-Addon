@@ -144,8 +144,20 @@ public class ShishouEntity extends PathfinderMob {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (STATE.equals(key)) refreshDimensions();
+        if (STATE.equals(key)) {
+            stateSince = tickCount;
+            refreshDimensions();
+        }
     }
+
+    private int stateSince;
+
+    /** Ticks since the animation state last changed (the renderer plays the attack clip from its start). */
+    public int stateAge() { return tickCount - stateSince; }
+
+    /** The blade is longer than the body's box: the culling box covers it, so the sword does not vanish when only its tip is in view. */
+    @Override
+    public net.minecraft.world.phys.AABB getBoundingBoxForCulling() { return getBoundingBox().inflate(1.1); }
 
     @Override
     public EntityDimensions getDefaultDimensions(Pose pose) {
