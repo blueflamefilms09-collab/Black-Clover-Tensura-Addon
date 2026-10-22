@@ -201,6 +201,12 @@ public final class GuiMove {
     }
 
     // ================================================================ the mouse of a moved element
+    /** The total scale the element was drawn at on its last frame (1 for an unknown id): what the GUI Size and the player's own size made of it together. */
+    public static float lastScale(String id) {
+        Element e = GuiMoveRegistry.byId(id);
+        return e == null ? 1f : e.t;
+    }
+
     /** A mouse x of the screen in the space the element draws in (its default coordinates), when it has been moved; unchanged when it has not. */
     public static double toLocalX(String id, double mouseX) {
         Element e = GuiMoveRegistry.byId(id);

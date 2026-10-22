@@ -161,6 +161,13 @@ public final class GuiMoveRegistry {
         fixed("client/multiverse/FourKingdomsSlot.java", "a button fixed to a slot of the inventory screen: it follows the inventory");
         fixed("client/manazone/ManaZoneClient.java", "a full-screen tint of the camera: nothing to move");
         fixed("client/skilltree/ItemsClient.java", "the full-width 'skill acquired' banner and flash: an announcement across the whole screen");
+        // GUI Size entries that GUI Move leaves alone (by id)
+        fixed("gui_scale:multiverse_status", "a full-window status book: nothing to move");
+        fixed("gui_scale:skill_shop", "a full-window shop: nothing to move");
+        fixed("gui_scale:weapon_book", "a full-window book: nothing to move");
+        fixed("gui_scale:dungeon_map", "a full-window map: nothing to move");
+        fixed("gui_scale:system_stats", "a full-window stat screen: nothing to move");
+        fixed("gui_scale:arts_bar", "no layer of this name is registered anywhere in this mod, so there is nothing to move");
     }
 
     public static List<Element> all() { return Collections.unmodifiableList(ALL); }

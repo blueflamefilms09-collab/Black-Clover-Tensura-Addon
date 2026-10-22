@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public final class GuiMoveOptions {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue SNAP, SHOW_ALL;
+    public static final ModConfigSpec.BooleanValue SNAP, SHOW_ALL, SHOW_PANELS;
     private static final Map<String, ModConfigSpec.ConfigValue<String>> VALUES = new LinkedHashMap<>();
 
     static {
@@ -25,6 +25,8 @@ public final class GuiMoveOptions {
                 .define("snap", true);
         SHOW_ALL = b.comment("Edit mode: also show the elements that are not on screen right now (dimmed), so a GUI you cannot see at the moment can be placed too.")
                 .define("showAll", true);
+        SHOW_PANELS = b.comment("Edit mode: let Tab pick the panels of the mod's screens (codex, forge, ...) so they can be placed; the panel you pick takes its place when its screen opens.")
+                .define("showPanels", false);
         b.comment("One entry per movable GUI: empty = never moved (it draws where it always did). Set by dragging in edit mode (the GUI Move key, or /nusmp gui move), not by hand: "
                 + "p=1 placed; a=corner 0..3 (top-left, top-right, bottom-left, bottom-right); cx/cy=1 measured from the middle of the screen; ox/oy=offset in the element's own pixels; "
                 + "s=size 0.5..2.5; h=1 hidden. The ids are listed in docs/ui/gui_move.md.").push("elements");
@@ -38,6 +40,10 @@ public final class GuiMoveOptions {
     public static boolean snap() { return bool(SNAP, true); }
 
     public static boolean showAll() { return bool(SHOW_ALL, true); }
+
+    public static boolean showPanels() { return bool(SHOW_PANELS, false); }
+
+    public static void setShowPanels(boolean on) { set(SHOW_PANELS, on); }
 
     public static void setSnap(boolean on) { set(SNAP, on); }
 

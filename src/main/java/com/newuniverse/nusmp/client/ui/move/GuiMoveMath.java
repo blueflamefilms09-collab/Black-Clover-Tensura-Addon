@@ -26,6 +26,12 @@ public final class GuiMoveMath {
     /** A key nudge in GUI pixels (Shift: the big one) and the distance within which an edge snaps to another edge. */
     public static final int NUDGE = 1, BIG_NUDGE = 8;
     public static final double SNAP_DISTANCE = 6.0;
+    /**
+     * An axis is anchored to the MIDDLE of the screen only when the element's centre is within this fraction of the screen's extent from the middle (a band a sixth of the
+     * extent wide). A third, as the System window's own edit screen uses, would call the Djinn panel's default spot (62 pixels above the bottom) "middle" on a short screen
+     * and let it drift up when the window grows; this keeps bottom and corner elements on their edge.
+     */
+    public static final double MIDDLE_BAND = 1.0 / 12.0;
 
     /** A rectangle in GUI pixels. */
     public record Rect(double x, double y, double w, double h) {
@@ -123,14 +129,14 @@ public final class GuiMoveMath {
 
     /**
      * The place that puts an element's top-left corner at ({@code leftGui}, {@code topGui}) (GUI pixels, held on the screen first) and anchors it to the NEAREST of the
-     * nine anchor points: an axis is "middle" when the element's centre is in the middle third of the screen, else it is the near side. The offsets are computed for that
+     * nine anchor points: an axis is "middle" when the element's centre is within {@link #MIDDLE_BAND} of the screen's middle, else it is the near side. The offsets are computed for that
      * anchor, so {@link #leftGui} / {@link #topGui} of the result give the held corner back (to the rounding of one own pixel).
      */
     public static Place placeFromGui(int guiW, int guiH, float total, int wOwn, int hOwn, int margin, double leftGui, double topGui) {
         double l = clampVisible(leftGui, wOwn * (double) total, guiW), t = clampVisible(topGui, hOwn * (double) total, guiH);
         double cx = l + wOwn * (double) total / 2.0, cy = t + hOwn * (double) total / 2.0;
         boolean right = cx >= guiW / 2.0, bottom = cy >= guiH / 2.0;
-        boolean centerX = Math.abs(cx - guiW / 2.0) < guiW / 6.0, centerY = Math.abs(cy - guiH / 2.0) < guiH / 6.0;
+        boolean centerX = Math.abs(cx - guiW / 2.0) < guiW * MIDDLE_BAND, centerY = Math.abs(cy - guiH / 2.0) < guiH * MIDDLE_BAND;
         int sx = own(guiW, total), sy = own(guiH, total);
         int xo = (int) Math.round(l / total), yo = (int) Math.round(t / total);
         int ox = centerX ? xo - (sx - wOwn) / 2 : right ? sx - wOwn - margin - xo : xo - margin;

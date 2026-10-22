@@ -73,7 +73,7 @@ final class CustomBarOverlay {
             boolean scaled = Math.abs(cfg - 1f) > 0.01f;
             if (scaled) GuiScale.around(gg, gg.guiWidth() / 2f, 0f, cfg);
             try {
-                draw(gg, mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false), custom, GuiScale.hud("boss_bar") * cfg);
+                draw(gg, mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false), custom, GuiMove.lastScale("boss_bar") * cfg);
             } finally {
                 if (scaled) gg.pose().popPose();
                 GuiMove.end(gg, sized);
