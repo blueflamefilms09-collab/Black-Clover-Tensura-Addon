@@ -1,0 +1,54 @@
+{
+ "spiritlight_beam_1": {
+  "bytes": 21006,
+  "seconds": 2.16
+ },
+ "spiritlight_farewell_1": {
+  "bytes": 27495,
+  "seconds": 2.98
+ },
+ "spiritlight_farewell_2": {
+  "bytes": 23845,
+  "seconds": 2.53
+ },
+ "spiritlight_farewell_3": {
+  "bytes": 27078,
+  "seconds": 2.97
+ },
+ "spiritlight_greet_1": {
+  "bytes": 23777,
+  "seconds": 2.58
+ },
+ "spiritlight_greet_2": {
+  "bytes": 34670,
+  "seconds": 4.0
+ },
+ "spiritlight_greet_3": {
+  "bytes": 26775,
+  "seconds": 2.91
+ },
+ "spiritlight_greet_4": {
+  "bytes": 34440,
+  "seconds": 4.0
+ },
+ "spiritlight_rise_1": {
+  "bytes": 33885,
+  "seconds": 3.83
+ },
+ "spiritlight_rise_2": {
+  "bytes": 32760,
+  "seconds": 3.63
+ },
+ "spiritlight_rise_3": {
+  "bytes": 28592,
+  "seconds": 3.17
+ },
+ "spiritlight_settle_1": {
+  "bytes": 28481,
+  "seconds": 3.11
+ },
+ "spiritlight_settle_2": {
+  "bytes": 27688,
+  "seconds": 2.99
+ }
+}

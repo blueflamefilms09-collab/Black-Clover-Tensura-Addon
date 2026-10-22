@@ -88,6 +88,8 @@ public class NUSMP {
         com.newuniverse.nusmp.firecast.FireCastBoot.init(modEventBus, modContainer);                                      // fire casting: Magna's Soul Bat, nusmp-firecast-server.toml (magic.fireCasting), the key packet, the events, self-test magic.fire_casting
         com.newuniverse.nusmp.sylph.SylphBoot.init(modEventBus, modContainer);                                            // the Sylph: Yuno's wind Spirit Lord, her sounds, nusmp-sylph-server.toml (magic.sylph), the key packet, the events, self-test magic.sylph
         com.newuniverse.nusmp.spiritspace.SpiritSpaceBoot.init(modEventBus, modContainer);                                // Spirit of Space: nusmp-spiritspace-server.toml (magic.spiritSpace), the key packet, the sounds, the events, self-test magic.spirit_space
+        com.newuniverse.nusmp.spiritlight.SpiritLightBoot.init(modEventBus, modContainer);                                  // Spirit of Light: nusmp-spiritlight-server.toml (magic.spiritLight), the key packet, its own sounds, the events, self-test magic.spirit_light
+
         com.newuniverse.nusmp.fairytail.FairyTailSystem.init(modEventBus);                                                 // Fairy Tail skills: Fire Dragon Slayer -> King, Ice-Make, Sky/Lightning/Iron Dragon Slayer, Crash, Water Magic, the skill book
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
@@ -174,6 +176,8 @@ public class NUSMP {
             com.newuniverse.nusmp.client.firecast.FireCastClient.init(modEventBus);                                           // fire casting: the Salamander key
             com.newuniverse.nusmp.client.sylph.SylphClient.init(modEventBus);                                                 // the Sylph key
             com.newuniverse.nusmp.client.spiritspace.SpiritSpaceClient.init(modEventBus);                                     // Spirit of Space: the link, ability and waypoint keys
+            com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);                                     // Spirit of Light: the link and command keys
+
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");

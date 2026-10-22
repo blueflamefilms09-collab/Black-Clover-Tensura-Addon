@@ -92,5 +92,7 @@ final class PropPainterRegistry {
         SylphPropPainter.register();      // the Sylph: Yuno's wind Spirit Lord, small and powered
         SpiritSpacePropPainter.register();      // Spirit of Space: the orb, the wisp-dragon, the portal rings
         UndinePropPainter.register();        // Undine: the companion and the full form
+        SpiritLightPropPainter.register();   // Spirit of Light: the lion cub, the seraph, the beam, the pulse ring
+
     }
 }

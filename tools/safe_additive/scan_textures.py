@@ -35,6 +35,9 @@ SCOPE = [
     ("entity", ("spirit_space_orb", "spirit_space_wisp_fx")),          # Spirit of Space: the additive rift ring of the orb (and its levels) and the glow-only model of the wisp's head
     ("entity", ("firecast_salamander_fx", "firecast_dragon_fx")),
     ("entity", ("undine_fx", "undine_ring")),          # the Undine: the soft additive foam pass and the ripple ring (docs/magic/undine.md)          # fire casting: the glow-only models of the two Salamander forms (eyes, mouth, licks of flame)
+    ("entity", ("spiritlight_cub_fx", "spiritlight_seraph_fx")),          # Spirit of Light: the glow-only models of the cub and the seraph (halo, eyes, rings, core, prism)
+    ("particle", ("spiritlight_",)),                                       # Spirit of Light: the soft beam, ring, glow and spark textures
+
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"

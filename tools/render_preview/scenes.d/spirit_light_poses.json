@@ -1,0 +1,614 @@
+{
+ "spirit_light_pose_cub_idle": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   24,
+   48
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "idle (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_cast": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   4,
+   9,
+   14
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "cast (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_pounce": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   5,
+   12,
+   18
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "pounce",
+  "views": [
+   {
+    "name": "pounce (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_roll": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   6,
+   14,
+   22
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "roll",
+  "views": [
+   {
+    "name": "roll (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_stretch": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   9,
+   20,
+   31
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "stretch",
+  "views": [
+   {
+    "name": "stretch (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_lick": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   10,
+   23,
+   36
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "lick",
+  "views": [
+   {
+    "name": "lick (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_roar": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   4,
+   10,
+   15
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "roar",
+  "views": [
+   {
+    "name": "roar (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_sleep": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   24,
+   48
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "sleep",
+  "views": [
+   {
+    "name": "sleep (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_hurt": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   2,
+   5,
+   8
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "hurt (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_cub_victory": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   7,
+   16,
+   25
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "victory",
+  "views": [
+   {
+    "name": "victory (cub)",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_idle": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "idle (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_cast": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   5,
+   11,
+   17
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "cast (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_wings_open": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   9,
+   20,
+   31
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "wings_open",
+  "views": [
+   {
+    "name": "wings_open (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_halo_spin": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   10,
+   22,
+   34
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "halo_spin",
+  "views": [
+   {
+    "name": "halo_spin (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_bless": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   10,
+   22,
+   34
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "bless",
+  "views": [
+   {
+    "name": "bless (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_prayer": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "prayer",
+  "views": [
+   {
+    "name": "prayer (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_hurt": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "hurt (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ },
+ "spirit_light_pose_seraph_victory": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   10,
+   22,
+   34
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "victory",
+  "views": [
+   {
+    "name": "victory (seraph)",
+    "yaw": 20,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 11.5
+   }
+  ]
+ }
+}

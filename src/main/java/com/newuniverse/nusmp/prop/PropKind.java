@@ -175,5 +175,8 @@ public enum PropKind {
     SPIRITSPACE_1,
     SPIRITSPACE_2,
     /** Undine (undine.UndineProps): Noelle's water Spirit Lord as a casting companion; the variant is the low four bits of the param: 0 = the companion beside the caster, 1 = the full form on a ring of waves (painter client.prop.UndinePropPainter) */
-    UNDINE_1
+    UNDINE_1,
+    /** Spirit of Light (spiritlight.SpiritLightProps): SPIRIT_LIGHT_1 = the lion cub (variant 0) and the seraph (1); SPIRIT_LIGHT_2 = the piercing light beam (2) and the Glowing pulse ring (3); the variant is the low four bits of the param (painter client.prop.SpiritLightPropPainter) */
+    SPIRIT_LIGHT_1,
+    SPIRIT_LIGHT_2
 }

@@ -1,0 +1,67 @@
+{
+ "spirit_light_powered": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   620
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13
+   }
+  ]
+ }
+}

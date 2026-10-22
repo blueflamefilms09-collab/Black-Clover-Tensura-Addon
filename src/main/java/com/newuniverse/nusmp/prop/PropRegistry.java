@@ -86,5 +86,7 @@ final class PropRegistry {
         com.newuniverse.nusmp.sylph.SylphProps.init();            // the Sylph: Yuno's wind Spirit Lord, small and powered
         com.newuniverse.nusmp.spiritspace.SpiritSpaceProps.init();      // Spirit of Space: the orb, the wisp, the portal rings
         com.newuniverse.nusmp.undine.UndineProps.init();          // Undine: the companion and the full form of Noelle's water Spirit Lord
+        com.newuniverse.nusmp.spiritlight.SpiritLightProps.init();      // Spirit of Light: the lion cub, the seraph, the beam, the pulse ring
+
     }
 }
