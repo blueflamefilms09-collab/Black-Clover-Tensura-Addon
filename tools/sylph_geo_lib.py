@@ -20,7 +20,45 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import firecast_geo_lib as L  # noqa: E402  (write_animations, sine, merge are shared with the Salamander kit)
 
 ROOT = L.ROOT
-write_animations, sine, merge = L.write_animations, L.sine, L.merge
+sine = L.sine
+
+
+def merge(*tracks):
+    """Adds several {time: (x, y, z)} tracks. Each track is read at EVERY time any of them has a key (linear between its own keys, held at its ends), so a constant pose {0: v, T: v}
+    and a sine with eight keys a cycle add up to the pose plus the sine all the way through, not only at the times they happen to share."""
+    times = sorted({t for tr in tracks for t in tr})
+    out = {}
+    for t in times:
+        acc = [0.0, 0.0, 0.0]
+        for tr in tracks:
+            ks = sorted(tr)
+            if t <= ks[0]:
+                v = tr[ks[0]]
+            elif t >= ks[-1]:
+                v = tr[ks[-1]]
+            else:
+                hi = next(k for k in ks if k >= t)
+                lo = ks[ks.index(hi) - 1] if hi > t else hi
+                f = 0.0 if hi == lo else (t - lo) / (hi - lo)
+                v = tuple(tr[lo][i] + (tr[hi][i] - tr[lo][i]) * f for i in range(3))
+            for i in range(3):
+                acc[i] += v[i]
+        out[t] = tuple(acc)
+    return out
+
+
+def write_animations(ident, clips):
+    """clips: {name: {"loop": bool, "length": s, "bones": {bone: {"rotation"|"position"|"scale": {time: (x, y, z)}}}}} -> animations/entity/<id>.animation.json (keys at 1 ms)."""
+    out = {}
+    for name, c in clips.items():
+        bones = {}
+        for bone, tracks in c["bones"].items():
+            bones[bone] = {k: {("%.3f" % t).rstrip("0").rstrip(".") if t else "0.0": [round(float(x), 3) for x in v] for t, v in sorted(frames.items())} for k, frames in tracks.items()}
+        out[name] = {"loop": c["loop"], "animation_length": c["length"], "bones": bones}
+    os.makedirs(os.path.join(ROOT, "animations", "entity"), exist_ok=True)
+    with open(os.path.join(ROOT, "animations", "entity", ident + ".animation.json"), "w", newline="\n") as f:
+        json.dump({"format_version": "1.8.0", "animations": out}, f, indent=1)
+        f.write("\n")
 BEDROCK = {"west": "east", "north": "north", "east": "west", "south": "south", "up": "up", "down": "down"}     # the loader reads Bedrock's sides from the other end of x
 PAD = 2                                                     # transparent texels between two pictures (a reduced copy of the sheet must not bleed one into the next)
 FACES = ("up", "down", "west", "north", "east", "south")

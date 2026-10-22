@@ -91,7 +91,7 @@ def body_atlas(form):
     at.add("choker", A.choker(2.6, 0.9, 16))
     if form == "powered":
         for i in range(3):
-            at.add("ribbon%d" % i, A.ribbon(10.0, 34.0, 12, 80 + i, "powered", phase=1.4 * i, sway=1.0 + 0.2 * i))
+            at.add("ribbon%d" % i, A.ribbon(12.0, 34.0, 12, 80 + i, "powered", phase=1.4 * i, sway=1.0 + 0.2 * i))
     return at.pack()
 
 
@@ -167,7 +167,7 @@ def head(b, at, lod, hy, kinds, powered=False):
                 nm = "hair%d_%d" % (i, k)
                 bend = -side * 9.0 if k == 0 else s1 * (1.0 if k % 2 else -1.2)
                 b.bone(nm, (x, y, 1.0 - 0.4 * i), prev, rot=(0, 0, bend))
-                b.top(nm, x - 5.0, y, 1.0 - 0.4 * i, 10.0, 8.5, 0.12, {"north": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k), "south": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k)})
+                b.top(nm, x - 6.0, y, 1.0 - 0.4 * i, 12.0, 8.5, 0.12, {"north": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k), "south": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k)})
                 prev, y = nm, y + 8.5
     b.dy = 0.0
 
@@ -304,7 +304,7 @@ def low_poly(b, at, form, o):
             x = (-4.6, -2.3, 0.0, 2.3, 4.6)[i]
             z = 1.0 - 0.4 * i
             b.bone("hair%d_0" % i, (x, 8.6, z), "head")
-            b.top("hair%d_0" % i, x - 5.0, 8.6, z, 10.0, 30.0, 0.12, {"north": W("ribbon%d" % j), "south": W("ribbon%d" % j)})
+            b.top("hair%d_0" % i, x - 6.0, 8.6, z, 12.0, 30.0, 0.12, {"north": W("ribbon%d" % j), "south": W("ribbon%d" % j)})
     else:
         b.bone("ahoge0", (0.0, 8.9, -0.4), "head")
         b.top("ahoge0", -0.8, 8.9, -0.45, 1.6, 4.0, 0.12, {"north": W("ahoge"), "south": W("ahoge")})
@@ -361,14 +361,14 @@ def add_wings(b, form, at):
             bn = "wing_%s_%s" % (nm, tag)
             b.bone(bn, (s * rx_, ry_, rz_), "chest", rot=(0, s * -yaw, s * roll))
             img = "fore" if nm == "f" else "hind"
-            cut = 0.6                                                                              # the inner 60 % of the wing, then a joint that bends the tip up a little
+            cut = 0.6                                                                              # the inner 60 % of the wing, then a joint the clips bend (the tip whips a little behind the root)
             ox = s * rx_
             # the picture has its root at the left and the leading edge up; from the front the model's right (-x) is on the viewer's right, so the +x wing (tip on the viewer's left) is mirrored
             x0 = ox if s > 0 else ox - ln * cut
             if at is not None: b.top(bn, x0, ry_ - ch * 0.40, rz_ - 0.05, ln * cut, ch, 0.1, {"north": (W(img, 0, 0, cut, 1), s > 0), "south": (W(img, 0, 0, cut, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
             jx = ox + s * ln * cut
             bo = "wingo_%s_%s" % (nm, tag)
-            b.bone(bo, (jx, ry_, rz_), bn, rot=(0, 0, s * 9.0))
+            b.bone(bo, (jx, ry_, rz_), bn)
             x1 = jx if s > 0 else jx - ln * (1 - cut)
             if at is not None: b.top(bo, x1, ry_ - ch * 0.40, rz_ - 0.05, ln * (1 - cut), ch, 0.1, {"north": (W(img, cut, 0, 1, 1), s > 0), "south": (W(img, cut, 0, 1, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
     if form == "powered":                                                                          # the petal wings of the skirt: three a side, a fan from the hip
@@ -606,7 +606,7 @@ def powered_animations():
         "arm_R": {"rotation": mg(L((4, 0, -44)), sn(T, 3.0, 2, 0.0, steps=8))}, "arm_L": {"rotation": mg(L((4, 0, 44)), sn(T, -3.0, 2, 0.0, steps=8))},
         "fore_R": {"rotation": L((0, 0, -6))}, "fore_L": {"rotation": L((0, 0, 6))},
         "hand_R": {"rotation": L((0, 0, -10))}, "hand_L": {"rotation": L((0, 0, 10))},
-        "leg_R": {"rotation": mg(L((2, 0, -9)), sn(T, 1.5, 0, 0.0, steps=8))}, "leg_L": {"rotation": mg(L((-2, 0, 9)), sn(T, 1.5, 0, 0.3, steps=8))},
+        "leg_R": {"rotation": mg(L((2, 0, -14)), sn(T, 1.5, 0, 0.0, steps=8))}, "leg_L": {"rotation": mg(L((-2, 0, 14)), sn(T, 1.5, 0, 0.3, steps=8))},
         "foot_R": {"rotation": L((26, 0, 0))}, "foot_L": {"rotation": L((26, 0, 0))},
     }
     bones.update(wings(T, 9.0))

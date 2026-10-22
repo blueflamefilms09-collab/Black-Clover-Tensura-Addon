@@ -19,6 +19,11 @@ def sc(param, views, ages=(0,), tile=(520, 560), figure=False, floor=False):
             "tile": list(tile), "views": views, "light": "0xF000F0"}
 
 
+def geo(model, views, anim="rest", layer="TRANSLUCENT", tile=(520, 520)):
+    return {"kind": "geo", "model": model, "space": "PROP", "layer": layer, "argb": "FFFFFFFF", "glow": "00000000", "ages": [0], "tile": list(tile), "floor": False, "figure": False, "expect": [],
+            "anim": anim, "views": views}
+
+
 def v(name, yaw, pitch, tx, ty, tz, dist):
     return {"name": name, "yaw": yaw, "pitch": pitch, "target": [tx, ty, tz], "dist": dist}
 
@@ -30,6 +35,10 @@ def main():
     s["sylph_small_rest"] = sc(6, [v("rest front", 0, 4, 0, 0, 0, 1.6), v("rest side", 90, 4, 0, 0, 0, 1.6)], tile=(380, 460))
     s["sylph_small_point"] = sc(7, [v("point 3/4", 20, 6, 0, 0, 0, 1.5), v("point front", -10, 4, 0, 0, 0, 1.5)], ages=(0, 8), tile=(420, 460))
     s["sylph_small_fly"] = sc(8, [v("fly side", 90, 6, 0, 0, 0, 1.5)], tile=(420, 420))
+    s["sylph_small_wings"] = geo("sylph_small_wings", [v("wings back", 180, 0, 0, 1.2, 0, 3.4), v("wings front", 0, 0, 0, 1.2, 0, 3.4)], anim="idle")
+    s["cmp_small_laugh"] = sc(0, [v("small, idle (the first picture)", 28, 5, 0, 0.0, 0, 1.25)], ages=(6,), tile=(560, 560))
+    s["cmp_small_point"] = sc(7, [v("small, pointing (the second picture)", -12, 4, 0, 0.0, 0, 1.25)], ages=(8,), tile=(560, 560))
+    s["cmp_powered"] = sc(103, [v("powered (the third picture)", 0, 4, 0, 0.35, 0, 4.2)], ages=(6,), tile=(560, 660))
     s["sylph_small_face"] = sc(0, [v("face front", 0, 2, 0, 0.18, 0, 0.55), v("face 3/4", 30, 4, 0, 0.18, 0, 0.55)], tile=(520, 520))
     s["sylph_small_laugh"] = sc(1, [v("laugh 3/4", 25, 6, 0, 0.04, 0, 1.1)], ages=(0, 6, 12), tile=(380, 420))
     s["sylph_small_cast"] = sc(2, [v("cast 3/4", -30, 6, 0, 0.0, 0, 1.4), v("cast side", -90, 6, 0, 0, 0, 1.4)], ages=(4, 12), tile=(420, 460))

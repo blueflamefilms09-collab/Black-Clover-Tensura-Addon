@@ -157,12 +157,7 @@
        }
       }
      ],
-     "parent": "wing_f_R",
-     "rotation": [
-      0.0,
-      0.0,
-      -9.0
-     ]
+     "parent": "wing_f_R"
     },
     {
      "name": "wing_h_R",
@@ -257,12 +252,7 @@
        }
       }
      ],
-     "parent": "wing_h_R",
-     "rotation": [
-      0.0,
-      0.0,
-      -9.0
-     ]
+     "parent": "wing_h_R"
     },
     {
      "name": "wing_f_L",
@@ -357,12 +347,7 @@
        }
       }
      ],
-     "parent": "wing_f_L",
-     "rotation": [
-      0.0,
-      0.0,
-      9.0
-     ]
+     "parent": "wing_f_L"
     },
     {
      "name": "wing_h_L",
@@ -457,12 +442,7 @@
        }
       }
      ],
-     "parent": "wing_h_L",
-     "rotation": [
-      0.0,
-      0.0,
-      9.0
-     ]
+     "parent": "wing_h_L"
     }
    ]
   }

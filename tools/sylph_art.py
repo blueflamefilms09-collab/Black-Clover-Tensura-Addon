@@ -27,7 +27,7 @@ HAIR = {"small": ((240, 232, 128, 255), (206, 194, 84, 255), (252, 248, 176, 255
         "powered": ((240, 234, 142, 255), (208, 198, 100, 255), (252, 250, 188, 255))}
 EYE_IRIS = (150, 214, 168, 255)
 EYE_IRIS_DK = (74, 150, 112, 255)
-DRESS = {"small": ((206, 244, 176, 255), (150, 208, 134, 255), (240, 255, 224, 255)),         # lime mint: the green glow of the first picture on a white-mint dress
+DRESS = {"small": ((222, 246, 204, 255), (168, 214, 156, 255), (246, 255, 236, 255)),         # lime mint: the green glow of the first picture on a white-mint dress
          "powered": ((232, 246, 226, 255), (176, 218, 184, 255), (250, 255, 246, 255))}
 CHOKER = (92, 74, 66, 255)
 
@@ -178,8 +178,8 @@ def face(kind, wu=9.0, hu=8.5, ppu=16):
     my = ey + 2.75
     if kind in ("laugh", "shout"):
         # an open mouth: a wide D shape, dark, with a pink tongue and a row of upper teeth showing as a pale band
-        ww = 1.55 if kind == "laugh" else 1.15
-        hh = 1.35 if kind == "laugh" else 1.5
+        ww = 1.95 if kind == "laugh" else 1.15
+        hh = 1.75 if kind == "laugh" else 1.5
         mouth = [(cx - ww, my - 0.35), (cx - ww * 0.8, my + hh * 0.7), (cx, my + hh), (cx + ww * 0.8, my + hh * 0.7), (cx + ww, my - 0.35)]
         c.poly(catmull(mouth, 12), (120, 48, 52, 255))
         c.line(catmull(mouth, 12) + [mouth[0]], INK, 0.22)
@@ -196,11 +196,6 @@ def face(kind, wu=9.0, hu=8.5, ppu=16):
     return c.done()
 
 
-def ear(wu=2.6, hu=2.4, ppu=16, side=1):
-    """The side of the head with the pointed ear drawn on it: a skin picture with the ear's shell, drawn on the head's side face (the ear sticks out as its own cube too)."""
-    c = Canvas(wu, hu, ppu, SKIN)
-    c.poly([(0, hu * 0.8), (wu, hu * 0.8), (wu, hu), (0, hu)], SKIN_SH)
-    return c.done()
 
 
 def ear_card(wu=4.0, hu=2.2, ppu=16):
@@ -218,7 +213,7 @@ def _rng(seed):
     return np.random.default_rng(seed)
 
 
-def hair_block(wu, hu, ppu, seed, tone="small", part=False):
+def hair_block(wu, hu, ppu, seed, tone="small"):
     """A solid hair surface (the cap and the back of the head): flat colour with a hard shadow band at the bottom, a highlight arc and long strand lines, dark line work at the rim."""
     base, dark, light = HAIR[tone]
     c = Canvas(wu, hu, ppu, base)
@@ -296,28 +291,6 @@ def strand(wu, hu, ppu, seed, tone="small", curl=0.0, ragged=1.0, tip_up=False):
     return img
 
 
-def bang(wu, hu, ppu, seed, tone="small"):
-    """A bang: a wide lock over the forehead, root on the top edge, ragged V-shaped end at the bottom."""
-    base, dark, light = HAIR[tone]
-    c = Canvas(wu, hu, ppu)
-    rng = _rng(seed)
-    pts = [(0.0, 0.0), (wu, 0.0), (wu * 0.98, hu * 0.55)]
-    teeth = 3
-    for i in range(teeth * 2 + 1):
-        t = i / float(teeth * 2)
-        x = wu * (0.98 - 0.96 * t)
-        y = hu * (0.98 if i % 2 == 0 else 0.62) - rng.uniform(0, hu * 0.08)
-        pts.append((x, y))
-    pts.append((wu * 0.02, hu * 0.55))
-    c.poly(pts, base)
-    c.poly([(0, hu * 0.5), (wu, hu * 0.5)] + [p for p in pts[2:-1]][::-1][:0] + [(wu * 0.98, hu * 0.55)] + pts[3:-1][::-1] + [(wu * 0.02, hu * 0.55)], dark)
-    c.poly(pts[:3] + pts[3:-1] + [pts[-1]], None) if False else None
-    c.curve([(wu * 0.1, hu * 0.12), (wu * 0.45, hu * 0.25), (wu * 0.9, hu * 0.14)], light, 0.45)
-    for k in range(4):
-        x = wu * (0.14 + 0.22 * k)
-        c.curve([(x, hu * 0.05), (x + rng.uniform(-0.4, 0.4), hu * 0.45), (x + rng.uniform(-0.5, 0.5), hu * 0.85)], INK_HAIR, 0.08)
-    c.line(pts[2:-1], INK, 0.11)
-    return c.done()
 
 
 # ====================================================================================================================== dress and body
@@ -383,11 +356,7 @@ def bodice(wu, hu, ppu, tone="small", back=False):
     """The chest front: bare skin above a scalloped strapless neckline, two shell cups with a fold line each, a dark seam; the back is plain dress with a bow-less closure line."""
     base, dark, light = DRESS[tone]
     c = Canvas(wu, hu, ppu, SKIN)
-    c.poly([(0, hu * 0.88), (wu, hu * 0.88), (wu, hu), (0, hu)], SKIN_SH) if False else None
     top = hu * (0.34 if not back else 0.22)
-    for i in range(2):
-        x0, x1 = wu * i / 2, wu * (i + 1) / 2
-        pts = [(x0, top + hu * 0.12)] + [(lerp(x0, x1, t / 6.0), top + math.sin(t / 6.0 * math.pi) * hu * 0.14 * (-1 if False else 1) - hu * 0.05) for t in range(7)] + [(x1, top + hu * 0.12)]
     # dress area below the neckline (scallops: one per half)
     neck = []
     for i in range(2):
@@ -425,9 +394,6 @@ def choker(wu, hu, ppu):
     return c.done()
 
 
-def hair_tie(wu, hu, ppu):
-    c = Canvas(wu, hu, ppu, (240, 220, 120, 255))
-    return c.done()
 
 
 # ====================================================================================================================== wings
@@ -456,32 +422,33 @@ def wing(wu, hu, ppu, seed, kind="fore", tone="small", glow=False, powered=False
         p = np.array([246, 206, 240], np.float32)
         y_ = np.array([250, 244, 176], np.float32)
     else:
-        g = np.array([150, 238, 140], np.float32)
-        b = np.array([160, 224, 220], np.float32)
-        p = np.array([200, 246, 150], np.float32)
-        y_ = np.array([226, 250, 130], np.float32)
+        g = np.array([120, 226, 110], np.float32)
+        b = np.array([130, 214, 190], np.float32)
+        p = np.array([186, 240, 120], np.float32)
+        y_ = np.array([214, 246, 110], np.float32)
     col = g[None, None] * (1 - band[..., None]) + b[None, None] * band[..., None]
     col = col * (1 - 0.55 * band2[..., None]) + p[None, None] * (0.55 * band2[..., None])
     col = col * (1 - 0.35 * (u[..., None] ** 2)) + y_[None, None] * (0.35 * (u[..., None] ** 2))
-    alpha = np.full((H, W), 0.42 if tone == "small" else 0.50, np.float32)
+    alpha = np.full((H, W), 0.42 if tone == "small" else 0.58, np.float32)
     alpha += 0.10 * band + 0.10 * (1 - v) * 0.0
     vein_img = Canvas(wu, hu, ppu)
     ink = (98, 134, 108, 255) if tone == "small" else (60, 130, 80, 255)
     # long veins from the root, fanning out and curving towards the tip
-    nl = 6
+    nl = 4 if tone == "powered" else 5                                        # a few long veins: the cells of the pictures are big
     for i in range(nl):
         t = (i + 0.5) / nl
         y0 = lerp(hu * 0.34, hu * 0.56, t)
         y1 = lerp(hu * 0.16, hu * 0.80, t) + (t - 0.5) * hu * 0.08
-        vein_img.curve([(0.0, y0), (wu * 0.3, lerp(y0, y1, 0.35)), (wu * 0.68, lerp(y0, y1, 0.78)), (wu * (0.93 - 0.05 * abs(t - 0.5)), y1)], ink, 0.07 if i not in (0, nl - 1) else 0.11)
+        vein_img.curve([(0.0, y0), (wu * 0.3, lerp(y0, y1, 0.35)), (wu * 0.68, lerp(y0, y1, 0.78)), (wu * (0.93 - 0.05 * abs(t - 0.5)), y1)], ink, (0.10 if tone == "powered" else 0.08) if i not in (0, nl - 1) else 0.14)
     # cross veins: short links between neighbouring long veins make the cells
-    for k in range(10):
-        x = wu * (0.12 + 0.085 * k)
+    ncross = 5 if tone == "powered" else 7
+    for k in range(ncross):
+        x = wu * (0.14 + (0.78 / ncross) * k)
         for i in range(nl - 1):
             ya = lerp(lerp(hu * 0.34, hu * 0.56, (i + 0.5) / nl), lerp(hu * 0.16, hu * 0.80, (i + 0.5) / nl), min(1.0, x / wu * 0.9))
             yb = lerp(lerp(hu * 0.34, hu * 0.56, (i + 1.5) / nl), lerp(hu * 0.16, hu * 0.80, (i + 1.5) / nl), min(1.0, x / wu * 0.9))
             j = rng.uniform(-0.02, 0.02) * wu
-            vein_img.line([(x + j, ya), (x + j + wu * 0.012, yb)], ink, 0.05, False)
+            vein_img.line([(x + j, ya), (x + j + wu * 0.02, yb)], ink, 0.09 if tone == "powered" else 0.06, False)
     vimg = np.asarray(vein_img.done()).astype(np.float32)
     va = vimg[..., 3] / 255.0
     edge = Canvas(wu, hu, ppu)
@@ -548,15 +515,6 @@ def hem_glow(wu, hu, ppu, seed, tone="small"):
     return Image.fromarray(a, "RGBA")
 
 
-def tip_glow(wu, hu, ppu):
-    """A soft pale green blob (the end of the ahoge, a spark)."""
-    c = Canvas(wu, hu, ppu)
-    c.ellipse(wu / 2, hu / 2, wu * 0.38, hu * 0.38, (190, 255, 170, 255))
-    c.blur(wu * 0.10)
-    img = c.done()
-    a = np.asarray(img).copy()
-    a[a[..., 3] < 6] = 0
-    return Image.fromarray(a, "RGBA")
 
 
 def halo(size=128):
@@ -577,7 +535,7 @@ def halo(size=128):
 
 
 # ====================================================================================================================== the powered form: streaming hair and petal wings
-def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=2):
+def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=1):
     """A long lock of streaming hair as a standing card: the ROOT at the bottom of the picture, the tip at the top. The silhouette follows an S-curve (it sways to one side and back), swells in
     the middle and ends in a few ragged points; flat colour, a dark shadow along the right side, a light band, long strand lines that follow the curve, a dark outline."""
     base, dark, light = HAIR[tone]
@@ -586,7 +544,7 @@ def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=2):
     n = 40
 
     def centre(t):                                           # t = 0 at the root (bottom) .. 1 at the tip (top)
-        return wu * 0.5 + math.sin(t * math.pi * 1.6 + phase) * wu * 0.16 * sway * min(1.0, t * 3.0)
+        return wu * 0.5 + math.sin(t * math.pi * 2.2 + phase) * wu * 0.22 * sway * min(1.0, t * 2.5)
 
     def half(t):
         return wu * 0.5 * (0.62 + 0.38 * math.sin(min(1.0, t * 2.0) * math.pi * 0.5)) * (1.0 - t ** 2.4) * 0.96

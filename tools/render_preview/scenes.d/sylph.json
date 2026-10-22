@@ -112,6 +112,231 @@
   ],
   "light": "0xF000F0"
  },
+ "sylph_small_point": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   8
+  ],
+  "tile": [
+   420,
+   460
+  ],
+  "views": [
+   {
+    "name": "point 3/4",
+    "yaw": 20,
+    "pitch": 6,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.5
+   },
+   {
+    "name": "point front",
+    "yaw": -10,
+    "pitch": 4,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.5
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_small_fly": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 8,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "fly side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.5
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_small_wings": {
+  "kind": "geo",
+  "model": "sylph_small_wings",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "wings back",
+    "yaw": 180,
+    "pitch": 0,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "wings front",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "cmp_small_laugh": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "small, idle (the first picture)",
+    "yaw": 28,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "cmp_small_point": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   8
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "small, pointing (the second picture)",
+    "yaw": -12,
+    "pitch": 4,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "cmp_powered": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 103,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6
+  ],
+  "tile": [
+   560,
+   660
+  ],
+  "views": [
+   {
+    "name": "powered (the third picture)",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.35,
+     0
+    ],
+    "dist": 4.2
+   }
+  ],
+  "light": "0xF000F0"
+ },
  "sylph_small_face": {
   "kind": "prop",
   "example": "SylphProp",
