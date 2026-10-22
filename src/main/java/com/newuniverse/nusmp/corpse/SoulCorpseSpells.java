@@ -47,12 +47,13 @@ public final class SoulCorpseSpells {
         return false;
     }
 
-    /** One of the named puppets: Jimmy, Alfredo or Carl. */
+    /** One of Rades's numbered undead: No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl or No.0 Michael Caesal (the elite: only one at a time). */
     public static boolean named(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, NamedCorpses kind) {
         if (!CorpseConfig.enabled()) { GrimoireBook.fail(p, "Soul Corpse Magic is switched off on this server."); return false; }
-        if (Corpses.summonNamed(p, kind) == null) { GrimoireBook.fail(p, kind.display + " will not come here: the world refused the body."); return false; }
-        b.castCircle(p, 1.0f);
-        p.displayClientMessage(Component.literal(kind.display + " answers your call.").withStyle(ChatFormatting.GRAY), true);
+        if (kind.elite() && Corpses.liveNamed(p, kind) != null) { GrimoireBook.fail(p, kind.display + " already stands at your side."); return false; }
+        if (Corpses.summonNamed(p, kind) == null) { GrimoireBook.fail(p, kind.title() + " will not come here: the world refused the body."); return false; }
+        b.castCircle(p, kind.elite() ? 1.4f : 1.0f);
+        p.displayClientMessage(Component.literal(kind.title() + " answers your call.").withStyle(ChatFormatting.GRAY), true);
         return true;
     }
 

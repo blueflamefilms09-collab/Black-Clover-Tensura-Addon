@@ -70,6 +70,8 @@ public final class Corpses {
 
     static final CorpseRoster<UUID, UUID> RAISED = new CorpseRoster<>();
     static final CorpseRoster<UUID, UUID> NAMED = new CorpseRoster<>();
+    /** The zombies of Soul Corpse Magic ({@link SoulZombieEntity}): their own roster and cap ({@code corpse.zombieCap}), the same life / owner sweep. */
+    static final CorpseRoster<UUID, UUID> ZOMBIES = new CorpseRoster<>();
     private static final Map<UUID, CorpseLedger> LEDGERS = new HashMap<>();
 
     // ================================================================ identity
@@ -77,16 +79,20 @@ public final class Corpses {
 
     public static boolean isNamed(Entity e) { return e instanceof NamedCorpseEntity; }
 
+    /** A zombie summoned by Soul Corpse Magic. */
+    public static boolean isSoulZombie(Entity e) { return e instanceof SoulZombieEntity; }
+
     /** The owner of a body (a reanimated one by its tag, a named one by its field), or null. */
     public static UUID ownerOf(Entity e) {
         if (e instanceof NamedCorpseEntity n) return n.getOwnerUUID();
+        if (e instanceof SoulZombieEntity z) return z.getOwnerUUID();
         if (e == null || !isCorpse(e)) return null;
         CompoundTag t = e.getPersistentData().getCompound(TAG);
         return t.hasUUID("Owner") ? t.getUUID("Owner") : null;
     }
 
     /** True for a reanimated (not named) body, whose health bleeds and whose damage is raised. */
-    public static boolean isRaised(Entity e) { return isCorpse(e) && !isNamed(e); }
+    public static boolean isRaised(Entity e) { return isCorpse(e) && !isNamed(e) && !isSoulZombie(e); }
 
     /** May this creature be raised as a Soul Corpse? Not a boss, player, NPC, ender dragon, anything immune, a body already, or something that cannot fight. */
     public static boolean raisable(LivingEntity e) {
@@ -181,6 +187,13 @@ public final class Corpses {
     static LivingEntity raise(ServerPlayer owner, CorpseLedger.Fallen f) {
         if (owner == null || !owner.isAlive()) return null;
         ServerLevel level = owner.serverLevel();
+        if (CorpseConfig.zombiesInsteadOfPuppets()) {                      // Soul Corpse Magic raises zombies now, whatever fell (the entry only gives the place)
+            boolean near = level.dimension().location().toString().equals(f.dim()) && owner.distanceToSqr(f.x(), f.y(), f.z()) < 40 * 40;
+            Vec3 at = near ? new Vec3(f.x(), f.y(), f.z()) : null;
+            List<SoulZombieEntity> made = SoulZombies.summon(owner, 1, CorpseConfig.lifeTicks(), 1.0, at);
+            if (!made.isEmpty()) com.newuniverse.nusmp.quests.NusmpEvents.fire(owner, "corpse.raised");
+            return made.isEmpty() ? null : made.get(0);
+        }
         Optional<EntityType<?>> type = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.parse(f.type()));
         if (type.isEmpty() || type.get().is(CorpseTags.IMMUNE)) return null;
         try {
@@ -364,6 +377,7 @@ public final class Corpses {
         }
         NamedCorpseEntity n = CorpseEntities.type(kind).create(level);
         if (n == null) return null;
+        n.setPersistenceRequired();
         // 1.46.0: the old spot (straight ahead at the caster's own height) could be inside a wall or a slope, where the puppet suffocated at once;
         // look for a free spot with ground under it, nearest in front first, and fall back to the caster's own place
         Vec3 look = owner.getLookAngle();
@@ -376,17 +390,26 @@ public final class Corpses {
         CompoundTag t = new CompoundTag();
         t.putUUID("Owner", owner.getUUID());
         t.putLong("Born", level.getGameTime());
-        t.putInt("Life", CorpseConfig.namedLifeTicks());
+        t.putInt("Life", kind.lifeTicks(CorpseConfig.namedLifeTicks()));
         t.putString("Kind", kind.id);
         n.getPersistentData().put(TAG, t);
-        n.setCustomName(Component.literal(kind.display));
+        n.setCustomName(Component.literal(kind.title()));
         n.setCustomNameVisible(true);
         if (!level.addFreshEntity(n)) return null;
-        for (UUID old : NAMED.add(owner.getUUID(), n.getUUID(), NamedCorpses.values().length)) crumbleById(owner.getServer(), old);
+        for (UUID old : NAMED.add(owner.getUUID(), n.getUUID(), NamedCorpses.MAX_AT_ONCE)) crumbleById(owner.getServer(), old);
         mark(n, 0);
         CorpseVfx.raise(level, n.position(), Math.max(1.0f, kind.width * 2.0f), 40);
         level.playSound(null, n.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 1.2f, 0.55f);
         return n;
+    }
+
+    /** The owner's live named corpse of this kind, or null. */
+    static NamedCorpseEntity liveNamed(ServerPlayer owner, NamedCorpses kind) {
+        for (UUID id : NAMED.bodies(owner.getUUID())) {
+            Entity e = find(owner.getServer(), id);
+            if (e instanceof NamedCorpseEntity n && n.kind() == kind && n.isAlive() && !n.isRemoved()) return n;
+        }
+        return null;
     }
 
     private static boolean fits(ServerLevel level, Entity e, Vec3 at) {
@@ -460,9 +483,10 @@ public final class Corpses {
 
     // ================================================================ the sweep
     static void tick(MinecraftServer server) {
-        if ((RAISED.isEmpty() && NAMED.isEmpty()) || server.getTickCount() % SWEEP != 7) return;
+        if ((RAISED.isEmpty() && NAMED.isEmpty() && ZOMBIES.isEmpty()) || server.getTickCount() % SWEEP != 7) return;
         sweep(server, RAISED, false);
         sweep(server, NAMED, true);
+        sweep(server, ZOMBIES, true);                                        // a zombie has its own goals: it is on the clock and the owner's side only, no bleed and no driving
     }
 
     private static void sweep(MinecraftServer server, CorpseRoster<UUID, UUID> roster, boolean named) {
@@ -536,7 +560,7 @@ public final class Corpses {
         e.discard();
     }
 
-    private static void crumbleById(MinecraftServer server, UUID id) {
+    static void crumbleById(MinecraftServer server, UUID id) {
         if (server != null) crumble(find(server, id));
     }
 
@@ -553,6 +577,8 @@ public final class Corpses {
     static void crumbleAllOf(MinecraftServer server, UUID owner) {
         for (UUID id : RAISED.bodies(owner)) crumbleById(server, id);
         for (UUID id : NAMED.bodies(owner)) crumbleById(server, id);
+        for (UUID id : ZOMBIES.bodies(owner)) crumbleById(server, id);
+        for (UUID id : ZOMBIES.bodies(owner)) ZOMBIES.remove(owner, id);
         for (UUID id : RAISED.bodies(owner)) RAISED.remove(owner, id);
         for (UUID id : NAMED.bodies(owner)) NAMED.remove(owner, id);
     }
@@ -561,8 +587,10 @@ public final class Corpses {
     static void discardAll(MinecraftServer server) {
         for (UUID o : RAISED.owners()) crumbleAllOf(server, o);
         for (UUID o : NAMED.owners()) crumbleAllOf(server, o);
+        for (UUID o : ZOMBIES.owners()) crumbleAllOf(server, o);
         RAISED.clear();
         NAMED.clear();
+        ZOMBIES.clear();
         LEDGERS.clear();
         Pacts.clear();
     }
@@ -570,7 +598,7 @@ public final class Corpses {
     /** True if the roster knows this body (a tagged body that joins a level without being listed is an orphan from a crash). */
     static boolean listed(Entity e) {
         UUID owner = ownerOf(e);
-        return owner != null && (RAISED.bodies(owner).contains(e.getUUID()) || NAMED.bodies(owner).contains(e.getUUID()));
+        return owner != null && (RAISED.bodies(owner).contains(e.getUUID()) || NAMED.bodies(owner).contains(e.getUUID()) || ZOMBIES.bodies(owner).contains(e.getUUID()));
     }
 
     /** Damage source helper for the hooks: the body behind a blow (a direct hit or its projectile), or null. */

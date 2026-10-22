@@ -188,6 +188,9 @@ public abstract class GrimoireBook extends Skill {
     @Override public ResourceLocation getSkillIcon() { return icon; }
     @Override public int getModes(ManasSkillInstance instance) { return pages().size(); }
 
+    /** The instance names itself with the bound character in front of the magic ("Rades Spirito's Soul Corpse Magic"): see {@link GrimoireSkillInstance}. */
+    @Override public io.github.manasmods.tensura.ability.TensuraSkillInstance createDefaultInstance() { return new GrimoireSkillInstance(this); }
+
     @Override
     public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) {
         int n = pages().size();
@@ -729,7 +732,8 @@ public abstract class GrimoireBook extends Skill {
     }
 
     private void shout(ServerPlayer p, String incantation) {
-        Component line = Component.literal(magicLabel() + ": " + incantation + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
+        String label = com.newuniverse.nusmp.grimoire.CanonNaming.named(CanonSkillSync.canonOf(p, magic.name()), magicLabel());     // the character's name in front of the magic
+        Component line = Component.literal(label + ": " + incantation + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
         for (ServerPlayer other : p.serverLevel().players()) if (other.distanceToSqr(p) < 32 * 32) other.displayClientMessage(line, true);
     }
 

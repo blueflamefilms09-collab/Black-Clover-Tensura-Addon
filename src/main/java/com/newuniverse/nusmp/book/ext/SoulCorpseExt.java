@@ -18,9 +18,19 @@ public final class SoulCorpseExt {
     public static List<BookPage> pages() {
         return List.of(
                 BookPage.mid("corpse_reanimate", "Soul Corpse: Reanimation", SoulCorpseSpells::reanimate),
-                BookPage.mid("corpse_jimmy", "Soul Corpse: Jimmy", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.JIMMY)),
-                BookPage.mid("corpse_alfredo", "Soul Corpse: Alfredo", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.ALFREDO)),
-                BookPage.mid("corpse_carl", "Soul Corpse: Carl", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.CARL)),
+                BookPage.mid("corpse_jimmy", "No.4 - Jimmy", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.JIMMY)),
+                BookPage.mid("corpse_alfredo", "No.2 - Alfredo", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.ALFREDO)),
+                BookPage.mid("corpse_carl", "No.1 - Carl", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.CARL)),
                 BookPage.signature("true_soul_corpse", "True Soul Corpse Magic", SoulCorpseSpells::truePact).withCooldown(0));
+    }
+
+    /**
+     * The two numbered undead that came after the first release: No.3 David (the huge stitched bruiser) and No.0 Michael Caesal (the elite, one at a time, a long cooldown). They are the end
+     * of Rades's page list, but the pages of the book are numbered by position, so {@code SoulCorpseBook.familyList} appends them after everything it already had: no old page changes its mode.
+     */
+    public static List<BookPage> latePages() {
+        return List.of(
+                BookPage.mid("corpse_david", "No.3 - David", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.DAVID)).withCooldown(NamedCorpses.DAVID_PAGE_COOLDOWN),
+                BookPage.signature("corpse_michael_caesal", "No.0 - Michael Caesal", (b, i, p, m) -> SoulCorpseSpells.named(b, i, p, NamedCorpses.MICHAEL_CAESAL)).withCooldown(NamedCorpses.ELITE_PAGE_COOLDOWN));
     }
 }

@@ -10,4 +10,7 @@ public class EntityRenderDispatcher {
     public EntityRenderDispatcher(Camera camera) { this.camera = camera; }
 
     public Quaternionf cameraOrientation() { return camera.rotation(); }
+
+    /** Preview stub: the squared distance of an entity to the camera (the aura level of detail asks; the preview draws everything near). */
+    public double distanceToSqr(Object entity) { return 0.0; }
 }

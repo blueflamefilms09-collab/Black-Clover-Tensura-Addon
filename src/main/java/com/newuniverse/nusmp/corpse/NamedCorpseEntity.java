@@ -1,5 +1,9 @@
 package com.newuniverse.nusmp.corpse;
 
+import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -34,7 +38,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,6 +54,12 @@ import java.util.UUID;
  * the caster role keeps its distance and fires through {@link #volley}/{@link #bolt}. Nothing heals anyone. They are never saved with
  * the world ({@link #shouldBeSaved}), so a stopped server leaves none behind, and they drop nothing. The owner cannot hurt them by
  * accident. {@link #castLeft()} tells the renderer the caster is throwing (arm raised).
+ * <p>
+ * Rades's numbered undead (No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl, No.0 Michael Caesal) are this one class: the three old rows keep their stats and registry ids, and the
+ * {@link NamedCorpses.Signature} of a row adds one move that is decided here on the server only: Alfredo's soul barrier (Absorption for the caster's side), David's ground slam and Michael
+ * Caesal's soul barrage. Each waits {@link NamedCorpses#SIGNATURE_OPENING_TICKS} after the summon, has its own cooldown, touches a capped number of targets, only ever hurts the
+ * owner's foes ({@link Corpses#isFoe}) and goes through {@link BalanceLaw#cap} against players. They are flagged undead (data tag {@code minecraft:undead}) and, being plain mobs, do not
+ * burn in daylight.
  */
 public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
     private static final EntityDataAccessor<Integer> CAST = SynchedEntityData.defineId(NamedCorpseEntity.class, EntityDataSerializers.INT);
@@ -55,7 +68,8 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
 
     private final NamedCorpses kind;
     private UUID ownerId;
-    private int shardCd = 20, boltCd = 80, pending;          // pending: 0 nothing, 1 volley, 2 bolt
+    private int shardCd = 20, boltCd = 80, pending;          // pending: 0 nothing, 1 volley, 2 bolt, 3 ground slam, 4 soul barrage
+    private int sigCd = NamedCorpses.SIGNATURE_OPENING_TICKS, barrageLeft;
     private LivingEntity pendingTarget;
 
     public NamedCorpseEntity(EntityType<? extends NamedCorpseEntity> type, Level level, NamedCorpses kind) {
@@ -68,7 +82,7 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
     public static AttributeSupplier.Builder createAttributes(NamedCorpses k) {
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, k.health).add(Attributes.ATTACK_DAMAGE, k.attack)
                 .add(Attributes.MOVEMENT_SPEED, k.speed).add(Attributes.ARMOR, k.armor).add(Attributes.KNOCKBACK_RESISTANCE, k.knockbackResistance)
-                .add(Attributes.FOLLOW_RANGE, 32).add(Attributes.ATTACK_KNOCKBACK, k.role == NamedCorpses.Role.BRUISER ? 1.5 : 0.4);
+                .add(Attributes.FOLLOW_RANGE, 32).add(Attributes.ATTACK_KNOCKBACK, k.role == NamedCorpses.Role.BRUISER ? 1.5 : k.role == NamedCorpses.Role.ELITE ? 0.8 : 0.4);
     }
 
     public NamedCorpses kind() { return kind; }
@@ -140,6 +154,90 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
             entityData.set(CAST, --c);
             if (c == 0) release();
         }
+        if (kind.signature != NamedCorpses.Signature.NONE && level() instanceof ServerLevel sl) {
+            if (sigCd > 0) sigCd--;
+            signature(sl);
+        }
+    }
+
+    // ---------------------------------------------------------------- signature moves (Alfredo, David, Michael Caesal)
+    private void signature(ServerLevel sl) {
+        LivingEntity t = getTarget();
+        switch (kind.signature) {
+            case SOUL_BARRIER -> { if (sigCd <= 0 && t != null && t.isAlive() && tickCount % 10 == 0) barrier(sl); }
+            case GROUND_SLAM -> {
+                if (sigCd <= 0 && readyToThrow() && t != null && t.isAlive() && canAttack(t) && distanceTo(t) <= NamedCorpses.SLAM_TRIGGER) {
+                    pending = 3;
+                    sigCd = NamedCorpses.SLAM_EVERY_TICKS;
+                    entityData.set(CAST, THROW_TICKS);
+                    playSound(SoundEvents.WARDEN_ATTACK_IMPACT, 1.0f, 0.6f);
+                }
+            }
+            case SOUL_BARRAGE -> {
+                if (sigCd <= 0 && readyToThrow() && barrageLeft == 0 && t != null && t.isAlive() && canAttack(t)
+                        && distanceTo(t) <= NamedCorpses.BARRAGE_RANGE && hasLineOfSight(t)) {
+                    pending = 4;
+                    sigCd = NamedCorpses.BARRAGE_EVERY_TICKS;
+                    entityData.set(CAST, THROW_TICKS);
+                    playSound(SoundEvents.SOUL_ESCAPE.value(), 1.2f, 0.5f);
+                }
+                if (barrageLeft > 0) tickBarrage(sl);
+            }
+            default -> { }
+        }
+    }
+
+    /** Alfredo: Absorption for the owner's side within range (at most {@link NamedCorpses#BARRIER_MAX_TARGETS}); a shield, not a heal. */
+    private void barrier(ServerLevel sl) {
+        sigCd = NamedCorpses.BARRIER_EVERY_TICKS;
+        double r = NamedCorpses.BARRIER_RANGE;
+        List<LivingEntity> side = new ArrayList<>();
+        List<UUID> allies = ownerId == null ? List.of() : Pacts.RULES.allies(ownerId);
+        for (LivingEntity e : sl.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(r, 4, r), e -> e.isAlive() && e.distanceToSqr(this) <= r * r)) {
+            boolean mine = e == this || ownerId != null && (ownerId.equals(e.getUUID()) || ownerId.equals(Corpses.ownerOf(e)) || allies.contains(e.getUUID()));
+            if (mine) side.add(e);
+        }
+        side.sort(Comparator.comparingDouble(e -> e.distanceToSqr(this)));
+        int n = 0;
+        for (LivingEntity e : side) {
+            if (n++ >= NamedCorpses.BARRIER_MAX_TARGETS) break;
+            e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, NamedCorpses.BARRIER_TICKS, NamedCorpses.BARRIER_AMPLIFIER, true, true), this);
+            Fx.burst(sl, FxThemes.CORPSE, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), FxTone.LIGHT, 6);
+        }
+        Fx.ring(sl, FxThemes.CORPSE, FxTone.LIGHT, getX(), getY() + 0.2, getZ(), 2.2, 24);
+        sl.playSound(null, blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.NEUTRAL, 1.0f, 1.4f);
+    }
+
+    /** David: a shock round him after the wind-up: every foe within the radius (at most {@link NamedCorpses#SLAM_MAX_TARGETS}) takes part of his blow, is thrown back and slowed. */
+    private void slam(ServerLevel sl) {
+        ServerPlayer owner = ownerPlayerServer();
+        Fx.ring(sl, FxThemes.CORPSE, FxTone.DARK, getX(), getY() + 0.1, getZ(), NamedCorpses.SLAM_RADIUS, 28);
+        Fx.burst(sl, FxThemes.CORPSE, getX(), getY() + 0.3, getZ(), FxTone.DARK, 14);
+        sl.playSound(null, blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.NEUTRAL, 0.8f, 0.5f);
+        if (owner == null) return;
+        double r = NamedCorpses.SLAM_RADIUS;
+        List<LivingEntity> foes = sl.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(r, 1.5, r), e -> e != this && e.distanceToSqr(this) <= r * r && Corpses.isFoe(owner, e));
+        foes.sort(Comparator.comparingDouble(e -> e.distanceToSqr(this)));
+        int n = 0;
+        for (LivingEntity e : foes) {
+            if (n++ >= NamedCorpses.SLAM_MAX_TARGETS) break;
+            hit(e, (float) (kind.attack * NamedCorpses.SLAM_FACTOR), false);
+            e.knockback(NamedCorpses.SLAM_KNOCKBACK, getX() - e.getX(), getZ() - e.getZ());
+            e.hurtMarked = true;
+            if (!BalanceLaw.isBoss(e)) e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, NamedCorpses.SLAM_SLOW_TICKS, 1), this);
+        }
+    }
+
+    /** Michael Caesal: one soul bolt every {@link NamedCorpses#BARRAGE_GAP_TICKS} ticks at the target he has in sight, {@link NamedCorpses#BARRAGE_BOLTS} in all. */
+    private void tickBarrage(ServerLevel sl) {
+        LivingEntity t = getTarget();
+        barrageLeft--;
+        if (t == null || !t.isAlive() || !canAttack(t) || distanceTo(t) > NamedCorpses.BARRAGE_RANGE * 1.3) { barrageLeft = 0; return; }
+        if (barrageLeft % NamedCorpses.BARRAGE_GAP_TICKS != 0 || !hasLineOfSight(t)) return;
+        Vec3 from = getEyePosition().add(0, -0.2, 0), to = t.getBoundingBox().getCenter();
+        VfxSpawn.send(sl, VfxShape.WIKI_MAGIC_CAST, from, to, 0xFF6C7899, 10, 0.7f);
+        t.invulnerableTime = 0;                                              // each bolt is its own hit (the six are spread over 12 ticks, inside the usual invulnerability window)
+        hit(t, (float) NamedCorpses.BARRAGE_DAMAGE, true);
     }
 
     /** True while the caster is free to start a new throw. */
@@ -161,8 +259,18 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
         LivingEntity t = pendingTarget;
         pending = 0;
         pendingTarget = null;
+        if (move == 3 || move == 4) { releaseSignature(move); return; }
         if (move == 0 || t == null || !t.isAlive() || !(level() instanceof ServerLevel sl) || !canAttack(t)) return;
         if (move == 2) bolt(sl, t); else volley(sl, t);
+    }
+
+    private void releaseSignature(int move) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        if (move == 3) slam(sl);
+        else if (move == 4) {
+            barrageLeft = NamedCorpses.BARRAGE_BOLTS * NamedCorpses.BARRAGE_GAP_TICKS;
+            entityData.set(CAST, barrageLeft);
+        }
     }
 
     /** Three bone shards at the target, each a short hit-scan with a trail of bone chips; they hit only what Carl can see. */
@@ -318,5 +426,7 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
     @Override protected SoundEvent getHurtSound(DamageSource s) { return com.newuniverse.nusmp.audio.MobVoice.hurt("ghoul"); }
     @Override protected SoundEvent getDeathSound() { return com.newuniverse.nusmp.audio.MobVoice.death("ghoul"); }
     @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) { playSound(com.newuniverse.nusmp.audio.MobVoice.event("ghoul", com.newuniverse.nusmp.audio.Cue.STEP), 0.5f, 0.8f); }
-    @Override public float getVoicePitch() { return kind == NamedCorpses.ALFREDO ? 0.55f : kind == NamedCorpses.CARL ? 0.85f : 0.75f; }
+    @Override public float getVoicePitch() {
+        return switch (kind) { case ALFREDO -> 0.55f; case CARL -> 0.85f; case DAVID -> 0.45f; case MICHAEL_CAESAL -> 0.95f; default -> 0.75f; };
+    }
 }

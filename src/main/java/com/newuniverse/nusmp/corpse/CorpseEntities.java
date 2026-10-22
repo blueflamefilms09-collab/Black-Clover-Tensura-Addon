@@ -25,6 +25,14 @@ public final class CorpseEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> ALFREDO = named(NamedCorpses.ALFREDO);
     public static final DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> CARL = named(NamedCorpses.CARL);
 
+    /** The zombie of Soul Corpse Magic (a thin subclass of the vanilla zombie: owned, no sun burn, no drops). Appended; the ids above stay. */
+    public static final DeferredHolder<EntityType<?>, EntityType<SoulZombieEntity>> SOUL_ZOMBIE = ENTITIES.register("soul_zombie",
+            () -> EntityType.Builder.<SoulZombieEntity>of(SoulZombieEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(8).build("soul_zombie"));
+
+    /** No.3 David and No.0 Michael Caesal (appended after the three old puppets; same entity class, their own rows in {@link NamedCorpses}). */
+    public static final DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> DAVID = named(NamedCorpses.DAVID);
+    public static final DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> MICHAEL_CAESAL = named(NamedCorpses.MICHAEL_CAESAL);
+
     private static DeferredHolder<EntityType<?>, EntityType<NamedCorpseEntity>> named(NamedCorpses k) {
         return ENTITIES.register(k.id, () -> EntityType.Builder.<NamedCorpseEntity>of((t, l) -> new NamedCorpseEntity(t, l, k), MobCategory.MISC)
                 .sized(k.width, k.height).clientTrackingRange(10).build(k.id));
@@ -38,10 +46,13 @@ public final class CorpseEntities {
             case JIMMY -> JIMMY.get();
             case ALFREDO -> ALFREDO.get();
             case CARL -> CARL.get();
+            case DAVID -> DAVID.get();
+            case MICHAEL_CAESAL -> MICHAEL_CAESAL.get();
         };
     }
 
     public static void attributes(EntityAttributeCreationEvent e) {
         for (NamedCorpses k : NamedCorpses.values()) e.put(type(k), NamedCorpseEntity.createAttributes(k).build());
+        e.put(SOUL_ZOMBIE.get(), SoulZombieEntity.createAttributes().build());
     }
 }
