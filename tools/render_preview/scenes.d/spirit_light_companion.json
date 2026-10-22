@@ -1,0 +1,67 @@
+{
+ "spirit_light_companion": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.2
+   },
+   {
+    "name": "head close",
+    "yaw": 15,
+    "pitch": 8,
+    "target": [
+     0,
+     2.1,
+     -0.9
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 14,
+    "target": [
+     0,
+     1.5,
+     0.3
+    ],
+    "dist": 6.2
+   }
+  ]
+ }
+}

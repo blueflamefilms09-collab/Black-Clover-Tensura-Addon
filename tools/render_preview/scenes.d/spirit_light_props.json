@@ -1,0 +1,386 @@
+{
+ "spirit_light_in_game_companion": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   24
+  ],
+  "tile": [
+   460,
+   520
+  ],
+  "views": [
+   {
+    "name": "beside the shoulder, front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.3,
+     1.5,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "from the back",
+    "yaw": 160,
+    "pitch": 12,
+    "target": [
+     -0.3,
+     1.5,
+     0.1
+    ],
+    "dist": 3.8
+   }
+  ]
+ },
+ "spirit_light_in_game_powered": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1000,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   460,
+   560
+  ],
+  "views": [
+   {
+    "name": "behind the owner, front 3/4",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.6,
+     -0.9
+    ],
+    "dist": 7.0
+   },
+   {
+    "name": "from the front",
+    "yaw": -5,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     -0.6
+    ],
+    "dist": 7.4
+   }
+  ]
+ },
+ "spirit_light_in_game_cast_companion": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": true,
+  "ages": [
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   380,
+   440
+  ],
+  "views": [
+   {
+    "name": "the beam cast (cub)",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.3,
+     1.5,
+     0.6
+    ],
+    "dist": 3.8
+   }
+  ]
+ },
+ "spirit_light_in_game_cast_powered": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1001,
+  "figure": true,
+  "ages": [
+   6,
+   12,
+   20
+  ],
+  "tile": [
+   380,
+   520
+  ],
+  "views": [
+   {
+    "name": "the beam cast (seraph)",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.6,
+     -0.5
+    ],
+    "dist": 7.2
+   }
+  ]
+ },
+ "spirit_light_beam": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2000,
+  "figure": true,
+  "ages": [
+   1,
+   2,
+   4
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "the piercing beam",
+    "yaw": 60,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     4.0
+    ],
+    "dist": 9.0
+   }
+  ]
+ },
+ "spirit_light_beam_powered": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2001,
+  "figure": true,
+  "ages": [
+   1,
+   2,
+   4
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "the seraph's beam",
+    "yaw": 60,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     4.0
+    ],
+    "dist": 9.0
+   }
+  ]
+ },
+ "spirit_light_pulse": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3000,
+  "figure": true,
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "the Glowing pulse",
+    "yaw": 30,
+    "pitch": 22,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 11.0
+   }
+  ]
+ },
+ "spirit_light_lod_game_companion": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100,
+  "figure": true,
+  "ages": [
+   24
+  ],
+  "tile": [
+   360,
+   360
+  ],
+  "views": [
+   {
+    "name": "half level",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.3,
+     1.5,
+     0.1
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "spirit_light_lod_game_companion2": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200,
+  "figure": true,
+  "ages": [
+   24
+  ],
+  "tile": [
+   360,
+   360
+  ],
+  "views": [
+   {
+    "name": "low level",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.3,
+     1.5,
+     0.1
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "spirit_light_lod_game_powered": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1100,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   360,
+   440
+  ],
+  "views": [
+   {
+    "name": "half level",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.6,
+     -0.9
+    ],
+    "dist": 7.0
+   }
+  ]
+ },
+ "spirit_light_lod_game_powered2": {
+  "kind": "prop",
+  "example": "SpiritLightProp",
+  "realFiles": [
+   "client/prop/SpiritLightDraw.java",
+   "spiritlight/SpiritLightLod.java",
+   "spiritlight/SpiritLightRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1200,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   360,
+   440
+  ],
+  "views": [
+   {
+    "name": "low level",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0,
+     1.6,
+     -0.9
+    ],
+    "dist": 7.0
+   }
+  ]
+ }
+}

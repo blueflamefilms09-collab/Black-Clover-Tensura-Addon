@@ -1,0 +1,258 @@
+{
+ "spirit_light_face_cub_happy": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "happy (cub)",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     2.0,
+     -1.0
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_cub_sleepy": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "sleep",
+  "views": [
+   {
+    "name": "sleepy (cub)",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     2.0,
+     -1.0
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_cub_fierce": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   9
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "fierce (cub)",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     2.0,
+     -1.0
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_cub_surprised": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   2
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "surprised (cub)",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     2.0,
+     -1.0
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_seraph_serene": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "serene (seraph)",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     4.15,
+     -0.6
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_seraph_stern": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   14
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "stern (seraph)",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     4.15,
+     -0.6
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_seraph_compassionate": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   24
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "bless",
+  "views": [
+   {
+    "name": "compassionate (seraph)",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     4.15,
+     -0.6
+    ],
+    "dist": 3.3
+   }
+  ]
+ },
+ "spirit_light_face_seraph_radiant": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "wings_open",
+  "views": [
+   {
+    "name": "radiant (seraph)",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     4.15,
+     -0.6
+    ],
+    "dist": 3.3
+   }
+  ]
+ }
+}

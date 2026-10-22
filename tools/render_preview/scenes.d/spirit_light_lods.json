@@ -1,0 +1,194 @@
+{
+ "spirit_light_lod_cub_0": {
+  "kind": "geo",
+  "model": "spiritlight_cub",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   360
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 0",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.4
+   }
+  ]
+ },
+ "spirit_light_lod_cub_1": {
+  "kind": "geo",
+  "model": "spiritlight_cub_lod1",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   360
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 1",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.4
+   }
+  ]
+ },
+ "spirit_light_lod_cub_2": {
+  "kind": "geo",
+  "model": "spiritlight_cub_lod2",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   360
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 2",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     1.5,
+     -0.2
+    ],
+    "dist": 6.4
+   }
+  ]
+ },
+ "spirit_light_lod_seraph_0": {
+  "kind": "geo",
+  "model": "spiritlight_seraph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 0",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13.0
+   }
+  ]
+ },
+ "spirit_light_lod_seraph_1": {
+  "kind": "geo",
+  "model": "spiritlight_seraph_lod1",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 1",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13.0
+   }
+  ]
+ },
+ "spirit_light_lod_seraph_2": {
+  "kind": "geo",
+  "model": "spiritlight_seraph_lod2",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   360,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 2",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     2.9,
+     0
+    ],
+    "dist": 13.0
+   }
+  ]
+ }
+}
