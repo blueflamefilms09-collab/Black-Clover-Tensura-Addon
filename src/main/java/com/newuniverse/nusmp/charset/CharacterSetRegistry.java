@@ -105,8 +105,8 @@ public final class CharacterSetRegistry {
     public boolean hidden(String canon, String book, String page, boolean modeZero, boolean hideSignatures) {
         if (modeZero) return false;
         CharacterSet set = of(canon);
-        if (set != null) return set.book().equals(book) && !set.has(page);
-        if (canon == null || canon.isEmpty()) return hideSignatures && exclusive.containsKey(book + "|" + page);
+        if (set != null) return set.book().equals(book) && !set.has(page) && !BasicSignatures.reservedFor(canon, book, page);      // basic grimoires (docs/magic/basic_grimoires.md): a page reserved for this character is his even when his set does not list it
+        if (canon == null || canon.isEmpty()) return hideSignatures && (exclusive.containsKey(book + "|" + page) || BasicSignatures.hides(book, page));      // ... and the basic book hides it
         return false;
     }
 
@@ -118,12 +118,13 @@ public final class CharacterSetRegistry {
         CharacterSet set = of(canon);
         if (set == null || !set.book().equals(book)) return null;
         CharacterSet.Spell s = set.spell(page);
+        if (s == null && BasicSignatures.reservedFor(canon, book, page)) return null;      // reserved for him but not in his set: the old mastery order opens it
         return s != null && s.rule().test(facts);
     }
 
     /** Does the grimoire of this character list this page (so the old "locked to another grimoire" line must not block it)? */
     public boolean listed(String canon, String book, String page) {
         CharacterSet set = of(canon);
-        return set != null && set.book().equals(book) && set.has(page);
+        return set != null && set.book().equals(book) && (set.has(page) || BasicSignatures.reservedFor(canon, book, page));
     }
 }

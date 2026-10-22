@@ -76,7 +76,8 @@ class AlignmentDataTest {
             + "demon_slayer_slash demon_water_strike devil_dive devil_union evil_eye fallen_angel_gate heavens_shadow_second_sight hellfire_wave myriad_black shadow_bind "
             + "shadow_realm shadow_step shadow_travel summon_demon_destroyer summon_demon_dweller undying_curse veil_of_black_light divine_punishment light_prison "
             + "light_shaft_of_divine_punishment light_speed light_step light_sword_of_judgment purging_light"
-            + " black_hole_collapse cursed_ash dark_cloak evil_gods_pressure_craft shadow_embrace blood").split(" ")));
+            + " black_hole_collapse cursed_ash dark_cloak evil_gods_pressure_craft shadow_embrace blood"
+            + " black_star holy_water_assassination_bullet").split(" ")));      // basic grimoires: Black Star (a Dark Magic page) and Holy Water Assassination Bullet (holy water, the undead take more)
 
     /** A page declaration in the sources: {@code starter("id", ...)}, {@code BookPage.mid("id", ...)}, {@code new BookPage("id", ...)} and the other tiers. */
     private static final Pattern PAGE = Pattern.compile("(?<![A-Za-z0-9_])(?:BookPage\\.)?(?:starter|mid|zone|signature|daily)\\(\\s*\"([a-z0-9_]+)\"|new BookPage\\(\\s*\"([a-z0-9_]+)\"");

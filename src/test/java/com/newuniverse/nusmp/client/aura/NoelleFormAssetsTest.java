@@ -222,7 +222,7 @@ class NoelleFormAssetsTest {
         assertEquals("character", water.get("style_by").getAsString());
         Set<String> appended = new HashSet<>();
         for (JsonElement e : water.getAsJsonArray("new_pages")) appended.add(e.getAsString());
-        assertEquals(Set.of("mermaid_form", "sea_dragon_god_form", "black_dragon_form"), appended);
+        assertTrue(appended.containsAll(Set.of("mermaid_form", "sea_dragon_god_form", "black_dragon_form")), "the three forms are among the appended pages (the pilots' and the basic grimoires' pages are listed there too): " + appended);
         String book = read(new File(JAVA, "book/WaterBook.java"));
         int torrent = book.indexOf("BookPage.zone(\"torrent\"");
         assertTrue(torrent > 0 && book.indexOf("BookPage.zone(\"mermaid_form\"") > torrent && book.indexOf("BookPage.signature(\"sea_dragon_god_form\"") > book.indexOf("\"mermaid_form\"")
