@@ -69,6 +69,7 @@ public final class WeaponEngravings {
             Map.entry("butcher_cleaver", List.of(e("severance", 2), e("sturdy", 1), e("enervation", 1))),                 // cuts clean along the weak point and saps what it wounds
             // 0.100: the reference-sheet weapons
             Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
+            Map.entry("shishou", List.of(e("severance", 2), e("barrier_piercing", 2), e("magicule_absorption", 2), e("energy_steal", 1), e("magic_interference", 1))),   // Shishou, the talking sword (Akashic Relic): cuts clean, goes through wards, drinks the magic of what it eats
             Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages
             Map.entry("prism_blade", List.of(e("holy_weapon", 2), e("elemental_boost", 2), e("barrier_piercing", 1))),   // a blade of refracted light
             Map.entry("thundercleave", List.of(e("elemental_boost", 2), e("crushing", 2), e("severance", 1))),           // a thunder-struck greatsword

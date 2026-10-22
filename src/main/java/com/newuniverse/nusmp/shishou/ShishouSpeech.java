@@ -34,7 +34,9 @@ public final class ShishouSpeech {
         gate.listenerMay(w, now);
         int counter = ShishouLive.SPEECH_COUNTER.merge(w, 1, Integer::sum);
         String id = ShishouVoiceLines.pickManifest(g, counter);
-        Component text = Component.translatableWithFallback(ShishouVoiceLines.textKey(id), ShishouVoiceLines.text(id), args).withStyle(net.minecraft.ChatFormatting.AQUA);
+        net.minecraft.network.chat.MutableComponent text = Component.translatableWithFallback(ShishouVoiceLines.textKey(id), ShishouVoiceLines.text(id)).withStyle(net.minecraft.ChatFormatting.AQUA);
+        if (args.length > 0 && args[0] instanceof Component what) text.append(Component.literal(" [")).append(what).append(Component.literal("]"));         // the skill that was learned
+        else if (args.length > 0 && args[0] instanceof Integer n) text.append(Component.literal(" (" + n + ")"));                                           // the new level, the number of hostiles behind
         wielder.displayClientMessage(text, true);
         boolean voice = ShishouConfig.voice() && ShishouVoiceLines.has(id);
         if (voice) Voice.say(wielder, id, g.cooldown());
