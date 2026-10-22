@@ -92,6 +92,10 @@ final class GeometryCheck {
                 else omitted++;
             }
         }
+        for (String m : rebuiltRooms(mgr, r, built)) {                                  // rooms rebuilt: a piece built from a rebuilt room must be a variant of its own shipped template, same size
+            if (fails.size() < MAX_LISTED) fails.add(m);
+            else omitted++;
+        }
         int sampled = 0, found = 0, left = 0, checked = 0;
         final boolean[][] connectedSockets = clearance7 ? Clearance7.connected(r) : null;
         if (worldPieces > 0) {
@@ -144,6 +148,31 @@ final class GeometryCheck {
             List<Vec> stands = ClearanceCarver.standsOf(level, p.box);
             int short7 = Clearance7.shortHeadroom(space, stands);
             if (short7 > 0) bad.add("piece " + p.index + " (" + p.shape.id + "): " + short7 + " of " + stands.size() + " stair blocks have less than 7 free blocks above them");
+        }
+        return bad;
+    }
+
+    /**
+     * The rule {@code rooms_rebuilt} (docs/labyrinth/rooms_rebuilt.md): every piece that was built from another template than its shape names must have been built from a rebuilt
+     * variant of exactly that shape's template ({@link RoomVariants}) whose size is the shape's size. The sockets and markers of such a piece are then judged by the checks above (the
+     * game's own boxes, jigsaw cells and marker cells against the plan), which is what proves a rebuilt room is the shipped room's size, doors and encounters. Empty = the rule holds.
+     */
+    static List<String> rebuiltRooms(StructureTemplateManager mgr, Result r, SectorGenerator.Built built) {
+        List<String> bad = new ArrayList<>();
+        for (int i = 0; i < r.pieces.size() && i < built.templates().size(); i++) {
+            Placed p = r.pieces.get(i);
+            String id = built.templates().get(i);
+            if (id.equals(p.shape.id)) continue;
+            if (!RoomVariants.isVariantId(id) || !RoomVariants.shippedOf(id).equals(p.shape.id)) {
+                bad.add(label(p) + " is built from " + id + ", which is not a rebuilt room of " + p.shape.id);
+                continue;
+            }
+            ResourceLocation rl = ResourceLocation.tryParse(id);
+            Optional<StructureTemplate> t = rl == null ? Optional.empty() : mgr.get(rl);
+            if (t.isEmpty()) bad.add(label(p) + ": the rebuilt room " + id + " cannot be read");
+            else if (t.get().getSize().getX() != p.shape.sx || t.get().getSize().getY() != p.shape.sy || t.get().getSize().getZ() != p.shape.sz) {
+                bad.add(label(p) + ": the rebuilt room " + id + " is " + t.get().getSize().getX() + "x" + t.get().getSize().getY() + "x" + t.get().getSize().getZ() + ", the shape is " + p.shape.sx + "x" + p.shape.sy + "x" + p.shape.sz);
+            }
         }
         return bad;
     }

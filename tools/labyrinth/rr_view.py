@@ -70,7 +70,16 @@ def plan(t, out, scale=14):
 def section(t, out, zrow, scale=14):
     W, H, D = t.size
     top = max(y for (xx, y, zz) in t.cells)
-    SP.render_elevation(t, out, (0, W - 1), (8, top), (zrow, zrow), scale, "z", lit=False)
+    for pos in [p for p, c in t.cells.items() if c.block.endswith("_carpet")]:         # the elevation renderer cannot draw the thin box of a carpet
+        del t.cells[pos]
+    last = None
+    for z in (zrow, zrow + 1, zrow - 1, zrow + 2, zrow - 2):           # the shape renderer chokes on a few block shapes: try the next row
+        try:
+            SP.render_elevation(t, out, (0, W - 1), (8, top), (z, z), scale, "z", lit=False)
+            return
+        except ValueError as e:
+            last = e
+    raise last
 
 
 _SCENES = {}

@@ -168,7 +168,11 @@ def walls(room, variant, rng):
                 if post:
                     for y in range(G, SPRING):
                         room.force(x, y, z, L.STRIPPED_LOG, {"axis": "y"})
-                room.force(x, G + 3, z, L.STRIPPED_LOG, {"axis": "z"})
+                elif z % 12 in (5, 6, 7) and 5 <= z <= D - 6:                      # a bookcase panel: the wall of a hidden passage, dressed (flush, no block entity)
+                    for y in range(G + 3, G + 7):
+                        room.force(x, y, z, "minecraft:bookshelf")
+                if not (z % 12 in (5, 6, 7) and 5 <= z <= D - 6):
+                    room.force(x, G + 3, z, L.STRIPPED_LOG, {"axis": "z"})
                 room.force(x, top, z, L.STRIPPED_LOG, {"axis": "z"})
             else:                                 # panels: a polished frame round brick panels
                 if z % 6 in (0, 5):

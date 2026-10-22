@@ -1,5 +1,10 @@
 # Weapon racks and the rift extras (1.107.0, lane "props")
 
+> **Update (rooms rebuilt, `docs/labyrinth/rooms_rebuilt.md`).** At the owner's request the dungeon no longer places weapon racks and its armour stands are a rare prop again.
+> What stays: the rack block, item, block entity, renderer and loot tables (old worlds and players' own racks keep working). What changed: `props.rackInsteadOfArmourStand`
+> now defaults to false and only has an effect together with the new legacy switch `props.legacyRackConversion` (default false); the generator drops the template stands and
+> keeps at most one lootable stand in a few armoury / barracks / vault-type rooms. Everything below describes the old path, which is still in the code behind those two switches.
+
 Spec followed: the owner's dungeon design spec, section "Anti-Armor-Stand Prop Engine and BER Weapon Racks" (no armour stands as scenery; a
 block-entity-renderer weapon rack; solid model blocks) and the rift items "floating, shattering reality shards" and "stencil-based or multi-pass parallax
 view" of "Space-Time Fracture Rift Engine". Lang fragment: `tools/lang/weapon_racks.json`. Generator of every rack file:

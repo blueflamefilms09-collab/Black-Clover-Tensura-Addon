@@ -65,7 +65,7 @@ class RoomVariantsTest {
     void theAssignmentIsDeterministicBySeed() {
         List<String> ids = List.of("nusmp:mega/hall/library_a", "nusmp:mega/corridor/bend_1x1_a", "nusmp:mega/landing/landing_a", "nusmp:mega/hall/library_a", "nusmp:mega/hall/crypt_b");
         String[] a = RoomVariants.assign(ids, 42L, table()), b = RoomVariants.assign(ids, 42L, table());
-        assertArrayEquals(a, b);
+        assertEquals(java.util.Arrays.asList(a), java.util.Arrays.asList(b));
         assertEquals("nusmp:mega/landing/landing_a", a[2], "a piece with no variants keeps its template");
         boolean differs = false;
         for (long seed = 0; seed < 50 && !differs; seed++) differs = !java.util.Arrays.equals(a, RoomVariants.assign(ids, seed, table()));

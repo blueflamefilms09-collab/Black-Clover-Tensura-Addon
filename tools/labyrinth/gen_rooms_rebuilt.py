@@ -96,8 +96,62 @@ def work(args):
     return name, v, data, problems, stats, time.time() - t0
 
 
+def verify():
+    """Runs the contract checker of the shipped templates (mega_check.check_template) on every rebuilt file on disk: sizes, sockets on the outer layer, markers, blocks, states."""
+    import mega_check as MC
+    errors, warns = [], []
+    known = {"vanilla": MC.vanilla_blocks(), "nusmp": MC.registered_nusmp_blocks()}
+    pools = MC.check_pools(errors, warns)
+    files = sorted(glob.glob(os.path.join(C.STRUCT, OUT_ROOT, "**", "*.nbt"), recursive=True))
+    for p in files:
+        MC.check_template(p, known, errors, warns, pools)
+    for e in errors:
+        print("ERROR  " + e)
+    print("%d rebuilt templates, %d errors, %d warnings (the palette warnings are the shipped rooms' own non-palette architecture)" % (len(files), len(errors), len(warns)))
+    return 1 if errors else 0
+
+
+def write_manifest_from_disk():
+    """Rebuilds data/nusmp/mega/rooms_rebuilt.json from the files under structure/mega_r (how many contiguous variants each shipped template has, which carry a stand slot), so a
+    partial re-run of a few templates still leaves a consistent manifest."""
+    from template import load
+    variants, stands = {}, set()
+    skipped = dict(SKIP)
+    for name in shipped():
+        if name in SKIP or generator_of(name) != "hall":
+            continue
+        if not C.Room(name, 0).regular:
+            skipped[name] = "no flat roof layer was found (an irregular shell: the roof is part of the room)"
+    for name in shipped():
+        if name in skipped:
+            continue
+        n = 0
+        while os.path.exists(out_path(name, n + 1)):
+            n += 1
+        if n == 0:
+            continue
+        variants[name] = n
+        for k in range(1, n + 1):
+            t = load(out_path(name, k), out_name(name, k))
+            if any(str(e["nbt"].get("id", "")) == "minecraft:armor_stand" for e in t.entities):
+                stands.add(name)
+    text = json.dumps({"_doc": ["Written by tools/labyrinth/gen_rooms_rebuilt.py (docs/labyrinth/rooms_rebuilt.md). variants: shipped template -> number of rebuilt variants "
+                                "(structure/mega_r/<folder>/<stem>_v1.._vN); stand_rooms: the rebuilt rooms that carry the single armour stand slot of the rarity roll; "
+                                "skipped: shipped templates that are not rebuilt, and why."],
+                       "variants": dict(sorted(variants.items())), "stand_rooms": sorted(stands), "skipped": dict(sorted(skipped.items()))}, indent=1) + "\n"
+    os.makedirs(os.path.dirname(MANIFEST), exist_ok=True)
+    with open(MANIFEST, "w") as f:
+        f.write(text)
+    print("manifest: %d templates, %d stand rooms, %d skipped" % (len(variants), len(stands), len(skipped)))
+    return 0
+
+
 def main(argv):
     args = list(argv)
+    if "--verify" in args:
+        return verify()
+    if "--manifest" in args:
+        return write_manifest_from_disk()
     check = "--check" in args
     listing = "--list" in args
     report = None

@@ -93,6 +93,9 @@ def cobwebs(room, count=6):
         y = r - 1
         if y < G + 9:
             continue
+        above = room.cells.get((x, r, z))
+        if above is None or not L.is_full(above.block):
+            continue                                    # a cobweb hangs under a solid roof cell (not under a coffer or a hole)
         if room.put(x, y, z, "minecraft:cobweb"):
             n += 1
     return n
@@ -155,8 +158,9 @@ def strip_stands(room, prop="candles"):
     """Drops every armour stand entity of the shipped room. Where it stood (the cell above its plinth) a small prop goes: candles, a lantern or a skull."""
     keep = []
     removed = []
+    mine = getattr(room, "slot_entity", None)
     for e in room.t.entities:
-        if str(e.get("nbt", {}).get("id", "")) == "minecraft:armor_stand":
+        if e is not mine and str(e.get("nbt", {}).get("id", "")) == "minecraft:armor_stand":
             bp = e.get("blockPos")
             if bp is not None:
                 removed.append((int(bp[0]), int(bp[1]), int(bp[2])))
@@ -193,22 +197,74 @@ def stand_slot(room, side=None, lat=None):
     for s in ("n", "s", "w", "e"):
         w = Wall(room, s)
         doors = w.door_lats()
-        for k in range(w.m):
-            c = 9 * k + 4
+        for c in range(4, w.length - 3):
             if any(abs(c - d) <= 4 for d in doors):
                 continue
             options.append((s, c))
     rng.shuffle(options)
+    options.sort(key=lambda o: (o[1] % 9) != 4)         # the middle of a bay first, any other free spot of the wall after it
     if side is not None:
         options = [(side, lat)]
     for s, c in options:
         w = Wall(room, s)
-        if not _frame(w, c, G + 1, G + 4):
+        if not _frame(w, c, G + 1, G + 4, front_from=G + 1):
             continue
         # the plinth: the sill of the niche is the wall cell at row G (set to polished by the frame); the stand stands on the niche floor row G + 1? it stands on the sill
         w.put(c - 1, 1, G + 1, "minecraft:white_candle", {"candles": "3", "lit": "true", "waterlogged": "false"})
         w.put(c + 1, 1, G + 1, "minecraft:white_candle", {"candles": "2", "lit": "true", "waterlogged": "false"})
         x, y, z = w.cell(c, 1, G + 1)
-        room.t.entities.append(stand_nbt(x, y, z, YAW[room.into(s)]))
+        room.slot_entity = stand_nbt(x, y, z, YAW[room.into(s)])
+        room.t.entities.append(room.slot_entity)
         return (s, c)
+    return pedestal_slot(room, options)
+
+
+def pedestal_slot(room, options):
+    """The fallback when no wall bay is plain (a barracks wall is lined with benches, racks and torches): a free-standing polished plinth with a candle at each side, two to
+    three cells off a wall and never near a door. Returns ('p', lat) or None."""
+    rng = room.rng
+    spots = []
+    for (s, c) in options:
+        for d in (2, 3, 4):
+            spots.append((s, c, d))
+    rng.shuffle(spots)
+    import mega_decor_r1 as D1
+    starts = D1.socket_starts(room.t)
+
+    def wide():
+        nodes = D1.walk_nodes(room.t)
+        return [D1.reach(room.t, nodes, [st], wide=True) for st in starts]
+    before = wide()
+    tries = 0
+    for s, c, d in spots:
+        w = Wall(room, s)
+        ok = True
+        for lat in (c - 1, c, c + 1):
+            fx, fy, fz = w.cell(lat, d, FR)
+            f = room.cells.get((fx, fy, fz))
+            if f is None or not L.is_full(f.block) or not room.free(*w.cell(lat, d, G)):
+                ok = False
+                break
+        for y in range(G + 1, G + 4):
+            if not room.free(*w.cell(c, d, y)):
+                ok = False
+        if not ok:
+            continue
+        if not w.put(c, d, G, L.POLISHED):
+            continue
+        w.put(c - 1, d, G, "minecraft:white_candle", {"candles": "3", "lit": "true", "waterlogged": "false"})
+        w.put(c + 1, d, G, "minecraft:white_candle", {"candles": "2", "lit": "true", "waterlogged": "false"})
+        tries += 1
+        after = wide()
+        lost = any(o in before[i] and o not in after[i] for i in range(len(starts)) for o in starts)
+        if lost:                                   # the plinth would narrow a 3-wide route: take it away again and try another spot
+            for lat in (c - 1, c, c + 1):
+                room.remove(*w.cell(lat, d, G))
+            if tries >= 40:
+                return None
+            continue
+        x, y, z = w.cell(c, d, G + 1)
+        room.slot_entity = stand_nbt(x, y, z, YAW[room.into(s)])
+        room.t.entities.append(room.slot_entity)
+        return ("p", c)
     return None

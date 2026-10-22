@@ -148,13 +148,13 @@ def courses(room, dado=True, frieze=True, mid=False, accent=C):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- feature panels
-def _frame(w, c, y0, y1, half=1):
+def _frame(w, c, y0, y1, half=1, front_from=G):
     """The recess (inner layer, lat c-half..c+half, rows y0..y1) with a polished frame: sill, lintel and jambs. Returns False when the wall there is not plain."""
     for lat in range(c - half - 1, c + half + 2):
         for y in range(y0 - 1, y1 + 2):
             if not w.plain(lat, 1, y):
                 return False
-    if not w.free_front(c - half, c + half, G, y1 + 1):
+    if not w.free_front(c - half, c + half, front_from, y1 + 1):
         return False
     for lat in range(c - half, c + half + 1):
         for y in range(y0, y1 + 1):
@@ -167,11 +167,17 @@ def _frame(w, c, y0, y1, half=1):
     return True
 
 
+#: block entities each niche kind places (banners, skulls, barrels, pots, a furnace): the rebuild adds a handful per room at most
+BE_NEED = {"lantern": 1, "banner": 4, "tomb": 3, "shrine": 1, "grate": 1, "forge": 2, "casks": 5}
+
+
 def niche(room, side, c, kind, rng, color="red", soul=False):
     """A feature panel centred on lateral position c of `side`. kinds: lantern, banner, books, slit, tomb, shrine, grate, forge, casks, plain. Returns True when built."""
     w = Wall(room, side)
     lamp = SOUL_LANTERN if soul else LANTERN
     top = w.rtop(c)
+    if room.be_added + BE_NEED.get(kind, 0) > room.be_cap:
+        return False                                  # the niche needs block entities (banners, skulls, barrels, a furnace) and the room's budget is spent
     if kind == "lantern":
         if not _frame(w, c, G + 1, G + 4):
             return False
@@ -196,8 +202,7 @@ def niche(room, side, c, kind, rng, color="red", soul=False):
                     return False
         for lat in range(c - 1, c + 2):
             for y in range(G + 1, G + 5):
-                w.force(lat, 1, y, "minecraft:chiseled_bookshelf" if (lat + y) % 3 == 0 else "minecraft:bookshelf",
-                        {"facing": w.into, **{"slot_%d_occupied" % i: "true" for i in range(6)}} if (lat + y) % 3 == 0 else None)
+                w.force(lat, 1, y, "minecraft:bookshelf")
         for y in range(G + 1, G + 5):
             w.force(c - 2, 1, y, P)
             w.force(c + 2, 1, y, P)
@@ -290,4 +295,90 @@ def door_crown(room, side, lat, banner="red"):
     for sgn in (-1, 1):
         if top > y0 + 3 and w.free_front(lat + 3 * sgn, lat + 3 * sgn, y0, y0 + 1):
             w.put(lat + 3 * sgn, 2, y0, "minecraft:%s_wall_banner" % banner, {"facing": w.into})
+    return n
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- pillars
+def pillar(room, x, z, size=2):
+    """A free-standing pillar (size x size) from the floor to the roof: a polished shaft with a chiselled band, a stair base and a flared stair capital round it. It is only
+    built where the whole shaft and the ring round its foot are free (no furniture, no marker, no door apron), so a room never loses a prop or a walking lane to it."""
+    cells = [(x + i, z + j) for i in range(size) for j in range(size)]
+    ring = [(a, b) for a in range(x - 1, x + size + 1) for b in range(z - 1, z + size + 1) if (a, b) not in cells]
+    for (a, b) in cells + ring:
+        if not room.inside(a, b) or (a, b) not in room.roofmap and (a, b) not in cells:
+            return 0
+    top = min(room.roofmap[c] for c in cells) - 1
+    if top < G + 6:
+        return 0
+    for (a, b) in cells:
+        for y in range(G, top + 1):
+            if not room.free(a, y, b):
+                return 0
+    for (a, b) in ring:
+        for y in (G, G + 1, G + 2):
+            if not room.free(a, y, b):
+                return 0
+    n = 0
+    for (a, b) in cells:
+        for y in range(G, top + 1):
+            blk = C if y in (G + 3, top) else P
+            if room.put(a, y, b, blk):
+                n += 1
+    for (a, b) in ring:
+        if a < x and z <= b < z + size:
+            face = "east"
+        elif a >= x + size and z <= b < z + size:
+            face = "west"
+        elif b < z and x <= a < x + size:
+            face = "south"
+        elif b >= z + size and x <= a < x + size:
+            face = "north"
+        else:
+            face = None                                         # a corner of the ring: a plain slab
+        if face is None:
+            room.put(a, G, b, L.POLISHED_SLAB, {"type": "bottom", "waterlogged": "false"})
+            if top > G + 6 and room.free(a, top, b):
+                room.put(a, top, b, L.POLISHED_SLAB, {"type": "top", "waterlogged": "false"})
+        else:
+            room.stair(a, G, b, L.POLISHED_STAIRS, face, "bottom")
+            if top > G + 6 and room.free(a, top, b):
+                room.stair(a, top, b, L.POLISHED_STAIRS, face, "top")
+        n += 1
+    return n
+
+
+def pillars(room, size=2):
+    """Pillars at the crossings of the module borders (x and z = 9 k - 1 .. 9 k): where the ribs of a groin vault meet. Returns how many were built."""
+    n = 0
+    for i in range(1, room.W // 9):
+        for j in range(1, room.D // 9):
+            if pillar(room, 9 * i - 1, 9 * j - 1, size):
+                n += 1
+    return n
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- balconies
+def balcony(room, side, y0=G + 8, depth=2, shelves=False, rail="minecraft:iron_bars"):
+    """A gallery along the wall of `side`: a ledge `depth` cells deep at row y0, resting on the pilasters and a stair corbel course under it, a railing on its edge, and over it
+    bookshelves (`shelves`) or the plain wall. Built only on the stretches where the whole box (rows y0 - 1 .. y0 + 3) is free and out of the door aprons and the room is tall
+    enough. Returns the number of ledge cells."""
+    w = Wall(room, side)
+    n = 0
+    for lat in range(3, w.length - 3):
+        top = w.rtop(lat)
+        if top < y0 + 4:
+            continue
+        cells = [w.cell(lat, 2 + d, y) for d in range(depth) for y in (y0 - 1, y0, y0 + 1, y0 + 2)]
+        if not all(room.free(*c) for c in cells):
+            continue
+        for d in range(depth):
+            w.put(lat, 2 + d, y0, L.PLANKS_SLAB, {"type": "bottom", "waterlogged": "false"})
+            if d == 0:
+                w.stair(lat, 2, y0 - 1, L.POLISHED_STAIRS, w.out, "top")
+        w.put(lat, 2 + depth - 1, y0 + 1, rail)
+        n += 1
+        if shelves and w.plain(lat, 1, y0 + 1):
+            for y in range(y0 + 1, min(top, y0 + 4)):
+                if w.plain(lat, 1, y):
+                    w.force(lat, 1, y, "minecraft:bookshelf")
     return n

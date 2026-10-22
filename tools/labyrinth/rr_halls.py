@@ -70,37 +70,51 @@ def stand_eligible(name):
 
 # ------------------------------------------------------------------------------------------------------------------------------- recipes
 def recipes_for(family):
-    """Four recipes per family (variants 1..4). Each one differs in the vault, the floor, the wall rhythm, the lights and the wear."""
+    """Four recipes per family (variants 1..4). They differ in the roof, the ribs, the floor, the wall rhythm, pillars, balconies, coffers, the lights and the wear:
+    1 a groin-vaulted hall on pillars, 2 a barrel-vaulted hall with galleries and lamp posts, 3 a low coffered hall with heavier wear, 4 a hall under a special roof (gable,
+    dome or hip) with a mid course on the walls. The families bend this matrix to their purpose."""
     soul = family in SOUL_FAMILIES
     ruin = family in ("crypt",)
     base = {
-        1: dict(roof=("groin", 5), ribs="diag", floor="grid", pilaster="standing", corner=True, courses=dict(dado=True, frieze=True), light="chandelier", plight=True,
-                posts=False, wear=dict(crack=0.08, moss=0, cobweb=4, rubble=1, broken=0.0), crown=True),
-        2: dict(roof=("barrel", 5), ribs="cross", floor="runner", pilaster="engaged", corner=True, courses=dict(dado=True, frieze=True, mid=True), light="hanging",
-                plight=True, posts=True, wear=dict(crack=0.12, moss=1, cobweb=5, rubble=2, broken=0.0), crown=True),
-        3: dict(roof=("flat", 0), ribs="cross", floor="checker", pilaster="standing", corner=True, courses=dict(dado=True, frieze=False), light="rib", plight=True,
-                posts=False, wear=dict(crack=0.16, moss=0, cobweb=8, rubble=3, broken=0.3), crown=True),
-        4: dict(roof=("gable", 5), ribs="none", floor="rosette", pilaster="engaged", corner=False, courses=dict(dado=False, frieze=True, mid=True), light="chandelier",
-                plight=False, posts=True, wear=dict(crack=0.06, moss=2, cobweb=3, rubble=0, broken=0.0), crown=True),
+        1: dict(roof=("groin", 5), ribs="diag", floor="grid", pilaster="standing", corner=True, pillars=True, balcony=None, coffers=None,
+                courses=dict(dado=True, frieze=True), light="chandelier", plight=True, posts=False,
+                wear=dict(crack=0.08, moss=0, cobweb=4, rubble=1, broken=0.0), crown=True),
+        2: dict(roof=("barrel", 5), ribs="cross", floor="runner", pilaster="engaged", corner=True, pillars=False, balcony=dict(shelves=family == "library"), coffers=None,
+                courses=dict(dado=True, frieze=True, mid=True), light="hanging", plight=True, posts=True,
+                wear=dict(crack=0.12, moss=1, cobweb=5, rubble=2, broken=0.0), crown=True),
+        3: dict(roof=("flat", 0), ribs="cross", floor="checker", pilaster="standing", corner=True, pillars=False, balcony=None, coffers="minecraft:ochre_froglight",
+                courses=dict(dado=True, frieze=False), light="rib", plight=True, posts=False,
+                wear=dict(crack=0.16, moss=0, cobweb=8, rubble=3, broken=0.3), crown=True),
+        4: dict(roof=("gable", 5), ribs="none", floor="rosette", pilaster="engaged", corner=False, pillars=True, balcony=None, coffers=None,
+                courses=dict(dado=False, frieze=True, mid=True), light="chandelier", plight=False, posts=True,
+                wear=dict(crack=0.06, moss=2, cobweb=3, rubble=0, broken=0.0), crown=True),
     }
     if family == "sacred":
-        base[3] = dict(base[3], roof=("dome", 6), floor="inlay", ribs="none")
-        base[4] = dict(base[4], roof=("groin", 6), floor="border", ribs="diag")
+        base[3] = dict(base[3], roof=("dome", 6), floor="inlay", ribs="none", coffers=None)
+        base[4] = dict(base[4], roof=("groin", 6), floor="border", ribs="diag", balcony=dict(shelves=False))
+        base[2] = dict(base[2], balcony=dict(shelves=False))
     elif family == "library":
-        base[1] = dict(base[1], floor="border")
-        base[4] = dict(base[4], roof=("barrel", 4), floor="inlay", ribs="cross")
+        base[1] = dict(base[1], floor="border", pillars=False)
+        base[4] = dict(base[4], roof=("barrel", 4), floor="inlay", ribs="cross", pillars=False, balcony=dict(shelves=True))
+        base[3] = dict(base[3], coffers="minecraft:shroomlight")
     elif family == "arms":
         base[1] = dict(base[1], floor="checker")
-        base[2] = dict(base[2], roof=("gable", 4), floor="grid", ribs="none")
+        base[2] = dict(base[2], roof=("gable", 4), floor="grid", ribs="none", balcony=None)
+        base[3] = dict(base[3], coffers="minecraft:glowstone")
     elif family == "hearth":
-        base[3] = dict(base[3], roof=("hip", 5), floor="runner", ribs="none")
+        base[3] = dict(base[3], roof=("hip", 5), floor="runner", ribs="none", coffers=None)
+        base[4] = dict(base[4], roof=("groin", 4), ribs="cross")
     elif family == "water":
         base[1] = dict(base[1], floor="diamond")
-        base[3] = dict(base[3], roof=("barrel", 4), floor="ruin")
+        base[3] = dict(base[3], roof=("barrel", 4), floor="ruin", coffers=None)
+        base[2] = dict(base[2], balcony=None)
     elif family in ("crypt", "cells"):
         base[1] = dict(base[1], floor="diamond", wear=dict(base[1]["wear"], crack=0.18, cobweb=8, rubble=3))
-        base[2] = dict(base[2], floor="ruin")
+        base[2] = dict(base[2], floor="ruin", balcony=None)
+        base[3] = dict(base[3], coffers="minecraft:shroomlight")
         base[4] = dict(base[4], roof=("groin", 4), floor="grid", ribs="diag")
+    elif family == "lab":
+        base[2] = dict(base[2], balcony=None)
     for v in base.values():
         v["soul"] = soul
         v["ruin"] = ruin
@@ -157,7 +171,18 @@ def build(name, variant, rise_scale=1.0, restraint=0):
     if rc["corner"] and restraint < 2:
         for (cx, cz, dx, dz) in ((room.x0, room.z0, 1, 1), (room.x1, room.z0, -1, 1), (room.x0, room.z1, 1, -1), (room.x1, room.z1, -1, -1)):
             W.corner_pier(room, cx, cz, dx, dz)
+    if rc["pillars"] and restraint < 2:
+        W.pillars(room)
+    if rc["balcony"] is not None and restraint < 2 and room.ceil >= 21:
+        sides = ("n", "s") if room.W >= room.D else ("w", "e")
+        for side in sides:
+            W.balcony(room, side, shelves=rc["balcony"]["shelves"])
+    if rc["coffers"]:
+        R.coffers(room, 4, rc["coffers"])
     W.courses(room, **rc["courses"])
+    # the one armour stand slot goes in before the niches take every free bay (only in the rooms that may hold a rare stand)
+    if stand_eligible(name):
+        room.stand_slot = DR.stand_slot(room)
     weights = PANELS.get(fam, PANELS["other"])
     kinds = [k for k, wt in weights.items() for _ in range(wt)]
     color = room.rng.choice(["red", "black", "purple", "blue", "green", "orange"])
@@ -167,13 +192,15 @@ def build(name, variant, rise_scale=1.0, restraint=0):
         for k in range(w.m):
             c = 9 * k + 4
             if any(abs(c - d) <= 3 for d in doors):
-                if rc["crown"] and c in doors:
-                    W.door_crown(room, side, c, color)
                 continue
             for attempt in range(4):
                 kind_k = room.rng.choice(kinds)
                 if W.niche(room, side, c, kind_k, room.rng, color, rc["soul"]):
                     break
+    if rc["crown"]:                          # the crowns last: their banners are block entities and take what is left of the room's budget
+        for side in ("n", "s", "w", "e"):
+            for lat in W.Wall(room, side).door_lats():
+                W.door_crown(room, side, lat, color)
     # lights
     y_lamp = 16 + room.rng.randrange(0, 2)
     LT.scheme(room, rc["light"], y_lamp, False)
@@ -194,8 +221,6 @@ def build(name, variant, rise_scale=1.0, restraint=0):
         DR.broken_ribs(room, wr["broken"])
     # armour stands: none carried over; one empty slot in the rooms that may hold one
     DR.strip_stands(room, prop=room.rng.choice(["candles", "lantern", "skull"]))
-    if stand_eligible(name):
-        room.stand_slot = DR.stand_slot(room)
     return room
 
 

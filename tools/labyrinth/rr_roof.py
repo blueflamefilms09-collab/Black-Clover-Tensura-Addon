@@ -167,6 +167,35 @@ def rib_lines(room, bay=9, width=1, axes="xz", diag=False):
     return f
 
 
+def coffers(room, pitch=4, glow=None, glow_every=5):
+    """Coffers in a flat part of the roof: every interior column whose cell inside a (pitch - 1) x (pitch - 1) grid lies away from the grid lines loses the lowest roof cell (the
+    layer above stays, so the roof stays closed), leaving square recesses; every `glow_every`-th coffer gets a light block of `glow` (a froglight, shroomlight, glowstone or sea
+    lantern) as its floor, a recessed ceiling light. Only columns whose roof is exactly as high as their four neighbours' are carved. Returns the number of recesses."""
+    r = room.roofmap
+    n = 0
+    k = 0
+    for z in range(room.z0, room.z1 + 1):
+        for x in range(room.x0, room.x1 + 1):
+            row = r[(x, z)]
+            if x % pitch == 0 or z % pitch == 0:
+                continue
+            if any(r.get((x + dx, z + dz), row) != row for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                continue
+            if (x, row, z) not in room.cells or (x, row - 1, z) in room.cells:
+                continue                                      # something hangs here (a rib, a lamp): leave it
+            if (x, row + 1, z) not in room.cells:
+                continue
+            if x % pitch == pitch // 2 and z % pitch == pitch // 2:
+                k += 1
+                if glow and k % glow_every == 0:
+                    room.put_unlocked(x, row, z, glow)
+                    n += 1
+                    continue
+            room.cells.pop((x, row, z))
+            n += 1
+    return n
+
+
 def fix_hangers(room):
     """Re-hangs what the old ribs held: a chain (or a hanging lantern) whose top has air above it gets chain blocks up to the first solid block above, if the run is free.
     Why: the shipped rooms hang their lamps and cages from ribs under the roof; the rebuilt roof has other ribs, so every stack is checked and, where it hangs from

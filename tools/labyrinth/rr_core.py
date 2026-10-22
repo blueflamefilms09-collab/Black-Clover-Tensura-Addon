@@ -43,6 +43,21 @@ PAL_FLOOR = {L.TILE, L.CRACKED_TILE, L.POLISHED, L.CHISELED, L.BRICK, L.CRACKED_
 STAIRISH = ("_stairs", "_slab", "_wall")
 
 
+#: block entities are saved with their chunk (and a few are synced): the rebuild adds at most this many per room
+BE_CAP = 10
+_BE_SUFFIX = ("_banner", "_wall_banner", "_skull", "_wall_skull", "_head", "_wall_head", "_sign", "_wall_sign", "_hanging_sign", "_wall_hanging_sign", "_bed", "_shulker_box")
+_BE_EXACT = {"minecraft:chiseled_bookshelf", "minecraft:decorated_pot", "minecraft:lectern", "minecraft:barrel", "minecraft:chest", "minecraft:trapped_chest", "minecraft:ender_chest",
+             "minecraft:furnace", "minecraft:blast_furnace", "minecraft:smoker", "minecraft:brewing_stand", "minecraft:bell", "minecraft:campfire", "minecraft:soul_campfire",
+             "minecraft:jukebox", "minecraft:beacon", "minecraft:enchanting_table", "minecraft:hopper", "minecraft:dropper", "minecraft:dispenser", "minecraft:spawner", "minecraft:conduit",
+             "minecraft:daylight_detector", "minecraft:crafter", "minecraft:trial_spawner", "minecraft:vault", "minecraft:beehive", "minecraft:bee_nest", "minecraft:sculk_sensor",
+             "minecraft:sculk_catalyst", "minecraft:sculk_shrieker", "minecraft:comparator", "minecraft:structure_block", "minecraft:jigsaw"}
+
+
+def is_block_entity(block):
+    """Does the block have a block entity in the game (the ones a rebuilt room may use are counted against its budget)?"""
+    return block in _BE_EXACT or block.endswith(_BE_SUFFIX)
+
+
 def path_of(block):
     return block.split(":", 1)[1] if ":" in block else block
 
@@ -86,6 +101,8 @@ class Room:
         self.x0, self.x1, self.z0, self.z1 = interior if interior else (2, self.W - 3, 2, self.D - 3)
         self.cx, self.cz = self.W // 2, self.D // 2
         self.added = 0
+        self.be_added = 0            # block-entity blocks (banners, skulls, pots, barrels ...) the rebuild added
+        self.be_cap = BE_CAP
         self.scratch = template is not None
         if self.scratch:
             self.ceil, self.layers = ceil, 2
@@ -215,8 +232,15 @@ class Room:
             raise ValueError("%s: %s at %s" % (self.name, err, (x, y, z)))
         if block.startswith("nusmp:") and block not in L.CUSTOM:
             raise ValueError("%s: %s is not allowed in a template" % (self.name, block))
+        be = is_block_entity(block)
+        if be:
+            old = self.cells.get((x, y, z))
+            if self.be_added >= self.be_cap and not (old is not None and old.block == block):
+                return False                    # block entities are saved with the chunk: a rebuilt room adds a handful at most
         self.t.set(x, y, z, block, props, nbt_)
         self.added += 1
+        if be:
+            self.be_added += 1
         return True
 
     def force(self, x, y, z, block, props=None, nbt_=None):
@@ -235,7 +259,7 @@ class Room:
         self.cells.pop((x, y, z), None)
 
     def stair(self, x, y, z, block, facing, half="bottom", over=False):
-        return self.put(x, y, z, block, {"facing": facing, "half": half, "shape": "straight", "waterlogged": "false"}, over=over)
+        return self.put(x, y, z, block, {"facing": facing, "half": half, "waterlogged": "false"}, over=over)        # no `shape`: mega_lib.autoconnect turns neighbouring stairs into corners as the game does
 
     def slab(self, x, y, z, block, top=False, over=False):
         return self.put(x, y, z, block, {"type": "top" if top else "bottom", "waterlogged": "false"}, over=over)

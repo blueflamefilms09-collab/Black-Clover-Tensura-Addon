@@ -27,7 +27,7 @@ import mega_lib as L  # noqa: E402
 import mega_decor_r1 as D1  # noqa: E402
 import mega_check as MC  # noqa: E402
 import rr_light as LT  # noqa: E402
-from rr_core import FR, G  # noqa: E402
+from rr_core import FR, G, is_block_entity, BE_CAP  # noqa: E402
 
 _VANILLA = None
 
@@ -210,8 +210,14 @@ def check(room, max_blocks_ratio=1.45):
         problems.append("%.1f%% of the route is under light 5 (shipped %.1f%%)" % (100 * sn_["below"], 100 * sb_["below"]))
     if sn_["median"] > sb_["median"] + 4:
         problems.append("the room is much brighter than the shipped one: median %d (shipped %d)" % (sn_["median"], sb_["median"]))
+    if sn_["bright"] > sb_["bright"] + 0.12:
+        problems.append("%.0f%% of the route is at light 13 or more (shipped %.0f%%): a bright room is met more often" % (100 * sn_["bright"], 100 * sb_["bright"]))
+    be_new = sum(1 for c in t.cells.values() if is_block_entity(c.block))
+    be_old = sum(1 for c in base.cells.values() if is_block_entity(c.block))
+    if be_new - be_old > BE_CAP + 2:
+        problems.append("%d block entities more than the shipped room (cap %d)" % (be_new - be_old, BE_CAP))
     ratio = len(t.cells) / max(1.0, float(len(base.cells)))
     if ratio > max_blocks_ratio:
         problems.append("%d blocks is x%.2f of the shipped %d (cap x%.2f)" % (len(t.cells), ratio, len(base.cells), max_blocks_ratio))
     return problems, {"blocks": len(t.cells), "base_blocks": len(base.cells), "ratio": ratio, "light_min": sn_["min"], "light_median": sn_["median"],
-                      "base_light_min": sb_["min"], "base_light_median": sb_["median"], "below5": sn_["below"], "bright": sn_["bright"], "height": top}
+                      "base_light_min": sb_["min"], "base_light_median": sb_["median"], "below5": sn_["below"], "bright": sn_["bright"], "height": top, "be_new": be_new, "be_old": be_old}
