@@ -21,10 +21,10 @@ class VoiceLogicTest {
 
     @Test
     void theCatalogueHasTheExpectedShape() {
-        assertEquals(10 + 30 + 8 + 72, VoiceCatalog.baseIds().size());
+        assertEquals(10 + 30 + 8 + 72 + VoiceCatalog.GNOME_LINES.size(), VoiceCatalog.baseIds().size());
         assertTrue(VoiceCatalog.ids().size() >= VoiceCatalog.baseIds().size(), "the Undine's lines come after the base set");
         assertEquals(36, VoiceCatalog.DJINN_NAMES.size());
-        assertEquals(List.of("system", "boss", "npc", "djinn"), VoiceCatalog.roles());
+        assertEquals(List.of("system", "boss", "npc", "djinn", "gnome"), VoiceCatalog.roles());
         assertEquals(10, VoiceCatalog.byRole().get("system").size());
         assertEquals(30, VoiceCatalog.byRole().get("boss").size());
         assertEquals(8, VoiceCatalog.byRole().get("npc").size());

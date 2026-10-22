@@ -84,7 +84,7 @@ class VoiceAssetsTest {
             assertFalse(o.get("prompt").getAsString().isBlank(), id + " has no prompt");
             assertFalse(o.get("voice").getAsString().isBlank(), id + " has no voice id");
         }
-        assertEquals(120, ids.size(), "the owner asked for all 120 lines");
+        assertEquals(120 + VoiceCatalog.GNOME_LINES.size(), ids.size(), "the owner asked for all 120 lines; the Gnome's lines are appended after them");
         assertEquals(ids, VoiceCatalog.baseIds(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines (the Undine's lines come after them)");
         assertEquals(new HashSet<>(ids).size(), ids.size(), "an id is listed twice");
     }

@@ -407,6 +407,66 @@
   "bytes": 47529,
   "seconds": 5.4
  },
+ "gnome_cast_1": {
+  "bytes": 18714,
+  "seconds": 2.03
+ },
+ "gnome_cast_2": {
+  "bytes": 18846,
+  "seconds": 2.11
+ },
+ "gnome_cast_3": {
+  "bytes": 25272,
+  "seconds": 2.92
+ },
+ "gnome_cast_big_1": {
+  "bytes": 19972,
+  "seconds": 2.27
+ },
+ "gnome_cast_big_2": {
+  "bytes": 19907,
+  "seconds": 2.16
+ },
+ "gnome_farewell_1": {
+  "bytes": 32671,
+  "seconds": 3.84
+ },
+ "gnome_farewell_2": {
+  "bytes": 23245,
+  "seconds": 2.65
+ },
+ "gnome_greet_1": {
+  "bytes": 30619,
+  "seconds": 3.64
+ },
+ "gnome_greet_2": {
+  "bytes": 21572,
+  "seconds": 2.42
+ },
+ "gnome_hurt_1": {
+  "bytes": 22892,
+  "seconds": 2.54
+ },
+ "gnome_hurt_2": {
+  "bytes": 11576,
+  "seconds": 1.11
+ },
+ "gnome_hurt_3": {
+  "bytes": 26563,
+  "seconds": 3.07
+ },
+ "gnome_lowhp_1": {
+  "bytes": 28275,
+  "seconds": 3.16
+ },
+ "gnome_surprised_1": {
+  "bytes": 18925,
+  "seconds": 2.14
+ },
+ "gnome_wake_1": {
+  "bytes": 16780,
+  "seconds": 1.76
+ },
  "npc_guide_greet": {
   "bytes": 39025,
   "seconds": 4.4

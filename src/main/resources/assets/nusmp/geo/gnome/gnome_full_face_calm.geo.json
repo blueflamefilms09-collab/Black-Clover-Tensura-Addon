@@ -1,0 +1,90 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.gnome_full_face_calm",
+    "texture_width": 480,
+    "texture_height": 280,
+    "visible_bounds_width": 8,
+    "visible_bounds_height": 8,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "body",
+     "pivot": [
+      0.0,
+      40.0,
+      0.0
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "chest",
+     "pivot": [
+      0.0,
+      48.0,
+      0.0
+     ],
+     "cubes": [],
+     "parent": "body"
+    },
+    {
+     "name": "head",
+     "pivot": [
+      0.0,
+      92.0,
+      -6.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -13.0,
+        91.0,
+        -22.4
+       ],
+       "size": [
+        26.0,
+        22.0,
+        0.4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          160,
+          140
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "chest",
+     "rotation": [
+      -6.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

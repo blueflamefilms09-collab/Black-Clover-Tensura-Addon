@@ -1,0 +1,18 @@
+{
+  "key.nusmp.gnome": "Gnome (Earth Spirit)",
+  "nusmp.gnome.linked": "The Gnome rises beside you.",
+  "nusmp.gnome.unlinked": "The Gnome sinks back into the earth.",
+  "nusmp.gnome.need_earth": "The Gnome answers only an Earth Magic mage.",
+  "nusmp.gnome.full": "The Gnome cannot answer: too many spirits are out.",
+  "subtitles.nusmp.gnome.link": "The Gnome rises beside its master",
+  "subtitles.nusmp.gnome.unlink": "The Gnome sinks into the earth",
+  "subtitles.nusmp.gnome.idle": "The Gnome grinds and rumbles",
+  "subtitles.nusmp.gnome.cast": "The Gnome grinds stone",
+  "subtitles.nusmp.gnome.rise": "The Gnome heaves out of the ground",
+  "subtitles.nusmp.gnome.slam": "The Gnome slams the earth",
+  "subtitles.nusmp.gnome.sink": "The Gnome sinks into the ground",
+  "subtitles.nusmp.gnome.grunt": "The Gnome grunts",
+  "subtitles.nusmp.gnome.chuckle": "The Gnome chuckles deeply",
+  "subtitles.nusmp.gnome.snore": "The Gnome snores",
+  "subtitles.nusmp.gnome.huff": "The Gnome huffs"
+}

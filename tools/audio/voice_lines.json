@@ -718,5 +718,95 @@
   "role": "djinn",
   "voice": "QjEdRoRdZC2i3ncmFpNy",
   "prompt": "[dark, fierce] Feel the sound of Murmur!"
+ },
+ {
+  "id": "gnome_greet_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Gnome rises. The earth is with you."
+ },
+ {
+  "id": "gnome_greet_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] You called. I came."
+ },
+ {
+  "id": "gnome_farewell_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] The earth remembers you. Gnome sleeps."
+ },
+ {
+  "id": "gnome_farewell_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Call again, and I will stand."
+ },
+ {
+  "id": "gnome_cast_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Stone, answer."
+ },
+ {
+  "id": "gnome_cast_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Earth, rise."
+ },
+ {
+  "id": "gnome_cast_3",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Hold. Break."
+ },
+ {
+  "id": "gnome_cast_big_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, powerful] Mother Earth, awake!"
+ },
+ {
+  "id": "gnome_cast_big_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, powerful] Let the ground take them!"
+ },
+ {
+  "id": "gnome_hurt_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Stone does not bleed."
+ },
+ {
+  "id": "gnome_hurt_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Is that all?"
+ },
+ {
+  "id": "gnome_hurt_3",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Hm. A scratch."
+ },
+ {
+  "id": "gnome_surprised_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, gravelly, alarmed] You are hurt! Careful."
+ },
+ {
+  "id": "gnome_lowhp_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, firm] Gnome stands firm. Behind me."
+ },
+ {
+  "id": "gnome_wake_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, gravelly] Hm? We move."
  }
 ]

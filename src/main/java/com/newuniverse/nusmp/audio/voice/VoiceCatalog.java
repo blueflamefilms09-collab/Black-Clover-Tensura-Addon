@@ -10,14 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Why: the one list of the spoken voice lines (120 of them: ids as in {@code tools/audio/voice_lines.json}, made by {@code tools/audio/voice_lines.py}). Pure data with no Minecraft
+ * Why: the one list of the spoken voice lines (120 of the System, the bosses, the NPCs and the Djinn, and the Gnome's own, appended as a fifth role: ids as in {@code tools/audio/voice_lines.json}, made by {@code tools/audio/voice_lines.py}). Pure data with no Minecraft
  * class, so the tests, the payload codec, the cooldown logic and the registry ({@link VoiceSounds}) all read the same ids and cannot drift apart. An id is {@code <role>_<rest>}; the
  * role is also the folder of the file ({@code sounds/voice/<role>/<id>.ogg}) and the sound event is {@code nusmp:voice.<id>}.
  */
 public final class VoiceCatalog {
     private VoiceCatalog() {}
 
-    public static final String SYSTEM = "system", BOSS = "boss", NPC = "npc", DJINN = "djinn";
+    public static final String SYSTEM = "system", BOSS = "boss", NPC = "npc", DJINN = "djinn", GNOME = "gnome";
 
     /** The System announcer's lines (suffix after {@code system_}). */
     public static final List<String> SYSTEM_LINES = List.of("floor_enter", "floor_sealed", "lockdown_start", "lockdown_clear", "ambush_warning", "rest_safe", "boss_ahead", "rift_open",
@@ -39,6 +39,13 @@ public final class VoiceCatalog {
     /** The role of the Undine's lines (Noelle's water spirit, {@link com.newuniverse.nusmp.undine.UndineLines}): appended after the 120 lines of the four roles above. */
     public static final String UNDINE = "undine";
 
+    /**
+     * The Gnome's lines (suffix after {@code gnome_}; docs/magic/gnome.md section 7): deep, slow, gravelly words of the Earth Spirit, said by the server through {@code gnome.Gnome} to the players within 32
+     * blocks of it. A line is listed here only when its recording exists (tools/audio/gnome_voice.py).
+     */
+    public static final List<String> GNOME_LINES = List.of("greet_1", "greet_2", "farewell_1", "farewell_2", "cast_1", "cast_2", "cast_3", "cast_big_1", "cast_big_2", "hurt_1", "hurt_2", "hurt_3", "surprised_1", "lowhp_1", "wake_1");
+
+    /** The 120 lines and the Gnome's: exactly the ids of tools/audio/voice_lines.json. */
     private static final List<String> BASE_IDS;
     private static final List<String> IDS;
     private static final Set<String> SET;
@@ -49,6 +56,7 @@ public final class VoiceCatalog {
         for (String f : BOSS_FAMILIES) for (String e : BOSS_EVENTS) ids.add(BOSS + "_" + f + "_" + e);
         for (String n : NPC_LINES) ids.add("npc_" + n);
         for (String d : DJINN_NAMES) for (String e : DJINN_EVENTS) ids.add(DJINN + "_" + d + "_" + e);
+        for (String g : GNOME_LINES) ids.add(gnomeId(g));
         BASE_IDS = Collections.unmodifiableList(new ArrayList<>(ids));
         ids.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());                                // the Undine's registered lines (the ones that have a voice file), after the base set
         IDS = Collections.unmodifiableList(ids);
@@ -75,8 +83,8 @@ public final class VoiceCatalog {
     /** The resource path of the file, without the namespace and extension: {@code voice/system/system_floor_enter}. */
     public static String filePath(String id) { return "voice/" + role(id) + "/" + id; }
 
-    /** The four roles of the 120 base lines (the Undine's role is {@link #UNDINE}). */
-    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN); }
+    /** The roles of the manifest's lines (the Undine's role is {@link #UNDINE}, her lines come after them). */
+    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN, GNOME); }
 
     /** The role -> its ids, for reports. */
     public static Map<String, List<String>> byRole() {
@@ -99,4 +107,6 @@ public final class VoiceCatalog {
     public static String npcId(String line) { return "npc_" + line; }
 
     public static String djinnId(String name, String event) { return DJINN + "_" + slug(name) + "_" + event; }
+
+    public static String gnomeId(String line) { return GNOME + "_" + line; }
 }

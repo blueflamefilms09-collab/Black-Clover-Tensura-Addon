@@ -40,6 +40,8 @@ SCOPE = [
 
     ("entity", ("spirit_dark_companion_fx", "spirit_dark_powered_fx", "spirit_dark_companion_faceglow", "spirit_dark_powered_faceglow")),          # Spirit of Darkness: the glow-only models and the face glow sheets (eyes, grin, runes, seams, smoke wisps)
 
+    ("entity", ("gnome_companion_fx", "gnome_full_fx", "gnome_faces_fx")),                  # the Gnome (docs/magic/gnome.md): the glow-only models (eyes, magic circle, rune cuffs, crystal veins)
+
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"

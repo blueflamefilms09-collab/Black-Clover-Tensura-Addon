@@ -90,5 +90,7 @@ final class PropRegistry {
 
         com.newuniverse.nusmp.spiritdark.SpiritDarkProps.init();    // Spirit of Darkness: the companion and the powered form
 
+        com.newuniverse.nusmp.gnome.GnomeProps.init();      // the Gnome: the stone companion and the full-size giant
+
     }
 }

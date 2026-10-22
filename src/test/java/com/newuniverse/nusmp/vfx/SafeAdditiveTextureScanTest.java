@@ -26,7 +26,7 @@ class SafeAdditiveTextureScanTest {
             {"entity", "firecast_salamander_fx|firecast_dragon_fx"}, {"entity", "sylph_small_fx|sylph_powered_fx|sylph_halo|sylph_small_wings_glow|sylph_powered_wings_glow"},
             {"entity/spirit_space", ""}, {"entity", "spirit_space_orb|spirit_space_wisp_fx"},
             {"entity", "undine_fx|undine_ring"}, {"entity", "spiritlight_cub_fx|spiritlight_seraph_fx"},
-            {"particle", "spiritlight_"}};
+            {"particle", "spiritlight_"}, {"entity", "gnome_companion_fx|gnome_full_fx|gnome_faces_fx"}};
 
     private static boolean wanted(String name, String keys) {
         if (!name.endsWith(".png") || name.startsWith("time_")) return false;

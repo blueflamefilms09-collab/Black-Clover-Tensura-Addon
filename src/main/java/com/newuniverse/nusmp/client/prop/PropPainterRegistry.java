@@ -96,5 +96,7 @@ final class PropPainterRegistry {
 
         SpiritDarkPropPainter.register();    // Spirit of Darkness: the companion and the powered form
 
+        GnomePropPainter.register();      // the Gnome: the stone companion and the full-size giant
+
     }
 }
