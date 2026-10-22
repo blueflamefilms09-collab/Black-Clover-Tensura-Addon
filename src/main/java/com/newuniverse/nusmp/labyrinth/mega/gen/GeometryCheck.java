@@ -99,7 +99,7 @@ final class GeometryCheck {
                 Placed p = r.pieces.get(i);
                 int[] w;
                 try {
-                    w = world(level, mgr, p, skipBoxes(clearance7 ? Clearance7.cuts(p, connectedSockets[p.index]) : List.of()));
+                    w = world(level, mgr, p, i < built.templates().size() ? built.templates().get(i) : p.shape.id, skipBoxes(clearance7 ? Clearance7.cuts(p, connectedSockets[p.index]) : List.of()));
                 } catch (Throwable t) {
                     if (fails.size() < MAX_LISTED) fails.add(label(p) + ": the world could not be read (" + t + ")");
                     else omitted++;
@@ -257,8 +257,8 @@ final class GeometryCheck {
     }
 
     /** {sampled, found non-air, jigsaws left} for one piece. */
-    private static int[] world(ServerLevel level, StructureTemplateManager mgr, Placed p, List<Box> skip) {
-        ResourceLocation id = ResourceLocation.tryParse(p.shape.id);
+    private static int[] world(ServerLevel level, StructureTemplateManager mgr, Placed p, String templateId, List<Box> skip) {          // the template the piece was really built from (a rebuilt room has other blocks than the shipped one)
+        ResourceLocation id = ResourceLocation.tryParse(templateId);
         Optional<StructureTemplate> t = id == null ? Optional.empty() : mgr.get(id);
         if (t.isEmpty()) return new int[] {0, 0, 0};
         CompoundTag nbt = t.get().save(new CompoundTag());

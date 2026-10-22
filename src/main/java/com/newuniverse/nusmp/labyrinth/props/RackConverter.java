@@ -50,10 +50,11 @@ public final class RackConverter {
 
     public static void onJoin(EntityJoinLevelEvent e) {
         if (!(e.getEntity() instanceof ArmorStand stand) || !(e.getLevel() instanceof ServerLevel level) || e.loadedFromDisk()) return;
+        if (stand.getTags().contains(ArmourStandGate.RARE_TAG)) return;                        // the rare stand of the dungeon is a stand, never a rack
         RegionContext.Active ctx = RegionContext.current();
         boolean dungeon = Labyrinth.in(level);
         boolean own = ctx != null || (dungeon && DungeonGuard.inInternal());
-        if (!RackPlacement.shouldConvert(PropsConfig.rackInsteadOfStand(), dungeon, own, false)) return;
+        if (!RackPlacement.shouldConvert(PropsConfig.legacyRackConversion(), dungeon, own, false)) return;       // the generator places no rack unless the legacy path is switched on (default: off)
         if (!stand.isNoGravity() || !stand.isInvulnerable() || stand.isInvisible()) return;        // the template's signature (the generator writes both; an invisible stand is a marker, not furniture)
         String theme = ctx == null || ctx.sector() == null || ctx.sector().theme == null ? "" : ctx.sector().theme.id();
         long salt = ctx == null || ctx.sector() == null ? 0L : ctx.sector().seed;

@@ -40,6 +40,8 @@ public final class MegaGenRegistry {
         CyclicSelfTests.register();                                   // 1.83.0: gen.cyclic
         ClearanceSettings.register();                                 // 1.107.0: gen.clearance7 (nusmp-labyrinth-mega-clearance-server.toml)
         ClearanceSelfTests.register();                                // 1.107.0: dungeon.clearance7
+        RoomsSettings.register();                                     // rooms rebuilt: gen.roomsRebuilt (nusmp-labyrinth-mega-rooms-server.toml)
+        RoomsSelfTests.register();                                    // rooms rebuilt: dungeon.rooms_rebuilt
     }
 
     public static void register(IEventBus gameBus) {

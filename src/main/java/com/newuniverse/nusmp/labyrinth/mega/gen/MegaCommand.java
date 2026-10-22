@@ -263,7 +263,7 @@ public final class MegaCommand {
         int world = SectorGenerator.playable(s) ? 12 : 0;
         SectorGenerator.Planned planned = SectorGenerator.plan(level, data, s);
         if (!planned.ok()) return no(src, "verify " + s.id + " FAIL: the sector cannot be planned: " + planned.failure());
-        SectorGenerator.Built built = SectorGenerator.build(level, planned);
+        SectorGenerator.Built built = SectorGenerator.build(level, planned, world > 0 ? RoomsSettings.sectorRebuilt(server, s.id) : RoomsSettings.enabled());       // a placed sector is checked against the rooms it was built with
         GeometryCheck.Report r = GeometryCheck.run(level, built, world, world > 0 && ClearanceCarver.wasCut(server, s.id));
         List<String> failures = new ArrayList<>(r.failures());
         int roomsPlanned = planned.result().rooms().size();

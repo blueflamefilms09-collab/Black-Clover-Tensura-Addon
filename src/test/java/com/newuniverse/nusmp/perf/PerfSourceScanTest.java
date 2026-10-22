@@ -486,4 +486,23 @@ class PerfSourceScanTest {
         String rules = code(read("compass3d/CompassRules.java"));
         assertTrue(rules.contains("GLOBAL_NEEDLES") && rules.contains("AIM_RESEND_TICKS"));
     }
+
+    /** Rooms rebuilt: the armour stand gate and the variant choice are generation-time work only: nothing per tick, no world scan, one plan per floor. */
+    @Test
+    void theRareStandAndTheRoomVariantsCostNothingPerTick() throws IOException {
+        String gate = code(read("labyrinth/props/ArmourStandGate.java"));
+        for (Method m : methods(read("labyrinth/props/ArmourStandGate.java"), "labyrinth/props/ArmourStandGate.java")) {
+            assertFalse(PER_FRAME_OR_TICK.matcher(m.name()).matches(), "ArmourStandGate has a per-tick or per-frame method: " + m.name());
+        }
+        assertFalse(gate.contains("Tick") || gate.contains("getEntities") || gate.contains("getEntitiesOfClass") || gate.contains("level.getChunk"), "the stand gate scans the world or ticks");
+        assertTrue(gate.contains("e.loadedFromDisk()") && gate.contains("templateSignature(stand)"), "the stand gate touches stands it must leave alone");
+        assertFalse(code(read("labyrinth/props/PropsRegistry.java")).contains("Tick"), "the props registry listens to a tick");
+        String variants = code(read("labyrinth/mega/gen/RoomVariants.java"));
+        assertFalse(variants.contains("net.minecraft") || variants.contains("Minecraft") || variants.contains("ServerLevel"), "RoomVariants must stay pure");
+        String placer = code(read("labyrinth/mega/gen/SectorPlacer.java"));
+        assertEquals(1, placer.split("RareStands\\.plan\\(", -1).length - 1, "the stand plan is made once per floor, in the constructor of the placer");
+        assertFalse(code(method("labyrinth/mega/gen/SectorPlacer.java", "placeOne").body()).contains("RareStands.plan("), "the stand plan is recomputed for every piece");
+        String stands = code(read("labyrinth/props/ArmourStandRarity.java"));
+        assertFalse(stands.contains("net.minecraft"), "ArmourStandRarity must stay pure");
+    }
 }
