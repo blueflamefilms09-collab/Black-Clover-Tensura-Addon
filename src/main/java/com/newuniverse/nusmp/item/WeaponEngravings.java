@@ -137,6 +137,23 @@ public final class WeaponEngravings {
 
     static final String FLAG = "NUEngraved";
 
+    /** Read-only view for the Engravement Codex (engraving/codex/CodexGather): item path -> its engravings as "id@level" ("nusmp:anti_magic@1"). Built on first use. */
+    public static Map<String, List<String>> codexTable() {
+        Map<String, List<String>> t = CODEX_TABLE;
+        if (t == null) {
+            java.util.LinkedHashMap<String, List<String>> m = new java.util.LinkedHashMap<>();
+            for (Map.Entry<String, List<Engraving>> en : ENGRAVINGS.entrySet()) {
+                java.util.ArrayList<String> specs = new java.util.ArrayList<>();
+                for (Engraving g : en.getValue()) specs.add(g.id() + "@" + g.level());
+                m.put(en.getKey(), List.copyOf(specs));
+            }
+            CODEX_TABLE = t = java.util.Collections.unmodifiableMap(m);
+        }
+        return t;
+    }
+
+    private static volatile Map<String, List<String>> CODEX_TABLE;
+
     /** Engraves a stack of one of this mod's weapons if it hasn't been yet; true if it changed. */
     public static boolean engrave(ItemStack stack, HolderLookup.Provider registries) {
         if (stack.isEmpty()) return false;

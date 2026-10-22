@@ -100,6 +100,8 @@ public final class GrimoireBakedModel implements BakedModel {
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
             if (stack.getItem() instanceof com.newuniverse.nusmp.compat.CompatCodexItem)                       // 1.34.0: the Compatibility Codex has a fixed look (compat/CompatCodexLook)
                 return viewFor(com.newuniverse.nusmp.compat.CompatCodexLook.LOOK.key(false));
+            if (stack.getItem() instanceof com.newuniverse.nusmp.engraving.codex.EngravingCodexItem)           // 1.99.0: the Engravement Codex has a fixed look (engraving/codex/EngravingCodexLook)
+                return viewFor(com.newuniverse.nusmp.engraving.codex.EngravingCodexLook.LOOK.key(false));
             return viewFor(GrimoireItem.look(stack).key(false, GrimoireItem.openView(stack)));
         }
     }

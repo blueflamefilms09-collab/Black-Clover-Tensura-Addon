@@ -38,6 +38,7 @@ public final class NUCreativeTab {
                 output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.darkShardStack());
                 output.accept(com.newuniverse.nusmp.compat.CompatBookItem.stack());
                 output.accept(com.newuniverse.nusmp.compat.CompatItems.codexStack());                                  // 1.34.0: grimoire-style codex
+                output.accept(com.newuniverse.nusmp.engraving.codex.EngravingCodexItems.codexStack());                 // 1.99.0: the Engravement Codex
                 if (params.hasPermissions()) for (net.minecraft.world.item.ItemStack w : com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponItems.creativeStacks()) output.accept(w);   // 1.34.0: Djinn weapons (operators)                                     // 1.33.0: Compatibility Codex
                 for (net.minecraft.world.item.Item ti : com.newuniverse.nusmp.relics.tier.TierItems.all()) output.accept(ti);                  // 1.30.0: catalysts
                 for (var sc : com.newuniverse.nusmp.relics.socket.SocketItems.all()) output.accept(sc.get());                                 // Spirit and Devil Cores                                              // 1.25.0: Dark Rukh Shard

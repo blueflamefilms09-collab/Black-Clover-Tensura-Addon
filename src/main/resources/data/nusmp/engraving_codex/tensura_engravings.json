@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "credit": "From Tensura Reincarnated, exact numbers are Tensura's.",
+  "comment": "This mod only names these engravings on its items; the effects and every number belong to Tensura, never to this book. One honest line per Tensura engraving, in words only (no numbers). The Codex prefers the engraving's own description text from Tensura's language file when the game has one; this table is the fallback. An id that is not here gets the generic line. Read by engraving/codex/TensuraNotes.",
+  "generic": "An engraving of Tensura Reincarnated. This mod only puts it on items and has no text of its own for it; read the engraving on the item's own tooltip for Tensura's wording.",
+  "engravings": {
+    "swift": "A speed engraving. This mod puts it on quick weapons (rapiers, katanas, daggers) and on light armour that should move fast.",
+    "sturdy": "A toughness engraving. The item is harder to wear down. Put on heavy weapons, shields and armour.",
+    "severance": "A cutting engraving for blades that sever cleanly. Put on katanas, cleavers, scythes and swords that cut.",
+    "severance_protection": "An armour engraving that guards against cutting (severing) attacks.",
+    "crushing": "A heavy-blow engraving for hammers, maces, mauls and greatswords that break what they strike.",
+    "barrier_piercing": "Strikes that go through wards and barriers. Put on weapons that are meant to open a guarded foe.",
+    "magic_interference": "Disturbs the magic of whatever it touches, such as spells being cast. Put on anti-magic blades, shields and the weapons of mage-hunters.",
+    "magic_weapon": "Marks the weapon as a magical one: a casting focus or a magic-forged weapon, such as staves, bows and conjured blades.",
+    "magicule_absorption": "Drinks magicules from what the item touches. Put on blades and armour that feed on the magic aimed at them.",
+    "magic_capacity": "An armour engraving that raises how much magicule the wearer can hold.",
+    "magic_protection": "An engraving that lessens the harm of magic. Put on robes, crowns, shields and warding armour.",
+    "energy_protection": "An armour engraving that guards against raw energy attacks.",
+    "spiritual_protection": "An armour engraving that guards against spirit and soul attacks.",
+    "elemental_resistance": "An armour engraving that eases elemental harm such as flame, frost and storm.",
+    "elemental_boost": "Strengthens the element a weapon is built around. Put on flame, frost, storm and tide weapons and on Djinn weapons.",
+    "holy_weapon": "A holy engraving: the weapon is blessed. Put on the weapons of light, of paladins and of the Waves heroes.",
+    "holy_coat": "A holy engraving for armour: the wearer is wrapped in a blessing.",
+    "enervation": "A sapping engraving: wounds from the weapon take strength from the foe. Put on rot, poison, shadow and drain weapons.",
+    "energy_steal": "Takes energy from the foe. Put on weapons that drink what they cut.",
+    "soul_eater": "The weapon takes the soul of what it fells. Put on scythes, bone weapons and the weapons of death.",
+    "restoration": "A mending engraving. Put on healing items and on the weapons and armour of healers and paladins.",
+    "vitality": "An engraving that raises the bearer's life. Put on armour and weapons of the hardy and the holy.",
+    "vigor": "An engraving that helps the bearer keep going. Put on light armour, boots and mantles of the nimble.",
+    "breathing_support": "An armour engraving that helps the wearer breathe where air is short, such as under water."
+  }
+}

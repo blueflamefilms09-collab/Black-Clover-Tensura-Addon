@@ -57,6 +57,7 @@ public final class GuiScaleRegistry {
         screen("grimoire_slot", "client.grimoire.GrimoireSlotScreen", -1, -1, "Grimoire slot");
         screen("system_stats", "client.mega.system.SystemStatsScreen", 0, 0, "System stat points");
         screen("requip_armoury", "client.requip.RequipArmouryScreen", -1, -1, "Requip Armoury");
+        screen("engraving_codex", "client.engraving.EngravingCodexScreen", 540, 300, "Engravement codex");
         // HUD overlays scaled by a render-layer hook
         layer("quest_tracker", "hub_quest_tracker", GuiScaleMath.Anchor.TOP_RIGHT, "Quest tracker");
         layer("arts_bar", "line_arts_bar", GuiScaleMath.Anchor.BOTTOM_CENTER, "Arts bar");

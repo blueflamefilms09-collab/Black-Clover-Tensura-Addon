@@ -210,6 +210,7 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.relics.order.RelicOrderCommand.addTo(root);                                              // relic order census|enforce|status|release|summon
         com.newuniverse.nusmp.relics.djinn.DjinnCommand.addTo(root);                                                   // djinn status|release|share|grant|phase
         root.then(com.newuniverse.nusmp.compat.CompatCommand.node());                                    // 1.33.0: compat book|status
+        root.then(com.newuniverse.nusmp.engraving.codex.EngravingCodexCommand.node());                   // 1.99.0: engravings (gives the Engravement Codex)
         root.then(com.newuniverse.nusmp.compat.maps.MapsCommand.waypointNode());                       // compat-maps: waypoint share on|off|here|gate|return
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
         root.then(com.newuniverse.nusmp.fairytail.FairyTailCommand.node());                                    // Fairy Tail skills: fairytail give|learn|list
