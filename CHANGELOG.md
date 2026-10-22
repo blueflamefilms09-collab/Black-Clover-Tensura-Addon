@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.113.0] — Spirit Lords remade (Salamander, Sylph, Undine, Gnome) and new Spirits of Darkness, Light and Space; Vermillion/Magna casting styles and Scale Magic; movable GUIs; dungeon rooms rebuilt; Engravement Codex; smaller jar
+
+### NEW
+- **Spirit Lords with poses, faces and voices** (all server-decided, bounded, with LOD and frame budgets, each behind its own `magic.<spirit>` server config, off = old behaviour): **Salamander** (closer to the references, moods, 25 synthesised creature sounds), **Sylph** (small, wings rebuilt like the references with a rainbow sheen, 14 new poses, 14 faces), **Undine** (tall water woman, 10 poses, 7 faces), **Gnome** (stone golem companion and 6 m giant, 9 poses, 6 faces, Feremena's spirit), and new **Spirits of Darkness** (shadow-wisp and aristocratic demon, life steal, mark, Shadow Step), **Light** (golden cub and seraph, piercing beam and Glowing pulse) and **Space** (rift orb and wisp-dragon, portal rings, waypoints). Docs and previews: `docs/magic/*.md`, `docs/previews/*`.
+- **Casting styles:** Magna needs his Soul Bat (bat swing launches the spell), Mereoleona casts through fist combos, Fuegoleon through his Salamander, Leopold through a charging spiral; **Scale Magic** weighs the opponent (Scale readout, suppression aura) (`docs/magic/fire_casting.md`, `scale_casting.md`).
+- **Engravement Codex** book listing what every engraving does; `docs/items/engraving_codex.md`.
+- **Relics are wearable and always visible** on players unless toggled off (`/nusmp relic wear`).
+- **Movable GUIs (F9 or `/nusmp gui move`)**: drag, snap, resize, hide and reset the Djinn panel and every other custom HUD element and screen panel; client config `nusmp-gui-layout-client.toml` (`docs/ui/gui_move.md`).
+- **Dungeon rooms and hallways rebuilt at the same size:** 460 new room and hallway variants (new roofs, floors, pillars, galleries, lighting), server config `gen.roomsRebuilt`; weapon racks are no longer generated; **armour stands are a rare prop** (about 6 percent of eligible rooms, at most 2 per floor; `props.armourStandRarity`) (`docs/labyrinth/rooms_rebuilt.md`).
+- **Elsdocia / Demon Dweller no longer drain the target's magicule** (charge still builds; `magic.weaponsDrainTargetMagicule`, default off).
+- **Smaller jar:** 739 large textures reduced to 256-colour palettes with a quality gate (PSNR, alpha, size unchanged), about 150 MB less (`tools/shrink_pngs.py`).
+- **Mob remake plan and audit** (`docs/mobs/remake_plan.md`, no mob changed yet; decisions pending).
+- **CLAUDE.md rule 12** (building and shipping standard).
+
+### REPLACED
+- The look and sound of Sylph's wings, the Water, Earth and Fire Spirit Lords (old looks kept behind each spirit's switch); armour stands as set decoration (now rare); the System window position store (old keys still read as the fallback).
+
+### KEPT
+- All old pages, ids, models, textures, saves and the Time Magic VFX; weapon rack block, item and loot tables stay registered.
+
+### Not done / caveats
+- Spoken lines are only partly recorded (ElevenLabs credits ran out): Undine 13/40, Light 13/35, Darkness 24/47, Gnome 15/21, Sylph 2/56; missing situations use synthesised sounds. Voice licences are unchecked.
+- Nothing was run in a real game before this release; CI (build + server smoke) is the first real run.
+
 ## [1.112.0] — Soul Corpse zombies and Rades's five undead, 3D Compass, anime Recombination golem, Storm staff (Fairy Tail), Light and Bone remake, flat white shapes gone, lag audit
 
 ### NEW
