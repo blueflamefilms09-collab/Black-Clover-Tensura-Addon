@@ -170,7 +170,7 @@ class WaterRebuildTest {
     @Test
     void theBooksKeepTheirLegacyPagesInOrderAndAppendTheNewOnes() throws Exception {
         checkBook("WaterBook.java", new String[]{"waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress"},
-                new String[]{"sea_dragons_wrath", "tide_lance", "scale_mail", "torrent"});
+                new String[]{"sea_dragons_wrath", "tide_lance", "scale_mail", "torrent", "mermaid_form", "sea_dragon_god_form", "black_dragon_form"});      // 1.99.0: Noelle's forms, appended
         checkBook("DarkBook.java", new String[]{"avidya_slash", "black_hole", "dimension_slash", "death_thrust", "black_blade", "avidya_wild_slash", "black_moon", "iai_slash", "dimension_slash_equinox"},
                 new String[]{"dark_cloak", "shadow_embrace", "black_hole_collapse"});
         checkBook("LightningBook.java", new String[]{"chain", "thunder_boots", "thunder_lance", "thunder_fiend", "pulsaranta", "rising_salim", "thunderbird_cavalry", "black_lightning_battle_fiend"},

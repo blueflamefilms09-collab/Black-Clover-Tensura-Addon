@@ -31,7 +31,7 @@ ARMOURED = {
         canon="Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); "
               "Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."),
     'WATER': dict(
-        kind='FORM', name='Valkyrie Armour', form_name='Spirit Dive: Undine', aura='WATER', armour_pages={'valkyrie_dress': 1, 'scale_mail': 0}, form_pages=['spirit_dive'],
+        kind='FORM', name='Valkyrie Armour', form_name='Spirit Dive: Undine', aura='WATER', armour_pages={'valkyrie_dress': 1, 'scale_mail': 0, 'mermaid_form': 2, 'sea_dragon_god_form': 3, 'black_dragon_form': 4}, style_by='character', form_pages=['spirit_dive'],
         bonus=dict(cut=0.12, attack=0.05, speed=0.08, knockback=0.1, upkeep=0.004),
         form_bonus=dict(cut=0.18, attack=0.18, speed=0.22, senses=True, absorb=0.012),
         canon="Noelle Silva's Valkyrie Armor / Valkyrie Dress (water armour of the Sea Dragon) and, with the water spirit Undine, the Saint Valkyrie Dress "

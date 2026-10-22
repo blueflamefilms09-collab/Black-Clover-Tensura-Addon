@@ -22,7 +22,9 @@ public final class ArmourCast {
 
     private static int styleOf(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, String magic, String pageId) {
         boolean mastered = b.masteryFrac(i) >= 0.75 || GrimoireBook.inDevilState(p);
-        return ArmourPolicy.get().styleFor(magic, pageId, p.isShiftKeyDown(), mastered);
+        ArmourPolicy.Entry e = ArmourPolicy.get().entry(magic);
+        boolean character = e != null && "character".equals(e.styleBy()) && NoelleFormState.characterTier(p);      // Noelle's forms: the full-quality look for her grimoire only
+        return ArmourPolicy.get().styleFor(magic, pageId, p.isShiftKeyDown(), mastered, character);
     }
 
     /** True when this cast was only "take the armour off": the caller then ends the cast (nothing is spent, no cooldown, no spell runs). */

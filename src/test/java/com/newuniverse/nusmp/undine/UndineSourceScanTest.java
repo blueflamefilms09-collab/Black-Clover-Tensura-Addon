@@ -139,7 +139,7 @@ class UndineSourceScanTest {
         List<String> ids = new ArrayList<>();
         Matcher m = Pattern.compile("BookPage\\.\\w+\\(\"(\\w+)\"").matcher(water.substring(water.indexOf("private final List<BookPage> pages"), water.indexOf("public WaterBook()")));
         while (m.find()) ids.add(m.group(1));
-        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent"), ids, "no page renamed, removed or reordered");
+        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent", "mermaid_form", "sea_dragon_god_form", "black_dragon_form"), ids, "no page renamed, removed or reordered");
     }
 
     @Test

@@ -69,8 +69,17 @@
    "form_name": "Spirit Dive: Undine",
    "armour_pages": {
     "valkyrie_dress": 1,
-    "scale_mail": 0
+    "scale_mail": 0,
+    "mermaid_form": 2,
+    "sea_dragon_god_form": 3,
+    "black_dragon_form": 4
    },
+   "style_by": "character",
+   "new_pages": [
+    "mermaid_form",
+    "sea_dragon_god_form",
+    "black_dragon_form"
+   ],
    "form_pages": [
     "spirit_dive"
    ],

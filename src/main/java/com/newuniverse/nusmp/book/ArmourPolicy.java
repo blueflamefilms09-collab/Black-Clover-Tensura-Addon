@@ -170,7 +170,7 @@ public final class ArmourPolicy {
         }
         for (String id : e.armourPages().keySet()) if (e.formPages().contains(id)) p.add(e.magic() + ": page " + id + " is both an armour page and a form page");
         for (int s : e.armourPages().values()) if (s < 0 || s > 120) p.add(e.magic() + ": style " + s + " does not fit the aura payload");
-        if (!List.of("none", "sneak", "mastery").contains(e.styleBy())) p.add(e.magic() + ": unknown style_by '" + e.styleBy() + "'");
+        if (!List.of("none", "sneak", "mastery", "character").contains(e.styleBy())) p.add(e.magic() + ": unknown style_by '" + e.styleBy() + "'");
         if (!e.shimmer().isEmpty() && e.kind() != Kind.NONE) p.add(e.magic() + ": only a NONE magic has a shimmer");
         return p;
     }
@@ -236,6 +236,14 @@ public final class ArmourPolicy {
         if (e == null) return 0;
         int base = e.armourPages().getOrDefault(pageId, 0);
         return ArmourRules.style(e.styleBy(), base, sneaking, mastered);
+    }
+
+    /** {@link #styleFor(String, String, boolean, boolean)} with the character tier (style_by "character": Noelle's forms). */
+    public int styleFor(String magic, String pageId, boolean sneaking, boolean mastered, boolean character) {
+        Entry e = entry(magic);
+        if (e == null) return 0;
+        int base = e.armourPages().getOrDefault(pageId, 0);
+        return ArmourRules.style(e.styleBy(), base, sneaking, mastered, character);
     }
 
     /** Counts per kind, for the report and the self-test. */
