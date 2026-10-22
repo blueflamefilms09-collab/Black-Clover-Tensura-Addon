@@ -26,7 +26,7 @@ import java.util.List;
 
 /** Earth Magic. Gnome spirit. */
 public class EarthBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.gnome.Gnome.wrap(List.of(      // the Gnome: the same nine pages; while a Gnome is linked their start point moves to its fist and it slams (gnome.Gnome)
             BookPage.starter("spike_line", "Earth Spikes", EarthBook::spikes),
             BookPage.mid("wall", "Mud Wall Partition", EarthBook::wall),                      // 0.31: canon name (was Earth Wall)
             BookPage.zone("mother_earth_split", "Divided Mother Earth", EarthBook::split),     // 0.31: canon name (was Mother Earth Split)
@@ -37,7 +37,7 @@ public class EarthBook extends GrimoireBook {
             // 1.93.0 rebuild: appended pages (the six above keep their ids, order and mastery bits)
             BookPage.mid("earth_golem", "Clay Guardian", EarthKit.guardian(com.newuniverse.nusmp.prop.EarthConstruct.GOLEM, 500, 1)),
             BookPage.mid("earth_armor", "Gnome Plate", EarthKit.guard(200, 1, 3f, 0.06)),
-            BookPage.zone("sinkhole", "Swallowing Ground", EarthFamilyArts::sinkhole));
+            BookPage.zone("sinkhole", "Swallowing Ground", EarthFamilyArts::sinkhole)));
 
     public EarthBook() { super(MagicType.EARTH, 0xFFB08850); }
     @Override protected List<BookPage> familyPages() { return pages; }

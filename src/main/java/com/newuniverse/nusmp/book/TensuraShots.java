@@ -71,7 +71,7 @@ public final class TensuraShots {
         if (burnTicks > 0) pr.setBurnTicks(burnTicks);
         pr.setSpeed(speed);
         pr.setNoGravity(true);
-        pr.setPos(com.newuniverse.nusmp.firecast.FireCasting.origin(p, p.getEyePosition().add(p.getLookAngle().scale(0.6))));      // fire casting: the emitter's start (unchanged for every other caster)
+        pr.setPos(com.newuniverse.nusmp.gnome.Gnome.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, p.getEyePosition().add(p.getLookAngle().scale(0.6)))));      // fire casting: the emitter's start (unchanged for every other caster)
         pr.shootFromRot(p.getLookAngle());
         p.level().addFreshEntity(pr);
         book.castCircle(p, 0.8f);

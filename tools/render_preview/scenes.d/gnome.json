@@ -1,0 +1,365 @@
+{
+ "_comment": "The Gnome (docs/magic/gnome.md): the full form and the companion form drawn by the real client/prop/GnomeDraw (example GnomeProp). Regenerate with python3 -B tools/gnome_scenes.py.",
+ "gnome_dev_full": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   560
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "back",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ },
+ "gnome_dev_comp": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   440
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back",
+    "yaw": 155,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_full_rise": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   11,
+   14,
+   17
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "rise",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ },
+ "gnome_dev_full_cast": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   5,
+   9,
+   12,
+   15
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ },
+ "gnome_dev_full_punch": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   10,
+   14
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "punch",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ },
+ "gnome_dev_full_walk": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   8,
+   16,
+   24
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ },
+ "gnome_dev_full_sink": {
+  "kind": "geo",
+  "model": "gnome_full",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "floor": true,
+  "figure": true,
+  "expect": [],
+  "anim": "sink",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.4,
+     0
+    ],
+    "dist": 17
+   }
+  ]
+ }
+}

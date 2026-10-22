@@ -168,5 +168,7 @@ public enum PropKind {
     SCALE_BALANCE,
     /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
     FIRECAST_1,
-    FIRECAST_2
+    FIRECAST_2,
+    /** The Gnome (gnome.GnomeProps): GNOME_1 = the stone companion beside an Earth Magic caster (variant 0) and the full-size stone giant that rises for the big earth pages (1); the variant is the low four bits of the param (painter client.prop.GnomePropPainter) */
+    GNOME_1
 }
