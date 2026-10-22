@@ -51,6 +51,7 @@
     "senses": true,
     "absorb": 0.012
    },
+   "new_pages": ["leo_parma", "salamanders_breath"],
    "canon": "Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."
   },
   "EXPLOSION": {
@@ -87,6 +88,7 @@
     "senses": true,
     "absorb": 0.012
    },
+   "new_pages": ["point_blank_roar"],
    "canon": "Noelle Silva's Valkyrie Armor / Valkyrie Dress (water armour of the Sea Dragon) and, with the water spirit Undine, the Saint Valkyrie Dress (feathered wing-like parts and a halo). Spirit Dive is the form; Valkyrie Dress and Sea Dragon's Scale Mail are the explicit armour pages."
   },
   "ICE": {
@@ -130,6 +132,7 @@
     "senses": true,
     "absorb": 0.012
    },
+   "new_pages": ["tornado_fang", "sylphs_breath", "spirits_hushed_dance", "liable_tempest", "gale_white_bow", "swift_white_hawk", "heavenly_wind_ark", "wind_blades_shower", "spirit_of_boreas"],
    "canon": "Yuno's Spirit Dive with the wind spirit Sylph (Spirit of Zephyr): the first dive transforms only the left half (one wing, half a crown, a ring round the wrist), the full dive has two wings and a full crown. Spirit Dive is the form; the Zephyr page is the older overlay (blackclover.ModeArmor)."
   },
   "STAR": {
@@ -219,6 +222,7 @@
     "attack": 0.1,
     "upkeep": 0.004
    },
+   "new_pages": ["deep_black_blade", "black_crescent_moon"],
    "canon": "Yami Sukehiro's Dark Cloaked: his body and blades coated in dark mana (obsidian plate, horned hood, tattered cape in the mod). Dark Cloaked Guard is the explicit armour page; the Dark Cloaked slashes are spells, not armour."
   },
   "SHADOW": {

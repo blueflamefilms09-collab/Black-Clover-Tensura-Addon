@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "canon": "noelle",
+  "magic": "WATER",
+  "book": "book_water",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com): Noelle Silva abilities, Sea Dragon's Roar, Valkyrie Dress. Read through search summaries only: the wiki host is not reachable from the build machine.",
+    "other_en": "Secondary English pages found by search (TV Tropes character page, Baidu Baike, Deltia's Gaming): used for spell names the wiki summary did not repeat; they disagree on some names (Nest / Lair).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells.md."
+  },
+  "spells": [
+    { "page": "waterball", "name": "Water Creation Magic: Sea Dragon's Waterball", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "start" }, "note": "A large swirling sphere of water launched at the target. Mode 0 of the Water book, so it stays in the basic book too." },
+    { "page": "roar", "name": "Water Creation Magic: Sea Dragon's Roar", "ja": "海竜の咆哮", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.1 }, "note": "A dragon-shaped water attack of very high destructive power." },
+    { "page": "sea_dragons_nest", "name": "Water Creation Magic: Sea Dragon's Nest (Lair)", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "mastery", "min": 0.25 }, "note": "A hemispherical water barrier with whirlpools that deflects attacks. Some pages call it Lair." },
+    { "page": "cradle", "name": "Water Creation Magic: Sea Dragon's Cradle", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "mastery", "min": 0.35 }, "note": "A large sphere of water that carries Noelle and her allies through deep water." },
+    { "page": "point_blank_roar", "name": "Point-Blank Sea Dragon's Roar", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "roar", "count": 3 }, { "type": "mastery", "min": 0.5 } ] },
+      "note": "The Roar from a hand against the target's body. It follows a trained Roar." },
+    { "page": "valkyrie_dress", "name": "Valkyrie Armor: Sea Goddess's Dress", "ja": "海神戦乙女の羽衣", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "cradle", "count": 2 }, { "type": "mastery", "min": 0.7 } ] },
+      "note": "Awakened in the Elf Reincarnation arc against the reincarnated Letoile: the late page of the book. The existing page keeps its ArmourCast hook." }
+  ],
+  "planned": [
+    { "name": "Saint Valkyrie Dress (Undine)", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Comes from the water spirit Undine and purifies malice. In this mod it is the Water book's Spirit Dive page (the Valkyrie plates); owned by the Valkyrie lane, nothing to add here." },
+    { "name": "Valkyrie Armor: Dragon Form", "ja": "海竜神形態", "origin": "anime", "source": "en_wiki", "note": "(Japanese read from the owner's picture of the wiki's variations.) Sea God Leviathan's power. The dragon and mermaid forms are built by the Valkyrie lane; add them as pages after that." },
+    { "name": "Mermaid Form", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Boosts her power underwater. Same lane as the Dragon Form." },
+    { "name": "Black Dragon Form", "ja": "", "origin": "anime", "source": "design", "note": "Named in the owner's reference picture of her variations; no description found." },
+    { "name": "Sea Dragon God's Vortex / Tail", "ja": "", "origin": "anime", "source": "other_en", "note": "Listed by one low-quality source only: unconfirmed, no page." }
+  ],
+  "notes": "Not in Noelle's grimoire (kept in the basic Water book): Aqua Javelin, Sea Dragon's Wrath, Valkyrie Tide Lance, Sea Dragon's Scale Mail and Sea Dragon's Torrent were not found in any source for Noelle."
+}

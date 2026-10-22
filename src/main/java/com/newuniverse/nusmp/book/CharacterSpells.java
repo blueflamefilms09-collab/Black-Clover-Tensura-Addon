@@ -79,7 +79,8 @@ public final class CharacterSpells {
     /** Who may open this page, or null if anyone may. */
     public static Set<CanonBook> owners(GrimoireBook book, BookPage page) {
         if (book == null || page == null || book.getRegistryName() == null) return null;
-        return LOCKS.get(book.getRegistryName().getPath() + ":" + page.id());
+        Set<CanonBook> legacy = LOCKS.get(book.getRegistryName().getPath() + ":" + page.id());
+        return legacy != null ? legacy : com.newuniverse.nusmp.charset.CharacterSets.addedPageOwners(book, page);      // character spell sets: a page added for one character belongs to that character only
     }
 
     /** The canon character of the player's bound grimoire, or null. */
@@ -90,7 +91,9 @@ public final class CharacterSpells {
     /** Null if the player may open this page, else who it waits for ("the grimoire of Yami Sukehiro"). */
     public static String block(GrimoireBook book, BookPage page, ServerPlayer p) {
         Set<CanonBook> owners = owners(book, page);
-        if (owners == null || owners.contains(characterOf(p))) return null;
+        CanonBook who = characterOf(p);
+        if (owners == null || owners.contains(who)) return null;
+        if (who != null && com.newuniverse.nusmp.charset.CharacterSets.listed(who.id(), book, page)) return null;      // character spell sets: a page in this character's own set is his, whatever the old lock says
         StringBuilder sb = new StringBuilder("the grimoire of ");
         int k = 0;
         for (CanonBook b : owners) sb.append(k++ == 0 ? "" : " or ").append(b.owner);

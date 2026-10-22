@@ -44,7 +44,8 @@ public class WaterBook extends GrimoireBook {
             BookPage.zone("torrent", "Sea Dragon's Torrent", WaterArts::torrent).withCooldown(400));
 
     public WaterBook() { super(MagicType.WATER, 0xFF4FA8FF); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withCharacters;      // character spell sets: the pages that belong to one character are appended after the shared pages (book.CharacterPages)
+    @Override protected List<BookPage> familyPages() { if (withCharacters == null) withCharacters = CharacterPages.water(pages); return withCharacters; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.WATER_ELEMENTAL; }
     @Override public Element spiritElement() { return Element.WATER; }
     @Override public String spiritName() { return "Undine"; }

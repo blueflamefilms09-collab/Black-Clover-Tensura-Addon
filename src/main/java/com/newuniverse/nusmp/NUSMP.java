@@ -93,6 +93,7 @@ public class NUSMP {
         com.newuniverse.nusmp.spiritspace.SpiritSpaceBoot.init(modEventBus, modContainer);                                // Spirit of Space: nusmp-spiritspace-server.toml (magic.spiritSpace), the key packet, the sounds, the events, self-test magic.spirit_space
         com.newuniverse.nusmp.spiritlight.SpiritLightBoot.init(modEventBus, modContainer);                                  // Spirit of Light: nusmp-spiritlight-server.toml (magic.spiritLight), the key packet, its own sounds, the events, self-test magic.spirit_light
 
+        com.newuniverse.nusmp.charset.CharacterSetBoot.init(modContainer);      // character spell sets: nusmp-character-spells-server.toml (magic.characterSpellSets), self-test magic.character_spells (docs/magic/character_spells.md)
         com.newuniverse.nusmp.spiritdark.SpiritDarkBoot.init(modEventBus, modContainer);                                  // Spirit of Darkness: nusmp-spiritdark-server.toml (magic.spiritDark), the sounds, the key packet, the events, self-test magic.spirit_dark
 
         com.newuniverse.nusmp.fairytail.FairyTailSystem.init(modEventBus);                                                 // Fairy Tail skills: Fire Dragon Slayer -> King, Ice-Make, Sky/Lightning/Iron Dragon Slayer, Crash, Water Magic, the skill book

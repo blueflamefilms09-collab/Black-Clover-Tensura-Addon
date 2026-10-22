@@ -85,7 +85,7 @@ public final class MultiverseSync {
                 int unlocked = 0;
                 for (int m = 0; m < book.familyCount(); m++) if (GrimoireBook.isUnlocked(inst.get(), m)) unlocked++;
                 g.putInt("Unlocked", unlocked);
-                g.putInt("Pages", book.familyCount());
+                g.putInt("Pages", com.newuniverse.nusmp.charset.CharacterSets.visibleCount(inst.get(), book));      // character spell sets: only the pages this grimoire can ever show
                 g.putInt("Slots", MasteryPages.slots(p, inst.get(), book));
                 g.putInt("Mastery", (int) Math.round(book.masteryFrac(inst.get()) * 100));
                 // 0.46: the unlocked pages themselves, for the Four Kingdoms menu's grimoire (name, lang key, cost, cooldown)
