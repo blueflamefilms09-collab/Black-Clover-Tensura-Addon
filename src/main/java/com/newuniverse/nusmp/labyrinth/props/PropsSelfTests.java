@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * Why: nothing here can be played by its author, so the CI server smoke test runs these in the real game (prefix {@code dungeon.props}). {@code dungeon.props.rack}: a rack takes five items and
  * refuses the sixth, gives the last back first, keeps its contents through a save and a load, and honours its mode. {@code dungeon.props.convert}: a dressed armour stand becomes a rack that
  * shows the stand's items (or, when the loot variant was drawn, the themed gear), faces the way the stand faced, and a stand with no room is kept. {@code dungeon.props.loot}: every family's
- * table exists and gives something. {@code dungeon.props.flag}: the switch defaults on and the decision turns off with it. The tests build in the Overworld above the spawn (a throw-away CI
+ * table exists and gives something. {@code dungeon.props.flag}: the old rack path defaults OFF (the dungeon places no rack) and the rack block stays registered. {@code dungeon.props.stands}: the rare armour stand is breakable, unlocked, tagged and dressed for its floor. The tests build in the Overworld above the spawn (a throw-away CI
  * world) and clean up after themselves.
  */
 public final class PropsSelfTests {
@@ -30,6 +30,7 @@ public final class PropsSelfTests {
         SelfTests.register("dungeon.props.convert", PropsSelfTests::convert);
         SelfTests.register("dungeon.props.loot", PropsSelfTests::loot);
         SelfTests.register("dungeon.props.flag", PropsSelfTests::flag);
+        SelfTests.register("dungeon.props.stands", PropsSelfTests::stands);
     }
 
     private static BlockPos spot(ServerLevel level) {
@@ -126,9 +127,45 @@ public final class PropsSelfTests {
     }
 
     private static SelfTests.Result flag(MinecraftServer server) {
-        if (!PropsConfig.rackInsteadOfStand()) return SelfTests.Result.fail("props.rackInsteadOfArmourStand is not on by default");
+        // rooms rebuilt: the generator places no weapon rack unless the legacy path is switched on (both keys), and the keys default to off
+        if (PropsConfig.rackInsteadOfStand()) return SelfTests.Result.fail("props.rackInsteadOfArmourStand is on by default: the dungeon would place racks");
+        if (PropsConfig.legacyRackConversion()) return SelfTests.Result.fail("the legacy rack conversion is on by default");
+        if (RackPlacement.shouldConvert(PropsConfig.legacyRackConversion(), true, true, false)) return SelfTests.Result.fail("with the defaults a template stand would become a rack");
         if (RackPlacement.shouldConvert(false, true, true, false)) return SelfTests.Result.fail("the flag off must keep the armour stands");
         if (!RackPlacement.shouldConvert(true, true, true, false) || RackPlacement.shouldConvert(true, true, true, true)) return SelfTests.Result.fail("only the mod's own, freshly built stands convert");
-        return SelfTests.Result.ok("flag on by default, off keeps stands, loaded stands untouched");
+        if (PropsRegistry.RACK.get() == null || PropsRegistry.RACK_ITEM.get() == null) return SelfTests.Result.fail("the weapon rack block or item is no longer registered (old worlds need it)");
+        return SelfTests.Result.ok("racks never placed by default (legacy path off), rack block and item still registered");
+    }
+
+    private static SelfTests.Result stands(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos p = spot(level);
+        double rarity = PropsConfig.armourStandRarity();
+        if (rarity < 0.0 || rarity > 100.0 || PropsConfig.armourStandFloorCap() < 0 || PropsConfig.armourStandFloorCap() > ArmourStandRarity.HARD_CAP) return SelfTests.Result.fail("the stand config is out of range: " + rarity + " / " + PropsConfig.armourStandFloorCap());
+        ArmorStand stand = null;
+        try {
+            stand = EntityType.ARMOR_STAND.create(level);
+            if (stand == null) return SelfTests.Result.fail("no armour stand could be made");
+            stand.setPos(p.getX() + 0.5, p.getY(), p.getZ() + 0.5);
+            stand.setNoGravity(true);
+            stand.setInvulnerable(true);
+            if (!ArmourStandGate.templateSignature(stand)) return SelfTests.Result.fail("a template stand (invulnerable, no gravity) is not recognised");
+            if (ArmourStandGate.current() != null) return SelfTests.Result.fail("a generator scope is open outside the generator");
+            ArmourStandGate.makeRare(level, stand, ArmourStandGate.Scope.of(true, 35, 7L));
+            if (stand.isInvulnerable()) return SelfTests.Result.fail("the rare stand is still invulnerable (it must be breakable)");
+            if (!stand.getTags().contains(ArmourStandGate.RARE_TAG)) return SelfTests.Result.fail("the rare stand is not tagged");
+            if (stand.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) return SelfTests.Result.fail("the rare stand has no chest piece");
+            int worn = 0;
+            for (EquipmentSlot slot : new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) if (!stand.getItemBySlot(slot).isEmpty()) worn++;
+            if (worn < 2 || worn > 4) return SelfTests.Result.fail("the rare stand wears " + worn + " pieces (two to four)");
+            CompoundTag tag = new CompoundTag();
+            stand.saveWithoutId(tag);
+            if (tag.getInt("DisabledSlots") != 0) return SelfTests.Result.fail("the rare stand's slots are locked (a player must be able to take its armour)");
+            ArmourStandGate.run(ArmourStandGate.Scope.of(false, 0, 1L), () -> { });
+            if (ArmourStandGate.current() != null) return SelfTests.Result.fail("a generator scope was left open");
+            return SelfTests.Result.ok("rare stand: breakable, unlocked, tagged, " + worn + " pieces for floor 35 (" + RareStandSet.setOf(RareStandSet.band(35)) + "); chance " + rarity + "%, floor cap " + PropsConfig.armourStandFloorCap());
+        } finally {
+            if (stand != null) stand.discard();
+        }
     }
 }

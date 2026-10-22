@@ -49,6 +49,7 @@ public final class PropsRegistry {
     }
 
     public static void register(IEventBus gameBus) {
-        gameBus.addListener(EventPriority.HIGH, (EntityJoinLevelEvent e) -> RackConverter.onJoin(e));
+        gameBus.addListener(EventPriority.HIGHEST, (EntityJoinLevelEvent e) -> ArmourStandGate.onJoin(e));          // rooms rebuilt: the template's stands are dropped, the rare stand is dressed
+        gameBus.addListener(EventPriority.HIGH, (EntityJoinLevelEvent e) -> RackConverter.onJoin(e));              // legacy rack path: does nothing unless props.legacyRackConversion is on
     }
 }

@@ -27,6 +27,8 @@ public final class GenData extends SavedData {
         public boolean fallback, deadEnd;
         /** 1.107.0: was gen.clearance7 on when the sector was finished (its doorways, corridors and stairs were cut to 7 x 7)? Written only when true, so an older save is byte for byte the same. */
         public boolean clear7;
+        /** Rooms rebuilt: were the pieces of this sector built from the rebuilt rooms (gen.roomsRebuilt was on)? Written only when true, so an older save is byte for byte the same. */
+        public boolean rooms;
 
         CompoundTag save(int id) {
             CompoundTag t = new CompoundTag();
@@ -40,6 +42,7 @@ public final class GenData extends SavedData {
             t.putBoolean("fallback", fallback);
             t.putBoolean("dead", deadEnd);
             if (clear7) t.putBoolean("c7", true);
+            if (rooms) t.putBoolean("rr", true);
             return t;
         }
 
@@ -54,6 +57,7 @@ public final class GenData extends SavedData {
             s.fallback = t.getBoolean("fallback");
             s.deadEnd = t.getBoolean("dead");
             s.clear7 = t.getBoolean("c7");
+            s.rooms = t.getBoolean("rr");
             return s;
         }
     }

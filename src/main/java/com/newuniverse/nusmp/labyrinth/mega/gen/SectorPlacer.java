@@ -53,12 +53,18 @@ final class SectorPlacer {
     private boolean[][] connected;
     private int next;
     private int failed;
+    /** Rooms rebuilt: the pieces whose rooms hold the one rare armour stand of the floor ({@link RareStands}); the stands of every other piece are dropped as they are made ({@code ArmourStandGate}). */
+    private final java.util.Set<Integer> standRooms;
+    private final int depth;
 
     SectorPlacer(ServerLevel level, Sector sector, SectorGenerator.Built built, boolean repair) {
         this.level = level;
         this.sector = sector;
         this.built = built;
         this.repair = repair;
+        Result r = built.planned() == null ? null : built.planned().result();
+        this.standRooms = r == null ? java.util.Set.of() : RareStands.plan(r, built.templates());
+        this.depth = Math.abs(sector.firstFloor());
     }
 
     int total() { return built.pieces().size(); }
@@ -89,8 +95,9 @@ final class SectorPlacer {
             final Map<BlockPos, Marker> markers = built.markersByCell();
             final ServerChunkCache cache = level.getChunkSource();
             final BlockPos pivot = sector.entry;
-            DungeonGuard.internal(() -> RegionContext.run(sector, markers, () ->
-                    piece.place(level, level.structureManager(), cache.getGenerator(), level.getRandom(), BoundingBox.infinite(), pivot, false)));
+            final com.newuniverse.nusmp.labyrinth.props.ArmourStandGate.Scope stands = com.newuniverse.nusmp.labyrinth.props.ArmourStandGate.Scope.of(standRooms.contains(index), depth, Rng.mix(sector.seed, index));
+            DungeonGuard.internal(() -> RegionContext.run(sector, markers, () -> com.newuniverse.nusmp.labyrinth.props.ArmourStandGate.run(stands, () ->
+                    piece.place(level, level.structureManager(), cache.getGenerator(), level.getRandom(), BoundingBox.infinite(), pivot, false))));
             clearance(index);
         } catch (Throwable t) {
             failed++;

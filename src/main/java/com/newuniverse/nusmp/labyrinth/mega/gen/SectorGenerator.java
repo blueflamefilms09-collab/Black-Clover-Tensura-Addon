@@ -52,6 +52,7 @@ public final class SectorGenerator {
     private static final Logger LOG = LogUtils.getLogger();
     private static final Rotation[] ROTATIONS = {Rotation.NONE, Rotation.CLOCKWISE_90, Rotation.CLOCKWISE_180, Rotation.COUNTERCLOCKWISE_90};
     private static final Set<String> WARNED_PROCESSORS = new HashSet<>();
+    private static final Set<String> WARNED_VARIANTS = new HashSet<>();
 
     private SectorGenerator() {}
 
@@ -62,8 +63,23 @@ public final class SectorGenerator {
         public Result result() { return solved == null ? null : solved.result(); }
     }
 
-    /** The pieces and markers of a plan, ready to place. */
-    public record Built(Planned planned, List<PoolElementStructurePiece> pieces, List<Marker> markers, Map<BlockPos, Marker> markersByCell) {}
+    /**
+     * The pieces and markers of a plan, ready to place. {@code templates} are the template ids the pieces are really built from (the plan's own shapes, or the rebuilt rooms that stand
+     * in for them, {@link RoomVariants}); {@code rebuilt} says whether the rebuilt rooms were asked for.
+     */
+    public record Built(Planned planned, List<PoolElementStructurePiece> pieces, List<Marker> markers, Map<BlockPos, Marker> markersByCell, List<String> templates, boolean rebuilt) {
+        /** A build from the shipped templates only (every piece is built from the template its shape names). */
+        public Built(Planned planned, List<PoolElementStructurePiece> pieces, List<Marker> markers, Map<BlockPos, Marker> markersByCell) {
+            this(planned, pieces, markers, markersByCell, shipped(planned), false);
+        }
+
+        private static List<String> shipped(Planned planned) {
+            List<String> out = new ArrayList<>();
+            Result r = planned == null ? null : planned.result();
+            if (r != null) for (Placed p : r.pieces) out.add(p.shape.id);
+            return out;
+        }
+    }
 
     // ---------------------------------------------------------------- conversions
 
@@ -247,10 +263,21 @@ public final class SectorGenerator {
 
     // ---------------------------------------------------------------- pieces and markers
 
-    /** Turns a successful plan into game pieces and world markers. */
-    public static Built build(ServerLevel level, Planned planned) {
+    /** Turns a successful plan into game pieces and world markers, with the rooms the switch {@code gen.roomsRebuilt} says now. */
+    public static Built build(ServerLevel level, Planned planned) { return build(level, planned, RoomsSettings.enabled()); }
+
+    /**
+     * Turns a successful plan into game pieces and world markers. With {@code rebuilt} true every piece whose shipped template has rebuilt variants ({@link RoomVariants}) is built
+     * from one of them instead: the same size, sockets and data markers (the plan, the markers computed below and the geometry check are unchanged), new architecture inside. A variant
+     * that cannot be read falls back to the shipped template, so a missing file never leaves a hole in a wall.
+     */
+    public static Built build(ServerLevel level, Planned planned, boolean rebuilt) {
         Result r = planned.result();
         StructureTemplateManager mgr = level.getStructureManager();
+        List<String> ids = new ArrayList<>(r.pieces.size());
+        for (Placed p : r.pieces) ids.add(p.shape.id);
+        String[] use = rebuilt ? RoomVariants.assign(ids, r.seed, RoomVariants.table()) : ids.toArray(new String[0]);
+        List<String> used = new ArrayList<>(r.pieces.size());
         Registry<StructureProcessorList> registry = level.registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
         Map<String, Holder<StructureProcessorList>> holders = new HashMap<>();
         List<PoolElementStructurePiece> pieces = new ArrayList<>(r.pieces.size());
@@ -258,7 +285,9 @@ public final class SectorGenerator {
         Map<BlockPos, Marker> byCell = new LinkedHashMap<>();
         for (Placed p : r.pieces) {
             Holder<StructureProcessorList> h = holders.computeIfAbsent(p.processors, id -> processors(registry, id));
-            StructurePoolElement element = StructurePoolElement.single(p.shape.id, h).apply(StructureTemplatePool.Projection.RIGID);
+            String templateId = rebuilt ? readable(mgr, use[p.index], p.shape.id) : p.shape.id;
+            used.add(templateId);
+            StructurePoolElement element = StructurePoolElement.single(templateId, h).apply(StructureTemplatePool.Projection.RIGID);
             pieces.add(new PoolElementStructurePiece(mgr, element, pos(p.origin), 0, rotation(p.rot), bb(p.box), LiquidSettings.APPLY_WATERLOGGING));
             for (ShapeMarker m : p.shape.markers) {
                 Vec w = p.world(m.cell());
@@ -268,7 +297,16 @@ public final class SectorGenerator {
                 byCell.put(mp, marker);
             }
         }
-        return new Built(planned, pieces, markers, byCell);
+        return new Built(planned, pieces, markers, byCell, used, rebuilt);
+    }
+
+    /** {@code id} when the game can read that template, else {@code fallback} (the shipped template). */
+    private static String readable(StructureTemplateManager mgr, String id, String fallback) {
+        if (id.equals(fallback)) return id;
+        ResourceLocation rl = ResourceLocation.tryParse(id);
+        if (rl != null && mgr.get(rl).isPresent()) return id;
+        if (WARNED_VARIANTS.add(id)) LOG.warn("[nusmp] Rebuilt room {} cannot be read; the shipped template {} is built instead.", id, fallback);
+        return fallback;
     }
 
     /** The processor list a pool element names; an unknown or absent list becomes the empty list (once logged), so the sector is still placed, only unstyled. */
@@ -335,7 +373,10 @@ public final class SectorGenerator {
     }
 
     /** The statistics the status line and the log line report. */
-    public static GenData.Stat stat(Planned p, long totalMillis) {
+    public static GenData.Stat stat(Planned p, long totalMillis) { return stat(p, totalMillis, false); }
+
+    /** {@link #stat(Planned, long)} for a sector built with ({@code rooms} true) or without the rebuilt rooms. */
+    public static GenData.Stat stat(Planned p, long totalMillis, boolean rooms) {
         Result r = p.result();
         GenData.Stat st = new GenData.Stat();
         st.pieces = r.pieces.size();
@@ -346,6 +387,7 @@ public final class SectorGenerator {
         st.deadEnd = p.solved().deadEnd();
         st.millis = totalMillis;
         st.clear7 = ClearanceSettings.enabled();                         // 1.107.0: the pieces of this sector were cut to 7 x 7 (read again here: the switch is not expected to flip mid-job)
+        st.rooms = rooms;                                                // the rebuilt rooms were what the pieces were built from (the value the job built with)
         int link = 0;
         for (Placed x : r.pieces) if (x.link) link++;
         st.link = link;

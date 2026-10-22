@@ -424,7 +424,7 @@ public final class ExpansionQueue implements Expander {
         Sector next = s.nextId >= 0 ? data.sector(s.nextId) : null;
         if (next != null && SectorGenerator.playable(next)) SectorPlacer.clearSeal(level, s);       // a regenerated sector has its rubble back, but the tunnel to its successor exists
         long ms = (System.nanoTime() - j.startNanos) / 1_000_000L;
-        GenData.Stat st = SectorGenerator.stat(j.planned, ms);
+        GenData.Stat st = SectorGenerator.stat(j.planned, ms, j.built != null && j.built.rebuilt());       // rooms rebuilt: the sector remembers which rooms it was built from
         GenData.get(server).put(s.id, st);
         data.setDirty();
         LOG.info("MEGA sector {} {} rooms={} edges={} pieces={} loops={} tries={} ms={} road={} chain={}", s.id, s.state.name(), s.rooms.size(), s.edges.size(), st.pieces, st.loops, st.tries, ms,
