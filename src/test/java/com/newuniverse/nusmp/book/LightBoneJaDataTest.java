@@ -64,6 +64,18 @@ class LightBoneJaDataTest {
         assertFalse(read(ROOT.resolve("tools/lang/light_bone_ja.json")).toLowerCase().contains("claude"), "no assistant names in lang text");
     }
 
+    @Test
+    void theDocumentTablesEverySpellWithItsJapaneseNameStatusAndTheUnverifiedList() throws IOException {
+        String doc = read(ROOT.resolve("docs/magic/light_bone_ja.md"));
+        for (String magic : new String[]{"LIGHT", "BONE"})
+            for (LightBoneJa.Spell s : LightBoneJa.spells(magic)) {
+                assertTrue(doc.contains("| `" + s.id() + "` | " + s.english() + " | " + s.kanji()), "the document has no row for " + s.id());
+                assertTrue(doc.contains(s.status().name()), s.status().name());
+            }
+        assertTrue(doc.contains("Not verified") && doc.contains("could NOT be fetched") && doc.contains("magic.lightBoneJa"));
+        assertTrue(Files.isDirectory(ROOT.resolve("docs/previews/light_bone_ja")), "the preview PNGs");
+    }
+
     // ================================================================ assets
     @Test
     void everyTextureThePaintersAskForExistsAndTheSceneFileCoversEveryVariant() throws IOException {
