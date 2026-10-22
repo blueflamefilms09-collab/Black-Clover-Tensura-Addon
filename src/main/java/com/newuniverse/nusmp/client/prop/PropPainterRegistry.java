@@ -55,6 +55,7 @@ final class PropPainterRegistry {
         EarthPropPainter.register();         // 1.93.0: Earth / Rock / Stone / Sandstone / Red Ochre / Mineral constructs
         ShakudoPropPainter.register();       // 1.93.0: the rebuilt wiki magics
         ScalePropPainter.register();
+        ScaleBalancePainter.register();      // Scale casting: the floating balance scale
         SpikePropPainter.register();
         NailPropPainter.register();
         HairPropPainter.register();

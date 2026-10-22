@@ -28,6 +28,7 @@ SCOPE = [
     ("entity/djinn", ("glow", "rune", "nebula", "star", "halo")),
     ("relic_worn", ("glow", "nebula", "star", "halo", "atlas", "shimmer", "fx")),
     ("aura", ("glow",)),
+    ("entity/scalecast", ("glow",)),                    # Scale casting (docs/magic/scale_casting.md): the runes, the halo and the ring
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"

@@ -123,6 +123,7 @@ public final class ManaLaw {
         double boon = com.newuniverse.nusmp.mana.zone.GrandZones.boonOf(p);                                                  // 1.99.0: a strong player is fed by a Grand Magic Zone
         if (boon > 0) m *= com.newuniverse.nusmp.mana.zone.GrandZoneMath.powerMult(boon);
         if (negativeActive(p)) m *= 1.6;
+        m *= com.newuniverse.nusmp.scalecast.ScaleCastKit.magicMult(p);                      // Scale casting: a foe inside a Scale user's aura casts up to 30 percent weaker (docs/magic/scale_casting.md)
         return m;
     }
 

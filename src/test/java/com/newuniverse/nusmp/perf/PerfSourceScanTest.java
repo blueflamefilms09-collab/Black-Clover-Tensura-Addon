@@ -353,7 +353,7 @@ class PerfSourceScanTest {
         List<String> bad = new ArrayList<>();
         for (Path f : javaFiles()) {
             String rel = SRC.relativize(f).toString().replace('\\', '/');
-            boolean mine = rel.startsWith("franchise/") || rel.startsWith("compass3d/") || rel.startsWith("client/compass/") || rel.matches("relics/wave/Wave10[1-5].*\\.java");
+            boolean mine = rel.startsWith("franchise/") || rel.startsWith("compass3d/") || rel.startsWith("client/compass/") || rel.startsWith("scalecast/") || rel.startsWith("client/scalecast/") || rel.matches("relics/wave/Wave10[1-5].*\\.java");
             if (!mine) continue;
             String src = Files.readString(f);
             if (!ENTITY_SCAN.matcher(src).find()) continue;
