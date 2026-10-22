@@ -141,7 +141,7 @@ public abstract class GrimoireBook extends Skill {
         List<BookPage> f = familyPages();
         if (restBase == f && restAll != null) return restAll;
         if (getRegistryName() == null) return f;
-        restAll = CharacterPagesRest.append(getRegistryName().getPath(), f);
+        restAll = BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go last of all
         restBase = f;
         return restAll;
     }

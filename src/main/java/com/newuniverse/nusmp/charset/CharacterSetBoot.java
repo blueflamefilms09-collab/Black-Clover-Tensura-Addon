@@ -20,5 +20,6 @@ public final class CharacterSetBoot {
         CharacterSetGoldSelfTests.register();      // builder gold: magic.character_spells_gold (docs/magic/character_spells_gold.md)
         CharacterRestSelfTests.register();      // the squad captains / Spade / Heart / Diamond / Seabed sets (magic.character_spells_rest)
         CharacterSetBullsSelfTests.register();      // the Black Bulls' sets (docs/magic/character_spells_bulls.md)
+        BasicGrimoireSelfTests.register();      // the basic grimoires: reserved signature pages and the generic anime pages (magic.basic_grimoires, docs/magic/basic_grimoires.md)
     }
 }

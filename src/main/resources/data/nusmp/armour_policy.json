@@ -51,7 +51,7 @@
     "senses": true,
     "absorb": 0.012
    },
-   "new_pages": ["leo_parma", "salamanders_breath", "exploding_buckshot", "grand_slam", "soul_chain_deathmatch", "mereoleona_brachium_barrage", "mereoleona_purgatory", "mereoleona_purgatory_abyss", "mereoleona_hellfire_incarnate", "leopold_deep_spiral_flame", "leopold_crimson_eruption"],
+   "new_pages": ["leo_parma", "salamanders_breath", "exploding_buckshot", "grand_slam", "soul_chain_deathmatch", "mereoleona_brachium_barrage", "mereoleona_purgatory", "mereoleona_purgatory_abyss", "mereoleona_hellfire_incarnate", "leopold_deep_spiral_flame", "leopold_crimson_eruption", "shining_flame_cross", "combo_eruption"],
    "canon": "Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."
   },
   "EXPLOSION": {
@@ -92,11 +92,12 @@
     "senses": true,
     "absorb": 0.012
    },
-   "new_pages": ["point_blank_roar", "mermaid_form", "sea_dragon_god_form", "black_dragon_form"],
+   "new_pages": ["point_blank_roar", "mermaid_form", "sea_dragon_god_form", "black_dragon_form", "aqua_curtain", "cascade_destroyer", "holy_water_assassination_bullet"],
    "canon": "Noelle Silva's Valkyrie Armor / Valkyrie Dress (water armour of the Sea Dragon) and, with the water spirit Undine, the Saint Valkyrie Dress (feathered wing-like parts and a halo). Spirit Dive is the form; Valkyrie Dress and Sea Dragon's Scale Mail are the explicit armour pages."
   },
   "ICE": {
    "kind": "NONE",
+   "new_pages": ["heavenly_ice_fang", "icicle_bridge", "dissolve", "crystal_ice_shield"],
    "canon": "Ice spells are shots, walls and constructs (repo wiki: Heavenly Ice Fang, Cage of Infinite Hail ...); nothing is worn."
   },
   "MERCURY": {
@@ -136,7 +137,7 @@
     "senses": true,
     "absorb": 0.012
    },
-   "new_pages": ["tornado_fang", "sylphs_breath", "spirits_hushed_dance", "liable_tempest", "gale_white_bow", "swift_white_hawk", "heavenly_wind_ark", "wind_blades_shower", "spirit_of_boreas"],
+   "new_pages": ["tornado_fang", "sylphs_breath", "spirits_hushed_dance", "liable_tempest", "gale_white_bow", "swift_white_hawk", "heavenly_wind_ark", "wind_blades_shower", "spirit_of_boreas", "slicing_wind_emperor_wintry_wind", "slicing_wind_emperor_gale", "slicing_wind_emperor_mountain_retreat", "slicing_wind_emperor_whirlwind", "killing_kakara_blade", "piercing_tornado_needle"],
    "canon": "Yuno's Spirit Dive with the wind spirit Sylph (Spirit of Zephyr): the first dive transforms only the left half (one wing, half a crown, a ring round the wrist), the full dive has two wings and a full crown. Spirit Dive is the form; the Zephyr page is the older overlay (blackclover.ModeArmor)."
   },
   "STAR": {
@@ -229,7 +230,7 @@
     "attack": 0.1,
     "upkeep": 0.004
    },
-   "new_pages": ["deep_black_blade", "black_crescent_moon"],
+   "new_pages": ["deep_black_blade", "black_crescent_moon", "black_star"],
    "canon": "Yami Sukehiro's Dark Cloaked: his body and blades coated in dark mana (obsidian plate, horned hood, tattered cape in the mod). Dark Cloaked Guard is the explicit armour page; the Dark Cloaked slashes are spells, not armour."
   },
   "SHADOW": {
@@ -309,6 +310,7 @@
     "speed": 0.1,
     "upkeep": 0.004
    },
+   "new_pages": ["bear_claw", "cheetah_charge", "rhinoceros_armor"],
    "canon": "Beast Magic: Rhinoceros Armor (repo wiki spell page): a magic aura in the shape of a rhinoceros round the body, able to stop powerful impacts; the Beast spells (Bear Claw, Cheetah Charge ...) are animal forms. Primal Beast Form is the explicit page (sneak: the great beast)."
   },
   "BONE": {
