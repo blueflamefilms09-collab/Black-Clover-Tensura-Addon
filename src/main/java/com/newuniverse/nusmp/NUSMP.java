@@ -176,6 +176,7 @@ public class NUSMP {
             modEventBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.client.corpse.CorpseClient::registerLooks);     // after the dungeon player-model kit: the new looks of Jimmy, Alfredo and Carl win
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
+            com.newuniverse.nusmp.client.aura.NoelleFormsClientConfig.init(modEventBus, modContainer);                       // 1.99.0: noelleForms.classicLook (nusmp-noelle-forms-client.toml): the first Valkyrie Dress look
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.undine.UndineClient.init(modEventBus);                                               // Undine: the link key
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
@@ -433,6 +434,8 @@ public class NUSMP {
         com.newuniverse.nusmp.book.AntiMagicSelfTests.register();                                                 // 1.94.0: self-test antimagic.aura (Anti-Magic pays Aura, not AMP)
         com.newuniverse.nusmp.book.ArmourState.register();                                                        // 1.99.0: the worn armour (book.ArmourPolicy): stats, upkeep, lease, death / login / respawn / dimension
         com.newuniverse.nusmp.book.ArmourPolicySelfTests.register();                                              // 1.99.0: self-test magic.armour_policy
+        com.newuniverse.nusmp.book.NoelleFormState.register();                                                    // 1.99.0: Noelle's forms (book.NoelleFormRules): buffs, limits, the Black Dragon exhaustion
+        com.newuniverse.nusmp.book.NoelleFormsSelfTests.register();                                               // 1.99.0: self-test magic.noelle_forms
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
         com.newuniverse.nusmp.vupgrade.UpgradeParticlesSelfTests.register();                                      // 1.110.0: self-test visual.upgrade_particles (the upgraded items spawn only the mod's own particles, the budget and the first-person size cap)

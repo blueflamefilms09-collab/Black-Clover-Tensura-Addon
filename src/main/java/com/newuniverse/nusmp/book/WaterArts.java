@@ -125,10 +125,11 @@ public final class WaterArts {
         return true;
     }
 
-    /** Valkyrie Dress: the full Valkyrie armour (style 1) and the buffs of the old page, 30 s. */
+    /** Valkyrie Dress: the full Valkyrie armour (style 1; Noelle's grimoire: the Saint Valkyrie Dress, the character tier) and the buffs of the old page, 30 s. */
     static boolean valkyrieDress(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.WATERFX_BURST, p.position(), p.position().add(0, 1, 0), 26, 1.6f);
+        formFx(p, TH_VALKYRIE, 1.6);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1));
@@ -211,6 +212,65 @@ public final class WaterArts {
             t.knockback(2.2, -flat.x, -flat.z);
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 2));
         }
+        return true;
+    }
+
+    // ---------------------------------------------------------------- 1.99.0: Noelle's forms (docs/magic/noelle_forms.md)
+    private static final com.newuniverse.nusmp.particle.fx.ThemeKey TH_VALKYRIE = com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.valkyrie"),
+            TH_MERMAID = com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.mermaid"), TH_DRAGON = com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.dragon"),
+            TH_BLACK = com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.black_dragon");
+
+    /** The particles of a form's entry: one puff and one ring, both through the particle budgets (24 + 24 at most; the facade thins them by distance and quality). */
+    private static void formFx(ServerPlayer p, com.newuniverse.nusmp.particle.fx.ThemeKey theme, double radius) {
+        com.newuniverse.nusmp.particle.fx.Fx.send(p.serverLevel(), theme, p.getX(), p.getY() + 1.0, p.getZ(), 24, 0.7);
+        com.newuniverse.nusmp.particle.fx.Fx.ring(p.serverLevel(), theme, p.getX(), p.getY() + 0.1, p.getZ(), radius, 24);
+    }
+
+    /** The entry shockwave of the two dragon forms: foes within the form's radius are hit through the balance law and thrown back (at most {@link NoelleFormRules#ENTRY_MAX_TARGETS}). */
+    private static void entryWave(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, NoelleFormRules.Form f) {
+        float dmg = NoelleFormRules.entryDamage(f);
+        double r = NoelleFormRules.entryRadius(f) * Math.min(1.5f, GrimoireBook.size(i, p));
+        if (dmg <= 0f || r <= 0.0) return;
+        Vec3 c = p.position();
+        int n = 0;
+        for (LivingEntity t : GrimoireBook.around(p, c, r)) {
+            if (n++ >= NoelleFormRules.ENTRY_MAX_TARGETS) break;
+            b.hurt(i, p, t, mode, dmg);
+            Vec3 away = t.position().subtract(c);
+            away = away.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : away.normalize();
+            t.knockback(1.6, -away.x, -away.z);
+        }
+    }
+
+    /** Mermaid Form: the armour turns into a scaled tail with twin tails of hair and a trident of water; the form page puts the look on (armour policy, style 2), the buffs follow in {@link NoelleFormState}. Any Water mage. */
+    static boolean mermaidForm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        b.castCircle(p, 1.3f);
+        b.vfx(p, VfxShape.WATERFX_BURST, p.position(), p.position().add(0, 1, 0), 26, 1.5f);
+        formFx(p, TH_MERMAID, 1.4);
+        p.clearFire();
+        return true;
+    }
+
+    /** Sea Dragon God Form: Noelle's grimoire only. The horned, winged dragon-scale armour (style 3) with the dragon-head water cannon; a roar at the entry hits foes within 6 blocks for 12. */
+    static boolean seaDragonForm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        if (!NoelleFormRules.pageOpen(NoelleFormRules.PAGE_DRAGON, NoelleFormState.characterTier(p))) { GrimoireBook.fail(p, "Only Noelle Silva's grimoire may call the Sea God."); return false; }
+        b.castCircle(p, 1.6f);
+        b.vfx(p, VfxShape.WATERFX_BURST, p.position(), p.position().add(0, 1, 0), 30, 2.0f);
+        formFx(p, TH_DRAGON, 2.0);
+        entryWave(b, i, p, mode, NoelleFormRules.Form.SEA_DRAGON);
+        p.clearFire();
+        return true;
+    }
+
+    /** Black Dragon Form: Noelle's grimoire only, strictly limited (ninety seconds, then three minutes of exhaustion; refused during Devil Union and its aftermath). Style 4; entry shockwave 18 within 8 blocks. */
+    static boolean blackDragonForm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        if (!NoelleFormRules.pageOpen(NoelleFormRules.PAGE_BLACK, NoelleFormState.characterTier(p))) { GrimoireBook.fail(p, "Only Noelle Silva's grimoire holds the black scales."); return false; }
+        if (NoelleFormState.refuseBlackDragon(p)) return false;
+        b.castCircle(p, 1.8f);
+        b.vfx(p, VfxShape.WATERFX_BURST, p.position(), p.position().add(0, 1, 0), 34, 2.4f);
+        formFx(p, TH_BLACK, 2.4);
+        entryWave(b, i, p, mode, NoelleFormRules.Form.BLACK_DRAGON);
+        p.clearFire();
         return true;
     }
 }

@@ -1,0 +1,143 @@
+{
+ "_comment": "Noelle Silva's armour forms (docs/magic/noelle_forms.md): Aura.WATER style = form (low four bits) + 16 for the character tier. 1 Valkyrie / Saint Valkyrie, 2 Mermaid, 3 Sea Dragon God, 4 Black Dragon. Run: python3 -B tools/render_preview/preview.py noelle_val_char ...",
+ "nvl_piece_wings": {
+  "kind": "geo",
+  "model": "nvl_arm_wings",
+  "space": "PLAYER",
+  "layer": "TRANSLUCENT",
+  "glow": "FFBFF4FF",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "top",
+    "yaw": 0,
+    "pitch": 80
+   }
+  ]
+ },
+ "noelle_val_std": {
+  "kind": "aura",
+  "attr": "Water",
+  "realFiles": [
+   "book/NoelleFormRules.java",
+   "client/aura/NoelleFormRig.java",
+   "client/aura/NoelleFormsAura.java",
+   "client/aura/NoelleFormsOptions.java"
+  ],
+  "style": 1,
+  "total": 140,
+  "ages": [
+   60
+  ],
+  "tile": [
+   440,
+   600
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 5.800000000000001
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.4
+    ],
+    "dist": 6.0
+   }
+  ]
+ },
+ "noelle_val_char": {
+  "kind": "aura",
+  "attr": "Water",
+  "realFiles": [
+   "book/NoelleFormRules.java",
+   "client/aura/NoelleFormRig.java",
+   "client/aura/NoelleFormsAura.java",
+   "client/aura/NoelleFormsOptions.java"
+  ],
+  "style": 17,
+  "total": 140,
+  "ages": [
+   60
+  ],
+  "tile": [
+   440,
+   600
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 6.199999999999999
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 6.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.5
+    ],
+    "dist": 6.4
+   }
+  ]
+ }
+}

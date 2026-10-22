@@ -74,6 +74,9 @@ public final class CharacterSpells {
         lock("book_shadow", "unite_equus", CanonBook.NACHT);
         lock("book_shadow", "unite_felis", CanonBook.NACHT);
         lock("book_shadow", "unite_gallus_call", CanonBook.NACHT);
+        // 1.99.0: Noelle Silva's dragon forms (the Mermaid Form and the Valkyrie Dress stay open to every Water mage)
+        lock("book_water", "sea_dragon_god_form", CanonBook.NOELLE);
+        lock("book_water", "black_dragon_form", CanonBook.NOELLE);
     }
 
     /** Who may open this page, or null if anyone may. */

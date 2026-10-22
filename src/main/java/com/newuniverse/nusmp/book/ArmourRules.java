@@ -65,6 +65,12 @@ public final class ArmourRules {
         return base;
     }
 
+    /** The same with the character tier (Noelle's forms, {@link NoelleFormRules}): "character" raises every armour page whose table style is above 0 by the character bit when the caster is the canon character. */
+    public static int style(String styleBy, int base, boolean sneaking, boolean mastered, boolean character) {
+        int s = style(styleBy, base, sneaking, mastered);
+        return "character".equals(styleBy) && character && base > 0 ? s | NoelleFormRules.CHARACTER_BIT : s;
+    }
+
     // ------------------------------------------------------------------ timing
     public static boolean refreshDue(long now) { return now % REFRESH_EVERY == 0; }
 

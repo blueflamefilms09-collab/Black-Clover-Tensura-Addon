@@ -58,6 +58,7 @@ public final class WaterAura {
     }
 
     private static void paint(AuraContext c) {
+        if (NoelleFormsAura.paint(c)) return;      // 1.99.0: Noelle's forms (styles 1 to 4 remade, docs/magic/noelle_forms.md); style 0 and the classic switch fall through to the first look below
         float f = c.fade();
         if (f <= 0.002f) return;
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.17f) + 0.08f * Mth.sin(age * 0.53f);

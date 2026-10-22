@@ -28,7 +28,7 @@ public final class WaterRebuildSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("magic.water_rebuild", s -> check(MagicType.WATER, Aura.WATER, PropKind.WATER_1, PropKind.WATER_2, VfxShape.WATERFX_CAST,
-                List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress"), List.of("sea_dragons_wrath", "tide_lance", "scale_mail", "torrent")));
+                List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress"), List.of("sea_dragons_wrath", "tide_lance", "scale_mail", "torrent", "mermaid_form", "sea_dragon_god_form", "black_dragon_form")));
         SelfTests.register("magic.dark_rebuild", s -> check(MagicType.DARK, Aura.DARK, PropKind.DARK_1, PropKind.DARK_2, VfxShape.DARKFX_CAST,
                 List.of("avidya_slash", "black_hole", "dimension_slash", "death_thrust", "black_blade", "avidya_wild_slash", "black_moon", "iai_slash", "dimension_slash_equinox"),
                 List.of("dark_cloak", "shadow_embrace", "black_hole_collapse")));
