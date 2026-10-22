@@ -160,5 +160,8 @@ public enum PropKind {
     MUCUS_1,
     /** Celestial Spirit Magic (celestial.CelestialProps): a zodiac or silver spirit stepping out of its circle (param: key ordinal | phase << 8 | ticks since the cast << 16); and the Gate / the Spirit King's summon (param 0 gate, 1 king) */
     CELESTIAL_1,
-    CELESTIAL_2
+    CELESTIAL_2,
+    /** 1.99.0 Light and Bone Magic after the Black Clover wiki: one kind each, the variant is the low byte of the param (prop.LightJaProps / BoneJaProps, painters client.prop.LightJaPropPainter / BoneJaPropPainter) */
+    LIGHT_JA,
+    BONE_JA
 }

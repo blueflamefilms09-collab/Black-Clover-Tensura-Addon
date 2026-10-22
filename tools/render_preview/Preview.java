@@ -657,6 +657,8 @@ public final class Preview {
         e.setPos(pos[0], pos[1], pos[2]);
         e.setYRot(yaw);
         e.yRotO = yaw;
+        e.setXRot((float) num(sc, "xRot", 0.0));                       // 1.99.0: a prop scene may tilt the prop (pitch in degrees, positive = looking down), like the server does for a directional prop
+        e.xRotO = e.getXRot();
         e.previewSetSize((float) size[0], (float) size[1]);
         e.previewSet(kind, scale, maxLife, param, seed, health);
         if (sc.get("target") != null) {

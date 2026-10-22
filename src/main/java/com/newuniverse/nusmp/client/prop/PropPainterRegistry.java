@@ -78,6 +78,8 @@ final class PropPainterRegistry {
         DarkPropPainter.register();
         LightningPropPainter.register();
         FlamePropPainter.register();
+        LightJaPropPainter.register();       // 1.99.0: Light and Bone Magic after the Black Clover wiki
+        BoneJaPropPainter.register();
         TreePropPainter.register();          // 1.93.0 nature-magic rebuild: the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
         VinePropPainter.register();
         PlantPropPainter.register();
