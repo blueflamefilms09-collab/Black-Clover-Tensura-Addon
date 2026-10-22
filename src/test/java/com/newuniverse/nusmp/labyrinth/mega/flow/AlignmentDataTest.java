@@ -67,7 +67,7 @@ class AlignmentDataTest {
      * lives in a family that decides anyway, or it really is light or dark) or to give it an exact NEUTRAL entry in the file (the Raging Black Bull is the example).
      */
     private static final Set<String> TOUCHED_BY_NAME = new LinkedHashSet<>(List.of((
-            "abyssal_ward abyssal_whirlpool arresting_dark_weave demon_sword_dainsleif black_blade black_divider black_flame_bullets black_flame_pillar black_flame_twister black_flame_veil "
+            "abyssal_ward abyssal_whirlpool black_crescent_moon black_dragon_form deep_black_blade arresting_dark_weave demon_sword_dainsleif black_blade black_divider black_flame_bullets black_flame_pillar black_flame_twister black_flame_veil "
             + "black_form black_hole black_hurricane black_lightning_battle_fiend black_meteorite black_moon black_oil_eruption black_oil_sea black_oil_strike blood_bullet "
             + "blood_pact blood_whip catoblepas_s_evil_eye curse_candle_ritual_disk curse_cleanse curse_epidemic curse_filled_nails curse_misfortune curse_strike "
             + "curse_transfer curse_warding_strike curse_workers_neighbor cursed_step dark_tide_wave death_scythe death_thrust demon_beast_mantle demon_beast_strike "
