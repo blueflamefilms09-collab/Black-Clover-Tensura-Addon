@@ -47,7 +47,7 @@ class SpiritDarkSourceScanTest {
 
     @Test
     void nothingOnATickOrInAnEventScansTheWorld() throws IOException {
-        for (String f : new String[]{"SpiritDark.java", "SpiritDarkEvents.java", "SpiritDarkProps.java", "SpiritDarkNet.java"}) {
+        for (String f : new String[]{"SpiritDark.java", "SpiritDarkEvents.java", "SpiritDarkProps.java", "SpiritDarkControl.java"}) {
             String c = code(SRC.resolve("spiritdark/" + f));
             assertFalse(c.contains("getEntitiesOfClass") || c.contains("getEntities(") || c.contains("GrimoireBook.around") || c.contains("getBlockState") || c.contains("getChunk") || c.contains("getNearbyEntities"), f + " must not search the world");
         }

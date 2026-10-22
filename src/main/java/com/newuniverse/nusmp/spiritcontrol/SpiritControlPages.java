@@ -113,9 +113,10 @@ public final class SpiritControlPages {
             return;
         }
         CompoundTag ui = new CompoundTag();
+        SpiritHandle call = callTarget(p, l);                                              // the spirit the call page would toggle: its name and its state are on the page
         ui.putString("id", h.id());
-        ui.putString("name", h.display());
-        ui.putBoolean("out", callTarget(p, l).isOut(p));
+        ui.putString("name", call.display());
+        ui.putBoolean("out", call.isOut(p));
         ui.putBoolean("combat", SpiritCombat.isOn(p.getUUID()));
         for (int i = 0; i < h.abilities().size(); i++) ui.putString("a" + (i + 1), h.abilities().get(i).label());
         if (!ui.equals(tag.getCompound(UI))) { tag.put(UI, ui); inst.markDirty(); }
@@ -124,6 +125,7 @@ public final class SpiritControlPages {
     /** After an action: rewrites the tag of every grimoire the player has, so the page names are right at once. */
     public static void refresh(ServerPlayer p) {
         var skills = SkillAPI.getSkillsFrom(p);
+        if (skills == null) return;
         for (var h : com.newuniverse.nusmp.skill.NUSkills.BOOKS)
             skills.getSkill(h.getId()).ifPresent(i -> { if (i.getSkill() instanceof GrimoireBook b) sync(b, i, p); });
     }

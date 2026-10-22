@@ -62,7 +62,7 @@ Switch it on (page or command). While it is on and a spirit is out, every `comba
 4. cast: damage through the balance law, credited to you, capped by `combat.maxDamagePerCast`; power follows the bond and both pools (0.6 to 1.6 times).
 
 If either pool cannot pay, the spirit stops and says so on the action bar (at most once in five seconds). The spirit never spends your last `combat.userReservePercent` (10) percent of magicules.
-Targets: hostile mobs and mobs that hunt you; a player only where the server already counts them your enemy (PvP allowed, not your FTB team); never yourself, your pets, summons, allies or teammates
+Targets: hostile mobs and mobs that hunt you (with combat mode on, an idle spirit will also open fire on a hostile mob it can see within range, one search every 40 ticks); a player only where the server already counts them your enemy (PvP allowed, not your FTB team); never yourself, your pets, summons, allies or teammates
 (the existing `Foes` helper decides). A Spirit Lord with combat mode on stops its free casts and casts through this code instead (so it pays); with combat mode off it casts for nothing as always.
 Combat mode ends at logout, death, respawn and dimension change, like the spirits' own links; the pools survive a death or a change of world (no refill by dying), and go at logout.
 
@@ -118,7 +118,7 @@ Everything is decided on the server; there is NO packet from the client for any 
 | REPLACED (owner asked) | the seven spirit keybindings and their client key handling and key packets: Sylph key, Undine key, Gnome key, Salamander key, Spirit of Light (link, command), Spirit of Darkness (link, step, power), Spirit of Space (link, cycle, use). Deleted: `client/{sylph,undine,gnome,firecast,spiritdark,spiritspace}/*Client`, the six `*Net` key packets, the key record of `SpiritLightNet`, the `RegisterKeyMappingsEvent` hooks, the six `NUSMP` client init lines. The `key.nusmp.*` lang entries stay in `en_us.json` (harmless) |
 | KEPT | every server-side action (`toggle`, `link`, `unlink`, `onKey`, the forms, the abilities), the spirits' looks, sounds, caps, ledgers and moods, the Spirit Lord entities and their free casts (while combat mode is off), the Spirit Lord skill's two modes, Spirit Dive and Spirit Burst, `/spiritspace` (waypoint names), `/multiverse spirit bond|incarnate|info`, the admin `spirit_body`, `spirit_lord`, `spirit_release` commands, all page ids and mode numbers of every book |
 
-Shared files touched (additions only, except the key deletions): `GrimoireBook` (7 hooks), `MultiverseCommands` (1 line), `NUSMP` (1 line added, 6 key lines removed), the seven spirit Boots (1 line each, the
+Shared files touched (additions only, except the key deletions): `GrimoireBook` (eight small hooks: the page list, the instant rule, the gate in `usable`, the page name, the page price, the press, the once-a-second tag, and two tiny helpers), `MultiverseCommands` (1 line), `NUSMP` (1 line added, 6 key lines removed), the seven spirit Boots (1 line each, the
 payload line removed), `SpiritLordSkill` (mode 2), `SpiritLordEntity` and `ElementalSpiritLordEntity` (1 guard line each), `Salamander.summonDragon` and `SylphCasting.summonPowered` (visibility only),
 `SpiritLightNet` (key packet removed), `ManaZoneSelfTests` (the Mana Zone's three pages must now be the three right before the spirit pages instead of the last three).
 

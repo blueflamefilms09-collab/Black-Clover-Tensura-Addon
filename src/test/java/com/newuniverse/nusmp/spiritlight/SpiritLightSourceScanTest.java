@@ -79,7 +79,6 @@ class SpiritLightSourceScanTest {
     @Test
     void everyPacketIsValidatedOnTheServer() throws IOException {
         String net = code(SRC.resolve("spiritlight/SpiritLightNet.java"));
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
         assertFalse(net.contains("playToServer"), "3.0.0: the key packet is gone, only the voice line travels (server to client)");
         assertTrue(net.contains("playToClient"), "the voice packet goes to the client");
         assertTrue(net.contains("readUtf(MAX_ID)") && net.contains("SpiritLightVoiceLines.has("), "the line id is a bounded string checked against the catalogue");

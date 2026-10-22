@@ -62,6 +62,14 @@ class PageGateTest {
     }
 
     @Test
+    void anAvatarNeverCastsASpiritPage() {
+        for (String id : PageGate.pageIds()) {
+            assertEquals(com.newuniverse.nusmp.avatar.cast.AvatarSkillList.Kind.NONE, com.newuniverse.nusmp.avatar.cast.AvatarSkillList.kind(id, 0), id);
+            assertFalse(com.newuniverse.nusmp.avatar.cast.AvatarSkillList.allowedPage(id, 3.0), id);
+        }
+    }
+
+    @Test
     void theLabels() {
         assertEquals("Summon Sylph", PageGate.callLabel("Sylph", false));
         assertEquals("Release Sylph", PageGate.callLabel("Sylph", true));
