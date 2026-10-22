@@ -22,7 +22,8 @@ class FlatPropsSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
 
     /** The only files that may name a flat sprite without branching on the switch: the list itself and the texture constants. */
-    private static final Set<String> NAMES_ONLY = Set.of("vfx/FlatProps.java", "vfx/FlatPropsSelfTests.java", "vfx/client/VfxTextures.java");
+    private static final Set<String> NAMES_ONLY = Set.of("vfx/FlatProps.java", "vfx/FlatPropsSelfTests.java", "vfx/client/VfxTextures.java",
+            "vfx/client/layer/SoulCorpseFxLayer.java", "vfx/client/layer/SoulFxLayer.java");   // 1.112.0: these two only draw through VfxVertexBuffer, whose one gate refuses the flat sprites
 
     /** The single flat quads the prop painters draw: ground shadows and ring decals (soft textured, dark or ring-shaped, never an object cut-out). Review before adding to this list. */
     private static final Set<String> PROP_QUAD_FILES = Set.of("TreeDraw", "BeastDraw", "RecombinationPropPainter", "ShakudoPropDraw", "SealDraw", "EarthPropPainter", "CorundumDraw", "KeyDraw",
@@ -71,7 +72,7 @@ class FlatPropsSourceScanTest {
     void noPropPainterOrAuraNamesAFlatSprite() throws IOException {
         List<String> bad = new ArrayList<>();
         for (String dir : new String[]{"client/prop", "client/aura", "prop"}) {
-            for (Path p : javaFiles(dir)) if (namesFlatSprite(code(p))) bad.add(rel(p));
+            for (Path p : javaFiles(dir)) { String c = code(p); if (namesFlatSprite(c) && !c.contains("FlatProps.drawFlat()")) bad.add(rel(p)); }
         }
         assertTrue(bad.isEmpty(), "a prop painter or aura draws a flat cut-out: " + bad);
     }

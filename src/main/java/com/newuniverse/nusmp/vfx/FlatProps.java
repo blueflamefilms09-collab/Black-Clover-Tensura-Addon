@@ -25,7 +25,11 @@ public final class FlatProps {
             new Entry("construct_sword", "a sword (white cut-out)", List.of("Bone Armor", "Iron Maiden", "Creation: Arsenal", "Pack Hunt", "Hero sword float", "Hero shield ward", "Weapon arts constructs")),
             new Entry("construct_axe", "a double-bit axe (two white half-moons on a stick)", List.of("Bone Armor", "Iron Maiden", "Creation: Arsenal", "Pack Hunt", "Hero sword float", "Hero shield ward", "Weapon arts constructs")),
             new Entry("construct_shield", "a shield (a big white slab)", List.of("Bone Armor", "Iron Maiden", "Creation: Arsenal", "Pack Hunt", "Hero sword float", "Hero shield ward", "Weapon arts constructs")),
-            new Entry("arc_silhouette", "a person (white paper figure of the caster)", List.of("Mirror: Real Double", "Mirror: Real Double (step out of the glass)")));
+            new Entry("arc_silhouette", "a person (white paper figure of the caster)", List.of("Mirror: Real Double", "Mirror: Real Double (step out of the glass)")),
+            new Entry("scorpse_hand", "a hand (flat white billboard)", List.of("Soul Corpse: Grave Field")),
+            new Entry("scorpse_grave", "a grave (flat white billboard)", List.of("Soul Corpse: Grave Field")),
+            new Entry("scorpse_shard", "a bone shard (flat white billboard)", List.of("Soul Corpse: bone shards")),
+            new Entry("soul_skull", "a skull (flat white billboard)", List.of("Soul Magic", "Soul Corpse")));
 
     private static volatile boolean drawFlat = false;
 

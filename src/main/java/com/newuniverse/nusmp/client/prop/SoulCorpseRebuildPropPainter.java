@@ -102,7 +102,9 @@ public final class SoulCorpseRebuildPropPainter {
         pose.translate(0f, 0.04f, 0f);
         SealDraw.flat(pose, vc, (0.9f + (closing ? 0.25f : 0f)) * s, -age * 0.6f, SealDraw.argb(0.6f * rise, THREAD), FB);
         pose.popPose();
-        VertexConsumer g = buf.getBuffer(AuraRender.additive(grave));
-        SealDraw.glow(pose, g, 0f, 0.15f * s, 0f, 0.5f * s * rise, 0f, SealDraw.argb(0.45f * rise, PALE), FB);
+        if (com.newuniverse.nusmp.vfx.FlatProps.drawFlat()) {                  // 1.112.0: the flat white grave billboard only comes back with visual.flatProps
+            VertexConsumer g = buf.getBuffer(AuraRender.additive(grave));
+            SealDraw.glow(pose, g, 0f, 0.15f * s, 0f, 0.5f * s * rise, 0f, SealDraw.argb(0.45f * rise, PALE), FB);
+        }
     }
 }
