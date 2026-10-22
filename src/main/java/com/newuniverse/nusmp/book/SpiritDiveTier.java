@@ -117,20 +117,23 @@ public final class SpiritDiveTier {
      * @param motes   mana motes streaming into the body
      * @param bits    element bits rising round the body
      * @param strands hair / mane / ribbon strands (each a few segments, see {@link #SEGMENTS})
+     * @param spirals helices of the element rising round the body (wind streams, flame ribbons, water ribbons), {@link #SPIRAL_SEGMENTS} quads each
      * @param rings   flat rings (ground sigil, counter ring, rune rings, the entry shockwave): two quads each (both faces)
      * @param flares  camera-facing flares (eyes, hands, the entry flash)
      */
-    public record Budget(int columns, int pillars, int motes, int bits, int strands, int rings, int flares) {
-        public int quads() { return columns * 2 + pillars * 2 + motes + bits + strands * SEGMENTS + rings * 2 + flares; }
+    public record Budget(int columns, int pillars, int motes, int bits, int strands, int spirals, int rings, int flares) {
+        public int quads() { return columns * 2 + pillars * 2 + motes + bits + strands * SEGMENTS + spirals * SPIRAL_SEGMENTS + rings * 2 + flares; }
     }
 
     /** Segments of one strand (a ribbon of this many quads). */
     public static final int SEGMENTS = 4;
+    /** Segments of one helix. */
+    public static final int SPIRAL_SEGMENTS = 8;
 
     private static final Budget[][] BUDGET = {
-            //            FULL                                         MID                                        FAR                              CULLED
-            {new Budget(4, 0, 6, 4, 3, 1, 2), new Budget(2, 0, 2, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 0, 0)},       // standard tier
-            {new Budget(8, 2, 18, 12, 9, 6, 6), new Budget(4, 0, 6, 0, 3, 2, 2), new Budget(0, 0, 0, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 0, 0)},   // character tier
+            //            FULL                                            MID                                             FAR                                CULLED
+            {new Budget(4, 0, 6, 4, 3, 1, 1, 2), new Budget(2, 0, 2, 0, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 0, 0, 0)},       // standard tier
+            {new Budget(8, 2, 18, 12, 9, 3, 6, 6), new Budget(4, 0, 6, 0, 3, 1, 2, 2), new Budget(0, 0, 0, 0, 0, 0, 1, 0), new Budget(0, 0, 0, 0, 0, 0, 0, 0)},    // character tier
     };
 
     /** The effect budget of a tier at a level of detail. */

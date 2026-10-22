@@ -192,6 +192,8 @@ public final class SpiritDivePieces {
         ALL.add(d(S + "water_ribbon_r", Anchor.BODY, 8, -10, -2, 10, true, false, "idle", false, false, 1.1f));
         ALL.add(d(S + "water_rings", Anchor.HEAD, 10, 0, -16, 0, true, false, "idle", true, true, 1.3f));              // Noelle: the halo of water rings
         ALL.add(d(S + "water_train", Anchor.BODY, 5, 0, 8, 10, true, false, "idle", true, false, 1.1f));                // Noelle: the flowing train of the dress
+        ALL.add(d(S + "fire_flames_l", Anchor.BODY, 8, 10, -4, 12, true, true, "idle", false, false, 1.2f));              // the remade fire dive's wings of flame (both tiers)
+        ALL.add(d(S + "fire_flames_r", Anchor.BODY, 9, -10, -4, 12, true, true, "idle", false, false, 1.2f));
         ALL.add(d(S + "earth_crown", Anchor.HEAD, 3, 0, -16, 0, false, false, "idle", false, true, 1.1f));              // the rock crown with floating crystals
     }
 
@@ -277,9 +279,9 @@ public final class SpiritDivePieces {
 
     private static final List<String> V2_FIRE_HALF = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_wingbud_r",
             S + "fire_wingbud_l");
-    private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_chest", S + "fire_wing_r", S + "fire_wing_l");
+    private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_chest", S + "fire_flames_l", S + "fire_flames_r");
     private static final List<String> V2_FUEGO_HALF = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_wingbud_r", S + "fire_wingbud_l", S + "fire_mane");
-    private static final List<String> V2_FUEGO_FULL = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_wing_r", S + "fire_wing_l",
+    private static final List<String> V2_FUEGO_FULL = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_flames_l", S + "fire_flames_r",
             S + "fire_mane", S + "fire_cape");
 
     private static final List<String> V2_WATER_HALF = list(W + "chest", W + "skirt", W + "pauldron_r", W + "pauldron_l", W + "gauntlet_r", W + "gauntlet_l", W + "helm", W + "wing_r", W + "wing_l", W + "halo");

@@ -129,6 +129,7 @@ PAL_YUNO = ("2AA878", "7CF8B8", "FFFFE8", "B8FFD8")                 # Yuno: gree
 PAL_YUNO_GOLD = ("A08A30", "F0DC78", "FFFFE0", "FFF0A0")
 PAL_FIRE = ("A01408", "FF6A1C", "FFF0A0", "FF9A30")                 # the standard fire dive
 PAL_FUEGO = ("8A0C10", "F03A18", "FFE070", "FF7A2A")                # Fuegoleon: crimson with a gold-white heart
+PAL_FLAME = ("7A0A06", "E23A0E", "FF9A30", "FF6A18")               # flames that stay orange-red (the wings, the mane, the tongues of the arm): the heart is amber, not white
 PAL_FUEGO_GOLD = ("A8741A", "FFC040", "FFF4C0", "FFD060")
 PAL_WATER = ("2C78D0", "6EBEF4", "F2FCFF", "A8F4FF")
 PAL_NOELLE = ("2A62C8", "62B8FF", "F4F8FF", "B8E8FF")              # Noelle: blue with a silver-white heart
@@ -256,7 +257,7 @@ def flame_arm(out):
     p.box("root", (-9.9, 6.9, -3.6), (7.2, 3.4, 7.2), M3)                                     # the fist
     for k in range(4):                                                                         # the knuckles
         p.box("root", (-9.6 + k * 1.75, 6.4, -4.4), (1.7, 1.6, 1.3), M3, d=3)
-    tg = PAL_FUEGO
+    tg = PAL_FLAME
 
     def tongue(name, pivot, origin, size, rot, phase, amp=9.0, faces=("north", "south"), down=False, seed=0):
         p.bone(name, pivot, parent="root", rotation=rot)
@@ -293,8 +294,8 @@ def fire_mane(out):
             b = "t%d_%d" % (side, i)
             p.bone(b, P, parent="m", rotation=(0, -sg * (58 + i * 3), -sg * rz))
             shape = tip_right if side else tip_left
-            mat = shape_mat(lambda tag, sh=shape, ph=i * 1.3 + side: sh(tongue_polys(sway=0.22, phase=ph, base=0.95, wob=0.09)), PAL_FUEGO if (i + side) % 2 == 0 else PAL_FIRE, "manetongue%d" % ((i + side) % 2),
-                            streaks=2.4, body_alpha=0.52, core=0.55, glow_k=0.55, flip_south=False)
+            mat = shape_mat(lambda tag, sh=shape, ph=i * 1.3 + side: sh(tongue_polys(sway=0.22, phase=ph, base=0.95, wob=0.09)), PAL_FLAME if (i + side) % 2 == 0 else PAL_FUEGO, "manetongue%d" % ((i + side) % 2),
+                            streaks=2.4, body_alpha=0.52, core=0.5, glow_k=0.4, flip_south=False)
             o = (P[0], P[1] - wd / 2, P[2]) if side else (P[0] - L, P[1] - wd / 2, P[2])
             p.box(b, o, (L, wd, 0.4), mat)
             sine_rot(a, "idle", b, 2.0, 2, 7.0 * sg, 0.1 * i + 0.3 * side)
@@ -327,10 +328,37 @@ def fire_cape(out):
     return made(p, out)
 
 
+def fire_flames(side, out):
+    """Wings of flame (the remade fire dive's wings; the old cross-hatched feathers stay for the classic look): a fan of four flame tongues a side from the upper back, long and swaying."""
+    n = "fire_flames_" + lr(side)
+    p = Piece(KEY, "arm_" + n, density=4)
+    a = Anim()
+    a.clip("idle", length=2.2, loop=True)
+    sg = 1.0 if side else -1.0
+    P = (sg * 2.4, 22.0, 2.8)
+    p.bone("w", P, parent="root")
+    sine_rot(a, "idle", "w", 2.2, 2, -6.0 * sg, 0.0)
+    sine_rot(a, "idle", "w", 2.2, 1, 4.0 * sg, 0.18)
+    defs = [(-74, 26.0, 8.0), (-48, 23.0, 7.6), (-22, 20.0, 7.2), (4, 15.0, 6.4)]
+    shape = tip_right if side else tip_left
+    for i, (rz, L, wd) in enumerate(defs):
+        b = "f%d" % i
+        p.bone(b, P, parent="w", rotation=(0, -sg * (24 + i * 4), -sg * rz))
+        mat = shape_mat(lambda tag, sh=shape, ph=i * 1.7 + (side * 0.9): sh(tongue_polys(sway=0.2, phase=ph, base=0.95, wob=0.08)), PAL_FLAME if i % 2 == 0 else PAL_FUEGO, "flamewing%d" % (i % 2),
+                        streaks=2.6, body_alpha=0.5, core=0.5, glow_k=0.4, flip_south=False)
+        o = (P[0], P[1] - wd / 2, P[2]) if side else (P[0] - L, P[1] - wd / 2, P[2])
+        p.box(b, o, (L, wd, 0.4), mat)
+        sine_rot(a, "idle", b, 2.2, 2, 6.0 * sg, 0.12 * i + 0.3 * side)
+    p.save(a)
+    return made(p, out)
+
+
 def fire(out):
     flame_arm(out)
     fire_mane(out)
     fire_cape(out)
+    for s_ in (0, 1):
+        fire_flames(s_, out)
 
 
 # ====================================================================================================================== WATER (Noelle)

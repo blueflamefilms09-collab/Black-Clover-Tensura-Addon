@@ -105,7 +105,7 @@ public final class FuegoleonArmFx {
                 float nx = px - 1.4f + wave * 0.6f, ny = py - (2.2f - 0.3f * seg) * lift, nz = pz + (3.0f + 1.5f * Math.min(1f, swing)) * lift;
                 float w = (1.7f - 0.3f * seg) * (0.8f + 0.2f * k);
                 int col = SealDraw.argb(0.8f * k * (1f - 0.18f * seg), SealDraw.mix(C_MANE_HOT, C_MANE, seg / (float) STRAND_SEGMENTS));
-                SealDraw.ribbon(pose, vc, nx, ny, nz, px, py, pz, w, 1f - (seg + 1f) / STRAND_SEGMENTS, 1f - (float) seg / STRAND_SEGMENTS, col, FB);
+                SealDraw.ribbon(pose, vc, nx, ny, nz, px, py, pz, w, 0.25f, 1f, col, FB);
                 px = nx; py = ny; pz = nz;
             }
         }

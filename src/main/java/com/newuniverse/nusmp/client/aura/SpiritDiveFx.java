@@ -23,6 +23,7 @@ import org.joml.Quaternionf;
  * <ul>
  *   <li><b>ground</b>: the sigil of the element under the feet (character tier: a large turning sigil and a counter-ring; standard: one turning ring);</li>
  *   <li><b>columns</b>: streaks of light rising round the body (the aura: Yuno's green, Fuegoleon's crimson, Noelle's blue);</li>
+ *   <li><b>spirals</b>: helices of the element winding up round the body (wind streams, flame ribbons, water ribbons);</li>
  *   <li><b>entry</b> (character tier, the first {@link SpiritDiveTier#ENTRY_TICKS} ticks): a shockwave ring and a second one, a pillar of light and a flash at the chest;</li>
  *   <li><b>rune rings</b> (character tier, full level of detail): two tilted rings of runes orbiting the torso;</li>
  *   <li><b>motes and bits</b>: mana flowing into the body (the passive intake of the dive) and bits of the element rising;</li>
@@ -66,8 +67,9 @@ public final class SpiritDiveFx {
         int glow = SpiritDiveTier.glow(el, g, saint), prim = SpiritDiveTier.primary(el, g), acc = SpiritDiveTier.accent(el, g);
         float lit = pulse * (1f + 0.35f * flare);
         boolean half = SpiritDivePieces.halfBody(el, st);
-        ground(c, el, character, b.rings(), f, lit, glow, acc);
+        ground(c, el, character, b.rings(), f, lit, glow, prim);
         if (b.columns() > 0) columns(c, b.columns(), half, f, lit, glow, acc);
+        if (b.spirals() > 0) spirals(c, el, b.spirals(), half, f, lit, prim, acc);
         if (character && b.pillars() > 0) entry(c, el, b, f, glow, acc);
         if (character && SpiritDiveTier.extras(lod)) runeRings(c, f, lit, glow, acc);
         if (b.motes() > 0) motes(c, b.motes(), half, f, glow, acc);
@@ -126,6 +128,36 @@ public final class SpiritDiveFx {
             float cx = Mth.cos(a) * r, cz = Mth.sin(a) * r;
             SealDraw.plane(pose, vc, cx, y, cz, ux, 0f, uz, 0f, -hh, 0f, false, col, FB);
             SealDraw.plane(pose, vc, cx, y, cz, ux, 0f, uz, 0f, -hh, 0f, true, col, FB);
+        }
+    }
+
+        // ------------------------------------------------------------------ the helices
+    /** Streams of the element winding up round the body: a ribbon of {@link SpiritDiveTier#SPIRAL_SEGMENTS} camera-facing quads per helix, the bright end low (flames, water) or high (wind). */
+    private static void spirals(AuraContext c, Element el, int n, boolean half, float f, float lit, int prim, int acc) {
+        PoseStack pose = c.pose();
+        VertexConsumer vc = add(c, WISP);
+        float age = c.age();
+        float speed = el == Element.WIND ? 0.075f : el == Element.FIRE ? 0.05f : 0.06f;
+        boolean headLow = el != Element.WIND;
+        int seg = SpiritDiveTier.SPIRAL_SEGMENTS;
+        for (int h = 0; h < n; h++) {
+            float dir = h % 2 == 0 ? 1f : -1f, phase = h * Mth.TWO_PI / n + age * speed * dir;
+            float px = 0f, py = 0f, pz = 0f;
+            for (int k = 0; k <= seg; k++) {
+                float t = k / (float) seg;
+                float a = phase + t * Mth.TWO_PI * 1.15f * dir;
+                float r = 0.58f + 0.2f * Mth.sin(t * Mth.PI) + 0.04f * Mth.sin(age * 0.09f + h);
+                float x = Mth.cos(a) * r, y = 1.5f - (0.08f + t * 2.05f), z = Mth.sin(a) * r;
+                if (half) x = Math.abs(x);
+                if (k > 0) {
+                    float tPrev = (k - 1f) / seg, tm = (k - 0.5f) / seg, env = Mth.sin(tm * Mth.PI);
+                    int col = SealDraw.argb(1.0f * env * f * lit, SealDraw.mix(prim, acc, 0.35f + 0.4f * (1f - tm)));
+                    float hw = 0.08f + 0.1f * env;
+                    if (headLow) SealDraw.ribbon(pose, vc, x, y, z, px, py, pz, hw, 0.25f, 1f, col, FB);          // the bright end is the low one (flames, water)
+                    else SealDraw.ribbon(pose, vc, px, py, pz, x, y, z, hw, 0.25f, 1f, col, FB);               // the bright end is the high one (wind)
+                }
+                px = x; py = y; pz = z;
+            }
         }
     }
 
@@ -224,7 +256,7 @@ public final class SpiritDiveFx {
                 float w = wid * (1f - 0.62f * k / SpiritDiveTier.SEGMENTS);
                 float fade = (1f - 0.7f * k / SpiritDiveTier.SEGMENTS);
                 int col = SealDraw.argb(0.85f * f * lit * fade, k < 2 ? SealDraw.mix(prim, acc, 0.45f) : prim);
-                SealDraw.ribbon(pose, vc, nx, ny, nz, px, py, pz, w, 1f - (k + 1f) / SpiritDiveTier.SEGMENTS, 1f - (float) k / SpiritDiveTier.SEGMENTS, col, FB);
+                SealDraw.ribbon(pose, vc, nx, ny, nz, px, py, pz, w, 0.25f, 1f, col, FB);
                 px = nx; py = ny; pz = nz;
             }
         }

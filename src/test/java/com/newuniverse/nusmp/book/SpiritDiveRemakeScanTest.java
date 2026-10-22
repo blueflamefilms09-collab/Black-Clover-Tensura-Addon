@@ -165,7 +165,7 @@ class SpiritDiveRemakeScanTest {
     @Test
     void theDiveCountsEveryEffectFromTheBudgetAndFromNothingElse() {
         String fx = code(read(JAVA.resolve("client/aura/SpiritDiveFx.java")));
-        for (String need : new String[]{"b.columns()", "b.pillars()", "b.motes()", "b.bits()", "b.strands()", "b.rings()", "b.flares()"})
+        for (String need : new String[]{"b.columns()", "b.pillars()", "b.motes()", "b.bits()", "b.strands()", "b.spirals()", "b.rings()", "b.flares()"})
             assertTrue(fx.contains(need), "the painter ignores the budget field " + need);
         assertTrue(fx.contains("SpiritDiveTier.budget(character, lod)"));
         String aura = code(read(JAVA.resolve("client/aura/SpiritDiveAura.java")));

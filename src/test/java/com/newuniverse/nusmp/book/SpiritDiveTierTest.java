@@ -117,7 +117,7 @@ class SpiritDiveTierTest {
     void theCharacterTierMayDrawMoreThanTheStandardTierAtEveryLevelAndNeverLess() {
         for (Lod l : Lod.values()) {
             Budget s = SpiritDiveTier.budget(false, l), c = SpiritDiveTier.budget(true, l);
-            assertTrue(c.columns() >= s.columns() && c.pillars() >= s.pillars() && c.motes() >= s.motes() && c.bits() >= s.bits() && c.strands() >= s.strands() && c.rings() >= s.rings()
+            assertTrue(c.columns() >= s.columns() && c.pillars() >= s.pillars() && c.motes() >= s.motes() && c.bits() >= s.bits() && c.strands() >= s.strands() && c.spirals() >= s.spirals() && c.rings() >= s.rings()
                     && c.flares() >= s.flares(), "character below standard at " + l);
             assertTrue(c.quads() >= s.quads());
         }
@@ -130,18 +130,18 @@ class SpiritDiveTierTest {
         for (boolean ch : new boolean[]{false, true}) {
             Budget far = SpiritDiveTier.budget(ch, Lod.FAR);
             assertEquals(1, far.rings());
-            assertEquals(0, far.columns() + far.pillars() + far.motes() + far.bits() + far.strands() + far.flares());
+            assertEquals(0, far.columns() + far.pillars() + far.motes() + far.bits() + far.strands() + far.spirals() + far.flares());
         }
     }
 
     @Test
     void theEffectsHaveHardUpperBounds() {
-        assertTrue(SpiritDiveTier.worstQuads(false) <= 64, "standard tier: " + SpiritDiveTier.worstQuads(false) + " quads");
+        assertTrue(SpiritDiveTier.worstQuads(false) <= 72, "standard tier: " + SpiritDiveTier.worstQuads(false) + " quads");
         assertTrue(SpiritDiveTier.worstQuads(true) <= 160, "character tier: " + SpiritDiveTier.worstQuads(true) + " quads");
         for (Lod l : Lod.values())
             for (boolean ch : new boolean[]{false, true}) {
                 Budget b = SpiritDiveTier.budget(ch, l);
-                assertTrue(b.columns() >= 0 && b.pillars() >= 0 && b.motes() >= 0 && b.bits() >= 0 && b.strands() >= 0 && b.rings() >= 0 && b.flares() >= 0);
+                assertTrue(b.columns() >= 0 && b.pillars() >= 0 && b.motes() >= 0 && b.bits() >= 0 && b.strands() >= 0 && b.spirals() >= 0 && b.rings() >= 0 && b.flares() >= 0);
                 assertTrue(b.quads() <= SpiritDiveTier.worstQuads(ch));
             }
         assertTrue(SpiritDiveTier.pieceCap(true) > SpiritDiveTier.pieceCap(false), "the character tier may have more pieces than the standard one");

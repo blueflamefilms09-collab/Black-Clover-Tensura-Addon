@@ -71,9 +71,9 @@ def wisp():
     y, x = np.mgrid[0:h, 0:w].astype(np.float32)
     u, v = (x + 0.5) / w, (y + 0.5) / h
     across = np.exp(-((v - 0.5) / 0.30) ** 2)
-    along = clamp01(u) ** 1.6                                        # tail (u = 0) fades out, the root (u = 1) is bright
+    along = clamp01(u * 1.1) ** 0.9                                  # tail (u = 0) fades out, the root (u = 1) is bright
     n = fbm2(rng, w, h, 6, 2, 2)
-    return white(across * along * (0.55 + 0.7 * n) * 1.1)
+    return white(across * along * (0.7 + 0.6 * n) * 1.35)
 
 
 # ====================================================================================================================== line-art sigils
