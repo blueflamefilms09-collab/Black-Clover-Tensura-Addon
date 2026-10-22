@@ -48,12 +48,14 @@ final class Salamander {
         VfxSpawn.send(sl, VfxShape.FLAMEFX_BURST, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.3, a[2]), FIRE_COLOR, 16, 0.5f);
         sl.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.8f, 0.8f);
         p.displayClientMessage(Component.translatableWithFallback("nusmp.firecast.spirit.linked", "The Salamander takes your shoulder.").withStyle(ChatFormatting.GOLD), true);
+        SalamanderMood.linked(p, s);
         return true;
     }
 
     static void unlink(ServerPlayer p, FireCasting.State s, boolean say) {
         ServerLevel sl = p.serverLevel();
         MagicPropEntity e = FireCasting.prop(sl, s.spirit);
+        if (e != null && say) SalamanderMood.unlinking(p, s);                                  // its goodbye (a small whoosh), only for a link the player ended themselves
         if (e != null) e.discard();
         if (s.spirit != null) FireCasting.SPIRITS.release(p.getUUID());
         s.spirit = null;
@@ -74,8 +76,9 @@ final class Salamander {
             mouth = new Vec3(m[0], m[1], m[2]);
             MagicPropEntity sp = FireCasting.prop(sl, s.spirit);
             int stamp = (int) (now & 0xFFFFF);
-            if (sp != null) sp.setParam((sp.param() & FireCastRules.HIDDEN) | FireCastRules.param(FireCastRules.V_SALAMANDER, stamp == 0 ? 1 : stamp));      // the client plays the breathing clip for a second after this tick
+            if (sp != null && !FireCastConfig.moods()) sp.setParam((sp.param() & FireCastRules.HIDDEN) | FireCastRules.param(FireCastRules.V_SALAMANDER, stamp == 0 ? 1 : stamp));      // the old way (moods off): the client plays the breathing clip for a second after this tick
         }
+        if (FireCastConfig.moods() || FireCastConfig.sounds()) SalamanderMood.cast(p, s, page.costPercent());           // the pose, face and sound of the page's tier (the breath, with an alert, angry or roaring face)
         if (mouth == null) return page.cast().cast(book, inst, p, mode);
         FireCasting.flare(p, book, mouth, 0.5f);
         return FireCasting.withEmitter(p, mouth, null, () -> page.cast().cast(book, inst, p, mode));
@@ -88,13 +91,14 @@ final class Salamander {
         ServerLevel sl = p.serverLevel();
         double[] a = FireCastRules.dragonPosition(p.getX(), p.getY(), p.getZ(), p.getYRot());
         MagicPropEntity e = MagicProps.spawn(sl, PropKind.FIRECAST_2, new Vec3(a[0], a[1], a[2]), p.getYRot(), 1.0f, FireCastRules.DRAGON_TICKS,
-                FireCastRules.param(FireCastRules.V_DRAGON, FireCastRules.DRAGON_BREATH_TICK), p);
+                SalamanderMood.dragonParam(now), p);
         if (e == null) { FireCasting.DRAGONS.release(p.getUUID()); return false; }
         e.setTarget(p);
         s.dragon = e.getUUID();
         s.dragonReadyAt = now + FireCastRules.DRAGON_COOLDOWN;
         FireCasting.markLive(p);
-        sl.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.4f, 0.7f);
+        SalamanderMood.dragonCame(p, s, e, now);                                                  // its own roar (nearby players, through the gate) and the dragon's mood clock
+        if (!FireCastConfig.sounds()) sl.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.4f, 0.7f);      // sounds off: the plain Ravager roar it always had
         return true;
     }
 

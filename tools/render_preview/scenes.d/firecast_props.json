@@ -6,7 +6,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2000,
@@ -76,7 +77,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2002,
@@ -116,7 +118,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2100,
@@ -153,7 +156,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2200,
@@ -190,7 +194,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 3000,
@@ -260,7 +265,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 3002,
@@ -300,7 +306,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 3100,
@@ -337,7 +344,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 3200,
@@ -374,7 +382,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1010,
@@ -407,7 +416,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1020,
@@ -440,7 +450,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1030,
@@ -473,7 +484,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1040,
@@ -506,7 +518,8 @@
   "realFiles": [
    "client/prop/FireCastDraw.java",
    "firecast/FireCastLod.java",
-   "firecast/FireCastRules.java"
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 0,

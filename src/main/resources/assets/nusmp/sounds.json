@@ -1806,5 +1806,85 @@
       { "name": "nusmp:sylph/gale_1" },
       { "name": "nusmp:sylph/gale_2" }
     ]
+  },
+  "salamander.trill": {
+    "subtitle": "subtitles.nusmp.salamander.trill",
+    "sounds": [
+      { "name": "nusmp:salamander/trill_1" },
+      { "name": "nusmp:salamander/trill_2" },
+      { "name": "nusmp:salamander/trill_3" }
+    ]
+  },
+  "salamander.chirp": {
+    "subtitle": "subtitles.nusmp.salamander.chirp",
+    "sounds": [
+      { "name": "nusmp:salamander/chirp_1" },
+      { "name": "nusmp:salamander/chirp_2" },
+      { "name": "nusmp:salamander/chirp_3" }
+    ]
+  },
+  "salamander.growl": {
+    "subtitle": "subtitles.nusmp.salamander.growl",
+    "sounds": [
+      { "name": "nusmp:salamander/growl_1" },
+      { "name": "nusmp:salamander/growl_2" }
+    ]
+  },
+  "salamander.hiss": {
+    "subtitle": "subtitles.nusmp.salamander.hiss",
+    "sounds": [
+      { "name": "nusmp:salamander/hiss_1" },
+      { "name": "nusmp:salamander/hiss_2" }
+    ]
+  },
+  "salamander.whoosh": {
+    "subtitle": "subtitles.nusmp.salamander.whoosh",
+    "sounds": [
+      { "name": "nusmp:salamander/whoosh_1" },
+      { "name": "nusmp:salamander/whoosh_2" }
+    ]
+  },
+  "salamander.purr": {
+    "subtitle": "subtitles.nusmp.salamander.purr",
+    "sounds": [
+      { "name": "nusmp:salamander/purr_1" },
+      { "name": "nusmp:salamander/purr_2" }
+    ]
+  },
+  "salamander.yawn": {
+    "subtitle": "subtitles.nusmp.salamander.yawn",
+    "sounds": [
+      { "name": "nusmp:salamander/yawn_1" },
+      { "name": "nusmp:salamander/yawn_2" }
+    ]
+  },
+  "salamander.whimper": {
+    "subtitle": "subtitles.nusmp.salamander.whimper",
+    "sounds": [
+      { "name": "nusmp:salamander/whimper_1" },
+      { "name": "nusmp:salamander/whimper_2" }
+    ]
+  },
+  "salamander.flap": {
+    "subtitle": "subtitles.nusmp.salamander.flap",
+    "sounds": [
+      { "name": "nusmp:salamander/flap_1" },
+      { "name": "nusmp:salamander/flap_2" }
+    ]
+  },
+  "salamander.roar": {
+    "subtitle": "subtitles.nusmp.salamander.roar",
+    "sounds": [
+      { "name": "nusmp:salamander/roar_1" },
+      { "name": "nusmp:salamander/roar_2", "stream": true },
+      { "name": "nusmp:salamander/roar_3" }
+    ]
+  },
+  "salamander.dragon_flap": {
+    "subtitle": "subtitles.nusmp.salamander.dragon_flap",
+    "sounds": [
+      { "name": "nusmp:salamander/dragon_flap_1" },
+      { "name": "nusmp:salamander/dragon_flap_2" }
+    ]
   }
 }

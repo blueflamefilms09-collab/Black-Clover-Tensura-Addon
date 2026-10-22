@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.firecast.FireCastLod;
 import com.newuniverse.nusmp.firecast.FireCastRules;
+import com.newuniverse.nusmp.firecast.SalamanderMoodRules;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -27,10 +28,22 @@ public final class FireCastDraw {
                 ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
     }
 
+    private static GeoSpec[] faces(GeoSpec base, String prefix) {
+        GeoSpec[] out = new GeoSpec[SalamanderMoodRules.FACES - 1];
+        for (int f = 1; f < SalamanderMoodRules.FACES; f++) {
+            String id = prefix + SalamanderMoodRules.faceName(f);
+            out[f - 1] = new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + id + ".geo.json"), base.animations(),
+                    ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + id + ".png"), ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + id + "_glow.png"));
+        }
+        return out;
+    }
+
     private static final GeoSpec SAL = GeoSpec.of("firecast", "salamander"), DRAGON = GeoSpec.of("firecast", "dragon");
     private static final GeoSpec[] SAL_LOD = {SAL, lod(SAL, "firecast_salamander_lod1"), lod(SAL, "firecast_salamander_lod2")};
     private static final GeoSpec[] DRAGON_LOD = {DRAGON, lod(DRAGON, "firecast_dragon_lod1"), lod(DRAGON, "firecast_dragon_lod2")};
     private static final GeoSpec SAL_FX = lod(SAL, "firecast_salamander_fx"), DRAGON_FX = lod(DRAGON, "firecast_dragon_fx");
+    /** The face plates (docs/magic/fire_casting.md, 4.2): per face a tiny model of the head bones with the eye (and mouth) plates, its own small sheet and glow sheet; index = face id - 1 (the calm face is the model's own eyes). */
+    private static final GeoSpec[] SAL_FACE = faces(SAL, "firecast_salamander_fx_face_"), DRAGON_FACE = faces(DRAGON, "firecast_dragon_fx_face_");
     private static final ResourceLocation FLAME = AuraRender.tex("particle/flamefx_flame"), EMBER = AuraRender.tex("particle/flamefx_ember"), BURST = AuraRender.tex("particle/flamefx_burst");
     static final int FB = PropDraw.FULL_BRIGHT, BODY = 0xFF5A14, CORE = 0xFFA838, GLOW = 0xFF8A2A, HOT = 0xFFD070;
     /** The small form is drawn at this scale, the dragon at its own size (the models are built in 1/16 block units). */
@@ -41,6 +54,11 @@ public final class FireCastDraw {
      * {@code fade} is 0..1 (translucent while it forms and fades); {@code clip} and {@code secs} pick the animation.
      */
     public static void salamander(PoseStack pose, MultiBufferSource buffers, boolean dragon, int lod, String clip, float secs, float age, float fade, int light) {
+        salamander(pose, buffers, dragon, lod, clip, secs, age, fade, light, SalamanderMoodRules.FACE_CALM);
+    }
+
+    /** {@link #salamander(PoseStack, MultiBufferSource, boolean, int, String, float, float, float, int)} with a face: on the full level of detail the eye (and mouth) plates of the face are drawn over the head (at most {@link FireCastLod#FACE_QUADS} quads). */
+    public static void salamander(PoseStack pose, MultiBufferSource buffers, boolean dragon, int lod, String clip, float secs, float age, float fade, int light, int face) {
         if (lod >= FireCastLod.CULL || fade <= 0.01f) return;
         MultiBufferSource b = WaterPropDraw.lazy(buffers);
         float s = (dragon ? DRAGON_SCALE : SMALL_SCALE) * (0.8f + 0.2f * fade);
@@ -55,6 +73,9 @@ public final class FireCastDraw {
         GeoSpec body = (dragon ? DRAGON_LOD : SAL_LOD)[lod];
         int white = ((int) (fade * 255f + 0.5f) << 24) | 0xFFFFFF;
         GeoDraw.paint(pose, b, body, clip, secs, GeoDraw.Space.PROP, fade < 0.99f ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT, light, white, 0);
+        if (lod == FireCastLod.FULL && face > SalamanderMoodRules.FACE_CALM && face < SalamanderMoodRules.FACES) {                // the face: plates over the eyes (and the mouth), posed by the same clip; drawn before the glow-only model so they cover its eyes
+            GeoDraw.paint(pose, b, (dragon ? DRAGON_FACE : SAL_FACE)[face - 1], clip, secs, GeoDraw.Space.PROP, fade < 0.99f ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT, light, white, SealDraw.argb(fade, 0xFFFFFF));
+        }
         if (lod <= FireCastLod.HALF) {                                                                // the slit eyes and the furnace of the mouth, additive, full bright
             GeoDraw.paint(pose, b, dragon ? DRAGON_FX : SAL_FX, clip, secs, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, FB, SealDraw.argb(fade * (0.85f + 0.15f * Mth.sin(age * 0.5f)), 0xFFFFFF), 0);
         }

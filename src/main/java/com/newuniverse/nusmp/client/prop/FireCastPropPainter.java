@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.firecast.FireCastLod;
 import com.newuniverse.nusmp.firecast.FireCastRules;
+import com.newuniverse.nusmp.firecast.SalamanderMoodRules;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.perf.PerfSettings;
@@ -65,26 +66,16 @@ public final class FireCastPropPainter {
         float fade = Mth.clamp(Math.min((e.life() + partial) / 8f, (e.maxLife() - e.life() - partial) / 8f), 0f, 1f);
         if (fade <= 0.01f) return;
 
-        String clip;
-        float secs;
-        if (dragon) {
-            float t = e.life() + partial - FireCastRules.DRAGON_BREATH_TICK;
-            boolean breathing = t >= 0f && t < 40f;
-            clip = breathing ? "breathe" : "fly";
-            secs = breathing ? t / 20f : age / 20f;
-        } else {
-            int stamp = FireCastRules.extra(param);
-            long now = e.level().getGameTime();
-            int dt = stamp == 0 ? Integer.MAX_VALUE : (int) ((now - stamp) & 0xFFFFF);
-            boolean breathing = stamp != 0 && dt < 32;
-            clip = breathing ? "breathe" : "perch";
-            secs = breathing ? (dt + partial) / 20f : age / 20f;
-        }
+        // the pose and the face come from the prop's param and the clock (SalamanderMoodRules.look: pure, allocation free); the server only wrote a pose id and a start tick
+        int look = SalamanderMoodRules.look(dragon, param, e.level().getGameTime(), e.life(), e.maxLife());
+        int poseId = SalamanderMoodRules.poseOfLook(look), face = SalamanderMoodRules.faceOfLook(look);
+        String clip = SalamanderMoodRules.clipName(dragon, poseId);
+        float secs = SalamanderMoodRules.looping(dragon, poseId) ? age / 20f : (SalamanderMoodRules.elapsedOfLook(look) + partial) / 20f;
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(Mth.rotLerp(partial, e.yRotO, e.getYRot())));         // undo the renderer's turn: the offset below is in world axes
         pose.translate(ax - ex, ay - ey, az - ez);
         pose.mulPose(Axis.YP.rotationDegrees(-yaw));
-        FireCastDraw.salamander(pose, buffers, dragon, lod, clip, secs, age, fade, light);
+        FireCastDraw.salamander(pose, buffers, dragon, lod, clip, secs, age, fade, light, face);
         pose.popPose();
         if (lod == FireCastLod.FULL && !dragon && dsq < 24 * 24) embers(e, ax, ay + 0.35, az);
         else if (lod <= FireCastLod.HALF && dragon) embers(e, ax, ay, az);

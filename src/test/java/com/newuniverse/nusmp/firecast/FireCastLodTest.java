@@ -61,13 +61,34 @@ class FireCastLodTest {
             int[] body = dragon ? FireCastLod.DRAGON_QUADS : FireCastLod.SALAMANDER_QUADS;
             for (int lod = 0; lod < 3; lod++) {
                 int fx = lod <= FireCastLod.HALF ? (dragon ? FireCastLod.DRAGON_FX_QUADS : FireCastLod.SALAMANDER_FX_QUADS) : 0;
-                String row = "| " + body[lod] + " | " + fx + " | " + (body[lod] + fx) + " |";
+                int face = lod == FireCastLod.FULL ? (dragon ? FireCastLod.DRAGON_FACE_QUADS : FireCastLod.SALAMANDER_FACE_QUADS) : 0;
+                String row = "| " + body[lod] + " | " + fx + " | " + face + " | " + (body[lod] + fx + face) + " |";
                 assertTrue(doc.contains(row), "the doc's level table has the row " + row);
             }
         }
         assertTrue(doc.contains("Owner-approved raised limits"), "the doc says the raised limits are the owner's");
         for (String n : new String[]{"700", "900", "300", "380", "120", "3200", "64 blocks", "112 blocks"}) assertTrue(doc.contains(n), "the doc states " + n);
         assertTrue(doc.contains("never dropped"), "the doc states the own-form rule");
+    }
+
+    /** The faces (docs/magic/fire_casting.md, 4.2): the face models are tiny, one per face and form, and a face never adds more than the owner's 20 quads. */
+    @Test
+    void theFaceModelsAddAtMostTheStatedQuadsAndTheCostOfAFullFormIncludesThem() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            int most = 0;
+            for (String face : new String[]{"alert", "angry", "sleepy", "smug", "roaring"}) {
+                int q = quads("firecast_" + form + "_fx_face_" + face);
+                assertTrue(q >= 2, form + " " + face + ": two eye plates at least");
+                most = Math.max(most, q);
+            }
+            assertEquals(form.equals("dragon") ? FireCastLod.DRAGON_FACE_QUADS : FireCastLod.SALAMANDER_FACE_QUADS, most, form + ": the table states the largest face");
+            assertTrue(most <= FireCastLod.MAX_FACE_QUADS, form + ": no more than +20 quads");
+        }
+        assertEquals(20, FireCastLod.MAX_FACE_QUADS);
+        assertEquals(FireCastLod.SALAMANDER_QUADS[0] + FireCastLod.SALAMANDER_FX_QUADS + FireCastLod.SALAMANDER_FACE_QUADS, FireCastLod.cost(false, FireCastLod.FULL));
+        assertEquals(FireCastLod.DRAGON_QUADS[1] + FireCastLod.DRAGON_FX_QUADS, FireCastLod.cost(true, FireCastLod.HALF), "no face on the half level");
+        assertEquals(FireCastLod.SALAMANDER_QUADS[2], FireCastLod.cost(false, FireCastLod.LOW), "and none on the low level");
+        assertTrue(FireCastLod.cost(true, FireCastLod.FULL) <= FireCastLod.MAX_FULL_DRAGON && FireCastLod.cost(false, FireCastLod.FULL) <= FireCastLod.MAX_FULL_SALAMANDER, "a full form with its glow and its face is still under the approved ceiling");
     }
 
     @Test

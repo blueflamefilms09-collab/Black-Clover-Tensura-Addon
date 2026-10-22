@@ -38,7 +38,7 @@ class FireCastSourceScanTest {
 
     @Test
     void nothingOnATickOrInAnEventScansTheWorld() throws IOException {
-        for (String f : new String[]{"FireCasting.java", "FireCastEvents.java", "FireCastProps.java", "Salamander.java", "FireCastNet.java"}) {
+        for (String f : new String[]{"FireCasting.java", "FireCastEvents.java", "FireCastProps.java", "Salamander.java", "FireCastNet.java", "SalamanderMood.java", "SalamanderMoodRules.java"}) {
             String c = code(SRC.resolve("firecast/" + f));
             assertFalse(c.contains("getEntitiesOfClass") || c.contains("getEntities(") || c.contains("GrimoireBook.around") || c.contains("GrimoireBook.along") || c.contains("getBlockState")
                     || c.contains("getChunk"), f + " must not search the world");
@@ -119,6 +119,33 @@ class FireCastSourceScanTest {
         // the raised limits stay bounded: the budget's cap is the one constant, the cull distances come from the table
         String lod = code(SRC.resolve("firecast/FireCastLod.java"));
         assertTrue(lod.contains("FRAME_QUADS = 3200") && lod.contains("budget.force(frameKey, cost(dragon, LOW))"), "one frame cap, and the forced own form is the low level only");
+    }
+
+    /** The Salamander's moods (docs/magic/fire_casting.md, 4.2): the server decides, behind two server switches, every situation is cooldown bound and the clients only read the param. */
+    @Test
+    void theMoodsAreDecidedOnTheServerBehindTheirSwitchesAndTheClientOnlyReadsTheParam() throws IOException {
+        String cfg = code(SRC.resolve("firecast/FireCastConfig.java"));
+        assertTrue(cfg.contains(".define(\"salamanderMoods\", true)") && cfg.contains(".define(\"salamanderSounds\", true)"), "two server switches, default on");
+        String mood = code(SRC.resolve("firecast/SalamanderMood.java"));
+        assertTrue(mood.contains("FireCastConfig.moods()") && mood.contains("FireCastConfig.sounds()"), "both switches are read");
+        assertTrue(mood.contains("s.mood.decide(") && mood.contains("s.mood.idle("), "every decision goes through the tracker (cooldowns, priorities)");
+        assertTrue(mood.contains("dragon != (s.dragon != null)"), "while the big form is out only it reacts");
+        assertFalse(mood.contains("Level.players") || mood.contains(".players()"), "the glue never walks the players itself: sounds go through SalamanderSounds");
+        String props = code(SRC.resolve("firecast/FireCastProps.java"));
+        assertTrue(props.contains("SalamanderMood.tick(") && props.contains("e.life() % NUDGE != 0"), "the idle check rides the prop's own tick, once every few ticks");
+        String events = code(SRC.resolve("firecast/FireCastEvents.java"));
+        assertTrue(events.contains("LivingDamageEvent.Post") && events.contains("isDeadOrDying()"), "a hit that kills does not also make it hiss: the whimper is heard");
+        String fc = code(SRC.resolve("firecast/FireCasting.java"));
+        assertTrue(fc.contains("final SalamanderMoodRules.Tracker mood = new SalamanderMoodRules.Tracker()"), "one small tracker per player, inside the player's state (gone with it on logout, death, dimension change)");
+        assertTrue(fc.contains("STATES.isEmpty() ? null : STATES.get(id)"), "a death or a hit of a player without a Salamander costs one map lookup");
+        String sal = code(SRC.resolve("firecast/Salamander.java"));
+        assertTrue(sal.contains("if (!FireCastConfig.sounds())") && sal.contains("SoundEvents.RAVAGER_ROAR"), "with the creature sounds off the plain Ravager roar of the summon is kept");
+        String rules = code(SRC.resolve("firecast/SalamanderMoodRules.java"));
+        assertFalse(rules.contains("net.minecraft") || rules.contains("Math.random") || rules.contains("new Random"), "pure and deterministic");
+        String painter = code(SRC.resolve("client/prop/FireCastPropPainter.java"));
+        assertTrue(painter.contains("SalamanderMoodRules.look(") && !painter.contains("FireCasting."), "the painter only reads the pose from the synced param and the clock");
+        String draw = code(SRC.resolve("client/prop/FireCastDraw.java"));
+        assertTrue(draw.contains("lod == FireCastLod.FULL && face >"), "faces are drawn on the full level of detail only");
     }
 
     @Test

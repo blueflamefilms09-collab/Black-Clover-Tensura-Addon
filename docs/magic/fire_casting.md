@@ -137,22 +137,78 @@ What each reference gave, and what was built from it:
 
 **Owner-approved raised limits** (the redo asked for more silhouette, so the limits of the first version were raised by the owner): a full model may take up to 700 quads (small) / 900 (dragon), a half model up to 300 / 380, a low model up to 120; the shared frame cap is 3200 quads (was 2400); the cull distances are 64 blocks (small) and 112 blocks (dragon) (were 56 and 96). Unchanged: three levels, one dragon per player and 6 on the server, 48 spirits on the server, the 60-tick dragon, nearby-only packets, nothing allocated per frame, the shared frame budget stepping a form down to a lower level when it is over budget. NEW with the raise: the CASTER'S OWN Salamander is never dropped by the budget (when nothing fits the frame it is drawn at the low level anyway, a bounded overshoot of one low form). The numbers below are counted from the model files; `FireCastLodTest` reads the files and the doc and fails if they disagree.
 
-| Form | LOD | When (distance) | Body quads | Glow-only model quads | Quads per frame |
-|---|---|---|---|---|---|
-| Small (shoulder) | full | up to 14 blocks | 486 | 13 | 499 |
-| Small | half | up to 30 | 278 | 13 | 291 |
-| Small | low | up to 64 | 98 | 0 | 98 |
-| Small | culled | beyond 64 | 0 | 0 | 0 |
-| Big dragon | full | up to 30 | 618 | 17 | 635 |
-| Big dragon | half | up to 60 | 314 | 17 | 331 |
-| Big dragon | low | up to 112 | 91 | 0 | 91 |
-| Big dragon | culled | beyond 112 | 0 | 0 | 0 |
+| Form | LOD | When (distance) | Body quads | Glow-only model quads | Face plates (full level only, the largest face) | Quads per frame |
+|---|---|---|---|---|---|---|
+| Small (shoulder) | full | up to 14 blocks | 486 | 13 | 3 | 502 |
+| Small | half | up to 30 | 278 | 13 | 0 | 291 |
+| Small | low | up to 64 | 98 | 0 | 0 | 98 |
+| Small | culled | beyond 64 | 0 | 0 | 0 | 0 |
+| Big dragon | full | up to 30 | 618 | 17 | 3 | 638 |
+| Big dragon | half | up to 60 | 314 | 17 | 0 | 331 |
+| Big dragon | low | up to 112 | 91 | 0 | 0 | 91 |
+| Big dragon | culled | beyond 112 | 0 | 0 | 0 | 0 |
+
+The face plates are NEW with the moods (4.2): a face (not the calm one) draws at most 3 more quads on the full level, so a full small form is at most 502 quads and a full dragon at most 638, still under the owner-approved ceilings (700 / 900); the cost of a full form in the frame budget always includes them. The body and glow-only models, the three levels and their numbers are exactly as before.
 
 (Before the redo: small 240 / 170 / 86 quads, dragon 254 / 184 / 86, frame cap 2400, ranges 14 / 30 / 56 and 30 / 60 / 96. The ranges are the distances at the best effect quality; a weaker machine gets the lower levels sooner, down to half the distance.)
 
 The glow-only model is drawn additive with its own half-size glow sheet. No billboards. Wing and tail animation is by part rotation. Textures: the colour sheet per form (small 512 x 512, big 1024 x 1024), `_lod1` half size, `_lod2` quarter size, `_fx` the glow sheet at half size.
 
 A **shared frame budget** `FireCastLod.FRAME_QUADS = 3200` quads for all Salamanders, spirals and balls in one frame: the nearest are drawn at the level their distance asks for, then each is stepped down a level until it fits (`QuadBudget`, `FireCastLod.fit`), then culled; the caster's own form is forced in at the low level when the budget is spent (`fit(..., own)`, `QuadBudget.force`). Nothing is allocated per frame (a static scratch array, static tables). The painter decides `own` from the entity's owner (`e.target() == mc.player`), client side only.
+
+### 4.2 Moods: poses, faces and creature sounds (the Salamander does not speak)
+
+Owner request: let the spirits show different poses, faces and voice lines where that makes sense. The Salamander is a fire lizard-dragon and does NOT speak, so it has poses (new clips on both forms), faces (plate swaps on the head) and creature sounds (a trill, a hiss, a roar; no word anywhere). The server picks them from what happens; the clients only play what the synced param says. Everything below is behind two SERVER switches in `nusmp-firecast-server.toml`: `magic.salamanderMoods` (poses and faces, default true) and `magic.salamanderSounds` (creature sounds, default true; false also gives the big form's summon its plain Ravager roar back). Both false = the Salamander perches, flies and breathes exactly as before.
+
+**Poses (new animation clips; the four old ones, `idle`, `perch`, `fly`, `breathe`, stay first and unchanged; all written by `tools/gen_salamander_poses.py`):**
+
+| Form | Clip | Length | What it shows |
+|---|---|---|---|
+| small | `grip_tighten` | 1.4 s | the hands clench the shoulder's edge, the body sinks, the wings fold, the tail curls tight |
+| small | `head_tilt` | 1.8 s | a curious look: the head turns and rolls to one side |
+| small | `tail_flick` | 1.2 s | the tail curls aside and snaps back |
+| small | `wing_stretch` | 2.2 s | the wings open flat and wide with the fingers fanned, the chest arches |
+| small | `yawn` | 2.4 s | head tipped back, the jaw wide and held, the chest filling |
+| small | `flinch` | 0.7 s | a hurt jerk: body snapped back, head thrown up, jaw gaping, wings flared |
+| small | `puff_up` | 1.8 s | proud: the chest swells, the head lifts, the wings open a little |
+| small | `sleepy_curl` | 4 s, loops | settled low on the shoulder, head tucked down and aside, wings folded, tail curled, slow breathing |
+| small | `breathe` (existing) | 1.6 s | the fire breath of a cast |
+| big | `hover` | 2.8 s, loops | the new base: slow strong wing beats, a calm bob, legs tucked |
+| big | `roar` | 1.6 s | head thrown back, jaw gaping, chest swelling, arms open, wings spread |
+| big | `wing_display` | 1.6 s | the wings open to their full span with the fingers fanned |
+| big | `claw_swipe` | 0.9 s | the right arm winds back and rakes across, the body twists |
+| big | `hurt` | 0.8 s | the body jerks back, the head flings up, the jaw gapes, the wings flare |
+| big | `descend` | 0.4 s | drops in from above with the wings flared, one beat to brake |
+| big | `land` | 0.6 s | the wings flare to brake, the legs reach down, the body sinks and the wings fold |
+| big | `breathe` (existing) | 2.0 s | the fire breath |
+
+**Faces (plate swaps on the head, `tools/gen_salamander_faces.py`).** The model's own slit eyes are the calm face. Every other face is a tiny model per form (`firecast_<form>_fx_face_<face>`: only the bones from the root to the head and the jaw, the same pivots and rest turns as the full model, so the one animation file poses it exactly like the body) with two flat eye plates, one quad each, standing 0.25 units proud of the model's own eye cards and painted opaque so they cover them: a lidded eye socket with the eye of the mood (alert: a wide round eye with a thin pupil; angry: a slanted lid and a heavy brow; sleepy: a heavy flat lid with a thin crescent of eye; smug: a half lid with a raised lower lid and a sideways look; roaring: a squeezed slanted eye with a heavy brow and crinkles, plus a mouth plate on the jaw, the glowing inside of an open mouth). Each face has its own small sheet and a glow sheet of the same size (the iris, drawn additive). A face costs at most 3 quads (2 eyes, +1 mouth for the roaring face), drawn on the full level of detail only, before the glow-only model so the plates cover its eyes; the half and low levels keep the calm eyes. The owner's limit was +20 quads: the real number is +3.
+
+**Creature sounds (`tools/gen_salamander_sounds.py`, 11 cues, 25 variants, about 370 KB of mono Vorbis; every file is synthesised from nothing with numpy, seeded from its own name, so a re-run writes the same audio):** `trill` (3), `chirp` (3), `growl` (2), `hiss` (2), `whoosh` (a small flame whoosh, 2), `purr` (a content purr-rumble, 2), `yawn` (2), `whimper` (2), `flap` (small leathery wings, 2), `roar` (the big form, 3), `dragon_flap` (heavy wing beats, 2). Sound events `nusmp:salamander.<cue>` are registered from the catalogue (`SalamanderSoundSet`), the entries are appended at the END of `sounds.json`, the subtitles are in `tools/lang/salamander_moods.json` (a lang fragment, merged by the owner's lang merge). They are played by the SERVER only to players within 32 blocks, as a sound packet to each allowed listener, through a per listener gate built on the voice limiter (`audio/voice/VoiceLimiter`): at most one Salamander sound per 3 seconds for a listener and no cue inside its own cooldown (trill 5 s, chirp 5 s, growl 4 s, hiss 4 s, whoosh 2 s, purr 10 s, yawn 20 s, whimper 10 s, flap 6 s, roar 5 s, dragon flap 5 s).
+
+**Which situation gives what (`SalamanderMoodRules`, pure and tested; priority decides what may interrupt what):**
+
+| Situation | Small form: pose, face, sound | Big form: pose, face, sound | Cooldown |
+|---|---|---|---|
+| link (the key) | `grip_tighten`, alert, trill | n/a | 2 s |
+| unlink (the key) | no pose (the prop goes at once), whoosh | n/a | 2 s |
+| cast, light page (under 8 % mana) | `breathe`, alert, whoosh | `breathe`, roaring | 0.6 s |
+| cast, mid page (8 to 20 %) | `breathe`, angry, growl | `breathe`, roaring | 0.6 s |
+| cast, heavy page (20 % and up; these call the big form) | `breathe`, roaring, growl (the big form is out, so the dragon breathes) | the summon: `descend` while it arrives, then `breathe`, roaring face, and its roar | 0.6 s |
+| owner took damage | `flinch`, angry, hiss | `hurt`, angry, roar | 2.5 s |
+| idle for 10 s | `head_tilt` (alert, trill), `tail_flick`, `wing_stretch` (smug, flap), `yawn` (sleepy, yawn), in turn, a gap of 12 to 18 s between | none (it only lives 3 s) | by the idle clock |
+| idle for 90 s | `sleepy_curl` (20 s), sleepy, purr; any event wakes it | none | 90 s |
+| owner on low health (under 30 %) | `grip_tighten`, alert, trill | `wing_display`, angry, dragon flap | 20 s |
+| owner killed something | `puff_up`, smug, chirp | `roar`, roaring, roar | 5 s |
+| owner struck with their hand or weapon | none | `claw_swipe`, angry | 2 s |
+| owner died | sound only, whimper (the props are removed at once, so only the whimper is heard) | the same | 5 s |
+| the big form leaves | the last 12 ticks: `land` (no packet: the clients read it from the dragon's life) | | |
+
+Nothing flickers: a pose is held until it ends unless something of a higher priority comes (hurt 6 and the owner's death 7 outrank a cast and a kill 4 and a link 3, which outrank the idle poses 1), two poses are at least 1 second apart, every situation has its cooldown, and one Salamander makes at most one sound per 3 seconds (a pose that is not allowed now may still let its sound through if the gap allows; a hit that kills does not make it hiss, so the whimper is heard). The pose ends by itself: the server writes a pose id and a start tick into the prop's one synced param (bits 4 to 7 the pose, bits 9 to 11 the face, the old stamp bits the start tick; the old encoding is still read the old way) and sends nothing when it ends; each client works out the clip, its time and the face from the clock (`SalamanderMoodRules.look`, allocation free). The dragon's descent and landing are read from its own life, no packet.
+
+Server side, how it hooks in: `FireCastEvents` (a `LivingDamageEvent.Post` listener for the owner's hurt and strike, the death listener for a kill and for the owner's death), `FireCastProps` (the Salamander prop's own tick, once every 5 ticks, runs the idle clock and the low health check), `Salamander` (link, unlink, cast, summon), `FireCasting.State` (one pure `Tracker` per player, a dozen numbers, gone with the player's state on logout, death, respawn and dimension change). `SalamanderSounds.forget` drops a listener's gate record on logout.
+
+**Worst-case cost of the moods (rule 11).** Server: no new entity; no new packet type; one entity-data update of the prop's param per pose change, nearby players only (the vanilla tracking range), at most one per second per Salamander (the minimum pose gap) and in practice one per few seconds; the idle and low health checks are a few integer compares on a tick that already ran (once per 5 ticks per Salamander, the same as before); the hit, kill and death hooks cost one map lookup for a player without a Salamander; sounds: at most one packet per listener per 3 seconds, to listeners within 32 blocks, so even 48 Salamanders in earshot send one listener at most 20 sound packets a minute. Client: at most 3 more quads for a face on the full level (a full small form 502, a full dragon 638 quads, both included in the frame budget of 3200), one more small texture pair per face used, no allocation per frame (a static table of face specs, primitive math for the pose), the pose clips are bone rotations like the old ones.
 
 ## 5. Worst-case cost (rule 11)
 
@@ -188,6 +244,14 @@ Client per frame: see 4.1 (at most 3200 quads shared, plus at most one forced lo
 | REPLACED (owner asked for a closer likeness, rule 5) | the geometry, sheets (colour, glow, LODs) and animation files of both Salamander forms (`firecast_salamander*`, `firecast_dragon*`: same ids and file names, built in place); the quad table, ranges and frame cap of `FireCastLod`; the placement numbers of the big form in `FireCastDraw` (its model origin is now the pelvis); the preview scenes' views and the three pictures in `docs/previews/fire_casting/` (`salamander_small.png`, `salamander_dragon.png`, `salamander_vs_reference.png`) |
 | KEPT | all Fire page ids and gameplay numbers (the style only changes who releases the page, from where, and how the old multipliers are fed), the old flame props and effects, the exclusive `ElementalSpiritLordEntity`, every other caster's generic casting (and everybody's, with `magic.fireCasting=false`), the first version of the Salamander models as `*_v1` copies (unused), the clip names (`idle`, `perch`, `fly`, `breathe`) and the bone names `body`, `head`, `jaw`, `wing_*`, `wingout_*`, `t0`.., `tail_tip`, `arm_*`, `fore_*`, `hand_*`, `leg_*`, `shin_*`, `foot_*` (the old single `neck` bones became the chain `neck1`..`neck4`, new are `chest`, `wf1_*`..`wf4_*`), the server side of the Salamander (rules, emitter positions, ledgers) |
 
+**With the moods (round 1.99):**
+
+| | What |
+|---|---|
+| NEW | 15 pose clips (8 small, 7 big) and the pose table, 5 face models per form with their sheets, 11 creature sound cues (25 files), the sound events and their gate, the mood rules and tracker, the two server switches `magic.salamanderMoods` and `magic.salamanderSounds`, the self-test `magic.salamander_moods`, the lang fragment `tools/lang/salamander_moods.json`, the scene and preview tools, two pictures, tests |
+| REPLACED | only what the new poses take over in the game's choice of clip: the dragon's base clip is now `hover` (it was `fly`), and with the creature sounds on, the dragon's summon plays the new `roar` (to nearby players, through the gate) instead of the plain Ravager roar (`magic.salamanderSounds=false` gives the Ravager roar back); the quad table of the doc and `FireCastLod.cost` now include the face plates |
+| KEPT | the four old clips of both forms (`idle`, `perch`, `fly`, `breathe`, unchanged and first in the files), every model, level of detail, sheet and quad number of the body and the glow-only models, the old encoding of the param (still read the old way), all server rules, ledgers and ids, the vanilla fire-charge sound at the link, the `*_v1` copies |
+
 Existing files touched (hooks and append-only one-liners): `book/GrimoireBook` (style hooks in `onPressed`, `onHeld`, `onRelease`, `castReady` split into `castReady` + `castReadyBase`, `castPage` refuse gate and `FireCasting.run`, `size()` / `hurtAs()` multipliers, `vfx()` origin), `book/SpellRuntime` (bolt start origin + homing), `book/TensuraShots` (spawn origin), `anim/CastAnim` (constants), `prop/PropKind` (+`FIRECAST_1`, `FIRECAST_2`, appended), `prop/PropRegistry`, `client/prop/PropPainterRegistry`, `NUSMP` (boot lines), `NUCreativeTab`, `client/WeaponRenderer`, `item/WeaponEngravings`, `blackclover/GrimoireItem` (Magna canon grant).
 
 ## 7. Weapon: Magna's Soul Bat
@@ -200,7 +264,8 @@ Real 3D weapon in hand (`tools/gen_magna_bat_model.py` through the hook in `tool
 * self-test key `magic.fire_casting` (`FireCastSelfTests`, in the CI server smoke test);
 * the guards that scan it: `FxSourceScanTest`, `PerfSourceScanTest`, `ServerSafetyTest`, `ConfigFileNamesTest`, `WeaponClassesTest`, `WeaponMeshesTest`, `GripTableTest`, `WeaponSizesTest`, `GeoAssetsTest`, `CastAnimAssetsTest`, the safe additive texture scan (scope `entity` for the two `_fx` sheets), `WeaponAttributesTest`, `FranchiseDataTest`.
 * the redo added: `FireCastLodTest` (the exact quads of the files equal the table and the doc, the owner-approved ceilings, the own form never dropped, the frame budget), `FireCastAssetsTest` (the `_v1` copies, the rig with four finger bones per wing and the tail chain, the silhouette cards, the glow-only models, the level models keep the silhouette bones); `SafeAdditiveTextureScanTest` covers the two glow sheets (`scan_textures.py --fix` reports 0 offending texels);
-* previews: `python tools/render_preview/preview.py firecast_...` (scenes in `tools/render_preview/scenes.d/firecast_*.json`), the punch in `tools/vfx_preview/scenes.d/firecast_punch.json`; pictures in `docs/previews/fire_casting/`.
+* the moods added: `SalamanderMoodRulesTest` (the table event to pose, face and sound for both forms, the cast tiers, the cooldowns and priorities, the minimum pose gap, one sound per 3 seconds, the idle clock, a long random day that never flickers, the param word, the client's reading of it, the per listener gate), `SalamanderSoundsTest` (the catalogue against `sounds.json`, the files, the subtitles and the size), `FireCastLodTest` (the face quads and the table with its face column), `FireCastAssetsTest` (the new clips come after the four old ones, the face models and sheets, the plates cover the model's own eye cards), `FireCastSourceScanTest` (the moods are server decisions behind their switches), self-test key `magic.salamander_moods`;
+* previews: `python tools/render_preview/preview.py firecast_...` (scenes in `tools/render_preview/scenes.d/firecast_*.json`), the punch in `tools/vfx_preview/scenes.d/firecast_punch.json`; pictures in `docs/previews/fire_casting/` (`salamander_poses.png`, `salamander_faces.png` for the moods; scenes in `tools/render_preview/scenes.d/firecast_salamander_moods.json`, written by `tools/gen_salamander_scenes.py`).
 
 ## 9. Not verified (honest list)
 
@@ -211,6 +276,9 @@ Real 3D weapon in hand (`tools/gen_magna_bat_model.py` through the hook in `tool
 * Balance feel (ball speed, finisher counts, charge costs, dragon cooldown) is untested.
 * Mereoleona's held-punch variant and Fuegoleon's flame forearm are not built. The spirit commands are only link toggle, aura and emitter (no AI follow, no attack commands).
 * The Salamander's `ElementalSpiritLordEntity` behaviours (tamed follow, commands) are not shared: this is a prop, deliberately cheaper.
+
+* The moods (4.2): nothing was heard or seen in a game. The pictures are the headless rasteriser's (the pose sheet and the face sheet); how the poses read in motion, whether the face plates z-fight with the model's own eye cards at the far end of the full level (14 and 30 blocks) and how the synthesised sounds actually sound (they were only checked as spectrograms and by size, length, peak and mono) all wait for a game. The sounds are procedurally synthesised creature calls, not recordings: expect them to be rough. The sleepy curl and the idle poses are timed by the clock only (not by whether the owner moves), so a Salamander may yawn while its owner is fighting if nothing hit them for 10 seconds; the tuning numbers (10 s, 90 s, 30 % health, the cooldowns) are guesses. The owner's death and the unlink have no visible pose: the prop is removed at once (a graceful exit would need the prop to outlive its link), so only their sound is heard. The listener gate does not count a refused cue against the 3 second gap, but a sound that is allowed by the gate and then lost on the network is simply lost.
+* The face plates cover the model's own eyes by depth (0.25 units in front): they only appear on the full level (within 14 blocks for the small form, 30 for the dragon); at the half level the calm eyes stay whatever the mood.
 
 ## 10. Sources
 

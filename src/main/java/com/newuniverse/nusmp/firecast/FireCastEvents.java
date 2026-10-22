@@ -19,6 +19,7 @@ public final class FireCastEvents {
     public static void register(IEventBus bus) {
         bus.addListener(FireCastEvents::onPlayerTick);
         bus.addListener(FireCastEvents::onDamaged);
+        bus.addListener(FireCastEvents::onHurt);
         bus.addListener(FireCastEvents::onLogout);
         bus.addListener(FireCastEvents::onDeath);
         bus.addListener(FireCastEvents::onRespawn);
@@ -36,15 +37,35 @@ public final class FireCastEvents {
     static void onDamaged(LivingDamageEvent.Post e) {
         if (!(e.getSource().getDirectEntity() instanceof ServerPlayer p) || e.getNewDamage() <= 0f || !e.getSource().is(DamageTypes.PLAYER_ATTACK)) return;
         FireCasting.onPunch(p, e.getEntity());
+        FireCasting.onOwnerMelee(p);
     }
 
-    static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { if (e.getEntity() instanceof ServerPlayer p) FireCasting.forget(p); }
+    /** A player took damage: their Salamander (if they have one out) flinches. One map lookup for a player without one. */
+    static void onHurt(LivingDamageEvent.Post e) {
+        if (e.getNewDamage() > 0f && e.getEntity() instanceof ServerPlayer p && !p.isDeadOrDying()) FireCasting.onOwnerHurt(p);
+    }
 
-    static void onDeath(LivingDeathEvent e) { if (e.getEntity() instanceof ServerPlayer p) FireCasting.forget(p); }
+    static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
+        FireCasting.forget(p);
+        SalamanderSounds.forget(p.getUUID());                                                  // the listener's sound gate record goes with them
+    }
+
+    /** A player died (their Salamander whimpers, then everything goes), or something died by a player's hand (the Salamander is proud). */
+    static void onDeath(LivingDeathEvent e) {
+        if (e.getEntity() instanceof ServerPlayer p) {
+            FireCasting.onOwnerDeath(p);
+            FireCasting.forget(p);
+        }
+        if (e.getSource().getEntity() instanceof ServerPlayer killer && killer != e.getEntity()) FireCasting.onOwnerKill(killer);
+    }
 
     static void onRespawn(PlayerEvent.PlayerRespawnEvent e) { if (e.getEntity() instanceof ServerPlayer p) FireCasting.forget(p); }
 
     static void onDimension(PlayerEvent.PlayerChangedDimensionEvent e) { if (e.getEntity() instanceof ServerPlayer p) FireCasting.forget(p); }
 
-    static void onStopping(ServerStoppingEvent e) { FireCasting.clearAll(); }
+    static void onStopping(ServerStoppingEvent e) {
+        FireCasting.clearAll();
+        SalamanderSounds.clearAll();
+    }
 }

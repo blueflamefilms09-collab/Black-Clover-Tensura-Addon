@@ -48,11 +48,14 @@ public final class FireCastProps implements MagicProps.Behavior {
                 int want = s.dragon != null ? e.param() | FireCastRules.HIDDEN : e.param() & ~FireCastRules.HIDDEN;      // hidden while the big form is out
                 if (want != e.param()) e.setParam(want);
                 if (e.life() % 100 == 20 && o instanceof ServerPlayer p) FireCasting.aura(p);       // Fire Resistance, as the elemental Salamander gives its master
+                if (o instanceof ServerPlayer p) SalamanderMood.tick(p, s, e, false);              // the idle poses and the worried look on low health (a few compares)
             }
             case FireCastRules.V_DRAGON -> {
                 double[] a = FireCastRules.dragonPosition(o.getX(), o.getY(), o.getZ(), o.yBodyRot);
                 e.setPos(a[0], a[1], a[2]);
                 e.setYRot(o.yBodyRot);
+                FireCasting.State ds = FireCasting.STATES.get(o.getUUID());
+                if (ds != null && o instanceof ServerPlayer p) SalamanderMood.tick(p, ds, e, true);
             }
             default -> { }
         }
