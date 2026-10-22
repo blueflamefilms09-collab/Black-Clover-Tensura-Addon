@@ -50,6 +50,7 @@ public final class GrimoireKeeper {
 
     /** Every 5 s: own a bound grimoire but the book skill vanished? Teach it again. */
     public static void heal(ServerPlayer p) {
+        CanonSkillSync.sync(p);                                                // the Unique Skill's name carries the bound character (book.GrimoireSkillInstance)
         if (p.tickCount % 100 != 0 || GrimoirePages.grimoireOf(p).isPresent()) return;
         var books = new java.util.ArrayList<ItemStack>();
         books.add(com.newuniverse.nusmp.blackclover.GrimoireSlot.get(p));

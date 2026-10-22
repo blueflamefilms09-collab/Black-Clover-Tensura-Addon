@@ -250,7 +250,7 @@ public class GrimoireItem extends Item {
             tooltip.add(Component.literal(tag.getString("BornName") + " Magic").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
             tooltip.add(Component.literal("Born of " + MagicType.byName(fused[0]).displayName + " and " + MagicType.byName(fused[1]).displayName).withStyle(ChatFormatting.LIGHT_PURPLE));
         } else {
-            tooltip.add(Component.literal(MagicType.byName(tag.getString("Magic")).displayName).withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.literal(com.newuniverse.nusmp.grimoire.CanonNaming.named(tag.getString("Canon"), MagicType.byName(tag.getString("Magic")).displayName)).withStyle(ChatFormatting.AQUA));   // the character's name in front of the magic
             if (fusion) tooltip.add(Component.literal("Fused: " + MagicType.byName(fused[0]).displayName + " + " + MagicType.byName(fused[1]).displayName).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
         tooltip.add(Component.literal(cover.kingdom.displayName).withStyle(ChatFormatting.GOLD));

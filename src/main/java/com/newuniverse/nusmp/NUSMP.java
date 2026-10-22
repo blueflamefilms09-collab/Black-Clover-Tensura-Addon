@@ -157,6 +157,8 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.thread.ThreadClient::register);                          // 1.44.0: Rouge, thread traps
             com.newuniverse.nusmp.client.soul.PaladinClient.register(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::register);
+            modEventBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.client.corpse.CorpseClient::registerLooks);     // after the dungeon player-model kit: the new looks of Jimmy, Alfredo and Carl win
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");

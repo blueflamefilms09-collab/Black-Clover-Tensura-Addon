@@ -82,6 +82,18 @@
       "required": false
     },
     {
+      "id": "nusmp:corpse_david",
+      "required": false
+    },
+    {
+      "id": "nusmp:corpse_michael_caesal",
+      "required": false
+    },
+    {
+      "id": "nusmp:soul_zombie",
+      "required": false
+    },
+    {
       "id": "nusmp:tower_wizard",
       "required": false
     },

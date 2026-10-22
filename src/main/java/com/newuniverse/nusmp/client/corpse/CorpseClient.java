@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.corpse;
 import com.newuniverse.nusmp.corpse.CorpseEntities;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.ZombieRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
@@ -18,6 +19,20 @@ public final class CorpseClient {
         e.registerEntityRenderer(CorpseEntities.JIMMY.get(), NamedCorpseRenderer::new);
         e.registerEntityRenderer(CorpseEntities.ALFREDO.get(), NamedCorpseRenderer::new);
         e.registerEntityRenderer(CorpseEntities.CARL.get(), NamedCorpseRenderer::new);
+        e.registerEntityRenderer(CorpseEntities.DAVID.get(), RadesUndeadRenderer::new);
+        e.registerEntityRenderer(CorpseEntities.MICHAEL_CAESAL.get(), RadesUndeadRenderer::new);
+        e.registerEntityRenderer(CorpseEntities.SOUL_ZOMBIE.get(), ZombieRenderer::new);          // the zombie of Soul Corpse Magic is drawn as a zombie; the decay layer stitches it
+    }
+
+    /**
+     * Registered last (EventPriority.LOWEST): the dungeon player-model kit also registers a renderer for Jimmy, Alfredo and Carl, and the one registered last stays. Unless
+     * {@code corpse.classicLooks} is set, the three get the new custom looks that follow the series art ({@link RadesUndeadRenderer}); the old renderers and assets stay in the tree.
+     */
+    public static void registerLooks(EntityRenderersEvent.RegisterRenderers e) {
+        if (CorpseClientConfig.classicLooks()) return;
+        e.registerEntityRenderer(CorpseEntities.JIMMY.get(), RadesUndeadRenderer::new);
+        e.registerEntityRenderer(CorpseEntities.ALFREDO.get(), RadesUndeadRenderer::new);
+        e.registerEntityRenderer(CorpseEntities.CARL.get(), RadesUndeadRenderer::new);
     }
 
     public static void addLayers(EntityRenderersEvent.AddLayers e) {

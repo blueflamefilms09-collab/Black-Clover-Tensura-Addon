@@ -11,6 +11,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class CorpseConfig {
     public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.IntValue ZOMBIE_CAP, ZOMBIE_GLOBAL_CAP, NAMED_GLOBAL_CAP;
+    public static final ModConfigSpec.BooleanValue ZOMBIES_INSTEAD_OF_PUPPETS;
     public static final ModConfigSpec.IntValue LEDGER_MAX, RAISE_MAX, MAX_ACTIVE, LIFE_SECONDS, NAMED_LIFE_SECONDS, TRUE_COOLDOWN_SECONDS,
             PACT_MINUTES, REVIVE_DECAY_SECONDS, PET_WINDOW_SECONDS, PACT_RANGE, LEDGER_RADIUS, REVIVE_MANA_PERCENT;
     public static final ModConfigSpec.DoubleValue DAMAGE_MULT, REVIVE_HEALTH, REVIVE_MAX_HEALTH_CUT;
@@ -60,6 +62,15 @@ public final class CorpseConfig {
                 .define("conjureTensura", true);
         CONJURE_MANA_PERCENT = b.comment("Mana a conjured corpse costs, percent of your maximum magicule per body, on top of the page's own cost. 0 = free.")
                 .defineInRange("conjureManaPercent", 3.0, 0.0, 100.0);
+        ZOMBIES_INSTEAD_OF_PUPPETS = b.comment("true: Soul Corpse Magic summons real zombies (owned by the caster, no sun burn, no drops) in the Marionette, Necropolis and Legion pages, in Reanimation and",
+                "in True Soul Corpse Magic's re-raising of fallen pets. false = the old behaviour: stitched puppet props, and Reanimation raising the dead creature's own kind.")
+                .define("zombiesInsteadOfPuppets", true);
+        ZOMBIE_CAP = b.comment("Most summoned zombies one caster owns at once, over every page; summoning more dismisses the oldest.")
+                .defineInRange("zombieCap", 6, 1, 16);
+        ZOMBIE_GLOBAL_CAP = b.comment("Most summoned zombies on the whole server at once, all casters together (a new summon is cut to what is left).")
+                .defineInRange("zombieGlobalCap", SoulZombieRules.GLOBAL_CAP_DEFAULT, 4, 512);
+        NAMED_GLOBAL_CAP = b.comment("Most of Rades's numbered undead (Jimmy, David, Alfredo, Carl, Michael Caesal) on the whole server at once.")
+                .defineInRange("namedGlobalCap", SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT, 3, 256);
         b.pop();
         SPEC = b.build();
     }
@@ -78,6 +89,10 @@ public final class CorpseConfig {
         try { return v.get(); } catch (IllegalStateException unloaded) { return fallback; }
     }
 
+    public static boolean zombiesInsteadOfPuppets() { return getb(ZOMBIES_INSTEAD_OF_PUPPETS, true); }
+    public static int zombieGlobalCap() { return geti(ZOMBIE_GLOBAL_CAP, SoulZombieRules.GLOBAL_CAP_DEFAULT); }
+    public static int namedGlobalCap() { return geti(NAMED_GLOBAL_CAP, SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT); }
+    public static int zombieCap() { return geti(ZOMBIE_CAP, SoulZombieRules.CAP_DEFAULT); }
     public static boolean conjure() { return getb(CONJURE, true); }
     public static boolean conjureTensura() { return getb(CONJURE_TENSURA, true); }
     public static double conjureManaPercent() { return getd(CONJURE_MANA_PERCENT, 3.0); }

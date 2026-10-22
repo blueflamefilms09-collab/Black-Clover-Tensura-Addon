@@ -61,6 +61,9 @@ public class GrimoireMagicSkill extends Skill {
 
     @Override public ResourceLocation getSkillIcon() { return icon; }
 
+    /** the instance names itself with the bound character in front of the magic (book.GrimoireSkillInstance). */
+    @Override public io.github.manasmods.tensura.ability.TensuraSkillInstance createDefaultInstance() { return new com.newuniverse.nusmp.book.GrimoireSkillInstance(this); }
+
     public MagicType fixedMagic() { return fixed; }
 
     // ---------- stored data ----------

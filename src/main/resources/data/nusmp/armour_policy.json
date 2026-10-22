@@ -698,6 +698,10 @@
     "SOUL_CORPSE"
    ],
    "shimmer": "SOUL_CORPSE_FX2",
+   "new_pages": [
+    "corpse_david",
+    "corpse_michael_caesal"
+   ],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "SOUL": {

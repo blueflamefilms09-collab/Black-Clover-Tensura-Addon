@@ -63,6 +63,11 @@ public final class CharacterSpells {
         lock("book_soul", "paladin_conversion", CanonBook.LUCIUS);
         lock("book_soul", "paladin_recall", CanonBook.LUCIUS);
         lock("book_soul_corpse", "true_soul_corpse", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_jimmy", CanonBook.RADES);            // Rades's numbered undead are his exclusive spells
+        lock("book_soul_corpse", "corpse_david", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_alfredo", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_carl", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_michael_caesal", CanonBook.RADES);
         lock("book_song", "song_crescendo", CanonBook.KAHONO);
         lock("book_butoh", "butoh_dance", CanonBook.KIATO);
         lock("book_butoh", "butoh_dash_deflect", CanonBook.KIATO);

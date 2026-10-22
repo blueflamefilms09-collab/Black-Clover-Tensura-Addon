@@ -60,6 +60,7 @@ public final class SoulCorpseBook extends ElementBook {
         l.add(mid("corpse_marionette", "Soul Corpse: Marionette", SoulCorpseBook::marionette).withCooldown(260));
         l.add(mid("corpse_swap", "Soul Corpse: Corpse Swap", SoulCorpseBook::swap).withCooldown(300));
         l.add(signature("corpse_legion", "Soul Corpse: Corpse Legion", SoulCorpseBook::legion).withCooldown(1800).withAnim("signature"));
+        l.addAll(com.newuniverse.nusmp.book.ext.SoulCorpseExt.latePages());      // Rades's No.3 David and No.0 Michael Caesal: appended last so no mode number (and no unlock bit) of an older page moves
         return List.copyOf(l);
     }
 
@@ -167,6 +168,9 @@ public final class SoulCorpseBook extends ElementBook {
     // ---------------------------------------------------------------- the appended pages
     /** Raises {@code n} marionettes round the caster, keeping at most {@link SoulCorpseRules#PUPPET_CAP} puppets (the oldest end). */
     private static int raise(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, int n, int life) {
+        // the owner's call: Soul Corpse Magic summons real zombies (owned, no sun burn, no drops; cap corpse.zombieCap). corpse.zombiesInsteadOfPuppets = false brings the old puppet props back
+        if (com.newuniverse.nusmp.corpse.CorpseConfig.zombiesInsteadOfPuppets())
+            return com.newuniverse.nusmp.corpse.SoulZombies.summon(p, n, life, SongRebuildKit.size(p), null).size();
         SongRebuildKit.dismiss(p, PropKind.SOUL_CORPSE_1, 0, Math.max(0, SoulCorpseRules.PUPPET_CAP - n));
         float s = 0.9f * Math.min(1.3f, SongRebuildKit.size(p));
         int made = 0;

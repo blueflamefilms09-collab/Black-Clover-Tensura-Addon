@@ -1,0 +1,17 @@
+{
+  "entity.nusmp.soul_zombie": "Soul Zombie",
+  "entity.nusmp.corpse_david": "David",
+  "entity.nusmp.corpse_michael_caesal": "Michael Caesal",
+
+  "nusmp.page.book_soul_corpse.corpse_jimmy": "No.4 - Jimmy: a bandaged, crouching undead with big golden spiral eyes rises beside you for three minutes. The fast brawler of Rades Spirito's undead: light, quick and hits often. Rades Spirito's grimoire only.",
+  "nusmp.page.book_soul_corpse.corpse_david": "No.3 - David: a huge hunched giant sewn together from blue-grey and brown patches rises beside you for about two minutes. The slowest and the heaviest of Rades Spirito's undead, a wall of health and armour; every eight seconds, with a foe at his feet, he slams the ground (foes within four blocks are hurt, thrown back and slowed). Rades Spirito's grimoire only.",
+  "nusmp.page.book_soul_corpse.corpse_alfredo": "No.2 - Alfredo: a tall, armoured, hooded undead bound in straps and chains, wrapped in a blue-white spirit aura, rises beside you for three minutes. Slow and hard to hurt; every twenty seconds in a fight he raises a soul barrier: you, your pact's people, your other undead and he himself get Absorption II for eight seconds. Rades Spirito's grimoire only.",
+  "nusmp.page.book_soul_corpse.corpse_carl": "No.1 - Carl: a tall, thin undead in long white ornate robes and a white mitre, a dark wild-haired body inside the robe, rises beside you for three minutes. He keeps his distance and throws bone shards and Soul Corpse bolts. He never heals anyone. Rades Spirito's grimoire only.",
+  "nusmp.page.book_soul_corpse.corpse_michael_caesal": "No.0 - Michael Caesal: the strongest of Rades Spirito's undead, a lean figure in a white featureless mask with a grey ponytail, a red sash and his arms spread wide, answers your call for ninety seconds. The hardest blow and the fastest feet; every ten seconds he looses a soul barrage of six bolts at the foe he sees. Only one at a time, and a long cooldown. Rades Spirito's grimoire only.",
+
+  "nusmp.page.book_soul_corpse.corpse_reanimate": "Raises Soul Zombies at your side (up to 2 for the dead of the last minute; when no one has died near you the earth gives up one to three, each for a little mana). They are real zombies that obey you: they follow you, fight your foes only, never burn in daylight and drop nothing. They last about a minute. You own at most six zombies at once (the oldest is dismissed first). This page is open from the start.",
+  "nusmp.page.book_soul_corpse.attribute_domain": "Necropolis: a great burst of grave-cold around you that hurts and withers every foe near, and two Soul Zombies rise to fight for ten seconds.",
+  "nusmp.page.book_soul_corpse.corpse_marionette": "Marionette: a Soul Zombie fights for you for twenty-five seconds. It follows you and fights your foes only, never burns in daylight and drops nothing. At most six zombies of yours stand at a time (the oldest is dismissed first).",
+  "nusmp.page.book_soul_corpse.corpse_legion": "Corpse Legion: four Soul Zombies rise round you for twenty seconds and the hands of the grave close under every foe near you.",
+  "nusmp.skill.book_soul_corpse.description": "A grimoire of Soul Corpse: a necromancer's craft of threads, Soul Zombies that fight for you and hands out of the grave. Rades's pages (Reanimation, his numbered undead No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl and No.0 Michael Caesal, True Soul Corpse Magic) are his alone. Summon your grimoire, select a page, and press the skill key to cast."
+}
