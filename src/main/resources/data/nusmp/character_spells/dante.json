@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "canon": "dante",
+  "magic": "GRAVITY",
+  "book": "book_gravity",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "heavy_infighting",
+      "name": "Gravity Magic: Heavy Infighting",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "He moves in and punches rapidly; gravity makes the fists heavier for damage and lighter for speed."
+    },
+    {
+      "page": "weighted_blows",
+      "name": "Gravity Magic (added weight)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "Gravity Magic page: increasing gravity on a body part makes attacks deal more damage."
+    },
+    {
+      "page": "lightened_step",
+      "name": "Gravity Magic (lessened gravity)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "Gravity Magic page: decreasing gravity makes attacks and movement quicker."
+    },
+    {
+      "page": "heavy_infighting_gladiator",
+      "name": "Gravity Magic: Heavy Infighting Gladiator",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "heavy_infighting",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.28
+          }
+        ]
+      },
+      "note": "A sword-based variant: he controls the speed of his sword strikes with gravity."
+    },
+    {
+      "page": "crushing_weight",
+      "name": "Gravity Magic (slamming a target down)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.36
+      },
+      "note": "Gravity Magic page: greatly increased gravity slams a target into the ground."
+    },
+    {
+      "page": "demon_king",
+      "name": "Gravity Magic: Presence of the Demon King",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "A wide-area, high-intensity gravitational field that forces opponents to the ground and nullifies long-range attacks."
+    },
+    {
+      "page": "evil_gods_pressure_craft",
+      "name": "Gravity Magic: Evil God's Pressure Craft",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "heavy_infighting_gladiator",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.65
+          }
+        ]
+      },
+      "note": "Gravity lifts rocks and compresses them into a greatsword he controls with his hands and launches at a target."
+    },
+    {
+      "page": "gravity_sphere",
+      "name": "Gravity Magic (small black hole; the Gravity Singularity small form)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "demon_king"
+          },
+          {
+            "type": "mastery",
+            "min": 0.8
+          }
+        ]
+      },
+      "note": "The Gravity Singularity itself stays a forbidden ritual and is not a page; this is its small form."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Gravity Singularity",
+      "ja": "",
+      "origin": "manga",
+      "source": "en_wiki",
+      "note": "A small black hole that destroys everything in a short range: the book's forbidden ritual, never a page."
+    },
+    {
+      "name": "Body Magic: Body Compression and his flesh",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "His original attribute; the Body book is not his CanonBook entry."
+    }
+  ],
+  "notes": "Gravity Well is this mod's own page and was not found in any source for Dante (kept in the basic Gravity book). Dante's gravity came from the devil Lucifero; his Body Magic was his own."
+}

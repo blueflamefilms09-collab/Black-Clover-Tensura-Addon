@@ -213,6 +213,7 @@
     "ward": "lightning",
     "upkeep": 0.005
    },
+   "new_pages": ["tenjiolia", "apocalypra_astrauza"],
    "canon": "Luck Voltia's lightning armour (Thunder Fiend, Black Lightning Battle Fiend, Raging Lightning: the white-and-gold armour with bolts of docs/mode_armor_spec.md). The three Fiend pages are the explicit armour pages."
   },
   "SWORD": {
@@ -319,6 +320,7 @@
   },
   "BLOOD": {
    "kind": "NONE",
+   "new_pages": ["red_beast", "herd_of_red_beasts"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "CREATION": {
@@ -385,6 +387,7 @@
   },
   "PAINTING": {
    "kind": "NONE",
+   "new_pages": ["souterrain_groundswell", "sirenes_game", "four_headed_lindworm", "vouivres_shout", "souterrain_giant", "twilight_of_valhalla"],
    "canon": "Painting Magic brings painted creatures to life (Rill); nothing is worn."
   },
   "WORLD_TREE": {
@@ -481,6 +484,7 @@
   },
   "BRIAR": {
    "kind": "NONE",
+   "new_pages": ["blue_rose_paradise", "scarlet_braided_spear"],
    "canon": "Briar Magic: the Queen of Briars wears a dress and crown of briars (repo wiki), but the mod has no briar armour painter (client.aura.BriarAura is an empty stub); if one is built it becomes a TOGGLE on Queen of Briars (follow-up)."
   },
   "CHERRY_BLOSSOM": {
@@ -585,6 +589,7 @@
     "WIKI"
    ],
    "shimmer": "EARTHFAM_ZONE",
+   "new_pages": ["laevateinn"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "MODIFICATION": {
@@ -705,6 +710,7 @@
     "SONG"
    ],
    "shimmer": "SONG_FX2",
+   "new_pages": ["heal_lullaby", "mother_lullaby"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "SOUL_CORPSE": {

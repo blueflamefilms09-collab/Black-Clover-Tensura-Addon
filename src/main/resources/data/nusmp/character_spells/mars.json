@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "canon": "mars",
+  "magic": "MINERAL",
+  "book": "book_mineral",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "attribute_bolt",
+      "name": "Mineral Magic (a lance of ore)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Mineral book."
+    },
+    {
+      "page": "attribute_guard",
+      "name": "Mineral Magic: Nemean Armor",
+      "ja": "ネメアの鎧",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "Ore covers the body for defence. The existing Mineral Guard page is this effect (crystal armour), shown under its own name."
+    },
+    {
+      "page": "lance_volley",
+      "name": "Mineral Creation Magic: Harpe",
+      "ja": "ハルパー",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "A great many knives of ore thrown at once (the existing Lance Volley is this effect, shown under its own name)."
+    },
+    {
+      "page": "laevateinn",
+      "name": "Mineral Creation Magic: Laevateinn",
+      "ja": "レーヴァテイン",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "lance_volley",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.45
+          }
+        ]
+      },
+      "note": "NEW page. A giant greatsword of ore made and swung; listed as a mineral offensive spell, no description beyond that."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Heavy Armored Titan",
+      "ja": "タイタンの重鎧",
+      "origin": "anime",
+      "source": "ja_search",
+      "note": "A mineral offensive spell on the wiki's navigation; no description found."
+    },
+    {
+      "name": "Talos Puppet / Talos Puppet Cluster",
+      "ja": "タロスの人形",
+      "origin": "anime",
+      "source": "ja_search",
+      "note": "Ore doubles of himself (supplementary); the Mineral book's spires are not the same thing."
+    },
+    {
+      "name": "Flame Magic: Phoenix Feather Robe",
+      "ja": "不死鳥の羽衣",
+      "origin": "anime",
+      "source": "ja_search",
+      "note": "His second attribute (healing by fire); lives in the Fire book."
+    }
+  ],
+  "notes": "His CanonBook entry changed from Earth Magic to Mineral Magic (the series' attribute; the mod has a Mineral book): a grimoire already bound with the old pair (EARTH, mars) keeps working as before. Not in his grimoire (kept in the basic Mineral book): Mineral Manifestation, Mineral Field, Mineral Domain and Crystal Spire are this mod's own pages and were not found in any source for him."
+}

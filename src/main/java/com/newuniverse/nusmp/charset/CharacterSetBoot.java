@@ -17,5 +17,6 @@ public final class CharacterSetBoot {
         done = true;
         container.registerConfig(ModConfig.Type.SERVER, CharacterSetConfig.SPEC, "nusmp-character-spells-server.toml");
         CharacterSetSelfTests.register();
+        CharacterRestSelfTests.register();      // the squad captains / Spade / Heart / Diamond / Seabed sets (magic.character_spells_rest)
     }
 }
