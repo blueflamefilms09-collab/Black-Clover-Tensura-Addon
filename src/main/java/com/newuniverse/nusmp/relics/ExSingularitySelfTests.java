@@ -51,10 +51,10 @@ public final class ExSingularitySelfTests {
                 if ((c & 0xFFFFFF) != c) return SelfTests.Result.fail("text colour out of range: " + c);
                 checked++;
             }
-            int[] cs = {ExSingularity.rowRgb(ms, 0.3f), ExSingularity.borderRgb(ms, true), ExSingularity.frameRgb(5, 8, ms, true), ExSingularity.glowRgb(ms / 50f), ExSingularity.haloRgb(ms / 50f), ExSingularity.shardRgb(3, 8, ms / 50f)};
+            int[] cs = {ExSingularity.rowRgb(ms, 0.3f), ExSingularity.borderRgb(ms, true), ExSingularity.frameRgb(5, 8, ms, true), ExSingularity.glowRgb(ms / 50f), ExSingularity.veilRgb((ms % 1000) / 1000f, ms / 50f), ExSingularity.shardRgb(3, 8, ms / 50f)};
             for (int c : cs) if ((c & 0xFFFFFF) != c) return SelfTests.Result.fail("colour out of range: " + c);
-            int a = ExSingularity.frameAlpha(false, ms), b = ExSingularity.frameAlpha(true, ms), h = ExSingularity.haloAlpha(ms / 50f);
-            if (a < 0 || a > 255 || b < 0 || b > 255 || h < 0 || h > 255) return SelfTests.Result.fail("alpha out of range");
+            int a = ExSingularity.frameAlpha(false, ms), b = ExSingularity.frameAlpha(true, ms);
+            if (a < 0 || a > 255 || b < 0 || b > 255) return SelfTests.Result.fail("alpha out of range");
         }
         return SelfTests.Result.ok("EX-Singularity is grade " + Grade.AKASHIC.tier() + " (above Genesis), never rolled, none of " + relics + " relics carries it, Shishou resolves to it, " + checked + " palette samples in range");
     }

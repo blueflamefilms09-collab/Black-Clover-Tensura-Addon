@@ -66,6 +66,18 @@ public final class PrismText {
         for (int i = 0; i < n; i++) g.drawString(font, row.glyph[i], x + row.x[i], y, 0xFF000000 | ExSingularity.textRgb(i, n, millis), shadow);
     }
 
+    /** Segments of the prismatic hairline (EX-Singularity's rule under the grade row and above the footer): eight fills, each its own hue of the turning spectrum. */
+    public static final int HAIR_SEGMENTS = 8;
+
+    /** A one-pixel hairline of {@link #HAIR_SEGMENTS} hues from x to x + w at y; {@code alpha} 0..255. No allocation. */
+    public static void hairline(GuiGraphics g, int x, int y, int w, long millis, int alpha) {
+        int a = (alpha & 255) << 24;
+        for (int k = 0; k < HAIR_SEGMENTS; k++) {
+            int x0 = x + w * k / HAIR_SEGMENTS, x1 = x + w * (k + 1) / HAIR_SEGMENTS;
+            g.fill(x0, y, x1, y + 1, a | ExSingularity.rowRgb(millis, k / (float) HAIR_SEGMENTS * 0.6f));
+        }
+    }
+
     // ---------------------------------------------------------------- the item's name (drawn by vanilla, so it is a component)
     private static long nameStep = Long.MIN_VALUE;
     private static String nameText = "";

@@ -190,7 +190,8 @@ public final class UnifiedTooltip {
                         yy += LINE;
                     }
                 } else if (d.part() == FOOT) {
-                    if (anime) g.fill(x, y + 1, x + w, y + 2, UiMath.withAlpha(0xFF000000 | d.rgb(), 0.30f));          // a hairline above the footer
+                    if (anime && d.rgb() == com.newuniverse.nusmp.relics.Grade.AKASHIC.rgb()) PrismText.hairline(g, x, y + 1, w, System.currentTimeMillis(), 110);          // EX-Singularity: a prismatic hairline above the footer
+                    else if (anime) g.fill(x, y + 1, x + w, y + 2, UiMath.withAlpha(0xFF000000 | d.rgb(), 0.30f));          // a hairline above the footer
                     int yy = y + 3;
                     for (Row r : l.pages().get(0)) {
                         g.drawString(font, r.text(), x + r.indent(), yy, UnifiedTooltipRules.COLOUR_FOOTER, true);
@@ -209,7 +210,10 @@ public final class UnifiedTooltip {
                         boolean banner = r.tag() == TAG_BANNER;
                         if (banner && d.part() == HEAD_PRISM) PrismText.draw(g, font, prism[i], x + r.indent(), yy, now, true);                  // EX-Singularity: every glyph its own hue, a glint running along
                         else g.drawString(font, r.text(), x + r.indent(), yy, banner ? 0xFF000000 | d.rgb() : UnifiedTooltipRules.COLOUR_TYPE, true);
-                        if (banner && anime) g.fill(x, yy + LINE - 1, x + w, yy + LINE, UiMath.withAlpha(0xFF000000 | (d.part() == HEAD_PRISM ? com.newuniverse.nusmp.relics.ExSingularity.rowRgb(now, 0f) : d.rgb()), 0.45f));      // the hairline under the grade row
+                        if (banner && anime) {
+                            if (d.part() == HEAD_PRISM) PrismText.hairline(g, x, yy + LINE - 1, w, now, 200);                                          // EX-Singularity: the hairline is a small spectrum too
+                            else g.fill(x, yy + LINE - 1, x + w, yy + LINE, UiMath.withAlpha(0xFF000000 | d.rgb(), 0.45f));      // the hairline under the grade row
+                        }
                         yy += LINE;
                     }
                 }

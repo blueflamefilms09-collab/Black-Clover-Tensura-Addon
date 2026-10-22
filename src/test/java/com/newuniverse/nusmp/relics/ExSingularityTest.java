@@ -145,17 +145,34 @@ class ExSingularityTest {
         for (float t = 0; t < ExSingularity.GLOW_PERIOD_TICKS; t += 5f) sector[(int) Math.floor(hueOf(ExSingularity.glowRgb(t)) * 6) % 6] = true;
         for (boolean b : sector) assertTrue(b, "every hue sector is visited");
         assertEquals(10f, ExSingularity.GLOW_PERIOD_TICKS / 20f, 1e-6, "ten seconds a turn: slow, never a flash");
-        // the halo is half a turn away from the main glow
-        for (float t = 0; t < 200f; t += 17f) {
-            double d = Math.abs(hueOf(ExSingularity.glowRgb(t)) - hueOf(ExSingularity.haloRgb(t)));
-            d = Math.min(d, 1 - d);
-            assertTrue(d > 0.4, "opposite hues: " + d);
+        // the veil: the spectrum along the blade, dim with a bright band running up it
+        for (float t = 0; t < 600f; t += 11f) {
+            Set<Integer> along = new HashSet<>();
+            int brightest = 0, dimmest = 255;
+            for (float y = 0f; y <= 1.0001f; y += 0.02f) {
+                int c = ExSingularity.veilRgb(y, t);
+                assertEquals(c & 0xFFFFFF, c);
+                along.add(c);
+                int v = Math.max(c >> 16 & 255, Math.max(c >> 8 & 255, c & 255));
+                brightest = Math.max(brightest, v);
+                dimmest = Math.min(dimmest, v);
+            }
+            assertTrue(along.size() > 25, "the veil is a gradient along the blade: " + along.size());
+            assertTrue(dimmest <= 50 && dimmest >= 38, "dim base " + dimmest);
+            assertTrue(brightest <= 170, "never white-hot: " + brightest);
         }
+        float bestAt0 = -1, bestAt30 = -1;
+        int vmax0 = 0, vmax30 = 0;
+        for (float y = 0f; y <= 1f; y += 0.01f) {
+            int a = ExSingularity.veilRgb(y, 0f), b = ExSingularity.veilRgb(y, 30f);
+            int va = Math.max(a >> 16 & 255, Math.max(a >> 8 & 255, a & 255)), vb = Math.max(b >> 16 & 255, Math.max(b >> 8 & 255, b & 255));
+            if (va > vmax0) { vmax0 = va; bestAt0 = y; }
+            if (vb > vmax30) { vmax30 = vb; bestAt30 = y; }
+        }
+        assertTrue(bestAt30 > bestAt0 + 0.3f, "the bright band runs up the blade: " + bestAt0 + " -> " + bestAt30);
         for (float t = 0; t < 400f; t += 3f) {
             float p = ExSingularity.pulse(t);
             assertTrue(p >= 0.6f && p <= 1.0f, "pulse " + p);
-            int a = ExSingularity.haloAlpha(t);
-            assertTrue(a >= 70 && a <= 130, "halo alpha " + a);
         }
     }
 
@@ -170,7 +187,7 @@ class ExSingularityTest {
                 seen.add(c);
             }
             int a = ExSingularity.frameAlpha(false, ms), b = ExSingularity.frameAlpha(true, ms);
-            assertTrue(a >= 200 && a <= 255 && b >= 70 && b <= 110, a + " " + b);
+            assertTrue(a >= 200 && a <= 255 && b >= 100 && b <= 150, a + " " + b);
             assertEquals(ExSingularity.borderRgb(ms, false) & 0xFFFFFF, ExSingularity.borderRgb(ms, false));
             float tw = 0;
             for (int c = 0; c < 4; c++) { tw += ExSingularity.twinkle(c, ms) > 0.05f ? 1 : 0; }
@@ -178,7 +195,7 @@ class ExSingularityTest {
         }
         assertTrue(seen.size() > 100);
         assertEquals(ExSingularity.frameRgb(3, 8, 0L, false), ExSingularity.frameRgb(3, 8, ExSingularity.FRAME_PERIOD_MS, false), "the frame loops");
-        assertEquals(15, ExSingularity.FRAME_FILLS, "8 outer + 4 inner + 1 sheen + 2 twinkle");
+        assertEquals(23, ExSingularity.FRAME_FILLS, "16 outer (6 + 6 pieces, 4 gradients) + 4 inner + 1 sheen + 2 twinkle");
         assertTrue(ExSingularity.FRAME_SLOTS_PER_FRAME <= 8);
     }
 
@@ -275,7 +292,7 @@ class ExSingularityTest {
     @Test
     void theDrawPathsAllocateNothing() throws IOException {
         String fx = strip(Files.readString(SRC.resolve("client/ExSingularityFx.java")));
-        for (String m : new String[]{"extras", "shards", "plane", "vert"}) assertNoAlloc("ExSingularityFx." + m, body(fx, m));
+        for (String m : new String[]{"extras", "veil", "shards", "plane", "vert"}) assertNoAlloc("ExSingularityFx." + m, body(fx, m));
         String cl = strip(Files.readString(SRC.resolve("client/ex/ExSingularityClient.java")));
         for (String m : new String[]{"frame", "paint", "onClientTick", "onEntityTick", "mote"}) assertNoAlloc("ExSingularityClient." + m, body(cl, m));
         String pt = strip(Files.readString(SRC.resolve("client/ui/tooltip/PrismText.java")));

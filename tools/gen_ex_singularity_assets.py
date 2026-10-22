@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Generates the one texture of the EX-Singularity sword effect: the prismatic shard (a four-pointed star glint).
+"""Generates the textures of the EX-Singularity sword effect: the prismatic shard (a four-pointed star glint) and the tint-neutral copy of Shishou's glow skin.
 
-Output: src/main/resources/assets/nusmp/textures/entity/weapon/ex_singularity_star.png  (64x64, deterministic)
+Output (deterministic):
+  src/main/resources/assets/nusmp/textures/entity/weapon/ex_singularity_star.png    (64x64 star glint)
+  src/main/resources/assets/nusmp/textures/entity/weapon/shishou_prism_glow.png     (the sword's glow skin made tint-neutral)
 
 The sword's orbiting shards (client/ExSingularityFx) draw this one star in the additive pass and tint it per vertex with the spectrum, so the texture itself is neutral: white, with the
 colour PREMULTIPLIED (RGB = alpha, transparent texels are 0,0,0,0). That makes it safe in both blends of client/SafeAdditive (alpha-weighted and plain additive): nothing under alpha, no
@@ -14,7 +16,10 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "weapon", "ex_singularity_star.png")
+WEAPON = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "weapon")
+OUT = os.path.join(WEAPON, "ex_singularity_star.png")
+GLOW_IN = os.path.join(WEAPON, "shishou_glow.png")
+GLOW_OUT = os.path.join(WEAPON, "shishou_prism_glow.png")
 N = 64
 
 
@@ -41,7 +46,24 @@ def star():
     return a
 
 
+def prism_glow():
+    """The sword's own glow skin (shishou_glow.png) is cyan and yellow: tinted with a hue it would only ever make a dim cyan-ish red or green. The prismatic passes multiply their vertex
+    colour with the texture, so they need a NEUTRAL map: the same shape and alpha, every lit texel white scaled by the brightest channel and PREMULTIPLIED by the alpha (colour never sits under alpha 0)."""
+    im = np.asarray(Image.open(GLOW_IN).convert("RGBA"), np.float64)
+    a = im[..., 3]
+    lum = im[..., :3].max(axis=2)
+    out = np.zeros(im.shape, np.uint8)
+    v = np.round(lum * a / 255.0).astype(np.uint8)                      # premultiplied: nothing under alpha 0, and plain and alpha-weighted additive blends agree
+    out[..., 0] = v
+    out[..., 1] = v
+    out[..., 2] = v
+    out[..., 3] = a.astype(np.uint8)
+    Image.fromarray(out, "RGBA").save(GLOW_OUT)
+    print("wrote", os.path.relpath(GLOW_OUT, os.path.join(HERE, "..")), "lit texels", int((a > 0).sum()))
+
+
 def main():
+    prism_glow()
     a = star()
     v = np.round(a * 255.0).astype(np.uint8)
     img = np.zeros((N, N, 4), dtype=np.uint8)

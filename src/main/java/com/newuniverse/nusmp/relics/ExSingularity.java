@@ -11,8 +11,8 @@ import java.util.Set;
  * ({@link Grade#rollable()}), only items that name it by hand carry it ({@link #isAkashicPath}).
  * <p>
  * Worst-case numbers this module's draw code is built on (docs/relics/ex_singularity.md): tooltip text at most {@link #MAX_GLYPHS} glyph draws per hovered tooltip; the slot frame
- * {@link #FRAME_FILLS} fills per decorated slot and at most {@link #FRAME_SLOTS_PER_FRAME} slots a frame; the sword at most {@link #MAX_SHARDS} shards (two quads each) on top of the
- * same two glow passes a Genesis weapon has; at most {@link #MOTES_PER_SECOND} particle motes a second per carrier.
+ * {@link #FRAME_FILLS} fills per decorated slot and at most {@link #FRAME_SLOTS_PER_FRAME} slots a frame; the sword at most {@link #MAX_SHARDS} shards (four quads each: two crossed planes, both faces) plus the blade veil (the
+ * blade's own quads once more, about 450) on top of ONE glow pass, fewer quads than the two glow passes a Genesis weapon has; at most {@link #MOTES_PER_SECOND} particle motes a second per carrier.
  */
 public final class ExSingularity {
     private ExSingularity() {}
@@ -33,7 +33,7 @@ public final class ExSingularity {
     /** The most glyphs a tooltip row draws one by one (a longer row falls back to one plain colour). */
     public static final int MAX_GLYPHS = 64;
     /** Fills one decorated inventory slot costs (batched into one managed draw). */
-    public static final int FRAME_FILLS = 15;
+    public static final int FRAME_FILLS = 23;
     /** Decorated slots drawn in one frame (Shishou is one in the world; the hotbar, the inventory and the cursor can show it at most a few times). */
     public static final int FRAME_SLOTS_PER_FRAME = 4;
     /** Shards that orbit the sword (two crossed quads each). */
@@ -110,23 +110,38 @@ public final class ExSingularity {
     public static final float GLOW_PERIOD_TICKS = 200f;
 
     /** The sword's main glow colour (0xRRGGBB) at a time in ticks: a slow walk through every hue. */
-    public static int glowRgb(float ticks) { return hsv(ticks / GLOW_PERIOD_TICKS, 0.88f, 1f); }
+    public static int glowRgb(float ticks) { return hsv(ticks / GLOW_PERIOD_TICKS, 0.90f, 0.78f); }
 
-    /** The second (halo) pass colour: half a turn away from the main glow, so the two passes read as a prism, not one flat colour. */
-    public static int haloRgb(float ticks) { return hsv(ticks / GLOW_PERIOD_TICKS + 0.5f, 0.80f, 1f); }
+    /** Where the veil starts on the sword, as a share of its length from the pommel end: the blade only (the hilt and the guard keep their own metal). */
+    public static final float VEIL_FROM = 0.38f;
+    /** Ticks the bright band of the veil takes to run up the blade once (three seconds). */
+    public static final float VEIL_BAND_TICKS = 60f;
+
+    /**
+     * The colour of the iridescent VEIL at a point of the blade ({@code yFrac} 0 = pommel end, 1 = tip) at a time in ticks: the spectrum laid along the blade (0.8 of a turn from the
+     * guard to the tip) and turning with the glow, dim all over (value 0.16) with a bright band (up to 0.66) that runs up the blade every three seconds. The sword's second pass draws the
+     * blade's own skin additively with this colour per quad, so the silver shimmers like oil on water. Pure; no allocation.
+     */
+    public static int veilRgb(float yFrac, float ticks) {
+        float hue = ticks / GLOW_PERIOD_TICKS + yFrac * 0.8f;
+        float pos = frac(ticks / VEIL_BAND_TICKS) * 1.5f - 0.25f;
+        float d = Math.abs(yFrac - pos);
+        float band = d < 0.25f ? 1f - d / 0.25f : 0f;
+        return hsv(hue, 0.85f, 0.16f + 0.50f * band * band);
+    }
 
     /** The slow pulse (about 0.62..1.0) both passes breathe with; period about nine seconds, so it never reads as a flicker. */
     public static float pulse(float ticks) { return 0.81f + 0.19f * (float) Math.sin(ticks * 0.07f); }
 
-    /** The alpha (0..255) of the halo pass, breathing against the main pulse. */
-    public static int haloAlpha(float ticks) { return 70 + Math.round(60f * (0.5f + 0.5f * (float) Math.sin(ticks * 0.07f + 2.2f))); }
+    
+    public static int haloAlpha(float ticks) { return 110 + Math.round(80f * (0.5f + 0.5f * (float) Math.sin(ticks * 0.07f + 2.2f))); }
 
     /** The colour of orbiting shard {@code i} (they sit at evenly spaced hues, all turning with the glow). */
     public static int shardRgb(int i, int count, float ticks) { return hsv(ticks / GLOW_PERIOD_TICKS + i / (float) Math.max(1, count), 0.70f, 1f); }
 
     /**
      * Where shard {@code i} of {@code count} is at {@code ticks}, in units of the blade length: {@code out[0]} and {@code out[2]} are the offsets across the blade (the circle's radius is
-     * {@code radius} blade lengths), {@code out[1]} is the height along the blade from its tip-less middle 0..1 (0 = the guard end, 1 = the tip), {@code out[3]} the shard's twinkle 0..1.
+     * {@code radius} blade lengths), {@code out[1]} is the height along the blade 0..1 (0 = the pommel end, 1 = the tip), {@code out[3]} the shard's twinkle 0..1.
      * Pure; no allocation (the caller passes the array).
      */
     public static void shard(int i, int count, float ticks, float radius, float[] out) {
@@ -152,7 +167,7 @@ public final class ExSingularity {
     /** The alpha (0..255) of a frame segment: the outer ring is bright, the inner one softer; both breathe a little. */
     public static int frameAlpha(boolean inner, long millis) {
         float b = 0.5f + 0.5f * (float) Math.sin((millis % FRAME_PERIOD_MS) / (float) FRAME_PERIOD_MS * 6.2831855f * 2f);
-        return inner ? 70 + Math.round(40f * b) : 200 + Math.round(55f * b);
+        return inner ? 100 + Math.round(50f * b) : 200 + Math.round(55f * b);
     }
 
     /** How strong corner twinkle {@code c} (0..3) is at {@code millis}, 0..1 (the four corners take turns). */

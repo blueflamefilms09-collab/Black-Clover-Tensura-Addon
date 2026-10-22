@@ -84,35 +84,41 @@ public final class ExSingularityClient {
         return false;
     }
 
-    /** The frame itself: an outer ring of eight coloured segments that turns round the slot, an inner ring turning the other way, a faint sheen over the item and one twinkling corner. 15 fills at most. */
+    /** Perimeter units of the outer ring: 18 px top, 16 right, 18 bottom, 16 left. The hue runs once round it, so all of the spectrum is on the frame at once. */
+    private static final int PERIMETER = 68;
+
+    /**
+     * The frame itself: an outer ring (six 3 px pieces on the top and the bottom, two gradient fills on each side) whose hue runs round the slot and turns with time, an inner ring turning the other
+     * way, a faint sheen over the item and one twinkling corner. {@link ExSingularity#FRAME_FILLS} (23) fills at most, one managed draw.
+     */
     private static void paint() {
         GuiGraphics g = curG;
         int x = curX, y = curY;
         long ms = curMs;
         RenderType rt = RenderType.guiOverlay();
-        int outerA = ExSingularity.frameAlpha(false, ms) << 24, innerA = ExSingularity.frameAlpha(true, ms) << 24;
-        // outer ring: top, right, bottom, left, two segments each, hues running round the perimeter
-        g.fill(rt, x - 1, y - 1, x + 8, y, outerA | ExSingularity.frameRgb(0, 8, ms, false));
-        g.fill(rt, x + 8, y - 1, x + 17, y, outerA | ExSingularity.frameRgb(1, 8, ms, false));
-        g.fill(rt, x + 16, y, x + 17, y + 8, outerA | ExSingularity.frameRgb(2, 8, ms, false));
-        g.fill(rt, x + 16, y + 8, x + 17, y + 16, outerA | ExSingularity.frameRgb(3, 8, ms, false));
-        g.fill(rt, x + 8, y + 16, x + 17, y + 17, outerA | ExSingularity.frameRgb(4, 8, ms, false));
-        g.fill(rt, x - 1, y + 16, x + 8, y + 17, outerA | ExSingularity.frameRgb(5, 8, ms, false));
-        g.fill(rt, x - 1, y + 8, x, y + 16, outerA | ExSingularity.frameRgb(6, 8, ms, false));
-        g.fill(rt, x - 1, y, x, y + 8, outerA | ExSingularity.frameRgb(7, 8, ms, false));
+        int oa = ExSingularity.frameAlpha(false, ms) << 24, ia = ExSingularity.frameAlpha(true, ms) << 24;
+        int n = PERIMETER;
+        for (int i = 0; i < 6; i++) {
+            g.fill(rt, x - 1 + 3 * i, y - 1, x + 2 + 3 * i, y, oa | ExSingularity.frameRgb(3 * i + 1, n, ms, false));                  // top, left to right
+            g.fill(rt, x + 14 - 3 * i, y + 16, x + 17 - 3 * i, y + 17, oa | ExSingularity.frameRgb(35 + 3 * i, n, ms, false));         // bottom, right to left
+        }
+        g.fillGradient(rt, x + 16, y, x + 17, y + 8, oa | ExSingularity.frameRgb(18, n, ms, false), oa | ExSingularity.frameRgb(26, n, ms, false), 0);          // right, top to bottom
+        g.fillGradient(rt, x + 16, y + 8, x + 17, y + 16, oa | ExSingularity.frameRgb(26, n, ms, false), oa | ExSingularity.frameRgb(34, n, ms, false), 0);
+        g.fillGradient(rt, x - 1, y + 8, x, y + 16, oa | ExSingularity.frameRgb(60, n, ms, false), oa | ExSingularity.frameRgb(52, n, ms, false), 0);         // left, bottom to top
+        g.fillGradient(rt, x - 1, y, x, y + 8, oa | ExSingularity.frameRgb(68, n, ms, false), oa | ExSingularity.frameRgb(60, n, ms, false), 0);
         // inner ring: one softer strip per side, the hues turning the other way
-        g.fill(rt, x, y, x + 16, y + 1, innerA | ExSingularity.frameRgb(0, 4, ms, true));
-        g.fill(rt, x + 15, y + 1, x + 16, y + 16, innerA | ExSingularity.frameRgb(1, 4, ms, true));
-        g.fill(rt, x, y + 15, x + 15, y + 16, innerA | ExSingularity.frameRgb(2, 4, ms, true));
-        g.fill(rt, x, y + 1, x + 1, y + 15, innerA | ExSingularity.frameRgb(3, 4, ms, true));
+        g.fill(rt, x, y, x + 16, y + 1, ia | ExSingularity.frameRgb(0, 4, ms, true));
+        g.fill(rt, x + 15, y + 1, x + 16, y + 16, ia | ExSingularity.frameRgb(1, 4, ms, true));
+        g.fill(rt, x, y + 15, x + 15, y + 16, ia | ExSingularity.frameRgb(2, 4, ms, true));
+        g.fill(rt, x, y + 1, x + 1, y + 15, ia | ExSingularity.frameRgb(3, 4, ms, true));
         // the sheen: a very faint wash of the current hue over the sprite
-        g.fill(rt, x, y, x + 16, y + 16, 0x16000000 | ExSingularity.frameRgb(0, 1, ms, false));
+        g.fill(rt, x, y, x + 16, y + 16, 0x14000000 | ExSingularity.frameRgb(0, 1, ms, false));
         // the twinkle: a plus-shaped glint at the corner whose turn it is (at most one at a time)
         for (int c = 0; c < 4; c++) {
             float tw = ExSingularity.twinkle(c, ms);
             if (tw <= 0.05f) continue;
             int cx = (c == 0 || c == 3) ? x : x + 15, cy = (c < 2) ? y : y + 15;
-            int a = Math.round(255f * tw) << 24 | ExSingularity.towardWhite(ExSingularity.frameRgb(c * 2, 8, ms, false), 0.7f);
+            int a = Math.round(255f * tw) << 24 | ExSingularity.towardWhite(ExSingularity.frameRgb(c * 17, n, ms, false), 0.7f);
             g.fill(rt, cx - 2, cy, cx + 3, cy + 1, a);
             g.fill(rt, cx, cy - 2, cx + 1, cy + 3, a);
             break;
