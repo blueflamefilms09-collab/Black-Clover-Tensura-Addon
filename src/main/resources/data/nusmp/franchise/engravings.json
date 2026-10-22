@@ -509,6 +509,23 @@
         "heavy knight",
         "game the system"
       ]
+    },
+    {
+      "id": "reincarnated_as_a_sword",
+      "name": "Reincarnated as a Sword",
+      "colour": "#7FEBFF",
+      "theme": "relic.element.holy",
+      "aliases": [
+        "reincarnated as a sword",
+        "tensei shitara ken deshita"
+      ],
+      "words": [
+        "shishou",
+        "fran",
+        "talking sword",
+        "akashic relic",
+        "skill eater"
+      ]
     }
   ],
   "engravings": [
@@ -1431,6 +1448,33 @@
           "kind": "first_strike",
           "pct": 0.07,
           "window": 200
+        }
+      ]
+    },
+    {
+      "id": "fr_teachers_insight",
+      "franchise": "reincarnated_as_a_sword",
+      "name": "Teacher's Insight",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "first_strike",
+          "pct": 0.08,
+          "window": 200
+        }
+      ]
+    },
+    {
+      "id": "fr_devoured_power",
+      "franchise": "reincarnated_as_a_sword",
+      "name": "Devoured Power",
+      "scope": "main",
+      "effects": [
+        {
+          "kind": "kill_stacks",
+          "pct": 0.012,
+          "max": 6,
+          "decay": 1200
         }
       ]
     }

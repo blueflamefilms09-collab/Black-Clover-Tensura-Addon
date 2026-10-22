@@ -1844,6 +1844,20 @@
       "fixed_scale": 0.787
     },
     {
+      "id": "shishou",
+      "action": "preset",
+      "length_blocks": 1.706,
+      "first_person_scale": 0.572,
+      "first_person_translation_px": [
+        1.13,
+        2.83,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.468,
+      "fixed_scale": 0.879
+    },
+    {
       "id": "shroud_of_margins",
       "action": "keep",
       "length_blocks": 1.091

@@ -21,7 +21,7 @@ class VoiceLogicTest {
 
     @Test
     void theCatalogueHasTheExpectedShape() {
-        int own = com.newuniverse.nusmp.undine.UndineLines.ids().size() + com.newuniverse.nusmp.sylph.SylphVoiceLines.ids().size();                    // the Undine's and Sylph's own spoken lines come after the manifest's
+        int own = com.newuniverse.nusmp.undine.UndineLines.ids().size() + com.newuniverse.nusmp.sylph.SylphVoiceLines.ids().size() + com.newuniverse.nusmp.shishou.ShishouVoiceLines.ids().size();                    // the Undine's and Sylph's own spoken lines come after the manifest's
         assertEquals(10 + 30 + 8 + 72 + VoiceCatalog.GNOME_LINES.size(), VoiceCatalog.baseIds().size());
         assertEquals(VoiceCatalog.baseIds().size() + own, VoiceCatalog.ids().size());
         assertEquals(36, VoiceCatalog.DJINN_NAMES.size());

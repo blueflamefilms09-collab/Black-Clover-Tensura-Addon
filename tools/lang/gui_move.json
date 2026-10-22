@@ -17,6 +17,7 @@
   "gui_move.cmd.reset": "Every GUI is back in its normal place.",
   "gui_move.element.system_hud": "System window",
   "gui_move.element.hero_hud": "Hero weapon HUD",
+  "gui_move.element.shishou_hud": "Shishou HUD",
   "gui_move.element.curse_bar": "Corruption bar",
   "gui_move.element.djinn_panel": "Djinn panel",
   "gui_move.element.boss_bar": "Boss bar",

@@ -89,6 +89,7 @@ class VoiceAssetsTest {
         List<String> all = new ArrayList<>(ids);
         all.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());
         all.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());                    // their own lines (UndineVoiceAssetsTest, SylphVoiceDataTest check them) are appended after the manifest
+        all.addAll(com.newuniverse.nusmp.shishou.ShishouVoiceLines.ids());                // Shishou's own lines (ShishouVoiceAssetsTest checks them; none are recorded yet) come last
         assertEquals(all, VoiceCatalog.ids(), "VoiceCatalog.ids() is the manifest plus the Undine's and Sylph's generated lines");
         assertEquals(new HashSet<>(ids).size(), ids.size(), "an id is listed twice");
     }
@@ -106,7 +107,7 @@ class VoiceAssetsTest {
                 continue;
             }
             JsonObject e = entry.getAsJsonObject();
-            boolean own = id.startsWith("sylph_") || VoiceCatalog.UNDINE.equals(VoiceCatalog.role(id));
+            boolean own = id.startsWith("sylph_") || id.startsWith("shishou_") || VoiceCatalog.UNDINE.equals(VoiceCatalog.role(id));
             if (!own && e.has("subtitle")) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");
             if (id.startsWith("sylph_") && !e.has("subtitle")) bad.add(key + ": Sylph's lines are spoken with no message: they carry a subtitle");
             JsonArray sounds = e.getAsJsonArray("sounds");

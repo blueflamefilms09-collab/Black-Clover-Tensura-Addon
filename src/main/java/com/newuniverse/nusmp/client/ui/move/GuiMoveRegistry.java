@@ -130,6 +130,7 @@ public final class GuiMoveRegistry {
         hud("scale_readout", "Scale weights", How.BEGIN, BC, 56, 110, 24, "client/scalecast/ScaleHud.java");
         hud("floor_card", "System floor report", How.LAYER, new Place(0, true, false, 0, 6), 6, 276, 120, "client/mega/system/FloorCardClient.java");
         hud("page_toast", "Page unlocked toast", How.LAYER, TC, 8, 300, 62, "client/ui/theme/PageUnlockOverlay.java");
+        hud("shishou_hud", "Shishou HUD", How.BEGIN, new Place(3, false, false, 6, 40), 6, 156, 80, "client/shishou/ShishouClient.java", "client/shishou/ShishouHud.java");
         // ---------------- panels of screens (centred by default)
         panel("four_kingdoms", "Four Kingdoms menu", 340, 236, "client/multiverse/FourKingdomsScreen.java");
         panel("codex", "Codex", 480, 300, "client/ui/CodexScreen.java");

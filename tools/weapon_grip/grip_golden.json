@@ -2599,6 +2599,14 @@
   "y": 16.351,
   "z": 0.0
  },
+ "shishou": {
+  "class": "longsword",
+  "fraction": 0.112,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 15.6,
+  "z": 0.0
+ },
  "shroud_of_margins": {
   "class": "handitem",
   "fraction": 0.5,

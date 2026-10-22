@@ -64,6 +64,7 @@ FRANCHISES = [
     F("hunter_x_hunter", "Hunter x Hunter", "#58B858", "relic.element.nature", ["hunter x hunter", "hunter × hunter"], ["nen", "hatsu", "gon freecss", "killua", "hunter license"]),
     F("jojo", "JoJo's Bizarre Adventure", "#C84AA8", "relic.element.time", ["jojo"], ["stand user", "gold experience", "the world", "stand rush"]),
     F("exiled_heavy_knight", "The Exiled Heavy Knight Knows How to Game the System", "#8A9AA8", "relic.element.metal", ["exiled heavy knight"], ["heavy knight", "game the system"]),
+    F("reincarnated_as_a_sword", "Reincarnated as a Sword", "#7FEBFF", "relic.element.holy", ["reincarnated as a sword", "tensei shitara ken deshita"], ["shishou", "fran", "talking sword", "akashic relic", "skill eater"]),
 ]
 
 
@@ -246,6 +247,11 @@ ENGRAVINGS = [
       k("ward", tag="melee", pct=0.07)),
     E("game_the_system", "exiled_heavy_knight", "Game the System", "Found the exploit: the first hit is the cheap one.", "main",
       k("first_strike", pct=0.07, window=200)),
+    # ---------------------------------------------------------------- Reincarnated as a Sword (2)
+    E("teachers_insight", "reincarnated_as_a_sword", "Teacher's Insight", "A sword that appraises its foe sees the first opening.", "main",
+      k("first_strike", pct=0.08, window=200)),
+    E("devoured_power", "reincarnated_as_a_sword", "Devoured Power", "What the sword defeats makes it stronger for a while.", "main",
+      k("kill_stacks", pct=0.012, max=6, decay=1200)),
 ]
 
 # ---------------------------------------------------------------- text of an engraving's effects
