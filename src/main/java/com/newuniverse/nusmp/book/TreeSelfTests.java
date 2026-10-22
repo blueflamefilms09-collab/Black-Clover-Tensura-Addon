@@ -58,6 +58,7 @@ public final class TreeSelfTests {
     private static String check(String magic, GrimoireBook b) {
         List<String> ids = new ArrayList<>();
         for (int i = 0; i < b.familyCount(); i++) ids.add(b.page(i).id());
+        ids.removeAll(CharacterPagesGold.addedTo("book_plant"));      // character spell sets (builder gold): Mimosa's pages are appended after the rebuilt ones
         return TreeRules.check(magic, ids);
     }
 

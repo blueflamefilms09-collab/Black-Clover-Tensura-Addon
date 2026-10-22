@@ -43,7 +43,7 @@ public final class LightBoneJaSelfTests {
                 if (k >= pages.size() || !pages.get(k).id().equals(want.get(k))) return Result.fail(magic + ": page " + k + " should be " + want.get(k) + " but is " + (k < pages.size() ? pages.get(k).id() : "missing"));
             Set<String> ids = new HashSet<>();
             for (BookPage p : pages) if (!ids.add(p.id())) return Result.fail(magic + ": the page id " + p.id() + " is used twice");
-            if (b.familyCount() != want.size()) return Result.fail(magic + ": " + b.familyCount() + " family pages, expected " + want.size());
+            if (b.familyCount() < want.size()) return Result.fail(magic + ": " + b.familyCount() + " family pages, expected " + want.size() + " (character pages may follow them: builder gold, Karna)");
             for (String old : LightBoneJa.ids(magic, false))
                 if (!ids.contains(old)) return Result.fail(magic + ": the old page id " + old + " is gone");
             for (LightBoneJa.Spell s : LightBoneJa.spells(magic))
