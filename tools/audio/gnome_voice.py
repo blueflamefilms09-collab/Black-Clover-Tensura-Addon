@@ -48,7 +48,7 @@ LINES = {
     "victory_2": "[deep, slow, gravelly, amused] Another one crumbles.",
     "death_1": "[deep, very slow, gravelly, soft] Rest now. The earth will hold you.",
     "doze_1": "[deep, very slow, gravelly, drowsy] Gnome... waits... in the stone.",
-    "wake_1": "[deep, gravelly, surprised] Hm? We move.",
+    "wake_1": "[deep, gravelly] Hm? We move.",
     "idle_1": "[deep, very slow, gravelly] Still. As the mountain is still.",
 }
 

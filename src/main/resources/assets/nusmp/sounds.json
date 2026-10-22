@@ -1791,5 +1791,19 @@
     "subtitle": "subtitles.nusmp.gnome.huff",
     "sounds": [ { "name": "nusmp:gnome/huff_1", "stream": false }, { "name": "nusmp:gnome/huff_2", "stream": false } ]
   },
-  "voice.gnome_greet_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_greet_1", "stream": false } ] }
+  "voice.gnome_greet_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_greet_1", "stream": false } ] },
+  "voice.gnome_greet_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_greet_2", "stream": false } ] },
+  "voice.gnome_farewell_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_farewell_1", "stream": false } ] },
+  "voice.gnome_farewell_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_farewell_2", "stream": false } ] },
+  "voice.gnome_cast_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_cast_1", "stream": false } ] },
+  "voice.gnome_cast_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_cast_2", "stream": false } ] },
+  "voice.gnome_cast_3": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_cast_3", "stream": false } ] },
+  "voice.gnome_cast_big_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_cast_big_1", "stream": false } ] },
+  "voice.gnome_cast_big_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_cast_big_2", "stream": false } ] },
+  "voice.gnome_hurt_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_hurt_1", "stream": false } ] },
+  "voice.gnome_hurt_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_hurt_2", "stream": false } ] },
+  "voice.gnome_hurt_3": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_hurt_3", "stream": false } ] },
+  "voice.gnome_surprised_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_surprised_1", "stream": false } ] },
+  "voice.gnome_lowhp_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_lowhp_1", "stream": false } ] },
+  "voice.gnome_wake_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_wake_1", "stream": false } ] }
 }

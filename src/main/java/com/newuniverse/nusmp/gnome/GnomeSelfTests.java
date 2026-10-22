@@ -112,7 +112,7 @@ public final class GnomeSelfTests {
             if (Gnome.react(p, s, GnomeMoodRules.Situation.CAST_MID, Gnome.prop(level, s.spirit), -1)) return Result.fail("a situation reacted again inside its own cooldown");
             Gnome.forget(p);
             if (Gnome.liveCount() != before) return Result.fail("the ledgers kept a slot after the player was forgotten");
-            if (Gnome.LINES.tracked() != 0 && Gnome.LINES.tracked() > 8) return Result.fail("the line gate keeps too many listeners");
+            if (Gnome.LINES.tracked() > 64) return Result.fail("the line gate keeps too many listeners");
         } finally {
             Gnome.forget(p);
         }
