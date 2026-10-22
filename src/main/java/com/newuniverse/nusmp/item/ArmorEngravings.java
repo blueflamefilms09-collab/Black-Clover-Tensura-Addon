@@ -104,6 +104,29 @@ public final class ArmorEngravings {
 
     private static final Map<String, List<Engraving>> FOR_ITEM = new java.util.concurrent.ConcurrentHashMap<>();
 
+    /**
+     * Read-only view for the Engravement Codex (engraving/codex/CodexGather): item path -> its engravings as "id@level", for every set piece (chest, leggings, hood, boots, as {@link #forItem}
+     * gives them) and every armour relic. A path that is not a registered item is simply never found by the caller. Built on first use.
+     */
+    public static Map<String, List<String>> codexTable() {
+        Map<String, List<String>> t = CODEX_TABLE;
+        if (t == null) {
+            java.util.LinkedHashMap<String, List<String>> m = new java.util.LinkedHashMap<>();
+            java.util.ArrayList<String> paths = new java.util.ArrayList<>(SETS.keySet());
+            for (String set : SETS.keySet()) { paths.add(set + "_leggings"); paths.add(set + "_hood"); paths.add(set + "_boots"); }
+            paths.addAll(RELICS.keySet());
+            for (String p : paths) {
+                java.util.ArrayList<String> specs = new java.util.ArrayList<>();
+                for (Engraving g : forItem(p)) specs.add(g.id() + "@" + g.level());
+                if (!specs.isEmpty()) m.put(p, List.copyOf(specs));
+            }
+            CODEX_TABLE = t = java.util.Collections.unmodifiableMap(m);
+        }
+        return t;
+    }
+
+    private static volatile Map<String, List<String>> CODEX_TABLE;
+
     private static List<Engraving> forItem0(String path) {
         List<Engraving> all = SETS.get(path);
         if (all != null) return all;

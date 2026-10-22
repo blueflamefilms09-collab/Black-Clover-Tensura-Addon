@@ -18,6 +18,8 @@ core/discovery/Discovery.java
 dungeon/placed/PlacedClientBoot.java
 elite/hub/HubNet.java
 elite/hub/HubRegistry.java
+# the Engravement Codex item: the client screen is opened by one call behind level.isClientSide(), like compat/CompatCodexItem.java
+engraving/codex/EngravingCodexItem.java
 heroweapon/HeroTooltip.java
 heroweapon/bond/HeroNet.java
 heroweapon/curse/CurseNet.java

@@ -298,7 +298,7 @@ public final class GrimoireBookPlan {
         for (com.newuniverse.nusmp.blackclover.MagicType magic : com.newuniverse.nusmp.book.WikiBooks.newAttributes())
             t.add("magic_sigil_" + magic.name().toLowerCase(java.util.Locale.ROOT));
         for (String e : new String[]{"three_leaf", "four_leaf", "five_leaf", "spade", "double_spade", "triple_spade",
-                "heart", "two_heart", "cracked_heart", "diamond", "five_sided", "cracked_diamond", "black_magic", "god_tier", "compat"}) t.add("emblem_" + e);
+                "heart", "two_heart", "cracked_heart", "diamond", "five_sided", "cracked_diamond", "black_magic", "god_tier", "compat", "engraving"}) t.add("emblem_" + e);
         return t;
     }
 }

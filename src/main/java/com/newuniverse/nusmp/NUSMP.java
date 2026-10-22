@@ -71,6 +71,7 @@ public class NUSMP {
         com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arena.ArenaConfig.SPEC, "nusmp-lucius-arena-server.toml");
         com.newuniverse.nusmp.compat.CompatItems.init();                                                                   // 1.34.0: the Compatibility Codex item (before NUItems.ITEMS.register)
+        com.newuniverse.nusmp.engraving.codex.EngravingCodexItems.init();                                                  // 1.99.0: the Engravement Codex item (before NUItems.ITEMS.register)
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.ArmorEngravings::onPlayerTick);   // 1.34.0: armour engravings
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.arc.ArcSystem.init(modEventBus, modContainer);                                              // 1.58.0: the characters of the arcs: roster, NPC entity, story, arc Charter Grimoires, spawn egg (before NUItems.ITEMS.register; registers its own config)
@@ -135,6 +136,7 @@ public class NUSMP {
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
         com.newuniverse.nusmp.client.playermodel.PlayerModelSelfTests.register();                            // 1.94.0: self-test render.playermodel (data only, runs on the dedicated server)
         com.newuniverse.nusmp.tooltip.UnifiedTooltipSelfTests.register();                                    // 1.110.0: self-test ui.unified_tooltips (every nusmp item resolves to a tooltip style)
+        com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
@@ -153,6 +155,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
             com.newuniverse.nusmp.client.compat.CompatCodexClient.init(modEventBus);                                           // 1.34.0
+            com.newuniverse.nusmp.client.engraving.EngravingCodexClient.init(modEventBus);                                     // 1.99.0: the Engravement Codex's tint handler and screen
             com.newuniverse.nusmp.client.particle.rukh.RukhClient.init(modEventBus);                                          // 1.36.0
             com.newuniverse.nusmp.client.particle.fx.FxClient.init(modEventBus, modContainer);                                 // 1.103.0: providers of the custom particles, nusmp-particles-client.toml
             com.newuniverse.nusmp.client.relics.forge.ForgeClient.init(modEventBus);                                         // 1.40.0

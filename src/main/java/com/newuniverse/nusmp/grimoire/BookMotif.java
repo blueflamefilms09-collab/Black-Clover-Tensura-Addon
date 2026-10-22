@@ -12,7 +12,9 @@ public enum BookMotif {
     STRAPS, TATTERED,
     THREE_LEAF, FOUR_LEAF, FIVE_LEAF, SPADE, TRIPLE_SPADE, HEART, TWO_HEART, DIAMOND, BLACK_MAGIC, GOD_TIER,
     /** 1.34.0: the Compatibility Codex (two interlocking rings: two mods linked). Appended; only the codex item uses it. */
-    COMPAT;
+    COMPAT,
+    /** 1.99.0: the Engravement Codex (a blade crossed over a rune ring: the engravings). Appended; only the codex item uses it. */
+    ENGRAVING;
 
     /** True for the art-pack cover designs. */
     public boolean isArt() { return this != STRAPS && this != TATTERED; }
@@ -32,6 +34,7 @@ public enum BookMotif {
             case SPADE -> "a crown of spears"; case TRIPLE_SPADE -> "arcane wheels"; case HEART -> "cloud swirls"; case TWO_HEART -> "a sea serpent";
             case DIAMOND -> "stained crystal"; case BLACK_MAGIC -> "a blood-red burst"; case GOD_TIER -> "a golden sunburst";
             case COMPAT -> "two linked rings";
+            case ENGRAVING -> "a rune ring cut by a blade";
         };
     }
 
