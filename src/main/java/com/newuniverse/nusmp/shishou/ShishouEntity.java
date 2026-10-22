@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.shishou;
 
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,6 +27,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: Shishou as a body in the world. One class, three lives of the same one sword: a WILD flying sword that hunts hostile mobs and eats what they leave (and settles into its pedestal after N kills, N days
@@ -258,7 +260,7 @@ public class ShishouEntity extends PathfinderMob {
         Vec3 c = position().add(0, 0.3, 0);
         Vec3 hilt = c.subtract(look.scale(ShishouRules.HILT_BACK));
         Vec3 tip = c.add(look.scale(ShishouRules.BLADE_LENGTH - ShishouRules.HILT_BACK));
-        net.minecraft.core.particles.SimpleParticleType p = isMinion() ? RukhParticles.light() : RukhParticles.dark();
+        net.minecraft.core.particles.ParticleOptions p = isMinion() ? Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT) : Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK);
         PerfParticles.send(sl, p, hilt.x, hilt.y, hilt.z, 2, 0.08, 0.08, 0.08, 0.01);
         if (state() == ShishouRules.STATE_ATTACK) PerfParticles.send(sl, p, tip.x, tip.y, tip.z, 1, 0.05, 0.05, 0.05, 0.02);
     }

@@ -184,6 +184,7 @@ OTHER = {
     "skill.blackwings": ("dark", "feather_black void_speck spark soot_puff", "2A2038"),
     "skill.grimoire": ("fantasy", "mana_mote rune_sol glint mote_soft", "CFE3FF"),
     "skill.celestial": ("light", "star4 glint mana_mote mote_soft", "A8D8FF"),
+    "skill.shishou": ("light", "glint rune_sol spark mote_soft", "7FEBFF"),
     # bosses
     "boss": ("dark", "ember void_speck spark soot_puff", "C03030"),
     "boss.lucius": ("light", "star4 rune_sol glint mote_soft", "FFE9A0"),

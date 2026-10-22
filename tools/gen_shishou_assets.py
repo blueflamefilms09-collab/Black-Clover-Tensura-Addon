@@ -448,11 +448,21 @@ def add_gripxyz():
     open(path, "w", encoding="utf-8", newline="\n").write("\n".join(lines))
 
 
+def clean_glow(path):
+    """The additive glow skin must carry no colour under a fully transparent pixel (the safe-additive texture scan): black there."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(Image.open(path).convert("RGBA"))
+    a[a[..., 3] == 0, :3] = 0
+    Image.fromarray(a, "RGBA").save(path, optimize=True)
+
+
 def main(args=None):
     args = args or []
     m, atlas = build()
     finish(ITEM_ID, m, atlas, "longsword", glow=("7FEBFF", 0.10, 0.55, 1.0), real_m=REAL_M)
     add_gripxyz()
+    clean_glow(os.path.join(GAME_ASSETS, "textures", "entity", "weapon", ITEM_ID + "_glow.png"))
     make_icon(os.path.join(GAME_ASSETS, "textures", "item", ITEM_ID + ".png"))
     write_animation()
     write_proxy()

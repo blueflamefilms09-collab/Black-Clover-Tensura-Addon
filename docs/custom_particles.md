@@ -11,7 +11,7 @@ Everything below was built without a running game: nothing here has been looked 
 | One particle class with a physics profile per type (gravity, drag, spin, swirl, sway, jitter, size curve, fade, light, blend, lifetime) | `client/particle/fx/FxParticle`, profiles in `data/nusmp/particle_catalog.json` (written by the generator) |
 | One provider for all types, one atlas lookup list per type, nothing allocated per particle but the particle | `client/particle/fx/FxClient` |
 | Tint payload (colour + size) with a codec and a stream codec | `TintedParticleOptions`, `TintedParticleType`, pure data in `FxTint` |
-| Theme table: 284 themes (all 105 magic types, 7 relic grades, 21 relic elements, 100 relic waves, skills, bosses, dungeon areas), 1 to 4 particles + a colour + a dark flavour each | `data/nusmp/particle_themes.json` (written by `tools/particles/gen_themes.py`), `ParticleThemes`, `ThemeKey` |
+| Theme table: 295 themes (all 105 magic types, 7 relic grades, 21 relic elements, 100 relic waves, skills, bosses, dungeon areas), 1 to 4 particles + a colour + a dark flavour each | `data/nusmp/particle_themes.json` (written by `tools/particles/gen_themes.py`), `ParticleThemes`, `ThemeKey` |
 | The facade `Fx` (spray / add / burst / stream / gather / aura / send / ring) through the perf budgets, the quality level and the distance | `particle/fx/Fx`, `FxRelic` (relics by colour hue) |
 | Switches `particles.custom` (client file `nusmp-particles-client.toml`, server file `nusmp-particles-server.toml`, default true); off = the old vanilla particle of the mapping (Rukh for the calls that used the Rukh) | `FxConfig` |
 | `/multiverse particles list [group]`, `spawn <id> [count] [color]`, `theme <key>`, `status` (operators) | `FxCommands` |
@@ -41,38 +41,38 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `ember` | NEW | 6 | 16 | no | A small glowing coal that flickers while it drifts up; gets hot-yellow in the middle, fades to red. Rises, light drag, additive, full-bright. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.BEAST` +33 more |
-| `cinder` | NEW | 6 | 16 | no | A burnt-out lump with glowing cracks that pulse; tumbles, falls slowly, translucent, lit by its own cracks. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.EARTH` +69 more |
+| `ember` | NEW | 6 | 16 | no | A small glowing coal that flickers while it drifts up; gets hot-yellow in the middle, fades to red. Rises, light drag, additive, full-bright. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.BEAST` +34 more |
+| `cinder` | NEW | 6 | 16 | no | A burnt-out lump with glowing cracks that pulse; tumbles, falls slowly, translucent, lit by its own cracks. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.EARTH` +71 more |
 | `flame_tongue` | NEW | 6 | 16 | no | A tongue of fire (red edge, orange body, white-yellow heart) that licks upwards and sways; rises, shrinks to nothing. | `magic.FLAME`, `relic.element.fire`, `relic.wave.0`, `relic.wave.21` +5 more ; replaces vanilla FLAME, SMALL_FLAME |
-| `flame_soul` | NEW | 6 | 16 | yes | The same tongue in pale spirit-fire (white body, tintable): a cold flame for souls, ghosts and blue fire; drifts up with a little sway. | `magic.DEMON_FIRE`, `relic.element.demon`, `boss.dante`, `relic.wave.19` +2 more ; replaces vanilla SOUL_FIRE_FLAME |
-| `spark` | NEW | 4 | 16 | no | A hot spark: a bright four-ray burst that shortens as it cools; flies fast, falls a little, drag. | `magic.FLAME`, `magic.EXPLOSION`, `magic.STORM`, `magic.LIGHTNING` +58 more |
+| `flame_soul` | NEW | 6 | 16 | yes | The same tongue in pale spirit-fire (white body, tintable): a cold flame for souls, ghosts and blue fire; drifts up with a little sway. | `magic.DEMON_FIRE`, `relic.element.demon`, `boss.dante`, `relic.wave.19` +3 more ; replaces vanilla SOUL_FIRE_FLAME |
+| `spark` | NEW | 4 | 16 | no | A hot spark: a bright four-ray burst that shortens as it cools; flies fast, falls a little, drag. | `magic.FLAME`, `magic.EXPLOSION`, `magic.STORM`, `magic.LIGHTNING` +59 more |
 | `lava_blob` | NEW | 6 | 16 | no | A bubble of molten rock: dark crust plates over a bright orange core with a yellow hot spot, swelling and cooling as it falls; lit by its own glow, translucent. | `magic.MAGMA` ; replaces vanilla LAVA, FALLING_LAVA, DRIPPING_LAVA |
 
 ### ash (3)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `ash_flake` | NEW | 6 | 16 | no | A thin grey ash flake that tumbles and flips as it sinks; matte, no glow. | `magic.EARTH`, `magic.SAND`, `magic.SWORD`, `magic.REINFORCEMENT` +48 more ; replaces vanilla ASH |
-| `soot_puff` | NEW | 6 | 16 | no | A dark soot puff that swells and thins out while rising slowly; dithered lumpy edge, translucent, never glows. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.WATER` +211 more |
-| `smoke_wisp` | NEW | 6 | 16 | yes | A curling wisp of smoke (light grey, tintable); rises in an S shape that unwinds, translucent, fades. | `magic.MIST`, `magic.WIND`, `magic.STAR`, `magic.STORM` +28 more |
+| `ash_flake` | NEW | 6 | 16 | no | A thin grey ash flake that tumbles and flips as it sinks; matte, no glow. | `magic.EARTH`, `magic.SAND`, `magic.SWORD`, `magic.REINFORCEMENT` +49 more ; replaces vanilla ASH |
+| `soot_puff` | NEW | 6 | 16 | no | A dark soot puff that swells and thins out while rising slowly; dithered lumpy edge, translucent, never glows. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.WATER` +219 more |
+| `smoke_wisp` | NEW | 6 | 16 | yes | A curling wisp of smoke (light grey, tintable); rises in an S shape that unwinds, translucent, fades. | `magic.MIST`, `magic.WIND`, `magic.STAR`, `magic.STORM` +29 more |
 
 ### light (13)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `mote` | NEW | 6 | 16 | yes | The basic light mote: a soft round glow with a hard white core that breathes; drifts, slowly rising, additive, the theme colour tints it. | `magic.MIST`, `magic.WIND`, `magic.STAR`, `magic.LIGHT` +48 more |
-| `mote_soft` | NEW | 4 | 16 | yes | A large dim glow without a core: an air-filling haze mote; very slow, long fade in and out, additive. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.MIST` +125 more |
-| `glint` | NEW | 6 | 16 | yes | A lens glint: a thin four-armed cross that swells and snaps shut, with a tilt; sits where it is spawned, additive. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.WIND` +112 more |
-| `star4` | NEW | 6 | 16 | yes | A solid four-point star that turns a quarter turn while it twinkles and shrinks; slow rise, additive. | `magic.STAR`, `magic.LIGHT`, `magic.SWORD`, `magic.MIRROR` +42 more |
-| `gem_sparkle` | NEW | 6 | 16 | yes | A tiny cut gem with three shaded facets that flashes a cross glint at its brightest frame; hovers, additive. | `magic.CREATION`, `magic.TRANSMUTATION`, `magic.RECOMBINATION`, `magic.GAME` +25 more |
-| `mana_mote` | NEW | 8 | 16 | yes | A mote of raw mana: a glow with a tiny satellite circling it; the satellite leaves a faint ring. Rises gently, additive. | `magic.MERCURY`, `magic.SPATIAL`, `magic.GRAVITY`, `magic.COPY` +39 more |
+| `mote` | NEW | 6 | 16 | yes | The basic light mote: a soft round glow with a hard white core that breathes; drifts, slowly rising, additive, the theme colour tints it. | `magic.MIST`, `magic.WIND`, `magic.STAR`, `magic.LIGHT` +50 more |
+| `mote_soft` | NEW | 4 | 16 | yes | A large dim glow without a core: an air-filling haze mote; very slow, long fade in and out, additive. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.MIST` +130 more |
+| `glint` | NEW | 6 | 16 | yes | A lens glint: a thin four-armed cross that swells and snaps shut, with a tilt; sits where it is spawned, additive. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.WIND` +118 more |
+| `star4` | NEW | 6 | 16 | yes | A solid four-point star that turns a quarter turn while it twinkles and shrinks; slow rise, additive. | `magic.STAR`, `magic.LIGHT`, `magic.SWORD`, `magic.MIRROR` +44 more |
+| `gem_sparkle` | NEW | 6 | 16 | yes | A tiny cut gem with three shaded facets that flashes a cross glint at its brightest frame; hovers, additive. | `magic.CREATION`, `magic.TRANSMUTATION`, `magic.RECOMBINATION`, `magic.GAME` +26 more |
+| `mana_mote` | NEW | 8 | 16 | yes | A mote of raw mana: a glow with a tiny satellite circling it; the satellite leaves a faint ring. Rises gently, additive. | `magic.MERCURY`, `magic.SPATIAL`, `magic.GRAVITY`, `magic.COPY` +40 more |
 | `aura_wisp` | NEW | 6 | 16 | yes | A comet-shaped aura wisp: a round head and a tail that waves; rises and bends, additive. | `magic.VORTEX` |
-| `spirit_firefly` | NEW | 8 | 16 | yes | A spirit firefly: a small warm body whose glow blinks on and off in a slow rhythm and whose wings flick; wanders on a lazy path, additive. | `magic.LEGION`, `magic.SOUL`, `relic.element.soul`, `dungeon.safe` +3 more |
-| `dream_star` | NEW | 6 | 16 | no | A pastel five-point star with two tiny sparkles that trade places; floats up and sways, twinkles, additive. Native lavender-pink. | `magic.STAR`, `magic.CREATION`, `magic.COPY`, `magic.ILLUSION` +29 more |
+| `spirit_firefly` | NEW | 8 | 16 | yes | A spirit firefly: a small warm body whose glow blinks on and off in a slow rhythm and whose wings flick; wanders on a lazy path, additive. | `magic.LEGION`, `magic.SOUL`, `relic.element.soul`, `dungeon.safe` +4 more |
+| `dream_star` | NEW | 6 | 16 | no | A pastel five-point star with two tiny sparkles that trade places; floats up and sways, twinkles, additive. Native lavender-pink. | `magic.STAR`, `magic.CREATION`, `magic.COPY`, `magic.ILLUSION` +31 more |
 | `holy_ray` | NEW | 6 | 32 | yes | A sunburst of holy rays: eight shafts that turn slowly and breathe around a white core; stays in place, additive, long soft fade. | (new code: `/multiverse particles spawn holy_ray`) |
-| `nebula_puff` | NEW | 6 | 32 | no | A cloud of star dust in violet, blue and pink: three drifting lobes of noise with bright pin stars; swells and thins, slow spin, additive. | `magic.SPATIAL`, `magic.MIRROR`, `magic.GRAVITY`, `magic.TIME` +62 more |
-| `void_speck` | NEW | 4 | 16 | no | A speck of nothing: a black core with a thin violet rim that pulses; sucks slowly sideways, translucent so it stays dark. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.WATER` +255 more |
-| `soul_wisp` | NEW | 8 | 16 | yes | A ghostly wisp with a round head, two dark eyes that blink and a wavy tail; floats up with a lazy sway, additive. | `magic.WIND`, `magic.STAR`, `magic.STORM`, `magic.LIGHT` +125 more |
+| `nebula_puff` | NEW | 6 | 32 | no | A cloud of star dust in violet, blue and pink: three drifting lobes of noise with bright pin stars; swells and thins, slow spin, additive. | `magic.SPATIAL`, `magic.MIRROR`, `magic.GRAVITY`, `magic.TIME` +66 more |
+| `void_speck` | NEW | 4 | 16 | no | A speck of nothing: a black core with a thin violet rim that pulses; sucks slowly sideways, translucent so it stays dark. | `magic.FLAME`, `magic.EXPLOSION`, `magic.MAGMA`, `magic.WATER` +266 more |
+| `soul_wisp` | NEW | 8 | 16 | yes | A ghostly wisp with a round head, two dark eyes that blink and a wavy tail; floats up with a lazy sway, additive. | `magic.WIND`, `magic.STAR`, `magic.STORM`, `magic.LIGHT` +132 more |
 
 ### pulse (5)
 
@@ -95,14 +95,14 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `rune_sol` | NEW | 6 | 16 | yes | Rune glyph, the sun glyph: a ringed dot with eight ticks. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SEALING`, `magic.COMPASS`, `magic.KOTODAMA`, `magic.CURSE_WARDING` +19 more |
-| `rune_luna` | NEW | 6 | 16 | yes | Rune glyph, the moon glyph: a crescent with a star. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.LIGHT`, `magic.LIGHTNING`, `magic.DARK`, `magic.KOTODAMA` +40 more |
-| `rune_eye` | NEW | 6 | 16 | yes | Rune glyph, the eye glyph: an almond with a pupil and a brow tick. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SPATIAL`, `magic.MIRROR`, `magic.GRAVITY`, `magic.TIME` +37 more |
+| `rune_sol` | NEW | 6 | 16 | yes | Rune glyph, the sun glyph: a ringed dot with eight ticks. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SEALING`, `magic.COMPASS`, `magic.KOTODAMA`, `magic.CURSE_WARDING` +20 more |
+| `rune_luna` | NEW | 6 | 16 | yes | Rune glyph, the moon glyph: a crescent with a star. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.LIGHT`, `magic.LIGHTNING`, `magic.DARK`, `magic.KOTODAMA` +41 more |
+| `rune_eye` | NEW | 6 | 16 | yes | Rune glyph, the eye glyph: an almond with a pupil and a brow tick. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SPATIAL`, `magic.MIRROR`, `magic.GRAVITY`, `magic.TIME` +39 more |
 | `rune_wave` | NEW | 6 | 16 | yes | Rune glyph, the water glyph: three waves. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.PERMEATION`, `magic.SOUND` |
 | `rune_flame` | NEW | 6 | 16 | yes | Rune glyph, the fire glyph: a triangle with a flame bar. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `dungeon.crucible` |
 | `rune_leaf` | NEW | 6 | 16 | yes | Rune glyph, the life glyph: a leaf with a midrib. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.WORLD_TREE` |
 | `rune_bolt` | NEW | 6 | 16 | yes | Rune glyph, the storm glyph: a zigzag bolt. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.STORM`, `magic.LIGHTNING`, `relic.element.storm`, `dungeon.trial` +7 more |
-| `rune_key` | NEW | 6 | 16 | yes | Rune glyph, the key glyph: a looped key with two teeth. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SPATIAL`, `magic.SEALING`, `magic.CURSE_WARDING`, `magic.KEY` +9 more |
+| `rune_key` | NEW | 6 | 16 | yes | Rune glyph, the key glyph: a looped key with two teeth. Fades in, glows steady, fades out while rising a hair; a faint ring of dashes around it. Stays in place, additive. | `magic.SPATIAL`, `magic.SEALING`, `magic.CURSE_WARDING`, `magic.KEY` +10 more |
 
 ### combat (1)
 
@@ -121,15 +121,15 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
 | `shard_ice` | NEW | 6 | 16 | no | A sliver of ice with three facets that spins end over end and flashes a glint on one frame; falls with a little bounce, translucent. | `magic.ICE`, `magic.DEMON_ICE`, `magic.ICE_WEDGE`, `relic.element.ice` +8 more |
-| `shard_crystal` | NEW | 6 | 16 | yes | A faceted crystal chunk (six-sided, light neutral facets so the theme colour reads) that turns slowly; drifts down, glints, translucent. | `magic.EARTH`, `magic.CRYSTAL`, `magic.CORUNDUM`, `magic.MINERAL` +6 more |
+| `shard_crystal` | NEW | 6 | 16 | yes | A faceted crystal chunk (six-sided, light neutral facets so the theme colour reads) that turns slowly; drifts down, glints, translucent. | `magic.EARTH`, `magic.CRYSTAL`, `magic.CORUNDUM`, `magic.MINERAL` +7 more |
 | `shard_glass` | NEW | 6 | 16 | yes | A broken pane fragment: a see-through triangle with bright edges and a diagonal shine that slides across it; tumbles and falls, translucent. | `magic.MERCURY`, `magic.MIRROR`, `magic.STEEL`, `magic.SLASH` +11 more |
 
 ### feather (3)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `feather_white` | NEW | 6 | 16 | yes | A white feather that turns over as it sways down; flat shaded, a grey spine and finely notched barbs, slow fall. | `magic.WIND`, `magic.AIR`, `magic.WING`, `relic.element.wind` +13 more |
-| `feather_black` | NEW | 6 | 16 | no | A black feather with a blue-violet sheen on the edge; same lazy sway and fall as the white one, never glows. | `magic.WIND`, `magic.STAR`, `magic.STORM`, `magic.AIR` +17 more |
+| `feather_white` | NEW | 6 | 16 | yes | A white feather that turns over as it sways down; flat shaded, a grey spine and finely notched barbs, slow fall. | `magic.WIND`, `magic.AIR`, `magic.WING`, `relic.element.wind` +14 more |
+| `feather_black` | NEW | 6 | 16 | no | A black feather with a blue-violet sheen on the edge; same lazy sway and fall as the white one, never glows. | `magic.WIND`, `magic.STAR`, `magic.STORM`, `magic.AIR` +18 more |
 | `feather_fire` | NEW | 6 | 16 | no | A feather of living fire (red edge, orange vane, yellow spine) that trails a soft glow; floats up with a flutter and burns out, additive. | (new code: `/multiverse particles spawn feather_fire`) |
 
 ### flora (6)
@@ -141,14 +141,14 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 | `leaf_green` | NEW | 6 | 16 | no | A green leaf with a pale midrib and veins; turns over as it tumbles down, quicker fall than a petal, translucent. | `magic.PLANT`, `magic.WORLD_TREE`, `magic.BRIAR`, `magic.POISON_PLANT` +11 more |
 | `leaf_autumn` | NEW | 6 | 16 | no | An autumn leaf (red, orange and gold) with dark veins, same tumble as the green one but drier and slower. | `magic.PLANT`, `magic.WORLD_TREE`, `magic.BRIAR`, `magic.CHERRY_BLOSSOM` +15 more |
 | `seed` | NEW | 6 | 16 | no | A winged tree seed (maple key): a seed and one long wing that whirls around the seed like a helicopter blade while it sinks. | `magic.PLANT`, `magic.WORLD_TREE`, `magic.BRIAR`, `magic.FOOD` +10 more |
-| `spore` | NEW | 6 | 16 | no | A drifting spore: a pale yellow-green puff with a few dust specks orbiting it; floats up and wobbles, additive, soft. | `magic.PLANT`, `magic.POISON`, `magic.WORLD_TREE`, `magic.BRIAR` +22 more |
+| `spore` | NEW | 6 | 16 | no | A drifting spore: a pale yellow-green puff with a few dust specks orbiting it; floats up and wobbles, additive, soft. | `magic.PLANT`, `magic.POISON`, `magic.WORLD_TREE`, `magic.BRIAR` +23 more |
 
 ### water (4)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `bubble` | NEW | 6 | 16 | no | A soap bubble: a thin blue ring with a bright glint, wobbling and growing slightly; the last frame is the pop (a ring of droplets). Rises slowly, translucent. | `magic.WATER`, `magic.POISON`, `magic.DEMON_WATER`, `magic.FUNGUS` +19 more ; replaces vanilla BUBBLE, BUBBLE_POP, BUBBLE_COLUMN_UP |
-| `droplet` | NEW | 4 | 16 | no | A water drop: a teardrop that stretches as it falls and, on the last frame, flattens into a splash ring with two satellites. Falls fast, translucent. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.MIST` +32 more ; replaces vanilla CURRENT_DOWN, SPLASH |
+| `bubble` | NEW | 6 | 16 | no | A soap bubble: a thin blue ring with a bright glint, wobbling and growing slightly; the last frame is the pop (a ring of droplets). Rises slowly, translucent. | `magic.WATER`, `magic.POISON`, `magic.DEMON_WATER`, `magic.FUNGUS` +20 more ; replaces vanilla BUBBLE, BUBBLE_POP, BUBBLE_COLUMN_UP |
+| `droplet` | NEW | 4 | 16 | no | A water drop: a teardrop that stretches as it falls and, on the last frame, flattens into a splash ring with two satellites. Falls fast, translucent. | `magic.WATER`, `magic.ICE`, `magic.MERCURY`, `magic.MIST` +33 more ; replaces vanilla CURRENT_DOWN, SPLASH |
 | `water_splash` | NEW | 6 | 32 | yes | A splash crown: nine arcs of water that fly out and up from the spot with a bead at each tip, then fall back; a thin ring on the ground; stays at its spot, translucent, short. | (new code: `/multiverse particles spawn water_splash`) |
 | `snowflake` | NEW | 6 | 16 | yes | A six-armed snow crystal that turns slowly while it sinks, with a little sway; crisp white, translucent. | `magic.ICE`, `magic.DEMON_ICE`, `magic.ICE_WEDGE`, `magic.SNOW` +9 more ; replaces vanilla SNOWFLAKE |
 
@@ -156,16 +156,16 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `sand_grain` | NEW | 4 | 16 | no | A pinch of sand grains that tumble: five to six single-texel specks in warm tans that swap places each frame; falls fast, collides, translucent. | `magic.EARTH`, `magic.SAND`, `magic.MUD`, `magic.ROCK` +7 more |
-| `earth_chip` | NEW | 6 | 16 | no | A chunk of dirt and rock with a light top and dark underside that tumbles; heavy, bounces on the ground, opaque. | `magic.EARTH`, `magic.SAND`, `magic.GRAVITY`, `magic.REINFORCEMENT` +25 more |
+| `sand_grain` | NEW | 4 | 16 | no | A pinch of sand grains that tumble: five to six single-texel specks in warm tans that swap places each frame; falls fast, collides, translucent. | `magic.EARTH`, `magic.SAND`, `magic.MUD`, `magic.ROCK` +8 more |
+| `earth_chip` | NEW | 6 | 16 | no | A chunk of dirt and rock with a light top and dark underside that tumbles; heavy, bounces on the ground, opaque. | `magic.EARTH`, `magic.SAND`, `magic.GRAVITY`, `magic.REINFORCEMENT` +27 more |
 | `bone_chip` | NEW | 6 | 16 | no | A sliver of bone: an off-white splinter with a knobbed end that tumbles; falls and bounces, opaque. | `magic.BEAST`, `magic.BONE`, `magic.DEMON_BEAST`, `magic.SOUL_CORPSE` +2 more |
 
 ### mechanism (3)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `cog` | NEW | 6 | 16 | no | A brass cog with eight teeth and an axle hole that turns steadily; drifts down, translucent. The gear of clockwork and machines. | `magic.TRANSMUTATION`, `magic.BRONZE`, `magic.COPPER`, `magic.MODIFICATION` +6 more |
-| `clock_tick` | NEW | 6 | 16 | no | A small brass clock face whose hand jumps one step each frame, with a brief ring pulse on every tick; hovers and fades, translucent. (The Time Magic effects are untouched; this is a plain tick glyph.) | `magic.TIME`, `relic.element.time`, `relic.wave.12`, `relic.wave.42` +1 more |
+| `cog` | NEW | 6 | 16 | no | A brass cog with eight teeth and an axle hole that turns steadily; drifts down, translucent. The gear of clockwork and machines. | `magic.TRANSMUTATION`, `magic.BRONZE`, `magic.COPPER`, `magic.MODIFICATION` +7 more |
+| `clock_tick` | NEW | 6 | 16 | no | A small brass clock face whose hand jumps one step each frame, with a brief ring pulse on every tick; hovers and fades, translucent. (The Time Magic effects are untouched; this is a plain tick glyph.) | `magic.TIME`, `relic.element.time`, `relic.wave.12`, `relic.wave.42` +2 more |
 | `chain_link` | NEW | 6 | 16 | no | An iron chain link that turns about its long axis: a full oval ring, a narrow ring, then the edge-on bar; dark steel with a bright edge. Falls with a spin, translucent, hits the ground. | `magic.CHAIN`, `magic.IRON`, `magic.NAIL`, `relic.element.metal` +7 more |
 
 ### paper (2)
@@ -192,7 +192,7 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `music_note` | NEW | 6 | 16 | yes | A music note (a single eighth on three frames, a beamed pair on three, picked at random per particle) that bobs while it floats up and fades; tintable, translucent. | `magic.BUTOH`, `magic.SONG`, `magic.SOUND`, `relic.element.music` +3 more |
+| `music_note` | NEW | 6 | 16 | yes | A music note (a single eighth on three frames, a beamed pair on three, picked at random per particle) that bobs while it floats up and fades; tintable, translucent. | `magic.BUTOH`, `magic.SONG`, `magic.SOUND`, `relic.element.music` +4 more |
 
 ### blood (1)
 
@@ -204,13 +204,13 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `poison_cloud` | NEW | 6 | 32 | no | A toxic cloud: lumpy green fog with rising bubbles and a sick yellow rim, billowing slowly; spreads while it thins, translucent but full-bright so it reads in the dark. | `magic.PLANT`, `magic.POISON`, `magic.WORLD_TREE`, `magic.BRIAR` +20 more |
+| `poison_cloud` | NEW | 6 | 32 | no | A toxic cloud: lumpy green fog with rising bubbles and a sick yellow rim, billowing slowly; spreads while it thins, translucent but full-bright so it reads in the dark. | `magic.PLANT`, `magic.POISON`, `magic.WORLD_TREE`, `magic.BRIAR` +21 more |
 
 ### shadow (1)
 
 | id | status | frames | px | tint | behaviour | used by (themes) |
 |---|---|---|---|---|---|---|
-| `shadow_tendril` | NEW | 6 | 32 | no | A curling tendril of shadow that reaches up from the bottom and coils at the tip, with a violet edge light; sways and retracts, translucent, never lit. | `magic.DARK`, `magic.SHADOW`, `magic.POISON`, `magic.ANTI_MAGIC` +43 more |
+| `shadow_tendril` | NEW | 6 | 32 | no | A curling tendril of shadow that reaches up from the bottom and coils at the tip, with a violet edge light; sways and retracts, translucent, never lit. | `magic.DARK`, `magic.SHADOW`, `magic.POISON`, `magic.ANTI_MAGIC` +46 more |
 
 ## Replaced, kept, new
 
@@ -230,7 +230,7 @@ Status: every particle in this table is **NEW** (nothing like it existed). Frame
 
 A theme is `[mote, accent, spark, ambient]` (`FxSlot`) plus a colour and a dark flavour. The codemod maps `END_ROD`, `GLOW`... to the MOTE slot, `ENCHANT`, `PORTAL`... to ACCENT, `CRIT`, `ELECTRIC_SPARK`... to SPARK,
 `SMOKE`, `CLOUD`, `POOF`... to AMBIENT; elemental ones keep their element whatever the theme (a `FLAME` is a `flame_tongue`, `SNOWFLAKE` a `snowflake`) and the one-shot shapes become `impact_burst`, `circle_flash`, `slash_streak`,
-`shock_ring` in the theme colour (`tools/particles/map.json`, section `particles`). Counts: arena 2, boss 1, boss.abyssal 1, boss.avatar 1, boss.celestial 1, boss.charybdis 1, boss.dante 1, boss.elsdocia 1, boss.goliath 1, boss.lucius 1, boss.vanica 1, boss.zagred 1, boss.zenon 1, corpse 1, dungeon 1, dungeon.crucible 1, dungeon.decennial 1, dungeon.gate 1, dungeon.guardian 1, dungeon.humanoid 1, dungeon.lock 1, dungeon.rift 1, dungeon.safe 1, dungeon.seal 1, dungeon.squad 1, dungeon.trap 1, dungeon.trial 1, dungeon.vault 1, grimoire 1, item 4, magic 105, relic 1, relic.element 21, relic.forge 1, relic.grade 7, relic.order 1, relic.pair 1, relic.socket 1, relic.wave 101, skill 1, skill.blackwings 1, skill.celestial 1, skill.god 1, skill.grimoire 1, skill.paladin 1, skill.requip 1, skill.sword 1, skill.tree 1, wizard 1, world 1.
+`shock_ring` in the theme colour (`tools/particles/map.json`, section `particles`). Counts: arena 2, boss 1, boss.abyssal 1, boss.avatar 1, boss.celestial 1, boss.charybdis 1, boss.dante 1, boss.elsdocia 1, boss.goliath 1, boss.lucius 1, boss.vanica 1, boss.zagred 1, boss.zenon 1, corpse 1, dungeon 1, dungeon.crucible 1, dungeon.decennial 1, dungeon.gate 1, dungeon.guardian 1, dungeon.humanoid 1, dungeon.lock 1, dungeon.rift 1, dungeon.safe 1, dungeon.seal 1, dungeon.squad 1, dungeon.trap 1, dungeon.trial 1, dungeon.vault 1, grimoire 1, item 4, magic 105, relic 1, relic.element 21, relic.forge 1, relic.grade 7, relic.order 1, relic.pair 1, relic.socket 1, relic.wave 111, skill 1, skill.blackwings 1, skill.celestial 1, skill.god 1, skill.grimoire 1, skill.paladin 1, skill.requip 1, skill.shishou 1, skill.sword 1, skill.tree 1, wizard 1, world 1.
 
 ### The 105 magic types
 
@@ -400,10 +400,10 @@ With `--include-relics --include-lanes` on top: 126 more files (relic waves 113,
 
 | reason | count |
 |---|---|
-| lane: relics (other builders; run with --include-relics after they merge) | 123 |
-| dust options held in a variable, field or helper (the declared type would change) | 28 |
-| carries data (block state / item / colour) | 21 |
-| lane: rift pockets (other builders; run with --include-lanes after they merge) | 7 |
+| dust options held in a variable, field or helper (the declared type would change) | 29 |
+| lane: relics (other builders; run with --include-relics after they merge) | 25 |
+| carries data (block state / item / colour) | 22 |
+| lane: rift pockets (other builders; run with --include-lanes after they merge) | 5 |
 
 Not in a lane, left on purpose:
 
@@ -412,10 +412,8 @@ Not in a lane, left on purpose:
 | `arc/spade/SpadeFx.java` | 91 | dust options held in a variable, field or helper (the declared type would change) |
 | `arc/zagred/ZagredDecrees.java` | 124 | dust options held in a variable, field or helper (the declared type would change) |
 | `boss/refill/RefillFx.java` | 20 | dust options held in a variable, field or helper (the declared type would change) |
-| `client/ElsdociaGlitterClient.java` | 28 | dust options held in a variable, field or helper (the declared type would change) |
-| `client/ElsdociaGlitterClient.java` | 29 | dust options held in a variable, field or helper (the declared type would change) |
-| `corpse/Corpses.java` | 306 | carries data (block state / item / colour) |
-| `corpse/NamedCorpseEntity.java` | 197 | carries data (block state / item / colour) |
+| `corpse/Corpses.java` | 322 | carries data (block state / item / colour) |
+| `corpse/NamedCorpseEntity.java` | 305 | carries data (block state / item / colour) |
 | `dungeon/floor/charybdis/CharybdisMinions.java` | 118 | carries data (block state / item / colour) |
 | `dungeon/floor/charybdis/CharybdisMoves.java` | 394 | dust options held in a variable, field or helper (the declared type would change) |
 | `dungeon/floor/charybdis/MagiculeScaleEntity.java` | 46 | dust options held in a variable, field or helper (the declared type would change) |
@@ -457,48 +455,88 @@ Not in a lane, left on purpose:
 | `labyrinth/mega/crucible/CrucibleOffer.java` | 249 | carries data (block state / item / colour) |
 | `labyrinth/mega/guard/GuardianTraits.java` | 216 | carries data (block state / item / colour) |
 | `requip/RequipParticles.java` | 23 | dust options held in a variable, field or helper (the declared type would change) |
-| `vfx/client/VfxManager.java` | 422 | dust options held in a variable, field or helper (the declared type would change) |
+| `shishou/ShishouEffects.java` | 41 | dust options held in a variable, field or helper (the declared type would change) |
+| `shishou/ShishouSpells.java` | 351 | carries data (block state / item / colour) |
+| `shishou/ShishouSpells.java` | 60 | dust options held in a variable, field or helper (the declared type would change) |
+| `shishou/ShishouSpells.java` | 61 | dust options held in a variable, field or helper (the declared type would change) |
+| `vfx/client/VfxManager.java` | 426 | dust options held in a variable, field or helper (the declared type would change) |
 
 ### Existing files edited, by package (git, against `51fdb09`)
 
 | package | files | |
 |---|---|---|
-| `(root)` | 1 | `NUSMP.java` |
+| `(root)` | 3 | `NUConfig.java`, `NUCreativeTab.java`, `NUSMP.java` |
+| `anim` | 1 | `CastAnim.java` |
 | `arc/arena` | 1 | `ChronicleSigilItem.java` |
 | `arena` | 1 | `ZogratisHourglassItem.java` |
-| `blackclover` | 1 | `MagicType.java` |
-| `book` | 1 | `BlackOilArts.java` |
+| `balance` | 1 | `BalanceLaw.java` |
+| `blackclover` | 3 | `GrimoireAcceptance.java`, `GrimoireItem.java`, `MagicType.java` |
+| `book` | 14 | `BlackOilArts.java`, `CharacterSpells.java`, `CompassBook.java`, `EarthBook.java`, `ElementBooks.java`, `GrimoireBook.java`, `GrimoireKeeper.java`, `LightBook.java`, `RecombinationArts.java`, `ScaleSpells.java`, `SoulCorpseBook.java`, `SpellRuntime.java`, `TensuraShots.java`, `WindBook.java` |
+| `book/ext` | 1 | `SoulCorpseExt.java` |
 | `boss` | 1 | `LuciusSpells.java` |
+| `boss/bar` | 2 | `BossBarNet.java`, `BossBarSync.java` |
 | `celestial` | 4 | `CelestialKeyItem.java`, `CelestialProps.java`, `SpiritKingEntity.java`, `SpiritKingSceptreItem.java` |
-| `client` | 2 | `ElsdociaGlitterClient.java`, `SwordDrawClient.java` |
+| `client` | 11 | `DemonSlayerRenderer.java`, `ElementalSpiritRenderer.java`, `ElsdociaGlitterClient.java`, `GrimoireDaemonRenderer.java`, `MirrorDoubleRenderer.java`, `NURenderTypes.java`, `PaintedConstructRenderer.java`, `SpiritOrbRenderer.java`, `SwordDrawClient.java`, `WeaponRenderer.java`, `ZagredRenderer.java` |
+| `client/aura` | 1 | `AuraRender.java` |
 | `client/avatar` | 1 | `PlayerAvatarClient.java` |
-| `client/grimoire` | 1 | `GrimoireFloatClient.java` |
-| `client/playermodel` | 1 | `DungeonBodies.java` |
-| `client/remodel` | 1 | `AbyssalRenderer.java` |
+| `client/corpse` | 2 | `CorpseClient.java`, `CorpseDecayLayer.java` |
+| `client/elite` | 2 | `DungeonMapScreen.java`, `QuestOverlay.java` |
+| `client/grimoire` | 2 | `GrimoireBakedModel.java`, `GrimoireFloatClient.java` |
+| `client/gui` | 2 | `BossBarOptions.java`, `ModBossBarOverlay.java` |
+| `client/heroweapon` | 3 | `HeroHud.java`, `CarriageRenderer.java`, `CurseOverlay.java` |
+| `client/labyrinth` | 4 | `LabyrinthClient.java`, `DimensionalRiftRenderer.java`, `MegaRiftRenderer.java`, `RelicPedestalRenderer.java` |
+| `client/mega` | 3 | `FloorCardClient.java`, `SystemClientConfig.java`, `SystemOverlay.java` |
+| `client/mode` | 1 | `ModeArmorLayer.java` |
+| `client/perf` | 1 | `PerfClient.java` |
+| `client/playermodel` | 3 | `DungeonBodies.java`, `KitRelicLayer.java`, `ZagredAuraLayer.java` |
+| `client/prop` | 4 | `CompassPropPainter.java`, `PropPainterRegistry.java`, `RecombinationPropPainter.java`, `SoulCorpseRebuildPropPainter.java` |
+| `client/relics` | 35 | `ArmorPainter.java`, `HumanoidRelicLayer.java`, `RelicActKeys.java`, `RelicClient.java`, `RelicGradeFx.java`, `RelicLayerGuard.java`, `RelicTextures.java`, `RelicWornLayer.java`, `DjinnArmorLayer.java`, `DjinnClient.java`, `DjinnDraw.java`, `DjinnScreenFx.java`, `DjinnGui.java`, `RelicFxClient.java`, `RelicFxOptions.java`, `HandForms.java`, `HandItemRenderer.java`, `HandTransforms.java`, `SocketFx.java`, `WeaponClasses.java`, `DanteGravityCrownRenderer.java`, `WornDebugClient.java`, `WornPlan.java`, `WornTrace.java`, `ZenonSpatialRingRenderer.java`, `ArmorFx.java`, `ArmorGlow.java`, `ArmorItemRenderer.java`, `WornAnim.java`, `WornLibClient.java`, `WornLibDraw.java`, `WornLibrary.java`, `WornMesh.java`, `WornModels.java`, `WornPlacer.java` |
+| `client/remodel` | 2 | `AbyssalRenderer.java`, `KitZagredRenderer.java` |
+| `client/song` | 1 | `SongClient.java` |
+| `client/thread` | 1 | `RougeRenderer.java` |
+| `client/ui` | 5 | `GuiScale.java`, `GuiSizeScreen.java`, `GuiScaleRegistry.java`, `PageUnlockOverlay.java`, `UiThemeClient.java` |
 | `compat/create` | 1 | `TrapRuntime.java` |
 | `core/magic` | 4 | `EnumMagicProfile.java`, `GenericFallbackFx.java`, `MagicProfile.java`, `ProfileOverride.java` |
-| `corpse` | 1 | `Corpses.java` |
+| `corpse` | 8 | `CorpseConfig.java`, `CorpseEntities.java`, `CorpseHooks.java`, `CorpseRoster.java`, `Corpses.java`, `NamedCorpseEntity.java`, `NamedCorpses.java`, `SoulCorpseSpells.java` |
+| `dungeon` | 1 | `DungeonGuard.java` |
 | `dungeon/floor` | 6 | `CharybdisMinions.java`, `CharybdisMoves.java`, `CharybdisSpawnBoss.java`, `MagiculeScaleEntity.java`, `GoliathBoss.java`, `GoliathMoves.java` |
-| `entity` | 4 | `CottonCloudEntity.java`, `CottonSheepEntity.java`, `GrimoireDaemonEntity.java`, `ZagredBossEntity.java` |
+| `elite/hub` | 8 | `CoinBossDrops.java`, `CoinLoot.java`, `CoinLootModifier.java`, `CoinMobDrops.java`, `MerchantNPC.java`, `QuestGiverNPC.java`, `QuestService.java`, `ShopService.java` |
+| `entity` | 6 | `CottonCloudEntity.java`, `CottonSheepEntity.java`, `ElementalSpiritLordEntity.java`, `GrimoireDaemonEntity.java`, `SpiritLordEntity.java`, `ZagredBossEntity.java` |
 | `entity/avatar` | 2 | `AvatarMoves.java`, `HexVolley.java` |
-| `entity/zogratis` | 4 | `DanteMoves.java`, `LuciusFx.java`, `SpellSeal.java`, `ZenonMoves.java` |
-| `item` | 3 | `BroochPinArts.java`, `HandOfProvidenceArts.java`, `RotDoomArts.java` |
+| `entity/zogratis` | 5 | `DanteMoves.java`, `LuciusFx.java`, `SpellSeal.java`, `ZenonMoves.java`, `ZogratisBoss.java` |
+| `grimoire` | 2 | `BookMotif.java`, `GrimoireBookPlan.java` |
+| `heroweapon` | 1 | `HeroWeaponItem.java` |
+| `item` | 8 | `ArmorEngravings.java`, `BroochPinArts.java`, `CuriosLink.java`, `DemonSlayerSwordItem.java`, `HandOfProvidenceArts.java`, `MagicWeaponItem.java`, `RotDoomArts.java`, `WeaponEngravings.java` |
+| `labyrinth` | 1 | `LabyrinthCreative.java` |
 | `labyrinth/gate` | 2 | `ExitGateBlock.java`, `GateBlock.java` |
-| `labyrinth/mega` | 15 | `CatastropheRunner.java`, `CrucibleHook.java`, `CrucibleOffer.java`, `DecennialArenas.java`, `DecennialFx.java`, `DecennialLayer.java`, `Signatures.java`, `DndBoss.java`, `GuardianAltarBlockEntity.java`, `GuardianTraits.java`, `LabyrinthGuardianEntity.java`, `ManaCoreItem.java`, `SectorDoor.java`, `LockRunes.java`, `RestEvents.java` |
+| `labyrinth/loot` | 2 | `LootConfig.java`, `LootRegistry.java` |
+| `labyrinth/mega` | 56 | `MegaCommands.java`, `MegaSystem.java`, `CatastropheRunner.java`, `CrucibleHook.java`, `CrucibleOffer.java`, `DecennialArenas.java`, `DecennialBossController.java`, `DecennialFx.java`, `DecennialLayer.java`, `Signatures.java`, `EcoConfig.java`, `EcoSelfTests.java`, `TurfWarGoal.java`, `TurfWars.java`, `EncounterDirector.java`, `FloorTracker.java`, `FoundryAbilityRunner.java`, `FoundryBrain.java`, `FoundryConfig.java`, `FoundryGoals.java`, `FoundryMobEntity.java`, `CoreSelfTests.java`, `ExpansionQueue.java`, `GenData.java`, `GeometryCheck.java`, `MegaCommand.java`, `MegaGenRegistry.java`, `SectorGenerator.java`, `SectorPlacer.java`, `DndBoss.java`, `GuardianAltarBlockEntity.java`, `GuardianTraits.java`, `LabyrinthGuardianEntity.java`, `ManaCoreItem.java`, `SectorDoor.java`, `LockRunes.java`, `PrimsWorld.java`, `DimensionalRiftBlockEntity.java`, `PocketBuilder.java`, `PocketEvents.java`, `PocketRealm.java`, `RiftAdmin.java`, `RiftCommand.java`, `RiftConfig.java`, `RiftRegistry.java`, `RiftSelfTests.java`, `RiftService.java`, `ExclusiveEvents.java`, `ExclusivePockets.java`, `PocketBuild.java`, `PocketClear.java`, `PocketCollapse.java`, `PocketPlan.java`, `PocketRuntime.java`, `PocketSelfTests.java`, `RestEvents.java` |
 | `labyrinth/seal` | 3 | `FloorWardenEntity.java`, `GatekeeperDoorBlock.java`, `PeakAltarBlockEntity.java` |
-| `labyrinth/squad` | 1 | `SupportCast.java` |
-| `labyrinth/trial` | 5 | `MagicBarrierBlock.java`, `SealedArchwayBlock.java`, `SealedArchwayBlockEntity.java`, `SpawnGlyphBlock.java`, `WardRuneBlock.java` |
+| `labyrinth/squad` | 3 | `GoalInstaller.java`, `SquadHook.java`, `SupportCast.java` |
+| `labyrinth/trial` | 6 | `MagicBarrierBlock.java`, `SealedArchwayBlock.java`, `SealedArchwayBlockEntity.java`, `SpawnGlyphBlock.java`, `TrialMath.java`, `WardRuneBlock.java` |
 | `labyrinth/vault` | 1 | `RelicPedestalBlockEntity.java` |
-| `relics` | 3 | `MobRelics.java`, `RelicEngine.java`, `RelicSummons.java` |
+| `mana` | 1 | `ManaLaw.java` |
+| `mixin` | 1 | `LevelGuardMixin.java` |
+| `multiverse` | 1 | `MultiverseCommands.java` |
+| `perf` | 2 | `PerfBudgets.java`, `PerfSelfTests.java` |
+| `prop` | 5 | `CompassProps.java`, `PropKind.java`, `PropRegistry.java`, `RecombinationProps.java`, `ScaleProps.java` |
+| `relics` | 15 | `MobRelics.java`, `RelicBowItem.java`, `RelicCatalog.java`, `RelicCommands.java`, `RelicEngine.java`, `RelicItemSupport.java`, `RelicPayloads.java`, `RelicRangedSupport.java`, `RelicSummons.java`, `RelicSystem.java`, `RelicWeaponItem.java`, `Relics.java`, `UnbindingSealItem.java`, `WornDebug.java`, `WornSync.java` |
+| `relics/djinn` | 10 | `DjinnBinding.java`, `DjinnCommand.java`, `DjinnEngine.java`, `DjinnNet.java`, `DjinnSealItem.java`, `DjinnSelfTests.java`, `VesselAccess.java`, `DarkDjinn.java`, `DarkRukhShardItem.java`, `DjinnWeaponItem.java` |
+| `relics/forge` | 1 | `ForgeEngraving.java` |
+| `relics/order` | 2 | `OrderFx.java`, `OrderMoves.java` |
+| `relics/pair` | 1 | `PairHooks.java` |
+| `relics/socket` | 2 | `SocketActs.java`, `SocketService.java` |
 | `relics/tier` | 1 | `TierRitual.java` |
+| `relics/wave` | 115 | `Wave0Fusion.java`, `Wave0Hooks.java`, `Wave1.java`, `Wave10Acts.java`, `Wave10Events.java`, `Wave11Acts.java`, `Wave11Events.java`, `Wave12Heavy.java`, `Wave12Light.java`, `Wave12Magic.java`, `Wave13Acts.java`, `Wave13Events.java`, `Wave13Util.java`, `Wave14Feet.java`, `Wave14Head.java`, `Wave14Util.java`, `Wave14Zones.java`, `Wave15Events.java`, `Wave15Field.java`, `Wave15Hands.java`, `Wave15Util.java`, `Wave15Wear.java`, `Wave16Acts.java`, `Wave16Chalk.java`, `Wave16Events.java`, `Wave16God.java`, `Wave16Kit.java`, `Wave16Swarm.java`, `Wave17Acts.java`, `Wave17Dragon.java`, `Wave17Events.java`, `Wave17Kit.java`, `Wave18Acts.java`, `Wave18Bags.java`, `Wave18Camp.java`, `Wave18Events.java`, `Wave18Kit.java`, `Wave19Book.java`, `Wave19Events.java`, `Wave19Field.java`, `Wave19Goods.java`, `Wave19Scrolls.java`, `Wave19Surge.java`, `Wave19Util.java`, `Wave1Aim.java`, `Wave1Casts.java`, `Wave20Acts.java`, `Wave20Events.java`, `Wave20Util.java`, `Wave21Acts.java`, `Wave21Events.java`, `Wave22Acts.java`, `Wave22Events.java`, `Wave23.java`, `Wave23Acts.java`, `Wave23Events.java`, `Wave24Acts.java`, `Wave24Events.java`, `Wave24Util.java`, `Wave25Acts.java`, `Wave25Events.java`, `Wave25Kit.java`, `Wave26Acts.java`, `Wave26Frank.java`, `Wave26Mind.java`, `Wave26Util.java`, `Wave26Wear.java`, `Wave27Hands.java`, `Wave27Head.java`, `Wave27Util.java`, `Wave28Belt.java`, `Wave28Hands.java`, `Wave28Neck.java`, `Wave28Potions.java`, `Wave28Util.java`, `Wave29Brews.java`, `Wave29Portal.java`, `Wave2Acts.java`, `Wave2Events.java`, `Wave30Deck.java`, `Wave30Events.java`, `Wave30Key.java`, `Wave30Paradox.java`, `Wave30Stones.java`, `Wave30Vecna.java`, `Wave31Acts.java`, `Wave3Belt.java`, `Wave3Field.java`, `Wave3Goods.java`, `Wave3Hands.java`, `Wave3Head.java`, `Wave3Util.java`, `Wave4BeastActs.java`, `Wave4ChargeActs.java`, `Wave4CovenActs.java`, `Wave4ForestActs.java`, `Wave4Handlers.java`, `Wave4MiscActs.java`, `Wave5Aim.java`, `Wave5Dragon.java`, `Wave5Hemlock.java`, `Wave5Locket.java`, `Wave5Safeguard.java`, `Wave5Souls.java`, `Wave5Warmage.java`, `Wave6Acts.java`, `Wave6Events.java`, `Wave6Zones.java`, `Wave71Acts.java`, `Wave7Events.java`, `Wave8Acts.java`, `Wave8Events.java`, `Wave9Acts.java`, `Wave9Events.java`, `WaveBossActs.java` |
 | `requip` | 2 | `RequipMagicFx.java`, `RequipParticles.java` |
 | `skill` | 3 | `GodTier.java`, `GrimoireMagicSkill.java`, `SkillFx.java` |
 | `skilltree/line` | 1 | `LineFx.java` |
 | `song` | 1 | `SongEffects.java` |
 | `soul` | 1 | `PaladinFx.java` |
 | `thread` | 3 | `RougeEntity.java`, `RougeFateEvents.java`, `ThreadTrapEntity.java` |
-| `vfx/client` | 1 | `PortalClient.java` |
-| `wizard` | 1 | `WizardSystem.java` |
+| `vfx` | 1 | `VfxShape.java` |
+| `vfx/client` | 11 | `VfxClientEvents.java`, `VfxDefinitions.java`, `VfxManager.java`, `VfxTextures.java`, `VfxVertexBuffer.java`, `ArcaneSpellLayer2.java`, `AuraLayer.java`, `MirrorLayer.java`, `RecombinationLayer.java`, `SlashCompassMercuryLayer.java`, `PortalClient.java` |
+| `wizard` | 2 | `MagicFlavors.java`, `WizardSystem.java` |
 
 Shared files touched with append-only lines: `NUSMP.java` (two lines: `FxBoot.init`, `FxClient.init`). Hand edits after the codemod: `core/magic/profile/*` (`particle()` returns `ParticleOptions`, `themeKey()`), `blackclover/MagicType`, `skill/GrimoireMagicSkill`, `labyrinth/mega/guard/GuardianTraits` (ring helper takes any options), comments in `skill/SkillFx`, `skilltree/line/LineFx`, `vfx/client/portal/PortalClient`.
 

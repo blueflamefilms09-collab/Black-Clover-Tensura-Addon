@@ -55,6 +55,11 @@ public final class FxThemes {
     public static final ThemeKey RELIC_WAVE_0 = ThemeKey.of("relic.wave.0");
     public static final ThemeKey RELIC_WAVE_1 = ThemeKey.of("relic.wave.1");
     public static final ThemeKey RELIC_WAVE_10 = ThemeKey.of("relic.wave.10");
+    public static final ThemeKey RELIC_WAVE_101 = ThemeKey.of("relic.wave.101");
+    public static final ThemeKey RELIC_WAVE_102 = ThemeKey.of("relic.wave.102");
+    public static final ThemeKey RELIC_WAVE_103 = ThemeKey.of("relic.wave.103");
+    public static final ThemeKey RELIC_WAVE_104 = ThemeKey.of("relic.wave.104");
+    public static final ThemeKey RELIC_WAVE_105 = ThemeKey.of("relic.wave.105");
     public static final ThemeKey RELIC_WAVE_11 = ThemeKey.of("relic.wave.11");
     public static final ThemeKey RELIC_WAVE_12 = ThemeKey.of("relic.wave.12");
     public static final ThemeKey RELIC_WAVE_13 = ThemeKey.of("relic.wave.13");
@@ -109,6 +114,7 @@ public final class FxThemes {
     public static final ThemeKey SKILL_GRIMOIRE = ThemeKey.of("skill.grimoire");
     public static final ThemeKey SKILL_PALADIN = ThemeKey.of("skill.paladin");
     public static final ThemeKey SKILL_REQUIP = ThemeKey.of("skill.requip");
+    public static final ThemeKey SKILL_SHISHOU = ThemeKey.of("skill.shishou");
     public static final ThemeKey SKILL_TREE = ThemeKey.of("skill.tree");
     public static final ThemeKey WIZARD = ThemeKey.of("wizard");
     public static final ThemeKey WORLD = ThemeKey.of("world");

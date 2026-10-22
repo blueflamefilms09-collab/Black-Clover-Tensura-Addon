@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.shishou;
 
 import com.newuniverse.nusmp.NUSMP;
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.registries.Registries;
@@ -17,6 +16,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.joml.Vector3f;
 
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: Black Flame (Kuroen) is Shishou's own damage-over-time effect, a real {@link MobEffect} (so milk, death and other mods' cleansing know it, and the icon tells the victim what is wrong). It burns for five
@@ -57,7 +59,7 @@ public final class ShishouEffects {
             victim.invulnerableTime = Math.max(keepTime, victim.invulnerableTime);
             double cx = victim.getX(), cy = victim.getY() + victim.getBbHeight() * 0.5, cz = victim.getZ();
             PerfParticles.send(sl, DARK_PURPLE, cx, cy, cz, 6, victim.getBbWidth() * 0.35, victim.getBbHeight() * 0.35, victim.getBbWidth() * 0.35, 0.02);
-            PerfParticles.send(sl, RukhParticles.dark(), cx, cy, cz, 1, victim.getBbWidth() * 0.3, victim.getBbHeight() * 0.3, victim.getBbWidth() * 0.3, 0.01);
+            PerfParticles.send(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), cx, cy, cz, 1, victim.getBbWidth() * 0.3, victim.getBbHeight() * 0.3, victim.getBbWidth() * 0.3, 0.01);
             return true;
         }
     }

@@ -25,7 +25,7 @@ class CodexEntriesTest {
         for (String id : CodexTestData.allEnchantmentIds()) assertEquals(1, seen.getOrDefault("nusmp:" + id, 0).intValue(), "nusmp:" + id + " must be in the book exactly once");
         for (Map.Entry<String, Integer> e : seen.entrySet()) assertEquals(1, e.getValue().intValue(), "duplicate " + e.getKey());
         FranchiseData.Table table = CodexTestData.table();
-        assertEquals(69, table.engravings().size(), "the franchise table");
+        assertEquals(71, table.engravings().size(), "the franchise table");
         long franchise = book.entries().stream().filter(e -> e.kind() == CodexEntries.Kind.FRANCHISE).count();
         assertEquals(table.engravings().size(), franchise);
         long mod = book.entries().stream().filter(e -> e.kind() == CodexEntries.Kind.MOD).count();

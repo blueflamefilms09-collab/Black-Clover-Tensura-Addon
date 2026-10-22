@@ -2533,6 +2533,23 @@
     ]
    }
   },
+  "skill.shishou": {
+   "particles": [
+    "glint",
+    "rune_sol",
+    "spark",
+    "mote_soft"
+   ],
+   "color": "#7FEBFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
   "boss": {
    "particles": [
     "ember",

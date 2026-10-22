@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.shishou;
 
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -32,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: every active skill of Shishou in one place, each server-decided and each BOUNDED: one box query at most per use ({@link ShishouTargets#near}, capped), at most a few dozen particles through the perf
@@ -150,7 +153,7 @@ public final class ShishouSpells {
             ItemStack rest = st.insert(ie.getItem());
             if (rest.getCount() == ie.getItem().getCount()) continue;
             if (rest.isEmpty()) ie.discard(); else ie.setItem(rest);
-            fx(level, RukhParticles.light(), ie.position(), 1, 0.1);
+            fx(level, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), ie.position(), 1, 0.1);
             moved++;
         }
         return moved;
@@ -233,8 +236,8 @@ public final class ShishouSpells {
             p.teleportTo(to.x, to.y, to.z);
             p.fallDistance = 0.0f;
             ShishouLive.WINDOWS.start(p.getUUID(), ShishouWindows.Kind.IFRAMES, c.now(), ShishouRules.LEAP_IFRAMES);
-            fx(c.level(), RukhParticles.light(), from, 6, 0.4);
-            fx(c.level(), RukhParticles.light(), to.add(0, 1, 0), 6, 0.4);
+            fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), from, 6, 0.4);
+            fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), to.add(0, 1, 0), 6, 0.4);
             sound(c.level(), to, SoundEvents.ENDERMAN_TELEPORT, 0.5f, 1.4f);
             return Result.of(skill.manaCost(), skill.cooldown());
         }
@@ -247,8 +250,8 @@ public final class ShishouSpells {
         Vec3 at = aimPoint(c, ShishouRules.DIVINE_RANGE);
         double dmg = ShishouRules.divine(c.swordLevel(), ShishouConfig.divineCap());
         for (Mob m : ShishouTargets.hostilesNear(c.level(), c.wielder(), at, ShishouRules.DIVINE_RADIUS, ShishouRules.DIVINE_TARGETS)) hit(c, m, dmg);
-        for (int y = 0; y <= 12; y += 2) fx(c.level(), RukhParticles.light(), at.add(0, y, 0), 2, 0.35);                  // the light pillar: seven rows of two Rukh
-        fx(c.level(), ParticleTypes.END_ROD, at.add(0, 1, 0), 10, 0.8);
+        for (int y = 0; y <= 12; y += 2) fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), at.add(0, y, 0), 2, 0.35);                  // the light pillar: seven rows of two Rukh
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.END_ROD), at.add(0, 1, 0), 10, 0.8);
         sound(c.level(), at, SoundEvents.BEACON_ACTIVATE, 1.0f, 1.6f);
         ShishouLive.WINDOWS.start(c.key(), ShishouWindows.Kind.RELEASE, c.now(), ShishouRules.DIVINE_RELEASE_TICKS);           // the temporary release: +25% on his blows for eight seconds
         return Result.of(ShishouSkill.DIVINE_SWORD_RELEASE.manaCost(), ShishouSkill.DIVINE_SWORD_RELEASE.cooldown());
@@ -264,8 +267,8 @@ public final class ShishouSpells {
         for (Mob m : ShishouTargets.near(c.level(), Mob.class, at, ShishouRules.BLACK_LIGHTNING_SPLASH_RADIUS, ShishouRules.BLACK_LIGHTNING_SPLASH_TARGETS + 1, e -> e != t && ShishouTargets.hostileFor(c.wielder(), e)))
             hit(c, m, dmg * ShishouRules.BLACK_LIGHTNING_SPLASH_SHARE);
         for (int i = 0; i < 12; i++) fx(c.level(), DARK, at.add(0, 12 - i, 0), 1, 0.12);                                      // the bolt: a dark column from the sky (a particle visual, never a real lightning bolt)
-        fx(c.level(), ParticleTypes.ELECTRIC_SPARK, at, 8, 0.5);
-        fx(c.level(), RukhParticles.dark(), at, 3, 0.4);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.ELECTRIC_SPARK), at, 8, 0.5);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), at, 3, 0.4);
         sound(c.level(), at, SoundEvents.LIGHTNING_BOLT_IMPACT, 0.6f, 1.5f);
         return Result.of(ShishouSkill.BLACK_LIGHTNING.manaCost(), ShishouSkill.BLACK_LIGHTNING.cooldown());
     }
@@ -277,7 +280,7 @@ public final class ShishouSpells {
         if (t == null) return Result.FAIL;
         int made = ShishouLive.CLONES.spawn(c.key(), t.getUUID(), ShishouRules.CLONES_PER_CAST, c.now(), ShishouRules.CLONE_LIFE, ShishouRules.CLONES_PER_CAST, ShishouRules.CLONES_GLOBAL);
         if (made <= 0) return Result.FAIL;
-        fx(c.level(), RukhParticles.light(), c.origin(), 8, 0.6);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), c.origin(), 8, 0.6);
         return Result.of(ShishouSkill.DOPPELGANGER.manaCost(), ShishouSkill.DOPPELGANGER.cooldown());
     }
 
@@ -305,7 +308,7 @@ public final class ShishouSpells {
             double dmg = ShishouRules.strikeDamage(ShishouData.get().record().level(), ShishouData.get().record().attackSteps(), 0.0, ShishouConfig.strikeCap()) * ShishouRules.CLONE_SHARE;
             Caster c = new Caster(sl, w, null, pos, center(victim).subtract(pos), ShishouData.get().record().level(), ShishouData.get().record(), now, k.wielder);
             hit(c, victim, dmg);
-            fx(sl, RukhParticles.light(), pos, 2, 0.1);
+            fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), pos, 2, 0.1);
         }
     }
 
@@ -316,8 +319,8 @@ public final class ShishouSpells {
         for (Mob m : ShishouTargets.hostilesNear(c.level(), c.wielder(), at, 3.0, ShishouRules.SPELL_TARGETS)) {
             if (hit(c, m, dmg)) m.setRemainingFireTicks(100);
         }
-        line(c, at, ParticleTypes.FLAME, 10);
-        fx(c.level(), ParticleTypes.FLAME, at, 14, 0.7);
+        line(c, at, Fx.options(FxThemes.SKILL_SHISHOU, FxOld.FLAME), 10);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.FLAME), at, 14, 0.7);
         sound(c.level(), at, SoundEvents.FIRECHARGE_USE, 0.8f, 1.0f);
         return Result.of(ShishouSkill.FIRE_MAGIC.manaCost(), ShishouSkill.FIRE_MAGIC.cooldown());
     }
@@ -337,7 +340,7 @@ public final class ShishouSpells {
             c.wielder().hurtMarked = true;
             c.wielder().fallDistance = 0.0f;
         }
-        fx(c.level(), ParticleTypes.CLOUD, from, 18, 1.4);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.CLOUD), from, 18, 1.4);
         sound(c.level(), from, SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), 0.8f, 1.2f);
         return Result.of(ShishouSkill.WIND_MAGIC.manaCost(), ShishouSkill.WIND_MAGIC.cooldown());
     }
@@ -363,10 +366,10 @@ public final class ShishouSpells {
             hit(c, m, dmg);
             m.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2, false, false));
             m.setTicksFrozen(m.getTicksRequiredToFreeze() + 40);
-            fx(c.level(), ParticleTypes.SNOWFLAKE, center(m), 8, 0.4);
+            fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.SNOWFLAKE), center(m), 8, 0.4);
         }
         if (c.wielder() != null) c.wielder().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 0, false, false));   // the water barrier: one small shield, no blocks
-        fx(c.level(), ParticleTypes.SNOWFLAKE, at, 14, 1.0);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.SNOWFLAKE), at, 14, 1.0);
         sound(c.level(), at, SoundEvents.GLASS_BREAK, 0.8f, 1.4f);
         return Result.of(ShishouSkill.WATER_ICE_MAGIC.manaCost(), ShishouSkill.WATER_ICE_MAGIC.cooldown());
     }
@@ -378,7 +381,7 @@ public final class ShishouSpells {
             m.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false));
             fx(c.level(), DARK, center(m), 6, 0.4);
         }
-        fx(c.level(), RukhParticles.dark(), at, 6, 0.8);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), at, 6, 0.8);
         sound(c.level(), at, SoundEvents.WITHER_SHOOT, 0.5f, 1.6f);
         return Result.of(ShishouSkill.DARKNESS_MAGIC.manaCost(), ShishouSkill.DARKNESS_MAGIC.cooldown());
     }
@@ -388,8 +391,8 @@ public final class ShishouSpells {
         if (p == null || p.getHealth() >= p.getMaxHealth() && !hasHarmful(p)) return Result.FAIL;
         p.heal((float) Math.min(16.0, 4.0 + 0.15 * c.swordLevel()));
         cleanse(p, false);
-        fx(c.level(), ParticleTypes.HAPPY_VILLAGER, p.position().add(0, 1, 0), 8, 0.5);
-        fx(c.level(), RukhParticles.light(), p.position().add(0, 1, 0), 4, 0.5);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.HAPPY_VILLAGER), p.position().add(0, 1, 0), 8, 0.5);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), p.position().add(0, 1, 0), 4, 0.5);
         return Result.of(ShishouSkill.HEALING_MAGIC.manaCost(), ShishouSkill.HEALING_MAGIC.cooldown());
     }
 
@@ -397,8 +400,8 @@ public final class ShishouSpells {
         ServerPlayer p = c.wielder();
         if (p == null || !hasHarmful(p)) return Result.FAIL;
         cleanse(p, true);
-        fx(c.level(), ParticleTypes.END_ROD, p.position().add(0, 1, 0), 10, 0.6);
-        fx(c.level(), RukhParticles.light(), p.position().add(0, 1, 0), 4, 0.5);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.END_ROD), p.position().add(0, 1, 0), 10, 0.6);
+        fx(c.level(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), p.position().add(0, 1, 0), 4, 0.5);
         return Result.of(ShishouSkill.PURIFICATION.manaCost(), ShishouSkill.PURIFICATION.cooldown());
     }
 

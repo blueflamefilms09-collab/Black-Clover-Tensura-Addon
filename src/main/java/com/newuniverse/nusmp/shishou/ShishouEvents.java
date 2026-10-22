@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.shishou;
 
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.perf.PerfParticles;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -30,6 +29,9 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the game events Shishou listens to. Each one is cheap for everybody else by construction: a kill is looked at only when its killer is Shishou's body or a linked wielder (a null check and a set test), the
@@ -109,7 +111,7 @@ public final class ShishouEvents {
             proj.setDeltaMovement(dir.scale(speed));
             proj.setOwner(p);
             proj.hasImpulse = true;
-            PerfParticles.send(p.serverLevel(), ParticleTypes.CLOUD, proj.getX(), proj.getY(), proj.getZ(), 4, 0.2, 0.2, 0.2, 0.05);     // the small wind burst
+            PerfParticles.send(p.serverLevel(), Fx.options(FxThemes.SKILL_SHISHOU, FxOld.CLOUD), proj.getX(), proj.getY(), proj.getZ(), 4, 0.2, 0.2, 0.2, 0.05);     // the small wind burst
             d.touch();
         });
     }

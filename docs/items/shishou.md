@@ -27,7 +27,7 @@ One sword per world. He starts as a wild flying sword that hunts and eats monste
 | Telekinetic Throw | key H throws him out as a friendly minion, H again recalls him to the hand |
 | Part 3 tiers | Tier 1 from level 1, tier 2 from level 21, tier 3 from level 50 (table below) |
 | Part 4 four animation states | idle / aggro / attack / dormant clips of the mod's own animation file |
-| Rukh trail at the hilt | the mod's own light / dark Rukh particles (`RukhParticles`), server-sent, through the perf budget |
+| Rukh trail at the hilt (`light_rukh` / `dark_rukh`) | NOT the Rukh types: the repo's own rule (`RukhExclusiveScopeTest`, owner decision) keeps Rukh for the Djinn and the dungeons only, and `FxSourceScanTest` forbids raw vanilla particles outside the allow-list. The trail uses the mod's custom particle library through the new theme `skill.shishou` (cyan, light tone for a wielder's sword, dark tone for the wild one), server-sent, through the perf budget |
 | Capability structure (Level, EXP, Mana) | `ShishouRecord` (pure) stored in `ShishouData` (world saved data); the item stack carries the level and the token as data components |
 
 ## What was NOT built from the owner's document, and why
@@ -103,6 +103,7 @@ Honest status of the skills: all 31 are wired and server-decided; none is a sile
 - **Entity** draws the same mesh, animated by the animation file; beyond 48 blocks it draws an eight-cube proxy (`geo/entity/shishou_sword.geo.json`), beyond the cull range nothing.
 - **Previews** (made by `tools/shishou/shishou_preview.py`): `docs/previews/shishou/*.png` (sword against the reference, guard and head close-up, the four states, dormant in the ground, inventory icon, HUD, in-hand).
 - **HUD** `shishou_hud`: level, mana, selected skill, barrier / sense / stealth timers and the Appraisal readout; movable with the mod's GUI-move screen.
+- **Particles:** every call goes through the custom particle facade (`Fx.options(FxThemes.SKILL_SHISHOU, ...)`), rewritten by `tools/particles/codemod.py`; the theme `skill.shishou` was appended to `tools/particles/gen_themes.py` and `map.json` (so `particle_themes.json`, `FxThemes.java` and `docs/custom_particles.md` were regenerated; the regeneration also added the already-existing relic wave themes 101 to 105 that the generated files had not listed yet).
 - **Engravings** (rule 6): severance 2, barrier piercing 2, magicule absorption 2, energy steal 1, magic interference 1 (`item/WeaponEngravings.java`), and the franchise engravings `Teacher's Insight` and `Devoured Power`.
 
 ## Voice (no audio exists yet)
@@ -128,7 +129,7 @@ Only one Shishou exists, so every per-sword number is a world-wide number.
 | holder hook (`inventoryTick`) | per stack in an inventory: one token compare (O(1)); the full upkeep once a second, only for the holder |
 | server tick | one counter test per tick; once a second a flag test, one window sweep, one repair check; clones only while any live (every 10 ticks, at most 6) |
 | kill / drop listeners | O(1) unless a sword body or a linked wielder is involved |
-| the body (entity) | one entity; goals retarget at most once per 20 ticks with one capped box query (24 blocks, at most 12 candidates); a strike every 24 ticks; the Rukh trail 2 to 3 particles every third tick; ground search at most 40 blocks vertically and 8 sideways tries |
+| the body (entity) | one entity; goals retarget at most once per 20 ticks with one capped box query (24 blocks, at most 12 candidates); a strike every 24 ticks; the particle trail 2 to 3 particles every third tick; ground search at most 40 blocks vertically and 8 sideways tries |
 | Telekinesis throw / recall | 1 entity spawn or removal; gap 20 ticks per player |
 | Stomach vacuum | one box query, at most 16 items, 60 ticks cooldown; auto mode at most 8 items per second |
 | Multilayer Barrier | up to 3 deflects per second, per-player O(1) window gate |

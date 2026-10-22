@@ -47,6 +47,7 @@
     ["boss/LuciusSpells.java", "boss.lucius"],
     ["celestial/SpiritKingEntity.java", "boss.celestial"],
     ["celestial/**", "skill.celestial"],
+    ["shishou/**", "skill.shishou"],
     ["client/ElsdociaGlitterClient.java", "boss.elsdocia"],
     ["client/avatar/**", "boss.avatar"],
     ["client/playermodel/**", "dungeon.humanoid"],

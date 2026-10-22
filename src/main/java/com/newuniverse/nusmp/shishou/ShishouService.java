@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.shishou;
 
 import com.newuniverse.nusmp.perf.PerfProbe;
 import com.mojang.logging.LogUtils;
-import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -37,6 +36,10 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 
 /**
  * Why: every decision about Shishou, on the server, in one place, over the pure rules. It owns the doors: claiming the dormant sword, the holder's tick (the one-per-world checks: ghosts, copies, the
@@ -217,7 +220,7 @@ public final class ShishouService {
     static void thief(ServerPlayer p, ItemStack stack, ShishouTheft.Verdict v, ServerLevel sl) {
         if (v == ShishouTheft.Verdict.CONFISCATE) {
             stack.setCount(0);
-            ShishouSpells.fx(sl, RukhParticles.dark(), p.position().add(0, 1, 0), 14, 0.6);
+            ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), p.position().add(0, 1, 0), 14, 0.6);
             p.displayClientMessage(Component.translatableWithFallback("shishou.msg.torn_away", "He tears himself out of your hands.").withStyle(ChatFormatting.RED), true);
             recover(ShishouRecovery.Cause.THIEF, sl, p.position());
             return;
@@ -397,7 +400,7 @@ public final class ShishouService {
             return false;
         }
         ShishouLive.COOLDOWNS.start(p.getUUID(), ShishouSkill.TELEKINESIS, now, ShishouSkill.TELEKINESIS.cooldown());
-        ShishouSpells.fx(sl, RukhParticles.light(), at, 6, 0.3);
+        ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), at, 6, 0.3);
         d.touch();
         ShishouSpeech.say(p, sl, ShishouVoiceLines.Group.THROW);
         return true;
@@ -413,7 +416,7 @@ public final class ShishouService {
         if (t == 0L) return false;
         removeBody(p.getServer(), body);
         give(p, t);
-        ShishouSpells.fx(p.serverLevel(), RukhParticles.light(), p.position().add(0, 1.2, 0), 6, 0.3);
+        ShishouSpells.fx(p.serverLevel(), Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), p.position().add(0, 1.2, 0), 6, 0.3);
         d.touch();
         ShishouSpeech.say(p, p.serverLevel(), ShishouVoiceLines.Group.RECALL);
         return true;
@@ -538,8 +541,8 @@ public final class ShishouService {
                 m.invulnerableTime = 0;
                 m.hurt(sever, (float) dmg);
             }
-            ShishouSpells.fx(sl, RukhParticles.light(), target.position().add(0, target.getBbHeight() * 0.5, 0), 8, 0.7);
-            ShishouSpells.fx(sl, net.minecraft.core.particles.ParticleTypes.END_ROD, target.position().add(0, target.getBbHeight() * 0.5, 0), 6, 0.6);
+            ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), target.position().add(0, target.getBbHeight() * 0.5, 0), 8, 0.7);
+            ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxOld.END_ROD), target.position().add(0, target.getBbHeight() * 0.5, 0), 6, 0.6);
         }
     }
 
@@ -554,14 +557,14 @@ public final class ShishouService {
             if ((el & 1 << ShishouStealTable.Element.ICE.ordinal()) != 0) target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false));
             if ((el & 1 << ShishouStealTable.Element.POISON.ordinal()) != 0) target.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
             if ((el & 1 << ShishouStealTable.Element.DARK.ordinal()) != 0) target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, false, false));
-            if ((el & 1 << ShishouStealTable.Element.LIGHTNING.ordinal()) != 0) ShishouSpells.fx(sl, net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK, target.position().add(0, target.getBbHeight() * 0.5, 0), 4, 0.4);
+            if ((el & 1 << ShishouStealTable.Element.LIGHTNING.ordinal()) != 0) ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxOld.ELECTRIC_SPARK), target.position().add(0, target.getBbHeight() * 0.5, 0), 4, 0.4);
         }
         if (usable(rec, ShishouSkill.VIBRATION_MAGIC)) {
             double bonus = ShishouRules.vibrationBonus(hit, ShishouConfig.vibrationShare(), ShishouConfig.vibrationShare());
             if (bonus > 0.05) {
                 target.invulnerableTime = 0;
                 target.hurt(sl.damageSources().indirectMagic(attacker, attacker), (float) bonus);                  // magic damage: armour points do not count
-                ShishouSpells.fx(sl, net.minecraft.core.particles.ParticleTypes.END_ROD, target.position().add(0, target.getBbHeight() * 0.5, 0), 1, 0.2);
+                ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxOld.END_ROD), target.position().add(0, target.getBbHeight() * 0.5, 0), 1, 0.2);
             }
         }
         if (wielderHit && attacker instanceof ServerPlayer p && ShishouLive.WINDOWS.active(p.getUUID(), ShishouWindows.Kind.RELEASE, now)) {                      // the released sword: +25% for eight seconds
@@ -592,7 +595,7 @@ public final class ShishouService {
         boolean ok = t.hurt(sl.damageSources().mobAttack(e), (float) dmg);
         if (ok) {
             applyOnHit(e, t, rec, sl, now, dmg, false);
-            ShishouSpells.fx(sl, e.isMinion() ? RukhParticles.light() : RukhParticles.dark(), t.position().add(0, t.getBbHeight() * 0.5, 0), 4, 0.3);
+            ShishouSpells.fx(sl, e.isMinion() ? Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT) : Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), t.position().add(0, t.getBbHeight() * 0.5, 0), 4, 0.3);
         }
         d.touch();
         return ok;
@@ -738,7 +741,7 @@ public final class ShishouService {
         e.makeDormant();
         d.cap().dormant(e.getUUID(), dimOf(sl), ground.getX(), ground.getY(), ground.getZ());
         d.touch();
-        ShishouSpells.fx(sl, RukhParticles.dark(), e.position().add(0, 1.0, 0), 12, 0.5);
+        ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), e.position().add(0, 1.0, 0), 12, 0.5);
     }
 
     // ================================================================ losing and finding him again
@@ -821,7 +824,7 @@ public final class ShishouService {
             d.touch();
             return null;
         }
-        ShishouSpells.fx(level, RukhParticles.dark(), at, 10, 0.5);
+        ShishouSpells.fx(level, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.DARK), at, 10, 0.5);
         return e;
     }
 
