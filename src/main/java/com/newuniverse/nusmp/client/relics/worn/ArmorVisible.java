@@ -50,7 +50,7 @@ public final class ArmorVisible {
      * this form allocates nothing ({@link #resolve(ArmorSlotPlan.Verdict, Facts)} is this, called with the record's fields).
      */
     public static Outcome resolve(ArmorSlotPlan.Verdict plan, int modelPieces, boolean customRan, boolean paintedLayer, boolean textureOk, boolean bodyNeedsPaint) {
-        if (plan.why() == WornPlan.Why.ARMOUR_OPTION || plan.why() == WornPlan.Why.FIRST_PERSON_HEAD) return Outcome.OFF_ON_PURPOSE;
+        if (plan.why() == WornPlan.Why.ARMOUR_OPTION || plan.why() == WornPlan.Why.SHOW_OFF || plan.why() == WornPlan.Why.FIRST_PERSON_HEAD) return Outcome.OFF_ON_PURPOSE;
         if (plan.why() == WornPlan.Why.TOO_FAR) return Outcome.OUT_OF_RANGE;
         if (modelPieces > 0 && !bodyNeedsPaint) return Outcome.MODEL;
         if (customRan) return Outcome.CUSTOM;

@@ -43,6 +43,9 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.worn.WornDebugCommand::register);          // 1.110.0: /nusmp debug worn
+        NeoForge.EVENT_BUS.addListener(RelicWearClient::onClientTick);                 // relics_wear: a fresh look at the local player while a screen is open (the preview and the paper doll)
+        NeoForge.EVENT_BUS.addListener(RelicWearClient::onLeave);                     // relics_wear: the server's list for an entity is dropped when the entity leaves the client's level
+        NeoForge.EVENT_BUS.addListener(RelicWearClient::registerCommands);            // relics_wear: /multiverse relic show <on|off|toggle> (relicfx.showWorn)
         NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                      // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onEntityTick);
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onClientTick);
@@ -53,6 +56,7 @@ public final class RelicClient {
             com.newuniverse.nusmp.client.relics.worn.ArmorTrace.clear();                   // 1.111.0: what was really drawn for the armour relics
             com.newuniverse.nusmp.client.relics.worn.WornTrace.clear();                    // 1.99.0: what the worn layer last did, and what the server said wearers carry
             com.newuniverse.nusmp.relics.WornSync.clearClient();
+            RelicWearClient.onLogout();
             Relics.clearCaches();
         });
     }

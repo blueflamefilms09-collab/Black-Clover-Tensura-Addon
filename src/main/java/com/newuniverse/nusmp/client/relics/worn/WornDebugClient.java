@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.relics.worn;
 
 import com.newuniverse.nusmp.client.relics.RelicClient;
 import com.newuniverse.nusmp.client.relics.RelicTextures;
+import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibDraw;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.item.CuriosProbe;
@@ -64,6 +65,11 @@ public final class WornDebugClient {
         for (String l : probe.lines()) out.add(lit("  " + l));
 
         List<Relics.Located> found = Relics.locatedList(who);
+        out.add(t("wear_options", "Options in force: relicfx.showWorn=%s (all worn relics), relicfx.hideArmourRelics=%s, relicfx.models=%s; Curios eye icons are per slot", yes(RelicFxOptions.showWorn()), RelicFxOptions.hideArmourRelics(), RelicFxOptions.models()));
+        WornPlan.View view = WornExec.viewOf(who);
+        boolean far = WornExec.tooFar(who, new double[1]);
+        java.util.List<com.newuniverse.nusmp.item.CuriosLink.RenderFlag> eyes = com.newuniverse.nusmp.item.CuriosLink.flags(who);
+        List<String> told = WornSync.keysOf(WornSync.client(target));
         Set<String> clientHas = new HashSet<>();
         int n = 0;
         for (Relics.Located l : found) {
@@ -79,9 +85,20 @@ public final class WornDebugClient {
             out.add(t("client_model", "     model library: %s", e == null ? "NO MODEL LOADED (resources missing or the catalog has no entry): plain boxes or a floating charm" : e.pieces.size() + " pieces, " + e.baseVerts + " vertices, tier " + e.tier));
             WornPlan.Item item = seen == null || seen.plan == null ? null : find(seen.plan, d.id());
             out.add(t("client_plan", "     last decision: %s", item == null ? "-" : item.describe()));
+            boolean armourSlot = d.slot().isArmor();
+            Boolean eye = l.where() == Relics.Where.CURIOS ? WornExec.eyeOf(eyes, l.stack()) : null;
+            WornVisibility.Result vis = WornVisibility.decide(armourSlot ? WornVisibility.Source.ARMOUR : WornVisibility.Source.CURIOS, d.slot().name(), eye, WornRenderers.get(d.id()) != null,
+                    RelicFxOptions.hideArmourRelics(), RelicFxOptions.showWorn(), view, far, who.isSpectator(), who.isInvisible());
+            out.add(t("wear_client", "     wear: slot %s, equipped (found on this client) yes, synced from the server %s, visible now %s%s", armourSlot ? "armour " + d.slot().name().toLowerCase() : d.slot().curiosSlot(),
+                    armourSlot ? "n/a" : yes(told.contains(WornSync.keyOf(l.stack()))), yes(vis.visible()), vis.visible() ? "" : " (hidden: " + vis.reason().text + ")"));
             if (l.where() == Relics.Where.ARMOUR && d.slot().isArmor()) armourLines(out, target, d);
         }
         if (found.isEmpty()) out.add(t("client_none", "This client found no worn relic on the wearer."));
+        List<String> causes = com.newuniverse.nusmp.relics.WornOnce.causes();
+        if (!causes.isEmpty()) {
+            out.add(t("causes", "Causes noted on this machine since the game started (each once):"));
+            for (String c : causes) out.add(lit("  " + c));
+        }
         for (String s : serverLines) {                                                      // the server's list against this client's
             String[] p = s.split("\\|");
             if (p.length >= 3 && !clientHas.contains(p[0] + "|" + p[1])) out.add(t("missing", "The server sees %s (%s, %s) but this client did not find it: it is not drawn on this machine.", p[0], p[1], p[2].toLowerCase()));

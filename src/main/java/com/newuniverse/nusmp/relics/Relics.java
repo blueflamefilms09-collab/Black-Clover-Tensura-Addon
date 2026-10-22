@@ -137,6 +137,18 @@ public final class Relics {
         return out;
     }
 
+    /** relics_wear: the one client-side entity (the local player) whose look is kept for only {@link WornSyncRules#FAST_TTL} ticks right now, or null. Set by the client while a screen is open. */
+    private static volatile UUID fastLook;
+
+    /** Client only: the local player's look is refreshed every {@link WornSyncRules#FAST_TTL} ticks (the inventory preview and the Curios screen show a relic put on at once); null switches it off. */
+    public static void setFastLook(UUID id) { fastLook = id; }
+
+    /** How many ticks the look at this entity stays good: the fast time for the local player in fast mode (client side only), else {@link #ttl()}. */
+    private static int ttlFor(LivingEntity e, int normal) {
+        UUID f = fastLook;
+        return f != null && e.level().isClientSide() && f.equals(e.getUUID()) ? WornSyncRules.lookTtl(true, normal) : normal;
+    }
+
     /** Forget the kept look at a client-side entity (the server's list for it just changed). */
     public static void invalidateClient(UUID id) {
         if (id != null) CLIENT.remove(id);
@@ -177,7 +189,7 @@ public final class Relics {
         Map<UUID, Cached> cache = cacheFor(e);
         long now = e.level().getGameTime();
         Cached c = fresh ? null : cache.get(e.getUUID());
-        if (c != null && now >= c.tick() && now - c.tick() < ttl()) return c;
+        if (c != null && now >= c.tick() && now - c.tick() < ttlFor(e, ttl())) return c;
         long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
         List<Located> located = scan(e);
         List<Worn> worn = new ArrayList<>(located.size());

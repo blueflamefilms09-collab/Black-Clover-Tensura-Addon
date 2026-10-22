@@ -146,6 +146,34 @@ public final class CuriosLink {
         return out;
     }
 
+    /**
+     * relics_wear: the slot types this entity really has in its Curios inventory, each with the handler of its places (slot id to the stacks, in Curios' own order). This is the runtime
+     * fact behind "can a relic be worn here": a slot id that is not a key of this map was never given to the entity (its slot file or entity assignment is missing or was overridden), whatever
+     * the mod's own data says. Used by the right-click equip ({@code RelicCurioEquip}), {@code /multiverse relic debug} and the self-test {@code relic.wear}. Empty without Curios or on any
+     * failure (the failure is recorded like every other read). Not for per-tick use: it builds a map.
+     */
+    public static Map<String, IItemHandler> slotHandlers(LivingEntity e) {
+        if (e == null || isBroken() || !loaded()) return Map.of();
+        try {
+            Method inv = getInventory;
+            if (inv == null) inv = getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
+            Object opt = inv.invoke(null, e);
+            if (!(opt instanceof Optional<?> o) || o.isEmpty()) return Map.of();
+            initStackMethods();
+            if (!(getCurios.invoke(o.get()) instanceof Map<?, ?> map)) return Map.of();
+            Map<String, IItemHandler> out = new java.util.LinkedHashMap<>();
+            for (Map.Entry<?, ?> en : map.entrySet()) {
+                if (en.getKey() instanceof String id && getStacks.invoke(en.getValue()) instanceof IItemHandler h) out.put(id, h);
+            }
+            return out;
+        } catch (Throwable t) {
+            brokenUntil = System.currentTimeMillis() + 10_000L;
+            getInventory = null; getCurios = null; getStacks = null; getRenders = null; rendersChecked = false;
+            noteFailure("slot types", t);
+            return Map.of();
+        }
+    }
+
     private static boolean rendersChecked;
 
     /** getCurios and getStacks are needed to read the worn stacks; getRenders (the eye icon) is optional: without it every worn stack counts as shown. */

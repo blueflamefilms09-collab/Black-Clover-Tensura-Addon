@@ -39,5 +39,8 @@ public final class RelicSystem {
         WornRender2SelfTests.register();                        // the self-test relic.worn_render2 (the plan, the sync codec, the Curios probe)
         RelicPowerSelfTests.register();                         // 1.104.0: the self-test relic.attune_lock (an unattuned relic deals a fifth of its damage)
         com.newuniverse.nusmp.relics.upgrade.UpgradeSelfTests.register();   // 1.102.0: the self-test visual.god_worn (the upgraded God relics: models, skins, effect tables, flag fallback)
+        WornOnce.setSink(line -> com.mojang.logging.LogUtils.getLogger().warn("[nusmp] worn relic: {}", line));   // relics_wear: each fallback names its cause once
+        RelicCurioEquip.register(gameBus);                      // relics_wear: right-click puts a Curios relic on (first free place of its slot type; sneak keeps the ritual)
+        RelicWearSelfTests.register();                          // relics_wear: the self-test relic.wear (every relic maps to a defined, assigned, tagged slot; armour and Curios equip; the visibility contract)
     }
 }

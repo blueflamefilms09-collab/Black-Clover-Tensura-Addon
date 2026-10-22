@@ -17,6 +17,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
     public static final ModConfigSpec.BooleanValue ROBE_ANIME;
     public static final ModConfigSpec.BooleanValue HAND_MODELS;
+    public static final ModConfigSpec.BooleanValue SHOW_WORN;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -37,6 +38,9 @@ public final class RelicFxOptions {
         HAND_MODELS = b.comment("Show relics that are not weapons (rings, necklaces, hoods, boots, flasks, scrolls ...) as 3D objects in the hand, on the ground and in item frames. Off = the flat sprite, as before. "
                         + "The inventory always shows the sprite.")
                 .define("handModels", true);
+        SHOW_WORN = b.comment("Show the relics worn on the body (Curios and armour) on every player, yourself in third person and the inventory preview included. On by default. Off hides all of them at once; "
+                        + "the Curios eye icon of one slot and relicfx.hideArmourRelics still switch single groups off while this is on. Also /multiverse relic show <on|off> and the 'Show or hide all worn relics' key.")
+                .define("showWorn", true);
         b.pop();
         SPEC = b.build();
     }
@@ -78,6 +82,23 @@ public final class RelicFxOptions {
             return false;
         }
     }
+
+    /** True (the default, and when the config is not loaded) unless the player switched all worn relics off ({@code relicfx.showWorn}). */
+    public static boolean showWorn() { return get(SHOW_WORN); }
+
+    /** Sets {@code relicfx.showWorn} and saves it; returns the value now in force (the old one if the config cannot be written). */
+    public static boolean setShowWorn(boolean on) {
+        try {
+            SHOW_WORN.set(on);
+            SPEC.save();
+            return on;
+        } catch (RuntimeException notLoaded) {
+            return showWorn();
+        }
+    }
+
+    /** Flips {@code relicfx.showWorn}; returns the new value. */
+    public static boolean toggleShowWorn() { return setShowWorn(!showWorn()); }
 
     private static boolean get(ModConfigSpec.BooleanValue v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return true; }

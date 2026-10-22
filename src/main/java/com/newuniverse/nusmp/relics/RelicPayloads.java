@@ -18,5 +18,7 @@ public final class RelicPayloads {
                 (payload, ctx) -> ctx.enqueueWork(() -> WornSync.put(payload.wearer(), payload.stacks())));
         r.playToClient(WornDebugPayload.TYPE, WornDebugPayload.STREAM_CODEC,                                  // 1.99.0: /multiverse relic debug asks the client for its half of the report
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.relics.worn.WornDebugClient.report(payload.target(), payload.serverLines())));
+        r.playToClient(RelicShowPayload.TYPE, RelicShowPayload.STREAM_CODEC,                                  // relics_wear: /multiverse relic show <on|off|toggle> sets the player's own relicfx.showWorn
+                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.relics.RelicWearClient.apply(payload.mode())));
     }
 }
