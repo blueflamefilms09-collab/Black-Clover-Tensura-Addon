@@ -56,6 +56,14 @@ def make_atlas():
     return at
 
 
+def make_face_atlas():
+    """The six faces on one small sheet (3 x 2 regions of 160 x 140): the colour sheet and the glow sheet share the layout, so one plate model draws both."""
+    at = L.Atlas(480, 280)
+    for e in A.EXPRESSIONS:
+        at.region("face_" + e, 160, 140, lambda w, h, e=e: A.face_front(w, h, 1012, e))
+    return at
+
+
 # ====================================================================================================================== the body
 class Builder:
     def __init__(self, form, lod, atlas, fx=False):
@@ -140,6 +148,18 @@ class Builder:
             self.part(bone, tc, (w * 0.60, w * 0.8, w * 0.60), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0), "up": (reg, 0)}, (rot[0], 45.0, rot[2]), piv, 0, comp, head)
             tc2 = (c[0], c[1] + h + w * 0.85, c[2])
             self.part(bone, tc2, (w * 0.30, w * 0.5, w * 0.30), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0), "up": (reg, 0)}, (rot[0], 0.0, rot[2]), piv, 0, comp, head)
+
+
+def build_face(form, expr, atlas):
+    """The face plate of one expression: the bones of the body down to the head (same pivots, same rest pose, so every clip drives it) and ONE cube, a thin plate just proud of the head's front face
+    with the face of the expression on it. Drawn twice: with the colour sheet (cutout) and with the glow sheet (additive)."""
+    b = Builder(form, 0, atlas, False)
+    b.m.id = "gnome_%s_face_%s" % (form, expr)
+    b.bone("body", (0, 40, 0))
+    b.bone("chest", (0, 48, 0), "body")
+    b.bone("head", HEAD_PIVOT, "chest", rotation=(-6, 0, 0))
+    b.part("head", (0, 102, -22.2), (26, 22, 0.4), {"north": ("face_" + expr, 0)}, head=True)
+    return b.m
 
 
 def build(form, lod, atlas, fx=False):
@@ -259,7 +279,6 @@ def build(form, lod, atlas, fx=False):
             P("root", c, (9 + (i % 3) * 3, 5, 9), b.stone_faces("dark", down=False), rot=(0, math.degrees(a), 0), piv=c, lod=0)
     # ------------------------------------------------------------------ glow-only model: eyes, the circle, rune bands, veins
     G = b.glow
-    G("head", (0, 102, -22.12), (26, 22, 0.2), {"north": ("face_front", 0)}, lod=1, head=True)
     G("chest", (0, 72, -22.62), (30, 30, 0.2), {"north": ("circle", 0)}, lod=1)
     G("body", (0, 45, -16.5), (30, 5, 0.2), {"north": ("bracer", 0)}, lod=0)
     for sx, t in ((-1, "R"), (1, "L")):
@@ -280,7 +299,8 @@ def build(form, lod, atlas, fx=False):
 TICK = 0.05
 SLAM_T = 0.70                                         # the rise: both fists land at 0.70 s (tick 14)
 CAST_T = 0.60                                         # the cast: contact at 0.60 s (tick 12)
-LENGTHS = {"rise": 1.0, "cast": 1.2, "sink": 1.0, "punch": 1.0, "stomp": 0.9}
+LENGTHS = {"rise": 1.0, "cast": 1.2, "sink": 1.0, "punch": 1.0, "stomp": 0.9, "slam": 1.1, "shrug": 1.1, "pound": 1.8, "kneel": 2.0}
+GUARD_Z, GUARD_Y = -26.0, 60.0                         # the crossed arms: the upper arms swing inward, the forearms turn across the chest (checked in the preview)
 
 
 def tracks(clip_len, fn, steps=12):
@@ -367,6 +387,76 @@ def animations(form):
              "arm_R": rot(t, [(0, 0, 0), (10, 0, -8), (10, 0, -14), (10, 0, -14)]),
              "head": rot(t, [(0, 0, 0), (6, 0, 0), (-12, 0, 0), (-12, 0, 0)])}
     clips["sink"] = {"loop": False, "length": LENGTHS["sink"], "bones": bones}
+    # ---- slam: ONE fist drops on the ground like a hammer (a mid page): the right arm up, then down at 0.50 s (tick 10)
+    t = [0.0, 0.30, 0.50, 0.65, 0.85, 1.1]
+    bones = {"arm_R": rot(t, [(0, 0, 0), (105, 0, -6), (-8, 0, 0), (-3, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "fore_R": rot(t, [(0, 0, 0), (34, 0, 0), (-4, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "chest": rot(t, [(0, 0, 0), (9, 0, 0), (-11, 0, 0), (-3, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "head": rot(t, [(0, 0, 0), (-6, 0, 0), (8, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "body": {"position": dict(zip(t, [(0, 0, 0), (0, 2, 0), (0, -4, 0), (0, -1, 0), (0, 0, 0), (0, 0, 0)]))}}
+    clips["slam"] = {"loop": False, "length": LENGTHS["slam"], "bones": bones}
+
+    # ---- shrug: the hit rolls off the stone: the shoulders heave up, the head rocks, the chest jerks back and settles (22 ticks)
+    t = [0.0, 0.10, 0.30, 0.55, 0.80, 1.1]
+    bones = {"arm_L": {"position": dict(zip(t, [(0, 0, 0), (0, 6, 0), (0, 5, 0), (0, 2, 0), (0, 0, 0), (0, 0, 0)])), "rotation": dict(zip(t, [(0, 0, 0), (0, 0, 10), (0, 0, 8), (0, 0, 3), (0, 0, 0), (0, 0, 0)]))},
+             "arm_R": {"position": dict(zip(t, [(0, 0, 0), (0, 6, 0), (0, 5, 0), (0, 2, 0), (0, 0, 0), (0, 0, 0)])), "rotation": dict(zip(t, [(0, 0, 0), (0, 0, -10), (0, 0, -8), (0, 0, -3), (0, 0, 0), (0, 0, 0)]))},
+             "chest": rot(t, [(0, 0, 0), (9, 4, 0), (5, -4, 0), (2, 2, 0), (0, 0, 0), (0, 0, 0)]),
+             "head": rot(t, [(0, 0, 0), (-4, 10, 7), (-2, -8, 5), (0, 4, 0), (0, 0, 0), (0, 0, 0)]),
+             "body": {"position": dict(zip(t, [(0, 0, 0), (0, -2, 1.5), (0, -1, 0.5), (0, 0, 0), (0, 0, 0), (0, 0, 0)]))}}
+    clips["shrug"] = {"loop": False, "length": LENGTHS["shrug"], "bones": bones}
+
+    # ---- guard: the arms crossed over the chest, the head level and stern, a slow breath (a loop, held while the master is in danger)
+    GT = 3.0
+    ga = {"arm_L": (62, 0, GUARD_Z), "arm_R": (62, 0, -GUARD_Z), "fore_L": (88, GUARD_Y, 0), "fore_R": (88, -GUARD_Y, 0)}
+    bones = {k: {"rotation": tracks(GT, lambda u, v=v: (v[0] + 1.5 * math.sin(u * math.tau), v[1], v[2]), 12)} for k, v in ga.items()}
+    bones["chest"] = {"rotation": tracks(GT, lambda u: (-3 + 1.5 * math.sin(u * math.tau), 0, 0), 12), "scale": tracks(GT, lambda u: (1.0, 1.0 + 0.012 * math.sin(u * math.tau), 1.0), 12)}
+    bones["head"] = {"rotation": tracks(GT, lambda u: (2, 4 * math.sin(u * math.tau), 0), 12)}
+    for i, nm in enumerate(ORB):
+        bones[nm] = {"position": tracks(GT, lambda u, i=i: (0, 2.0 * math.sin((u + i * 0.25) * math.tau), 0), 12)}
+    clips["guard"] = {"loop": True, "length": GT, "bones": bones}
+
+    # ---- pound: the victory chest-pound: the head tips back, the fists hammer the chest one after the other, twice each (1.8 s)
+    t = [0.0, 0.25, 0.40, 0.55, 0.70, 0.85, 1.00, 1.15, 1.30, 1.8]
+    up = (50, 0, 0)
+    bones = {"arm_L": rot(t, [(0, 0, 0), (50, 0, GUARD_Z * 0.5), (60, 0, GUARD_Z * 0.5), (50, 0, GUARD_Z * 0.5), (0, 0, 0), (0, 0, 0), (60, 0, GUARD_Z * 0.5), (50, 0, GUARD_Z * 0.5), (40, 0, 4), (0, 0, 0)]),
+             "arm_R": rot(t, [(0, 0, 0), (0, 0, 0), (0, 0, 0), (50, 0, -GUARD_Z * 0.5), (60, 0, -GUARD_Z * 0.5), (50, 0, -GUARD_Z * 0.5), (0, 0, 0), (0, 0, 0), (40, 0, -4), (0, 0, 0)]),
+             "fore_L": rot(t, [(0, 0, 0), (95, 0, 0), (110, 0, 0), (95, 0, 0), (20, 0, 0), (20, 0, 0), (110, 0, 0), (95, 0, 0), (60, 0, 0), (0, 0, 0)]),
+             "fore_R": rot(t, [(0, 0, 0), (20, 0, 0), (20, 0, 0), (95, 0, 0), (110, 0, 0), (95, 0, 0), (20, 0, 0), (20, 0, 0), (60, 0, 0), (0, 0, 0)]),
+             "chest": rot(t, [(0, 0, 0), (7, 0, 0), (5, 0, 0), (7, 0, 0), (5, 0, 0), (7, 0, 0), (5, 0, 0), (7, 0, 0), (4, 0, 0), (0, 0, 0)]),
+             "head": rot(t, [(0, 0, 0), (12, 0, 0), (14, 0, 0), (12, 0, 0), (14, 0, 0), (12, 0, 0), (14, 0, 0), (12, 0, 0), (8, 0, 0), (0, 0, 0)]),
+             "body": {"position": dict(zip(t, [(0, 0, 0), (0, 1, 0), (0, -1.5, 0), (0, 1, 0), (0, -1.5, 0), (0, 1, 0), (0, -1.5, 0), (0, 1, 0), (0, 0, 0), (0, 0, 0)]))}}
+    clips["pound"] = {"loop": False, "length": LENGTHS["pound"], "bones": bones}
+
+    # ---- doze: the sleepy settle: the whole body sinks into a crouch, the head droops and nods, the arms hang loose, the stones barely move (a loop)
+    DT = 4.0
+    bones = {"body": {"position": tracks(DT, lambda u: (0, -9 + 0.8 * math.sin(u * math.tau), 0), 12)},
+             "leg_L": {"rotation": tracks(DT, lambda u: (38, 0, 0), 12)}, "leg_R": {"rotation": tracks(DT, lambda u: (38, 0, 0), 12)},
+             "shin_L": {"rotation": tracks(DT, lambda u: (-30, 0, 0), 12)}, "shin_R": {"rotation": tracks(DT, lambda u: (-30, 0, 0), 12)},
+             "chest": {"rotation": tracks(DT, lambda u: (-5 + 1.5 * math.sin(u * math.tau), 0, 0), 12), "scale": tracks(DT, lambda u: (1.0, 1.0 + 0.02 * math.sin(u * math.tau), 1.0 + 0.012 * math.sin(u * math.tau)), 12)},
+             "head": {"rotation": tracks(DT, lambda u: (-14 + 5 * max(0.0, math.sin(u * math.tau * 2)) ** 2, 0, 3 * math.sin(u * math.tau)), 12)},
+             "arm_L": {"rotation": tracks(DT, lambda u: (10, 0, 6), 12)}, "arm_R": {"rotation": tracks(DT, lambda u: (10, 0, -6), 12)}}
+    for i, nm in enumerate(ORB):
+        bones[nm] = {"position": tracks(DT, lambda u, i=i: (0, 0.8 * math.sin((u + i * 0.25) * math.tau) - 6, 0), 12)}
+    clips["doze"] = {"loop": True, "length": DT, "bones": bones}
+
+    # ---- kneel: it comes up out of a kneel, as if rising from the earth (2 s): a deep kneel (the thighs folded, the head bowed, a fist on the ground), then it rises, the stones lifting after it
+    t = [0.0, 0.50, 0.90, 1.30, 1.65, 2.0]
+    bones = {"root": {"position": dict(zip(t, [(0, -14, 0), (0, -14, 0), (0, -8, 0), (0, 2, 0), (0, 0, 0), (0, 0, 0)]))},
+             "body": {"position": dict(zip(t, [(0, -14, 0), (0, -14, 0), (0, -8, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]))},
+             "leg_L": rot(t, [(70, 0, 0), (70, 0, 0), (45, 0, 0), (10, 0, 0), (0, 0, 0), (0, 0, 0)]), "leg_R": rot(t, [(40, 0, 0), (40, 0, 0), (28, 0, 0), (6, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "shin_L": rot(t, [(-110, 0, 0), (-110, 0, 0), (-60, 0, 0), (-10, 0, 0), (0, 0, 0), (0, 0, 0)]), "shin_R": rot(t, [(-70, 0, 0), (-70, 0, 0), (-40, 0, 0), (-6, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "chest": rot(t, [(-22, 0, 0), (-22, 0, 0), (-12, 0, 0), (3, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "head": rot(t, [(-28, 0, 0), (-28, 0, 0), (-14, 0, 0), (6, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "arm_L": rot(t, [(30, 0, 6), (30, 0, 6), (18, 0, 4), (0, 0, 0), (0, 0, 0), (0, 0, 0)]), "arm_R": rot(t, [(30, 0, -6), (30, 0, -6), (18, 0, -4), (0, 0, 0), (0, 0, 0), (0, 0, 0)])}
+    clips["kneel"] = {"loop": False, "length": LENGTHS["kneel"], "bones": bones}
+    # the positions above are in units of the FULL form; the companion's models are authored at k times that size, so its bobs and crouches shrink with it (the root of the rise and the sink stays:
+    # it only has to go far enough under the ground)
+    if form == "companion":
+        k = FORMS[form]["k"]
+        for name, c in clips.items():
+            for bone, trk in c["bones"].items():
+                if "position" in trk and not (bone == "root" and name in ("rise", "sink")):
+                    trk["position"] = {tt: tuple(v * k for v in vec) for tt, vec in trk["position"].items()}
     # the companion walks a little quicker
     if form == "companion":
         clips["walk"]["length"] = 1.2
@@ -379,6 +469,10 @@ def main():
     count_only = "--count" in sys.argv
     only = [a for a in sys.argv[1:] if not a.startswith("--")]
     at = make_atlas()
+    fa = make_face_atlas()
+    if not count_only:
+        fa.save_color("gnome_faces", 1.0)
+        fa.save_glow("gnome_faces_fx", 1.0)
     for form in FORMS:
         if only and form not in only:
             continue
@@ -396,6 +490,11 @@ def main():
                     at.save_color(m.id, m.tex_scale)
                 elif lod == 0:
                     at.save_glow(m.id, 0.5)
+        for expr in A.EXPRESSIONS:
+            fm = build_face(form, expr, fa)
+            rows.append((fm.id, fm.cubes(), fm.quads()))
+            if not count_only:
+                fm.save("gnome")
         if not count_only:
             at.save_glow("gnome_%s_fx_lod1" % form, 0.5)
             L.write_animations("gnome_" + form, animations(form))

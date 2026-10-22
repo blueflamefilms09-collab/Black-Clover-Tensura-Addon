@@ -755,6 +755,286 @@
    }
   ]
  },
+ "gnome_dev_comp_guard": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   20,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "guard",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_comp_shrug": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   2,
+   6,
+   11,
+   16
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "shrug",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_comp_pound": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   5,
+   8,
+   11,
+   14,
+   17,
+   20
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "pound",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_comp_doze": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "doze",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_comp_kneel": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   12,
+   22,
+   30,
+   40
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "kneel",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_dev_comp_slam": {
+  "kind": "geo",
+  "model": "gnome_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   10,
+   13,
+   17
+  ],
+  "tile": [
+   300,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "slam",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
  "gnome_full_lod1": {
   "kind": "prop",
   "example": "GnomeProp",

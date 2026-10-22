@@ -162,7 +162,7 @@ class Model:
     def cubes(self):
         return sum(len(b["cubes"]) for b in self.bones.values())
 
-    def save(self):
+    def save(self, folder="entity"):
         bones = [self.bones[n] for n in self.order]
         k = self.tex_scale
         if k != 1.0:                                                         # the same layout on a smaller copy of the sheet
@@ -175,8 +175,8 @@ class Model:
         geo = {"format_version": "1.12.0", "minecraft:geometry": [{
             "description": {"identifier": "geometry." + self.id, "texture_width": int(self.atlas.w * k), "texture_height": int(self.atlas.h * k),
                             "visible_bounds_width": 8, "visible_bounds_height": 8, "visible_bounds_offset": [0, 1, 0]}, "bones": bones}]}
-        os.makedirs(os.path.join(ROOT, "geo", "entity"), exist_ok=True)
-        with open(os.path.join(ROOT, "geo", "entity", self.id + ".geo.json"), "w", newline="\n") as f:
+        os.makedirs(os.path.join(ROOT, "geo", folder), exist_ok=True)
+        with open(os.path.join(ROOT, "geo", folder, self.id + ".geo.json"), "w", newline="\n") as f:
             json.dump(geo, f, indent=1)
             f.write("\n")
 

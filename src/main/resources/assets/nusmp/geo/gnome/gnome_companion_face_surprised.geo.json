@@ -1,0 +1,90 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.gnome_companion_face_surprised",
+    "texture_width": 480,
+    "texture_height": 280,
+    "visible_bounds_width": 8,
+    "visible_bounds_height": 8,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "body",
+     "pivot": [
+      0.0,
+      6.6000000000000005,
+      0.0
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "chest",
+     "pivot": [
+      0.0,
+      7.92,
+      0.0
+     ],
+     "cubes": [],
+     "parent": "body"
+    },
+    {
+     "name": "head",
+     "pivot": [
+      0.0,
+      15.180000000000001,
+      -0.99
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -2.9600999999999997,
+        14.952300000000001,
+        -4.72428
+       ],
+       "size": [
+        5.9201999999999995,
+        5.0094,
+        0.09108
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          160,
+          140
+         ],
+         "uv_size": [
+          160,
+          140
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "chest",
+     "rotation": [
+      -6.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

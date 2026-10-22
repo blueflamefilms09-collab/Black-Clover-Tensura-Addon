@@ -234,9 +234,27 @@ def crystal(w, h, seed, pal="amber"):
 
 
 # ------------------------------------------------------------------------------------------------------------------ the face
-def face_front(w, h, seed):
-    """The Gnome's face: a stone mask carved with a heavy brow ridge, two narrow slanted eyes that glow amber (a white-hot core), a nose ridge, a mouth seam with square stone teeth and cheek
-    cracks. Ink linework everywhere. The glow sheet has the eyes (and the thin amber lines in the cracks)."""
+EXPRESSIONS = ("calm", "amused", "angry", "sleepy", "surprised", "stern")
+# per expression: the eye shape, its tilt (negative = outer ends up), height, width, the brow's drop (0..) and its slant, the mouth, the glow colour and strength
+EXPR = {
+    "calm": dict(shape="slit", tilt=0.06, ew=0.17, eh=0.075, drop=0.0, slant=0.0, mouth="line", glow="glow", core="glow_core", gs=1.00, eye="amber", eye_core="amber_w"),
+    "amused": dict(shape="arc", tilt=0.0, ew=0.15, eh=0.06, drop=-0.02, slant=0.0, mouth="smile", glow="glow", core="glow_core", gs=1.00, eye="amber", eye_core="amber_w"),
+    "angry": dict(shape="slit", tilt=0.15, ew=0.19, eh=0.095, drop=0.045, slant=0.06, mouth="snarl", glow="#FF6A22", core="#FFD9A0", gs=1.00, eye="#F26A1E", eye_core="#FFE2B0"),
+    "sleepy": dict(shape="bar", tilt=0.0, ew=0.16, eh=0.022, drop=0.03, slant=0.0, mouth="small", glow="#B9782A", core="#E2B060", gs=0.34, eye="amber_d", eye_core="amber"),
+    "surprised": dict(shape="round", tilt=0.0, ew=0.13, eh=0.115, drop=-0.04, slant=0.0, mouth="open", glow="amber_l", core="#FFFFFF", gs=1.00, eye="amber_l", eye_core="amber_w"),
+    "stern": dict(shape="bar", tilt=0.025, ew=0.18, eh=0.045, drop=0.02, slant=0.025, mouth="line", glow="glow", core="glow_core", gs=0.78, eye="amber", eye_core="amber_w"),
+}
+
+
+def _pal(k):
+    return PAL[k] if k in PAL else k
+
+
+def face_front(w, h, seed, expr="calm"):
+    """The Gnome's face in one of six expressions (calm, amused, angry, sleepy, surprised, stern): a stone mask carved with a heavy brow ridge, two eyes that glow, a nose ridge, a mouth with square
+    stone teeth and cheek cracks, a small gem on the forehead. Ink linework everywhere. The base stone is the same for every expression (the plates of the other expressions sit on the calm head
+    without a seam); what changes is the shape of the eyes, the drop and slant of the brow, the mouth, and the colour and strength of the glow. Returns colour, glow."""
+    E = EXPR[expr]
     base, _ = stone(w, h, seed, cell=w / 5.0, tone=-0.06, line=1.5, cracks=2)
     lay = canvas(w, h)
     d = ImageDraw.Draw(lay)
@@ -244,50 +262,87 @@ def face_front(w, h, seed):
     def P(x, y):
         return (x * w * SS, y * h * SS)
 
-    # brow ridge: a heavy dark slab over both eyes, lit on top
-    d.polygon([P(0.02, 0.20), P(0.98, 0.20), P(0.98, 0.40), P(0.60, 0.46), P(0.50, 0.40), P(0.40, 0.46), P(0.02, 0.40)], fill=col(PAL["ink2"]))
-    d.polygon([P(0.04, 0.22), P(0.96, 0.22), P(0.96, 0.36), P(0.60, 0.42), P(0.50, 0.36), P(0.40, 0.42), P(0.04, 0.36)], fill=col(PAL["dark"]))
+    dr, sl = E["drop"], E["slant"]
+    # brow ridge: a heavy dark slab over both eyes, lit on top; an angry or stern brow comes down toward the nose, a surprised one rises
+    outer, inner = 0.40 - 0.02 * (dr < 0) - 0.03 * min(0, dr) * -1, 0.46 + dr + sl
+    d.polygon([P(0.02, 0.20), P(0.98, 0.20), P(0.98, 0.40 + dr * 0.4), P(0.60, inner), P(0.50, 0.40 + dr), P(0.40, inner), P(0.02, 0.40 + dr * 0.4)], fill=col(PAL["ink2"]))
+    d.polygon([P(0.04, 0.22), P(0.96, 0.22), P(0.96, 0.36 + dr * 0.4), P(0.60, inner - 0.04), P(0.50, 0.36 + dr), P(0.40, inner - 0.04), P(0.04, 0.36 + dr * 0.4)], fill=col(PAL["dark"]))
     d.polygon([P(0.04, 0.22), P(0.96, 0.22), P(0.96, 0.27), P(0.04, 0.27)], fill=col(PAL["light"]))
-    # eye sockets (ink) and the eyes: narrow, slanted down toward the nose, the "angry stone" look
+
+    def eye_polys(s, scale=1.0):
+        """The eye polygon and its core for side s (-1 / +1) in picture units."""
+        cx, ew, eh, tilt = 0.5 + s * 0.23, E["ew"] * scale, E["eh"] * scale, E["tilt"] * s
+        cy = 0.54 + dr * 0.3
+        if E["shape"] == "slit":
+            eye = [P(cx - ew, cy - eh * 0.4 - tilt), P(cx + ew, cy - eh * 0.4 + tilt), P(cx + ew * 0.82, cy + eh * 0.9 + tilt), P(cx - ew * 0.82, cy + eh * 0.8 - tilt)]
+            core = [P(cx - ew * 0.7, cy - eh * 0.1 - tilt * 0.8), P(cx + ew * 0.7, cy - eh * 0.1 + tilt * 0.8), P(cx + ew * 0.6, cy + eh * 0.5 + tilt * 0.8), P(cx - ew * 0.6, cy + eh * 0.45 - tilt * 0.8)]
+        elif E["shape"] == "arc":                                         # a happy crescent (the lower edge curves up in the middle)
+            top = [P(cx - ew + ew * 2 * t / 10.0, cy - eh * 1.4 * math.sin(math.pi * t / 10.0)) for t in range(11)]
+            bot = [P(cx + ew - ew * 2 * t / 10.0, cy - eh * 0.2 * math.sin(math.pi * t / 10.0) + eh * 0.5) for t in range(11)]
+            eye = top + bot
+            core = [P(cx - ew * 0.6 + ew * 1.2 * t / 8.0, cy - eh * 0.9 * math.sin(math.pi * t / 8.0) + eh * 0.15) for t in range(9)] + [P(cx + ew * 0.6, cy + eh * 0.3), P(cx - ew * 0.6, cy + eh * 0.3)]
+        elif E["shape"] == "round":
+            n = 20
+            eye = [P(cx + ew * math.cos(a), cy + eh * math.sin(a)) for a in np.linspace(0, math.tau, n, endpoint=False)]
+            core = [P(cx + ew * 0.55 * math.cos(a), cy + eh * 0.55 * math.sin(a)) for a in np.linspace(0, math.tau, n, endpoint=False)]
+        else:                                                              # a bar: a flat slit (sleepy: nearly shut; stern: a level bar)
+            eye = [P(cx - ew, cy - eh - tilt), P(cx + ew, cy - eh + tilt), P(cx + ew, cy + eh + tilt), P(cx - ew, cy + eh - tilt)]
+            core = [P(cx - ew * 0.7, cy - eh * 0.4 - tilt * 0.8), P(cx + ew * 0.7, cy - eh * 0.4 + tilt * 0.8), P(cx + ew * 0.7, cy + eh * 0.4 + tilt * 0.8), P(cx - ew * 0.7, cy + eh * 0.4 - tilt * 0.8)]
+        return eye, core
+
     for s in (-1, 1):
         cx = 0.5 + s * 0.23
-        sock = [P(cx - 0.17, 0.44 - s * 0.0), P(cx + 0.17, 0.44), P(cx + s * 0.02 + 0.13 * -s, 0.60), P(cx - 0.15 * -s, 0.56)]
-        d.polygon([P(cx - 0.20, 0.42 - 0.04 * s * -1 + 0.0), P(cx + 0.20, 0.42), P(cx + 0.16, 0.62), P(cx - 0.16, 0.62)], fill=col(PAL["ink"]))
-        tilt = 0.06 * s
-        eye = [P(cx - 0.17, 0.50 - tilt), P(cx + 0.17, 0.50 + tilt), P(cx + 0.14, 0.58 + tilt), P(cx - 0.14, 0.57 - tilt)]
-        d.polygon(eye, fill=col(PAL["amber"]))
-        core = [P(cx - 0.12, 0.52 - tilt * 0.8), P(cx + 0.12, 0.52 + tilt * 0.8), P(cx + 0.10, 0.56 + tilt * 0.8), P(cx - 0.10, 0.55 - tilt * 0.8)]
-        d.polygon(core, fill=col(PAL["amber_w"]))
-    # nose ridge, mouth seam, square teeth
+        top = 0.42 + dr * 0.5
+        d.polygon([P(cx - 0.20, top), P(cx + 0.20, top), P(cx + 0.16, 0.64), P(cx - 0.16, 0.64)], fill=col(PAL["ink"]))        # the socket
+        eye, core = eye_polys(s)
+        d.polygon(eye, fill=col(_pal(E["eye"])))
+        d.polygon(core, fill=col(_pal(E["eye_core"])))
+    # nose ridge, mouth, teeth
     d.polygon([P(0.46, 0.46), P(0.54, 0.46), P(0.58, 0.72), P(0.42, 0.72)], fill=col(PAL["dark"]))
     d.line([P(0.46, 0.46), P(0.42, 0.72)], fill=col(PAL["ink"]), width=int(1.5 * SS))
     d.line([P(0.54, 0.46), P(0.58, 0.72)], fill=col(PAL["ink"]), width=int(1.5 * SS))
-    d.rectangle([P(0.12, 0.80), P(0.88, 0.90)], fill=col(PAL["ink"]))
-    for i in range(7):
-        x0 = 0.15 + i * 0.10
-        d.rectangle([P(x0, 0.80), P(x0 + 0.07, 0.86 + 0.02 * (i % 2))], fill=col(PAL["hi"]))
+    m = E["mouth"]
+    if m == "smile":                                                       # a curved seam with small square teeth along it
+        pts = [P(0.14 + 0.72 * t / 12.0, 0.80 + 0.07 * math.sin(math.pi * t / 12.0)) for t in range(13)]
+        d.line(pts, fill=col(PAL["ink"]), width=int(5.0 * SS))
+        for i in range(1, 12, 2):
+            x, y = 0.14 + 0.72 * i / 12.0, 0.80 + 0.07 * math.sin(math.pi * i / 12.0)
+            d.rectangle([P(x - 0.025, y - 0.018), P(x + 0.025, y + 0.02)], fill=col(PAL["hi"]))
+    elif m == "snarl":                                                     # a wide jagged opening, teeth up and down
+        d.polygon([P(0.10, 0.80), P(0.90, 0.80), P(0.84, 0.93), P(0.16, 0.93)], fill=col(PAL["ink"]))
+        for i in range(8):
+            x0 = 0.13 + i * 0.095
+            d.polygon([P(x0, 0.80), P(x0 + 0.08, 0.80), P(x0 + 0.04, 0.87)], fill=col(PAL["hi"]))
+            d.polygon([P(x0 + 0.01, 0.93), P(x0 + 0.07, 0.93), P(x0 + 0.04, 0.88)], fill=col(PAL["light"]))
+    elif m == "open":                                                      # a round open mouth
+        d.polygon([P(0.36, 0.76), P(0.64, 0.76), P(0.68, 0.85), P(0.62, 0.94), P(0.38, 0.94), P(0.32, 0.85)], fill=col(PAL["ink"]))
+        d.rectangle([P(0.40, 0.76), P(0.60, 0.80)], fill=col(PAL["hi"]))
+    elif m == "small":                                                     # a short closed seam
+        d.rectangle([P(0.36, 0.82), P(0.64, 0.86)], fill=col(PAL["ink"]))
+    else:                                                                  # line: the seam with square teeth
+        d.rectangle([P(0.12, 0.80), P(0.88, 0.90)], fill=col(PAL["ink"]))
+        for i in range(7):
+            x0 = 0.15 + i * 0.10
+            d.rectangle([P(x0, 0.80), P(x0 + 0.07, 0.86 + 0.02 * (i % 2))], fill=col(PAL["hi"]))
     d.line([P(0.04, 0.20), P(0.96, 0.20)], fill=col(PAL["ink"]), width=int(2.0 * SS))
     gem = [P(0.5, 0.025), P(0.57, 0.10), P(0.5, 0.175), P(0.43, 0.10)]                    # a small gem on the forehead: the mage stone of the host
     d.polygon(gem, fill=col(PAL["ink"]))
-    d.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(PAL["amber"]))
+    d.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(_pal(E["eye"] if expr in ("sleepy",) else "amber")))
     d.polygon([P(0.5, 0.075), P(0.525, 0.10), P(0.5, 0.125), P(0.475, 0.10)], fill=col(PAL["amber_w"]))
     out = over(base, done(lay, w, h))
-    g = clear(w, h)
-    gl = canvas(w, h)
-    dg = ImageDraw.Draw(gl)
-    gc = canvas(w, h)
-    dc = ImageDraw.Draw(gc)
+    gl, gc = canvas(w, h), canvas(w, h)
+    dg, dc = ImageDraw.Draw(gl), ImageDraw.Draw(gc)
     for s in (-1, 1):
-        cx = 0.5 + s * 0.23
-        tilt = 0.06 * s
-        eye = [P(cx - 0.17, 0.50 - tilt), P(cx + 0.17, 0.50 + tilt), P(cx + 0.14, 0.58 + tilt), P(cx - 0.14, 0.57 - tilt)]
-        dg.polygon(eye, fill=col(PAL["glow"]))
-        core = [P(cx - 0.12, 0.52 - tilt * 0.8), P(cx + 0.12, 0.52 + tilt * 0.8), P(cx + 0.10, 0.56 + tilt * 0.8), P(cx - 0.10, 0.55 - tilt * 0.8)]
-        dc.polygon(core, fill=col(PAL["glow_core"]))
-    dg.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(PAL["glow"]))
-    dc.polygon([P(0.5, 0.075), P(0.525, 0.10), P(0.5, 0.125), P(0.475, 0.10)], fill=col(PAL["glow_core"]))
-    g = over(over(g, done(gl, w, h)), done(gc, w, h))
+        eye, core = eye_polys(s)
+        dg.polygon(eye, fill=col(_pal(E["glow"])))
+        dc.polygon(core, fill=col(_pal(E["core"])))
+    dg.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(_pal(E["glow"])))
+    dc.polygon([P(0.5, 0.075), P(0.525, 0.10), P(0.5, 0.125), P(0.475, 0.10)], fill=col(_pal(E["core"])))
+    g = over(done(gl, w, h), done(gc, w, h))
+    g[..., 3] = g[..., 3] * E["gs"]                                        # the strength of the glow: dim for a sleepy face, full for a calm one
+    g[..., :3] = np.where(g[..., 3:4] > 0, g[..., :3], 0.0)
     return out, g
+
 
 
 def face_side(w, h, seed):

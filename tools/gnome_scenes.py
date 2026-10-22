@@ -47,6 +47,8 @@ def main():
     s["gnome_full_punch"] = prop(1050, [0, 5, 10, 13, 17], [V("3/4", 38, 8, F, 15)], tile=(300, 460), figure=True)
     s["gnome_full_stomp"] = prop(1060, [0, 4, 8, 10, 14], [V("3/4", 38, 8, F, 15)], tile=(300, 460), figure=True)
     s["gnome_companion_punch"] = prop(50, [0, 5, 10, 13, 17], [V("3/4", 35, 10, C, 3.2)], tile=(330, 400), figure=True)
+    for clip, ages in (("guard", [0, 20, 40]), ("shrug", [0, 2, 6, 11, 16]), ("pound", [0, 5, 8, 11, 14, 17, 20]), ("doze", [0, 40, 80]), ("kneel", [0, 12, 22, 30, 40]), ("slam", [0, 6, 10, 13, 17])):
+        s["gnome_dev_comp_" + clip] = geo("gnome_companion", clip, ages, [V("3/4", 35, 10, [0, 0.8, 0], 3.6), V("side", 90, 5, [0, 0.8, 0], 3.6)], tile=(300, 340), figure=False)
     for lod in (1, 2):
         s["gnome_full_lod%d" % lod] = prop(1000 + lod * 100, [30], [V("3/4", 38, 10, F, 17)], tile=(520, 560), figure=True)
         s["gnome_companion_lod%d" % lod] = prop(lod * 100, [30], [V("3/4", 35, 10, C, 3.2)], tile=(440, 480), figure=True)
