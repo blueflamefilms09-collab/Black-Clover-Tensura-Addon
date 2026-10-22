@@ -2991,7 +2991,7 @@
               1024
             ],
             "texels": 1048576,
-            "painted": 89038
+            "painted": 89017
           },
           {
             "file": "textures/entity/weapon/up/djinn_weapon_crocell_dark_glow2.png",
@@ -3005,7 +3005,7 @@
         ],
         "skin_size_texels": 1048576,
         "painted_skin_texels": 867928,
-        "painted_texels_all_maps": 1111976
+        "painted_texels_all_maps": 1111955
       },
       "swing_trail": true,
       "unique_act_vfx": true,
