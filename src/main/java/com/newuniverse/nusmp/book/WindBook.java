@@ -36,7 +36,8 @@ public class WindBook extends GrimoireBook {
             BookPage.signature("spirit_of_zephyr", "Spirit of Zephyr", WindBook::zephyr).withCooldown(1800));
 
     public WindBook() { super(MagicType.WIND, 0xFF8CFFC2); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withCharacters;      // character spell sets: the pages that belong to one character are appended after the shared pages (book.CharacterPages)
+    @Override protected List<BookPage> familyPages() { if (withCharacters == null) withCharacters = CharacterPages.wind(pages); return withCharacters; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.WIND_ELEMENTAL; }
     @Override public Element spiritElement() { return Element.WIND; }
     @Override public String spiritName() { return "Sylph"; }

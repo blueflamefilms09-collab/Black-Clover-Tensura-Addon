@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "canon": "yami",
+  "magic": "DARK",
+  "book": "book_dark",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com): Dark Magic page (offensive: Avidya Slash, Black Blade, Dimension Slash, Avidya Wild Slash, Avidya Blunt Strike, Black Blade Shadow Strike, Dimension Slash: Equinox, Iai Slash, Death Thrust, Deep Black Blade, Black Crescent Moon; defensive: Black Hole, Black Cocoon, Dusk), Dark Cloaked Black Blade. Read through search summaries only: the wiki host is not reachable from the build machine.",
+    "other_en": "Secondary English pages found by search (OtakusNotes, GameRant): Black Hole absorbs spells and paralyses; Black Moon is the Mana Zone with a Black Hole; Death Thrust is used while Black Moon is active; Dimension Slash targets space itself.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells.md."
+  },
+  "spells": [
+    { "page": "avidya_slash", "name": "Dark Cloaked Avidya Slash", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "His basic slash of darkness. Mode 0 of the Dark book, so it stays in the basic book too." },
+    { "page": "black_blade", "name": "Dark Cloaked Black Blade", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.08 }, "note": "Darkness coats the sword and forms a longer blade." },
+    { "page": "avidya_wild_slash", "name": "Dark Cloaked Avidya Wild Slash", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.15 }, "note": "Swinging wildly: a spray of Avidya Slashes." },
+    { "page": "black_hole", "name": "Dark Cloaked Black Hole", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "mastery", "min": 0.22 }, "note": "A small black hole that swallows spells and paralyses whoever cast them." },
+    { "page": "dimension_slash", "name": "Dark Cloaked Dimension Slash", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.32 }, "note": "A slash that cuts space itself." },
+    { "page": "iai_slash", "name": "Dark Cloaked Iai Slash", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "black_blade", "count": 2 }, { "type": "mastery", "min": 0.42 } ] },
+      "note": "On the wiki's offensive list; no description was found. The existing page is a draw-and-dash." },
+    { "page": "black_moon", "name": "Dark Cloaked Black Moon", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "any", "of": [ { "type": "flag", "name": "mana_zone" }, { "type": "mastery", "min": 0.9 } ] },
+      "note": "A Mana Zone spell: opens with the Mana Zone gate, or near the top of the mastery bar." },
+    { "page": "death_thrust", "name": "Dark Cloaked Death Thrust", "ja": "", "origin": "anime", "exclusive": true, "source": "other_en",
+      "acquire": { "type": "page_uses", "page": "black_moon", "count": 1 }, "note": "Used while Black Moon is active, so it needs the Moon cast once." },
+    { "page": "deep_black_blade", "name": "Dark Cloaked Deep Black Blade", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "black_blade", "count": 3 }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "On the wiki's offensive list; no description found. The effect is inferred from the name: a deeper Black Blade." },
+    { "page": "black_crescent_moon", "name": "Black Crescent Moon", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "black_moon", "count": 3 }, { "type": "mastery", "min": 0.75 } ] },
+      "note": "On the wiki's offensive list; no description found. The effect is inferred from the name: a wide crescent cut." },
+    { "page": "dimension_slash_equinox", "name": "Dark Cloaked Dimension Slash: Equinox", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "dimension_slash", "count": 4 }, { "type": "mastery", "min": 0.85 } ] },
+      "note": "Dimension Slash with the Mana Zone's reach." }
+  ],
+  "planned": [
+    { "name": "Dark Cloaked Avidya Blunt Strike", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named on the wiki's offensive list; no description found." },
+    { "name": "Black Blade Shadow Strike", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named on the wiki's offensive list; no description found." },
+    { "name": "Dark Cloaked Black Cocoon", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named on the wiki's defensive list; no description found." },
+    { "name": "Dark Cloaked Dusk", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named on the wiki's defensive list; no description found." }
+  ],
+  "notes": "Not in Yami's grimoire (kept in the basic Dark book): Dark Cloaked Guard, Dark Cloaked Shadow Embrace and Black Hole Collapse are this mod's own pages and were not found in any source for Yami."
+}

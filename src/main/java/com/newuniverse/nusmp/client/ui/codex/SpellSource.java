@@ -78,6 +78,7 @@ public final class SpellSource {
         for (int m = 0; m < n; m++) {
             BookPage page = book.page(m);
             if (page == null) continue;
+            if (com.newuniverse.nusmp.charset.CharacterSets.hidden(inst, m)) continue;      // character spell sets: not a page of this grimoire, so not "still sealed" either
             if (!GrimoireBook.isUnlocked(inst, m)) { sealed.merge(magicId, 1, Integer::sum); continue; }
             int mastery = m == 0 ? 0 : (int) Math.round(MasteryPages.masteryCost(page, m, n) * 100.0);
             spells.add(new SpellModel.Spell(magicId, label, page.id(), page.name(), m, (int) Math.round(page.costPercent()), page.cooldown() / 20, mastery,

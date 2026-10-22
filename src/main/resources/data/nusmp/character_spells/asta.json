@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "canon": "asta",
+  "magic": "ANTI_MAGIC",
+  "book": "book_anti_magic",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com): Anti Magic, Demon-Dweller Sword: Black Slash, the Asta page. Read through search summaries only: the wiki host is not reachable from the build machine.",
+    "other_en": "Secondary English pages found by search (fan wikis): the Black Asta mode (Black Hurricane, Black Meteorite, Demon-Slayer Sword: Black Divider), the Demon-Slasher katana.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells.md."
+  },
+  "spells": [
+    { "page": "demon_slayer_slash", "name": "Anti Magic: Demon-Dweller Sword: Black Slash", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A flying slash. Mode 0 of the Anti-Magic book. The anti-magic book is Asta's alone in the series, so none of its pages is exclusive." },
+    { "page": "bull_thrust", "name": "Bull Thrust", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "mastery", "min": 0.15 }, "note": "Both swords pointed forward and hurled ahead. First appearance not confirmed." },
+    { "page": "black_form", "name": "Black Asta", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "mastery", "min": 0.3 }, "note": "Unlocked after the Witch Queen healed him and Radois nearly beat him (the search summary). The existing rules stay: a toggle once the Anti-Magic Lord awakens." },
+    { "page": "black_meteorite", "name": "Black Meteorite", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "page_uses", "page": "black_form", "count": 1 }, "note": "A Black Asta technique, so it needs the form used once." },
+    { "page": "black_hurricane", "name": "Black Hurricane", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "page_uses", "page": "black_form", "count": 1 }, "note": "A Black Asta technique, so it needs the form used once." },
+    { "page": "black_divider", "name": "Demon-Slayer Sword: Black Divider", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "black_form", "count": 2 }, { "type": "mastery", "min": 0.5 } ] },
+      "note": "First seen in Black Asta; after the time skip it needs no transformation." },
+    { "page": "infinite_slash", "name": "Demon-Slasher Katana: Infinite Slash", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "black_divider", "count": 3 }, { "type": "mastery", "min": 0.65 } ] },
+      "note": "The katana taken from Yami in the fight against Dante (the search summary). Acquisition point not confirmed." },
+    { "page": "infinite_slash_equinox", "name": "Demon-Slasher Katana: Infinite Slash Equinox", "ja": "", "origin": "anime", "exclusive": false, "source": "other_en",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "infinite_slash", "count": 3 }, { "type": "flag", "name": "anti_magic_lord" } ] },
+      "note": "The great Infinite Slash: after the Anti-Magic Lord has awakened." }
+  ],
+  "planned": [
+    { "name": "Demon-Destroyer Sword techniques", "ja": "", "origin": "anime", "source": "en_wiki", "note": "The Demon-Destroyer Sword is drawn through the book's sword system; the wiki's Anti Magic page lists it but no technique description was found." }
+  ],
+  "notes": "Every existing Anti-Magic page is Asta's. The set only gives them an anime-order of opening (and the existing Aura costs, weapon requirements and Lord rules are untouched). Black Asta's own Lord rules stay in AntiMagicBook."
+}

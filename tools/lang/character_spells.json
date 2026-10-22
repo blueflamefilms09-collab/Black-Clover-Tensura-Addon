@@ -1,0 +1,16 @@
+{
+  "nusmp.page.book_wind.tornado_fang": "Tornado Fang - the Towering Tornado laid on its side. A rolling drill of wind runs 16 blocks ahead, tears spells out of the air and drags up to 8 foes along the lane for 11 base damage each.",
+  "nusmp.page.book_wind.sylphs_breath": "Sylph's Breath - the wind spirit exhales a great volume of air. A wide cone of 14 blocks throws up to 8 foes back for 12 base damage each and shreds the spells in it. Yuno's first spirit technique.",
+  "nusmp.page.book_wind.spirits_hushed_dance": "Spirit's Hushed Dance - you read the flow of mana and move before it does. For 10 seconds (15 inside a Spirit Dive, and quicker) you run, jump and fall like a feather, and every hostile spell that comes within 3.5 blocks is turned aside.",
+  "nusmp.page.book_wind.liable_tempest": "Liable Tempest - a tempest that will not let go. For 5 seconds a storm of 6 blocks radius where you aim pulls up to 8 foes in, spins them and tears at them for 5 base damage a second, and swallows hostile spells.",
+  "nusmp.page.book_wind.gale_white_bow": "Gale White Bow - a great bow of wind is drawn and the Sylph's breath looses a white arrow. It flies 40 blocks, pierces everything for 16 base damage and pushes foes back.",
+  "nusmp.page.book_wind.swift_white_hawk": "Swift White Hawk - a hawk of wind carries you up to 16 blocks ahead in one dive. Up to 8 foes on the way take 9 base damage. Needs room to land.",
+  "nusmp.page.book_wind.heavenly_wind_ark": "Heavenly Wind Ark - a ship of wind lifts you and up to 8 allies within 8 blocks: Slow Falling and Speed II for 15 seconds and a push forward.",
+  "nusmp.page.book_wind.wind_blades_shower": "Wind Blades Shower - wind swords rain down where you look: four volleys over 1.6 seconds across 5 blocks radius, each hitting up to 8 foes for 5 base damage and a little more each time.",
+  "nusmp.page.book_wind.spirit_of_boreas": "Spirit of Boreas - the north wind in a close-range strike. A freezing cyclone around you bites everything within 6 blocks for 22 base damage, chills and slows it and throws it away. Saint Stage only.",
+  "nusmp.page.book_water.point_blank_roar": "Point-Blank Sea Dragon's Roar - the Roar fired from the hand into the target's body. No flight: a crash of water at the spot you face (up to 7 blocks) hits everything within 3.5 blocks for 24 base damage and throws it back.",
+  "nusmp.page.book_fire.leo_parma": "Leo Palma - a giant paw of flame closes on the foe you look at (up to 18 blocks). 8 base damage, it burns and cannot move for 3 seconds, taking 4 more every second.",
+  "nusmp.page.book_fire.salamanders_breath": "Salamander's Breath - the fire spirit's breath, a huge flame spat in a wide cone of 14 blocks. Up to 8 foes take 16 base damage (20 inside a Spirit Dive) and burn for 5 seconds.",
+  "nusmp.page.book_dark.deep_black_blade": "Dark Cloaked Deep Black Blade - the Black Blade grown deeper. For 20 seconds your sword reaches 4 blocks further and you gain Strength II.",
+  "nusmp.page.book_dark.black_crescent_moon": "Black Crescent Moon - a wide crescent of darkness cuts 22 blocks ahead for 24 base damage, half as much again while Black Moon is up, and cuts the spells in its way."
+}

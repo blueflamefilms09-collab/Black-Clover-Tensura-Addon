@@ -109,7 +109,9 @@ public final class MasteryPages {
         double mastery = book.masteryFrac(inst);
         for (int m = 1; m < n; m++) {
             BookPage page = book.page(m);
-            if (GrimoireBook.isUnlocked(inst, m) || mastery < masteryCost(page, m, n)) continue;
+            if (com.newuniverse.nusmp.charset.CharacterSets.hidden(inst, m) || GrimoireBook.isUnlocked(inst, m)) continue;      // character spell sets: a page that is not in this character's grimoire never opens
+            Boolean byCharacter = com.newuniverse.nusmp.charset.CharacterSets.opens(p, inst, book, m);      // the character's own acquisition rule (null = no set: the mastery order below)
+            if (byCharacter != null ? !byCharacter : mastery < masteryCost(page, m, n)) continue;
             Gate gate = gate(book, page);
             if (!gate.passes(p)) {
                 remindGate(p, inst, m, page, gate.describe());

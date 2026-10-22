@@ -165,7 +165,9 @@ public abstract class GrimoireBook extends Skill {
                 || this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID);
     }
 
-    public static boolean isUnlocked(ManasSkillInstance i, int mode) { return mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0; }
+    public static boolean isUnlocked(ManasSkillInstance i, int mode) {
+        return (mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0) && !com.newuniverse.nusmp.charset.CharacterSets.hidden(i, mode);      // character spell sets: a page the bound character never used (or a signature spell, in the basic book) is not in the grimoire
+    }
 
     public static void unlock(ManasSkillInstance i, int mode) {
         i.getOrCreateTag().putInt("Unlocked", i.getOrCreateTag().getInt("Unlocked") | (1 << mode));
@@ -210,6 +212,7 @@ public abstract class GrimoireBook extends Skill {
     public Component getModeName(ManasSkillInstance instance, int mode) {
         BookPage p = page(mode);
         if (p == null) return Component.literal("?");
+        if (com.newuniverse.nusmp.charset.CharacterSets.hidden(instance, mode)) return Component.literal("-").withStyle(ChatFormatting.DARK_GRAY);      // character spell sets: not a page of this grimoire at all
         if (mode < familyCount() && !isUnlocked(instance, mode)) return Component.literal("Sealed Page").withStyle(ChatFormatting.DARK_GRAY);
         if (mode >= familyCount() && !usable(instance, null, mode)) return Component.literal(com.newuniverse.nusmp.core.discovery.DiscoveryRules.QUESTION).withStyle(ChatFormatting.DARK_GRAY);   // 1.27.0: a base page that cannot be used yet stays hidden
         int cd = instance.getCoolDown(mode);   // ManasCore cooldowns are in seconds
@@ -364,6 +367,7 @@ public abstract class GrimoireBook extends Skill {
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, player);
+        com.newuniverse.nusmp.charset.CharacterSets.onCast(instance, p.id());      // character spell sets: the cast counts toward the rules that name this page (Spirit of Zephyr after the Spirit Dive)
         com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.onCast(player, magicId(), p.id(), p.costPercent());      // 1.55.0: the Rukh flow: a finished cast is Light, Dark or neutral; an opposing one is rejected in a Holy place
         instance.getOrCreateTag().putInt("LastMode", mode);

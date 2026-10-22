@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "canon": "fuegoleon",
+  "magic": "FLAME",
+  "book": "book_fire",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com): Leo Rugiens, Ignis Columna, Wild Bursting Flame, Exercitus Leonum pages and the Flame Magic spell lists, as shown by search summaries (the wiki host is not reachable from the build machine).",
+    "ja_search": "Japanese pages found by search: the official Magic Knight file on shonenjump.com (he was fatally wounded by the Eye of the Midnight Sun, was chosen by the fire spirit Salamander and has a flaming right arm), manga-tantei and pixiv encyclopedia spell lists (Sol Linea, Leo Rugiens, Ignis Columna, Leo Palma).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells.md."
+  },
+  "spells": [
+    { "page": "sol_linea", "name": "Flame Creation Magic: Sol Linea", "ja": "小太陽光芒 (ソル・リーネア)", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A small sun of concentrated flame shot as an intense beam. His opening spell." },
+    { "page": "ignis_columna", "name": "Flame Magic: Ignis Columna", "ja": "螺旋火炎 (イグニス・コルムナ)", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.15 }, "note": "A defensive pillar of spiralling flame around the user." },
+    { "page": "leo_rugiens", "name": "Flame Creation Magic: Leo Rugiens", "ja": "大火炎獅子の咆哮 (レオ・ルゼーナス)", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.3 }, "note": "A huge flame lion that breathes fire. Also open to Leopold's grimoire through the old lock line." },
+    { "page": "leo_parma", "name": "Flame Creation Magic: Leo Palma (Hand of the Flame Lion)", "ja": "大火炎獅子の掌 (レオ・パルマ)", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "leo_rugiens" }, { "type": "mastery", "min": 0.4 } ] },
+      "note": "Flames in the form of a lion's paw that bind the opponent. Follows the lion." },
+    { "page": "salamanders_breath", "name": "Flame Spirit Magic: Salamander's Breath", "ja": "サラマンダーの吐息", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "flag", "name": "spirit_bond" }, { "type": "mastery", "min": 0.5 } ] },
+      "note": "Only after Salamander has chosen him (the flaming arm): the spirit's breath turned into a huge flame." }
+  ],
+  "planned": [
+    { "name": "Exercitus Leonum", "ja": "", "origin": "anime", "source": "en_wiki", "note": "A wiki page of that name appeared in the Fuegoleon search; the user and effect were not confirmed, so no page." },
+    { "name": "Spirit Dive with Salamander", "ja": "", "origin": "anime", "source": "ja_search", "note": "The Fire book's Spirit Dive page (universal), with the flaming arm drawn by the Spirit Dive lane; nothing to add here." }
+  ],
+  "notes": "Mode 0 of the Fire book (Exploding Fireball) is the book's default page and cannot be hidden, so it stays in his grimoire although the sources do not name it. Not in his grimoire (kept in the basic Fire book): Calderos, Spiral Flame, Wild Bursting Flame (possibly a Vermillion spell, not confirmed for him), Calidos Brachium (Mereoleona's, still locked to her), Crimson Lion King, Flame Armour and Phoenix Flare."
+}

@@ -46,7 +46,8 @@ public class DarkBook extends GrimoireBook {
             BookPage.signature("black_hole_collapse", "Black Hole Collapse", DarkArts::blackHoleCollapse).withCooldown(1200));
 
     public DarkBook() { super(MagicType.DARK, 0xFF5B3A8A); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withCharacters;      // character spell sets: the pages that belong to one character are appended after the shared pages (book.CharacterPages)
+    @Override protected List<BookPage> familyPages() { if (withCharacters == null) withCharacters = CharacterPages.dark(pages); return withCharacters; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.DARKNESS_ELEMENTAL; }
 
     /** A 4.5-block arc that cuts deeper than armor expects (+25%). */
