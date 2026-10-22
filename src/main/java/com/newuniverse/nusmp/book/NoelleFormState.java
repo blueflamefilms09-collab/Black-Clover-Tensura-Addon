@@ -52,6 +52,24 @@ public final class NoelleFormState {
         return f.ordinal() >= Form.MERMAID.ordinal() ? f : null;
     }
 
+    /** The form of the Water armour the player wears, the Valkyrie Dress included (null: Scale Mail, another magic's armour or nothing). */
+    public static Form wornAny(ServerPlayer p) {
+        ArmourRules.Held h = ArmourState.held(p);
+        if (h == null || h.form() || !"WATER".equals(h.magic())) return null;
+        Form f = NoelleFormRules.form(h.style());
+        return f.ordinal() >= Form.VALKYRIE.ordinal() ? f : null;
+    }
+
+    private static final com.newuniverse.nusmp.particle.fx.ThemeKey[] THEMES = {null, com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.valkyrie"),
+            com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.mermaid"), com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.dragon"),
+            com.newuniverse.nusmp.particle.fx.ThemeKey.of("form.noelle.black_dragon")};
+
+    /** Once a second: four motes of the form's theme round the wearer (the facade thins them by the particle budgets, the quality and the distance). */
+    private static void ambient(ServerPlayer p, Form f) {
+        com.newuniverse.nusmp.particle.fx.ThemeKey k = THEMES[f.ordinal()];
+        if (k != null) com.newuniverse.nusmp.particle.fx.Fx.send(p.serverLevel(), k, p.getX(), p.getY() + 1.0, p.getZ(), NoelleFormRules.AMBIENT_MOTES, 0.6);
+    }
+
     // ------------------------------------------------------------------ entering
     /** Black Dragon Form: refused (true, with a message) during its own exhaustion, during Devil Union and during the aftermath of a broken union. */
     public static boolean refuseBlackDragon(ServerPlayer p) {
@@ -70,6 +88,9 @@ public final class NoelleFormState {
     private static void tick(ServerPlayer p) {
         CompoundTag t = p.getPersistentData();
         if (!t.contains(ArmourState.KEY, 10) || p.tickCount % 20 != 3) return;                      // nearly everyone stops here: no armour, or not this tick of the second
+        Form any = wornAny(p);
+        if (any == null) return;
+        ambient(p, any);                                                                             // a few motes of the form's particles, through the particle budgets
         Form f = worn(p);
         if (f == null) return;
         long now = p.level().getGameTime(), since = t.getCompound(ArmourState.KEY).getLong("T");

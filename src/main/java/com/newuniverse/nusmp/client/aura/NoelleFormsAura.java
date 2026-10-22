@@ -55,9 +55,9 @@ public final class NoelleFormsAura {
             Piece.of("greave_r", Anchor.LEG_R, 6, -3, 14, -6),
             Piece.of("greave_l", Anchor.LEG_L, 7, 3, 14, -6),
             Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).head(),
-            Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().glass(),
+            Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().unfold().glass(),
             Piece.of("halo", Anchor.HEAD, 10, 0, -16, 0).clip("idle", 1f).glass().detail().head(),
-            Piece.of("wings2", Anchor.BODY, 9, 0, 4, 14).clip("idle", 1f).flap().glass().character(),
+            Piece.of("wings2", Anchor.BODY, 9, 0, 4, 14).clip("idle", 1f).flap().unfold().glass().character(),
             Piece.of("aureole", Anchor.BODY, 12, 0, 0, 18).clip("idle", 1f).glass().detail().character(),
             Piece.of("sash", Anchor.BODY, 6, 0, 6, -8).clip("idle", 1f).glass().detail().character(),
             Piece.of("lance", Anchor.BODY, 11, -14, 0, -4).clip("idle", 1f).glass().detail().character());
@@ -73,7 +73,7 @@ public final class NoelleFormsAura {
             Piece.of("crown", Anchor.HEAD, 0, 0, -16, 0).glass().head(),
             Piece.of("hair", Anchor.HEAD, 2, 0, -8, 6).clip("idle", 1f).glass().head(),
             Piece.of("trident", Anchor.BODY, 8, -14, 0, -4).clip("idle", 1f).glass().detail(),
-            Piece.of("dorsal", Anchor.BODY, 9, 0, 0, 14).clip("idle", 1f).glass().character(),
+            Piece.of("dorsal", Anchor.BODY, 9, 0, 0, 14).clip("idle", 1f).glass().unfold().character(),
             Piece.of("scarf", Anchor.BODY, 7, 0, -4, 10).clip("idle", 1f).glass().detail().character(),
             Piece.of("coral", Anchor.HEAD, 10, 0, -14, 0).clip("idle", 1f).glass().detail().head().character());
     private static final NoelleFormRig.Set DRG = dragonSet("ndg"), BLK = dragonSet("nbk");
@@ -90,12 +90,12 @@ public final class NoelleFormsAura {
                 Piece.of("greave_r", Anchor.LEG_R, 6, -3, 14, -6),
                 Piece.of("greave_l", Anchor.LEG_L, 7, 3, 14, -6),
                 Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).head(),
-                Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().glass(),
+                Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().unfold().glass(),
                 Piece.of("tail", Anchor.BODY, 9, 0, 8, 14).clip("idle", 1f).glass(),
                 Piece.of("cannon_r", Anchor.ARM_R, 11, -10, 6, -6).clip("idle", 1f),
                 Piece.of("ridge", Anchor.BODY, 10, 0, -6, 10).clip("idle", 1f).glass().detail().character(),
                 Piece.of("horns2", Anchor.HEAD, 10, 0, -14, 0).detail().head().character(),
-                Piece.of("wings2", Anchor.BODY, 11, 0, 4, 14).clip("idle", 1f).flap().glass().character(),
+                Piece.of("wings2", Anchor.BODY, 11, 0, 4, 14).clip("idle", 1f).flap().unfold().glass().character(),
                 Piece.of("cannon_l", Anchor.ARM_L, 12, 10, 6, -6).clip("idle", 1f).detail().character());
     }
 
@@ -343,7 +343,7 @@ public final class NoelleFormsAura {
         VertexConsumer vc = c.buffers().getBuffer(AuraRender.additive(EYE));
         int col = SealDraw.argb(0.95f * e * pulse, f == Form.BLACK_DRAGON ? 0xFF2A2A : 0x9CF8FF);
         for (int side = -1; side <= 1; side += 2) {
-            SealDraw.plane(pose, vc, side * 0.135f, -0.272f, -0.272f, 0.115f, 0f, 0f, 0f, 0.058f, 0f, true, col, FB);
+            SealDraw.plane(pose, vc, side * 0.150f, -0.222f, -0.268f, 0.115f, 0f, 0f, 0f, 0.058f, 0f, true, col, FB);
         }
         pose.popPose();
     }

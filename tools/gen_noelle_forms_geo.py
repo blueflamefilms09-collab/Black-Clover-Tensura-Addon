@@ -11,9 +11,21 @@ import importlib
 import os
 import sys
 
+import numpy as np
+from PIL import Image
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 FORMS = {"val": "gen_noelle_forms_val", "mer": "gen_noelle_forms_mer", "drg": "gen_noelle_forms_drg", "blk": "gen_noelle_forms_blk"}
+
+
+def clean_glow(model_id):
+    """Zero the colour under every fully transparent texel of the model's glow map (docs/vfx_square_bug.md: nothing the additive passes draw may carry colour under alpha 0)."""
+    from geo_builder import ROOT
+    path = os.path.join(ROOT, "textures", "entity", model_id + "_glow.png")
+    a = np.array(Image.open(path).convert("RGBA"))
+    a[a[..., 3] == 0, :3] = 0
+    Image.fromarray(a, "RGBA").save(path)
 
 
 def main(argv):
@@ -27,6 +39,7 @@ def main(argv):
         cubes = sum(m.cube_count() for m in made)
         print("== %s: %d models, %d cubes" % (f, len(made), cubes))
         for m in made:
+            clean_glow(m.id)
             print("   %-24s cubes %3d" % (m.id, m.cube_count()))
         total += cubes
     print("total cubes", total)

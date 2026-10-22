@@ -45,32 +45,34 @@ def crown():
         p.bone("ear_" + t, (sx * 4.2, 28.4, 0.0), rotation=(0, sx * 24, sx * 14))
         p.box("ear_" + t, (sx * 4.2 - 0.3, 25.4, -0.8), (0.6, 8.0, 10.0), um.fin_mat("ear", seed=2, W=10.0, H=8.0), d=4)
         p.box("ear_" + t, (sx * 4.3 - 0.45, 27.2, -1.4), (0.9, 2.6, 1.8), SHELL[1], d=4)
-        for k in range(3):
-            p.box("root", (sx * (2.4 + k * 0.9) - 0.4, 30.4, -3.0 + k * 1.8), (0.8, 2.2 + k * 0.5, 0.8), CORAL, rot=(0, 0, sx * -14), pivot=(sx * (2.4 + k * 0.9), 30.4, -3.0 + k * 1.8))
+        for k in range(2):                                                                                                        # pearls strung along the circlet
+            p.box("root", (sx * (2.8 + k * 1.6) - 0.6, 30.2, -4.9), (1.2, 1.2, 1.2), PEARL)
     p.save()
     return p
 
 
 def hair():
-    """Noelle's twin tails: a long wavy lock hangs from each side of the head, nine segments, each waving with a lag; a pearl tie at the root; the tips thin and glow."""
+    """Noelle's twin tails: from each side of the head two interleaved strands of long wavy hair fall past the shoulders to the hips (nine segments, each waving with a lag), a pearl tie at the
+    root, the tips thinning and glowing."""
     p = P("hair", 2)
     a = Anim()
     a.clip("idle", length=3.4, loop=True)
-    lock = []
     for sx, tag in ((1, "l"), (-1, "r")):
-        prev, y = "root", 31.0
-        px = sx * 5.2
-        p.box("root", (px - 1.4, 29.4, -0.4), (2.8, 2.8, 2.8), PEARL)                                                              # the tie
-        for i in range(9):
-            n = "%s%d" % (tag, i)
-            rz = sx * (14.0 if i == 0 else 9.0 * math.cos(0.9 * i + (sx > 0)))
-            p.bone(n, (px, y, 1.0), parent=prev, rotation=(0, 0, rz))
-            w = 5.2 - 0.30 * i
-            p.box(n, (px - w / 2, y - 5.6, 0.2), (w, 5.8, 1.8), HAIR[(i + (3 if sx > 0 else 0)) % 12], d=2)
-            sine_rot(a, "idle", n, 3.4, 2, 5.0 + 0.5 * i, phase=0.06 * i + (0.0 if sx > 0 else 0.35))
-            sine_rot(a, "idle", n, 3.4, 0, 3.0 + 0.3 * i, phase=0.08 * i + 0.25)
-            prev, y = n, y - 5.2
-            lock.append(n)
+        px = sx * 5.4
+        p.box("root", (px - 1.5, 29.2, -0.2), (3.0, 3.0, 3.0), PEARL)                                                              # the tie
+        for strand in range(2):
+            prev, y = "root", 31.0
+            ox = sx * (0.0 if strand == 0 else 1.6)
+            zz = 0.6 + 1.6 * strand
+            for i in range(9):
+                n = "%s%d_%d" % (tag, strand, i)
+                rz = sx * ((12.0 if strand == 0 else 20.0) if i == 0 else 8.0 * math.cos(0.9 * i + (sx > 0) + strand))
+                p.bone(n, (px + ox, y, zz), parent=prev, rotation=(0, 0, rz))
+                w = (4.4 if strand == 0 else 3.0) - 0.26 * i
+                p.box(n, (px + ox - w / 2, y - 5.6, zz - 0.6), (w, 5.8, 1.6), HAIR[(i + strand * 5 + (3 if sx > 0 else 0)) % 12], d=2)
+                sine_rot(a, "idle", n, 3.4, 2, 5.0 + 0.5 * i, phase=0.06 * i + 0.18 * strand + (0.0 if sx > 0 else 0.35))
+                sine_rot(a, "idle", n, 3.4, 0, 3.0 + 0.3 * i, phase=0.08 * i + 0.25)
+                prev, y = n, y - 5.2
     p.save(a)
     return p
 
@@ -232,15 +234,18 @@ def scarf():
 
 
 def coral():
-    """A tall crown of coral and pearl above the circlet: five branching spires, two pearls."""
+    """A tiara of shells and pearls above the circlet (the character tier): five scallop shells fanned over the brow, a pearl between each, a gem in the middle."""
     p = P("coral", 3)
     a = Anim()
     a.clip("idle", length=6.0, loop=True)
-    p.bone("c", (0, 31.0, 0))
-    for k, (x, z, h, rz) in enumerate([(0, -4.4, 8.0, 0), (-2.4, -3.6, 6.4, 14), (2.4, -3.6, 6.4, -14), (-3.8, -1.6, 5.2, 22), (3.8, -1.6, 5.2, -22)]):
-        p.box("c", (x - 0.7, 30.6, z - 0.7), (1.4, h, 1.4), CORAL, rot=(0, 0, rz), pivot=(x, 30.6, z))
-        p.box("c", (x - 1.0, 30.6 + h - 1.0, z - 1.0), (2.0, 2.0, 2.0), GEM if k % 2 == 0 else PEARL, rot=(0, 0, rz), pivot=(x, 30.6, z))
-    sine_rot(a, "idle", "c", 6.0, 2, 1.5)
+    p.bone("c", (0, 31.0, -3.0))
+    for k in range(5):
+        ang = -50 + 25 * k
+        h = 5.4 - abs(k - 2) * 0.9
+        p.box("c", (-1.8, 31.4, -4.2), (3.6, h, 1.1), SHELL[k % 4], d=4, rot=(-8, 0, ang), pivot=(0, 31.0, -4.0))
+        p.box("c", (-0.6 + math.sin(math.radians(ang + 12)) * 4.6 * -1, 31.2, -4.5), (1.2, 1.2, 1.2), PEARL)
+    p.box("c", (-1.0, 33.4, -5.0), (2.0, 2.0, 1.2), GEM, rot=(0, 0, 45), pivot=(0, 34.4, -4.6))
+    sine_rot(a, "idle", "c", 6.0, 2, 1.0)
     p.save(a)
     return p
 

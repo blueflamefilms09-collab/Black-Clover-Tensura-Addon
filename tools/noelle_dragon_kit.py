@@ -221,7 +221,7 @@ def wings(pal):
     p = piece(pal, "wings", 2)
     a = Anim()
     a.clip("idle", length=2.6, loop=True)
-    _dragon_wing(pal, p, a, (3.0, 21.0, 3.2), tattered=pal.black, scale=1.0)
+    _dragon_wing(pal, p, a, (3.0, 21.0, 3.2), tattered=pal.black, scale=0.82)
     p.save(a)
     return p
 

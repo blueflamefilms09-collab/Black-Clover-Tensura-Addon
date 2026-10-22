@@ -28,7 +28,7 @@ public final class NoelleFormRig {
         public final String name;
         public final Anchor anchor;
         public final float delay, dx, dy, dz;
-        boolean glass, flap, detail, head, character;
+        boolean glass, flap, detail, head, character, unfold;
         String clip;
         float speed = 1f, glowK = 1f, phase;
 
@@ -48,6 +48,8 @@ public final class NoelleFormRig {
         public Piece head() { this.head = true; return this; }
         /** Only the character tier (Noelle's grimoire) draws it, and only within 32 blocks. */
         public Piece character() { this.character = true; return this; }
+        /** Wings: while the piece forges in it opens out from the spine (its width grows from 30 to 100 percent). */
+        public Piece unfold() { this.unfold = true; return this; }
         public Piece glow(float k) { this.glowK = k; return this; }
         public Piece phase(float seconds) { this.phase = seconds; return this; }
         public boolean isCharacter() { return character; }
@@ -126,6 +128,7 @@ public final class NoelleFormRig {
             if (part.xRot != 0f || part.yRot != 0f || part.zRot != 0f) pose.mulPose(new Quaternionf().rotationZYX(part.zRot, part.yRot, part.xRot));
             pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
             float alpha = EquipAnimation.begin(pose, a, p.dx, p.dy, p.dz);
+            if (p.unfold && a > 0f && a < 1f) pose.scale(0.3f + 0.7f * a, 1f, 1f);
             pose.scale(16f, 16f, 16f);
             if (slim && (p.anchor == Anchor.ARM_R || p.anchor == Anchor.ARM_L)) pose.scale(0.8f, 1f, 1f);
             pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);               // the model is authored in whole-body coordinates: undo the part's rest position

@@ -53,7 +53,7 @@ def _finish(img, g, face, shade=True):
 
 
 # ====================================================================================================================== enamel armour plate
-def enamel(seed, base="EEF5FF", dark="8DA8CE", light="FFFFFF", trim="E6BE5E", trim_d="8A6520", inlay="3F7FDC", glow="9FE8FF", gem=None, wave=0.55, trim_glow=0.40, border=0.085, pearl=0.14):
+def enamel(seed, base="EEF5FF", dark="8DA8CE", light="FFFFFF", trim="E6BE5E", trim_d="8A6520", inlay="3F7FDC", glow="9FE8FF", gem=None, wave=0.55, trim_glow=0.40, border=0.085, pearl=0.07):
     """A pearl-white enamel plate. `gem` = hex colour of a cut gem in the middle of the north face (None = no gem); `wave` the strength of the engraved seigaiha waves; the border is gold."""
     B, D, L, T, TD, IN, GL = col(base), col(dark), col(light), col(trim), col(trim_d), col(inlay), col(glow)
 
@@ -62,7 +62,7 @@ def enamel(seed, base="EEF5FF", dark="8DA8CE", light="FFFFFF", trim="E6BE5E", tr
         u, v, x, y = grid(w, h)
         img, g = blank(w, h)
         n = fbm(rng, w, h, 3, 3) - 0.5
-        lum = np.clip(0.62 + 0.30 * (1 - v) - 0.10 * np.abs(u - 0.5) + n * 0.12, 0, 1)
+        lum = np.clip(0.74 + 0.22 * (1 - v) - 0.07 * np.abs(u - 0.5) + n * 0.08, 0, 1)
         c = np.where((lum < 0.55)[..., None], D + (B - D) * (lum / 0.55)[..., None], B + (L - B) * ((lum - 0.55) / 0.45)[..., None])
         sheen = film(0.35 * u + 0.5 * v + seed * 0.07, sat=0.22, lo=0.48, hi=0.92)
         c = c * (1 - pearl) + sheen * pearl

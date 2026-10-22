@@ -19,21 +19,26 @@ import os
 import sys
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from great_spirits_lib import grid, fbm, smooth, TAU  # noqa: E402
 from water_aura_lib import Mat, shell_texture  # noqa: E402
+from noelle_forms_lib import waterband, dscale, ink  # noqa: E402
 from geo_builder import ROOT  # noqa: E402
 
 OUT = os.path.join(ROOT, "textures", "aura")
 
 
-def save(name, lum, alpha=None, rgb=None):
+def save(name, lum, alpha=None, rgb=None, bloom=0.0):
     """lum 0..1 (h, w); alpha 0..1 (default: lum); rgb optional (h, w, 3) 0..1 (default white * lum). The colour is zeroed where the alpha is 0 and the border is cleared."""
     h, w = lum.shape
     a = lum if alpha is None else alpha
+    if bloom > 0:                                                                            # a soft halo round every line: it reads as light, not as a drawing
+        blur = np.asarray(Image.fromarray((np.clip(lum, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(max(1.0, min(lum.shape) / 64.0))), dtype=np.float32) / 255.0
+        lum = np.clip(np.maximum(lum, blur * bloom * 2.2), 0, 1)
+        a = np.clip(np.maximum(a, blur * bloom * 2.2), 0, 1)
     a = np.clip(a, 0, 1).copy()
     b = max(1, int(min(w, h) * 0.03))
     a[:b, :] = 0
@@ -117,7 +122,7 @@ def sigil_val():
         along = r * np.cos(a - ang)
         star = np.maximum(star, np.clip(1 - d / 0.03, 0, 1) * (along > 0.35) * (along < 0.62) * 0.6)
     lum = np.clip(L + rune + star * 0.8, 0, 1) * smooth(1 - r, 0.0, 0.08)
-    save("noelle_sigil_val", lum)
+    save("noelle_sigil_val", lum, bloom=0.55)
 
 
 def sigil_mer():
@@ -135,7 +140,7 @@ def sigil_mer():
     spiral = np.abs(((r * 5.2 + a / TAU) % 1.0) - 0.5)
     sp = np.clip(1 - spiral / 0.11, 0, 1) * (r < 0.5) * 0.8 * smooth(r, 0.0, 0.1)
     lum = np.clip(L + scal * 0.85 + sp, 0, 1) * smooth(1 - r, 0.0, 0.08)
-    save("noelle_sigil_mer", lum)
+    save("noelle_sigil_mer", lum, bloom=0.55)
 
 
 def sigil_drg():
@@ -157,7 +162,7 @@ def sigil_drg():
         claws = np.maximum(claws, np.clip(1 - d / (0.09 * (1 - along).clip(0.02, 1)), 0, 1) * (along > 0.1) * (along < 1.0))
     coil = np.clip(1 - np.abs(r - (0.28 + 0.07 * np.sin(a * 3))) / 0.025, 0, 1) * 0.8        # a coiled serpent in the middle
     lum = np.clip(L + scale * 0.7 * band + claws * 0.65 + coil, 0, 1) * smooth(1 - r, 0.0, 0.07)
-    save("noelle_sigil_drg", lum)
+    save("noelle_sigil_drg", lum, bloom=0.55)
 
 
 def sigil_blk():
@@ -178,7 +183,7 @@ def sigil_blk():
         cx = sgn * (0.12 + 0.38 * t ** 1.4)
         horn = np.maximum(horn, np.clip(1 - np.abs(px - cx) / (0.05 * (1 - 0.7 * t) + 0.012), 0, 1) * (py > -0.55) * (py < 0.35))
     lum = np.clip(L + th * 0.9 + broken * 0.85 + horn * 0.7, 0, 1) * smooth(1 - r, 0.0, 0.06)
-    save("noelle_sigil_blk", lum)
+    save("noelle_sigil_blk", lum, bloom=0.55)
 
 
 # ---------------------------------------------------------------------------------------------------------------------- small sprites
@@ -214,12 +219,22 @@ def sprites():
 
 
 # ---------------------------------------------------------------------------------------------------------------------- skin overlays
+def clean_glow(name):
+    """Zero the colour under every fully transparent texel of a glow map (the additive passes of the mod ask for it: docs/vfx_square_bug.md)."""
+    path = os.path.join(OUT, name + "_glow.png")
+    a = np.array(Image.open(path).convert("RGBA"))
+    a[a[..., 3] == 0, :3] = 0
+    Image.fromarray(a, "RGBA").save(path)
+
+
 def shells():
-    shell_texture("noelle_val_shell", Mat("water", "5CB0F0", dark="2A70D0", light="F0FCFF", glow="B4F4FF", glow_amount=0.8, alpha=120, seed=61))
-    shell_texture("noelle_mer_shell", Mat("water", "4CC4E8", dark="1E88C8", light="E8FEFF", glow="9CF8FF", glow_amount=0.9, alpha=135, seed=62))
-    shell_texture("noelle_drg_shell", Mat("scales", "2A6CB8", dark="0A2450", light="7CC8F0", glow="46E4FF", glow_amount=0.8, alpha=170, cells=5, seed=63))
-    shell_texture("noelle_blk_shell", Mat("wisp", "0A0E18", dark="020308", light="1C2A48", glow="2C7CFF", glow_amount=0.95, alpha=185, seed=64))
-    shell_texture("noelle_haze", Mat("water", "9CD8FF", dark="5CA8F0", light="FFFFFF", glow="E8FCFF", glow_amount=1.0, alpha=255, seed=65))
+    shell_texture("noelle_val_shell", waterband(61, alpha=125, c0="6CB8F4", c1="F0FCFF", glow="B4F4FF", streaks=0.8))
+    shell_texture("noelle_mer_shell", waterband(62, alpha=140, c0="48C8E8", c1="E8FEFF", glow="9CF8FF", streaks=1.0))
+    shell_texture("noelle_drg_shell", dscale(63, base="2A6CB8", dark="0A2450", light="7CC8F0", seam="46E4FF", cell=8.0, glow_k=0.6, alpha=165))
+    shell_texture("noelle_blk_shell", ink(64, base="0A0E18", dark="020308", light="1C2A48", flame="2C7CFF", flame2="5CA0FF", glow_k=0.8, alpha=185))
+    shell_texture("noelle_haze", waterband(65, alpha=255, c0="9CD8FF", c1="FFFFFF", glow="E8FCFF", streaks=0.6))
+    for n in ("noelle_val_shell", "noelle_mer_shell", "noelle_drg_shell", "noelle_blk_shell", "noelle_haze"):
+        clean_glow(n)
 
 
 def main():

@@ -194,6 +194,9 @@ public final class NoelleFormRules {
 
     public static double entryRadius(Form f) { return f == Form.SEA_DRAGON ? 6.0 : f == Form.BLACK_DRAGON ? 8.0 : 0.0; }
 
+    /** Motes of the form's particle theme sent round the wearer once a second (server side; the particle facade thins them further). */
+    public static final int AMBIENT_MOTES = 4;
+
     /** Most foes one entry shockwave may hit (a bound on the work of one cast). */
     public static final int ENTRY_MAX_TARGETS = 24;
 }
