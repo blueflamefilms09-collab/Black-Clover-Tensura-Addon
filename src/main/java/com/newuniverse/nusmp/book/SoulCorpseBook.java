@@ -183,7 +183,10 @@ public final class SoulCorpseBook extends ElementBook {
     }
 
     private static boolean marionette(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        raise(b, i, p, mode, 1, SongRebuildKit.span(500, p));
+        if (raise(b, i, p, mode, 1, SongRebuildKit.span(500, p)) <= 0) {          // nothing stood up: say why instead of a silent cast (and no cooldown)
+            GrimoireBook.fail(p, com.newuniverse.nusmp.corpse.SoulZombies.refusal(p.getUUID()));
+            return false;
+        }
         b.castCircle(p, 1.2f);
         VfxSpawn.send(p.serverLevel(), VfxShape.SOUL_CORPSE_FX3, p.position(), p.position().add(0, 1, 0), VIOLET, 20, 0.8f);
         return true;
@@ -212,11 +215,15 @@ public final class SoulCorpseBook extends ElementBook {
     }
 
     private static boolean legion(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        raise(b, i, p, mode, SoulCorpseRules.PUPPET_CAP, SongRebuildKit.span(400, p));
-        int n = 0;
+        int risen = raise(b, i, p, mode, SoulCorpseRules.PUPPET_CAP, SongRebuildKit.span(400, p));
+        int n = 0, hands = 0;
         for (LivingEntity t : GrimoireBook.around(p, p.position(), 8 * GrimoireBook.size(i, p))) {
             if (n++ >= 6) break;
-            SongRebuildKit.spawn(p, PropKind.SOUL_CORPSE_2, t.position(), p.getYRot(), 0.9f, 60, 0, b, i, mode);
+            if (SongRebuildKit.spawn(p, PropKind.SOUL_CORPSE_2, t.position(), p.getYRot(), 0.9f, 60, 0, b, i, mode) != null) hands++;
+        }
+        if (risen <= 0 && hands <= 0) {                                              // neither the legion nor a single hand: say why instead of a silent cast (and no cooldown)
+            GrimoireBook.fail(p, com.newuniverse.nusmp.corpse.SoulZombies.refusal(p.getUUID()));
+            return false;
         }
         b.castCircle(p, 1.5f);
         VfxSpawn.send(p.serverLevel(), VfxShape.SOUL_CORPSE_FX3, p.position(), p.position().add(0, 1, 0), VIOLET, 36, 1.6f);
