@@ -14,5 +14,6 @@ public final class CompassProps {
         MagicProps.register(PropKind.COMPASS_1, com.newuniverse.nusmp.compass3d.CompassKit.MAIN_BEHAVIOR);
         MagicProps.register(PropKind.COMPASS_2, com.newuniverse.nusmp.compass3d.CompassKit.SPELL_BEHAVIOR);
         com.newuniverse.nusmp.compass3d.CompassSelfTests.register();      // the CI server smoke test runs magic.compass_3d
+        com.newuniverse.nusmp.compass3d.CompassKit.register();            // 1.112.0: the per-caster tables are dropped on log out and server stop
     }
 }

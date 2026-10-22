@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.particle.fx.FxRelic;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
+import com.newuniverse.nusmp.relics.Relics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +29,9 @@ final class Wave101Events {
 
     static final String SOUL = "nusmp_w101_soul", FORESIGHT = "nusmp_w101_foresight";
 
+    /** 1.112.0 (lag audit): the cost of this wave's two handlers (off by default: a flag read). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE = com.newuniverse.nusmp.perf.PerfProbe.section("s.relic.w101");
+
     static void register() {
         NeoForge.EVENT_BUS.addListener(Wave101Events::onIncoming);
         NeoForge.EVENT_BUS.addListener(Wave101Events::onPlayerTick);
@@ -35,8 +39,26 @@ final class Wave101Events {
     }
 
     // ================================================================ damage
+    /** The flag key of each weapon with a rule, built once ("w101_" + id was a string concatenation on every swing of such a weapon). */
+    private static final java.util.Map<String, String> FLAGS = new java.util.HashMap<>();
+
+    static {
+        for (String id : Wave101Passives.RULES.keySet()) FLAGS.put(id, "w101_" + id);
+    }
+
     static void onIncoming(LivingIncomingDamageEvent e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onIncoming0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE, t0);
+        }
+    }
+
+    private static void onIncoming0(LivingIncomingDamageEvent e) {
         LivingEntity victim = e.getEntity();
+        // 1.112.0 (lag audit): this listener sees every hit of every mob in the world; only a hit that involves a player is worth a guard and a closure
+        if (!(victim instanceof ServerPlayer) && !(e.getSource().getEntity() instanceof ServerPlayer)) return;
         if (victim.level().isClientSide()) return;
         SafeCast.tick("relic.w101.events", () -> {
             if (victim instanceof ServerPlayer p) wearer(e, p);
@@ -47,6 +69,7 @@ final class Wave101Events {
 
     /** The wearer takes a blow: the Necklace foresees it, and the Puzzle's second soul takes the deadly one. */
     private static void wearer(LivingIncomingDamageEvent e, ServerPlayer p) {
+        if (Relics.loadout(p).flags().isEmpty()) return;                                          // no relic with a flag works for this player: neither the Necklace nor the Puzzle
         long now = p.level().getGameTime();
         CompoundTag data = p.getPersistentData();
         if (RelicFlags.has(p, "w101_necklace") && now >= data.getLong(FORESIGHT) && e.getAmount() >= Wave101Rules.FORESIGHT_MIN) {
@@ -76,7 +99,7 @@ final class Wave101Events {
         if (marks > 0.0) e.setAmount((float) (e.getAmount() * (1.0 + marks)));
         String id = Wave20Util.heldId(atk);
         Wave71Rules.Rule rule = Wave101Passives.RULES.get(id);
-        if (rule == null || !RelicFlags.has(atk, "w101_" + id)) return;
+        if (rule == null || !RelicFlags.has(atk, FLAGS.get(id))) return;
         boolean melee = src.getDirectEntity() == atk && !src.is(DamageTypeTags.IS_PROJECTILE);
         if (!melee) return;
         Wave71Rules.Facts f = Wave71Events.facts(atk, victim, atk.serverLevel());
@@ -90,8 +113,22 @@ final class Wave101Events {
 
     // ================================================================ the player tick
     private static void onPlayerTick(PlayerTickEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPlayerTick0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE, t0);
+        }
+    }
+
+    private static void onPlayerTick0(PlayerTickEvent.Post e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || !p.isAlive() || p.isSpectator()) return;
         if ((p.tickCount + p.getId()) % 20 != 0) return;
+        // 1.112.0 (lag audit): a player with nothing that works for them costs the cached loadout look and nothing else (no closure, no guard, no set count)
+        if (Relics.loadout(p).active().isEmpty()) {
+            if (p.tickCount % 200 < 20) Wave101Marks.purge(p.level().getGameTime());
+            return;
+        }
         SafeCast.tick("relic.w101.tick", () -> {
             Wave101Set.tick(p);
             if (RelicFlags.has(p, "w101_key")) Wave101Acts.clearMind(p);

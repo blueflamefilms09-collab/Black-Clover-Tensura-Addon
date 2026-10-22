@@ -22,6 +22,7 @@ public final class PerfSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("perf.core", PerfSelfTests::core);
+        LagAudit1SelfTests.register();                                    // 1.112.0: perf.lag_audit_1 (docs/perf/lag_audit_1.md)
     }
 
     private static SelfTests.Result core(MinecraftServer server) {

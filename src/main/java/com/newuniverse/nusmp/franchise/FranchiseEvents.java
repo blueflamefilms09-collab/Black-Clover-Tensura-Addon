@@ -56,9 +56,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class FranchiseEvents {
     private FranchiseEvents() {}
 
-    /** One effect of one engraving the player has right now, with the engraving's level. */
-    record Active(Engraving eng, Effect fx, int level) {
-        String key() { return eng.id() + ":" + fx.kind(); }
+    /**
+     * One effect of one engraving the player has right now, with the engraving's level. 1.112.0 (lag audit): the cooldown key is built once, when the record is made (it was a string
+     * concatenation on every {@code key()} call, several per hit), and the lists of these are kept per player ({@link State#cache}).
+     */
+    record Active(Engraving eng, Effect fx, int level, String key) {
+        Active(Engraving eng, Effect fx, int level) { this(eng, fx, level, eng.id() + ":" + fx.kind()); }
     }
 
     /** The per-player state. */
@@ -69,6 +72,10 @@ public final class FranchiseEvents {
         double refunded;
         final Map<UUID, Long> struck = new LinkedHashMap<>();
         Map<String, Integer> worn = Map.of();
+        /** 1.112.0: the {@link Active} list for the last (main hand, off hand, worn) it was worked out for; reused while the three are the very same objects (an enchantment component is replaced, never changed in place). */
+        ItemEnchantments cacheMain, cacheOff;
+        Map<String, Integer> cacheWorn;
+        List<Active> cache;
     }
 
     private static final Map<UUID, State> STATES = new ConcurrentHashMap<>();
@@ -89,11 +96,12 @@ public final class FranchiseEvents {
         };
     }
 
-    /** Adds the engravings of one stack to {id -> level}; rank 0 main hand, 1 off hand, 2 worn. */
-    private static void add(Map<String, Integer> out, ItemStack s, int rank) {
-        if (s.isEmpty()) return;
-        ItemEnchantments ench = s.getEnchantments();
-        if (ench.isEmpty()) return;
+    /**
+     * Adds the engravings of one stack's enchantments to {id -> level}; rank 0 main hand, 1 off hand, 2 worn. Returns the map (made on the first engraving found, so a player with none
+     * costs no allocation).
+     */
+    private static Map<String, Integer> add(Map<String, Integer> out, ItemEnchantments ench, int rank) {
+        if (ench.isEmpty()) return out;
         for (Object2IntMap.Entry<Holder<Enchantment>> en : ench.entrySet()) {
             Optional<ResourceKey<Enchantment>> k = en.getKey().unwrapKey();
             if (k.isEmpty()) continue;
@@ -101,34 +109,56 @@ public final class FranchiseEvents {
             if (!"nusmp".equals(id.getNamespace()) || !id.getPath().startsWith("fr_")) continue;
             Engraving e = FranchiseData.engraving(id.getPath());
             if (e == null || !scopeAllows(e.scope(), rank)) continue;
+            if (out == null) out = new LinkedHashMap<>(4);
             out.merge(id.getPath(), Math.max(1, Math.min(FranchiseRules.MAX_LEVEL, en.getIntValue())), Math::max);
-        }
-    }
-
-    private static List<Active> actives(ServerPlayer p, State st) {
-        Map<String, Integer> lv = new LinkedHashMap<>();
-        add(lv, p.getMainHandItem(), 0);
-        add(lv, p.getOffhandItem(), 1);
-        if (st != null) for (Map.Entry<String, Integer> w : st.worn.entrySet()) lv.merge(w.getKey(), w.getValue(), Math::max);
-        if (lv.isEmpty()) return List.of();
-        List<Active> out = new ArrayList<>(4);
-        for (Map.Entry<String, Integer> en : lv.entrySet()) {
-            Engraving e = FranchiseData.engraving(en.getKey());
-            if (e != null) for (Effect fx : e.effects()) out.add(new Active(e, fx, en.getValue()));
         }
         return out;
     }
 
-    /** Armour and Curios, re-read once a second. */
+    /**
+     * The effects the player has right now. 1.112.0 (lag audit): this runs on every hit a player gives or takes; it used to rebuild a map, a list and a string key per effect each time. Now a
+     * player with no engraving in hand and none worn costs two component reads, and everyone else gets the list kept in their state until a hand item's enchantments or the worn set change.
+     */
+    private static List<Active> actives(ServerPlayer p, State st) {
+        ItemEnchantments main = p.getMainHandItem().getEnchantments(), off = p.getOffhandItem().getEnchantments();
+        Map<String, Integer> worn = st == null ? Map.of() : st.worn;
+        if (main.isEmpty() && off.isEmpty() && worn.isEmpty()) return List.of();
+        if (st != null && st.cache != null && st.cacheMain == main && st.cacheOff == off && st.cacheWorn == worn) return st.cache;
+        Map<String, Integer> lv = add(add(null, main, 0), off, 1);
+        if (!worn.isEmpty()) {
+            if (lv == null) lv = new LinkedHashMap<>(worn);
+            else for (Map.Entry<String, Integer> w : worn.entrySet()) lv.merge(w.getKey(), w.getValue(), Math::max);
+        }
+        List<Active> out;
+        if (lv == null) {
+            out = List.of();
+        } else {
+            out = new ArrayList<>(4);
+            for (Map.Entry<String, Integer> en : lv.entrySet()) {
+                Engraving e = FranchiseData.engraving(en.getKey());
+                if (e != null) for (Effect fx : e.effects()) out.add(new Active(e, fx, en.getValue()));
+            }
+        }
+        if (st != null) {
+            st.cacheMain = main;
+            st.cacheOff = off;
+            st.cacheWorn = worn;
+            st.cache = out;
+        }
+        return out;
+    }
+
+    /** Armour and Curios, re-read once a second (the Curios read is shared with the other once-a-second passes: {@link com.newuniverse.nusmp.item.CuriosLink#equippedCached}). */
     private static Map<String, Integer> readWorn(ServerPlayer p) {
-        Map<String, Integer> lv = new LinkedHashMap<>();
-        for (ItemStack s : p.getArmorSlots()) add(lv, s, 2);
+        Map<String, Integer> lv = null;
+        for (ItemStack s : p.getArmorSlots()) lv = add(lv, s.getEnchantments(), 2);
         try {
-            if (com.newuniverse.nusmp.item.CuriosLink.available()) for (ItemStack s : com.newuniverse.nusmp.item.CuriosLink.equipped(p)) add(lv, s, 2);
+            if (com.newuniverse.nusmp.item.CuriosLink.available())
+                for (ItemStack s : com.newuniverse.nusmp.item.CuriosLink.equippedCached(p, 5)) lv = add(lv, s.getEnchantments(), 2);
         } catch (RuntimeException | LinkageError failed) {
             // Curios is optional: armour and hands still count
         }
-        return lv.isEmpty() ? Map.of() : lv;
+        return lv == null ? Map.of() : lv;
     }
 
     // ---------------------------------------------------------------- helpers
@@ -168,14 +198,26 @@ public final class FranchiseEvents {
     }
 
     // ---------------------------------------------------------------- damage
+    /** 1.112.0 (lag audit): the cost of the two damage handlers, one section (off by default: a flag read; {@code /multiverse perf on}). */
+    private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_HIT = com.newuniverse.nusmp.perf.PerfProbe.section("s.franchise.hit");
+
     public static void onIncoming(LivingIncomingDamageEvent e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onIncoming0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_HIT, t0);
+        }
+    }
+
+    private static void onIncoming0(LivingIncomingDamageEvent e) {
         if (!FranchiseConfig.enabled()) return;
         LivingEntity victim = e.getEntity();
-        if (victim.level().isClientSide()) return;
         DamageSource src = e.getSource();
-        if (src.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || e.getAmount() <= 0f) return;
-        boolean attackerIsPlayer = src.getEntity() instanceof ServerPlayer;
+        boolean attackerIsPlayer = src.getEntity() instanceof ServerPlayer;                 // 1.112.0 (lag audit): this listener sees every hit of every mob; the cheap "no player involved" exit comes first
         if (!(victim instanceof ServerPlayer) && !attackerIsPlayer) return;
+        if (victim.level().isClientSide()) return;
+        if (e.getAmount() <= 0f || src.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         long now = victim.level().getGameTime();
         if (victim instanceof ServerPlayer vp && defend(vp, src, e, now)) return;
         if (src.getEntity() instanceof ServerPlayer ap && ap != victim) attack(ap, victim, src, e, now);
@@ -310,6 +352,15 @@ public final class FranchiseEvents {
 
     /** After the damage landed: lifesteal, debuffs, the memory of who was struck, the armed counter and the second wind. */
     public static void onPost(LivingDamageEvent.Post e) {
+        long t0 = com.newuniverse.nusmp.perf.PerfProbe.begin();
+        try {
+            onPost0(e);
+        } finally {
+            com.newuniverse.nusmp.perf.PerfProbe.end(PROBE_HIT, t0);
+        }
+    }
+
+    private static void onPost0(LivingDamageEvent.Post e) {
         if (!FranchiseConfig.enabled()) return;
         LivingEntity victim = e.getEntity();
         if (victim.level().isClientSide() || e.getNewDamage() <= 0f) return;
@@ -465,10 +516,12 @@ public final class FranchiseEvents {
             if (worn.isEmpty() && !hasHandEngraving(p)) return;
             st = state(p);
         }
-        st.worn = worn;
+        if (!worn.equals(st.worn)) st.worn = worn;                                                 // 1.112.0: the same map object while nothing changed, so the kept list below stays valid
         long now = p.level().getGameTime();
         if (st.killStacks > 0 && FranchiseRules.stacksLeft(st.killStacks, st.lastKill, now, 2400) == 0) st.killStacks = 0;
         List<Active> act = actives(p, st);
+        double auraRadius = 0.0;
+        int auraDur = 0;
         for (Active a : act) {
             Effect fx = a.fx();
             if (fx.kind().equals("mana_trickle") && ready(st, a.key(), now)) {
@@ -476,35 +529,46 @@ public final class FranchiseEvents {
                 FranchiseMana.refund(p, FranchiseRules.trickle(FranchiseMana.max(p), fx.d("pct", 0), a.level()));
             } else if (fx.kind().equals("ally_regen") && FranchiseConfig.aura() && ready(st, a.key(), now)) {
                 arm(st, a.key(), now, fx.i("interval", 40));
-                regenAround(p, fx);
+                auraRadius = Math.max(auraRadius, Math.max(2.0, Math.min(12.0, fx.d("radius", 8))));          // 1.112.0: several ally auras of one player ask for ONE scan (the widest radius, the longest refresh)
+                auraDur = Math.max(auraDur, FranchiseRules.regenDuration(fx.i("dur", 80)));
             }
         }
+        if (auraRadius > 0.0) regenAround(p, auraRadius, auraDur);
     }
 
+    /** True if a hand item carries a franchise engraving (no allocation unless one is found). */
     private static boolean hasHandEngraving(ServerPlayer p) {
-        Map<String, Integer> m = new HashMap<>();
-        add(m, p.getMainHandItem(), 0);
-        add(m, p.getOffhandItem(), 1);
-        return !m.isEmpty();
+        return add(add(null, p.getMainHandItem().getEnchantments(), 0), p.getOffhandItem().getEnchantments(), 1) != null;
     }
 
-    private static void regenAround(ServerPlayer p, Effect fx) {
-        double r = Math.max(2.0, Math.min(12.0, fx.d("radius", 8)));
-        int dur = FranchiseRules.regenDuration(fx.i("dur", 80));
+    /** The most players one ally pulse refreshes (a crowd standing in one spot cannot make it cost more). */
+    static final int MAX_AURA_TARGETS = 16;
+
+    private static void regenAround(ServerPlayer p, double r, int dur) {
+        ServerLevel level = p.serverLevel();
+        if (level.players().size() <= 1) return;                                                  // nobody else to find: no scan at all (a single-player world, a quiet dimension)
         AABB box = p.getBoundingBox().inflate(r);
-        for (ServerPlayer o : p.serverLevel().getEntitiesOfClass(ServerPlayer.class, box)) {
+        int n = 0;
+        for (ServerPlayer o : level.getEntitiesOfClass(ServerPlayer.class, box)) {
             if (o == p || !o.isAlive() || o.isSpectator() || o.distanceToSqr(p) > r * r) continue;
             boolean friendly = p.isAlliedTo(o) || (p.getTeam() == null && o.getTeam() == null);
-            if (friendly) quiet(o, MobEffects.REGENERATION, dur, 0);
+            if (!friendly) continue;
+            quiet(o, MobEffects.REGENERATION, dur, 0);
+            if (++n >= MAX_AURA_TARGETS) break;
         }
     }
 
     // ---------------------------------------------------------------- clean-up
-    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { STATES.remove(e.getEntity().getUUID()); }
+    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
+        STATES.remove(e.getEntity().getUUID());
+        com.newuniverse.nusmp.item.CuriosLink.forget(e.getEntity().getUUID());
+    }
 
     public static void onServerStopping(ServerStoppingEvent e) {
         STATES.clear();
         EFFECTS.clear();
+        com.newuniverse.nusmp.item.CuriosLink.clearCaches();
+        FranchiseEngravings.clearCaches();
     }
 
     /** For the self-test: drops the state of a stand-in player. */

@@ -172,16 +172,17 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             ArmorSlotPlan.Verdict v = ArmorSlotPlan.of(it);
             boolean asked = ArmorTrace.takePainted(p.getUUID(), slot);
             boolean tex = RelicTextures.paintedOk(d.id());
-            ArmorVisible.Facts facts = new ArmorVisible.Facts(WornLibDraw.piecesDrawn(d.id()), CUSTOM_RAN.contains(d.id()), asked, tex, d.slot() == RelicSlot.CHEST);
-            ArmorVisible.Outcome o = ArmorVisible.resolve(v, facts);
+            int pieces = WornLibDraw.piecesDrawn(d.id());                                // 1.112.0 (lag audit): the facts as plain values; no record per armour relic per wearer per frame
+            boolean ran = CUSTOM_RAN.contains(d.id());
+            ArmorVisible.Outcome o = ArmorVisible.resolve(v, pieces, ran, asked, tex, d.slot() == RelicSlot.CHEST);
             ArmorTrace.Rec r = ArmorTrace.rec(p.getUUID(), slot);
             r.id = d.id();
             r.slot = slot;
             r.kind = it.kind();
             r.why = it.why();
             r.layer = v.layer();
-            r.modelPieces = facts.modelPieces();
-            r.customRan = facts.customRan();
+            r.modelPieces = pieces;
+            r.customRan = ran;
             r.paintedAsked = asked;
             r.textureOk = tex;
             r.outcome = o;
@@ -198,7 +199,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             }
             if (ArmorTrace.firstWarning(d.id()))
                 LogUtils.getLogger().warn("[nusmp] armour relic {} ({}) was worn but nothing of it was drawn (model pieces {}, own renderer {}, vanilla layer asked {}, painted texture {}; plan {} / {}): its plain painted boxes are drawn instead",
-                        d.id(), slot, facts.modelPieces(), facts.customRan(), asked, tex, it.kind(), it.why());
+                        d.id(), slot, pieces, ran, asked, tex, it.kind(), it.why());
         }
         return rescued;
     }

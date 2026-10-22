@@ -98,6 +98,13 @@ public final class ArmorEngravings {
 
     /** The engravings of one piece: the whole list for the chest piece, two for the leggings, one for the hood and the boots; empty if the item is not of a set. */
     static List<Engraving> forItem(String path) {
+        // 1.112.0 (lag audit): the answer for an item path never changes, and the unlisted case walked every set with string concatenations for every item of every inventory every second
+        return FOR_ITEM.computeIfAbsent(path, ArmorEngravings::forItem0);
+    }
+
+    private static final Map<String, List<Engraving>> FOR_ITEM = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static List<Engraving> forItem0(String path) {
         List<Engraving> all = SETS.get(path);
         if (all != null) return all;
         all = RELICS.get(path);
@@ -118,7 +125,7 @@ public final class ArmorEngravings {
         List<Engraving> list = forItem(key.getPath());
         if (list.isEmpty()) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
-        if (cd != null && cd.copyTag().getBoolean(WeaponEngravings.FLAG)) return false;
+        if (cd != null && cd.contains(WeaponEngravings.FLAG)) return false;                 // 1.112.0 (lag audit): no copy of the tag every second
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         for (Engraving g : list) {
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath("tensura", g.id());

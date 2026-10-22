@@ -16,6 +16,8 @@ public final class PerfBudgets {
     public static final PerfBudget PARTICLES = new PerfBudget("particles", PerfSettings.DEFAULT_MAX_PARTICLES_PER_TICK);
     public static final PerfBudget EFFECT_PACKETS = new PerfBudget("effect-packets", PerfSettings.DEFAULT_MAX_EFFECT_PACKETS_PER_TICK);
     public static final PerfBudget CLIENT_PARTICLES = new PerfBudget("client-particles", PerfSettings.DEFAULT_CLIENT_PARTICLES_PER_TICK);
+    /** 1.112.0 (lag audit): the quads one client frame may spend on 3D compasses, arrow-needles and routes together (the cap follows the effect quality: {@code CompassLod.frameQuads}); keyed by the client frame counter, not the game tick. */
+    public static final PerfBudget COMPASS_QUADS = new PerfBudget("compass-quads", 4000);
 
     /** How many of {@code wanted} server particles may be sent in the tick {@code gameTime} (the count a {@code sendParticles} call should use). */
     public static int particles(long gameTime, int wanted) {
@@ -39,5 +41,6 @@ public final class PerfBudgets {
         PARTICLES.resetStats();
         EFFECT_PACKETS.resetStats();
         CLIENT_PARTICLES.resetStats();
+        COMPASS_QUADS.resetStats();
     }
 }
