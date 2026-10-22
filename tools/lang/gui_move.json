@@ -41,5 +41,6 @@
   "gui_move.element.relic_forge": "Relic forge",
   "gui_move.element.grimoire_slot": "Grimoire slot",
   "gui_move.element.requip_armoury": "Requip Armoury",
+  "gui_move.element.shishou_stomach": "Shishou Stomach",
   "gui_move.panels": "Panels: %s"
 }

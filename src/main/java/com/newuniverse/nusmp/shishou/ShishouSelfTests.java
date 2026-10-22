@@ -35,6 +35,9 @@ public final class ShishouSelfTests {
         SelfTests.register("relic.shishou", ShishouSelfTests::basics);
         SelfTests.register("relic.shishou_claim", ShishouSelfTests::claim);
         SelfTests.register("relic.shishou_skills", ShishouSelfTests::skills);
+        SelfTests.register("relic.shishou_skill_grant", ShishouSelfTests::skillGrant);
+        SelfTests.register("relic.shishou_feed", ShishouSelfTests::feed);
+        SelfTests.register("relic.shishou_hunt", ShishouSelfTests::hunt);
     }
 
     private static boolean exists(String path) {
@@ -134,6 +137,160 @@ public final class ShishouSelfTests {
             for (ServerLevel l : server.getAllLevels()) if (cap.entity() != null && l.getEntity(cap.entity()) instanceof ShishouEntity se) {
                 se.expectRemoval();
                 se.discard();
+            }
+            cap.reset();
+            d.touch();
+            ShishouLive.clearAll();
+        }
+    }
+
+    // ================================================================ relic.shishou_skill_grant: the Tensura Ultimate skill follows the sword
+    private static Result skillGrant(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        ShishouData d = ShishouData.get();
+        ShishouCap cap = d.cap();
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 3, 0);
+        ServerPlayer a = SelfTests.standIn(level, "shishou_g1", at.x, at.y, at.z), b = SelfTests.standIn(level, "shishou_g2", at.x + 1, at.y, at.z);
+        try {
+            // the skill itself: registered, an Ultimate, seven modes with unique ids and names
+            com.newuniverse.nusmp.skill.ShishouUltimateSkill s = com.newuniverse.nusmp.skill.NUSkills.SHISHOU.get();
+            if (s.getType() != io.github.manasmods.tensura.ability.skill.Skill.SkillType.ULTIMATE) return Result.fail("the skill is not an Ultimate");
+            var inst = s.createDefaultInstance();
+            if (s.getModes(inst) != ShishouModes.COUNT) return Result.fail("mode count " + s.getModes(inst));
+            java.util.Set<String> ids = new java.util.HashSet<>();
+            for (int m = 0; m < s.getModes(inst); m++) {
+                if (!ids.add(s.getModeId(inst, m))) return Result.fail("duplicate mode id " + s.getModeId(inst, m));
+                if (s.getModeName(inst, m).getString().isEmpty()) return Result.fail("mode " + m + " has no name");
+            }
+            if (s.nextMode(a, inst, ShishouModes.COUNT - 1, false) != 0 || s.nextMode(a, inst, 0, true) != ShishouModes.COUNT - 1) return Result.fail("the mode key does not wrap");
+            if (!ShishouConfig.enabled() || !ShishouConfig.grantSkill()) return Result.ok("skipped the grant: relic.shishouEnabled or skill.grantUltimateSkill is off (the skill itself is fine)");
+            cap.reset();
+            ShishouLive.clearAll();
+            ShishouGrantService.sync(a);
+            ShishouGrantService.sync(b);
+            if (ShishouGrantService.has(a) || ShishouGrantService.has(b)) return Result.fail("the skill exists with no wielder");
+            cap.adopt(a.getUUID());
+            if (ShishouGrantService.sync(a) != ShishouGrant.Verdict.GRANT || !ShishouGrantService.has(a)) return Result.fail("the wielder was not given the skill");
+            if (ShishouGrantService.sync(b) != ShishouGrant.Verdict.KEEP || ShishouGrantService.has(b)) return Result.fail("a stranger got the skill");
+            if (ShishouGrantService.sync(a) != ShishouGrant.Verdict.KEEP) return Result.fail("a second check changed something");
+            ShishouGrantService.syncAll(server);
+            cap.reset();                                                                         // the sword is nobody's now
+            if (ShishouGrantService.sync(a) != ShishouGrant.Verdict.REVOKE || ShishouGrantService.has(a)) return Result.fail("the skill stayed after the sword left the wielder");
+            return Result.ok("the skill (" + ShishouModes.COUNT + " modes) is granted to the wielder only, kept on a second check and revoked when the sword is no longer theirs");
+        } finally {
+            cap.reset();
+            d.touch();
+            ShishouLive.clearAll();
+            ShishouGrantService.sync(a);
+            ShishouGrantService.sync(b);
+        }
+    }
+
+    // ================================================================ relic.shishou_feed: feeding from the inventory
+    private static Result feed(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        ShishouData d = ShishouData.get();
+        ShishouCap cap = d.cap();
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 3, 0);
+        ServerPlayer a = SelfTests.standIn(level, "shishou_f1", at.x, at.y, at.z), b = SelfTests.standIn(level, "shishou_f2", at.x + 1, at.y, at.z);
+        ShishouRecord rec = d.record();
+        int levelBefore = rec.level();
+        try {
+            if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+            cap.reset();
+            ShishouLive.clearAll();
+            cap.adopt(a.getUUID());
+            ItemStack sword = ShishouItems.creativeStack();
+            sword.set(ShishouComponents.TOKEN.get(), cap.token());
+            sword.set(ShishouComponents.OWNER.get(), a.getUUID().toString());
+            rec.setLevel(Math.max(ShishouConfig.startLevel(), 12));
+            // the pure rules agree with the real item classes
+            if (ShishouFeed.classify(ShishouFeedService.describe(new ItemStack(Items.DIAMOND_SWORD))) != ShishouFeed.Kind.NONE) return Result.fail("a sword counted as food");
+            if (ShishouFeed.classify(ShishouFeedService.describe(new ItemStack(Items.STONE))) != ShishouFeed.Kind.NONE) return Result.fail("a block counted as food");
+            if (ShishouFeed.classify(ShishouFeedService.describe(new ItemStack(Items.ROTTEN_FLESH, 3))) != ShishouFeed.Kind.DROP) return Result.fail("rotten flesh is not a drop");
+            // a stranger's click is not taken over, and nothing is eaten
+            ItemStack food = new ItemStack(Items.ROTTEN_FLESH, 8);
+            if (ShishouFeedService.onStacked(sword, food, b, true, true) || food.getCount() != 8) return Result.fail("a non-wielder fed him");
+            // the wielder: the whole stack on a left click, valued by the table, experience paid once
+            long before = rec.totalExp();
+            if (!ShishouFeedService.onStacked(sword, food, a, true, true)) return Result.fail("the wielder's click was not taken over");
+            long want = ShishouService.scaleExp(ShishouFeed.value(ShishouFeedService.describe(new ItemStack(Items.ROTTEN_FLESH, 8)), ShishouFeed.take(8, true, ShishouConfig.feedPerClick())));
+            if (!ShishouConfig.feed()) return Result.ok("the click is taken over and refused while relic.shishouFeed is false");
+            if (food.getCount() != 8 - ShishouFeed.take(8, true, ShishouConfig.feedPerClick())) return Result.fail("the stack was not eaten by count: " + food.getCount());
+            if (rec.totalExp() - before != want) return Result.fail("experience paid " + (rec.totalExp() - before) + ", the table says " + want);
+            // a second click in the same tick is refused (rate limit) and eats nothing
+            ItemStack more = new ItemStack(Items.BONE, 4);
+            ShishouFeedService.onStacked(sword, more, a, true, true);
+            if (more.getCount() != 4) return Result.fail("a second feeding in the same tick was not refused");
+            // a rare or enchanted drop is taken over but never eaten
+            ShishouLive.FEED_GAP.clear();
+            ItemStack fancy = new ItemStack(Items.BONE, 2);
+            fancy.enchant(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING), 1);
+            ShishouFeedService.onStacked(sword, fancy, a, true, true);
+            if (fancy.getCount() != 2) return Result.fail("an enchanted bone was eaten");
+            // a sword at the cap keeps the stack
+            ShishouLive.FEED_GAP.clear();
+            rec.setLevel(ShishouLevels.MAX_LEVEL);
+            ItemStack last = new ItemStack(Items.ROTTEN_FLESH, 5);
+            ShishouFeedService.onStacked(sword, last, a, true, true);
+            if (last.getCount() != 5) return Result.fail("a sword at the level cap ate");
+            return Result.ok("feeding: the wielder only, by count, paid by the table, rate limited, valuables and a full level keep the stack");
+        } finally {
+            rec.setLevel(levelBefore);
+            cap.reset();
+            d.touch();
+            ShishouLive.clearAll();
+        }
+    }
+
+    // ================================================================ relic.shishou_hunt: the bounded scan and the charge
+    private static Result hunt(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        ShishouData d = ShishouData.get();
+        ShishouCap cap = d.cap();
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 8, 0);
+        List<net.minecraft.world.entity.Entity> made = new ArrayList<>();
+        try {
+            if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+            cap.reset();
+            ShishouLive.clearAll();
+            ShishouEntity sword = ShishouService.spawnWild(level, at);
+            if (sword == null) return Result.fail("the wild sword did not spawn");
+            made.add(sword);
+            int r = ShishouConfig.huntRadius();
+            Zombie near = EntityType.ZOMBIE.create(level), far = EntityType.ZOMBIE.create(level);
+            net.minecraft.world.entity.npc.Villager villager = EntityType.VILLAGER.create(level);
+            if (near == null || far == null || villager == null) return Result.fail("could not make the stand-in creatures");
+            near.moveTo(at.x + r * 0.6, at.y + 10, at.z, 0, 0);                                  // up in the air within the cube: the 2.0.0 scan (4 blocks up and down) missed this
+            far.moveTo(at.x + r * 1.5, at.y, at.z, 0, 0);
+            villager.moveTo(at.x + 2, at.y, at.z, 0, 0);
+            for (var e : new net.minecraft.world.entity.Mob[]{near, far, villager}) {
+                e.setPersistenceRequired();
+                e.setNoAi(true);
+                if (level.addFreshEntity(e)) made.add(e);
+            }
+            net.minecraft.world.entity.LivingEntity found = ShishouGoals.scan(sword, level, level.getGameTime());
+            if (found != near) return Result.fail("the scan picked " + found + " instead of the monster within the radius (never the villager, never one beyond " + r + " blocks)");
+            // the charge accelerates and never exceeds the top speed
+            sword.beginCharge();
+            double top = ShishouHunt.topSpeed(sword.swordLevel(), ShishouConfig.chargePercent());
+            Vec3 aim = near.position().add(0, 1, 0);
+            double v0 = -1.0, v = 0.0;
+            for (int i = 0; i < 12; i++) {
+                sword.charge(aim);
+                v = sword.getDeltaMovement().length();
+                sword.setPos(sword.position().add(sword.getDeltaMovement()));                      // it flies, so it is never 'blocked'
+                if (i == 0) v0 = v;
+            }
+            if (!(v > v0) || v > top + 1e-6) return Result.fail("the charge did not accelerate within the cap: " + v0 + " -> " + v + " (top " + top + ")");
+            return Result.ok("the scan finds the monster in the cube, skips the villager and the far one; the charge accelerates to " + String.format("%.2f", v) + " blocks a tick (top " + String.format("%.2f", top) + ")");
+        } finally {
+            for (var e : made) if (!e.isRemoved()) {
+                if (e instanceof ShishouEntity se) se.expectRemoval();
+                e.discard();
             }
             cap.reset();
             d.touch();

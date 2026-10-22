@@ -79,12 +79,12 @@ class ShishouSourceScanTest {
     void everyPacketIsValidatedOnTheServer() throws IOException {
         String net = code(read("shishou/ShishouNet.java"));
         assertTrue(net.contains("instanceof ServerPlayer") && net.contains("enqueueWork"), "the sender is a real player, the work runs on the server thread");
-        assertTrue(net.contains("action < 0 || action >= ACTIONS"), "an unknown action is ignored");
+        assertFalse(net.contains("shishou_key") || net.contains("record Key"), "2.1.0: no key packet any more, the Tensura skill system carries the presses");
         assertTrue(net.contains("entityId < -1 || entityId > 100_000_000"), "an entity id the game could not have handed out is ignored");
         assertTrue(net.contains("NAME_MAX"), "strings are length-bounded");
         String svc = code(read("shishou/ShishouService.java"));
-        String key = method(svc, "onKey"), app = method(svc, "onAppraise");
-        assertTrue(key.contains("KEY_GAP"), "key presses are rate limited per player");
+        String key = method(svc, "pressAllowed"), app = method(svc, "onAppraise");
+        assertTrue(key.contains("KEY_GAP"), "presses of the skill are rate limited per player");
         assertTrue(app.contains("APPRAISE_GAP"), "appraisal requests are rate limited per player");
         assertTrue(app.contains("distanceToSqr") || app.contains("closerThan") || app.contains("distance"), "an appraisal target must be near the asker");
     }
@@ -120,7 +120,7 @@ class ShishouSourceScanTest {
         int scans = 0;
         Matcher m = Pattern.compile("getEntitiesOfClass\\(").matcher(s);
         while (m.find()) scans++;
-        assertTrue(scans <= 2, "entity box queries stay in ShishouTargets.near and the one skill scan: " + scans);
+        assertTrue(scans <= 3, "entity box queries stay in ShishouTargets.near, the clone cleanup and the hunt's one scan (ShishouGoals.scan): " + scans);
         assertTrue(code(read("shishou/ShishouTargets.java")).contains("cap"), "the scan helper is capped");
         // the only chunk load is the rare recovery
         Matcher c = Pattern.compile("getChunk\\(").matcher(s);

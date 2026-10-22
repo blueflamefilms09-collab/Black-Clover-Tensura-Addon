@@ -1,11 +1,11 @@
 package com.newuniverse.nusmp.client.shishou;
 
 import com.newuniverse.nusmp.client.ui.move.GuiMove;
-import com.newuniverse.nusmp.client.ui.theme.UiBar;
-import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.shishou.ShishouAppraisal;
+import com.newuniverse.nusmp.shishou.ShishouGuiLayout;
+import com.newuniverse.nusmp.shishou.ShishouModes;
 import com.newuniverse.nusmp.shishou.ShishouNet;
 import com.newuniverse.nusmp.shishou.ShishouSkill;
 import net.minecraft.client.DeltaTracker;
@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Why: the sword's panel while he is held: his level and the way to the next one, his mana, the selected skill with its cooldown and the key hint, the windows that are open (barrier, sense, stealth, released)
- * and, below, the Appraisal readout of what the crosshair is on (name, health, a level and a mana estimate, its weak elements, the skill it would give him). One small panel in the mod's panel theme, drawn
+ * and, below, the Appraisal readout of what the crosshair is on (name, health, a level and a mana estimate, its weak elements, the skill it would give him). One small Akashic panel (dark star field, glowing cyan frame, sword emblem, glowing gauges, drifting motes: {@link AkashicTheme}), drawn
  * through the movable-GUI framework (id {@code shishou_hud}: the player can drag, size and hide it, docs/ui/gui_move.md). Reads {@link ShishouClientState} only; one string per row, no allocation of
  * note per frame beyond the row texts; a fault is logged once and never reaches the frame.
  */
@@ -27,8 +27,7 @@ public final class ShishouHud {
     private ShishouHud() {}
 
     public static final String MOVE_ID = "shishou_hud";
-    private static final int W = 156, PAD = 4, ROW = 11, BAR = 5;
-    private static final int MANA_RGB = 0x5CD8FF, EXP_RGB = 0xFFD76A;
+    private static final int W = ShishouGuiLayout.HUD_W, PAD = ShishouGuiLayout.HUD_PAD, ROW = ShishouGuiLayout.HUD_ROW, BAR = ShishouGuiLayout.HUD_BAR;
 
     public static void render(GuiGraphics g, DeltaTracker delta) { SafeCast.client("shishou.hud", () -> draw(g)); }
 
@@ -41,32 +40,38 @@ public final class ShishouHud {
         Font font = mc.font;
         List<String> lines = new ArrayList<>();
         if (r != null) readoutLines(font, r, lines);
-        int h = PAD + ROW + BAR * 2 + 6 + ROW + (flagsOf(s) > 0 ? ROW : 0) + (lines.isEmpty() ? 0 : 4 + lines.size() * ROW) + PAD;
+        ShishouSkill sel = s == null || s.selected() < 0 || s.selected() >= ShishouSkill.values().length ? null : ShishouSkill.values()[s.selected()];
+        ShishouModes.Mode mode = sel == null ? null : ShishouModes.modeOf(sel);
+        int h = PAD + (ROW + 3) + (BAR + 2) + (BAR + 4) + (ROW - 2) + (mode != null ? ROW - 2 : 0) + ROW + (flagsOf(s) > 0 ? ROW : 0) + (lines.isEmpty() ? 0 : 4 + lines.size() * ROW) + PAD;   // the sum of the rows drawn below
         int px = g.guiWidth() - W - 6, py = g.guiHeight() - h - 40;
         boolean moved = GuiMove.begin(g, MOVE_ID, px, py, W, h, px + W, py + h);
         g.pose().pushPose();
         g.pose().translate(px, py, 0.0);
         try {
-            if (UiTheme.anime()) UiPanel.panel(g, 0, 0, W, h, 0xFF000000 | MANA_RGB, 0.7f, 0.92f);
-            else {
-                g.fill(0, 0, W, h, 0xC0101018);
-                g.renderOutline(0, 0, W, h, 0xFF000000 | MANA_RGB);
-            }
+            boolean flat = !UiTheme.anime();
+            float now = UiTheme.now();
+            AkashicTheme.panel(g, 0, 0, W, h, now, flat, PAD + ROW - 1);
+            if (!flat) AkashicTheme.motes(g, 2, 2, W - 4, h - 4, now, ShishouGuiLayout.MOTES_HUD);
             int y = PAD;
+            AkashicTheme.emblem(g, PAD, y - 3, 12);
             String level = Component.translatableWithFallback("shishou.hud.level", "Lv %s", s == null ? 1 : s.level()).getString();
             int lw = font.width(level);
-            g.drawString(font, Component.translatableWithFallback("item.nusmp.shishou", "Shishou").getString(), PAD + 2, y + 1, UiTheme.TEXT, true);
-            g.drawString(font, level, W - PAD - lw, y + 1, 0xFF000000 | EXP_RGB, true);
-            y += ROW;
-            float now = UiTheme.now();
-            UiBar.draw(g, PAD, y, W - 2 * PAD, BAR, s == null ? 0f : s.expShare() / 100f, EXP_RGB, now, 1.0f);
+            g.drawString(font, Component.translatableWithFallback("item.nusmp.shishou", "Shishou").getString(), PAD + 15, y, 0xFF000000 | ShishouGuiLayout.CYAN_HI, true);
+            g.drawString(font, level, W - PAD - lw, y, 0xFF000000 | ShishouGuiLayout.GOLD, true);
+            y += ROW + 3;
+            AkashicTheme.gauge(g, PAD, y, W - 2 * PAD, BAR, s == null ? 0f : s.expShare() / 100f, ShishouGuiLayout.EXP_LOW, ShishouGuiLayout.EXP_HIGH, now, flat);
             y += BAR + 2;
-            UiBar.draw(g, PAD, y, W - 2 * PAD, BAR, s == null || s.maxMana() <= 0 ? 0f : s.mana() / (float) s.maxMana(), s != null && (s.flags() & ShishouNet.Sync.F_LOW) != 0 ? 0xFF6A6A : MANA_RGB, now, 1.0f);
+            boolean low = s != null && (s.flags() & ShishouNet.Sync.F_LOW) != 0;
+            AkashicTheme.gauge(g, PAD, y, W - 2 * PAD, BAR, s == null || s.maxMana() <= 0 ? 0f : s.mana() / (float) s.maxMana(), low ? 0x8A2A2A : ShishouGuiLayout.MANA_LOW,
+                    low ? ShishouGuiLayout.LOW : ShishouGuiLayout.MANA_HIGH, now, flat);
             y += BAR + 4;
             String mana = Component.translatableWithFallback("shishou.hud.mana", "Mana %s / %s", s == null ? 0 : s.mana(), s == null ? 0 : s.maxMana()).getString();
             g.drawString(font, mana, PAD + 1, y - 1, UiTheme.TEXT_DIM, false);
             y += ROW - 2;
-            ShishouSkill sel = s == null || s.selected() < 0 || s.selected() >= ShishouSkill.values().length ? null : ShishouSkill.values()[s.selected()];
+            if (mode != null) {                                                                   // the mode of the Tensura skill the selected ability belongs to
+                g.drawString(font, Component.translatableWithFallback(mode.langKey(), mode.english()).getString(), PAD + 1, y - 1, 0xFF000000 | ShishouGuiLayout.VIOLET, false);
+                y += ROW - 2;
+            }
             String name = sel == null ? Component.translatableWithFallback("shishou.hud.no_skill", "No skill to cast yet").getString()
                     : Component.translatableWithFallback(sel.langKey(), sel.english()).getString() + " (" + Component.translatableWithFallback(sel.langKey() + ".jp", sel.romaji()).getString() + ")";
             boolean cooling = s != null && s.cooldownShare() > 0;
@@ -78,7 +83,7 @@ public final class ShishouHud {
                 y += ROW;
             }
             if (!lines.isEmpty()) {
-                g.fill(PAD, y + 1, W - PAD, y + 2, 0x55FFFFFF);
+                AkashicTheme.prismLine(g, PAD, y + 1, W - 2 * PAD, now);
                 y += 4;
                 for (int i = 0; i < lines.size(); i++) {
                     g.drawString(font, font.plainSubstrByWidth(lines.get(i), W - 2 * PAD), PAD + 1, y, i == 0 ? (r.concealed() ? UiTheme.TEXT_DIM : UiTheme.GOLD) : UiTheme.TEXT, i == 0);

@@ -9,8 +9,8 @@ import java.util.Map;
  * This is the pure core: experience and levels, mana that refills LAZILY from a time stamp (nothing ticks), the absorbed-skill bits, the capped steps, and a flat map form for saving. Server thread only.
  */
 public final class ShishouRecord {
-    private long totalExp;
-    private double mana = ShishouRules.maxMana(1, 0);
+    private long totalExp = ShishouLevels.totalFor(ShishouRules.START_LEVEL);
+    private double mana = ShishouRules.maxMana(ShishouRules.START_LEVEL, 0);
     private long manaStamp;
     private long learned;
     private int manaSteps, attackSteps;
@@ -45,6 +45,20 @@ public final class ShishouRecord {
             mana = Math.min(max, mana + (max - mana) * 0.25);                          // a level up gives a quarter of the missing mana back
         }
         return new Gain(from, to, totalExp - before);
+    }
+
+    /**
+     * Raises the sword to at least {@code minLevel} (never lowers anything): the fresh record starts at {@link ShishouRules#START_LEVEL}, and a config that asks for more raises it here. When the level rises the
+     * pool is raised to the new maximum share it had (a full pool stays full). Returns true when the level rose.
+     */
+    public boolean raiseTo(int minLevel, long now) {
+        int want = Math.max(1, Math.min(ShishouLevels.MAX_LEVEL, minLevel));
+        if (level() >= want) return false;
+        double share = maxMana() <= 0 ? 1.0 : Math.min(1.0, mana(now) / maxMana());
+        totalExp = ShishouLevels.totalFor(want);
+        mana = maxMana() * share;
+        manaStamp = Math.max(manaStamp, now);
+        return true;
     }
 
     public void setLevel(int level) {
@@ -172,6 +186,7 @@ public final class ShishouRecord {
         m.put("wkills", (long) wildKills);
         m.put("wsince", wildSince);
         m.put("wmana", Double.doubleToLongBits(wildMana));
+        m.put("ver", (long) ShishouLevels.CURVE_VERSION);
         return m;
     }
 
@@ -182,8 +197,15 @@ public final class ShishouRecord {
 
     public static ShishouRecord fromMap(Map<String, Long> m) {
         ShishouRecord r = new ShishouRecord();
-        r.totalExp = Math.max(0L, Math.min(ShishouLevels.capTotal(), get(m, "exp", 0L)));
-        double mm = Double.longBitsToDouble(get(m, "mana", Double.doubleToLongBits(ShishouRules.maxMana(1, 0))));
+        long exp = Math.max(0L, get(m, "exp", 0L));
+        boolean legacy = m != null && get(m, "ver", 1L) < ShishouLevels.CURVE_VERSION;
+        if (legacy) {                                                                         // 2.0.0 save: the old curve's level is kept (the new curve is gentler, so it never drops) and the new floor applies
+            int oldLevel = ShishouLevels.legacyLevelFor(exp);
+            exp = Math.max(ShishouLevels.totalFor(oldLevel), exp);
+        }
+        if (m == null || m.isEmpty()) exp = ShishouLevels.totalFor(ShishouRules.START_LEVEL);
+        r.totalExp = Math.min(ShishouLevels.capTotal(), Math.max(exp, ShishouLevels.totalFor(ShishouRules.START_LEVEL)));
+        double mm = Double.longBitsToDouble(get(m, "mana", Double.doubleToLongBits(ShishouRules.maxMana(ShishouRules.START_LEVEL, 0))));
         r.mana = Double.isNaN(mm) || mm < 0 ? 0.0 : mm;
         r.manaStamp = get(m, "stamp", 0L);
         r.learned = get(m, "learned", 0L) & validMask();
@@ -198,7 +220,9 @@ public final class ShishouRecord {
         r.wildKills = (int) Math.max(0L, get(m, "wkills", 0L));
         r.wildSince = get(m, "wsince", 0L);
         double wm = Double.longBitsToDouble(get(m, "wmana", Double.doubleToLongBits(ShishouRules.WILD_MANA)));
+        if (legacy) wm *= ShishouRules.WILD_MANA / ShishouRules.LEGACY_WILD_MANA;               // the wild budget of 2.0.0 (100) is the same share of the new one (400)
         r.wildMana = Double.isNaN(wm) ? ShishouRules.WILD_MANA : Math.max(0.0, Math.min(ShishouRules.WILD_MANA, wm));
+        if (legacy) r.mana = Math.max(r.mana, r.maxMana() * Math.min(1.0, r.mana / Math.max(1.0, ShishouRules.LEGACY_MANA_BASE + ShishouRules.LEGACY_MANA_PER_LEVEL * ShishouLevels.legacyLevelFor(exp) + ShishouRules.LEGACY_MANA_PER_STEP * r.manaSteps)));   // the same share of the (larger) pool
         r.mana = Math.min(r.mana, r.maxMana());
         return r;
     }

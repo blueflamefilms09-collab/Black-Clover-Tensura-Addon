@@ -10,15 +10,14 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import java.util.function.Consumer;
 
 /**
- * Why: Shishou talks over four tiny packets and nothing else. Two go UP and are only asks: a key press (one byte: throw or recall, cast the selected skill, select the next skill, open Stomach) and an
- * Appraisal request (the id of the entity under the crosshair, at most one answered a second). The server decides everything: the sender must be a real player, hold the sword as its wielder, the skill must
- * be unlocked and switched on, and every ask is rate limited. Two go DOWN, only to the wielder: the sword's state for the HUD (once a second while he is held, and when a cast changes it) and the answer
+ * Why: Shishou talks over three tiny packets and nothing else (2.1.0: the key packet is gone: his abilities are the Tensura Ultimate skill {@code nusmp:shishou}, whose presses travel in the skill system's own
+ * packets). One goes UP and is only an ask: an Appraisal request (the id of the entity under the crosshair, at most one answered a second). The server decides everything: the sender must be a real player,
+ * hold the sword, and every ask is rate limited. Two go DOWN, only to the wielder: the sword's state for the HUD (once a second while he is held, and when a cast changes it) and the answer
  * of an Appraisal. The client side is hooked in by {@link #clientSync} and {@link #clientAppraisal} (set by the client class), so this common file names no client class. Both directions are optional.
  */
 public final class ShishouNet {
     private ShishouNet() {}
 
-    public static final int ACT_THROW_RECALL = 0, ACT_CAST = 1, ACT_NEXT = 2, ACT_STOMACH = 3, ACTIONS = 4;
     public static final int NAME_MAX = 96;
 
     /** Set by the client at start-up; null on a dedicated server. */
@@ -26,12 +25,6 @@ public final class ShishouNet {
     public static volatile Consumer<AppraisalReply> clientAppraisal;
 
     // ---------------------------------------------------------------- client to server
-    public record Key(int action) implements CustomPacketPayload {
-        public static final Type<Key> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_key"));
-        public static final StreamCodec<FriendlyByteBuf, Key> STREAM_CODEC = StreamCodec.of((buf, p) -> buf.writeByte(p.action()), buf -> new Key(buf.readUnsignedByte()));
-        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
-    }
-
     /** What is under the crosshair: an entity id, or -1 for the item in the off hand. */
     public record AppraiseRequest(int entityId) implements CustomPacketPayload {
         public static final Type<AppraiseRequest> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_appraise"));
@@ -77,11 +70,6 @@ public final class ShishouNet {
     }
 
     // ---------------------------------------------------------------- the server's side of the asks
-    static void onKey(ServerPlayer p, int action) {
-        if (action < 0 || action >= ACTIONS) return;                           // an unknown action is ignored, never trusted
-        ShishouService.onKey(p, action);
-    }
-
     static void onAppraise(ServerPlayer p, int entityId) {
         if (entityId < -1 || entityId > 100_000_000) return;                  // not an id the game could have handed out
         ShishouService.onAppraise(p, entityId);
@@ -94,7 +82,6 @@ public final class ShishouNet {
 
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         var r = event.registrar("1").optional();
-        r.playToServer(Key.TYPE, Key.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> { if (ctx.player() instanceof ServerPlayer sp) onKey(sp, payload.action()); }));
         r.playToServer(AppraiseRequest.TYPE, AppraiseRequest.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> { if (ctx.player() instanceof ServerPlayer sp) onAppraise(sp, payload.entityId()); }));
         r.playToClient(Sync.TYPE, Sync.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> { Consumer<Sync> c = clientSync; if (c != null) c.accept(payload); }));
         r.playToClient(AppraisalReply.TYPE, AppraisalReply.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> { Consumer<AppraisalReply> c = clientAppraisal; if (c != null) c.accept(payload); }));

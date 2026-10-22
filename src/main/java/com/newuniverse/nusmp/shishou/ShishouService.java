@@ -143,12 +143,14 @@ public final class ShishouService {
             return;
         }
         if (r != ShishouCap.Claim.OK) return;
+        floorLevel(d.record(), now);
         d.record().refill(now);
         d.touch();
         rememberHome(p, cap);
         e.expectRemoval();
         e.discard();
         give(p, cap.token());
+        ShishouGrantService.syncAll(p.getServer());                                          // the claimer gets the Tensura skill, a former wielder (if online) loses it
         ShishouSpeech.say(p, p.serverLevel(), ShishouVoiceLines.Group.CLAIM);
         syncNow(p);
     }
@@ -188,6 +190,7 @@ public final class ShishouService {
                 d.record().startWild(now);
                 rememberHome(p, cap);
                 d.touch();
+                ShishouGrantService.syncAll(p.getServer());
                 ShishouSpeech.say(p, sl, ShishouVoiceLines.Group.CLAIM);
             } else {
                 stack.setCount(0);
@@ -210,6 +213,7 @@ public final class ShishouService {
         }
         ShishouLive.LINKED.put(p.getUUID(), now);
         ShishouRecord rec = d.record();
+        floorLevel(rec, now);
         if (ShishouComponents.level(stack) != rec.level()) stack.set(ShishouComponents.LEVEL.get(), rec.level());
         BlockPos r = p.getRespawnPosition();
         if (!cap.hasHome() || r != null && (cap.home()[0] != r.getX() || cap.home()[2] != r.getZ())) rememberHome(p, cap);
@@ -322,6 +326,7 @@ public final class ShishouService {
                 d.record().refill(sl.getGameTime());
                 rememberHome(sp, cap);
                 d.touch();
+                ShishouGrantService.syncAll(sp.getServer());
             } else e.discard();
             return;
         }
@@ -335,34 +340,34 @@ public final class ShishouService {
         }
     }
 
-    // ================================================================ throw, recall and the keys
-    public static void onKey(ServerPlayer p, int action) {
+    // ================================================================ throw, recall and the skill's modes
+    /**
+     * The Telekinesis mode of the Tensura skill: throws the held sword out as a minion, or recalls it. Only the wielder (the caller has passed {@link #pressAllowed}); the same rules as ever (the sword's own mana, one body).
+     * (2.0.0 had a key packet for this; 2.1.0 has none: the Tensura skill system carries the press.)
+     */
+    public static void throwRecall(ServerPlayer p) {
         if (!enabled() || p.isSpectator()) return;
-        long now = p.level().getGameTime();
-        if (!ShishouLive.gap(ShishouLive.KEY_GAP, p.getUUID(), now, ShishouRules.CAST_GAP)) return;
         ShishouData d = ShishouData.get();
-        switch (action) {
-            case ShishouNet.ACT_THROW_RECALL -> {
-                if (!d.cap().isOwner(p.getUUID())) return;
-                if (d.cap().form() == ShishouCap.Form.MINION) recall(p);
-                else if (d.cap().form() == ShishouCap.Form.HELD && !heldStack(p).isEmpty()) throwOut(p);
-            }
-            case ShishouNet.ACT_CAST -> {
-                ShishouSkill s = d.record().selectedOrFirst();
-                if (s != null) cast(p, s);
-            }
-            case ShishouNet.ACT_NEXT -> {
-                if (heldStack(p).isEmpty()) return;
-                ShishouRecord r = d.record();
-                ShishouSkill nx = ShishouSkill.nextCastable(r.selectedOrFirst(), r.level(), r.learned());
-                r.select(nx);
-                d.touch();
-                sync(p, r, now);
-            }
-            case ShishouNet.ACT_STOMACH -> openStorage(p);
-            default -> { }
-        }
+        if (!d.cap().isOwner(p.getUUID())) return;
+        if (d.cap().form() == ShishouCap.Form.MINION) recall(p);
+        else if (d.cap().form() == ShishouCap.Form.HELD && !heldStack(p).isEmpty()) throwOut(p);
+        else p.displayClientMessage(Component.translatableWithFallback("shishou.msg.hold_throw", "Hold me to throw me.").withStyle(ChatFormatting.GRAY), true);
     }
+
+    /** The Counsel mode: one action-bar line of what he is (level, experience share, mana).  */
+    public static void counsel(ServerPlayer p) {
+        if (!enabled() || p.isSpectator() || !ShishouData.get().cap().isOwner(p.getUUID())) return;
+        long now = p.level().getGameTime();
+        ShishouRecord r = ShishouData.get().record();
+        p.displayClientMessage(Component.translatableWithFallback("shishou.msg.counsel", "Shishou, level %s (%s%% to the next), mana %s / %s, %s skills eaten.", r.level(), (int) Math.round(r.progress() * 100.0), (int) r.mana(now), (int) r.maxMana(), r.absorbedCount()).withStyle(ChatFormatting.AQUA), true);
+        sync(p, r, now);
+    }
+
+    /** The press of the Tensura skill is rate limited per player by the same gap as every cast. */
+    public static boolean pressAllowed(ServerPlayer p) { return enabled() && !p.isSpectator() && ShishouLive.gap(ShishouLive.KEY_GAP, p.getUUID(), p.level().getGameTime(), ShishouRules.CAST_GAP); }
+
+    /** Shows the HUD the state now (after a mode change). */
+    public static void syncHud(ServerPlayer p) { if (enabled()) sync(p, ShishouData.get().record(), p.level().getGameTime()); }
 
     /** Telekinesis (Nennou): the sword leaves the hand and fights for the wielder as a minion; one body only. */
     public static boolean throwOut(ServerPlayer p) {
@@ -533,7 +538,7 @@ public final class ShishouService {
         applyOnHit(p, target, rec, sl, now, swing, true);
         if (usable(rec, ShishouSkill.SPATIAL_BLADE) && charge != null && charge >= 0.99f && ShishouLive.COOLDOWNS.ready(p.getUUID(), ShishouSkill.SPATIAL_BLADE, now) && rec.spend(now, ShishouSkill.SPATIAL_BLADE.manaCost())) {
             ShishouLive.COOLDOWNS.start(p.getUUID(), ShishouSkill.SPATIAL_BLADE, now, ShishouSkill.SPATIAL_BLADE.cooldown());
-            double dmg = Math.min(ShishouRules.STRIKE_CAP, ShishouRules.heldAttack(level));
+            double dmg = Math.min(ShishouConfig.strikeCap(), ShishouRules.heldAttack(level, ShishouConfig.damagePercent()));
             List<Mob> sweep = ShishouTargets.near(sl, Mob.class, target.position(), 3.0, 4, m -> m == target || ShishouTargets.hostileFor(p, m));
             if (!sweep.contains(target) && target instanceof Mob tm) sweep.add(0, tm);
             DamageSource sever = com.newuniverse.nusmp.item.DemonSlayerSwordItem.severance(p);        // the mod's own armour- and enchantment-bypassing damage type
@@ -588,7 +593,7 @@ public final class ShishouService {
         ShishouRecord rec = d.record();
         long now = sl.getGameTime();
         int el = usable(rec, ShishouSkill.ELEMENTAL_SYNTHESIS) ? Integer.bitCount(ShishouStealTable.elements(rec.learned())) : 0;
-        double dmg = ShishouRules.strikeDamage(rec.level(), rec.attackSteps(), ShishouRules.elementBonus(el), ShishouConfig.strikeCap());
+        double dmg = ShishouRules.strikeDamage(rec.level(), rec.attackSteps(), ShishouRules.elementBonus(el), ShishouConfig.strikeCap(), ShishouConfig.damagePercent());
         ServerPlayer owner = e.isMinion() ? e.owner() : null;
         if (owner != null) t.setLastHurtByPlayer(owner);
         t.invulnerableTime = 0;
@@ -599,6 +604,14 @@ public final class ShishouService {
         }
         d.touch();
         return ok;
+    }
+
+    /** The experience after the server's percentage (100 = as listed). */
+    static long scaleExp(long exp) { return Math.max(0L, Math.round(exp * ShishouConfig.expPercent() / 100.0)); }
+
+    /** The floor of the level (2.1.0: a fresh or old sword is at least level 10, the config may ask for more); never lowers. */
+    static void floorLevel(ShishouRecord rec, long now) {
+        if (rec.raiseTo(ShishouConfig.startLevel(), now)) ShishouData.get().touch();
     }
 
     // ================================================================ rewards: Skill Eater
@@ -621,7 +634,7 @@ public final class ShishouService {
         else return;
         if (wild) rec.countWildKill(); else rec.countKill();
         boolean boss = victim.getType().is(Tags.EntityTypes.BOSSES);
-        ShishouRecord.Gain g = rec.addExp(ShishouPredation.killExp(victim.getMaxHealth(), boss));
+        ShishouRecord.Gain g = rec.addExp(scaleExp(ShishouPredation.killExp(victim.getMaxHealth(), boss)));
         ShishouStealTable.Row row = ShishouStealTable.lookup(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(victim.getType()).toString(), victim instanceof Creeper c && c.isPowered());
         ShishouSkill stolen = null;
         boolean isNew = false;
@@ -639,7 +652,7 @@ public final class ShishouService {
         }
     }
 
-    private static void levelUp(ServerPlayer w, ServerLevel sl, ShishouRecord.Gain g) {
+    static void levelUp(ServerPlayer w, ServerLevel sl, ShishouRecord.Gain g) {
         ShishouSpeech.say(w, sl, ShishouVoiceLines.Group.LEVELUP, g.to());
         List<ShishouSkill> fresh = ShishouSkill.unlockedBetween(g.from(), g.to());
         if (!fresh.isEmpty()) ShishouSpeech.say(w, sl, groupOf(fresh.get(0)), Component.translatableWithFallback(fresh.get(0).langKey(), fresh.get(0).english()));
@@ -661,7 +674,7 @@ public final class ShishouService {
             exp += stone > 0 ? stone : ShishouPredation.dropExp(s.getCount(), s.getRarity().ordinal());
         }
         e.getDrops().clear();
-        ShishouRecord.Gain g = d.record().addExp(Math.min(ShishouPredation.MAX_EXP_PER_ABSORB, exp));
+        ShishouRecord.Gain g = d.record().addExp(scaleExp(Math.min(ShishouPredation.MAX_EXP_PER_ABSORB, exp)));
         d.touch();
         ServerPlayer w = se.isMinion() ? se.owner() : null;
         if (w != null && g.leveled() && v.level() instanceof ServerLevel sl) levelUp(w, sl, g);
@@ -684,6 +697,7 @@ public final class ShishouService {
             }
         }
         cap.moved(dimOf(sl), e.getBlockX(), e.getBlockY(), e.getBlockZ());
+        floorLevel(rec, now);
         e.setSwordLevel(rec.level());
         if (ShishouRecovery.inVoid(e.getY(), sl.getMinBuildHeight() - 8)) {
             e.expectRemoval();
@@ -703,7 +717,7 @@ public final class ShishouService {
             return;
         }
         if (!e.isMinion()) {
-            boolean done = ShishouRules.shouldGoDormant(rec.wildKills(), now - rec.wildSince(), rec.wildMana(), ShishouConfig.dormantKills(), ShishouConfig.dormantDays());
+            boolean done = ShishouRules.shouldGoDormant(rec.wildKills(), now - rec.wildSince(), rec.wildMana(), ShishouRules.dormantKillLimit(ShishouConfig.dormantKills(), rec.level()), ShishouConfig.dormantDays());
             if (done != e.wantsDormant()) e.setDormantPending(done);
             return;
         }
@@ -925,8 +939,8 @@ public final class ShishouService {
         if (s.isEmpty()) return new ShishouNet.AppraisalReply(id, 2, "", 0f, 0f, 0, 0, 0, "", false);
         if (s.getItem() == ShishouItems.SHISHOU.get()) return selfReply(id, wielder, d);
         String key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).toString();
-        long worth = ShishouPredation.stoneExp(key, s.getCount(), 0);
-        if (worth == 0L) worth = ShishouPredation.dropExp(s.getCount(), s.getRarity().ordinal());
+        long worth = ShishouFeed.value(ShishouFeedService.describe(s), s.getCount());                // what feeding it to him would pay (0 for what he does not eat)
+
         return new ShishouNet.AppraisalReply(id, 1, s.getDescriptionId(), s.getCount(), s.getMaxStackSize(), s.getRarity().ordinal() * 10 + s.getEnchantments().size(), (int) Math.min(9999L, worth), 0, "", false);
     }
 

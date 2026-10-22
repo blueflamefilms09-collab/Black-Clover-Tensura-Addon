@@ -20,7 +20,7 @@ public final class ShishouLive {
 
     /** The wielder -> the game tick of the last beat in which they held the sword (a link lasts two beats). */
     static final Map<UUID, Long> LINKED = new HashMap<>();
-    static final Map<UUID, Long> KEY_GAP = new HashMap<>(), APPRAISE_GAP = new HashMap<>(), CHARGE_TICK = new HashMap<>();
+    static final Map<UUID, Long> KEY_GAP = new HashMap<>(), APPRAISE_GAP = new HashMap<>(), CHARGE_TICK = new HashMap<>(), FEED_GAP = new HashMap<>();
     static final Map<UUID, Float> CHARGE = new HashMap<>();
     static final Map<UUID, Integer> SPEECH_COUNTER = new HashMap<>();
     /** Spatial Blade: the wielder's next blow is a full-charge swing (set by the left click, consumed by the hit). */
@@ -45,6 +45,7 @@ public final class ShishouLive {
         LINKED.remove(who);
         KEY_GAP.remove(who);
         APPRAISE_GAP.remove(who);
+        FEED_GAP.remove(who);
         CHARGE_TICK.remove(who);
         CHARGE.remove(who);
         SPEECH_COUNTER.remove(who);
@@ -61,6 +62,7 @@ public final class ShishouLive {
         LINKED.clear();
         KEY_GAP.clear();
         APPRAISE_GAP.clear();
+        FEED_GAP.clear();
         CHARGE_TICK.clear();
         CHARGE.clear();
         SPEECH_COUNTER.clear();

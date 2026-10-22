@@ -11,8 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShishouProgressionTest {
     @Test
     void theCurveIsMonotonicCappedAndInvertible() {
-        assertEquals(31L, ShishouLevels.toNext(1));
-        assertEquals(285L, ShishouLevels.toNext(20));
+        assertEquals(22L, ShishouLevels.toNext(1), "2.1.0 curve: 18 + 3.5 L + 0.2 L^2");
+        assertEquals(168L, ShishouLevels.toNext(20));
+        assertEquals(31L, ShishouLevels.legacyToNext(1), "the 2.0.0 curve is kept for old saves");
+        assertEquals(285L, ShishouLevels.legacyToNext(20));
+        for (int l = 1; l < ShishouLevels.MAX_LEVEL; l++) assertTrue(ShishouLevels.toNext(l) < ShishouLevels.legacyToNext(l), "gentler than 2.0.0 at level " + l);
         assertEquals(0L, ShishouLevels.toNext(ShishouLevels.MAX_LEVEL));
         long prev = -1;
         for (int l = 1; l <= ShishouLevels.MAX_LEVEL; l++) {
@@ -71,7 +74,7 @@ class ShishouProgressionTest {
         ShishouRecord r = new ShishouRecord();
         r.refill(0L);
         double max = r.maxMana();
-        assertEquals(ShishouRules.maxMana(1, 0), max, 1e-9);
+        assertEquals(ShishouRules.maxMana(ShishouRules.START_LEVEL, 0), max, 1e-9, "a fresh record starts at the start level");
         assertTrue(r.spend(0L, 50.0));
         assertEquals(max - 50.0, r.mana(0L), 1e-9);
         assertFalse(r.spend(0L, max), "cannot pay more than is there");
@@ -79,15 +82,15 @@ class ShishouProgressionTest {
         double after = r.mana(20L * 10);
         assertTrue(after > max - 50.0 && after < max, "ten seconds give back a little");
         assertEquals(max, r.mana(20L * 100000), 1e-9, "never above the pool");
-        assertTrue(ShishouRules.regenPerTick(100) < 0.3, "slow");
+        assertTrue(ShishouRules.regenPerTick(100) < 0.7, "13 a second at the top: still bounded");
         assertTrue(r.isLow(0L) == (r.mana(0L) < max * ShishouRules.LOW_MANA_SHARE));
     }
 
     @Test
     void experienceLevelsUpAndPaysTheSkillsOfTheTier() {
         ShishouRecord r = new ShishouRecord();
-        ShishouRecord.Gain g = r.addExp(ShishouLevels.totalFor(21));
-        assertEquals(1, g.from());
+        ShishouRecord.Gain g = r.addExp(ShishouLevels.totalFor(21) - r.totalExp());
+        assertEquals(ShishouRules.START_LEVEL, g.from());
         assertEquals(21, g.to());
         assertTrue(g.leveled());
         assertTrue(r.has(ShishouSkill.STOMACH));
@@ -137,11 +140,11 @@ class ShishouProgressionTest {
         bad.put("msteps", 9999L);
         bad.put("sel", 777L);
         ShishouRecord c = ShishouRecord.fromMap(bad);
-        assertEquals(0L, c.totalExp());
+        assertEquals(ShishouLevels.totalFor(ShishouRules.START_LEVEL), c.totalExp(), "bad data never goes below the start level");
         assertEquals(ShishouRecord.validMask(), c.learned(), "only absorbed skill bits are kept");
         assertEquals(ShishouRules.MAX_STEPS, c.manaSteps());
         assertNull(c.selected());
-        assertEquals(1, ShishouRecord.fromMap(null).level());
+        assertEquals(ShishouRules.START_LEVEL, ShishouRecord.fromMap(null).level());
     }
 
     @Test
@@ -154,14 +157,14 @@ class ShishouProgressionTest {
         r.startWild(50L);
         int strikes = 0;
         while (r.spendWild(ShishouRules.WILD_STRIKE_MANA)) strikes++;
-        assertTrue(strikes >= 20 && strikes <= 30, "about twenty five strikes: " + strikes);
+        assertTrue(strikes >= 150 && strikes <= 250, "about two hundred strikes (2.0.0: twenty five): " + strikes);
         assertTrue(ShishouRules.shouldGoDormant(0, 0L, r.wildMana(), 25, 7));
     }
 
     @Test
     void theNumbersAreCapped() {
-        assertEquals(ShishouRules.STRIKE_CAP, ShishouRules.strikeDamage(100, 20, 4, ShishouRules.STRIKE_CAP), 1e-9);
-        assertTrue(ShishouRules.strikeDamage(1, 0, 0, 60) < 8);
+        assertTrue(ShishouRules.strikeDamage(100, 20, 4, ShishouRules.STRIKE_CAP) <= ShishouRules.STRIKE_CAP);
+        assertTrue(ShishouRules.strikeDamage(1, 0, 0, 60) <= ShishouRules.START_ATTACK, "he starts at the damage of a low magisteel sword");
         assertEquals(30.0, ShishouRules.strikeDamage(100, 20, 4, 30.0), 1e-9, "the config cap holds");
         assertEquals(0.2, ShishouRules.vibrationBonus(1.0, 0.2, 0.3), 1e-9);
         assertEquals(0.3, ShishouRules.vibrationBonus(1.0, 0.9, 0.3), 1e-9, "never above the share cap");

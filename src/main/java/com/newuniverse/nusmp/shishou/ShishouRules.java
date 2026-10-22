@@ -15,15 +15,20 @@ public final class ShishouRules {
 
     // ---------------------------------------------------------------- mana
     public static final int MAX_STEPS = 20;
-    public static final double MANA_BASE = 100.0, MANA_PER_LEVEL = 8.0, MANA_PER_STEP = 6.0;
+    public static final double MANA_BASE = 250.0, MANA_PER_LEVEL = 14.0, MANA_PER_STEP = 10.0;
+    /** The 2.0.0 numbers (100 + 8 per level + 6 per step; 0.6 + 0.04 per level a second), kept for the before / after table of the docs and the tests. */
+    public static final double LEGACY_MANA_BASE = 100.0, LEGACY_MANA_PER_LEVEL = 8.0, LEGACY_MANA_PER_STEP = 6.0;
 
-    /** The mana pool: 100 + 8 per level + 6 per absorbed step. Level 1: 108; level 100 with all steps: 1020. */
+    /** The level a fresh (and every migrated) Shishou starts at: Tier 1 is fully open and Multilayer Barrier (level 10) with it. The server config {@code progress.startLevel} may raise it. */
+    public static final int START_LEVEL = 10;
+
+    /** The mana pool: 250 + 14 per level + 10 per absorbed step. Level 10: 390; level 100 with all steps: 1850 (2.0.0: 188 and 1020). */
     public static double maxMana(int level, int manaSteps) {
         return MANA_BASE + MANA_PER_LEVEL * clampLevel(level) + MANA_PER_STEP * Math.max(0, Math.min(MAX_STEPS, manaSteps));
     }
 
-    /** Mana back per tick: 0.6 per second plus 0.04 per level per second (level 1: 0.64 a second, level 100: 4.6): slow. */
-    public static double regenPerTick(int level) { return (0.6 + 0.04 * clampLevel(level)) / 20.0; }
+    /** Mana back per tick: 3 per second plus 0.1 per level per second (level 10: 4 a second, level 100: 13; 2.0.0: 1 and 4.6). */
+    public static double regenPerTick(int level) { return (3.0 + 0.10 * clampLevel(level)) / 20.0; }
 
     /** What a swing of the sword costs in mana (the upkeep of Ultra-Speed Regeneration: the sword never wears, mana pays). */
     public static final double HIT_MANA = 1.0;
@@ -33,12 +38,22 @@ public final class ShishouRules {
     public static int clampLevel(int level) { return Math.max(1, Math.min(ShishouLevels.MAX_LEVEL, level)); }
 
     // ---------------------------------------------------------------- strikes
-    public static final double STRIKE_CAP = 60.0;
+    public static final double STRIKE_CAP = 120.0, LEGACY_STRIKE_CAP = 60.0;
 
-    /** The damage of a telekinetic charge strike: 6 + 0.45 per level + 0.5 per attack step + the element bonus, never above {@code cap}. */
-    public static double strikeDamage(int level, int attackSteps, double elementBonus, double cap) {
-        double d = 6.0 + 0.45 * clampLevel(level) + 0.5 * Math.max(0, Math.min(MAX_STEPS, attackSteps)) + Math.max(0.0, elementBonus);
+    /**
+     * The damage of a telekinetic charge strike: the held attack of that level ({@link #heldAttack}) + 0.5 per attack step + the element bonus, never above {@code cap}. It starts where a low magisteel sword is
+     * (8.5) and climbs steeply (level 50: about 38 plus steps, level 100: 78.5 plus steps and elements). {@code scalePercent} is the server's damage scale (100 = as listed).
+     */
+    public static double strikeDamage(int level, int attackSteps, double elementBonus, double cap, int scalePercent) {
+        double d = heldAttack(level, scalePercent) + 0.5 * Math.max(0, Math.min(MAX_STEPS, attackSteps)) + Math.max(0.0, elementBonus);
         return Math.min(Math.max(1.0, cap), d);
+    }
+
+    public static double strikeDamage(int level, int attackSteps, double elementBonus, double cap) { return strikeDamage(level, attackSteps, elementBonus, cap, 100); }
+
+    /** The 2.0.0 strike (6 + 0.45 per level + 0.5 per step + element), only for the before / after table. */
+    public static double legacyStrikeDamage(int level, int attackSteps, double elementBonus) {
+        return Math.min(LEGACY_STRIKE_CAP, 6.0 + 0.45 * clampLevel(level) + 0.5 * Math.max(0, Math.min(MAX_STEPS, attackSteps)) + Math.max(0.0, elementBonus));
     }
 
     /** The bonus of Vibration Magic: a share of the hit that bypasses armour, capped (default 20% of the hit, never above {@code pctCap}). */
@@ -100,8 +115,11 @@ public final class ShishouRules {
     public static final int STORAGE_SLOTS = 54, STORAGE_ROWS_DEFAULT = 3;
 
     // ---------------------------------------------------------------- the wild phase
-    public static final int DORMANT_KILLS = 25, DORMANT_DAYS = 7, DAY_TICKS = 24000, WILD_STRIKE_MANA = 4;
-    public static final double WILD_MANA = 100.0;
+    public static final int DORMANT_KILLS = 60, LEGACY_DORMANT_KILLS = 25, DORMANT_KILLS_PER_LEVEL = 2, DORMANT_DAYS = 7, DAY_TICKS = 24000, WILD_STRIKE_MANA = 2, LEGACY_WILD_STRIKE_MANA = 4;
+    public static final double WILD_MANA = 400.0, LEGACY_WILD_MANA = 100.0;
+
+    /** The kills after which the wild sword settles: the config base plus 2 per level (level 10: 80, level 100: 260), so a fast hunter does not go dormant in minutes. */
+    public static int dormantKillLimit(int baseKills, int level) { return Math.max(1, baseKills) + DORMANT_KILLS_PER_LEVEL * clampLevel(level); }
 
     /** Should a wild sword settle into its pedestal? After {@code kills} kills, after {@code days} days, or when its wild mana is spent. */
     public static boolean shouldGoDormant(int wildKills, long wildTicks, double wildMana, int killLimit, int dayLimit) {
@@ -110,6 +128,7 @@ public final class ShishouRules {
 
     /** Hovering height above the ground the wild sword keeps, the reach of its strike, its flight speed. */
     public static final double REACH = 2.4, FLIGHT_SPEED = 0.7, CHARGE_SPEED = 1.9;
+    /** The strike cooldown of 2.0.0 (24 ticks) and the range of 2.0.0 (24 blocks): the new, level-scaled ones are in {@link ShishouHunt}. */
     public static final int STRIKE_COOLDOWN = 24, ATTACK_ANIM_TICKS = 14, TARGET_RANGE = 24, MINION_LEASH = 16, MINION_RETURN = 24, MINION_TELEPORT = 64;
     public static final int GROUND_SEARCH = 40, GROUND_SIDE_TRIES = 8, GROUND_SIDE_RADIUS = 12;
 
@@ -124,10 +143,28 @@ public final class ShishouRules {
     public static final double BLADE_LENGTH = 1.7, HILT_BACK = 0.65;
 
     // ---------------------------------------------------------------- sword arts (attribute numbers, applied only while held)
-    public static final double BASE_ATTACK = 7.0, ATTACK_PER_LEVEL = 0.12, ATTACK_BONUS_CAP = 12.0, SPEED_ARTS_BONUS = 0.4, ARTS_DAMAGE_SHARE = 0.10, SHARING_SPEED_PER_SKILL = 0.004, SHARING_SPEED_CAP = 0.04;
+    /**
+     * The starting attack is that of a low magisteel sword. The repo carries no number for it and the wiki hosts could not be reached, so this is an ASSUMPTION (a little above a netherite sword's 7):
+     * item damage 8.5, which the tooltip shows as 9.5 with the player's own 1 (and is never below the 8.2 a level-10 sword showed in 2.0.0). Tuneable through {@code combat.damageScalePercent} (the part that grows) and this constant (the start).
+     */
+    public static final double START_ATTACK = 8.5, BASE_ATTACK = START_ATTACK, SPEED_ARTS_BONUS = 0.4, ARTS_DAMAGE_SHARE = 0.10, SHARING_SPEED_PER_SKILL = 0.004, SHARING_SPEED_CAP = 0.04;
+    /** The growth of the attack above {@link #START_LEVEL}: {@code 0.6 per level + 0.0035 per level squared}, never more than {@link #ATTACK_BONUS_CAP}. The 2.0.0 numbers were 7 + 0.12 per level, at most +12. */
+    public static final double ATTACK_PER_LEVEL = 0.6, ATTACK_PER_LEVEL_SQ = 0.0035, ATTACK_BONUS_CAP = 70.0, LEGACY_ATTACK_PER_LEVEL = 0.12, LEGACY_ATTACK_BONUS_CAP = 12.0, LEGACY_BASE_ATTACK = 7.0;
 
-    /** The attack damage the sword shows: 7 + 0.12 per level, never more than 7 + 12. */
-    public static double heldAttack(int level) { return BASE_ATTACK + Math.min(ATTACK_BONUS_CAP, ATTACK_PER_LEVEL * clampLevel(level)); }
+    /** What the level adds to the attack: 0 up to level 10, then 0.6 per level + 0.0035 per level squared (level 50: 24 + 5.6, level 100: 70 capped), times the server scale, never above the cap. */
+    public static double attackBonus(int level, int scalePercent) {
+        int over = Math.max(0, clampLevel(level) - START_LEVEL);
+        double b = (ATTACK_PER_LEVEL * over + ATTACK_PER_LEVEL_SQ * over * over) * Math.max(0, Math.min(1000, scalePercent)) / 100.0;
+        return Math.min(ATTACK_BONUS_CAP, b);
+    }
+
+    /** The attack damage the sword shows: 8.5 (a low magisteel sword) plus the level's growth. Level 10: 8.5, level 30: 21.9, level 50: 38.1, level 70: 57.1, level 100: 78.5. */
+    public static double heldAttack(int level, int scalePercent) { return START_ATTACK + attackBonus(level, scalePercent); }
+
+    public static double heldAttack(int level) { return heldAttack(level, 100); }
+
+    /** The 2.0.0 attack (7 + 0.12 per level, at most 7 + 12), only for the before / after table. */
+    public static double legacyHeldAttack(int level) { return LEGACY_BASE_ATTACK + Math.min(LEGACY_ATTACK_BONUS_CAP, LEGACY_ATTACK_PER_LEVEL * clampLevel(level)); }
 
     /** The Skill Sharing walk-speed boost of the holder: a small share per absorbed skill, capped at 4%. */
     public static double sharingSpeed(int absorbedCount) { return Math.min(SHARING_SPEED_CAP, SHARING_SPEED_PER_SKILL * Math.max(0, absorbedCount)); }

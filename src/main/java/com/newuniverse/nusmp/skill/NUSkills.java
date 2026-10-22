@@ -249,5 +249,8 @@ public final class NUSkills {
     /** Celestial Spirit Magic (Lucy Heartfilia): a Unique skill learned from its own book (celestial.CelestialSkillBookItem). Registered after the retired books so the order of the older entries is unchanged. */
     public static final DeferredHolder<ManasSkill, CelestialSpiritMagicSkill> CELESTIAL_SPIRIT_MAGIC = SKILLS.register("celestial_spirit_magic", CelestialSpiritMagicSkill::new);
 
+    /** Shishou, the Teacher (2.1.0): the talking sword's abilities as an Ultimate skill with modes, given to his wielder (shishou.ShishouGrantService). Registered last so the order of the older entries is unchanged. */
+    public static final DeferredHolder<ManasSkill, ShishouUltimateSkill> SHISHOU = SKILLS.register("shishou", ShishouUltimateSkill::new);
+
     private NUSkills() {}
 }

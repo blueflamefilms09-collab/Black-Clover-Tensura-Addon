@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.shishou;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.commands.SharedSuggestionProvider;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -31,6 +33,8 @@ public final class ShishouCommand {
                 .then(Commands.literal("level").requires(s -> s.hasPermission(2))
                         .then(Commands.literal("set").then(Commands.argument("n", IntegerArgumentType.integer(1, ShishouLevels.MAX_LEVEL)).executes(ShishouCommand::setLevel))))
                 .then(Commands.literal("skills").executes(ShishouCommand::skills))
+                .then(Commands.literal("cast").then(Commands.argument("ability", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(castable(), b)).executes(ShishouCommand::cast)))
+                .then(Commands.literal("throw").executes(ShishouCommand::throwRecall))
                 .then(Commands.literal("broadcast").then(Commands.argument("on", BoolArgumentType.bool()).executes(ShishouCommand::broadcast)))
                 .then(Commands.literal("stomach").then(Commands.literal("auto").then(Commands.argument("on", BoolArgumentType.bool()).executes(ShishouCommand::stomachAuto))));
     }
@@ -65,6 +69,7 @@ public final class ShishouCommand {
         d.cap().reset();
         d.touch();
         ShishouLive.clearAll();
+        ShishouGrantService.syncAll(c.getSource().getServer());                              // nobody is the wielder now: the Tensura skill goes
         if (body != null) for (ServerLevel l : c.getSource().getServer().getAllLevels()) if (l.getEntity(body) instanceof ShishouEntity se) {
             se.expectRemoval();
             se.discard();
@@ -80,7 +85,7 @@ public final class ShishouCommand {
 
     private static int setLevel(CommandContext<CommandSourceStack> c) {
         if (!ShishouData.bound()) return fail(c, "The server has not started.");
-        int n = IntegerArgumentType.getInteger(c, "n");
+        int n = Math.max(IntegerArgumentType.getInteger(c, "n"), ShishouConfig.startLevel());      // he never drops below his start level
         ShishouData d = ShishouData.get();
         d.record().setLevel(n);
         d.touch();
@@ -90,6 +95,31 @@ public final class ShishouCommand {
     private static ServerPlayer wielder(CommandContext<CommandSourceStack> c) {
         ServerPlayer p = c.getSource().getPlayer();
         return p != null && ShishouService.enabled() && ShishouService.holding(p) ? p : null;
+    }
+
+    private static java.util.List<String> castable() {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        for (ShishouSkill s : ShishouSkill.values()) if (s.castable()) out.add(s.id());
+        return out;
+    }
+
+    /** The chat route of the skill's modes (for a server that switched the Tensura skill off, or a player who prefers it): the wielder casts an ability by id; the same cooldown, mana and rate limit as the skill. */
+    private static int cast(CommandContext<CommandSourceStack> c) {
+        ServerPlayer p = c.getSource().getPlayer();
+        if (p == null || !ShishouService.enabled() || !ShishouData.get().cap().isOwner(p.getUUID())) return fail(c, "Only his wielder may cast.");
+        ShishouSkill s = ShishouSkill.byId(StringArgumentType.getString(c, "ability"));
+        if (s == null || !s.castable()) return fail(c, "That is not an ability that can be cast (see the suggestions).");
+        if (!ShishouService.pressAllowed(p)) return fail(c, "Too fast.");
+        ShishouService.cast(p, s);
+        return 1;
+    }
+
+    private static int throwRecall(CommandContext<CommandSourceStack> c) {
+        ServerPlayer p = c.getSource().getPlayer();
+        if (p == null || !ShishouService.enabled() || !ShishouData.get().cap().isOwner(p.getUUID())) return fail(c, "Only his wielder may throw him.");
+        if (!ShishouService.pressAllowed(p)) return fail(c, "Too fast.");
+        ShishouService.throwRecall(p);
+        return 1;
     }
 
     private static int skills(CommandContext<CommandSourceStack> c) {
