@@ -79,6 +79,26 @@ class Ctx:
             self.card(bone, vec(*base) + td * height / 2.0, unit(third), td, width, height, region)
 
 
+def rot_about(v, axis, deg):
+    """The vector v turned by deg degrees about axis (Rodrigues)."""
+    a = unit(axis)
+    t = math.radians(deg)
+    return v * math.cos(t) + np.cross(a, v) * math.sin(t) + a * float(np.dot(a, v)) * (1.0 - math.cos(t))
+
+
+def curl_finger(c, bone, p0, dirv, lens, ws, curl, axis, faces, claw=None, cross=False, d=None):
+    """A finger (or toe) of boxes laid end to end, each turned `curl` degrees about `axis` from the one before, so it hooks; a claw card on the end."""
+    p = vec(*p0)
+    dv = unit(dirv)
+    for ln, w in zip(lens, ws):
+        q = p + dv * ln
+        c.limb(bone, p, q, w, w * 0.9, faces, pad=w * 0.3, d=d)
+        p = q
+        dv = rot_about(dv, axis, curl)
+    if claw:
+        c.spike(bone, p - dv * claw[0] * 0.15, dv, claw[0], claw[1], vec(1, 0, 0), "claw", cross=cross)
+
+
 def tail_path(n, start, heading0, heading1, length):
     """The nodes of a tail: n segments from `start` (y, z) heading0 degrees (0 = straight back +z, 90 = up, 180 = forward) turning to heading1; returns the n + 1 nodes as (y, z) and the headings."""
     pts = [np.array(start, dtype=np.float64)]
@@ -113,7 +133,7 @@ def wing_panels(span, big=False):
     P = wing_layout(span, big)
     S, E, W, H = [np.array(P[k], float) for k in ("S", "E", "W", "H")]
     T = [np.array(t, float) for t in P["T"]]
-    pull = 0.30 if not big else 0.26
+    pull = 0.40 if not big else 0.26
     panels = {}
     for k in range(3):                                                           # between finger k and finger k + 1
         edge = scallop(T[k], T[k + 1], W, pull)
@@ -172,8 +192,12 @@ def add_wing(ctx, side, S_pt, span, bones, lod, big=False, wk=1.0, bar_k=1.0):
     for k in range(4):
         if lod == 0:
             ctx.limb(fingers[k], Wr, T[k], fw, fw * 0.9, bar, pad=fw * 0.5, d=0)
-        elif lod == 1 and k in (0, 2):
+        elif lod == 1:
             ctx.limb(fingers[k], Wr, T[k], fw * 1.2, fw * 1.1, {"up": ("bone", 0), "down": ("bone", 0)}, pad=fw * 0.5, d=0)
+    if lod == 0:                                                                     # a claw on each finger tip (the three inner fingers)
+        for k in (1, 2, 3):
+            fd = unit(T[k] - Wr)
+            ctx.spike(fingers[k], T[k] - fd * 0.2 * wk, fd, 3.0 * wk, 1.5 * wk, vec(0, 1, 0), "claw", cross=True)
     if lod <= 1:                                                                     # the thumb claw standing at the wrist
         ctx.spike(out, Wr + vec(0, arm * 0.2, -arm * 0.1), vec(0.0, 0.8, -0.7), 4.6 * wk, 2.6 * wk, vec(s, 0, 0), "claw")
     panels = wing_panels(span, big)
@@ -188,57 +212,76 @@ def add_wing(ctx, side, S_pt, span, bones, lod, big=False, wk=1.0, bar_k=1.0):
 
 # ====================================================================================================================== the head (both forms)
 def head_parts(c, JH, hs, big, lod, d):
-    """The head, local to the head bone's pivot JH (the snout points to -z), scaled by hs: a skull, a two-step wedge snout, the lower jaw (its own bone) with a furnace on its top, big round slit eyes on cards,
-    slanted brow ridges, cheek frills, fangs and a swept crest; the big form adds two long swept horns. All the detail that is not a silhouette is texture."""
-    pal = A.BIG if big else A.SMALL
+    """The head, local to the head bone's pivot JH (the snout points to -z), scaled by hs. The small form's head is short and wide (a cat-like dragon face with a blunt snout), the big form's long with a
+    long jaw; both have a skull, a two-step sloping snout, cheeks, a lower jaw (its own bone) with a furnace on its top, big slit eyes on cards, slanted brow ridges with a spike each, cheek frills, a
+    jagged jaw line, fangs and a swept crest; the big form adds long swept horns. All the detail that is not a silhouette is texture."""
     SK = ("skin", d)
     BE = ("belly", d)
+    sl, ws = (1.0, 1.0) if big else (0.58, 1.2)
 
     def H(x, y, z):
         return JH + vec(x, y, z) * hs
     I3 = np.eye(3)
-    skull = {"up": ("head_top", 0), "west": ("skull_w", 0), "east": ("skull_e", 0), "south": SK, "down": BE}
+    rx = lambda a: L.rot_matrix(a, 0, 0)
+    L1, L2 = 4.6 * sl, 3.8 * sl
+    zs1 = -(6.9 + L1 / 2 - 0.4)
+    zs2 = -(6.9 + L1 + L2 / 2 - 0.8)
+    zend = -(6.9 + L1 + L2 - 0.8)
+    jlen = -zend - 1.2
     if lod == 2:
-        c.box("head", H(0, 0.3, -5.0), (7.2 * hs, 6.4 * hs, 12.0 * hs), I3, {"up": ("head_top", 0), "west": ("snout_w", 0), "east": ("snout_e", 0), "south": SK, "down": ("jaw_in", 0)}, 0)
+        c.box("head", H(0, 0.3, zend / 2), (7.4 * ws * hs, 6.4 * hs, -zend * hs), I3, {"up": ("head_top", 0), "west": ("snout_w", 0), "east": ("snout_e", 0), "south": SK, "down": ("jaw_in", 0)}, 0)
     else:
-        c.box("head", H(0, 0.4, -3.5), (7.4 * hs, 6.6 * hs, 7.2 * hs), I3, skull, 0)
+        c.box("head", H(0, 0.5, -3.4), (7.6 * ws * hs, 6.8 * hs, 7.0 * hs), I3, {"up": ("head_top", 0), "west": ("skull_w", 0), "east": ("skull_e", 0), "south": SK, "down": SK}, 0)
         sn1 = {"up": SK, "west": ("snout_w", 0), "east": ("snout_e", 0), "down": ("jaw_in", 0)}
-        c.box("head", H(0, -0.1, -9.0), (5.8 * hs, 4.8 * hs, 4.4 * hs), L.rot_matrix(-4, 0, 0), sn1, 0)
+        c.box("head", H(0, 0.3, zs1), (6.2 * ws * hs, 5.0 * hs, L1 * hs), rx(-7), sn1, 0)
         sn2 = {"up": SK, "west": ("snout_w", 0), "east": ("snout_e", 0), "down": ("jaw_in", 0), "north": ("snout_front", 0)}
-        c.box("head", H(0, -0.9, -12.3), (4.4 * hs, 3.8 * hs, 3.8 * hs), L.rot_matrix(-9, 0, 0), sn2, 0)
-    jaw = {"up": ("jaw_in", 0), "west": ("jaw_w", 0), "east": ("jaw_e", 0), "down": BE, "north": BE}
-    c.box("jaw", H(0, -3.0, -7.4), (4.6 * hs, 1.8 * hs, 11.4 * hs), L.rot_matrix(-2, 0, 0), jaw, 0)
-    if lod < 3:
-        for sx in (-1, 1):                                                           # eyes: a bulge and a big round slit eye on a card
-            if lod < 2:
-                c.box("head", H(sx * 3.45, 1.4, -4.4), (1.6 * hs, 3.4 * hs, 3.6 * hs), I3, {"up": SK, "north": SK, "south": SK, "west": SK, "east": SK})
-            reg = "eye_w" if sx < 0 else "eye_e"
-            right = vec(0, 0, -1) if sx < 0 else vec(0, 0, 1)
-            es = (3.3 if big else 4.4) * hs
-            c.card("head", H(sx * 4.32, 1.4, -4.6), right, vec(0, 1, 0), es, es, reg)
-            c.glow_card("head", H(sx * 4.34, 1.4, -4.6), right, vec(0, 1, 0), es, es, reg)
+        c.box("head", H(0, -0.7, zs2), (4.8 * ws * hs, 3.9 * hs, L2 * hs), rx(-13), sn2, 0)
+    jaw = {"up": ("jaw_in", 0), "west": ("jaw_w", 0), "east": ("jaw_e", 0), "down": SK, "north": SK}
+    c.box("jaw", H(0, -2.9, -1.2 - jlen / 2), (4.9 * ws * hs, 2.3 * hs, jlen * hs), rx(-2), jaw, 0)
+    for sx in (-1, 1):                                                           # eyes: a bulge and a big slit eye on a card
+        if lod < 2:
+            c.box("head", H(sx * 3.55 * ws, 1.5, -4.4), (1.6 * hs, 3.4 * hs, 3.6 * hs), I3, {"up": SK, "north": SK, "south": SK, "west": SK, "east": SK})
+        reg = "eye_w" if sx < 0 else "eye_e"
+        right = vec(0, 0, -1) if sx < 0 else vec(0, 0, 1)
+        es = (3.3 if big else 3.9) * hs
+        ex = sx * (3.55 * ws + 0.82) if lod < 2 else sx * (3.7 * ws + 0.05)
+        c.card("head", H(ex, 1.5, -4.7), right, vec(0, 1, 0), es, es, reg)
+        c.glow_card("head", H(ex + sx * 0.02, 1.5, -4.7), right, vec(0, 1, 0), es, es, reg)
     if lod == 0:
-        for sx in (-1, 1):                                                           # brow ridges: slanted bars over the eyes (the angry look)
-            c.box("head", H(sx * 3.0, 3.6, -4.0), (2.2 * hs, 1.7 * hs, 6.4 * hs), L.rot_matrix(-6, 0, sx * 20), {"up": SK, "west": SK, "east": SK, "north": SK}, d)
-            right = unit(vec(sx * 0.75, 0, 0.66))                                     # cheek frill: a fan of swept spines
-            c.card("head", H(sx * 6.9, -0.4, -0.4), right, unit(vec(-right[2], 0, right[0])), 7.2 * hs * (1.1 if big else 1.0), 5.4 * hs * (1.1 if big else 1.0), "frill")
+        for sx in (-1, 1):
+            c.box("head", H(sx * 3.1 * ws, 3.9, -4.2), (2.4 * hs, 1.8 * hs, 6.4 * hs), L.rot_matrix(-8, 0, sx * 22), {"up": SK, "west": SK, "east": SK, "north": SK}, d)       # brow ridge, slanted (the angry look)
+            c.spike("head", H(sx * 3.5 * ws, 4.6, -2.6), vec(sx * 0.35, 0.8, 0.5), 3.4 * hs, 1.9 * hs, vec(0, 0, -1), "spike")
+            c.box("head", H(sx * 4.1 * ws, -1.7, -1.0), (1.8 * hs, 3.2 * hs, 4.2 * hs), I3, {"up": SK, "west": SK, "east": SK, "north": SK})                                     # the cheek
+            right = unit(vec(sx * 0.78, 0, 0.62))                                    # cheek frill: a fan of swept spines (two cards at a slant for volume)
+            fk = 1.15 if big else 1.0
+            c.card("head", H(sx * 6.8 * ws, -0.2, -0.6), right, unit(vec(-right[2], 0, right[0])), 8.0 * hs * fk, 6.0 * hs * fk, "frill")
+            c.card("head", H(sx * 6.4 * ws, 0.6, -0.4), unit(right + vec(0, 0.5, 0)), unit(vec(-right[2], 0, right[0])), 6.4 * hs * fk, 4.8 * hs * fk, "frill")
+            for k, z in enumerate((-3.8, -5.8, -7.8)[: 3 if big else 2]):          # the jagged jaw line: small spikes down and back
+                c.spike("jaw", H(sx * 2.7 * ws, -3.6, z * (1.0 if big else 0.85)), vec(sx * 0.25, -0.55, 0.8), 2.6 * hs, 1.5 * hs, vec(0, 0, -1), "spike")
             nf = 3 if big else 2
             for k in range(nf):                                                      # fangs standing up from the lower jaw and hanging from the lip
-                z = -7.0 - k * (4.6 / max(1, nf - 1) if nf > 1 else 0)
-                c.spike("jaw", H(sx * 2.3, -2.2, z - 0.8), vec(0, 1, -0.2), 2.0 * hs, 1.2 * hs, vec(0, 0, 1), "fang")
-                c.spike("head", H(sx * 2.4, -2.3, z + 1.2), vec(0, -1, 0.1), 2.3 * hs, 1.3 * hs, vec(0, 0, 1), "fang")
-    for i, (z, hgt) in enumerate([(-5.0, 3.6), (-2.6, 4.6), (-0.2, 5.4), (2.0, 4.8)]):    # the swept crest on the skull's top
+                z = -(6.2 + k * (4.2 if big else 3.0) * sl)
+                c.spike("jaw", H(sx * 2.3 * ws, -2.2, z - 0.8), vec(0, 1, -0.2), 2.0 * hs, 1.2 * hs, vec(0, 0, 1), "fang")
+                c.spike("head", H(sx * 2.4 * ws, -2.3, z + 1.2), vec(0, -1, 0.1), 2.3 * hs, 1.3 * hs, vec(0, 0, 1), "fang")
+    elif lod == 1:
+        for sx in (-1, 1):
+            c.box("head", H(sx * 3.1 * ws, 3.9, -4.2), (2.4 * hs, 1.8 * hs, 6.4 * hs), L.rot_matrix(-8, 0, sx * 22), {"up": SK, "west": SK, "east": SK})
+            right = unit(vec(sx * 0.78, 0, 0.62))
+            c.card("head", H(sx * 6.8 * ws, -0.2, -0.6), right, unit(vec(-right[2], 0, right[0])), 8.0 * hs, 6.0 * hs, "frill")
+            c.spike("jaw", H(sx * 2.3 * ws, -2.2, -7.0), vec(0, 1, -0.2), 2.0 * hs, 1.2 * hs, vec(0, 0, 1), "fang")
+    crest = [(-5.0, 3.6), (-2.6, 4.6), (-0.2, 5.4), (2.0, 4.8)] + ([(4.2, 4.2), (6.4, 3.6)] if big else [])
+    for i, (z, hgt) in enumerate(crest):                                              # the swept crest on the skull's top
         if (lod == 2 and i % 2 == 0) or (lod == 1 and i == 0):
             continue
-        ang = math.radians(25 + 12 * i)
-        c.spike("head", H(0, 3.6 - 0.2 * i, z), vec(0, math.cos(ang), math.sin(ang)), hgt * hs, 3.0 * hs, vec(0, 0, -1), "spike", cross=lod == 0)
+        ang = math.radians(25 + 12 * min(i, 3))
+        c.spike("head", H(0, 3.6 - 0.2 * min(i, 3), z), vec(0, math.cos(ang), math.sin(ang)), hgt * hs, 3.0 * hs, vec(0, 0, -1), "spike", cross=lod == 0)
     if big and lod < 2:
-        for sx in (-1, 1):                                                           # the two long swept horns
-            c.spike("head", H(sx * 2.6, 3.0, -0.8), vec(sx * 0.22, 0.72, 0.66), 8.0 * hs, 3.2 * hs, vec(0, 0, -1) * (1 if sx < 0 else -1), "horn", cross=lod == 0)
+        for sx in (-1, 1):                                                           # the long swept horns
+            c.spike("head", H(sx * 2.8, 3.0, -0.8), vec(sx * 0.22, 0.72, 0.66), 8.6 * hs, 3.4 * hs, vec(0, 0, -1) * (1 if sx < 0 else -1), "horn", cross=lod == 0)
             if lod == 0:
-                c.spike("head", H(sx * 3.9, 1.0, 1.0), vec(sx * 0.7, 0.3, 0.64), 4.8 * hs, 2.4 * hs, vec(0, 0, -1), "horn")
+                c.spike("head", H(sx * 4.2, 1.0, 0.8), vec(sx * 0.7, 0.3, 0.64), 5.2 * hs, 2.6 * hs, vec(0, 0, -1), "horn")
     if c.fx:                                                                        # the furnace in the mouth
-        c.m.box("jaw", H(0, -2.0, -7.4), (4.4 * hs, 0.0, 11.0 * hs), I3, {"up": ("jaw_in", 0)}, 0)
+        c.m.box("jaw", H(0, -1.72, -1.2 - jlen / 2), (4.7 * ws * hs, 0.0, jlen * hs), I3, {"up": ("jaw_in", 0)}, 0)
 
 
 # ====================================================================================================================== the small form
@@ -279,8 +322,11 @@ def small_atlas():
     pal, seed = f["pal"], f["seed"]
     at = L.Atlas(512, 512)
     z = lambda w, h: np.zeros((h, w, 4), np.float32)
-    at.region("skin", 128, 128, lambda w, h: (A.skin(w, h, pal, seed, cell=11), z(w, h)))
-    at.region("tail_skin", 96, 96, lambda w, h: (A.plates(w, h, pal, seed + 20, cell=22, squash=0.95), z(w, h)))
+    back = dict(pal, base="#B0361F", light="#DE5A3E", dark="#6A1C14")                  # the shadowed back: darker plates on the top faces
+    at.region("skin", 128, 128, lambda w, h: (A.skin(w, h, pal, seed, cell=18), z(w, h)))
+    at.region("skin_back", 128, 128, lambda w, h: (A.skin(w, h, back, seed + 3, cell=18), z(w, h)))
+    at.region("tail_skin", 96, 96, lambda w, h: (A.plates(w, h, pal, seed + 20, cell=26, squash=0.95), z(w, h)))
+    at.region("tail_back", 96, 96, lambda w, h: (A.plates(w, h, back, seed + 21, cell=26, squash=0.95), z(w, h)))
     at.region("belly", 64, 64, lambda w, h: (A.belly(w, h, pal, seed + 1), z(w, h)))
     head_regions(at, pal, seed, 1, False)
     add_wing_regions(at, pal, seed + 40, SMALL_SPAN, 3.6, False, SMALL_BARK)
@@ -302,9 +348,10 @@ def build_small(lod, atlas, fx=False):
     c = Ctx("salamander", lod, fx, atlas, ident, 0.5 if fx else {0: 1.0, 1: 0.5, 2: 0.25}[lod], f["seed"] + lod, f["d"])
     d = f["d"]
     SK = ("skin", d)
+    SB = ("skin_back", d)
     BE = ("belly", d)
-    sk = {"up": SK, "west": SK, "east": SK, "down": BE}
-    L4 = {"up": SK, "down": SK, "west": SK, "east": SK}
+    sk = {"up": SB, "west": SK, "east": SK, "down": BE}
+    L4 = {"up": SB, "down": SK, "west": SK, "east": SK}
 
     # ------------------------------------------------------------------ bones
     c.bone("body", (0, 12, 2), "root")
@@ -313,7 +360,7 @@ def build_small(lod, atlas, fx=False):
         c.bone("neck2", (0, 10.0, -16.2), "neck1")
     head_parent = "neck2" if lod < 2 else "neck1"
     JH = vec(0, 8.8, -19.5)
-    c.bone("head", JH, head_parent, (-13, 0, 0))
+    c.bone("head", JH, head_parent, (-7, 0, 0))
     c.bone("jaw", JH + vec(0, -2.0, -1.2), "head")
 
     # ------------------------------------------------------------------ torso: an arched spine, a deep chest
@@ -336,6 +383,9 @@ def build_small(lod, atlas, fx=False):
         y, hh = spine_at(nodes, z)
         hgt = 3.0 + 1.8 * math.sin((i + 0.5) / len(zs) * math.pi)
         c.spike("body", vec(0, y + hh - 0.5, z), vec(0, 0.9, 0.42), hgt, 2.5, vec(0, 0, -1), "spike", cross=lod == 0)
+        if lod == 0:
+            for sxx in (-1, 1):                                                      # a second, lower row on each side of the ridge
+                c.spike("body", vec(sxx * 2.8, y + hh - 1.2, z - 1.4), vec(sxx * 0.45, 0.8, 0.4), hgt * 0.55, 1.8, vec(0, 0, -1), "spike")
 
     # ------------------------------------------------------------------ neck
     N = [vec(0, 11.6, -12.5), vec(0, 10.2, -16.4), vec(0, 8.8, -19.8)]
@@ -356,6 +406,8 @@ def build_small(lod, atlas, fx=False):
         c.bone("arm_" + tag, Sh, "body")
         c.limb("arm_" + tag, Sh, El, 4.4, 4.2, L4, pad=1.6)
         c.bone("fore_" + tag, El, "arm_" + tag)
+        if lod == 0:
+            c.spike("fore_" + tag, El + vec(sx * 1.6, 0.4, 0.8), vec(sx * 0.8, 0.35, 0.45), 3.0, 1.6, vec(0, 0, -1), "spike")                  # a spike on each elbow
         if lod < 2:
             c.box("fore_" + tag, El, (3.6, 3.6, 3.6), L.rot_matrix(0, 45, 0), {"*": SK})                                                    # the elbow knob
         c.limb("fore_" + tag, El, Wr, 3.4, 3.2, L4, pad=1.2)
@@ -363,36 +415,31 @@ def build_small(lod, atlas, fx=False):
             c.bone("hand_" + tag, Wr, "fore_" + tag)
             c.limb("hand_" + tag, Wr, Kn, 3.8, 2.2, L4, pad=1.0)
             for j, off in enumerate((-2.6, 0.0, 2.6)):
-                tip = Kn + vec(off * 1.15, -3.2 - 0.4 * (1 - abs(j - 1)), -3.0)
                 st = Kn + vec(off * 0.8, 0.0, 0.0)
-                if lod == 0:
-                    c.limb("hand_" + tag, st, tip, 1.3, 1.2, L4, pad=0.4)
-                    c.spike("hand_" + tag, tip, unit(vec(0, -0.7, -0.7)), 2.8, 1.5, vec(1, 0, 0), "claw")
-                else:
-                    c.limb("hand_" + tag, st, tip, 1.4, 1.3, {"up": SK, "west": SK, "east": SK}, pad=0.4)
+                f = L4 if lod == 0 else {"up": SK, "west": SK, "east": SK}
+                curl_finger(c, "hand_" + tag, st, vec(off * 0.12, -0.38, -0.9), (2.6, 2.4) if lod == 0 else (4.6,), (1.35, 1.15) if lod == 0 else (1.4,), -30, (1, 0, 0), f, (2.8, 1.5) if lod == 0 else (2.4, 1.4))
         Hp, Kne, Ank = vec(sx * 5.9, 11.6, 9.0), vec(sx * 10.8, 8.6, 12.2), vec(sx * 10.0, 6.0, 8.6)
         c.bone("leg_" + tag, Hp, "body")
         c.limb("leg_" + tag, Hp, Kne, 5.2, 5.4, L4, pad=1.4)
         c.bone("shin_" + tag, Kne, "leg_" + tag)
         c.limb("shin_" + tag, Kne, Ank, 3.4, 3.2, L4, pad=1.2)
+        if lod == 0:
+            c.spike("leg_" + tag, Kne + vec(sx * 2.4, 0.8, 0.6), vec(sx * 0.8, 0.3, 0.5), 3.4, 1.8, vec(0, 0, -1), "spike")                   # a spike on each knee
         if lod < 2:
             c.bone("foot_" + tag, Ank, "shin_" + tag)
             c.limb("foot_" + tag, Ank, Ank + vec(0, -0.3, -5.6), 3.6, 2.0, L4, pad=0.8)
             for j, off in enumerate((-2.4, 0.0, 2.4)):
                 st = Ank + vec(off * 0.8, -0.4, -5.2)
-                tip = st + vec(off * 0.4, -1.4, -3.2)
-                if lod == 0:
-                    c.limb("foot_" + tag, st, tip, 1.2, 1.1, L4, pad=0.3)
-                    c.spike("foot_" + tag, tip, unit(vec(0, -0.7, -0.7)), 2.4, 1.4, vec(1, 0, 0), "claw")
+                curl_finger(c, "foot_" + tag, st, vec(off * 0.1, -0.3, -0.95), (2.0, 1.8) if lod == 0 else (3.6,), (1.2, 1.05) if lod == 0 else (1.3,), -32, (1, 0, 0), L4, (2.4, 1.4) if lod == 0 else (2.0, 1.2))
 
     # ------------------------------------------------------------------ the tail: a column of plates that curls up over the back, a spike on each
-    tail_chain(c, d, "tail_skin", {0: 12, 1: 6, 2: 4}[lod], 12, (10.6, 15.0), 14.0, 196.0, 58.0, 5.8, 0.93, 4.4, 3.0, lod, barb=(6.0, 3.0))
+    tail_chain(c, d, ("tail_back", "tail_skin"), {0: 12, 1: 6, 2: 4}[lod], 12, (10.6, 15.0), 14.0, 196.0, 58.0, 5.8, 0.93, 4.4, 3.0, lod, barb=(6.0, 3.0))
 
     # ------------------------------------------------------------------ the wings: raised and swept back on the shoulder blades, four finger bones, scalloped membranes
     for sx, tag in ((-1, "R"), (1, "L")):
         S_pt = vec(sx * 3.8, 15.6, -3.6)
         names = ("wing_" + tag, "wingout_" + tag, ["wf%d_%s" % (k + 1, tag) for k in range(4)])
-        c.bone(names[0], S_pt, "body", (0, -sx * 34, sx * 66))
+        c.bone(names[0], S_pt, "body", (22, -sx * 30, sx * 64))
         P = wing_layout(SMALL_SPAN)
         c.bone(names[1], S_pt + vec(sx * P["E"][0], 0, P["E"][1]), names[0], (0, 0, 0))
         for k in range(4):
@@ -421,13 +468,19 @@ def tail_chain(c, d, region, n, full, start, h0, h1, length, w0, taper, spike_h,
         h_ = 0.88 * (w + w1) / 2
         av = lerp(heads[i0], heads[min(i1, full) - 1], 0.5)
         nrm = vec(0, math.cos(av), -math.sin(av))
-        sd = {"up": (region, d), "west": (region, d), "east": (region, d), "down": (region, d)}
+        ru, rs = (region if isinstance(region, tuple) else (region, region))
+        sd = {"up": (ru, d), "west": (rs, d), "east": (rs, d), "down": (rs, d)}
         c.limb(nm, vec(0, a[0], a[1]), vec(0, b[0], b[1]), (w + w1) / 2, h_, sd, up=nrm, pad=w0 * 0.2, d=d)
         mid = (a + b) / 2
         sp_dir = unit(0.55 * vec(0, 1, 0) + 0.45 * (-nrm))
         sh = max(2.0, spike_h * (1.0 - 0.45 * i0 / full)) * (1.0 if lod == 0 else 1.15)
         top = vec(0, mid[0], mid[1]) + (-nrm) * (h_ / 2 - 0.2 * spike_h * 0.1)
         c.spike(nm, top, sp_dir, sh, spike_w * (0.9 + 0.1 * (1 - i0 / full)), vec(0, 0, -1), "spike", cross=lod == 0 and k < n * 2 // 3)
+        if lod == 0 and k < n * 3 // 4:                                              # side spines: a pair on each segment, swept out and back
+            hv = vec(0, math.sin(av), math.cos(av))
+            for sxx in (-1, 1):
+                sdir = unit(vec(sxx * 0.85, 0.0, 0.0) + 0.3 * hv + 0.25 * (-nrm))
+                c.spike(nm, vec(0, mid[0], mid[1]) + vec(sxx * (w + w1) / 4.0, 0, 0), sdir, max(1.6, sh * 0.5), spike_w * 0.7, hv, "spike")
         prev = nm
     last = pts[full]
     c.bone("tail_tip", vec(0, last[0], last[1]), prev)
@@ -472,8 +525,8 @@ def build_dragon(lod, atlas, fx=False):
 
     c.bone("body", (0, 26, 0), "root")
     c.bone("chest", (0, 44, -5), "body")
-    N = [vec(0, 60, -8), vec(0, 72, -15), vec(0, 84, -23), vec(0, 94, -32)]
-    JH = vec(0, 100, -39)
+    N = [vec(0, 60, -8), vec(0, 73, -12), vec(0, 87, -18), vec(0, 98, -27)]
+    JH = vec(0, 103, -36)
     nb = ["neck1", "neck2", "neck3", "neck4"]
     chain = {0: [0, 1, 2, 3], 1: [0, 2], 2: [0]}[lod]
     prev = "chest"
@@ -481,8 +534,8 @@ def build_dragon(lod, atlas, fx=False):
     for k in chain:
         c.bone(nb[k], N[k], prev)
         prev = nb[k]
-    c.bone("head", JH, prev, (-9, 0, 0))
-    c.bone("jaw", JH + vec(0, -2.0, -1.2) * BIG_HS, "head", (-14, 0, 0))
+    c.bone("head", JH, prev, (-16, 0, 0))
+    c.bone("jaw", JH + vec(0, -2.0, -1.2) * BIG_HS, "head", (-9, 0, 0))
 
     # ------------------------------------------------------------------ torso: a stack of slices (a hips-to-collar-bone profile: narrow waist, broad chest) wearing ONE painted front (chest, ribs, abs)
     def slices(rows, lean):
@@ -506,13 +559,29 @@ def build_dragon(lod, atlas, fx=False):
     else:
         c.box("body", vec(0, 22, -2.2), (28, 30, 20), rx(-5), {"west": SK, "east": SK, "south": SK, "north": ("torso_front", 0, False, (0.1, 0.35, 0.9, 1.0))})
         c.box("chest", vec(0, 47, -6.8), (44, 26, 23), rx(-9), {"up": SK, "west": SK, "east": SK, "south": SK, "north": ("torso_front", 0, False, (0.0, 0.0, 1.0, 0.4))})
+    if lod == 0:                                                                        # relief: heavy pectorals and six blocks of abs standing proud of the slices, each wearing its piece of the painted front
+        def zf(y):
+            dep = 21.0 + (y - 20.0) * 0.1
+            return 1.0 - 0.15 * (y - 2.0) - dep / 2.0
+        for sx in (-1, 1):
+            xs = (1.0, 21.5) if sx > 0 else (-21.5, -1.0)
+            u0, u1 = (27.0 + xs[0]) / 54.0, (27.0 + xs[1]) / 54.0
+            y0, y1 = 43.2, 57.0
+            c.box("chest", vec(sx * 11.2, (y0 + y1) / 2, zf(50) + 0.6), (xs[1] - xs[0], y1 - y0, 6.0), L.rot_matrix(-10, 0, sx * 7),
+                  {"up": SK, "down": SK, "west": SK, "east": SK, "north": ("torso_front", 0, False, (u0, (60.0 - y1) / 62.0, u1, (60.0 - y0) / 62.0))})
+            xs2 = (1.2, 10.6) if sx > 0 else (-10.6, -1.2)
+            ua, ub = (27.0 + xs2[0]) / 54.0, (27.0 + xs2[1]) / 54.0
+            for k in range(3):
+                ya, yb = 29.0 - k * 7.2 - 6.2, 29.0 - k * 7.2
+                c.box("body", vec(sx * 5.9, (ya + yb) / 2, zf((ya + yb) / 2) + 0.9), (xs2[1] - xs2[0], yb - ya, 3.4), rx(-6),
+                      {"up": SK, "down": SK, "west": SK, "east": SK, "north": ("torso_front", 0, False, (ua, (60.0 - yb) / 62.0, ub, (60.0 - ya) / 62.0))})
     if lod < 2:
         for sx in (-1, 1):
             c.box("chest", vec(sx * 30.5, 55, -6.5), (18, 17, 19), L.rot_matrix(0, 0, sx * 18), {"up": SK, "west": MU, "east": MU, "north": SK, "south": SK})        # the deltoids
             c.box("chest", vec(sx * 13, 61.5, -7.5), (24, 9, 18), L.rot_matrix(-8, 0, -sx * 16), {"up": SK, "north": SK, "west": SK, "east": SK})                        # the trapezius
 
     # ------------------------------------------------------------------ the long neck: boxes laid between the nodes, the throat toward the front, spines down the back
-    widths = [(21.0, 18.0), (17.0, 15.0), (14.5, 13.0), (12.8, 11.8)]
+    widths = [(25.0, 21.0), (20.0, 18.0), (17.0, 15.0), (15.0, 13.5)]
     nf = {"up": SK, "west": SK, "east": SK, "down": ("neck_front", 0)}
     segs = {0: [(0, 1, 0), (1, 2, 1), (2, 3, 2), (3, 4, 3)], 1: [(0, 2, 0), (2, 4, 2)], 2: [(0, 4, 0)]}[lod]
     for a, b, wi in segs:
@@ -541,17 +610,19 @@ def build_dragon(lod, atlas, fx=False):
         if lod < 2:
             c.box("fore_" + tag, El, (10, 10, 10), L.rot_matrix(0, 45, 0), {"*": SK})
         c.limb("fore_" + tag, El, Wr, 10.5, 10.0, {"up": SK, "down": SK, "west": MU, "east": MU}, pad=2.4, d=d)
+        if lod == 0:
+            fd = unit(Wr - El)
+            for t_ in (0.32, 0.56, 0.8):                                               # blade spines along the outer edge of the forearm
+                c.spike("fore_" + tag, El + (Wr - El) * t_ + vec(sx * 5.0, 0.4, 0), unit(vec(sx * 0.55, 0.25, 0.25) + fd * 0.45), 7.5 - 2.0 * t_, 3.4, fd, "spike")
+            c.spike("chest", vec(sx * 31, 62.5, -6.0), vec(sx * 0.35, 0.9, 0.2), 9.0, 4.6, vec(0, 0, 1), "spike", cross=True)       # a spike on each shoulder
         if lod < 2:
             c.bone("hand_" + tag, Wr, "fore_" + tag)
             c.limb("hand_" + tag, Wr, Pa, 10.0, 5.0, L4, pad=2.0, d=d)
             for j, off in enumerate((-4.5, -1.5, 1.5, 4.5)):
                 st = Pa + vec(off * 0.7, 0.0, -1.0)
-                tip = st + vec(off * 0.9, -9.5 + abs(off) * 0.5, -6.5)
-                if lod == 0:
-                    c.limb("hand_" + tag, st, tip, 3.0, 2.6, L4, pad=0.8, d=d)
-                    c.spike("hand_" + tag, tip, unit(vec(0, -0.78, -0.62)), 6.5, 3.4, vec(1, 0, 0), "claw")
-                else:
-                    c.limb("hand_" + tag, st, tip, 3.4, 3.0, {"up": SK, "west": SK, "east": SK}, pad=0.8, d=d)
+                dv0 = vec(off * 0.07, -0.55, -0.83)
+                f = L4 if lod == 0 else {"up": SK, "west": SK, "east": SK}
+                curl_finger(c, "hand_" + tag, st, dv0, (6.0, 5.4) if lod == 0 else (10.5,), (3.2, 2.7) if lod == 0 else (3.4,), -24, (1, 0, 0), f, (6.4, 3.4) if lod == 0 else (5.4, 3.0), cross=lod == 0, d=d)
 
     # ------------------------------------------------------------------ legs: tucked, thighs forward, shins down, clawed feet
     for sx, tag in ((-1, "R"), (1, "L")):
@@ -562,24 +633,24 @@ def build_dragon(lod, atlas, fx=False):
         if lod < 2:
             c.box("shin_" + tag, Kne, (11, 11, 11), L.rot_matrix(0, 45, 0), {"*": SK})
         c.limb("shin_" + tag, Kne, Ank, 11.0, 10.0, {"up": SK, "down": SK, "west": MU, "east": MU}, pad=2.4, d=d)
+        if lod == 0:
+            c.spike("leg_" + tag, Kne + vec(sx * 8.0, 1.0, -1.0), vec(sx * 0.75, 0.25, -0.4), 8.0, 4.0, vec(0, 0, 1), "spike")           # a spike on each knee
+            c.spike("shin_" + tag, Ank + vec(0, 3.0, 5.0), vec(0, 0.3, 1.0), 6.0, 3.4, vec(1, 0, 0), "spike")                           # a spur on each heel
         if lod < 2:
             c.bone("foot_" + tag, Ank, "shin_" + tag)
             c.limb("foot_" + tag, Ank, Ank + vec(0, -4.0, -15.0), 10.5, 5.0, L4, pad=1.6, d=d)
             for j, off in enumerate((-3.4, 0.0, 3.4)):
                 st = Ank + vec(off * 0.8, -4.0, -14.0)
-                tip = st + vec(off * 0.5, -3.6, -6.5)
-                if lod == 0:
-                    c.limb("foot_" + tag, st, tip, 3.2, 2.8, L4, pad=0.6, d=d)
-                    c.spike("foot_" + tag, tip, unit(vec(0, -0.7, -0.7)), 5.4, 3.2, vec(1, 0, 0), "claw")
+                curl_finger(c, "foot_" + tag, st, vec(off * 0.05, -0.3, -0.95), (4.6, 4.0) if lod == 0 else (8.0,), (3.3, 2.9) if lod == 0 else (3.2,), -30, (1, 0, 0), L4, (5.4, 3.2) if lod == 0 else (4.4, 2.8), cross=lod == 0, d=d)
 
     # ------------------------------------------------------------------ the tail: a long spiny chain that trails down and sweeps up
-    tail_chain(c, d, "skin", {0: 14, 1: 7, 2: 4}[lod], 14, (-1.0, 9.0), -22.0, 26.0, 150.0, 16.0, 0.915, 9.0, 5.0, lod, barb=(11.0, 5.5))
+    tail_chain(c, d, ("skin", "skin"), {0: 14, 1: 7, 2: 4}[lod], 14, (-1.0, 9.0), -22.0, 26.0, 150.0, 16.0, 0.915, 9.0, 5.0, lod, barb=(11.0, 5.5))
 
     # ------------------------------------------------------------------ the wings: huge, four long finger bones, veined membrane
     for sx, tag in ((-1, "R"), (1, "L")):
         S_pt = vec(sx * 14, 56, 3.0)
         names = ("wing_" + tag, "wingout_" + tag, ["wf%d_%s" % (k + 1, tag) for k in range(4)])
-        c.bone(names[0], S_pt, "chest", (0, -sx * 14, sx * 22))
+        c.bone(names[0], S_pt, "chest", (40, -sx * 10, sx * 46))
         P = wing_layout(BIG_SPAN, True)
         c.bone(names[1], S_pt + vec(sx * P["E"][0], 0, P["E"][1]), names[0], (0, 0, 0))
         for k in range(4):
@@ -685,9 +756,26 @@ def animations(form):
 
 
 # ====================================================================================================================== main
+LOD_JAVA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "java", "com", "newuniverse", "nusmp", "firecast", "FireCastLod.java")
+
+
+def sync_java(counts):
+    """--sync: writes the quad counts of the generated models into the table of firecast/FireCastLod.java (FireCastLodTest holds the two equal)."""
+    import re
+    with open(LOD_JAVA) as f:
+        src = f.read()
+    sal, dra = counts["salamander"], counts["dragon"]
+    src = re.sub(r"SALAMANDER_QUADS = \{[^}]*\}, DRAGON_QUADS = \{[^}]*\};", "SALAMANDER_QUADS = {%d, %d, %d}, DRAGON_QUADS = {%d, %d, %d};" % (sal[0], sal[1], sal[2], dra[0], dra[1], dra[2]), src)
+    src = re.sub(r"SALAMANDER_FX_QUADS = \d+, DRAGON_FX_QUADS = \d+;", "SALAMANDER_FX_QUADS = %d, DRAGON_FX_QUADS = %d;" % (sal[3], dra[3]), src)
+    with open(LOD_JAVA, "w", newline="\n") as f:
+        f.write(src)
+    print("synced", LOD_JAVA)
+
+
 def main():
     count_only = "--count" in sys.argv
     only = [a for a in sys.argv[1:] if not a.startswith("--")]
+    counts = {}
     for form, atlas, builder in (("salamander", small_atlas, build_small), ("dragon", big_atlas, build_dragon)):
         if only and form not in only:
             continue
@@ -706,6 +794,9 @@ def main():
             L.write_animations("firecast_" + form, animations(form))
         for r in rows:
             print("%-28s cubes %4d  quads %5d" % r)
+        counts[form] = [r[2] for r in rows]                                           # full, half, low, glow-only
+    if "--sync" in sys.argv and len(counts) == 2:
+        sync_java(counts)
 
 
 if __name__ == "__main__":

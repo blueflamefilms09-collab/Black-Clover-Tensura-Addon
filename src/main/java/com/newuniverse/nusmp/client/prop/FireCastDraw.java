@@ -46,7 +46,7 @@ public final class FireCastDraw {
         float s = (dragon ? DRAGON_SCALE : SMALL_SCALE) * (0.8f + 0.2f * fade);
         pose.pushPose();
         if (dragon) {
-            pose.translate(0f, -4.3f * s, 0.7f * s);                                                // the model's origin is its pelvis: its mouth (100 units up, 70 forward) lands on the casting emitter
+            pose.translate(0f, -3.6f * s, 1.0f * s);                                                // the model's origin is its pelvis: its mouth (87 units up, 68 forward) lands on the casting emitter
             pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(2f + 2f * Mth.sin(age * 0.07f)));       // hanging upright in the air, a slow lean
         } else {
             pose.translate(0f, -0.01f, 0.02f);

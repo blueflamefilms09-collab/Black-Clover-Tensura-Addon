@@ -20,12 +20,12 @@ from firecast_geo_lib import rgb, smoothstep, fbm  # noqa: E402
 SS = 3                                                    # supersampling of the drawn shapes
 
 SMALL = dict(base="#D8482E", dark="#8A2418", deep="#4E140F", light="#F2704C", outline="#2A0C0A", line="#3A100C", ring="#F6B04C", ring_in="#E5582F",
-             belly="#F2A04A", belly_dark="#C26A2C", belly_line="#7A3216", membrane="#F4A24C", membrane2="#E27C3A", membrane_hi="#FAC070", vein="#B0381C", bone="#A02818",
-             bone_light="#D8583A", eye="#F4D64A", eye_dark="#1C0707", tooth="#F8EEDA", claw="#F0D8A8", claw_dark="#7A3A22", spike="#E4502C", spike_tip="#F6B060", mouth="#6A0E10",
+             belly="#EE8C46", belly_dark="#B8502A", belly_line="#6E2412", membrane="#F4A24C", membrane2="#E27C3A", membrane_hi="#FAC070", vein="#B0381C", bone="#A02818",
+             bone_light="#D8583A", eye="#FFE95A", eye_dark="#1C0707", tooth="#F8EEDA", claw="#F0D8A8", claw_dark="#7A3A22", spike="#E4502C", spike_tip="#F6B060", mouth="#6A0E10",
              glow="#FFD45A", spots=0.0, cell=8, seam=0.55, big=False)
-BIG = dict(base="#F5B95F", dark="#D58A3A", deep="#A5562A", light="#FCD890", outline="#6A3012", line="#8E4418", ring="#B8472A", ring_in="#EEA85A", belly="#F6D088", belly_dark="#DDA050",
+BIG = dict(base="#F6A83F", dark="#E0802C", deep="#B05A22", light="#FFC966", outline="#6A3012", line="#8E4418", ring="#B8472A", ring_in="#EEA85A", belly="#F6D088", belly_dark="#DDA050",
            belly_line="#B26A2E", membrane="#F3BE68", membrane2="#EAA04C", membrane_hi="#FAD890", vein="#C0502A", bone="#C2622C", bone_light="#EE9A52", eye="#F8E858", eye_dark="#1E0A04",
-           tooth="#FBF2DE", claw="#A82E1E", claw_dark="#5A140C", spike="#E08A3A", spike_tip="#F8CE80", mouth="#7A1A12", glow="#FFE070", spots=0.55, cell=11, seam=0.24, big=True)
+           tooth="#FBF2DE", claw="#A82E1E", claw_dark="#5A140C", spike="#F29A44", spike_tip="#FBD98A", mouth="#7A1A12", glow="#FFE070", spots=0.30, cell=11, seam=0.24, big=True)
 
 
 def col(h, a=255):
@@ -108,11 +108,11 @@ def plates(w, h, pal, seed, cell=None, squash=0.78):
             shade = (t - 0.5) * 0.35
             body = mix(base, light if shade > 0 else dark, abs(shade) * 0.8)
             tip = [(x, y), (x + cw, y), (x + cw * 1.02, y + ch * 0.62), (x + cw * 0.5, y + ch * 1.42), (x - cw * 0.02, y + ch * 0.62)]
-            poly(dr, tip, body, outline, 0.9)
+            poly(dr, tip, body, outline, 1.15)
             hi = [(x + cw * 0.10, y + ch * 0.10), (x + cw * 0.90, y + ch * 0.10), (x + cw * 0.84, y + ch * 0.34), (x + cw * 0.50, y + ch * 0.46), (x + cw * 0.16, y + ch * 0.34)]
             dr.polygon(S(hi), fill=mix(body, light, 0.40))
             sh = [(x + cw * 0.10, y + ch * 0.70), (x + cw * 0.50, y + ch * 1.06), (x + cw * 0.90, y + ch * 0.70), (x + cw * 0.50, y + ch * 0.92)]
-            dr.polygon(S(sh), fill=mix(body, dark, 0.65))
+            dr.polygon(S(sh), fill=mix(body, dark, 0.45))
     out = done(img, w, h)
     out[..., 3] = 255
     return out
@@ -148,7 +148,7 @@ def ring_spots(base_img, w, h, pal, rng):
     """Ring spots: a dark red ring round an orange centre with a thin outline, scattered on a jittered grid; some are open rosettes (a broken ring with a dot), like the leopard spots of the giant spirit."""
     big = canvas(w, h)
     dr = ImageDraw.Draw(big)
-    gap = 30
+    gap = 34
     ringc, inner, line_c = col(pal["ring"], 255), col(pal["ring_in"], 255), col(pal["line"], 255)
     for gy in range(-1, h // gap + 2):
         for gx in range(-1, w // gap + 2):
@@ -183,9 +183,8 @@ def belly(w, h, pal, seed):
     for r in range(rows):
         y = r * band
         t = rng.random()
-        poly(dr, [(0, y + band * 0.08), (w, y + band * 0.08), (w, y + band * 0.92), (0, y + band * 0.92)], mix(b, (255, 235, 170), 0.25 * t), col(pal["belly_line"]), 0.9)
+        poly(dr, [(0, y + band * 0.08), (w, y + band * 0.08), (w, y + band * 0.92), (0, y + band * 0.92)], mix(b, rgb(pal["light"]), 0.12 * t), col(pal["belly_line"]), 1.1)
         dr.rectangle([0, int((y + band * 0.62) * SS), w * SS, int((y + band * 0.90) * SS)], fill=mix(b, dk, 0.35))
-        line(dr, [(0, y + band * 0.12), (w, y + band * 0.12)], col("#FFE6A8", 200), 0.7)
     line(dr, [(w / 2, 0), (w / 2, h)], col(pal["belly_line"], 150), 0.8)
     out = done(img, w, h)
     out[..., 3] = 255
@@ -204,7 +203,7 @@ def spike(w, h, pal, seed):
     dr = ImageDraw.Draw(img)
     pts = [(w * 0.10, h), (w * 0.96, h), (w * 0.70, h * 0.46), (w * 0.10, 0.5)]
     poly(dr, pts, col(pal["line"]))
-    inset = [(w * 0.24, h - 1.6), (w * 0.84, h - 1.6), (w * 0.64, h * 0.48), (w * 0.12, 3.5)]
+    inset = [(w * 0.20, h - 0.9), (w * 0.88, h - 0.9), (w * 0.66, h * 0.47), (w * 0.12, 2.2)]
     poly(dr, inset, col(pal["spike"]))
     tip = [(w * 0.12, 3.5), (w * 0.36, h * 0.34), (w * 0.66, h * 0.5), (w * 0.64, h * 0.48)]
     dr.polygon(S([(w * 0.12, 3.5), (w * 0.34, h * 0.30), (w * 0.52, h * 0.42), (w * 0.64, h * 0.48), (w * 0.40, h * 0.30)]), fill=col(pal["spike_tip"]))
@@ -350,11 +349,13 @@ def snout_side(w, h, pal, seed, mirror=False):
 
 
 def jaw_side(w, h, pal, seed, mirror=False):
-    """The lower jaw's side (front at the left): belly-coloured plates, teeth standing up from the top edge, a darker lower edge."""
-    img = belly(w, h, pal, seed)
+    """The lower jaw's side (front at the left): plates, a lighter chin band along the bottom, teeth standing up from the top edge, a dark line under the teeth."""
+    img = skin(w, h, pal, seed, cell=max(5.0, w / 8.0), spots=False)
     lay = canvas(w, h)
     dr = ImageDraw.Draw(lay)
-    n = max(4, int(w / 8))
+    poly(dr, [(0, h * 0.70), (w, h * 0.66), (w, h), (0, h)], col(pal["belly"], 235), None)
+    line(dr, [(0, h * 0.70), (w, h * 0.66)], col(pal["line"], 200), 1.2)
+    n = max(4, int(w / 9))
     for i in range(n):
         x = (i + 0.5) * w / n
         t = 0.7 + 0.5 * abs(math.sin(i * 1.7 + 1))
@@ -402,7 +403,7 @@ def head_top(w, h, pal, seed):
 
 def snout_front(w, h, pal, seed):
     """The tip of the snout seen from the front: plates, two nostrils."""
-    img = skin(w, h, pal, seed, cell=max(4.0, w / 7.0), spots=False)
+    img = skin(w, h, pal, seed, cell=max(4.0, w / 4.0), spots=False)
     lay = canvas(w, h)
     dr = ImageDraw.Draw(lay)
     for fx in (0.30, 0.70):
