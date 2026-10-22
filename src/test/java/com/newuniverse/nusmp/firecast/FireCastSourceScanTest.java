@@ -80,9 +80,10 @@ class FireCastSourceScanTest {
     @Test
     void theGrimoireCastPathStillCallsTheHooksAndTheOldPagesAreUntouched() throws IOException {
         String gb = code(SRC.resolve("book/GrimoireBook.java"));
-        for (String hook : new String[]{"FireCasting.held(", "FireCasting.release(", "FireCasting.refuse(", "FireCasting.run(", "FireCasting.releaseClip(", "FireCasting.ready(", "FireCasting.chants(", "FireCasting.origin(",
+        for (String hook : new String[]{"FireCasting.held(", "FireCasting.release(", "FireCasting.refuse(", "FireCasting.releaseClip(", "FireCasting.ready(", "FireCasting.chants(", "FireCasting.origin(",
                 "FireCasting.damageMult(", "FireCasting.sizeMult("})
             assertTrue(gb.contains(hook), "GrimoireBook calls " + hook);
+        assertTrue(gb.contains("UndineCasting.run(this, p, instance, player, mode)") && code(SRC.resolve("undine/UndineCasting.java")).contains("FireCasting.run(book, page, inst, p, mode)"), "the cast reaches FireCasting.run through the Undine hook, which falls through to it");
         assertTrue(code(SRC.resolve("book/SpellRuntime.java")).contains("FireCasting.origin(owner, start)") && code(SRC.resolve("book/SpellRuntime.java")).contains("FireCasting.homing(owner, homing)"));
         assertTrue(code(SRC.resolve("book/TensuraShots.java")).contains("FireCasting.origin(p,"));
         // the Fire book's pages, in order, as they were
