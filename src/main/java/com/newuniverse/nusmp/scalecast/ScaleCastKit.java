@@ -410,11 +410,11 @@ public final class ScaleCastKit {
             long now = sl.getGameTime();
             long left = st.shownUntil - now;
             if (left <= 0) { e.expire(); return; }
-            // follow: float at the caster's left; ease toward the place so a sprint does not snap it; no write (no packet) when it is already there
+            // follow: float at the caster's left; ease toward the place so a sprint does not snap it; no write (no packet) when it is already there or on an odd tick
             double[] want = ScaleCastRules.position(owner.getX(), owner.getY(), owner.getZ(), owner.yBodyRot);
             double dx = want[0] - e.getX(), dy = want[1] - e.getY(), dz = want[2] - e.getZ(), d2 = dx * dx + dy * dy + dz * dz;
-            if (d2 > 1e-4) {
-                double k = d2 > 64 ? 1.0 : 0.4;
+            if (d2 > 1e-4 && ((now & 1L) == 0L || d2 > 64)) {                        // every second tick only (the client smooths between updates): half the position packets
+                double k = d2 > 64 ? 1.0 : 0.6;
                 e.setPos(e.getX() + dx * k, e.getY() + dy * k, e.getZ() + dz * k);
             }
             float wantYaw = ScaleCastRules.yaw(owner.yBodyRot);

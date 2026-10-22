@@ -103,8 +103,8 @@ public final class ScaleCastRules {
     /** The tilt for two log codes; a Scale with no foe weighed rests level. */
     public static float tilt(int casterQ, int foeQ, boolean hasFoe) { return hasFoe ? tilt(decades(casterQ, foeQ)) : 0f; }
 
-    /** The spring of the beam: stiffness and damping per tick (settles in about a second with one small overshoot). */
-    public static final float SPRING_K = 0.30f, SPRING_D = 0.24f;
+    /** The spring of the beam: stiffness and damping per tick (settles in about a second with one overshoot of about a quarter of the step). */
+    public static final float SPRING_K = 0.30f, SPRING_D = 0.42f;
 
     /** One spring step in place: {@code st[0]} the angle, {@code st[1]} the angular speed (degrees, degrees per tick), toward {@code goal} over {@code dt} ticks (0..2.5). No allocation. */
     public static void spring(float[] st, float goal, float dt) {
@@ -127,7 +127,8 @@ public final class ScaleCastRules {
 
     /** The glow of a pan's load, 0.15..1: the heavier side shines more. */
     public static float load(int q, int otherQ) {
-        int hi = Math.max(1, Math.max(q, otherQ));
+        int hi = Math.max(q, otherQ);
+        if (hi <= 0) return 1f;                                                            // two weights of one: level pans, both full
         return Math.max(0.15f, Math.min(1f, q / (float) hi));
     }
 
@@ -216,7 +217,7 @@ public final class ScaleCastRules {
      * Where the Scale floats: to the caster's LEFT (the off hand side; the Compass is on the right), up and a little in front, and how far it is turned from the caster's facing toward the
      * caster, degrees (its front looks at the caster's face from the shoulder: the caster reads their own pan on the left and the foe's on the right).
      */
-    public static final double SIDE = 1.15, UP = 1.45, FRONT = 0.20, IN_YAW = 80.0;
+    public static final double SIDE = 1.15, UP = 1.45, FRONT = 0.20, IN_YAW = 65.0;
     /** Radius of the whole Scale (beam half length) in blocks: scale of the prop. */
     public static final float MAIN_SCALE = 0.55f;
 

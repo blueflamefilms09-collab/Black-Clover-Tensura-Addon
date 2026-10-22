@@ -209,7 +209,7 @@ def figure_with_scale(parts, ang, lc, lf, t, eye, cam, extra=()):
     """The caster (facing +z) with the Scale at the left shoulder, front toward the caster's face."""
     left = np.array([1, 0, 0], np.float32)
     pos = np.array([0, 1.45, 0], np.float32) + left * 1.15 + np.array([0, 0, 0.2], np.float32)
-    m = pc.T(*pos) @ pc.RY(-80.0) @ pc.S(0.55)
+    m = pc.T(*pos) @ pc.RY(-65.0) @ pc.S(0.55)
     return pc.caster_prims(0.0) + scale_prims(parts, m, ang, lc, lf, t=t, eye=eye, cam=(cam[2], cam[3])) + list(extra)
 
 
@@ -218,7 +218,7 @@ def caster(parts):
     d, ang = ang_for(cq, fq)
     left = np.array([1, 0, 0], np.float32)
     pos = np.array([0, 1.45, 0], np.float32) + left * 1.15 + np.array([0, 0, 0.2], np.float32)
-    m = pc.T(*pos) @ pc.RY(-80.0) @ pc.S(0.55)
+    m = pc.T(*pos) @ pc.RY(-65.0) @ pc.S(0.55)
     tiles = []
     shots = [("the caster turns to look at it", (0.0, 1.62, -0.05), (1.15, 1.35, 0.3), 62), ("from the front", (2.6, 1.9, 4.6), (0.6, 1.3, 0.0), 36), ("from behind", (2.2, 1.9, -4.6), (0.6, 1.3, 0.0), 36)]
     for name, eye, tgt, fov in shots:
@@ -243,7 +243,6 @@ def aura(parts):
     eye = (-12.0, 15.0, -9.0)
     cam = pc.look(eye, (0.0, 0.0, 5.0), 52)
     ps = [ground(16, cz=3.0)] + pc.caster_prims(0.0)
-    ps.append(ring_card((0, 0.02, 0), 12.0, (1, 1, 1), 0.55, 0.2))
     for name, w, at in foes:
         fq = int(round(math.log10(w) * 20))
         d = (fq - cq) / 20.0
@@ -256,10 +255,18 @@ def aura(parts):
     d, ang = ang_for(cq, int(round(math.log10(8e6 * 3) * 20)))
     left = np.array([1, 0, 0], np.float32)
     pos = np.array([0, 1.45, 0], np.float32) + left * 1.15 + np.array([0, 0, 0.2], np.float32)
-    m = pc.T(*pos) @ pc.RY(-80.0) @ pc.S(0.55 * 2.2)                        # drawn larger than life so it reads from the air
+    m = pc.T(*pos) @ pc.RY(-65.0) @ pc.S(0.55 * 2.2)                        # drawn larger than life so it reads from the air
     ps += scale_prims(parts, m, ang, 0.8, 1.0, t=12, eye=eye, cam=(cam[2], cam[3]))
+    # the measuring line from the jewel to the weighed foe (the peer in the middle distance), like the renderer's ribbon
+    tail = pos + np.array([0, 0.1, 0], np.float32)
+    head = np.array([6.0, 1.1, 3.5], np.float32)
+    dirv = head - tail
+    sidev = np.cross(dirv, np.array(eye, np.float32) - tail)
+    sidev = sidev / np.linalg.norm(sidev) * 0.07
+    quad = np.array([[*(tail - sidev), 0, 0], [*(tail + sidev), 1, 0], [*(head + sidev), 1, 1], [*(head - sidev), 0, 1]], np.float32)
+    ps.append(pc.Prim([(quad, np.array([0, 1, 0], np.float32))], "particle/glow", "add", (0.5, 0.9, 0.85), 0.5, shade=False))
     c.draw(ps, cam)
-    img = pc.label(c.finish(), "aura: the big ring is its reach (12 blocks); a ring under a foe means it is pressed (the Scale is drawn 2x larger here)")
+    img = pc.label(c.finish(), "aura: the line is the weighing, a ring under a foe means it is pressed (the Scale is drawn 2.2x larger here; its reach, 12 blocks, is not drawn)")
     dr = ImageDraw.Draw(img)
     dr.text((6, 22), "caster weight %s" % fmt(wc), fill=(160, 240, 230))
     for name, w, at in foes:
