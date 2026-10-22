@@ -225,6 +225,14 @@ OTHER = {
     "item.providence": ("light", "glint feather_white star4 mote_soft", "FFFFFF"),
     "item": ("light", "mote glint star4 mote_soft", "FFD89A"),
     "world": ("life", "mote spore leaf_green mote_soft", "CFE8B0"),
+    # Spirit Dive remake (appended): the particle trail of a dive (client.aura.DiveParticles); the character tiers get their own
+    "spirit_dive.wind": ("wind", "mote feather_white glint smoke_wisp", "A8FFD8"),
+    "spirit_dive.yuno": ("wind", "mote glint star4 feather_white", "B8FFD8"),
+    "spirit_dive.fire": ("fire", "ember flame_tongue spark soot_puff", "FF8A2A"),
+    "spirit_dive.fuegoleon": ("fire", "ember flame_tongue spark cinder", "FF5A1C"),
+    "spirit_dive.water": ("water", "droplet bubble glint mote_soft", "8FD8FF"),
+    "spirit_dive.noelle": ("water", "droplet glint star4 bubble", "B8E8FF"),
+    "spirit_dive.earth": ("earth", "earth_chip shard_crystal glint ash_flake", "E8B060"),
 }
 
 

@@ -136,11 +136,14 @@ public final class SpiritDiveTier {
     /** The effect budget of a tier at a level of detail. */
     public static Budget budget(boolean character, Lod lod) { return BUDGET[character ? 1 : 0][lod.ordinal()]; }
 
-    /** The most vertices of geo pieces one dive may put in a frame, per tier (the painter skips pieces from the end of the list when a look would exceed it; see the test that sums the cubes). */
-    public static int pieceCap(boolean character) { return character ? 14000 : 6000; }
+    /**
+     * The most vertices the geo pieces of one dive may have in a frame, per tier: 24 vertices a cube and two passes (the body and its glow map). Not enforced while drawing: SpiritDiveBudgetTest sums the cubes
+     * of the model files of every piece list (every element, stage and tier) and fails if one list is over, so a list can not grow past it unnoticed.
+     */
+    public static int pieceCap(boolean character) { return character ? 8000 : 6500; }
 
-    /** The most vertices the whole dive of a tier may draw in one frame at the full level of detail (pieces, mana skin passes and effects). */
-    public static int vertexCap(boolean character) { return character ? 17000 : 8500; }
+    /** The most vertices the whole dive of a tier may draw in one frame at the full level of detail (pieces, four passes of the mana skin of at most twelve boxes, and the procedural effects); same test. */
+    public static int vertexCap(boolean character) { return character ? 10500 : 8500; }
 
     /** The worst case of the procedural effects, in quads, of a tier at the full level of detail. */
     public static int worstQuads(boolean character) { return budget(character, Lod.FULL).quads(); }
@@ -165,6 +168,23 @@ public final class SpiritDiveTier {
 
     /** How many dives of the character tier one frame may draw as such (the rest draw the standard tier): the nearest ones come first in the render order of the layer. */
     public static final int CHARACTER_PER_FRAME = 3;
+
+    // ------------------------------------------------------------------ the particle trail (client side, through the client particle budget)
+    /** Dives within this many blocks of the camera trail particles, and at most {@link #TRAIL_PLAYERS} dives per client tick do. */
+    public static final double TRAIL_RANGE = 24.0;
+    public static final int TRAIL_PLAYERS = 6;
+
+    /** Particles one diving player spawns this client tick: the standard tier one every third tick (staggered by entity id), the character tier two every tick. */
+    public static int trailCount(boolean character, long tick, int entityId) {
+        if (character) return 2;
+        return Math.floorMod(tick + entityId, 3L) == 0 ? 1 : 0;
+    }
+
+    /** The burst of particles on the tick after a dive begins: the character tier's entry is a big one. */
+    public static int entryBurst(boolean character) { return character ? 28 : 8; }
+
+    /** The most particles per second the trails of all dives in view can ask for (before the client particle budget and the effect quality thin them): players * per tick * 20. */
+    public static int worstTrailPerSecond() { return TRAIL_PLAYERS * 2 * 20; }
 
     // ------------------------------------------------------------------ the entry
     /** Ticks the entry (the shockwave and the light pillar) lasts from the start of the lease. */

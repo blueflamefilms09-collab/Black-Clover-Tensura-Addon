@@ -67,6 +67,21 @@ public final class SpiritDiveForm {
         tag.remove(UPGRADED);
         ArmourState.putOn(p, ownLook ? withoutAura(e) : e, style, true, stage);
         if (el != null) look(p, el, SpiritDivePieces.stageFor(stage), LEASE_TICKS);
+        if (el != null && counts) announceTier(p, gradeOf(p, el));
+    }
+
+    /** The one line of the actionbar when a character's own dive begins (the standard tier says nothing). */
+    private static void announceTier(ServerPlayer p, SpiritDiveTier.Grade g) {
+        String text = switch (g) {
+            case YUNO -> "The wind spirit's crown rises: Yuno's Spirit Dive.";
+            case FUEGOLEON -> "The Salamander's flame cloaks you: Fuegoleon's Spirit Dive.";
+            case NOELLE -> "The water spirit's dress unfolds: Noelle's Spirit Dive.";
+            case STANDARD -> null;
+        };
+        if (text == null) return;
+        try {
+            p.displayClientMessage(Component.translatableWithFallback("nusmp.spiritdive.tier." + g.name().toLowerCase(java.util.Locale.ROOT), text).withStyle(ChatFormatting.GOLD), true);
+        } catch (NullPointerException noConnection) { /* a stand-in player without a connection */ }
     }
 
     /** The policy entry without the form's armour layer (Earth's Gnome Plate): the dive puts the stats on and draws its own layer. */

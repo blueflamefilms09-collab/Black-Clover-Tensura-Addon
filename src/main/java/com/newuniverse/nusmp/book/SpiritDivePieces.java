@@ -277,8 +277,7 @@ public final class SpiritDivePieces {
 
     private static final List<String> V2_FIRE_HALF = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_wingbud_r",
             S + "fire_wingbud_l");
-    private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_chest",
-            S + "fire_wing_r", S + "fire_wing_l");
+    private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_chest", S + "fire_wing_r", S + "fire_wing_l");
     private static final List<String> V2_FUEGO_HALF = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_wingbud_r", S + "fire_wingbud_l", S + "fire_mane");
     private static final List<String> V2_FUEGO_FULL = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_wing_r", S + "fire_wing_l",
             S + "fire_mane", S + "fire_cape");
