@@ -168,5 +168,8 @@ public enum PropKind {
     SCALE_BALANCE,
     /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
     FIRECAST_1,
-    FIRECAST_2
+    FIRECAST_2,
+    /** Spirit of Space (spiritspace.SpiritSpaceProps): SPIRITSPACE_1 = the spirit, an orb that is a tear in reality (variant 0) or its powered wisp-dragon (1); SPIRITSPACE_2 = one ring of a spatial portal (variant 2 entrance, 3 exit); the variant is the low four bits of the param (painter client.prop.SpiritSpacePropPainter) */
+    SPIRITSPACE_1,
+    SPIRITSPACE_2
 }

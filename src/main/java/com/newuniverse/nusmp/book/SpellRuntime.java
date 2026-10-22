@@ -94,6 +94,18 @@ public final class SpellRuntime {
         return n;
     }
 
+    /** Spirit of Space: the same, but at most {@code max} bolts (the nearest are not picked, the list order is: a cast deletes a bounded number). */
+    public static int dissolveBolts(ServerLevel level, Vec3 at, double r, LivingEntity keeper, int max) {
+        int n = 0;
+        for (Bolt b : BOLTS) {
+            if (n >= max) break;
+            if (b.dead || b.level != level || b.owner == keeper || b.owner.isAlliedTo(keeper) || b.pos.distanceToSqr(at) > r * r) continue;
+            b.dead = true;
+            n++;
+        }
+        return n;
+    }
+
     private static void end(Bolt b, Vec3 at) {
         if (b.dead) return;
         b.dead = true;

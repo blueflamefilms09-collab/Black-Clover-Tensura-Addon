@@ -1746,5 +1746,120 @@
   "voice.djinn_camio_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_summon", "stream": false } ] },
   "voice.djinn_camio_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_attack", "stream": false } ] },
   "voice.djinn_murmur_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_summon", "stream": false } ] },
-  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] }
+  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] },
+  "spirit_space.hum": {
+    "subtitle": "subtitles.nusmp.spirit_space.hum",
+    "sounds": [
+      { "name": "nusmp:spirit_space/hum_1", "attenuation_distance": 20 },
+      { "name": "nusmp:spirit_space/hum_2", "attenuation_distance": 20 }
+    ]
+  },
+  "spirit_space.ping": {
+    "subtitle": "subtitles.nusmp.spirit_space.ping",
+    "sounds": [
+      { "name": "nusmp:spirit_space/ping_1", "attenuation_distance": 24 },
+      { "name": "nusmp:spirit_space/ping_2", "attenuation_distance": 24 }
+    ]
+  },
+  "spirit_space.unlink": {
+    "subtitle": "subtitles.nusmp.spirit_space.unlink",
+    "sounds": [
+      { "name": "nusmp:spirit_space/unlink_1", "attenuation_distance": 20 },
+      { "name": "nusmp:spirit_space/unlink_2", "attenuation_distance": 20 }
+    ]
+  },
+  "spirit_space.tear": {
+    "subtitle": "subtitles.nusmp.spirit_space.tear",
+    "sounds": [
+      { "name": "nusmp:spirit_space/tear_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/tear_2", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.swell": {
+    "subtitle": "subtitles.nusmp.spirit_space.swell",
+    "sounds": [
+      { "name": "nusmp:spirit_space/swell_1", "attenuation_distance": 24 },
+      { "name": "nusmp:spirit_space/swell_2", "attenuation_distance": 24 }
+    ]
+  },
+  "spirit_space.open": {
+    "subtitle": "subtitles.nusmp.spirit_space.open",
+    "sounds": [
+      { "name": "nusmp:spirit_space/open_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/open_2", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.gravity": {
+    "subtitle": "subtitles.nusmp.spirit_space.gravity",
+    "sounds": [
+      { "name": "nusmp:spirit_space/gravity_1", "attenuation_distance": 28 },
+      { "name": "nusmp:spirit_space/gravity_2", "attenuation_distance": 28 }
+    ]
+  },
+  "spirit_space.wisp": {
+    "subtitle": "subtitles.nusmp.spirit_space.wisp",
+    "sounds": [
+      { "name": "nusmp:spirit_space/wisp_1", "attenuation_distance": 28 },
+      { "name": "nusmp:spirit_space/wisp_2", "attenuation_distance": 28 }
+    ]
+  },
+  "spirit_space.deny": {
+    "subtitle": "subtitles.nusmp.spirit_space.deny",
+    "sounds": [
+      { "name": "nusmp:spirit_space/deny_1", "attenuation_distance": 16 },
+      { "name": "nusmp:spirit_space/deny_2", "attenuation_distance": 16 }
+    ]
+  },
+  "spirit_space.voice_whisper": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_whisper",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_whisper_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_whisper_2", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_whisper_3", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_chime": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_chime",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_chime_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_chime_2", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_chime_3", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_murmur": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_murmur",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_murmur_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_murmur_2", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_chirp": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_chirp",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_chirp_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_chirp_2", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_chirp_3", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_warble": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_warble",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_warble_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_warble_2", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_trill": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_trill",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_trill_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_trill_2", "attenuation_distance": 32 }
+    ]
+  },
+  "spirit_space.voice_sigh": {
+    "subtitle": "subtitles.nusmp.spirit_space.voice_sigh",
+    "sounds": [
+      { "name": "nusmp:spirit_space/voice_sigh_1", "attenuation_distance": 32 },
+      { "name": "nusmp:spirit_space/voice_sigh_2", "attenuation_distance": 32 }
+    ]
+  }
 }
