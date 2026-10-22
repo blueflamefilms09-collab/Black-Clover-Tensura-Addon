@@ -59,6 +59,7 @@ public final class RecombinationPropPainter {
     }
 
     private static void room(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
+        if (RecombAnimeOptions.on()) { RecombAnimePainter.house(e, partial, age, pose, buffers, light); return; }        // visual.recombAnime (default on): the house look; off = the oak room below
         float s = Math.max(0.3f, e.scale()), maxL = Math.max(1f, e.maxLife());
         boolean swap = e.param() == 1;
         String clip;
@@ -76,6 +77,7 @@ public final class RecombinationPropPainter {
     }
 
     private static void boards(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
+        if (RecombAnimeOptions.on()) { RecombAnimePainter.ring(e, partial, age, pose, buffers, light); return; }
         float s = Math.max(0.4f, e.scale()), maxL = Math.max(1f, e.maxLife());
         float k = smooth(age / 6f) * smooth((maxL - age) / 8f);
         if (k <= 0.01f) return;
@@ -87,6 +89,7 @@ public final class RecombinationPropPainter {
     }
 
     private static void bull(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
+        if (RecombAnimeOptions.on()) { RecombAnimePainter.golem(e, partial, age, pose, buffers, light); return; }       // the house-golem of the anime; off = the four-legged bull below
         float maxL = Math.max(1f, e.maxLife());
         int p = e.param();
         long now = e.level().getGameTime();
@@ -112,6 +115,7 @@ public final class RecombinationPropPainter {
     }
 
     private static void drill(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
+        if (RecombAnimeOptions.on()) { RecombAnimePainter.drill(e, partial, age, pose, buffers, light); return; }
         float maxL = Math.max(1f, e.maxLife());
         float k = smooth(age / 3f) * smooth((maxL - age) / 3f);
         if (k <= 0.01f) return;

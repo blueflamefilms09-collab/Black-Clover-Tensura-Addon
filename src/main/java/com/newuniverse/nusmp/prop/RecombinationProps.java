@@ -48,6 +48,7 @@ public final class RecombinationProps {
         MagicProps.register(PropKind.RECOMBINATION_3, new Bull());
         MagicProps.register(PropKind.RECOMBINATION_4, new Drill());
         SelfTests.register("magic.recombination_rebuild", RecombinationProps::selfTest);
+        RecombAnimeSelfTest.register();                                                  // magic.recomb_anime: the anime look's assets, the older look kept, the rules
     }
 
     // ------------------------------------------------------------------ the synced state word

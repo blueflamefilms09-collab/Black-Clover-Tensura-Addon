@@ -44,6 +44,23 @@ public class RecombinationLayer extends AbstractVfxLayer {
 
     @Override public int defaultColor(VfxShape s) { return ORANGE; }
 
+    /**
+     * The anime look ({@code visual.recombAnime}): a zone laid out (FX2) or an impact (FX3) also bursts dust and a few bricks up from the ground, with the mod's own custom particles
+     * ({@link RecombAnimeFx}); the golem's own dust and fist flash come from its painter. Off = nothing extra (the layer draws as before).
+     */
+    @Override
+    public void onSpawn(VfxInstance inst) {
+        if (!com.newuniverse.nusmp.client.prop.RecombAnimeOptions.on()) return;
+        var level = net.minecraft.client.Minecraft.getInstance().level;
+        if (level == null) return;
+        var at = inst.payload.from();
+        switch (inst.shape) {
+            case RECOMBINATION_FX2 -> RecombAnimeFx.houseDust(level, at.x, at.y, at.z, Math.max(0.8f, inst.power) * 0.85, 0.9f);
+            case RECOMBINATION_FX3 -> RecombAnimeFx.dustRing(level, at.x, at.y, at.z, 0.22 * Mth.clamp(inst.power, 0.5f, 5f), 8 + (int) (2 * Mth.clamp(inst.power, 0.5f, 5f)), 0.35f * Mth.clamp(inst.power, 0.5f, 5f));
+            default -> { }
+        }
+    }
+
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         switch (inst.shape) {
