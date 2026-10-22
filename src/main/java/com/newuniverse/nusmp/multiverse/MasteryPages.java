@@ -58,6 +58,13 @@ public final class MasteryPages {
         return Math.min(1.0, Math.max(byPlace, byCost) * MultiverseConfig.get(MultiverseConfig.PAGE_MASTERY_SCALE));
     }
 
+    /** What a page asks of the mastery bar: {@link #masteryCost} for most pages; the Soul Corpse summons are capped so they can be reached (corpse.SoulCorpseAccess). */
+    public static double needed(GrimoireBook book, BookPage page, int m, int n) {
+        double base = masteryCost(page, m, n);
+        if (book == null || page == null || book.getRegistryName() == null) return base;
+        return com.newuniverse.nusmp.corpse.SoulCorpseAccess.needed(book.getRegistryName().getPath(), page.id(), base, MultiverseConfig.get(MultiverseConfig.PAGE_MASTERY_SCALE));
+    }
+
     // ---------------------------------------------------------------- gates
     public record Gate(int minStep, Set<Race> races) {
         public boolean passes(ServerPlayer p) {
@@ -87,7 +94,8 @@ public final class MasteryPages {
             if (parts.length > 1) for (String r : parts[1].split("\\|")) { Race race = Race.byName(r.trim()); if (race != null) races.add(race); }
             return new Gate(step, races);
         }
-        String tier = page.costPercent() >= 35 ? MultiverseConfig.get(MultiverseConfig.GATE_SIGNATURE)
+        String tier = com.newuniverse.nusmp.corpse.SoulCorpseAccess.rankWaived(book.getRegistryName().getPath(), page.id()) ? ""      // Soul Corpse summons fix: these pages ask no rank (corpse.SoulCorpseAccess)
+                : page.costPercent() >= 35 ? MultiverseConfig.get(MultiverseConfig.GATE_SIGNATURE)
                 : page.costPercent() >= 20 ? MultiverseConfig.get(MultiverseConfig.GATE_ZONE) : "";
         return new Gate(Math.max(0, KnightRank.parseStep(tier)), EnumSet.noneOf(Race.class));
     }
@@ -103,13 +111,16 @@ public final class MasteryPages {
     /** Opens the first page whose mastery, gates and slot allow it. Returns its mode, or -1. */
     public static int tryUnlock(ServerPlayer p, ManasSkillInstance inst, GrimoireBook book) {
         int n = book.familyCount(), unlocked = 0;
-        for (int m = 0; m < n; m++) if (GrimoireBook.isUnlocked(inst, m)) unlocked++;
+        String bookPath = book.getRegistryName().getPath();
+        for (int m = 0; m < n; m++) if (GrimoireBook.isUnlocked(inst, m) && !com.newuniverse.nusmp.corpse.SoulCorpseAccess.slotFree(bookPath, book.page(m).id())) unlocked++;     // the Soul Corpse summons take no slot
         if (book.masteryFrac(inst) >= 1.0) com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(p, "mastery.max", GrimoirePages.magicOf(inst).name().toLowerCase(java.util.Locale.ROOT));
-        if (unlocked >= slots(p, inst, book)) return -1;
+        boolean full = unlocked >= slots(p, inst, book);
+        if (full && !com.newuniverse.nusmp.corpse.SoulCorpseAccess.isBook(bookPath)) return -1;
         double mastery = book.masteryFrac(inst);
         for (int m = 1; m < n; m++) {
             BookPage page = book.page(m);
-            if (GrimoireBook.isUnlocked(inst, m) || mastery < masteryCost(page, m, n)) continue;
+            if (GrimoireBook.isUnlocked(inst, m) || mastery < needed(book, page, m, n)) continue;
+            if (full && !com.newuniverse.nusmp.corpse.SoulCorpseAccess.slotFree(bookPath, page.id())) continue;
             Gate gate = gate(book, page);
             if (!gate.passes(p)) {
                 remindGate(p, inst, m, page, gate.describe());

@@ -247,12 +247,14 @@ public final class Corpses {
     }
 
     /** The page that makes Reanimation usable from the first day (it is appended after the generic five, where mastery would keep it sealed for a long time). */
-    static final String STARTER_PAGE = "corpse_reanimate";
+    static final String STARTER_PAGE = SoulCorpseAccess.REANIMATE;
 
     /**
      * Why: the Soul Corpse pages are appended after the generic five, and a page opens only when mastery reaches its place in the book, so
      * Reanimation (page 6 of 10) stayed sealed for most players and "Soul Corpse Magic summons nothing". Reanimation is the entry spell of
-     * this magic, so it is opened for every holder of the grimoire; the named puppets and the pact still open by mastery.
+     * this magic, so it is opened for every holder of the grimoire; the named puppets and the pact still open by mastery. The same reason kept
+     * the Marionette (page 11 of 15, 67 percent of the bar) shut once the zombies came, so every page of {@link SoulCorpseAccess#STARTER} is opened here
+     * and the other generic summons are capped in {@code MasteryPages.needed}.
      */
     static void openStarterPage(ServerPlayer p) {
         var holder = NUSkills.WIKI_ATTRIBUTE_BOOKS.get(MagicType.SOUL_CORPSE);
@@ -261,12 +263,9 @@ public final class Corpses {
             if (!(inst.getSkill() instanceof com.newuniverse.nusmp.book.GrimoireBook book)) return;
             var pages = book.pages();
             for (int m = 1; m < pages.size() && m < 31; m++) {
-                if (!STARTER_PAGE.equals(pages.get(m).id())) continue;
-                if (!com.newuniverse.nusmp.book.GrimoireBook.isUnlocked(inst, m)) {
-                    com.newuniverse.nusmp.book.GrimoireBook.unlock(inst, m);
-                    p.displayClientMessage(Component.literal("The grimoire shows you how to call up the dead: Soul Corpse: Reanimation.").withStyle(net.minecraft.ChatFormatting.GRAY), true);
-                }
-                return;
+                if (!SoulCorpseAccess.isStarter(pages.get(m).id()) || com.newuniverse.nusmp.book.GrimoireBook.isUnlocked(inst, m)) continue;
+                com.newuniverse.nusmp.book.GrimoireBook.unlock(inst, m);
+                p.displayClientMessage(Component.literal("The grimoire shows you how to call up the dead: " + pages.get(m).name() + ".").withStyle(net.minecraft.ChatFormatting.GRAY), true);
             }
         });
     }

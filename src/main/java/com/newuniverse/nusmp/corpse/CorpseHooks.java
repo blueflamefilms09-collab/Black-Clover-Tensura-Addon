@@ -59,6 +59,7 @@ public final class CorpseHooks {
         bus.addListener(CorpseHooks::onInteract);
         bus.addListener(CorpseHooks::onStopping);
         RadesUndeadSelfTests.register();                                    // CI server smoke test: magic.rades_undead
+        SoulCorpseCastSelfTests.register();                                 // CI server smoke test: magic.soul_corpse_cast (a real cast through the grimoire)
     }
 
     private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_S_CORPSE_TICK = com.newuniverse.nusmp.perf.PerfProbe.section("s.corpse.tick");   // 1.99.0: performance probe (off by default: one flag read)
