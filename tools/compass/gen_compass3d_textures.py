@@ -216,8 +216,8 @@ def glass():
     a = 22 + 18 * smooth((r - 0.6) / 0.4)                                   # a faint tint, a little more toward the edge
     # a bright crescent highlight upper left and a small specular dot
     cres = np.exp(-((np.sqrt((x + 0.30) ** 2 + (y - 0.30) ** 2) - 0.62) / 0.07) ** 2) * ((x < 0) & (y > 0) & (r < 0.92))
-    dot = np.exp(-(((x + 0.46) ** 2 + (y - 0.50) ** 2) / 0.004))
-    stripe = np.exp(-(((x + y * 0.9 - 0.18) / 0.05) ** 2)) * (r < 0.9) * 0.35         # a soft diagonal sheen
+    dot = np.exp(-(((x + 0.46) ** 2 + (y - 0.50) ** 2) / 0.012)) * 0.8
+    stripe = np.exp(-(((x + y * 0.9 - 0.18) / 0.07) ** 2)) * (r < 0.9) * 0.22         # a soft diagonal sheen
     k = np.clip(cres * 0.85 + dot + stripe, 0, 1)
     img[..., :3] = mix(base, np.array([255, 255, 255], np.float32), k)
     img[..., 3] = np.where(r <= 1.0, np.clip(a + 190 * k, 0, 235), 0)

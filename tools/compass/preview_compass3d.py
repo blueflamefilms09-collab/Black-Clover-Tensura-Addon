@@ -319,7 +319,6 @@ def spells_scene(parts):
     c = Canvas(W, H, ((0.10, 0.12, 0.16), (0.24, 0.26, 0.28)))
     cam = look((2.6, 1.2, 2.4), (0, 0, 0.1), 30)
     ps = part_prims(parts, "arrow", T(0, 0, -0.1) @ RY(-30) @ S(0.9))
-    ps.append(card((0, 0, 0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), "glint", (1, 1, 1), 0))
     c.draw(ps, cam)
     tiles.append(label(c.finish(), "arrow-needle (Useless North)"))
     # 2: the route: bars and chevrons from the compass to a target
@@ -354,12 +353,92 @@ def spells_scene(parts):
     return sheet
 
 
+def needle_angle(d, yaw_deg):
+    """Same maths as CompassRules.needleAngle: the angle about the model's z that turns the needle (north up at 0) toward the world direction d."""
+    a = math.radians(yaw_deg)
+    lx = d[0] * math.cos(a) + d[2] * math.sin(a)
+    return math.degrees(math.atan2(-lx, d[1]))
+
+
+def foe_prims(at, yaw=180.0):
+    ps = []
+    skin, cloth, dark = (0.55, 0.62, 0.50), (0.42, 0.18, 0.2), (0.14, 0.12, 0.16)
+    x, y, z = at
+    ps.append(box_prim((x, y + 1.62, z), (0.25, 0.25, 0.25), skin, yaw))
+    ps.append(box_prim((x, y + 1.12, z), (0.25, 0.375, 0.125), cloth, yaw))
+    ps.append(box_prim((x - 0.375, y + 1.12, z), (0.125, 0.375, 0.125), skin, yaw))
+    ps.append(box_prim((x + 0.375, y + 1.12, z), (0.125, 0.375, 0.125), skin, yaw))
+    ps.append(box_prim((x - 0.125, y + 0.375, z), (0.125, 0.375, 0.125), dark, yaw))
+    ps.append(box_prim((x + 0.125, y + 0.375, z), (0.125, 0.375, 0.125), dark, yaw))
+    return ps
+
+
+def seal_prims(parts, feet, t, size=0.5):
+    m = T(feet[0], feet[1] + 0.16, feet[2]) @ RX(-90) @ RZ(t * 5) @ S(size)
+    ps = part_prims(parts, "rim", m) + part_prims(parts, "face", m) + part_prims(parts, "star", m) + part_prims(parts, "needle", m @ RZ(t * 11))
+    ps.append(card((feet[0], feet[1] + 0.05, feet[2]), (1.15 * math.cos(t * 0.05), 0, 1.15 * math.sin(t * 0.05)), (-1.15 * math.sin(t * 0.05), 0, 1.15 * math.cos(t * 0.05)), "seal_ring", (1, 1, 1), 0.9))
+    ps += part_prims(parts, "glass", m, mode="alpha")
+    return ps
+
+
+def arrow_prims(parts, pos, direction, size=0.5, roll=0.0):
+    d = np.array(direction, np.float32); d = d / np.linalg.norm(d)
+    yaw = math.degrees(math.atan2(d[0], d[2])); pitch = -math.degrees(math.asin(d[1]))
+    return part_prims(parts, "arrow", T(*pos) @ RY(yaw) @ RX(pitch) @ RZ(roll) @ S(size))
+
+
+def casting_scene(parts):
+    """Useless North and Compass Rose: the compass, its needle on the foe, arrow-needles in flight, the route, the seal discs."""
+    tiles = []
+    # --- Useless North
+    c = Canvas(W * 2, H, ((0.14, 0.18, 0.25), (0.34, 0.42, 0.34)))
+    caster_at = np.array([0, 0, 0], np.float32)
+    foe_at = np.array([-1.5, 0, 7.5], np.float32)
+    right = np.array([-1, 0, 0], np.float32)
+    cpos = caster_at + np.array([0, 1.55, 0], np.float32) + right * 1.25 + np.array([0, 0, -0.35], np.float32)
+    yaw_c = 25.0
+    foe_c = foe_at + np.array([0, 1.1, 0], np.float32)
+    ang = needle_angle(foe_c - cpos, yaw_c)
+    m = T(*cpos) @ RY(-yaw_c) @ S(0.72)
+    cam = look((-8.0, 2.8, 0.2), (-1.0, 1.3, 4.6), 50)
+    ps = [box_prim((0, -0.05, 3), (7, 0.05, 9), (0.26, 0.32, 0.24))] + caster_prims(0.0) + foe_prims(foe_at)
+    ps += compass_prims(parts, m, ang, t=14, cam_right=(cam[2], cam[3]), eye=cam[0])
+    dirv = foe_c - cpos
+    n = np.linalg.norm(dirv)
+    for i, f in enumerate((0.16, 0.37, 0.62)):
+        pos = cpos + dirv * f + np.array([0.0, 0.25 * math.sin(f * 9), 0.0], np.float32)
+        ps += arrow_prims(parts, pos, dirv, 0.5, roll=i * 50)
+    ps += seal_prims(parts, foe_at, 14)
+    c.draw(ps, cam)
+    img = label(c.finish(), "Useless North: needle on the foe, 3 arrow-needles in flight, seal disc at the foe")
+    tiles.append(img)
+    # --- Compass Rose
+    c = Canvas(W * 2, H, ((0.10, 0.12, 0.18), (0.26, 0.34, 0.30)))
+    foes = [np.array([-4.0, 0, 6.0], np.float32), np.array([0.0, 0, 8.0], np.float32), np.array([3.8, 0, 5.5], np.float32), np.array([-1.5, 0, 4.0], np.float32)]
+    cam = look((-9.5, 4.0, 1.0), (0.0, 1.0, 5.4), 52)
+    ps = [box_prim((0, -0.05, 4), (9, 0.05, 9), (0.26, 0.32, 0.24))] + caster_prims(0.0)
+    m = T(*cpos) @ RY(-yaw_c) @ S(0.72 * 1.12)
+    ps += compass_prims(parts, m, 200, t=20, cam_right=(cam[2], cam[3]), eye=cam[0])
+    for k, f in enumerate(foes):
+        ps += foe_prims(f)
+        ps += seal_prims(parts, f, 20 + k * 3)
+        fc = f + np.array([0, 1.1, 0], np.float32)
+        d2 = fc - cpos
+        ps += arrow_prims(parts, cpos + d2 * (0.3 + 0.12 * k), d2, 0.5, roll=k * 70)
+    c.draw(ps, cam)
+    tiles.append(label(c.finish(), "Compass Rose: a seal disc to each foe, needles out of the one compass"))
+    sheet = Image.new("RGB", (W * 2, H * 2))
+    for i, t in enumerate(tiles):
+        sheet.paste(t, (0, i * H))
+    return sheet
+
+
 def main():
     _flat_tex()
     parts = build_dump()
     print({k: len(v) for k, v in parts.items()}, "quads")
     os.makedirs(OUT, exist_ok=True)
-    for name, fn in (("compass_views", views), ("caster", caster_scene), ("spells", spells_scene)):
+    for name, fn in (("compass_views", views), ("caster", caster_scene), ("spells", spells_scene), ("casting", casting_scene)):
         img = fn(parts)
         img.save(os.path.join(OUT, name + ".png"), optimize=True)
         print("wrote", os.path.join(OUT, name + ".png"))
