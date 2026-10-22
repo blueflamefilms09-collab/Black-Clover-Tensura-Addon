@@ -131,6 +131,7 @@ public final class WeaponEngravings {
             Map.entry("shadowsteel_katana", List.of(e("severance", 2), e("swift", 1), e("barrier_piercing", 1))),        // dark steel: a fast clean cut that parts wards
             Map.entry("drakefang_greatsword", List.of(e("elemental_boost", 1), e("crushing", 1), e("severance", 1))),    // a drake's fang: fire in a heavy edge
             Map.entry("wisp_staff", List.of(e("magic_weapon", 1), e("magicule_absorption", 1), e("swift", 1))),          // a casting focus that drinks stray mana
+            Map.entry("stormcaller_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 1), e("barrier_piercing", 1), e("swift", 1))),   // Storm Magic (Fairy Tail): storm and lightning boosted, a casting staff, bolts that go through wards, a gale-quick rod
             Map.entry("golem_maul", List.of(e("crushing", 2), e("sturdy", 2), e("magic_interference", 1))));             // a golem's fist on a haft: heavy, hard, jams spells
 
     static final String FLAG = "NUEngraved";

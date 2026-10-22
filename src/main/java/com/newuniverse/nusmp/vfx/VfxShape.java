@@ -335,7 +335,15 @@ public enum VfxShape {
     // (relics.upgrade.UpgradeItems); from = the caster (the effect follows him), to = the point he looks at; the recipe is read from assets/nusmp/visual_upgrade/<item>.json
     UPGRADE_SIGNATURE,
     // 1.110.0 (vfx.client.layer.DeckSummonLayer): the card summon of the Deck of Many Things from the worn duel disk; the seed carries the card, the zone and the alignment (vfx.deck.DeckSummonGeometry.pack); follows the player
-    DECK_SUMMON;
+    DECK_SUMMON,
+    // Storm Magic of the Stormcaller Staff (vfx.client.layer.StormLayer). The seed carries the weather parts and the spell (fairytail.storm.StormMath.packSeed); every position in time is a function of (seed, age).
+    // STORM_CLOUD: from = ground centre at the start, to = at the end of the drift, power = radius: the dark cloud deck, the funnel, the eye. STORM_FALL: the same arguments: rain curtains, hail, gust rings.
+    // STORM_BOLT: from = the cloud, to = the mark: one forked bolt. STORM_FRONT: from = start of the line, to = its far end, power = half width: a gale front or a storm surge. STORM_CANCEL: ends the storm of that seed early.
+    STORM_CLOUD,
+    STORM_FALL,
+    STORM_BOLT,
+    STORM_FRONT,
+    STORM_CANCEL;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

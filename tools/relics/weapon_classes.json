@@ -755,6 +755,9 @@
     "drakefang_greatsword": {
       "class": "greatsword"
     },
+    "stormcaller_staff": {
+      "class": "staff"
+    },
     "wisp_staff": {
       "class": "staff"
     },

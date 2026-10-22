@@ -94,7 +94,7 @@ public final class MagicFlavors {
     /** Every attribute the tower can give: all the ones that carry flavors (never Anti-Magic, Kotodama, Curse or the Demon magics). */
     public static List<MagicType> pool() {
         List<MagicType> l = new ArrayList<>();
-        for (MagicType m : MagicType.values()) if (FLAVORS.containsKey(m) && !m.restricted()) l.add(m);
+        for (MagicType m : MagicType.values()) if (FLAVORS.containsKey(m) && !m.restricted() && !com.newuniverse.nusmp.fairytail.storm.StormGate.hidden(m)) l.add(m);   // Storm Magic is a Fairy Tail staff magic (config storm.staffOnly)
         return l;
     }
 

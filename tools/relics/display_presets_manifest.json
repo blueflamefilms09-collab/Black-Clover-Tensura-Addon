@@ -2052,6 +2052,20 @@
       "fixed_scale": 0.849
     },
     {
+      "id": "stormcaller_staff",
+      "action": "preset",
+      "length_blocks": 2.706,
+      "first_person_scale": 0.36,
+      "first_person_translation_px": [
+        1.13,
+        2.44,
+        0.74
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.295,
+      "fixed_scale": 0.554
+    },
+    {
       "id": "sun_gift",
       "action": "preset",
       "length_blocks": 3.671,

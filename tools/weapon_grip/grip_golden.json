@@ -2823,6 +2823,14 @@
   "y": 24.488,
   "z": 0.68
  },
+ "stormcaller_staff": {
+  "class": "staff",
+  "fraction": 0.314,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 68.0,
+  "z": 0.0
+ },
  "sun_gift": {
   "class": "glaive",
   "fraction": 0.33,

@@ -48,7 +48,7 @@ def patched_vertex_buffer(src):
     drain = '''    // preview: hand the collected quads out instead of drawing them (the batches are the ones of the 1.99 buffer: one per texture and blend, kept in the order of their first quad)
     public List<Object[]> drain() {
         List<Object[]> out = new ArrayList<>();
-        for (Batch bt : order) {
+        for (Batch bt : order) {                                           // 1.99.0 buffer: the batches of the frame in the order of their first quad
             for (int i = 0; i + 24 <= bt.size; i += 24) {
                 out.add(new Object[]{bt.texture.getPath(), bt.blend.name(), bt.blend.order, Arrays.copyOfRange(bt.data, i, i + 24)});
             }
@@ -88,6 +88,10 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "VfxShape.java"), pkg)
     shutil.copy(os.path.join(VFX, "FlatProps.java"), pkg)                  # the pure switch of the flat object cut-outs (the vertex buffer asks it)
     shutil.copy(os.path.join(VFX, "EarthFxStyle.java"), pkg)               # 1.93.0: the pure palette table of the earth-family layer (colour -> magic identity)
+    storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
+    os.makedirs(storm_pkg, exist_ok=True)
+    for name in ("StormMath.java", "StormComp.java"):
+        shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "fairytail", "storm", name), storm_pkg)
     for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures", "SolidParts", "SolidModels"):
         shutil.copy(os.path.join(VFX, "client", name + ".java"), os.path.join(pkg, "client"))
     with open(os.path.join(VFX, "client", "VfxVertexBuffer.java"), encoding="utf-8") as f:
@@ -255,8 +259,7 @@ def raster(img, quads, cam, target):
     return img
 
 
-def run_scene(name, scene, classes):
-    out_json = os.path.join(BUILD, name + ".json")
+def run_java(scene, classes, out_json):
     args = ["java", "-cp", classes + os.pathsep + JOML, "Preview",
             "--layer", "com.newuniverse.nusmp.vfx.client.layer." + scene["layer"], "--shape", scene["shape"],
             "--from", ",".join(map(str, scene.get("from", [0, 0, 0]))), "--to", ",".join(map(str, scene.get("to", [0, 1, 0]))),
@@ -270,7 +273,22 @@ def run_scene(name, scene, classes):
         args += ["--flat", "1"]
     subprocess.run(args, check=True)
     with open(out_json) as f:
-        data = json.load(f)
+        return json.load(f)
+
+
+def run_scene(name, scene, classes):
+    out_json = os.path.join(BUILD, name + ".json")
+    data = run_java(scene, classes, out_json)
+    single = max(fr["vertices"] for fr in data["frames"])
+    # Storm Magic: a scene may list "also": [{shape, from, to, power, duration, seed ...}], more shapes of the same layer drawn into the same frames (each has its own vertex budget)
+    for k, extra in enumerate(scene.get("also", [])):
+        sc = dict(scene)
+        sc.update(extra)
+        d2 = run_java(sc, classes, os.path.join(BUILD, "%s_also%d.json" % (name, k)))
+        single = max(single, max(fr["vertices"] for fr in d2["frames"]))
+        for fr, fr2 in zip(data["frames"], d2["frames"]):
+            fr["quads"] = fr["quads"] + fr2["quads"]
+            fr["vertices"] += fr2["vertices"]
     tiles = []
     for fr in data["frames"]:
         img = background(scene, scene["cam"], scene["target"])
@@ -284,7 +302,7 @@ def run_scene(name, scene, classes):
         sheet.paste(t, (i * W, 0))
     path = os.path.join(BUILD, name + ".png")
     sheet.save(path)
-    worst = max(fr["vertices"] for fr in data["frames"])
+    worst = single if scene.get("also") else max(fr["vertices"] for fr in data["frames"])
     budget = scene.get("budget", 400)
     print(f"{name:24s} max {worst:3d}/{budget} vertices -> {path}")
     return worst - (budget - 400)

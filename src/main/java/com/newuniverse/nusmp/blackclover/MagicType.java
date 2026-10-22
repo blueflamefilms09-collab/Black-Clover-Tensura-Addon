@@ -197,10 +197,10 @@ public enum MagicType {
     public static List<MagicType> forSoul(String soul) {
         List<MagicType> list = new ArrayList<>();
         for (MagicType t : values()) {
-            if (t != ANTI_MAGIC && t != KOTODAMA && t.soulType.equals(soul)) list.add(t);
+            if (t != ANTI_MAGIC && t != KOTODAMA && t.soulType.equals(soul) && !com.newuniverse.nusmp.fairytail.storm.StormGate.hidden(t)) list.add(t);   // Storm Magic is a Fairy Tail staff magic (config storm.staffOnly)
         }
         if (list.isEmpty()) {
-            for (MagicType t : values()) if (!t.restricted()) list.add(t);
+            for (MagicType t : values()) if (!t.restricted() && !com.newuniverse.nusmp.fairytail.storm.StormGate.hidden(t)) list.add(t);
         }
         return list;
     }
