@@ -27,7 +27,7 @@ class FlatPropsSourceScanTest {
 
     /** The single flat quads the prop painters draw: ground shadows and ring decals (soft textured, dark or ring-shaped, never an object cut-out). Review before adding to this list. */
     private static final Set<String> PROP_QUAD_FILES = Set.of("TreeDraw", "BeastDraw", "RecombinationPropPainter", "ShakudoPropDraw", "SealDraw", "EarthPropPainter", "CorundumDraw", "KeyDraw",
-            "SnowPropPainter", "VortexPropPainter", "AshPropPainter", "BronzePropPainter", "SmokePropPainter", "AirPropPainter");
+            "SnowPropPainter", "VortexPropPainter", "AshPropPainter", "BronzePropPainter", "SmokePropPainter", "AirPropPainter", "LightJaPropPainter", "RecombAnimePainter");   // 1.112.0 reviewed: glowing ground rings / pools and soft shadow decals, no object silhouettes
 
     private static String code(Path p) throws IOException {
         return Files.readString(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", "");
