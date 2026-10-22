@@ -59,6 +59,13 @@ public class ElementalSpiritRenderer extends EntityRenderer<ElementalSpiritLordE
             case SYLPH -> canon ? GreatSpiritModels.SYLPH_FAIRY : SYLPH;
             case GNOME -> GNOME;
         };
+        if (k == ElementalSpiritLordEntity.Kind.UNDINE) {                                      // Undine (magic.undine): the tall woman of water; false = the old look below
+            pose.pushPose();
+            pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
+            boolean drawn = com.newuniverse.nusmp.client.undine.UndineEntityDraw.draw(e, partial, pose, buffers, light);
+            pose.popPose();
+            if (drawn) { super.render(e, yaw, partial, pose, buffers, light); return; }
+        }
         float age = e.tickCount + partial;
         float castAge = e.tickCount - e.clientCastTick + partial;
         GeoAnim anims = GeoModels.animations(body.animations());

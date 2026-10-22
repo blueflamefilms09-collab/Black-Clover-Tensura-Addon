@@ -1,0 +1,24 @@
+{
+ "_comment": "Undine (docs/magic/undine.md): Noelle Silva's water Spirit Lord, drawn by the real client.prop.UndineDraw (example UndineProp; param = form * 1000 + lod * 100 + clip: form 0 companion, 1 full form; clip 0 idle, 1 full_idle, 2 cast, 3 open).",
+ "undine_companion": {
+  "kind": "prop", "example": "UndineProp", "realFiles": ["client/prop/UndineDraw.java", "undine/UndineLod.java"],
+  "propKind": "BRONZE_1", "param": 0, "figure": true, "ages": [10], "tile": [640, 760],
+  "views": [
+   {"name": "front", "yaw": 0, "pitch": 4, "target": [0, 0.9, 0], "dist": 4.6},
+   {"name": "3/4", "yaw": 40, "pitch": 10, "target": [0, 0.9, 0], "dist": 4.6},
+   {"name": "back", "yaw": 180, "pitch": 6, "target": [0, 0.9, 0], "dist": 4.6},
+   {"name": "face", "yaw": 12, "pitch": 2, "target": [0, 1.55, 0], "dist": 1.5}
+  ]
+ },
+ "undine_full": {
+  "kind": "prop", "example": "UndineProp", "realFiles": ["client/prop/UndineDraw.java", "undine/UndineLod.java"],
+  "propKind": "BRONZE_1", "param": 1001, "figure": true, "ages": [10], "tile": [760, 760],
+  "views": [
+   {"name": "front", "yaw": 0, "pitch": 3, "target": [0, 1.6, 0], "dist": 7.2},
+   {"name": "3/4", "yaw": 38, "pitch": 9, "target": [0, 1.6, 0], "dist": 7.2},
+   {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.6, 0], "dist": 7.2},
+   {"name": "back", "yaw": 180, "pitch": 6, "target": [0, 1.6, 0], "dist": 7.2},
+   {"name": "upper body", "yaw": 0, "pitch": 2, "target": [0, 2.3, 0], "dist": 3.6}
+  ]
+ }
+}

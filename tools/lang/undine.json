@@ -1,0 +1,14 @@
+{
+  "subtitles.nusmp.undine.ambient": "Undine flows and hums",
+  "subtitles.nusmp.undine.link": "Undine rises from the water",
+  "subtitles.nusmp.undine.unlink": "Undine sinks into the water",
+  "subtitles.nusmp.undine.cast": "Undine casts a water spell",
+  "subtitles.nusmp.undine.full": "Undine rises as a wave",
+  "subtitles.nusmp.undine.crash": "Undine crashes as a wave",
+  "subtitles.nusmp.undine.hurt": "Undine splashes in pain",
+  "subtitles.nusmp.undine.death": "Undine dissolves into water",
+  "key.nusmp.undine_link": "Undine (link or unlink Noelle's water spirit)",
+  "nusmp.undine.spirit.full": "Undine cannot answer: too many spirits are out.",
+  "nusmp.undine.spirit.linked": "Undine rises from the water beside you.",
+  "nusmp.undine.spirit.unlinked": "Undine sinks back into the water."
+}

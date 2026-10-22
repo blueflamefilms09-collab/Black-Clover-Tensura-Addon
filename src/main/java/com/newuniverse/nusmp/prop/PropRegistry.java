@@ -83,5 +83,6 @@ final class PropRegistry {
         BoneJaProps.init();
         TreeProps.init();                    // 1.93.0 nature-magic rebuild: starts the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
         com.newuniverse.nusmp.firecast.FireCastProps.init();      // fire casting: the ball, the spiral, the Salamander
+        com.newuniverse.nusmp.undine.UndineProps.init();          // Undine: the companion and the full form of Noelle's water Spirit Lord
     }
 }

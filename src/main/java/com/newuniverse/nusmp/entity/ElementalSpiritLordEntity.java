@@ -86,7 +86,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
     static final byte EVENT_CAST = 100;
     static final String K_BODY = "nusmp_spirit_lord_body";
 
-    private int castCooldown = 50, auraCooldown = 60, mendCooldown;
+    private int castCooldown = 50, auraCooldown = 60, mendCooldown, undineAmbient = 200;
     /** Client: the tick the last cast began (drives the cast clip). */
     public int clientCastTick = -1000;
 
@@ -224,6 +224,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
             BalanceLaw.heal(owner, owner.getMaxHealth() * 0.12f);
             VfxSpawn.send(sl, VfxShape.WATER_RING, owner.position(), owner.position().add(0, 1, 0), k.color, 18, 1.0f);
         }
+        if (k == Kind.UNDINE && --undineAmbient <= 0) { undineAmbient = 400 + random.nextInt(400); undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue.AMBIENT); }      // Undine: her own sound set (never the vanilla silence of the others)
         LivingEntity t = getTarget();
         if (--castCooldown > 0 || t == null || !t.isAlive() || distanceToSqr(t) > 14 * 14 || !hasLineOfSight(t)) return;
         castCooldown = 70;
@@ -257,6 +258,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
                 VfxSpawn.send(sl, VfxShape.FIRE_BURST, to, to, k.color, 16, 1.0f);
             }
             case UNDINE -> {
+                undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue.CAST);
                 t.hurt(src, BalanceLaw.damage(t, 11f, 0.5));
                 t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1));
                 t.clearFire();
@@ -295,7 +297,20 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() != null && source.getEntity() == getOwner()) return false;     // the master cannot hurt their spirit
-        return super.hurt(source, amount);
+        boolean hurt = super.hurt(source, amount);
+        if (hurt && kind() == Kind.UNDINE) undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue.HURT);
+        return hurt;
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        if (kind() == Kind.UNDINE) undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue.DEATH);
+        super.die(source);
+    }
+
+    /** Undine's voice (server driven, to the players near her, through the Undine sound budget); nothing while {@code magic.undine} is off. */
+    private void undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue cue) {
+        com.newuniverse.nusmp.undine.UndineAudio.play(this, getOwnerUUID() != null ? getOwnerUUID() : getUUID(), cue, true);
     }
 
     @Override

@@ -57,7 +57,7 @@ public final class SpellRuntime {
     public static Bolt bolt(ServerPlayer owner, Vec3 start, Vec3 vel, double radius, int life, boolean pierce,
                             LivingEntity homing, OnHit onHit, OnEnd onEnd) {
         // 1.27.0: a bolt fired inside a merged cast keeps the merge (colours, the second hit effect) when it hits or ends ticks later
-        Bolt b = new Bolt(owner, com.newuniverse.nusmp.firecast.FireCasting.origin(owner, start), vel, radius, life, pierce, com.newuniverse.nusmp.firecast.FireCasting.homing(owner, homing), onHit, onEnd);      // fire casting: the emitter's start and a Magna launch's homing target (unchanged for every other caster)
+        Bolt b = new Bolt(owner, com.newuniverse.nusmp.undine.UndineCasting.origin(owner, com.newuniverse.nusmp.firecast.FireCasting.origin(owner, start)), vel, radius, life, pierce, com.newuniverse.nusmp.firecast.FireCasting.homing(owner, homing), onHit, onEnd);      // fire casting: the emitter's start and a Magna launch's homing target (unchanged for every other caster)
         BOLTS.add(b);
         return b;
     }

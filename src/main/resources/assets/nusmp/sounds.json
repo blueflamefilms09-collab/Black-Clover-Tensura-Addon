@@ -1746,5 +1746,62 @@
   "voice.djinn_camio_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_summon", "stream": false } ] },
   "voice.djinn_camio_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_attack", "stream": false } ] },
   "voice.djinn_murmur_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_summon", "stream": false } ] },
-  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] }
+  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] },
+  "undine.ambient": {
+    "subtitle": "subtitles.nusmp.undine.ambient",
+    "sounds": [
+      { "name": "nusmp:undine/ambient_1", "attenuation_distance": 16, "stream": true },
+      { "name": "nusmp:undine/ambient_2", "attenuation_distance": 16, "stream": true },
+      { "name": "nusmp:undine/ambient_3", "attenuation_distance": 16, "stream": true }
+    ]
+  },
+  "undine.link": {
+    "subtitle": "subtitles.nusmp.undine.link",
+    "sounds": [
+      { "name": "nusmp:undine/link_1", "attenuation_distance": 24, "stream": true },
+      { "name": "nusmp:undine/link_2", "attenuation_distance": 24, "stream": true }
+    ]
+  },
+  "undine.unlink": {
+    "subtitle": "subtitles.nusmp.undine.unlink",
+    "sounds": [
+      { "name": "nusmp:undine/unlink_1", "attenuation_distance": 20, "stream": true },
+      { "name": "nusmp:undine/unlink_2", "attenuation_distance": 20, "stream": true }
+    ]
+  },
+  "undine.cast": {
+    "subtitle": "subtitles.nusmp.undine.cast",
+    "sounds": [
+      { "name": "nusmp:undine/cast_1", "attenuation_distance": 24 },
+      { "name": "nusmp:undine/cast_2", "attenuation_distance": 24 },
+      { "name": "nusmp:undine/cast_3", "attenuation_distance": 24 }
+    ]
+  },
+  "undine.full": {
+    "subtitle": "subtitles.nusmp.undine.full",
+    "sounds": [
+      { "name": "nusmp:undine/full_1", "attenuation_distance": 48, "stream": true },
+      { "name": "nusmp:undine/full_2", "attenuation_distance": 48, "stream": true }
+    ]
+  },
+  "undine.crash": {
+    "subtitle": "subtitles.nusmp.undine.crash",
+    "sounds": [
+      { "name": "nusmp:undine/crash_1", "attenuation_distance": 56, "stream": true },
+      { "name": "nusmp:undine/crash_2", "attenuation_distance": 56, "stream": true }
+    ]
+  },
+  "undine.hurt": {
+    "subtitle": "subtitles.nusmp.undine.hurt",
+    "sounds": [
+      { "name": "nusmp:undine/hurt_1", "attenuation_distance": 20 },
+      { "name": "nusmp:undine/hurt_2", "attenuation_distance": 20 }
+    ]
+  },
+  "undine.death": {
+    "subtitle": "subtitles.nusmp.undine.death",
+    "sounds": [
+      { "name": "nusmp:undine/death_1", "attenuation_distance": 24, "stream": true }
+    ]
+  }
 }
