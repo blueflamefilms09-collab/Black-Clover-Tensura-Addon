@@ -30,8 +30,11 @@ class VoiceLogicTest {
         assertEquals(30, VoiceCatalog.byRole().get("boss").size());
         assertEquals(8, VoiceCatalog.byRole().get("npc").size());
         assertEquals(72, VoiceCatalog.byRole().get("djinn").size());
+        int sylph = com.newuniverse.nusmp.sylph.SylphVoiceLines.ids().size();
+        assertEquals(VoiceCatalog.GNOME_LINES.size(), VoiceCatalog.byRole().get("gnome").size());
         assertEquals(sylph, VoiceCatalog.byRole().get("sylph").size());
-        assertEquals(VoiceCatalog.ids().subList(120, 120 + sylph), com.newuniverse.nusmp.sylph.SylphVoiceLines.ids(), "Sylph's lines come after the first 120, in their own order");
+        int from = VoiceCatalog.baseIds().size() + com.newuniverse.nusmp.undine.UndineLines.ids().size();
+        assertEquals(VoiceCatalog.ids().subList(from, from + sylph), com.newuniverse.nusmp.sylph.SylphVoiceLines.ids(), "Sylph's lines come after the manifest and the Undine's, in their own order");
         for (String id : VoiceCatalog.ids()) {
             assertTrue(id.matches("[a-z0-9_]+") && id.length() < VoiceNet.MAX_ID, id);
             assertEquals(id.substring(0, id.indexOf('_')), VoiceCatalog.role(id));
