@@ -143,6 +143,9 @@
       }
     ]
   },
+  "spirit.dark.voice.link_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.link_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.link_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_3", "stream": false, "attenuation_distance": 32 } ] },
   "mob.goblin.ambient": {
     "subtitle": "subtitles.nusmp.mob.goblin.ambient",
     "sounds": [

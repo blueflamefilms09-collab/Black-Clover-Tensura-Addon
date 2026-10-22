@@ -1,0 +1,14 @@
+{
+ "link_1": {
+  "bytes": 48041,
+  "seconds": 6.1
+ },
+ "link_2": {
+  "bytes": 36808,
+  "seconds": 4.4
+ },
+ "link_3": {
+  "bytes": 42931,
+  "seconds": 5.2
+ }
+}

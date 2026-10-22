@@ -1,0 +1,386 @@
+{
+ "voice": {
+  "id": "lo1O1Dz1Tu4FWVEPaxuT",
+  "name": "Oliver - Warm British Narrator",
+  "source": "ElevenLabs voice library (library voice; licence to be checked for commercial use before a public release)"
+ },
+ "model": "eleven_v4",
+ "lines": [
+  {
+   "id": "link_1",
+   "group": "link",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Ah. At last, a master worth the bother. Do try to be interesting.",
+   "prompt": "[smooth] [smug] Ah. At last, a master worth the bother. [short pause] Do try to be interesting."
+  },
+  {
+   "id": "link_2",
+   "group": "link",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Splendid. Another mortal who thinks they hold the leash.",
+   "prompt": "[smooth] [amused] Splendid. Another mortal who thinks they hold the leash."
+  },
+  {
+   "id": "link_3",
+   "group": "link",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Good evening. I shall be your shadow, and you shall be my entertainment.",
+   "prompt": "[smooth] [softly] Good evening. I shall be your shadow, and you shall be my entertainment."
+  },
+  {
+   "id": "link_4",
+   "group": "link",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Oh, how touching. You called, and I came. Don't make a habit of it.",
+   "prompt": "[smooth] [sarcastic] Oh, how touching. You called, and I came. Don't make a habit of it."
+  },
+  {
+   "id": "unlink_1",
+   "group": "unlink",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Do ring when you're bored again.",
+   "prompt": "[smooth] [mischievously] Do ring when you're bored again."
+  },
+  {
+   "id": "unlink_2",
+   "group": "unlink",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "I shall return to the dark. It is better company.",
+   "prompt": "[smooth] [sighs] I shall return to the dark. It is better company."
+  },
+  {
+   "id": "unlink_3",
+   "group": "unlink",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Farewell, master. Try not to die before I come back.",
+   "prompt": "[smooth] [softly] Farewell, master. Try not to die before I come back."
+  },
+  {
+   "id": "cast_1",
+   "group": "cast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Oh, how theatrical.",
+   "prompt": "[smooth] [amused] Oh, how theatrical."
+  },
+  {
+   "id": "cast_2",
+   "group": "cast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Darker, my dear. The shadows demand it.",
+   "prompt": "[smooth] [softly] Darker, my dear. The shadows demand it."
+  },
+  {
+   "id": "cast_3",
+   "group": "cast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "A pretty little spell. Almost frightening.",
+   "prompt": "[smooth] [sarcastic] A pretty little spell. Almost frightening."
+  },
+  {
+   "id": "cast_4",
+   "group": "cast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Yes, yes, flourish. I do love a performance.",
+   "prompt": "[smooth] [chuckles] Yes, yes, flourish. I do love a performance."
+  },
+  {
+   "id": "cast_5",
+   "group": "cast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Splendid. Burn it all, and do it elegantly.",
+   "prompt": "[smooth] [mischievously] Splendid. Burn it all, and do it elegantly."
+  },
+  {
+   "id": "step_1",
+   "group": "step",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Do keep up.",
+   "prompt": "[smooth] [smug] Do keep up."
+  },
+  {
+   "id": "step_2",
+   "group": "step",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Through the dark, and out again. Charming.",
+   "prompt": "[smooth] [softly] Through the dark, and out again. Charming."
+  },
+  {
+   "id": "step_3",
+   "group": "step",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Now you see me. Now you see the back of me.",
+   "prompt": "[smooth] [amused] Now you see me. Now you see the back of me."
+  },
+  {
+   "id": "step_4",
+   "group": "step",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Shadows are such lovely doors, aren't they?",
+   "prompt": "[smooth] [curious] Shadows are such lovely doors, aren't they?"
+  },
+  {
+   "id": "hurt_1",
+   "group": "hurt",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Oh dear. That looked rather painful.",
+   "prompt": "[smooth] [sarcastic] Oh dear. That looked rather painful."
+  },
+  {
+   "id": "hurt_2",
+   "group": "hurt",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "You're bleeding, master. How unseemly.",
+   "prompt": "[smooth] [tutting] You're bleeding, master. How unseemly."
+  },
+  {
+   "id": "hurt_3",
+   "group": "hurt",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Careful. I have invested so much in you.",
+   "prompt": "[smooth] [dryly] Careful. I have invested so much in you."
+  },
+  {
+   "id": "hurt_4",
+   "group": "hurt",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Ha! They bite. How rude.",
+   "prompt": "[smooth] [laughs softly] Ha! They bite. How rude."
+  },
+  {
+   "id": "feast_1",
+   "group": "feast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Mm. Delicious. Do share more.",
+   "prompt": "[smooth] [softly] Mm. Delicious. Do share more."
+  },
+  {
+   "id": "feast_2",
+   "group": "feast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Drink deep. They won't be needing it.",
+   "prompt": "[smooth] [sinister] Drink deep. They won't be needing it."
+  },
+  {
+   "id": "feast_3",
+   "group": "feast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "A little life, borrowed. Do give it back someday.",
+   "prompt": "[smooth] [mischievously] A little life, borrowed. Do give it back someday."
+  },
+  {
+   "id": "feast_4",
+   "group": "feast",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Ah, the taste of fear. A fine vintage.",
+   "prompt": "[smooth] [savouring] Ah, the taste of fear. A fine vintage."
+  },
+  {
+   "id": "idle_1",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Is nothing happening? How dreadfully dull.",
+   "prompt": "[smooth] [bored] Is nothing happening? [sighs] How dreadfully dull."
+  },
+  {
+   "id": "idle_2",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "I could rule a kingdom, you know. Instead I watch you walk.",
+   "prompt": "[smooth] [wry] I could rule a kingdom, you know. Instead, I watch you walk."
+  },
+  {
+   "id": "idle_3",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Shall we ruin someone's evening?",
+   "prompt": "[smooth] [mischievously] Shall we ruin someone's evening?"
+  },
+  {
+   "id": "idle_4",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Don't mind me. I'm merely admiring the dark.",
+   "prompt": "[smooth] [softly] Don't mind me. I'm merely admiring the dark."
+  },
+  {
+   "id": "idle_5",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Do you ever stop? Mortals are exhausting.",
+   "prompt": "[smooth] [sighs] Do you ever stop? Mortals are exhausting."
+  },
+  {
+   "id": "idle_6",
+   "group": "idle",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "I have seen empires fall. This is nearly as thrilling.",
+   "prompt": "[smooth] [dryly] I have seen empires fall. This is nearly as thrilling."
+  },
+  {
+   "id": "low_1",
+   "group": "low",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Master. You are dying. How inconvenient for me.",
+   "prompt": "[smooth] [sharp] Master. You are dying. How inconvenient for me."
+  },
+  {
+   "id": "low_2",
+   "group": "low",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Mend yourself, or I shall have to find a new hobby.",
+   "prompt": "[smooth] [sarcastic] Mend yourself, or I shall have to find a new hobby."
+  },
+  {
+   "id": "low_3",
+   "group": "low",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Now, now. Don't you dare fall over.",
+   "prompt": "[smooth] [firmly] Now, now. Don't you dare fall over."
+  },
+  {
+   "id": "low_4",
+   "group": "low",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Oh, this is getting interesting. Bleed less, fight more.",
+   "prompt": "[smooth] [amused] Oh, this is getting interesting. Bleed less, fight more."
+  },
+  {
+   "id": "kill_1",
+   "group": "kill",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Magnificent. Another one for the dark.",
+   "prompt": "[smooth] [pleased] Magnificent. Another one for the dark."
+  },
+  {
+   "id": "kill_2",
+   "group": "kill",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "And down they go. Bravo.",
+   "prompt": "[smooth] [amused] And down they go. Bravo."
+  },
+  {
+   "id": "kill_3",
+   "group": "kill",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Ha ha ha! Oh, that was lovely.",
+   "prompt": "[smooth] [laughs] Ha ha ha! Oh, that was lovely."
+  },
+  {
+   "id": "kill_4",
+   "group": "kill",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Such a waste. Of their time, not mine.",
+   "prompt": "[smooth] [dryly] Such a waste. Of their time, not mine."
+  },
+  {
+   "id": "kill_5",
+   "group": "kill",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Do take a bow. I'll hold your applause.",
+   "prompt": "[smooth] [chuckles] Do take a bow. I'll hold your applause."
+  },
+  {
+   "id": "died_1",
+   "group": "died",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Oh. Well. That was brief.",
+   "prompt": "[smooth] [surprised] Oh. Well. That was brief."
+  },
+  {
+   "id": "died_2",
+   "group": "died",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "How careless. And we were just beginning.",
+   "prompt": "[smooth] [sighs] How careless. And we were just beginning."
+  },
+  {
+   "id": "died_3",
+   "group": "died",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Pity. I did so enjoy you.",
+   "prompt": "[smooth] [softly] Pity. I did so enjoy you."
+  },
+  {
+   "id": "power_1",
+   "group": "power",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Enough pleasantries. Let me show them what I truly am.",
+   "prompt": "[deep voice] [smooth] Enough pleasantries. Let me show them what I truly am."
+  },
+  {
+   "id": "power_2",
+   "group": "power",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Behold. The dark, with manners.",
+   "prompt": "[deep voice] [smooth] [sinister] Behold. The dark, with manners."
+  },
+  {
+   "id": "power_3",
+   "group": "power",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Kneel, little ones. Your host has arrived.",
+   "prompt": "[deep voice] [smooth] [mischievously] Kneel, little ones. Your host has arrived."
+  },
+  {
+   "id": "power_end_1",
+   "group": "power_end",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "That will do. I have a reputation to keep.",
+   "prompt": "[smooth] [sighs] That will do. I have a reputation to keep."
+  },
+  {
+   "id": "power_end_2",
+   "group": "power_end",
+   "voice": "lo1O1Dz1Tu4FWVEPaxuT",
+   "model": "eleven_v4",
+   "text": "Back to my lounge. Do try not to need me.",
+   "prompt": "[smooth] [wry] Back to my lounge. Do try not to need me."
+  }
+ ]
+}

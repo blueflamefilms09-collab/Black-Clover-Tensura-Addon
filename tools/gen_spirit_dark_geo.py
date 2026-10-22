@@ -599,8 +599,12 @@ def write_faces(count_only):
                 if not count_only:
                     if glow:
                         at.save_glow("spirit_dark_%s_faceglow_%s" % (form, mood), 1.0)
+                        if mood == F.MOODS[0]:
+                            at.save_glow("spirit_dark_%s_faceglow" % form, 1.0)               # the model's own default sheet (the rule that every model has a sheet of its name): the smug one
                     else:
                         at.save_color("spirit_dark_%s_face_%s" % (form, mood), 1.0)
+                        if mood == F.MOODS[0]:
+                            at.save_color("spirit_dark_%s_face" % form, 1.0)
     for r in rows:
         print("%-34s cubes %4d  quads %5d" % r)
 
