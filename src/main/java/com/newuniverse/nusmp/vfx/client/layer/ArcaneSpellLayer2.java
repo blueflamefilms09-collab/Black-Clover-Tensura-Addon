@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
+import com.newuniverse.nusmp.vfx.FlatProps;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.resources.ResourceLocation;
@@ -203,12 +204,18 @@ public class ArcaneSpellLayer2 extends AbstractVfxLayer {
             float a = Mth.TWO_PI * k / count + age * 0.02f, rad = 1.6f * appear;
             Vector3f foot = new Vector3f(g).add(Mth.cos(a) * rad, 0.02f + 0.05f * Mth.sin(age * 0.1f + k), Mth.sin(a) * rad);
             float shimmer = 0.75f + 0.25f * Mth.sin(age * 0.25f + k * 2);
-            stand(ctx, buf, SILHOUETTE, VfxBlend.ALPHA, foot, 0.9f, 1.85f, VfxVertexBuffer.withAlpha(light, 0.55f * fade * shimmer));
-            stand(ctx, buf, SILHOUETTE, VfxBlend.ADD, foot, 0.95f, 1.9f, VfxVertexBuffer.withAlpha(col, 0.35f * fade));
+            boolean flat = FlatProps.drawFlat();
+            if (flat) {                                                              // the old paper figure, only when visual.flatProps is on
+                stand(ctx, buf, SILHOUETTE, VfxBlend.ALPHA, foot, 0.9f, 1.85f, VfxVertexBuffer.withAlpha(light, 0.55f * fade * shimmer));
+                stand(ctx, buf, SILHOUETTE, VfxBlend.ADD, foot, 0.95f, 1.9f, VfxVertexBuffer.withAlpha(col, 0.35f * fade));
+            } else {                                                                 // a solid glass figure (about 15 quads) turned to the caster at the middle
+                SolidModels.figure(buf, foot, (float) Mth.atan2(g.x - foot.x, g.z - foot.z), 1.85f / 1.7f, 0.85f * fade * shimmer, light);
+                VfxBloom.glow(ctx, buf, new Vector3f(foot.x, foot.y + 0.95f, foot.z), 0.8f, col, 0.5f * fade * shimmer);      // the glass lit from inside
+            }
             // a glint sweeping up the glass
             float gy = ((age * 0.04f) + k * 0.25f) % 1f;
             buf.billboard(ctx, VfxTextures.SPARK, VfxBlend.ADD, new Vector3f(foot).add(0, 0.2f + 1.6f * gy, 0), 0.35f, age * 0.2f, VfxVertexBuffer.withAlpha(WHITE, fade * Mth.sin(gy * Mth.PI)));
-            buf.ring(VfxTextures.GLOW, VfxBlend.ADD, VfxPose.ground(new Vector3f(foot).add(0, 0.03f, 0)), 0.35f, 0.5f, ctx.seg(10, 8), 1, 0, VfxVertexBuffer.withAlpha(col, 0.6f * fade));
+            buf.ring(VfxTextures.GLOW, VfxBlend.ADD, VfxPose.ground(new Vector3f(foot).add(0, 0.03f, 0)), 0.35f, 0.5f, flat ? ctx.seg(10, 8) : ctx.seg(8, 6), 1, 0, VfxVertexBuffer.withAlpha(col, 0.6f * fade));
         }
     }
 

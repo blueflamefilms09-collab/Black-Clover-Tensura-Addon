@@ -1,3 +1,4 @@
+import com.newuniverse.nusmp.vfx.FlatProps;
 import com.newuniverse.nusmp.vfx.VfxPayload;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.AbstractVfxLayer;
@@ -19,12 +20,13 @@ import java.util.Map;
  * with texture, blend and vertex colours) as JSON for preview.py to rasterise.
  *
  * args: --layer CLASS --shape NAME --from x,y,z --to x,y,z --power P --duration D --color AARRGGBB|0 --seed N
- *       --cam x,y,z --target x,y,z --ages a,b,c --detail 1 [--budget N] --out FILE
+ *       [--flat 1 draws the old flat cut-outs, visual.flatProps on]  --cam x,y,z --target x,y,z --ages a,b,c --detail 1 [--budget N] --out FILE
  */
 public final class Preview {
     public static void main(String[] a) throws Exception {
         Map<String, String> o = new HashMap<>();
         for (int i = 0; i + 1 < a.length; i += 2) o.put(a[i], a[i + 1]);
+        FlatProps.setDrawFlat("1".equals(o.get("--flat")));                   // a scene may ask for the old flat cut-outs (the before picture)
         AbstractVfxLayer layer = (AbstractVfxLayer) Class.forName(o.get("--layer")).getDeclaredConstructor().newInstance();
         VfxShape shape = VfxShape.valueOf(o.get("--shape"));
         Vec3 from = vec(o.getOrDefault("--from", "0,0,0")), to = vec(o.getOrDefault("--to", "0,1,0"));
