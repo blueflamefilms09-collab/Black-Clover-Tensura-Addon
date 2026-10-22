@@ -3323,6 +3323,10 @@ def main(only=None):
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import gen_loot_models
         return gen_loot_models.main(only[1:])
+    if only and only[0] == "storm_staff":                          # Storm Magic (Fairy Tail): the Stormcaller Staff is built by tools/gen_storm_staff_model.py (same method, own file)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import gen_storm_staff_model
+        return gen_storm_staff_model.main(only[1:])
     if not only or "butcher_cleaver" in only:                      # 1.19.0: its sprite must exist before the mesh is placed on it
         _bc_write_icon()
     for fit, specs in ((False, SPECS), (True, RELICS)):

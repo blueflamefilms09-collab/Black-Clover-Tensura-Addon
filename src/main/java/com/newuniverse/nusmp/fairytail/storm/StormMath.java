@@ -13,7 +13,7 @@ public final class StormMath {
     /** The cloud base hangs this high over the ground point of the cell. */
     public static final double CLOUD_HEIGHT = 9.0;
     /** A storm hurts and moves at most this many creatures at a time. */
-    public static final int MAX_FOES = 24;
+    public static final int MAX_FOES = 16;
     /** The cost floor: a share of a tiny Aura pool is never less than this. */
     public static final double MIN_COST = 12.0;
     /** Ticks a cell takes to build up and to die away. */
@@ -68,6 +68,12 @@ public final class StormMath {
         return new double[]{from[0] + (to[0] - from[0]) * t, from[1] + (to[1] - from[1]) * t, from[2] + (to[2] - from[2]) * t};
     }
 
+    /** One axis of {@link #center}: {@code from} to {@code to} over {@code duration} ticks, no array (the client calls it every frame). */
+    public static double lerpAt(double from, double to, double age, int duration) {
+        double t = duration <= 0 ? 1.0 : Math.min(1.0, Math.max(0.0, age / duration));
+        return from + (to - from) * t;
+    }
+
     /** 0..1: builds up over {@link #FADE_IN} ticks, holds, dies away over {@link #FADE_OUT} ticks. */
     public static double envelope(double age, int duration) {
         if (age < 0 || age >= duration) return 0.0;
@@ -105,9 +111,17 @@ public final class StormMath {
 
     /** The offset (x, z) from the cell centre where stone {@code i} of volley {@code v} lands: uniform over the disc, never at its very rim. */
     public static double[] hailStone(long seed, int volley, int i, double radius) {
-        double r = Math.sqrt(hash(seed, volley * 8 + i, 11)) * radius * 0.92;
-        double a = hash(seed, volley * 8 + i, 12) * Math.PI * 2;
-        return new double[]{Math.cos(a) * r, Math.sin(a) * r};
+        return new double[]{hailStoneX(seed, volley, i, radius), hailStoneZ(seed, volley, i, radius)};
+    }
+
+    /** The x offset of {@link #hailStone} (no array: the client reads it every frame and every tick). */
+    public static double hailStoneX(long seed, int volley, int i, double radius) {
+        return Math.cos(hash(seed, volley * 8 + i, 12) * Math.PI * 2) * Math.sqrt(hash(seed, volley * 8 + i, 11)) * radius * 0.92;
+    }
+
+    /** The z offset of {@link #hailStone}. */
+    public static double hailStoneZ(long seed, int volley, int i, double radius) {
+        return Math.sin(hash(seed, volley * 8 + i, 12) * Math.PI * 2) * Math.sqrt(hash(seed, volley * 8 + i, 11)) * radius * 0.92;
     }
 
     // ------------------------------------------------------------------------------------------------------------------ bolts
@@ -130,11 +144,17 @@ public final class StormMath {
      * jitter that is largest in the middle. The same path for the same seed and {@code frame}; the client re-rolls {@code frame} a few times while the bolt flickers.
      */
     public static double[][] boltPath(long seed, int frame, double[] from, double[] to, int segments, double jitter) {
+        double[][] p = new double[Math.max(2, segments) + 1][3];
+        boltPath(seed, frame, from[0], from[1], from[2], to[0], to[1], to[2], segments, jitter, p);
+        return p;
+    }
+
+    /** The same path written into a buffer the caller keeps (at least {@code segments + 1} rows of 3): the client draws bolts every frame and allocates nothing. */
+    public static void boltPath(long seed, int frame, double fx, double fy, double fz, double tx, double ty, double tz, int segments, double jitter, double[][] out) {
         int n = Math.max(2, segments);
-        double[][] p = new double[n + 1][3];
-        double dx = to[0] - from[0], dy = to[1] - from[1], dz = to[2] - from[2];
+        double dx = tx - fx, dy = ty - fy, dz = tz - fz;
         double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        // two unit vectors across the bolt: one horizontal, one that completes the frame
+        // a unit vector across the bolt, horizontal
         double hx = len < 1.0e-6 ? 1 : -dz, hz = len < 1.0e-6 ? 0 : dx;
         double hl = Math.sqrt(hx * hx + hz * hz);
         if (hl < 1.0e-6) { hx = 1; hz = 0; hl = 1; }
@@ -144,14 +164,11 @@ public final class StormMath {
             double t = i / (double) n;
             double k = Math.sin(t * Math.PI) * jitter;
             double a = (hash(seed, frame * 64 + i, 31) - 0.5) * 2 * k, b = (hash(seed, frame * 64 + i, 32) - 0.5) * 2 * k;
-            double x = from[0] + dx * t + hx * a, y = from[1] + dy * t + b * 0.35, z = from[2] + dz * t + hz * a;
-            if (i == 0) { x = from[0]; y = from[1]; z = from[2]; }
-            if (i == n) { x = to[0]; y = to[1]; z = to[2]; }
-            p[i][0] = x;
-            p[i][1] = y;
-            p[i][2] = z;
+            double[] o = out[i];
+            if (i == 0) { o[0] = fx; o[1] = fy; o[2] = fz; }
+            else if (i == n) { o[0] = tx; o[1] = ty; o[2] = tz; }
+            else { o[0] = fx + dx * t + hx * a; o[1] = fy + dy * t + b * 0.35; o[2] = fz + dz * t + hz * a; }
         }
-        return p;
     }
 
     // ------------------------------------------------------------------------------------------------------------------ fronts

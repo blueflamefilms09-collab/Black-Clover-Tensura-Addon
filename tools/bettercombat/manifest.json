@@ -1136,6 +1136,11 @@
       "profile": "club",
       "source": "relic"
     },
+    "stormcaller_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
     "sun_gift": {
       "class": "glaive",
       "profile": "glaive",

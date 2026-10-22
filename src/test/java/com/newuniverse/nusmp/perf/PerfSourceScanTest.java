@@ -283,6 +283,7 @@ class PerfSourceScanTest {
         PROBES.put("client/relics/RelicWornLayer.java", "c.relic.worn_layer");
         PROBES.put("client/relics/djinn/DjinnArmorLayer.java", "c.djinn.armor_layer");
         PROBES.put("client/labyrinth/foundry/FoundryRenderer.java", "c.foundry.render");
+        PROBES.put("fairytail/storm/StormField.java", "s.storm.tick");                                   // Storm Magic: the whole storm tick
     }
 
     @Test

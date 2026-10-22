@@ -11,7 +11,7 @@ package com.newuniverse.nusmp.fairytail.storm;
  */
 public enum StormSpell {
     //            id                 name                         mask                                                              cost  cd  aim radius dur drift boltRaw hailRaw tickRaw push bolts every
-    GATHERING_CLOUDS("gathering_clouds", "Storm Cloud: Gathering", StormComp.RAIN | StormComp.BOLTS,                                 5.0, 200, 26, 7.0, 160, 1.6, 9.0, 0.0, 1.5, 0.0, 5, 30,
+    GATHERING_CLOUDS("gathering_clouds", "Storm Cloud: Gathering", StormComp.RAIN | StormComp.BOLTS,                                 5.0, 240, 26, 7.0, 160, 1.6, 8.0, 0.0, 1.2, 0.0, 5, 30,
             "A storm cell gathers over the place you look at: a dark cloud rolls in, rain curtains fall and forked bolts strike from it. It drifts slowly the way you faced."),
     DOWNPOUR("downpour", "Downpour", StormComp.RAIN,                                                                                  4.0, 160, 24, 8.0, 140, 1.0, 0.0, 0.0, 2.2, 0.0, 0, 0,
             "A heavy rain falls on the area: foes are soaked, slowed and weakened, fires are put out, friends are cooled."),

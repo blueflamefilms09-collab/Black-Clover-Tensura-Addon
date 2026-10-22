@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.mana.ManaLaw;
+import com.newuniverse.nusmp.perf.PerfProbe;
+import com.newuniverse.nusmp.perf.PerfSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -22,7 +24,6 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,8 @@ public final class StormField {
     private static final List<StormCell> LIVE = new ArrayList<>();
     private static final StormCooldowns COOLDOWNS = new StormCooldowns();
     private static int nextId = 1;
+    /** 1.99.0 performance probe (off by default: one flag read): the whole storm tick. */
+    private static final PerfProbe.Section PROBE_S_STORM_TICK = PerfProbe.section("s.storm.tick");
     private static boolean registered;
 
     /** What a cast did. */
@@ -83,6 +86,7 @@ public final class StormField {
 
     /** Ends every storm (the self-test and the server stop use it). */
     static void clearAll(boolean cancel, MinecraftServer server) {
+        StormBudget.reset();
         for (StormCell c : new ArrayList<>(LIVE)) end(c, cancel, server);
         LIVE.clear();
         COOLDOWNS.clear();
@@ -107,8 +111,8 @@ public final class StormField {
         if (!StormCost.pay(p, spell)) return Cast.no(null);
         if (verdict.evicts()) end(LIVE.get(verdict.evictIndex()), true, level.getServer());
 
-        int duration = Math.min(spell.durationTicks, StormConfig.maxDuration());
-        double radius = Math.min(spell.radius, StormConfig.maxRadius());
+        int duration = StormRules.effectiveDuration(spell, StormConfig.maxDuration());
+        double radius = StormRules.effectiveRadius(spell, StormConfig.maxRadius());
         Vec3 look = p.getViewVector(1.0F);
         double dx = look.x, dz = look.z, hl = Math.sqrt(dx * dx + dz * dz);
         if (hl < 0.05) {                                          // looking straight up or down: the way the body faces
@@ -164,17 +168,23 @@ public final class StormField {
 
     // ------------------------------------------------------------------------------------------------------------------ the tick
     private static void onServerTick(ServerTickEvent.Post event) {
-        if (LIVE.isEmpty()) return;
-        MinecraftServer server = event.getServer();
-        for (Iterator<StormCell> it = new ArrayList<>(LIVE).iterator(); it.hasNext(); ) {
-            StormCell c = it.next();
-            try {
-                if (!tick(server, c)) end(c, false, server);
-            } catch (Throwable ex) {
-                SafeCast.fault("storm.tick", ex);
-                LOG.warn("[nusmp] a storm failed and was ended: {}", ex.toString());
-                end(c, true, server);
+        if (LIVE.isEmpty()) return;                                          // no storm: one list-size read per tick
+        long t0 = PerfProbe.begin();
+        try {
+            MinecraftServer server = event.getServer();
+            for (int i = LIVE.size() - 1; i >= 0; i--) {                      // newest first, no copy of the list: a storm only ever removes itself
+                if (i >= LIVE.size()) continue;
+                StormCell c = LIVE.get(i);
+                try {
+                    if (!tick(server, c)) end(c, false, server);
+                } catch (Throwable ex) {
+                    SafeCast.fault("storm.tick", ex);
+                    LOG.warn("[nusmp] a storm failed and was ended: {}", ex.toString());
+                    end(c, true, server);
+                }
             }
+        } finally {
+            PerfProbe.end(PROBE_S_STORM_TICK, t0);
         }
     }
 
@@ -199,7 +209,8 @@ public final class StormField {
         StormSpell s = c.spell;
         double[] ctr = StormMath.center(c.from, c.to, age, c.duration);
         double r = StormMath.radiusAt(c.radius, age, c.duration);
-        boolean scan = (age + c.id) % 4 == 0;
+        // an entity scan only every few ticks (the performance pass's scan interval, never under 4), staggered by the storm's number, and only while the server-wide scan budget of the tick lasts
+        boolean scan = (age + c.id) % Math.max(4, PerfSettings.entityScanInterval()) == 0 && StormBudget.scan(now);
         double cx = ctr[0], cy = ctr[1], cz = ctr[2];
 
         // rain and the funnel and the gust rings all work on the creatures under the cloud: one scan serves them
@@ -212,7 +223,7 @@ public final class StormField {
         if (s.has(StormComp.BOLTS)) bolts(level, owner, c, age, now, ctr, r);
         if (s.has(StormComp.GUST) && scan) gust(c, foes, age, ctr);
         if (s.has(StormComp.FUNNEL) && scan) funnel(level, owner, c, foes, age, now, ctr);
-        if (s.has(StormComp.EYE) && scan && age % 20 < 4) eye(level, owner, ctr);
+        if (s.has(StormComp.EYE) && scan && age % 20 < Math.max(4, PerfSettings.entityScanInterval())) eye(level, owner, ctr);
         if (s.has(StormComp.RAIN) && age % 40 == 5) StormFx.sound(level, new Vec3(cx, cy + 2, cz), SoundEvents.WEATHER_RAIN, 0.7f, 1.0f);
     }
 
@@ -225,32 +236,33 @@ public final class StormField {
             if (heavy) f.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 50, 0, true, true));
             if (s.tickRaw > 0 && c.hits.tryHit(f.getId(), StormHits.Kind.PULSE, now)) StormWorld.hit(owner, f, s.tickRaw);
         }
-        if (age % 8 == 0) for (LivingEntity friend : StormWorld.in(owner, level, cx, cy, cz, r, StormMath.CLOUD_HEIGHT + 2, false)) friend.clearFire();   // the rain puts out a friend's fire too
+        if (age % 20 < Math.max(4, PerfSettings.entityScanInterval())) for (LivingEntity friend : StormWorld.in(owner, level, cx, cy, cz, r, StormMath.CLOUD_HEIGHT + 2, false)) friend.clearFire();   // the rain puts out a friend's fire too
     }
 
     private static void hail(ServerLevel level, ServerPlayer owner, StormCell c, int age, long now, double[] ctr) {
         int v = StormMath.hailVolleyLanding(age);
-        if (v < 0) return;
+        if (v < 0 || !StormBudget.hail(now)) return;                          // a volley the budget refuses is not queued: the next one lands on its own beat
         StormSpell s = c.spell;
         double r = StormMath.radiusAt(c.radius, v * StormMath.HAIL_PERIOD, c.duration);
         int n = StormMath.hailPerVolley(c.radius);
+        // ONE scan serves the whole volley: the creatures under the cell, then each stone is tested against that short list (no query and no block search per stone)
+        List<LivingEntity> foes = StormWorld.in(owner, level, ctr[0], ctr[1], ctr[2], r + StormMath.HAIL_RADIUS, 8.0, true);
         for (int i = 0; i < n; i++) {
-            double[] off = StormMath.hailStone(c.seed, v, i, r);
-            double x = ctr[0] + off[0], z = ctr[2] + off[1];
-            double y = StormWorld.groundY(level, x, ctr[1] + 1.5, z);
-            Vec3 at = new Vec3(x, y + 0.4, z);
-            for (LivingEntity f : StormWorld.near(owner, level, at, StormMath.HAIL_RADIUS)) {
+            double x = ctr[0] + StormMath.hailStoneX(c.seed, v, i, r), z = ctr[2] + StormMath.hailStoneZ(c.seed, v, i, r);
+            for (LivingEntity f : foes) {
+                double dx = f.getX() - x, dz = f.getZ() - z, reach = StormMath.HAIL_RADIUS + f.getBbWidth() * 0.5;
+                if (dx * dx + dz * dz > reach * reach || Math.abs(f.getY() - ctr[1]) > 7.0) continue;
                 if (!c.hits.tryHit(f.getId(), StormHits.Kind.HAIL, now)) continue;
                 StormWorld.hit(owner, f, s.hailRaw);
                 f.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 25, 0, true, true));
             }
-            if (i == 0) StormFx.sound(level, at, SoundEvents.GLASS_HIT, 0.5f, 1.7f);
         }
+        if (v % 2 == 0) StormFx.sound(level, new Vec3(ctr[0], ctr[1] + 1.0, ctr[2]), SoundEvents.GLASS_HIT, 0.5f, 1.7f);
     }
 
     private static void bolts(ServerLevel level, ServerPlayer owner, StormCell c, int age, long now, double[] ctr, double r) {
         StormSpell s = c.spell;
-        if (!StormMath.boltDue(age, c.duration, s.boltEvery, c.bolts, s.maxBolts)) return;
+        if (!StormMath.boltDue(age, c.duration, s.boltEvery, c.bolts, s.maxBolts) || !StormBudget.bolt(now)) return;      // one bolt a tick and a few a second over the whole server
         List<LivingEntity> foes = StormWorld.in(owner, level, ctr[0], ctr[1], ctr[2], r, StormMath.CLOUD_HEIGHT + 2, true);
         List<LivingEntity> fit = new ArrayList<>();
         for (LivingEntity f : foes) if (c.hits.count(f.getId(), StormHits.Kind.BOLT) < StormMath.MAX_BOLTS_PER_TARGET) fit.add(f);

@@ -11,14 +11,8 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 public final class StormGate {
     private StormGate() {}
 
-    /** The one name the gate is about. */
-    public static final String STORM = "STORM";
-
-    /** Pure form of the rule, for tests: is the magic of this enum name hidden from rolls under this setting? */
-    public static boolean hiddenName(String enumName, boolean staffOnly) { return staffOnly && STORM.equals(enumName); }
-
     /** True when this magic must not be rolled for a soul, a starter pool or the wizard tower right now (server config {@code storm.staffOnly}). */
-    public static boolean hidden(MagicType t) { return t != null && hiddenName(t.name(), StormConfig.staffOnly()); }
+    public static boolean hidden(MagicType t) { return t != null && StormRules.hiddenName(t.name(), StormConfig.staffOnly()); }
 
     /** How many magics the staff-only setting takes out of the "every magic" pool (0 or 1), for the pools that compare their size to the enum's. */
     public static int hiddenCount() { return StormConfig.staffOnly() ? 1 : 0; }

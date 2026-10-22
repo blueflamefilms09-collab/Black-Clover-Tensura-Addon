@@ -22,13 +22,13 @@ public final class StormCaps {
         public boolean evicts() { return admit && evictIndex >= 0; }
     }
 
-    public static final int MIN_PER_PLAYER = 1, MAX_PER_PLAYER = 4, MIN_GLOBAL = 1, MAX_GLOBAL = 128;
+    public static final int MIN_PER_PLAYER = 1, MAX_PER_PLAYER = 2, MIN_GLOBAL = 1, MAX_GLOBAL = 64;
 
     /**
      * @param live      the storms alive now, in the order they were started (oldest first)
      * @param owner     the caster
-     * @param perPlayer most storms one player may have alive (clamped to 1..4)
-     * @param global    most storms the server may have alive (clamped to 1..128)
+     * @param perPlayer most storms one player may have alive (clamped to 1..2)
+     * @param global    most storms the server may have alive (clamped to 1..64)
      * @return admit (and which live one to end first, or -1) or refuse (the sky is full of other people's storms)
      */
     public static Verdict decide(List<Live> live, String owner, int perPlayer, int global) {
