@@ -6,7 +6,7 @@ The owner's request: *"also add custom engravements based on the animes the reli
 
 ## What it is
 
-Tensura Reincarnated's engravings are enchantments (the tag `#tensura:engraving`: severance, barrier piercing, holy weapon ...). This release adds the mod's OWN engravings, themed by franchise: **32 franchises, 69 engravings** (2 or 3 each). Every one is a real 1.21.1 datapack enchantment `nusmp:fr_<name>` (`data/nusmp/enchantment/`), listed in `data/tensura/tags/enchantment/engraving.json` (an additions tag, `replace: false`; the two older entries stay) so Tensura's engraving screens and the grindstone rules treat them like its own.
+Tensura Reincarnated's engravings are enchantments (the tag `#tensura:engraving`: severance, barrier piercing, holy weapon ...). This release adds the mod's OWN engravings, themed by franchise: **33 franchises, 71 engravings** (2 or 3 each). Every one is a real 1.21.1 datapack enchantment `nusmp:fr_<name>` (`data/nusmp/enchantment/`), listed in `data/tensura/tags/enchantment/engraving.json` (an additions tag, `replace: false`; the two older entries stay) so Tensura's engraving screens and the grindstone rules treat them like its own.
 
 What an engraving DOES is code, driven by the numbers of `data/nusmp/franchise/engravings.json`: the datapack `effects` of each enchantment are `{}` (the same shape as the two older `nusmp:` engravings). Vanilla enchantment effect components were not used on purpose: the effects are stateful (cooldowns, stacks, charges, per-player memory), cannot be tested offline, and a malformed component would fail the whole datapack load; the code path is capped, tested and cannot break a world.
 
@@ -18,12 +18,12 @@ Derived from: the relic waves (the class comment of a generated wave says what i
 
 | franchise | mapped items | foundry mobs | engravings |
 |---|---:|---:|---|
-| Black Clover | 78 | 6 | Grimoire Surge, Anti-Magic Edge, Wizard King's Reserve |
+| Black Clover | 79 | 6 | Grimoire Surge, Anti-Magic Edge, Wizard King's Reserve |
 | That Time I Got Reincarnated as a Slime | 3 | 6 | Great Sage's Insight, Predator's Harvest |
 | Magi: The Labyrinth of Magic | 108 | 4 | Magoi Overflow, Wings of the Rukh, Solomon's Wisdom |
 | Solo Leveling | 19 | 4 | Shadow Extraction, Rank Breaker |
 | DanMachi | 3 | 1 | Falna, Argonaut |
-| Fairy Tail | 31 | 6 | Guild Bond, Dragon Force, Celestial Contract |
+| Fairy Tail | 32 | 6 | Guild Bond, Dragon Force, Celestial Contract |
 | The Rising of the Shield Hero | 41 | 1 | Vassal Bond, Spirit Tortoise Ward, Waves Hunter |
 | The Seven Deadly Sins | 3 | 3 | Full Counter, Sunshine |
 | Dungeons and Dragons | 354 | 178 | Natural Twenty, Sneak Attack, Saving Throw |
@@ -50,8 +50,9 @@ Derived from: the relic waves (the class comment of a generated wave says what i
 | Hunter x Hunter | 0 | 3 | Nen Vow, Gyo |
 | JoJo's Bizarre Adventure | 0 | 0 | Stand Rush, Life Giver |
 | The Exiled Heavy Knight Knows How to Game the System | 0 | 0 | Heavy Plate Discipline, Game the System |
+| Reincarnated as a Sword | 1 | 0 | Teacher's Insight, Devoured Power |
 
-Total mapped items: 916 in 25 franchises (the map is `data/nusmp/relics/franchise_map.json`).
+Total mapped items: 919 in 26 franchises (the map is `data/nusmp/relics/franchise_map.json`).
 
 **Franchises with engravings but no mapped item yet (7):** Naruto, Bleach, One Piece, Dragon Ball, Hunter x Hunter, JoJo's Bizarre Adventure, The Exiled Heavy Knight Knows How to Game the System. They appear in the owner's list and in skills / the labyrinth foundry, but no relic, weapon or armour of the mod comes from them today, so their engravings exist (anvil, Tensura's engraving screen, commands) and are put on automatically the day an item is mapped (add it to `tools/relics/franchise_overrides.json` or a wave that says `inspired by <work>`, then re-run the tool).
 
@@ -292,6 +293,13 @@ Dungeons and Dragons: waves 0 to 30 are the cards of the D&D magic-item sheets (
 | **Heavy Plate Discipline** (`nusmp:fr_heavy_plate_discipline`) | any | Blows glance off a well-built knight. -7% damage taken from melee blows. |
 | **Game the System** (`nusmp:fr_game_the_system`) | main | Found the exploit: the first hit is the cheap one. +7% damage on the first hit against a foe you have not hit for 10 s. |
 
+### Reincarnated as a Sword
+
+| engraving | scope | effect |
+|---|---|---|
+| **Teacher's Insight** (`nusmp:fr_teachers_insight`) | main | A sword that appraises its foe sees the first opening. +8% damage on the first hit against a foe you have not hit for 10 s. |
+| **Devoured Power** (`nusmp:fr_devoured_power`) | main | What the sword defeats makes it stronger for a while. Each kill adds +1.2% damage, up to 6 times; the growth fades 60 s after the last kill. |
+
 ## Balance
 
 The weapon damage is already set by `relics/GradeDamage` (normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, genesis 260-350 per hit by weapon type). An engraving is a flavour bonus, not a second weapon:
@@ -330,7 +338,7 @@ The run prints how many items each rule decided (`--report --why` lists every it
 ## Files
 
 * `src/main/java/com/newuniverse/nusmp/franchise/`: `FranchiseData` (table, pure), `FranchiseMap` (item map, pure), `FranchiseRules` (the numbers and caps, pure), `FranchiseEngravings` (puts them on, tooltip line), `FranchiseEvents` (handlers, per-player state keyed by UUID, cleared on logout and server stop), `FranchiseMana`, `FranchiseConfig` (SERVER config `nusmp-franchise-server.toml`: `enabled`, `allies`, `aura`, `attackCapPercent`), `FranchiseBoot`, `FranchiseSelfTests`.
-* data: `data/nusmp/enchantment/fr_*.json` (69), `data/tensura/tags/enchantment/engraving.json` (additions appended), `data/nusmp/franchise/engravings.json`, `data/nusmp/relics/franchise_map.json`.
+* data: `data/nusmp/enchantment/fr_*.json` (71), `data/tensura/tags/enchantment/engraving.json` (additions appended), `data/nusmp/franchise/engravings.json`, `data/nusmp/relics/franchise_map.json`.
 * tools: `tools/franchise/gen_engravings.py` (the table; writes the enchantments, the tag additions, the data file and the lang fragment), `tools/franchise/gen_doc.py` (this page), `tools/relics/franchise_map.py` and `tools/relics/franchise_overrides.json`.
 * lang fragment: `tools/lang/franchise_engravings.json` (names, descriptions `.desc`, `franchise.nusmp.<id>`, `tooltip.nusmp.franchise`).
 * tests: `FranchiseRulesTest` (every effect with its caps), `FranchiseDataTest` (every json parses with the fields 1.21.1 requires, lang name and description, in the tag, every franchise of the map has 2 or 3 engravings, the numbers are inside their caps, nothing mentions hunger, the older `WeaponEngravings` entries are unchanged against a baseline taken before this release), CI self-test `item.franchise_engravings`.
@@ -341,7 +349,7 @@ Append-only edits to shared files: `NUSMP.java` (one line: `FranchiseBoot.init`)
 
 | part | status |
 |---|---|
-| 69 franchise engravings and their enchantments, tag entries, lang | **NEW** (nothing like them existed; the two older `nusmp:` engravings are a different thing) |
+| 71 franchise engravings and their enchantments, tag entries, lang | **NEW** (nothing like them existed; the two older `nusmp:` engravings are a different thing) |
 | franchise item map, its tool and overrides | **NEW** |
 | franchise tooltip line | **NEW** (added under the engraving list) |
 | `WeaponEngravings` table, `RelicEngravings`, `ArmorEngravings`, the `NUEngraved` marker, `nusmp:anti_magic`, `nusmp:legacy_of_the_wizard_kings`, every Tensura engraving on every weapon | **KEPT** unchanged |

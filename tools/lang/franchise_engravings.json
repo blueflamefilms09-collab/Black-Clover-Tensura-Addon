@@ -137,6 +137,10 @@
   "enchantment.nusmp.fr_heavy_plate_discipline.desc": "Blows glance off a well-built knight. -7% damage taken from melee blows. Works while the item is held, worn as armour or worn as a Curio. Effects are capped; stronger items carry a higher level (+25% per level).",
   "enchantment.nusmp.fr_game_the_system": "Game the System",
   "enchantment.nusmp.fr_game_the_system.desc": "Found the exploit: the first hit is the cheap one. +7% damage on the first hit against a foe you have not hit for 10 s. Works while the item is in your main hand. Effects are capped; stronger items carry a higher level (+25% per level).",
+  "enchantment.nusmp.fr_teachers_insight": "Teacher's Insight",
+  "enchantment.nusmp.fr_teachers_insight.desc": "A sword that appraises its foe sees the first opening. +8% damage on the first hit against a foe you have not hit for 10 s. Works while the item is in your main hand. Effects are capped; stronger items carry a higher level (+25% per level).",
+  "enchantment.nusmp.fr_devoured_power": "Devoured Power",
+  "enchantment.nusmp.fr_devoured_power.desc": "What the sword defeats makes it stronger for a while. Each kill adds +1.2% damage, up to 6 times; the growth fades 60 s after the last kill. Works while the item is in your main hand. Effects are capped; stronger items carry a higher level (+25% per level).",
   "franchise.nusmp.black_clover": "Black Clover",
   "franchise.nusmp.tensura": "That Time I Got Reincarnated as a Slime",
   "franchise.nusmp.magi": "Magi: The Labyrinth of Magic",
@@ -169,5 +173,6 @@
   "franchise.nusmp.hunter_x_hunter": "Hunter x Hunter",
   "franchise.nusmp.jojo": "JoJo's Bizarre Adventure",
   "franchise.nusmp.exiled_heavy_knight": "The Exiled Heavy Knight Knows How to Game the System",
+  "franchise.nusmp.reincarnated_as_a_sword": "Reincarnated as a Sword",
   "tooltip.nusmp.franchise": "Franchise: %s"
 }
