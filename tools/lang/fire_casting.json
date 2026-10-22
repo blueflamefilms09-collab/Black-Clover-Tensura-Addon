@@ -1,0 +1,11 @@
+{
+  "item.nusmp.magnas_soul_bat": "Magna's Soul Bat",
+  "item.nusmp.magnas_soul_bat.lore": "A flame-studded club. Magna Swing casts through it: the spell is a ball tossed ahead, the swing sends it.",
+  "item.nusmp.magnas_soul_bat.use": "Hold it in the main hand to cast the Fire pages of Magna's grimoire.",
+  "key.nusmp.fire_salamander": "Salamander (link or unlink Fuegoleon's spirit)",
+  "nusmp.firecast.spent": "The spiral stops winding: no mana left.",
+  "nusmp.firecast.ready": "Ready: the page. Punch to release it.",
+  "nusmp.firecast.spirit.full": "The Salamander cannot answer: too many spirits are out.",
+  "nusmp.firecast.spirit.linked": "The Salamander takes your shoulder.",
+  "nusmp.firecast.spirit.unlinked": "The Salamander returns to its flames."
+}

@@ -241,7 +241,7 @@ public abstract class GrimoireBook extends Skill {
             instance.getOrCreateTag().putInt("ChargeMode", mode);
             instance.getOrCreateTag().putInt("ChargeTicks", 0);
             instance.markDirty();
-            if (CastHoldFx.pressed(instance, p.level().getGameTime())) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);   // 1.27.0: a repeated press does not replay the chant
+            if (CastHoldFx.pressed(instance, p.level().getGameTime()) && com.newuniverse.nusmp.firecast.FireCasting.chants(this, p, mode)) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);   // 1.27.0: a repeated press does not replay the chant (the fire styles: Mereoleona does not chant)
         }
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
@@ -269,12 +269,14 @@ public abstract class GrimoireBook extends Skill {
         CastHoldFx.held(instance, p, colorNow(), charge, castTicks(instance, p), castReady(instance, p, mode));
         if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: a heavy page held long enough is a massive channel to the god-tier Lucius
             com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireHold(p, page(mode), charge, castTicks(instance, p), castReady(instance, p, mode));
+        com.newuniverse.nusmp.firecast.FireCasting.held(this, instance, p, heldTicks, mode);      // fire casting: Leopold's spiral winds while the key is held (nothing for every other caster)
         return true;
     }
 
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
         if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
+        if (com.newuniverse.nusmp.firecast.FireCasting.release(this, instance, player, heldTicks, mode)) return;      // fire casting: Mereoleona readies the page (the fists release it); Leopold fixes his spiral level
         long now = player.level().getGameTime();
         long pendingUntil = instance.getOrCreateTag().getLong("PendingCastUntil");
         int charge = Math.min(castTicks(instance, player), Math.max(0, heldTicks));
@@ -303,6 +305,10 @@ public abstract class GrimoireBook extends Skill {
 
     /** 1.27.0: whether castPage would get past its checks right now (no side effects): the circles of a held key are only shown for a page that can be cast. */
     private boolean castReady(ManasSkillInstance instance, ServerPlayer player, int mode) {
+        return castReadyBase(instance, player, mode) && com.newuniverse.nusmp.firecast.FireCasting.ready(this, player, mode);      // fire casting: no hold circle for a page the style would refuse (Magna without the bat, Mereoleona's fists)
+    }
+
+    private boolean castReadyBase(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);
         if (p == null) return false;
         if (com.newuniverse.nusmp.entity.zogratis.SpellSeal.sealed(player) || !usable(instance, player, mode) || !holdingBook(player)) return false;
@@ -310,6 +316,12 @@ public abstract class GrimoireBook extends Skill {
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) return false;
         return !instance.onCoolDown(mode);
     }
+
+    /** Fire casting: whether the page could be cast right now (the hold's check), for the styles in {@code firecast}. */
+    public boolean chargeReady(ManasSkillInstance instance, ServerPlayer player, int mode) { return castReadyBase(instance, player, mode); }
+
+    /** Fire casting: casts the page the way a key release does (cost, cooldown, mastery, animation), for a style that releases it itself (Mereoleona's finisher punch). */
+    public void castFromStyle(ManasSkillInstance instance, ServerPlayer player, int mode) { castPage(instance, player, mode); }
 
     private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);
@@ -322,6 +334,8 @@ public abstract class GrimoireBook extends Skill {
             return;
         }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
+        String styleRefusal = com.newuniverse.nusmp.firecast.FireCasting.refuse(this, player, mode);      // fire casting: Magna needs his bat (nothing for every other caster)
+        if (styleRefusal != null) { fail(player, styleRefusal); return; }
         if (ArmourCast.beforeCast(player, this, instance, p.id())) return;      // 1.99.0: the armour page of a worn armour only takes it off (free, no cooldown, no spell)
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
         // 1.27.0: a magic whose code faulted is on a short recovery cooldown (checked BEFORE any mana is spent), and its cast runs
@@ -334,13 +348,14 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
-        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> p.cast().cast(this, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.firecast.FireCasting.run(this, p, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
                 : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
                 : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);
-        com.newuniverse.nusmp.anim.CastAnim.play(player, clip);
+        String styledClip = com.newuniverse.nusmp.firecast.FireCasting.releaseClip(this, player, mode, clip);      // fire casting: the style's own release clip (the bat swing started at the toss)
+        if (styledClip != null) com.newuniverse.nusmp.anim.CastAnim.play(player, styledClip);
         shout(player, p.incantation());
         if (p.cooldown() > 0) {
             int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.mana.ManaLaw.cooldownMult(player) * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
@@ -368,7 +383,7 @@ public abstract class GrimoireBook extends Skill {
     /** Spirit Dive makes this book's spells 20% bigger. */
     public static float size(ManasSkillInstance i, LivingEntity e) {
         float s = e.level().getGameTime() < i.getOrCreateTag().getLong("DiveUntil") ? 1.2f : 1f;
-        return s * buildUpMultiplier(i, e);
+        return s * buildUpMultiplier(i, e) * (float) com.newuniverse.nusmp.firecast.FireCasting.sizeMult(e);      // fire casting: Leopold's charged spiral (1 for every other caster)
     }
 
     private static float buildUpMultiplier(ManasSkillInstance instance, LivingEntity entity) {
@@ -394,7 +409,7 @@ public abstract class GrimoireBook extends Skill {
     public void hurtAs(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, ResourceKey<DamageType> type) {
         if (target == caster || target.isAlliedTo(caster)) return;
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
-                * buildUpMultiplier(i, caster)
+                * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)      // fire casting: Leopold's charged spiral (1 for every other caster)
                 * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
@@ -445,7 +460,7 @@ public abstract class GrimoireBook extends Skill {
 
     // ---------------------------------------------------------------- VFX helpers
     public void vfx(ServerPlayer p, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
-        VfxSpawn.send(p.serverLevel(), shape, from, to, color, ticks, power);
+        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
     }
 
     /** Spinning magic circle under the caster in this book's color (every cast). */

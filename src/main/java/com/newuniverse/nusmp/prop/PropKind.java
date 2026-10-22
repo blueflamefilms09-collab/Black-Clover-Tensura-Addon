@@ -163,5 +163,8 @@ public enum PropKind {
     CELESTIAL_2,
     /** 1.99.0 Light and Bone Magic after the Black Clover wiki: one kind each, the variant is the low byte of the param (prop.LightJaProps / BoneJaProps, painters client.prop.LightJaPropPainter / BoneJaPropPainter) */
     LIGHT_JA,
-    BONE_JA
+    BONE_JA,
+    /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
+    FIRECAST_1,
+    FIRECAST_2
 }

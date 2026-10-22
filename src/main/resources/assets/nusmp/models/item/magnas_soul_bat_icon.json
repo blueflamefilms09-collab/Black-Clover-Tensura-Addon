@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "nusmp:item/magnas_soul_bat"
+  }
+}

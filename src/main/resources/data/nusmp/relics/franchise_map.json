@@ -3,7 +3,7 @@
  "comment": "Written by tools/relics/franchise_map.py (re-run it after a wave changes; manual choices are in tools/relics/franchise_overrides.json). An id that is not here has no franchise.",
  "franchises": {
   "berserk": 11,
-  "black_clover": 78,
+  "black_clover": 79,
   "danmachi": 3,
   "delicious_in_dungeon": 20,
   "dnd": 354,
@@ -43,6 +43,7 @@
   "golden_dawn_mantle": "black_clover",
   "heart_kingdom_uniform": "black_clover",
   "magic_knight_robe_": "black_clover",
+  "magnas_soul_bat": "black_clover",
   "silver_eagle_cloak": "black_clover",
   "spade_war_coat": "black_clover",
   "vassal_": "shield_hero",

@@ -194,6 +194,7 @@ public class GrimoireItem extends Item {
     /** Gives the player's own grimoire of this magic a canon book's look (after binding a canon copy). */
     public static void applyCanon(ServerPlayer p, MagicType magic, String canon) {
         applyCanonLook(p, magic, canon);
+        if ("magna".equals(canon)) com.newuniverse.nusmp.firecast.FireCastBoot.grantBat(p);                      // fire casting: Magna's grimoire comes with Magna's Soul Bat (once per player; the creative tab has it too)
         if ("yami".equals(canon)) {                                                      // 0.54: Yami's grimoire comes with Yami's weapon, drawn out of the book
             com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.YAMI,
                     com.newuniverse.nusmp.item.MagicWeaponItem.bound(com.newuniverse.nusmp.item.NUItems.MIASMA_KATANA.get(), p));

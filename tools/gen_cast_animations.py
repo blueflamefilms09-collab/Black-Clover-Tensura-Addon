@@ -259,6 +259,76 @@ DANCE_CLIPS = {
 CLIPS.update(DANCE_CLIPS)
 
 
+# ----------------------------------------------------------------------------------------------------------------------------------
+# Fire casting (docs/magic/fire_casting.md): the casting styles of Magna, Mereoleona and Leopold. The server starts these clips at the moment the effect it times
+# (anim/CastAnim.FIRE_*): the contact keyframe of the bat swing is at 0.40 s = tick 8 (firecast.FireCastRules.SWING_IMPACT_TICK, where the server tests the swing and
+# launches the spell), the punches land at 0.10 s, the charge loops until the key is released. Run with --append-fire: only these clips are added, every other clip
+# stays exactly as it is on disk. The bat is held in the RIGHT hand: the right arm leads the swing (a two-handed grip: the left arm follows).
+# ----------------------------------------------------------------------------------------------------------------------------------
+FIRE_CLIPS = {
+    # MAGNA: the bat rests on the shoulder, the weight loads back, the body whips round (contact at 0.40 s), follow-through over the shoulder, settle
+    "fire_bat_swing": clip(0.8, False, [
+        (0.00, dict(body=(2, 20, 0), right_arm=(-150, 10, 30), left_arm=(-100, 0, -20), left_leg=(-6, 0, 0), right_leg=(6, 0, 0))),
+        (0.20, dict(body=(0, 42, 0), right_arm=(-170, 25, 40), left_arm=(-120, 10, -26), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+        (0.34, dict(body=(-2, 0, 0), right_arm=(-100, 0, 10), left_arm=(-95, -5, -12))),
+        (0.40, dict(body=(-6, -48, 0), right_arm=(-85, -35, 2), left_arm=(-88, -20, -6), left_leg=(8, 0, 0), right_leg=(-8, 0, 0))),
+        (0.55, dict(body=(-4, -58, 0), right_arm=(-110, -60, -10), left_arm=(-100, -40, -10))),
+        (0.80, dict(body=REST, right_arm=REST, left_arm=REST, left_leg=REST, right_leg=REST)),
+    ]),
+    # MEREOLEONA: two quick straight punches, alternating; the contact is at 0.10 s
+    "fire_punch_a": clip(0.4, False, [
+        (0.00, dict(body=(0, 14, 0), right_arm=(-30, 0, 6), left_arm=(-60, 0, -10))),
+        (0.10, dict(body=(-3, -22, 0), right_arm=(-92, -8, 4), left_arm=(-40, 0, -14))),
+        (0.18, dict(body=(-3, -24, 0), right_arm=(-94, -8, 4), left_arm=(-40, 0, -14))),
+        (0.40, dict(body=REST, right_arm=REST, left_arm=REST)),
+    ]),
+    "fire_punch_b": clip(0.4, False, [
+        (0.00, dict(body=(0, -14, 0), left_arm=(-30, 0, -6), right_arm=(-60, 0, 10))),
+        (0.10, dict(body=(-3, 22, 0), left_arm=(-92, 8, -4), right_arm=(-40, 0, 14))),
+        (0.18, dict(body=(-3, 24, 0), left_arm=(-94, 8, -4), right_arm=(-40, 0, 14))),
+        (0.40, dict(body=REST, right_arm=REST, left_arm=REST)),
+    ]),
+    # the finisher: the fist draws back, drives through with the whole body, holds while the flame leaves it
+    "fire_punch_finisher": clip(0.9, False, [
+        (0.00, dict(body=(2, 30, 0), right_arm=(-40, 20, 20), left_arm=(-70, 0, -20), left_leg=(-10, 0, 0), right_leg=(10, 0, 0))),
+        (0.12, dict(body=(4, 44, 0), right_arm=(-20, 40, 28), left_arm=(-80, 0, -24), left_leg=(-12, 0, 0), right_leg=(12, 0, 0))),
+        (0.20, dict(body=(-8, -30, 0), right_arm=(-96, -10, 2), left_arm=(-36, 0, -16), left_leg=(10, 0, 0), right_leg=(-10, 0, 0))),
+        (0.50, dict(body=(-8, -32, 0), right_arm=(-98, -10, 2), left_arm=(-36, 0, -16), left_leg=(10, 0, 0), right_leg=(-10, 0, 0))),
+        (0.90, dict(body=REST, right_arm=REST, left_arm=REST, left_leg=REST, right_leg=REST)),
+    ]),
+    # LEOPOLD: both hands wind a spiral in front of the chest (loops while the key is held), then the release drives it forward
+    "fire_charge": clip(1.2, True, [
+        (0.00, dict(body=((4, 0, 0), (0, -0.4, 0)), left_arm=(-72, 18, -22), right_arm=(-72, -18, 22), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+        (0.30, dict(body=((5, 4, 0), (0, -0.6, 0)), left_arm=(-84, 24, -28), right_arm=(-64, -10, 18), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+        (0.60, dict(body=((4, 0, 0), (0, -0.4, 0)), left_arm=(-72, 18, -22), right_arm=(-72, -18, 22), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+        (0.90, dict(body=((5, -4, 0), (0, -0.6, 0)), left_arm=(-64, 10, -18), right_arm=(-84, -24, 28), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+        (1.20, dict(body=((4, 0, 0), (0, -0.4, 0)), left_arm=(-72, 18, -22), right_arm=(-72, -18, 22), left_leg=(-8, 0, 0), right_leg=(8, 0, 0))),
+    ]),
+    "fire_charge_release": clip(0.8, False, [
+        (0.00, dict(body=((6, 0, 0), (0, -0.6, 0)), left_arm=(-72, 18, -22), right_arm=(-72, -18, 22))),
+        (0.08, dict(body=(-8, 0, 0), left_arm=(-96, 4, -6), right_arm=(-96, -4, 6))),
+        (0.30, dict(body=(-8, 0, 0), left_arm=(-98, 4, -6), right_arm=(-98, -4, 6))),
+        (0.50, dict(body=(2, 0, 0), left_arm=(-70, 0, -10), right_arm=(-70, 0, 10))),
+        (0.80, dict(body=REST, left_arm=REST, right_arm=REST)),
+    ]),
+}
+
+
+CLIPS.update(FIRE_CLIPS)
+
+
+def append_fire():
+    """Adds (or refreshes) only the fire_* clips in the existing file and leaves every other clip exactly as it is on disk."""
+    path = os.path.normpath(OUT)
+    with open(path) as f:
+        data = json.load(f)
+    data["animations"].update(FIRE_CLIPS)
+    with open(path, "w", newline="\n") as f:
+        json.dump(data, f, indent=1)
+        f.write("\n")
+    print("appended", len(FIRE_CLIPS), "fire clips to", path)
+
+
 def append_dance():
     """Adds (or refreshes) only the dance_* clips in the existing file and leaves every other clip exactly as it is on disk."""
     path = os.path.normpath(OUT)
@@ -274,6 +344,9 @@ def append_dance():
 def main():
     if "--append-dance" in sys.argv:
         append_dance()
+        return
+    if "--append-fire" in sys.argv:
+        append_fire()
         return
     data = {"format_version": "1.8.0", "animations": CLIPS}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

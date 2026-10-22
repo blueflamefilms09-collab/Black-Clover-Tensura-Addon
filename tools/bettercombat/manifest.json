@@ -851,6 +851,11 @@
       "profile": "longsword",
       "source": "item"
     },
+    "magnas_soul_bat": {
+      "class": "club",
+      "profile": "club",
+      "source": "table"
+    },
     "marids_valor": {
       "class": "sabre",
       "profile": "sabre",

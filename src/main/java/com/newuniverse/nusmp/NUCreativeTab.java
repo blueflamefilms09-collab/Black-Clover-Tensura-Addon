@@ -49,6 +49,7 @@ public final class NUCreativeTab {
                 for (net.minecraft.world.item.Item hw : com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.creativeItems()) output.accept(hw);   // 1.62.0: the 21 hero weapons and the Calling Gems
                 for (net.minecraft.world.item.ItemStack ft : com.newuniverse.nusmp.fairytail.FairyTailSystem.creativeItems()) output.accept(ft);   // Fairy Tail skill books
                 output.accept(com.newuniverse.nusmp.fairytail.storm.StormBoot.STAFF.get());                                          // Storm Magic (Fairy Tail): the Stormcaller Staff
+                output.accept(com.newuniverse.nusmp.firecast.FireCastBoot.BAT.get());                                                // fire casting: Magna's Soul Bat
                 for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Spirit Magic: the keys, the book, the sceptre
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items

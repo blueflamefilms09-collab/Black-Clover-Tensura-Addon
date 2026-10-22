@@ -1,0 +1,201 @@
+{
+ "firecast_dragon_idle": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   560,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "head close 3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     1.4,
+     4.4
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 14,
+    "target": [
+     0,
+     1.4,
+     -1.5
+    ],
+    "dist": 15.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.4,
+     -2.5
+    ],
+    "dist": 19.0
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 16,
+    "target": [
+     0,
+     1.4,
+     -2.5
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_dragon_fly": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   8,
+   16,
+   24
+  ],
+  "tile": [
+   420,
+   340
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "fly",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     -2.0
+    ],
+    "dist": 22.0
+   }
+  ]
+ },
+ "firecast_dragon_breathe": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   18,
+   26
+  ],
+  "tile": [
+   420,
+   340
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "breathe",
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     -2.0
+    ],
+    "dist": 20.0
+   }
+  ]
+ },
+ "firecast_dragon_lod": {
+  "kind": "geo",
+  "model": "firecast_dragon_lod1",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   560,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 1",
+    "yaw": 38,
+    "pitch": 14,
+    "target": [
+     0,
+     1.4,
+     -1.5
+    ],
+    "dist": 15.0
+   }
+  ]
+ },
+ "firecast_dragon_lod2": {
+  "kind": "geo",
+  "model": "firecast_dragon_lod2",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   560,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "lod 2",
+    "yaw": 38,
+    "pitch": 14,
+    "target": [
+     0,
+     1.4,
+     -1.5
+    ],
+    "dist": 15.0
+   }
+  ]
+ }
+}
