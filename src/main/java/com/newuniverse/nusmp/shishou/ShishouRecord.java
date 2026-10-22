@@ -52,7 +52,10 @@ public final class ShishouRecord {
         mana = Math.min(mana, maxMana());
     }
 
-    public void countKill() { kills++; wildKills++; }
+    public void countKill() { kills++; }
+
+    /** A kill made by the wild sword (the wild phase's own counter, which settles him into his pedestal). */
+    public void countWildKill() { kills++; wildKills++; }
 
     // ---------------------------------------------------------------- mana (lazy)
     public double maxMana() { return ShishouRules.maxMana(level(), manaSteps); }

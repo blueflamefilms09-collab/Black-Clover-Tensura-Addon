@@ -45,7 +45,21 @@ public final class ShishouVoiceLines {
     private static final String[] REGISTERED = {};
     // END REGISTERED
 
+    // BEGIN TEXTS (rewritten by tools/audio/shishou_lines.py: the words of every manifest line, in manifest order; they are the Thought Communication text and the fallback of the lang keys)
+    private static final String[] TEXTS = {};
+    // END TEXTS
+
     private static final List<String> IDS = Collections.unmodifiableList(java.util.Arrays.asList(REGISTERED));
+
+    /** The words of a manifest line (the action-bar text and the subtitle); the id itself when it is unknown. */
+    public static String text(String id) {
+        List<String> all = manifestIds();
+        int i = all.indexOf(id);
+        return i >= 0 && i < TEXTS.length ? TEXTS[i] : id;
+    }
+
+    /** How many words the catalogue knows (the manifest tool writes one per line; a test compares). */
+    public static int textCount() { return TEXTS.length; }
 
     /** Every id of the manifest, recorded or not, in group order. */
     public static List<String> manifestIds() {

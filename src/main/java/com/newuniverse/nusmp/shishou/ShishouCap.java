@@ -81,6 +81,13 @@ public final class ShishouCap {
         return true;
     }
 
+    /** The ground under the dormant sword is gone: it flies again and will settle somewhere else. */
+    public boolean wake(UUID entityId) {
+        if (form != Form.DORMANT || entityId == null || !entityId.equals(entity)) return false;
+        form = Form.WILD;
+        return true;
+    }
+
     /** A player right-clicks the dormant sword. */
     public Claim claim(UUID player, long now) {
         if (form != Form.DORMANT || player == null) return Claim.NOT_DORMANT;
