@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.112.0] — Soul Corpse zombies and Rades's five undead, 3D Compass, anime Recombination golem, Storm staff (Fairy Tail), Light and Bone remake, flat white shapes gone, lag audit
+
+### NEW
+- **Soul Corpse summons real zombies** (they never burn in daylight, obey the caster, capped 6 per player / 60 per server; server config `corpse.zombiesInsteadOfPuppets`, off = old puppets). **Rades Spirito's five numbered undead:** No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl, No.0 Michael Caesal, each a custom-looking undead mob with its own model, skin, animations and signature move (`docs/exclusive/rades_undead.md`).
+- **Grimoire Unique Skill shows the character's name** ("Rades Spirito's Soul Corpse Magic") for every canon character.
+- **Compass Magic is one floating 3D compass** (bronze rim, green dial, 8-point rose, needle that points at the target) and every Compass spell comes out of it as 3D models; level of detail and frame budget keep it cheap (`docs/magic/compass_3d.md`, client config `visual.compass3d`).
+- **Recombination Magic looks like the anime:** the Raging Black Bull is a house-golem (stacked houses, tower-spire horns, glowing eyes, brick fists) that rises, walks, punches and stomps with dust, bricks and an impact flash; rooms, ring and drill are house/brick pieces (`docs/magic/recomb_anime.md`, client config `visual.recombAnime`).
+- **Storm Magic is a Fairy Tail magic tied to the new Stormcaller Staff** (3D weapon): eight storm spells (Gathering, Downpour, Hailstorm, Thunderhead, Gale Front, Storm Surge, Twister, Eye of the Storm) with a cloud deck, rain, hail, forked bolts and funnels; the old grimoire stays registered but is not rolled (`storm.staffOnly`) (`docs/magic/storm_staff.md`).
+- **Light and Bone Magic remade after the wiki:** Light has the nine listed spells (Light Sword of Judgment ... Absolute Monarch of Divine Brilliance), Bone gets Eternal Fangs, Bone Bullets, Demon Sword Dainsleif and Spatial Rupture, all with 3D props (`docs/magic/light_bone_ja.md`, server config `magic.lightBoneJa`).
+- **The ugly flat white shapes are gone** (weapon constructs, Mirror doubles, Soul Corpse hand/grave/shard/skull billboards): solid shaded models instead, old look behind `visual.flatProps`.
+- **Lag audit (CLAUDE.md rule 11):** caps, throttles, level of detail and frame budgets for the Compass, franchise engravings, new relics, armour failsafe; per-effect worst-case costs in every doc (`docs/perf/lag_audit_1.md`).
+- **CLAUDE.md rules 10 and 11:** English wiki first with the Japanese wiki as fallback; no lag on a public server.
+
+### KEPT
+- Every old page id, model, texture and behaviour (all replaced looks stay one setting away).
+
 ## [1.111.0] — Relic pyramid rebalanced by ADDING relics (Millennium Items, 287 new Normal), franchise engravings, armour relics never invisible, weapons held by the hilt
 
 ### NEW
