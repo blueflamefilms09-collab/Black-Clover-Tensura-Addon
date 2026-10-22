@@ -20,9 +20,9 @@ from gnome_geo_lib import rgb, smoothstep, fbm  # noqa: E402
 SS = 3
 
 PAL = dict(ink="#1F130C", ink2="#34200F",
-           shade="#3F2C20", dark="#5B4030", base="#8A6240", light="#B88B52", hi="#E0B972",
-           warm="#A5703A",                                   # a few stones are warmer (ochre)
-           moss_d="#37461A", moss="#62762A", moss_l="#8DA03E",
+           shade="#4A3D35", dark="#66543F", base="#8F7C66", light="#BBA58A", hi="#E0CDA8",
+           warm="#B27A3E",                                   # a few stones are warmer (ochre)
+           moss_d="#34421A", moss="#566A28", moss_l="#7C9036",
            amber_d="#9A5A16", amber="#F0A52A", amber_l="#FFD35C", amber_w="#FFF2B8",
            glow="#FFB43C", glow_core="#FFE9A0",
            dia_d="#5E8E9E", dia="#A6D6E2", dia_l="#E4F7FB", dia_w="#FFFFFF")
@@ -107,7 +107,7 @@ def stone(w, h, seed, cell, tone=0.0, warm=0.0, line=2.0, shade_side=0.26, moss=
     rng = np.random.default_rng(seed * 7 + 1)
     d1, d2, cx, cy, hh = voronoi(w, h, cell, seed, stretch=0.9)
     # where the facet sits: light from the upper left, a little lighter near the top
-    lit = 0.50 + tone + (0.5 - cy / h) * 0.22 + (0.5 - cx / w) * 0.10 + (hh - 0.5) * 0.55
+    lit = 0.57 + tone + (0.5 - cy / h) * 0.22 + (0.5 - cx / w) * 0.10 + (hh - 0.5) * 0.55
     if flat_tone is not None:
         lit = np.full_like(lit, flat_tone) + (hh - 0.5) * 0.35
     # inside each facet: a shaded lower-right side and a lit upper-left rim (the cel step)

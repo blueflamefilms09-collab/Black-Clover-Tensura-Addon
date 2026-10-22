@@ -15,7 +15,7 @@ public final class GnomeLod {
     public static final int LOD_FULL = 0, LOD_HALF = 1, LOD_LOW = 2, CULL = 3;
 
     /** Quads of the colour models by form and level (counted from the generated files). */
-    public static final int[][] BODY = {{539, 223, 74}, {541, 228, 74}};
+    public static final int[][] BODY = {{475, 239, 74}, {611, 244, 74}};
     /** Quads of the glow-only model by form and level (level 2 has none). */
     public static final int[][] FX = {{58, 31, 0}, {78, 35, 0}};
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the Gnome is not drawn. */

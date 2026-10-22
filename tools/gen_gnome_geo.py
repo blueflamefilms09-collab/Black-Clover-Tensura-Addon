@@ -24,7 +24,7 @@ import gnome_geo_lib as L  # noqa: E402
 import gen_gnome_art as A  # noqa: E402
 
 D = 5.0                                   # texels per model unit of the full form
-FORMS = {"full": dict(k=1.0, hs=1.0, seed=7100), "companion": dict(k=0.20, hs=1.38, seed=7200)}
+FORMS = {"full": dict(k=1.0, hs=1.0, seed=7100), "companion": dict(k=0.165, hs=1.38, seed=7200)}
 HEAD_PIVOT = (0.0, 92.0, -6.0)
 LOD_SCALE = {0: 1.0, 1: 0.5, 2: 0.25}
 
@@ -37,12 +37,12 @@ def noz(w, h):
 def make_atlas():
     at = L.Atlas(1024, 1024)
     S = 1000
-    at.region("rock_a", 256, 256, lambda w, h: A.stone(w, h, S + 1, w / 5.0, moss=0.45, warm=0.22, cracks=2))
-    at.region("rock_b", 256, 256, lambda w, h: A.stone(w, h, S + 2, w / 7.0, warm=0.20, cracks=3, vein=1, tone=0.0))
-    at.region("rock_c", 256, 256, lambda w, h: A.stone(w, h, S + 3, w / 3.4, warm=0.25, cracks=1, moss=0.22))
+    at.region("rock_a", 256, 256, lambda w, h: A.stone(w, h, S + 1, w / 4.2, moss=0.45, warm=0.22, cracks=2))
+    at.region("rock_b", 256, 256, lambda w, h: A.stone(w, h, S + 2, w / 5.6, warm=0.20, cracks=3, vein=1, tone=0.0))
+    at.region("rock_c", 256, 256, lambda w, h: A.stone(w, h, S + 3, w / 3.0, warm=0.25, cracks=1, moss=0.22))
     at.region("rock_top", 256, 256, lambda w, h: A.stone(w, h, S + 4, w / 5.5, tone=0.07, warm=0.12, moss=0.95, moss_top=False))
     at.region("rock_dark", 192, 192, lambda w, h: A.stone(w, h, S + 5, w / 3.6, tone=-0.15, warm=0.10, cracks=2))
-    at.region("rock_lt", 256, 256, lambda w, h: A.stone(w, h, S + 16, w / 4.0, tone=0.10, warm=0.45, cracks=1, moss=0.2))
+    at.region("rock_lt", 256, 256, lambda w, h: A.stone(w, h, S + 16, w / 3.4, tone=0.10, warm=0.45, cracks=1, moss=0.2))
     at.region("circle", 256, 256, lambda w, h: A.magic_circle(w, h, S + 6))
     at.region("knuckle", 192, 160, lambda w, h: A.knuckle(w, h, S + 7))
     at.region("veins", 256, 256, lambda w, h: A.veins_plate(w, h, S + 8))
@@ -132,9 +132,11 @@ class Builder:
                 self.glow(bone, cc, (w * 1.08, h * 1.02, w * 1.08), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0)}, rot, piv, lod=1, comp=comp, head=head)
             return
         self.part(bone, cc, (w, h, w), f, rot, piv, lod, comp, head)
-        if tip and self.lod == 0:
-            tc = (c[0], c[1] + h + w * 0.25, c[2])
-            self.part(bone, tc, (w * 0.62, w * 0.9, w * 0.62), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0), "up": (reg, 0)}, rot, piv, 0, comp, head)
+        if tip and self.lod == 0:                                      # a narrower tip turned 45 degrees on top: the point of the crystal
+            tc = (c[0], c[1] + h + w * 0.40, c[2])
+            self.part(bone, tc, (w * 0.60, w * 0.8, w * 0.60), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0), "up": (reg, 0)}, (rot[0], 45.0, rot[2]), piv, 0, comp, head)
+            tc2 = (c[0], c[1] + h + w * 0.85, c[2])
+            self.part(bone, tc2, (w * 0.30, w * 0.5, w * 0.30), {"west": (reg, 0), "east": (reg, 0), "north": (reg, 0), "south": (reg, 0), "up": (reg, 0)}, (rot[0], 0.0, rot[2]), piv, 0, comp, head)
 
 
 def build(form, lod, atlas, fx=False):
@@ -143,8 +145,8 @@ def build(form, lod, atlas, fx=False):
     P = b.part
     B = b.bone
     big = form == "full"
-    X = 19.0                                           # the legs' stance
-    SH = 46.0                                          # the shoulders' stance
+    X = 20.0                                           # the legs' stance
+    SH = 49.0                                          # the shoulders' stance
     # ------------------------------------------------------------------ bones (the same in every model)
     B("body", (0, 40, 0))
     B("chest", (0, 48, 0), "body")
@@ -156,74 +158,76 @@ def build(form, lod, atlas, fx=False):
         B("leg_" + t, (sx * X, 36, 2), "body")
         B("shin_" + t, (sx * X, 17, 2), "leg_" + t)
         B("foot_" + t, (sx * X, 7, 2), "shin_" + t)
-    orbs = [("orb1", (-64, 70, -10), 11, 1), ("orb2", (64, 94, 8), 9, 1), ("orb3", (-34, 118, 16), 8, 0), ("orb4", (40, 40, -40), 9, 0)]
+    orbs = [("orb1", (-70, 72, -10), 12, 1), ("orb2", (70, 96, 8), 10, 1), ("orb3", (-36, 124, 16), 8, 0), ("orb4", (44, 40, -42), 10, 0)]
     for nm, c, s, lv in orbs:
         B(nm, c, "root")
 
     # ------------------------------------------------------------------ legs: stacked dark boulders on a slab, planted, a clear gap between them
     for sx, t in ((-1, "R"), (1, "L")):
         x = sx * X
-        P("leg_" + t, (x, 26, 2), (21, 20, 24), b.stone_faces("dark", down=False), lod=2)
-        P("leg_" + t, (x, 26, -11.5), (17, 12, 5), b.stone_faces("plate", down=False, back=False), rot=(8, 0, 0), piv=(x, 26, -11), lod=1)             # knee plate
-        P("leg_" + t, (x + sx * 11.5, 28, 2), (4, 14, 16), b.stone_faces("arm", down=False, front=False, back=False), lod=0)                       # a slab on the outside
-        P("shin_" + t, (x, 10, 2), (19, 15, 21), b.stone_faces("leg", up=False, down=False), lod=2)
-        P("shin_" + t, (x, 13, 13.5), (15, 9, 5), b.stone_faces("plate", down=False, front=False), lod=0)
-        P("foot_" + t, (x, 3.5, -2), (27, 7, 35), b.stone_faces("leg", down=False), lod=2)
+        P("leg_" + t, (x, 26, 2), (22, 20, 25), b.stone_faces("dark", down=False), rot=(0, sx * 4, 0), piv=(x, 26, 2), lod=2)
+        P("leg_" + t, (x, 27, -12), (18, 12, 5), b.stone_faces("plate", down=False, back=False), rot=(10, 0, 0), piv=(x, 27, -11), lod=1)             # knee plate
+        P("leg_" + t, (x + sx * 12.5, 29, 2), (4, 15, 17), b.stone_faces("arm", down=False, front=False, back=False), rot=(0, 0, sx * -8), piv=(x + sx * 12.5, 22, 2), lod=0)
+        P("shin_" + t, (x, 10, 2), (20, 15, 22), b.stone_faces("leg", up=False, down=False), lod=2)
+        P("shin_" + t, (x, 13, 14), (16, 9, 5), b.stone_faces("plate", down=False, front=False), lod=0)
+        P("foot_" + t, (x, 3.5, -2), (28, 7, 36), b.stone_faces("leg", down=False), lod=2)
         for j in range(3):
-            P("foot_" + t, (x + (j - 1) * 9, 5, -21.5), (8, 10, 9), b.stone_faces("arm", back=False, sides=(j != 1)), lod=0)
-        P("foot_" + t, (x + sx * 15.5, 3, 0), (7, 6, 13), b.stone_faces("dark", down=False), lod=0)
-    # ------------------------------------------------------------------ pelvis and belt (narrow: the body is a V)
+            P("foot_" + t, (x + (j - 1) * 9.5, 5, -22), (8.5, 10, 9), b.stone_faces("arm", back=False, sides=(j != 1)), lod=0)
+        P("foot_" + t, (x + sx * 16.5, 3, 0), (7, 6, 14), b.stone_faces("dark", down=False), lod=0)
+    # ------------------------------------------------------------------ pelvis, belt and a skirt of stone plates (the body is a V)
     P("body", (0, 41, 0), (40, 13, 30), b.stone_faces("dark", down=False), lod=2)
     P("body", (0, 45, -15.6), (30, 5, 1.6), {"north": ("bracer", 0), "up": ("rock_dark", b.dens)}, lod=1)
     for sx in (-1, 1):
-        P("body", (sx * 21, 37, -10), (9, 9, 12), b.stone_faces("arm", down=False, back=False), lod=0)                       # hip stones
-    # ------------------------------------------------------------------ chest: a lower plate, then the great breast, the carved circle
-    P("chest", (0, 56, 0), (34, 16, 28), b.stone_faces("plate", down=False), lod=2)
-    P("chest", (0, 74, 0), (58, 27, 38), b.stone_faces("boulder", down=False), rot=(0, 0, 0), lod=2)
-    P("chest", (0, 70, -21.5), (31, 31, 4), {"north": ("circle", 0), "up": ("rock_top", b.dens), "west": ("rock_dark", b.dens), "east": ("rock_dark", b.dens)}, lod=2)
+        P("body", (sx * 22, 36, -10), (9, 9, 12), b.stone_faces("arm", down=False, back=False), lod=0)                       # hip stones
+        P("body", (sx * 9, 33, -17), (12, 15, 3.5), b.stone_faces("plate", down=False, back=False), rot=(8, 0, sx * -7), piv=(sx * 9, 40, -17), lod=1)   # skirt plates
+    # ------------------------------------------------------------------ chest: the belly, the great breast with its rib plates, the carved circle
+    P("chest", (0, 55, 0), (30, 14, 26), b.stone_faces("plate", down=False), lod=2)
+    P("chest", (0, 76, 0), (54, 22, 36), b.stone_faces("boulder", down=False), lod=2)
+    P("chest", (0, 72, -20.5), (30, 30, 4), {"north": ("circle", 0), "up": ("rock_top", b.dens), "west": ("rock_dark", b.dens), "east": ("rock_dark", b.dens)}, lod=2)
     for sx in (-1, 1):
-        P("chest", (sx * 25, 77, -20), (14, 15, 8), b.stone_faces("plate", down=False, back=False), rot=(0, 0, sx * -5), piv=(sx * 25, 77, -20), lod=1)         # pectoral stones
-        P("chest", (sx * 21, 58, -17), (11, 10, 6), b.stone_faces("arm", down=False, back=False), lod=0)
-    P("chest", (0, 74, 21.5), (48, 27, 7), b.stone_faces("plate", down=False, front=False), lod=1)                            # back plate
-    P("chest", (0, 90.5, 6), (40, 4, 26), b.stone_faces("plate", down=False), lod=1)                                          # a ledge of slabs between the shoulders
-    P("chest", (0, 86, 22), (22, 18, 8), b.stone_faces("arm", down=False, front=False), rot=(-14, 0, 0), piv=(0, 80, 22), lod=0)               # a hump
-    b.shard("chest", (0, 85, 24), 20, 6, (-22, 0, 0), "amber", lod=1)
-    b.shard("chest", (-11, 82, 24), 15, 5, (-18, 0, 18), "dia", lod=1, comp=False)
-    b.shard("chest", (11, 82, 24), 15, 5, (-18, 0, -18), "amber", lod=0)
-    # ------------------------------------------------------------------ head: SMALL, forward and low between the shoulders, a heavy brow, glowing eyes, a short crown of crystals
-    P("head", (0, 100, -8), (22, 18, 22), {"north": ("face_front", 0), "west": ("face_side", 0), "east": ("face_side", 0), "up": ("rock_top", b.dens), "south": ("rock_a", b.dens)}, lod=2, head=True)
-    P("head", (0, 107.5, -18), (25, 4, 7), b.stone_faces("plate", down=False, back=False), lod=1, head=True)                 # the brow overhang
-    P("head", (0, 91.5, -16), (15, 5, 8), b.stone_faces("dark", up=False, down=False, back=False), lod=0, head=True)           # jaw
-    P("head", (0, 90, -5), (13, 8, 13), b.stone_faces("dark", up=False, down=False), lod=1, head=True)                      # neck
+        P("chest", (sx * 29, 73, 0), (8, 26, 28), b.stone_faces("plate", down=False, front=False), rot=(0, 0, sx * -10), piv=(sx * 29, 60, 0), lod=1)               # rib plates
+        P("chest", (sx * 26, 82, -19), (15, 14, 8), b.stone_faces("plate", down=False, back=False), rot=(0, sx * 14, sx * -6), piv=(sx * 26, 82, -19), lod=1)   # pectoral stones
+        P("chest", (sx * 22, 58, -15), (11, 10, 6), b.stone_faces("arm", down=False, back=False), lod=0)
+    P("chest", (0, 76, 21.5), (48, 24, 7), b.stone_faces("plate", down=False, front=False), lod=1)                            # back plate
+    P("chest", (0, 88.5, 6), (38, 4, 26), b.stone_faces("plate", down=False), lod=1)                                          # a ledge of slabs between the shoulders
+    P("chest", (0, 86, 23), (24, 20, 8), b.stone_faces("arm", down=False, front=False), rot=(-14, 0, 0), piv=(0, 78, 23), lod=0)                # a hump
+    b.shard("chest", (0, 84, 25), 17, 6, (-22, 0, 0), "amber", lod=1)
+    b.shard("chest", (-11, 82, 25), 12, 5, (-18, 0, 18), "dia", lod=1, comp=False)
+    b.shard("chest", (11, 82, 25), 12, 5, (-18, 0, -18), "amber", lod=0)
+    # ------------------------------------------------------------------ head: SMALL next to the shoulders, forward and low between them, a heavy brow, glowing eyes, a short crown of crystals
+    P("head", (0, 102, -10), (26, 22, 24), {"north": ("face_front", 0), "west": ("face_side", 0), "east": ("face_side", 0), "up": ("rock_top", b.dens), "south": ("rock_a", b.dens)}, lod=2, head=True)
+    P("head", (0, 110.5, -23.5), (29, 5, 8), b.stone_faces("plate", down=False, back=False), lod=1, head=True)                 # the brow overhang
+    P("head", (0, 92.5, -19), (18, 6, 9), b.stone_faces("dark", up=False, down=False, back=False), lod=0, head=True)           # jaw
+    P("head", (0, 87.5, -5), (14, 9, 14), b.stone_faces("dark", up=False, down=False), lod=1, head=True)                    # neck
     for sx in (-1, 1):
-        P("head", (sx * 13, 100, -7), (4, 9, 9), b.stone_faces("arm", up=True, back=False, front=False, sides=True), lod=0, head=True)       # ear slabs
-    b.shard("head", (0, 109, -7), 12, 5, (0, 0, 0), "amber", lod=2, head=True)
-    b.shard("head", (-6, 108, -7), 9, 4, (0, 0, 24), "amber", lod=1, head=True)
-    b.shard("head", (6, 108, -7), 9, 4, (0, 0, -24), "dia", lod=1, head=True)
-    b.shard("head", (-9.5, 106, -7), 6, 3.2, (0, 0, 46), "amber", lod=0, head=True)
-    b.shard("head", (9.5, 106, -7), 6, 3.2, (0, 0, -46), "amber", lod=0, head=True)
+        P("head", (sx * 15, 102, -8), (4.5, 10, 10), b.stone_faces("arm", up=True, back=False, front=False, sides=True), lod=0, head=True)       # ear slabs
+    b.shard("head", (0, 113, -9), 10, 5, (0, 0, 0), "amber", lod=2, head=True)
+    b.shard("head", (-6, 112.5, -9), 8, 4, (0, 0, 24), "amber", lod=1, head=True)
+    b.shard("head", (6, 112.5, -9), 8, 4, (0, 0, -24), "dia", lod=1, head=True)
+    b.shard("head", (-10.5, 111, -9), 6, 3.2, (0, 0, 46), "amber", lod=0, head=True)
+    b.shard("head", (10.5, 111, -9), 6, 3.2, (0, 0, -46), "amber", lod=0, head=True)
     # ------------------------------------------------------------------ shoulders, arms, fists: broad boulder shoulders, thick arms, HUGE fists
     for sx, t in ((-1, "R"), (1, "L")):
         sa, sf = "arm_" + t, "fore_" + t
         x = sx * SH
-        P(sa, (x, 82, 0), (31, 27, 33), b.stone_faces("boulder", down=False), rot=(0, 0, sx * -4), piv=(x, 82, 0), lod=2)
-        P(sa, (x + sx * 1, 96, 0), (36, 6, 36), b.stone_faces("plate", down=False), rot=(0, 0, -sx * 10), piv=(x, 96, 0), lod=1)             # the pauldron slab
-        P(sa, (x - sx * 6, 98.5, -12), (14, 5, 14), b.stone_faces("arm", down=False), rot=(0, sx * 24, 0), piv=(x, 98, -12), lod=0)           # a loose stone on it
-        P(sa, (x + sx * 2, 58, 0), (23, 30, 25), b.stone_faces("arm", up=False, down=False), lod=2)
-        P(sa, (x + sx * 2, 71, -13.5), (19, 5, 3), b.stone_faces("plate", down=False, back=False), lod=0)                                   # a strap of stone across the front
-        b.shard(sa, (x + sx * 6, 99, 6), 17, 5.5, (6, 0, -sx * 20), "amber" if sx < 0 else "dia", lod=1)
-        b.shard(sa, (x - sx * 3, 100, -8), 12, 4.5, (-10, 0, -sx * 8), "amber", lod=0)
-        b.shard(sa, (x + sx * 11, 94, -2), 10, 4, (0, 0, -sx * 42), "amber", lod=0, comp=False)
-        P(sa, (x + sx * 2, 98, -18.5), (13, 14, 0.5), {"north": ("moss", 0), "south": ("moss", 0)}, lod=0, comp=False)                    # hanging moss
-        P(sf, (x + sx * 4, 32, -3), (28, 30, 29), b.stone_faces("arm", up=False, down=False), lod=2)
-        P(sf, (x + sx * 4, 28.5, -3), (31, 8, 32), {"north": ("bracer", 0), "west": ("bracer", 0), "east": ("bracer", 0), "south": ("bracer", 0)}, lod=1)   # rune cuff
-        b.shard(sf, (x + sx * 4, 46, 12), 11, 4.5, (-62, 0, 0), "amber", lod=0, comp=False)
+        P(sa, (x, 84, 0), (32, 28, 34), b.stone_faces("boulder", down=False), rot=(0, sx * 6, sx * -4), piv=(x, 84, 0), lod=2)
+        P(sa, (x + sx * 1, 99, 0), (37, 6, 37), b.stone_faces("plate", down=False), rot=(0, sx * -12, -sx * 10), piv=(x, 99, 0), lod=1)             # the pauldron slab
+        P(sa, (x - sx * 6, 101.5, -12), (14, 5, 14), b.stone_faces("arm", down=False), rot=(0, sx * 24, 0), piv=(x, 101, -12), lod=0)           # a loose stone on it
+        P(sa, (x + sx * 2, 59, 0), (24, 31, 26), b.stone_faces("arm", up=False, down=False), rot=(0, 0, sx * 3), piv=(x, 74, 0), lod=2)
+        P(sa, (x + sx * 2, 72, -14), (20, 5, 3), b.stone_faces("plate", down=False, back=False), lod=0)                                   # a strap of stone across the front
+        b.shard(sa, (x + sx * 6, 102, 6), 13, 5.5, (6, 0, -sx * 20), "amber" if sx < 0 else "dia", lod=1)
+        b.shard(sa, (x - sx * 3, 103, -8), 9, 4.5, (-10, 0, -sx * 8), "amber", lod=0)
+        b.shard(sa, (x + sx * 12, 97, -2), 8, 4, (0, 0, -sx * 42), "amber", lod=0, comp=False)
+        P(sa, (x + sx * 2, 101, -19), (13, 14, 0.5), {"north": ("moss", 0), "south": ("moss", 0)}, lod=0, comp=False)                    # hanging moss
+        P(sf, (x + sx * 4, 33, -3), (30, 31, 31), b.stone_faces("arm", up=False, down=False), lod=2)
+        P(sf, (x + sx * 4, 29.5, -3), (33, 8, 34), {"north": ("bracer", 0), "west": ("bracer", 0), "east": ("bracer", 0), "south": ("bracer", 0)}, lod=1)   # rune cuff
+        b.shard(sf, (x + sx * 4, 47, 13), 10, 4.5, (-62, 0, 0), "amber", lod=0, comp=False)
         fx0 = x + sx * 4
-        P("fist_" + t, (fx0, 12.5, -7), (37, 25, 37), {**b.stone_faces("boulder", down=False, front=False), "north": ("knuckle", 0)}, lod=2)
-        P("fist_" + t, (fx0, 25.5, -7), (39, 4, 39), b.stone_faces("plate", down=False), lod=1)
+        P("fist_" + t, (fx0, 13.5, -7), (40, 28, 40), {**b.stone_faces("boulder", down=False, front=False), "north": ("knuckle", 0)}, lod=2)
+        P("fist_" + t, (fx0, 28, -7), (42, 4, 42), b.stone_faces("plate", down=False), lod=1)
         for j in range(4):
-            P("fist_" + t, (fx0 + (j - 1.5) * 9, 16, -27), (8.4, 11, 6.5), {"north": ("knuckle", 0), "up": ("rock_top", b.dens), "west": ("rock_a", b.dens), "east": ("rock_a", b.dens)}, lod=1)
-        P("fist_" + t, (fx0 - sx * 20, 12, -15), (7, 10, 16), b.stone_faces("arm", down=False, back=False), lod=0)             # thumb
+            P("fist_" + t, (fx0 + (j - 1.5) * 9.6, 17, -29), (9, 12, 7), {"north": ("knuckle", 0), "up": ("rock_top", b.dens), "west": ("rock_a", b.dens), "east": ("rock_a", b.dens)}, lod=1)
+        P("fist_" + t, (fx0 - sx * 22, 13, -16), (8, 11, 17), b.stone_faces("arm", down=False, back=False), lod=0)             # thumb
     # ------------------------------------------------------------------ floating stones (a few, they bob and turn)
     for nm, c, s, lv in orbs:
         P(nm, c, (s, s, s), b.stone_faces("boulder", down=True), rot=(18, 30, 12), piv=c, lod=lv, comp=(lv == 1))
@@ -231,23 +235,23 @@ def build(form, lod, atlas, fx=False):
     if big:
         for i in range(9):
             a = i / 9.0 * math.tau + 0.3
-            r = 54 + 9 * ((i * 5) % 3)
+            r = 58 + 9 * ((i * 5) % 3)
             c = (math.cos(a) * r, 2.5, math.sin(a) * r)
             P("root", c, (9 + (i % 3) * 3, 5, 9), b.stone_faces("dark", down=False), rot=(0, math.degrees(a), 0), piv=c, lod=0)
     # ------------------------------------------------------------------ glow-only model: eyes, the circle, rune bands, veins
     G = b.glow
-    G("head", (0, 100, -19.12), (22, 18, 0.2), {"north": ("face_front", 0)}, lod=1, head=True)
-    G("chest", (0, 70, -23.62), (31, 31, 0.2), {"north": ("circle", 0)}, lod=1)
+    G("head", (0, 102, -22.12), (26, 22, 0.2), {"north": ("face_front", 0)}, lod=1, head=True)
+    G("chest", (0, 72, -22.62), (30, 30, 0.2), {"north": ("circle", 0)}, lod=1)
     G("body", (0, 45, -16.5), (30, 5, 0.2), {"north": ("bracer", 0)}, lod=0)
     for sx, t in ((-1, "R"), (1, "L")):
         sf = "fore_" + t
         x = sx * (SH + 4)
-        G(sf, (x, 28.5, -19.2), (31, 8, 0.2), {"north": ("bracer", 0)}, lod=1)
-        G(sf, (x + sx * 15.7, 28.5, -3), (0.2, 8, 32), {"west": ("bracer", 0)} if sx > 0 else {"east": ("bracer", 0)}, lod=0)
-        G("arm_" + t, (sx * SH + sx * 13.8, 58, 0), (0.2, 26, 21), {"west": ("veins", 0)} if sx > 0 else {"east": ("veins", 0)}, lod=1)
-        G("fist_" + t, (x, 12.5, -30.4), (34, 20, 0.2), {"north": ("veins", 0)}, lod=0)
-        G("leg_" + t, (sx * X, 26, -10.2), (17, 15, 0.2), {"north": ("veins", 0)}, lod=0)
-    G("chest", (0, 74, 25.2), (40, 22, 0.2), {"south": ("veins", 0)}, lod=1)
+        G(sf, (x, 29.5, -20.2), (33, 8, 0.2), {"north": ("bracer", 0)}, lod=1)
+        G(sf, (x + sx * 16.7, 29.5, -3), (0.2, 8, 34), {"west": ("bracer", 0)} if sx > 0 else {"east": ("bracer", 0)}, lod=0)
+        G("arm_" + t, (sx * SH + sx * 14.8, 59, 0), (0.2, 27, 22), {"west": ("veins", 0)} if sx > 0 else {"east": ("veins", 0)}, lod=1)
+        G("fist_" + t, (x, 13.5, -33.2), (36, 22, 0.2), {"north": ("veins", 0)}, lod=0)
+        G("leg_" + t, (sx * X, 26, -11.2), (17, 15, 0.2), {"north": ("veins", 0)}, lod=0)
+    G("chest", (0, 76, 25.2), (40, 22, 0.2), {"south": ("veins", 0)}, lod=1)
     return m
 
 

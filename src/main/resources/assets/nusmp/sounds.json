@@ -1746,5 +1746,33 @@
   "voice.djinn_camio_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_summon", "stream": false } ] },
   "voice.djinn_camio_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_attack", "stream": false } ] },
   "voice.djinn_murmur_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_summon", "stream": false } ] },
-  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] }
+  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] },
+  "gnome.link": {
+    "subtitle": "subtitles.nusmp.gnome.link",
+    "sounds": [ { "name": "nusmp:gnome/link_1", "stream": false }, { "name": "nusmp:gnome/link_2", "stream": false }, { "name": "nusmp:gnome/link_3", "stream": false } ]
+  },
+  "gnome.unlink": {
+    "subtitle": "subtitles.nusmp.gnome.unlink",
+    "sounds": [ { "name": "nusmp:gnome/unlink_1", "stream": false }, { "name": "nusmp:gnome/unlink_2", "stream": false } ]
+  },
+  "gnome.idle": {
+    "subtitle": "subtitles.nusmp.gnome.idle",
+    "sounds": [ { "name": "nusmp:gnome/idle_1", "stream": false }, { "name": "nusmp:gnome/idle_2", "stream": false }, { "name": "nusmp:gnome/idle_3", "stream": false } ]
+  },
+  "gnome.cast": {
+    "subtitle": "subtitles.nusmp.gnome.cast",
+    "sounds": [ { "name": "nusmp:gnome/cast_1", "stream": false }, { "name": "nusmp:gnome/cast_2", "stream": false }, { "name": "nusmp:gnome/cast_3", "stream": false } ]
+  },
+  "gnome.rise": {
+    "subtitle": "subtitles.nusmp.gnome.rise",
+    "sounds": [ { "name": "nusmp:gnome/rise_1", "stream": true }, { "name": "nusmp:gnome/rise_2", "stream": true }, { "name": "nusmp:gnome/rise_3", "stream": true } ]
+  },
+  "gnome.slam": {
+    "subtitle": "subtitles.nusmp.gnome.slam",
+    "sounds": [ { "name": "nusmp:gnome/slam_1", "stream": false }, { "name": "nusmp:gnome/slam_2", "stream": false }, { "name": "nusmp:gnome/slam_3", "stream": false } ]
+  },
+  "gnome.sink": {
+    "subtitle": "subtitles.nusmp.gnome.sink",
+    "sounds": [ { "name": "nusmp:gnome/sink_1", "stream": false }, { "name": "nusmp:gnome/sink_2", "stream": false } ]
+  }
 }
