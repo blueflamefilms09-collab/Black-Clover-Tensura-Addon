@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
  * Why: the drawing of the four fire casting props, apart from the entity glue ({@link FireCastPropPainter}), so the headless preview (tools/render_preview, example FireCastProp) draws exactly what the
  * game draws. Everything here is primitive math into a pose and a buffer: no entity, no world, no allocation per frame.
  *
- * <p>The costs, per call (the numbers of the doc): the small Salamander is 240 quads (full), 173 (half), 86 (low) plus 10 / 4 / 0 flame quads; the dragon 263 / 193 / 90 plus 24 / 10 / 0; the ball
+ * <p>The costs, per call (the numbers of the doc, {@link FireCastLod}): the small Salamander and the dragon cost {@link FireCastLod#cost} quads per level (body plus the glow-only model on the two nearer levels); the ball
  * {@link FireCastLod#BALL_QUADS} quads; the spiral at most {@code 3 * 26 - 2 + 2 = 78} quads ({@link FireCastLod#SPIRAL_MAX_POINTS} sprites, a ribbon between each two, a halo and a tip).</p>
  */
 public final class FireCastDraw {
@@ -46,8 +46,8 @@ public final class FireCastDraw {
         float s = (dragon ? DRAGON_SCALE : SMALL_SCALE) * (0.8f + 0.2f * fade);
         pose.pushPose();
         if (dragon) {
-            pose.translate(0f, -1.07f * s, 0.47f * s);                                              // the body's centre on the anchor
-            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-26f + 4f * Mth.sin(age * 0.07f)));    // nose a little up, hanging in the air
+            pose.translate(0f, -3.6f * s, 1.0f * s);                                                // the model's origin is its pelvis: its mouth (87 units up, 68 forward) lands on the casting emitter
+            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(2f + 2f * Mth.sin(age * 0.07f)));       // hanging upright in the air, a slow lean
         } else {
             pose.translate(0f, -0.01f, 0.02f);
         }

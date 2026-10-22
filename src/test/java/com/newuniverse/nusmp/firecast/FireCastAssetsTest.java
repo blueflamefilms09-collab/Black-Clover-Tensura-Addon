@@ -114,6 +114,85 @@ class FireCastAssetsTest {
                 if (be.getKey().startsWith("wing") || be.getKey().startsWith("t")) assertTrue(be.getValue().getAsJsonObject().has("rotation"), clip + " " + be.getKey());
     }
 
+    // ------------------------------------------------------------------ the redo after the reference stills (rig, cards, kept old models)
+    private static double[] arr3(JsonArray a) { return new double[]{a.get(0).getAsDouble(), a.get(1).getAsDouble(), a.get(2).getAsDouble()}; }
+
+    /** The flat cards of a model: cubes with one size component 0 (one quad each: spikes, claws, fangs, the wing membrane panels, the frill, the eyes). */
+    private static int cards(JsonObject geo, String boneStartsWith) {
+        int n = 0;
+        for (JsonElement be : geo.getAsJsonArray("bones")) {
+            JsonObject b = be.getAsJsonObject();
+            if (!b.get("name").getAsString().startsWith(boneStartsWith)) continue;
+            for (JsonElement ce : b.getAsJsonArray("cubes")) {
+                double[] sz = arr3(ce.getAsJsonObject().getAsJsonArray("size"));
+                if (sz[0] == 0 || sz[1] == 0 || sz[2] == 0) {
+                    n++;
+                    assertEquals(1, ce.getAsJsonObject().getAsJsonObject("uv").size(), "a card is one quad");
+                }
+            }
+        }
+        return n;
+    }
+
+    @Test
+    void theOldModelsAreKeptAsV1CopiesAfterTheRedo() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            for (String f : new String[]{"geo/entity/firecast_" + form + "_v1.geo.json", "animations/entity/firecast_" + form + "_v1.animation.json", "textures/entity/firecast_" + form + "_v1.png"})
+                assertTrue(Files.exists(ASSETS.resolve(f)), "kept old version: " + f);
+            assertFalse(read(ASSETS.resolve("geo/entity/firecast_" + form + ".geo.json")).equals(read(ASSETS.resolve("geo/entity/firecast_" + form + "_v1.geo.json"))), "the live model is the new one");
+        }
+    }
+
+    @Test
+    void bothFormsHaveTheNewRigWithWingFingersAndTailChain() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            Map<String, JsonObject> b = bones(geo("firecast_" + form));
+            for (String n : new String[]{"body", "head", "jaw", "neck1", "tail_tip", "t0", "t2", "t4", "t6"}) assertTrue(b.containsKey(n), form + " bone " + n);
+            for (String side : new String[]{"R", "L"}) {
+                for (String n : new String[]{"arm_", "fore_", "hand_", "leg_", "shin_", "foot_", "wing_", "wingout_", "wf1_", "wf2_", "wf3_", "wf4_"}) assertTrue(b.containsKey(n + side), form + " bone " + n + side);
+            }
+            // the wings are mirrored and raised: the right wing turns one way, the left the other
+            double rz = arr3(b.get("wing_R").getAsJsonArray("rotation"))[2], lz = arr3(b.get("wing_L").getAsJsonArray("rotation"))[2];
+            assertTrue(rz < 0 && lz > 0 && Math.abs(rz + lz) < 1e-6, form + " wings raised in mirror");
+        }
+        Map<String, JsonObject> big = bones(geo("firecast_dragon"));
+        for (String n : new String[]{"chest", "neck2", "neck3", "neck4", "t13"}) assertTrue(big.containsKey(n), "the big form's longer neck and tail: " + n);
+        assertTrue(arr3(big.get("jaw").getAsJsonArray("rotation"))[0] < 0, "the big form's mouth is open at rest (the roar of the still)");
+    }
+
+    @Test
+    void theSilhouetteIsBuiltFromFlatCardsAndEveryWingHasFourMembranePanelsAndFourFingerBones() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            JsonObject g = geo("firecast_" + form);
+            assertTrue(cards(g, "") >= (form.equals("dragon") ? 90 : 90), form + ": spikes, claws, fangs, membrane panels and eyes are cards");
+            Map<String, JsonObject> b = bones(g);
+            for (String side : new String[]{"R", "L"}) {
+                int panels = cards(g, "wing_" + side) + cards(g, "wf1_" + side) + cards(g, "wf2_" + side) + cards(g, "wf3_" + side) + cards(g, "wf4_" + side);
+                assertTrue(panels >= 4, form + " " + side + ": four membrane panels (plus claws): " + panels);
+                for (int k = 1; k <= 4; k++) {
+                    int boxes = 0;
+                    for (JsonElement ce : b.get("wf" + k + "_" + side).getAsJsonArray("cubes")) {
+                        double[] sz = arr3(ce.getAsJsonObject().getAsJsonArray("size"));
+                        if (sz[0] > 0 && sz[1] > 0 && sz[2] > 0) boxes++;
+                    }
+                    assertTrue(boxes >= 1, form + " finger bone " + k + side + " is a real box");
+                }
+            }
+        }
+    }
+
+    @Test
+    void theLevelsOfDetailKeepTheSilhouetteAndTheGlowModelsKeepEyesAndMouth() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            Map<String, JsonObject> lod1 = bones(geo("firecast_" + form + "_lod1")), lod2 = bones(geo("firecast_" + form + "_lod2"));
+            for (String n : new String[]{"wing_R", "wing_L", "head", "jaw", "tail_tip", "t0"}) assertTrue(lod1.containsKey(n) && lod2.containsKey(n), form + " levels keep " + n);
+            assertTrue(cards(geo("firecast_" + form + "_lod1"), "") >= 20, form + " half level keeps spikes, claws and panels");
+            Map<String, JsonObject> fx = bones(geo("firecast_" + form + "_fx"));
+            assertEquals(2, fx.get("head").getAsJsonArray("cubes").size(), form + " glow-only: two eyes");
+            assertEquals(1, fx.get("jaw").getAsJsonArray("cubes").size(), form + " glow-only: the furnace of the mouth");
+        }
+    }
+
     @Test
     void theCastClipsAreAddedAndTheOldOnesAreKept() throws IOException {
         JsonObject all = json(ASSETS.resolve("animations/player/cast.animation.json")).getAsJsonObject("animations");

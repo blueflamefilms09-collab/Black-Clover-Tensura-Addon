@@ -151,7 +151,12 @@ class Model:
                 continue
             region, density, flip = (spec, d, False) if isinstance(spec, str) else (spec[0], spec[1] if len(spec) > 1 else d, spec[2] if len(spec) > 2 else False)
             fw, fh = fsize[f]
-            xy, wh = self.uv_of(region, fw, fh, density, self.count)
+            if not isinstance(spec, str) and len(spec) > 3 and spec[3] is not None:       # a named window of the region: (u0, v0, u1, v1) as fractions of its size, v0 at the top (a continuous picture cut over several boxes)
+                rx_, ry_, rw_, rh_ = self.atlas.regions[region]
+                u0, v0, u1, v1 = spec[3]
+                xy, wh = [rx_ + u0 * rw_, ry_ + v0 * rh_], [(u1 - u0) * rw_, (v1 - v0) * rh_]
+            else:
+                xy, wh = self.uv_of(region, fw, fh, density, self.count)
             if flip:                                                           # a negative uv_size mirrors the face (the loader keeps the corners in order)
                 xy = [xy[0] + wh[0], xy[1]]
                 wh = [-wh[0], wh[1]]
@@ -159,6 +164,33 @@ class Model:
         c["uv"] = uv
         self.bones[bone]["cubes"].append(c)
         return c
+
+
+    def box(self, bone, center, size, R, faces, d=3.0):
+        """A box of `size` (local x, y, z) centred on `center`, turned by the rotation matrix R about its own centre. faces as in cube()."""
+        c = np.asarray(center, dtype=np.float64)
+        s = np.asarray(size, dtype=np.float64)
+        o = c - s / 2.0
+        rx, ry, rz = euler_of(R)
+        if abs(rx) + abs(ry) + abs(rz) < 1e-6:
+            return self.cube(bone, o, s, faces, None, None, d)
+        return self.cube(bone, o, s, faces, (rx, ry, rz), c, d)
+
+    def limb(self, bone, p0, p1, w, h, faces, up=(0, 1, 0), pad=0.0, roll=0.0, d=3.0):
+        """A box laid from p0 to p1 (local z along the segment, `pad` longer in total), w wide and h high; overlapping neighbours hide the joints."""
+        p0, p1 = np.asarray(p0, dtype=np.float64), np.asarray(p1, dtype=np.float64)
+        n = float(np.linalg.norm(p1 - p0))
+        return self.box(bone, (p0 + p1) / 2.0, (w, h, n + pad), frame(p1 - p0, up, roll), faces, d)
+
+    def card(self, bone, center, right, up, w, h, region, face="north", d=0, thick=0.0):
+        """A flat picture: one quad (nothing is culled, so both sides are seen), the region of the sheet mapped over w x h, the picture's right and up given in the file frame. thick > 0 makes a slab (then the two big faces)."""
+        R = card_frame(right, up)
+        faces = {"north": region} if thick <= 0 else {"north": region, "south": region}
+        if thick <= 0:
+            faces = {"north": region}
+        for f in list(faces):
+            pass
+        return self.box(bone, center, (w, h, thick), R, faces, d)
 
     def quads(self):
         return sum(len(c["uv"]) for b in self.bones.values() for c in b["cubes"])
@@ -183,6 +215,64 @@ class Model:
         with open(os.path.join(ROOT, "geo", "entity", self.id + ".geo.json"), "w", newline="\n") as f:
             json.dump(geo, f, indent=1)
             f.write("\n")
+
+
+# ====================================================================================================================== frames, limbs and cards (the silhouette helpers)
+def vec(*a):
+    return np.array(a, dtype=np.float64)
+
+
+def unit(v):
+    v = np.asarray(v, dtype=np.float64)
+    n = np.linalg.norm(v)
+    return v / n if n > 1e-9 else vec(0, 0, 1)
+
+
+def rot_matrix(rx, ry, rz):
+    """The file's cube rotation as a matrix: the point is turned about x first, then y, then z (degrees); this is how GeoDraw turns a bone or a cube."""
+    ax, ay, az = math.radians(rx), math.radians(ry), math.radians(rz)
+    cx, sx, cy, sy, cz, sz = math.cos(ax), math.sin(ax), math.cos(ay), math.sin(ay), math.cos(az), math.sin(az)
+    RX = np.array([[1, 0, 0], [0, cx, -sx], [0, sx, cx]])
+    RY = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]])
+    RZ = np.array([[cz, -sz, 0], [sz, cz, 0], [0, 0, 1]])
+    return RZ @ RY @ RX
+
+
+def euler_of(R):
+    """The (rx, ry, rz) degrees whose rot_matrix is R (a proper rotation)."""
+    sy = -R[2, 0]
+    sy = max(-1.0, min(1.0, sy))
+    ry = math.asin(sy)
+    if abs(sy) < 0.99999:
+        rx = math.atan2(R[2, 1], R[2, 2])
+        rz = math.atan2(R[1, 0], R[0, 0])
+    else:                                                                  # gimbal lock: all the turn goes to z
+        rx = 0.0
+        rz = math.atan2(-R[0, 1], R[1, 1])
+    return tuple(math.degrees(v) for v in (rx, ry, rz))
+
+
+def frame(z_axis, up=(0, 1, 0), roll=0.0):
+    """The rotation matrix whose local z is `z_axis` and whose local y is as near `up` as possible (then turned by `roll` degrees about z): columns are the local x, y, z in the file frame."""
+    z = unit(z_axis)
+    u = vec(*up)
+    if abs(float(np.dot(unit(u), z))) > 0.98:
+        u = vec(1, 0, 0)
+    y = unit(u - z * float(np.dot(u, z)))
+    x = np.cross(y, z)
+    if roll:
+        c, s = math.cos(math.radians(roll)), math.sin(math.radians(roll))
+        x, y = x * c + y * s, y * c - x * s
+    return np.stack([x, y, z], axis=1)
+
+
+def card_frame(right, up):
+    """The frame of a flat card: local x = the picture's right, local y = the picture's up; the picture reads correctly for a viewer on the local -z side."""
+    x = unit(right)
+    u = vec(*up)
+    y = unit(u - x * float(np.dot(u, x)))
+    z = np.cross(x, y)
+    return np.stack([x, y, z], axis=1)
 
 
 def write_animations(ident, clips):

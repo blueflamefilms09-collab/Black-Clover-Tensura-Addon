@@ -10,8 +10,8 @@
    0
   ],
   "tile": [
-   560,
-   440
+   520,
+   520
   ],
   "floor": true,
   "figure": false,
@@ -21,44 +21,55 @@
    {
     "name": "head close 3/4",
     "yaw": 38,
-    "pitch": 10,
+    "pitch": 8,
     "target": [
      0,
-     1.4,
-     4.4
+     6.2,
+     3.1
     ],
-    "dist": 6.5
+    "dist": 3.8
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
    },
    {
     "name": "front 3/4",
-    "yaw": 38,
-    "pitch": 14,
+    "yaw": 35,
+    "pitch": 10,
     "target": [
      0,
-     1.4,
-     -1.5
+     3.6,
+     0.3
     ],
-    "dist": 15.0
+    "dist": 17.0
    },
    {
-    "name": "side",
-    "yaw": 90,
+    "name": "side (right)",
+    "yaw": -90,
     "pitch": 4,
     "target": [
      0,
-     1.4,
-     -2.5
+     3.6,
+     0.3
     ],
-    "dist": 19.0
+    "dist": 17.0
    },
    {
     "name": "back 3/4",
     "yaw": 150,
-    "pitch": 16,
+    "pitch": 14,
     "target": [
      0,
-     1.4,
-     -2.5
+     3.6,
+     0.3
     ],
     "dist": 17.0
    }
@@ -73,13 +84,11 @@
   "glow": "00000000",
   "ages": [
    0,
-   8,
-   16,
-   24
+   7
   ],
   "tile": [
    420,
-   340
+   420
   ],
   "floor": false,
   "figure": false,
@@ -89,13 +98,35 @@
    {
     "name": "front",
     "yaw": 0,
-    "pitch": 8,
+    "pitch": 6,
     "target": [
      0,
-     1.4,
-     -2.0
+     3.6,
+     0.3
     ],
-    "dist": 22.0
+    "dist": 18.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 18.0
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 18.0
    }
   ]
  },
@@ -108,13 +139,14 @@
   "glow": "00000000",
   "ages": [
    0,
-   10,
-   18,
-   26
+   9,
+   14,
+   22,
+   32
   ],
   "tile": [
-   420,
-   340
+   380,
+   380
   ],
   "floor": false,
   "figure": false,
@@ -122,15 +154,15 @@
   "anim": "breathe",
   "views": [
    {
-    "name": "side",
-    "yaw": 90,
-    "pitch": 6,
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
     "target": [
      0,
-     1.4,
-     -2.0
+     3.6,
+     0.3
     ],
-    "dist": 20.0
+    "dist": 17.0
    }
   ]
  },
@@ -145,8 +177,8 @@
    0
   ],
   "tile": [
-   560,
-   440
+   420,
+   420
   ],
   "floor": true,
   "figure": false,
@@ -154,15 +186,37 @@
   "anim": "idle",
   "views": [
    {
-    "name": "lod 1",
-    "yaw": 38,
-    "pitch": 14,
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
     "target": [
      0,
-     1.4,
-     -1.5
+     3.6,
+     0.3
     ],
-    "dist": 15.0
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
    }
   ]
  },
@@ -177,8 +231,8 @@
    0
   ],
   "tile": [
-   560,
-   440
+   420,
+   420
   ],
   "floor": true,
   "figure": false,
@@ -186,15 +240,37 @@
   "anim": "idle",
   "views": [
    {
-    "name": "lod 2",
-    "yaw": 38,
-    "pitch": 14,
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
     "target": [
      0,
-     1.4,
-     -1.5
+     3.6,
+     0.3
     ],
-    "dist": 15.0
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
    }
   ]
  }

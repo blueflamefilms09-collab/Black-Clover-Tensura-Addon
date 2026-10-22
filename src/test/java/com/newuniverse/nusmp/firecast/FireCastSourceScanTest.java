@@ -114,6 +114,11 @@ class FireCastSourceScanTest {
         String painter = code(SRC.resolve("client/prop/FireCastPropPainter.java"));
         assertTrue(painter.contains("FireCastLod.fit(") && painter.contains("FireCastLod.level("), "the level of detail and the frame budget");
         assertTrue(painter.contains("LAST_EMBER[slot] == e.tickCount"), "embers once per game tick, not per frame");
+        assertTrue(painter.contains("o == mc.player"), "the caster's own form is told to the budget (client side only), so it is never dropped");
+        assertTrue(painter.contains("FireCastLod.frameKey(e.level().getGameTime(), partial), o != null && o == mc.player)"), "the own flag reaches fit()");
+        // the raised limits stay bounded: the budget's cap is the one constant, the cull distances come from the table
+        String lod = code(SRC.resolve("firecast/FireCastLod.java"));
+        assertTrue(lod.contains("FRAME_QUADS = 3200") && lod.contains("budget.force(frameKey, cost(dragon, LOW))"), "one frame cap, and the forced own form is the low level only");
     }
 
     @Test
