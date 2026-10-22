@@ -34,7 +34,9 @@ public final class UnifiedTooltipRules {
         DJINN("Djinn", Grade.LEGEND),
         BLOCK("Block", Grade.NORMAL),
         CURRENCY("Currency", Grade.NORMAL),
-        MISC("Item", Grade.NORMAL);
+        MISC("Item", Grade.NORMAL),
+        /** The Akashic Relics (Shishou): the EX-Singularity grade, above Genesis; its banner, name and frame are drawn prismatic (docs/relics/ex_singularity.md). */
+        AKASHIC_RELIC("Akashic Relic", Grade.AKASHIC);
 
         private final String label;
         private final Grade base;
@@ -66,6 +68,9 @@ public final class UnifiedTooltipRules {
         public int rgb() { return grade.rgb(); }
 
         public boolean genesis() { return grade == Grade.GENESIS; }
+
+        /** EX-Singularity: the prismatic style above Genesis. */
+        public boolean akashic() { return grade == Grade.AKASHIC; }
     }
 
     /** The mod id whose items get the tooltip. */
@@ -88,6 +93,7 @@ public final class UnifiedTooltipRules {
     public static Category classify(Hints h) {
         String names = String.join(" ", h.classNames()).toLowerCase(Locale.ROOT);
         String p = h.path().toLowerCase(Locale.ROOT);
+        if (com.newuniverse.nusmp.relics.ExSingularity.isAkashicPath(p)) return Category.AKASHIC_RELIC;           // the Akashic Relics (Shishou): EX-Singularity
         if (names.contains("heroweapon")) return Category.HERO_WEAPON;
         if (names.contains("djinn") && (names.contains("weapon") || h.weapon())) return Category.WEAPON;
         if (names.contains("djinn")) return Category.DJINN;

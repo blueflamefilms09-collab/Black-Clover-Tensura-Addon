@@ -91,7 +91,7 @@ public final class RelicCommands {
             return ok(src, b.append("  - /multiverse relic list <grade> names them.").toString());
         }
         Grade g = Grade.byName(gradeName);
-        if (g == null) return fail(src, "Unknown grade \"" + gradeName + "\" (normal, special, rare, unique, legend, god, genesis).");
+        if (g == null) return fail(src, "Unknown grade \"" + gradeName + "\" (normal, special, rare, unique, legend, god, genesis, ex-singularity).");
         StringBuilder b = new StringBuilder(g.label() + ":");
         int n = 0;
         for (RelicDef d : Relics.all()) {

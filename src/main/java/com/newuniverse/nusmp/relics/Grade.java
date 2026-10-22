@@ -18,7 +18,9 @@ public enum Grade {
     UNIQUE("Unique", "LIGHT_PURPLE", 0xFF77FF, 0.01, 8.0),
     LEGEND("Legend", "GOLD", 0xFFAA00, 0.025, 4.0),
     GOD("God", "RED", 0xFF5555, 0.06, 1.5),
-    GENESIS("Genesis", "WHITE", 0xFFFFFF, 0.12, 0.5);
+    GENESIS("Genesis", "WHITE", 0xFFFFFF, 0.12, 0.5),
+    /** The top tier, ABOVE Genesis, shown as "EX-Singularity" (the Akashic Relics). Never rolled (weight 0, {@link #rollable()} false); an item names it by hand (docs/relics/ex_singularity.md). */
+    AKASHIC("EX-Singularity", "LIGHT_PURPLE", 0xFF8CFF, 0.20, 0.0);
 
     private final String shortName, chat;
     private final int rgb;
@@ -32,7 +34,7 @@ public enum Grade {
         this.weight = weight;
     }
 
-    /** 1 (NORMAL) to 7 (GENESIS). */
+    /** 1 (NORMAL) to 7 (GENESIS), 8 (AKASHIC, EX-Singularity). */
     public int tier() { return ordinal() + 1; }
 
     /** "Rare Grade". */
@@ -58,8 +60,12 @@ public enum Grade {
     /** Relative chance in the loot tables (higher is commoner). */
     public double weight() { return weight; }
 
-    /** The filled and empty stars of the tooltip, seven in all. */
+    /** Can the loot rolls pick a relic of this grade? Everything but AKASHIC (EX-Singularity items are handed out by hand, never rolled). */
+    public boolean rollable() { return this != AKASHIC; }
+
+    /** The filled and empty stars of the tooltip, seven in all (EX-Singularity has its own longer, prismatic run). */
     public String stars() {
+        if (this == AKASHIC) return ExSingularity.STARS;
         StringBuilder b = new StringBuilder();
         for (int i = 0; i < 7; i++) b.append(i < tier() ? '★' : '☆');
         return b.toString();
@@ -67,7 +73,7 @@ public enum Grade {
 
     /**
      * The grade a card's printed rarity becomes: common NORMAL, uncommon SPECIAL, rare RARE, very rare UNIQUE, epic and legendary LEGEND;
-     * anything else RARE. (GOD and GENESIS are never printed: the lead sets them by hand.)
+     * anything else RARE. (GOD, GENESIS and AKASHIC are never printed: the lead sets them by hand.)
      */
     public static Grade ofCard(String printedRarity) {
         if (printedRarity == null) return RARE;

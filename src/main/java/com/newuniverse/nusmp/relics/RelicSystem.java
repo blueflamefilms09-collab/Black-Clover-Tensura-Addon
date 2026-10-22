@@ -29,6 +29,7 @@ public final class RelicSystem {
         RelicLoot.register(gameBus);
         RelicCatalog.hooks();
         GradeDamageSelfTests.register();                        // the self-test relic.grade_damage (every relic weapon's damage is inside its grade range)
+        ExSingularitySelfTests.register();                      // the self-test relic.ex_singularity (the grade above Genesis: order, never rolled, tooltip style of Shishou, palette bounds)
         RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
         com.newuniverse.nusmp.relics.ArmorSlotSelfTests.register();   // 1.110.0: the self-test visual.armor_slot_relics (every armour-slot relic and armour item has a way onto the body)
         com.newuniverse.nusmp.relics.ArmorVisibleSelfTests.register();   // 1.111.0: the self-test relic.armor_visible (the decision table: a worn armour relic is never invisible; painted layers non-empty)
