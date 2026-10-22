@@ -56,7 +56,7 @@ class CharacterSetSourceScanTest {
     @Test
     void theLegacyPagesAreUntouchedAndInOrder() throws IOException {
         assertEquals(List.of("kamaitachi", "gust_lane", "spirit_storm", "towering_tornado", "slicing_wind_emperor", "spirit_of_zephyr"), legacy("book_wind"));
-        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent"), legacy("book_water"));
+        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent", "mermaid_form", "sea_dragon_god_form", "black_dragon_form"), legacy("book_water"));
         assertEquals(List.of("exploding_fireball", "sol_linea", "calderos", "leo_rugiens", "spiral_flame", "wild_bursting_flame", "ignis_columna", "calidos_brachium", "crimson_lion_king", "flame_armour", "phoenix_flare"), legacy("book_fire"));
         assertEquals(List.of("avidya_slash", "black_hole", "dimension_slash", "death_thrust", "black_blade", "avidya_wild_slash", "black_moon", "iai_slash", "dimension_slash_equinox", "dark_cloak", "shadow_embrace", "black_hole_collapse"), legacy("book_dark"));
         assertEquals(List.of("demon_slayer_slash", "black_divider", "black_meteorite", "black_hurricane", "black_form", "bull_thrust", "infinite_slash", "infinite_slash_equinox"), legacy("book_anti_magic"));
