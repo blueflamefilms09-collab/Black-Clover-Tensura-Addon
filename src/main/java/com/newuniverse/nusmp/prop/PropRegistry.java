@@ -82,5 +82,6 @@ final class PropRegistry {
         LightJaProps.init();                 // 1.99.0: Light and Bone Magic after the Black Clover wiki
         BoneJaProps.init();
         TreeProps.init();                    // 1.93.0 nature-magic rebuild: starts the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
+        com.newuniverse.nusmp.firecast.FireCastProps.init();      // fire casting: the ball, the spiral, the Salamander
     }
 }

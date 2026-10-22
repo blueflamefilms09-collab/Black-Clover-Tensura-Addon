@@ -20,6 +20,10 @@ public final class CastAnim {
             WEAPON_SWORD = "cast_weapon_sword", WEAPON_HEAVY = "cast_weapon_heavy", WEAPON_KATANA = "cast_weapon_katana",
             WEAPON_DANCE = "cast_weapon_dance", KEY_TURN = "key_turn", DICE_FIDDLE = "dice_fiddle", DICE_TOSS = "dice_toss";
 
+    /** Fire casting (firecast.FireCasting): Magna's bat swing (contact at tick 8), Mereoleona's two punches and her finisher, Leopold's charge loop and its release (tools/gen_cast_animations.py --append-fire). */
+    public static final String FIRE_BAT_SWING = "fire_bat_swing", FIRE_PUNCH_A = "fire_punch_a", FIRE_PUNCH_B = "fire_punch_b", FIRE_PUNCH_FINISHER = "fire_punch_finisher",
+            FIRE_CHARGE = "fire_charge", FIRE_CHARGE_RELEASE = "fire_charge_release";
+
     /** Plays a clip on the player for everyone who sees them; a one-shot returns to the previous loop when it finishes. */
     public static void play(ServerPlayer p, String clip) {
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new CastAnimPayload(p.getId(), clip));

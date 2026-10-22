@@ -187,6 +187,8 @@ def build(scenes, need_geo):
             files.append(os.path.join(HERE, "examples", dep))
         for real in sc.get("realFiles", []):                                     # 1.99.0: real mod sources (relative to src/main/java/com/newuniverse/nusmp) an example needs
             files.append(os.path.join(SRC, real.replace("/", os.sep)))
+    real_rel = {os.path.relpath(f, SRC).replace(os.sep, "/") for f in files if f.startswith(SRC)}                   # a stub of a class the real sources already provide would be a duplicate class
+    files = [f for f in files if not (f.startswith(os.path.join(HERE, "stubs")) and os.path.relpath(f, os.path.join(HERE, "stubs", "com", "newuniverse", "nusmp")).replace(os.sep, "/") in real_rel)]
     files = sorted(set(files))
     missing = [f for f in files if not os.path.isfile(f)]
     if missing:

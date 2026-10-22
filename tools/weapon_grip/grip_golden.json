@@ -2111,6 +2111,14 @@
   "y": -6.281,
   "z": 0.0
  },
+ "magnas_soul_bat": {
+  "class": "club",
+  "fraction": 0.181,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 20.0,
+  "z": 0.0
+ },
  "mana_core": {
   "class": "handitem",
   "fraction": 0.5,

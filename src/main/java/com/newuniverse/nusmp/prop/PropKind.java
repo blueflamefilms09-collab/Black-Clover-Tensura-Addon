@@ -165,5 +165,8 @@ public enum PropKind {
     LIGHT_JA,
     BONE_JA,
     /** Scale casting (docs/magic/scale_casting.md): the ONE floating balance scale of a Scale Magic caster; the prop word is scalecast.ScaleCastRules (weights, tilt, aura), the work is scalecast.ScaleCastKit */
-    SCALE_BALANCE
+    SCALE_BALANCE,
+    /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
+    FIRECAST_1,
+    FIRECAST_2
 }

@@ -1,0 +1,464 @@
+{
+ "_comment": "Fire casting (docs/magic/fire_casting.md): the props next to a standing player at the origin, drawn by the real client.prop.FireCastDraw (example FireCastProp; param = variant * 1000 + lod * 100 + level * 10 + clip: variant 0 ball, 1 spiral, 2 small Salamander, 3 dragon).",
+ "firecast_shoulder": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2000,
+  "figure": true,
+  "ages": [
+   24
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     -0.2,
+     1.6,
+     0
+    ],
+    "dist": 3.0
+   },
+   {
+    "name": "side (the right)",
+    "yaw": -90,
+    "pitch": 6,
+    "target": [
+     -0.3,
+     1.5,
+     -0.1
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 14,
+    "target": [
+     -0.3,
+     1.5,
+     -0.2
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "firecast_shoulder_breathe": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2002,
+  "figure": true,
+  "ages": [
+   0,
+   6,
+   12,
+   20
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     -0.2,
+     1.6,
+     0.2
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "firecast_prop_shoulder_lod1": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2100,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "half level",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     -0.2,
+     1.6,
+     0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
+ "firecast_prop_shoulder_lod2": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2200,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "low level",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     -0.2,
+     1.6,
+     0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
+ "firecast_dragon_over_caster": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3000,
+  "figure": true,
+  "ages": [
+   20,
+   44
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4 above",
+    "yaw": 25,
+    "pitch": 18,
+    "target": [
+     0,
+     2.8,
+     -1.0
+    ],
+    "dist": 12.0
+   },
+   {
+    "name": "behind",
+    "yaw": 160,
+    "pitch": 12,
+    "target": [
+     0,
+     3.2,
+     -1.0
+    ],
+    "dist": 12.0
+   }
+  ]
+ },
+ "firecast_dragon_breath": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3002,
+  "figure": true,
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     3.2,
+     0.0
+    ],
+    "dist": 11.0
+   }
+  ]
+ },
+ "firecast_prop_dragon_lod1": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3100,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "half level",
+    "yaw": 25,
+    "pitch": 18,
+    "target": [
+     0,
+     3.2,
+     -1.0
+    ],
+    "dist": 12.0
+   }
+  ]
+ },
+ "firecast_prop_dragon_lod2": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3200,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "low level",
+    "yaw": 25,
+    "pitch": 18,
+    "target": [
+     0,
+     3.2,
+     -1.0
+    ],
+    "dist": 12.0
+   }
+  ]
+ },
+ "firecast_spiral_1": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1010,
+  "figure": true,
+  "ages": [
+   6,
+   14
+  ],
+  "tile": [
+   380,
+   420
+  ],
+  "views": [
+   {
+    "name": "level 1 from the front",
+    "yaw": 28,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.9
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "firecast_spiral_2": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1020,
+  "figure": true,
+  "ages": [
+   6,
+   14
+  ],
+  "tile": [
+   380,
+   420
+  ],
+  "views": [
+   {
+    "name": "level 2 from the front",
+    "yaw": 28,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.9
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "firecast_spiral_3": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1030,
+  "figure": true,
+  "ages": [
+   6,
+   14
+  ],
+  "tile": [
+   380,
+   420
+  ],
+  "views": [
+   {
+    "name": "level 3 from the front",
+    "yaw": 28,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.9
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "firecast_spiral_4": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1040,
+  "figure": true,
+  "ages": [
+   6,
+   14
+  ],
+  "tile": [
+   380,
+   420
+  ],
+  "views": [
+   {
+    "name": "level 4 from the front",
+    "yaw": 28,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.9
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "firecast_ball": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   4,
+   10
+  ],
+  "tile": [
+   380,
+   420
+  ],
+  "views": [
+   {
+    "name": "the tossed ball",
+    "yaw": 28,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.9
+    ],
+    "dist": 3.4
+   }
+  ]
+ }
+}

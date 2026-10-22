@@ -1373,6 +1373,20 @@
       "fixed_scale": 0.817
     },
     {
+      "id": "magnas_soul_bat",
+      "action": "preset",
+      "length_blocks": 1.765,
+      "first_person_scale": 0.554,
+      "first_person_translation_px": [
+        1.13,
+        2.8,
+        0.81
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.453,
+      "fixed_scale": 0.849
+    },
+    {
       "id": "mana_core",
       "action": "keep",
       "length_blocks": 0.891
