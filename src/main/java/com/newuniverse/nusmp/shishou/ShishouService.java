@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.shishou;
 
+import com.newuniverse.nusmp.perf.PerfProbe;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.particle.rukh.RukhParticles;
 import net.minecraft.ChatFormatting;
@@ -155,9 +156,20 @@ public final class ShishouService {
         else cap.setHome(dimOf(p.level()), p.getBlockX(), p.getBlockY(), p.getBlockZ());
     }
 
+    private static final PerfProbe.Section PROBE_HOLD = PerfProbe.section("s.shishou.hold"), PROBE_CAST = PerfProbe.section("s.shishou.cast"), PROBE_HIT = PerfProbe.section("s.shishou.hit"), PROBE_TICK = PerfProbe.section("s.shishou.tick");
+
     // ================================================================ the holder's tick
     /** Called every tick for each stack in a player's inventory (cheap by construction): the token compare, and once a second the upkeep. */
     public static void holderTick(ServerPlayer p, ItemStack stack, boolean held) {
+        long t0 = PerfProbe.begin();
+        try {
+            holderTickBody(p, stack, held);
+        } finally {
+            PerfProbe.end(PROBE_HOLD, t0);
+        }
+    }
+
+    private static void holderTickBody(ServerPlayer p, ItemStack stack, boolean held) {
         if (!enabled()) return;
         ShishouData d = ShishouData.get();
         ShishouCap cap = d.cap();
@@ -422,6 +434,15 @@ public final class ShishouService {
     // ================================================================ casting
     /** Casts a skill for the wielder: the sword's own mana, its cooldown, bounded. */
     public static void cast(ServerPlayer p, ShishouSkill s) {
+        long t0 = PerfProbe.begin();
+        try {
+            castBody(p, s);
+        } finally {
+            PerfProbe.end(PROBE_CAST, t0);
+        }
+    }
+
+    private static void castBody(ServerPlayer p, ShishouSkill s) {
         if (!enabled() || !s.castable()) return;
         ItemStack sw = heldStack(p);
         if (sw.isEmpty()) {
@@ -486,6 +507,15 @@ public final class ShishouService {
 
     /** A melee blow of the wielder: Black Flame, the learned elements, Vibration Magic, the released blade, Spatial Blade. The sword pays one mana for the blow; with none, the extras stop. */
     public static void onHit(ServerPlayer p, ItemStack stack, LivingEntity target) {
+        long t0 = PerfProbe.begin();
+        try {
+            onHitBody(p, stack, target);
+        } finally {
+            PerfProbe.end(PROBE_HIT, t0);
+        }
+    }
+
+    private static void onHitBody(ServerPlayer p, ItemStack stack, LivingEntity target) {
         if (!enabled()) return;
         ShishouData d = ShishouData.get();
         ShishouCap cap = d.cap();
@@ -797,6 +827,15 @@ public final class ShishouService {
 
     // ================================================================ once a second, server wide
     public static void tickServer(MinecraftServer server) {
+        long t0 = PerfProbe.begin();
+        try {
+            tickServerBody(server);
+        } finally {
+            PerfProbe.end(PROBE_TICK, t0);
+        }
+    }
+
+    private static void tickServerBody(MinecraftServer server) {
         if (!ShishouData.bound()) return;
         long tick = server.getTickCount();
         if (!ShishouLive.CLONES.live().isEmpty() && tick % ShishouRules.CLONE_PERIOD == 0) ShishouSpells.tickClones(server, server.overworld().getGameTime());

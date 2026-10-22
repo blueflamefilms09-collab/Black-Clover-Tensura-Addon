@@ -288,6 +288,7 @@ class PerfSourceScanTest {
         PROBES.put("relics/wave/Wave101Events.java", "s.relic.w101");
         PROBES.put("relics/wave/Wave102Events.java", "s.relic.w102");
         PROBES.put("client/prop/CompassPropPainter.java", "c.compass.paint");
+        PROBES.put("shishou/ShishouService.java", "s.shishou.hold");                                      // Shishou: the holder tick, the casts, the blows and the server tick are measurable
     }
 
     @Test
