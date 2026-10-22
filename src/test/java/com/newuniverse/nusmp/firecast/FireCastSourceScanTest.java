@@ -38,7 +38,7 @@ class FireCastSourceScanTest {
 
     @Test
     void nothingOnATickOrInAnEventScansTheWorld() throws IOException {
-        for (String f : new String[]{"FireCasting.java", "FireCastEvents.java", "FireCastProps.java", "Salamander.java", "FireCastNet.java", "SalamanderMood.java", "SalamanderMoodRules.java"}) {
+        for (String f : new String[]{"FireCasting.java", "FireCastEvents.java", "FireCastProps.java", "Salamander.java", "SalamanderSpirit.java", "SalamanderMood.java", "SalamanderMoodRules.java"}) {
             String c = code(SRC.resolve("firecast/" + f));
             assertFalse(c.contains("getEntitiesOfClass") || c.contains("getEntities(") || c.contains("GrimoireBook.around") || c.contains("GrimoireBook.along") || c.contains("getBlockState")
                     || c.contains("getChunk"), f + " must not search the world");
@@ -61,10 +61,8 @@ class FireCastSourceScanTest {
 
     @Test
     void everyPacketIsValidatedOnTheServer() throws IOException {
-        String net = code(SRC.resolve("firecast/FireCastNet.java"));
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
-        assertTrue(net.contains("action != 0"), "an unknown action is ignored");
-        assertTrue(net.contains("playToServer") && !net.contains("playToClient"), "the one packet goes client to server and nothing is sent back");
+        assertFalse(SRC.resolve("firecast/FireCastNet.java").toFile().exists(), "3.0.0: the key packet is gone (the spirit control plane calls the Salamander; spiritcontrol validates every ask)");
+        assertTrue(code(SRC.resolve("firecast/SalamanderSpirit.java")).contains("CanonBook.FUEGOLEON") && code(SRC.resolve("firecast/SalamanderSpirit.java")).contains("FireCastConfig.enabled()"), "the control plane handle asks the same rule: Fuegoleon's book and the switch");
         String fc = code(SRC.resolve("firecast/FireCasting.java"));
         assertTrue(fc.contains("PACKET_GAP") && fc.contains("CharacterSpells.characterOf(p) != CanonBook.FUEGOLEON") && fc.contains("FireCastConfig.enabled()"), "rate limit, character and switch are checked");
     }
@@ -151,8 +149,6 @@ class FireCastSourceScanTest {
 
     @Test
     void theSpellsDecidedOnTheServerAreNeverDrawnByTheClient() throws IOException {
-        String client = code(SRC.resolve("client/firecast/FireCastClient.java"));
-        assertTrue(client.contains("PacketDistributor.sendToServer(new FireCastNet.Key(0))"));
-        assertFalse(client.contains("FireCasting."), "the client never calls the server's rules");
+        assertFalse(SRC.resolve("client/firecast/FireCastClient.java").toFile().exists(), "3.0.0: the Salamander key is gone, the client has nothing to ask");
     }
 }

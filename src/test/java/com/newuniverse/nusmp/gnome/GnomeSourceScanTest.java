@@ -60,9 +60,7 @@ class GnomeSourceScanTest {
 
     @Test
     void theKeyPacketIsValidatedOnTheServer() throws IOException {
-        String net = code(read("gnome/GnomeNet.java"));
-        assertTrue(net.contains("action != 0") && net.contains("instanceof ServerPlayer") && net.contains("enqueueWork"), "the sender is a real player, an unknown action is ignored, the work runs on the server thread");
-        assertTrue(net.contains("playToServer") && !net.contains("playToClient"), "client to server only: one byte per press");
+        assertFalse(java.nio.file.Files.exists(SRC.resolve("gnome/GnomeNet.java")), "3.0.0: the key packet is gone (the spirit control plane calls the Gnome; spiritcontrol validates every ask)");
         String g = code(read("gnome/Gnome.java"));
         String toggle = method(g, "toggle");
         assertTrue(toggle.contains("gapOk") && toggle.contains("eligible"), "rate limited and gated by the Earth grimoire and the switch");
@@ -148,8 +146,6 @@ class GnomeSourceScanTest {
 
     @Test
     void theClientKeyOnlyAsksAndSendsOneByte() throws IOException {
-        String c = code(read("client/gnome/GnomeClient.java"));
-        assertTrue(c.contains("new GnomeNet.Key(0)") && c.contains("consumeClick"), "the key asks; the server decides");
-        assertFalse(c.contains("Gnome.toggle"), "the client never runs the rules itself");
+        assertFalse(java.nio.file.Files.exists(SRC.resolve("client/gnome/GnomeClient.java")), "3.0.0: the Gnome key is gone, the client has nothing to ask");
     }
 }

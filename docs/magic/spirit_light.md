@@ -181,3 +181,7 @@ Iteration history: more than five look rounds were made and looked at (shape of 
 * Packet handling on a real network (`SpiritLightNet.Key` and `Say`) is only covered by source scans and by the self-test calling the server methods directly.
 * The wiki side: no Fandom page could be fetched (see section 7).
 * Balance: the beam numbers are small on purpose; they were not play-tested against the real Light Magic scaling.
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The two Light keys (the right and left bracket, with and without sneak) are gone. The Light grimoire's "Summon Spirit / Release Spirit" page (or `/multiverse spirit summon spirit_light`) links and unlinks the cub; the pages "Light Beam", "Glowing Pulse" and "Seraph Form" (or `/multiverse spirit ability beam|pulse|power`) do what the command key and the sneak keys did; "Spirit Combat Mode" lets it cast light beams with its mana and yours. The voice lines still travel to the clients; only the key packet was removed. Full description, numbers and costs: `docs/magic/spirit_control.md`.

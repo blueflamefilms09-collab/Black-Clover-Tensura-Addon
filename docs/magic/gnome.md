@@ -277,3 +277,7 @@ Edited (additions, append-only one-liners): `prop/PropKind` (+`GNOME_1` at the e
 * The rise sound plays at tick 0 and the slam sound at tick 14: the spells' own effects start at once, so the first earth effect comes about 0.7 s before the giant's fists land.
 * The Gnome link needs the Earth grimoire skill, not a canon grimoire; the host Feremena has no grimoire in the mod (section 2).
 * The companion's walk clip does not follow the real stride length of its master; it only plays while the master moves.
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The Gnome key (the right bracket) is gone. Link and unlink the Gnome with the Earth grimoire's "Summon Spirit / Release Spirit" page, or `/multiverse spirit summon gnome` / `release`; the giant is the page "Gnome Giant" or `/multiverse spirit ability giant`; "Spirit Combat Mode" lets it cast stone shots with its mana and yours. Only the key was removed. Full description, numbers and costs: `docs/magic/spirit_control.md`.

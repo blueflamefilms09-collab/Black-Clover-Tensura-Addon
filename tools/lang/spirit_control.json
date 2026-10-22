@@ -1,0 +1,15 @@
+{
+  "nusmp.spirit_control.none": "No spirit answers you.",
+  "nusmp.spirit_control.refused": "%s does not answer you.",
+  "nusmp.spirit_control.callfirst": "Call %s first.",
+  "nusmp.spirit_control.notout": "%s is not out.",
+  "nusmp.spirit_control.combat_off": "Spirit combat mode is switched off on this server.",
+  "nusmp.spirit_control.combat_on": "Spirit combat mode ON: your spirits cast with their mana and yours.",
+  "nusmp.spirit_control.combat_off_now": "Spirit combat mode off.",
+  "nusmp.spirit_control.spirit_dry": "%s has no mana left to cast.",
+  "nusmp.spirit_control.user_dry": "%s waits: you have no mana to spare.",
+  "nusmp.spirit_control.slot": "Waypoint slot %s selected.",
+  "nusmp.spirit_control.severed": "Your spirit is severed from you for a moment.",
+  "nusmp.spirit_control.wont": "Your spirit will not answer you.",
+  "nusmp.spirit_control.nobody": "%s has no body yet. Earn its full trust and give it a True Name (Spirit Charm)."
+}

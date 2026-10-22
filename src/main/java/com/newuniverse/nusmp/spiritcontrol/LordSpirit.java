@@ -63,8 +63,8 @@ public final class LordSpirit extends AbstractSpirit {
 
     @Override public boolean isOut(ServerPlayer p) { return body(p) != null; }
 
-    private static void say(ServerPlayer p, String key, String text, ChatFormatting color) {
-        p.displayClientMessage(Component.translatableWithFallback(key, text).withStyle(color), true);
+    private static void say(ServerPlayer p, String key, String text, ChatFormatting color, Object... args) {
+        p.displayClientMessage(Component.translatableWithFallback(key, text, args).withStyle(color), true);
     }
 
     @Override
@@ -76,7 +76,7 @@ public final class LordSpirit extends AbstractSpirit {
         if ("-".equals(type)) return false;
         boolean anti = "Anti".equalsIgnoreCase(type);
         if (!anti && !SpiritBond.incarnate(p)) {
-            say(p, "nusmp.spirit_control.nobody", type + " has no body yet. Earn its full trust and give it a True Name (Spirit Charm).", ChatFormatting.GRAY);
+            say(p, "nusmp.spirit_control.nobody", "%s has no body yet. Earn its full trust and give it a True Name (Spirit Charm).", ChatFormatting.GRAY, type);
             return false;
         }
         ElementalSpiritLordEntity.Kind bodyKind = anti ? null : ElementalSpiritLordEntity.Kind.forSpirit(type);

@@ -185,3 +185,7 @@ Two takes are not single-line recordings. `hurt_3`, `hurt_4` and `feast_1..4` we
 * The prop is placed from the owner's body; a **vehicle or elytra** owner, a very fast fall and a **Shadow Step across a chunk border at the world edge** were not exercised. A teleport mid-chunk-load relies on `hasChunkAt`.
 * `book_dark` as the gate means a Dark Magic caster of any canon grimoire may link; the spirit commands of the older systems (`/multiverse spirit_*`) are not extended (no admin command for this spirit).
 * The mood hook is one appended line in `GrimoireBook.castPage`; if another builder moves that method the hook must be re-added.
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The three Darkness keys (the right bracket, the semicolon and the apostrophe) are gone. The Dark grimoire's "Summon Spirit / Release Spirit" page (or `/multiverse spirit summon spirit_dark`) links and unlinks the wisp; the pages "Shadow Step" and "Demon Form" (or `/multiverse spirit ability step|power`) do what the step and power keys did; "Spirit Combat Mode" lets it cast shadow marks and lances with its mana and yours. Only the keys and the key packet were removed. Full description, numbers and costs: `docs/magic/spirit_control.md`.
