@@ -73,8 +73,8 @@ class CharacterSetRegistryTest {
     @Test
     void aCharacterWithoutASetKeepsTheWholeBook() {
         CharacterSetRegistry r = shipped();
-        assertFalse(r.hidden("mereoleona", "book_fire", "calidos_brachium", false, true));
-        assertFalse(r.hidden("mereoleona", "book_fire", "sol_linea", false, true), "an unfinished character keeps today's grimoire, even for a spell another character owns");
+        assertFalse(r.hidden("nobody_with_a_set", "book_fire", "calidos_brachium", false, true));
+        assertFalse(r.hidden("nobody_with_a_set", "book_fire", "sol_linea", false, true), "an unfinished character keeps today's grimoire, even for a spell another character owns");
         assertFalse(r.hidden("kaiser", "book_wind", "spirit_storm", false, true));
     }
 
@@ -173,7 +173,7 @@ class CharacterSetRegistryTest {
         CharacterSetRegistry r = shipped();
         assertTrue(r.tracked("yuno").contains("spirit_dive"));
         assertTrue(r.tracked("yami").contains("black_moon"));
-        assertTrue(r.tracked("kaiser").isEmpty());
+        assertTrue(r.tracked("nobody_with_a_set").isEmpty());
         assertTrue(r.tracked("asta").size() <= 8, "the grimoire's tag stays small");
     }
 }

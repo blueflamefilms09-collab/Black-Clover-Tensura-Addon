@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "canon": "kaiser",
+  "magic": "STORM",
+  "book": "book_storm",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "vortex_shield",
+      "name": "Vortex Magic: Vortex Shield",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "The page the repo already gave him through the old lock. A spiral shield; the search summaries named only the Area Helix for his barrier, so this page is not wiki-confirmed."
+    },
+    {
+      "page": "kaiser_area_helix",
+      "name": "Vortex Magic: Area Helix",
+      "ja": "螺旋結界(エリアヘリックス)",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "A huge spherical vortex; strong enough to hold a devil for a while (ja.wikipedia); a barrier of rotation that defends (namu). NEW page."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Other Vortex Magic spells",
+      "ja": "",
+      "origin": "anime",
+      "source": "ja_search",
+      "note": "The searches found no full list for Kaiser; the Japanese summary says only the Area Helix could be confirmed."
+    }
+  ],
+  "notes": "CanonBook gives Kaiser the STORM book (Vortex Magic is a separate MagicType, VORTEX, with its own book), so his page is appended to the Storm book. The Storm book's Storm Lance, Tempest Ring, Eye of the Storm and Thunder Sphere were not found for him and stay in the basic Storm book; mode 0 (Storm Lance) cannot be hidden."
+}

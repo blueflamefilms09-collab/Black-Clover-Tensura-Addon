@@ -37,7 +37,8 @@ public class PlantBook extends GrimoireBook {
             BookPage.zone("petal_storm", "Plant Magic: Petal Storm", PlantArts::storm));
 
     public PlantBook() { super(MagicType.PLANT, 0xFF6CFF7A); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withGold;      // character spell sets (builder gold): the pages that belong to Mimosa are appended after the shared pages (book.CharacterPagesGold)
+    @Override protected List<BookPage> familyPages() { if (withGold == null) withGold = CharacterPagesGold.plant(pages); return withGold; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
     /** The cast circle: a small version of the magic's own ground sigil under the caster. */

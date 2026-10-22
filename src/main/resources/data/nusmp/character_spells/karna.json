@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "canon": "karna",
+  "magic": "LIGHT",
+  "book": "book_light",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "karna_crescent_cut",
+      "name": "Moonlight Magic: Crescent Cut",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Offensive, mid range: crescent-shaped moonlight blades, several at once. NEW page (drawn in the Light book: Moonlight has no book of its own)."
+    },
+    {
+      "page": "karna_bewitching_moonlight",
+      "name": "Moonlight Magic: Bewitching Moonlight",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "Supplementary: tries to take control of a target's body by suppressing its mana and will; several people at once. NEW page; the mod holds the targets instead of controlling them."
+    },
+    {
+      "page": "karna_full_moon_shell",
+      "name": "Moonlight Magic: Full Moon Shell",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "karna_crescent_cut",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.35
+          }
+        ]
+      },
+      "note": "Close-range defence: a dark sphere round the user that knocks back attacks and attackers. NEW page."
+    },
+    {
+      "page": "karna_crescent_cut_full_moon",
+      "name": "Moonlight Magic: Crescent Cut Full Moon",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "karna_full_moon_shell"
+          },
+          {
+            "type": "page_uses",
+            "page": "karna_full_moon_shell",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "She creates a Full Moon Shell and erratically fires several Crescent Cuts from it. NEW page."
+    },
+    {
+      "page": "karna_lunatic_crisis",
+      "name": "Moonlight Magic: Lunatic Crisis",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "karna_crescent_cut_full_moon"
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.75
+              }
+            ]
+          }
+        ]
+      },
+      "note": "Long range: she gathers mana round the red moon and releases it as an enormous ray of moonlight. NEW page; the latest in the set."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Gibbous Ray",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Named on her wiki page; the summary gave no description, so no page."
+    },
+    {
+      "name": "Moon Trap",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Named on her wiki page; the summary gave no description, so no page."
+    }
+  ],
+  "notes": "Moonlight Magic is not a magic of this mod (CanonBook gives her LIGHT), so her pages are appended to the Light book. Mode 0 of the Light book (Light Sword of Judgment) cannot be hidden and stays in her grimoire. The owner may later give Moonlight its own MagicType and book; her set would then move with it."
+}

@@ -53,6 +53,13 @@ class CharacterSetSourceScanTest {
         return m.find() ? ids(m.group(1)) : List.of();
     }
 
+    /** builder gold: the pages appended by CharacterPagesGold for a book (their own checks are in CharacterSetGoldTest). */
+    private static List<String> addedGold(String bookPath) throws IOException {
+        String file = read(SRC.resolve("book/CharacterPagesGold.java"));
+        Matcher m = Pattern.compile("register\\(\"" + bookPath + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(file);
+        return m.find() ? ids(m.group(1)) : List.of();
+    }
+
     @Test
     void theLegacyPagesAreUntouchedAndInOrder() throws IOException {
         assertEquals(List.of("kamaitachi", "gust_lane", "spirit_storm", "towering_tornado", "slicing_wind_emperor", "spirit_of_zephyr"), legacy("book_wind"));
@@ -80,9 +87,10 @@ class CharacterSetSourceScanTest {
             for (Path f : (Iterable<Path>) s.filter(p -> p.toString().endsWith(".json"))::iterator) {
                 JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
                 String book = o.get("book").getAsString();
-                assertTrue(BOOK_FILES.containsKey(book), f + ": no source file known for " + book);
+                if (!BOOK_FILES.containsKey(book)) continue;      // builder gold: the books of the Golden Dawn / Crimson Lion side are checked by CharacterSetGoldTest
                 List<String> have = new ArrayList<>(legacy(book));
                 have.addAll(added(book));
+                have.addAll(addedGold(book));
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);

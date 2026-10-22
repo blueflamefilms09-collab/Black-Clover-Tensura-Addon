@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "canon": "william",
+  "magic": "WORLD_TREE",
+  "book": "book_world_tree",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "mistilteinn_seed",
+      "name": "World Tree Magic: Mistilteinn Seed",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Offensive: a seed that paralyses and absorbs the target's mana. Mode 0 of the book."
+    },
+    {
+      "page": "magic_tree_descent",
+      "name": "World Tree Magic: Magic Tree Descent",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "A Creation spell: roots of a giant tree come down from the sky; at the Magic Knight Entrance Exam he shaped one into a broom."
+    },
+    {
+      "page": "root_bind",
+      "name": "World Tree Magic: Dracaena Formation (the page Root Bind)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "The wiki's Dracaena Formation is the roots-wrapping spell: he touches the ground and giant roots bind the target. The mod's page is named Root Bind; the match is a design choice."
+    },
+    {
+      "page": "william_magic_warding_ash",
+      "name": "World Tree Magic: Magic Warding Ash",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.35
+      },
+      "note": "Supplementary: a huge ash tree grows and its branches bind the opponent's attacks. NEW page."
+    },
+    {
+      "page": "william_great_tree_mistilteinn",
+      "name": "World Tree Magic: Great Tree Mistilteinn",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mistilteinn_seed"
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "Supplementary: world-tree roots spread over a wide area and absorb the mana of those nearby; the tree can then catch and subdue enemies. NEW page."
+    },
+    {
+      "page": "william_mistilteinn_blade",
+      "name": "World Tree Magic: Mistilteinn Blade",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "william_great_tree_mistilteinn"
+          },
+          {
+            "type": "mastery",
+            "min": 0.62
+          }
+        ]
+      },
+      "note": "Listed as supplementary by the wiki; no description was found, so the effect is the mod's reading (a blade of tree wood). NEW page."
+    },
+    {
+      "page": "budding_of_yggdrasil",
+      "name": "World Tree Magic: Budding of Yggdrasil",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "magic_tree_descent"
+          },
+          {
+            "type": "mastery",
+            "min": 0.8
+          }
+        ]
+      },
+      "note": "Supplementary: the world tree buds and catches attacks in mid-air. His late signature."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Demon-Dweller Sword: Spirit Light Tree",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A union spell with Licht's sword magic; needs the Anti-Magic sword, not built here."
+    }
+  ],
+  "notes": "Order: the seed is mode 0 (always shown); the rest follow the mod's design, the arc order of first use was not measured. The old Plant-book lock for Yggdrasil stays."
+}

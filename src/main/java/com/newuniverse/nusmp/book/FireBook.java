@@ -48,7 +48,7 @@ public class FireBook extends GrimoireBook {
 
     public FireBook() { super(MagicType.FLAME, 0xFFFF6A1E); }
     private List<BookPage> withCharacters;      // character spell sets: the pages that belong to one character are appended after the shared pages (book.CharacterPages)
-    @Override protected List<BookPage> familyPages() { if (withCharacters == null) withCharacters = CharacterPages.fire(pages); return withCharacters; }
+    @Override protected List<BookPage> familyPages() { if (withCharacters == null) withCharacters = CharacterPagesGold.fire(CharacterPages.fire(pages)); return withCharacters; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.FIRE_ELEMENTAL; }
     @Override public Element spiritElement() { return Element.FLAME; }
     @Override public String spiritName() { return "Salamander"; }

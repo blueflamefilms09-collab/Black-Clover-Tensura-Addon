@@ -68,7 +68,12 @@ public class LightBook extends GrimoireBook {
     }
 
     public LightBook() { super(MagicType.LIGHT, 0xFFFFF2A8); }
-    @Override protected List<BookPage> familyPages() { return LightBoneJaKit.enabled() ? pagesJaAll : pages; }
+    private List<BookPage> goldJa, goldOld;      // character spell sets (builder gold): the pages that belong to Karna are appended after the shared pages (book.CharacterPagesGold), for both shapes of the book
+    @Override protected List<BookPage> familyPages() {
+        if (LightBoneJaKit.enabled()) { if (goldJa == null) goldJa = CharacterPagesGold.light(pagesJaAll); return goldJa; }
+        if (goldOld == null) goldOld = CharacterPagesGold.light(pages);
+        return goldOld;
+    }
     @Override protected int pagesVersion() { return LightBoneJaKit.enabled() ? 1 : 0; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.LIGHT_ELEMENTAL; }
 

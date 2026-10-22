@@ -25,7 +25,7 @@ import java.util.function.Function;
  */
 public final class CharacterSetRegistry {
     /** The characters that have a file in data/nusmp/character_spells. A content builder appends the id of a new character here (one line). */
-    public static final List<String> SHIPPED = List.of("yuno", "noelle", "fuegoleon", "asta", "yami");
+    public static final List<String> SHIPPED = List.of("yuno", "noelle", "fuegoleon", "asta", "yami", "mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser");
     public static final String RESOURCE_DIR = "/data/nusmp/character_spells/";
 
     private final Map<String, CharacterSet> byCanon = new LinkedHashMap<>();

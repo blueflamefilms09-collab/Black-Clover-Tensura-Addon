@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "canon": "julius",
+  "magic": "TIME",
+  "book": "book_time",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "chrono_stasis",
+      "name": "Time Magic: Chrono Stasis",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Traps enemies in a translucent sphere where time stands still, can catch and return a projectile faster."
+    },
+    {
+      "page": "acceleration",
+      "name": "Time Magic: Time Acceleration",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "He can speed up, slow down, stop or reverse time; a wound from acceleration is hard to heal."
+    },
+    {
+      "page": "stolen_time",
+      "name": "Time Magic: Stolen Time",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "The nature of his magic: he steals time from those he targets and keeps it in reserve (thirteen years of it before his death)."
+    },
+    {
+      "page": "reversal",
+      "name": "Time Magic: Time Reversal",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "acceleration"
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "Reversing time; at the end he spent all his stored time to reverse a kingdom-wide spell."
+    },
+    {
+      "page": "grigora",
+      "name": "Time Magic: Chrono Stasis Grigora",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "chrono_stasis"
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.6
+              }
+            ]
+          }
+        ]
+      },
+      "note": "The stronger Chrono Stasis of the repo's book. The name Grigora was not found in the summaries, so this is the mod's page: it is placed with the Mana Zone because the sources say Mana Zone combined with Time Magic ages the flow of mana around him."
+    },
+    {
+      "page": "chrono_anastasis",
+      "name": "Time Magic: Chrono Anastasis",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "reversal"
+          },
+          {
+            "type": "mastery",
+            "min": 0.85
+          }
+        ]
+      },
+      "note": "Greek for time resurrection: the last spell he used before Licht stabbed him; it rewinds time to undo the attack. His signature; the latest in the set."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Mana Zone (Time)",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A Mana Zone ability, not a page: the book already uses the shared Mana Zone gate."
+    }
+  ],
+  "notes": "Not in his list (they stay in the basic Time book): Hourglass Step, Borrowed Future, Pendulum Ward, Age Breaker, Moment Reprise and Hourglass Storm are the mod's own 'Julius-inspired' pages (version 0.61) and were not found in any source. No new page, and nothing in TimeBook or the Time VFX was touched (rule 3)."
+}

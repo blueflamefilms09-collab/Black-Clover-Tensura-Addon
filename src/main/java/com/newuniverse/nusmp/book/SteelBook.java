@@ -36,7 +36,8 @@ public class SteelBook extends GrimoireBook {
                     ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 80, 1)))));
 
     public SteelBook() { super(MagicType.STEEL, 0xFFB8C2CC); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withGold;      // character spell sets (builder gold): the pages that belong to Klaus are appended after the shared pages (book.CharacterPagesGold)
+    @Override protected List<BookPage> familyPages() { if (withGold == null) withGold = CharacterPagesGold.steel(pages); return withGold; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
     /** Three steel bolts in a tight spread. */

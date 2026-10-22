@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "canon": "kirsch",
+  "magic": "CHERRY_BLOSSOM",
+  "book": "book_cherry_blossom",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "cherry_blossom_strike",
+      "name": "Cherry Blossom Magic: (blossoms thrown as a strike)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Cherry Blossom book; shown because the engine never hides mode 0. Cherry Blossom Magic needs no grimoire for its simple uses (en wiki summary)."
+    },
+    {
+      "page": "petal_step",
+      "name": "Cherry Blossom Magic: a passage of blossom wind for allies",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "The Korean wiki summary says he uses the blossom wind to create a passage for allies; the page is the mod's nearest, so the match is design."
+    },
+    {
+      "page": "petal_veil",
+      "name": "Cherry Blossom Magic: blossoms over the battlefield as a defence",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "The English summary says he covers a battlefield with blossoms as a defensive tactic; the page is the mod's nearest, so the match is design."
+    },
+    {
+      "page": "clones_of_the_beautiful_me",
+      "name": "Cherry Blossom Magic: Clones of the Beautiful Me",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "A grimoire spell (an advanced technique he still needs the grimoire for)."
+    },
+    {
+      "page": "magic_cherry_blossom_blizzard",
+      "name": "Cherry Blossom Magic: Magic Cherry Blossom Blizzard",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "clones_of_the_beautiful_me"
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "A grimoire spell, with Clones of the Beautiful Me his two named advanced techniques."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Beautifying Bloom, Dance of 100 Million Cherry Blossoms, Everlasting Sakura Grove, Blossom Blessing, Blossom Snare, Petal Fan, Razor Petal Stream",
+      "ja": "",
+      "origin": "anime",
+      "source": "design",
+      "note": "Pages of the repo's Cherry Blossom book that the searches did not find for Kirsch; they stay in the basic Cherry Blossom book."
+    }
+  ],
+  "notes": "His canon grimoire was bound to the Plant book; the series' magic is Cherry Blossom Magic and the book exists, so CanonBook.KIRSCH now names CHERRY_BLOSSOM (the one edit of an existing line; a Kirsch grimoire made before keeps its Canon tag and shows the whole Plant book). No new page."
+}

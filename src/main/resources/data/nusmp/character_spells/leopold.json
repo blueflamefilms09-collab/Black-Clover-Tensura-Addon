@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "canon": "leopold",
+  "magic": "FLAME",
+  "book": "book_fire",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "spiral_flame",
+      "name": "Flame Magic: Spiral Flame",
+      "ja": "螺旋焔(らせんほむら)",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "His basic spell: a vortex of flame from the palm, one from each hand or one huge one. The existing page."
+    },
+    {
+      "page": "wild_bursting_flame",
+      "name": "Flame Magic: Wild Bursting Flame",
+      "ja": "爆乱焔(ばくらんほむら)",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "Fire balls thrown in several directions from his feet (the Japanese list names it for him). The existing page."
+    },
+    {
+      "page": "leopold_deep_spiral_flame",
+      "name": "Flame Magic: Deep Spiral Flame",
+      "ja": "深炎螺旋焔(しんえんらせんほむら)",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "spiral_flame",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.45
+          }
+        ]
+      },
+      "note": "His own formula, learned in the Heart Kingdom: several spirals of flame leave him in different directions. NEW page; the English name is a translation of the Japanese one."
+    },
+    {
+      "page": "leopold_crimson_eruption",
+      "name": "True Flame Magic: Crimson Eruption",
+      "ja": "真炎魔法「紅蓮噴火」(ぐれんふんか)",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "leopold_deep_spiral_flame"
+          },
+          {
+            "type": "page_uses",
+            "page": "wild_bursting_flame",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "Learned in the Heart Kingdom: the formula is drawn over a wide area and the whole area erupts. NEW page; the English name is a translation."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Leo Rugiens (shared with Fuegoleon)",
+      "ja": "",
+      "origin": "anime",
+      "source": "design",
+      "note": "The old lock keeps it open for him (the Vermillion family spell); no source named it for Leopold, so it is not in his list."
+    }
+  ],
+  "notes": "Mode 0 of the Fire book stays. His style of casting (hold the key to wind a spiral up, release throws it) is the existing firecast LEOPOLD style and applies to every Fire page. Spiral Flame and Wild Bursting Flame are marked exclusive to him, so the basic Fire book loses them."
+}

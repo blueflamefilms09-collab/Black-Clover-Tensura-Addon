@@ -17,5 +17,6 @@ public final class CharacterSetBoot {
         done = true;
         container.registerConfig(ModConfig.Type.SERVER, CharacterSetConfig.SPEC, "nusmp-character-spells-server.toml");
         CharacterSetSelfTests.register();
+        CharacterSetGoldSelfTests.register();      // builder gold: magic.character_spells_gold (docs/magic/character_spells_gold.md)
     }
 }

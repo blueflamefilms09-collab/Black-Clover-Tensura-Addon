@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "canon": "mimosa",
+  "magic": "PLANT",
+  "book": "book_plant",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "guidepost",
+      "name": "Plant Magic: Magic Flower Guidepost",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "A flower that builds a 3D map of the area out of pollen; in this mod it also mends the one you look at (the page as it was)."
+    },
+    {
+      "page": "mimosa_magic_flower_cannon",
+      "name": "Plant Magic: Magic Flower Cannon",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "A giant flower that shoots a laser of pure mana. NEW page."
+    },
+    {
+      "page": "mimosa_dream_healing_cradle",
+      "name": "Plant Magic: Dream-Healing Flower Cradle",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "guidepost"
+          },
+          {
+            "type": "mastery",
+            "min": 0.25
+          }
+        ]
+      },
+      "note": "A cradle of vines and flowers that heals the one inside (wikis call it Basket or Cradle). NEW page."
+    },
+    {
+      "page": "mimosa_princess_healing_robe",
+      "name": "Plant Magic: Princess-Healing Flower Robe",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mimosa_dream_healing_cradle"
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "A plant-based Healing Magic spell; Mimosa is its only listed user. NEW page."
+    },
+    {
+      "page": "hundred_flowers",
+      "name": "Dream World of a Hundred Flowers",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.55
+      },
+      "note": "The mod's first-release healing field. No wiki page of that exact name was found; it is the closest page the repo has to her group heal, so it stays in her grimoire. KEPT."
+    },
+    {
+      "page": "mimosa_flower_princess_utopia",
+      "name": "Plant Magic: Flower Princess Utopia",
+      "ja": "花姫の夢想郷",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mimosa_princess_healing_robe"
+          },
+          {
+            "type": "mastery",
+            "min": 0.75
+          }
+        ]
+      },
+      "note": "Her Ultimate Magic: heals the injuries and exhaustion of everyone in the cradle, even fatal wounds in a short time. NEW page. The mod places it late (the Heart Kingdom training)."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Princess Healing Flower Garden",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "One summary says she learned this advanced group heal in the Heart Kingdom; it is probably the same spell as Flower Princess Utopia, so no separate page."
+    },
+    {
+      "name": "Magic Flower Bullet",
+      "ja": "",
+      "origin": "anime_only",
+      "source": "en_wiki",
+      "note": "A mobile-game skill only; not built."
+    }
+  ],
+  "notes": "The Plant book's other pages (Seed Bloom, Healing Bloom, Flower Sprite, Ivy Barrier, Blossom Dress, Petal Storm, Yggdrasil, Briar Prison) are not in her list and stay in the basic Plant book. Yggdrasil is William's lock, Briar Prison Charlotte's."
+}

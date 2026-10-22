@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "canon": "mereoleona",
+  "magic": "FLAME",
+  "book": "book_fire",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "calidos_brachium",
+      "name": "Flame Magic: Calidus Brachium",
+      "ja": "灼熱腕(カリドゥス・ブラキウム)",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Her basic spell: the fist wrapped in condensed flame; a punch burns anything it hits and can burn through water magic. The page keeps the repo's spelling Calidos."
+    },
+    {
+      "page": "mereoleona_brachium_barrage",
+      "name": "Mana Zone: Flame Magic: Calidus Brachium Barrage",
+      "ja": "灼熱腕 連撃",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "calidos_brachium",
+            "count": 3
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.4
+              }
+            ]
+          }
+        ]
+      },
+      "note": "After taking control of the surrounding mana (Mana Zone) she pummels the target with fiery blasts from several directions. NEW page. Whether the anime reached it was not checked, so the origin is manga."
+    },
+    {
+      "page": "mereoleona_purgatory",
+      "name": "Flame Magic: Calidus Brachium Purgatory",
+      "ja": "灼熱腕 煉獄",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mereoleona_brachium_barrage"
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "She becomes the flame: every attack is greatly strengthened. NEW page. The en wiki lists Cremation and Abyss as variants; the effect here (20 s of Strength II, fire immunity, a ring of fire) is the mod's reading."
+    },
+    {
+      "page": "mereoleona_purgatory_abyss",
+      "name": "Flame Magic: Calidus Brachium Purgatory: Abyss",
+      "ja": "灼熱腕 煉獄・深淵",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "mereoleona_purgatory",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "The deeper form of Purgatory (the full name was read in a search summary: Mana Zone full open, Calidus Brachium Purgatory: Abyss). NEW page."
+    },
+    {
+      "page": "mereoleona_hellfire_incarnate",
+      "name": "Hellfire Incarnate",
+      "ja": "業火の化身",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mereoleona_purgatory_abyss"
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.88
+              }
+            ]
+          }
+        ]
+      },
+      "note": "Her most powerful technique: her body begins to turn into mana, to fight on par with devils. NEW page; the last, so it needs the Abyss form first and the Mana Zone (or the top of the mastery bar)."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Mana Skin",
+      "ja": "",
+      "origin": "manga",
+      "source": "en_wiki",
+      "note": "A defensive technique named by one summary; no page: a passive, not a spell of the book."
+    },
+    {
+      "name": "Calidus Brachium Purgatory: Cremation",
+      "ja": "",
+      "origin": "manga",
+      "source": "en_wiki",
+      "note": "Named as a variant of Purgatory by the English summary; no description found, so it is folded into the Purgatory page."
+    }
+  ],
+  "notes": "Mode 0 of the Fire book (Exploding Fireball) is the book's default page and cannot be hidden, so it stays in her grimoire although the sources do not name it. Her style of casting (key readies the page, a punch combo releases it from the fist) is the existing firecast MEREOLEONA style and applies to every Fire page, including the four new ones. Not in her grimoire (kept in the basic Fire book): the other Fire pages."
+}

@@ -83,7 +83,7 @@ public final class CharacterSets {
      */
     public static Set<CanonBook> addedPageOwners(GrimoireBook b, BookPage page) {
         String book = bookPath(b);
-        if (!CharacterPages.isAdded(book, page.id())) return null;
+        if (!CharacterPages.isAdded(book, page.id()) && !com.newuniverse.nusmp.book.CharacterPagesGold.isAdded(book, page.id())) return null;      // builder gold: the pages of the Golden Dawn / Crimson Lion side
         String owner = registry().exclusiveOwner(book, page.id());
         CanonBook c = CanonBook.byId(owner);
         return c == null ? null : EnumSet.of(c);
