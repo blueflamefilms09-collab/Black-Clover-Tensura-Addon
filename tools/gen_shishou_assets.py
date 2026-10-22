@@ -337,6 +337,48 @@ def write_animation():
         f.write("\n")
 
 
+# ================================================================ the far proxy: a few cubes in the mod's own geo.json format (the level of detail beyond 48 blocks, and the model the animation file moves)
+def write_proxy():
+    """assets/nusmp/geo/entity/shishou_sword.geo.json (one bone 'sword', eight cubes: pommel, grip, collar, guard, ornament, blade, point, the cyan line) + textures/entity/shishou_sword.png and _glow.png
+    (32 x 32: flat swatches, every face of a cube points at the swatch of its colour). The body draws this beyond 48 blocks instead of the mesh of about five thousand quads; the animation file's bone is this bone."""
+    sw = {"silver": (0, 0), "gold": (8, 0), "white": (16, 0), "dark": (24, 0), "cyan": (0, 8), "grey": (8, 8)}
+    cols = {"silver": (190, 205, 216), "gold": (234, 206, 100), "white": (232, 238, 246), "dark": (52, 54, 62), "cyan": (80, 214, 255), "grey": (150, 160, 174)}
+    tex = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
+    glow = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
+    for name, (u, v) in sw.items():
+        tex.paste(Image.new("RGBA", (8, 8), cols[name] + (255,)), (u, v))
+    glow.paste(Image.new("RGBA", (8, 8), (90, 225, 255, 255)), sw["cyan"])
+    tdir = os.path.join(GAME_ASSETS, "textures", "entity")
+    tex.save(os.path.join(tdir, "shishou_sword.png"))
+    glow.save(os.path.join(tdir, "shishou_sword_glow.png"))
+    k = 27.4 / LENGTH                                                                        # pixels (1/16 block) per model centimetre: the sword is 1.71 blocks = 27.4 px long
+    cy0 = -LENGTH * 0.5 * k
+
+    def y(ycm):
+        return round(cy0 + ycm * k, 3)
+
+    def cube(color, x0, x1, y0cm, y1cm, z):
+        u, v = sw[color]
+        face = {"uv": [u + 2, v + 2], "uv_size": [2, 2]}
+        return {"origin": [round(x0, 3), y(y0cm), round(-z, 3)], "size": [round(x1 - x0, 3), round((y1cm - y0cm) * k, 3), round(2 * z, 3)], "uv": {f: dict(face) for f in ("north", "south", "east", "west", "up", "down")}}
+    cubes = [cube("gold", -0.8, 0.8, 0.0, 6.0, 0.8),                    # pommel
+             cube("white", -0.5, 0.5, 6.0, 25.0, 0.5),                  # grip
+             cube("gold", -1.5, 1.5, 25.0, 28.0, 0.8),                  # collar and lens
+             cube("gold", -5.4, 5.4, 29.5, 40.0, 0.9),                  # the crescent guard
+             cube("dark", -2.2, 2.2, 38.0, 44.0, 0.5),                  # the ornament under it
+             cube("silver", -2.0, 2.0, 43.0, LENGTH - 4.0, 0.34),       # the blade
+             cube("silver", -1.1, 1.1, LENGTH - 4.0, LENGTH - 0.3, 0.2),  # the point
+             cube("cyan", -0.28, 0.28, 47.0, 95.0, 0.4)]               # the cyan line of the fuller
+    geo = {"format_version": "1.12.0", "minecraft:geometry": [{"description": {"identifier": "geometry.shishou_sword", "texture_width": 32, "texture_height": 32,
+                                                                           "visible_bounds_width": 4, "visible_bounds_height": 4, "visible_bounds_offset": [0, 0, 0]},
+                                                           "bones": [{"name": "sword", "pivot": [0.0, 0.0, 0.0], "cubes": cubes}]}]}
+    d = os.path.join(GAME_ASSETS, "geo", "entity")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "shishou_sword.geo.json"), "w", encoding="utf-8", newline="\n") as f:
+        json.dump(geo, f, indent=1)
+        f.write("\n")
+
+
 # ================================================================ the rows of the shared tables (class, display preset, Better Combat)
 def class_rows():
     """The class row (longsword) in both copies of weapon_classes.json, by text insertion (the files keep their formatting and every other row)."""
@@ -413,6 +455,7 @@ def main(args=None):
     add_gripxyz()
     make_icon(os.path.join(GAME_ASSETS, "textures", "item", ITEM_ID + ".png"))
     write_animation()
+    write_proxy()
     class_rows()
     e = presets()
     print("  %s L=%.2f %s" % (ITEM_ID, e["length_blocks"], e["action"]))

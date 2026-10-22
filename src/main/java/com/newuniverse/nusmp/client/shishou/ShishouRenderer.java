@@ -4,7 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.client.ShishouMeshDraw;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
+import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoModels;
+import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.shishou.ShishouEntity;
 import com.newuniverse.nusmp.shishou.ShishouRules;
 import net.minecraft.client.Minecraft;
@@ -25,6 +27,7 @@ public final class ShishouRenderer extends EntityRenderer<ShishouEntity> {
     private static final ResourceLocation ANIMATION = ResourceLocation.fromNamespaceAndPath("nusmp", "animations/entity/shishou_sword.animation.json");
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/shishou.png");
     private static final float[] ROT = new float[3], POS = new float[3];
+    private static final GeoSpec PROXY = GeoSpec.of("shishou", "sword");
 
     public ShishouRenderer(EntityRendererProvider.Context ctx) { super(ctx); }
 
@@ -73,8 +76,11 @@ public final class ShishouRenderer extends EntityRenderer<ShishouEntity> {
         pose.mulPose(Axis.ZP.rotationDegrees(rz));                                            // roll about the blade
         pose.mulPose(Axis.XP.rotationDegrees(90f));                                           // lay the upright mesh (tip +y) along +z
         float alpha = e.isVeiled() ? 0.35f : 1f;
-        float glow = d2 > ShishouMeshDraw.GLOW_RANGE * ShishouMeshDraw.GLOW_RANGE ? 0f : state == ShishouRules.STATE_DORMANT ? 0.35f : 1f;
-        ShishouMeshDraw.draw(pose, buffers, light, alpha, glow, e.tickCount + partial);
+        boolean far = d2 > ShishouMeshDraw.GLOW_RANGE * ShishouMeshDraw.GLOW_RANGE;
+        if (far) {                                                                            // beyond 48 blocks: the eight-cube proxy (the animation file's own model) instead of the mesh of about five thousand quads
+            int a = Math.round(alpha * 255f);
+            GeoDraw.paint(pose, buffers, PROXY, null, 0f, GeoDraw.Space.PROP, alpha < 0.98f ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT, light, a << 24 | 0xFFFFFF, a << 24 | 0xFFFFFF);
+        } else ShishouMeshDraw.draw(pose, buffers, light, alpha, state == ShishouRules.STATE_DORMANT ? 0.35f : 1f, e.tickCount + partial);
         pose.popPose();
     }
 }
