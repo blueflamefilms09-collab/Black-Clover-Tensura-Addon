@@ -178,5 +178,7 @@ public enum PropKind {
     UNDINE_1,
     /** Spirit of Light (spiritlight.SpiritLightProps): SPIRIT_LIGHT_1 = the lion cub (variant 0) and the seraph (1); SPIRIT_LIGHT_2 = the piercing light beam (2) and the Glowing pulse ring (3); the variant is the low four bits of the param (painter client.prop.SpiritLightPropPainter) */
     SPIRIT_LIGHT_1,
-    SPIRIT_LIGHT_2
+    SPIRIT_LIGHT_2,
+    /** Spirit of Darkness (spiritdark.SpiritDarkProps): the shadow-wisp companion (variant 0) and the powered demon form (variant 1); the param word is spiritdark.SpiritDarkRules (painter client.prop.SpiritDarkPropPainter) */
+    SPIRITDARK_1
 }

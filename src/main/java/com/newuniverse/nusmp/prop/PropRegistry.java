@@ -88,5 +88,7 @@ final class PropRegistry {
         com.newuniverse.nusmp.undine.UndineProps.init();          // Undine: the companion and the full form of Noelle's water Spirit Lord
         com.newuniverse.nusmp.spiritlight.SpiritLightProps.init();      // Spirit of Light: the lion cub, the seraph, the beam, the pulse ring
 
+        com.newuniverse.nusmp.spiritdark.SpiritDarkProps.init();    // Spirit of Darkness: the companion and the powered form
+
     }
 }

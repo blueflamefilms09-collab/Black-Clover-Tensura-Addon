@@ -38,6 +38,8 @@ SCOPE = [
     ("entity", ("spiritlight_cub_fx", "spiritlight_seraph_fx")),          # Spirit of Light: the glow-only models of the cub and the seraph (halo, eyes, rings, core, prism)
     ("particle", ("spiritlight_",)),                                       # Spirit of Light: the soft beam, ring, glow and spark textures
 
+    ("entity", ("spirit_dark_companion_fx", "spirit_dark_powered_fx", "spirit_dark_companion_faceglow", "spirit_dark_powered_faceglow")),          # Spirit of Darkness: the glow-only models and the face glow sheets (eyes, grin, runes, seams, smoke wisps)
+
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"

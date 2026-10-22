@@ -90,6 +90,8 @@ public class NUSMP {
         com.newuniverse.nusmp.spiritspace.SpiritSpaceBoot.init(modEventBus, modContainer);                                // Spirit of Space: nusmp-spiritspace-server.toml (magic.spiritSpace), the key packet, the sounds, the events, self-test magic.spirit_space
         com.newuniverse.nusmp.spiritlight.SpiritLightBoot.init(modEventBus, modContainer);                                  // Spirit of Light: nusmp-spiritlight-server.toml (magic.spiritLight), the key packet, its own sounds, the events, self-test magic.spirit_light
 
+        com.newuniverse.nusmp.spiritdark.SpiritDarkBoot.init(modEventBus, modContainer);                                  // Spirit of Darkness: nusmp-spiritdark-server.toml (magic.spiritDark), the sounds, the key packet, the events, self-test magic.spirit_dark
+
         com.newuniverse.nusmp.fairytail.FairyTailSystem.init(modEventBus);                                                 // Fairy Tail skills: Fire Dragon Slayer -> King, Ice-Make, Sky/Lightning/Iron Dragon Slayer, Crash, Water Magic, the skill book
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
@@ -177,6 +179,8 @@ public class NUSMP {
             com.newuniverse.nusmp.client.sylph.SylphClient.init(modEventBus);                                                 // the Sylph key
             com.newuniverse.nusmp.client.spiritspace.SpiritSpaceClient.init(modEventBus);                                     // Spirit of Space: the link, ability and waypoint keys
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);                                     // Spirit of Light: the link and command keys
+
+            com.newuniverse.nusmp.client.spiritdark.SpiritDarkClient.init(modEventBus);                                       // Spirit of Darkness: the link, Shadow Step and powered form keys
 
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);

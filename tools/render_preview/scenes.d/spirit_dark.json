@@ -1,0 +1,1584 @@
+{
+ "sd_powered_body": {
+  "kind": "geo",
+  "model": "spirit_dark_powered",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   560,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ]
+ },
+ "sd_companion_body": {
+  "kind": "geo",
+  "model": "spirit_dark_companion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0
+  ],
+  "tile": [
+   560,
+   440
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 10,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 2.8
+   }
+  ]
+ },
+ "sd_powered_game": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10000,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   560,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4, from beside the owner",
+    "yaw": 25,
+    "pitch": 14,
+    "target": [
+     -0.7,
+     1.5,
+     -1.9
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "behind the owner",
+    "yaw": 160,
+    "pitch": 12,
+    "target": [
+     -0.7,
+     1.5,
+     -1.9
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     -1.0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "sd_powered_battle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10082,
+  "figure": true,
+  "ages": [
+   20
+  ],
+  "tile": [
+   520,
+   500
+  ],
+  "views": [
+   {
+    "name": "battle stance",
+    "yaw": 25,
+    "pitch": 12,
+    "target": [
+     -0.7,
+     1.5,
+     -1.9
+    ],
+    "dist": 7.5
+   }
+  ]
+ },
+ "sd_powered_face": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10000,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "face and chest",
+    "yaw": 12,
+    "pitch": 6,
+    "target": [
+     -0.7,
+     2.1,
+     -1.9
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "wing and shoulder",
+    "yaw": 70,
+    "pitch": 14,
+    "target": [
+     -0.7,
+     2.2,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sd_powered_lod": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 11082,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   420,
+   460
+  ],
+  "views": [
+   {
+    "name": "lod 1",
+    "yaw": 25,
+    "pitch": 12,
+    "target": [
+     -0.7,
+     1.5,
+     -1.9
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "sd_powered_lod2": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 12082,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   420,
+   460
+  ],
+  "views": [
+   {
+    "name": "lod 2",
+    "yaw": 25,
+    "pitch": 12,
+    "target": [
+     -0.7,
+     1.5,
+     -1.9
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "sd_companion_game": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   480
+  ],
+  "views": [
+   {
+    "name": "shoulder 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "beside",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0.0
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "behind",
+    "yaw": 160,
+    "pitch": 10,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "sd_companion_full": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   400,
+   400
+  ],
+  "views": [
+   {
+    "name": "full",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
+ "sd_companion_lod": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1000,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   400,
+   400
+  ],
+  "views": [
+   {
+    "name": "lod 1",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
+ "sd_companion_lod2": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2000,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   400,
+   400
+  ],
+  "views": [
+   {
+    "name": "lod 2",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
+ "sdp_powered_idle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10005,
+  "figure": false,
+  "ages": [
+   40
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "idle",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_bow": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10020,
+  "figure": false,
+  "ages": [
+   14
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "bow",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_smug": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10030,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "smug",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_cast": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10040,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "cast",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_feast": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10050,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "feast",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_recoil": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10060,
+  "figure": false,
+  "ages": [
+   4
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "recoil",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_cackle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10070,
+  "figure": false,
+  "ages": [
+   20
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "cackle",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_battle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10085,
+  "figure": false,
+  "ages": [
+   20
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "battle",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_appear": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10100,
+  "figure": false,
+  "ages": [
+   4
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "appear",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_powered_farewell": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10110,
+  "figure": false,
+  "ages": [
+   18
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "farewell",
+    "yaw": 18,
+    "pitch": 8,
+    "target": [
+     -0.7,
+     1.7,
+     -1.9
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "sdp_companion_idle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "ages": [
+   40
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "idle",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_bow": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 20,
+  "figure": false,
+  "ages": [
+   14
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "bow",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_smug": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 30,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "smug",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_cast": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 40,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "cast",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_feast": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 50,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "feast",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_recoil": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 60,
+  "figure": false,
+  "ages": [
+   4
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "recoil",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_cackle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 70,
+  "figure": false,
+  "ages": [
+   20
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "cackle",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_battle": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 80,
+  "figure": false,
+  "ages": [
+   20
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "battle",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_appear": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100,
+  "figure": false,
+  "ages": [
+   4
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "appear",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdp_companion_farewell": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 110,
+  "figure": false,
+  "ages": [
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "farewell",
+    "yaw": 25,
+    "pitch": 8,
+    "target": [
+     0.62,
+     1.95,
+     -0.18
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "sdf_powered_smug": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10000,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "smug",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_smug": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "smug",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_grin": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "grin",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_grin": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "grin",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_angry": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10002,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "angry",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_angry": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "angry",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_bored": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10003,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "bored",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_bored": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "bored",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_surprised": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10004,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "surprised",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_surprised": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 4,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "surprised",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_sinister": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10005,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "sinister",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_sinister": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 5,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "sinister",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ },
+ "sdf_powered_amused": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10006,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "amused",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     -0.7,
+     2.3,
+     -1.9
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "sdf_companion_amused": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 6,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   300,
+   280
+  ],
+  "views": [
+   {
+    "name": "amused",
+    "yaw": 8,
+    "pitch": 4,
+    "target": [
+     0.62,
+     1.97,
+     -0.18
+    ],
+    "dist": 1.05
+   }
+  ]
+ }
+}

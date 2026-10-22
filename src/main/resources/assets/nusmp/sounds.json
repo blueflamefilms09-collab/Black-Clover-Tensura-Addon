@@ -51,6 +51,146 @@
     "subtitle": "subtitles.entity.nusmp.zagred_phase",
     "sounds": [{ "name": "nusmp:entity/zagred/phase", "stream": true }]
   },
+  "spirit.dark.whisper": {
+    "subtitle": "subtitles.nusmp.spirit.dark.whisper",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/whisper_1",
+        "attenuation_distance": 18
+      },
+      {
+        "name": "nusmp:spirit/dark/whisper_2",
+        "attenuation_distance": 18
+      },
+      {
+        "name": "nusmp:spirit/dark/whisper_3",
+        "attenuation_distance": 18
+      }
+    ]
+  },
+  "spirit.dark.chime": {
+    "subtitle": "subtitles.nusmp.spirit.dark.chime",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/chime_1",
+        "attenuation_distance": 24
+      },
+      {
+        "name": "nusmp:spirit/dark/chime_2",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "spirit.dark.flutter": {
+    "subtitle": "subtitles.nusmp.spirit.dark.flutter",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/flutter_1",
+        "attenuation_distance": 20
+      },
+      {
+        "name": "nusmp:spirit/dark/flutter_2",
+        "attenuation_distance": 20
+      },
+      {
+        "name": "nusmp:spirit/dark/flutter_3",
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "spirit.dark.step": {
+    "subtitle": "subtitles.nusmp.spirit.dark.step",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/step_1",
+        "attenuation_distance": 24
+      },
+      {
+        "name": "nusmp:spirit/dark/step_2",
+        "attenuation_distance": 24
+      },
+      {
+        "name": "nusmp:spirit/dark/step_3",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "spirit.dark.arrive": {
+    "subtitle": "subtitles.nusmp.spirit.dark.arrive",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/arrive_1",
+        "attenuation_distance": 24
+      },
+      {
+        "name": "nusmp:spirit/dark/arrive_2",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "spirit.dark.strike": {
+    "subtitle": "subtitles.nusmp.spirit.dark.strike",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/strike_1",
+        "attenuation_distance": 16
+      },
+      {
+        "name": "nusmp:spirit/dark/strike_2",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "spirit.dark.unlink": {
+    "subtitle": "subtitles.nusmp.spirit.dark.unlink",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/unlink_1",
+        "attenuation_distance": 20
+      },
+      {
+        "name": "nusmp:spirit/dark/unlink_2",
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "spirit.dark.powered": {
+    "subtitle": "subtitles.nusmp.spirit.dark.powered",
+    "sounds": [
+      {
+        "name": "nusmp:spirit/dark/powered_1",
+        "attenuation_distance": 32
+      },
+      {
+        "name": "nusmp:spirit/dark/powered_2",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "spirit.dark.voice.link_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.link_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.link_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.link_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/link_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.unlink_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/unlink_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.unlink_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/unlink_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.unlink_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/unlink_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.cast_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/cast_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.cast_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/cast_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.cast_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/cast_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.cast_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/cast_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.cast_5": { "sounds": [ { "name": "nusmp:spirit/dark/voice/cast_5", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.step_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/step_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.step_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/step_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.step_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/step_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.step_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/step_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.hurt_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/hurt_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.hurt_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/hurt_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.hurt_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/hurt_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.hurt_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/hurt_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.feast_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.feast_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.feast_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.feast_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_4", "stream": false, "attenuation_distance": 32 } ] },
   "mob.goblin.ambient": {
     "subtitle": "subtitles.nusmp.mob.goblin.ambient",
     "sounds": [

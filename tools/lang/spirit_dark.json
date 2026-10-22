@@ -1,0 +1,21 @@
+{
+  "key.nusmp.spirit_dark_link": "Spirit of Darkness (link or unlink the companion)",
+  "key.nusmp.spirit_dark_step": "Spirit of Darkness: Shadow Step",
+  "key.nusmp.spirit_dark_power": "Spirit of Darkness: call or dismiss the demon form",
+  "nusmp.spirit_dark.linked": "The Spirit of Darkness settles on your shoulder.",
+  "nusmp.spirit_dark.unlinked": "The Spirit of Darkness melts back into the shadows.",
+  "nusmp.spirit_dark.full": "The Spirit of Darkness cannot answer: too many spirits are out.",
+  "nusmp.spirit_dark.needlink": "Link the Spirit of Darkness first.",
+  "nusmp.spirit_dark.recharging": "The demon is not ready to come again yet.",
+  "nusmp.spirit_dark.steprecharging": "The shadows are still settling.",
+  "nusmp.spirit_dark.nostep": "No shadow to step into that way.",
+  "nusmp.spirit_dark.poweredfull": "Too many demons are out.",
+  "subtitles.nusmp.spirit.dark.whisper": "Shadows whisper",
+  "subtitles.nusmp.spirit.dark.chime": "Dark chime rings",
+  "subtitles.nusmp.spirit.dark.flutter": "Dark wings flutter",
+  "subtitles.nusmp.spirit.dark.step": "Shadow Step",
+  "subtitles.nusmp.spirit.dark.arrive": "Shadow arrives",
+  "subtitles.nusmp.spirit.dark.strike": "Life siphoned",
+  "subtitles.nusmp.spirit.dark.unlink": "Spirit departs",
+  "subtitles.nusmp.spirit.dark.powered": "Demon called"
+}

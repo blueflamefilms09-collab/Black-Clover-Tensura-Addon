@@ -94,5 +94,7 @@ final class PropPainterRegistry {
         UndinePropPainter.register();        // Undine: the companion and the full form
         SpiritLightPropPainter.register();   // Spirit of Light: the lion cub, the seraph, the beam, the pulse ring
 
+        SpiritDarkPropPainter.register();    // Spirit of Darkness: the companion and the powered form
+
     }
 }
