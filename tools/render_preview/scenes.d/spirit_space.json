@@ -1,0 +1,1325 @@
+{
+ "_comment": "Spirit of Space (docs/magic/spirit_space.md): the orb, the wisp-dragon and the portal ring, drawn by the real client.prop.SpiritSpaceDraw (example SpiritSpaceProp; param = form * 100000 + lod * 10000 + mood * 100 + expression * 10 + place; form 0 orb, 1 wisp, 2 portal; the age of a scene is the ticks since the pose began; place 1 = centred on the origin).",
+ "spirit_space_orb": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "3/4 from above",
+    "yaw": 40,
+    "pitch": 28,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": -8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.7
+   }
+  ]
+ },
+ "spirit_space_orb_player": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   520,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 14,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "spirit_space_orb_lod1": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "lod 1 front",
+    "yaw": 20,
+    "pitch": 10,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.7
+   }
+  ]
+ },
+ "spirit_space_orb_lod2": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 20001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "lod 2 front",
+    "yaw": 20,
+    "pitch": 10,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.7
+   }
+  ]
+ },
+ "spirit_space_wisp": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   640,
+   480
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "3/4 front",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.2,
+     0.4
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "head close",
+    "yaw": 62,
+    "pitch": 10,
+    "target": [
+     0,
+     0.2,
+     1.55
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 14,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "spirit_space_wisp_player": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100000,
+  "figure": true,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   640,
+   520
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     2.0,
+     0
+    ],
+    "dist": 7.0
+   },
+   {
+    "name": "3/4 front",
+    "yaw": 40,
+    "pitch": 14,
+    "target": [
+     0,
+     2.0,
+     0
+    ],
+    "dist": 7.0
+   }
+  ]
+ },
+ "spirit_space_wisp_lod1": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 110001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   560,
+   400
+  ],
+  "views": [
+   {
+    "name": "lod 1 side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_wisp_lod2": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 120001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   560,
+   400
+  ],
+  "views": [
+   {
+    "name": "lod 2 side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_portal": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   440,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 10,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.4
+   }
+  ]
+ },
+ "spirit_space_portal_player": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200000,
+  "figure": true,
+  "floor": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   560,
+   480
+  ],
+  "views": [
+   {
+    "name": "player steps through",
+    "yaw": 24,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     1.2
+    ],
+    "dist": 5.8
+   }
+  ]
+ },
+ "spirit_space_pose_orb_calm": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_curious": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 111,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_flare": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 211,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_portal_pulse": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 311,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_snap": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 421,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_squeeze": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 511,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_hurt": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 621,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_orb_sleepy": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 731,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_wisp_coil": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100811,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6,
+   14,
+   24
+  ],
+  "tile": [
+   480,
+   380
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.5,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_pose_orb_coil": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 811,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_wisp_ascend": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100911,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6,
+   14,
+   24
+  ],
+  "tile": [
+   480,
+   380
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.5,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_pose_orb_ascend": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 911,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_wisp_roar": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 101021,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6,
+   14,
+   24
+  ],
+  "tile": [
+   480,
+   380
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.5,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_pose_orb_roar": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1021,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_pose_wisp_farewell": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 101131,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6,
+   14,
+   24
+  ],
+  "tile": [
+   480,
+   380
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.5,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_space_pose_orb_farewell": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1131,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 8,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_orb_calm": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_wisp_calm": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100001,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "head close",
+    "yaw": 62,
+    "pitch": 10,
+    "target": [
+     0,
+     0.2,
+     1.55
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_orb_excited": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 11,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_wisp_excited": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100011,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "head close",
+    "yaw": 62,
+    "pitch": 10,
+    "target": [
+     0,
+     0.2,
+     1.55
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_orb_angry": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 21,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_wisp_angry": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100021,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "head close",
+    "yaw": 62,
+    "pitch": 10,
+    "target": [
+     0,
+     0.2,
+     1.55
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_orb_sleepy": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 731,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 12,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "spirit_space_expr_wisp_sleepy": {
+  "kind": "prop",
+  "example": "SpiritSpaceProp",
+  "realFiles": [
+   "client/prop/SpiritSpaceDraw.java",
+   "spiritspace/SpiritSpaceLod.java",
+   "spiritspace/SpiritSpaceMesh.java",
+   "spiritspace/SpiritSpaceRules.java",
+   "spiritspace/SpaceMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100731,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "head close",
+    "yaw": 62,
+    "pitch": 10,
+    "target": [
+     0,
+     0.2,
+     1.55
+    ],
+    "dist": 1.9
+   }
+  ]
+ }
+}

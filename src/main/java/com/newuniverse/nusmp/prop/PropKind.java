@@ -170,5 +170,8 @@ public enum PropKind {
     FIRECAST_1,
     FIRECAST_2,
     /** The Sylph (sylph.SylphProps): Yuno's wind Spirit Lord as a small winged girl beside the caster (variant 0) and her powered form above and behind (variant 1); the variant is the low four bits of the param (painter client.prop.SylphPropPainter) */
-    SYLPH_1
+    SYLPH_1,
+    /** Spirit of Space (spiritspace.SpiritSpaceProps): SPIRITSPACE_1 = the spirit, an orb that is a tear in reality (variant 0) or its powered wisp-dragon (1); SPIRITSPACE_2 = one ring of a spatial portal (variant 2 entrance, 3 exit); the variant is the low four bits of the param (painter client.prop.SpiritSpacePropPainter) */
+    SPIRITSPACE_1,
+    SPIRITSPACE_2
 }
