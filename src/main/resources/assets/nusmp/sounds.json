@@ -1807,6 +1807,24 @@
       { "name": "nusmp:voice/undine/undine_cast_3", "stream": false }
     ]
   },
+  "voice.undine_cast_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_4", "stream": false }
+    ]
+  },
+  "voice.undine_cast_5": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_5",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_5", "stream": false }
+    ]
+  },
+  "voice.undine_died_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_died_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_died_1", "stream": false }
+    ]
+  },
   "undine.ambient": {
     "subtitle": "subtitles.nusmp.undine.ambient",
     "sounds": [

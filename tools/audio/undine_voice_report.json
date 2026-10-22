@@ -49,11 +49,24 @@
    "seconds": 2.07,
    "bytes": 20045,
    "text": "Rise, and run."
+  },
+  "undine_cast_4": {
+   "seconds": 1.68,
+   "bytes": 17375,
+   "text": "Tides, obey."
+  },
+  "undine_cast_5": {
+   "seconds": 1.49,
+   "bytes": 15728,
+   "text": "Go, little wave."
+  },
+  "undine_died_1": {
+   "seconds": 2.61,
+   "bytes": 24990,
+   "text": "No... come back to the water..."
   }
  },
  "missing": [
-  "undine_cast_4",
-  "undine_cast_5",
   "undine_cast_6",
   "undine_cast_7",
   "undine_cast_8",
@@ -80,9 +93,8 @@
   "undine_win_2",
   "undine_win_3",
   "undine_win_4",
-  "undine_died_1",
   "undine_died_2"
  ],
  "rejected": [],
- "bytes": 233932
+ "bytes": 292025
 }

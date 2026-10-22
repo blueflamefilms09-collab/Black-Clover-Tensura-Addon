@@ -5,7 +5,7 @@ usage:  ELEVENLABS_API_KEY=<your key> python3 tools/audio/undine_voice_generate.
 then:   python3 tools/audio/undine_voice_convert.py <raw_dir>        (converts, registers, rewrites UndineLines.java and sounds.json)
 
 Reads tools/audio/undine_lines.json (id, group, library voice id, model, prompt with its audio tags). For every line without <raw_dir>/<id>.mp3 it asks for one take (about 35 to 50 credits each) and saves it;
-a line that already has a take is never asked for again, so the script can be run again and again until nothing is missing (a 429 'rate limited' answer is waited out and retried: nothing is charged for a
+a line that already has a take, or already has its converted file in the repository, is never asked for again (--force asks for all), so the script can be run again and again until nothing is missing (a 429 'rate limited' answer is waited out and retried: nothing is charged for a
 refused request). The voice is the library voice named in the manifest ("Julie I"), never a clone of anyone; its licence terms are the creator's, shown on the voice's page in the ElevenLabs library.
 Only the standard library is used."""
 import json, os, sys, time, urllib.error, urllib.request
@@ -43,7 +43,9 @@ def main():
     raw = sys.argv[1]
     os.makedirs(raw, exist_ok=True)
     lines = json.load(open(os.path.join(HERE, "undine_lines.json"), encoding="utf-8"))
-    todo = [ln for ln in lines if not os.path.exists(os.path.join(raw, ln["id"] + ".mp3"))]
+    done_dir = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp", "sounds", "voice", "undine")
+    again = "--force" in sys.argv
+    todo = [ln for ln in lines if again or not (os.path.exists(os.path.join(raw, ln["id"] + ".mp3")) or os.path.exists(os.path.join(done_dir, ln["id"] + ".ogg")))]
     print("%d of %d lines still need a take" % (len(todo), len(lines)))
     failed = []
     for ln in todo:

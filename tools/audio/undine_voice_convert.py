@@ -11,7 +11,7 @@ Then it keeps four things in step, so a line is registered if and only if its fi
   * assets/nusmp/sounds.json gets 'voice.<id>' (appended as text, the rest of the file is not reformatted; an existing entry is kept) with a subtitle key
   * tools/lang/undine.json gets 'subtitles.nusmp.voice.<id>' = the spoken text (the owner merges the fragment into en_us.json)
   * src/main/java/com/newuniverse/nusmp/undine/UndineLines.java: the REGISTERED array between its two marker comments is rewritten
-A line with no take is simply not registered (its moment falls back to the sung hum cue); the raw takes stay outside the repository. Needs ffmpeg and ffprobe on the path."""
+A line with no take and no file is simply not registered (its moment falls back to the sung hum cue); a file made by an earlier run stays registered even when its take is not in <raw_dir>; the raw takes stay outside the repository. Needs ffmpeg and ffprobe on the path."""
 import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -55,9 +55,10 @@ def main():
         src = os.path.join(raw, ln["id"] + ".mp3")
         dst = os.path.join(OUT, ln["id"] + ".ogg")
         if not os.path.exists(src):
-            if os.path.exists(dst):
-                os.remove(dst)                                                           # a file without a take is not kept: registered = has a file made by this script
-            missing.append(ln["id"])
+            if os.path.exists(dst):                                                      # no take here, but the file was made by an earlier run: it stays (nothing is ever deleted) and stays registered
+                report[ln["id"]] = {"seconds": round(seconds(dst), 2), "bytes": os.path.getsize(dst), "text": spoken_text(ln["prompt"])}
+            else:
+                missing.append(ln["id"])
             continue
         convert(src, dst)
         sec = seconds(dst)

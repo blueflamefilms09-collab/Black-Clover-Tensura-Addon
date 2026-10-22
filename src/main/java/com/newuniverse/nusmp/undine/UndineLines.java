@@ -37,7 +37,7 @@ public final class UndineLines {
     }
 
     // BEGIN REGISTERED (rewritten by tools/audio/undine_voice_convert.py)
-    private static final String[] REGISTERED = {"undine_link_1", "undine_link_2", "undine_link_3", "undine_link_4", "undine_farewell_1", "undine_farewell_2", "undine_farewell_3", "undine_cast_1", "undine_cast_2", "undine_cast_3"};
+    private static final String[] REGISTERED = {"undine_link_1", "undine_link_2", "undine_link_3", "undine_link_4", "undine_farewell_1", "undine_farewell_2", "undine_farewell_3", "undine_cast_1", "undine_cast_2", "undine_cast_3", "undine_cast_4", "undine_cast_5", "undine_died_1"};
     // END REGISTERED
 
     private static final List<String> IDS = Collections.unmodifiableList(java.util.Arrays.asList(REGISTERED));
