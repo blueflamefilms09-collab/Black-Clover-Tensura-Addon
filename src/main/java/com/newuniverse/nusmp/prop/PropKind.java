@@ -168,5 +168,8 @@ public enum PropKind {
     SCALE_BALANCE,
     /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
     FIRECAST_1,
-    FIRECAST_2
+    FIRECAST_2,
+    /** Spirit of Light (spiritlight.SpiritLightProps): SPIRIT_LIGHT_1 = the lion cub (variant 0) and the seraph (1); SPIRIT_LIGHT_2 = the piercing light beam (2) and the Glowing pulse ring (3); the variant is the low four bits of the param (painter client.prop.SpiritLightPropPainter) */
+    SPIRIT_LIGHT_1,
+    SPIRIT_LIGHT_2
 }
