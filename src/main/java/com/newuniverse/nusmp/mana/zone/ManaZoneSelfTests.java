@@ -60,7 +60,8 @@ public final class ManaZoneSelfTests {
             else if (id.equals(TrueMagic.ID)) truth = i;
         }
         if (zone < 0 || volley < 0 || space < 0 || truth < 0) return Result.fail("a grimoire misses a Mana Zone page (zone " + zone + ", volley " + volley + ", space " + space + ", true magic " + truth + ")");
-        if (volley != pages.size() - 3 || space != pages.size() - 2 || truth != pages.size() - 1) return Result.fail("the new pages are not the last three (" + volley + ", " + space + ", " + truth + " of " + pages.size() + ")");
+        int spirit = pages.size() - com.newuniverse.nusmp.spiritcontrol.PageGate.pageIds().size();      // 3.0.0: the six spirit pages of the control plane are appended after the Mana Zone's three
+        if (space != volley + 1 || truth != space + 1 || truth != spirit - 1) return Result.fail("the new pages are not the three right before the spirit pages (" + volley + ", " + space + ", " + truth + " of " + pages.size() + ")");
         for (int m : new int[]{zone, volley, space, truth})
             if (book.usable(null, p, m)) return Result.fail("page " + pages.get(m).id() + " is usable for a player who fails the gate");
         for (String id : new String[]{GrimoireBook.ZONE_ID, ManaZoneActions.VOLLEY_ID, ManaZoneActions.SPACE_ID, TrueMagic.ID})

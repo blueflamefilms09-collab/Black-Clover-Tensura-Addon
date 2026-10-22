@@ -94,6 +94,7 @@ public class NUSMP {
         com.newuniverse.nusmp.spiritlight.SpiritLightBoot.init(modEventBus, modContainer);                                  // Spirit of Light: nusmp-spiritlight-server.toml (magic.spiritLight), the key packet, its own sounds, the events, self-test magic.spirit_light
 
         com.newuniverse.nusmp.spiritdark.SpiritDarkBoot.init(modEventBus, modContainer);                                  // Spirit of Darkness: nusmp-spiritdark-server.toml (magic.spiritDark), the sounds, the key packet, the events, self-test magic.spirit_dark
+        com.newuniverse.nusmp.spiritcontrol.SpiritControlBoot.init(modEventBus, modContainer);                           // 3.0.0: the spirit control plane (grimoire spirit pages, /multiverse spirit, combat mode), nusmp-spirit-control-server.toml (magic.spiritControl), self-tests magic.spirit_control and magic.spirit_combat
 
         com.newuniverse.nusmp.fairytail.FairyTailSystem.init(modEventBus);                                                 // Fairy Tail skills: Fire Dragon Slayer -> King, Ice-Make, Sky/Lightning/Iron Dragon Slayer, Crash, Water Magic, the skill book
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
@@ -177,16 +178,10 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
-            com.newuniverse.nusmp.client.undine.UndineClient.init(modEventBus);                                               // Undine: the link key
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
-            com.newuniverse.nusmp.client.gnome.GnomeClient.init(modEventBus);      // the Gnome key
 
-            com.newuniverse.nusmp.client.firecast.FireCastClient.init(modEventBus);                                           // fire casting: the Salamander key
-            com.newuniverse.nusmp.client.sylph.SylphClient.init(modEventBus);                                                 // the Sylph key
-            com.newuniverse.nusmp.client.spiritspace.SpiritSpaceClient.init(modEventBus);                                     // Spirit of Space: the link, ability and waypoint keys
-            com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);                                     // Spirit of Light: the link and command keys
+            com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
-            com.newuniverse.nusmp.client.spiritdark.SpiritDarkClient.init(modEventBus);                                       // Spirit of Darkness: the link, Shadow Step and powered form keys
 
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);

@@ -81,7 +81,7 @@ public final class SpiritDark {
     }
 
     // ================================================================================================ the key
-    /** The key packet's work (validated by {@link SpiritDarkNet}): one of the three actions, rate limited per player. */
+    /** The server entry of the spirit's three actions (until 3.0.0 the key packet's work; now called by the spirit control plane, {@code SpiritDarkControl}): validated, rate limited per player. */
     public static void onKey(ServerPlayer p, int action) {
         if (!SpiritDarkRules.validAction(action)) return;
         State s = state(p.getUUID());
