@@ -51,7 +51,7 @@
     "senses": true,
     "absorb": 0.012
    },
-   "new_pages": ["leo_parma", "salamanders_breath", "exploding_buckshot", "grand_slam", "soul_chain_deathmatch"],
+   "new_pages": ["leo_parma", "salamanders_breath", "exploding_buckshot", "grand_slam", "soul_chain_deathmatch", "mereoleona_brachium_barrage", "mereoleona_purgatory", "mereoleona_purgatory_abyss", "mereoleona_hellfire_incarnate", "leopold_deep_spiral_flame", "leopold_crimson_eruption"],
    "canon": "Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."
   },
   "EXPLOSION": {
@@ -150,6 +150,7 @@
   },
   "STORM": {
    "kind": "NONE",
+   "new_pages": ["kaiser_area_helix"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "EARTH": {
@@ -182,6 +183,7 @@
   },
   "PLANT": {
    "kind": "NONE",
+   "new_pages": ["mimosa_magic_flower_cannon", "mimosa_dream_healing_cradle", "mimosa_princess_healing_robe", "mimosa_flower_princess_utopia"],
    "legacy_auras": [
     "PLANT"
    ],
@@ -194,7 +196,7 @@
   },
   "LIGHT": {
    "kind": "NONE",
-   "new_pages": ["bright_judgment_whip", "heaven_splitting_flash", "arrows_of_judgment", "avior_lamp", "absolute_monarch"],
+   "new_pages": ["bright_judgment_whip", "heaven_splitting_flash", "arrows_of_judgment", "avior_lamp", "absolute_monarch", "karna_crescent_cut", "karna_bewitching_moonlight", "karna_full_moon_shell", "karna_crescent_cut_full_moon", "karna_lunatic_crisis"],
    "canon": "Light Magic is rays, swords and healing (repo wiki: Healing Ray of Light, Light Sword of Judgment). The Light spirit form exists only as a spirit lord summon in this mod; a future Light Spirit Dive would be a FORM (follow-up), there is no worn armour to put on today."
   },
   "LIGHTNING": {
@@ -261,7 +263,7 @@
     "SPATIAL"
    ],
    "shimmer": "SPATIAL_FX2",
-   "new_pages": ["fallen_angel_wingbeat"],
+   "new_pages": ["fallen_angel_wingbeat", "langris_archangel_crash", "langris_archangel_annihilation", "langris_spatial_auto_guard"],
    "canon": "Spatial Magic opens gates and cuts space; nothing is worn. Dimensional Armour (Gate Garb) keeps its blow-turning effect but is no render layer."
   },
   "MIRROR": {
@@ -356,6 +358,7 @@
   },
   "STEEL": {
    "kind": "NONE",
+   "new_pages": ["klaus_piercing_lance", "klaus_castle_wall", "klaus_spiral_lance", "klaus_thunder_arrow"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "THREAD": {
@@ -401,6 +404,7 @@
   },
   "WORLD_TREE": {
    "kind": "NONE",
+   "new_pages": ["william_magic_warding_ash", "william_great_tree_mistilteinn", "william_mistilteinn_blade"],
    "canon": "World Tree Magic grows great trees (William Vangeance); nothing is worn."
   },
   "DICE": {

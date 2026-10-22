@@ -26,7 +26,7 @@ public enum CanonBook {
     MAGNA("Magna Swing", "THREE_LEAF", "FLAME", 0xA02010, 0x302020, 0, null),
     ZORA("Zora Ideale", "THREE_LEAF", "ASH", 0xC8C8C8, 0x707070, 0, null),                    // Ash Magic (0.34)
     KLAUS("Klaus Lunettes", "THREE_LEAF", "STEEL", 0x9AB0C0, 0xD8E0E8, 0, null),
-    KIRSCH("Kirsch Vermillion", "THREE_LEAF", "PLANT", 0xE88AB8, 0xF8D0E0, 0, null),            // Cherry Blossom Magic
+    KIRSCH("Kirsch Vermillion", "THREE_LEAF", "CHERRY_BLOSSOM", 0xE88AB8, 0xF8D0E0, 0, null),            // Cherry Blossom Magic (builder gold: was PLANT, the series' magic is Cherry Blossom and the book exists)
     KARNA("Karna Freese", "THREE_LEAF", "LIGHT", 0x2A3E8E, 0xC0303A, 0, BookMotif.STRAPS),                 // Moonlight Magic
     WILLIAM("William Vangeance", "THREE_LEAF", "WORLD_TREE", 0xE0D0A0, 0xC8A050, 0, null),     // World Tree Magic (0.45; was PLANT)
     LANGRIS("Langris Vaude", "THREE_LEAF", "SPATIAL", 0x5AA8B8, 0xC8E0E8, 0, null),

@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "canon": "langris",
+  "magic": "SPATIAL",
+  "book": "book_spatial",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "domination",
+      "name": "Spatial Magic: (the book's first page)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Spatial book; shown because the engine never hides mode 0. Not a named Langris spell."
+    },
+    {
+      "page": "langris_archangel_crash",
+      "name": "Spatial Magic: Archangel's Crash",
+      "ja": "大天使の撃墜",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "His main spell: it removes everything it touches, together with the space it is in."
+    },
+    {
+      "page": "langris_archangel_annihilation",
+      "name": "Spatial Magic: Archangel's Annihilation",
+      "ja": "大天使の撃滅",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "langris_archangel_crash",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "Named by the Japanese summary as the greater attack; no description was found, so the effect (three strokes of space) is inferred."
+    },
+    {
+      "page": "langris_spatial_auto_guard",
+      "name": "Spatial Magic: Auto-Guard",
+      "ja": "空間魔法のオートガード",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "langris_archangel_annihilation"
+          },
+          {
+            "type": "mastery",
+            "min": 0.65
+          }
+        ]
+      },
+      "note": "Learned after the Elf Reincarnation experience, according to the Japanese summary: spatial magic that guards him by itself."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Fallen Angel's Descent",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A search summary of the Baidu wiki calls his ultimate this; it may be a different translation of the Archangel spells, so no page."
+    }
+  ],
+  "notes": "The Spatial book's gate and portal pages belong to Finral and the other Spatial users. Langris's Archangel spells are an attack of removal, not a portal."
+}

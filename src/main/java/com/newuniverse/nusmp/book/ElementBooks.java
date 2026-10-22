@@ -70,12 +70,12 @@ public final class ElementBooks {
     }
 
     public static GrimoireBook storm() {
-        return new ElementBook(MagicType.STORM, 0xFF96D7FF, TensuraDamageTypes.LIGHTNING_ELEMENTAL, List.of(
+        return new ElementBook(MagicType.STORM, 0xFF96D7FF, TensuraDamageTypes.LIGHTNING_ELEMENTAL, CharacterPagesGold.storm(List.of(      // character spell sets (builder gold): Kaiser's Area Helix is appended
                 starter("storm_lance", "Storm Lance", shot(Shot.LIGHTNING_LANCE, 9, 2.4f, 0.4f, 0)),
                 mid("tempest_ring", "Tempest Ring", nova(6, 5, false, VfxShape.WIND_RING, all(knock(1.4), lift(0.4)))),
                 signature("eye_of_the_storm", "Eye of the Storm", field(4, 5, 100, 10, false, VfxShape.WIND_RING, lift(0.3))),
                 zone("thunder_sphere", "Thunder Sphere", shot(Shot.THUNDER_SPHERE, 12, 1.2f, 0.6f, 0)),
-                zone("vortex_shield", "Vortex Magic: Vortex Shield", WikiSpells::vortexShield).withCooldown(900)));  // 0.34: Kaiser Granvorka
+                zone("vortex_shield", "Vortex Magic: Vortex Shield", WikiSpells::vortexShield).withCooldown(900))));  // 0.34: Kaiser Granvorka
     }
 
     public static GrimoireBook sand() {

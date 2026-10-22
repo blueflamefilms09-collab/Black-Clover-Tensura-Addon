@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "canon": "nozel",
+  "magic": "MERCURY",
+  "book": "book_mercury",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "silver_blade",
+      "name": "Mercury Magic: Silver Blade",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Listed on the wiki; mode 0 of the book."
+    },
+    {
+      "page": "silver_bullet",
+      "name": "Mercury Magic: Silver Bullet",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "A mercury shot (wiki list)."
+    },
+    {
+      "page": "silver_spear",
+      "name": "Mercury Magic: Silver Spear",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.16
+      },
+      "note": "A spear of mercury launched at a target; several can be made and fired together; extreme heat melts it."
+    },
+    {
+      "page": "mercury_rain",
+      "name": "Mercury Magic: Silver Rain",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.28
+      },
+      "note": "Countless droplets of mercury fall from the sky; their density lets them punch through obstacles; good against groups."
+    },
+    {
+      "page": "silver_eagle",
+      "name": "Mercury Magic: Silver Eagle",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "silver_spear"
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "Listed as a supplementary spell on the wiki; the giant eagle of liquid silver."
+    },
+    {
+      "page": "mercury_shield",
+      "name": "Mercury Magic: Silver Guardian",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.52
+      },
+      "note": "With an open grimoire, mercury becomes a defensive coating over the whole body; poisonous to him, so it harms him while it runs. The page keeps its old id mercury_shield."
+    },
+    {
+      "page": "silver_shining_regal_spear",
+      "name": "Mercury Magic: Silver Shining Regal Spear",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "silver_spear",
+            "count": 3
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.68
+              }
+            ]
+          }
+        ]
+      },
+      "note": "A long-range shot of mercury from the palm; the strongest after the Star of Execution."
+    },
+    {
+      "page": "silver_star_of_execution",
+      "name": "Mercury Creation Magic: Silver Star of Execution",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "silver_shining_regal_spear"
+          },
+          {
+            "type": "mastery",
+            "min": 0.85
+          }
+        ]
+      },
+      "note": "Mercury strands and drops are spread over an area and gathered into a giant cage whose bars switch between spears and shields. His signature."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Valkyrie Armor / Silver Sunset",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Valkyrie Armor is another builder's; Silver Sunset was not found in any summary."
+    }
+  ],
+  "notes": "All eight pages of the Mercury book are Nozel's in the sources, so his grimoire shows the whole book; what the set adds is the ORDER he gets them in and the signature marking. The order is the mod's design (no source gave the episodes); the Mana Zone alternatives follow the Spade Kingdom arc where he uses it. No new page: the book already had all of his spells, and the Valkyrie Armour belongs to another builder."
+}

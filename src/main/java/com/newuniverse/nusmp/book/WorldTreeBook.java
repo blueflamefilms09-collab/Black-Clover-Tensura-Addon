@@ -48,7 +48,8 @@ public class WorldTreeBook extends GrimoireBook {
             BookPage.signature("budding_of_yggdrasil", "Budding of Yggdrasil", WorldTreeBook::yggdrasil).withCooldown(1200)), com.newuniverse.nusmp.book.ext.WorldTreeExt.pages());
 
     public WorldTreeBook() { super(MagicType.WORLD_TREE, 0xFF3CE08A); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withGold;      // character spell sets (builder gold): the pages that belong to William are appended after the shared pages (book.CharacterPagesGold)
+    @Override protected List<BookPage> familyPages() { if (withGold == null) withGold = CharacterPagesGold.worldTree(pages); return withGold; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.EARTH_ELEMENTAL; }
 
     // ---------------------------------------------------------------- real trees (0.45: the owner asked for real Minecraft trees)

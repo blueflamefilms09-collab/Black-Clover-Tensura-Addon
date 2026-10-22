@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "canon": "lemiel",
+  "magic": "LIGHT",
+  "book": "book_light",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "avior_lamp",
+      "name": "Light Magic: Lamp of Avior",
+      "ja": "アヴィオールの灯",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "The user surrounds himself with light and launches it: Lumiere's (Lemiel's) spell. The existing page."
+    },
+    {
+      "page": "light_speed",
+      "name": "Light Magic: (travelling on a beam of light)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.25
+      },
+      "note": "The wiki says he shapes light into a large arrow that becomes a beam of light along which he flies. The mod's Light Speed page is the nearest existing page; it is not a wiki-named spell."
+    },
+    {
+      "page": "lamp_of_avior",
+      "name": "Light Magic: Lamp of Avior Gloria",
+      "ja": "アヴィオールの灯・栄光",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "avior_lamp"
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.6
+              }
+            ]
+          }
+        ]
+      },
+      "note": "The Mana Zone version of the Lamp of Avior (Multiversal Omnipedia via the search summary). The existing page."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Light swords and explosive bursts of light",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Described but not named by the wiki; the Light Sword of Judgment page belongs to Patolli, so no page."
+    },
+    {
+      "name": "Demon-Dweller Sword: Protecting Light",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A union spell with Licht's sword magic; needs the Anti-Magic sword, not built here."
+    }
+  ],
+  "notes": "Mode 0 of the Light book (Light Sword of Judgment) cannot be hidden, so it stays in his grimoire although it is Patolli's spell. He has no new page: all three of his spells already exist."
+}

@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "canon": "klaus",
+  "magic": "STEEL",
+  "book": "book_steel",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "steel_shot",
+      "name": "Steel Magic: (the book's first page)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Steel book; shown because the engine never hides mode 0. Not a named wiki spell."
+    },
+    {
+      "page": "klaus_piercing_lance",
+      "name": "Steel Magic: Blazing Piercing Lance",
+      "ja": "施貫の烈槍",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "A great lance of steel launched at the target (the Japanese article names it his attack lance)."
+    },
+    {
+      "page": "klaus_castle_wall",
+      "name": "Steel Magic: Steel Castle's Armored Wall",
+      "ja": "鋼城の鎧壁",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "A wall of steel raised from the ground; his defensive spell."
+    },
+    {
+      "page": "klaus_spiral_lance",
+      "name": "Steel Magic: Violent Spiral Lance",
+      "ja": "旋貫の激槍",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "klaus_piercing_lance"
+          },
+          {
+            "type": "mastery",
+            "min": 0.38
+          }
+        ]
+      },
+      "note": "A spiralling lance that drills through its target (the English wiki spelling varies: Blazing Spiral Lance, Fierce Spiral Lance)."
+    },
+    {
+      "page": "klaus_thunder_arrow",
+      "name": "Thunder Arrow (union with Luck Voltia's lightning and Puli's wing magic)",
+      "ja": "神鳴の矢",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "klaus_spiral_lance",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "The English Steel Magic page lists it as a union spell; the Japanese article puts it in the Royal Knights Selection Exam, a super-fast attack that is hard to steer after it is shot."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Steel chariot, steel coffin",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Named by one summary only; no description, no page."
+    },
+    {
+      "name": "Restraining Magic with steel",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Named by one summary only; no page."
+    }
+  ],
+  "notes": "The Steel book's Returning Lance, Steel Cannon, Steel Spikes and Iron Maiden were not found for Klaus and stay in the basic Steel book. Mode 0 (steel_shot) cannot be hidden."
+}

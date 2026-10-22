@@ -27,7 +27,8 @@ public final class CharacterSetRegistry {
     /** The characters that have a file in data/nusmp/character_spells. A content builder appends the id of a new character here (one line). */
     public static final List<String> SHIPPED = List.of("yuno", "noelle", "fuegoleon", "asta", "yami",
             "charlotte", "jack", "rill", "dorothy", "zenon", "vanica", "dante", "lucius", "rades", "gadjah", "mars", "kahono", "kiato",  // the "rest" builder: docs/magic/character_spells_rest.md
-            "vanessa", "charmy", "luck", "magna", "gauche", "gordon", "zora", "grey", "henry", "finral", "nacht", "secre");      // + the Black Bulls (docs/magic/character_spells_bulls.md)
+            "vanessa", "charmy", "luck", "magna", "gauche", "gordon", "zora", "grey", "henry", "finral", "nacht", "secre",
+            "mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser", "letoile");      // + the Black Bulls (docs/magic/character_spells_bulls.md)
     public static final String RESOURCE_DIR = "/data/nusmp/character_spells/";
 
     private final Map<String, CharacterSet> byCanon = new LinkedHashMap<>();
