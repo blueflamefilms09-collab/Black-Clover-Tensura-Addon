@@ -43,6 +43,13 @@ import java.util.Map;
  * own geo model anchored on the model part it was built for, forged in / shattered out by {@link EquipAnimation}; 3 their glow maps; 4 an additive haze; 5 extras: a ring on the ground and
  * a small, capped stream of motes flowing INTO the body (the passive absorption of ambient mana: at most {@link #MOTES} sprites and {@link #BITS} rising bits, none beyond 24 blocks).
  * The pieces come from tools/gen_spirit_dive_geo.py (and tools/gen_water_aura_geo.py for the Valkyrie set); the lists per element and stage are book.SpiritDivePieces.
+ *
+ * <p><b>The remade look (Spirit Dive remake, the default).</b> The same layer, a lighter and more elemental dive in two tiers ({@link SpiritDiveTier}): the STANDARD tier for every mage, and the CHARACTER
+ * tier (Yuno on Wind, Fuegoleon on Fire, Noelle on Water: the server puts the grade in the style number, {@link SpiritDivePieces#grade}) with the character's own pieces and effects ({@link SpiritDiveFx}:
+ * columns of light, helices, a sigil on the ground and behind the back, orbiting rune rings, a shockwave and a pillar of light on entry, glowing eyes and hands) in the colours of the character. Every
+ * count comes from {@link SpiritDiveTier#budget}; the level of detail follows the distance ({@link SpiritDiveTier#lod}); at most {@link SpiritDiveTier#CHARACTER_PER_FRAME} dives a frame draw the character
+ * tier ({@link SpiritDiveFrame}). The client option {@code spiritDive.classicLook} ({@link SpiritDiveLook}) brings back the 1.99 look above, unchanged. Fuegoleon's molten arm is not a piece of the dive: the server keeps
+ * his arm lease alive during the Fire dive and {@link FuegoleonArmAura} draws it, burning highest then.</p>
  */
 public final class SpiritDiveAura {
     private SpiritDiveAura() {}
@@ -140,7 +147,7 @@ public final class SpiritDiveAura {
         boolean saint = SpiritDivePieces.saint(el, st);
         if (lod != Lod.FAR) {
             shell(c, el, st, pulse, false, true, false);
-            drawPieces(c, el, st, use, true, lod, SpiritDiveTier.glow(el, use, saint), (0.75f * pulse + 0.35f) * (1f + 0.4f * flare), tintRgb(el, st));
+            drawPieces(c, el, st, use, true, lod, SpiritDiveTier.glow(el, use, saint), (0.75f * pulse + 0.35f) * (el == Element.FIRE ? 0.75f : 1f) * (1f + 0.4f * flare), tintRgb(el, st));
             shell(c, el, st, pulse, true, true, lod == Lod.FULL);
         }
         SpiritDiveFx.paint(c, el, st, use, lod, character, f, pulse, self1p, flare);
@@ -248,7 +255,6 @@ public final class SpiritDiveAura {
             boolean already = remade ? SpiritDivePieces.alreadyOn(el, st, grade, id) : SpiritDivePieces.alreadyOn(el, st, id);
             float a = EquipAnimation.assembled(already ? 1e4f : c.t(), c.left(), p.delay());
             if (a == 0f) continue;
-            if (remade && p.anchor() == Anchor.ARM_R && id.endsWith("flame_arm_r")) SpiritDiveFrame.markFlameArm(c.player().getId());        // the arm painter adds flames only
             ModelPart part = part(c.model(), p.anchor());
             PartPose rest = part.getInitialPose();
             pose.pushPose();

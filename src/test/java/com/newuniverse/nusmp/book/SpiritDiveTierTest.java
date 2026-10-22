@@ -260,9 +260,9 @@ class SpiritDiveTierTest {
                 assertTrue(SpiritDivePieces.pieces(Element.WIND, s, Grade.YUNO).contains(id));
                 assertFalse(SpiritDivePieces.pieces(Element.WIND, s, Grade.STANDARD).contains(id));
             }
-            assertTrue(SpiritDivePieces.pieces(Element.FIRE, s, Grade.FUEGOLEON).contains("spiritdive:flame_arm_r"));
             assertTrue(SpiritDivePieces.pieces(Element.FIRE, s, Grade.FUEGOLEON).contains("spiritdive:fire_mane"));
-            assertFalse(SpiritDivePieces.pieces(Element.FIRE, s, Grade.STANDARD).contains("spiritdive:flame_arm_r"));
+            assertFalse(SpiritDivePieces.pieces(Element.FIRE, s, Grade.STANDARD).contains("spiritdive:fire_mane"));
+            for (Grade g : Grade.values()) assertFalse(SpiritDivePieces.pieces(Element.FIRE, s, g).contains("spiritdive:flame_arm_r"), "the molten arm is drawn by the arm aura, not by the dive (a second arm would double its glow)");
             assertTrue(SpiritDivePieces.pieces(Element.WATER, s, Grade.NOELLE).contains("spiritdive:water_ribbon_l"));
             assertFalse(SpiritDivePieces.pieces(Element.WATER, s, Grade.STANDARD).contains("spiritdive:water_ribbon_l"));
         }

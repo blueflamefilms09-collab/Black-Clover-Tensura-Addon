@@ -20,7 +20,7 @@ import org.joml.Quaternionf;
  * haze and a mane of fire strands streaming off the shoulder ({@link FuegoleonArmFx}). The flames leap when the wearer casts (the cast animation, {@link DiveCast}) and burn highest during the Fire dive
  * ({@code Aura.SPIRIT_DIVE} running). The viewer's setting ({@link SpiritDiveLook#armView}) can turn the arm off or limit it to the moments of casting and diving. The first person arm is
  * {@link FireArmFirstPerson}. Level of detail by distance ({@link SpiritDiveTier#lod}): the full arm up to 24 blocks, the model and half the flames up to 48, nothing beyond.
- * When the dive of the Fuegoleon grade already drew the molten arm among its pieces, this painter adds only its flames. No allocation per frame.
+ * The dive of the Fuegoleon grade does not draw an arm of its own: the server keeps this arm alive during the Fire dive. No allocation per frame.
  */
 public final class FuegoleonArmAura {
     private FuegoleonArmAura() {}
@@ -49,18 +49,16 @@ public final class FuegoleonArmAura {
         PartPose rest = arm.getInitialPose();
         boolean slim = WaterAuraRig.slim(c.model());
         float age = c.age();
-        if (!SpiritDiveFrame.flameArmDrawn(id)) {                                                // the dive of the Fuegoleon grade draws the same model among its pieces
-            pose.pushPose();
-            pose.translate(arm.x / 16f, arm.y / 16f, arm.z / 16f);
-            if (arm.xRot != 0f || arm.yRot != 0f || arm.zRot != 0f) pose.mulPose(ROT.rotationZYX(arm.zRot, arm.yRot, arm.xRot));
-            if (slim) pose.scale(0.8f, 1f, 1f);
-            pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);                         // the model is authored in whole-body coordinates
-            int white = SealDraw.argb(c.fade(), 0xFFFFFF);                                       // the body is solid at every strength (it covers the skin); only the flames and the glow follow the strength
-            int glow = SealDraw.argb(Mth.clamp(k * (1.0f + 0.5f * flare), 0f, 1f), 0xFF8A30);
-            boolean solid = c.fade() >= 0.97f;                                                  // a solid body once it has fully grown in (it covers the skin underneath), translucent while it fades
-            GeoDraw.paint(pose, c.buffers(), SPEC, "idle", age / 20f, GeoDraw.Space.PLAYER, solid ? GeoDraw.Layer.CUTOUT : GeoDraw.Layer.TRANSLUCENT, solid ? SealDraw.lift(c.light(), 8) : SealDraw.lift(c.light(), 8), white, glow);
-            pose.popPose();
-        }
+        pose.pushPose();                                                                           // the molten model, anchored on the right arm (it follows every swing, crouch and cast)
+        pose.translate(arm.x / 16f, arm.y / 16f, arm.z / 16f);
+        if (arm.xRot != 0f || arm.yRot != 0f || arm.zRot != 0f) pose.mulPose(ROT.rotationZYX(arm.zRot, arm.yRot, arm.xRot));
+        if (slim) pose.scale(0.8f, 1f, 1f);
+        pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);                             // the model is authored in whole-body coordinates
+        int white = SealDraw.argb(c.fade(), 0xFFFFFF);                                           // the body is solid at every strength (it covers the skin); only the flames and the glow follow the strength
+        int glow = SealDraw.argb(Mth.clamp(k * (1.0f + 0.5f * flare), 0f, 1f), 0xFF8A30);
+        boolean solid = c.fade() >= 0.97f;                                                       // opaque once grown in, translucent while it fades in and out
+        GeoDraw.paint(pose, c.buffers(), SPEC, "idle", age / 20f, GeoDraw.Space.PLAYER, solid ? GeoDraw.Layer.CUTOUT : GeoDraw.Layer.TRANSLUCENT, SealDraw.lift(c.light(), 8), white, glow);
+        pose.popPose();
         pose.pushPose();                                                                           // the flames, in the arm frame (model pixels)
         pose.translate(arm.x / 16f, arm.y / 16f, arm.z / 16f);
         if (arm.xRot != 0f || arm.yRot != 0f || arm.zRot != 0f) pose.mulPose(ROT.rotationZYX(arm.zRot, arm.yRot, arm.xRot));

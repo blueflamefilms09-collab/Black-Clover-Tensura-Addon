@@ -185,15 +185,15 @@ public final class SpiritDivePieces {
         ALL.add(d(S + "wind_blades_l", Anchor.BODY, 8, 10, -4, 12, true, true, "idle", false, false, 1.3f));            // Yuno: the wing-like wind blades
         ALL.add(d(S + "wind_blades_r", Anchor.BODY, 9, -10, -4, 12, true, true, "idle", false, false, 1.3f));
         ALL.add(d(S + "wind_hair", Anchor.HEAD, 4, 0, -10, 6, true, false, "idle", true, true, 1.4f));                  // Yuno: the hair streaming in the wind
-        ALL.add(d(S + "fire_mane", Anchor.HEAD, 2, 0, -8, 8, true, false, "idle", false, true, 1.4f));                  // Fuegoleon: the flame mane
-        ALL.add(d(S + "fire_cape", Anchor.BODY, 6, 0, 0, 12, true, false, "idle", false, false, 1.2f));                 // Fuegoleon: the flame cape
-        ALL.add(d(S + "flame_arm_r", Anchor.ARM_R, 1, -12, 2, -6, false, false, "idle", false, false, 1.5f));            // Fuegoleon: the molten right arm (also the persistent arm of the Salamander contract)
+        ALL.add(d(S + "fire_mane", Anchor.HEAD, 2, 0, -8, 8, true, false, "idle", false, true, 0.8f));                  // Fuegoleon: the flame mane
+        ALL.add(d(S + "fire_cape", Anchor.BODY, 6, 0, 0, 12, true, false, "idle", false, false, 0.6f));                 // Fuegoleon: the flame cape
+        ALL.add(d(S + "flame_arm_r", Anchor.ARM_R, 1, -12, 2, -6, false, false, "idle", false, false, 1.0f));            // Fuegoleon: the molten right arm (drawn by client.aura.FuegoleonArmAura, in the dive and at rest; not in the piece lists)
         ALL.add(d(S + "water_ribbon_l", Anchor.BODY, 7, 10, -2, 10, true, false, "idle", false, false, 1.1f));          // Noelle: water ribbons
         ALL.add(d(S + "water_ribbon_r", Anchor.BODY, 8, -10, -2, 10, true, false, "idle", false, false, 1.1f));
         ALL.add(d(S + "water_rings", Anchor.HEAD, 10, 0, -16, 0, true, false, "idle", true, true, 1.3f));              // Noelle: the halo of water rings
         ALL.add(d(S + "water_train", Anchor.BODY, 5, 0, 8, 10, true, false, "idle", true, false, 1.1f));                // Noelle: the flowing train of the dress
-        ALL.add(d(S + "fire_flames_l", Anchor.BODY, 8, 10, -4, 12, true, true, "idle", false, false, 1.2f));              // the remade fire dive's wings of flame (both tiers)
-        ALL.add(d(S + "fire_flames_r", Anchor.BODY, 9, -10, -4, 12, true, true, "idle", false, false, 1.2f));
+        ALL.add(d(S + "fire_flames_l", Anchor.BODY, 8, 10, -4, 12, true, true, "idle", false, false, 0.7f));              // the remade fire dive's wings of flame (both tiers)
+        ALL.add(d(S + "fire_flames_r", Anchor.BODY, 9, -10, -4, 12, true, true, "idle", false, false, 0.7f));
         ALL.add(d(S + "earth_crown", Anchor.HEAD, 3, 0, -16, 0, false, false, "idle", false, true, 1.1f));              // the rock crown with floating crystals
     }
 
@@ -280,8 +280,8 @@ public final class SpiritDivePieces {
     private static final List<String> V2_FIRE_HALF = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_wingbud_r",
             S + "fire_wingbud_l");
     private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_chest", S + "fire_flames_l", S + "fire_flames_r");
-    private static final List<String> V2_FUEGO_HALF = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_wingbud_r", S + "fire_wingbud_l", S + "fire_mane");
-    private static final List<String> V2_FUEGO_FULL = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_flames_l", S + "fire_flames_r",
+    private static final List<String> V2_FUEGO_HALF = list(S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_wingbud_r", S + "fire_wingbud_l", S + "fire_mane");
+    private static final List<String> V2_FUEGO_FULL = list(S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_flames_l", S + "fire_flames_r",
             S + "fire_mane", S + "fire_cape");
 
     private static final List<String> V2_WATER_HALF = list(W + "chest", W + "skirt", W + "pauldron_r", W + "pauldron_l", W + "gauntlet_r", W + "gauntlet_l", W + "helm", W + "wing_r", W + "wing_l", W + "halo");
@@ -317,7 +317,10 @@ public final class SpiritDivePieces {
     /** {@link #alreadyOn(Element, Stage, String)} for the remade look. */
     public static boolean alreadyOn(Element e, Stage s, SpiritDiveTier.Grade g, String id) { return s == Stage.UPGRADE && halfPieces(e, g).contains(id) && pieces(e, s, g).contains(id); }
 
-    /** True when the dive draws the Fuegoleon grade: the right arm is the molten flame arm instead of the draconic one. */
+    /**
+     * True when the dive is of the Fuegoleon grade: its right arm is the molten flame arm, which is NOT among the pieces: the server keeps Fuegoleon's arm lease alive for the whole Fire dive
+     * ({@code book.FuegoleonArm}, reason DIVE) and {@code client.aura.FuegoleonArmAura} draws the arm (burning highest during the dive), the same arm at rest and in the dive.
+     */
     public static boolean flameArm(Element e, SpiritDiveTier.Grade g) { return e == Element.FIRE && SpiritDiveTier.effective(e, g) == SpiritDiveTier.Grade.FUEGOLEON; }
 
     // ------------------------------------------------------------------ the body overlay (the translucent skin drawn under the pieces)
@@ -345,6 +348,7 @@ public final class SpiritDivePieces {
         java.util.LinkedHashSet<String> seen = new java.util.LinkedHashSet<>();
         for (Element e : Element.values()) for (Stage s : Stage.values()) seen.addAll(pieces(e, s));
         for (Element e : Element.values()) for (Stage s : Stage.values()) for (SpiritDiveTier.Grade g : SpiritDiveTier.Grade.values()) seen.addAll(pieces(e, s, g));          // the remade look
+        for (Def x : ALL) seen.add(x.id());                                                       // and every defined piece (the molten arm is drawn by its own aura, not listed)
         seen.forEach(sink);
     }
 }

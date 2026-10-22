@@ -68,6 +68,7 @@ public final class SpiritDiveFx {
         float lit = pulse * (1f + 0.35f * flare);
         boolean half = SpiritDivePieces.halfBody(el, st);
         ground(c, el, character, b.rings(), f, lit, glow, prim);
+        if (character && b.rings() >= 3) backSigil(c, el, f, lit, glow);
         if (b.columns() > 0) columns(c, b.columns(), half, f, lit, glow, acc);
         if (b.spirals() > 0) spirals(c, el, b.spirals(), half, f, lit, prim, acc);
         if (character && b.pillars() > 0) entry(c, el, b, f, glow, acc);
@@ -124,14 +125,27 @@ public final class SpiritDiveFx {
             float r = 0.5f + 0.07f * Mth.sin(i * 2.3f + age * 0.05f);
             float hh = 0.62f + 0.3f * Mth.sin(i * 1.7f), y = 1.5f - (ph * 2.5f - 0.1f);
             float hw = 0.36f, ux = -Mth.sin(a) * hw, uz = Mth.cos(a) * hw;
-            int col = SealDraw.argb(Mth.sin(ph * Mth.PI) * 0.6f * f * lit, i % 2 == 0 ? glow : acc);
+            int col = SealDraw.argb(Mth.sin(ph * Mth.PI) * 0.3f * f * lit, i % 2 == 0 ? glow : acc);
             float cx = Mth.cos(a) * r, cz = Mth.sin(a) * r;
             SealDraw.plane(pose, vc, cx, y, cz, ux, 0f, uz, 0f, -hh, 0f, false, col, FB);
             SealDraw.plane(pose, vc, cx, y, cz, ux, 0f, uz, 0f, -hh, 0f, true, col, FB);
         }
     }
 
-        // ------------------------------------------------------------------ the helices
+        // ------------------------------------------------------------------ the sigil behind the back (character tier)
+    /** A large sigil standing upright behind the back, turning slowly: Yuno's circle of connected crosses (the series puts it behind his back in the full dive), Fuegoleon's sun of flames, Noelle's waves. */
+    private static void backSigil(AuraContext c, Element el, float f, float lit, int glow) {
+        PoseStack pose = c.pose();
+        float spin = c.age() * 0.012f, r = 1.05f * (0.7f + 0.3f * f);
+        float cs = Mth.cos(spin) * r, sn = Mth.sin(spin) * r;                                    // the plane's two vectors turn about its centre: the texture turns, the disc stands still
+        VertexConsumer vc = add(c, sigil(el));
+        int col = SealDraw.argb(0.4f * f * lit, glow);
+        float cy = 1.5f - 1.12f, cz = 0.62f;                                                      // behind the back (+z), at the height of the chest
+        SealDraw.plane(pose, vc, 0f, cy, cz, cs, -sn, 0f, -sn, -cs, 0f, false, col, FB);
+        SealDraw.plane(pose, vc, 0f, cy, cz, cs, -sn, 0f, -sn, -cs, 0f, true, col, FB);
+    }
+
+    // ------------------------------------------------------------------ the helices
     /** Streams of the element winding up round the body: a ribbon of {@link SpiritDiveTier#SPIRAL_SEGMENTS} camera-facing quads per helix, the bright end low (flames, water) or high (wind). */
     private static void spirals(AuraContext c, Element el, int n, boolean half, float f, float lit, int prim, int acc) {
         PoseStack pose = c.pose();
@@ -151,7 +165,7 @@ public final class SpiritDiveFx {
                 if (half) x = Math.abs(x);
                 if (k > 0) {
                     float tPrev = (k - 1f) / seg, tm = (k - 0.5f) / seg, env = Mth.sin(tm * Mth.PI);
-                    int col = SealDraw.argb(1.0f * env * f * lit, SealDraw.mix(prim, acc, 0.35f + 0.4f * (1f - tm)));
+                    int col = SealDraw.argb(0.8f * env * f * lit, SealDraw.mix(prim, acc, 0.3f + 0.35f * (1f - tm)));
                     float hw = 0.08f + 0.1f * env;
                     if (headLow) SealDraw.ribbon(pose, vc, x, y, z, px, py, pz, hw, 0.25f, 1f, col, FB);          // the bright end is the low one (flames, water)
                     else SealDraw.ribbon(pose, vc, px, py, pz, x, y, z, hw, 0.25f, 1f, col, FB);               // the bright end is the high one (wind)
@@ -287,7 +301,7 @@ public final class SpiritDiveFx {
                 pose.pushPose();
                 applyPart(pose, arm);
                 SealDraw.camera(pose);
-                float sz = 3.6f * (0.85f + 0.15f * Mth.sin(age * 0.23f + hand * 2f));
+                float sz = 2.8f * (0.85f + 0.15f * Mth.sin(age * 0.23f + hand * 2f));
                 SealDraw.glow(pose, vc, 0f, 10.8f, 0f, sz * (1f + 0.2f * (lit - 1f)), age * 0.1f, SealDraw.argb(0.8f * f * Math.min(1.2f, lit), glow), FB);
                 pose.popPose();
             }

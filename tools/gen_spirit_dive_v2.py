@@ -257,12 +257,16 @@ def flame_arm(out):
     p.box("root", (-9.9, 6.9, -3.6), (7.2, 3.4, 7.2), M3)                                     # the fist
     for k in range(4):                                                                         # the knuckles
         p.box("root", (-9.6 + k * 1.75, 6.4, -4.4), (1.7, 1.6, 1.3), M3, d=3)
+    # a second turn of every segment, 45 degrees about the arm's axis: the cross-section becomes an eight-pointed star instead of a square, so the arm reads round and molten, not boxy
+    for (org, size, mat) in (((-9.7, 15.6, -3.3), (6.6, 5.4, 6.6), M1), ((-9.5, 9.6, -3.2), (6.4, 5.0, 6.4), M2), ((-9.9, 6.9, -3.6), (7.2, 3.4, 7.2), M3)):
+        cx, cz = org[0] + size[0] / 2.0, org[2] + size[2] / 2.0
+        p.box("root", org, size, mat, rot=(0, 45, 0), pivot=(cx, org[1] + size[1] / 2.0, cz))
     tg = PAL_FLAME
 
     def tongue(name, pivot, origin, size, rot, phase, amp=9.0, faces=("north", "south"), down=False, seed=0):
         p.bone(name, pivot, parent="root", rotation=rot)
         mat = shape_mat(lambda tag, sd=seed, dn=down: (tip_down if dn else (lambda q: q))(tongue_polys(sway=0.2, phase=sd * 1.9, base=0.9, wob=0.08)), tg, "armtongue%d" % (seed % 3),
-                        along="y", streaks=2.5, body_alpha=0.55, core=0.75, faces=faces)
+                        along="y", streaks=2.5, body_alpha=0.85, core=0.5, faces=faces)
         p.box(name, origin, size, mat)
         sine_rot(a, "idle", name, 1.6, 2, amp, phase)
         sine_rot(a, "idle", name, 1.6, 0, amp * 0.6, phase + 0.25)
@@ -287,7 +291,7 @@ def fire_mane(out):
     P = (0.0, 30.5, 3.6)
     p.bone("m", P, parent="root")
     sine_rot(a, "idle", "m", 2.0, 0, 3.0, 0.0)
-    spec = [(-60, 11.0, 4.6), (-38, 13.0, 5.0), (-16, 14.0, 5.2), (6, 13.0, 5.0), (28, 11.0, 4.6)]
+    spec = [(-58, 11.0, 4.6), (-32, 13.0, 5.0), (-6, 13.5, 5.2), (20, 11.0, 4.6)]
     for side in (0, 1):
         sg = 1.0 if side else -1.0
         for i, (rz, L, wd) in enumerate(spec):
@@ -295,7 +299,7 @@ def fire_mane(out):
             p.bone(b, P, parent="m", rotation=(0, -sg * (58 + i * 3), -sg * rz))
             shape = tip_right if side else tip_left
             mat = shape_mat(lambda tag, sh=shape, ph=i * 1.3 + side: sh(tongue_polys(sway=0.22, phase=ph, base=0.95, wob=0.09)), PAL_FLAME if (i + side) % 2 == 0 else PAL_FUEGO, "manetongue%d" % ((i + side) % 2),
-                            streaks=2.4, body_alpha=0.52, core=0.5, glow_k=0.4, flip_south=False)
+                            streaks=2.4, body_alpha=0.85, core=0.35, glow_k=0.4, flip_south=False)
             o = (P[0], P[1] - wd / 2, P[2]) if side else (P[0] - L, P[1] - wd / 2, P[2])
             p.box(b, o, (L, wd, 0.4), mat)
             sine_rot(a, "idle", b, 2.0, 2, 7.0 * sg, 0.1 * i + 0.3 * side)
@@ -320,7 +324,7 @@ def fire_cape(out):
             for k in range(4):
                 ps += place(tip_down(tongue_polys(sway=0.2, phase=k * 2.3 + i, base=0.95, wob=0.07)), k * 0.25 + 0.01, 0.26, k * 0.25 + 0.24, 1.0)
             return ps
-        mat = shape_mat(polys, PAL_FUEGO, "fcape%d" % i, along="y", streaks=3.0, body_alpha=0.6, core=0.45)
+        mat = shape_mat(polys, PAL_FUEGO, "fcape%d" % i, along="y", streaks=3.0, body_alpha=0.92, core=0.3, glow_k=0.5)
         p.box(b, (x - wd / 2, TOP - L, 3.0), (wd, L, 0.4), mat)
         sine_rot(a, "idle", b, 2.4, 0, 7.0, 0.12 * i)
         sine_rot(a, "idle", b, 2.4, 2, 4.0, 0.2 * i + 0.3)
@@ -339,13 +343,13 @@ def fire_flames(side, out):
     p.bone("w", P, parent="root")
     sine_rot(a, "idle", "w", 2.2, 2, -6.0 * sg, 0.0)
     sine_rot(a, "idle", "w", 2.2, 1, 4.0 * sg, 0.18)
-    defs = [(-74, 26.0, 8.0), (-48, 23.0, 7.6), (-22, 20.0, 7.2), (4, 15.0, 6.4)]
+    defs = [(-72, 25.0, 8.0), (-44, 22.0, 7.6), (-16, 18.0, 7.0)]
     shape = tip_right if side else tip_left
     for i, (rz, L, wd) in enumerate(defs):
         b = "f%d" % i
         p.bone(b, P, parent="w", rotation=(0, -sg * (24 + i * 4), -sg * rz))
         mat = shape_mat(lambda tag, sh=shape, ph=i * 1.7 + (side * 0.9): sh(tongue_polys(sway=0.2, phase=ph, base=0.95, wob=0.08)), PAL_FLAME if i % 2 == 0 else PAL_FUEGO, "flamewing%d" % (i % 2),
-                        streaks=2.6, body_alpha=0.5, core=0.5, glow_k=0.4, flip_south=False)
+                        streaks=2.6, body_alpha=0.85, core=0.35, glow_k=0.4, flip_south=False)
         o = (P[0], P[1] - wd / 2, P[2]) if side else (P[0] - L, P[1] - wd / 2, P[2])
         p.box(b, o, (L, wd, 0.4), mat)
         sine_rot(a, "idle", b, 2.2, 2, 6.0 * sg, 0.12 * i + 0.3 * side)

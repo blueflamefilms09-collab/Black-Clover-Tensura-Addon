@@ -308,6 +308,7 @@ def shells():
     ga = clamp01((streak - 0.55) * 1.6) * 0.55
     g[..., :3] = rgb("FF7A1E")[None, None, :] * ga[..., None]
     g[..., 3] = np.where(ga > 0.04, 255.0, 0.0)
+    g[..., :3] *= (g[..., 3:4] > 0)                                       # no colour under a clear texel (the SafeAdditive texture scan)
     save_rgba("spirit2_fire_shell", img)
     save_rgba("spirit2_fire_shell_glow", g)
 

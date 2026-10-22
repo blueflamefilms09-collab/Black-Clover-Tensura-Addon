@@ -25,7 +25,8 @@ import net.minecraft.server.level.ServerPlayer;
  *       the pieces shatter out), and the style number of the lease carries element and stage ({@link SpiritDivePieces#style}). Wind first dive: only the LEFT half transforms (one wing, half a crown,
  *       a ring round the wrist); the full dive has two wings and a full crown; a half dive becomes full (the missing half forges in) when the book is mastered during the dive. Water at the full
  *       stage is the Saint Valkyrie Dress. Any other armour the mage wears gives way to the dive. The old overlays stay registered ({@link GrimoireBook#diveArmor} is null while
- *       {@link SpiritDivePieces#LOOK} is on) and the policy's armour layer of Earth (the Gnome Plate) is not started by the dive any more.</li>
+ *       {@link SpiritDivePieces#LOOK} is on) and the policy's armour layer of Earth (the Gnome Plate) is not started by the dive any more. Spirit Dive remake: the lease also carries the TIER of the
+ *       look, the mage whose bound grimoire is Yuno's (Wind), Fuegoleon's (Fire) or Noelle's (Water) dives with that character's own look ({@link #gradeOf}, {@link SpiritDiveTier}); everyone else the standard tier.</li>
  * </ul>
  */
 public final class SpiritDiveForm {
@@ -68,6 +69,7 @@ public final class SpiritDiveForm {
         ArmourState.putOn(p, ownLook ? withoutAura(e) : e, style, true, stage);
         if (el != null) look(p, el, SpiritDivePieces.stageFor(stage), LEASE_TICKS);
         if (el != null && counts) announceTier(p, gradeOf(p, el));
+        if (el == SpiritDivePieces.Element.FIRE && counts) FuegoleonArm.update(p);                  // Fuegoleon's arm burns from the first tick of the Fire dive, not at the next check
     }
 
     /** The one line of the actionbar when a character's own dive begins (the standard tier says nothing). */

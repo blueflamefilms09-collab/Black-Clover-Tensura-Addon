@@ -54,6 +54,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_wind_yuno_half": {
@@ -110,6 +113,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_wind_yuno_full": {
@@ -166,6 +172,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_fire_std_full": {
@@ -222,6 +231,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_fire_fuego_half": {
@@ -280,6 +292,7 @@
    }
   ],
   "examples": [
+   "SdvRemade",
    "SdvFuegoleonArm"
   ],
   "alsoAuras": [
@@ -342,6 +355,7 @@
    }
   ],
   "examples": [
+   "SdvRemade",
    "SdvFuegoleonArm"
   ],
   "alsoAuras": [
@@ -402,6 +416,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_water_noelle_half": {
@@ -458,6 +475,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_water_noelle_full": {
@@ -514,6 +534,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_earth_std_half": {
@@ -570,6 +593,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_earth_std_full": {
@@ -626,6 +652,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_wind_std_half": {
@@ -671,6 +700,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_fire_std_half": {
@@ -716,6 +748,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_water_std_half": {
@@ -761,6 +796,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_entry_yuno": {
@@ -798,6 +836,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_entry_fuego": {
@@ -835,6 +876,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_entry_noelle": {
@@ -872,6 +916,9 @@
     ],
     "dist": 4.6
    }
+  ],
+  "examples": [
+   "SdvRemade"
   ]
  },
  "sdv_arm_rest": {
@@ -989,5 +1036,81 @@
     "dist": 3.6
    }
   ]
+ },
+ "sdv_arm_fp_rest": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   520,
+   340
+  ],
+  "views": [
+   {
+    "name": "from the eye (approximation)",
+    "yaw": 180,
+    "pitch": 20,
+    "target": [
+     -0.45,
+     1.02,
+     0.98
+    ],
+    "dist": 2.0
+   }
+  ],
+  "limbSwing": 0.0,
+  "limbSwingAmount": 1.0
+ },
+ "sdv_arm_fp_linked": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   520,
+   340
+  ],
+  "views": [
+   {
+    "name": "from the eye (approximation)",
+    "yaw": 180,
+    "pitch": 20,
+    "target": [
+     -0.45,
+     1.02,
+     0.98
+    ],
+    "dist": 2.0
+   }
+  ],
+  "limbSwing": 0.0,
+  "limbSwingAmount": 1.0
  }
 }
