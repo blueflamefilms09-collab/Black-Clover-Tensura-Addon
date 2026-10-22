@@ -92,8 +92,6 @@ def main():
     if os.path.isfile(os.path.join(BUILD, "sdv_arm_linked_cast.png")):
         items.append(("while casting (flare)", "sdv_arm_linked", 0, "sdv_arm_linked_cast"))
     sheet("fuegoleon_arm_states", items, "the arm in its three states (third person)")
-    if os.path.isfile(os.path.join(BUILD, "sdv_fire_fuego_full_cast.png")):
-        sheet("fuegoleon_dive_cast", [("Fuegoleon dive", "sdv_fire_fuego_full", 0), ("the same, casting (flare)", "sdv_fire_fuego_full", 0, "sdv_fire_fuego_full_cast")], "Fire Spirit Dive of the Fuegoleon tier with the arm painter, and during a cast")
     sheet("fuegoleon_arm_first_person_approx", [("rest", "sdv_arm_fp_rest", 0), ("Salamander out", "sdv_arm_fp_linked", 0)],
           "MOCK / APPROXIMATION of the first person view: a camera behind the shoulder, the arm swung forward. The real hand view (FireArmFirstPerson) was not rendered here.")
 
