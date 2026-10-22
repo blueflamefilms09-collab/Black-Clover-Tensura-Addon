@@ -36,7 +36,7 @@ LIP = "#D6A3A4"
 
 
 # the gown's cone, shared by the painters and the model (tools/gen_undine_geo.py): radii and heights in model units, the number of strips of the two layers and how much wider than its sector each is
-SK = dict(WAIST_R=3.8, HEM_R=24.0, WAIST_Y=31.0, INNER_N=16, OUTER_N=24, INNER_OVER=1.18, OUTER_OVER=1.25, OUTER_PUSH=0.55, OUTER_EXTRA=2.5)
+SK = dict(WAIST_R=3.8, HEM_R=24.0, WAIST_Y=31.0, INNER_N=24, OUTER_N=32, INNER_OVER=1.18, OUTER_OVER=1.25, OUTER_PUSH=0.55, OUTER_EXTRA=2.5)
 
 
 def col(h, a=255):

@@ -1747,6 +1747,66 @@
   "voice.djinn_camio_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_attack", "stream": false } ] },
   "voice.djinn_murmur_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_summon", "stream": false } ] },
   "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] },
+  "voice.undine_link_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_link_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_link_1", "stream": false }
+    ]
+  },
+  "voice.undine_link_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_link_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_link_2", "stream": false }
+    ]
+  },
+  "voice.undine_link_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_link_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_link_3", "stream": false }
+    ]
+  },
+  "voice.undine_link_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_link_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_link_4", "stream": false }
+    ]
+  },
+  "voice.undine_farewell_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_farewell_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_farewell_1", "stream": false }
+    ]
+  },
+  "voice.undine_farewell_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_farewell_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_farewell_2", "stream": false }
+    ]
+  },
+  "voice.undine_farewell_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_farewell_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_farewell_3", "stream": false }
+    ]
+  },
+  "voice.undine_cast_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_1", "stream": false }
+    ]
+  },
+  "voice.undine_cast_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_2", "stream": false }
+    ]
+  },
+  "voice.undine_cast_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_3", "stream": false }
+    ]
+  },
   "undine.ambient": {
     "subtitle": "subtitles.nusmp.undine.ambient",
     "sounds": [
@@ -1765,8 +1825,8 @@
   "undine.unlink": {
     "subtitle": "subtitles.nusmp.undine.unlink",
     "sounds": [
-      { "name": "nusmp:undine/unlink_1", "attenuation_distance": 20, "stream": true },
-      { "name": "nusmp:undine/unlink_2", "attenuation_distance": 20, "stream": true }
+      { "name": "nusmp:undine/unlink_1", "attenuation_distance": 20 },
+      { "name": "nusmp:undine/unlink_2", "attenuation_distance": 20 }
     ]
   },
   "undine.cast": {
@@ -1802,6 +1862,14 @@
     "subtitle": "subtitles.nusmp.undine.death",
     "sounds": [
       { "name": "nusmp:undine/death_1", "attenuation_distance": 24, "stream": true }
+    ]
+  },
+  "undine.hum": {
+    "subtitle": "subtitles.nusmp.undine.hum",
+    "sounds": [
+      { "name": "nusmp:undine/hum_1", "attenuation_distance": 16, "stream": true },
+      { "name": "nusmp:undine/hum_2", "attenuation_distance": 16, "stream": true },
+      { "name": "nusmp:undine/hum_3", "attenuation_distance": 16, "stream": true }
     ]
   }
 }

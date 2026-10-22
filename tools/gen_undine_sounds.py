@@ -45,6 +45,7 @@ CUES = {
     'crash': (2, 56, 'crashes as a wave', -16.0),
     'hurt': (2, 20, 'splashes in pain', -17.0),
     'death': (1, 24, 'dissolves into water', -18.0),
+    'hum': (3, 16, 'hums a soft tune', -22.0),
 }
 STREAM_OVER = 2.4
 PEAK = 0.80
@@ -278,7 +279,7 @@ def r_link(v, rng):
 
 
 def r_unlink(v, rng):
-    dur = 1.8
+    dur = 1.7
     n = int(dur * SR)
     water = water_flow(dur, rng, 1.0, sweep=lambda t: 2000 - 1500 * min(1.0, t / 1.2), bubbles=1.6) * envelope(n, 0.02, 0.8, 1.6)
     bells = track(n)
@@ -353,7 +354,21 @@ def r_death(v, rng):
     return reverb(mix(n, [(water, -9.0), (hum, -3.0), (bells, -1.0)]), rng, 1.8, 0.4)
 
 
-RECIPES = {'ambient': r_ambient, 'link': r_link, 'unlink': r_unlink, 'cast': r_cast, 'full': r_full, 'crash': r_crash, 'hurt': r_hurt, 'death': r_death}
+def r_hum(v, rng):
+    """The stand-in for a spoken line: a short sung phrase of three soft notes on 'ah' / 'mm' with a bell under the last one (her voice without words, used when a group has no recorded line)."""
+    dur = 2.0
+    n = int(dur * SR)
+    phrase = [[293.66, 329.63, 440.00], [329.63, 293.66, 369.99], [440.00, 369.99, 293.66]][v - 1]
+    voice = track(n)
+    for k, f in enumerate(phrase):
+        put(voice, choir(f / 2.0, 0.85, rng, 4, 'ah' if k < 2 else 'oo', 1.0, 0.6), 0.1 + 0.42 * k)
+    bells = track(n)
+    put(bells, glass_bell(phrase[-1] * 2.0, 1.2, rng, 0.8), 0.1 + 0.42 * 2 + 0.2)
+    water = water_flow(dur, rng, 0.6, sweep=lambda t: 900, bubbles=0.6) * envelope(n, 0.3, 0.7, 1.4)
+    return reverb(mix(n, [(voice, -2.0), (bells, -6.0), (water, -17.0)]), rng, 1.5, 0.4)
+
+
+RECIPES = {'ambient': r_ambient, 'link': r_link, 'unlink': r_unlink, 'cast': r_cast, 'full': r_full, 'crash': r_crash, 'hurt': r_hurt, 'death': r_death, 'hum': r_hum}
 
 
 # ====================================================================================================================== mastering and files
@@ -453,7 +468,11 @@ def write_manifest(lengths):
     json.loads(new)                                                                    # it must still be valid JSON
     with open(SOUNDS_JSON, 'w', encoding='utf-8', newline='\n') as f:
         f.write(new)
+    keep = {}
+    if os.path.exists(LANG_OUT):                                                          # the subtitles of the spoken lines belong to tools/audio/undine_voice_convert.py: kept as they are
+        keep = {k: v for k, v in json.load(open(LANG_OUT, encoding='utf-8')).items() if k.startswith('subtitles.nusmp.voice.undine_')}
     lang = {'subtitles.nusmp.undine.%s' % c: 'Undine %s' % CUES[c][2] for c in CUES}
+    lang.update(keep)
     lang.update({
         'key.nusmp.undine_link': 'Undine (link or unlink Noelle\'s water spirit)',
         'nusmp.undine.spirit.full': 'Undine cannot answer: too many spirits are out.',

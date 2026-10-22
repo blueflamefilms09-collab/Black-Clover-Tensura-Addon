@@ -15,7 +15,11 @@ public final class UndineLod {
     public static final int FULL = 0, HALF = 1, LOW = 2, CULL = 3;
 
     /** Quads of each pass at each level (index = level), counted from the generated files; a pass a level does not draw has 0. */
-    public static final int[] BODY_QUADS = {0, 0, 0}, WATER_QUADS = {0, 0, 0}, FX_QUADS = {0, 0, 0}, BASE_QUADS = {0, 0, 0};
+    public static final int[] BODY_QUADS = {209, 88, 66}, WATER_QUADS = {136, 54, 0}, FX_QUADS = {26, 26, 0}, BASE_QUADS = {42, 30, 0};
+    /** The expression card (one quad) drawn over the calm face on the two nearer levels while a face other than calm is shown; counted in the cost always, so the budget is the worst case. */
+    public static final int[] FACE_QUADS = {1, 1, 0};
+    /** The two soft ripple rings of the full form (two flat quads each, drawn on the two nearer levels only). */
+    public static final int RING_QUADS = 4;
     /** The most quads one form may have at each level (the owner's budget: companion ~900 / 400 / 150, full ~1100 / 500 / 150). */
     public static final int[] COMPANION_CAP = {900, 400, 150}, FULL_CAP = {1100, 500, 150};
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the form is not drawn (64 blocks for the companion, 112 for the full form). */
@@ -28,7 +32,7 @@ public final class UndineLod {
     /** The quads one form costs at a level; 0 for CULL. The full form adds the wave base on the two nearer levels. */
     public static int cost(boolean full, int lod) {
         if (lod >= CULL) return 0;
-        return BODY_QUADS[lod] + WATER_QUADS[lod] + FX_QUADS[lod] + (full ? BASE_QUADS[lod] : 0);
+        return BODY_QUADS[lod] + WATER_QUADS[lod] + FX_QUADS[lod] + FACE_QUADS[lod] + (full ? BASE_QUADS[lod] + (lod <= HALF ? RING_QUADS : 0) : 0);
     }
 
     /**

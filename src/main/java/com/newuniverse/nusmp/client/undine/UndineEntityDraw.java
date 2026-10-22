@@ -6,7 +6,8 @@ import com.newuniverse.nusmp.entity.ElementalSpiritLordEntity;
 import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.undine.UndineConfig;
 import com.newuniverse.nusmp.undine.UndineLod;
-import com.newuniverse.nusmp.undine.UndineRules;
+import com.newuniverse.nusmp.undine.UndineFace;
+import com.newuniverse.nusmp.undine.UndinePose;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.Vec3;
@@ -33,10 +34,10 @@ public final class UndineEntityDraw {
         int lod = UndineLod.fit(true, wanted, BUDGET, UndineLod.frameKey(e.level().getGameTime(), partial), UndineLod.ownerPriority(mine, dsq));
         if (lod == UndineLod.CULL) return true;
         float age = e.tickCount + partial, castAge = e.tickCount - e.clientCastTick + partial;
-        boolean casting = castAge >= 0 && castAge < UndineRules.CAST_POSE_TICKS;
-        String clip = casting ? "cast" : "full_idle";
+        boolean casting = castAge >= 0 && castAge < UndinePose.CAST.ticks();
+        String clip = casting ? UndinePose.CAST.clip(true) : UndinePose.NONE.clip(true);
         float secs = casting ? castAge / 20f : age / 20f;
-        UndineDraw.undine(pose, buffers, true, lod, clip, secs, age, 1f, light);
+        UndineDraw.undine(pose, buffers, true, lod, clip, secs, age, 1f, light, casting ? UndineFace.CALM.id() : UndineFace.CALM.id());
         return true;
     }
 }

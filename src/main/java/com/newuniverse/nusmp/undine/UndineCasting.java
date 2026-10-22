@@ -43,7 +43,8 @@ public final class UndineCasting {
 
     /** The state of one player's Undine. */
     static final class State {
-        UUID spirit, full;
+        UUID spirit, full, leaving;
+        final UndineMoodRules.State mood = new UndineMoodRules.State();
         long fullReadyAt, lastPacket = Long.MIN_VALUE / 4, lastMessage = Long.MIN_VALUE / 4, nextAmbient;
     }
 
@@ -88,11 +89,15 @@ public final class UndineCasting {
             double[] m = UndineRules.fullPalms(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
             palm = new Vec3(m[0], m[1], m[2]);
             full = true;
+        } else if (prop(sl, s.full) != null) {                                                       // the full form is already out: the spell leaves her raised hands
+            double[] m = UndineRules.fullPalms(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
+            palm = new Vec3(m[0], m[1], m[2]);
+            full = true;
+            mood(p, s, UndineMoodRules.Event.CAST_SMALL);
         } else if (s.spirit != null && prop(sl, s.spirit) != null) {
             double[] m = UndineRules.companionPalm(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
             palm = new Vec3(m[0], m[1], m[2]);
-            MagicPropEntity sp = prop(sl, s.spirit);
-            if (sp != null && !UndineRules.hidden(sp.param())) sp.setParam((sp.param() & UndineRules.HIDDEN) | UndineRules.param(UndineRules.V_COMPANION, UndineRules.stampOf(now)));      // the client plays the cast pose for a second after this tick
+            mood(p, s, UndineMoodRules.Event.CAST_SMALL);                                          // the cast pose, the calm face and a spoken line, by the mood rules
         }
         if (palm == null) return FireCasting.run(book, page, inst, p, mode);
         VfxSpawn.send(sl, VfxShape.WATER_SPLASH, palm, palm, 0xFF4FA8FF, 12, 0.5f);
@@ -107,7 +112,7 @@ public final class UndineCasting {
         ServerLevel sl = p.serverLevel();
         double[] a = UndineRules.full(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
         MagicPropEntity e = MagicProps.spawn(sl, PropKind.UNDINE_1, new Vec3(a[0], a[1], a[2]), p.yBodyRot, 1.0f, UndineRules.FULL_TICKS,
-                UndineRules.param(UndineRules.V_FULL, UndineRules.stampOf(now)), p);
+                UndineRules.withPose(UndineRules.param(UndineRules.V_FULL), UndinePose.RISE.id(), UndineFace.CALM.id(), now), p);
         if (e == null) { FULLS.release(p.getUUID()); return false; }
         e.setTarget(p);
         s.full = e.getUUID();
@@ -117,6 +122,9 @@ public final class UndineCasting {
         UndineAudio.play(sl, p.getUUID(), a[0], a[1] + 1.5, a[2], UndineSoundSet.Cue.FULL, true);
         UUID owner = p.getUUID();
         SpellRuntime.later(sl, 10, () -> UndineAudio.play(sl, owner, a[0], a[1] + 1.0, a[2], UndineSoundSet.Cue.CRASH, true));      // the wave crashes as she finishes rising
+        SpellRuntime.later(sl, UndinePose.RISE.ticks() - 2, () -> {                                                                 // risen: the powered swell, the stern face and her war cry
+            if (sl.getPlayerByUUID(owner) instanceof ServerPlayer again && STATES.get(owner) == s && prop(sl, s.full) != null) mood(again, s, UndineMoodRules.Event.CAST_BIG);
+        });
         return true;
     }
 
@@ -169,15 +177,17 @@ public final class UndineCasting {
             return false;
         }
         double[] a = UndineRules.companion(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
-        MagicPropEntity e = MagicProps.spawn(sl, PropKind.UNDINE_1, new Vec3(a[0], a[1], a[2]), p.yBodyRot, 1.0f, 24000, UndineRules.param(UndineRules.V_COMPANION, 0), p);
+        MagicPropEntity e = MagicProps.spawn(sl, PropKind.UNDINE_1, new Vec3(a[0], a[1], a[2]), p.yBodyRot, 1.0f, 24000, UndineRules.param(UndineRules.V_COMPANION), p);
         if (e == null) { SPIRITS.release(p.getUUID()); return false; }
         e.setTarget(p);
         s.spirit = e.getUUID();
         s.nextAmbient = sl.getGameTime() + 100;
+        s.mood.reset(sl.getGameTime());
         LIVE.add(p.getUUID());
         VfxSpawn.send(sl, VfxShape.WATER_RING, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.3, a[2]), 0xFF4FA8FF, 16, 0.7f);
         UndineAudio.play(sl, p.getUUID(), a[0], a[1] + 1.0, a[2], UndineSoundSet.Cue.LINK, false);
         say(p, s, "nusmp.undine.spirit.linked", "Undine rises from the water beside you.", ChatFormatting.AQUA);
+        mood(p, s, UndineMoodRules.Event.LINK);
         return true;
     }
 
@@ -186,11 +196,56 @@ public final class UndineCasting {
         MagicPropEntity e = prop(sl, s.spirit);
         if (e != null) {
             UndineAudio.play(sl, p.getUUID(), e.getX(), e.getY() + 1.0, e.getZ(), UndineSoundSet.Cue.UNLINK, false);
-            e.discard();
+            mood(p, s, UndineMoodRules.Event.UNLINK, e);                                                // the farewell pose and her last words, then she is gone
+            MagicPropEntity old = prop(sl, s.leaving);
+            if (old != null) old.discard();                                                          // at most one leaving Undine per player
+            s.leaving = e.getUUID();
+            UUID owner = p.getUUID(), gone = e.getUUID();
+            SpellRuntime.later(sl, UndinePose.FAREWELL.ticks() + 2, () -> {
+                MagicPropEntity still = prop(sl, gone);
+                if (still != null) still.discard();
+                State st = STATES.get(owner);
+                if (st != null && gone.equals(st.leaving)) st.leaving = null;
+            });
         }
         if (s.spirit != null) SPIRITS.release(p.getUUID());
         s.spirit = null;
         if (say) say(p, s, "nusmp.undine.spirit.unlinked", "Undine sinks back into the water.", ChatFormatting.GRAY);
+    }
+
+    // ================================================================================================ the mood (poses, faces, spoken lines)
+    /** The prop that shows her right now: the full form while it is out, else the companion. */
+    static MagicPropEntity active(ServerLevel sl, State s) {
+        MagicPropEntity f = prop(sl, s.full);
+        return f != null ? f : prop(sl, s.spirit);
+    }
+
+    /**
+     * Something happened to this player: the pure mood rules ({@link UndineMoodRules}) say which pose, face and line she answers with (and when she keeps still), the prop word carries the pose and the face
+     * to every client in one int, and the line goes through {@link UndineSpeech}. Cheap: a few array reads; the packet is the prop's own data sync, at most one per pose change.
+     */
+    public static void mood(ServerPlayer p, UndineMoodRules.Event ev) {
+        State s = STATES.get(p.getUUID());
+        if (s != null) mood(p, s, ev);
+    }
+
+    static void mood(ServerPlayer p, State s, UndineMoodRules.Event ev) { mood(p, s, ev, active(p.serverLevel(), s)); }
+
+    static void mood(ServerPlayer p, State s, UndineMoodRules.Event ev, MagicPropEntity e) {
+        ServerLevel sl = p.serverLevel();
+        if (e == null) return;
+        long now = sl.getGameTime();
+        UndineMoodRules.Mood m = UndineMoodRules.decide(s.mood, ev, now, sl.random.nextInt());
+        if (m == null) return;
+        boolean full = UndineRules.variant(e.param()) == UndineRules.V_FULL;
+        if (m.pose() != null) e.setParam(UndineRules.withPose(e.param(), m.pose().id(), m.face() == null ? UndineFace.CALM.id() : m.face().id(), now));
+        if (m.speech() != null) UndineSpeech.say(p, sl, e.getX(), e.getY() + (full ? 2.6 : 1.5), e.getZ(), m.speech(), s.mood.nextSpeech(), full);
+    }
+
+    /** Her master died: she has her last words before everything of the player is forgotten. */
+    public static void ownerDied(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s != null) mood(p, s, UndineMoodRules.Event.OWNER_DIED);
     }
 
     // ================================================================================================ upkeep and cleanup
@@ -210,6 +265,10 @@ public final class UndineCasting {
                 if (e != null && !UndineRules.hidden(e.param())) UndineAudio.play(sl, p.getUUID(), e.getX(), e.getY() + 1.2, e.getZ(), UndineSoundSet.Cue.AMBIENT, false);
             }
         }
+        if (s.spirit != null || s.full != null) {
+            if (UndineMoodRules.lowHealth(p.getHealth(), p.getMaxHealth())) mood(p, s, UndineMoodRules.Event.OWNER_LOW_HP);
+            mood(p, s, UndineMoodRules.Event.IDLE);
+        }
         if (s.spirit == null && s.full == null) LIVE.remove(p.getUUID());
     }
 
@@ -220,8 +279,9 @@ public final class UndineCasting {
         SPIRITS.forget(p.getUUID());
         FULLS.forget(p.getUUID());
         UndineAudio.forget(p.getUUID());
+        UndineSpeech.forget(p.getUUID());
         if (s == null || !(p.level() instanceof ServerLevel sl)) return;
-        for (UUID id : new UUID[]{s.spirit, s.full}) if (id != null && sl.getEntity(id) instanceof MagicPropEntity e) e.discard();
+        for (UUID id : new UUID[]{s.spirit, s.full, s.leaving}) if (id != null && sl.getEntity(id) instanceof MagicPropEntity e) e.discard();
     }
 
     /** The server stops: nothing may survive into the next world. */
@@ -231,6 +291,7 @@ public final class UndineCasting {
         SPIRITS.clear();
         FULLS.clear();
         UndineAudio.clearAll();
+        UndineSpeech.clearAll();
         emitterOwner = null;
         emitterAt = null;
     }
@@ -241,6 +302,7 @@ public final class UndineCasting {
         if (s == null || entity == null) return;
         if (variant == UndineRules.V_FULL && entity.equals(s.full)) { s.full = null; FULLS.release(owner); }
         else if (variant == UndineRules.V_COMPANION && entity.equals(s.spirit)) { s.spirit = null; SPIRITS.release(owner); }
+        else if (entity.equals(s.leaving)) s.leaving = null;
     }
 
     /** The prop entity with this id in this level, or null. */

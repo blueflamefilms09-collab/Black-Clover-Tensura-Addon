@@ -1,0 +1,322 @@
+[
+ {
+  "id": "undine_link_1",
+  "group": "link",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft, serene] I am here, beside you."
+ },
+ {
+  "id": "undine_link_2",
+  "group": "link",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gentle] The water answers you, as it always has."
+ },
+ {
+  "id": "undine_link_3",
+  "group": "link",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[warm, airy] Call, and I will rise."
+ },
+ {
+  "id": "undine_link_4",
+  "group": "link",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft smile] Good to see you again, my friend."
+ },
+ {
+  "id": "undine_farewell_1",
+  "group": "farewell",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft, wistful] I return to the water. Call me again."
+ },
+ {
+  "id": "undine_farewell_2",
+  "group": "farewell",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gentle] Until the tide brings us together."
+ },
+ {
+  "id": "undine_farewell_3",
+  "group": "farewell",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[quiet] Rest well. I will be listening."
+ },
+ {
+  "id": "undine_cast_1",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[calm] Flow."
+ },
+ {
+  "id": "undine_cast_2",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gentle, firm] Let the water carry it."
+ },
+ {
+  "id": "undine_cast_3",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[softly] Rise, and run."
+ },
+ {
+  "id": "undine_cast_4",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[calm, focused] Tides, obey."
+ },
+ {
+  "id": "undine_cast_5",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[quiet] Go, little wave."
+ },
+ {
+  "id": "undine_cast_6",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[serene] As the river wills."
+ },
+ {
+  "id": "undine_cast_7",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[firm] Sea, lend me your strength."
+ },
+ {
+  "id": "undine_cast_8",
+  "group": "cast",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[focused] Be washed away."
+ },
+ {
+  "id": "undine_wave_1",
+  "group": "wave",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[powerful, resonant] Rise, great sea! Crash upon them!"
+ },
+ {
+  "id": "undine_wave_2",
+  "group": "wave",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[commanding, echoing] Hear the roar of the deep!"
+ },
+ {
+  "id": "undine_wave_3",
+  "group": "wave",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[intense] Drown their fury beneath the waves!"
+ },
+ {
+  "id": "undine_wave_4",
+  "group": "wave",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[ringing] Let the ocean remember its name!"
+ },
+ {
+  "id": "undine_hurt_1",
+  "group": "hurt",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[concerned] Be careful."
+ },
+ {
+  "id": "undine_hurt_2",
+  "group": "hurt",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[worried] You are bleeding."
+ },
+ {
+  "id": "undine_hurt_3",
+  "group": "hurt",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[firm, caring] Do not let them touch you."
+ },
+ {
+  "id": "undine_hurt_4",
+  "group": "hurt",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gasps] Oh!"
+ },
+ {
+  "id": "undine_hurt_5",
+  "group": "hurt",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[concerned] Stay with me."
+ },
+ {
+  "id": "undine_idle_1",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[dreamy, soft] The water is calm tonight."
+ },
+ {
+  "id": "undine_idle_2",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gentle, humming] Hm... listen to the stream."
+ },
+ {
+  "id": "undine_idle_3",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[serene] Every river finds the sea in the end."
+ },
+ {
+  "id": "undine_idle_4",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft] I can hear the rain, far away."
+ },
+ {
+  "id": "undine_idle_5",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[wistful] The tide remembers everyone."
+ },
+ {
+  "id": "undine_idle_6",
+  "group": "idle",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[warm] Take your time. I am not going anywhere."
+ },
+ {
+  "id": "undine_lowhp_1",
+  "group": "lowhp",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[worried] Your strength is fading. Let me help you."
+ },
+ {
+  "id": "undine_lowhp_2",
+  "group": "lowhp",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[urgent, gentle] Please, be careful. You are hurt."
+ },
+ {
+  "id": "undine_lowhp_3",
+  "group": "lowhp",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft, pleading] Do not give up. I am with you."
+ },
+ {
+  "id": "undine_lowhp_4",
+  "group": "lowhp",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[concerned] Breathe. The water will mend you."
+ },
+ {
+  "id": "undine_win_1",
+  "group": "win",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[pleased] Well done."
+ },
+ {
+  "id": "undine_win_2",
+  "group": "win",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[soft smile] The tide is yours."
+ },
+ {
+  "id": "undine_win_3",
+  "group": "win",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[warm] As I knew you would."
+ },
+ {
+  "id": "undine_win_4",
+  "group": "win",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[gentle laugh] Beautifully done."
+ },
+ {
+  "id": "undine_died_1",
+  "group": "died",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[heartbroken, quiet] No... come back to the water..."
+ },
+ {
+  "id": "undine_died_2",
+  "group": "died",
+  "voice": "g12yXXabMWeFoLMzxPrF",
+  "voice_name": "Julie I",
+  "model": "eleven_v4",
+  "prompt": "[sorrowful] Sleep now. I will carry you home."
+ }
+]

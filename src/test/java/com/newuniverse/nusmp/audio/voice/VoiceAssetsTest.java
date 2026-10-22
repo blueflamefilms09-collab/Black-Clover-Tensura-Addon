@@ -85,7 +85,7 @@ class VoiceAssetsTest {
             assertFalse(o.get("voice").getAsString().isBlank(), id + " has no voice id");
         }
         assertEquals(120, ids.size(), "the owner asked for all 120 lines");
-        assertEquals(ids, VoiceCatalog.ids(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines");
+        assertEquals(ids, VoiceCatalog.baseIds(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines (the Undine's lines come after them)");
         assertEquals(new HashSet<>(ids).size(), ids.size(), "an id is listed twice");
     }
 
@@ -102,7 +102,7 @@ class VoiceAssetsTest {
                 continue;
             }
             JsonObject e = entry.getAsJsonObject();
-            if (e.has("subtitle")) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");
+            if (e.has("subtitle") && !VoiceCatalog.UNDINE.equals(VoiceCatalog.role(id))) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");        // the Undine's words are written nowhere else: her lines have a subtitle (UndineVoiceAssetsTest)
             JsonArray sounds = e.getAsJsonArray("sounds");
             if (sounds == null || sounds.size() != 1) {
                 bad.add(key + ": exactly one file expected");

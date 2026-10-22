@@ -23,6 +23,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import undine_geo_lib as L  # noqa: E402
 import gen_undine_art as A  # noqa: E402
+import undine_poses as P  # noqa: E402
 from undine_geo_lib import rot_m, euler_of, rx_m, ry_m, rz_m  # noqa: E402
 
 # ====================================================================================================================== numbers (model units: 1/16 block)
@@ -36,9 +37,9 @@ SKIRT_SECTORS = 12          # sway groups round the skirt
 
 def lod_cfg(lod):
     return {
-        0: dict(ribbons=1.0, panels=SK['INNER_N'], streams=SK['OUTER_N'], shell=24, splash=24, tears=2, drops=24, hair_layers=3, locks=4, fingers=True, base_n=(10, 13, 16)),
+        0: dict(ribbons=1.0, panels=SK['INNER_N'], streams=SK['OUTER_N'], shell=32, splash=28, tears=2, drops=32, hair_layers=6, locks=4, fingers=True, base_n=(11, 14, 17)),
         1: dict(ribbons=0.5, panels=12, streams=12, shell=12, splash=12, tears=1, drops=8, hair_layers=2, locks=2, fingers=False, base_n=(8, 10, 12)),
-        2: dict(ribbons=0.18, panels=8, streams=0, shell=0, splash=0, tears=0, drops=0, hair_layers=1, locks=0, fingers=False, base_n=(6, 8, 0)),
+        2: dict(ribbons=0.4, panels=8, streams=0, shell=0, splash=0, tears=0, drops=0, hair_layers=1, locks=0, fingers=False, base_n=(6, 8, 0)),
     }[lod]
 
 
@@ -235,7 +236,7 @@ def hair_plan(cfg, lod, regions):
             if keep < 1.0 and (j * 0.6180339 + layer * 0.37) % 1.0 > keep:
                 continue
             for s in (1, -1):
-                lyaw = yaw + layer * 34.0 + (4 if s < 0 else -4)
+                lyaw = yaw + layer * 26.0 + (4 if s < 0 else -4)
                 lrise = rise + (layer - 1) * 6.0
                 length = ln * (1.0 - 0.07 * layer) * (0.95 + 0.1 * rng.random())
                 root = np.array([rx, ry - layer * 0.9, rz + layer * 0.6])
@@ -260,7 +261,7 @@ def water_regions(art, lod):
     k = 1.0 if lod == 0 else 0.5
     out = {n: (max(8, int(round(w * k / 4.0)) * 4), max(8, int(round(h * k / 4.0)) * 4)) for n, (w, h) in art.WATER_REGIONS.items()}
     n = lod_cfg(lod)["streams"]
-    out["skirt_out"] = (n * (64 if lod == 0 else 44), 380 if lod == 0 else 192)
+    out["skirt_out"] = (n * (48 if lod == 0 else 44), 380 if lod == 0 else 192)
     art.B.CTX["OUTER_N"] = n
     return out
 
@@ -270,6 +271,29 @@ def make_atlas_of(regs, width, art):
     for name, (w, h) in sorted(regs.items(), key=lambda kv: -kv[1][1]):
         at.region(name, w, h, lambda ww, hh, n=name: art.paint(n, ww, hh))
     return at
+
+
+def build_face(at, key):
+    """One expression: a single card over the face (the head model's front face is at z -3.4, the hair shell's at -3.8; the sheet is drawn after the body with no depth write, so its place in z only has to
+    keep it off the face's own plane)."""
+    m = L.Model("undine_face_" + key, at)
+    add_skeleton(m)
+    m.card("head", (0.0, 45.5, -3.43), (7.4, 9.0), (0, 0, 0), key)
+    return m
+
+
+def build_faces(save=True):
+    """One model and one 320 x 392 texture per expression (undine_face_<key>), each a single card: the project's GeoAssetsTest wants a texture of the model's own name."""
+    out = []
+    for k in A.FACE_KEYS:
+        at = L.Atlas(*A.FACE_SHEET)
+        at.region(k, 320, 392, lambda ww, hh, n=k: A.face_overlay(n, ww, hh))
+        m = build_face(at, k)
+        out.append(m)
+        if save:
+            m.save()
+            at.save_color(m.id)
+    return out
 
 
 def build_water(at, lod, ident, body_regions):
@@ -293,7 +317,7 @@ def build_water(at, lod, ident, body_regions):
         radial = np.array([math.sin(a), 0.0, -math.cos(a)])
         c = radial * (HEM_R + 1.0) + np.array([0, 2.2, 0])
         eul = L.look_card(radial * 0.94 + np.array([0, 0.34, 0]), up_hint=(0, 1, 0), roll=(i % 3 - 1) * 6.0)
-        m.card("sk%d" % sector_of(az), tuple(c), (2 * math.pi * (HEM_R + 1) / nf * 1.3, 4.0), eul, "splash", flip=(i % 2 == 1))
+        m.card("sk%d" % sector_of(az), tuple(c), (2 * math.pi * (HEM_R + 1) / nf * 1.3, 3.2), eul, "splash", flip=(i % 2 == 1))
     for s, tag in ((1, "l"), (-1, "r")):                                                 # the foam bands on the upper arms, and torn streaks off them
         sx, sy, _ = RIG.sh[s]
         ey = RIG.elbow[s][1]
@@ -335,7 +359,7 @@ def build_fx(at, ident):
 def build_base(at, lod, ident):
     cfg = lod_cfg(lod)
     m = L.Model(ident, at)
-    rings = [("base_a", 21.0, 22.0, "wave_a", 0), ("base_b", 30.0, 26.0, "wave_b", 1), ("base_c", 39.0, 30.0, "wave_c", 2)]
+    rings = [("base_a", 25.0, 20.0, "wave_a", 0), ("base_b", 32.0, 22.0, "wave_b", 1), ("base_c", 39.0, 24.0, "wave_c", 2)]
     for bone, R, w, region, k in rings:
         n = cfg["base_n"][k]
         if n <= 0:
@@ -370,7 +394,7 @@ def _sway(length, amp, phase, axes=(0, 1, 2), freq=1, steps=16, bias=(0, 0, 0), 
     return fr
 
 
-MAX_RIBBONS = 48
+MAX_RIBBONS = 120
 
 
 def animations():
@@ -465,6 +489,7 @@ def animations():
         bones["fore_" + tag] = {"rotation": dict(zip(ts, [(-24.0, 0, -s * 6.0), (-10.0, 0, -s * 2.0), (0, 0, 0)]))}
         bones["hand_" + tag] = {"rotation": dict(zip(ts, [(8.0, 0, 0), (3.0, 0, 0), (0, 0, 0)]))}
     clips["open"] = {"loop": "hold", "length": T, "bones": bones}
+    clips.update(P.pose_clips(MAX_RIBBONS, SKIRT_SECTORS))                          # welcome, clasp, wave, sorrow, rise, cast (+ _f), power, flinch, farewell
     return clips
 
 
@@ -472,10 +497,12 @@ def animations():
 def build_all(count_only=False):
     art = A
     rows = []
+    rows_models = []
     for lod, ident in ((0, "undine_body"), (1, "undine_body_lod1"), (2, "undine_body_lod2")):
         at = make_body_atlas(art, lod)
         m = build_body(at, lod, ident)
         rows.append((m.id, m.cubes(), m.quads(), at.w, at.h))
+        rows_models.append(m)
         if not count_only:
             m.save()
             at.save_color(m.id)
@@ -501,11 +528,19 @@ def build_all(count_only=False):
         if not count_only:
             m.save()
             at.save_color(m.id)
+    for m in build_faces(not count_only):
+        rows.append((m.id, m.cubes(), m.quads(), A.FACE_SHEET[0], A.FACE_SHEET[1]))
     if not count_only:
-        L.write_animations("undine_body", animations())
+        clips = animations()
+        lod0 = set(rows_models[0].bones)                                              # the clip file is the one of undine_body: it may only move bones that model has (GeoAssetsTest)
+        for clip in clips.values():
+            clip["bones"] = {k: v for k, v in clip["bones"].items() if k in lod0}
+        L.write_animations("undine_body", clips)
         ring = A.paint("ring", 256, 256)
         from PIL import Image
-        Image.fromarray(np.clip(ring, 0, 255).astype(np.uint8), "RGBA").save(os.path.join(L.ROOT, "textures", "entity", "undine_ring.png"), optimize=True)
+        ring = np.clip(ring, 0, 255).astype(np.uint8)
+        ring[ring[..., 3] == 0] = 0                                                  # nothing under a fully transparent texel (the safe additive rule)
+        Image.fromarray(ring, "RGBA").save(os.path.join(L.ROOT, "textures", "entity", "undine_ring.png"), optimize=True)
     for r in rows:
         print("%-24s cubes %4d  quads %5d   sheet %d x %d" % r)
     return rows

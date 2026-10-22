@@ -25,6 +25,7 @@ public final class UndineAudio {
             case CAST -> 8;
             case FULL, CRASH -> 40;
             case HURT -> 10;
+            case HUM -> 60;
         };
     }
 

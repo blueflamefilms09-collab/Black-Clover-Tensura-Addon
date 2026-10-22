@@ -22,19 +22,16 @@ def S(v):
 
 # ====================================================================================================================== water pass
 def shell(w, h):
-    """A strip of the flowing outer gown, seen from outside: clear blue water (about half transparent) with long white foam streaks, a darker edge on one side, ragged foamy lower end."""
+    """A strip of the flowing outer gown, seen from outside: clear blue water, hardly there at the waist and thicker toward the hem where it runs past the gown onto the waves, a darker tongue,
+    a few soft pale bands, a ragged foamy lower end; the sides fade out so the strips run into each other."""
     rng = np.random.default_rng(1100)
-    img = canvas(w, h, col(A.GOWN, 40))
+    g = np.linspace(0, 1, h * SS) ** 1.6
+    img = canvas(w, h, col(A.GOWN, 0))
     d = ImageDraw.Draw(img)
-    for k in range(3):
-        x0 = w * (0.2 + 0.3 * k)
-        pts = wave_pts(x0, 0, x0 + w * rng.uniform(-0.2, 0.2), h * 0.95, w * 0.12, 1.4, rng.uniform(0, TAU), 40)
-        smooth_ribbon(d, [(x * SS, y * SS) for x, y in pts], [w * 0.1 * SS * (0.4 + 0.7 * i / 39.0) for i in range(40)], col(A.GOWN_DARK, 90))
-    for k in range(3):
-        x0 = w * (0.12 + 0.34 * k) + rng.uniform(-6, 6)
-        pts = wave_pts(x0, 0, x0 + w * rng.uniform(-0.2, 0.2), h * 0.95, w * 0.1, 1.2, rng.uniform(0, TAU), 40)
-        smooth_ribbon(d, [(x * SS, y * SS) for x, y in pts], [w * 0.05 * SS * (0.3 + 1.0 * i / 39.0) for i in range(40)], col(A.FOAM, 120))
-    hatch(d, rng, (0, h * 0.1, w, h * 0.9), 40, h * 0.06, 80, SS * 1.5, col(A.GOWN_MID, 200))
+    d.rectangle([0, 0, w * SS, h * SS], fill=col(A.GOWN, 255))
+    x0 = w * 0.55
+    pts = wave_pts(x0, h * 0.2, x0 + w * 0.1, h * 0.95, w * 0.1, 1.3, rng.uniform(0, TAU), 40)
+    smooth_ribbon(d, [(x * SS, y * SS) for x, y in pts], [w * 0.2 * SS * (0.4 + 0.7 * i / 39.0) for i in range(40)], col(A.GOWN_DARK, 255))
     mask = Image.new("L", img.size, 255)
     md = ImageDraw.Draw(mask)
     md.rectangle([0, S(h * 0.88), w * SS, h * SS], fill=0)
@@ -43,13 +40,11 @@ def shell(w, h):
         r = rng.uniform(4, 8)
         y = h * 0.88 + rng.uniform(-4, 4)
         md.ellipse([S(x - r), S(y - r), S(x + r), S(y + r * 1.8)], fill=255)
-        d.ellipse([S(x - r), S(y - r - 1), S(x + r), S(y + r * 1.8)], fill=col(A.FOAM, 240))
+        d.ellipse([S(x - r), S(y - r - 1), S(x + r), S(y + r * 1.8)], fill=col(A.FOAM, 255))
     rough = torn(mask, rng, 3.0, 8.0)
-    al = np.asarray(img.split()[3], dtype=np.float32) * (np.asarray(rough, dtype=np.float32) / 255.0)
-    # the sides fade out so the strips blend into each other
-    edge = np.minimum(np.linspace(0, 1, w * SS), np.linspace(1, 0, w * SS)) * 8.0
-    al = al * np.clip(edge, 0, 1)[None, :]
-    img.putalpha(Image.fromarray(al.astype(np.uint8), "L"))
+    edge = np.minimum(np.linspace(0, 1, w * SS), np.linspace(1, 0, w * SS)) * 6.0
+    al = np.asarray(rough, dtype=np.float32) * (g[:, None] * 0.42) * np.clip(edge, 0, 1)[None, :]
+    img.putalpha(Image.fromarray(np.clip(al, 0, 255).astype(np.uint8), "L"))
     return done(img, w, h)
 
 
@@ -135,7 +130,7 @@ def _soft(w, h, fn):
 
 def streak(w, h):
     """A soft vertical streak of light: a long gaussian ridge with a slow wave, brightest in the middle."""
-    return _soft(w, h, lambda u, v: np.exp(-((u + 0.18 * np.sin(v * 2.6)) / 0.22) ** 2) * np.clip(1 - np.abs(v) ** 3, 0, 1) * 0.16)
+    return _soft(w, h, lambda u, v: np.exp(-((u + 0.18 * np.sin(v * 2.6)) / 0.22) ** 2) * np.clip(1 - np.abs(v) ** 3, 0, 1) * 0.10)
 
 
 def glint(w, h):

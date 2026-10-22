@@ -24,53 +24,76 @@ def pt(x, y):
 
 
 # ====================================================================================================================== the face
-def _eye(d, cx, cy, w, h, flip):
-    """One calm almond eye with a pale blue iris, a thick upper lid with a flick, thin lower lash, and two highlights."""
+def _eye(d, cx, cy, w, h, flip, mode="open", iris=1.0):
+    """One calm almond eye with a pale blue iris, a thin upper lid with a flick, thin lower lash, and two highlights. Modes: open, wide, narrow, happy (the lower lid lifts into a smile), sad (the outer
+    corner droops, the eye is wet), closed (a curve with lashes)."""
     sx = -1 if flip else 1
-    # white
-    lid_top = [(cx - sx * w * 0.5 + sx * w * i / 24.0, cy - h * 0.55 * math.sin(math.pi * (0.04 + 0.92 * i / 24.0)) ** 0.8 + (h * 0.1 if i > 18 else 0)) for i in range(25)]
-    low = [(cx + sx * w * 0.5 - sx * w * i / 24.0, cy + h * 0.38 * math.sin(math.pi * (0.04 + 0.92 * i / 24.0)) ** 1.0) for i in range(25)]
+    if mode == "closed":
+        pts = [pt(cx - sx * w * 0.5 + sx * w * i / 20.0, cy + h * 0.18 * math.sin(math.pi * i / 20.0) ** 0.9 - h * 0.05) for i in range(21)]
+        smooth_ribbon(d, pts, [h * (0.07 + 0.10 * math.sin(math.pi * (0.1 + 0.8 * i / 20.0))) * SS for i in range(21)], col("#2C303E"))
+        for k in range(3):                                                         # three short lashes at the outer end
+            ox, oy = cx + sx * w * (0.30 + 0.07 * k), cy + h * 0.10
+            smooth_ribbon(d, [pt(ox, oy), pt(ox + sx * w * 0.05, oy + h * (0.22 + 0.03 * k))], [h * 0.05 * SS, h * 0.02 * SS], col("#2C303E"))
+        return
+    droop = h * 0.16 if mode == "sad" else 0.0
+    lid_top = [(cx - sx * w * 0.5 + sx * w * i / 24.0, cy - h * 0.55 * math.sin(math.pi * (0.04 + 0.92 * i / 24.0)) ** 0.8 + (h * 0.1 if i > 18 else 0) + droop * (i / 24.0)) for i in range(25)]
+    low_lift = h * 0.30 if mode == "happy" else 0.0
+    low = [(cx + sx * w * 0.5 - sx * w * i / 24.0, cy + h * 0.38 * math.sin(math.pi * (0.04 + 0.92 * i / 24.0)) ** 1.0 - low_lift * math.sin(math.pi * i / 24.0) + droop * (1 - i / 24.0)) for i in range(25)]
     d.polygon([pt(x, y) for x, y in lid_top + low], fill=col("#F8FAFF"))
-    # iris (clipped to the eye by drawing inside then re-drawing the lid over it)
-    ir = h * 0.70
-    ix, iy = cx + sx * w * 0.02, cy + h * 0.02
+    ir = h * 0.70 * iris
+    ix, iy = cx + sx * w * 0.02, cy + h * 0.02 + (droop * 0.4 if mode == "sad" else 0.0)
     d.ellipse([S(ix - ir), S(iy - ir * 1.12), S(ix + ir), S(iy + ir * 1.12)], fill=col(A.IRIS))
     d.ellipse([S(ix - ir * 0.9), S(iy - ir * 1.0), S(ix + ir * 0.9), S(iy + ir * 0.1)], fill=col(A.IRIS_DARK))
     d.ellipse([S(ix - ir * 0.78), S(iy - ir * 0.55), S(ix + ir * 0.78), S(iy + ir * 1.02)], fill=col("#B9D9EE"))
     d.ellipse([S(ix - ir * 0.30), S(iy - ir * 0.30), S(ix + ir * 0.30), S(iy + ir * 0.32)], fill=col("#34465A"))
     d.ellipse([S(ix - ir * 0.52), S(iy - ir * 0.62), S(ix - ir * 0.14), S(iy - ir * 0.24)], fill=col("#FFFFFF"))
     d.ellipse([S(ix + ir * 0.2), S(iy + ir * 0.28), S(ix + ir * 0.42), S(iy + ir * 0.5)], fill=col("#E8F6FF"))
-    # the upper lid: a thick tapered line with a flick at the outer corner, drawn over the iris
+    if mode == "sad":                                                              # a wet eye: a bigger glint, a tear on the lower lid
+        d.ellipse([S(ix - ir * 0.55), S(iy - ir * 0.70), S(ix + ir * 0.05), S(iy - ir * 0.10)], fill=col("#FFFFFF"))
+        tx, ty = cx + sx * w * 0.38, cy + h * 0.62
+        d.polygon([pt(tx, ty - h * 0.30), pt(tx - h * 0.14, ty + h * 0.05), pt(tx + h * 0.14, ty + h * 0.05)], fill=col("#CFE8F8"))
+        d.ellipse([S(tx - h * 0.14), S(ty - h * 0.08), S(tx + h * 0.14), S(ty + h * 0.2)], fill=col("#CFE8F8"))
     widths = [h * (0.17 * math.sin(math.pi * (0.1 + 0.8 * i / 24.0)) ** 0.6 + 0.05) for i in range(25)]
+    if mode == "narrow":
+        widths = [w_ * 1.4 for w_ in widths]
     smooth_ribbon(d, [pt(x, y) for x, y in lid_top], [wv * SS for wv in widths], col("#2C303E"))
-    ox, oy = cx + sx * w * 0.5, cy - h * 0.05
+    ox, oy = cx + sx * w * 0.5, cy - h * 0.05 + (droop if mode == "sad" else 0.0)
     smooth_ribbon(d, [pt(ox - sx * w * 0.06, oy), pt(ox + sx * w * 0.12, oy - h * 0.16), pt(ox + sx * w * 0.2, oy - h * 0.3)], [h * 0.12 * SS, h * 0.07 * SS, h * 0.02 * SS], col("#2C303E"))
     smooth_ribbon(d, [pt(x, y) for x, y in low[2:-3]], [h * 0.055 * SS] * len(low[2:-3]), col("#7C849A"))
 
 
-def face(w, h):
-    rng = np.random.default_rng(101)
+# the expressions: eye mode and height (of the face height), brow (inner y, mid y, outer y as fractions of the face height, thickness), mouth ('line', 'smile', 'frown', 'open', 'flat', 'tight') and blush
+EXPR = {
+    "calm": dict(eye="open", eh=0.092, brow=(0.415, 0.392, 0.405, 1.0), mouth="line", blush=1.0, iris=1.0),
+    "smile": dict(eye="happy", eh=0.090, brow=(0.405, 0.385, 0.395, 1.0), mouth="smile", blush=1.9, iris=1.0),
+    "sad": dict(eye="sad", eh=0.094, brow=(0.372, 0.388, 0.425, 1.0), mouth="frown", blush=0.4, iris=1.05),
+    "stern": dict(eye="narrow", eh=0.074, brow=(0.402, 0.392, 0.398, 1.7), mouth="flat", blush=0.2, iris=0.95),
+    "angry": dict(eye="narrow", eh=0.068, brow=(0.408, 0.386, 0.358, 2.0), mouth="tight", blush=0.0, iris=0.85),
+    "surprised": dict(eye="wide", eh=0.128, brow=(0.352, 0.330, 0.352, 1.0), mouth="open", blush=0.8, iris=0.80),
+    "serene": dict(eye="closed", eh=0.092, brow=(0.405, 0.385, 0.395, 0.9), mouth="smile_small", blush=1.4, iris=1.0),
+}
+
+
+def face_expr(w, h, expr="calm"):
+    ex = EXPR[expr]
     img = canvas(w, h)
     d = ImageDraw.Draw(img)
     cx = w / 2.0
-    # the oval of the face: wide at the temples, tapering to a small chin
     outline = []
     for i in range(61):
         t = i / 60.0
         y = h * t
-        half = w * 0.50 * (1.0 - 0.0 * t)
+        half = w * 0.50
         if t > 0.55:
             k = (t - 0.55) / 0.45
             half = w * 0.50 * (1 - 0.82 * k ** 1.35) if k < 1 else w * 0.09
         outline.append((cx - half, y))
     right = [(cx + (cx - x), y) for x, y in outline][::-1]
-    face_poly = outline + right
     mask = mask_canvas(w, h)
     md = ImageDraw.Draw(mask)
-    md.polygon([pt(x, y) for x, y in face_poly], fill=255)
+    md.polygon([pt(x, y) for x, y in outline + right], fill=255)
     md.ellipse([S(cx - w * 0.095), S(h - w * 0.07), S(cx + w * 0.095), S(h + w * 0.02)], fill=255)
     fill_mask(img, mask, col(A.SKIN))
-    # the bluish cel shade: under the hair at the temples and along the jaw, and under the nose
     sh = mask_canvas(w, h)
     sd = ImageDraw.Draw(sh)
     sd.polygon([pt(0, h * 0.18), pt(w * 0.16, h * 0.30), pt(w * 0.12, h * 0.70), pt(0, h * 0.60)], fill=255)
@@ -78,31 +101,49 @@ def face(w, h):
     sd.polygon([pt(w * 0.07, h * 0.72), pt(w * 0.26, h * 0.88), pt(cx, h * 0.97), pt(w * 0.74, h * 0.88), pt(w * 0.93, h * 0.72), pt(w * 0.80, h * 0.90), pt(cx, h * 1.02), pt(w * 0.20, h * 0.90)], fill=255)
     from PIL import ImageChops
     fill_mask(img, ImageChops.multiply(sh, mask), col(A.SKIN_SHADE2, 190))
-    cheek = mask_canvas(w, h)
-    cd = ImageDraw.Draw(cheek)
+    if expr == "angry":                                                            # a shadow over the eyes
+        bs = mask_canvas(w, h)
+        ImageDraw.Draw(bs).rectangle([S(w * 0.08), S(h * 0.34), S(w * 0.92), S(h * 0.47)], fill=90)
+        fill_mask(img, ImageChops.multiply(blur(bs, 14), mask), col("#9FA8C0", 110))
+    if ex["blush"] > 0:
+        cheek = mask_canvas(w, h)
+        cd = ImageDraw.Draw(cheek)
+        for sx in (-1, 1):
+            cd.ellipse([S(cx + sx * w * 0.26 - w * 0.1), S(h * 0.62 - h * 0.03), S(cx + sx * w * 0.26 + w * 0.1), S(h * 0.62 + h * 0.03)], fill=int(min(255, 110 * ex["blush"])))
+        fill_mask(img, ImageChops.multiply(blur(cheek, 7), mask), col("#F0CFD2", int(min(255, 150 * min(1.6, ex["blush"])))))
     for sx in (-1, 1):
-        cd.ellipse([S(cx + sx * w * 0.26 - w * 0.1), S(h * 0.62 - h * 0.03), S(cx + sx * w * 0.26 + w * 0.1), S(h * 0.62 + h * 0.03)], fill=110)
-    fill_mask(img, ImageChops.multiply(blur(cheek, 7), mask), col("#F0CFD2", 150))
-    # eyes
-    for sx in (-1, 1):
-        ex = cx + sx * w * 0.225
+        exx = cx + sx * w * 0.225
         ey = h * 0.515
-        _eye(d, ex, ey, w * 0.255, h * 0.092, sx > 0)
-        # eyebrow: thin, high, a soft arch in the hair's grey-blue
-        smooth_ribbon(d, [pt(ex - sx * w * 0.11, h * 0.425), pt(ex - sx * w * 0.02, h * 0.405), pt(ex + sx * w * 0.09, h * 0.41), pt(ex + sx * w * 0.14, h * 0.43)],
-                      [w * 0.012 * SS, w * 0.016 * SS, w * 0.014 * SS, w * 0.006 * SS], col("#8E9CB5"))
-    # nose: a small shadow line and a nostril hint
+        _eye(d, exx, ey, w * 0.255, h * ex["eh"], sx > 0, ex["eye"], ex["iris"])
+        bi, bm, bo, bt = ex["brow"]
+        smooth_ribbon(d, [pt(exx - sx * w * 0.12, h * bi), pt(exx - sx * w * 0.03, h * ((bi + bm) / 2.0)), pt(exx + sx * w * 0.08, h * bm), pt(exx + sx * w * 0.15, h * bo)],
+                      [w * 0.010 * bt * SS, w * 0.014 * bt * SS, w * 0.012 * bt * SS, w * 0.005 * bt * SS], col("#8E9AB4" if bt > 1.4 else "#9DAAC2"))
     smooth_ribbon(d, [pt(cx - w * 0.012, h * 0.55), pt(cx - w * 0.02, h * 0.64), pt(cx + w * 0.015, h * 0.675)], [w * 0.008 * SS, w * 0.012 * SS, w * 0.008 * SS], col("#C9AEB2"))
-    # mouth: a calm closed mouth, the upper lip line dark, the lower lip a soft rose
     my = h * 0.775
-    d.polygon([pt(cx - w * 0.075, my), pt(cx - w * 0.03, my - h * 0.012), pt(cx, my - h * 0.008), pt(cx + w * 0.03, my - h * 0.012), pt(cx + w * 0.075, my), pt(cx, my + h * 0.004)], fill=col("#C98C90"))
-    d.polygon([pt(cx - w * 0.06, my + h * 0.003), pt(cx + w * 0.06, my + h * 0.003), pt(cx + w * 0.035, my + h * 0.03), pt(cx, my + h * 0.036), pt(cx - w * 0.035, my + h * 0.03)], fill=col(A.LIP))
-    smooth_ribbon(d, [pt(cx - w * 0.078, my + h * 0.002), pt(cx, my + h * 0.006), pt(cx + w * 0.078, my + h * 0.002)], [w * 0.008 * SS] * 3, col("#7A5560"))
-    # the thin dark outline of the jaw and chin
-    jaw = [(x, y) for x, y in outline if y > h * 0.5]
-    smooth_ribbon(d, [pt(x, y) for x, y in jaw], [w * 0.012 * SS] * len(jaw), col(A.LINE, 230))
-    smooth_ribbon(d, [pt(2 * cx - x, y) for x, y in jaw], [w * 0.012 * SS] * len(jaw), col(A.LINE, 230))
+    mk = ex["mouth"]
+    if mk in ("line", "smile", "smile_small"):
+        up = 0.0 if mk == "line" else (0.020 if mk == "smile" else 0.012)
+        d.polygon([pt(cx - w * 0.075, my - h * up), pt(cx - w * 0.03, my - h * 0.012), pt(cx, my - h * 0.008), pt(cx + w * 0.03, my - h * 0.012), pt(cx + w * 0.075, my - h * up), pt(cx, my + h * 0.004)], fill=col("#C98C90"))
+        d.polygon([pt(cx - w * 0.06, my + h * 0.003 - h * up * 0.6), pt(cx + w * 0.06, my + h * 0.003 - h * up * 0.6), pt(cx + w * 0.035, my + h * (0.03 + up * 0.2)), pt(cx, my + h * (0.036 + up * 0.2)), pt(cx - w * 0.035, my + h * (0.03 + up * 0.2))], fill=col(A.LIP))
+        smooth_ribbon(d, [pt(cx - w * 0.078, my - h * up), pt(cx, my + h * 0.006), pt(cx + w * 0.078, my - h * up)], [w * 0.008 * SS] * 3, col("#7A5560"))
+    elif mk == "frown":
+        smooth_ribbon(d, [pt(cx - w * 0.07, my + h * 0.012), pt(cx, my - h * 0.004), pt(cx + w * 0.07, my + h * 0.012)], [w * 0.010 * SS] * 3, col("#7A5560"))
+        d.polygon([pt(cx - w * 0.05, my + h * 0.004), pt(cx + w * 0.05, my + h * 0.004), pt(cx, my + h * 0.03)], fill=col(A.LIP))
+    elif mk in ("flat", "tight"):
+        smooth_ribbon(d, [pt(cx - w * 0.065, my), pt(cx, my + h * (0.002 if mk == "flat" else -0.004)), pt(cx + w * 0.065, my)], [w * (0.011 if mk == "flat" else 0.014) * SS] * 3, col("#6E4B56"))
+        d.polygon([pt(cx - w * 0.05, my + h * 0.004), pt(cx + w * 0.05, my + h * 0.004), pt(cx + w * 0.03, my + h * 0.02), pt(cx - w * 0.03, my + h * 0.02)], fill=col(A.LIP))
+    elif mk == "open":
+        d.ellipse([S(cx - w * 0.04), S(my - h * 0.012), S(cx + w * 0.04), S(my + h * 0.05)], fill=col("#7A4450"))
+        d.ellipse([S(cx - w * 0.03), S(my + h * 0.02), S(cx + w * 0.03), S(my + h * 0.046)], fill=col("#C97F86"))
+        smooth_ribbon(d, [pt(cx - w * 0.05, my), pt(cx, my - h * 0.016), pt(cx + w * 0.05, my)], [w * 0.008 * SS] * 3, col("#7A5560"))
+    jaw = [(x, y) for x, y in outline if y > h * 0.5 and y > h * 0.62]
+    smooth_ribbon(d, [pt(x, y) for x, y in jaw], [w * 0.008 * SS] * len(jaw), col(A.LINE, 170))
+    smooth_ribbon(d, [pt(2 * cx - x, y) for x, y in jaw], [w * 0.008 * SS] * len(jaw), col(A.LINE, 170))
     return done(img, w, h)
+
+
+def face(w, h):
+    return face_expr(w, h, "calm")
 
 
 def head_side(w, h):
@@ -144,8 +185,8 @@ def skin_tube(w, h, seed=5):
     img = canvas(w, h, col(A.SKIN))
     d = ImageDraw.Draw(img)
     d.rectangle([S(w * 0.62), 0, w * SS, h * SS], fill=col(A.SKIN_SHADE2, 170))
-    d.rectangle([0, 0, S(w * 0.035), h * SS], fill=col(A.LINE, 200))
-    d.rectangle([S(w * 0.965), 0, w * SS, h * SS], fill=col(A.LINE, 200))
+    d.rectangle([0, 0, S(w * 0.02), h * SS], fill=col(A.LINE_SOFT, 150))
+    d.rectangle([S(w * 0.98), 0, w * SS, h * SS], fill=col(A.LINE_SOFT, 150))
     return done(img, w, h)
 
 
@@ -163,8 +204,8 @@ def neck(w, h):
     d = ImageDraw.Draw(img)
     d.rectangle([0, 0, w * SS, S(h * 0.38)], fill=col(A.SKIN_SHADE2, 200))                          # the shadow of the chin
     d.rectangle([S(w * 0.64), 0, w * SS, h * SS], fill=col(A.SKIN_SHADE2, 150))
-    d.rectangle([0, 0, S(w * 0.07), h * SS], fill=col(A.LINE, 235))
-    d.rectangle([S(w * 0.93), 0, w * SS, h * SS], fill=col(A.LINE, 235))
+    d.rectangle([0, 0, S(w * 0.03), h * SS], fill=col(A.LINE_SOFT, 150))
+    d.rectangle([S(w * 0.97), 0, w * SS, h * SS], fill=col(A.LINE_SOFT, 150))
     return done(img, w, h)
 
 
@@ -209,7 +250,7 @@ def hand_back(w, h):
 
 
 def hand_side(w, h):
-    img = canvas(w, h, col(A.SKIN_SHADE2))
+    img = canvas(w, h, col(A.SKIN))
     return done(img, w, h)
 
 
@@ -322,8 +363,8 @@ def skirt_unwrapped(W, H, outer):
             u0 = (k + rng.uniform(-0.3, 0.3)) * W / 14.0
             _periodic_stripe(d, W, H, u0, W * 0.02, rng.uniform(0.6, 1.2), rng.uniform(0, TAU), W * 0.02, W * 0.04, col(A.GOWN_MID if k % 2 else "#86B7E0", 150))
     # the streams: (u, amplitude, frequency, phase, foam width at the hem as a fraction of W)
-    streams = [(0.0, 0.05, 0.9, 0.3, 0.030), (-0.055, 0.045, 0.8, 2.0, 0.020), (0.06, 0.05, 1.1, 3.8, 0.022), (-0.15, 0.04, 1.0, 1.0, 0.014), (0.16, 0.04, 0.9, 4.4, 0.016),
-               (0.27, 0.035, 1.2, 0.8, 0.014), (-0.28, 0.035, 1.0, 2.7, 0.013), (0.42, 0.03, 0.9, 5.0, 0.012), (-0.42, 0.03, 1.1, 3.1, 0.012)]
+    streams = [(0.0, 0.05, 0.9, 0.3, 0.020), (-0.055, 0.045, 0.8, 2.0, 0.013), (0.06, 0.05, 1.1, 3.8, 0.015), (-0.15, 0.04, 1.0, 1.0, 0.010), (0.16, 0.04, 0.9, 4.4, 0.011),
+               (0.27, 0.035, 1.2, 0.8, 0.010), (-0.28, 0.035, 1.0, 2.7, 0.009), (0.42, 0.03, 0.9, 5.0, 0.009), (-0.42, 0.03, 1.1, 3.1, 0.009)]
     for k, (u, amp, fr, ph, fw) in enumerate(streams):
         u0 = u * W
         _periodic_stripe(d, W, H, u0 + W * fw * 0.7, W * amp, fr, ph, W * fw * 0.25, W * fw * 1.9, col(A.GOWN_DARK, 215 if outer else 255), margin=0.02)

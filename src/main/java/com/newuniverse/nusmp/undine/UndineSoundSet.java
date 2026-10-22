@@ -29,7 +29,9 @@ public final class UndineSoundSet {
         /** The spirit lord's body is hurt. */
         HURT("hurt", 2, 0.8f, 1.0f, 0.06f, 20, "splashes in pain"),
         /** The spirit lord's body falls apart into water. */
-        DEATH("death", 1, 1.0f, 1.0f, 0.03f, 24, "dissolves into water");
+        DEATH("death", 1, 1.0f, 1.0f, 0.03f, 24, "dissolves into water"),
+        /** A soft sung phrase without words: what she says when a moment has no recorded spoken line. */
+        HUM("hum", 3, 0.95f, 1.0f, 0.05f, 16, "hums a soft tune");
 
         private final String id;
         private final int variants;

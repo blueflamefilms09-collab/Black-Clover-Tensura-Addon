@@ -10,21 +10,36 @@ public final class UndineRules {
     private UndineRules() {}
 
     // ================================================================================================ the prop word
-    /** The Undine is a prop entity; its variant is the low four bits of the prop param. */
+    /**
+     * The Undine is a prop entity; everything the clients need to draw her is ONE int, the prop param: bits 0-3 the variant (companion, full form), bit 8 hidden (the companion while the full form is
+     * out), bits 9-11 the face ({@link UndineFace}), bits 12-15 the pose ({@link UndinePose}), bits 16-31 the game tick (mod 65536) at which the pose began (0 is 'never').
+     */
     public static final int V_COMPANION = 0, V_FULL = 1, V_MASK = 15;
-    /** Param bit: the companion is hidden (the full form is out). Bits 12 and up carry the game tick (mod 2^20) at which the last cast pose began. */
-    public static final int HIDDEN = 1 << 8, EXTRA_SHIFT = 12;
-    public static final int STAMP_MASK = 0xFFFFF;
+    public static final int HIDDEN = 1 << 8, FACE_SHIFT = 9, FACE_MASK = 7, POSE_SHIFT = 12, POSE_MASK = 15, STAMP_SHIFT = 16, STAMP_MASK = 0xFFFF;
 
-    public static int param(int variant, int extra) { return (variant & V_MASK) | (extra << EXTRA_SHIFT); }
+    /** The word for a variant (the rest is zero: no pose, calm face, no stamp). */
+    public static int param(int variant) { return variant & V_MASK; }
 
     public static int variant(int param) { return param & V_MASK; }
 
-    public static int extra(int param) { return param >>> EXTRA_SHIFT; }
-
     public static boolean hidden(int param) { return (param & HIDDEN) != 0; }
 
-    /** The stamp the server writes when a cast begins (0 is reserved for 'never'). */
+    public static int face(int param) { return (param >>> FACE_SHIFT) & FACE_MASK; }
+
+    public static int pose(int param) { return (param >>> POSE_SHIFT) & POSE_MASK; }
+
+    public static int stamp(int param) { return param >>> STAMP_SHIFT; }
+
+    /** The word with this pose, face and start tick (the variant and the hidden bit are kept). */
+    public static int withPose(int param, int pose, int face, long gameTime) {
+        int keep = param & (V_MASK | HIDDEN);
+        return keep | ((face & FACE_MASK) << FACE_SHIFT) | ((pose & POSE_MASK) << POSE_SHIFT) | (stampOf(gameTime) << STAMP_SHIFT);
+    }
+
+    /** The word with the pose and the face cleared (the stamp stays, it only matters while a pose is set). */
+    public static int withoutPose(int param) { return param & ~((FACE_MASK << FACE_SHIFT) | (POSE_MASK << POSE_SHIFT)); }
+
+    /** The stamp the server writes when a pose begins (0 is reserved for 'never'). */
     public static int stampOf(long gameTime) {
         int s = (int) (gameTime & STAMP_MASK);
         return s == 0 ? 1 : s;
@@ -37,8 +52,6 @@ public final class UndineRules {
     /** The full form: how long it stays (5 s), how long before it may come again (30 s), the cost tier of the pages that call it, how many a caster may have. */
     public static final int FULL_TICKS = 100, FULL_COOLDOWN = 600, FULL_PER_PLAYER = 1;
     public static final double FULL_COST_PERCENT = 20.0;
-    /** The small cast pose of the companion and the long one of the full form last this many ticks. */
-    public static final int CAST_POSE_TICKS = 28;
     /** One companion per player. */
     public static final int SPIRITS_PER_PLAYER = 1;
     /** Server defaults of the caps across the whole server (the config may change them): 48 companions, 6 full forms. */
@@ -129,14 +142,32 @@ public final class UndineRules {
     }
 
     // ================================================================================================ the clips
-    /** The clip the painter plays: the cast pose for {@link #CAST_POSE_TICKS} (companion) after the stamp, else the idle of the form. */
-    public static String clip(boolean full, int sinceCast) {
-        if (sinceCast >= 0 && sinceCast < CAST_POSE_TICKS) return "cast";
-        return full ? "full_idle" : "idle";
+    /**
+     * The clip the painter plays and the seconds into it: the pose's clip (its form's flavour) while the pose is held ({@link UndinePose#ticks()} after its stamp, plus a short tail so a late
+     * packet does not cut it), else the idle of the form. {@code sinceTicks} counts from the stamp with the partial tick.
+     */
+    public static String clip(boolean full, int pose, float sinceTicks) {
+        UndinePose p = UndinePose.of(pose);
+        if (p == UndinePose.NONE || sinceTicks < 0f || sinceTicks > p.ticks() + POSE_TAIL) return UndinePose.NONE.clip(full);
+        return p.clip(full);
     }
 
-    /** Seconds into the clip for a client that knows the age (ticks, with the partial tick) of the prop and the ticks since the cast pose began. */
-    public static float clipSeconds(String clip, float age, float sinceCast) { return "cast".equals(clip) ? sinceCast / 20f : age / 20f; }
+    /** Seconds into the clip: a pose clip counts from its stamp, an idle from the age of the prop. */
+    public static float clipSeconds(int pose, float sinceTicks, float age) {
+        UndinePose p = UndinePose.of(pose);
+        boolean held = p != UndinePose.NONE && sinceTicks >= 0f && sinceTicks <= p.ticks() + POSE_TAIL;
+        return (held ? sinceTicks : age) / 20f;
+    }
+
+    /** Ticks a client keeps showing a pose after the server's hold time (the server clears the pose in the word every few ticks; this only covers the gap). */
+    public static final int POSE_TAIL = 8;
+
+    /** The face to draw: the word's face while a pose is held or the face is not calm because of the idle moment; calm otherwise. */
+    public static int shownFace(int param, float sinceTicks) {
+        UndinePose p = UndinePose.of(pose(param));
+        if (p == UndinePose.NONE) return face(param);
+        return sinceTicks >= 0f && sinceTicks <= p.ticks() + POSE_TAIL ? face(param) : 0;
+    }
 
     /** The fade (0..1) of a form that forms over {@code in} ticks and fades over the last {@code out} ticks of its life. */
     public static float fade(float life, float maxLife, float in, float out) {

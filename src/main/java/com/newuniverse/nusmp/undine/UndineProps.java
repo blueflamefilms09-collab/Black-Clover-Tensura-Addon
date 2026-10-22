@@ -27,6 +27,14 @@ public final class UndineProps implements MagicProps.Behavior {
         if (o == null) { e.expire(); return; }
         int variant = UndineRules.variant(e.param());
         UndineCasting.State s = UndineCasting.STATES.get(o.getUUID());
+        int pose = UndineRules.pose(e.param());
+        if (pose != 0 && UndineRules.sinceStamp(UndineRules.stamp(e.param()), e.level().getGameTime()) > UndinePose.of(pose).ticks()) e.setParam(UndineRules.withoutPose(e.param()));      // the pose ran out: idle and calm face again
+        if (s != null && e.getUUID().equals(s.leaving)) {                                  // sinking away after an unlink: it stays near her master until it is gone
+            double[] a = UndineRules.companion(o.getX(), o.getY(), o.getZ(), o.yBodyRot);
+            e.setPos(a[0], a[1], a[2]);
+            e.setYRot(o.yBodyRot);
+            return;
+        }
         if (variant == UndineRules.V_COMPANION) {
             if (s == null || !e.getUUID().equals(s.spirit)) { e.expire(); return; }          // an orphan (the link was dropped): gone
             double[] a = UndineRules.companion(o.getX(), o.getY(), o.getZ(), o.yBodyRot);

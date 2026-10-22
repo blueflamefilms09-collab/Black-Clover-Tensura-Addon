@@ -1,24 +1,1082 @@
 {
- "_comment": "Undine (docs/magic/undine.md): Noelle Silva's water Spirit Lord, drawn by the real client.prop.UndineDraw (example UndineProp; param = form * 1000 + lod * 100 + clip: form 0 companion, 1 full form; clip 0 idle, 1 full_idle, 2 cast, 3 open).",
+ "_comment": "Undine (docs/magic/undine.md): Noelle Silva's water Spirit Lord, drawn by the real client.prop.UndineDraw (example UndineProp; param = face * 100000 + pose * 10000 + form * 1000 + lod * 100 + t, face = UndineFace id, pose = UndinePose id (0 = the idle of the form), form 0 companion / 1 full form, lod 0..2, t = seconds into the clip in tenths (0 = by the age)).",
  "undine_companion": {
-  "kind": "prop", "example": "UndineProp", "realFiles": ["client/prop/UndineDraw.java", "undine/UndineLod.java"],
-  "propKind": "BRONZE_1", "param": 0, "figure": true, "ages": [10], "tile": [640, 760],
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   10
+  ],
+  "tile": [
+   640,
+   760
+  ],
   "views": [
-   {"name": "front", "yaw": 0, "pitch": 4, "target": [0, 0.9, 0], "dist": 4.6},
-   {"name": "3/4", "yaw": 40, "pitch": 10, "target": [0, 0.9, 0], "dist": 4.6},
-   {"name": "back", "yaw": 180, "pitch": 6, "target": [0, 0.9, 0], "dist": 4.6},
-   {"name": "face", "yaw": 12, "pitch": 2, "target": [0, 1.55, 0], "dist": 1.5}
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "3/4",
+    "yaw": 40,
+    "pitch": 10,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "face",
+    "yaw": 12,
+    "pitch": 2,
+    "target": [
+     0,
+     1.55,
+     0
+    ],
+    "dist": 1.5
+   }
   ]
  },
  "undine_full": {
-  "kind": "prop", "example": "UndineProp", "realFiles": ["client/prop/UndineDraw.java", "undine/UndineLod.java"],
-  "propKind": "BRONZE_1", "param": 1001, "figure": true, "ages": [10], "tile": [760, 760],
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1000,
+  "figure": true,
+  "ages": [
+   10
+  ],
+  "tile": [
+   760,
+   760
+  ],
   "views": [
-   {"name": "front", "yaw": 0, "pitch": 3, "target": [0, 1.6, 0], "dist": 7.2},
-   {"name": "3/4", "yaw": 38, "pitch": 9, "target": [0, 1.6, 0], "dist": 7.2},
-   {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.6, 0], "dist": 7.2},
-   {"name": "back", "yaw": 180, "pitch": 6, "target": [0, 1.6, 0], "dist": 7.2},
-   {"name": "upper body", "yaw": 0, "pitch": 2, "target": [0, 2.3, 0], "dist": 3.6}
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 9,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "upper body",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.3,
+     0
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "undine_compare": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1000,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   700,
+   760
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.62,
+     0
+    ],
+    "dist": 8.4
+   },
+   {
+    "name": "3/4 low",
+    "yaw": 28,
+    "pitch": -6,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "undine_scale": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   620
+  ],
+  "views": [
+   {
+    "name": "companion beside a player",
+    "yaw": -20,
+    "pitch": 4,
+    "target": [
+     0.7,
+     1.0,
+     0
+    ],
+    "dist": 6.0
+   }
+  ]
+ },
+ "undine_lod1": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   620
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_lod2": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   520,
+   620
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_full_lod1": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1100,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   560,
+   620
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "undine_full_lod2": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1200,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   560,
+   620
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "undine_full_cast": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 61008,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   640,
+   640
+  ],
+  "views": [
+   {
+    "name": "cast pose",
+    "yaw": 20,
+    "pitch": 6,
+    "target": [
+     0,
+     1.8,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "undine_pose_welcome": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 20020,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_clasp": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 30020,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_wave": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 40010,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_sorrow": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 50030,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_rise": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10002,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_rise_full": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 11002,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "undine_pose_cast": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 60005,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_cast_full": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 61005,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "undine_pose_power": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 70012,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_power_full": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 71012,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "undine_pose_flinch": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 80002,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_flinch_full": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 81003,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "undine_pose_farewell": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 90008,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   520,
+   640
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "undine_pose_farewell_full": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 91008,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   620,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 18,
+    "pitch": 4,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "undine_face_calm": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_smile": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_sad": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_stern": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 300001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_angry": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 400001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_surprised": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 500001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
+  ]
+ },
+ "undine_face_serene": {
+  "kind": "prop",
+  "example": "UndineProp",
+  "realFiles": [
+   "client/prop/UndineDraw.java",
+   "undine/UndineLod.java",
+   "undine/UndineFace.java",
+   "undine/UndinePose.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 600001,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   420,
+   480
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.58,
+     0
+    ],
+    "dist": 1.25
+   }
   ]
  }
 }

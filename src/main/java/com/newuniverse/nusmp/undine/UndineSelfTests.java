@@ -46,6 +46,16 @@ public final class UndineSelfTests {
             if (in == null) return Result.fail("undine_body.animation.json is missing");
             String text = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             for (String clip : new String[]{"idle", "full_idle", "cast", "open"}) if (!text.contains("\"" + clip + "\"")) return Result.fail("clip " + clip + " is missing");
+            for (UndinePose pose : UndinePose.values()) for (String clip : pose.clips()) if (!text.contains("\"" + clip + "\"")) return Result.fail("the clip " + clip + " of the pose " + pose + " is missing");
+        }
+        for (UndineFace f : UndineFace.values()) {
+            if (!f.hasOverlay()) continue;
+            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/geo/entity/undine_face_" + f.key() + ".geo.json")) {
+                if (in == null) return Result.fail("the face model of " + f + " is missing");
+            }
+            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/textures/entity/undine_face_" + f.key() + ".png")) {
+                if (in == null) return Result.fail("the face texture of " + f + " is missing");
+            }
         }
         WaterBook water = new WaterBook();
         String[] ids = {"waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent"};
@@ -53,7 +63,18 @@ public final class UndineSelfTests {
         if (!UndineConfig.enabled()) return Result.fail("magic.undine must default to true");
 
         // the rules
-        if (UndineRules.variant(UndineRules.param(UndineRules.V_FULL, 77)) != UndineRules.V_FULL || UndineRules.extra(UndineRules.param(UndineRules.V_FULL, 77)) != 77) return Result.fail("the prop word does not round-trip");
+        UUID u0 = UUID.randomUUID();
+        UndineMoodRules.State mood = new UndineMoodRules.State();
+        mood.reset(0);
+        int word = UndineRules.withPose(UndineRules.param(UndineRules.V_FULL) | UndineRules.HIDDEN, UndinePose.POWER.id(), UndineFace.ANGRY.id(), 1234);
+        if (UndineRules.variant(word) != UndineRules.V_FULL || !UndineRules.hidden(word) || UndineRules.pose(word) != UndinePose.POWER.id() || UndineRules.face(word) != UndineFace.ANGRY.id()
+                || UndineRules.stamp(word) != 1234) return Result.fail("the prop word does not round-trip");
+        if (UndineMoodRules.decide(mood, UndineMoodRules.Event.LINK, 100, 0) == null) return Result.fail("the link gave no mood");
+        UndineMoodRules.Mood hurt = UndineMoodRules.decide(mood, UndineMoodRules.Event.OWNER_HURT, 102, 0);
+        if (hurt == null || hurt.pose() != null || UndineMoodRules.decide(mood, UndineMoodRules.Event.OWNER_HURT, 103, 0) != null) return Result.fail("the mood rules do not hold her still between events");
+        UndineSpeechBudget speech = new UndineSpeechBudget();
+        if (!speech.listenerMay(u0, 1000) || speech.listenerMay(u0, 1000 + UndineSpeechBudget.LISTENER_GAP - 1) || !speech.listenerMay(u0, 1000 + UndineSpeechBudget.LISTENER_GAP)) return Result.fail("the one-line-per-four-seconds limit does not hold");
+        for (String line : UndineLines.ids()) if (!com.newuniverse.nusmp.audio.voice.VoiceCatalog.has(line)) return Result.fail("the line " + line + " is not in the voice catalogue");
         if (UndineRules.callsFull(8.0) || !UndineRules.callsFull(20.0) || !UndineRules.callsFull(35.0)) return Result.fail("the full form is called by the wrong pages");
         double[] palm = UndineRules.fullPalms(0, 0, 0, 0);
         double[] eyeShift = UndineRules.emit(0, 1.6, 0.2, 0, 1.62, 0, 0, 0, 0, palm[0], palm[1], palm[2]);
@@ -79,6 +100,12 @@ public final class UndineSelfTests {
             if (!UndineCasting.summonFull(p, s, level.getGameTime()) || UndineCasting.prop(level, s.full) == null) return Result.fail("the full form did not spawn");
             if (UndineCasting.summonFull(p, s, level.getGameTime() + 1)) return Result.fail("a second full form was allowed for one player");
             UndineAudio.play(level, p.getUUID(), at.x, at.y, at.z, UndineSoundSet.Cue.CAST, false);
+            UndineCasting.mood(p, UndineMoodRules.Event.OWNER_HURT);
+            UndineCasting.mood(p, UndineMoodRules.Event.CAST_SMALL);
+            UndineCasting.mood(p, UndineMoodRules.Event.OWNER_KILL);
+            UUID spirit = s.spirit;
+            UndineCasting.unlink(p, s, false);
+            if (UndineCasting.prop(level, spirit) == null || s.leaving == null) return Result.fail("the unlinked Undine did not stay for her farewell");
             UndineCasting.forget(p);
             if (UndineCasting.liveCount() != before) return Result.fail("the ledgers kept a slot after the player was forgotten");
         } finally {

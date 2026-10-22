@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class UndineConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue UNDINE;
+    public static final ModConfigSpec.BooleanValue UNDINE, SPEECH;
     public static final ModConfigSpec.IntValue MAX_SPIRITS, MAX_FULL, SOUNDS_PER_SECOND;
 
     static {
@@ -18,6 +18,7 @@ public final class UndineConfig {
         UNDINE = b.comment("The Undine: Noelle's water Spirit Lord as a tall woman of water (a companion beside the caster and a full form for the big pages, with a sound set of her own).",
                 "false = the old Spirit Lord look and sound, and Noelle casts the Water grimoire the generic way; the pages, their numbers and their cooldowns are the same either way.")
                 .define("undine", true);
+        SPEECH = b.comment("The Undine speaks short spoken lines (to players within 32 blocks, at most one line per listener every 4 seconds). false = she only hums and plays her sounds.").define("undineSpeech", true);
         b.pop();
         b.push("caps");
         MAX_SPIRITS = b.comment("Most companion Undines linked across the whole server (one per caster).").defineInRange("maxSpirits", UndineRules.DEFAULT_MAX_SPIRITS, 1, 256);
@@ -35,6 +36,8 @@ public final class UndineConfig {
     }
 
     public static boolean enabled() { return get(UNDINE); }
+
+    public static boolean speech() { return get(SPEECH); }
 
     public static int maxSpirits() { return get(MAX_SPIRITS); }
 

@@ -36,6 +36,10 @@ public final class VoiceCatalog {
             "haagenti", "crocell", "furcas", "balam", "alloces", "camio", "murmur");
     public static final List<String> DJINN_EVENTS = List.of("summon", "attack");
 
+    /** The role of the Undine's lines (Noelle's water spirit, {@link com.newuniverse.nusmp.undine.UndineLines}): appended after the 120 lines of the four roles above. */
+    public static final String UNDINE = "undine";
+
+    private static final List<String> BASE_IDS;
     private static final List<String> IDS;
     private static final Set<String> SET;
 
@@ -45,12 +49,17 @@ public final class VoiceCatalog {
         for (String f : BOSS_FAMILIES) for (String e : BOSS_EVENTS) ids.add(BOSS + "_" + f + "_" + e);
         for (String n : NPC_LINES) ids.add("npc_" + n);
         for (String d : DJINN_NAMES) for (String e : DJINN_EVENTS) ids.add(DJINN + "_" + d + "_" + e);
+        BASE_IDS = Collections.unmodifiableList(new ArrayList<>(ids));
+        ids.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());                                // the Undine's registered lines (the ones that have a voice file), after the base set
         IDS = Collections.unmodifiableList(ids);
         SET = Collections.unmodifiableSet(new LinkedHashSet<>(ids));
     }
 
-    /** Every line id, in manifest order. */
+    /** Every line id, in manifest order, then the Undine's registered lines. */
     public static List<String> ids() { return IDS; }
+
+    /** The 120 lines of {@code tools/audio/voice_lines.json} alone (system, boss, npc, djinn), in manifest order. */
+    public static List<String> baseIds() { return BASE_IDS; }
 
     public static boolean has(String id) { return id != null && SET.contains(id); }
 
@@ -66,14 +75,14 @@ public final class VoiceCatalog {
     /** The resource path of the file, without the namespace and extension: {@code voice/system/system_floor_enter}. */
     public static String filePath(String id) { return "voice/" + role(id) + "/" + id; }
 
-    /** Which role folders there are. */
+    /** The four roles of the 120 base lines (the Undine's role is {@link #UNDINE}). */
     public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN); }
 
     /** The role -> its ids, for reports. */
     public static Map<String, List<String>> byRole() {
         Map<String, List<String>> m = new LinkedHashMap<>();
         for (String r : roles()) m.put(r, new ArrayList<>());
-        for (String id : IDS) m.get(role(id)).add(id);
+        for (String id : IDS) m.computeIfAbsent(role(id), k -> new ArrayList<>()).add(id);
         return m;
     }
 

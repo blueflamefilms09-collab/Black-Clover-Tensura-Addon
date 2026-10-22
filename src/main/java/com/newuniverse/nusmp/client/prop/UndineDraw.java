@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoModelData;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
+import com.newuniverse.nusmp.undine.UndineFace;
 import com.newuniverse.nusmp.undine.UndineLod;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -35,7 +36,19 @@ public final class UndineDraw {
 
     private static final GeoSpec[] BODY = {spec("undine_body"), spec("undine_body_lod1"), spec("undine_body_lod2")};
     private static final GeoSpec[] WATER = {spec("undine_water"), spec("undine_water_lod1")};
-    private static final GeoSpec FX = spec("undine_fx"), BASE = spec("undine_base");
+    private static final GeoSpec[] BASE = {spec("undine_base"), spec("undine_base_lod1")};
+    private static final GeoSpec FX = spec("undine_fx");
+    /** The expressions: one card each over the calm face, each with its own small texture (index = the face id; the calm face is the body's own, so its slot stays null). */
+    private static final GeoSpec[] FACES = faces();
+
+    private static GeoSpec[] faces() {
+        GeoSpec[] out = new GeoSpec[UndineFace.maxId() + 1];
+        for (UndineFace f : UndineFace.values()) {
+            if (!f.hasOverlay()) continue;
+            out[f.id()] = spec("undine_face_" + f.key());
+        }
+        return out;
+    }
     private static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/undine_ring.png");
 
     /** The size the companion is drawn at (about 1.8 blocks) and the size of the full form (about 3.2 blocks), of the model that is authored at 3.1 blocks. */
@@ -45,6 +58,12 @@ public final class UndineDraw {
     private static void pass(PoseStack pose, MultiBufferSource buffers, GeoSpec s, net.minecraft.client.renderer.RenderType rt, GeoAnim.Clip clip, float secs, int light, int argb) {
         GeoModelData m = GeoModels.model(s.model());
         GeoDraw.draw(pose, buffers.getBuffer(rt), m, clip, secs, GeoDraw.Space.PROP, light, OverlayTexture.NO_OVERLAY, argb);
+    }
+
+    /** Does the camera see her face (it looks along the way she faces, or across it)? From behind the expression card would show through the hair, so it is not drawn. */
+    private static boolean faceSeen(PoseStack pose) {
+        SealDraw.camera(pose);
+        return SealDraw.CAM[8] < 0.25f;
     }
 
     /** The tint of the cel colours for a packed light: 0.62 in the dark up to 1 in full light (the cel look stays flat, it only dims). */
@@ -72,9 +91,14 @@ public final class UndineDraw {
 
     /**
      * One Undine in the pose's space (the point under her at the origin, facing +z): {@code full} the big form with the wave base, else the companion. {@code lod} 0..2 from {@link UndineLod};
-     * {@code fade} 0..1 is her opacity while she forms and fades; {@code clip} and {@code secs} pick the animation.
+     * {@code fade} 0..1 is her opacity while she forms and fades; {@code clip} and {@code secs} pick the animation; {@code face} is the {@link UndineFace} id (an expression is one more quad, drawn only
+     * on the two nearer levels and only when the camera sees her face).
      */
     public static void undine(PoseStack pose, MultiBufferSource buffers, boolean full, int lod, String clip, float secs, float age, float fade, int light) {
+        undine(pose, buffers, full, lod, clip, secs, age, fade, light, 0);
+    }
+
+    public static void undine(PoseStack pose, MultiBufferSource buffers, boolean full, int lod, String clip, float secs, float age, float fade, int light, int face) {
         if (lod >= UndineLod.CULL || fade <= 0.01f) return;
         float s = (full ? FULL_SCALE : COMPANION_SCALE) * (0.9f + 0.1f * fade);
         if (full && lod <= UndineLod.HALF) ripples(pose, buffers, age, fade);
@@ -82,9 +106,10 @@ public final class UndineDraw {
         GeoAnim.Clip c = a == null ? null : a.clip(clip);
         pose.pushPose();
         pose.scale(s, s, s);
-        if (full && lod <= UndineLod.HALF) pass(pose, buffers, BASE, AuraRender.emissive(BASE.texture()), c, secs, light, tint(light, fade * 0.92f));
+        if (full && lod <= UndineLod.HALF) pass(pose, buffers, BASE[lod], AuraRender.emissive(BASE[lod].texture()), c, secs, light, tint(light, fade * 0.92f));
         pass(pose, buffers, BODY[lod], AuraRender.emissive(BODY[lod].texture()), c, secs, light, tint(light, fade));
         if (lod < WATER.length) pass(pose, buffers, WATER[lod], AuraRender.emissive(WATER[lod].texture()), c, secs, light, tint(light, fade * 0.7f));
+        if (lod <= UndineLod.HALF && face > 0 && face < FACES.length && FACES[face] != null && faceSeen(pose)) pass(pose, buffers, FACES[face], AuraRender.emissive(FACES[face].texture()), c, secs, light, tint(light, fade));
         if (lod <= UndineLod.HALF) pass(pose, buffers, FX, AuraRender.additive(FX.texture()), c, secs, PropDraw.FULL_BRIGHT, SealDraw.argb(fade * (0.7f + 0.3f * Mth.sin(age * 0.2f)), 0xFFFFFF));
         pose.popPose();
     }

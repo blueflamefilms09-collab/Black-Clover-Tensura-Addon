@@ -242,7 +242,7 @@ BODY_REGIONS = {
     "neck": (100, 132), "shoulder_front": (420, 140), "shoulder_back": (420, 140), "arm": (104, 420), "forearm": (92, 392), "hand_palm": (132, 172), "hand_back": (132, 172), "hand_side": (60, 172),
     "fingers": (160, 170), "thumb": (110, 130), "bodice_front": (360, 320), "bodice_back": (360, 320), "bodice_side": (200, 320),
     "rib_a": (672, 200), "rib_b": (560, 180), "rib_c": (480, 160), "rib_d": (420, 250), "rib_e": (360, 160), "rib_f": (520, 180),
-    "lock": (96, 520), "back_mass": (400, 640), "skirt_in": (1344, 224),
+    "lock": (96, 520), "back_mass": (400, 640), "skirt_in": (1440, 240),
 }
 WATER_REGIONS = {"skirt_out": (1536, 380), "shell": (256, 640), "splash": (256, 160), "foam_band": (256, 96), "foam_tear": (192, 64), "droplet": (256, 64)}
 FX_REGIONS = {"streak": (96, 384), "glint": (96, 96), "glow": (96, 96)}
@@ -260,7 +260,28 @@ def regions(lod):
     if lod == 1:                                                                    # a skirt of 12 strips of 40 texels each, and the outer layer a strip for each two
         out["skirt_in"] = (12 * 56, 128)
     if lod == 2:
-        out["skirt_in"] = (8 * 28, 96)
+        out["skirt_in"] = (8 * 40, 128)
+    return out
+
+
+FACE_KEYS = ("smile", "sad", "stern", "angry", "surprised", "serene")
+FACE_SHEET = (320, 392)                                                                   # one expression per texture
+
+
+def face_overlay(key, w, h):
+    """An expression drawn over the calm face: the painted face of the expression, kept only inside a soft window around the eyes, brows and mouth, and only where the hair of the front shell leaves the
+    face open (the sheet is drawn after the body, so it must not paint over the bangs). The skin under it is the same, so the edge of the window does not show."""
+    face = B.face_expr(w, h, key).astype(np.float32)
+    cap = cap_front(344, 380)[..., 3]
+    ys, xs = np.mgrid[0:h, 0:w]
+    u, v = (xs + 0.5) / w, (ys + 0.5) / h
+    uc = np.clip(((0.4 + 7.4 * u) / 8.2 * 344).astype(int), 0, 343)
+    vc = np.clip(((0.7 + 9.0 * v) / 9.8 * 380).astype(int), 0, 379)
+    open_ = 1.0 - cap[vc, uc] / 255.0
+    win = np.clip(np.minimum.reduce([(u - 0.08) / 0.10, (0.92 - u) / 0.10, (v - 0.22) / 0.07, (0.86 - v) / 0.07]), 0.0, 1.0)
+    out = face.copy()
+    out[..., 3] = face[..., 3] * win * open_
+    out[out[..., 3] <= 0] = 0
     return out
 
 

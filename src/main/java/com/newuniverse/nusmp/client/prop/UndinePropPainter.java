@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.PropKind;
 import com.newuniverse.nusmp.undine.UndineLod;
+import com.newuniverse.nusmp.undine.UndinePose;
 import com.newuniverse.nusmp.undine.UndineRules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -64,14 +65,18 @@ public final class UndinePropPainter {
         if (fade <= 0.01f) return;
 
         long now = e.level().getGameTime();
-        int since = UndineRules.sinceStamp(UndineRules.extra(param), now);
-        String clip = UndineRules.clip(full, since);
-        float secs = UndineRules.clipSeconds(clip, age, since + partial);
+        int poseId = UndineRules.pose(param);
+        float since = poseId == 0 ? -1f : UndineRules.sinceStamp(UndineRules.stamp(param), now) + partial;
+        String clip = UndineRules.clip(full, poseId, since);
+        float secs = UndineRules.clipSeconds(poseId, since, age);
+        int face = UndineRules.shownFace(param, since);
+        if (poseId == UndinePose.FAREWELL.id() && since >= 0f) fade *= Mth.clamp(1f - (since - 8f) / (UndinePose.FAREWELL.ticks() - 8f), 0f, 1f);      // she dissolves into the water
+        if (fade <= 0.01f) return;
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(Mth.rotLerp(partial, e.yRotO, e.getYRot())));         // undo the renderer's turn: the offset below is in world axes
         pose.translate(ax - ex, ay - ey, az - ez);
         pose.mulPose(Axis.YP.rotationDegrees(-yaw));
-        UndineDraw.undine(pose, buffers, full, lod, clip, secs, age, fade, light);
+        UndineDraw.undine(pose, buffers, full, lod, clip, secs, age, fade, light, face);
         pose.popPose();
         if (lod <= UndineLod.HALF && dsq < 28 * 28) spray(e, ax, ay + (full ? 0.4 : 1.0), az, full);
     }
