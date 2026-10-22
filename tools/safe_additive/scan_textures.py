@@ -33,6 +33,8 @@ SCOPE = [
     ("entity", ("sylph_small_fx", "sylph_powered_fx", "sylph_halo", "sylph_small_wings_glow", "sylph_powered_wings_glow")),          # the Sylph: the glow-only models, the halo and the glow maps of the wings
     ("entity/spirit_space", ("",)),                      # Spirit of Space: the starfield layers, the fins, the halo, the portal (docs/magic/spirit_space.md)
     ("entity", ("spirit_space_orb", "spirit_space_wisp_fx")),          # Spirit of Space: the additive rift ring of the orb (and its levels) and the glow-only model of the wisp's head
+    ("entity", ("firecast_salamander_fx", "firecast_dragon_fx")),
+    ("entity", ("undine_fx", "undine_ring")),          # the Undine: the soft additive foam pass and the ripple ring (docs/magic/undine.md)          # fire casting: the glow-only models of the two Salamander forms (eyes, mouth, licks of flame)
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"

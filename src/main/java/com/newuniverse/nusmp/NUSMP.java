@@ -84,6 +84,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.danmachi.DanMachiConfig.SPEC, "nusmp-danmachi-server.toml");   // 1.61.0: DanMachi: the Dungeon Level of the monsters
         com.newuniverse.nusmp.skilltree.SkillBookSystem.init(modEventBus, modContainer);                                    // 1.96.0: the Skill Books: one unique skill per book (the Skill Tree, SP and the Fairy Tail magics were removed), the loot, the Black Market (registers its own attachment, items, skills and configs)
         com.newuniverse.nusmp.fairytail.storm.StormBoot.init(modEventBus, modContainer);                                  // Storm Magic (Fairy Tail): the Stormcaller Staff, the storm cells, nusmp-storm-server.toml (staffOnly), self-test magic.storm_staff
+        com.newuniverse.nusmp.undine.UndineBoot.init(modEventBus, modContainer);                                           // Undine: nusmp-undine-server.toml (magic.undine), the sound events, the key packet, the events, self-test magic.undine
         com.newuniverse.nusmp.firecast.FireCastBoot.init(modEventBus, modContainer);                                      // fire casting: Magna's Soul Bat, nusmp-firecast-server.toml (magic.fireCasting), the key packet, the events, self-test magic.fire_casting
         com.newuniverse.nusmp.sylph.SylphBoot.init(modEventBus, modContainer);                                            // the Sylph: Yuno's wind Spirit Lord, her sounds, nusmp-sylph-server.toml (magic.sylph), the key packet, the events, self-test magic.sylph
         com.newuniverse.nusmp.spiritspace.SpiritSpaceBoot.init(modEventBus, modContainer);                                // Spirit of Space: nusmp-spiritspace-server.toml (magic.spiritSpace), the key packet, the sounds, the events, self-test magic.spirit_space
@@ -169,6 +170,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
+            com.newuniverse.nusmp.client.undine.UndineClient.init(modEventBus);                                               // Undine: the link key
             com.newuniverse.nusmp.client.firecast.FireCastClient.init(modEventBus);                                           // fire casting: the Salamander key
             com.newuniverse.nusmp.client.sylph.SylphClient.init(modEventBus);                                                 // the Sylph key
             com.newuniverse.nusmp.client.spiritspace.SpiritSpaceClient.init(modEventBus);                                     // Spirit of Space: the link, ability and waypoint keys

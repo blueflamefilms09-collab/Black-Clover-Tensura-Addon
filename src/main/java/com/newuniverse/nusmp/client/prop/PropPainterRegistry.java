@@ -91,5 +91,6 @@ final class PropPainterRegistry {
         FireCastPropPainter.register();      // fire casting: the ball, the spiral, the Salamander and its dragon form
         SylphPropPainter.register();      // the Sylph: Yuno's wind Spirit Lord, small and powered
         SpiritSpacePropPainter.register();      // Spirit of Space: the orb, the wisp-dragon, the portal rings
+        UndinePropPainter.register();        // Undine: the companion and the full form
     }
 }

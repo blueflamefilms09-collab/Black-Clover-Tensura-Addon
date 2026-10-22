@@ -173,5 +173,7 @@ public enum PropKind {
     SYLPH_1,
     /** Spirit of Space (spiritspace.SpiritSpaceProps): SPIRITSPACE_1 = the spirit, an orb that is a tear in reality (variant 0) or its powered wisp-dragon (1); SPIRITSPACE_2 = one ring of a spatial portal (variant 2 entrance, 3 exit); the variant is the low four bits of the param (painter client.prop.SpiritSpacePropPainter) */
     SPIRITSPACE_1,
-    SPIRITSPACE_2
+    SPIRITSPACE_2,
+    /** Undine (undine.UndineProps): Noelle's water Spirit Lord as a casting companion; the variant is the low four bits of the param: 0 = the companion beside the caster, 1 = the full form on a ring of waves (painter client.prop.UndinePropPainter) */
+    UNDINE_1
 }

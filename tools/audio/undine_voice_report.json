@@ -1,0 +1,100 @@
+{
+ "converted": {
+  "undine_link_1": {
+   "seconds": 2.49,
+   "bytes": 23565,
+   "text": "I am here, beside you."
+  },
+  "undine_link_2": {
+   "seconds": 3.48,
+   "bytes": 31751,
+   "text": "The water answers you, as it always has."
+  },
+  "undine_link_3": {
+   "seconds": 2.6,
+   "bytes": 24832,
+   "text": "Call, and I will rise."
+  },
+  "undine_link_4": {
+   "seconds": 2.57,
+   "bytes": 25202,
+   "text": "Good to see you again, my friend."
+  },
+  "undine_farewell_1": {
+   "seconds": 3.06,
+   "bytes": 28556,
+   "text": "I return to the water. Call me again."
+  },
+  "undine_farewell_2": {
+   "seconds": 2.74,
+   "bytes": 26848,
+   "text": "Until the tide brings us together."
+  },
+  "undine_farewell_3": {
+   "seconds": 2.39,
+   "bytes": 22773,
+   "text": "Rest well. I will be listening."
+  },
+  "undine_cast_1": {
+   "seconds": 0.95,
+   "bytes": 11119,
+   "text": "Flow."
+  },
+  "undine_cast_2": {
+   "seconds": 1.91,
+   "bytes": 19241,
+   "text": "Let the water carry it."
+  },
+  "undine_cast_3": {
+   "seconds": 2.07,
+   "bytes": 20045,
+   "text": "Rise, and run."
+  },
+  "undine_cast_4": {
+   "seconds": 1.68,
+   "bytes": 17375,
+   "text": "Tides, obey."
+  },
+  "undine_cast_5": {
+   "seconds": 1.49,
+   "bytes": 15728,
+   "text": "Go, little wave."
+  },
+  "undine_died_1": {
+   "seconds": 2.61,
+   "bytes": 24990,
+   "text": "No... come back to the water..."
+  }
+ },
+ "missing": [
+  "undine_cast_6",
+  "undine_cast_7",
+  "undine_cast_8",
+  "undine_wave_1",
+  "undine_wave_2",
+  "undine_wave_3",
+  "undine_wave_4",
+  "undine_hurt_1",
+  "undine_hurt_2",
+  "undine_hurt_3",
+  "undine_hurt_4",
+  "undine_hurt_5",
+  "undine_idle_1",
+  "undine_idle_2",
+  "undine_idle_3",
+  "undine_idle_4",
+  "undine_idle_5",
+  "undine_idle_6",
+  "undine_lowhp_1",
+  "undine_lowhp_2",
+  "undine_lowhp_3",
+  "undine_lowhp_4",
+  "undine_win_1",
+  "undine_win_2",
+  "undine_win_3",
+  "undine_win_4",
+  "undine_died_2"
+ ],
+ "rejected": [],
+ "bytes": 292025
+}
