@@ -61,7 +61,8 @@ public final class SpiritLightVoiceLines {
             "spiritlight_rise_2",
             "spiritlight_rise_3",
             "spiritlight_settle_1",
-            "spiritlight_settle_2");
+            "spiritlight_settle_2",
+            "spiritlight_beam_1");
 
     /** The text of a line (shown on the owner's action bar), or "" for an unknown id. */
     public static String text(String id) {

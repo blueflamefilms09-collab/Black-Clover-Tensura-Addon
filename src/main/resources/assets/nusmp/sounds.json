@@ -26,6 +26,7 @@
   "spirit_light.voice.spiritlight_rise_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_rise_3", "stream": false, "attenuation_distance": 32} ]},
   "spirit_light.voice.spiritlight_settle_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_1", "stream": false, "attenuation_distance": 32} ]},
   "spirit_light.voice.spiritlight_settle_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_beam_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_1", "stream": false, "attenuation_distance": 32} ]},
   "zagred_seal": {
     "subtitle": "subtitles.entity.nusmp.zagred_seal",
     "sounds": [{ "name": "nusmp:entity/zagred/seal", "stream": true }]
