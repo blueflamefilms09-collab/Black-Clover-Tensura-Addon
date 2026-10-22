@@ -241,8 +241,8 @@ class ExSingularityTest {
     @Test
     void langFragmentAndTextureExist() throws IOException {
         String lang = Files.readString(Path.of("tools/lang/ex_singularity.json"));
-        assertTrue(lang.contains("\"nusmp.ex_singularity.name\": \"EX-Singularity\""));
-        assertTrue(lang.contains("Akashic Relic - Grade: EX-Singularity"));
+        assertTrue(lang.contains("\"nusmp.ex_singularity.line\": \"Akashic Relic - Grade: EX-Singularity\""));
+        assertTrue(Files.readString(SRC.resolve("client/ui/tooltip/UnifiedTooltip.java")).contains("\"nusmp.ex_singularity.line\""), "the line is read from the fragment's key");
         assertTrue(Files.readString(Path.of("tools/lang/unified_tooltips.json")).contains("\"tooltip.nusmp.unified.cat.akashic_relic\""));
         Path tex = Path.of("src/main/resources/assets/nusmp/textures/entity/weapon/ex_singularity_star.png");
         assertTrue(Files.exists(tex), "the star texture");
@@ -276,6 +276,12 @@ class ExSingularityTest {
         String sd = Files.readString(SRC.resolve("client/ShishouMeshDraw.java"));
         assertTrue(sd.contains("ExSingularityFx.glowRgb(time)") && sd.contains("ExSingularityFx.extras(pose, buffers, mesh, time)"), "the world body");
         assertTrue(Files.readString(SRC.resolve("client/relics/RelicClient.java")).contains("ExSingularityClient.init(modBus)"));
+        assertTrue(Files.readString(SRC.resolve("NUSMP.java")).contains("ExSingularityOptions.SPEC, \"nusmp-ex-singularity-client.toml\""), "the client options are registered under their own file name");
+        String opts = Files.readString(SRC.resolve("client/ex/ExSingularityOptions.java"));
+        for (String key : new String[]{"\"prismatic\"", "\"slotFrame\"", "\"particles\""}) assertTrue(opts.contains(key), key);
+        assertTrue(Files.readString(SRC.resolve("client/ExSingularityFx.java")).contains("ExSingularity.isAkashicPath(id) && enabled()"), "the master switch gates the sword look");
+        assertTrue(Files.readString(SRC.resolve("client/ex/ExSingularityClient.java")).contains("ExSingularityOptions.slotFrame()"), "the slot frame has its switch");
+        assertTrue(Files.readString(SRC.resolve("client/ex/ExSingularityClient.java")).contains("ExSingularityOptions.particles()"), "the motes have their switch");
         assertTrue(Files.readString(SRC.resolve("relics/RelicSystem.java")).contains("ExSingularitySelfTests.register()"));
         String ut = Files.readString(SRC.resolve("client/ui/tooltip/UnifiedTooltip.java"));
         assertTrue(ut.contains("HEAD_PRISM") && ut.contains("PRISM_LINE") && ut.contains("PrismText.name("));

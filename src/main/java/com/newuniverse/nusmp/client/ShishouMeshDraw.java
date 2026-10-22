@@ -42,12 +42,13 @@ public final class ShishouMeshDraw {
         WeaponRenderer.emit(p, buffers.getBuffer(rt), mesh.layers[WeaponRenderer.BODY], a << 24 | 0xFFFFFF, light, OverlayTexture.NO_OVERLAY);
         if (glowStrength > 0.01f && mesh.glowTex != null && !mesh.layers[WeaponRenderer.GLOW].isEmpty()) {
             float k = com.newuniverse.nusmp.client.relics.item.VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, 1f) * glowStrength * alpha;
-            int rgb = ExSingularityFx.glowRgb(time);                       // EX-Singularity: the glow walks through every hue (client/ExSingularityFx), not the mesh's one blue
+            boolean ex = ExSingularityFx.enabled();
+            int rgb = ex ? ExSingularityFx.glowRgb(time) : mesh.glowRgb;                       // EX-Singularity: the glow walks through every hue (client/ExSingularityFx), not the mesh's one blue; option exSingularity.prismatic
             int r = com.newuniverse.nusmp.client.relics.item.VariantRules.channel(rgb >> 16 & 255, k), g = com.newuniverse.nusmp.client.relics.item.VariantRules.channel(rgb >> 8 & 255, k),
                     b = com.newuniverse.nusmp.client.relics.item.VariantRules.channel(rgb & 255, k);
-            WeaponRenderer.emit(p, buffers.getBuffer(SafeAdditive.additive(ExSingularityFx.PRISM_GLOW)), mesh.layers[WeaponRenderer.GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            WeaponRenderer.emit(p, buffers.getBuffer(SafeAdditive.additive(ex ? ExSingularityFx.PRISM_GLOW : mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
         }
-        if (glowStrength > 0.9f && alpha > 0.9f && mesh.glowTex != null) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards (not on a dormant or veiled sword)
+        if (glowStrength > 0.9f && alpha > 0.9f && mesh.glowTex != null && ExSingularityFx.enabled()) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards (not on a dormant or veiled sword)
         pose.popPose();
         return true;
     }

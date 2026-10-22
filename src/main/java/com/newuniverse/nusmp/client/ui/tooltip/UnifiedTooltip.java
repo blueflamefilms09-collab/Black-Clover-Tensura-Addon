@@ -71,7 +71,7 @@ public final class UnifiedTooltip {
             e.setMaxWidth(maxWidth);
             List<Either<FormattedText, TooltipComponent>> els = e.getTooltipElements();
             els.removeIf(x -> x.right().orElse(null) instanceof Data);
-            boolean akashic = style.akashic();                                                       // EX-Singularity: the name, the grade row and the grade line are prismatic
+            boolean akashic = style.akashic() && com.newuniverse.nusmp.client.ex.ExSingularityOptions.prismatic();                                                       // EX-Singularity: the name, the grade row and the grade line are prismatic
             if (!els.isEmpty() && els.get(0).left().orElse(null) instanceof Component name)
                 els.set(0, Either.left(akashic ? PrismText.name(name.getString(), System.currentTimeMillis()) : recolourName(name, style.rgb())));
             for (int i = 1; i < els.size(); i++) {
@@ -79,7 +79,7 @@ public final class UnifiedTooltip {
                 if (!(text instanceof Component line)) continue;
                 String key = keyOf(line);
                 if (akashic && "shishou.grade".equals(key)) {                                      // the yellow "Akashic Relic - Grade: EX-Singularity" line becomes the prismatic one
-                    els.set(i, Either.right(new Data(PRISM_LINE, line.getString(), "", style.rgb(), maxWidth)));
+                    els.set(i, Either.right(new Data(PRISM_LINE, Language.getInstance().getOrDefault("nusmp.ex_singularity.line", line.getString()), "", style.rgb(), maxWidth)));
                     continue;
                 }
                 int c = UnifiedTooltipRules.statColour(key);
@@ -129,7 +129,7 @@ public final class UnifiedTooltip {
         try {
             if (!UiTheme.anime() || !UnifiedTooltipItems.applies(e.getItemStack())) return;
             Style style = styleOf(e.getItemStack());
-            if (style.akashic()) {                                                                  // EX-Singularity: a deep violet glass, the border a two-hue prism that circles
+            if (style.akashic() && com.newuniverse.nusmp.client.ex.ExSingularityOptions.prismatic()) {                                                                  // EX-Singularity: a deep violet glass, the border a two-hue prism that circles
                 long now = System.currentTimeMillis();
                 e.setBackgroundStart(0xF2160C2E);
                 e.setBackgroundEnd(0xF2080414);

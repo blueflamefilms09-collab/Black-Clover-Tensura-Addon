@@ -46,8 +46,11 @@ public final class ExSingularityFx {
     private static float[] veilFrac = new float[0];
     private static int veilCount;
 
-    /** Does the item with this registry path wear the EX-Singularity look? */
-    public static boolean applies(String id) { return ExSingularity.isAkashicPath(id); }
+    /** Does the item with this registry path wear the EX-Singularity look (and is the look switched on: client option exSingularity.prismatic)? */
+    public static boolean applies(String id) { return ExSingularity.isAkashicPath(id) && enabled(); }
+
+    /** The client option exSingularity.prismatic (default true). */
+    public static boolean enabled() { return com.newuniverse.nusmp.client.ex.ExSingularityOptions.prismatic(); }
 
     /** The glow texture of a draw: the neutral prism map for the EX-Singularity sword, the mesh's own for everything else. */
     public static ResourceLocation glowTex(String id, WeaponRenderer.Mesh mesh) { return applies(id) ? PRISM_GLOW : mesh.glowTex; }

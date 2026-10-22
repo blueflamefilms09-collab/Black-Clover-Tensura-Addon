@@ -204,6 +204,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ui.theme.UiThemeOptions.SPEC, "nusmp-ui-client.toml");
             com.newuniverse.nusmp.client.ui.GuiScale.init(modEventBus, modContainer);                                         // GUI Size: nusmp-gui-client.toml, key, config screen, screen and HUD hooks
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.SPEC, "nusmp-relicfx-client.toml");     // 1.30.0: relic effects quality
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ex.ExSingularityOptions.SPEC, "nusmp-ex-singularity-client.toml");     // EX-Singularity look: exSingularity.prismatic / slotFrame / particles
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.deck.DeckSummonOptions.SPEC, "nusmp-deck-summon-client.toml");     // 1.110.0: deck.summonEffect (the Deck of Many Things card summon)
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.SPEC, "nusmp-visual-charms-client.toml");     // visual upgrade of the charms / Genesis worn relics: visual.upgrade
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.item.vu.VuOptions.SPEC, "nusmp-visual-upgrade-client.toml");     // 1.102.0: visual.upgrade and the other switches of the upgraded Genesis weapons

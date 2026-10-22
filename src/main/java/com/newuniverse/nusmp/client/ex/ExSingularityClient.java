@@ -65,6 +65,7 @@ public final class ExSingularityClient {
     /** The decorator: false = nothing to reset (it only draws gui fills). Never throws into the GUI. */
     static boolean frame(GuiGraphics g, Font font, ItemStack stack, int x, int y) {
         try {
+            if (!ExSingularityOptions.slotFrame()) return false;
             long frame = Minecraft.getInstance().getFrameTimeNs();
             if (frame != lastFrame) {
                 lastFrame = frame;
@@ -130,7 +131,7 @@ public final class ExSingularityClient {
     static void onClientTick(ClientTickEvent.Post e) {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
-        if (level == null || mc.player == null || mc.isPaused() || level.getGameTime() % 4 != 0) return;
+        if (level == null || mc.player == null || mc.isPaused() || level.getGameTime() % 4 != 0 || !ExSingularityOptions.particles()) return;
         Item sword = ShishouItems.SHISHOU.get();
         int looked = 0;
         for (AbstractClientPlayer p : level.players()) {
@@ -143,7 +144,7 @@ public final class ExSingularityClient {
     /** Entity tick: Shishou's body in the world and the sword lying on the ground. */
     static void onEntityTick(EntityTickEvent.Post e) {
         Entity en = e.getEntity();
-        if (!en.level().isClientSide() || en.tickCount % 4 != 0) return;
+        if (!en.level().isClientSide() || en.tickCount % 4 != 0 || !ExSingularityOptions.particles()) return;
         boolean body = en instanceof ShishouEntity;
         if (!body && !(en instanceof ItemEntity ie && ie.getItem().getItem() == ShishouItems.SHISHOU.get())) return;
         Minecraft mc = Minecraft.getInstance();
