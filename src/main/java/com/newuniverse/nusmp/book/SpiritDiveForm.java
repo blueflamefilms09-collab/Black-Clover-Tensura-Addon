@@ -25,7 +25,8 @@ import net.minecraft.server.level.ServerPlayer;
  *       the pieces shatter out), and the style number of the lease carries element and stage ({@link SpiritDivePieces#style}). Wind first dive: only the LEFT half transforms (one wing, half a crown,
  *       a ring round the wrist); the full dive has two wings and a full crown; a half dive becomes full (the missing half forges in) when the book is mastered during the dive. Water at the full
  *       stage is the Saint Valkyrie Dress. Any other armour the mage wears gives way to the dive. The old overlays stay registered ({@link GrimoireBook#diveArmor} is null while
- *       {@link SpiritDivePieces#LOOK} is on) and the policy's armour layer of Earth (the Gnome Plate) is not started by the dive any more.</li>
+ *       {@link SpiritDivePieces#LOOK} is on) and the policy's armour layer of Earth (the Gnome Plate) is not started by the dive any more. Spirit Dive remake: the lease also carries the TIER of the
+ *       look, the mage whose bound grimoire is Yuno's (Wind), Fuegoleon's (Fire) or Noelle's (Water) dives with that character's own look ({@link #gradeOf}, {@link SpiritDiveTier}); everyone else the standard tier.</li>
  * </ul>
  */
 public final class SpiritDiveForm {
@@ -67,6 +68,22 @@ public final class SpiritDiveForm {
         tag.remove(UPGRADED);
         ArmourState.putOn(p, ownLook ? withoutAura(e) : e, style, true, stage);
         if (el != null) look(p, el, SpiritDivePieces.stageFor(stage), LEASE_TICKS);
+        if (el != null && counts) announceTier(p, gradeOf(p, el));
+        if (el == SpiritDivePieces.Element.FIRE && counts) FuegoleonArm.update(p);                  // Fuegoleon's arm burns from the first tick of the Fire dive, not at the next check
+    }
+
+    /** The one line of the actionbar when a character's own dive begins (the standard tier says nothing). */
+    private static void announceTier(ServerPlayer p, SpiritDiveTier.Grade g) {
+        String text = switch (g) {
+            case YUNO -> "The wind spirit's crown rises: Yuno's Spirit Dive.";
+            case FUEGOLEON -> "The Salamander's flame cloaks you: Fuegoleon's Spirit Dive.";
+            case NOELLE -> "The water spirit's dress unfolds: Noelle's Spirit Dive.";
+            case STANDARD -> null;
+        };
+        if (text == null) return;
+        try {
+            p.displayClientMessage(Component.translatableWithFallback("nusmp.spiritdive.tier." + g.name().toLowerCase(java.util.Locale.ROOT), text).withStyle(ChatFormatting.GOLD), true);
+        } catch (NullPointerException noConnection) { /* a stand-in player without a connection */ }
     }
 
     /** The policy entry without the form's armour layer (Earth's Gnome Plate): the dive puts the stats on and draws its own layer. */
@@ -79,7 +96,17 @@ public final class SpiritDiveForm {
     // ------------------------------------------------------------------ the look: Aura.SPIRIT_DIVE
     /** Tells the clients that see the player that the dive of this element and stage runs for {@code ticks} more ticks (a fake player without a connection only updates the server table). */
     static void look(ServerPlayer p, SpiritDivePieces.Element el, SpiritDivePieces.Stage st, int ticks) {
-        try { PlayerAuras.set(p, Aura.SPIRIT_DIVE, ticks, SpiritDivePieces.style(el, st)); } catch (NullPointerException noConnection) { /* nothing to send */ }
+        try { PlayerAuras.set(p, Aura.SPIRIT_DIVE, ticks, SpiritDivePieces.style(el, st, gradeOf(p, el))); } catch (NullPointerException noConnection) { /* nothing to send */ }
+    }
+
+    /**
+     * Spirit Dive remake: the tier of this mage's dive. The character tier goes to the mage whose bound grimoire is the canon character of the element (Yuno on Wind, Fuegoleon on Fire, Noelle on
+     * Water; {@link SpiritDiveTier#gradeFor}), unless the server turned it off ({@code spiritDive.characterTier}). One grimoire NBT read per second per diving mage.
+     */
+    public static SpiritDiveTier.Grade gradeOf(ServerPlayer p, SpiritDivePieces.Element el) {
+        if (!SpiritDiveConfig.characterTier()) return SpiritDiveTier.Grade.STANDARD;
+        com.newuniverse.nusmp.grimoire.CanonBook c = CharacterSpells.characterOf(p);
+        return SpiritDiveTier.gradeFor(el, c == null ? null : c.id());
     }
 
     /** The stage held in the armour state (the scale it was put on with: below 1 is a half dive). */

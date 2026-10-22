@@ -765,7 +765,10 @@ public final class Preview {
         PlayerAuraLayer layer = new PlayerAuraLayer(rig.parent);
         PlayerAuraClient.previewSet(p.getId(), aura, 0L, total, style);
         for (Object oa : list(sc.get("alsoAuras"))) {
-            try { PlayerAuraClient.previewSet(p.getId(), Aura.valueOf(String.valueOf(oa)), 0L, total, 0); } catch (IllegalArgumentException ex) { issues.add(new Issue("BAD_SCENE", "ERROR", "alsoAuras: unknown aura " + oa)); }
+            String oas = String.valueOf(oa);
+            int oaStyle = 0, colon = oas.indexOf(':');                                    // "NAME" or "NAME:style" (the style of that aura)
+            if (colon > 0) { try { oaStyle = Integer.parseInt(oas.substring(colon + 1).trim()); } catch (NumberFormatException ex) { /* style 0 */ } oas = oas.substring(0, colon); }
+            try { PlayerAuraClient.previewSet(p.getId(), Aura.valueOf(oas), 0L, total, oaStyle); } catch (IllegalArgumentException ex) { issues.add(new Issue("BAD_SCENE", "ERROR", "alsoAuras: unknown aura " + oa)); }
         }
 
         String bin = binDir + "/" + name + ".bin";

@@ -1,0 +1,1116 @@
+{
+ "_comment": "Spirit Dive remake: the remade dive of every element at both tiers. style = element + 4 * stage + 16 * grade (book.SpiritDivePieces.style): element WIND 0, WATER 1, FIRE 2, EARTH 3; stage HALF 0, FULL 1, UPGRADE 2; grade STANDARD 0, YUNO 1, FUEGOLEON 2, NOELLE 3.",
+ "sdv_wind_std_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 4,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_wind_yuno_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 16,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_wind_yuno_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 20,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_fire_std_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 6,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_fire_fuego_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 34,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade",
+   "SdvFuegoleonArm"
+  ],
+  "alsoAuras": [
+   "FUEGOLEON_ARM:2"
+  ]
+ },
+ "sdv_fire_fuego_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 38,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade",
+   "SdvFuegoleonArm"
+  ],
+  "alsoAuras": [
+   "FUEGOLEON_ARM:2"
+  ]
+ },
+ "sdv_water_std_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 5,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_water_noelle_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 49,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_water_noelle_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 53,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_earth_std_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 3,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_earth_std_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 7,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_wind_std_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 0,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_fire_std_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_water_std_half": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_entry_yuno": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 20,
+  "total": 120,
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "tile": [
+   330,
+   460
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_entry_fuego": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 38,
+  "total": 120,
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "tile": [
+   330,
+   460
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_entry_noelle": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java"
+  ],
+  "style": 53,
+  "total": 120,
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "tile": [
+   330,
+   460
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 4.6
+   }
+  ],
+  "examples": [
+   "SdvRemade"
+  ]
+ },
+ "sdv_arm_rest": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "right side",
+    "yaw": -85,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": -150,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "sdv_arm_linked": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "right side",
+    "yaw": -85,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": -150,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "sdv_arm_fp_rest": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   520,
+   340
+  ],
+  "views": [
+   {
+    "name": "from the eye (approximation)",
+    "yaw": 180,
+    "pitch": 20,
+    "target": [
+     -0.45,
+     1.02,
+     0.98
+    ],
+    "dist": 2.0
+   }
+  ],
+  "limbSwing": 0.0,
+  "limbSwingAmount": 1.0
+ },
+ "sdv_arm_fp_linked": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/FuegoleonArmRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/SpiritDiveFrame.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   520,
+   340
+  ],
+  "views": [
+   {
+    "name": "from the eye (approximation)",
+    "yaw": 180,
+    "pitch": 20,
+    "target": [
+     -0.45,
+     1.02,
+     0.98
+    ],
+    "dist": 2.0
+   }
+  ],
+  "limbSwing": 0.0,
+  "limbSwingAmount": 1.0
+ }
+}

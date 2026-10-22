@@ -184,6 +184,7 @@ public class NUSMP {
 
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
+            com.newuniverse.nusmp.client.aura.DiveClient.init(modEventBus, modContainer);                                      // Spirit Dive remake: client config nusmp-spiritdive-client.toml, the first person flaming arm, the particle trail
 
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
@@ -433,6 +434,7 @@ public class NUSMP {
         com.newuniverse.nusmp.book.NoelleFormState.register();                                                    // 1.99.0: Noelle's forms (book.NoelleFormRules): buffs, limits, the Black Dragon exhaustion
         com.newuniverse.nusmp.book.NoelleFormsSelfTests.register();                                               // 1.99.0: self-test magic.noelle_forms
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
+        com.newuniverse.nusmp.book.SpiritDiveBoot.init(modContainer);                                              // Spirit Dive remake: server config nusmp-spiritdive-server.toml, Fuegoleon's arm events, self-tests magic.spirit_dive_looks / magic.fuegoleon_arm
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
         com.newuniverse.nusmp.vupgrade.UpgradeParticlesSelfTests.register();                                      // 1.110.0: self-test visual.upgrade_particles (the upgraded items spawn only the mod's own particles, the budget and the first-person size cap)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);

@@ -1,0 +1,310 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.spiritdive_arm_wind_blades_r",
+    "texture_width": 512,
+    "texture_height": 512,
+    "visible_bounds_width": 6,
+    "visible_bounds_height": 6,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "w",
+     "pivot": [
+      -2.2,
+      22.5,
+      2.8
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "b0",
+     "pivot": [
+      -2.2,
+      22.5,
+      2.8
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -40.2,
+        17.75,
+        2.8
+       ],
+       "size": [
+        38.0,
+        9.5,
+        0.4
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          2,
+          0
+         ],
+         "uv_size": [
+          152,
+          2
+         ]
+        },
+        "down": {
+         "uv": [
+          154,
+          0
+         ],
+         "uv_size": [
+          152,
+          2
+         ]
+        },
+        "east": {
+         "uv": [
+          0,
+          2
+         ],
+         "uv_size": [
+          2,
+          38
+         ]
+        },
+        "north": {
+         "uv": [
+          2,
+          2
+         ],
+         "uv_size": [
+          152,
+          38
+         ]
+        },
+        "west": {
+         "uv": [
+          154,
+          2
+         ],
+         "uv_size": [
+          2,
+          38
+         ]
+        },
+        "south": {
+         "uv": [
+          156,
+          2
+         ],
+         "uv_size": [
+          152,
+          38
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "w",
+     "rotation": [
+      0,
+      24.0,
+      -80.0
+     ]
+    },
+    {
+     "name": "b1",
+     "pivot": [
+      -2.2,
+      22.5,
+      2.8
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -35.2,
+        18.1,
+        2.8
+       ],
+       "size": [
+        33.0,
+        8.8,
+        0.4
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          2,
+          40
+         ],
+         "uv_size": [
+          132,
+          2
+         ]
+        },
+        "down": {
+         "uv": [
+          134,
+          40
+         ],
+         "uv_size": [
+          132,
+          2
+         ]
+        },
+        "east": {
+         "uv": [
+          0,
+          42
+         ],
+         "uv_size": [
+          2,
+          36
+         ]
+        },
+        "north": {
+         "uv": [
+          2,
+          42
+         ],
+         "uv_size": [
+          132,
+          36
+         ]
+        },
+        "west": {
+         "uv": [
+          134,
+          42
+         ],
+         "uv_size": [
+          2,
+          36
+         ]
+        },
+        "south": {
+         "uv": [
+          136,
+          42
+         ],
+         "uv_size": [
+          132,
+          36
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "w",
+     "rotation": [
+      0,
+      31.0,
+      -54.0
+     ]
+    },
+    {
+     "name": "b2",
+     "pivot": [
+      -2.2,
+      22.5,
+      2.8
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -29.2,
+        18.5,
+        2.8
+       ],
+       "size": [
+        27.0,
+        8.0,
+        0.4
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          270,
+          40
+         ],
+         "uv_size": [
+          108,
+          2
+         ]
+        },
+        "down": {
+         "uv": [
+          378,
+          40
+         ],
+         "uv_size": [
+          108,
+          2
+         ]
+        },
+        "east": {
+         "uv": [
+          268,
+          42
+         ],
+         "uv_size": [
+          2,
+          32
+         ]
+        },
+        "north": {
+         "uv": [
+          270,
+          42
+         ],
+         "uv_size": [
+          108,
+          32
+         ]
+        },
+        "west": {
+         "uv": [
+          378,
+          42
+         ],
+         "uv_size": [
+          2,
+          32
+         ]
+        },
+        "south": {
+         "uv": [
+          380,
+          42
+         ],
+         "uv_size": [
+          108,
+          32
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "w",
+     "rotation": [
+      0,
+      38.0,
+      -28.0
+     ]
+    }
+   ]
+  }
+ ]
+}
