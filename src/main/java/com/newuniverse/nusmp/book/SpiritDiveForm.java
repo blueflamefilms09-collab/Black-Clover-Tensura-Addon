@@ -79,7 +79,17 @@ public final class SpiritDiveForm {
     // ------------------------------------------------------------------ the look: Aura.SPIRIT_DIVE
     /** Tells the clients that see the player that the dive of this element and stage runs for {@code ticks} more ticks (a fake player without a connection only updates the server table). */
     static void look(ServerPlayer p, SpiritDivePieces.Element el, SpiritDivePieces.Stage st, int ticks) {
-        try { PlayerAuras.set(p, Aura.SPIRIT_DIVE, ticks, SpiritDivePieces.style(el, st)); } catch (NullPointerException noConnection) { /* nothing to send */ }
+        try { PlayerAuras.set(p, Aura.SPIRIT_DIVE, ticks, SpiritDivePieces.style(el, st, gradeOf(p, el))); } catch (NullPointerException noConnection) { /* nothing to send */ }
+    }
+
+    /**
+     * Spirit Dive remake: the tier of this mage's dive. The character tier goes to the mage whose bound grimoire is the canon character of the element (Yuno on Wind, Fuegoleon on Fire, Noelle on
+     * Water; {@link SpiritDiveTier#gradeFor}), unless the server turned it off ({@code spiritDive.characterTier}). One grimoire NBT read per second per diving mage.
+     */
+    public static SpiritDiveTier.Grade gradeOf(ServerPlayer p, SpiritDivePieces.Element el) {
+        if (!SpiritDiveConfig.characterTier()) return SpiritDiveTier.Grade.STANDARD;
+        com.newuniverse.nusmp.grimoire.CanonBook c = CharacterSpells.characterOf(p);
+        return SpiritDiveTier.gradeFor(el, c == null ? null : c.id());
     }
 
     /** The stage held in the armour state (the scale it was put on with: below 1 is a half dive). */

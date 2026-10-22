@@ -64,15 +64,25 @@ public final class SpiritDivePieces {
     }
 
     // ------------------------------------------------------------------ the style number of the aura lease (a byte)
-    /** element in bits 0-1, stage in bits 2-3 (0..11). */
+    /** element in bits 0-1, stage in bits 2-3 (0..11); since the Spirit Dive remake the TIER (grade: {@link SpiritDiveTier.Grade}) in bits 4-5 (0 = the standard look: the old numbers are unchanged). */
     public static int style(Element e, Stage s) { return e.ordinal() | (s.ordinal() << 2); }
 
-    public static boolean valid(int style) { return style >= 0 && (style & 3) < Element.values().length && (style >> 2) < Stage.values().length; }
+    /** The style number with the grade of the look (the character tier of Yuno, Fuegoleon or Noelle). */
+    public static int style(Element e, Stage s, SpiritDiveTier.Grade g) { return style(e, s) | (g.ordinal() << 4); }
+
+    public static boolean valid(int style) {
+        return style >= 0 && style < 64 && (style & 3) < Element.values().length && ((style >> 2) & 3) < Stage.values().length && (style >> 4) < SpiritDiveTier.Grade.values().length;
+    }
 
     /** The element of a style number (WIND for a number that makes no sense: the painter never throws on a bad byte). */
     public static Element element(int style) { return valid(style) ? Element.values()[style & 3] : Element.WIND; }
 
-    public static Stage stage(int style) { return valid(style) ? Stage.values()[style >> 2] : Stage.HALF; }
+    public static Stage stage(int style) { return valid(style) ? Stage.values()[(style >> 2) & 3] : Stage.HALF; }
+
+    /** The grade (tier) of a style number: STANDARD for a bad byte and for a grade that does not belong to the element. */
+    public static SpiritDiveTier.Grade grade(int style) {
+        return valid(style) ? SpiritDiveTier.effective(element(style), SpiritDiveTier.Grade.values()[style >> 4]) : SpiritDiveTier.Grade.STANDARD;
+    }
 
     /** The stage a dive starts at, from the scale {@link ArmourRules#diveScale} gave it: below 1 is a half dive. */
     public static Stage stageFor(float diveScale) { return diveScale < 1f ? Stage.HALF : Stage.FULL; }
@@ -170,6 +180,19 @@ public final class SpiritDivePieces {
         ALL.add(d(S + "earth_helm", Anchor.HEAD, 0, 0, -16, 0, false, false, "", false, true, 1f));
         ALL.add(d(S + "earth_back", Anchor.BODY, 7, 0, 0, 12, false, false, "", false, false, 0.9f));
         ALL.add(d(S + "earth_orbit", Anchor.BODY, 9, 0, 0, 0, false, false, "idle", true, false, 0.9f));
+        // ---- the Spirit Dive remake (appended): the signature pieces of the character tier and the rock crown of the earth dive
+        ALL.add(d(S + "wind_halo", Anchor.HEAD, 3, 0, -16, 0, true, false, "idle", false, true, 1.5f));                // Yuno: the crown halo
+        ALL.add(d(S + "wind_blades_l", Anchor.BODY, 8, 10, -4, 12, true, true, "idle", false, false, 1.3f));            // Yuno: the wing-like wind blades
+        ALL.add(d(S + "wind_blades_r", Anchor.BODY, 9, -10, -4, 12, true, true, "idle", false, false, 1.3f));
+        ALL.add(d(S + "wind_hair", Anchor.HEAD, 4, 0, -10, 6, true, false, "idle", true, true, 1.4f));                  // Yuno: the hair streaming in the wind
+        ALL.add(d(S + "fire_mane", Anchor.HEAD, 2, 0, -8, 8, true, false, "idle", false, true, 1.4f));                  // Fuegoleon: the flame mane
+        ALL.add(d(S + "fire_cape", Anchor.BODY, 6, 0, 0, 12, true, false, "idle", false, false, 1.2f));                 // Fuegoleon: the flame cape
+        ALL.add(d(S + "flame_arm_r", Anchor.ARM_R, 1, -12, 2, -6, false, false, "idle", false, false, 1.5f));            // Fuegoleon: the molten right arm (also the persistent arm of the Salamander contract)
+        ALL.add(d(S + "water_ribbon_l", Anchor.BODY, 7, 10, -2, 10, true, false, "idle", false, false, 1.1f));          // Noelle: water ribbons
+        ALL.add(d(S + "water_ribbon_r", Anchor.BODY, 8, -10, -2, 10, true, false, "idle", false, false, 1.1f));
+        ALL.add(d(S + "water_rings", Anchor.HEAD, 10, 0, -16, 0, true, false, "idle", true, true, 1.3f));              // Noelle: the halo of water rings
+        ALL.add(d(S + "water_train", Anchor.BODY, 5, 0, 8, 10, true, false, "idle", true, false, 1.1f));                // Noelle: the flowing train of the dress
+        ALL.add(d(S + "earth_crown", Anchor.HEAD, 3, 0, -16, 0, false, false, "idle", false, true, 1.1f));              // the rock crown with floating crystals
     }
 
     /** The definition of a piece id (null for an unknown id). */
@@ -245,6 +268,57 @@ public final class SpiritDivePieces {
         return out;
     }
 
+    // ------------------------------------------------------------------ the remade dive (Spirit Dive remake): the pieces per element, stage and tier
+    private static final List<String> V2_WIND_HALF = list(S + "wind_mantle_l", S + "wind_ring_l", S + "wind_crown_l", S + "wind_wing_l");
+    private static final List<String> V2_WIND_FULL = list(S + "wind_mantle_l", S + "wind_mantle_r", S + "wind_ring_l", S + "wind_ring_r", S + "wind_crown_l", S + "wind_crown_r", S + "wind_crown_c",
+            S + "wind_wing_l", S + "wind_wing_r");
+    private static final List<String> V2_YUNO_HALF = join(V2_WIND_HALF, list(S + "wind_blades_l"));
+    private static final List<String> V2_YUNO_FULL = join(V2_WIND_FULL, list(S + "wind_blades_l", S + "wind_blades_r", S + "wind_halo", S + "wind_hair"));
+
+    private static final List<String> V2_FIRE_HALF = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_wingbud_r",
+            S + "fire_wingbud_l");
+    private static final List<String> V2_FIRE_FULL = list(S + "fire_pauldron_r", S + "fire_pauldron_l", S + "fire_arm_r", S + "fire_arm_l", S + "fire_claws_r", S + "fire_claws_l", S + "fire_chest",
+            S + "fire_wing_r", S + "fire_wing_l");
+    private static final List<String> V2_FUEGO_HALF = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_wingbud_r", S + "fire_wingbud_l", S + "fire_mane");
+    private static final List<String> V2_FUEGO_FULL = list(S + "flame_arm_r", S + "fire_pauldron_l", S + "fire_arm_l", S + "fire_claws_l", S + "fire_chest", S + "fire_wing_r", S + "fire_wing_l",
+            S + "fire_mane", S + "fire_cape");
+
+    private static final List<String> V2_WATER_HALF = list(W + "chest", W + "skirt", W + "pauldron_r", W + "pauldron_l", W + "gauntlet_r", W + "gauntlet_l", W + "helm", W + "wing_r", W + "wing_l", W + "halo");
+    private static final List<String> V2_WATER_FULL = list(W + "chest", W + "skirt", W + "pauldron_r", W + "pauldron_l", W + "gauntlet_r", W + "gauntlet_l", W + "helm", S + "saint_sash", S + "saint_wing_r",
+            S + "saint_wing_l", S + "saint_halo");
+    private static final List<String> V2_NOELLE_HALF = join(V2_WATER_HALF, list(S + "water_ribbon_l", S + "water_ribbon_r", S + "water_train"));
+    /** Noelle's Saint dress: the gold halo gives way to the halo of water rings (one halo, not two). */
+    private static final List<String> V2_NOELLE_FULL = join(except(V2_WATER_FULL, S + "saint_halo"), list(S + "saint_sleeve_r", S + "saint_sleeve_l", S + "water_ribbon_l", S + "water_ribbon_r", S + "water_train",
+            S + "water_rings"));
+
+    private static final List<String> V2_EARTH_HALF = list(S + "earth_chest", S + "earth_pauldron_r", S + "earth_pauldron_l", S + "earth_gauntlet_r", S + "earth_gauntlet_l");
+    private static final List<String> V2_EARTH_FULL = join(V2_EARTH_HALF, list(S + "earth_crown", S + "earth_orbit"));
+
+    /**
+     * The pieces of the REMADE dive for an element, stage and tier, in draw order (the look every client draws unless it chose the classic look: {@link #pieces(Element, Stage)} is that old look).
+     * The standard tier is the light version (the signature pieces only); the character tier (Yuno on Wind, Fuegoleon on Fire, Noelle on Water) adds the character's own pieces. UPGRADE is the
+     * pieces of FULL, as before. A grade that does not belong to the element is the standard tier.
+     */
+    public static List<String> pieces(Element e, Stage s, SpiritDiveTier.Grade g) {
+        boolean full = full(s);
+        SpiritDiveTier.Grade eg = SpiritDiveTier.effective(e, g);
+        return switch (e) {
+            case WIND -> eg == SpiritDiveTier.Grade.YUNO ? (full ? V2_YUNO_FULL : V2_YUNO_HALF) : (full ? V2_WIND_FULL : V2_WIND_HALF);
+            case FIRE -> eg == SpiritDiveTier.Grade.FUEGOLEON ? (full ? V2_FUEGO_FULL : V2_FUEGO_HALF) : (full ? V2_FIRE_FULL : V2_FIRE_HALF);
+            case WATER -> eg == SpiritDiveTier.Grade.NOELLE ? (full ? V2_NOELLE_FULL : V2_NOELLE_HALF) : (full ? V2_WATER_FULL : V2_WATER_HALF);
+            case EARTH -> full ? V2_EARTH_FULL : V2_EARTH_HALF;
+        };
+    }
+
+    /** The pieces of the half dive of the remade look: what is already on when a half dive upgrades. */
+    public static List<String> halfPieces(Element e, SpiritDiveTier.Grade g) { return pieces(e, Stage.HALF, g); }
+
+    /** {@link #alreadyOn(Element, Stage, String)} for the remade look. */
+    public static boolean alreadyOn(Element e, Stage s, SpiritDiveTier.Grade g, String id) { return s == Stage.UPGRADE && halfPieces(e, g).contains(id) && pieces(e, s, g).contains(id); }
+
+    /** True when the dive draws the Fuegoleon grade: the right arm is the molten flame arm instead of the draconic one. */
+    public static boolean flameArm(Element e, SpiritDiveTier.Grade g) { return e == Element.FIRE && SpiritDiveTier.effective(e, g) == SpiritDiveTier.Grade.FUEGOLEON; }
+
     // ------------------------------------------------------------------ the body overlay (the translucent skin drawn under the pieces)
     public static final int SHELL_BODY = 1, SHELL_ARM_R = 2, SHELL_ARM_L = 4, SHELL_LEG_R = 8, SHELL_LEG_L = 16, SHELL_ALL = 31;
 
@@ -269,6 +343,7 @@ public final class SpiritDivePieces {
     public static void forEachId(Consumer<String> sink) {
         java.util.LinkedHashSet<String> seen = new java.util.LinkedHashSet<>();
         for (Element e : Element.values()) for (Stage s : Stage.values()) seen.addAll(pieces(e, s));
+        for (Element e : Element.values()) for (Stage s : Stage.values()) for (SpiritDiveTier.Grade g : SpiritDiveTier.Grade.values()) seen.addAll(pieces(e, s, g));          // the remade look
         seen.forEach(sink);
     }
 }

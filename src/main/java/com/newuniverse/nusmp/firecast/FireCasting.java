@@ -466,4 +466,10 @@ public final class FireCasting {
     static boolean safe(GrimoireBook book, ServerPlayer p, java.util.function.BooleanSupplier body) {
         return SafeCast.run(book.magicId(), p.level().getGameTime(), p, body);
     }
+
+    /** Spirit Dive remake (append-only): true while this player's Salamander (the small one on the shoulder, or its big form) is out; read by book.FuegoleonArm. One map read, no allocation. */
+    public static boolean salamanderOut(ServerPlayer p) {
+        State s = STATES.isEmpty() ? null : STATES.get(p.getUUID());
+        return s != null && (s.spirit != null || s.dragon != null);
+    }
 }

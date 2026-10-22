@@ -1,0 +1,6 @@
+{
+ "_comment": "Spirit Dive remake: the new geo pieces on a player figure (tools/gen_spirit_dive_v2.py). Piece scenes: PLAYER space, translucent body + additive glow.",
+ "sdv_geo_wind_pieces": {"kind": "geo", "space": "PLAYER", "layer": "TRANSLUCENT", "argb": "FFFFFFFF", "glow": "FFFFFFFF", "floor": true, "figure": true,
+  "model": "spiritdive_arm_wind_blades_l", "anim": "idle", "ages": [10], "tile": [460, 560],
+  "views": [{"name": "front 3/4", "yaw": 30, "pitch": 8, "target": [0, 1.0, 0.1], "dist": 4.2}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.1], "dist": 4.2}]}
+}

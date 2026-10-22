@@ -96,5 +96,7 @@ public enum Aura {
     /** Requip: The Knight (Erza Scarlet): the armour render layer; the style is the worn armour's ordinal in requip.Armour (client.aura.ErzaAura, pieces forged in by EquipAnimation) */
     ERZA,
     /** 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth; the style is book.SpiritDivePieces.style(element, stage) (client.aura.SpiritDiveAura, pieces forged in by EquipAnimation) */
-    SPIRIT_DIVE
+    SPIRIT_DIVE,
+    /** Spirit Dive remake: Fuegoleon's flaming right arm while the Salamander is his; the style is book.FuegoleonArmRules.STYLE (client.aura.FuegoleonArmAura; also drawn in first person by client.aura.FireArmFirstPerson) */
+    FUEGOLEON_ARM
 }
