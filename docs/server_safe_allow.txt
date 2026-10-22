@@ -40,6 +40,7 @@ relics/GradeDamage.java
 relics/RelicHolderSync.java
 relics/RelicPayloads.java
 relics/RelicSystem.java
+relics/RelicWearSelfTests.java
 relics/RelicWornSelfTests.java
 relics/WornDebug.java
 relics/WornRender2SelfTests.java

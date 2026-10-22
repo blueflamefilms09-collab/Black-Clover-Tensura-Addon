@@ -31,5 +31,11 @@
   "message.nusmp.relic_debug.armour_never": "     armour record: the worn layer has not finished a frame for this piece yet (or never ran for this wearer)",
   "message.nusmp.relic_debug.armour_layer": "     vanilla armour layer chosen: %s (plan %s / %s); asked for the painted layer last frame: %s",
   "message.nusmp.relic_debug.armour_drawn": "     model drawn: %s (%s pieces); own renderer ran: %s",
-  "message.nusmp.relic_debug.armour_result": "     result: %s; failsafe boxes drawn: %s"
+  "message.nusmp.relic_debug.armour_result": "     result: %s; failsafe boxes drawn: %s",
+  "message.nusmp.relic_debug.wear_slots": "Curios slot types of this wearer: %s",
+  "message.nusmp.relic_debug.wear_missing": "RELIC SLOT TYPES THE WEARER DOES NOT HAVE: %s (relics of these slots cannot be put on)",
+  "message.nusmp.relic_debug.causes": "Causes noted on this machine since the game started (each once):",
+  "message.nusmp.relic_debug.wear": "     wear: slot %s, equipped %s, slot defined: %s, tag: %s, sent to clients %s, visible by default %s%s",
+  "message.nusmp.relic_debug.wear_options": "Options in force: relicfx.showWorn=%s (all worn relics), relicfx.hideArmourRelics=%s, relicfx.models=%s; Curios eye icons are per slot",
+  "message.nusmp.relic_debug.wear_client": "     wear: slot %s, equipped (found on this client) yes, synced from the server %s, visible now %s%s"
 }

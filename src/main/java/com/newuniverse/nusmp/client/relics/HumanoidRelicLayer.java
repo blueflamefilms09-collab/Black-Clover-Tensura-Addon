@@ -57,7 +57,7 @@ public class HumanoidRelicLayer<T extends LivingEntity, M extends HumanoidModel<
         if (found.isEmpty()) return;
         boolean far = WornExec.tooFar(e, DIST);
         WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(false, WornPlan.View.OTHER, false, false, far, RelicFxOptions.models(), RelicFxOptions.hideArmourRelics(),
-                WornPlan.Fallback.CHARM), WornExec.entries(found, null, false));
+                WornPlan.Fallback.CHARM, RelicFxOptions.showWorn()), WornExec.entries(found, null, false));
         SETS.clear();
         if (!plan.isEmpty()) {
             WornExec.collect(plan, found, SETS);

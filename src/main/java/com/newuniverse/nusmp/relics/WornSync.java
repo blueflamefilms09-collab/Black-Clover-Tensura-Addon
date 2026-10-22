@@ -67,6 +67,9 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
         gameBus.addListener(WornSync::onStartTracking);
         gameBus.addListener(WornSync::onLogout);
         gameBus.addListener(WornSync::onLeave);
+        gameBus.addListener(WornSync::onLogin);                 // relics_wear: login, respawn and a change of dimension send the list again at the next tick (WornSyncRules.Moment)
+        gameBus.addListener(WornSync::onRespawn);
+        gameBus.addListener(WornSync::onDimension);
     }
 
     /** The key of a stack for {@link WornMerge}: its item's registry id. */
@@ -94,7 +97,9 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
     }
 
     private static void onPlayerTick0(PlayerTickEvent.Post e) {
-        if (!(e.getEntity() instanceof ServerPlayer p) || (p.tickCount + p.getId()) % 10 != 0) return;
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
+        boolean forced = !FORCE.isEmpty() && FORCE.remove(p.getUUID());
+        if (!WornSyncRules.looksNow(p.tickCount, p.getId(), forced)) return;
         check(p, true);
     }
 
@@ -121,7 +126,7 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
         for (Relics.Located l : Relics.scanExtra(e)) if (now.size() < MAX) now.add(l.stack().copyWithCount(1));
         String sig = WornMerge.signature(keysOf(now));
         String before = SIG.getOrDefault(e.getUUID(), "");
-        if (sig.equals(before)) return;
+        if (!WornSyncRules.shouldSend(before, sig)) return;
         if (now.isEmpty()) { SIG.remove(e.getUUID()); SENT.remove(e.getUUID()); }
         else { SIG.put(e.getUUID(), sig); SENT.put(e.getUUID(), now); }
         WornSync payload = new WornSync(e.getUUID(), now);
@@ -135,7 +140,26 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
         if (last != null && !last.isEmpty()) PacketDistributor.sendToPlayer(viewer, new WornSync(e.getTarget().getUUID(), last));
     }
 
-    static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { forget(e.getEntity().getUUID()); }
+    static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
+        forget(e.getEntity().getUUID());
+        FORCE.remove(e.getEntity().getUUID());
+    }
+
+    /** Players whose list must be looked at (and sent if there is one) at their next tick, whatever the period says: a login, a respawn, a change of dimension. */
+    private static final java.util.Set<UUID> FORCE = ConcurrentHashMap.newKeySet();
+
+    /** The client's idea of this player is gone (new entity, new level): forget what was sent and send it again at the next tick. */
+    static void resync(Player p, WornSyncRules.Moment why) {
+        if (p == null || p.level().isClientSide() || !WornSyncRules.forcesResend(why)) return;
+        forget(p.getUUID());
+        if (FORCE.size() < 4096) FORCE.add(p.getUUID());
+    }
+
+    static void onLogin(PlayerEvent.PlayerLoggedInEvent e) { resync(e.getEntity(), WornSyncRules.Moment.LOGIN); }
+
+    static void onRespawn(PlayerEvent.PlayerRespawnEvent e) { resync(e.getEntity(), WornSyncRules.Moment.RESPAWN); }
+
+    static void onDimension(PlayerEvent.PlayerChangedDimensionEvent e) { resync(e.getEntity(), WornSyncRules.Moment.DIMENSION); }
 
     /** A wearer leaving a level (death of a mob, a player changing dimension, an unload): the next tick says it again if it is still carrying. */
     static void onLeave(EntityLeaveLevelEvent e) {
@@ -182,6 +206,15 @@ public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPac
 
     /** Client: milliseconds since the last list arrived, or -1 if none did. */
     public static long sinceLastReceived() { return received == 0 ? -1L : System.currentTimeMillis() - lastReceivedAt; }
+
+    /**
+     * Client: the wearer's entity left this client's level (out of range, another dimension, respawn, death): its list is dropped ({@link WornSyncRules#keepListAfterLeave}). The server sends
+     * the current list again when the entity is tracked again, so a list can never outlive the entity it was about.
+     */
+    public static void forgetClient(UUID wearer) {
+        if (wearer == null || WornSyncRules.keepListAfterLeave()) return;
+        if (CLIENT.remove(wearer) != null) Relics.invalidateClient(wearer);
+    }
 
     /** Client: forget everything (leaving a world). */
     public static void clearClient() {

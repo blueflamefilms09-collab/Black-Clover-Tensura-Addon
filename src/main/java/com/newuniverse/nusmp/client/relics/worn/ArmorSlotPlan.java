@@ -34,19 +34,25 @@ public final class ArmorSlotPlan {
         WornPlan.Kind k = it.kind();
         WornPlan.Why y = it.why();
         Layer layer;
-        if ("CHEST".equals(e.slot())) layer = Layer.PAINTED;                         // a chest piece is a painted body with 3D ornaments over it: the painted layer is always its base
+        if (y == WornPlan.Why.SHOW_OFF) layer = Layer.EMPTY;                         // relics_wear: the player's all-relics switch hides the whole piece, a chest body included
+        else if ("CHEST".equals(e.slot())) layer = Layer.PAINTED;                    // a chest piece is a painted body with 3D ornaments over it: the painted layer is always its base
         else if (k == WornPlan.Kind.LIBRARY_MODEL) layer = Layer.EMPTY;
         else if (k == WornPlan.Kind.CUSTOM) layer = e.hasModel() ? Layer.EMPTY : Layer.PAINTED;
-        else if (y == WornPlan.Why.ARMOUR_OPTION || y == WornPlan.Why.FIRST_PERSON_HEAD) layer = Layer.EMPTY;
+        else if (y == WornPlan.Why.ARMOUR_OPTION || y == WornPlan.Why.SHOW_OFF || y == WornPlan.Why.FIRST_PERSON_HEAD) layer = Layer.EMPTY;
         else layer = Layer.PAINTED;                                                  // no model, too far, nothing known: the painted armour, never nothing
-        return new Verdict(k, y, layer, layer == Layer.PAINTED && y != WornPlan.Why.ARMOUR_OPTION);
+        return new Verdict(k, y, layer, layer == Layer.PAINTED && y != WornPlan.Why.ARMOUR_OPTION && y != WornPlan.Why.SHOW_OFF);
     }
 
     /** The answer for one armour relic worn in {@code slot} ("HEAD", "CHEST", "FEET") in the given circumstances. */
     public static Verdict decide(String slot, boolean hasModel, boolean custom, boolean modelsOption, boolean hideArmourOption, WornPlan.View view, boolean tooFar) {
+        return decide(slot, hasModel, custom, modelsOption, hideArmourOption, view, tooFar, true);
+    }
+
+    /** The same with the player's all-relics switch ({@code relicfx.showWorn}): off hides the armour relic at any distance and from any view. */
+    public static Verdict decide(String slot, boolean hasModel, boolean custom, boolean modelsOption, boolean hideArmourOption, WornPlan.View view, boolean tooFar, boolean showWorn) {
         WornPlan.Entry e = new WornPlan.Entry("armour_relic", slot, "", WornPlan.Source.ARMOUR, null, custom, hasModel, 3);
         // 1.111.0: the player's switch is obeyed at any distance (a far wearer used to get the painted layer back, because "too far" outranks every other reason in the plan)
-        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(false, view, false, false, tooFar && !hideArmourOption, modelsOption, hideArmourOption, WornPlan.Fallback.BOXES), List.of(e));
+        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(false, view, false, false, tooFar && !hideArmourOption, modelsOption, hideArmourOption, WornPlan.Fallback.BOXES, showWorn), List.of(e));
         return of(plan.all().get(0));
     }
 }

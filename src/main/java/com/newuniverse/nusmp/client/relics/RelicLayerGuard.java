@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.client.relics;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.relics.WornOnce;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -37,6 +39,9 @@ public final class RelicLayerGuard {
     /** The class name of the last renderer the guard attached the layer to ("" if none). */
     public static String lastHealed() { return lastHealed; }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void attachHumanoid(LivingEntityRenderer renderer) { renderer.addLayer(new HumanoidRelicLayer(renderer)); }
+
     /** Game-bus listener: {@code RenderLivingEvent.Pre}. */
     @SuppressWarnings("unchecked")
     public static void onPre(RenderLivingEvent.Pre<?, ?> e) {
@@ -48,7 +53,19 @@ public final class RelicLayerGuard {
         }
         lastSeen = r;
         if (!(r.getModel() instanceof PlayerModel<?>)) {
-            LogUtils.getLogger().warn("[nusmp] a player is drawn by {} whose model is not a PlayerModel: worn relics cannot be attached to it", r.getClass().getName());
+            if (r.getModel() instanceof HumanoidModel<?>) {                              // relics_wear: a body form of another mod (a humanoid model that is not a PlayerModel): the humanoid worn layer fits it
+                try {
+                    attachHumanoid(r);
+                    healed++;
+                    lastHealed = r.getClass().getName();
+                    WornOnce.log(WornOnce.Cause.RENDERER_NOT_PLAYER_MODEL, r.getClass().getName());
+                } catch (RuntimeException | LinkageError failed) {
+                    LogUtils.getLogger().error("[nusmp] the humanoid worn relic layer could not be attached to {}", r.getClass().getName(), failed);
+                }
+                return;
+            }
+            WornOnce.log(WornOnce.Cause.RENDERER_NOT_HUMANOID, r.getClass().getName() + " (model " + r.getModel().getClass().getName() + ")");
+            LogUtils.getLogger().warn("[nusmp] a player is drawn by {} whose model is neither a PlayerModel nor a HumanoidModel: worn relics cannot be attached to it", r.getClass().getName());
             return;
         }
         try {
@@ -56,6 +73,7 @@ public final class RelicLayerGuard {
                     .addLayer(new RelicWornLayer((RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>) r));
             healed++;
             lastHealed = r.getClass().getName();
+            WornOnce.log(WornOnce.Cause.LAYER_LATE, lastHealed);
             LogUtils.getLogger().warn("[nusmp] the renderer {} drew a player without the worn relic layer (the layer event never reached it); the layer was attached at the first frame", lastHealed);
         } catch (RuntimeException | LinkageError failed) {
             LogUtils.getLogger().error("[nusmp] the worn relic layer could not be attached to {}", r.getClass().getName(), failed);

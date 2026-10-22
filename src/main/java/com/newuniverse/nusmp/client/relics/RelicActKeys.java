@@ -34,6 +34,10 @@ public final class RelicActKeys {
     public static final KeyMapping TOGGLE_VISUALS = new KeyMapping("key.nusmp.toggle_relic_visuals", InputConstants.Type.KEYSYM,
             InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
 
+    /** relics_wear: the all-relics switch ({@code relicfx.showWorn}) as a key; unbound by default. {@code /multiverse relic show <on|off|toggle>} does the same. */
+    public static final KeyMapping TOGGLE_SHOW_WORN = new KeyMapping("key.nusmp.toggle_show_worn_relics", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+
     /** One ability on the ring. */
     record Entry(RelicDef def, Act act) {}
 
@@ -43,7 +47,7 @@ public final class RelicActKeys {
     private static long holdStart;
 
     /** Mod bus. */
-    public static void register(RegisterKeyMappingsEvent e) { e.register(USE); e.register(TOGGLE_VISUALS); }
+    public static void register(RegisterKeyMappingsEvent e) { e.register(USE); e.register(TOGGLE_VISUALS); e.register(TOGGLE_SHOW_WORN); }
 
     /** The abilities on the ring, in the order the player carries them. */
     static List<Entry> entries(Player p) {
@@ -68,6 +72,10 @@ public final class RelicActKeys {
         while (TOGGLE_VISUALS.consumeClick()) {
             boolean hidden = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.toggleHideArmourRelics();
             mc.player.displayClientMessage(net.minecraft.network.chat.Component.translatable(hidden ? "nusmp.relic.visuals.hidden" : "nusmp.relic.visuals.shown"), true);
+        }
+        while (TOGGLE_SHOW_WORN.consumeClick()) {
+            boolean on = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.toggleShowWorn();
+            mc.player.displayClientMessage(RelicWearClient.stateLine(on), true);
         }
         long now = mc.level.getGameTime();
         List<Entry> ring = entries(mc.player);

@@ -39,7 +39,8 @@ public final class WornPlan {
         EYE_OFF("the Curios eye icon of its slot is switched off"),
         ARMOUR_OPTION("relicfx.hideArmourRelics is on"),
         VANILLA_ARMOUR("an armour relic with no worn model: the armour layer draws its painted armour"),
-        FIRST_PERSON_HEAD("the camera is in the wearer's head: head pieces stay away from the view");
+        FIRST_PERSON_HEAD("the camera is in the wearer's head: head pieces stay away from the view"),
+        SHOW_OFF("the player switched all worn relics off (relicfx.showWorn, /multiverse relic show off)");
 
         public final String text;
 
@@ -72,8 +73,15 @@ public final class WornPlan {
         public boolean isCurioSlot() { return "NECK".equals(slot) || "BACK".equals(slot) || "BELT".equals(slot) || "HANDS".equals(slot) || "CHARM".equals(slot); }
     }
 
-    /** The circumstances of one frame of one wearer. */
-    public record Ctx(boolean slim, View view, boolean spectator, boolean invisible, boolean tooFar, boolean modelsOption, boolean hideArmourOption, Fallback fallback) {}
+    /**
+     * The circumstances of one frame of one wearer. {@code showWorn} is the player's all-relics switch ({@code relicfx.showWorn}, default on): off hides every worn relic, Curios and armour.
+     * The eight-argument form is "switch on", so older callers and tests are unchanged.
+     */
+    public record Ctx(boolean slim, View view, boolean spectator, boolean invisible, boolean tooFar, boolean modelsOption, boolean hideArmourOption, Fallback fallback, boolean showWorn) {
+        public Ctx(boolean slim, View view, boolean spectator, boolean invisible, boolean tooFar, boolean modelsOption, boolean hideArmourOption, Fallback fallback) {
+            this(slim, view, spectator, invisible, tooFar, modelsOption, hideArmourOption, fallback, true);
+        }
+    }
 
     /**
      * The answer for one relic.
@@ -139,7 +147,7 @@ public final class WornPlan {
     /** Decides what is drawn for one wearer. Never null; the plan has one item per entry, in the order given. */
     public static Plan decide(Ctx ctx, List<Entry> worn) {
         List<Item> all = new ArrayList<>(worn.size());
-        Why whole = ctx.spectator() ? Why.WEARER_SPECTATOR : ctx.invisible() ? Why.WEARER_INVISIBLE : ctx.tooFar() ? Why.TOO_FAR : null;
+        Why whole = ctx.spectator() ? Why.WEARER_SPECTATOR : ctx.invisible() ? Why.WEARER_INVISIBLE : !ctx.showWorn() ? Why.SHOW_OFF : ctx.tooFar() ? Why.TOO_FAR : null;
         // pass 1: the verdict of each relic, without places
         Kind[] kinds = new Kind[worn.size()];
         Why[] whys = new Why[worn.size()];

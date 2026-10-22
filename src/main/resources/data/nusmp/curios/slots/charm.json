@@ -1,0 +1,6 @@
+{
+  "size": 1,
+  "order": 54,
+  "icon": "curios:slot/empty_charm_slot",
+  "validators": ["curios:tag"]
+}

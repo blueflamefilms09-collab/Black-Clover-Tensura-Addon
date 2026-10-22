@@ -34,7 +34,7 @@ public final class ArmorSlotClient {
         WornPlan.View view = player ? WornExec.viewOf(wearer) : WornPlan.View.OTHER;
         boolean far = WornExec.tooFar(wearer, DIST);
         return ArmorSlotPlan.decide(d.slot().name(), WornLibrary.of(d) != null, player && WornRenderers.get(d.id()) != null, RelicFxOptions.models(),
-                RelicFxOptions.hideArmourRelics(), view, far);
+                RelicFxOptions.hideArmourRelics(), view, far, RelicFxOptions.showWorn());
     }
 
     /** True when the painted layer of this relic must not be drawn (a model, an own renderer or the player's switch stands in for it). */

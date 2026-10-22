@@ -25,6 +25,7 @@ import com.newuniverse.nusmp.relics.Look;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
+import com.newuniverse.nusmp.relics.WornOnce;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -101,7 +102,9 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         boolean hideArmour = RelicFxOptions.hideArmourRelics();
         List<CuriosLink.RenderFlag> flags = WornExec.needsFlags(found) ? CuriosLink.flags(p) : null;      // the eye icons of the Curios screen, read once per wearer
         List<WornPlan.Entry> entries = WornExec.entries(found, flags, true);
-        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(slim, view, false, false, far, models, hideArmour, WornPlan.Fallback.BOXES), entries);
+        boolean showWorn = RelicFxOptions.showWorn();                                  // relics_wear: the player's all-relics switch (default on): worn relics are drawn unless it, an eye icon or hideArmourRelics says otherwise (WornVisibility)
+        WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(slim, view, false, false, far, models, hideArmour, WornPlan.Fallback.BOXES, showWorn), entries);
+        noteFallbacks(found, plan, models);
         PlayerModel<AbstractClientPlayer> model = getParentModel();
         WornLibDraw.resetDrawRecord();                                                 // 1.111.0: from here on the library records what it really draws, for the armour failsafe below
         CUSTOM_RAN.clear();
@@ -136,6 +139,23 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         int rescued = armourFailsafe(pose, buffers, light, model, p, now, found, plan);   // 1.111.0: an armour relic is never invisible: if nothing of it was drawn by any path, its plain painted boxes are
         WornTrace.reached(p.getUUID(), now, "player", slim, view, found.size(), plan, ENSEMBLES.size(), WornLibDraw.setsDrawn() + CUSTOM_RAN.size() + plan.plain().size() + rescued);
         ENSEMBLES.clear();
+    }
+
+    /**
+     * relics_wear: says once, in the log and in {@code /multiverse relic debug}, why a relic is drawn in a plainer way than its best look: no model in the library, the plain boxes because
+     * {@code relicfx.models} is off, or found only in the server's list. A set lookup per such relic per frame, no allocation after the first time.
+     */
+    private static void noteFallbacks(List<Relics.Located> found, WornPlan.Plan plan, boolean models) {
+        for (int i = 0; i < found.size(); i++) {
+            if (found.get(i).where() == Relics.Where.SYNCED) WornOnce.log(WornOnce.Cause.SYNCED_ONLY, found.get(i).def().id());
+        }
+        for (WornPlan.Item it : plan.plain()) noteBox(it, models);
+        for (WornPlan.Item it : plan.charms()) noteBox(it, models);
+    }
+
+    private static void noteBox(WornPlan.Item it, boolean models) {
+        if (!it.entry().hasModel()) WornOnce.log(WornOnce.Cause.NO_MODEL, it.entry().id());
+        else if (!models) WornOnce.log(WornOnce.Cause.MODELS_OFF, it.entry().id());
     }
 
     /** The relics whose own renderer ran without an error in the frame being drawn (the render thread draws one wearer at a time), and those whose renderer failed once (switched off for the session). */

@@ -58,6 +58,11 @@ public final class RelicCommands {
                         .executes(ctx -> debug(ctx.getSource(), ctx.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player())
                                 .executes(ctx -> debug(ctx.getSource(), EntityArgument.getPlayer(ctx, "player")))))
+                .then(Commands.literal("show")                                                         // relics_wear: the player's own switch for all worn relics (a looks setting kept in the client config)
+                        .executes(ctx -> show(ctx.getSource(), RelicShowPayload.STATUS))
+                        .then(Commands.literal("on").executes(ctx -> show(ctx.getSource(), RelicShowPayload.ON)))
+                        .then(Commands.literal("off").executes(ctx -> show(ctx.getSource(), RelicShowPayload.OFF)))
+                        .then(Commands.literal("toggle").executes(ctx -> show(ctx.getSource(), RelicShowPayload.TOGGLE))))
                 .then(com.newuniverse.nusmp.relics.socket.SocketCommands.node())                  // 1.30.0: socket list|cast|add|remove|core
                 .then(com.newuniverse.nusmp.relics.socket.SocketCommands.unsocketNode()));
     }
@@ -148,6 +153,13 @@ public final class RelicCommands {
         if (Attune.isMine(held, p)) return ok(src, d.cardName() + " was already attuned to you.");
         if (!Attune.bind(p, held)) return fail(src, "You already have " + AttuneRules.CAP + " relics attuned: let one go first.");
         return ok(src, d.cardName() + " is now attuned to you (" + Attune.carried(p, null) + " of " + AttuneRules.CAP + ").");
+    }
+
+    /** relics_wear: {@code /multiverse relic show [on|off|toggle]}, for the player who runs it: the server only tells that player's client what to do with its own looks setting. */
+    private static int show(CommandSourceStack src, int mode) {
+        if (!(src.getEntity() instanceof ServerPlayer p)) return fail(src, "Only a player has worn-relic visuals to switch.");
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(p, new RelicShowPayload(mode));
+        return 1;
     }
 
     /** 1.99.0: {@code /multiverse relic debug [player]} (operators): the server's worn-relic report, then the operator's client is asked for its half ({@link WornDebugPayload}). */

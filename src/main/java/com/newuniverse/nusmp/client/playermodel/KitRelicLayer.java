@@ -48,7 +48,7 @@ public class KitRelicLayer<T extends LivingEntity> extends RenderLayer<T, Player
         }
         boolean far = WornExec.tooFar(e, DIST);
         WornPlan.Plan plan = WornPlan.decide(new WornPlan.Ctx(slim, WornPlan.View.OTHER, false, false, far, RelicFxOptions.models(), RelicFxOptions.hideArmourRelics(),
-                WornPlan.Fallback.CHARM), WornExec.entries(found, null, false));                  // a kit entity has no own-renderer relics and no Curios eye icons
+                WornPlan.Fallback.CHARM, RelicFxOptions.showWorn()), WornExec.entries(found, null, false));                  // a kit entity has no own-renderer relics and no Curios eye icons
         SETS.clear();
         if (!plan.isEmpty()) {
             WornExec.collect(plan, found, SETS);
