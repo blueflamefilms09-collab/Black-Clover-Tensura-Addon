@@ -3,6 +3,54 @@
   "bytes": 20615,
   "seconds": 2.29
  },
+ "cast_2": {
+  "bytes": 29308,
+  "seconds": 3.35
+ },
+ "cast_3": {
+  "bytes": 29088,
+  "seconds": 3.36
+ },
+ "cast_4": {
+  "bytes": 40041,
+  "seconds": 5.2
+ },
+ "cast_5": {
+  "bytes": 34678,
+  "seconds": 4.2
+ },
+ "feast_1": {
+  "bytes": 21404,
+  "seconds": 2.83
+ },
+ "feast_2": {
+  "bytes": 28636,
+  "seconds": 3.85
+ },
+ "feast_3": {
+  "bytes": 26752,
+  "seconds": 3.29
+ },
+ "feast_4": {
+  "bytes": 26426,
+  "seconds": 3.64
+ },
+ "hurt_1": {
+  "bytes": 26037,
+  "seconds": 3.0
+ },
+ "hurt_2": {
+  "bytes": 32492,
+  "seconds": 3.81
+ },
+ "hurt_3": {
+  "bytes": 23048,
+  "seconds": 3.19
+ },
+ "hurt_4": {
+  "bytes": 18581,
+  "seconds": 2.47
+ },
  "link_1": {
   "bytes": 48041,
   "seconds": 6.1
@@ -18,6 +66,22 @@
  "link_4": {
   "bytes": 45467,
   "seconds": 5.5
+ },
+ "step_1": {
+  "bytes": 13455,
+  "seconds": 1.26
+ },
+ "step_2": {
+  "bytes": 30767,
+  "seconds": 3.6
+ },
+ "step_3": {
+  "bytes": 31407,
+  "seconds": 3.6
+ },
+ "step_4": {
+  "bytes": 24293,
+  "seconds": 2.93
  },
  "unlink_1": {
   "bytes": 21708,
