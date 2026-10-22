@@ -53,12 +53,12 @@ def main():
 
     faces = {}
     # a moment of each pose that shows its face fully (the cub's face by the clip that wears it)
-    cub_face_clip = {"happy": ("idle", 0), "sleepy": ("sleep", 0), "fierce": ("cast", 9), "surprised": ("hurt", 2)}
+    cub_face_clip = {"happy": ("idle", 0), "sleepy": ("face_sleepy", 0), "fierce": ("cast", 9), "surprised": ("hurt", 2)}
+    cub_face_target = {"happy": (0, 1.6, -1.1), "sleepy": (0, 1.6, -1.1), "fierce": (0, 2.0, -1.2), "surprised": (0, 1.9, -1.1)}
     for face, (clip, age) in cub_face_clip.items():
-        faces["spirit_light_face_cub_" + face] = geo("spiritlight_cub", clip, [age], [view(face + " (cub)", 12, 6, (0, 2.0, -1.0), 3.3)], (300, 300))
-    ser_face_clip = {"serene": ("idle", 0), "stern": ("cast", 14), "compassionate": ("bless", 24), "radiant": ("wings_open", 30)}
-    for face, (clip, age) in ser_face_clip.items():
-        faces["spirit_light_face_seraph_" + face] = geo("spiritlight_seraph", clip, [age], [view(face + " (seraph)", 0, 4, (0, 4.15, -0.6), 3.3)], (300, 300))
+        faces["spirit_light_face_cub_" + face] = geo("spiritlight_cub", clip, [age], [view(face + " (cub)", 0, 8, cub_face_target[face], 5.8)], (300, 300))
+    for face in AN.SERAPH_FACES:
+        faces["spirit_light_face_seraph_" + face] = geo("spiritlight_seraph", "face_" + face, [4], [view(face + " (seraph)", 0, 2, (0, 3.2, -0.4), 2.9)], (300, 300))
     json.dump(faces, open(os.path.join(OUT, "spirit_light_faces.json"), "w"), indent=1)
 
     lods = {}

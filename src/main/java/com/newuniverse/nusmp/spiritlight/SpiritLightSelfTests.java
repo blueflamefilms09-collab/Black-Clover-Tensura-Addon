@@ -59,6 +59,17 @@ public final class SpiritLightSelfTests {
         l.forget(u);
         if (l.total() != 0) return Result.fail("the ledger kept a slot after forget");
 
+        // the mood rules: every pose of both forms has a clip file entry, the cub never speaks, a line without a file is never registered
+        for (boolean seraph : new boolean[]{false, true})
+            for (int pose = 0; pose < LightMoodRules.poseCount(seraph); pose++)
+                if (LightMoodRules.poseId(seraph, LightMoodRules.poseName(seraph, pose)) != pose) return Result.fail("the pose table is not consistent at " + pose);
+        for (LightMoodRules.Situation sit : LightMoodRules.Situation.values()) if (LightMoodRules.cueFor(false, sit, 0) != null) return Result.fail("the cub speaks on " + sit);
+        for (String id : SpiritLightVoiceLines.AVAILABLE) {
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", SpiritLightSounds.voiceEventId(id)))) return Result.fail("the spoken line " + id + " is not registered");
+            if (!resource("sounds/spirit_light/voice/" + id + ".ogg")) return Result.fail("the spoken line " + id + " has no file");
+        }
+        for (String id : SpiritLightRules.SOUND_IDS) if (!resource("sounds/" + id.replace("spirit_light.", "spirit_light/") + "_1.ogg")) return Result.fail("no file for the sound " + id);
+
         // the spirit on a stand-in player: link, Swiftness III, powered form, beam, pulse, caps, cleanup
         ServerLevel level = server.overworld();
         Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 2, 0);
@@ -71,6 +82,11 @@ public final class SpiritLightSelfTests {
             MobEffectInstance sw = p.getEffect(MobEffects.MOVEMENT_SPEED);
             if (sw == null || sw.getAmplifier() != SpiritLightRules.SWIFT_AMPLIFIER || sw.getDuration() > SpiritLightRules.SWIFT_TICKS) return Result.fail("Swiftness III is not a short effect while linked");
             if (!SpiritLight.link(p, s, false) || SpiritLight.SPIRITS.count(p.getUUID()) != 1) return Result.fail("a second spirit was allowed for one player");
+            SpiritLight.onOwnerHurt(p);
+            int hurtPose = LightMoodRules.poseId(false, "hurt");
+            net.minecraft.world.entity.Entity cubProp = SpiritLight.prop(level, s.cub);
+            if (!(cubProp instanceof com.newuniverse.nusmp.prop.MagicPropEntity cp) || SpiritLightRules.pose(cp.param()) != hurtPose) return Result.fail("the owner's hurt did not make the cub flinch");
+            if (SpiritLightVoice.say(p, "no_such_line", 0) != 0) return Result.fail("an unknown line was spoken");
             SpiritLight.togglePower(p, s);
             if (s.seraph == null || SpiritLight.prop(level, s.seraph) == null) return Result.fail("the seraph did not rise");
             if (SpiritLight.POWERED.count(p.getUUID()) != 1) return Result.fail("the powered form was not counted");
@@ -94,6 +110,6 @@ public final class SpiritLightSelfTests {
         } finally {
             SpiritLight.forget(p);
         }
-        return Result.ok("rules, caps, sounds, models, the link, Swiftness III, the seraph, the beam, the pulse and their cleanup hold");
+        return Result.ok("rules, caps, moods, sounds, models, the link, Swiftness III, the seraph, the beam, the pulse and their cleanup hold");
     }
 }

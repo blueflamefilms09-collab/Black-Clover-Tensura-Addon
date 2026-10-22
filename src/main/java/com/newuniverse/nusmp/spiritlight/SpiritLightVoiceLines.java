@@ -50,7 +50,18 @@ public final class SpiritLightVoiceLines {
 
     /** The ids that have a file (the ones registered as sound events and spoken). */
     public static final List<String> AVAILABLE = List.of(
-            "spiritlight_greet_1");
+            "spiritlight_greet_1",
+            "spiritlight_greet_2",
+            "spiritlight_greet_3",
+            "spiritlight_greet_4",
+            "spiritlight_farewell_1",
+            "spiritlight_farewell_2",
+            "spiritlight_farewell_3",
+            "spiritlight_rise_1",
+            "spiritlight_rise_2",
+            "spiritlight_rise_3",
+            "spiritlight_settle_1",
+            "spiritlight_settle_2");
 
     /** The text of a line (shown on the owner's action bar), or "" for an unknown id. */
     public static String text(String id) {

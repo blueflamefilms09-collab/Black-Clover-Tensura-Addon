@@ -223,6 +223,8 @@ def cub_clips():
         "halo": {"rotation": L.spin(VT, 2.0, 1, steps=8)},
     }
     clips["victory"] = clip(VT, False, bones, "happy", CUB_FACE_BONES)
+    # the faces sheet of the previews: the idle body with the sleepy face (the real sleep pose lies down and hides it); never played by the game
+    clips["face_sleepy"] = clip(1.0, False, {}, "sleepy", CUB_FACE_BONES)
     return flip_x(clips, ("body", "head", "jaw", "arm_L", "arm_R", "mane_top", "mane_chest"))
 
 
@@ -370,4 +372,9 @@ def seraph_clips():
     bones.update(wingtrack("wingB", tt, [0, 50, 60, 36, 0]))
     bones.update(rings(VT, 3.0, -5.0, 5.0, 8))
     clips["victory"] = clip(VT, False, bones, "radiant", FB)
+    # the faces sheet of the previews (docs/previews/spirit_light/spirit_light_faces.png): the face wings held open so each of the four faces can be seen square on; never played by the game
+    for mood in SERAPH_FACES:
+        bones = {}
+        bones.update(wingtrack("wingC", [0, 1.0], [96, 96]))
+        clips["face_" + mood] = clip(1.0, False, bones, mood, FB)
     return flip_x(clips, ("body", "head"))

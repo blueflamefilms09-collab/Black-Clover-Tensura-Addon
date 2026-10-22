@@ -15,6 +15,17 @@
   "spirit_light.cub_chirp": { "subtitle": "subtitles.nusmp.spirit_light.cub_chirp", "sounds": [ { "name": "nusmp:spirit_light/cub_chirp_1" }, { "name": "nusmp:spirit_light/cub_chirp_2" }, { "name": "nusmp:spirit_light/cub_chirp_3" } ]},
   "spirit_light.cub_whimper": { "subtitle": "subtitles.nusmp.spirit_light.cub_whimper", "sounds": [ { "name": "nusmp:spirit_light/cub_whimper_1" }, { "name": "nusmp:spirit_light/cub_whimper_2" } ]},
   "spirit_light.voice.spiritlight_greet_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_greet_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_greet_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_greet_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_greet_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_greet_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_greet_4": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_greet_4", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_farewell_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_farewell_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_farewell_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_farewell_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_farewell_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_farewell_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_rise_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_rise_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_rise_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_rise_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_rise_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_rise_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_settle_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_settle_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_2", "stream": false, "attenuation_distance": 32} ]},
   "zagred_seal": {
     "subtitle": "subtitles.entity.nusmp.zagred_seal",
     "sounds": [{ "name": "nusmp:entity/zagred/seal", "stream": true }]

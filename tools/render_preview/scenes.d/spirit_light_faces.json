@@ -20,14 +20,14 @@
   "views": [
    {
     "name": "happy (cub)",
-    "yaw": 12,
-    "pitch": 6,
+    "yaw": 0,
+    "pitch": 8,
     "target": [
      0,
-     2.0,
-     -1.0
+     1.6,
+     -1.1
     ],
-    "dist": 3.3
+    "dist": 5.8
    }
   ]
  },
@@ -48,18 +48,18 @@
   "floor": true,
   "figure": false,
   "expect": [],
-  "anim": "sleep",
+  "anim": "face_sleepy",
   "views": [
    {
     "name": "sleepy (cub)",
-    "yaw": 12,
-    "pitch": 6,
+    "yaw": 0,
+    "pitch": 8,
     "target": [
      0,
-     2.0,
-     -1.0
+     1.6,
+     -1.1
     ],
-    "dist": 3.3
+    "dist": 5.8
    }
   ]
  },
@@ -84,14 +84,14 @@
   "views": [
    {
     "name": "fierce (cub)",
-    "yaw": 12,
-    "pitch": 6,
+    "yaw": 0,
+    "pitch": 8,
     "target": [
      0,
      2.0,
-     -1.0
+     -1.2
     ],
-    "dist": 3.3
+    "dist": 5.8
    }
   ]
  },
@@ -116,14 +116,14 @@
   "views": [
    {
     "name": "surprised (cub)",
-    "yaw": 12,
-    "pitch": 6,
+    "yaw": 0,
+    "pitch": 8,
     "target": [
      0,
-     2.0,
-     -1.0
+     1.9,
+     -1.1
     ],
-    "dist": 3.3
+    "dist": 5.8
    }
   ]
  },
@@ -135,7 +135,7 @@
   "argb": "FFFFFFFF",
   "glow": "00000000",
   "ages": [
-   0
+   4
   ],
   "tile": [
    300,
@@ -144,18 +144,18 @@
   "floor": true,
   "figure": false,
   "expect": [],
-  "anim": "idle",
+  "anim": "face_serene",
   "views": [
    {
     "name": "serene (seraph)",
     "yaw": 0,
-    "pitch": 4,
+    "pitch": 2,
     "target": [
      0,
-     4.15,
-     -0.6
+     3.2,
+     -0.4
     ],
-    "dist": 3.3
+    "dist": 2.9
    }
   ]
  },
@@ -167,7 +167,7 @@
   "argb": "FFFFFFFF",
   "glow": "00000000",
   "ages": [
-   14
+   4
   ],
   "tile": [
    300,
@@ -176,18 +176,18 @@
   "floor": true,
   "figure": false,
   "expect": [],
-  "anim": "cast",
+  "anim": "face_stern",
   "views": [
    {
     "name": "stern (seraph)",
     "yaw": 0,
-    "pitch": 4,
+    "pitch": 2,
     "target": [
      0,
-     4.15,
-     -0.6
+     3.2,
+     -0.4
     ],
-    "dist": 3.3
+    "dist": 2.9
    }
   ]
  },
@@ -199,7 +199,7 @@
   "argb": "FFFFFFFF",
   "glow": "00000000",
   "ages": [
-   24
+   4
   ],
   "tile": [
    300,
@@ -208,18 +208,18 @@
   "floor": true,
   "figure": false,
   "expect": [],
-  "anim": "bless",
+  "anim": "face_compassionate",
   "views": [
    {
     "name": "compassionate (seraph)",
     "yaw": 0,
-    "pitch": 4,
+    "pitch": 2,
     "target": [
      0,
-     4.15,
-     -0.6
+     3.2,
+     -0.4
     ],
-    "dist": 3.3
+    "dist": 2.9
    }
   ]
  },
@@ -231,7 +231,7 @@
   "argb": "FFFFFFFF",
   "glow": "00000000",
   "ages": [
-   30
+   4
   ],
   "tile": [
    300,
@@ -240,18 +240,18 @@
   "floor": true,
   "figure": false,
   "expect": [],
-  "anim": "wings_open",
+  "anim": "face_radiant",
   "views": [
    {
     "name": "radiant (seraph)",
     "yaw": 0,
-    "pitch": 4,
+    "pitch": 2,
     "target": [
      0,
-     4.15,
-     -0.6
+     3.2,
+     -0.4
     ],
-    "dist": 3.3
+    "dist": 2.9
    }
   ]
  }
