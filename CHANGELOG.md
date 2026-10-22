@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.0.0] — Magic overhaul: anime-accurate character spell sets, spirits without keybinds + combat mode, remade Spirit Dives and Noelle's forms, Fuegoleon's flaming arm, basic grimoires, Soul Corpse fixed
+
+### NEW
+- **Every character's grimoire now holds the spells they actually used in the anime**, unlocked in the order the anime gave them (e.g. Yuno's Spirit of Zephyr, Spirit Storm and Hushed Dance only after Spirit Dive). 43 characters (Yuno, Noelle, Fuegoleon, Asta, Yami, the Black Bulls, Golden Dawn, Crimson Lion, Silver Eagle, the other captains, the Spade, Heart and Diamond casters ...) with about 100 new pages and per-character signature effect layers (`docs/magic/character_spells*.md`; sources and what could not be confirmed are listed there; server switch `magic.characterSpellSets`, off restores the old behaviour).
+- **Basic grimoires are anime-based and different from the characters' spells:** 23 characters' signature spells are no longer in the basic books (they stay registered and open in their owners' grimoires), 19 new generic anime-based pages for Fire, Water, Wind, Dark, Ice and Beast (`docs/magic/basic_grimoires.md`; `basicBookHidesSignatures`).
+- **Spirits are summoned and released from the grimoire or with `/multiverse spirit ...` (alias `/spirit`), no keybinds:** the seven spirit key sets (Salamander, Sylph, Undine, Gnome, Light, Darkness, Space) are removed. New **Spirit Combat Mode** (grimoire page, command or the Spirit Lord skill's third mode): the spirit casts at your target using BOTH its own mana and a share of yours (`docs/magic/spirit_control.md`).
+- **Spirit Dives remade for Wind, Water, Fire and Earth** with a standard look and a more layered character look for Yuno, Fuegoleon and Noelle grimoires (halo, wings, mane, ribbons, entry shockwave, particle trail); **Fuegoleon's flaming right arm** while his Salamander is bonded, in third and first person (`docs/magic/spirit_dives.md`; `nusmp-spiritdive-client.toml` `classicLook` restores the old dive).
+- **Noelle's forms remade:** Saint Valkyrie Dress, new Mermaid Form (open to every Water mage), Sea Dragon God Form and Black Dragon Form (Noelle only; limits and exhaustion; refused during Devil Union), standard and character tiers (`docs/magic/noelle_forms.md`).
+- **Soul Corpse summons work:** the pages could never be unlocked (mastery 67 to 100 percent, rank gates, slot limits) and the zombie summons failed silently; the generic summons now open for any Soul Corpse user (starters at once, others at 30 to 80 percent mastery without rank or slot), only Rades's numbered undead stay Rades-only (`docs/magic/soul_corpse_fix.md`).
+
+### REPLACED
+- The seven spirit keybinds (and their key packets), the whole-book grimoire of each character with a set, the old Spirit Dive look and Valkyrie Dress look (client options restore them), the basic books' copies of character signature spells, the page-unlock rules of the Soul Corpse summons, and three CanonBook magic assignments (Charlotte Briar, Lucius Soul, Mars Mineral, Kirsch Cherry Blossom).
+
+### KEPT
+- Every page id, order, cast and unlock bit, all old lock lines, the Time Magic VFX, relics, Shishou and everything else from 2.1.0.
+
+### Not done / caveats
+- Not run in a real game before this release; all previews are mock-ups. Spell acquisition order is the mod's design where chapter or episode numbers could not be found; some effects are inferred from a name alone. The wiki hosts could not be fetched (search summaries only). Floga, Lolopechka and Zagred have no set (no named spells found). Fire book is at its 24-page limit.
+
 ## [2.1.0] — Shishou update: new top grade EX-Singularity (prismatic), faster hunter, Tensura Ultimate Skill instead of keybinds, stronger growth, feeding from the inventory, Akashic GUI
 
 ### NEW
