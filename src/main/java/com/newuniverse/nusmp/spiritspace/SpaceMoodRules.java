@@ -238,8 +238,8 @@ public final class SpaceMoodRules {
 
     // ================================================================================================ what an expression does to the drawing
     /** The tint of the starfield layers (RGB), their strength, the factor of the ring and the colour of the glow parts (the dragon's eyes). */
-    private static final int[] TINT = {0xB8C4FF, 0x7FF4FF, 0xFF6FB0, 0x7080C0}, EYE = {0x4FE3FF, 0xB8FFFF, 0xFF4A7A, 0x6A5AA8};
-    private static final float[] STRENGTH = {0.9f, 1.2f, 1.15f, 0.5f}, RING = {1.0f, 1.1f, 0.9f, 0.85f};
+    private static final int[] TINT = {0x9AA8FF, 0x40F0FF, 0xFF4A9A, 0x6070B8}, EYE = {0x4FE3FF, 0xB8FFFF, 0xFF4A7A, 0x6A5AA8};
+    private static final float[] STRENGTH = {0.9f, 1.25f, 1.2f, 0.5f}, RING = {1.0f, 1.1f, 0.9f, 0.85f};
 
     public static int tint(Expression e) { return TINT[e.ordinal()]; }
 
