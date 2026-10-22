@@ -104,7 +104,7 @@ public final class FloorCardClient {
 
     private static void render(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
-        if (card == null || broken || since < 0f || mc.player == null || mc.level == null || mc.options.hideGui || mc.screen != null) return;
+        if (card == null || broken || since < 0f || mc.player == null || mc.level == null || mc.options.hideGui || (mc.screen != null && !com.newuniverse.nusmp.client.ui.move.GuiMove.editing())) return;
         if (!Labyrinth.inMega(mc.level) && !Labyrinth.inSanctuary(mc.level)) return;
         try {
             float time = mc.level.getGameTime() + delta.getGameTimeDeltaPartialTick(false);
@@ -126,6 +126,7 @@ public final class FloorCardClient {
             }
             int road = card.floor() > 0 ? 1 : 2;
             FloorCardLayout.Frame f = layout.layout(cached, tr(SystemText.HEADER, "[ SYSTEM ]"), road, g.guiWidth(), g.guiHeight(), SystemClientConfig.alpha(), fade, time);
+            com.newuniverse.nusmp.client.ui.move.GuiMove.report("floor_card", f.x(), f.y(), f.w(), f.h());          // GUI Move: where the report is drawn (the layer hook moves it)
             for (Op op : f.ops()) {
                 switch (op) {
                     case Op.Fill fl -> g.fill(fl.x1(), fl.y1(), fl.x2(), fl.y2(), fl.argb());

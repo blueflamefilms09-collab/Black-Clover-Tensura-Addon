@@ -58,6 +58,7 @@ public final class SongClient {
         int w = 62, h = 5;
         int x = g.guiWidth() / 2 - w / 2, y = g.guiHeight() - 58;
         int level = SongHudState.level();
+        com.newuniverse.nusmp.client.ui.move.GuiMove.report("song_meter", x - 1, y - 1, w + 2, SongHudState.charge() >= 0 ? h + 7 : h + 2);    // GUI Move: where the meter is drawn (the layer hook moves it)
         g.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xA0100818);
         int filled = Math.round(w * Math.min(100, level) / 100f);
         int col = level >= 60 ? 0xFFFFE6F8 : 0xFFFFB4E8;

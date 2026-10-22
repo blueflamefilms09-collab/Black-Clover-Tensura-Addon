@@ -49,13 +49,19 @@ public final class ModBossBarOverlay {
             BossBarClientState.purge(events, now);
         }
         if (events.isEmpty()) return;                                         // nothing to draw: vanilla's layer has nothing either
+        if (com.newuniverse.nusmp.client.ui.move.GuiMove.hidden("boss_bar")) {   // GUI Move: the player switched the boss bars off; vanilla's layer must not draw them either
+            event.setCanceled(true);
+            return;
+        }
         try {
             GuiGraphics gg = event.getGuiGraphics();
-            boolean sized = com.newuniverse.nusmp.client.ui.GuiScale.begin(gg, "boss_bar", gg.guiWidth() / 2f, 0f);     // GUI Size: grows from the top centre
+            int bw = BossBarLayout.BAR_W, bh = BossBarLayout.step(true) * Math.min(events.size(), 4);
+            // GUI Move + GUI Size: not moved, the bars grow from the top centre as before; moved, they are drawn at the saved place
+            boolean sized = com.newuniverse.nusmp.client.ui.move.GuiMove.begin(gg, "boss_bar", gg.guiWidth() / 2 - bw / 2, BossBarLayout.START_Y - 9, bw, bh, gg.guiWidth() / 2f, 0f);
             try {
                 draw(gg, mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false));
             } finally {
-                if (sized) gg.pose().popPose();
+                com.newuniverse.nusmp.client.ui.move.GuiMove.end(gg, sized);
             }
             event.setCanceled(true);
         } catch (RuntimeException e) {

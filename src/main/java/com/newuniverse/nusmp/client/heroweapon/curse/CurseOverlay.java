@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.heroweapon.curse;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.heroweapon.Sin;
 import com.newuniverse.nusmp.heroweapon.curse.CurseText;
 import com.newuniverse.nusmp.heroweapon.curse.CurseView;
@@ -24,6 +25,7 @@ final class CurseOverlay {
     private CurseOverlay() {}
 
     private static final Logger LOG = LogUtils.getLogger();
+    private static final String MOVE_ID = "curse_bar";
     private static boolean broken;
 
     /** The GUI layer: called every frame by the game. */
@@ -116,7 +118,18 @@ final class CurseOverlay {
         int corruption = overrun ? 1000 : CurseView.corruption(), despair = CurseView.despair();
         boolean cursed = corruption > 0 || CurseView.active() != null;
         if (!cursed && despair < 150) return;
+        if (GuiMove.hidden(MOVE_ID)) return;                                           // GUI Move: the player switched the bar off
         int x = CurseClientConfig.barX(), y = h - CurseClientConfig.barBottom(), bw = 92;
+        int bottom = despair > 0 ? (cursed ? y + 13 : y + 4) : y + 7;
+        boolean moved = GuiMove.apply(g, MOVE_ID, x - 1, y - 11, bw + 2, bottom - (y - 11));       // GUI Move + GUI Size: where the config puts it is the default
+        try {
+            drawBar(g, font, tint, now, overrun, corruption, despair, cursed, x, y, bw);
+        } finally {
+            GuiMove.end(g, moved);
+        }
+    }
+
+    private static void drawBar(GuiGraphics g, Font font, Sin tint, long now, boolean overrun, int corruption, int despair, boolean cursed, int x, int y, int bw) {
         if (cursed) {
             String label;
             int color;

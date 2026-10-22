@@ -120,6 +120,7 @@ public final class RelicActKeys {
         }
         int w = mc.font.width(line);
         int x = g.guiWidth() - w - 8, y = g.guiHeight() - 14;
+        com.newuniverse.nusmp.client.ui.move.GuiMove.report("relic_keys", x - 4, y - 3, w + 8, 14);       // GUI Move: where the line is drawn (the layer hook moves it)
         if (com.newuniverse.nusmp.client.ui.theme.UiTheme.anime())                                    // 1.27.0: a glass chip with a grade-coloured edge
             com.newuniverse.nusmp.client.ui.theme.UiPanel.panel(g, x - 4, y - 3, w + 8, 14, 0xFF000000 | en.def().grade().rgb(), 0.45f, 1f);
         else

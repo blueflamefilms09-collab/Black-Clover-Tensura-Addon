@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.heroweapon;
 
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.client.ui.theme.UiBar;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
 import com.newuniverse.nusmp.client.ui.theme.UiPanel;
@@ -30,6 +31,7 @@ public final class HeroHud {
     private HeroHud() {}
 
     private static final int W = 152, PAD = 4, HEADER = 12, BAR = 6, ROW = 11;
+    private static final String MOVE_ID = "hero_hud";
 
     /** The GUI layer. A fault in the drawing is logged once and never reaches the frame. */
     public static void render(GuiGraphics g, DeltaTracker delta) {
@@ -49,9 +51,14 @@ public final class HeroHud {
         for (String s : slots) if (!s.isEmpty()) rows++;
         int h = PAD + HEADER + BAR + (out ? ROW + rows * ROW : ROW) + (repelled ? ROW : 0) + PAD;
 
-        float scale = HeroClientConfig.scale() * com.newuniverse.nusmp.client.ui.GuiScale.hud("hero_hud");     // GUI Size: grows from the bottom-left corner of the panel
+        if (GuiMove.hidden(MOVE_ID)) return;                                           // GUI Move: the player switched the panel off
+        float scale = HeroClientConfig.scale();
+        int px = HeroClientConfig.x(), pyBottom = g.guiHeight() - HeroClientConfig.y();
+        int dw = Math.round(W * scale), dh = Math.round(h * scale);
+        // GUI Move + GUI Size: not moved, the panel grows from its bottom-left corner as before; moved, it is drawn at the saved place (this config's x/y/scale stay the default)
+        boolean moved = GuiMove.begin(g, MOVE_ID, px, pyBottom - dh, dw, dh, px, pyBottom);
         g.pose().pushPose();
-        g.pose().translate(HeroClientConfig.x(), g.guiHeight() - HeroClientConfig.y(), 0.0);
+        g.pose().translate(px, pyBottom, 0.0);
         g.pose().scale(scale, scale, 1.0f);
         try {
             float now = UiTheme.now();
@@ -86,6 +93,7 @@ public final class HeroHud {
             if (repelled) g.drawString(font, font.plainSubstrByWidth(Component.translatable("hero.hud.repelled").getString(), W - 2 * PAD), PAD + 1, y, UiTheme.RED, true);
         } finally {
             g.pose().popPose();
+            GuiMove.end(g, moved);
         }
     }
 

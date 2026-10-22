@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.gui.bossbar;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.boss.bars.BarLayoutMath;
 import com.newuniverse.nusmp.client.ui.GuiScale;
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
@@ -59,17 +60,23 @@ final class CustomBarOverlay {
             if ((st.dying || st.preview) && !events.containsKey(st.id) && resolve(st)) custom++;
         }
         if (custom == 0) return;
+        if (GuiMove.hidden("boss_bar")) {                                     // GUI Move: the player switched the boss bars off; vanilla's layer must not draw them either
+            event.setCanceled(true);
+            return;
+        }
         try {
             GuiGraphics gg = event.getGuiGraphics();
             float cfg = BossBarOptions.scale();
-            boolean sized = GuiScale.begin(gg, "boss_bar", gg.guiWidth() / 2f, 0f);
+            // GUI Move + GUI Size: the default rectangle is the stack as the config scale draws it, from the top centre; moved, the stack is drawn at the saved place
+            int bw = Math.round(BarLayoutMath.WIDTH * cfg), bh = Math.round(BarLayoutMath.step(BarLayoutMath.compact(custom)) * custom * cfg);
+            boolean sized = GuiMove.begin(gg, "boss_bar", gg.guiWidth() / 2 - bw / 2, Math.round(START_Y * cfg), bw, bh, gg.guiWidth() / 2f, 0f);
             boolean scaled = Math.abs(cfg - 1f) > 0.01f;
             if (scaled) GuiScale.around(gg, gg.guiWidth() / 2f, 0f, cfg);
             try {
                 draw(gg, mc, events, now, now + event.getPartialTick().getGameTimeDeltaPartialTick(false), custom, GuiScale.hud("boss_bar") * cfg);
             } finally {
                 if (scaled) gg.pose().popPose();
-                if (sized) gg.pose().popPose();
+                GuiMove.end(gg, sized);
             }
             event.setCanceled(true);
         } catch (RuntimeException e) {

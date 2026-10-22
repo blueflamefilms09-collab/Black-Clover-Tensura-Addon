@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.ui;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.client.ui.scale.GuiScaleMath;
 import com.newuniverse.nusmp.client.ui.scale.GuiScaleOptions;
 import com.newuniverse.nusmp.client.ui.scale.GuiScaleRegistry;
@@ -65,6 +66,7 @@ public final class GuiScale {
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, GuiScale::onScroll);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, GuiScale::onLayerPre);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, GuiScale::onLayerPost);
+        GuiMove.init(modBus, container);                                                    // GUI Move: nusmp-gui-layout-client.toml, the edit key, /nusmp gui move
     }
 
     // ---- values ----------------------------------------------------------------------------------------------------------------------------------
@@ -138,15 +140,39 @@ public final class GuiScale {
 
     // ---- screens ---------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * How the screen is drawn right now, as {@code screen = t * local + o}: reused (no allocation per event). Two cases fill it: the plain GUI Size scaling about the
+     * middle of the window (as always), or, when the player placed this screen's panel with GUI Move, the panel's saved place at its own size times the GUI Size size
+     * (applied once, see {@code GuiMoveMath.total}). The whole screen is drawn inside it and every mouse position goes back through it.
+     */
+    private static final GuiMove.Xf XF = new GuiMove.Xf();
+
+    /** Fills {@link #XF} for a screen; false when nothing needs to be hooked (a normal-size screen that was not moved). */
+    private static boolean prepare(Screen s) {
+        double sc = screenScale(s);
+        XF.placed = false;
+        if (GuiMove.screenXf(s, sc, XF)) return true;
+        if (GuiScaleMath.isIdentity(sc)) return false;
+        XF.t = sc;
+        XF.ox = s.width / 2.0 * (1.0 - sc);
+        XF.oy = s.height / 2.0 * (1.0 - sc);
+        return true;
+    }
+
+    private static double local(double mouse, double o) {
+        return (mouse - o) / XF.t;
+    }
+
     private static void onRenderPre(ScreenEvent.Render.Pre e) {
         Screen s = e.getScreen();
-        double sc = screenScale(s);
-        if (GuiScaleMath.isIdentity(sc)) return;
-        float cx = s.width / 2f, cy = s.height / 2f;
+        if (!prepare(s)) return;
+        double t = XF.t, ox = XF.ox, oy = XF.oy;
         GuiGraphics g = e.getGuiGraphics();
-        around(g, cx, cy, (float) sc);
+        g.pose().pushPose();
+        g.pose().translate(ox, oy, 0.0);
+        g.pose().scale((float) t, (float) t, 1f);
         try {
-            int mx = (int) Math.round(GuiScaleMath.toLocal(e.getMouseX(), cx, sc)), my = (int) Math.round(GuiScaleMath.toLocal(e.getMouseY(), cy, sc));
+            int mx = (int) Math.round((e.getMouseX() - ox) / t), my = (int) Math.round((e.getMouseY() - oy) / t);
             s.renderWithTooltip(g, mx, my, e.getPartialTick());
         } finally {
             g.pose().popPose();
@@ -156,39 +182,31 @@ public final class GuiScale {
 
     private static void onPress(ScreenEvent.MouseButtonPressed.Pre e) {
         Screen s = e.getScreen();
-        double sc = screenScale(s);
-        if (GuiScaleMath.isIdentity(sc)) return;
+        if (!prepare(s)) return;
         e.setCanceled(true);
-        s.mouseClicked(local(e.getMouseX(), s.width, sc), local(e.getMouseY(), s.height, sc), e.getButton());
+        s.mouseClicked(local(e.getMouseX(), XF.ox), local(e.getMouseY(), XF.oy), e.getButton());
     }
 
     private static void onRelease(ScreenEvent.MouseButtonReleased.Pre e) {
         Screen s = e.getScreen();
-        double sc = screenScale(s);
-        if (GuiScaleMath.isIdentity(sc)) return;
+        if (!prepare(s)) return;
         e.setCanceled(true);
-        s.mouseReleased(local(e.getMouseX(), s.width, sc), local(e.getMouseY(), s.height, sc), e.getButton());
+        s.mouseReleased(local(e.getMouseX(), XF.ox), local(e.getMouseY(), XF.oy), e.getButton());
     }
 
     private static void onDrag(ScreenEvent.MouseDragged.Pre e) {
         Screen s = e.getScreen();
-        double sc = screenScale(s);
-        if (GuiScaleMath.isIdentity(sc)) return;
+        if (!prepare(s)) return;
         e.setCanceled(true);
-        s.mouseDragged(local(e.getMouseX(), s.width, sc), local(e.getMouseY(), s.height, sc), e.getMouseButton(),
-                GuiScaleMath.deltaToLocal(e.getDragX(), sc), GuiScaleMath.deltaToLocal(e.getDragY(), sc));
+        s.mouseDragged(local(e.getMouseX(), XF.ox), local(e.getMouseY(), XF.oy), e.getMouseButton(),
+                GuiScaleMath.deltaToLocal(e.getDragX(), XF.t), GuiScaleMath.deltaToLocal(e.getDragY(), XF.t));
     }
 
     private static void onScroll(ScreenEvent.MouseScrolled.Pre e) {
         Screen s = e.getScreen();
-        double sc = screenScale(s);
-        if (GuiScaleMath.isIdentity(sc)) return;
+        if (!prepare(s)) return;
         e.setCanceled(true);
-        s.mouseScrolled(local(e.getMouseX(), s.width, sc), local(e.getMouseY(), s.height, sc), e.getScrollDeltaX(), e.getScrollDeltaY());    }
-
-    /** A mouse coordinate along one axis (extent = the screen's width or height) in the scaled screen's own coordinates. */
-    private static double local(double mouse, int extent, double sc) {
-        return GuiScaleMath.toLocal(mouse, extent / 2.0, sc);
+        s.mouseScrolled(local(e.getMouseX(), XF.ox), local(e.getMouseY(), XF.oy), e.getScrollDeltaX(), e.getScrollDeltaY());
     }
 
     // ---- HUD layers ------------------------------------------------------------------------------------------------------------------------------
@@ -198,6 +216,15 @@ public final class GuiScale {
         if (!"nusmp".equals(name.getNamespace())) return;
         GuiScaleRegistry.Entry en = GuiScaleRegistry.byLayer(name.getPath());
         if (en == null) return;
+        int moved = GuiMove.layerPre(e.getGuiGraphics(), en.id());     // GUI Move: a hidden layer is not drawn, a placed one is drawn at its saved place (at its own size times the GUI Size size, once)
+        if (moved == GuiMove.LAYER_HIDDEN) {
+            e.setCanceled(true);
+            return;
+        }
+        if (moved == GuiMove.LAYER_PUSHED) {
+            PUSHED_LAYERS.add(name);
+            return;
+        }
         float s = (float) requested(en);
         if (GuiScaleMath.isIdentity(s)) return;
         GuiGraphics g = e.getGuiGraphics();

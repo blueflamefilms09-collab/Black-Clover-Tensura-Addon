@@ -66,73 +66,116 @@ public final class SystemClientConfig {
         try { return Math.max(3, Math.min(60, FLOOR_CARD_SECONDS.get())); } catch (IllegalStateException notLoaded) { return 14; }
     }
 
-    /** The window scale, clamped to 0.5..2.0. */
+    /**
+     * GUI Move: the window's place and size live in the layout store of GUI Move ({@code nusmp-gui-layout-client.toml}, element {@code system_hud}) since the global edit mode
+     * moves it like every other GUI. The keys of this file ({@code scale}, {@code anchor}, {@code offsetX}, {@code offsetY}, {@code centerX}, {@code centerY}) are KEPT and
+     * are the fallback: while the store has no place for the window (a player who never placed it with the new code), the old keys decide, so every saved position of earlier
+     * versions still applies exactly. The first time the window is placed or sized (by either edit screen) the store takes over, with the old position as the starting point.
+     */
+    private static com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State stored() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveRegistry.Element e = com.newuniverse.nusmp.client.ui.move.GuiMoveRegistry.byId(GUI_MOVE_ID);
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = e == null ? null : e.state;
+        return st != null && st.placed ? st : null;
+    }
+
+    /** The id of the window in the GUI Move registry. */
+    public static final String GUI_MOVE_ID = "system_hud";
+
+    /** The window scale, clamped to 0.5..2.5. */
     public static float scale() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        if (st != null) return OverlayMath.clampScale(st.scale);
+        return legacyScale();
+    }
+
+    private static float legacyScale() {
         try { return OverlayMath.clampScale(SCALE.get()); } catch (IllegalStateException notLoaded) { return 1.0f; }
     }
 
     /** The corner, 0..3. */
     public static int anchor() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        if (st != null) return OverlayMath.safeAnchor(st.place.anchor());
         try { return Math.max(0, Math.min(3, ANCHOR.get())); } catch (IllegalStateException notLoaded) { return 0; }
     }
 
     /** How far the window is moved sideways from its corner (window pixels, inwards), within the config's range. */
-    public static int offsetX() { return offset(OFFSET_X); }
+    public static int offsetX() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        return st != null ? OverlayMath.clampOffset(st.place.offX()) : offset(OFFSET_X);
+    }
 
     /** How far the window is moved vertically from its corner (window pixels, inwards). */
-    public static int offsetY() { return offset(OFFSET_Y); }
+    public static int offsetY() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        return st != null ? OverlayMath.clampOffset(st.place.offY()) : offset(OFFSET_Y);
+    }
 
     /**
      * Puts the window at this corner and offset (limited to the valid range) in memory; {@link #save} writes the file. Called on every step of a nudge or a drag,
      * so it does not touch the disk; before the config is loaded it does nothing.
      */
     public static void setPlacement(int anchor, int offsetX, int offsetY) {
-        try {
-            ANCHOR.set(OverlayMath.safeAnchor(anchor));
-            OFFSET_X.set(OverlayMath.clampOffset(offsetX));
-            OFFSET_Y.set(OverlayMath.clampOffset(offsetY));
-        } catch (RuntimeException notLoaded) {
-            // the config is not loaded yet (or is being reloaded): the window simply stays where it is
-        }
+        setPlace(new OverlayDrag.Place(OverlayMath.safeAnchor(anchor), centerX(), centerY(), OverlayMath.clampOffset(offsetX), OverlayMath.clampOffset(offsetY)));
     }
 
-    /** Writes the client config file (the place of the window). Never throws: a failed write only loses the saved place. */
+    /** Writes the layout file (the place of the window, with every other GUI's). Never throws: a failed write only loses the saved place. */
     public static void save() {
-        try {
-            SPEC.save();
-        } catch (RuntimeException notSaved) {
-            // read-only file or the spec is not loaded: the place stays valid for this session
-        }
+        com.newuniverse.nusmp.client.ui.move.GuiMoveOptions.save();
     }
 
     /** Is the sideways offset measured from the middle of the screen? */
-    public static boolean centerX() { return bool(CENTER_X, false); }
+    public static boolean centerX() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        return st != null ? st.place.centerX() : bool(CENTER_X, false);
+    }
 
     /** Is the vertical offset measured from the middle of the screen? */
-    public static boolean centerY() { return bool(CENTER_Y, false); }
+    public static boolean centerY() {
+        com.newuniverse.nusmp.client.ui.move.GuiMoveLayout.State st = stored();
+        return st != null ? st.place.centerY() : bool(CENTER_Y, false);
+    }
 
     /** The whole saved place: the corner, the two centre flags and the offsets. */
     public static OverlayDrag.Place place() { return new OverlayDrag.Place(anchor(), centerX(), centerY(), offsetX(), offsetY()); }
 
-    /** Puts the window at this place in memory ({@link #save} writes the file). Before the config is loaded it does nothing. */
-    public static void setPlace(OverlayDrag.Place p) {
+    /** The place the OLD keys of this file hold (what the window had before GUI Move): used by the migration test and as the fallback. */
+    public static OverlayDrag.Place legacyPlace() {
         try {
-            ANCHOR.set(OverlayMath.safeAnchor(p.anchor()));
-            CENTER_X.set(p.centerX());
-            CENTER_Y.set(p.centerY());
-            OFFSET_X.set(OverlayMath.clampOffset(p.offX()));
-            OFFSET_Y.set(OverlayMath.clampOffset(p.offY()));
-        } catch (RuntimeException notLoaded) {
-            // the config is not loaded yet (or is being reloaded): the window simply stays where it is
+            return new OverlayDrag.Place(Math.max(0, Math.min(3, ANCHOR.get())), CENTER_X.get(), CENTER_Y.get(), OverlayMath.clampOffset(OFFSET_X.get()), OverlayMath.clampOffset(OFFSET_Y.get()));
+        } catch (IllegalStateException notLoaded) {
+            return OverlayDrag.Place.DEFAULT;
         }
     }
 
-    /** Sets the window's size in memory (0.5 to 2.5); {@link #save} writes the file. */
+    /** Puts the window at this place in memory ({@link #save} writes the file). Before the config is loaded it does nothing. */
+    public static void setPlace(OverlayDrag.Place p) {
+        com.newuniverse.nusmp.client.ui.move.GuiMove.storePlace(GUI_MOVE_ID,
+                com.newuniverse.nusmp.client.ui.move.GuiMoveMath.fromLegacy(p.anchor(), p.centerX(), p.centerY(), p.offX(), p.offY()), scale());
+    }
+
+    /** Sets the window's size in memory (0.5 to 2.5); {@link #save} writes the file. The place it has now is kept. */
     public static void setScale(float scale) {
+        OverlayDrag.Place p = place();
+        com.newuniverse.nusmp.client.ui.move.GuiMove.storePlace(GUI_MOVE_ID,
+                com.newuniverse.nusmp.client.ui.move.GuiMoveMath.fromLegacy(p.anchor(), p.centerX(), p.centerY(), p.offX(), p.offY()), OverlayMath.clampScale(scale));
+    }
+
+    /**
+     * Puts the old keys of this file back to their defaults (top-left corner, no offset, size 1) and writes them. Called when GUI Move resets the window: without it the
+     * old keys would show again as the fallback of a window that has no place in the store.
+     */
+    public static void forgetLegacyPlace() {
         try {
-            SCALE.set((double) OverlayMath.clampScale(scale));
+            ANCHOR.set(0);
+            CENTER_X.set(false);
+            CENTER_Y.set(false);
+            OFFSET_X.set(0);
+            OFFSET_Y.set(0);
+            SCALE.set(1.0);
+            SPEC.save();
         } catch (RuntimeException notLoaded) {
-            // not loaded yet: the size stays as it is
+            // the config is not loaded yet (or is being reloaded): nothing to forget
         }
     }
 
