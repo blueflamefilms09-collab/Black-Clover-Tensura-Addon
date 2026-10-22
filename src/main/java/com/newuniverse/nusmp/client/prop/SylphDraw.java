@@ -40,11 +40,11 @@ public final class SylphDraw {
     private static final ResourceLocation HALO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/sylph_halo.png");
     static final int FB = PropDraw.FULL_BRIGHT;
     /** The models are built in 1/16 block units; the small fairy is drawn at this scale (about 0.5 of a block seated, 0.6 standing), the powered form at its own. */
-    public static final float SMALL_SCALE = 0.24f, POWERED_SCALE = 0.40f;
+    public static final float SMALL_SCALE = 0.24f, POWERED_SCALE = 0.36f;
     /** The height (model units) of the middle of each body: the anchor of a Sylph is the middle of her body. */
     static final float ANCHOR_SMALL = 20f, ANCHOR_POWERED = 30f;
     /** The colour of the halo (a soft green) and of the wing film at its two ends of the wander (green, a pale blue-green). */
-    static final int HALO_RGB = 0x9CFF9A;
+    static final int HALO_RGB = 0x6CFF6C;
 
     /** The tint of the wing glow: the thin-film hue wanders slowly between green and a pale aqua. {@code age} in ticks. */
     public static int filmArgb(float age, float alpha) {

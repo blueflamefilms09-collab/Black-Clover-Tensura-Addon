@@ -170,9 +170,9 @@ def face(kind, wu=9.0, hu=8.5, ppu=16):
             c.ellipse(x, ey + 0.2, 0.62, 0.58, EYE_IRIS)
             c.ellipse(x, ey + 0.2, 0.26, 0.38, (40, 78, 66, 255))
             c.ellipse(x - 0.25, ey - 0.12, 0.18, 0.18, (255, 255, 255, 255))
-            c.curve([(x - s * 1.18, ey - 0.38), (x - s * 0.4, ey - 0.66), (x + s * 0.6, ey - 0.58), (x + s * 1.25, ey - 0.12)], INK, 0.28)
+            c.curve([(x - s * 1.18, ey - 0.12), (x - s * 0.4, ey - 0.50), (x + s * 0.6, ey - 0.62), (x + s * 1.25, ey - 0.40)], INK, 0.28)
             c.line([(x + s * 1.2, ey - 0.12), (x + s * 1.66, ey - 0.20)], INK, 0.2)
-            c.line([(x - s * 1.0, ey - 1.50), (x + s * 1.35, ey - 0.95)], (120, 100, 60, 255), 0.22)        # the brow slants down towards the nose
+            c.line([(x - s * 1.0, ey - 0.95), (x + s * 1.35, ey - 1.55)], (120, 100, 60, 255), 0.22)        # the brow slants down towards the nose (the inner end is the low one)
     # the nose: a tiny dot with a short stroke
     c.curve([(cx - 0.12, ey + 1.55), (cx, ey + 1.7), (cx + 0.12, ey + 1.55)], (200, 150, 130, 255), 0.11)
     my = ey + 2.75
@@ -321,7 +321,7 @@ def bang(wu, hu, ppu, seed, tone="small"):
 
 
 # ====================================================================================================================== dress and body
-def skin_plain(wu, hu, ppu, edges=True, toes=False, shade_bottom=0.25):
+def skin_plain(wu, hu, ppu, edges=True, toes=False, shade_bottom=0.08):
     """Flat cel skin for a limb face: cream, a hard shadow band along the bottom, a dark line down both edges (the outline of the limb)."""
     c = Canvas(wu, hu, ppu, SKIN)
     if shade_bottom > 0:
@@ -568,16 +568,16 @@ def halo(size=128):
     a = a ** 1.6
     out = np.zeros((size, size, 4), np.float32)
     k = np.clip(1.0 - r * 1.4, 0.0, 1.0)
-    out[..., 0] = 150 + 105 * k
-    out[..., 1] = 255
-    out[..., 2] = 150 + 95 * k
+    out[..., 0] = (150 + 105 * k) * a                                              # the colour fades to black with the alpha: a plain additive blend is as soft as an alpha-weighted one
+    out[..., 1] = 255 * a
+    out[..., 2] = (150 + 95 * k) * a
     out[..., 3] = a * 255
     out[out[..., 3] < 3] = 0
     return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8), "RGBA")
 
 
 # ====================================================================================================================== the powered form: streaming hair and petal wings
-def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=3):
+def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=2):
     """A long lock of streaming hair as a standing card: the ROOT at the bottom of the picture, the tip at the top. The silhouette follows an S-curve (it sways to one side and back), swells in
     the middle and ends in a few ragged points; flat colour, a dark shadow along the right side, a light band, long strand lines that follow the curve, a dark outline."""
     base, dark, light = HAIR[tone]
@@ -589,7 +589,7 @@ def ribbon(wu, hu, ppu, seed, tone="powered", phase=0.0, sway=1.0, tips=3):
         return wu * 0.5 + math.sin(t * math.pi * 1.6 + phase) * wu * 0.16 * sway * min(1.0, t * 3.0)
 
     def half(t):
-        return wu * 0.5 * (0.58 + 0.42 * math.sin(min(1.0, t * 2.0) * math.pi * 0.5)) * (1.0 - t ** 3.0) * 0.96
+        return wu * 0.5 * (0.62 + 0.38 * math.sin(min(1.0, t * 2.0) * math.pi * 0.5)) * (1.0 - t ** 2.4) * 0.96
 
     left, right = [], []
     for i in range(n + 1):

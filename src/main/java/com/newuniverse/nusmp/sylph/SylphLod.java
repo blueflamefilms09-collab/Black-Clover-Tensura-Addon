@@ -19,9 +19,9 @@ public final class SylphLod {
     public static final int SMALL = 0, POWERED = 1;
 
     /** Quads of the body model (the colour pass) per level, per form; counted from the generated files. */
-    public static final int[] SMALL_BODY = {0, 0, 0}, POWERED_BODY = {0, 0, 0};
+    public static final int[] SMALL_BODY = {365, 199, 66}, POWERED_BODY = {381, 229, 70};
     /** The wings (all levels) and the glow-only model, per form. */
-    public static final int[] WINGS_QUADS = {0, 0}, FX_QUADS = {0, 0};
+    public static final int[] WINGS_QUADS = {16, 28}, FX_QUADS = {23, 23};
     /** The halo behind the Sylph: one camera-facing square on every level but the lowest. */
     public static final int HALO_QUADS = 2;
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the form is not drawn (64 blocks small, 112 powered). */

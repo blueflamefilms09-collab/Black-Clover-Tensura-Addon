@@ -91,7 +91,7 @@ def body_atlas(form):
     at.add("choker", A.choker(2.6, 0.9, 16))
     if form == "powered":
         for i in range(3):
-            at.add("ribbon%d" % i, A.ribbon(9.0, 34.0, 12, 80 + i, "powered", phase=1.4 * i, sway=1.0 + 0.2 * i))
+            at.add("ribbon%d" % i, A.ribbon(10.0, 34.0, 12, 80 + i, "powered", phase=1.4 * i, sway=1.0 + 0.2 * i))
     return at.pack()
 
 
@@ -101,8 +101,8 @@ def wings_atlas(form, glow=False):
         at.add("fore", A.wing(24, 7.5, 16, 5, "fore", "small", glow))
         at.add("hind", A.wing(18, 6.0, 16, 6, "hind", "small", glow))
     else:
-        at.add("fore", A.wing(60, 17.0, 12, 5, "fore", "powered", glow))
-        at.add("hind", A.wing(44, 13.0, 12, 6, "hind", "powered", glow))
+        at.add("fore", A.wing(66, 18.0, 12, 5, "fore", "powered", glow))
+        at.add("hind", A.wing(48, 14.0, 12, 6, "hind", "powered", glow))
         for i in range(3):
             at.add("petal%d" % i, A.petal(18 + 3 * i, 11 + 2 * i, 12, 90 + i, "powered", glow))
     return at.pack()
@@ -159,13 +159,15 @@ def head(b, at, lod, hy, kinds, powered=False):
             b.top(nm, -0.8, y, -0.45, 1.6, 1.5, 0.12, {"north": W("ahoge", 0, 0.2 * k, 1, 0.2 * (k + 1)), "south": W("ahoge", 0, 0.2 * k, 1, 0.2 * (k + 1))})
             prev, y = nm, y + 1.5
     else:                                                                                                                          # the streaming hair: three ribbons of four cards, bending as they rise
-        for i, (x, side) in enumerate(((-3.0, -1), (0.0, 0), (3.0, 1))):
+        for i, (x, side) in enumerate(((-4.6, -2), (-2.3, -1), (0.0, 0), (2.3, 1), (4.6, 2))):
             prev, y = "head", 8.6
-            img = "ribbon%d" % i
+            img = "ribbon%d" % (i % 3)
+            s1 = 8.0 if i % 2 == 0 else -8.0
             for k in range(4):
                 nm = "hair%d_%d" % (i, k)
-                b.bone(nm, (x, y, 0.8 - 0.6 * i), prev, rot=(0, 0, side * (14 if k == 0 else 4) * (1 if k % 2 == 0 else -1)))
-                b.top(nm, x - 4.5, y, 0.8 - 0.6 * i, 9.0, 8.5, 0.12, {"north": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k), "south": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k)})
+                bend = -side * 9.0 if k == 0 else s1 * (1.0 if k % 2 else -1.2)
+                b.bone(nm, (x, y, 1.0 - 0.4 * i), prev, rot=(0, 0, bend))
+                b.top(nm, x - 5.0, y, 1.0 - 0.4 * i, 10.0, 8.5, 0.12, {"north": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k), "south": W(img, 0, 1.0 - 0.25 * (k + 1), 1, 1.0 - 0.25 * k)})
                 prev, y = nm, y + 8.5
     b.dy = 0.0
 
@@ -238,6 +240,15 @@ def skirt(b, at, lod, o):
             wid = 2.0 * math.pi * r / n * 1.38
             nm = "ruffle%d" % t
             b.top("sk%d_f" % i, -wid / 2, top - ln, -r, wid, ln, 0.15, {"north": W(nm), "south": W(nm), "up": None, "down": None, "west": None, "east": None}, rot=(flare, 0, 0), pivot=(0, top, -r))
+    if lod == 0:                                                                                   # a second ring of ruffles half a step round and a little lower: a fuller, layered skirt
+        for i in range(n):
+            yaw = 360.0 * (i + 0.5) / n
+            b.bone("skb%d" % i, (0, top0, 0), "body", rot=(0, yaw, 0))
+            b.bone("skb%d_f" % i, (0, top0, -2.0), "skb%d" % i)
+            for (top, ln, flare, r, t) in tiers[1:]:
+                wid = 2.0 * math.pi * (r + 0.3) / n * 1.38
+                nm = "ruffle%d" % ((t + 1) % 4)
+                b.top("skb%d_f" % i, -wid / 2, top - ln - 0.7, -r - 0.3, wid, ln, 0.15, {"north": W(nm), "south": W(nm), "up": None, "down": None, "west": None, "east": None}, rot=(flare + 6, 0, 0), pivot=(0, top - 0.7, -r - 0.3))
 
 
 # ====================================================================================================================== the two forms
@@ -253,12 +264,68 @@ def build_body(form, lod, at):
     o = SMALL if form == "small" else POWERED
     sfx = "" if lod == 0 else "_lod%d" % lod
     b = B("sylph_%s%s" % (form, sfx), at, 1.0 if lod == 0 else (0.5 if lod == 1 else 0.25))
+    if lod == 2:
+        low_poly(b, at, form, o)
+        return b
     torso(b, at, lod, o)
     head(b, at, lod, o["head_dy"], ("laugh", "smile", "stern") if form == "small" else ("stern", "shout", "smile"), powered=form == "powered")
     arms(b, at, lod, o)
     legs(b, at, lod, o)
     skirt(b, at, lod, o)
     return b
+
+
+def low_poly(b, at, form, o):
+    """The lowest level of detail (about a third of the quads of the half level): boxes for the body, one box a limb, the face painted straight on the head (no plates), a hair cap, the bob and the
+    ribbons / ahoge as single cards, four ruffles in two tiers. Same bones as the full model where it has a part (a clip's other tracks are ignored)."""
+    W = lambda n, *a: win(at, n, *a)
+    skin = W("skin")
+    limb = {"*": W("limb"), "up": None, "down": None}
+    dress = {"*": W("dress"), "up": None, "down": None}
+    powered = form == "powered"
+    kind = "stern" if powered else "smile"
+    b.bone("body", (0, o["hip"], 0))
+    b.bone("chest", (0, o["waist"], 0), "body")
+    b.bone("neck", (0, o["neck"], 0), "chest")
+    b.bone("head", (0, o["head_y"], 0), "neck")
+    b.box("chest", 0, o["chest_y"], 0, o["chest_w"], o["chest_h"], 3.6, {"*": skin, "north": W("bodice"), "south": W("bodice_back"), "up": None, "down": None})
+    b.box("body", 0, (o["waist_y"] + o["hip_y"]) / 2, 0, o["chest_w"] - 0.6, o["waist_h"] + o["hip_h"], 3.3, dress)
+    # head: the face is painted on the cranium and the chin
+    b.dy = o["head_dy"]
+    up, low = face_faces(at, kind)
+    b.top("head", -4.5, 2.5, -4.0, 9.0, FACE_UP, 8.0, {"*": skin, "north": up, "up": None, "down": None})
+    b.top("head", -3.5, 0.0, -3.5, 7.0, 2.6, 7.0, {"*": skin, "north": low, "up": None, "down": None})
+    b.top("head", -4.9, 6.4, -4.4, 9.8, 2.6, 8.8, {"north": W("fringe_n"), "south": W("fringe_s"), "west": W("fringe_w"), "east": W("fringe_e"), "up": W("hair_top"), "down": None})
+    b.top("head", -4.8, 0.8, 3.1, 9.6, 7.4, 1.5, {"south": W("hair_back"), "north": None, "west": None, "east": None, "up": None, "down": None})
+    if powered:
+        for i, x in enumerate((-4.0, 0.0, 4.0)):
+            b.bone("hair%d_0" % (i * 2 if i < 2 else 4), (x, 8.6, 1.0), "head")
+            b.top("hair%d_0" % (i * 2 if i < 2 else 4), x - 5.0, 8.6, 1.0, 10.0, 30.0, 0.12, {"north": W("ribbon%d" % i), "south": W("ribbon%d" % i)})
+    else:
+        b.bone("ahoge0", (0.0, 8.9, -0.4), "head")
+        b.top("ahoge0", -0.8, 8.9, -0.45, 1.6, 4.0, 0.12, {"north": W("ahoge"), "south": W("ahoge")})
+    b.dy = 0.0
+    # limbs: one box each (the knee and the elbow do not bend at this distance)
+    for s, tag in ((-1, "R"), (1, "L")):
+        sx, sy = s * o["shoulder_x"], o["shoulder_y"]
+        b.bone("arm_" + tag, (sx, sy, 0), "chest")
+        b.box("arm_" + tag, sx, sy - (o["upper"] + o["fore"]) / 2, 0, o["arm_w"], o["upper"] + o["fore"], o["arm_w"], limb)
+        x = s * o["leg_x"]
+        b.bone("leg_" + tag, (x, o["hip"], 0), "body")
+        leg_len = o["hip"] - 1.0
+        b.box("leg_" + tag, x, o["hip"] - leg_len / 2, 0, o["leg_w"], leg_len, o["leg_w"], {"*": W("limb"), "up": None, "down": None})
+        b.box("leg_" + tag, x, 0.5, -1.2, o["leg_w"], 1.0, 4.2, {"*": W("limb"), "up": W("foot"), "down": None})
+    # four ruffles in two tiers
+    n = 4
+    tiers = [o["tiers"][0], o["tiers"][-1]]
+    for i in range(n):
+        yaw = 360.0 * i / n
+        b.bone("sk%d" % i, (0, o["skirt_top"], 0), "body", rot=(0, yaw, 0))
+        b.bone("sk%d_f" % i, (0, o["skirt_top"], -2.0), "sk%d" % i)
+        for (top, ln, flare, r, t) in tiers:
+            wid = 2.0 * math.pi * r / n * 1.38
+            nm = "ruffle%d" % t
+            b.top("sk%d_f" % i, -wid / 2, top - ln, -r, wid, ln, 0.15, {"north": W(nm), "south": W(nm), "up": None, "down": None, "west": None, "east": None}, rot=(flare, 0, 0), pivot=(0, top, -r))
 
 
 def skeleton_only(b, o):
@@ -277,16 +344,22 @@ def build_wings(form, at):
         # (name, root x, root y, root z, length, chord, roll, yaw): a wing is a plate standing in the x-y plane (seen broad from the front and the back), rolled up and out, swept back
         specs = [("f", 1.6, 22.6, 2.6, 24.0, 7.5, 62.0, 10.0), ("h", 1.4, 21.4, 2.9, 18.0, 6.0, 24.0, 14.0)]
     else:
-        specs = [("f", 2.0, 35.0, 2.6, 60.0, 17.0, 52.0, 8.0), ("h", 1.8, 32.6, 3.0, 44.0, 13.0, 18.0, 12.0)]
+        specs = [("f", 2.0, 35.0, 2.6, 66.0, 18.0, 36.0, 8.0), ("h", 1.8, 32.6, 3.0, 48.0, 14.0, 12.0, 12.0)]
     for tag, s in (("R", -1), ("L", 1)):
         for nm, rx_, ry_, rz_, ln, ch, roll, yaw in specs:
             bn = "wing_%s_%s" % (nm, tag)
             b.bone(bn, (s * rx_, ry_, rz_), "chest", rot=(0, s * -yaw, s * roll))
-            img = W("fore" if nm == "f" else "hind")
-            x0 = s * rx_ if s > 0 else s * rx_ - ln
+            img = "fore" if nm == "f" else "hind"
+            cut = 0.6                                                                              # the inner 60 % of the wing, then a joint that bends the tip up a little
+            ox = s * rx_
             # the picture has its root at the left and the leading edge up; from the front the model's right (-x) is on the viewer's right, so the +x wing (tip on the viewer's left) is mirrored
-            face = {"north": (img, s > 0), "south": (img, s < 0), "up": None, "down": None, "west": None, "east": None}
-            b.top(bn, x0, ry_ - ch * 0.40, rz_ - 0.05, ln, ch, 0.1, face)
+            x0 = ox if s > 0 else ox - ln * cut
+            b.top(bn, x0, ry_ - ch * 0.40, rz_ - 0.05, ln * cut, ch, 0.1, {"north": (W(img, 0, 0, cut, 1), s > 0), "south": (W(img, 0, 0, cut, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
+            jx = ox + s * ln * cut
+            bo = "wingo_%s_%s" % (nm, tag)
+            b.bone(bo, (jx, ry_, rz_), bn, rot=(0, 0, s * 9.0))
+            x1 = jx if s > 0 else jx - ln * (1 - cut)
+            b.top(bo, x1, ry_ - ch * 0.40, rz_ - 0.05, ln * (1 - cut), ch, 0.1, {"north": (W(img, cut, 0, 1, 1), s > 0), "south": (W(img, cut, 0, 1, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
     if form == "powered":                                                                          # the petal wings of the skirt: three a side, a fan from the hip
         for tag, s in (("R", -1), ("L", 1)):
             for k, (roll, yaw, ln, ch, z) in enumerate(((66.0, 6.0, 18.0, 11.0, 2.4), (38.0, 10.0, 21.0, 13.0, 2.8), (12.0, 14.0, 24.0, 15.0, 3.2))):
@@ -346,14 +419,16 @@ def swayers(names, T, amp, lag, axis=2, step=0.07):
 
 def small_animations():
     kinds = ("laugh", "smile", "stern")
-    skirt = ["sk%d_f" % i for i in range(10)]
+    skirt = ["sk%d_f" % i for i in range(10)] + ["skb%d_f" % i for i in range(10)]
     locks = ["lock_side_R", "lock_side_L"] + ["lock_b%d" % i for i in range(5)]
     ahoge = ["ahoge%d" % k for k in range(5)]
     clips = {}
 
     def wings(T, a, lag=0.1):
         return {"wing_f_L": {"rotation": sn(T, a, 2, 0.0, steps=8)}, "wing_f_R": {"rotation": sn(T, -a, 2, 0.0, steps=8)},
-                "wing_h_L": {"rotation": sn(T, a * 0.9, 2, lag, steps=8)}, "wing_h_R": {"rotation": sn(T, -a * 0.9, 2, lag, steps=8)}}
+                "wing_h_L": {"rotation": sn(T, a * 0.9, 2, lag, steps=8)}, "wing_h_R": {"rotation": sn(T, -a * 0.9, 2, lag, steps=8)},
+                "wingo_f_L": {"rotation": sn(T, a * 0.8, 2, 0.12, steps=8)}, "wingo_f_R": {"rotation": sn(T, -a * 0.8, 2, 0.12, steps=8)},
+                "wingo_h_L": {"rotation": sn(T, a * 0.7, 2, lag + 0.12, steps=8)}, "wingo_h_R": {"rotation": sn(T, -a * 0.7, 2, lag + 0.12, steps=8)}}
 
     def skirt_sway(T, amp):
         out = {}
@@ -474,19 +549,21 @@ def small_animations():
 
 def powered_animations():
     kinds = ("stern", "shout", "smile")
-    skirt = ["sk%d_f" % i for i in range(10)]
-    hairs = ["hair%d_%d" % (i, k) for i in range(3) for k in range(4)]
+    skirt = ["sk%d_f" % i for i in range(10)] + ["skb%d_f" % i for i in range(10)]
+    hairs = ["hair%d_%d" % (i, k) for i in range(5) for k in range(4)]
     petals = ["petal_%d_%s" % (k, t) for k in range(3) for t in "RL"]
     locks = ["lock_side_R", "lock_side_L"]
     clips = {}
 
     def wings(T, a, lag=0.12):
         return {"wing_f_L": {"rotation": sn(T, a, 2, 0.0, steps=8)}, "wing_f_R": {"rotation": sn(T, -a, 2, 0.0, steps=8)},
-                "wing_h_L": {"rotation": sn(T, a * 0.9, 2, lag, steps=8)}, "wing_h_R": {"rotation": sn(T, -a * 0.9, 2, lag, steps=8)}}
+                "wing_h_L": {"rotation": sn(T, a * 0.9, 2, lag, steps=8)}, "wing_h_R": {"rotation": sn(T, -a * 0.9, 2, lag, steps=8)},
+                "wingo_f_L": {"rotation": sn(T, a * 0.8, 2, 0.12, steps=8)}, "wingo_f_R": {"rotation": sn(T, -a * 0.8, 2, 0.12, steps=8)},
+                "wingo_h_L": {"rotation": sn(T, a * 0.7, 2, lag + 0.12, steps=8)}, "wingo_h_R": {"rotation": sn(T, -a * 0.7, 2, lag + 0.12, steps=8)}}
 
     def flow(T, amp, lag):
         out = {}
-        for i in range(3):
+        for i in range(5):
             for k in range(4):
                 out["hair%d_%d" % (i, k)] = {"rotation": sn(T, amp * (1.0 + 0.25 * k) * (1 if (i + k) % 2 == 0 else -1), 2, 0.08 * k + 0.13 * i + lag, steps=8)}
         for i, nm in enumerate(locks):
@@ -515,7 +592,7 @@ def powered_animations():
         "foot_R": {"rotation": L((26, 0, 0))}, "foot_L": {"rotation": L((26, 0, 0))},
     }
     bones.update(wings(T, 9.0))
-    bones.update(flow(T, 5.0, 0.0))
+    bones.update(flow(T, 8.0, 0.0))
     bones.update(skirt_flow(T, 4.0))
     bones.update(face_tracks(kinds, "stern"))
     clips["hover"] = {"loop": True, "length": T, "bones": bones}
@@ -526,7 +603,7 @@ def powered_animations():
     b2 = {
         "body": {"position": sn(T, 1.6, 1, 0.0, steps=8), "rotation": L((-4, 0, 0))},
         "chest": {"rotation": L((-6, 0, 0))}, "head": {"rotation": mg(L((-14, 0, 0)), sn(T, 2.0, 0, 0.1, steps=8))},
-        "arm_R": {"rotation": L((84, 0, -24))}, "arm_L": {"rotation": L((84, 0, 24))}, "fore_R": {"rotation": L((8, 0, 0))}, "fore_L": {"rotation": L((8, 0, 0))},
+        "arm_R": {"rotation": L((84, 0, -42))}, "arm_L": {"rotation": L((84, 0, 42))}, "fore_R": {"rotation": L((8, 0, 0))}, "fore_L": {"rotation": L((8, 0, 0))},
         "leg_R": {"rotation": L((10, 0, -8))}, "leg_L": {"rotation": L((-10, 0, 8))},
         "foot_R": {"rotation": L((28, 0, 0))}, "foot_L": {"rotation": L((28, 0, 0))},
     }

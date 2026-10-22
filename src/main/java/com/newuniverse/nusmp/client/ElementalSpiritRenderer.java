@@ -7,7 +7,14 @@ import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.entity.ElementalSpiritLordEntity;
+import com.newuniverse.nusmp.client.prop.SylphDraw;
+import com.newuniverse.nusmp.client.prop.SylphView;
 import com.newuniverse.nusmp.entity.NUEntities;
+import com.newuniverse.nusmp.sylph.SylphConfig;
+import com.newuniverse.nusmp.sylph.SylphLod;
+import com.newuniverse.nusmp.sylph.SylphRules;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -49,9 +56,38 @@ public class ElementalSpiritRenderer extends EntityRenderer<ElementalSpiritLordE
         };
     }
 
+    /**
+     * The Sylph of {@code magic.sylph} (docs/magic/sylph.md): the small winged girl of the new look, drawn by {@link SylphDraw} through the shared level-of-detail budget ({@link SylphView}).
+     * The old fairy ({@link GreatSpiritModels}) is still drawn when the switch is off.
+     */
+    private void renderSylph(ElementalSpiritLordEntity e, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
+        Minecraft mc = Minecraft.getInstance();
+        Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
+        double dx = e.getX() - cam.x, dy = e.getY() - cam.y, dz = e.getZ() - cam.z;
+        long now = e.level().getGameTime();
+        int lod = SylphView.lod(SylphLod.SMALL, dx * dx + dy * dy + dz * dz, now, partial, e.getOwner() != null && e.getOwner() == mc.player);
+        if (lod == SylphLod.CULL) return;
+        float age = e.tickCount + partial;
+        int since = e.tickCount - e.clientCastTick;
+        boolean moving = e.walkAnimation.speed() > 0.05f || e.getDeltaMovement().horizontalDistanceSqr() > 0.0006;
+        String clip = SylphRules.smallClip(since, moving, now, e.getId() * 37);
+        float secs = "cast".equals(clip) ? (since + partial) / 20f : age / 20f;
+        this.shadowRadius = 0.12f;
+        pose.pushPose();
+        pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
+        pose.translate(0f, 0.3f, 0f);                                                          // the model's anchor is the middle of her body: her feet are the entity's feet
+        SylphDraw.sylph(pose, buffers, false, lod, clip, secs, age, 1f, light);
+        pose.popPose();
+    }
+
     @Override
     public void render(ElementalSpiritLordEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
         ElementalSpiritLordEntity.Kind k = e.kind();
+        if (k == ElementalSpiritLordEntity.Kind.SYLPH && SylphConfig.enabled()) {          // the new Sylph (magic.sylph): a small winged girl with her own looks
+            renderSylph(e, partial, pose, buffers, light);
+            super.render(e, yaw, partial, pose, buffers, light);                           // the name tag
+            return;
+        }
         boolean canon = SpiritLooks.CANON;
         GeoSpec body = switch (k) {
             case SALAMANDER -> SALAMANDER;

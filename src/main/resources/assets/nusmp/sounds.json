@@ -1746,5 +1746,65 @@
   "voice.djinn_camio_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_summon", "stream": false } ] },
   "voice.djinn_camio_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_camio_attack", "stream": false } ] },
   "voice.djinn_murmur_summon": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_summon", "stream": false } ] },
-  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] }
+  "voice.djinn_murmur_attack": { "sounds": [ { "name": "nusmp:voice/djinn/djinn_murmur_attack", "stream": false } ] },
+  "sylph.link": {
+    "subtitle": "subtitles.nusmp.sylph.link",
+    "sounds": [
+      { "name": "nusmp:sylph/link_1" },
+      { "name": "nusmp:sylph/link_2" }
+    ]
+  },
+  "sylph.unlink": {
+    "subtitle": "subtitles.nusmp.sylph.unlink",
+    "sounds": [
+      { "name": "nusmp:sylph/unlink_1" },
+      { "name": "nusmp:sylph/unlink_2" }
+    ]
+  },
+  "sylph.chime": {
+    "subtitle": "subtitles.nusmp.sylph.chime",
+    "sounds": [
+      { "name": "nusmp:sylph/chime_1" },
+      { "name": "nusmp:sylph/chime_2" },
+      { "name": "nusmp:sylph/chime_3" }
+    ]
+  },
+  "sylph.flutter": {
+    "subtitle": "subtitles.nusmp.sylph.flutter",
+    "sounds": [
+      { "name": "nusmp:sylph/flutter_1" },
+      { "name": "nusmp:sylph/flutter_2" },
+      { "name": "nusmp:sylph/flutter_3" }
+    ]
+  },
+  "sylph.giggle": {
+    "subtitle": "subtitles.nusmp.sylph.giggle",
+    "sounds": [
+      { "name": "nusmp:sylph/giggle_1" },
+      { "name": "nusmp:sylph/giggle_2" },
+      { "name": "nusmp:sylph/giggle_3" }
+    ]
+  },
+  "sylph.gust": {
+    "subtitle": "subtitles.nusmp.sylph.gust",
+    "sounds": [
+      { "name": "nusmp:sylph/gust_1" },
+      { "name": "nusmp:sylph/gust_2" },
+      { "name": "nusmp:sylph/gust_3" }
+    ]
+  },
+  "sylph.surge": {
+    "subtitle": "subtitles.nusmp.sylph.surge",
+    "sounds": [
+      { "name": "nusmp:sylph/surge_1" },
+      { "name": "nusmp:sylph/surge_2" }
+    ]
+  },
+  "sylph.gale": {
+    "subtitle": "subtitles.nusmp.sylph.gale",
+    "sounds": [
+      { "name": "nusmp:sylph/gale_1" },
+      { "name": "nusmp:sylph/gale_2" }
+    ]
+  }
 }

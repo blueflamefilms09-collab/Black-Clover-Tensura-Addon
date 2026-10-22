@@ -1,0 +1,14 @@
+{
+  "key.nusmp.sylph": "Sylph (link or unlink Yuno's wind spirit)",
+  "nusmp.sylph.full": "Sylph cannot answer: too many spirits are out.",
+  "nusmp.sylph.linked": "Sylph floats to your side.",
+  "nusmp.sylph.unlinked": "Sylph drifts away on the wind.",
+  "subtitles.nusmp.sylph.link": "Sylph's chimes glitter",
+  "subtitles.nusmp.sylph.unlink": "Sylph's chimes fade away",
+  "subtitles.nusmp.sylph.chime": "Sylph's wind chime rings",
+  "subtitles.nusmp.sylph.flutter": "Sylph's wings flutter",
+  "subtitles.nusmp.sylph.giggle": "Sylph giggles",
+  "subtitles.nusmp.sylph.gust": "Sylph's gust whooshes",
+  "subtitles.nusmp.sylph.surge": "Sylph surges with wind",
+  "subtitles.nusmp.sylph.gale": "Sylph's gale howls"
+}

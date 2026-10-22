@@ -37,7 +37,7 @@ def main():
     s["sylph_scale"] = sc(1000, [v("next to a player", 25, 6, -0.25, 1.4, 0, 3.4)], figure=True, tile=(560, 560))
     s["sylph_small_scale_close"] = sc(1000, [v("head and shoulder", 20, 4, -0.3, 1.8, 0, 1.6)], figure=True, tile=(520, 520))
     s["sylph_powered"] = sc(103, [v("front", 0, 6, 0, 0, 0, 5.2), v("3/4", 35, 8, 0, 0, 0, 5.2), v("side", 90, 6, 0, 0, 0, 5.2), v("back", 160, 10, 0, 0, 0, 5.2)], tile=(420, 520))
-    s["sylph_powered_face"] = sc(103, [v("face front", 0, 2, 0, 1.0, 0, 1.6), v("face 3/4", 30, 4, 0, 1.0, 0, 1.6)], tile=(520, 520))
+    s["sylph_powered_face"] = sc(103, [v("face front", 0, 2, 0, 0.42, 0, 1.6), v("face 3/4", 30, 4, 0, 0.42, 0, 1.6)], tile=(520, 520))
     s["sylph_powered_cast"] = sc(104, [v("cast 3/4", -30, 6, 0, 0, 0, 5.2)], ages=(4, 12), tile=(420, 520))
     s["sylph_powered_lod1"] = sc(113, [v("lod1", 30, 8, 0, 0, 0, 5.2)], tile=(360, 460))
     s["sylph_powered_lod2"] = sc(123, [v("lod2", 30, 8, 0, 0, 0, 5.2)], tile=(360, 460))
