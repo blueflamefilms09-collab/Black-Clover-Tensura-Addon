@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "canon": "vanica",
+  "magic": "BLOOD",
+  "book": "book_blood",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "blood_bullet",
+      "name": "Blood Magic (blood shot from the body)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Blood Magic page: blood is generated and congealed into weapons; mode 0 of the book."
+    },
+    {
+      "page": "blood_whip",
+      "name": "Blood Magic (blood shaped into a restraint or weapon)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "Blood Magic page: congealed blood shaped into weapons, creatures and rigid restraints."
+    },
+    {
+      "page": "red_beast",
+      "name": "Blood Magic: Red Beast",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW page. A giant monster of blood attached to the user's body, so the user must stay close to it."
+    },
+    {
+      "page": "herd_of_red_beasts",
+      "name": "Blood Magic: Herd of Red Beasts",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "red_beast",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "NEW page. Blood is expelled and shaped into several smaller whole beasts that are not attached to the user (the wiki lists Vanica as a user)."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Lifeblood Scythe",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A Blood Creation spell; the wiki snapshot gives no user."
+    },
+    {
+      "name": "Curse-Breaking Blood Cocoon",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A blood healing spell; no user found."
+    },
+    {
+      "name": "Jets of Blood / Puppet Bloodflow / Scaffold of Fresh Blood",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "On the Blood Magic page; users not confirmed for Vanica."
+    },
+    {
+      "name": "Curse-Warding Magic: Decaying World",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Her second attribute (from the devil); lives in the Curse-Warding book, not in this one."
+    }
+  ],
+  "notes": "Not in her grimoire (kept in the basic Blood book): Crimson Rain, Blood Pact and Hemorrhage are this mod's own pages and were not found in any source for Vanica. The Red Pack named by one fan page was not confirmed and is not built."
+}

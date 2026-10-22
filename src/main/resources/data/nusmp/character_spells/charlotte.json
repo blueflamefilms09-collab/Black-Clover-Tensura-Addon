@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "canon": "charlotte",
+  "magic": "BRIAR",
+  "book": "book_briar",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "briar_strike",
+      "name": "Briar Magic (briars generated and thrown)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Briar Magic generates and manipulates briars, most commonly wild roses; mode 0 of the book."
+    },
+    {
+      "page": "thorn_lash",
+      "name": "Briar whip",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.06
+      },
+      "note": "She summons a briar-like whip from her grimoire (English wiki, Queen of Briars: a briar whip)."
+    },
+    {
+      "page": "creeping_vines",
+      "name": "Briar binding",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "The Briar Magic page: briars are good for binding."
+    },
+    {
+      "page": "rose_scent",
+      "name": "Rose scent",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "The Briar Magic page: the roses can produce a scent that inhibits others' senses."
+    },
+    {
+      "page": "blue_rose_paradise",
+      "name": "Briar Magic: Blue Rose Paradise",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW page. Two concentric magic circles grow briars that trap the enemy; her curse turned the roses blue, so this is the spell she had while cursed (it absorbs curse power). Effect numbers are this mod's."
+    },
+    {
+      "page": "corpse_hunting_briar_tree",
+      "name": "Briar Creation Magic: Corpse-Hunting Briar Tree",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "blue_rose_paradise",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "KEPT page. Open grimoire, her weapon becomes prickly vines that hunt the targets and rise into a tree of briars."
+    },
+    {
+      "page": "queen_of_briars",
+      "name": "True Briar Magic: Queen of Briars",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "corpse_hunting_briar_tree",
+            "count": 2
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.8
+              }
+            ]
+          }
+        ]
+      },
+      "note": "KEPT page. True Briar Magic uses natural mana (the Heart Kingdom's training) to grow real red roses, after the curse was lifted: it opens with the Mana Zone gate or near the top of the mastery bar."
+    },
+    {
+      "page": "scarlet_braided_spear",
+      "name": "True Briar Magic: Scarlet-Braided Beautiful Battle Spear",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "queen_of_briars"
+          },
+          {
+            "type": "page_uses",
+            "page": "queen_of_briars",
+            "count": 1
+          },
+          {
+            "type": "mastery",
+            "min": 0.85
+          }
+        ]
+      },
+      "note": "NEW page. Named in the wiki's True Briar list, no description found: the effect is inferred from the name (red briars braided into a spear)."
+    }
+  ],
+  "planned": [
+    {
+      "name": "True Briar Magic mana array (the dress and crown of the Queen of Briars)",
+      "ja": "",
+      "origin": "manga",
+      "source": "en_wiki",
+      "note": "Part of Queen of Briars (the existing page); the dress itself would be an armour and the armour policy keeps Briar without one."
+    },
+    {
+      "name": "Mana Skin",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A body coat of mana, not a grimoire page."
+    }
+  ],
+  "notes": "Her CanonBook entry changed from Plant Magic to Briar Magic (it is the series' attribute and the mod has a Briar book since 1.5x): a grimoire already bound with the old pair (PLANT, charlotte) keeps working as before and keeps the old lock line of Briar Prison in the Plant book. Not in her grimoire (kept in the basic Briar book): Thorn Reflect, Bleeding Thorn Wall, Briar Leap, Briar Garden and Rose Garden Bloom are this mod's own pages and were not found in any source."
+}

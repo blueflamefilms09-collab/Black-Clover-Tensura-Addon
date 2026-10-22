@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "canon": "kahono",
+  "magic": "SONG",
+  "book": "book_song",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "attribute_bolt",
+      "name": "Song Magic: Destruction Beat",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Her offensive spell; mode 0 of the Song book is this effect (a bolt of sound) under its own name."
+    },
+    {
+      "page": "attribute_guard",
+      "name": "Song Magic: Rhythm Cushion",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "Her defensive spell: a cushion of air. The existing Aria Armour page is this effect under its own name."
+    },
+    {
+      "page": "heal_lullaby",
+      "name": "Song Magic: Heal Lullaby",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "NEW page. The song that healed Asta's wounds and restored his stamina."
+    },
+    {
+      "page": "mother_lullaby",
+      "name": "Song Magic: Mother Lullaby",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "heal_lullaby",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.32
+          }
+        ]
+      },
+      "note": "NEW page. A lullaby that puts a target to sleep; a defensive spell can block it."
+    },
+    {
+      "page": "song_crescendo",
+      "name": "Crescendo",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.7
+      },
+      "note": "LEGACY page locked to Kahono since 1.44.0 (not on the wiki's list): kept in her set so it stays reachable."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Union Magic: Sea God Slash",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "With Kiato: her song boosts his sword dance. It is Kiato's page in the Butoh book; a Song-book copy was not built."
+    },
+    {
+      "name": "Union Magic: Sea God's Descent",
+      "ja": "",
+      "origin": "anime_only",
+      "source": "en_wiki",
+      "note": "With Kiato, anime only; Kiato's page."
+    }
+  ],
+  "notes": "Her old singing system (song.SongSkill: hymn, lullaby, barrier, requiem) is a separate skill and is untouched. Not in her grimoire (kept in the basic Song book): Staccato-style cuts, the Choir field and domain, Choir of Spirits, Metronome, Harmony and Grand Finale are this mod's own pages."
+}

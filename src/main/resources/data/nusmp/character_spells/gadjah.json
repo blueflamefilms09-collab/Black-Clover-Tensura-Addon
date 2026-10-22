@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "canon": "gadjah",
+  "magic": "LIGHTNING",
+  "book": "book_lightning",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "chain",
+      "name": "Lightning Magic (lightning from the palms)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the book; he discharges lightning bolts from his palms."
+    },
+    {
+      "page": "pulsaranta",
+      "name": "Lightning Magic: Pulsaranta",
+      "ja": "体電乱流",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "He lays his hands on the target's head and sends electricity through it: no pain, a brief stun."
+    },
+    {
+      "page": "tenjiolia",
+      "name": "Lightning Magic: Tenjiolia",
+      "ja": "天迅亜音走",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "chain",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.3
+          }
+        ]
+      },
+      "note": "NEW page. Lightning shot from the held-out palm at great speed; rune arrays make it bend after a target."
+    },
+    {
+      "page": "apocalypra_astrauza",
+      "name": "Lightning Ultimate Magic: Apocalypra Astrauza",
+      "ja": "終焉の奏轟",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "tenjiolia",
+            "count": 3
+          },
+          {
+            "type": "any",
+            "of": [
+              {
+                "type": "flag",
+                "name": "mana_zone"
+              },
+              {
+                "type": "mastery",
+                "min": 0.85
+              }
+            ]
+          }
+        ]
+      },
+      "note": "NEW page. Several interconnected natural-mana arrays around the right hand turn his life force into magic; his strongest spell, learned with the Heart Kingdom's True Lightning. It costs life force."
+    }
+  ],
+  "planned": [
+    {
+      "name": "True Lightning Magic",
+      "ja": "",
+      "origin": "anime",
+      "source": "ja_search",
+      "note": "The Heart Kingdom technique of drawing natural mana (took him two years): it is the mana method, not a page."
+    }
+  ],
+  "notes": "Pulsaranta is not exclusive (it is a shared page); Thunder God's Boots, Thunder Fiend, Rising Salim and the other Lightning pages belong to other characters or to this mod and are not in his set."
+}

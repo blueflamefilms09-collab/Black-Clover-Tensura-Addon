@@ -80,7 +80,7 @@ class CharacterSetSourceScanTest {
             for (Path f : (Iterable<Path>) s.filter(p -> p.toString().endsWith(".json"))::iterator) {
                 JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
                 String book = o.get("book").getAsString();
-                assertTrue(BOOK_FILES.containsKey(book), f + ": no source file known for " + book);
+                if (!BOOK_FILES.containsKey(book)) continue;      // the books of the later content builders are checked by their own scan test (CharacterSetRestSourceScanTest)
                 List<String> have = new ArrayList<>(legacy(book));
                 have.addAll(added(book));
                 for (var e : o.getAsJsonArray("spells")) {

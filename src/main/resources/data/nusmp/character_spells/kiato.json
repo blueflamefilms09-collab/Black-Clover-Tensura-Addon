@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "canon": "kiato",
+  "magic": "BUTOH",
+  "book": "book_butoh",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "butoh_strike",
+      "name": "Butoh Magic (a strike danced)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Butoh book: spells are cast by dancing."
+    },
+    {
+      "page": "butoh_trance_dance",
+      "name": "Butoh Magic (trance)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "The Butoh page: as the user dances, a trance takes them and their attacks become unpredictable."
+    },
+    {
+      "page": "butoh_dance",
+      "name": "Butoh Dance",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "LEGACY page locked to Kiato since 1.44.0: kept in his set so it stays reachable."
+    },
+    {
+      "page": "butoh_dash_deflect",
+      "name": "Deflect Dash",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "LEGACY page locked to Kiato since 1.44.0: kept in his set so it stays reachable."
+    },
+    {
+      "page": "butoh_sea_god_slash",
+      "name": "Union Magic: Sea God Slash",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "butoh_trance_dance",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "Union with Kahono's song: swinging the swords makes shockwaves and flying slashes; a worship of the Sea God."
+    },
+    {
+      "page": "butoh_sea_god_descent",
+      "name": "Union Magic: Sea God's Descent",
+      "ja": "",
+      "origin": "anime_only",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "butoh_sea_god_slash",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.65
+          }
+        ]
+      },
+      "note": "Anime only: underwater the dancer swims overhead of the target and is propelled down with tremendous force."
+    }
+  ],
+  "planned": [],
+  "notes": "Not in his set (kept in the basic Butoh book): Flowing Water Blade, Rhythm Wave, Ebb Step, Tidal Veil, Undertow, Metronome Field and Seabed Hymn are this mod's own pages and were not found as Kiato's spells."
+}

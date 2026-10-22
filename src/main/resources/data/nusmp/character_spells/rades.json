@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "canon": "rades",
+  "magic": "SOUL_CORPSE",
+  "book": "book_soul_corpse",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md.",
+    "soul_corpse_fix": "docs/magic/soul_corpse_fix.md: the generic summons open for any Soul Corpse holder, only Jimmy / David / Alfredo / Carl / Michael Caesal / True Soul Corpse Magic are Rades's. The mastery numbers here repeat the caps of corpse.SoulCorpseAccess (Necropolis 30 percent, Legion 50, David 60, True Soul Corpse 70, Michael Caesal 80) because a character set replaces the mastery order."
+  },
+  "spells": [
+    {
+      "page": "attribute_bolt",
+      "name": "Soul Corpse (strings of mana on the dead)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "page_open",
+        "page": "corpse_reanimate"
+      },
+      "note": "Mode 0 of the book (always open); the rule only keeps the new-grimoire test at two starters."
+    },
+    {
+      "page": "corpse_reanimate",
+      "name": "Soul Corpse Magic: Reanimation",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "He infuses his mana into corpses and controls them; the starter page for every holder."
+    },
+    {
+      "page": "corpse_marionette",
+      "name": "Soul Corpse Magic: Marionette",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "A starter page for every holder (soul_corpse_fix)."
+    },
+    {
+      "page": "attribute_cut",
+      "name": "Soul Corpse (puppet strings)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "The wiki: the user can control corpses, even without taking out the grimoire."
+    },
+    {
+      "page": "attribute_guard",
+      "name": "Soul Corpse (a plate of corpses)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "Design."
+    },
+    {
+      "page": "corpse_carl",
+      "name": "No.1 Carl",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "Rades's special numbered corpse, enhanced with curse power."
+    },
+    {
+      "page": "corpse_alfredo",
+      "name": "No.2 Alfredo",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "Rades's special numbered corpse."
+    },
+    {
+      "page": "attribute_domain",
+      "name": "Soul Corpse (Necropolis)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "A generic summon: opens at 30 percent like the Soul Corpse fix."
+    },
+    {
+      "page": "corpse_jimmy",
+      "name": "No.4 Jimmy",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.4
+      },
+      "note": "Rades's special numbered corpse."
+    },
+    {
+      "page": "attribute_field",
+      "name": "Soul Corpse (Grave Field)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "Design."
+    },
+    {
+      "page": "corpse_legion",
+      "name": "Soul Corpse (Legion)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "A generic summon: opens at 50 percent like the Soul Corpse fix; an army of reanimated corpses."
+    },
+    {
+      "page": "corpse_swap",
+      "name": "Soul Corpse (corpse swap)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.55
+      },
+      "note": "Design."
+    },
+    {
+      "page": "corpse_david",
+      "name": "No.3 David",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.6
+      },
+      "note": "Rades's special numbered corpse."
+    },
+    {
+      "page": "true_soul_corpse",
+      "name": "True Soul Corpse Magic",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.7
+      },
+      "note": "His magic evolves when Patolli sacrifices him: he can recall souls and fully revive the dead."
+    },
+    {
+      "page": "corpse_michael_caesal",
+      "name": "No.0 Michael Caesal",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.8
+      },
+      "note": "The strongest numbered corpse."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Soul Abductor",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Revives the soul by putting it back into the body; only on the user and those who have been with the user a long time. Not built (no page)."
+    }
+  ],
+  "notes": "Every rule is mastery only on purpose: the CI self-test magic.soul_corpse_cast opens his six pages at full mastery and a page_uses rule would keep them shut there. The numbering No.0 to No.4 follows the page names of the mod; which corpse the anime showed first was not verified."
+}

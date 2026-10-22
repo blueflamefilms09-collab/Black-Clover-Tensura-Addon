@@ -108,7 +108,7 @@ public abstract class GrimoireBook extends Skill {
         int version = pagesVersion();
         if (all == null || version != builtVersion) {
             builtVersion = version;
-            List<BookPage> l = new ArrayList<>(familyPages());
+            List<BookPage> l = new ArrayList<>(familyAll());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
                 l.add(BookPage.signature("spirit_channeling", "Spirit Burst", GrimoireBook::channel));
@@ -132,7 +132,18 @@ public abstract class GrimoireBook extends Skill {
         return all;
     }
 
-    public int familyCount() { return familyPages().size(); }
+    public int familyCount() { return familyAll().size(); }
+
+    private List<BookPage> restBase, restAll;
+    /** The family's pages followed by the pages the character spell sets of the squad captains / Spade / Heart / Diamond / Seabed append to this book (book.CharacterPagesRest; the same list when none). */
+    private List<BookPage> familyAll() {
+        List<BookPage> f = familyPages();
+        if (restBase == f && restAll != null) return restAll;
+        if (getRegistryName() == null) return f;
+        restAll = CharacterPagesRest.append(getRegistryName().getPath(), f);
+        restBase = f;
+        return restAll;
+    }
 
     /**
      * Anything besides mastery, rank and race that a page waits for before it can open (0.34): character spells, Charmy's
@@ -368,6 +379,7 @@ public abstract class GrimoireBook extends Skill {
         }
         addMasteryPoint(instance, player);
         com.newuniverse.nusmp.charset.CharacterSets.onCast(instance, p.id());      // character spell sets: the cast counts toward the rules that name this page (Spirit of Zephyr after the Spirit Dive)
+        com.newuniverse.nusmp.charset.CharacterFlourishRest.after(player, instance, p);      // character spell sets (squad captains / Spade / Heart / Diamond / Seabed): the character's own colours around the cast
         com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.onCast(player, magicId(), p.id(), p.costPercent());      // 1.55.0: the Rukh flow: a finished cast is Light, Dark or neutral; an opposing one is rejected in a Holy place
         instance.getOrCreateTag().putInt("LastMode", mode);

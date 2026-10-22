@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "canon": "rill",
+  "magic": "PAINTING",
+  "book": "book_painting",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "brushstroke",
+      "name": "Painting Magic (brush and palette)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Painting Magic page: a palette and a paintbrush are manifested; mode 0 of the book."
+    },
+    {
+      "page": "spring_of_restriction",
+      "name": "Painting Magic: Spring of Restriction",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "A paint-brush-drawn spring-like well that captures a target (supplementary)."
+    },
+    {
+      "page": "souterrain_giant_arm",
+      "name": "Painting Magic: Souterrain Giant's Strong Arm",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "A giant arm of earth (the wiki lists Lira with a similar spell)."
+    },
+    {
+      "page": "souterrain_groundswell",
+      "name": "Painting Magic: Souterrain Groundswell",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "NEW page. Figures ride waves of dirt and crash into the target, covering it in dirt."
+    },
+    {
+      "page": "sirenes_game",
+      "name": "Painting Magic: Sirene's Game",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "NEW page. Mermaids made of water crash into the target and douse it."
+    },
+    {
+      "page": "deux_tempetes",
+      "name": "Painting Magic: Deux Tempetes of Fire and Ice",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "Two twisters, fire and water, that counter ice and fire spells."
+    },
+    {
+      "page": "four_headed_lindworm",
+      "name": "Painting Magic: Four-Headed Lindworm",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "deux_tempetes",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "NEW page. A four-headed serpent whose heads breathe different elements."
+    },
+    {
+      "page": "vouivres_shout",
+      "name": "Painting Magic: Phantom Dragon Vouivre's Shout",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "sirenes_game",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "NEW page. A winged serpent-woman that fires a magical blast and can carry the user into the air."
+    },
+    {
+      "page": "souterrain_giant",
+      "name": "Painting Magic: Souterrain Giant",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "souterrain_giant_arm",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.56
+          }
+        ]
+      },
+      "note": "NEW page. The upper body of a giant of dense earth rises from the ground; it can be broken apart (defensive)."
+    },
+    {
+      "page": "gods_game",
+      "name": "Painting Magic: God's Game",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.62
+      },
+      "note": "A bearded figure that bends any spell fired at the user and sends it back at the attacker."
+    },
+    {
+      "page": "master_of_valhalla",
+      "name": "Painting Magic: Master of Valhalla",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "souterrain_giant",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "A giant winged-helmet warrior who raises tornadoes that tear opponents apart."
+    },
+    {
+      "page": "painted_menagerie",
+      "name": "Painted Menagerie",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.76
+      },
+      "note": "LEGACY page locked to Rill since 0.34 (not on the wiki's list): kept in his set so it stays reachable."
+    },
+    {
+      "page": "twilight_of_valhalla",
+      "name": "Painting Magic: Twilight of Valhalla",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "master_of_valhalla"
+          },
+          {
+            "type": "mastery",
+            "min": 0.82
+          }
+        ]
+      },
+      "note": "NEW page. A many-storeyed hall and winged shield-maidens; after a delay allies inside gain power and cannot die easily (here: Regeneration, Resistance, Absorption)."
+    },
+    {
+      "page": "elemental_quintet",
+      "name": "Painting Magic: Elemental Quintet",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "deux_tempetes"
+          },
+          {
+            "type": "page_open",
+            "page": "four_headed_lindworm"
+          },
+          {
+            "type": "mastery",
+            "min": 0.9
+          }
+        ]
+      },
+      "note": "The wiki's one compound spell: a combination of five elements."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Invasion of Heat-Infused Ice",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A magic circle that pours ice over a target; supplementary. Not built yet (no page)."
+    },
+    {
+      "name": "Souterrain Groundswell / Sirene's Game as Lira's",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Lira shares the attribute; her grimoire is not in the CanonBook list."
+    }
+  ],
+  "notes": "Not in his grimoire (kept in the basic Painting book): Camouflage, Living Illustration and Counter Palette are this mod's own pages and were not found on the wiki's spell list for Rill."
+}

@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "canon": "jack",
+  "magic": "SLASH",
+  "book": "book_slash",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "slash_wave",
+      "name": "Slash Magic (projected slashes)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Slash Magic page: projected slashes for mid to long range; mode 0 of the book."
+    },
+    {
+      "page": "forearm_blades",
+      "name": "Slash Magic (forearm blades)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "Slash Magic page: large blades extended from the forearms for close combat."
+    },
+    {
+      "page": "death_scythe",
+      "name": "Slash Magic: Death Scythe",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "forearm_blades",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.25
+          }
+        ]
+      },
+      "note": "A powerful slash with the forearm blades that can divide the ground. Needs the forearm blades first."
+    },
+    {
+      "page": "adaptive_edge",
+      "name": "Slash Magic (blades that adapt)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "death_scythe",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.45
+          }
+        ]
+      },
+      "note": "Slash Magic page: the blades adapt to the enemy's magic (space, healing, gravity) as he fights, which is what his fights with the Zogratis showed; this mod's page for it."
+    },
+    {
+      "page": "lunatic_slash",
+      "name": "Slash Magic: Death Scythe: Lunatic Slash",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "death_scythe",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.6
+          }
+        ]
+      },
+      "note": "A chaotic flurry of flying slashes: the Death Scythe's later form."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Reinforcement Magic (leg strength)",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "A second attribute, not a Slash page."
+    },
+    {
+      "name": "Slash Magic: Ripper Cut",
+      "ja": "",
+      "origin": "anime",
+      "source": "design",
+      "note": "The Sword book's page of that name is locked to Jack since 0.34 (Slash Magic used to be filed under Sword); it stays there and is not in this set."
+    }
+  ],
+  "notes": "Not in his grimoire (kept in the basic Slash book): Ripper Dash is this mod's own page and was not found in any source for Jack."
+}

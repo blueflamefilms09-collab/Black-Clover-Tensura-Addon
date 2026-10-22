@@ -66,7 +66,7 @@ public final class CharacterPages {
     /** Was this page appended by this class (a page that belongs to one character from the day it exists)? */
     public static boolean isAdded(String bookPath, String pageId) {
         List<String> l = ADDED.get(bookPath);
-        return l != null && l.contains(pageId);
+        return (l != null && l.contains(pageId)) || CharacterPagesRest.isAdded(bookPath, pageId);
     }
 
     /** The ids appended to a book (for the self-test and docs). */
