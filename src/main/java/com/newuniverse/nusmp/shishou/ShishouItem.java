@@ -128,7 +128,7 @@ public class ShishouItem extends Item {
         lines.add(Component.translatableWithFallback("shishou.tooltip.level", "Level %s", ShishouComponents.level(stack)).withStyle(net.minecraft.ChatFormatting.AQUA));
         lines.add(Component.translatableWithFallback("shishou.tooltip.soulbound", "Soulbound. Only its wielder may hold it.").withStyle(net.minecraft.ChatFormatting.GRAY));
         lines.add(Component.translatableWithFallback("shishou.tooltip.stomach", "Shift + right click: Stomach (internal storage).").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-        lines.add(Component.translatableWithFallback("shishou.tooltip.skill_route", "Skills: the Ultimate skill Shishou (Tensura skill screen: mode key, skill key).").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatableWithFallback("shishou.tooltip.keys", "Skills: the Ultimate skill Shishou (Tensura skill screen: mode key, skill key). No keys of his own.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         lines.add(Component.translatableWithFallback("shishou.tooltip.feed", "Click a stack of monster drops or magic stones on me in your inventory to feed me.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         int shown = 0;
         int level = ShishouComponents.level(stack);

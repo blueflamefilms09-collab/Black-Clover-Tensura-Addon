@@ -44,7 +44,7 @@ public final class ShishouConfig {
         EXP_PERCENT = b.comment("Experience he gains from kills, stones and feeding, in percent of the listed values (100 = as listed).").defineInRange("expPercent", 100, 10, 1000);
         b.pop();
         b.push("combat");
-        DAMAGE_PERCENT = b.comment("How steeply his attack and strike grow with the level, in percent (100 = as listed: 8 at the start, about 38 at level 50, 78 at 100). The start (a low magisteel sword) does not change.").defineInRange("damageScalePercent", 100, 0, 500);
+        DAMAGE_PERCENT = b.comment("How steeply his attack and strike grow with the level, in percent (100 = as listed: 8.5 at the start, about 38 at level 50, 78.5 at 100). The start (a low magisteel sword) does not change.").defineInRange("damageScalePercent", 100, 0, 500);
         STRIKE_CAP = b.comment("Most damage of one telekinetic strike (2.0.0: 60).").defineInRange("strikeCap", ShishouRules.STRIKE_CAP, 1.0, 1000.0);
         VIBRATION_PCT = b.comment("Vibration Magic: the share of a hit that bypasses armour as extra damage (never above this).").defineInRange("vibrationShare", 0.2, 0.0, 0.5);
         FLAME_CAP = b.comment("Black Flame: most damage of one pulse (every half second for five seconds).").defineInRange("blackFlamePulseCap", 5.0, 0.5, 50.0);

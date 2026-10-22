@@ -42,7 +42,7 @@ public final class ShishouRules {
 
     /**
      * The damage of a telekinetic charge strike: the held attack of that level ({@link #heldAttack}) + 0.5 per attack step + the element bonus, never above {@code cap}. It starts where a low magisteel sword is
-     * (8) and climbs steeply (level 50: about 38 plus steps, level 100: 78 plus steps and elements). {@code scalePercent} is the server's damage scale (100 = as listed).
+     * (8.5) and climbs steeply (level 50: about 38 plus steps, level 100: 78.5 plus steps and elements). {@code scalePercent} is the server's damage scale (100 = as listed).
      */
     public static double strikeDamage(int level, int attackSteps, double elementBonus, double cap, int scalePercent) {
         double d = heldAttack(level, scalePercent) + 0.5 * Math.max(0, Math.min(MAX_STEPS, attackSteps)) + Math.max(0.0, elementBonus);
@@ -145,9 +145,9 @@ public final class ShishouRules {
     // ---------------------------------------------------------------- sword arts (attribute numbers, applied only while held)
     /**
      * The starting attack is that of a low magisteel sword. The repo carries no number for it and the wiki hosts could not be reached, so this is an ASSUMPTION (a little above a netherite sword's 7):
-     * item damage 8, which the tooltip shows as 9 with the player's own 1. Tuneable through {@code combat.damageScalePercent} (the part that grows) and this constant (the start).
+     * item damage 8.5, which the tooltip shows as 9.5 with the player's own 1 (and is never below the 8.2 a level-10 sword showed in 2.0.0). Tuneable through {@code combat.damageScalePercent} (the part that grows) and this constant (the start).
      */
-    public static final double START_ATTACK = 8.0, BASE_ATTACK = START_ATTACK, SPEED_ARTS_BONUS = 0.4, ARTS_DAMAGE_SHARE = 0.10, SHARING_SPEED_PER_SKILL = 0.004, SHARING_SPEED_CAP = 0.04;
+    public static final double START_ATTACK = 8.5, BASE_ATTACK = START_ATTACK, SPEED_ARTS_BONUS = 0.4, ARTS_DAMAGE_SHARE = 0.10, SHARING_SPEED_PER_SKILL = 0.004, SHARING_SPEED_CAP = 0.04;
     /** The growth of the attack above {@link #START_LEVEL}: {@code 0.6 per level + 0.0035 per level squared}, never more than {@link #ATTACK_BONUS_CAP}. The 2.0.0 numbers were 7 + 0.12 per level, at most +12. */
     public static final double ATTACK_PER_LEVEL = 0.6, ATTACK_PER_LEVEL_SQ = 0.0035, ATTACK_BONUS_CAP = 70.0, LEGACY_ATTACK_PER_LEVEL = 0.12, LEGACY_ATTACK_BONUS_CAP = 12.0, LEGACY_BASE_ATTACK = 7.0;
 
@@ -158,7 +158,7 @@ public final class ShishouRules {
         return Math.min(ATTACK_BONUS_CAP, b);
     }
 
-    /** The attack damage the sword shows: 8 (a low magisteel sword) plus the level's growth. Level 10: 8, level 30: 21.4, level 50: 37.6, level 70: 56.6, level 100: 78. */
+    /** The attack damage the sword shows: 8.5 (a low magisteel sword) plus the level's growth. Level 10: 8.5, level 30: 21.9, level 50: 38.1, level 70: 57.1, level 100: 78.5. */
     public static double heldAttack(int level, int scalePercent) { return START_ATTACK + attackBonus(level, scalePercent); }
 
     public static double heldAttack(int level) { return heldAttack(level, 100); }

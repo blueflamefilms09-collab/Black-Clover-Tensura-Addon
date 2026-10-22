@@ -26,6 +26,13 @@ public final class ShishouLevels {
         return Math.round(25.0 + 6.0 * l + 0.35 * l * l);
     }
 
+    /** The total experience at which a level started on the 2.0.0 curve (for the migration tests). */
+    public static long legacyTotalFor(int level) {
+        long sum = 0L;
+        for (int l = 1; l < Math.min(level, MAX_LEVEL); l++) sum += legacyToNext(l);
+        return sum;
+    }
+
     /** The level an experience total had on the 2.0.0 curve (1..MAX_LEVEL). */
     public static int legacyLevelFor(long totalExp) {
         long t = Math.max(0L, totalExp);
