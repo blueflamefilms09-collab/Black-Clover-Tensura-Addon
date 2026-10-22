@@ -154,7 +154,7 @@ public final class SylphCasting {
     }
 
     /** Calls the powered form for this cast if it is allowed (cooldown, one per caster, the server cap). */
-    private static boolean summonPowered(ServerPlayer p, State s, long now, boolean zephyr) {
+    static boolean summonPowered(ServerPlayer p, State s, long now, boolean zephyr) {
         if (now < s.poweredReadyAt || s.powered != null) return false;
         if (!POWERED.acquire(p.getUUID(), SylphRules.POWERED_PER_PLAYER, SylphConfig.maxPowered())) return false;
         ServerLevel sl = p.serverLevel();

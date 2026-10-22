@@ -235,3 +235,7 @@ English wiki first: `https://blackclover.fandom.com/wiki/Sylph` **could not be f
 * `magic.sylph` is read by the client renderer through NeoForge's server config sync; a client that has not received the config yet draws the default (on).
 * Balance feel (the powered form's duration and cooldown, the Slow Falling aura) is untested. The area pages' hits are still the caster's, only their pictures leave her hands.
 * Spirit commands are limited to the link toggle, the aura and the emitter (no AI follow, no attack commands): she is a prop, deliberately cheaper than a per-caster AI mob.
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The Sylph key (the right bracket) is gone. Link and unlink her with the Wind grimoire's "Summon Spirit / Release Spirit" page, or `/multiverse spirit summon sylph` / `release`; her powered form is the page "Sylph Powered Form" or `/multiverse spirit ability powered`; "Spirit Combat Mode" lets her cast wind blades with her mana and yours. Only the key was removed. Full description, numbers and costs: `docs/magic/spirit_control.md`.

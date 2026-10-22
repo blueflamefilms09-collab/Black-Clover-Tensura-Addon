@@ -129,3 +129,7 @@ three rings of wave cards and looks fin-like from the side; the fin ears are sma
 * Nothing was listened to: the synthesised sounds were checked as spectrograms and levels only; the spoken lines were not listened to either.
 * The licence of the library voice "Julie I" was not shown by the API and is not verified; commercial or redistribution terms must be checked on its ElevenLabs page.
 * The English wiki page was not reachable (see Sources).
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The Undine key (the right bracket) is gone. Link and unlink her with the Water grimoire's "Summon Spirit / Release Spirit" page, or `/multiverse spirit summon undine` / `release`; her full form is the page "Undine Full Form" or `/multiverse spirit ability full`; "Spirit Combat Mode" lets her cast water spheres with her mana and yours. Only the key was removed. Full description, numbers and costs: `docs/magic/spirit_control.md`.

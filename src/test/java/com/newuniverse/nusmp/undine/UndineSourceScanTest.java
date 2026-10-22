@@ -80,9 +80,7 @@ class UndineSourceScanTest {
 
     @Test
     void theKeyPacketIsValidatedOnTheServer() throws IOException {
-        String net = code(read(COMMON.resolve("UndineNet.java")));
-        assertTrue(net.contains("if (action != 0) return;") && net.contains("ctx.player() instanceof ServerPlayer"), "an unknown action and a sender that is not a player are ignored");
-        assertTrue(net.contains("playToServer"), "client to server only");
+        assertFalse(java.nio.file.Files.exists(COMMON.resolve("UndineNet.java")), "3.0.0: the key packet is gone (the spirit control plane calls her; spiritcontrol validates every ask)");
         String toggle = body(read(COMMON.resolve("UndineCasting.java")), "toggle");
         assertTrue(toggle.contains("PACKET_GAP") && toggle.contains("UndineConfig.enabled()") && toggle.contains("CanonBook.NOELLE"), "rate, switch and canon book are checked");
     }

@@ -47,7 +47,7 @@ class SpiritDarkSourceScanTest {
 
     @Test
     void nothingOnATickOrInAnEventScansTheWorld() throws IOException {
-        for (String f : new String[]{"SpiritDark.java", "SpiritDarkEvents.java", "SpiritDarkProps.java", "SpiritDarkNet.java"}) {
+        for (String f : new String[]{"SpiritDark.java", "SpiritDarkEvents.java", "SpiritDarkProps.java", "SpiritDarkControl.java"}) {
             String c = code(SRC.resolve("spiritdark/" + f));
             assertFalse(c.contains("getEntitiesOfClass") || c.contains("getEntities(") || c.contains("GrimoireBook.around") || c.contains("getBlockState") || c.contains("getChunk") || c.contains("getNearbyEntities"), f + " must not search the world");
         }
@@ -68,10 +68,7 @@ class SpiritDarkSourceScanTest {
 
     @Test
     void everyPacketIsValidatedOnTheServer() throws IOException {
-        String net = code(SRC.resolve("spiritdark/SpiritDarkNet.java"));
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
-        assertTrue(net.contains("validAction"), "an unknown action is ignored");
-        assertTrue(net.contains("playToServer") && !net.contains("playToClient"), "the one packet goes client to server and nothing is sent back");
+        assertFalse(SRC.resolve("spiritdark/SpiritDarkNet.java").toFile().exists(), "3.0.0: the key packet is gone (the spirit control plane calls the spirit; spiritcontrol validates every ask)");
         String sd = code(SRC.resolve("spiritdark/SpiritDark.java"));
         assertTrue(sd.contains("PACKET_GAP") && sd.contains("eligible(p)") && sd.contains("SpiritDarkConfig.enabled()"), "rate limit, Dark Magic and the switch are checked");
         assertTrue(sd.contains("NUSkills.BOOK_DARK"), "only a Dark Magic caster may link");
@@ -129,11 +126,8 @@ class SpiritDarkSourceScanTest {
     }
 
     @Test
-    void theClientOnlyAsksAndNeverCallsTheServersRules() throws IOException {
-        String client = code(SRC.resolve("client/spiritdark/SpiritDarkClient.java"));
-        assertTrue(client.contains("PacketDistributor.sendToServer(new SpiritDarkNet.Key(action))"));
-        assertFalse(client.contains("SpiritDark.") && client.contains("SpiritDark.onKey"), "the client never calls the server's code");
-        assertTrue(client.contains("InputConstants.KEY_RBRACKET") && client.contains("InputConstants.KEY_SEMICOLON") && client.contains("InputConstants.KEY_APOSTROPHE"));
+    void theKeysAreGoneAndTheClientHasNothingToAsk() throws IOException {
+        assertFalse(SRC.resolve("client/spiritdark/SpiritDarkClient.java").toFile().exists(), "3.0.0: the three Darkness keys are gone, the client has nothing to ask");
     }
 
     @Test
@@ -141,7 +135,7 @@ class SpiritDarkSourceScanTest {
         assertTrue(code(SRC.resolve("book/GrimoireBook.java")).contains("com.newuniverse.nusmp.spiritdark.SpiritDark.onCast(player, castMagic)"));
         assertTrue(code(SRC.resolve("prop/PropRegistry.java")).contains("SpiritDarkProps.init()"));
         assertTrue(code(SRC.resolve("client/prop/PropPainterRegistry.java")).contains("SpiritDarkPropPainter.register()"));
-        assertTrue(code(SRC.resolve("NUSMP.java")).contains("SpiritDarkBoot.init(modEventBus, modContainer)") && code(SRC.resolve("NUSMP.java")).contains("SpiritDarkClient.init(modEventBus)"));
+        assertTrue(code(SRC.resolve("NUSMP.java")).contains("SpiritDarkBoot.init(modEventBus, modContainer)") && !code(SRC.resolve("NUSMP.java")).contains("SpiritDarkClient.init(modEventBus)"), "3.0.0: no client key setup any more");
         assertTrue(code(SRC.resolve("prop/PropKind.java")).contains("SPIRITDARK_1"));
         String dark = code(SRC.resolve("book/DarkBook.java"));
         int last = -1;

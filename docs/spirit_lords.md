@@ -21,3 +21,7 @@ Preview: `python3 -B tools/render_preview/preview.py spirit_salamander_idle spir
 ## Tensura-style spirits (not exclusive, small orbs)
 `entity/SpiritLordEntity` (`nusmp:spirit_lord`), drawn by `client/SpiritOrbRenderer`: a small glowing orb in the spirit's colour that follows the player.
 Without a Black Clover bond the Spirit Charm calls one: use to pick the element, sneak-use to call it. The Anti-Magic lord (Black Devil) is also an orb.
+
+## Update 3.0.0: controls moved to the spirit control plane
+
+The Spirit Lord (the orb and the true body) can now also be called and sent away from the grimoire of its element ("Summon Spirit / Release Spirit" page) or with `/multiverse spirit summon lord` / `release lord`, with the same rules as the Spirit Lord skill's Call Spirit mode and the Spirit Charm (the spirit must answer, it needs its body, a mage who holds the element's slot gets the true body). "Spirit Combat Mode" (a page, a third mode of the Spirit Lord skill, or `/multiverse spirit combat on`) makes the Lord cast its element's spells with its own mana pool and a share of the owner's magicules instead of for free. Full description, numbers and costs: `docs/magic/spirit_control.md`.

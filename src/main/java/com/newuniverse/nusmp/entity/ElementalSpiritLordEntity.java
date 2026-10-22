@@ -225,6 +225,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
             VfxSpawn.send(sl, VfxShape.WATER_RING, owner.position(), owner.position().add(0, 1, 0), k.color, 18, 1.0f);
         }
         if (k == Kind.UNDINE && --undineAmbient <= 0) { undineAmbient = 400 + random.nextInt(400); undineVoice(com.newuniverse.nusmp.undine.UndineSoundSet.Cue.AMBIENT); }      // Undine: her own sound set (never the vanilla silence of the others)
+        if (com.newuniverse.nusmp.spiritcontrol.SpiritCombat.takesOver(owner)) return;                          // 3.0.0: combat mode on: the control plane casts for it (its mana and the owner's)
         LivingEntity t = getTarget();
         if (--castCooldown > 0 || t == null || !t.isAlive() || distanceToSqr(t) > 14 * 14 || !hasLineOfSight(t)) return;
         castCooldown = 70;

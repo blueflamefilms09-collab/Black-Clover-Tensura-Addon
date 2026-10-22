@@ -178,6 +178,7 @@ public final class MultiverseCommands {
                 }))));
         spirit.then(Commands.literal("info").executes(ctx -> spiritInfo(ctx, false))
                 .then(Commands.argument("player", EntityArgument.player()).requires(MultiverseCommands::admin).executes(ctx -> spiritInfo(ctx, true))));
+        com.newuniverse.nusmp.spiritcontrol.SpiritControlCommand.addTo(spirit);      // 3.0.0: summon, release, status, combat on|off, ability <name> (the spirit control plane; also /spirit)
         root.then(spirit);
 
         // ---------------------------------------------------------------- anti-magic

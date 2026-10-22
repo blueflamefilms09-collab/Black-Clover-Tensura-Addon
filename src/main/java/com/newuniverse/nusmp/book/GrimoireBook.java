@@ -126,6 +126,7 @@ public abstract class GrimoireBook extends Skill {
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.volleyPage());     // 1.99.0: the Mana Zone's offence and its pressurised space, appended after everything (late-game gate: see usable)
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.spacePage());
                 l.add(com.newuniverse.nusmp.mana.zone.TrueMagic.page());                 // 1.99.0: True Magic (Mana Method): the real element from a rune array, natural attributes only, same late-game gate
+                l.addAll(com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.pages());   // 3.0.0: the spirit control pages (Summon / Release, Combat Mode, the spirit's abilities), appended after everything; hidden unless a spirit of this magic answers the player
             }
             all = l;
         }
@@ -158,10 +159,13 @@ public abstract class GrimoireBook extends Skill {
         return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID)
                 || pg.id().equals(com.newuniverse.nusmp.mana.zone.TrueMagic.ID));
     }
+    /** 3.0.0: the two toggle pages of the spirit control plane (Summon / Release Spirit, Combat Mode) act on the key press; the ability pages are ordinary casts. */
+    private boolean isSpiritToggle(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isInstant(page(mode).id()); }
+    private boolean isSpiritPage(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isPage(page(mode).id()); }
     private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
     /** Pages that act on the key press itself without magicule cost or a cooldown. */
     private boolean instant(int mode) {
-        return isSummon(mode) || isStore(mode) || isDrawWeapon(mode) || isManaZone(mode)
+        return isSummon(mode) || isStore(mode) || isDrawWeapon(mode) || isManaZone(mode) || isSpiritToggle(mode)
                 || this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID);
     }
 
@@ -180,6 +184,7 @@ public abstract class GrimoireBook extends Skill {
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
         if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
+        if (isSpiritPage(mode)) return com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.usable(this, i, e, page(mode).id());      // 3.0.0: shown only while a spirit of this book's magic answers the player (asked after the Mana Zone gate)
         if (instant(mode)) return true;
         if (page(mode) != null && page(mode).id().equals(STRIKE_ID)) return true;      // 1.5.0: Mana Strike, in every grimoire
         if (page(mode) != null && SignatureSpell.isSig(page(mode).id()))                // 1.16.0: the Signature Spell for every wizard, the born spells for a fused book
@@ -216,7 +221,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount() && !isUnlocked(instance, mode)) return Component.literal("Sealed Page").withStyle(ChatFormatting.DARK_GRAY);
         if (mode >= familyCount() && !usable(instance, null, mode)) return Component.literal(com.newuniverse.nusmp.core.discovery.DiscoveryRules.QUESTION).withStyle(ChatFormatting.DARK_GRAY);   // 1.27.0: a base page that cannot be used yet stays hidden
         int cd = instance.getCoolDown(mode);   // ManasCore cooldowns are in seconds
-        String shown = SignatureSpell.pageName(instance, p);                           // 1.16.0: a signature page shows the wizard's own spell name
+        String shown = isSpiritPage(mode) ? com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.label(instance, p) : SignatureSpell.pageName(instance, p);      // 3.0.0: the spirit pages name themselves from the instance's SpiritUi tag                           // 1.16.0: a signature page shows the wizard's own spell name
         return Component.literal(cd > 0 ? shown + " (" + cd + "s)" : shown);
     }
 
@@ -225,9 +230,11 @@ public abstract class GrimoireBook extends Skill {
     public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) {
         BookPage p = page(mode);
         if (p == null) return 0;
-        double c = BalanceLaw.cost(entity, p.costPercent(), p.costFloor()) * cover(instance).cost;
-        if (p.costPercent() <= 0 && p.costFloor() <= 0) return 0;                       // e.g. Anti-Magic costs nothing
-        if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && p.costPercent() >= 20) c *= 0.85; // Mana Method
+        double pct = p.costPercent(), floor = p.costFloor();
+        if (com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isAbilityPage(p.id())) { double[] sc = com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.cost(this, entity, p.id()); pct = sc[0]; floor = sc[1]; }      // 3.0.0: an ability page asks the price of the spirit's ability
+        double c = BalanceLaw.cost(entity, pct, floor) * cover(instance).cost;
+        if (pct <= 0 && floor <= 0) return 0;                       // e.g. Anti-Magic costs nothing
+        if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && pct >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
         return c;
     }
@@ -247,6 +254,7 @@ public abstract class GrimoireBook extends Skill {
             if (CastHoldFx.pressed(instance, p.level().getGameTime()) && com.newuniverse.nusmp.firecast.FireCasting.chants(this, p, mode)) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);   // 1.27.0: a repeated press does not replay the chant (the fire styles: Mereoleona does not chant)
         }
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
+        if (isSpiritToggle(mode)) { com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.press(p, this, instance, page(mode).id()); return; }      // 3.0.0: Summon / Release Spirit and Combat Mode
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
         if (isDrawWeapon(mode)) { com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance); return; }
         if (isManaZone(mode)) {
@@ -645,6 +653,7 @@ public abstract class GrimoireBook extends Skill {
             }
         }
         manaSense(p);
+        com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.sync(this, i, p);      // 3.0.0: the SpiritUi tag that names the spirit pages (only a change is written)
         tickBook(i, p);
     }
 
