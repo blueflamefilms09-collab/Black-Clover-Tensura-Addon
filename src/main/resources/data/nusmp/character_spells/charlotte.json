@@ -139,10 +139,6 @@
         "type": "all",
         "of": [
           {
-            "type": "page_open",
-            "page": "queen_of_briars"
-          },
-          {
             "type": "page_uses",
             "page": "queen_of_briars",
             "count": 1
@@ -172,5 +168,5 @@
       "note": "A body coat of mana, not a grimoire page."
     }
   ],
-  "notes": "Her CanonBook entry changed from Plant Magic to Briar Magic (it is the series' attribute and the mod has a Briar book since 1.5x): a grimoire already bound with the old pair (PLANT, charlotte) keeps working as before and keeps the old lock line of Briar Prison in the Plant book. Not in her grimoire (kept in the basic Briar book): Thorn Reflect, Bleeding Thorn Wall, Briar Leap, Briar Garden and Rose Garden Bloom are this mod's own pages and were not found in any source."
+  "notes": "Her CanonBook entry changed from Plant Magic to Briar Magic (it is the series' attribute and the mod has had a Briar book since the 0.53 attribute expansion): a grimoire already bound with the old pair (PLANT, charlotte) keeps working as before and keeps the old lock line of Briar Prison in the Plant book. Not in her grimoire (kept in the basic Briar book): Thorn Reflect, Bleeding Thorn Wall, Briar Leap, Briar Garden and Rose Garden Bloom are this mod's own pages and were not found in any source."
 }

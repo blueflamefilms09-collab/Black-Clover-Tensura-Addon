@@ -35,19 +35,6 @@
       "note": "A paint-brush-drawn spring-like well that captures a target (supplementary)."
     },
     {
-      "page": "souterrain_giant_arm",
-      "name": "Painting Magic: Souterrain Giant's Strong Arm",
-      "ja": "",
-      "origin": "anime",
-      "exclusive": false,
-      "source": "en_wiki",
-      "acquire": {
-        "type": "mastery",
-        "min": 0.14
-      },
-      "note": "A giant arm of earth (the wiki lists Lira with a similar spell)."
-    },
-    {
       "page": "souterrain_groundswell",
       "name": "Painting Magic: Souterrain Groundswell",
       "ja": "",
@@ -144,7 +131,7 @@
         "of": [
           {
             "type": "page_uses",
-            "page": "souterrain_giant_arm",
+            "page": "sirenes_game",
             "count": 3
           },
           {
@@ -269,5 +256,5 @@
       "note": "Lira shares the attribute; her grimoire is not in the CanonBook list."
     }
   ],
-  "notes": "Not in his grimoire (kept in the basic Painting book): Camouflage, Living Illustration and Counter Palette are this mod's own pages and were not found on the wiki's spell list for Rill."
+  "notes": "Not in his grimoire (kept in the basic Painting book): Souterrain Giant's Strong Arm (the wiki gives it to Lira, and a grimoire has only 12 page slots), Camouflage, Living Illustration and Counter Palette are this mod's own pages and were not found on the wiki's spell list for Rill."
 }
