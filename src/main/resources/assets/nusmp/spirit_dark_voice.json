@@ -3,6 +3,11 @@
  "lines": {
   "link_1": "Ah. At last, a master worth the bother. Do try to be interesting.",
   "link_2": "Splendid. Another mortal who thinks they hold the leash.",
-  "link_3": "Good evening. I shall be your shadow, and you shall be my entertainment."
+  "link_3": "Good evening. I shall be your shadow, and you shall be my entertainment.",
+  "link_4": "Oh, how touching. You called, and I came. Don't make a habit of it.",
+  "unlink_1": "Do ring when you're bored again.",
+  "unlink_2": "I shall return to the dark. It is better company.",
+  "unlink_3": "Farewell, master. Try not to die before I come back.",
+  "cast_1": "Oh, how theatrical."
  }
 }

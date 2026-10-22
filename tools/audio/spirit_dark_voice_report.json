@@ -1,4 +1,8 @@
 {
+ "cast_1": {
+  "bytes": 20615,
+  "seconds": 2.29
+ },
  "link_1": {
   "bytes": 48041,
   "seconds": 6.1
@@ -10,5 +14,21 @@
  "link_3": {
   "bytes": 42931,
   "seconds": 5.2
+ },
+ "link_4": {
+  "bytes": 45467,
+  "seconds": 5.5
+ },
+ "unlink_1": {
+  "bytes": 21708,
+  "seconds": 2.27
+ },
+ "unlink_2": {
+  "bytes": 36517,
+  "seconds": 4.4
+ },
+ "unlink_3": {
+  "bytes": 31377,
+  "seconds": 3.73
  }
 }
