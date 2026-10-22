@@ -280,3 +280,5 @@ NOT verified (honest list):
 Mereoleona, Leopold, Nozel, Julius, Mimosa, Charmy, Finral, Vanessa, Luck, Gauche, Magna, Zora, Klaus, Kirsch, Karna, William, Langris, Lemiel, Zenon, Vanica, Dante, Lucius, Floga, Gadjah, Lolopechka, Mars, Charlotte, Jack, Rill, Dorothy, Kaiser, Nacht, Grey, Gordon, Henry, Letoile, Zagred, Secre, Rades, Kahono, Kiato. Their grimoire is the whole book as today, with their old lock lines. The steps are in section 8.
 
 Self-test prefix to add to the CI smoke list: `magic.character_spells`.
+
+Phase 2 (Black Bulls): Vanessa, Charmy, Luck, Magna, Gauche, Gordon, Zora, Grey, Henry, Finral, Nacht and Secre now have their sets, see `docs/magic/character_spells_bulls.md` (self-test `magic.character_spells_bulls`).

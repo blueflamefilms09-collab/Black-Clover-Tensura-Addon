@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "canon": "gordon",
+  "magic": "POISON",
+  "book": "book_poison",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Verbotenes Obst, Curse-Worker's Neighbor and Gordon Agrippa, read through search summaries only (host unreachable): Verbotenes Obst (Forbidden Fruit: a large mass of liquid poison), Violett Schirm (a great curtain of poison that protects), Curse-Worker's Neighbor.",
+    "repo_wiki": "The fandom spell pages Poison Curse Magic: Aufwachen Dachs (badgers of poison that chew through corpses) and Ultra Giant Bull cached in the repo (.github/wiki).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, RENOTE): 寝起きの穴熊(アオフヴァッヘン・ダクス), 毒雲の棲家, 禁じられた果実(ファーボーテン・オープスト), 紫の傘(ヴィオレット・シルム).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "venom_bolt", "name": "Poison Curse Magic: Aufwachen Dachs", "ja": "寝起きの穴熊", "origin": "anime", "exclusive": false, "source": "repo_wiki",
+      "acquire": { "type": "start" }, "note": "Badgers made of poison. Mode 0 of the Poison book, so it stays in the basic book too." },
+    { "page": "toxic_cloud", "name": "Poison Magic: Violett Schirm", "ja": "紫の傘", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.12 }, "note": "A great umbrella of poison; he covered his comrades with it as a defence." },
+    { "page": "poison_clouds_abode", "name": "Poison Curse Magic: Poison Cloud's Abode", "ja": "毒雲の棲家", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.2 }, "note": "NEW page: a cloud of poison that spreads over a wide area." },
+    { "page": "verbotenes_obst", "name": "Poison Magic: Verbotenes Obst", "ja": "禁じられた果実", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "toxic_cloud", "count": 3 }, { "type": "mastery", "min": 0.3 } ] },
+      "note": "NEW page: a large mass of liquid poison made between the hands and thrown." },
+    { "page": "curse_workers_neighbor", "name": "Curse-Worker's Neighbor", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "poison_clouds_abode", "count": 2 }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "Lets a cursed person control the curse; the poison part of the Ultra Giant Bull. Already locked to his grimoire." }
+  ],
+  "planned": [
+    { "name": "Ultra Giant Bull (Compound Magic: Poison, Recombination, Transmutation, Mirror)", "ja": "", "origin": "anime", "source": "repo_wiki", "note": "The page lives in the Recombination book and is in Henry's set; Gordon's part is Curse-Worker's Neighbor." }
+  ],
+  "notes": "Not in Gordon's grimoire (kept in the basic Poison book, no source found): Basilisk's Breath (plague nova) and Acid Ball."
+}

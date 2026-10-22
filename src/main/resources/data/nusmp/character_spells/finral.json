@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "canon": "finral",
+  "magic": "SPATIAL",
+  "book": "book_spatial",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Finral Roulacase, read through search summaries only (host unreachable): Fallen Angel Gate (a portal to places he has been or can see), Fallen Angel Wingbeat (a homing sphere of space that teleports its target away, gained after his training); Door of Fate is listed among the compound spells of Vanessa's page.",
+    "ja_search": "Japanese pages found by search (the official bclover.jp character page, playnews, manga-tantei): 空間魔法, 堕天使の抜け穴, 堕天使の羽ばたき (a ball of space that throws the hit target to another place; it can home, be counted out and also be used on allies).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "fallen_angel_gate", "name": "Spatial Magic: Fallen Angel Gate", "ja": "堕天使の抜け穴", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A portal to somewhere he has been or can see; the squad's transport." },
+    { "page": "fallen_angel_wingbeat", "name": "Spatial Magic: Fallen Angel Wingbeat", "ja": "堕天使の羽ばたき", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "fallen_angel_gate", "count": 5 }, { "type": "mastery", "min": 0.3 } ] },
+      "note": "NEW page: gained after his training, a sphere of space that sends the foe it hits to another place. The mod throws the foe 12 to 20 blocks away." },
+    { "page": "door_of_fate", "name": "Compound Magic: Door of Fate", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "fallen_angel_wingbeat", "count": 3 }, { "type": "mastery", "min": 0.7 } ] },
+      "note": "Listed as a compound spell on Vanessa's wiki page (her Red Thread through his doors); needs her in the series, here it is his late signature." }
+  ],
+  "planned": [
+    { "name": "Spatial Support / Spatial Movement Magic Bullet", "ja": "", "origin": "manga", "source": "en_wiki", "note": "Skill names of the mobile game only: no page." },
+    { "name": "Spatial armour of his late training", "ja": "", "origin": "anime", "source": "design", "note": "The mod's Dimensional Armour page exists but no source for it could be found for Finral, so it is not in his set." }
+  ],
+  "notes": "Mode 0 of the Spatial book (Sacred Mana Domination) cannot be hidden and is not Finral's in the series. Not in his grimoire (kept in the basic Spatial book, no source found for Finral): Spatial Cut, Unopening Red Room, Myriad Black, Dimensional Armour, Gate Strike, Gate Swap, Dimension Collapse."
+}

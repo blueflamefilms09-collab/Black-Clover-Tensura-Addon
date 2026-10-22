@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "canon": "grey",
+  "magic": "TRANSMUTATION",
+  "book": "book_transmutation",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Grey and Transformation Magic, read through search summaries only (host unreachable): she takes the appearance of other people or objects and, unlike other users, can transform other things (rocks, enemy spells).",
+    "ja_search": "Japanese pages found by search (the official TV Tokyo site lists her magic as 変身, manganoshirabe says the transformation is really Transmutation, the 必殺技辞典 lists マジックコンバート).",
+    "repo_wiki": "The fandom spell page Ultra Giant Bull (Compound Magic) cached in the repo: the Transmutation user turns a large structure into the material of the Recombination house.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "iron_spikes", "name": "Transmutation: Iron Spikes", "ja": "", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "start" }, "note": "Mode 0 of the Transmutation book, so it cannot be hidden; no source names it for Grey." },
+    { "page": "transformation_guise", "name": "Transformation Magic: Borrowed Form", "ja": "変身魔法", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "NEW page: she takes another shape. The mod cannot change a player's skin, so the effect is a vanishing act (invisibility and speed, hunters lose her)." },
+    { "page": "magic_convert", "name": "Transmutation Magic: Magic Convert", "ja": "マジックコンバート", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "transformation_guise", "count": 2 }, { "type": "mastery", "min": 0.3 } ] },
+      "note": "Converts one thing into another (enemy spells included, as the wiki says of her magic). The 必殺技辞典 entry is attached to her name but is disputed." }
+  ],
+  "planned": [
+    { "name": "Transformation of rocks and other objects", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Described only in general terms; no spell name." },
+    { "name": "Ultra Giant Bull (Compound Magic: converts a structure into the house's material)", "ja": "", "origin": "anime", "source": "repo_wiki", "note": "The page lives in the Recombination book and is in Henry's set." }
+  ],
+  "notes": "The sources for Grey are the thinnest of the squad: her magic is listed as Transformation although the series reveals it to be Transmutation, and no spell names were found. Not in her grimoire (kept in the basic Transmutation book): Quagmire, Grand Transmutation, Alchemic Blades, Flowering, Transmuted Sentinel, Alchemist's Armour."
+}

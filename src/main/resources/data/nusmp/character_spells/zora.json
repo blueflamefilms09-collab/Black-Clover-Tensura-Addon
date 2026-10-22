@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "canon": "zora",
+  "magic": "ASH",
+  "book": "book_ash",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Zora Ideale and Revelation of the Cowardly, read through search summaries only (host unreachable): Trap Magic, the Counter Trap Magic that absorbs a spell and returns it doubled, Revelation of the Cowardly (streams of ash on allies show them where his traps are).",
+    "mobile_wiki": "The Black Clover Mobile wiki skill Ash Magic Bullet (name only).",
+    "repo_wiki": "The fandom spell page Ash Curse Magic: Ash Absorbing Formation cached in the repo (.github/wiki/spell_ash_absorbing_formation.txt).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, usachannel, playnews): he draws a magic circle in ash and the trap fires on a condition; three quick traps (a binding snare, a pitfall, a mine) and the slow, strong counter trap that takes in the spells around it and returns them with double speed and power.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "ash_bullets", "name": "Ash Magic: Ash Bullets", "ja": "", "origin": "anime", "exclusive": false, "source": "mobile_wiki",
+      "acquire": { "type": "start" }, "note": "A magic bullet of ash. Mode 0 of the Ash book, so it stays in the basic book too." },
+    { "page": "ash_snare_trap", "name": "Trap Magic: Ash Snare Trap", "ja": "括り罠", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "start" }, "note": "NEW page: the quick binding trap of ash that holds whoever steps on it." },
+    { "page": "ash_absorbing_formation", "name": "Ash Curse Magic: Ash Absorbing Formation", "ja": "", "origin": "anime", "exclusive": true, "source": "repo_wiki",
+      "acquire": { "type": "mastery", "min": 0.2 }, "note": "Streams of cursed ash that drain mana from whoever they touch." },
+    { "page": "counter_trap_magic", "name": "Trap Magic: Counter Trap Magic", "ja": "カウンタートラップ魔法", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "ash_snare_trap", "count": 3 }, { "type": "mastery", "min": 0.35 } ] },
+      "note": "NEW page: his best trap. It needs long preparation in the series; here it needs the quick traps used first. A circle that swallows the spells that enter it and throws them back doubled." },
+    { "page": "revelation_of_the_cowardly", "name": "Ash Magic: Revelation of the Cowardly", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "counter_trap_magic" }, { "type": "mastery", "min": 0.5 } ] },
+      "note": "A supplementary spell: ash on his allies shows them where his traps lie. Already locked to his grimoire." }
+  ],
+  "planned": [
+    { "name": "Trap Magic: pitfall and mine traps", "ja": "", "origin": "anime", "source": "ja_search", "note": "Two more of the three quick traps; no names, the Snare Trap stands for the family." }
+  ],
+  "notes": "Not in Zora's grimoire (kept in the basic Ash book, no source found): Ash Cloud, Ash Shroud, Ash Soldiers, Cursed Ash. Magic Warding Ash is World Tree Magic (William's) and not an Ash spell."
+}

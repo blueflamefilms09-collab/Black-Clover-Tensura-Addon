@@ -45,7 +45,8 @@ public class LightningBook extends GrimoireBook {
             BookPage.mid("lightning_surge", "Lightning Surge", LightningArts::lightningSurge).withCooldown(200));
 
     public LightningBook() { super(MagicType.LIGHTNING, 0xFFFFE14A); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withBulls;           // Black Bulls character spell sets: the pages that belong to one squad member are appended after the shared pages (book.CharacterPagesBulls)
+    @Override protected List<BookPage> familyPages() { if (withBulls == null) withBulls = CharacterPagesBulls.lightning(pages); return withBulls; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.LIGHTNING_ELEMENTAL; }
 
     /** Strikes the target, then arcs to two more within 5 blocks. */

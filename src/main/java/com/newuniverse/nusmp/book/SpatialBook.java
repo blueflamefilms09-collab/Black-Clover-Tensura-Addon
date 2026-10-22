@@ -48,7 +48,8 @@ public class SpatialBook extends GrimoireBook {
             BookPage.signature("dimension_collapse", "Dimension Collapse", armoured(SpatialWorks::dimensionCollapse, 1)));
 
     public SpatialBook() { super(MagicType.SPATIAL, 0xFFB088FF); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withBulls;           // Black Bulls character spell sets: the pages that belong to one squad member are appended after the shared pages (book.CharacterPagesBulls)
+    @Override protected List<BookPage> familyPages() { if (withBulls == null) withBulls = CharacterPagesBulls.spatial(pages); return withBulls; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.SPACE_ELEMENTAL; }
 
     /** Erase the nearest enemy projectile within 8 blocks, or else pull the target 4 blocks. Never both. */

@@ -83,6 +83,8 @@ class CharacterSetSourceScanTest {
                 if (!BOOK_FILES.containsKey(book)) continue;      // the books of the later content builders are checked by their own scan test (CharacterSetRestSourceScanTest)
                 List<String> have = new ArrayList<>(legacy(book));
                 have.addAll(added(book));
+                Matcher twin = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(SRC.resolve("book/CharacterPagesBulls.java")));      // the Black Bulls' twin class (pages for Magna in the Fire book)
+                if (twin.find()) have.addAll(ids(twin.group(1)));
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);

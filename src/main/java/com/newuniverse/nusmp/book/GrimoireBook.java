@@ -388,6 +388,7 @@ public abstract class GrimoireBook extends Skill {
         addMasteryPoint(instance, player);
         com.newuniverse.nusmp.charset.CharacterSets.onCast(instance, p.id());      // character spell sets: the cast counts toward the rules that name this page (Spirit of Zephyr after the Spirit Dive)
         com.newuniverse.nusmp.charset.CharacterFlourishRest.after(player, instance, p);      // character spell sets (squad captains / Spade / Heart / Diamond / Seabed): the character's own colours around the cast
+        CharacterFlairBulls.onCast(player, instance, p);      // Black Bulls character spell sets: a signature layer in his colour on top of the page's own effect (nothing for any other grimoire)
         com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.onCast(player, magicId(), p.id(), p.costPercent());      // 1.55.0: the Rukh flow: a finished cast is Light, Dark or neutral; an opposing one is rejected in a Holy place
         instance.getOrCreateTag().putInt("LastMode", mode);
