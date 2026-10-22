@@ -249,19 +249,20 @@ def seraph(lod, fx=False):
     one = [(0.30, 1.0)]
     for sx in (1, -1):
         # A: the flying pair (attached high on the back)
-        prim = [(14, 40, 9, 5.0, two, 1, "primary"), (28, 44, 9, 5.45, two, 2, "primary"), (42, 47, 9, 5.9, two, 1, "primary"), (56, 47, 9, 6.35, two, 2, "primary"),
-                (70, 44, 9, 6.8, two, 1, "primary"), (84, 41, 9, 7.25, two, 2, "primary"), (98, 37, 9, 7.7, one, 1, "primary"), (112, 32, 9, 8.15, one, 2, "primary"), (126, 27, 8.5, 8.6, one, 1, "primary")]
-        cov = [(22, 27, 7.5, 3.6, one, 1, "covert"), (37, 29, 7.5, 3.15, one, 2, "covert"), (52, 30, 7.5, 2.7, one, 1, "covert"), (67, 29, 7.5, 2.25, one, 2, "covert"),
-               (82, 26, 7.5, 1.8, one, 1, "covert"), (97, 22, 7.2, 1.35, one, 2, "covert"), (112, 18, 7, 0.9, one, 1, "covert")]
+        # tier = the highest level of detail the blade is still built at (0 = the full model only, 1 = also the half model, 2 = all three)
+        prim = [(14, 40, 9, 5.0, two, 0, "primary"), (28, 44, 9, 5.45, two, 2, "primary"), (42, 47, 9, 5.9, two, 0, "primary"), (56, 47, 9, 6.35, two, 1, "primary"),
+                (70, 44, 9, 6.8, two, 2, "primary"), (84, 41, 9, 7.25, two, 1, "primary"), (98, 37, 9, 7.7, one, 0, "primary"), (112, 32, 9, 8.15, one, 2, "primary"), (126, 27, 8.5, 8.6, one, 0, "primary")]
+        cov = [(22, 27, 7.5, 3.6, one, 0, "covert"), (37, 29, 7.5, 3.15, one, 1, "covert"), (52, 30, 7.5, 2.7, one, 0, "covert"), (67, 29, 7.5, 2.25, one, 1, "covert"),
+               (82, 26, 7.5, 1.8, one, 0, "covert"), (97, 22, 7.2, 1.35, one, 1, "covert"), (112, 18, 7, 0.9, one, 0, "covert")]
         wing("wingA", sx, (6.0, 40.0, 4.0), prim + cov)
         # B: the lower pair, hanging down and crossing in front of the robe
-        lowp = [(168, 28, 8, -9.0, two, 1, "primary"), (180, 31, 8, -9.4, two, 2, "primary"), (192, 33, 8, -9.8, two, 1, "primary"), (204, 31, 8, -10.2, two, 2, "primary"),
-                (216, 27, 8, -10.6, one, 1, "primary")]
-        lowc = [(174, 19, 6.8, -8.4, one, 2, "covert"), (186, 21, 6.8, -8.0, one, 1, "covert"), (198, 21, 6.8, -7.6, one, 2, "covert"), (210, 18, 6.8, -7.2, one, 1, "covert")]
+        lowp = [(168, 28, 8, -9.0, two, 0, "primary"), (180, 31, 8, -9.4, two, 2, "primary"), (192, 33, 8, -9.8, two, 1, "primary"), (204, 31, 8, -10.2, two, 2, "primary"),
+                (216, 27, 8, -10.6, one, 0, "primary")]
+        lowc = [(174, 19, 6.8, -8.4, one, 0, "covert"), (186, 21, 6.8, -8.0, one, 1, "covert"), (198, 21, 6.8, -7.6, one, 0, "covert"), (210, 18, 6.8, -7.2, one, 1, "covert")]
         wing("wingB", sx, (6.5, 34.0, -4.0), lowp + lowc)
         # C: the pair raised before the face, parting on a slit
-        facep = [(-4, 19, 6.8, -8.2, one, 2, "primary"), (-12, 21, 6.8, -8.6, one, 1, "primary"), (-20, 21, 6.8, -9.0, one, 2, "primary"), (-28, 18, 6.8, -9.4, one, 1, "primary")]
-        facec = [(-8, 13, 6, -7.4, one, 1, "covert"), (-17, 14, 6, -7.0, one, 2, "covert"), (-26, 12, 6, -6.6, one, 1, "covert")]
+        facep = [(-4, 19, 6.8, -8.2, one, 2, "primary"), (-12, 21, 6.8, -8.6, one, 1, "primary"), (-20, 21, 6.8, -9.0, one, 2, "primary"), (-28, 18, 6.8, -9.4, one, 0, "primary")]
+        facec = [(-8, 13, 6, -7.4, one, 0, "covert"), (-17, 14, 6, -7.0, one, 1, "covert"), (-26, 12, 6, -6.6, one, 0, "covert")]
         wing("wingC", sx, (7.2, 41.5, -4.0), facep + facec)
 
     # ------------------------------------------------------------------ the rings (ophanim): three gyroscope rings turning about the body, eyes along them

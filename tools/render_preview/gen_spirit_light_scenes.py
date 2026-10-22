@@ -69,7 +69,7 @@ def main():
 
     # the real drawing helper (SpiritLightDraw): param = variant * 1000 + lod * 100 + clip index (see examples/SpiritLightProp.java)
     props = {}
-    realfiles = ["client/prop/SpiritLightDraw.java", "spiritlight/SpiritLightLod.java", "spiritlight/SpiritLightRules.java"]
+    realfiles = ["client/prop/SpiritLightDraw.java", "spiritlight/SpiritLightLod.java", "spiritlight/SpiritLightRules.java", "spiritlight/LightMoodRules.java"]
 
     def prop(param, ages, views, figure=True, tile=(460, 520)):
         return {"kind": "prop", "example": "SpiritLightProp", "realFiles": realfiles, "propKind": "BRONZE_1", "param": param, "figure": figure, "ages": ages, "tile": list(tile), "views": views}

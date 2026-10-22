@@ -48,9 +48,15 @@ public final class SpiritLight {
 
     /** The state of one player's spirit. */
     static final class State {
-        long lastPacket = Long.MIN_VALUE / 4, lastMessage = Long.MIN_VALUE / 4, nextBeam, nextPulse, powerReadyAt, poweredUntil, lastCast;
+        long lastPacket = Long.MIN_VALUE / 4, lastMessage = Long.MIN_VALUE / 4, nextBeam, nextPulse, powerReadyAt, poweredUntil;
         final long[] lastSound = new long[SpiritLightRules.SOUND_KINDS];
         UUID cub, seraph;
+        /** What the spirit does with its body, face and voice (pose, cues, cooldowns): pure rules, one small object per player. */
+        final LightMoodRules.Mood mood = new LightMoodRules.Mood();
+        /** Where the owner was at the last upkeep and for how many ticks they have not moved (the quiet clock of the mood). */
+        double lx, ly, lz;
+        int still;
+        boolean hasPos;
 
         State() { Arrays.fill(lastSound, Long.MIN_VALUE / 4); }
     }
@@ -120,7 +126,7 @@ public final class SpiritLight {
         ServerLevel sl = p.serverLevel();
         double[] a = SpiritLightRules.companion(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
         MagicPropEntity e = MagicProps.spawn(sl, PropKind.SPIRIT_LIGHT_1, new Vec3(a[0], a[1], a[2]), p.yBodyRot, 1.0f, SpiritLightRules.FORM_LIFE,
-                SpiritLightRules.formParam(SpiritLightRules.V_CUB, false, 0), p);
+                SpiritLightRules.formParam(SpiritLightRules.V_CUB, false, 0, 0), p);
         if (e == null) { SPIRITS.release(id); return false; }
         e.setTarget(p);
         s.cub = e.getUUID();
@@ -130,11 +136,13 @@ public final class SpiritLight {
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, at, at, GOLD, 14, 0.5f);
         sound(p, s, at, SpiritLightRules.S_LINK, 0.8f, 1.0f);
         say(p, s, "nusmp.spiritlight.linked", "The Spirit of Light takes your shoulder.", ChatFormatting.GOLD);
+        react(p, s, LightMoodRules.Situation.LINK, false, false);
         return true;
     }
 
     static void unlink(ServerPlayer p, State s, boolean say) {
         ServerLevel sl = p.serverLevel();
+        if (say) react(p, s, LightMoodRules.Situation.UNLINK, false, s.seraph != null);
         endPower(p, s, false, false);
         MagicPropEntity e = prop(sl, s.cub);
         if (e != null) e.discard();
@@ -180,17 +188,17 @@ public final class SpiritLight {
         ServerLevel sl = p.serverLevel();
         double[] a = SpiritLightRules.seraph(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
         MagicPropEntity e = MagicProps.spawn(sl, PropKind.SPIRIT_LIGHT_1, new Vec3(a[0], a[1], a[2]), p.yBodyRot, 1.0f, SpiritLightRules.SERAPH_LIFE,
-                SpiritLightRules.formParam(SpiritLightRules.V_SERAPH, false, now), p);
+                SpiritLightRules.formParam(SpiritLightRules.V_SERAPH, false, 0, 0), p);
         if (e == null) { POWERED.release(id); return; }
         e.setTarget(p);
         s.seraph = e.getUUID();
         s.poweredUntil = now + SpiritLightRules.POWER_TICKS;
-        s.lastCast = now;
         setCubHidden(sl, s, true);
         Vec3 at = new Vec3(a[0], a[1] + 1.2, a[2]);
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, at, at, GOLD, 18, 1.1f);
         sound(p, s, at, SpiritLightRules.S_POWER, 1.0f, 1.0f);
         say(p, s, "nusmp.spiritlight.risen", "The Spirit of Light rises as a seraph.", ChatFormatting.GOLD);
+        react(p, s, LightMoodRules.Situation.POWER_UP, true, true);
     }
 
     /** Ends the seraph: the cub comes back. {@code cooldown} starts the wait before it may rise again; {@code say} plays the sound and the message. */
@@ -206,12 +214,13 @@ public final class SpiritLight {
         if (say) {
             sound(p, s, p.position().add(0, 1.6, 0), SpiritLightRules.S_UNLINK, 0.8f, 0.85f);
             say(p, s, "nusmp.spiritlight.fallen", "The seraph settles back into the cub.", ChatFormatting.GRAY);
+            react(p, s, LightMoodRules.Situation.POWER_DOWN, false, true);
         }
     }
 
     private static void setCubHidden(ServerLevel sl, State s, boolean hidden) {
         MagicPropEntity cub = prop(sl, s.cub);
-        if (cub != null) cub.setParam(SpiritLightRules.formParam(SpiritLightRules.V_CUB, hidden, s.lastCast));
+        if (cub != null) cub.setParam(SpiritLightRules.formParam(SpiritLightRules.V_CUB, hidden, 0, 0));
     }
 
     // ================================================================================================ the piercing light beam
@@ -249,7 +258,7 @@ public final class SpiritLight {
             double yaw = SpiritLightRules.yawOf(dir[0], dir[2]), pitch = SpiritLightRules.pitchOf(dir[0], dir[1], dir[2]);
             MagicPropEntity b = MagicProps.spawn(sl, PropKind.SPIRIT_LIGHT_2, from, (float) yaw, 1.0f, SpiritLightRules.BEAM_LIFE, SpiritLightRules.beamParam(pw, hits, pitch, len), p);
             if (b != null) b.setTarget(p);
-            markCast(sl, s, now);
+            react(p, s, LightMoodRules.Situation.CAST_BEAM, pw, pw);
             if (stopHit.getType() != HitResult.Type.MISS) VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, stop, stop, GOLD, 8, pw ? 0.5f : 0.35f);
             sound(p, s, from, SpiritLightRules.S_BEAM, pw ? 0.9f : 0.7f, pw ? 0.92f : 1.08f);
         } finally {
@@ -307,7 +316,7 @@ public final class SpiritLight {
             Vec3 at = p.position().add(0, 0.1, 0);
             MagicPropEntity ring = MagicProps.spawn(sl, PropKind.SPIRIT_LIGHT_2, at, p.yBodyRot, 1.0f, SpiritLightRules.PULSE_LIFE, SpiritLightRules.pulseParam(pw, radius), p);
             if (ring != null) ring.setTarget(p);
-            markCast(sl, s, now);
+            react(p, s, LightMoodRules.Situation.CAST_PULSE, pw, pw);
             VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, at.add(0, 1.0, 0), at.add(0, 1.0, 0), GOLD, 12, pw ? 0.9f : 0.6f);
             sound(p, s, at.add(0, 1.0, 0), SpiritLightRules.S_PULSE, 1.0f, pw ? 0.9f : 1.0f);
         } finally {
@@ -321,13 +330,68 @@ public final class SpiritLight {
         return e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER || (e instanceof Mob m && m.getTarget() == p);
     }
 
-    /** The form that is out plays its cast clip: the cast tick goes into its param (the clients read it, no extra packet). */
-    private static void markCast(ServerLevel sl, State s, long now) {
-        s.lastCast = now;
-        MagicPropEntity sera = prop(sl, s.seraph);
-        if (sera != null) sera.setParam(SpiritLightRules.formParam(SpiritLightRules.V_SERAPH, false, now));
-        MagicPropEntity cub = prop(sl, s.cub);
-        if (cub != null) cub.setParam(SpiritLightRules.formParam(SpiritLightRules.V_CUB, s.seraph != null, now));
+    // ================================================================================================ mood: poses, faces, creature sounds and spoken lines
+    /**
+     * Something happened to the owner or the spirit: the pure rules ({@link LightMoodRules.Mood#react}) decide the pose (it goes into the param of the form that is out, the clients play the clip and so
+     * show its face), the cub makes a creature sound, the seraph says a line (one cue per situation, behind its cooldown). {@code poseSeraph} is the form that wears the pose, {@code voiceSeraph} whether
+     * the seraph speaks (it may speak while the pose is already the cub's, as it settles back).
+     */
+    static void react(ServerPlayer p, State s, LightMoodRules.Situation sit, boolean poseSeraph, boolean voiceSeraph) {
+        if (s.cub == null) return;
+        ServerLevel sl = p.serverLevel();
+        long now = sl.getGameTime();
+        int pose = s.mood.react(poseSeraph, sit, now);
+        if (pose >= 0) setPose(sl, s, poseSeraph, pose, now);
+        if (voiceSeraph) {
+            speak(p, s, sit, now);
+        } else if (pose >= 0 && !poseSeraph) {
+            int kind = LightMoodRules.cubSound(sit, pose);
+            if (kind >= 0) sound(p, s, p.position().add(0, 1.4, 0), kind, 0.7f, 1.0f);
+        }
+    }
+
+    private static void setPose(ServerLevel sl, State s, boolean seraph, int pose, long now) {
+        MagicPropEntity e = prop(sl, seraph ? s.seraph : s.cub);
+        if (e != null) e.setParam(SpiritLightRules.formParam(seraph ? SpiritLightRules.V_SERAPH : SpiritLightRules.V_CUB, !seraph && s.seraph != null, pose, now));
+    }
+
+    /** The seraph says the line of this situation: one box search of players behind {@link SpiritLightVoice}'s limits, the text on the owner's action bar; a cue without a line plays a synthesised one. */
+    private static void speak(ServerPlayer p, State s, LightMoodRules.Situation sit, long now) {
+        LightMoodRules.Cue cue = LightMoodRules.cueFor(true, sit, s.mood.counter());
+        if (cue == null || !s.mood.cueReady(cue, now)) return;
+        String line = LightMoodRules.line(cue, s.mood.counter(), SpiritLightVoiceLines.AVAILABLE, s.mood.lastLine());
+        if (line == null) {
+            int kind = LightMoodRules.fallbackSound(cue);
+            if (kind >= 0) sound(p, s, p.position().add(0, 1.6, 0), kind, 0.6f, 1.15f);
+            return;
+        }
+        s.mood.said(line);
+        SpiritLightVoice.say(p, line, LightMoodRules.cueCooldown(cue));
+        p.displayClientMessage(Component.translatableWithFallback("nusmp.spiritlight.say." + line, SpiritLightVoiceLines.text(line)).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), true);
+    }
+
+    /** The owner took damage (the damage event of a player with a linked spirit): a flinch, or at low health the spirit's alarm. */
+    public static void onOwnerHurt(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s == null || s.cub == null) return;
+        boolean sera = s.seraph != null;
+        react(p, s, LightMoodRules.lowHealth(p.getHealth(), p.getMaxHealth()) ? LightMoodRules.Situation.OWNER_LOW : LightMoodRules.Situation.HURT, sera, sera);
+    }
+
+    /** The owner killed something: a victory strut, a word of praise. */
+    public static void onOwnerKill(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s == null || s.cub == null) return;
+        boolean sera = s.seraph != null;
+        react(p, s, LightMoodRules.Situation.OWNER_KILL, sera, sera);
+    }
+
+    /** The owner died (before everything of the spirit is cleaned up): the last word, nothing else. */
+    public static void onOwnerDied(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s == null || s.cub == null) return;
+        boolean sera = s.seraph != null;
+        react(p, s, LightMoodRules.Situation.OWNER_DIED, sera, sera);
     }
 
     // ================================================================================================ upkeep and cleanup
@@ -348,6 +412,7 @@ public final class SpiritLight {
                     applySwiftness(p);
                 }
                 if (s.seraph != null && now >= s.poweredUntil) endPower(p, s, true, true);
+                quiet(p, s, now);
                 if (p.tickCount % 40 == 0) {
                     double[] a = s.seraph != null ? SpiritLightRules.seraph(p.getX(), p.getY(), p.getZ(), p.yBodyRot) : SpiritLightRules.companion(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
                     Fx.send(sl, LIGHT, a[0], a[1] + (s.seraph != null ? 1.4 : 0.3), a[2], s.seraph != null ? 4 : 2, s.seraph != null ? 0.6 : 0.25);
@@ -357,6 +422,22 @@ public final class SpiritLight {
             if (s.cub == null && s.seraph == null) LIVE.remove(id);
         } finally {
             PerfProbe.end(UPKEEP_SECTION, t0);
+        }
+    }
+
+    /** The quiet clock (every fourth tick): how long the owner has stood still, so the spirit can fidget, settle to rest, and wake when they move. Primitive math only. */
+    private static void quiet(ServerPlayer p, State s, long now) {
+        double x = p.getX(), y = p.getY(), z = p.getZ();
+        double dx = x - s.lx, dy = y - s.ly, dz = z - s.lz;
+        boolean still = s.hasPos && dx * dx + dy * dy + dz * dz < LightMoodRules.STILL_DIST * LightMoodRules.STILL_DIST;
+        s.still = still ? Math.min(s.still + 4, 1_000_000) : 0;
+        s.lx = x; s.ly = y; s.lz = z;
+        s.hasPos = true;
+        s.mood.settle(now);
+        LightMoodRules.Situation q = s.mood.quiet(now, s.still);
+        if (q != null) {
+            boolean sera = s.seraph != null;
+            react(p, s, q, sera, sera);
         }
     }
 

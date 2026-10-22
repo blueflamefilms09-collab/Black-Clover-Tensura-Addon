@@ -1,0 +1,252 @@
+{
+ "voice_id": "eiNgkRczHJmif3gxSoyz",
+ "voice_name": "Cherine Hani - Warm Storyteller",
+ "model": "eleven_v4",
+ "lines": [
+  {
+   "id": "spiritlight_greet_1",
+   "cue": "greet",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[serene, gentle] Peace be with you. I am here.",
+   "text": "Peace be with you. I am here."
+  },
+  {
+   "id": "spiritlight_greet_2",
+   "cue": "greet",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[warm, resonant] The light remembers you. I rise at your side.",
+   "text": "The light remembers you. I rise at your side."
+  },
+  {
+   "id": "spiritlight_greet_3",
+   "cue": "greet",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle] Be not afraid. I am your light.",
+   "text": "Be not afraid. I am your light."
+  },
+  {
+   "id": "spiritlight_greet_4",
+   "cue": "greet",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[calm, resonant] I answer. Walk, and I will go before you.",
+   "text": "I answer. Walk, and I will go before you."
+  },
+  {
+   "id": "spiritlight_farewell_1",
+   "cue": "farewell",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[soft, tender] Rest now. I will keep the light for you.",
+   "text": "Rest now. I will keep the light for you."
+  },
+  {
+   "id": "spiritlight_farewell_2",
+   "cue": "farewell",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle] Until you call me again, be well.",
+   "text": "Until you call me again, be well."
+  },
+  {
+   "id": "spiritlight_farewell_3",
+   "cue": "farewell",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[serene, fading] I return to the light. Peace.",
+   "text": "I return to the light. Peace."
+  },
+  {
+   "id": "spiritlight_rise_1",
+   "cue": "rise",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[radiant, resonant] Behold. The light takes its true form.",
+   "text": "Behold. The light takes its true form."
+  },
+  {
+   "id": "spiritlight_rise_2",
+   "cue": "rise",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[awed, gentle] Many eyes open, that you may not be alone.",
+   "text": "Many eyes open, that you may not be alone."
+  },
+  {
+   "id": "spiritlight_rise_3",
+   "cue": "rise",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[firm, resonant] Stand firm. The heavens are with you.",
+   "text": "Stand firm. The heavens are with you."
+  },
+  {
+   "id": "spiritlight_settle_1",
+   "cue": "settle",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[soft] The vision fades. I am still near.",
+   "text": "The vision fades. I am still near."
+  },
+  {
+   "id": "spiritlight_settle_2",
+   "cue": "settle",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, quiet] I fold my wings, but I do not leave.",
+   "text": "I fold my wings, but I do not leave."
+  },
+  {
+   "id": "spiritlight_beam_1",
+   "cue": "beam",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[resonant, calm] Let the light go forth.",
+   "text": "Let the light go forth."
+  },
+  {
+   "id": "spiritlight_beam_2",
+   "cue": "beam",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[firm, clear] Be pierced by the truth.",
+   "text": "Be pierced by the truth."
+  },
+  {
+   "id": "spiritlight_beam_3",
+   "cue": "beam",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, swift] A ray of mercy, swift and straight.",
+   "text": "A ray of mercy, swift and straight."
+  },
+  {
+   "id": "spiritlight_beam_4",
+   "cue": "beam",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[clear] Light, strike true.",
+   "text": "Light, strike true."
+  },
+  {
+   "id": "spiritlight_beam_5",
+   "cue": "beam",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[resonant, serene] Nothing hidden can stand before it.",
+   "text": "Nothing hidden can stand before it."
+  },
+  {
+   "id": "spiritlight_pulse_1",
+   "cue": "pulse",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[calm, resonant] Nothing hides from the light.",
+   "text": "Nothing hides from the light."
+  },
+  {
+   "id": "spiritlight_pulse_2",
+   "cue": "pulse",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, clear] Let every shadow be known.",
+   "text": "Let every shadow be known."
+  },
+  {
+   "id": "spiritlight_pulse_3",
+   "cue": "pulse",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[quiet, sure] I see them. Now, so do you.",
+   "text": "I see them. Now, so do you."
+  },
+  {
+   "id": "spiritlight_pulse_4",
+   "cue": "pulse",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[clear, commanding] Be revealed.",
+   "text": "Be revealed."
+  },
+  {
+   "id": "spiritlight_damage_1",
+   "cue": "damage",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[pained, steady] I am hurt, but I endure.",
+   "text": "I am hurt, but I endure."
+  },
+  {
+   "id": "spiritlight_damage_2",
+   "cue": "damage",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, strained] The light flickers, yet it does not fail.",
+   "text": "The light flickers, yet it does not fail."
+  },
+  {
+   "id": "spiritlight_damage_3",
+   "cue": "damage",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[calm, firm] Do not mind me. Keep your eyes forward.",
+   "text": "Do not mind me. Keep your eyes forward."
+  },
+  {
+   "id": "spiritlight_damage_4",
+   "cue": "damage",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[soft gasp, brave] Ah... this pain is a small thing.",
+   "text": "Ah... this pain is a small thing."
+  },
+  {
+   "id": "spiritlight_low_1",
+   "cue": "low",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[urgent, gentle] Your strength is failing. Hold on, I am with you.",
+   "text": "Your strength is failing. Hold on, I am with you."
+  },
+  {
+   "id": "spiritlight_low_2",
+   "cue": "low",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[firm, caring] Do not yield. The light is not done with you.",
+   "text": "Do not yield. The light is not done with you."
+  },
+  {
+   "id": "spiritlight_low_3",
+   "cue": "low",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[soft, steady] Breathe. Step back, and breathe.",
+   "text": "Breathe. Step back, and breathe."
+  },
+  {
+   "id": "spiritlight_win_1",
+   "cue": "win",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[warm, relieved] Well done. The dark gives way.",
+   "text": "Well done. The dark gives way."
+  },
+  {
+   "id": "spiritlight_win_2",
+   "cue": "win",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, solemn] Justice is done. Rejoice, but gently.",
+   "text": "Justice is done. Rejoice, but gently."
+  },
+  {
+   "id": "spiritlight_win_3",
+   "cue": "win",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[radiant, calm] The light prevails.",
+   "text": "The light prevails."
+  },
+  {
+   "id": "spiritlight_death_1",
+   "cue": "death",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[grieving, tender] No... not yet. Rise again, my friend.",
+   "text": "No... not yet. Rise again, my friend."
+  },
+  {
+   "id": "spiritlight_death_2",
+   "cue": "death",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[soft, sorrowful] Sleep, bright one. The light will find you.",
+   "text": "Sleep, bright one. The light will find you."
+  },
+  {
+   "id": "spiritlight_idle_1",
+   "cue": "idle",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[serene, quiet] All is calm. The light is with us.",
+   "text": "All is calm. The light is with us."
+  },
+  {
+   "id": "spiritlight_idle_2",
+   "cue": "idle",
+   "voice": "eiNgkRczHJmif3gxSoyz",
+   "prompt": "[gentle, watchful] Walk on. I am watching the way.",
+   "text": "Walk on. I am watching the way."
+  }
+ ]
+}

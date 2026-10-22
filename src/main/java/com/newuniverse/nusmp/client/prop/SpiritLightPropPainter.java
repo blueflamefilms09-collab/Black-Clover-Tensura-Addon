@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.PropKind;
+import com.newuniverse.nusmp.spiritlight.LightMoodRules;
 import com.newuniverse.nusmp.spiritlight.SpiritLightLod;
 import com.newuniverse.nusmp.spiritlight.SpiritLightRules;
 import net.minecraft.client.Minecraft;
@@ -68,10 +69,15 @@ public final class SpiritLightPropPainter {
         float fade = Mth.clamp(Math.min((e.life() + partial) / 8f, (e.maxLife() - e.life() - partial) / 8f), 0f, 1f);
         if (fade <= 0.01f) return;
 
-        int dt = SpiritLightRules.sinceCast(param, e.level().getGameTime());
-        boolean casting = dt < SpiritLightRules.CAST_CLIP_TICKS;
-        String clip = casting ? "cast" : "idle";
-        float secs = casting ? (dt + partial) / 20f : age / 20f;
+        int poseId = Math.min(SpiritLightRules.pose(param), LightMoodRules.poseCount(seraph) - 1);                    // the pose the server chose; its clip also wears its face
+        String clip = LightMoodRules.poseName(seraph, poseId);
+        float secs = age / 20f;
+        if (poseId != LightMoodRules.POSE_IDLE && !LightMoodRules.poseLoops(seraph, poseId)) {                            // a pose that plays once runs from the tick it began, then the idle comes back
+            int dt = SpiritLightRules.sinceCast(param, e.level().getGameTime());
+            if (dt < LightMoodRules.poseTicks(seraph, poseId)) secs = (dt + partial) / 20f; else clip = "idle";
+        } else if (poseId == LightMoodRules.POSE_IDLE) {
+            clip = "idle";
+        }
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(Mth.rotLerp(partial, e.yRotO, e.getYRot())));         // undo the renderer's turn: the offset below is in world axes
         pose.translate(ax - ex, ay - ey, az - ez);

@@ -34,10 +34,8 @@ public final class SpiritLightRules {
     public static final int V_CUB = 0, V_SERAPH = 1, V_BEAM = 2, V_PULSE = 3, V_MASK = 15;
     /** Param bits: the cub is hidden while the seraph is out; the powered flag of a beam or a pulse. */
     public static final int HIDDEN = 1 << 8, POWERED = 1 << 4;
-    /** The game time (low 20 bits) of the last cast sits in the bits from here up in a form's param: the client plays the cast clip for a second after it. */
+    /** The game time (low 20 bits) the pose began sits in the bits from here up in a form's param: the client plays the pose's clip from that moment. */
     public static final int STAMP_SHIFT = 12, STAMP_MASK = 0xFFFFF;
-    /** How long (ticks) the cast clip plays after the stamp. */
-    public static final int CAST_CLIP_TICKS = 24;
 
     public static int variant(int param) { return param & V_MASK; }
 
@@ -45,12 +43,18 @@ public final class SpiritLightRules {
 
     public static boolean powered(int param) { return (param & POWERED) != 0; }
 
-    /** A cub's or a seraph's param: the variant, the hidden bit (cub) and the cast stamp (0 = never cast). */
-    public static int formParam(int variant, boolean hidden, long castTick) {
-        int stamp = castTick <= 0 ? 0 : (int) (castTick & STAMP_MASK);
-        if (castTick > 0 && stamp == 0) stamp = 1;
-        return (variant & V_MASK) | (hidden ? HIDDEN : 0) | (stamp << STAMP_SHIFT);
+    /** The pose of a form (0..15, see {@link LightMoodRules}) lives in bits 4..7 of a form's param (the powered flag of a beam is the same bit of another variant). */
+    public static final int POSE_SHIFT = 4, POSE_MASK = 0xF;
+
+    /** A cub's or a seraph's param: the variant, the hidden bit (cub), the pose and the tick it began (0 = never). */
+    public static int formParam(int variant, boolean hidden, int pose, long poseTick) {
+        int stamp = poseTick <= 0 ? 0 : (int) (poseTick & STAMP_MASK);
+        if (poseTick > 0 && stamp == 0) stamp = 1;
+        return (variant & V_MASK) | ((pose & POSE_MASK) << POSE_SHIFT) | (hidden ? HIDDEN : 0) | (stamp << STAMP_SHIFT);
     }
+
+    /** The pose a form's param holds. */
+    public static int pose(int param) { return (param >> POSE_SHIFT) & POSE_MASK; }
 
     public static int stamp(int param) { return (param >>> STAMP_SHIFT) & STAMP_MASK; }
 
@@ -227,10 +231,11 @@ public final class SpiritLightRules {
 
     // ================================================================================================ sounds
     /** Ticks a player's sound of this kind may repeat at the soonest (the sounds go to players nearby only, through the effect packet budget). */
-    public static final int S_LINK = 0, S_UNLINK = 1, S_BEAM = 2, S_PULSE = 3, S_POWER = 4, S_PURR = 5, SOUND_KINDS = 6;
-    /** The event ids of the sound kinds, in order (sounds.json keys; the files are sounds/spirit_light/*.ogg). */
-    public static final String[] SOUND_IDS = {"spirit_light.link", "spirit_light.unlink", "spirit_light.beam", "spirit_light.pulse", "spirit_light.power", "spirit_light.purr"};
-    private static final int[] SOUND_GAPS = {10, 10, 8, 20, 20, 400};
+    public static final int S_LINK = 0, S_UNLINK = 1, S_BEAM = 2, S_PULSE = 3, S_POWER = 4, S_PURR = 5, S_MEW = 6, S_CUB_ROAR = 7, S_YAWN = 8, S_CHIRP = 9, S_WHIMPER = 10, SOUND_KINDS = 11;
+    /** The event ids of the sound kinds, in order (sounds.json keys; the files are sounds/spirit_light/*.ogg). The last five are the lion cub's creature sounds (no spoken words). */
+    public static final String[] SOUND_IDS = {"spirit_light.link", "spirit_light.unlink", "spirit_light.beam", "spirit_light.pulse", "spirit_light.power", "spirit_light.purr",
+            "spirit_light.cub_mew", "spirit_light.cub_roar", "spirit_light.cub_yawn", "spirit_light.cub_chirp", "spirit_light.cub_whimper"};
+    private static final int[] SOUND_GAPS = {10, 10, 8, 20, 20, 400, 60, 40, 200, 40, 60};
 
     public static int soundGap(int kind) { return kind < 0 || kind >= SOUND_KINDS ? Integer.MAX_VALUE : SOUND_GAPS[kind]; }
 

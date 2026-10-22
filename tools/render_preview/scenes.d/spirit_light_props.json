@@ -5,7 +5,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 0,
@@ -48,7 +49,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1000,
@@ -91,7 +93,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1,
@@ -125,7 +128,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1001,
@@ -159,7 +163,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2000,
@@ -193,7 +198,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 2001,
@@ -227,7 +233,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 3000,
@@ -261,7 +268,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 100,
@@ -293,7 +301,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 200,
@@ -325,7 +334,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1100,
@@ -357,7 +367,8 @@
   "realFiles": [
    "client/prop/SpiritLightDraw.java",
    "spiritlight/SpiritLightLod.java",
-   "spiritlight/SpiritLightRules.java"
+   "spiritlight/SpiritLightRules.java",
+   "spiritlight/LightMoodRules.java"
   ],
   "propKind": "BRONZE_1",
   "param": 1200,

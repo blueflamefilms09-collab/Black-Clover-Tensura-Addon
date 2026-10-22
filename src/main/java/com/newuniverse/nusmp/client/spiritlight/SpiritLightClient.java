@@ -25,6 +25,7 @@ public final class SpiritLightClient {
 
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> { e.register(LINK); e.register(COMMAND); });
+        SpiritLightNet.CLIENT_VOICE = SpiritLightVoiceClient::play;                                    // the seraph's spoken lines are played here (the common packet class names no client class)
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
             Minecraft mc = Minecraft.getInstance();
             boolean ready = mc.player != null && mc.screen == null && mc.getConnection() != null;

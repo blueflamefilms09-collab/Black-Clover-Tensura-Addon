@@ -15,9 +15,9 @@ public final class SpiritLightLod {
     public static final int FULL = 0, HALF = 1, LOW = 2, CULL = 3;
 
     /** Quads of the colour models, full / half / low (counted from the generated files). */
-    public static final int[] CUB_QUADS = {350, 214, 94}, SERAPH_QUADS = {778, 410, 112};
+    public static final int[] CUB_QUADS = {229, 183, 84}, SERAPH_QUADS = {215, 155, 56};
     /** The glow-only model drawn additive on the full and half levels (halo, eyes, mane glints / rings, wing eyes, core, prism). */
-    public static final int CUB_FX_QUADS = 40, SERAPH_FX_QUADS = 150;
+    public static final int CUB_FX_QUADS = 15, SERAPH_FX_QUADS = 90;
     /** The most quads a form may cost at its full level, colour and glow together (the owner's budget: cub about 600, seraph about 1000). */
     public static final int CUB_MAX_QUADS = 600, SERAPH_MAX_QUADS = 1000;
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the form is not drawn (cub 64, seraph 112). */

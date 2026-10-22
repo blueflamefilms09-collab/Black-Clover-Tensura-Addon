@@ -30,6 +30,8 @@ SCOPE = [
     ("aura", ("glow",)),
     ("entity/scalecast", ("glow",)),                    # Scale casting (docs/magic/scale_casting.md): the runes, the halo and the ring
     ("entity", ("firecast_salamander_fx", "firecast_dragon_fx")),          # fire casting: the glow-only models of the two Salamander forms (eyes, mouth, licks of flame)
+    ("entity", ("spiritlight_cub_fx", "spiritlight_seraph_fx")),          # Spirit of Light: the glow-only models of the cub and the seraph (halo, eyes, rings, core, prism)
+    ("particle", ("spiritlight_",)),                                       # Spirit of Light: the soft beam, ring, glow and spark textures
 ]
 HALO_SHEETS = {"entity/weapon_vu/halo.png": 128}      # path -> cell size (a card sheet: every cell must fade to alpha 0 at its border)
 TIME_PREFIX = "time_"
