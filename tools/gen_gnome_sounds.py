@@ -4,7 +4,7 @@
 Synthesises the sound set of the Gnome, the Earth Spirit (docs/magic/gnome.md): NOT the basic Tensura spirit sounds but a deep rumble, stone grinding and crashing, and a low resonant earth tone.
 No recording was used: numpy writes every sample and ffmpeg encodes mono Ogg Vorbis. Reproducible: every variant is seeded from its own name.
 
-  python3 -B tools/gen_gnome_sounds.py              write assets/nusmp/sounds/gnome/<cue>_<n>.ogg, the gnome.* entries of sounds.json and tools/lang/gnome_sounds.json
+  python3 -B tools/gen_gnome_sounds.py              write assets/nusmp/sounds/gnome/<cue>_<n>.ogg, the gnome.* entries of sounds.json and the subtitle lines of tools/lang/gnome.json
   python3 -B tools/gen_gnome_sounds.py --preview D  also write a .wav and a spectrogram .png per file into D
   python3 -B tools/gen_gnome_sounds.py --check      verify that the files exist, are mono Ogg, short and not clipped
 
@@ -30,7 +30,7 @@ sys.dont_write_bytecode = True
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 SOUND_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "gnome")
 SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
-LANG_OUT = os.path.join(ROOT, "tools", "lang", "gnome_sounds.json")
+LANG_OUT = os.path.join(ROOT, "tools", "lang", "gnome.json")
 SR = 32000
 PEAK = 0.80                        # -2 dBFS: the Vorbis encoder overshoots a little
 MIN_S, MAX_S, STREAM_OVER = 0.3, 3.0, 2.4
@@ -296,9 +296,10 @@ def update_sounds_json():
     out = head + ",\n" + entries_text() + "\n}\n"
     json.loads(out)
     open(SOUNDS_JSON, "w", newline="").write(out)
-    lang = {"subtitles.nusmp.gnome.%s" % c: s for c, (_, s, _) in CUES.items()}
+    lang = json.load(open(LANG_OUT)) if os.path.exists(LANG_OUT) else {}
+    lang.update({"subtitles.nusmp.gnome.%s" % c: s for c, (_, s, _) in CUES.items()})        # the subtitles join the other text of the Gnome in the one fragment
     with open(LANG_OUT, "w", newline="\n") as f:
-        json.dump(lang, f, indent=2)
+        json.dump(lang, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
 

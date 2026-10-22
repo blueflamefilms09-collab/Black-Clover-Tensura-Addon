@@ -35,24 +35,43 @@ class GnomeRulesTest {
     @Test
     void theFullFormRisesStandsCastsAndSinksOnItsOwnTicks() {
         int max = GnomeRules.FULL_TICKS;
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(0, max, -1));
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS - 1, max, -1));
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS, max, -1));
-        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(60, max, 3), "a cast while it stands plays the cast clip");
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(60, max, GnomeRules.CAST_CLIP_TICKS), "the cast clip is 24 ticks long");
-        assertEquals(GnomeRules.CLIP_SINK, GnomeRules.fullClip(max - GnomeRules.FULL_SINK_TICKS, max, 3), "the sink wins over a late cast");
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(2, max, 1), "the rise wins over a cast at the start");
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(0, max, -1, false));
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS - 1, max, -1, false));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS, max, -1, false));
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(60, max, 3, false), "a cast while it stands plays the cast clip");
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(60, max, GnomeRules.CAST_CLIP_TICKS, false), "the cast clip is 24 ticks long");
+        assertEquals(GnomeRules.CLIP_SINK, GnomeRules.fullClip(max - GnomeRules.FULL_SINK_TICKS, max, 3, false), "the sink wins over a late cast");
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(2, max, 1, false), "the rise wins over a cast at the start");
         assertEquals(max, GnomeRules.FULL_RISE_TICKS + 80 + GnomeRules.FULL_SINK_TICKS, "rise 20 + hold 80 + sink 20 = 120 ticks (6 seconds)");
         assertTrue(GnomeRules.FULL_SLAM_TICK < GnomeRules.FULL_RISE_TICKS, "the fists land inside the rise clip");
         assertTrue(GnomeRules.CAST_CONTACT_TICK < GnomeRules.CAST_CLIP_TICKS);
     }
 
     @Test
+    void aPageBelowTheBigTiersPunchesAndTheGiantStompsOnceWhileItStands() {
+        int max = GnomeRules.FULL_TICKS;
+        assertEquals(GnomeRules.CLIP_PUNCH, GnomeRules.fullClip(40, max, 4, true));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(40, max, GnomeRules.PUNCH_CLIP_TICKS, true), "the punch clip is 20 ticks long");
+        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT, max, -1, false));
+        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS - 1, max, -1, false));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS, max, -1, false));
+        assertTrue(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS <= max - GnomeRules.FULL_SINK_TICKS, "the stomp is over before the sink begins");
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(GnomeRules.STOMP_AT + 2, max, 3, false), "a cast wins over the stomp");
+        assertEquals(GnomeRules.CLIP_PUNCH, GnomeRules.companionClip(true, 2, true));
+        assertEquals(GnomeRules.PUNCH_CONTACT_TICK, GnomeRules.contactTick(true));
+        assertEquals(GnomeRules.CAST_CONTACT_TICK, GnomeRules.contactTick(false));
+        assertEquals(GnomeRules.PUNCH_CLIP_TICKS, GnomeRules.castTicks(true));
+        int w = GnomeRules.param(GnomeRules.V_COMPANION, 9) | GnomeRules.PUNCH | GnomeRules.HIDDEN;
+        assertTrue(GnomeRules.punch(w) && GnomeRules.hidden(w) && GnomeRules.stamp(w) == 9 && GnomeRules.variant(w) == GnomeRules.V_COMPANION, "the punch bit is its own");
+        assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_PUNCH, GnomeRules.PUNCH_CONTACT_TICK) && GnomeRules.slamNow(GnomeRules.CLIP_STOMP, GnomeRules.STOMP_CONTACT_TICK));
+    }
+
+    @Test
     void theCompanionWalksWhenItsMasterMovesAndCastsForOneClip() {
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.companionClip(false, Integer.MAX_VALUE));
-        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, Integer.MAX_VALUE));
-        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.companionClip(true, 5), "the cast wins over the walk");
-        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, GnomeRules.CAST_CLIP_TICKS));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.companionClip(false, Integer.MAX_VALUE, false));
+        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, Integer.MAX_VALUE, false));
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.companionClip(true, 5, false), "the cast wins over the walk");
+        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, GnomeRules.CAST_CLIP_TICKS, false));
         assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_RISE, GnomeRules.FULL_SLAM_TICK));
         assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_CAST, GnomeRules.CAST_CONTACT_TICK));
         assertFalse(GnomeRules.slamNow(GnomeRules.CLIP_IDLE, GnomeRules.CAST_CONTACT_TICK));

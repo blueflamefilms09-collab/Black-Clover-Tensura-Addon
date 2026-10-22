@@ -22,7 +22,7 @@ public final class GnomeRules {
     // ================================================================================================ forms, caps
     public static final int V_COMPANION = 0, V_FULL = 1, V_MASK = 15;
     /** Param bit: the companion is hidden (the full form is out). The cast stamp lives from bit 12 up (20 bits of game time). */
-    public static final int HIDDEN = 1 << 8, EXTRA_SHIFT = 12, STAMP_MASK = 0xFFFFF;
+    public static final int HIDDEN = 1 << 8, PUNCH = 1 << 9, EXTRA_SHIFT = 12, STAMP_MASK = 0xFFFFF;
     /** One companion and one full form per player. The server-wide caps are config values (defaults below). */
     public static final int SPIRITS_PER_PLAYER = 1, FULL_PER_PLAYER = 1, DEFAULT_MAX_SPIRITS = 48, DEFAULT_MAX_FULL = 6;
     /** The full form: how long it stays (rise, hold, sink) and how long before it may come again; the cost tier of the pages that call it. */
@@ -30,6 +30,8 @@ public final class GnomeRules {
     public static final double FULL_COST_PERCENT = 20.0;
     /** The cast clip of both forms: 24 ticks, the fists land on tick 12. */
     public static final int CAST_CLIP_TICKS = 24, CAST_CONTACT_TICK = 12;
+    /** The punch clip (a page below the big tiers: one fist drives forward, the spell leaves it): 20 ticks, the fist lands on tick 10. The stomp clip (the giant lifts a foot and slams it now and then): 18 ticks, the foot lands on tick 10. */
+    public static final int PUNCH_CLIP_TICKS = 20, PUNCH_CONTACT_TICK = 10, STOMP_CLIP_TICKS = 18, STOMP_CONTACT_TICK = 10, STOMP_AT = 62;
     /** Ticks between two position nudges of the companion prop (the clients place it from the owner every frame). */
     public static final int NUDGE = 5;
     /** Hit boxes (width, height) of the two forms: they only keep the entity inside the clients' tracking range and out of the way. */
@@ -43,6 +45,15 @@ public final class GnomeRules {
     public static int stamp(int param) { return (param >>> EXTRA_SHIFT) & STAMP_MASK; }
 
     public static boolean hidden(int param) { return (param & HIDDEN) != 0; }
+
+    /** Does the last cast of this prop play the punch clip (a page below the big tiers) rather than the slam? */
+    public static boolean punch(int param) { return (param & PUNCH) != 0; }
+
+    /** The ticks the fist lands after a cast: the punch's or the slam's. */
+    public static int contactTick(boolean punch) { return punch ? PUNCH_CONTACT_TICK : CAST_CONTACT_TICK; }
+
+    /** The length in ticks of the cast clip that is playing. */
+    public static int castTicks(boolean punch) { return punch ? PUNCH_CLIP_TICKS : CAST_CLIP_TICKS; }
 
     /** The stamp a cast at game time {@code now} writes (never 0, which means "no cast"). */
     public static int stampOf(long now) { int s = (int) (now & STAMP_MASK); return s == 0 ? 1 : s; }
@@ -59,21 +70,22 @@ public final class GnomeRules {
     }
 
     // ================================================================================================ what clip, when
-    public static final int CLIP_IDLE = 0, CLIP_WALK = 1, CLIP_RISE = 2, CLIP_CAST = 3, CLIP_SINK = 4;
+    public static final int CLIP_IDLE = 0, CLIP_WALK = 1, CLIP_RISE = 2, CLIP_CAST = 3, CLIP_SINK = 4, CLIP_PUNCH = 5, CLIP_STOMP = 6;
 
     /**
-     * The clip of the FULL form at an age: rise for the first {@link #FULL_RISE_TICKS}, sink for the last {@link #FULL_SINK_TICKS}, the cast clip for {@link #CAST_CLIP_TICKS} after a cast stamp
-     * (outside rise and sink), idle otherwise.
+     * The clip of the FULL form at an age: rise for the first {@link #FULL_RISE_TICKS}, sink for the last {@link #FULL_SINK_TICKS}, the cast (or punch) clip after a cast stamp (outside rise and sink),
+     * one stomp at {@link #STOMP_AT}, idle otherwise.
      */
-    public static int fullClip(int life, int maxLife, int sinceCast) {
+    public static int fullClip(int life, int maxLife, int sinceCast, boolean punch) {
         if (life < FULL_RISE_TICKS) return CLIP_RISE;
         if (maxLife - life <= FULL_SINK_TICKS) return CLIP_SINK;
-        return sinceCast >= 0 && sinceCast < CAST_CLIP_TICKS ? CLIP_CAST : CLIP_IDLE;
+        if (sinceCast >= 0 && sinceCast < castTicks(punch)) return punch ? CLIP_PUNCH : CLIP_CAST;
+        return life >= STOMP_AT && life < STOMP_AT + STOMP_CLIP_TICKS ? CLIP_STOMP : CLIP_IDLE;
     }
 
     /** The clip of the COMPANION: the cast clip after a cast, walk while the master moves, idle otherwise. */
-    public static int companionClip(boolean moving, int sinceCast) {
-        if (sinceCast >= 0 && sinceCast < CAST_CLIP_TICKS) return CLIP_CAST;
+    public static int companionClip(boolean moving, int sinceCast, boolean punch) {
+        if (sinceCast >= 0 && sinceCast < castTicks(punch)) return punch ? CLIP_PUNCH : CLIP_CAST;
         return moving ? CLIP_WALK : CLIP_IDLE;
     }
 
@@ -88,7 +100,8 @@ public final class GnomeRules {
 
     /** A footfall-free dust moment: the ticks at which a full form's clips land their fists (the painter sends its dust then). */
     public static boolean slamNow(int clip, int ticksIntoClip) {
-        return (clip == CLIP_RISE && ticksIntoClip == FULL_SLAM_TICK) || (clip == CLIP_CAST && ticksIntoClip == CAST_CONTACT_TICK);
+        return (clip == CLIP_RISE && ticksIntoClip == FULL_SLAM_TICK) || (clip == CLIP_CAST && ticksIntoClip == CAST_CONTACT_TICK)
+                || (clip == CLIP_PUNCH && ticksIntoClip == PUNCH_CONTACT_TICK) || (clip == CLIP_STOMP && ticksIntoClip == STOMP_CONTACT_TICK);
     }
 
     // ================================================================================================ where it stands

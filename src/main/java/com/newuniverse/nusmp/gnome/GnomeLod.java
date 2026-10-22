@@ -15,9 +15,11 @@ public final class GnomeLod {
     public static final int LOD_FULL = 0, LOD_HALF = 1, LOD_LOW = 2, CULL = 3;
 
     /** Quads of the colour models by form and level (counted from the generated files). */
-    public static final int[][] BODY = {{475, 239, 74}, {611, 244, 74}};
+    public static final int[][] BODY = {{519, 326, 74}, {751, 398, 74}};
     /** Quads of the glow-only model by form and level (level 2 has none). */
-    public static final int[][] FX = {{58, 31, 0}, {78, 35, 0}};
+    public static final int[][] FX = {{58, 31, 0}, {94, 35, 0}};
+    /** The three camera-facing glow quads (the eyes and the circle) drawn on the two nearer levels. */
+    public static final int HALO_QUADS = 3;
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the Gnome is not drawn. */
     public static final double[][] RANGE = {{12.0, 28.0, 64.0}, {32.0, 64.0, 112.0}};
     /** The quads all Gnomes together may add to one frame. */
@@ -28,7 +30,7 @@ public final class GnomeLod {
     /** The quads one Gnome costs at a level (body and glow-only model); 0 for CULL. */
     public static int cost(int form, int lod) {
         if (lod >= CULL) return 0;
-        return BODY[form][lod] + FX[form][lod];
+        return BODY[form][lod] + FX[form][lod] + (lod <= LOD_HALF ? HALO_QUADS : 0);
     }
 
     /**

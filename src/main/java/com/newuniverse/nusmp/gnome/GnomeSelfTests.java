@@ -64,7 +64,7 @@ public final class GnomeSelfTests {
 
         // the rules
         if (GnomeRules.variant(GnomeRules.param(GnomeRules.V_FULL, 77)) != GnomeRules.V_FULL || GnomeRules.stamp(GnomeRules.param(GnomeRules.V_FULL, 77)) != 77) return Result.fail("the prop word does not round trip");
-        if (GnomeRules.fullClip(3, 120, -1) != GnomeRules.CLIP_RISE || GnomeRules.fullClip(110, 120, -1) != GnomeRules.CLIP_SINK || GnomeRules.fullClip(60, 120, 5) != GnomeRules.CLIP_CAST) return Result.fail("the clip choice is wrong");
+        if (GnomeRules.fullClip(3, 120, -1, false) != GnomeRules.CLIP_RISE || GnomeRules.fullClip(110, 120, -1, false) != GnomeRules.CLIP_SINK || GnomeRules.fullClip(40, 120, 5, false) != GnomeRules.CLIP_CAST) return Result.fail("the clip choice is wrong");
         GnomeLedger l = new GnomeLedger();
         UUID u = UUID.randomUUID();
         if (!l.acquire(u, 1, 2) || l.acquire(u, 1, 2)) return Result.fail("the per player cap does not hold");

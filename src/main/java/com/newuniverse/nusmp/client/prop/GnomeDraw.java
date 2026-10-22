@@ -1,9 +1,12 @@
 package com.newuniverse.nusmp.client.prop;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.newuniverse.nusmp.client.aura.AuraRender;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.gnome.GnomeLod;
+import com.newuniverse.nusmp.gnome.GnomeRules;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -18,17 +21,27 @@ import net.minecraft.util.Mth;
 public final class GnomeDraw {
     private GnomeDraw() {}
 
-    /** A level of detail (or the glow-only model): its own model and its own copy of the sheet (a lower level reads a smaller one), the animation file of the full model, no glow pass. */
-    private static GeoSpec lod(GeoSpec base, String modelId) {
+    /**
+     * A level of detail (or the glow-only model): its own model, the sheet {@code textureId} (a lower level reads a smaller copy), the animation file of its form, no glow pass. Both forms are painted on
+     * ONE sheet, so the companion's models read the giant's textures (the same pixels): the game loads each sheet once, not twice.
+     */
+    private static GeoSpec lod(GeoSpec base, String modelId, String textureId) {
         return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
+                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + textureId + ".png"), null);
     }
 
     private static final GeoSpec COMP = GeoSpec.of("gnome", "companion"), FULL = GeoSpec.of("gnome", "full");
-    private static final GeoSpec[][] BODY = {{COMP, lod(COMP, "gnome_companion_lod1"), lod(COMP, "gnome_companion_lod2")}, {FULL, lod(FULL, "gnome_full_lod1"), lod(FULL, "gnome_full_lod2")}};
-    private static final GeoSpec[][] FX = {{lod(COMP, "gnome_companion_fx"), lod(COMP, "gnome_companion_fx_lod1")}, {lod(FULL, "gnome_full_fx"), lod(FULL, "gnome_full_fx_lod1")}};
+    private static final GeoSpec[][] BODY = {{lod(COMP, "gnome_companion", "gnome_full"), lod(COMP, "gnome_companion_lod1", "gnome_full_lod1"), lod(COMP, "gnome_companion_lod2", "gnome_full_lod2")},
+            {FULL, lod(FULL, "gnome_full_lod1", "gnome_full_lod1"), lod(FULL, "gnome_full_lod2", "gnome_full_lod2")}};
+    private static final GeoSpec[][] FX = {{lod(COMP, "gnome_companion_fx", "gnome_full_fx"), lod(COMP, "gnome_companion_fx_lod1", "gnome_full_fx_lod1")},
+            {lod(FULL, "gnome_full_fx", "gnome_full_fx"), lod(FULL, "gnome_full_fx_lod1", "gnome_full_fx_lod1")}};
+    private static final ResourceLocation HALO = AuraRender.tex("particle/glow");
+    /** The soft amber glow behind the eyes and over the magic circle (three camera-facing quads on the two nearer levels): where, in blocks of the drawn model, and how big (half size). {y, z} per form. */
+    private static final float[][] EYES = {{105.8f * 0.165f / 16f, -28.1f * 0.165f / 16f}, {102f / 16f, -22.5f / 16f}}, CHEST = {{72f * 0.165f / 16f, -24f * 0.165f / 16f}, {72f / 16f, -24f / 16f}};
+    private static final float[] EYE_HALF = {0.11f, 0.55f}, CHEST_HALF = {0.20f, 1.05f};
+    private static final int AMBER = 0xFFB43C;
     /** The clip names, in the order of {@code GnomeRules.CLIP_*}. */
-    public static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink"};
+    public static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink", "punch", "stomp"};
 
     /**
      * One Gnome in the pose's space (its feet at the origin, facing +z): the body at the level of detail and the glow-only model on the two nearer levels. {@code form} is
@@ -45,6 +58,14 @@ public final class GnomeDraw {
         if (lod <= GnomeLod.LOD_HALF) {                                                               // the eyes, the circle, the runes, the veins: additive, full bright, a slow pulse
             float pulse = 0.82f + 0.18f * Mth.sin(age * 0.09f) + 0.06f * Mth.sin(age * 0.37f);
             GeoDraw.paint(pose, b, FX[form][lod], clip, secs, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, PropDraw.FULL_BRIGHT, SealDraw.argb(fade * pulse, 0xFFFFFF), 0);
+        }
+        if (lod <= GnomeLod.LOD_HALF && !CLIPS[GnomeRules.CLIP_RISE].equals(clip) && !CLIPS[GnomeRules.CLIP_SINK].equals(clip)) {      // underground (the rise, the sink) it has nothing to glow over
+            float pulse = 0.55f + 0.2f * Mth.sin(age * 0.09f);
+            SealDraw.camera(pose);
+            VertexConsumer vc = b.getBuffer(AuraRender.additive(HALO));
+            SealDraw.glow(pose, vc, 0f, EYES[form][0], EYES[form][1], EYE_HALF[form], 0f, SealDraw.argb(0.55f * fade * pulse, AMBER), PropDraw.FULL_BRIGHT);
+            SealDraw.glow(pose, vc, 0f, CHEST[form][0], CHEST[form][1], CHEST_HALF[form], age * 0.01f, SealDraw.argb(0.38f * fade * pulse, AMBER), PropDraw.FULL_BRIGHT);
+            SealDraw.glow(pose, vc, 0f, CHEST[form][0], CHEST[form][1], CHEST_HALF[form] * 0.45f, -age * 0.02f, SealDraw.argb(0.45f * fade, 0xFFE9A0), PropDraw.FULL_BRIGHT);
         }
         pose.popPose();
     }

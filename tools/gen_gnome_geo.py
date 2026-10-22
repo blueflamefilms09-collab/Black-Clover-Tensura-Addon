@@ -39,10 +39,10 @@ def make_atlas():
     S = 1000
     at.region("rock_a", 256, 256, lambda w, h: A.stone(w, h, S + 1, w / 4.2, moss=0.45, warm=0.22, cracks=2))
     at.region("rock_b", 256, 256, lambda w, h: A.stone(w, h, S + 2, w / 5.6, warm=0.20, cracks=3, vein=1, tone=0.0))
-    at.region("rock_c", 256, 256, lambda w, h: A.stone(w, h, S + 3, w / 3.0, warm=0.25, cracks=1, moss=0.22))
+    at.region("rock_c", 256, 256, lambda w, h: A.stone(w, h, S + 3, w / 3.0, warm=0.16, cracks=1, moss=0.22))
     at.region("rock_top", 256, 256, lambda w, h: A.stone(w, h, S + 4, w / 5.5, tone=0.07, warm=0.12, moss=0.95, moss_top=False))
     at.region("rock_dark", 192, 192, lambda w, h: A.stone(w, h, S + 5, w / 3.6, tone=-0.15, warm=0.10, cracks=2))
-    at.region("rock_lt", 256, 256, lambda w, h: A.stone(w, h, S + 16, w / 3.4, tone=0.10, warm=0.45, cracks=1, moss=0.2))
+    at.region("rock_lt", 256, 256, lambda w, h: A.stone(w, h, S + 16, w / 3.4, tone=0.10, warm=0.30, cracks=1, moss=0.2))
     at.region("circle", 256, 256, lambda w, h: A.magic_circle(w, h, S + 6))
     at.region("knuckle", 192, 160, lambda w, h: A.knuckle(w, h, S + 7))
     at.region("veins", 256, 256, lambda w, h: A.veins_plate(w, h, S + 8))
@@ -98,6 +98,9 @@ class Builder:
     def part(self, bone, c, s, faces, rot=None, piv=None, lod=2, comp=True, head=False):
         """One cube: c = centre, s = size (full-form units). lod = the highest level it appears in (2 = every level); comp False = the companion leaves it out. Faces of lower levels: no under
         side, and on level 2 no back."""
+        self.n += 1
+        if self.lod == 1 and lod == 0 and self.n % 2 == 0:                  # the near-detail parts are thinned, not dropped: every second one stays on level 1 (about half the quads)
+            lod = 1
         if self.lod > lod or (self.form == "companion" and not comp):
             return
         if self.fx:
@@ -158,7 +161,7 @@ def build(form, lod, atlas, fx=False):
         B("leg_" + t, (sx * X, 36, 2), "body")
         B("shin_" + t, (sx * X, 17, 2), "leg_" + t)
         B("foot_" + t, (sx * X, 7, 2), "shin_" + t)
-    orbs = [("orb1", (-70, 72, -10), 12, 1), ("orb2", (70, 96, 8), 10, 1), ("orb3", (-36, 124, 16), 8, 0), ("orb4", (44, 40, -42), 10, 0)]
+    orbs = [("orb1", (-70, 72, -10), 12, 1), ("orb2", (70, 96, 8), 10, 1), ("orb3", (-36, 124, 16), 8, 0), ("orb4", (44, 40, -42), 10, 0), ("orb5", (-52, 132, -12), 6, 0), ("orb6", (62, 60, -34), 7, 0)]
     for nm, c, s, lv in orbs:
         B(nm, c, "root")
 
@@ -228,6 +231,22 @@ def build(form, lod, atlas, fx=False):
         for j in range(4):
             P("fist_" + t, (fx0 + (j - 1.5) * 9.6, 17, -29), (9, 12, 7), {"north": ("knuckle", 0), "up": ("rock_top", b.dens), "west": ("rock_a", b.dens), "east": ("rock_a", b.dens)}, lod=1)
         P("fist_" + t, (fx0 - sx * 22, 13, -16), (8, 11, 17), b.stone_faces("arm", down=False, back=False), lod=0)             # thumb
+    # ------------------------------------------------------------------ more layers: plates on the arms and the back, a gorget round the head, guards on the shins, small boulders on the shoulders
+    P("chest", (0, 66, 25.5), (40, 10, 6), b.stone_faces("plate", down=False, front=False), rot=(6, 0, 0), piv=(0, 66, 25), lod=1)
+    P("chest", (0, 57, 22), (30, 8, 6), b.stone_faces("plate", down=False, front=False), rot=(-6, 0, 0), piv=(0, 57, 22), lod=0)
+    P("body", (0, 41, -16.5), (9, 9, 3), b.stone_faces("plate", down=False, back=False, sides=False), rot=(0, 0, 45), piv=(0, 41, -16.5), lod=0)                 # the belt's buckle: a diamond
+    for sx, t in ((-1, "R"), (1, "L")):
+        sa, sf = "arm_" + t, "fore_" + t
+        x = sx * SH
+        P(sa, (x + sx * 14, 61, 0), (6, 23, 19), b.stone_faces("plate", down=False, front=False, back=False), rot=(0, 0, sx * -9), piv=(x + sx * 14, 72, 0), lod=1)
+        P(sa, (x + sx * 13, 49, 4), (5, 14, 12), b.stone_faces("arm", down=False, front=False, back=False), rot=(0, 0, sx * 7), piv=(x + sx * 13, 56, 4), lod=0)
+        P("head", (sx * 17, 92, -4), (12, 10, 20), b.stone_faces("plate", down=False, back=False), rot=(0, 0, sx * -18), piv=(sx * 17, 86, -4), lod=1, head=True)         # the gorget
+        P("shin_" + t, (sx * X, 15, -9.5), (15, 11, 4), b.stone_faces("plate", down=False, back=False, sides=False), rot=(-10, 0, 0), piv=(sx * X, 20, -9.5), lod=1)       # a shin guard
+        for j, (dx, dz, w) in enumerate(((-9, 8, 9), (8, 10, 7), (0, -9, 8))):
+            P(sa, (x + dx, 103.5 + (j % 2), dz), (w, w * 0.7, w), b.stone_faces("boulder", down=False), rot=(10 * j, 25 * j + 10, 8), piv=(x + dx, 103.5, dz), lod=0, comp=(j == 0))     # small boulders on the shoulder
+        b.shard("fist_" + t, (sx * (SH + 4) + sx * 6, 29, 4), 8, 4, (0, 0, -sx * 14), "amber", lod=0, comp=False)
+        b.shard(sf, (x + sx * 19, 40, 2), 9, 4, (0, 0, -sx * 50), "dia" if sx > 0 else "amber", lod=0, comp=False)
+        P(sa, (x + sx * 2, 98, 20), (14, 14, 0.5), {"north": ("moss", 0), "south": ("moss", 0)}, lod=0, comp=False)
     # ------------------------------------------------------------------ floating stones (a few, they bob and turn)
     for nm, c, s, lv in orbs:
         P(nm, c, (s, s, s), b.stone_faces("boulder", down=True), rot=(18, 30, 12), piv=c, lod=lv, comp=(lv == 1))
@@ -275,7 +294,7 @@ def rot(ts, vals):
 def animations(form):
     clips = {}
     s = L.sine
-    ORB = ("orb1", "orb2", "orb3", "orb4")
+    ORB = ("orb1", "orb2", "orb3", "orb4", "orb5", "orb6")
 
     # ---- idle: slow and heavy: the chest breathes, the head turns a little, the arms sway, the stones drift
     T = 4.0
@@ -335,9 +354,9 @@ def animations(form):
 
     # ---- stomp: the left leg lifts and slams (contact at 0.5 s), the whole body drops with it
     t = [0.0, 0.25, 0.5, 0.65, 0.9]
-    bones = {"leg_L": rot(t, [(0, 0, 0), (36, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
-             "shin_L": rot(t, [(0, 0, 0), (-18, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
-             "body": {"position": dict(zip(t, [(0, 0, 0), (-1.5, 3, 0), (0, -4, 0), (0, -1, 0), (0, 0, 0)]))},
+    bones = {"leg_L": rot(t, [(0, 0, 0), (58, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "shin_L": rot(t, [(0, 0, 0), (-34, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]),
+             "body": {"position": dict(zip(t, [(0, 0, 0), (-2.5, 6, 0), (0, -6, 0), (0, -1.5, 0), (0, 0, 0)]))},
              "chest": rot(t, [(0, 0, 0), (5, 6, 0), (-5, 0, 0), (0, 0, 0), (0, 0, 0)])}
     clips["stomp"] = {"loop": False, "length": LENGTHS["stomp"], "bones": bones}
 

@@ -45,7 +45,8 @@ import java.util.function.BooleanSupplier;
 public final class Gnome {
     private Gnome() {}
 
-    static final int EARTH_COLOR = 0xFFB08850;
+    /** The colour of the earth family's effects (the Earth book's own style). */
+    static final int EARTH_COLOR = com.newuniverse.nusmp.vfx.EarthFxStyle.color(com.newuniverse.nusmp.vfx.EarthFxStyle.style("EARTH"));
 
     /** The state of one player's Gnome. */
     static final class State {
@@ -154,8 +155,9 @@ public final class Gnome {
         if (!withEmitter(p, mouth, () -> original.cast(book, inst, p, mode))) return false;
         if (wantFull && summonFull(p, s, now, at)) return true;
         MagicPropEntity who = full != null ? full : comp;
-        who.setParam((who.param() & GnomeRules.HIDDEN) | GnomeRules.param(GnomeRules.variant(who.param()), GnomeRules.stampOf(now)));      // the clients play the cast clip for a second after this tick
-        contact(p, sl, GnomeRules.CAST_CONTACT_TICK, mouth, full != null || wantFull);
+        boolean punch = !GnomeRules.callsFull(page.costPercent());                                   // a page below the big tiers is a punch, a big one a slam of both fists
+        who.setParam((who.param() & GnomeRules.HIDDEN) | (punch ? GnomeRules.PUNCH : 0) | GnomeRules.param(GnomeRules.variant(who.param()), GnomeRules.stampOf(now)));      // the clients play the clip for a second after this tick
+        contact(p, sl, GnomeRules.contactTick(punch), mouth, full != null || wantFull);
         return true;
     }
 
@@ -170,6 +172,7 @@ public final class Gnome {
         s.full = e.getUUID();
         s.fullReadyAt = now + GnomeConfig.fullCooldown();
         LIVE.add(p.getUUID());
+        VfxSpawn.send(sl, VfxShape.EARTHFAM_ZONE, new Vec3(at[0], at[1] + 0.05, at[2]), new Vec3(at[0], at[1] + 1, at[2]), EARTH_COLOR, GnomeRules.FULL_TICKS, 3.4f);      // it stands on the earth sigil
         playCue(sl, p.getUUID(), "rise", at[0], at[1], at[2]);
         double[] h = GnomeRules.fullHand(at[0], at[1], at[2], p.yBodyRot);
         contact(p, sl, GnomeRules.FULL_SLAM_TICK, new Vec3(h[0], h[1], h[2]), true);

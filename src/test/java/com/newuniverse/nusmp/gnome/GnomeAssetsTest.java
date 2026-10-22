@@ -67,6 +67,14 @@ class GnomeAssetsTest {
     }
 
     @Test
+    void bothFormsArePaintedOnOneSheetSoTheCompanionsFilesAreCopiesOfTheGiants() throws IOException {
+        for (String suffix : new String[]{"", "_lod1", "_lod2", "_fx", "_fx_lod1"})
+            assertTrue(java.util.Arrays.equals(Files.readAllBytes(ASSETS.resolve("textures/entity/gnome_full" + suffix + ".png")), Files.readAllBytes(ASSETS.resolve("textures/entity/gnome_companion" + suffix + ".png"))), "the sheet" + suffix + " is the same for both forms");
+        String draw = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/prop/GnomeDraw.java"));
+        assertTrue(draw.contains("lod(COMP, \"gnome_companion\", \"gnome_full\")"), "the game loads each sheet once: the companion reads the giant's textures");
+    }
+
+    @Test
     void theLodAndGlowModelsUseTheBonesOfTheFullModelUnchanged() throws IOException {
         for (String form : FORMS) {
             Map<String, JsonObject> full = bones(geo("gnome_" + form));
@@ -104,6 +112,10 @@ class GnomeAssetsTest {
             assertEquals(GnomeRules.FULL_RISE_TICKS, Math.round(anim.getAsJsonObject("rise").get("animation_length").getAsDouble() * 20), form + ": the rise clip is the server's 20 ticks");
             assertEquals(GnomeRules.CAST_CLIP_TICKS, Math.round(anim.getAsJsonObject("cast").get("animation_length").getAsDouble() * 20), form + ": the cast clip is the server's 24 ticks");
             assertEquals(GnomeRules.FULL_SINK_TICKS, Math.round(anim.getAsJsonObject("sink").get("animation_length").getAsDouble() * 20), form + ": the sink clip is the server's 20 ticks");
+            assertEquals(GnomeRules.PUNCH_CLIP_TICKS, Math.round(anim.getAsJsonObject("punch").get("animation_length").getAsDouble() * 20), form + ": the punch clip is the server's 20 ticks");
+            assertEquals(GnomeRules.STOMP_CLIP_TICKS, Math.round(anim.getAsJsonObject("stomp").get("animation_length").getAsDouble() * 20), form + ": the stomp clip is 18 ticks");
+            assertTrue(anim.getAsJsonObject("punch").getAsJsonObject("bones").getAsJsonObject("chest").getAsJsonObject("rotation").has(String.format("%.2f", GnomeRules.PUNCH_CONTACT_TICK / 20.0)), "a chest keyframe at the punch contact");
+            assertTrue(anim.getAsJsonObject("stomp").getAsJsonObject("bones").getAsJsonObject("chest").getAsJsonObject("rotation").has(String.format("%.2f", GnomeRules.STOMP_CONTACT_TICK / 20.0)), "a chest keyframe at the stomp contact");
             JsonObject castChest = anim.getAsJsonObject("cast").getAsJsonObject("bones").getAsJsonObject("chest").getAsJsonObject("rotation");
             assertTrue(castChest.has(String.format("%.2f", GnomeRules.CAST_CONTACT_TICK / 20.0)), form + ": a chest keyframe at the contact tick " + GnomeRules.CAST_CONTACT_TICK);
             JsonObject riseChest = anim.getAsJsonObject("rise").getAsJsonObject("bones").getAsJsonObject("chest").getAsJsonObject("rotation");
@@ -173,6 +185,6 @@ class GnomeAssetsTest {
 
     /** The clip names of client.prop.GnomeDraw, repeated here (a common-side test never loads a client class). */
     private static final class GnomeDraw0 {
-        static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink"};
+        static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink", "punch", "stomp"};
     }
 }

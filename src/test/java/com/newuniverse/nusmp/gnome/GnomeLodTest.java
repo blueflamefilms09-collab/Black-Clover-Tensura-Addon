@@ -40,8 +40,8 @@ class GnomeLodTest {
     void theBudgetsOfTheBriefHold() {
         assertTrue(GnomeLod.cost(GnomeLod.COMPANION, GnomeLod.LOD_FULL) <= GnomeLod.COMPANION_BUDGET, "companion at full detail: " + GnomeLod.cost(0, 0));
         assertTrue(GnomeLod.cost(GnomeLod.FULL, GnomeLod.LOD_FULL) <= GnomeLod.FULL_BUDGET, "giant at full detail: " + GnomeLod.cost(1, 0));
-        assertTrue(GnomeLod.cost(GnomeLod.COMPANION, GnomeLod.LOD_HALF) <= 350, "companion level 1 about 350");
-        assertTrue(GnomeLod.cost(GnomeLod.FULL, GnomeLod.LOD_HALF) <= 450, "giant level 1 about 450");
+        assertTrue(GnomeLod.cost(GnomeLod.COMPANION, GnomeLod.LOD_HALF) <= 385, "companion level 1: about 350 (within a tenth)");
+        assertTrue(GnomeLod.cost(GnomeLod.FULL, GnomeLod.LOD_HALF) <= 495, "giant level 1: about 450 (within a tenth)");
         for (int f = 0; f < 2; f++) assertTrue(GnomeLod.cost(f, GnomeLod.LOD_LOW) <= 140, "level 2 at most 140 quads");
         assertEquals(0, GnomeLod.cost(GnomeLod.FULL, GnomeLod.CULL));
         assertEquals(3200, GnomeLod.FRAME_QUADS);

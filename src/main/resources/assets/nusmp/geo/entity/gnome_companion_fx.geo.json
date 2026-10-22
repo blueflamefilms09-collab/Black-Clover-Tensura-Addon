@@ -1289,6 +1289,26 @@
      ],
      "cubes": [],
      "parent": "root"
+    },
+    {
+     "name": "orb5",
+     "pivot": [
+      -8.58,
+      21.78,
+      -1.98
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "orb6",
+     "pivot": [
+      10.23,
+      9.9,
+      -5.61
+     ],
+     "cubes": [],
+     "parent": "root"
     }
    ]
   }

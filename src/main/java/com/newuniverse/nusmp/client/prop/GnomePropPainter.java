@@ -68,21 +68,23 @@ public final class GnomePropPainter {
         long now = e.level().getGameTime();
         int stamp = GnomeRules.stamp(param);
         int since = GnomeRules.sinceStamp(now, stamp);
+        boolean punch = GnomeRules.punch(param);
         int clip;
         float secs;
         float fade;
         if (full) {
             int life = e.life();
-            clip = GnomeRules.fullClip(life, e.maxLife(), since);
-            int into = clip == GnomeRules.CLIP_RISE ? life : clip == GnomeRules.CLIP_SINK ? life - (e.maxLife() - GnomeRules.FULL_SINK_TICKS) : since;
+            clip = GnomeRules.fullClip(life, e.maxLife(), since, punch);
+            int into = clip == GnomeRules.CLIP_RISE ? life : clip == GnomeRules.CLIP_SINK ? life - (e.maxLife() - GnomeRules.FULL_SINK_TICKS)
+                    : clip == GnomeRules.CLIP_STOMP ? life - GnomeRules.STOMP_AT : since;
             secs = GnomeRules.secs(Math.max(0, into), partial);
             fade = GnomeRules.fullFade(life, e.maxLife(), partial);
             dust(e, clip, into, ex, ey, ez, yaw, lod);
         } else {
-            clip = GnomeRules.companionClip(moving, since);
-            secs = clip == GnomeRules.CLIP_CAST ? GnomeRules.secs(since, partial) : age / 20f;
+            clip = GnomeRules.companionClip(moving, since, punch);
+            secs = clip == GnomeRules.CLIP_CAST || clip == GnomeRules.CLIP_PUNCH ? GnomeRules.secs(since, partial) : age / 20f;
             fade = Mth.clamp((e.life() + partial) / 8f, 0f, 1f);
-            if (lod == GnomeLod.LOD_FULL && dsq < 20 * 20 && clip == GnomeRules.CLIP_CAST && since == GnomeRules.CAST_CONTACT_TICK) pebbles(e, ax, ay + 0.15, az, 5);
+            if (lod == GnomeLod.LOD_FULL && dsq < 20 * 20 && (clip == GnomeRules.CLIP_CAST || clip == GnomeRules.CLIP_PUNCH) && since == GnomeRules.contactTick(punch)) pebbles(e, ax, ay + 0.15, az, 5);
             else if (lod == GnomeLod.LOD_FULL && dsq < 16 * 16 && clip == GnomeRules.CLIP_IDLE && e.tickCount % 40 == 0) pebbles(e, ax, ay + 0.3, az, 1);
         }
         if (fade <= 0.01f) return;

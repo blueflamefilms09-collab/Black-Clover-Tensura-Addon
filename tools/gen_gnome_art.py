@@ -126,6 +126,11 @@ def stone(w, h, seed, cell, tone=0.0, warm=0.0, line=2.0, shade_side=0.26, moss=
         wm = (hh * 7.31 % 1.0) < warm
         wc = rgb(PAL["warm"])
         c = np.where((wm & (idx >= 2))[..., None], np.where((idx == 3)[..., None], wc * 1.16, wc), c)
+    # manga hatching: parallel ink strokes on the shaded facets (the pen-and-ink shading of the series)
+    gy, gx = np.mgrid[0:h, 0:w]
+    stroke = ((gx + gy) % 6) < 1.25
+    hatch = stroke & ((idx == 0) | ((idx == 1) & (loc > 0.05)))
+    c = np.where(hatch[..., None], c * 0.52 + rgb(PAL["ink"]) * 0.48, c)
     # small flat chips: a darker speck here and there, as hand-inked texture
     n = fbm(rng, w, h, 3, max(3, int(w / 22)))
     chip = (n > 0.70) & (idx >= 2)
@@ -211,6 +216,8 @@ def crystal(w, h, seed, pal="amber"):
     seam = np.zeros((h, w), bool)
     for e in edges[1:-1]:
         seam |= np.abs(fx - e) < (0.9 / w)
+    for k0 in (0.30, 0.62):                                           # the diagonal cuts of a gem across the stripes
+        seam |= np.abs((yy / h) - k0 - 0.28 * (fx - 0.5)) < (0.8 / h)
     seam |= (xx < 1.2) | (xx > w - 2.2)
     seam |= (yy > h - 1.6)
     c = np.where(seam[..., None], rgb(PAL["ink"]), c)
@@ -260,6 +267,10 @@ def face_front(w, h, seed):
         x0 = 0.15 + i * 0.10
         d.rectangle([P(x0, 0.80), P(x0 + 0.07, 0.86 + 0.02 * (i % 2))], fill=col(PAL["hi"]))
     d.line([P(0.04, 0.20), P(0.96, 0.20)], fill=col(PAL["ink"]), width=int(2.0 * SS))
+    gem = [P(0.5, 0.025), P(0.57, 0.10), P(0.5, 0.175), P(0.43, 0.10)]                    # a small gem on the forehead: the mage stone of the host
+    d.polygon(gem, fill=col(PAL["ink"]))
+    d.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(PAL["amber"]))
+    d.polygon([P(0.5, 0.075), P(0.525, 0.10), P(0.5, 0.125), P(0.475, 0.10)], fill=col(PAL["amber_w"]))
     out = over(base, done(lay, w, h))
     g = clear(w, h)
     gl = canvas(w, h)
@@ -273,6 +284,8 @@ def face_front(w, h, seed):
         dg.polygon(eye, fill=col(PAL["glow"]))
         core = [P(cx - 0.12, 0.52 - tilt * 0.8), P(cx + 0.12, 0.52 + tilt * 0.8), P(cx + 0.10, 0.56 + tilt * 0.8), P(cx - 0.10, 0.55 - tilt * 0.8)]
         dc.polygon(core, fill=col(PAL["glow_core"]))
+    dg.polygon([P(0.5, 0.05), P(0.545, 0.10), P(0.5, 0.15), P(0.455, 0.10)], fill=col(PAL["glow"]))
+    dc.polygon([P(0.5, 0.075), P(0.525, 0.10), P(0.5, 0.125), P(0.475, 0.10)], fill=col(PAL["glow_core"]))
     g = over(over(g, done(gl, w, h)), done(gc, w, h))
     return out, g
 

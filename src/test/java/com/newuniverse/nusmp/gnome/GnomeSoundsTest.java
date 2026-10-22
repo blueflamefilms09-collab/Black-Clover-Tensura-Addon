@@ -56,7 +56,7 @@ class GnomeSoundsTest {
     @Test
     void everyCueHasItsEntryItsVariantsItsFilesAndItsSubtitle() throws IOException {
         JsonObject doc = sounds();
-        JsonObject lang = JsonParser.parseString(Files.readString(Path.of("tools/lang/gnome_sounds.json"))).getAsJsonObject();
+        JsonObject lang = JsonParser.parseString(Files.readString(Path.of("tools/lang/gnome.json"))).getAsJsonObject();
         List<String> bad = new ArrayList<>();
         for (GnomeSoundRules.Cue c : GnomeSoundRules.CUES) {
             JsonObject e = doc.has(c.event()) ? doc.getAsJsonObject(c.event()) : null;
