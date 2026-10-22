@@ -203,7 +203,7 @@ public final class CompassMesh {
         needleFacet(b, tail, c, sr);
         // the hub cap and the small ring at the tail
         float[] u = {1, 0, 0}, v = {0, 1, 0}, n = {0, 0, 1};
-        float[][] hub = {{NEEDLE_HUB_R, 0.10f, NEEDLE_HUB_R, 0.15f, 0.2f, 0.45f}, {NEEDLE_HUB_R, 0.15f, 0.035f, 0.185f, 0.45f, 0.7f}, {0.035f, 0.185f, 0f, 0.195f, 0.7f, 0.9f}};
+        float[][] hub = {{NEEDLE_HUB_R, 0.10f, NEEDLE_HUB_R, 0.145f, 0.2f, 0.45f}, {NEEDLE_HUB_R, 0.145f, 0.035f, 0.172f, 0.45f, 0.7f}, {0.035f, 0.172f, 0f, 0.18f, 0.7f, 0.9f}};
         for (float[] r : hub) lathe(b, 0, 0, 0, u, v, n, r[0], r[1], r[2], r[3], r[4], r[5], 14, TEX_U_LIGHT[0], TEX_U_LIGHT[1]);
         float ro = NEEDLE_RING_OUTER, ri = NEEDLE_RING_INNER;
         float[][] ring = {{ro, NEEDLE_RING_Z0, ro, NEEDLE_RING_Z1, 0.2f, 0.4f}, {ro, NEEDLE_RING_Z1, ri, NEEDLE_RING_Z1, 0.4f, 0.6f}, {ri, NEEDLE_RING_Z1, ri, NEEDLE_RING_Z0, 0.6f, 0.8f}};

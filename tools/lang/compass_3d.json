@@ -1,0 +1,6 @@
+{
+  "nusmp.compass3d.title": "Compass Magic in 3D",
+  "nusmp.compass3d.body": "Compass Magic is one floating 3D compass beside you: a thick bronze rim, a green dial, a raised cream and gold compass rose, a gold needle and a glass dome, with a spiky yellow aura behind it. It appears when you cast or hold a Compass page, its needle swings to your target and it fades a few seconds later. Every Compass spell comes out of it as 3D models: arrow-needles that leave the compass, seal discs that fly to your foes' feet, a route of dashes to the charted foe, and a turn disc where Willful Compass bends a shot back.",
+  "nusmp.compass3d.config": "Draw Compass Magic as one 3D compass with 3D spell models (visual.compass3d in config/nusmp-compass3d-client.toml). Off draws the old flat compasses, needle and lock sigil instead.",
+  "nusmp.compass3d.aura": "The spiky yellow aura behind the 3D compass and the glint that runs round its rim (visual.compass3d_aura)."
+}

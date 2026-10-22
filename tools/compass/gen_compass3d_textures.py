@@ -199,6 +199,9 @@ def star_and_needle():
     save("star", img)
     # needle: same columns, gold; the tail ring uses the light column
     nd = facet_tex("needle", (np.array([255, 216, 92], np.float32), np.array([236, 164, 36], np.float32)), (np.array([196, 128, 30], np.float32), np.array([112, 70, 18], np.float32)), t, SZ["needle"])
+    w2, h2 = SZ["needle"]
+    u2, _ = grid(w2, h2)
+    put(nd, u2 >= t["dark"][1] + 0.02, np.array([96, 62, 16], np.float32))              # the unused columns hold the darkest gold, never black
     save("needle", nd)
 
 
