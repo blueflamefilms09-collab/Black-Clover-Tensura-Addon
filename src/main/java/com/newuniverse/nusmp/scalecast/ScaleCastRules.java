@@ -155,9 +155,12 @@ public final class ScaleCastRules {
     }
 
     /** The share of a casting foe's spell power the aura takes: {@link #MAGIC_SHARE} of the damage reduction, never above {@link #MAGIC_CAP}. */
-    public static double magicReduction(double damageReduction) {
+    public static double magicReduction(double damageReduction) { return magicReduction(damageReduction, MAGIC_CAP); }
+
+    /** The same with a lower cap chosen by the server owner ({@code cap} is held to 0..{@link #MAGIC_CAP}). */
+    public static double magicReduction(double damageReduction, double cap) {
         double r = Math.max(0.0, Math.min(DAMAGE_CAP, finite(damageReduction))) * MAGIC_SHARE;
-        return r < DEAD_ZONE ? 0.0 : Math.min(r, MAGIC_CAP);
+        return r < DEAD_ZONE ? 0.0 : Math.min(r, Math.max(0.0, Math.min(MAGIC_CAP, finite(cap))));
     }
 
     /** The multiplier a magic reduction makes (1 = nothing taken). */
@@ -209,8 +212,11 @@ public final class ScaleCastRules {
     }
 
     // ================================================================ where it floats
-    /** Where the Scale floats: to the caster's LEFT (the off hand side; the Compass is on the right), up and a little in front, and how far it turns inward from the caster's facing, degrees. */
-    public static final double SIDE = 1.15, UP = 1.45, FRONT = 0.20, IN_YAW = 18.0;
+    /**
+     * Where the Scale floats: to the caster's LEFT (the off hand side; the Compass is on the right), up and a little in front, and how far it is turned from the caster's facing toward the
+     * caster, degrees (its front looks at the caster's face from the shoulder: the caster reads their own pan on the left and the foe's on the right).
+     */
+    public static final double SIDE = 1.15, UP = 1.45, FRONT = 0.20, IN_YAW = 80.0;
     /** Radius of the whole Scale (beam half length) in blocks: scale of the prop. */
     public static final float MAIN_SCALE = 0.55f;
 
@@ -220,8 +226,17 @@ public final class ScaleCastRules {
         return new double[]{x + lx * SIDE + fx * FRONT, y + UP, z + lz * SIDE + fz * FRONT};
     }
 
-    /** The yaw the Scale faces: the caster's, turned inward a little. */
-    public static float yaw(float ownerYawDeg) { return ownerYawDeg - (float) IN_YAW; }
+    /** x of {@link #position} without allocating (the client asks per frame whether a Scale is the local player's own). */
+    public static double positionX(double x, float yawDeg) { double a = Math.toRadians(yawDeg); return x + Math.cos(a) * SIDE - Math.sin(a) * FRONT; }
+
+    /** z of {@link #position} without allocating. */
+    public static double positionZ(double z, float yawDeg) { double a = Math.toRadians(yawDeg); return z + Math.sin(a) * SIDE + Math.cos(a) * FRONT; }
+
+    /** y of {@link #position}. */
+    public static double positionY(double y) { return y + UP; }
+
+    /** The yaw the Scale faces (Minecraft yaw: positive turns toward the caster's left, which is where the caster is seen from the Scale). */
+    public static float yaw(float ownerYawDeg) { return ownerYawDeg + (float) IN_YAW; }
 
     /** Moves {@code cur} toward {@code target} by the fraction k along the short way round, degrees. */
     public static float approachDegrees(float cur, float target, float k) {

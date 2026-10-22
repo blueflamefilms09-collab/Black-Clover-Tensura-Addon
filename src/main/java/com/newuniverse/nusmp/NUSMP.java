@@ -79,6 +79,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.spade.SpadeConfig.SPEC, "nusmp-spade-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");   // 1.61.0: the Eye of the Midnight Sun bosses
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.sds.SdsaConfig.SPEC, "nusmp-arc-sdsa-server.toml");   // 1.61.0: the Seven Deadly Sins, part 1 (Meliodas, Escanor, Ban)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.scalecast.ScaleCastConfig.SPEC, "nusmp-scale-casting-server.toml");   // Scale casting: magic.scaleCasting (the floating balance scale and the suppression aura; false = the old execution)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.danmachi.DanMachiConfig.SPEC, "nusmp-danmachi-server.toml");   // 1.61.0: DanMachi: the Dungeon Level of the monsters
         com.newuniverse.nusmp.skilltree.SkillBookSystem.init(modEventBus, modContainer);                                    // 1.96.0: the Skill Books: one unique skill per book (the Skill Tree, SP and the Fairy Tail magics were removed), the loot, the Black Market (registers its own attachment, items, skills and configs)
         com.newuniverse.nusmp.fairytail.storm.StormBoot.init(modEventBus, modContainer);                                  // Storm Magic (Fairy Tail): the Stormcaller Staff, the storm cells, nusmp-storm-server.toml (staffOnly), self-test magic.storm_staff
@@ -189,6 +190,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compat.maps.MapsClientConfig.SPEC, "nusmp-compat-maps-client.toml");      // compat-maps: minimap size / avoidance
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compass3d.CompassVisualConfig.SPEC, "nusmp-compass3d-client.toml");      // 3D Compass Magic: visual.compass3d (the old flat effects when off)
+            com.newuniverse.nusmp.client.scalecast.ScaleHud.init(modEventBus, modContainer);                                  // Scale casting: the weight readout (nusmp-scale-casting-client.toml: visual.scale3d, visual.scaleReadout)
             // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.ElementalSpiritRenderer::register);        // 0.102: the Black Clover Spirit Lords' true bodies

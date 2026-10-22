@@ -267,6 +267,7 @@ public abstract class GrimoireBook extends Skill {
         instance.markDirty();
         // 1.27.0: one continuous hold circle (start once, grow with the charge, keep-alive) instead of a new circle every 4 ticks; none for a page that cannot be cast
         CastHoldFx.held(instance, p, colorNow(), charge, castTicks(instance, p), castReady(instance, p, mode));
+        if (magic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onHeld(p);      // Scale casting: the Scale stays out while a page is held
         if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: a heavy page held long enough is a massive channel to the god-tier Lucius
             com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireHold(p, page(mode), charge, castTicks(instance, p), castReady(instance, p, mode));
         return true;
@@ -337,6 +338,7 @@ public abstract class GrimoireBook extends Skill {
         if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> p.cast().cast(this, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
+        if (castMagic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onCast(player);      // Scale casting (docs/magic/scale_casting.md): the floating Scale weighs the foe, the weighing animation starts
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
                 : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
                 : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);

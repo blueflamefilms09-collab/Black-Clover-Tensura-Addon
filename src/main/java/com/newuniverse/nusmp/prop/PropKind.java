@@ -163,5 +163,7 @@ public enum PropKind {
     CELESTIAL_2,
     /** 1.99.0 Light and Bone Magic after the Black Clover wiki: one kind each, the variant is the low byte of the param (prop.LightJaProps / BoneJaProps, painters client.prop.LightJaPropPainter / BoneJaPropPainter) */
     LIGHT_JA,
-    BONE_JA
+    BONE_JA,
+    /** Scale casting (docs/magic/scale_casting.md): the ONE floating balance scale of a Scale Magic caster; the prop word is scalecast.ScaleCastRules (weights, tilt, aura), the work is scalecast.ScaleCastKit */
+    SCALE_BALANCE
 }

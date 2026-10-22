@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.PropKind;
 import com.newuniverse.nusmp.prop.ShakudoPropKit;
+import com.newuniverse.nusmp.scalecast.ScaleCastKit;
+import com.newuniverse.nusmp.scalecast.ScaleCastRules;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -47,6 +49,12 @@ public final class ScaleSpells {
     static boolean volley(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         float k = ShakudoKit.k(i, p);
         Vec3 start = p.getEyePosition().add(0, -0.15, 0), look = p.getViewVector(1f);
+        ScaleCastKit.show(p, ScaleCastRules.LINGER);                                           // Scale casting: the scales leave the floating balance scale (magic.scaleCasting off: the old start at the caster's eyes)
+        Vec3 from = ScaleCastKit.origin(p, start);
+        if (from != start) {                                                                    // aimed at the point under the crosshair, so the shift to the Scale does not move the volley off its mark
+            start = from;
+            look = p.getEyePosition().add(look.scale(18)).subtract(start).normalize();
+        }
         b.castCircle(p, 0.7f);
         Vec3 axis = new Vec3(0, 1, 0);
         Vec3 side = look.cross(axis);
