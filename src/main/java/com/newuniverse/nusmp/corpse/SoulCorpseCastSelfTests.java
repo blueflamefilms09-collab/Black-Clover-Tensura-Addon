@@ -102,7 +102,7 @@ public final class SoulCorpseCastSelfTests {
             // ---- 3. the generic casts through the real pipeline
             int cap = CorpseConfig.zombieCap();
             String note = "";
-            int[][] expected = {{mode(book, SoulCorpseAccess.MARIONETTE), 1}, {mode(book, SoulCorpseAccess.NECROPOLIS), 2}, {mode(book, SoulCorpseAccess.LEGION), Math.min(4, cap)},
+            int[][] expected = {{mode(book, SoulCorpseAccess.MARIONETTE), 1}, {mode(book, SoulCorpseAccess.NECROPOLIS), Math.min(2, cap)}, {mode(book, SoulCorpseAccess.LEGION), Math.min(4, cap)},
                     {mode(book, SoulCorpseAccess.REANIMATE), CorpseConfig.conjure() ? 1 : 0}};
             for (int[] e : expected) {
                 BookPage page = book.page(e[0]);
