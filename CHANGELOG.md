@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.1.0] — Shishou update: new top grade EX-Singularity (prismatic), faster hunter, Tensura Ultimate Skill instead of keybinds, stronger growth, feeding from the inventory, Akashic GUI
+
+### NEW
+- **A new relic grade above Genesis: "EX-Singularity"** (Akashic Relic). Own tooltip (prismatic per-letter rainbow name, grade row and border, 11-glyph star run), animated rainbow ring around the item in inventory and hotbar slots, the sword's glow cycles the whole spectrum in hand and in the world with an iridescent blade veil, orbiting prism shards and motes (lighter than a Genesis weapon's glow). It is never rolled in loot or relic waves; only Shishou carries it. Client options in `nusmp-ex-singularity-client.toml`, off restores the old look (`docs/relics/ex_singularity.md`).
+- **Shishou hunts fast:** target scan every 6 ticks over a 40-block cube (was 24 horizontally and only 4 up or down), supersonic charge dash, immediate rescan after each kill, patrols toward the nearest player when idle, dormant only after about 80 kills (was 25); the thrown minion hunts aggressively around you.
+- **No new keybinds: Shishou is now an Ultimate Skill of the Tensura skill system** ("Shishou, the Teacher", 7 modes: Telekinesis, Sensory, Defence, Offence, Storage, Magic, Counsel). Claiming the sword grants the skill, losing it revokes it; chat fallback `/multiverse shishou cast <ability>` and `throw`. The H, J, K keys are removed.
+- **Stronger and growing like the anime:** starts at level 10 with low-magisteel-sword damage (assumed 8.5) and climbs steeply (L30 22, L50 38, L70 57, L100 78 held damage), bigger mana pool and faster regeneration, faster EXP; saves from 2.0.0 are raised safely.
+- **Feed him from the inventory:** click a stack from the cursor onto the sword (left = whole stack up to 64, right = one): magic stones and monster drops become EXP and can teach skills (blaze rod -> Fire, ender pearl -> Enderman, ...); owner only, rate limited (`relic.shishouFeed`).
+- **Akashic GUI:** new Stomach (storage) screen and Appraisal HUD (star-field, cyan frame, prismatic line-work, gauge bars), movable like the other GUIs.
+
+### REPLACED
+- Shishou's Unique-grade banner and cyan glow (now EX-Singularity, old look kept behind the option), the H/J/K keys, the 2.0.0 hunting goals and old level/mana/damage numbers (kept as legacy values for migration), the old Stomach screen and HUD look.
+
+### KEPT
+- All old grades and ordinals, every relic's grade, all 31 skills and their cooldown/mana logic, Shift+Right click Stomach, the one-per-world rules, saves, the Time Magic VFX.
+
+### Caveats
+- Not run in a real game before this release; previews are mock-ups. The low-magisteel damage (8.5) is an assumption (no repo value, wiki unreachable). The Tensura skill wiring copies the Requip pattern and was only type-checked; the hotbar floating name still shows the old blue.
+
 ## [2.0.0] — Shishou, the Akashic Relic sword (new): a talking, flying, levelling sword with 31 skills; new version numbering from 2.0.0
 
 ### NEW
