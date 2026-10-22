@@ -62,7 +62,7 @@ class RecombAnimeAssetsTest {
         int faces = 0;
         for (GeoModelData.Bone b : d.bones.values()) for (GeoModelData.Cube c : b.cubes) for (float[] uv : c.uv) if (uv != null) faces++;
         // 4 vertices a face, drawn twice (colour and glow): the preview's note for a prop is 6000 vertices in a frame
-        assertTrue(faces * 4 * 2 <= 7600, "the golem draws " + faces + " faces (" + faces * 8 + " vertices with the glow pass)");
+        assertTrue(faces * 4 * 2 <= 4200, "the golem draws " + faces + " faces (" + faces * 8 + " vertices with the glow pass)");
         assertTrue(faces < 6 * d.cubeCount(), "some faces are not drawn");
     }
 

@@ -109,6 +109,31 @@ def fk_arm(shoulder_pivot, forearm_pivot, fist_c, torso_pivot, hips_pivot, arm_a
     return p
 
 
+def _track(a, clip, bone):
+    t = a.clips[clip]["bones"].get(bone, {}).get("rotation")
+    return sorted((float(k), v) for k, v in t.items()) if t else []
+
+
+def _sample(track, t):
+    if not track:
+        return 0.0
+    if t <= track[0][0]:
+        return track[0][1][0]
+    for (t0, v0), (t1, v1) in zip(track, track[1:]):
+        if t0 <= t <= t1:
+            return v0[0] + (v1[0] - v0[0]) * ((t - t0) / (t1 - t0) if t1 > t0 else 0.0)
+    return track[-1][1][0]
+
+
+def counter(a, clip, foot, parents):
+    """Writes the rotation of a foot bone so that it cancels the x turns of its parents at every key time (the animation files interpolate linearly, so this is exact)."""
+    tracks = [_track(a, clip, b) for b in parents]
+    times = sorted({t for tr in tracks for t, _ in tr})
+    if not times:
+        return
+    a.rot(clip, foot, {t: (-sum(_sample(tr, t) for tr in tracks), 0.0, 0.0) for t in times})
+
+
 # ================================================================================================================================ the golem
 def golem():
     sh = Sheet(KEY, "golem", tex_w=2048, K=3.4, seed=7)
@@ -116,8 +141,10 @@ def golem():
     sh.bone("hips", "root", (0, 46, 0))
     sh.bone("leg_l", "hips", (14, 46, 0))
     sh.bone("shin_l", "leg_l", (14, 24, 0))
+    sh.bone("foot_l", "shin_l", (14, 5, 0))
     sh.bone("leg_r", "hips", (-14, 46, 0))
     sh.bone("shin_r", "leg_r", (-14, 24, 0))
+    sh.bone("foot_r", "shin_r", (-14, 5, 0))
     sh.bone("torso", "hips", (0, 52, 0))
     sh.bone("head", "torso", (0, 100, 0))
     sh.bone("horn_l", "head", (9.5, 114, 0))
@@ -137,8 +164,8 @@ def golem():
     # ---- legs: thick pillars of stone and timber on stone slabs
     for sx, n in ((1, "l"), (-1, "r")):
         cx = 14 * sx
-        leg, shin = "leg_" + n, "shin_" + n
-        sh.cube(shin, (cx - 13, 0, -17), (26, 5, 30), base=stone(base=(168, 162, 150), blk=9.0, row=2.6, moss="bottom"), faces={"top": ("grass", {"cover": 0.5})}, hide=("bottom",))
+        leg, shin, foot = "leg_" + n, "shin_" + n, "foot_" + n
+        sh.cube(foot, (cx - 13, 0, -17), (26, 5, 30), base=stone(base=(168, 162, 150), blk=9.0, row=2.6, moss="bottom"), faces={"top": ("grass", {"cover": 0.5})}, hide=("bottom",))
         sh.cube(shin, (cx - 9.5, 5, -9.5), (19, 17, 19), base=brick(bw=6.0, bh=3.0, base=(168, 100, 72), moss="bottom"), faces={"top": stone()}, hide=("top", "bottom"))
         sh.cube(shin, (cx - 10.4, 9.5, -10.4), (20.8, 2.2, 20.8), base=("iron", {}), hide=("top", "bottom"))
         sh.cube(leg, (cx - 11.5, 22, -11.5), (23, 4, 23), base=stone(base=(176, 170, 158), blk=8.0, row=2.2), hide=("bottom",))
@@ -246,7 +273,7 @@ def golem():
     wave(a, "walk", "leg_r", L, n, x=lambda p: -30 * ph(p))
     wave(a, "walk", "shin_l", L, n, x=lambda p: -34 * lift(p, 1.0) if True else 0)
     wave(a, "walk", "shin_r", L, n, x=lambda p: -34 * lift(p + 0.5, 1.0))
-    wave(a, "walk", "hips", L, n, kind="pos", y=lambda p: -2.6 * abs(math.cos(2 * math.pi * p)) + 1.6)
+    wave(a, "walk", "hips", L, n, kind="pos", y=lambda p: -6.2 * abs(math.sin(2 * math.pi * p)))                  # the body is lowest when the legs are spread (the feet stay on the ground)
     wave(a, "walk", "hips", L, n, z=lambda p: 2.0 * ph(p))
     wave(a, "walk", "torso", L, n, x=lambda p: -5 + 1.6 * math.cos(4 * math.pi * p), y=lambda p: -6 * ph(p), z=lambda p: 2.2 * math.cos(2 * math.pi * p))
     wave(a, "walk", "head", L, n, x=lambda p: 3 + 1.5 * math.cos(4 * math.pi * p), y=lambda p: 4 * ph(p))
@@ -328,6 +355,10 @@ def golem():
     keys(a, "collapse", "leg_l", "rot", {0.0: (0, 0, 0), 1.2: (-10, 0, 3)}, loop=False)
     keys(a, "collapse", "leg_r", "rot", {0.0: (0, 0, 0), 1.2: (10, 0, -3)}, loop=False)
     a.clips["collapse"]["animation_length"] = 1.2
+
+    for clip in ("walk", "punch", "stomp"):                                            # the feet stay flat: each foot turns against the hip, the leg and the shin
+        for n in ("l", "r"):
+            counter(a, clip, "foot_" + n, ["hips", "leg_" + n, "shin_" + n])
 
     # ---- numbers the Java side copies: the fist at the end of the blow, the feet, the eyes, the chimney
     arm_a, fore_a, torso_a, hips_a = 55, 14, -24, -4

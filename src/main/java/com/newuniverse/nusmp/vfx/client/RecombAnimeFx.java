@@ -78,7 +78,7 @@ public final class RecombAnimeFx {
 
     /** A foot coming down: a small ring of dust and a few grains. */
     public static void footfall(Level l, double x, double y, double z, float renderScale, int count) {
-        dustRing(l, x, y, z, 0.6 * renderScale, count, 0.55f * renderScale);
+        dustRing(l, x, y, z, 0.6 * renderScale, count, 1.5f * renderScale);
     }
 
     /** A column of rubble and dust while the golem rises out of the ground or falls apart. */
@@ -113,7 +113,7 @@ public final class RecombAnimeFx {
         }
         int n = allow(l, x, y, z, sparks);
         RandomSource r = l.getRandom();
-        ParticleOptions spark = opt("spark", -1, 1.5f * scale), ember = opt("ember", -1, 1.3f * scale), tongue = opt("flame_tongue", -1, 1.2f * scale);
+        ParticleOptions spark = opt("spark", -1, 3.0f * scale), ember = opt("ember", -1, 2.4f * scale), tongue = opt("flame_tongue", -1, 2.4f * scale);
         for (int i = 0; i < n; i++) {                                         // spark lines: evenly fanned, nearly flat, fast
             double a = (i + r.nextDouble() * 0.6) * (Math.PI * 2 / Math.max(1, n));
             double sp = 0.42 + r.nextDouble() * 0.3;
@@ -121,9 +121,9 @@ public final class RecombAnimeFx {
             if (i % 3 == 0) add(l, ember, x, my, z, Math.cos(a) * sp * 0.45, 0.12 + r.nextDouble() * 0.12, Math.sin(a) * sp * 0.45);
             if (i % 4 == 1) add(l, tongue, x, y + 0.2, z, Math.cos(a) * sp * 0.25, 0.1 + r.nextDouble() * 0.08, Math.sin(a) * sp * 0.25);
         }
-        dustRing(l, x, y, z, 0.8 * scale, dust, 0.9f * scale);
+        dustRing(l, x, y, z, 0.8 * scale, dust, 1.7f * scale);
         int c = allow(l, x, y, z, chips);
-        ParticleOptions chip = opt("earth_chip", DUST, 1.3f * scale);
+        ParticleOptions chip = opt("earth_chip", DUST, 2.4f * scale);
         for (int i = 0; i < c; i++) {
             double a = r.nextDouble() * Math.PI * 2, sp = 0.1 + r.nextDouble() * 0.2;
             add(l, chip, x, my, z, Math.cos(a) * sp, 0.35 + r.nextDouble() * 0.3, Math.sin(a) * sp);

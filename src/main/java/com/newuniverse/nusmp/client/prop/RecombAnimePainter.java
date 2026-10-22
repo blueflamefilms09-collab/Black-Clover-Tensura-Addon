@@ -130,17 +130,17 @@ public final class RecombAnimePainter {
         double yaw = e.getYRot();
         int age = tick;
         if (age < RecombAnimeRules.ASSEMBLE_TICKS) {                                                  // rising out of the ground
-            if ((age & 1) == 0) RecombAnimeFx.rubble(level, x, y, z, 2.6 * sc, 6, 0.9f * sc);
+            if ((age & 1) == 0) RecombAnimeFx.rubble(level, x, y, z, 2.6 * sc, 6, 1.5f * sc);
         } else if (RecombAnimeRules.crossed(age, elapsed, RecombAnimeRules.ASSEMBLE_TICKS)) {
-            RecombAnimeFx.dustRing(level, x, y, z, 2.2 * sc, RecombAnimeRules.slamDust(sc), 1.2f * sc);
+            RecombAnimeFx.dustRing(level, x, y, z, 2.2 * sc, RecombAnimeRules.slamDust(sc), 1.8f * sc);
             VfxShake.add(new Vec3(x, y, z), 0.25f * sc, 6);
         }
         if (RecombAnimeRules.crossed(age, elapsed, RecombAnimeRules.STOMP_AT_TICK) && state == 0) {      // the settling stomp (left foot)
             double[] f = RecombAnimeRules.footLanding(true, sc), w = RecombAnimeRules.toWorld(yaw, f[0], f[1] * 0.4);
-            RecombAnimeFx.dustRing(level, x + w[0], y, z + w[1], 1.2 * sc, RecombAnimeRules.slamDust(sc), 1.0f * sc);
+            RecombAnimeFx.dustRing(level, x + w[0], y, z + w[1], 1.2 * sc, RecombAnimeRules.slamDust(sc), 1.6f * sc);
         }
         if (age > maxL - RecombAnimeRules.COLLAPSE_TICKS) {                                            // falling apart
-            if ((age & 1) == 0) RecombAnimeFx.rubble(level, x, y, z, 3.0 * sc, 7, 1.0f * sc);
+            if ((age & 1) == 0) RecombAnimeFx.rubble(level, x, y, z, 3.0 * sc, 7, 1.6f * sc);
             return;
         }
         if (age < RecombAnimeRules.ASSEMBLE_TICKS) return;
