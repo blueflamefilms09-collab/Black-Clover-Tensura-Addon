@@ -7,8 +7,8 @@ import net.neoforged.neoforge.common.NeoForge;
 
 /**
  * Why: the Spirit of Space is one self-contained feature, so it has one entry point: the single line the mod constructor calls. It registers the server config
- * {@code nusmp-spiritspace-server.toml} ({@code magic.spiritSpace}), its own sound register, the key packet, the game events (and the {@code /spiritspace} commands) and the CI self-test
- * {@code magic.spirit_space}. Safe to call twice. The client half (the keys, the prop painters) is {@code client.spiritspace.SpiritSpaceClient}, called from the client block of the constructor.
+ * {@code nusmp-spiritspace-server.toml} ({@code magic.spiritSpace}), its own sound register, the game events (and the {@code /spiritspace} commands) and the CI self-test
+ * {@code magic.spirit_space}. Safe to call twice. No keys since 3.0.0: the grimoire's spirit pages and /multiverse spirit call it (its handle is registered here). The prop painters are registered by the prop painter registry.
  */
 public final class SpiritSpaceBoot {
     private SpiritSpaceBoot() {}
@@ -21,8 +21,8 @@ public final class SpiritSpaceBoot {
         done = true;
         SpiritSpaceSounds.SOUNDS.register(modBus);
         container.registerConfig(ModConfig.Type.SERVER, SpiritSpaceConfig.SPEC, "nusmp-spiritspace-server.toml");
-        modBus.addListener(SpiritSpaceNet::registerPayloads);
         SpiritSpaceEvents.register(NeoForge.EVENT_BUS);
         SpiritSpaceSelfTests.register();
+        com.newuniverse.nusmp.spiritcontrol.SpiritControl.register(new SpiritSpaceControl());                                  // 3.0.0: the spirit control plane (grimoire pages and /multiverse spirit) replaces the key
     }
 }

@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "canon": "zenon",
+  "magic": "BONE",
+  "book": "book_bone",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "bone_spear",
+      "name": "Bone Magic (Bone Bullets / bones shaped by hand)",
+      "ja": "骨弾",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the book (Bone Bullets, which the wiki gives to Lucius), kept because mode 0 is never hidden."
+    },
+    {
+      "page": "bone_armor",
+      "name": "Bone Armor",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "Not a spell page: the ja.wikipedia extract says his bones block almost every physical blow."
+    },
+    {
+      "page": "ossuary",
+      "name": "Bone Magic: Eternal Fangs",
+      "ja": "無間骨牙",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "Countless bones protrude from the body, sharp enough to pierce through dense sand and puncture the target."
+    },
+    {
+      "page": "demon_sword_dainsleif",
+      "name": "Bone x Spatial Magic: Demon Sword Dainsleif",
+      "ja": "魔剣ダーインスレイヴ",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "ossuary",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "A bone sword coated in offensive Spatial Magic: Zenon's second attribute came with his devil. Swinging it sends flying slashes of space."
+    },
+    {
+      "page": "spatial_rupture",
+      "name": "Bone x Spatial Magic: Spatial Rupture",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "demon_sword_dainsleif",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "Union spell in the Space category; no description found: the page is the Dainsleif's flying slashes."
+    }
+  ],
+  "planned": [],
+  "notes": "Not in his grimoire (kept in the basic Bone book): Rib Cage and Bone Rain are this mod's own pages (old book), not found in any source. His devil Beelzebub and the spatial cubes of the Spatial Mana Domination are not pages."
+}

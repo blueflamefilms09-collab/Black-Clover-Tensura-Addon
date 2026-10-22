@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "canon": "letoile",
+  "magic": "COMPASS",
+  "book": "book_compass",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
+    "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+  },
+  "spells": [
+    {
+      "page": "useless_north",
+      "name": "Compass Magic: Useless North",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Offensive: a large compass needle that pursues its target until it strikes (listed on the wiki's Compass Magic page; a Comic Vine thread gives it to Kivn, the elf she hosts)."
+    },
+    {
+      "page": "willful_compass",
+      "name": "Compass Magic: Willful Compass",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.25
+      },
+      "note": "Defensive: a large compass appears in front of a target and any incoming attack is redirected in the direction of the needle; close-ranged spells can resist it."
+    },
+    {
+      "page": "another_atlas",
+      "name": "Compass Magic: Another Atlas",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "willful_compass"
+          },
+          {
+            "type": "mastery",
+            "min": 0.45
+          }
+        ]
+      },
+      "note": "Supplementary: opened from the grimoire, a small compass and a large compass face above an area, the large needle mirroring the small one's spin; it disrupts the mana of the area, dissolving other spells and impeding other people's magic while her own is unaffected."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Spells used while possessed by Kivn",
+      "ja": "",
+      "origin": "anime",
+      "source": "en_wiki",
+      "note": "Her power rises while the elf Kivn possesses her; no separate spell names were found, so nothing is added."
+    }
+  ],
+  "notes": "All three wiki spells of Compass Magic already have pages; Compass Rose (the signature page of the mod's book) and the pages of CompassExt were not found in any source for her and stay in the basic Compass book. Mode 0 is Useless North. The order is the mod's design. No new page."
+}

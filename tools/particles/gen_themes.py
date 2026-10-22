@@ -214,6 +214,11 @@ OTHER = {
     "dungeon.rift": ("space", "void_speck nebula_puff mana_mote soot_puff", "8F5BFF"),
     "dungeon.humanoid": ("dark", "ash_flake void_speck ember soot_puff", "8A7A9A"),
     "dungeon.trap": ("battle", "spark cog ash_flake soot_puff", "D0A850"),
+    # Noelle Silva's armour forms (docs/magic/noelle_forms.md): the entry puff and ring of each form
+    "form.noelle.valkyrie": ("light", "feather_white glint star4 mote_soft", "BFEFFF"),
+    "form.noelle.mermaid": ("water", "bubble droplet gem_sparkle mote_soft", "7CF0FF"),
+    "form.noelle.dragon": ("water", "droplet mana_mote glint mote_soft", "46D8FF"),
+    "form.noelle.black_dragon": ("dark", "flame_soul ember void_speck soot_puff", "2C7CFF"),
     # misc systems
     "corpse": ("dark", "soul_wisp bone_chip void_speck soot_puff", "7FD0C0"),
     "grimoire.daemon": ("dark", "rune_eye void_speck ember soot_puff", "9B3FCB"),

@@ -36,7 +36,8 @@ public class SealingBook extends GrimoireBook {
             BookPage.zone("seal_barrier", "Seal Magic: Barrier", WikiSpells::sealBarrier)), com.newuniverse.nusmp.book.ext.SealExt.pages());
 
     public SealingBook() { super(MagicType.SEALING, 0xFFE8C26A); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withBulls;           // Black Bulls character spell sets: the pages that belong to one squad member are appended after the shared pages (book.CharacterPagesBulls)
+    @Override protected List<BookPage> familyPages() { if (withBulls == null) withBulls = CharacterPagesBulls.sealing(pages); return withBulls; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
     /** Seals a mage's grimoire for 5 s (bosses: 1 s); on monsters it seals the wound shut with a sealing cut. */

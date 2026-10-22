@@ -35,15 +35,15 @@ public enum CanonBook {
     ZENON("Zenon Zogratis", "SPADE", "BONE", 0x8C8C94, 0x2A2A30, 0xD8D8E0, null),
     VANICA("Vanica Zogratis", "SPADE", "BLOOD", 0x6A0A14, 0x2A0A10, 0xE0182C, null),
     DANTE("Dante Zogratis", "SPADE", "GRAVITY", 0x6A4A8A, 0x3A2A4A, 0, null),                  // Body Magic
-    LUCIUS("Lucius Zogratis", "SPADE", "DARK", 0xE8E8E8, 0x202020, 0x202020, null),            // Soul Magic
+    LUCIUS("Lucius Zogratis", "SPADE", "SOUL", 0xE8E8E8, 0x202020, 0x202020, null),            // Soul Magic
     // Heart Kingdom
     FLOGA("Floga", "HEART", "FLAME", 0xC0301C, 0xE8B850, 0, null),
     GADJAH("Gadjah", "HEART", "LIGHTNING", 0xC8A040, 0x6A4A20, 0, null),
     LOLOPECHKA("Lolopechka", "HEART", "WATER", 0x4A8AD8, 0xD8E8F8, 0, null),
     // Diamond Kingdom
-    MARS("Mars", "DIAMOND", "EARTH", 0xD8D8E0, 0xB04030, 0, null),                            // Mineral Magic
+    MARS("Mars", "DIAMOND", "MINERAL", 0xD8D8E0, 0xB04030, 0, null),                            // Mineral Magic
     // 0.34: the remaining squad captains (wiki: Magic Knights) and the Black Bulls with the new attributes; appended
-    CHARLOTTE("Charlotte Roselei", "THREE_LEAF", "PLANT", 0x2A6A9A, 0xC8D8E8, 0, null),        // Blue Rose captain; Briar Magic
+    CHARLOTTE("Charlotte Roselei", "THREE_LEAF", "BRIAR", 0x2A6A9A, 0xC8D8E8, 0, null),        // Blue Rose captain; Briar Magic
     JACK("Jack the Ripper", "THREE_LEAF", "SLASH", 0x2E8A5A, 0xC8E0C8, 0, null),               // Green Mantis captain; Slash Magic (0.45; was SWORD)
     RILL("Rill Boismortier", "THREE_LEAF", "PAINTING", 0x9AD0C0, 0xE8F0E8, 0, null),          // Aqua Deer captain; Painting Magic (0.41; was CREATION)
     DOROTHY("Dorothy Unsworth", "THREE_LEAF", "DREAM", 0xE88AA0, 0xF0D8E0, 0, null),          // Coral Peacock captain; Dream Magic

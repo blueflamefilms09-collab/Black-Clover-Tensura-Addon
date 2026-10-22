@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Builder gold (docs/magic/character_spells_gold.md): the twelve characters of the Golden Dawn / Crimson Lion / Silver Eagle / Wizard King side. Reads the real sources and files: every character
+ * Builder gold (docs/magic/character_spells_gold.md): the thirteen characters of the Golden Dawn / Crimson Lion / Silver Eagle / Wizard King side. Reads the real sources and files: every character
  * file loads and matches its CanonBook entry, every page it names exists in the real book, every page {@code CharacterPagesGold} appended is owned by the character whose name it carries and has its
  * text and its policy line, the spells are listed in the order they open (a rule only names earlier spells), every spell is reachable without the late-game gates, the casts are bounded
  * (effect packets, zones, hit caps, nothing spawned or placed, no client class), the Time Magic files are untouched, and the hooks are in place.
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CharacterSetGoldTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
-    static final List<String> OWNED = List.of("mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser");
+    static final List<String> OWNED = List.of("mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser", "letoile");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
@@ -59,7 +59,7 @@ class CharacterSetGoldTest {
     private static Map<String, Set<String>> bookPages() throws IOException {
         Map<String, Set<String>> m = new LinkedHashMap<>();
         Map<String, String> files = Map.of("book_fire", "FireBook.java", "book_plant", "PlantBook.java", "book_world_tree", "WorldTreeBook.java", "book_steel", "SteelBook.java",
-                "book_spatial", "SpatialBook.java", "book_light", "LightBook.java", "book_time", "TimeBook.java", "book_cherry_blossom", "CherryBlossomBook.java");
+                "book_spatial", "SpatialBook.java", "book_light", "LightBook.java", "book_time", "TimeBook.java", "book_cherry_blossom", "CherryBlossomBook.java", "book_compass", "CompassBook.java");
         for (var e : files.entrySet()) m.put(e.getKey(), new LinkedHashSet<>(ids(code(SRC.resolve("book/" + e.getValue())))));
         String eb = code(SRC.resolve("book/ElementBooks.java"));
         int from = eb.indexOf("public static GrimoireBook storm()"), to = eb.indexOf("public static GrimoireBook sand()");
@@ -70,11 +70,14 @@ class CharacterSetGoldTest {
         while (c.find()) merc.add(c.group(1));
         m.put("book_mercury", merc);
         String gold = code(SRC.resolve("book/CharacterPagesGold.java")), pilot = code(SRC.resolve("book/CharacterPages.java"));
+        String bulls = code(SRC.resolve("book/CharacterPagesBulls.java"));
         for (String book : new String[]{"book_fire", "book_plant", "book_world_tree", "book_steel", "book_spatial", "book_light", "book_storm"}) {
             Matcher g = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(gold);
             if (g.find()) m.get(book).addAll(ids(g.group(1)));
             Matcher p = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(pilot);
             if (p.find()) m.get(book).addAll(ids(p.group(1)));
+            Matcher bu = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(bulls);
+            if (bu.find()) m.get(book).addAll(ids(bu.group(1)));      // the Black Bulls' twin class: Magna's Fire pages, Finral's Spatial page (counted for the 24-page limit)
         }
         return m;
     }
@@ -216,7 +219,7 @@ class CharacterSetGoldTest {
     void theBookFilesAppendTheGoldPagesAfterTheSharedOnes() throws IOException {
         for (String f : new String[]{"PlantBook", "WorldTreeBook", "SteelBook", "SpatialBook"})
             assertTrue(read(SRC.resolve("book/" + f + ".java")).contains("CharacterPagesGold."), f);
-        assertTrue(read(SRC.resolve("book/FireBook.java")).contains("CharacterPagesGold.fire(CharacterPages.fire(pages))"), "the pilots' pages come first, then this builder's");
+        assertTrue(read(SRC.resolve("book/FireBook.java")).contains("CharacterPagesGold.fire(CharacterPagesBulls.fire(CharacterPages.fire(pages)))"), "the pilots' pages come first, then the Black Bulls', then this builder's");
         assertTrue(read(SRC.resolve("book/LightBook.java")).contains("CharacterPagesGold.light(pagesJaAll)") && read(SRC.resolve("book/LightBook.java")).contains("CharacterPagesGold.light(pages)"), "both shapes of the Light book");
         assertTrue(read(SRC.resolve("book/ElementBooks.java")).contains("CharacterPagesGold.storm(List.of("));
         assertTrue(read(SRC.resolve("charset/CharacterSets.java")).contains("CharacterPagesGold.isAdded"), "an added page is locked to its character");

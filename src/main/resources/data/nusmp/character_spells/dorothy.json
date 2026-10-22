@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "canon": "dorothy",
+  "magic": "DREAM",
+  "book": "book_dream",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "dream_haze",
+      "name": "Dream Magic (a drowsy haze)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Dream book; the magic's trait is drowsiness."
+    },
+    {
+      "page": "dream_world",
+      "name": "Dream Magic (a dream world under her control)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "Search summaries of the Dream Magic page: she creates a dream-like world over which she has full control."
+    },
+    {
+      "page": "imagination_manifestation",
+      "name": "Dream Magic (imagination made real in the dream)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.35
+      },
+      "note": "Design: what she builds inside the dream world."
+    },
+    {
+      "page": "glamour_world",
+      "name": "Dream Magic: Glamour World",
+      "ja": "幻惑の界",
+      "origin": "anime",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "dream_world",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "A multi-hued mist pulls whatever it touches into a dream world; those inside grow drowsier and die if they fall asleep there."
+    }
+  ],
+  "planned": [],
+  "notes": "Glamour World is the only Dream spell the sources name for her. Not in her grimoire (kept in the basic Dream book): Sweet Dream is this mod's own page and was not found in any source for Dorothy."
+}

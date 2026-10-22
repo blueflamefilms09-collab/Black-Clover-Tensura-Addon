@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "canon": "nacht",
+  "magic": "SHADOW",
+  "book": "book_shadow",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) page Nacht Faust, read through search summaries only (host unreachable), with fan-wiki and Baidu summaries: Shadow Magic spells Invitation to the Dark Garden, Shadow Corridor (first seen in chapter 274), Heavenly Shadow Thousand-Mile Eye, Atonement Monument; four devils (Gimodelo, Slotos, Plumede, Walgner) for the Union Modes Canis, Equus, Felis and Gallus.",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, namu, manga-tantei, netabare-comic): 影の回廊, 暗い園の誘い, 暗獄の狩り場 (in the Canis state a great shadow wraps the foe, blinds it and strikes from four sides), 天影千里眼 (Felis, sees through shadows), 贖罪の碑 (buries the enemy and himself in an empty shadow world), the forbidden 従魔の儀 that gave him four devils.",
+    "repo": "A page that already existed in the mod's Shadow book (names carried over from the 1.43.0 release); no source could be re-read this round.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "shadow_step", "name": "Shadow Magic: Invitation to the Dark Garden", "ja": "暗い園の誘い", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "start" }, "note": "Shadow hands rise from under the foe's feet and catch it. Mode 0 of the Shadow book, so it stays in the basic book too." },
+    { "page": "shadow_travel", "name": "Shadow Magic: Shadow Corridor", "ja": "影の回廊", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.08 }, "note": "A corridor of shadow that carries many people to another place." },
+    { "page": "unite_canis", "name": "Devil Union Mode: Canis", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "page_uses", "page": "devil_union", "count": 1 }, "note": "The first union with a devil. Already locked to his grimoire." },
+    { "page": "dark_hunting_ground", "name": "Shadow Magic: Dark Hunting Ground", "ja": "暗獄の狩り場", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "unite_canis" }, { "type": "mastery", "min": 0.3 } ] },
+      "note": "NEW page: the Canis state's spell, a big shadow that wraps the foes, blinds them and strikes from all four sides." },
+    { "page": "unite_gallus", "name": "Devil Union Mode: Gallus", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "page_uses", "page": "devil_union", "count": 2 }, "note": "The rooster-masked union with Walgner. Already locked to his grimoire." },
+    { "page": "unite_gallus_call", "name": "Gallus: Walgner's Call", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "page_open", "page": "unite_gallus" }, "note": "The rooster's cry; already locked to his grimoire." },
+    { "page": "unite_felis", "name": "Devil Union Mode: Felis", "ja": "", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "page_uses", "page": "devil_union", "count": 3 }, "note": "The union with Plumede. Already locked to his grimoire." },
+    { "page": "heavens_shadow_second_sight", "name": "Shadow Magic: Heavenly Shadow Thousand-Mile Eye", "ja": "天影千里眼", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "page_open", "page": "unite_felis" }, "note": "The Felis state's spell: he sees everything round him through the shadows." },
+    { "page": "unite_equus", "name": "Devil Union Mode: Equus", "ja": "", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "page_uses", "page": "devil_union", "count": 4 }, "note": "The union with Slotos (strength). Already locked to his grimoire." },
+    { "page": "unite_canis_felis", "name": "Devil Union Mode: Canis x Felis", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "unite_canis" }, { "type": "page_open", "page": "unite_felis" }, { "type": "mastery", "min": 0.8 } ] },
+      "note": "Two unions at once. Already locked to his grimoire." },
+    { "page": "atonement_monument", "name": "Shadow Magic: Atonement Monument", "ja": "贖罪の碑", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "unite_equus" }, { "type": "mastery", "min": 0.85 } ] },
+      "note": "NEW page: buries the enemy, himself included, in an empty world of shadow. The mod holds the foes near the caster for 4 s under the full weight of it; the caster is not harmed." }
+  ],
+  "planned": [],
+  "notes": "Not in Nacht's grimoire (kept in the basic Shadow book, no source found): Kids' Playground and Shadow Realm. The order of the four Union Modes is this mod's design (the series names the four devils but not the order they were first united)."
+}

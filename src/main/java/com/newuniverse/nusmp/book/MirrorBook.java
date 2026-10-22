@@ -47,7 +47,8 @@ public class MirrorBook extends GrimoireBook {
             BookPage.signature("mirrors_meteorite", "Mirrors Meteorite", armoured(MirrorWorks::mirrorsMeteorite, 1)).withCooldown(900)), MirrorRebuild.pages());
 
     public MirrorBook() { super(MagicType.MIRROR, 0xFFDDEEFF); }
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withBulls;           // Black Bulls character spell sets: the pages that belong to one squad member are appended after the shared pages (book.CharacterPagesBulls)
+    @Override protected List<BookPage> familyPages() { if (withBulls == null) withBulls = CharacterPagesBulls.mirror(pages); return withBulls; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
     /** A blow aimed at you may strike one of your Real Doubles instead (35%): it steps in front of it. */

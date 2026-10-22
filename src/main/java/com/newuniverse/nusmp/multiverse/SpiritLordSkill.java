@@ -42,7 +42,7 @@ import java.util.Optional;
  */
 public class SpiritLordSkill extends Skill {
     public static final String[] TYPES = {"Salamander", "Undine", "Sylph", "Gnome", "Anti"};
-    private static final int CHANNEL = 0, CALL = 1;
+    private static final int CHANNEL = 0, CALL = 1, COMBAT = 2;
 
     public SpiritLordSkill() { super(SkillType.UNIQUE); }
 
@@ -130,10 +130,11 @@ public class SpiritLordSkill extends Skill {
     @Override public ResourceLocation getSkillIcon() {
         return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/storm.png");
     }
-    @Override public int getModes(ManasSkillInstance instance) { return 2; }
-    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return mode == CHANNEL ? CALL : CHANNEL; }
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return mode == CHANNEL ? "spirit_channeling" : "call_spirit"; }
+    @Override public int getModes(ManasSkillInstance instance) { return 3; }
+    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), 3); }      // 3.0.0: Spirit Burst, Call Spirit, then Combat Mode
+    @Override public String getModeId(ManasSkillInstance i, int mode) { return mode == CHANNEL ? "spirit_channeling" : mode == COMBAT ? "spirit_combat_mode" : "call_spirit"; }
     @Override public Component getModeName(ManasSkillInstance i, int mode) {
+        if (mode == COMBAT) return Component.literal("Spirit Combat Mode");
         return Component.literal(mode == CHANNEL ? "Spirit Burst" : "Call " + (anti(i) ? "the Anti-Magic Lord" : type(i)));
     }
     @Override public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) { return 0; }
@@ -155,6 +156,7 @@ public class SpiritLordSkill extends Skill {
             castSpiritBurst(i, p);
             return;
         }
+        if (mode == COMBAT) { com.newuniverse.nusmp.spiritcontrol.SpiritControl.toggleCombat(p); return; }      // 3.0.0: the spirit control plane's combat mode (the Lord casts with its mana and yours)
         if (mode != CALL) return;
         if (com.newuniverse.nusmp.relics.Severance.isSevered(p)) {                         // 1.45.0: the god-tier Lucius's severance: the spirit does not answer for a few seconds, nothing is lost
             p.displayClientMessage(Component.literal("Your spirit is severed from you for a moment.").withStyle(ChatFormatting.DARK_PURPLE), true);

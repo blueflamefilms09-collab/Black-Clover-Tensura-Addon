@@ -63,7 +63,7 @@ class CharacterSetSourceScanTest {
     @Test
     void theLegacyPagesAreUntouchedAndInOrder() throws IOException {
         assertEquals(List.of("kamaitachi", "gust_lane", "spirit_storm", "towering_tornado", "slicing_wind_emperor", "spirit_of_zephyr"), legacy("book_wind"));
-        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent"), legacy("book_water"));
+        assertEquals(List.of("waterball", "roar", "cradle", "aqua_javelin", "sea_dragons_nest", "valkyrie_dress", "sea_dragons_wrath", "tide_lance", "scale_mail", "torrent", "mermaid_form", "sea_dragon_god_form", "black_dragon_form"), legacy("book_water"));
         assertEquals(List.of("exploding_fireball", "sol_linea", "calderos", "leo_rugiens", "spiral_flame", "wild_bursting_flame", "ignis_columna", "calidos_brachium", "crimson_lion_king", "flame_armour", "phoenix_flare"), legacy("book_fire"));
         assertEquals(List.of("avidya_slash", "black_hole", "dimension_slash", "death_thrust", "black_blade", "avidya_wild_slash", "black_moon", "iai_slash", "dimension_slash_equinox", "dark_cloak", "shadow_embrace", "black_hole_collapse"), legacy("book_dark"));
         assertEquals(List.of("demon_slayer_slash", "black_divider", "black_meteorite", "black_hurricane", "black_form", "bull_thrust", "infinite_slash", "infinite_slash_equinox"), legacy("book_anti_magic"));
@@ -87,10 +87,12 @@ class CharacterSetSourceScanTest {
             for (Path f : (Iterable<Path>) s.filter(p -> p.toString().endsWith(".json"))::iterator) {
                 JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
                 String book = o.get("book").getAsString();
-                if (!BOOK_FILES.containsKey(book)) continue;      // builder gold: the books of the Golden Dawn / Crimson Lion side are checked by CharacterSetGoldTest
+                if (!BOOK_FILES.containsKey(book)) continue;      // the books of the later content builders are checked by their own scan test (CharacterSetRestSourceScanTest)
                 List<String> have = new ArrayList<>(legacy(book));
                 have.addAll(added(book));
-                have.addAll(addedGold(book));
+                Matcher twin = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(SRC.resolve("book/CharacterPagesBulls.java")));      // the Black Bulls' twin class (pages for Magna in the Fire book)
+                if (twin.find()) have.addAll(ids(twin.group(1)));
+                have.addAll(addedGold(book));      // builder gold: the Golden Dawn / Crimson Lion pages
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);

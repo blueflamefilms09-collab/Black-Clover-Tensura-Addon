@@ -77,7 +77,7 @@ public final class CharacterSetSelfTests {
             GrimoireBook b = book(bookPath);
             List<String> added = CharacterPages.addedTo(bookPath);
             if (b == null || added.isEmpty()) return Result.fail(bookPath + ": no added pages");
-            int first = b.familyCount() - added.size();
+            int first = index(b, added.get(0));      // other squads' twin classes may append after these (book_fire: the Black Bulls' Magna pages), so the block is found, not assumed to be last
             for (int k = 0; k < added.size(); k++) if (!b.page(first + k).id().equals(added.get(k))) return Result.fail(bookPath + ": " + added.get(k) + " is not appended in order");
             for (String id : added) {
                 if (reg.exclusiveOwner(bookPath, id) == null) return Result.fail(bookPath + ": added page " + id + " belongs to no character file");

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "canon": "luck",
+  "magic": "LIGHTNING",
+  "book": "book_lightning",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Thunder God's Boots, Keraunos, Lightning Battle Fiend and Black Lightning Battle Fiend, and the Hero Wiki list for Luck Voltia (Thunderclap Crumbling Orb, Thunder God's Boots, Thunder God's Gloves, Thunder Fiend, Keraunos), read through search summaries only (the hosts are not reachable from the build machine).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, manga-legend, RENOTE, playnews): 雷創成魔法「雷神の長靴」「雷神の手袋」, 雷魔法「迅雷の崩玉」, 真雷魔法「雷霆(ケラノウス)」 learned in the Heart Kingdom training, 雷究極魔法「雷霆刹那戦鬼」 learned with the elves.",
+    "owner": "Raging Lightning is named by the owner for Luck's armour (docs/attributes/lightning_rebuild.md).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "thunder_boots", "name": "Lightning Creation Magic: Thunder God's Boots", "ja": "雷創成魔法「雷神の長靴」", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "Boots of lightning: speed, and flight for a while." },
+    { "page": "thunderclap_crumbling_orb", "name": "Lightning Magic: Thunderclap Crumbling Orb", "ja": "迅雷の崩玉", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "NEW page: lightning stored in the claws is thrown as a ball; it can be thrown again and again." },
+    { "page": "thunder_gods_gloves", "name": "Lightning Creation Magic: Thunder God's Gloves", "ja": "雷創成魔法「雷神の手袋」", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "thunder_boots", "count": 2 }, { "type": "mastery", "min": 0.2 } ] },
+      "note": "NEW page: the matching gloves of lightning (his charged fists). Opens after the boots, as the pair." },
+    { "page": "keraunos", "name": "True Lightning Magic: Keraunos", "ja": "真雷魔法「雷霆(ケラノウス)」", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "thunder_boots", "count": 3 }, { "type": "any", "of": [ { "type": "flag", "name": "mana_zone" }, { "type": "mastery", "min": 0.45 } ] } ] },
+      "note": "NEW page: learned in the Heart Kingdom training (a lightning spell that works through the surroundings' mana), so it opens with the Mana Zone gate or at 45 percent. He turns himself into the bolt and strikes in a line." },
+    { "page": "thunder_fiend", "name": "Lightning Ultimate Magic: Lightning Battle Fiend (Thunder Fiend)", "ja": "雷究極魔法「雷霆刹那戦鬼」", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "keraunos", "count": 2 }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "His ultimate magic, learned in the training with the elves after Keraunos; lightning wrapped round the whole body for attack and speed. Already locked to his grimoire." },
+    { "page": "raging_lightning", "name": "Raging Lightning", "ja": "", "origin": "anime", "exclusive": false, "source": "owner",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "thunder_fiend" }, { "type": "mastery", "min": 0.7 } ] },
+      "note": "The owner's name for his lightning armour; opens after the Fiend." },
+    { "page": "black_lightning_battle_fiend", "name": "Black Lightning Battle Fiend", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "thunder_fiend", "count": 3 }, { "type": "mastery", "min": 0.85 } ] },
+      "note": "The black form of the Fiend; the top of his book. Already locked to his grimoire." }
+  ],
+  "planned": [
+    { "name": "Thunder Arrow (Compound Magic with Klaus and Pouly)", "ja": "神鳴の矢", "origin": "anime", "source": "ja_search", "note": "A compound spell made at the Royal Knights selection test; needs two other casters." },
+    { "name": "Flame-Lightning Explosive Cannon (Union Magic with Magna)", "ja": "炎雷爆尽砲", "origin": "anime", "source": "en_wiki", "note": "Union of Flame and Lightning; needs Magna." }
+  ],
+  "notes": "Mode 0 of the Lightning book (Chain Lightning) is the book's default page and cannot be hidden, so it stays although no source names it for Luck. Not in his grimoire (kept in the basic Lightning book, no source found for Luck): Thunder Lance, Pulsaranta, God of Lightning Rising Salim, Thunderbird Cavalry, Raijin's Thunder Drums, Lightning Surge."
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "canon": "magna",
+  "magic": "FLAME",
+  "book": "book_fire",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Magna Swing, Grand Slam, Soul Chain Tag Deathmatch and Flame-Lightning Explosive Cannon, read through search summaries only (host unreachable).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, the 必殺技辞典): 爆殺轟炎魔球, 爆殺散弾魔球, 愚乱怒守羅夢(グランドスラム), 炎縄緊縛陣, 博打走塁, 魂炎鎖死決闘(ソウルチェーンデスマッチ, a hidden spell prepared for half a year and used on Dante).",
+    "fan_wiki": "A fan wiki spell list (names only) for Prison Kill Buckshot and Extreme Killing Vanishing Fireball.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "exploding_fireball", "name": "Flame Magic: Exploding Fireball", "ja": "爆殺轟炎魔球", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "start" }, "note": "A fireball that explodes on contact, thrown over-arm. Mode 0 of the Fire book, so it stays in the basic book too." },
+    { "page": "exploding_buckshot", "name": "Flame Magic: Exploding Buckshot", "ja": "爆殺散弾魔球", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.1 }, "note": "NEW page: the throw splits into many fireballs." },
+    { "page": "grand_slam", "name": "Flame Creation Magic: Grand Slam", "ja": "愚乱怒守羅夢", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "exploding_fireball", "count": 4 }, { "type": "mastery", "min": 0.2 } ] },
+      "note": "NEW page: the bat of swirling flames. In this mod the bat is the Soul Bat in the main hand, so every Fire page of his is already cast by swinging it at a tossed ball (firecast.MagnaSwing); this page knocks out three fireballs in a fan." },
+    { "page": "soul_chain_deathmatch", "name": "Soul Chain Tag Deathmatch", "ja": "魂炎鎖死決闘", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "grand_slam", "count": 3 }, { "type": "mastery", "min": 0.65 } ] },
+      "note": "NEW page: his hidden spell, prepared for half a year and used against Dante. A fireball and a chain made of two souls that splits the power between the two ends. The mod binds the foe within 7 blocks and evens the fight (weakness on the foe, strength on him); the exact power split is not modelled." }
+  ],
+  "planned": [
+    { "name": "Flame Rope Binding Formation", "ja": "炎縄緊縛陣", "origin": "anime", "source": "ja_search", "note": "Flame rope that holds the enemy and its magic; one Japanese summary only (a Wikipedia-style entry disagrees), no page." },
+    { "name": "Gambling Base Run", "ja": "博打走塁", "origin": "anime", "source": "ja_search", "note": "Flame around the legs for speed; a single source, no page (Fire has no free page slot left for it: the unlock mask is 32 bits)." },
+    { "name": "Prison Kill Buckshot / Extreme Killing Vanishing Fireball", "ja": "", "origin": "anime", "source": "fan_wiki", "note": "Names from a fan list only (a fireball that vanishes and strikes from another angle)." },
+    { "name": "Flame-Lightning Explosive Cannon (Union Magic with Luck)", "ja": "炎雷爆尽砲", "origin": "anime", "source": "en_wiki", "note": "Union of Flame and Lightning; needs Luck." }
+  ],
+  "notes": "Everything in the Fire book that is Fuegoleon's, Mereoleona's or Leopold's is hidden from Magna's grimoire (Sol Linea, Calderos, Leo Rugiens, Spiral Flame, Wild Bursting Flame, Ignis Columna, Calidos Brachium, Crimson Lion King, Flame Armour, Phoenix Flare and the Salamander pages). Casting: his pages need Magna's Soul Bat in the main hand (existing firecast hook); this builder did not change it."
+}

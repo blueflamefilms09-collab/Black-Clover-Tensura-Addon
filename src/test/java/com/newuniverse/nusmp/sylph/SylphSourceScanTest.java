@@ -53,10 +53,8 @@ class SylphSourceScanTest {
 
     @Test
     void everyPacketIsValidatedOnTheServer() throws IOException {
-        String net = code(SRC.resolve("sylph/SylphNet.java"));
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
-        assertTrue(net.contains("action != 0"), "an unknown action is ignored");
-        assertTrue(net.contains("playToServer") && !net.contains("playToClient"), "the one packet goes client to server and nothing is sent back");
+        assertFalse(SRC.resolve("sylph/SylphNet.java").toFile().exists(), "3.0.0: the key packet is gone (the spirit control plane calls her; spiritcontrol validates every ask)");
+        assertTrue(code(SRC.resolve("sylph/SylphSpirit.java")).contains("SylphCasting.applies(p)"), "the control plane handle asks the same rule: the canon book and the switch");
         String sc = code(SRC.resolve("sylph/SylphCasting.java"));
         assertTrue(sc.contains("PACKET_GAP") && sc.contains("CharacterSpells.characterOf(p) == CanonBook.YUNO") && sc.contains("SylphConfig.enabled()"), "rate limit, character and switch are checked");
     }
@@ -149,9 +147,7 @@ class SylphSourceScanTest {
     }
 
     @Test
-    void theClientOnlyAsksAndNeverCallsTheServersRules() throws IOException {
-        String client = code(SRC.resolve("client/sylph/SylphClient.java"));
-        assertTrue(client.contains("PacketDistributor.sendToServer(new SylphNet.Key(0))"));
-        assertFalse(client.contains("SylphCasting."), "the client never calls the server's rules");
+    void theKeyIsGoneAndTheClientHasNothingToAsk() throws IOException {
+        assertFalse(SRC.resolve("client/sylph/SylphClient.java").toFile().exists(), "3.0.0: the Sylph key is gone, the client has nothing to ask");
     }
 }

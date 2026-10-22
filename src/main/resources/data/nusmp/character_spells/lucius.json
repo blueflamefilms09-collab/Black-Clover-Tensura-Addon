@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "canon": "lucius",
+  "magic": "SOUL",
+  "book": "book_soul",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+  },
+  "spells": [
+    {
+      "page": "attribute_bolt",
+      "name": "Soul Magic (a soul-flame bolt)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "start"
+      },
+      "note": "Mode 0 of the Soul book."
+    },
+    {
+      "page": "soul_bind",
+      "name": "Soul Magic (touching the head to seize the soul)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "The search summaries: his Soul Magic needs a touch on the target's head."
+    },
+    {
+      "page": "attribute_cut",
+      "name": "Soul Magic (severing the soul)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "Design: the wiki lists Soul Magic spells only as unnamed."
+    },
+    {
+      "page": "paladin_conversion",
+      "name": "Soul Magic: Paladin Conversion",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "soul_bind",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.38
+          }
+        ]
+      },
+      "note": "KEPT page, locked to Lucius since 1.44.0: he turns people into his Paladins by remaking their souls."
+    },
+    {
+      "page": "paladin_recall",
+      "name": "Soul Magic: Paladin Recall",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": true,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "paladin_conversion"
+          },
+          {
+            "type": "mastery",
+            "min": 0.5
+          }
+        ]
+      },
+      "note": "KEPT page, locked to Lucius since 1.44.0: he calls his Paladins back."
+    },
+    {
+      "page": "soul_harvest",
+      "name": "Soul Magic (harvesting souls)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.65
+      },
+      "note": "Design from the attribute."
+    },
+    {
+      "page": "soul_ascension",
+      "name": "Soul Magic (ascension)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.85
+      },
+      "note": "Design from the attribute."
+    }
+  ],
+  "planned": [
+    {
+      "name": "Bone Bullets, Time Magic, Gravity, Body, Blood",
+      "ja": "",
+      "origin": "manga",
+      "source": "ja_search",
+      "note": "Attributes he gained later by absorbing his siblings and a contract; each lives in its own book."
+    },
+    {
+      "name": "Clone creation (Soul, Body, Blood and Bone together)",
+      "ja": "",
+      "origin": "manga",
+      "source": "en_wiki",
+      "note": "A union of four attributes; no page."
+    }
+  ],
+  "notes": "His CanonBook entry changed from Dark Magic to Soul Magic (the series' attribute; the mod has a Soul book since 1.44.0): a grimoire already bound with the old pair (DARK, lucius) keeps working as before. Soul Magic has no named spells on the wiki, so only the two Paladin pages are canon; the other pages are marked design."
+}

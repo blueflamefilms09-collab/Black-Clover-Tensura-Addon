@@ -103,15 +103,12 @@ class SpiritSpaceSourceScanTest {
 
     @Test
     void everyPacketIsValidatedOnTheServerAndNothingIsSentBack() throws IOException {
-        String net = code("spiritspace/SpiritSpaceNet.java");
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
-        assertTrue(net.contains("validAction(action)") && net.contains("validAbility(ability)") && net.contains("validSlot(slot"), "action, ability and slot are range checked");
-        assertTrue(net.contains("playToServer") && !net.contains("playToClient") && !net.contains("sendToPlayer"), "the one packet goes client to server");
+        assertFalse(java.nio.file.Files.exists(java.nio.file.Paths.get("src/main/java/com/newuniverse/nusmp/spiritspace/SpiritSpaceNet.java")), "3.0.0: the key packet is gone (the spirit control plane calls the spirit; spiritcontrol validates every ask)");
         String s = code("spiritspace/SpiritSpace.java");
         assertTrue(s.contains("PACKET_GAP") && s.contains("allowed(p)"), "rate limit and permission are checked");
-        String client = code("client/spiritspace/SpiritSpaceClient.java");
-        assertFalse(client.contains("SpiritSpace."), "the client never calls the server's rules");
-        assertTrue(client.contains("PacketDistributor.sendToServer(new SpiritSpaceNet.Key("));
+        String control = code("spiritspace/SpiritSpaceControl.java");
+        assertTrue(control.contains("SpiritSpaceRules.validSlot(arg") && control.contains("SpiritSpace.allowed(p)"), "the control plane handle checks the permission and range checks the slot");
+        assertFalse(java.nio.file.Files.exists(java.nio.file.Paths.get("src/main/java/com/newuniverse/nusmp/client/spiritspace/SpiritSpaceClient.java")), "3.0.0: the three Space keys are gone");
     }
 
     @Test
@@ -160,7 +157,7 @@ class SpiritSpaceSourceScanTest {
         assertTrue(kinds.indexOf("FIRECAST_2") < kinds.indexOf("SPIRITSPACE_1") && kinds.indexOf("SPIRITSPACE_1") < kinds.indexOf("SPIRITSPACE_2"), "new kinds only at the end");
         assertTrue(code("prop/PropRegistry.java").contains("SpiritSpaceProps.init()"));
         assertTrue(code("client/prop/PropPainterRegistry.java").contains("SpiritSpacePropPainter.register()"));
-        assertTrue(code("NUSMP.java").contains("SpiritSpaceBoot.init(modEventBus, modContainer)") && code("NUSMP.java").contains("SpiritSpaceClient.init(modEventBus)"));
+        assertTrue(code("NUSMP.java").contains("SpiritSpaceBoot.init(modEventBus, modContainer)") && !code("NUSMP.java").contains("SpiritSpaceClient.init(modEventBus)"), "3.0.0: no client key setup any more");
         assertTrue(code("book/SpellRuntime.java").contains("public static int dissolveBolts(ServerLevel level, Vec3 at, double r, LivingEntity keeper) {"), "the old overload is kept");
         String time = Files.readString(SRC.resolve("vfx/client/layer/TimeMagicLayer.java"));
         assertFalse(time.contains("spiritspace") || time.contains("SpiritSpace"), "the Time Magic layer knows nothing of the spirit");

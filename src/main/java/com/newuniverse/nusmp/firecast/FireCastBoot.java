@@ -14,9 +14,8 @@ import java.util.function.Supplier;
 
 /**
  * Why: the fire casting styles (Magna Swing, Mereoleona's fists, Fuegoleon's Salamander, Leopold's spiral) are one self-contained feature, so they have one entry point: the single line the mod
- * constructor calls. It registers Magna's Soul Bat on its own item register, the server config {@code nusmp-firecast-server.toml} ({@code magic.fireCasting}), the key packet, the game events and
- * the CI self-test {@code magic.fire_casting}. Safe to call twice. The client half (the Salamander key, the prop painters) is {@code client.firecast.FireCastClient}, called from the client block
- * of the constructor.
+ * constructor calls. It registers Magna's Soul Bat on its own item register, the server config {@code nusmp-firecast-server.toml} ({@code magic.fireCasting}), its handle on the spirit control plane (no key since 3.0.0: the grimoire's spirit pages and /multiverse spirit call the Salamander), the game events and
+ * the CI self-test {@code magic.fire_casting}. Safe to call twice. The prop painters are registered by the prop painter registry.
  */
 public final class FireCastBoot {
     private FireCastBoot() {}
@@ -35,9 +34,9 @@ public final class FireCastBoot {
         ITEMS.register(modBus);
         SalamanderSounds.SOUNDS.register(modBus);                                                    // the Salamander's creature sounds (docs/magic/fire_casting.md, 4.2)
         container.registerConfig(ModConfig.Type.SERVER, FireCastConfig.SPEC, "nusmp-firecast-server.toml");
-        modBus.addListener(FireCastNet::registerPayloads);
         FireCastEvents.register(NeoForge.EVENT_BUS);
         FireCastSelfTests.register();
+        com.newuniverse.nusmp.spiritcontrol.SpiritControl.register(new SalamanderSpirit());                                  // 3.0.0: the spirit control plane (grimoire pages and /multiverse spirit) replaces the key
     }
 
     /** The items drawn as 3D models in hand (client.WeaponRenderer). */

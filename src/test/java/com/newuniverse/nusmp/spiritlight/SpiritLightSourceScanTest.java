@@ -79,16 +79,14 @@ class SpiritLightSourceScanTest {
     @Test
     void everyPacketIsValidatedOnTheServer() throws IOException {
         String net = code(SRC.resolve("spiritlight/SpiritLightNet.java"));
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a real player");
-        assertTrue(net.contains("validAction(action)"), "an unknown action is ignored");
-        assertTrue(net.contains("playToServer") && net.contains("playToClient"), "one packet each way");
-        assertEquals(1, Pattern.compile("playToServer").matcher(net).results().count());
+        assertFalse(net.contains("playToServer"), "3.0.0: the key packet is gone, only the voice line travels (server to client)");
+        assertTrue(net.contains("playToClient"), "the voice packet goes to the client");
         assertTrue(net.contains("readUtf(MAX_ID)") && net.contains("SpiritLightVoiceLines.has("), "the line id is a bounded string checked against the catalogue");
         assertTrue(net.contains(".optional()"), "the channel is optional: a client without the mod is never sent anything");
         String sl = code(SRC.resolve("spiritlight/SpiritLight.java"));
         assertTrue(sl.contains("PACKET_GAP") && sl.contains("eligible(p)") && sl.contains("SpiritLightConfig.enabled()"), "rate limit, Light Magic and the switch are checked");
         String client = code(SRC.resolve("client/spiritlight/SpiritLightClient.java"));
-        assertTrue(client.contains("PacketDistributor.sendToServer(new SpiritLightNet.Key("));
+        assertFalse(client.contains("PacketDistributor") || client.contains("KeyMapping"), "3.0.0: the client class sends nothing and registers no key");
         assertFalse(client.contains("SpiritLight.") && client.contains("SpiritLight.on"), "the client never calls the server's rules");
     }
 

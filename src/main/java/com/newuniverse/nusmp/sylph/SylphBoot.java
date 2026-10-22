@@ -7,8 +7,8 @@ import net.neoforged.neoforge.common.NeoForge;
 
 /**
  * Why: the Sylph (Yuno's wind Spirit Lord, docs/magic/sylph.md) is one self-contained feature, so it has one entry point: the single line the mod constructor calls. It registers her sound
- * events, the server config {@code nusmp-sylph-server.toml} ({@code magic.sylph}), the key packet, the game events and the CI self-test {@code magic.sylph}. Safe to call twice. The client half
- * (the Sylph key) is {@code client.sylph.SylphClient}, called from the client block of the constructor; her prop painter is registered by the prop painter registry.
+ * events, the server config {@code nusmp-sylph-server.toml} ({@code magic.sylph}), her handle on the spirit control plane, the game events and the CI self-test {@code magic.sylph}. Safe to call twice. She has no key since 3.0.0: the grimoire's spirit pages and
+ * {@code /multiverse spirit} call her ({@code spiritcontrol}); her prop painter is registered by the prop painter registry.
  */
 public final class SylphBoot {
     private SylphBoot() {}
@@ -21,8 +21,8 @@ public final class SylphBoot {
         done = true;
         SylphSounds.SOUNDS.register(modBus);
         container.registerConfig(ModConfig.Type.SERVER, SylphConfig.SPEC, "nusmp-sylph-server.toml");
-        modBus.addListener(SylphNet::registerPayloads);
         SylphEvents.register(NeoForge.EVENT_BUS);
         SylphSelfTests.register();
+        com.newuniverse.nusmp.spiritcontrol.SpiritControl.register(new SylphSpirit());                                  // 3.0.0: the spirit control plane (grimoire pages and /multiverse spirit) replaces the key
     }
 }

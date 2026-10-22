@@ -1,6 +1,6 @@
 # Character spell sets, builder "gold": the Crimson Lion, Golden Dawn, Silver Eagle and Wizard King side
 
-Owner request (phase 2): the character's grimoire shows the spells that character used in the anime, in the order he got them, with a faithful rule for how each was acquired; his signature spells are his alone; and the character grimoire effects look far richer than the basic grimoire's. The engine is `charset` (`docs/magic/character_spells.md`); the five pilots (Yuno, Noelle, Fuegoleon, Asta, Yami) were done before. This document is the part of twelve more characters: Mereoleona, Leopold, Mimosa, William, Klaus, Langris, Lemiel, Julius, Kirsch, Karna, Nozel and Kaiser. Other builders own the Black Bulls ("bulls") and the other captains and kingdoms ("rest"); none of their characters was touched.
+Owner request (phase 2): the character's grimoire shows the spells that character used in the anime, in the order he got them, with a faithful rule for how each was acquired; his signature spells are his alone; and the character grimoire effects look far richer than the basic grimoire's. The engine is `charset` (`docs/magic/character_spells.md`); the five pilots (Yuno, Noelle, Fuegoleon, Asta, Yami) were done before. This document is the part of thirteen more characters: Mereoleona, Leopold, Mimosa, William, Klaus, Langris, Lemiel, Julius, Kirsch, Karna, Nozel, Kaiser and Letoile (Compass Magic, added at the coordinator's request after the first draft). Other builders own the Black Bulls ("bulls") and the other captains and kingdoms ("rest"); none of their characters was touched.
 
 Nothing here was seen in a game. What was run: the pure rules and the shipped files by JUnit (`charset.CharacterSetGoldTest` and the engine's own tests), the sources by scan tests, the type check against the API stubs. What the CI server smoke test will check in the real game: the self-test `magic.character_spells_gold`.
 
@@ -10,7 +10,7 @@ The existing server switch `magic.characterSpellSets` (`nusmp-character-spells-s
 
 | Part | Verdict |
 |---|---|
-| 12 character files (`data/nusmp/character_spells/<id>.json`), 12 ids appended to `CharacterSetRegistry.SHIPPED` | NEW |
+| 13 character files (`data/nusmp/character_spells/<id>.json`), 13 ids appended to `CharacterSetRegistry.SHIPPED` | NEW |
 | 26 pages appended to 7 books (Fire 6, Plant 4, World Tree 3, Steel 4, Spatial 3, Light 5, Storm 1) with their casts, texts and policy lines | NEW |
 | Grimoires bound to these twelve characters show their own spells and open them by their rule | REPLACED (the whole book in mastery order; with the switch off it is back) |
 | The basic grimoire hides the pages marked exclusive here (see section 6) | REPLACED (they were listed; `basicBookHidesSignatures` false restores it) |
@@ -19,13 +19,13 @@ The existing server switch `magic.characterSpellSets` (`nusmp-character-spells-s
 | Time Magic VFX, `TimeBook`, `TimeMagicLayer`, the time textures | KEPT (untouched; Julius's set only names existing Time pages) |
 | Characters of the other builders | not touched |
 
-Characters skipped: none of this builder's list was skipped. All twelve have a `CanonBook` entry. Two of them are drawn in a book that is not their series' magic because `CanonBook` binds them to it (Karna: Moonlight Magic in the Light book; Kaiser: Vortex Magic in the Storm book; section 9).
+Characters skipped: none of this builder's list was skipped (Letoile was the coordinator's addition). All thirteen have a `CanonBook` entry. Two of them are drawn in a book that is not their series' magic because `CanonBook` binds them to it (Karna: Moonlight Magic in the Light book; Kaiser: Vortex Magic in the Storm book; section 9).
 
 ## 2. How the sets were made (rule 10: English wiki first, Japanese as the fallback)
 
 Every fandom host was reported as not fetchable from this machine by the phase brief, so this builder used `WebSearch` (mode extended) only and did not retry the hosts. A search returns a summary of the page it found, so every wiki fact below is second hand. Searches run, English first:
 
-* Mereoleona, Leopold, Mimosa, William, Klaus, Langris, Lemiel, Julius, Kirsch, Karna, Nozel, Kaiser: "<name> Black Clover wiki abilities spells ..." (English). Found: Mereoleona (Calidus Brachium, Barrage, Purgatory with Cremation and Abyss variants, Hellfire Incarnate, Mana Zone), Mimosa (Magic Flower Guidepost, Magic Flower Cannon, Dream-Healing Flower Cradle, Princess-Healing Flower Robe, Flower Princess Utopia), William (the World Tree Magic page: Mistilteinn Seed, Dracaena Formation, Magic Tree Descent, Great Tree Mistilteinn, Magic Warding Ash, Budding of Yggdrasil, Mistilteinn Blade, the union Spirit Light Tree), Klaus (Steel Magic page; wall, lances, Thunder Arrow union), Lemiel (Lamp of Avior, Lamp of Avior Gloria, light sword and arrow, Mana Zone, the union Protecting Light), Julius (Chrono Stasis, Time Acceleration, Time Reversal, Chrono Anastasis, Mana Zone, stolen time), Kirsch (Cherry Blossom Magic: Clones of the Beautiful Me, Magic Cherry Blossom Blizzard), Karna (Moonlight Magic page: Crescent Cut, Bewitching Moonlight, Gibbous Ray, Lunatic Crisis, Moon Trap, Full Moon Shell, Crescent Cut Full Moon), Nozel (Silver Rain, Silver Spear, Silver Star of Execution, Silver Shining Regal Spear, Silver Bullet, Silver Blade, Silver Guardian, Silver Eagle), Kaiser (Vortex Magic, no spell names), Langris (Spatial Magic, House Vaude; Archangel's Crash and Destruction from one database).
+* Mereoleona, Leopold, Mimosa, William, Klaus, Langris, Lemiel, Julius, Kirsch, Karna, Nozel, Kaiser, Letoile: "<name> Black Clover wiki abilities spells ..." (English). Found: Mereoleona (Calidus Brachium, Barrage, Purgatory with Cremation and Abyss variants, Hellfire Incarnate, Mana Zone), Mimosa (Magic Flower Guidepost, Magic Flower Cannon, Dream-Healing Flower Cradle, Princess-Healing Flower Robe, Flower Princess Utopia), William (the World Tree Magic page: Mistilteinn Seed, Dracaena Formation, Magic Tree Descent, Great Tree Mistilteinn, Magic Warding Ash, Budding of Yggdrasil, Mistilteinn Blade, the union Spirit Light Tree), Klaus (Steel Magic page; wall, lances, Thunder Arrow union), Lemiel (Lamp of Avior, Lamp of Avior Gloria, light sword and arrow, Mana Zone, the union Protecting Light), Julius (Chrono Stasis, Time Acceleration, Time Reversal, Chrono Anastasis, Mana Zone, stolen time), Kirsch (Cherry Blossom Magic: Clones of the Beautiful Me, Magic Cherry Blossom Blizzard), Karna (Moonlight Magic page: Crescent Cut, Bewitching Moonlight, Gibbous Ray, Lunatic Crisis, Moon Trap, Full Moon Shell, Crescent Cut Full Moon), Nozel (Silver Rain, Silver Spear, Silver Star of Execution, Silver Shining Regal Spear, Silver Bullet, Silver Blade, Silver Guardian, Silver Eagle), Kaiser (Vortex Magic, no spell names), Letoile (Compass Magic: Willful Compass, Another Atlas, Useless North; the elf Kivn), Langris (Spatial Magic, House Vaude; Archangel's Crash and Destruction from one database).
 * Japanese fallback: Klaus (施貫の烈槍, 鋼城の鎧壁, 旋貫の激槍, 神鳴の矢 from manga-tantei), Langris (大天使の撃墜, 大天使の撃滅, the auto-guard after the elf awakening), Kaiser (螺旋結界 エリアヘリックス from ja.wikipedia and namu), Leopold (螺旋焔, 爆乱焔, 深炎螺旋焔, 真炎魔法「紅蓮噴火」 from pixiv and namu), Mereoleona (灼熱腕, 連撃, 煉獄, 煉獄・深淵, 業火の化身 from bclover.jp and manga-tantei).
 * Source ids in the files: `en_wiki` (English wiki through search summaries), `ja_search` (Japanese pages through search summaries), `design` (the mod's own placement or mapping, named as such in the entry's note). No entry rests on the builder's memory alone.
 
@@ -43,7 +43,7 @@ What could not be fetched at all: every blackclover.fandom.com page itself (only
 | Langris | Strokes of space (`SPACE_CRACK`, `SPACE_TEAR`, `SPACE_SHATTER`) from the eye line; the auto-guard follows him as a ring gate. |
 | Karna | Crescents leave the hand, the shell and the moon appear on her, and the Lunatic Crisis is charged for 1.5 s under a red flare before the ray. |
 | Kaiser | A vortex turns where he aims. |
-| Lemiel, Julius, Kirsch, Nozel | Existing pages only: their casting is the existing page's. |
+| Lemiel, Julius, Kirsch, Nozel, Letoile | Existing pages only: their casting is the existing page's. |
 
 Release clips (`BookPage.withAnim`, existing clips of `anim.CastAnim`): `thrust`, `up`, `sweep`, `slam`, `out`, `signature`. Not done: a required cast item (a bat for Magna is the bulls builder's), any keybind (the owner has too many keys), and a special posture for Klaus's grimoire-less casting.
 
@@ -292,6 +292,20 @@ Canon spells with no page (documented, ignored by the engine):
 
 Notes: CanonBook gives Kaiser the STORM book (Vortex Magic is a separate MagicType, VORTEX, with its own book), so his page is appended to the Storm book. The Storm book's Storm Lance, Tempest Ring, Eye of the Storm and Thunder Sphere were not found for him and stay in the basic Storm book; mode 0 (Storm Lance) cannot be hidden.
 
+### Letoile Becquerel (`letoile`, book `book_compass`, magic `COMPASS`)
+
+| # | Page id | Canon name | Japanese | Origin | Opens when | Page | Exclusive | Source |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `useless_north` | Compass Magic: Useless North | - | anime | from the start | KEPT | no | en_wiki |
+| 2 | `willful_compass` | Compass Magic: Willful Compass | - | anime | mastery 25% | KEPT | no | en_wiki |
+| 3 | `another_atlas` | Compass Magic: Another Atlas | - | anime | `willful_compass` open AND mastery 45% | KEPT | yes | en_wiki |
+
+Canon spells with no page (documented, ignored by the engine):
+
+* Spells used while possessed by Kivn (anime; en_wiki): Her power rises while the elf Kivn possesses her; no separate spell names were found, so nothing is added.
+
+Notes: All three wiki spells of Compass Magic already have pages; Compass Rose (the signature page of the mod's book) and the pages of CompassExt were not found in any source for her and stay in the basic Compass book. Mode 0 is Useless North. The order is the mod's design. No new page.
+
 ## 7. What the basic books lose, and what the character books hide
 
 Pages marked `exclusive` in a character file are hidden from the basic grimoire (config `basicBookHidesSignatures`, default true) and never open for another character's grimoire. Marked exclusive here: Fire: `calidos_brachium`, `spiral_flame`, `wild_bursting_flame` and the six added pages; Plant: the four added pages; World Tree: `mistilteinn_seed` (mode 0, so it is never actually hidden), `magic_tree_descent`, `root_bind`, `budding_of_yggdrasil` and the three added; Steel and Spatial: the added pages; Light: `avior_lamp`, `lamp_of_avior` and the five added; Time: `grigora`, `chrono_anastasis`; Mercury: `mercury_rain`, `silver_eagle`, `silver_shining_regal_spear`, `silver_star_of_execution`; Cherry Blossom: `clones_of_the_beautiful_me`, `magic_cherry_blossom_blizzard`; Storm: `vortex_shield` and the added page. Not exclusive (they stay in the basic book as before): Mimosa's `guidepost` and `hundred_flowers`, Julius's `chrono_stasis`, `acceleration`, `stolen_time`, `reversal`, Nozel's `silver_blade`, `silver_bullet`, `silver_spear`, `mercury_shield`, Kirsch's `petal_step`, `petal_veil`, `cherry_blossom_strike`, Light's `light_speed`. The later builder of the basic books re-bases these lists.
@@ -306,15 +320,17 @@ With `magic.lightBoneJa` off (default on), the Light book shows its old five pag
 
 | File | Edit |
 |---|---|
-| `book/FireBook.java` | `familyPages()` wraps the pilots' list: `CharacterPagesGold.fire(CharacterPages.fire(pages))` (merge hot spot: the other builders' fire pages go through the same line) |
-| `book/PlantBook.java`, `WorldTreeBook.java`, `SteelBook.java`, `SpatialBook.java` | a `withGold` field and the same lazy wrapper in `familyPages()` (Spatial is shared with Finral's builder: same hot spot) |
+| `book/FireBook.java` | `familyPages()` wraps the list: `CharacterPagesGold.fire(CharacterPagesBulls.fire(CharacterPages.fire(pages)))` (the pilots' pages, then Magna's, then this builder's; the Fire book ends at 22 family pages of the 24 the unlock mask allows) |
+| `book/PlantBook.java`, `WorldTreeBook.java`, `SteelBook.java`, `SpatialBook.java` | a `withGold` field and the same lazy wrapper in `familyPages()` (Spatial: one list `CharacterPagesGold.spatial(CharacterPagesBulls.spatial(pages))`, Finral's page first) |
 | `book/LightBook.java` | two lazy lists (`goldJa`, `goldOld`) for the two shapes of the book |
 | `book/ElementBooks.java` | `storm()`: the list is wrapped in `CharacterPagesGold.storm(...)` |
-| `charset/CharacterSetRegistry.java` | twelve ids appended to `SHIPPED` (hot spot) |
+| `charset/CharacterSetRegistry.java` | thirteen ids appended to `SHIPPED` |
 | `charset/CharacterSets.java` | `addedPageOwners` also asks `CharacterPagesGold.isAdded` |
 | `charset/CharacterSetBoot.java` | one line registering `CharacterSetGoldSelfTests` |
+| `book/TreeSelfTests.java` | one line: the Plant page check ignores the pages appended for Mimosa (the self-test `magic.tree_rebuild` compared the exact page list and would have failed) |
+| `book/LightBoneJaSelfTests.java` | `familyCount() != want` became `< want` (the self-test `magic.light_bone_ja` compared the exact count; Karna's five pages follow the ten) |
 | `grimoire/CanonBook.java` | REPLACED one word: `KIRSCH` magic `PLANT` to `CHERRY_BLOSSOM` |
-| `data/nusmp/armour_policy.json` | `new_pages` lines for PLANT, WORLD_TREE, STEEL, SPATIAL, STORM; ids appended to the FLAME and LIGHT `new_pages` arrays (hot spots) |
+| `data/nusmp/armour_policy.json` | `new_pages` lines for PLANT, WORLD_TREE, STEEL, STORM; ids appended to the existing FLAME, LIGHT and SPATIAL `new_pages` arrays |
 | `src/test/.../CharacterSetRegistryTest.java` | three lines: the "character without a set" checks used `mereoleona` and `kaiser`, who now have sets; they use `nobody_with_a_set` |
 | `src/test/.../CharacterSetSourceScanTest.java` | `everyPageAFileNamesExistsInItsBook` skips books it has no source file for (checked by `CharacterSetGoldTest`) and also accepts the ids of `CharacterPagesGold` (helper `addedGold`) |
 
@@ -331,9 +347,9 @@ New files: `book/CharacterPagesGold.java`, `book/CharacterArtsGold.java`, `chars
 
 ## 10. Tests, self-test and what is not verified
 
-* New JUnit: `charset.CharacterSetGoldTest` (12 tests: files load and match `CanonBook`, every page exists in the real book source, the spells are listed in the order they open, a fresh grimoire opens one or two, every spell opens at full mastery without Mana Zone, no page is exclusive to two characters, Time is untouched, every added page has an owner, a text, a policy line and a cooldown floor, the books append in the right order, the casts are bounded and server safe).
+* New JUnit: `charset.CharacterSetGoldTest` (12 tests, 13 characters: files load and match `CanonBook`, every page exists in the real book source, the spells are listed in the order they open, a fresh grimoire opens one or two, every spell opens at full mastery without Mana Zone, no page is exclusive to two characters, Time is untouched, every added page has an owner, a text, a policy line and a cooldown floor, the books append in the right order, the casts are bounded and server safe).
 * Changed JUnit: `CharacterSetRegistryTest`, `CharacterSetSourceScanTest` (section 8).
-* Ran and passing in the offline shim: the whole `charset` package, `ArmourPolicyTest`, `SpatialPageOrderTest`, `LightBoneJa*Test`, `MercuryRulesTest`, `TreeRulesTest`, `CanonNamingTest`, `PerfSourceScanTest`, `VfxQualityTest`, `ServerSafetyTest`, `ConfigFileNamesTest`, `FireCastRulesTest`; the sweep result is in the report. Tests that need Minecraft classes (`MagicEnumAuditTest`, `GrimoireBookPlanTest`, `CanonBookMagicTest` ...) cannot run offline.
+* Ran in the offline shim, class by class, before the merge with the Bulls and Rest builders: 309 test classes of the packages charset, book, grimoire, perf, core, firecast, multiverse, vfx, particle, prop, tooltip, gnome, sylph, undine, scalecast, spiritlight, spiritdark, spiritspace, client, skilltree, balance, anim, corpse, engraving: 289 pass, 20 cannot compile against the shim (they need Minecraft classes or hit shim limits: CanonBookMagicTest, FusionDesignTest, GrimoireBookPlanTest, GrimoireDesignGeneratorTest, GrimoireCarryTest, GrimoireShelfLayoutTest, MagicAuditTest, MagicEnumAuditTest, UnifiedTooltipRulesTest, LightMoodRulesTest, SpiritLightRulesTest, EquipAnimationTest, ArmorPainterTest, DjinnLookTest, HandWrapTest, WornMathTest, ArmorLooksTest, WornMeshTest, WornPlacerTest, EngravingCodexAssetsTest). After merging the branch of the other builders (`claude/new-session-hn036o`) into this one: the whole charset package (including the Bulls and Rest tests) and `ArmourPolicyTest` pass. Tests that need Minecraft classes (`MagicEnumAuditTest`, `GrimoireBookPlanTest`, `CanonBookMagicTest` ...) cannot run offline.
 * Type check against the API stubs: 0 real errors in the new and edited files (negative control: two wrong calls were reported).
 * Self-test for the CI smoke list: `magic.character_spells_gold` (the twelve sets load, resolve against the real books and `CanonBook`, the added pages follow the older ones in order, are owned, cast and cheap, the late spells wait for the early ones, Mereoleona's and Leopold's grimoires hide what they never used and the basic grimoire hides their signatures).
 * Lang: fragment `tools/lang/character_spells_gold.json` (26 keys `nusmp.page.<book>.<id>`) must be merged into `en_us.json` by the release step; the page names themselves are in code.

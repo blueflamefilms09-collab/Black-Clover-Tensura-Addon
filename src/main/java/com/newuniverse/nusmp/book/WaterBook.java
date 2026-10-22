@@ -41,7 +41,11 @@ public class WaterBook extends GrimoireBook {
             BookPage.signature("sea_dragons_wrath", "Sea Dragon's Wrath", WaterArts::wrath).withCooldown(900),
             BookPage.mid("tide_lance", "Valkyrie Tide Lance", WaterArts::tideLance).withCooldown(300),
             BookPage.mid("scale_mail", "Sea Dragon's Scale Mail", WaterArts::scaleMail).withCooldown(900),
-            BookPage.zone("torrent", "Sea Dragon's Torrent", WaterArts::torrent).withCooldown(400));
+            BookPage.zone("torrent", "Sea Dragon's Torrent", WaterArts::torrent).withCooldown(400),
+            // 1.99.0 (Noelle's forms, docs/magic/noelle_forms.md): appended; the Valkyrie Dress page above is remade (the Saint Valkyrie Dress for Noelle's grimoire)
+            BookPage.zone("mermaid_form", "Mermaid Form", WaterArts::mermaidForm).withCooldown(600),
+            BookPage.signature("sea_dragon_god_form", "Sea Dragon God Form", WaterArts::seaDragonForm).withCooldown(2400),
+            BookPage.signature("black_dragon_form", "Black Dragon Form", WaterArts::blackDragonForm).withCooldown(6000));
 
     public WaterBook() { super(MagicType.WATER, 0xFF4FA8FF); }
     private List<BookPage> withCharacters;      // character spell sets: the pages that belong to one character are appended after the shared pages (book.CharacterPages)

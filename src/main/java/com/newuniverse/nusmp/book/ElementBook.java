@@ -44,7 +44,8 @@ public class ElementBook extends GrimoireBook {
         return extra.isEmpty() ? this : new ElementBook(magic, color, damage, com.newuniverse.nusmp.book.ext.Ext.join(pages, extra));
     }
 
-    @Override protected List<BookPage> familyPages() { return pages; }
+    private List<BookPage> withBulls;           // Black Bulls character spell sets: the pages that belong to one squad member are appended after the shared pages (book.CharacterPagesBulls)
+    @Override protected List<BookPage> familyPages() { if (withBulls == null) withBulls = CharacterPagesBulls.forMagic(magic.name(), pages); return withBulls; }
     @Override public ResourceKey<DamageType> damageType() { return damage; }
 
     @Override

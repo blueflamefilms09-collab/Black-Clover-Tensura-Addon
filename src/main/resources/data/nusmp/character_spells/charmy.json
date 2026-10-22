@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "canon": "charmy",
+  "magic": "COTTON",
+  "book": "book_cotton",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) Charmy Pappitson page, read through search summaries only (host unreachable): Cotton Magic (Sleeping Sheep Strike, Sheep Cook, platforms and restraints of cotton), Food Magic awakened by her dwarf blood in the Elf Reincarnation arc, Glutton's Banquet (a giant wolf that eats spells).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, manga-comic-netabare, playnews): 綿創成魔法, 眠れる羊の一撃, ヒツジのコックさん, 羊のモコモコクッション, 綿雲, 大食らいの晩餐会 (Food Magic awakened in chapter 194 by an elf attack).",
+    "repo_wiki": "The fandom spell page Glutton's Banquet cached in the repo (.github/wiki/spell_glutton_s_banquet.txt).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "sleeping_sheep_strike", "name": "Cotton Creation Magic: Sleeping Sheep Strike", "ja": "眠れる羊の一撃", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A giant sheep punches the enemy. Mode 0 of the Cotton book, so it stays in the basic book too." },
+    { "page": "sheep_cook", "name": "Cotton Creation Magic: Sheep Cook", "ja": "ヒツジのコックさん", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A sheep of cotton cooks her meals anywhere." },
+    { "page": "cotton_cloud", "name": "Cotton Magic: Cotton Cloud", "ja": "綿雲", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.16 }, "note": "A cloud of cotton to ride on." },
+    { "page": "sheep_bondage", "name": "Cotton Magic: Sheep Bondage", "ja": "", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.25 }, "note": "Cotton wraps and holds an enemy without hurting it." },
+    { "page": "fluffy_sheep_cushion", "name": "Cotton Magic: Fluffy Sheep Cushion", "ja": "羊のモコモコクッション", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.33 }, "note": "A big sheep that works as a cushion. NEW page: soft landing for the party, a bounce for foes." },
+    { "page": "gluttons_banquet", "name": "Food Magic: Glutton's Banquet", "ja": "大食らいの晩餐会", "origin": "anime", "exclusive": true, "source": "repo_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "sheep_cook", "count": 3 }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "Awakened in the Elf Reincarnation arc (her dwarf blood), long after the Cotton spells, so it needs the Sheep Cook cast first. A giant wolf with a fork and knife eats the enemy's spells and turns them into her mana." }
+  ],
+  "planned": [
+    { "name": "Cotton Magic: shrinking herself to palm size / shrinking a foe and wrapping it in cotton", "ja": "", "origin": "anime", "source": "ja_search", "note": "Described in one Japanese summary only; no spell name." },
+    { "name": "Gourmet's Bite", "ja": "", "origin": "anime", "source": "repo", "note": "Already a page of the Cotton book; no source for it could be found this round, so it is not in her set (it stays in the basic book)." },
+    { "name": "Mana Method cooking of an opponent (Food + Cotton)", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Late-series combination; no spell name found." }
+  ],
+  "notes": "Charmy's Food side is Glutton's Banquet only, which is the one Food spell the sources agree on. Her adult dwarf form (chapter 194) is a transformation, not a spell, and is not part of the book."
+}

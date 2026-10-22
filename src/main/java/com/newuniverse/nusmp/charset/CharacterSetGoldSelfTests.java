@@ -24,7 +24,7 @@ public final class CharacterSetGoldSelfTests {
     private CharacterSetGoldSelfTests() {}
 
     /** The characters this builder owns (CanonBook ids). */
-    public static final List<String> OWNED = List.of("mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser");
+    public static final List<String> OWNED = List.of("mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser", "letoile");
 
     private static boolean registered;
 
@@ -81,7 +81,8 @@ public final class CharacterSetGoldSelfTests {
             GrimoireBook b = book(bookPath);
             List<String> ids = CharacterPagesGold.addedTo(bookPath);
             if (b == null || ids.isEmpty()) return Result.fail(bookPath + ": no added pages");
-            int first = b.familyCount() - ids.size();
+            int first = index(b, ids.get(0));      // other builders' twin classes may append after these, so the block is found, not assumed to be last
+            if (first < 0) return Result.fail(bookPath + ": " + ids.get(0) + " is not in the book");
             for (int k = 0; k < ids.size(); k++) {
                 BookPage pg = b.page(first + k);
                 if (pg == null || !pg.id().equals(ids.get(k))) return Result.fail(bookPath + ": " + ids.get(k) + " is not appended in order");

@@ -85,7 +85,7 @@ final class Salamander {
     }
 
     /** Calls the big form for this cast if it is allowed (cooldown, one per caster, the server cap). */
-    private static boolean summonDragon(ServerPlayer p, FireCasting.State s, long now) {
+    static boolean summonDragon(ServerPlayer p, FireCasting.State s, long now) {
         if (now < s.dragonReadyAt || s.dragon != null) return false;
         if (!FireCasting.DRAGONS.acquire(p.getUUID(), FireCastRules.DRAGONS_PER_PLAYER, FireCastConfig.maxDragons())) return false;
         ServerLevel sl = p.serverLevel();
