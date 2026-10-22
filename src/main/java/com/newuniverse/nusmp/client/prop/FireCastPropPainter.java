@@ -60,7 +60,7 @@ public final class FireCastPropPainter {
         double dx = ax - cam.x, dy = ay - cam.y, dz = az - cam.z, dsq = dx * dx + dy * dy + dz * dz;
         int wanted = FireCastLod.level(dragon, dsq, PerfSettings.vfxQuality().detail);
         if (wanted == FireCastLod.CULL) return;
-        int lod = FireCastLod.fit(dragon, wanted, BUDGET, FireCastLod.frameKey(e.level().getGameTime(), partial));
+        int lod = FireCastLod.fit(dragon, wanted, BUDGET, FireCastLod.frameKey(e.level().getGameTime(), partial), o != null && o == mc.player);
         if (lod == FireCastLod.CULL) return;
         float fade = Mth.clamp(Math.min((e.life() + partial) / 8f, (e.maxLife() - e.life() - partial) / 8f), 0f, 1f);
         if (fade <= 0.01f) return;

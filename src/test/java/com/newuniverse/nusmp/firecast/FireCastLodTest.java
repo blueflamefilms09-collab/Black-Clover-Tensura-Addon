@@ -34,8 +34,36 @@ class FireCastLodTest {
             assertEquals(FireCastLod.SALAMANDER_QUADS[lod], quads("firecast_salamander" + suffix), "salamander level " + lod);
             assertEquals(FireCastLod.DRAGON_QUADS[lod], quads("firecast_dragon" + suffix), "dragon level " + lod);
         }
-        assertEquals(FireCastLod.FX_QUADS, quads("firecast_salamander_fx"));
-        assertEquals(FireCastLod.FX_QUADS, quads("firecast_dragon_fx"));
+        assertEquals(FireCastLod.SALAMANDER_FX_QUADS, quads("firecast_salamander_fx"));
+        assertEquals(FireCastLod.DRAGON_FX_QUADS, quads("firecast_dragon_fx"));
+    }
+
+    /** The owner-approved raised limits: the full / half / low models stay under the ceilings of the doc (small 700 / 300 / 120, dragon 900 / 380 / 120). */
+    @Test
+    void theModelsStayUnderTheOwnerApprovedCeilings() {
+        assertTrue(FireCastLod.SALAMANDER_QUADS[0] <= FireCastLod.MAX_FULL_SALAMANDER, "small full " + FireCastLod.SALAMANDER_QUADS[0]);
+        assertTrue(FireCastLod.DRAGON_QUADS[0] <= FireCastLod.MAX_FULL_DRAGON, "dragon full " + FireCastLod.DRAGON_QUADS[0]);
+        assertTrue(FireCastLod.SALAMANDER_QUADS[1] <= FireCastLod.MAX_HALF_SALAMANDER, "small half " + FireCastLod.SALAMANDER_QUADS[1]);
+        assertTrue(FireCastLod.DRAGON_QUADS[1] <= FireCastLod.MAX_HALF_DRAGON, "dragon half " + FireCastLod.DRAGON_QUADS[1]);
+        assertTrue(FireCastLod.SALAMANDER_QUADS[2] <= FireCastLod.MAX_LOW && FireCastLod.DRAGON_QUADS[2] <= FireCastLod.MAX_LOW, "low levels");
+        assertEquals(700, FireCastLod.MAX_FULL_SALAMANDER);
+        assertEquals(900, FireCastLod.MAX_FULL_DRAGON);
+        assertEquals(3200, FireCastLod.FRAME_QUADS, "the shared frame cap of the raised limits");
+        assertEquals(64.0, FireCastLod.SALAMANDER_RANGE[2]);
+        assertEquals(112.0, FireCastLod.DRAGON_RANGE[2]);
+    }
+
+    @Test
+    void theCastersOwnFormIsNeverDroppedByTheFrameBudget() {
+        FireCastLod.QuadBudget b = new FireCastLod.QuadBudget();
+        long frame = FireCastLod.frameKey(500, 0.5f);
+        b.force(frame, FireCastLod.FRAME_QUADS);                                           // a frame already full of other forms
+        assertEquals(FireCastLod.CULL, FireCastLod.fit(true, FireCastLod.FULL, b, frame, false), "someone else's form is culled");
+        assertEquals(FireCastLod.CULL, FireCastLod.fit(false, FireCastLod.FULL, b, frame, false));
+        assertEquals(FireCastLod.LOW, FireCastLod.fit(true, FireCastLod.FULL, b, frame, true), "the caster's own dragon is drawn at the low level anyway");
+        assertEquals(FireCastLod.LOW, FireCastLod.fit(false, FireCastLod.HALF, b, frame, true), "and the own small form");
+        assertTrue(b.used() <= FireCastLod.FRAME_QUADS + 2 * FireCastLod.MAX_LOW, "a bounded overshoot (two low forms at most)");
+        assertEquals(FireCastLod.CULL, FireCastLod.fit(false, FireCastLod.CULL, new FireCastLod.QuadBudget(), frame, true), "beyond the cull distance even the own form is not drawn");
     }
 
     @Test
@@ -44,7 +72,7 @@ class FireCastLodTest {
             assertTrue(FireCastLod.cost(dragon, FireCastLod.FULL) > FireCastLod.cost(dragon, FireCastLod.HALF));
             assertTrue(FireCastLod.cost(dragon, FireCastLod.HALF) > FireCastLod.cost(dragon, FireCastLod.LOW));
             assertEquals(0, FireCastLod.cost(dragon, FireCastLod.CULL));
-            assertTrue(FireCastLod.cost(dragon, FireCastLod.FULL) <= 400, "a full form is a few hundred quads at most");
+            assertTrue(FireCastLod.cost(dragon, FireCastLod.FULL) <= (dragon ? FireCastLod.MAX_FULL_DRAGON : FireCastLod.MAX_FULL_SALAMANDER), "a full form is under the approved ceiling");
         }
     }
 
@@ -53,9 +81,11 @@ class FireCastLodTest {
         assertEquals(FireCastLod.FULL, FireCastLod.level(false, 10 * 10, 1f));
         assertEquals(FireCastLod.HALF, FireCastLod.level(false, 20 * 20, 1f));
         assertEquals(FireCastLod.LOW, FireCastLod.level(false, 40 * 40, 1f));
-        assertEquals(FireCastLod.CULL, FireCastLod.level(false, 60 * 60, 1f));
+        assertEquals(FireCastLod.LOW, FireCastLod.level(false, 60 * 60, 1f));
+        assertEquals(FireCastLod.CULL, FireCastLod.level(false, 70 * 70, 1f));
         assertEquals(FireCastLod.HALF, FireCastLod.level(false, 10 * 10, 0.5f), "a weaker machine drops a level sooner");
-        assertEquals(FireCastLod.CULL, FireCastLod.level(true, 100 * 100, 1f));
+        assertEquals(FireCastLod.LOW, FireCastLod.level(true, 100 * 100, 1f));
+        assertEquals(FireCastLod.CULL, FireCastLod.level(true, 120 * 120, 1f));
         assertEquals(FireCastLod.FULL, FireCastLod.level(true, 25 * 25, 1f));
         assertEquals(FireCastLod.level(false, 20 * 20, 0.5f), FireCastLod.level(false, 20 * 20, 0.1f), "the quality factor is clamped to 0.5");
         assertEquals(FireCastLod.FULL, FireCastLod.level(false, 0, 7f), "and to 1");
@@ -73,7 +103,12 @@ class FireCastLodTest {
         }
         assertTrue(b.used() <= FireCastLod.FRAME_QUADS, "never above the frame budget");
         assertEquals(FireCastLod.FRAME_QUADS / full, drawnFull);
-        assertTrue(drawnLower > 0 && culled > 0, "the rest are drawn lower and then not at all");
+        assertTrue(culled > 0, "the rest are not drawn at all once not even the low level fits");
+        FireCastLod.QuadBudget room = new FireCastLod.QuadBudget();
+        long f2 = FireCastLod.frameKey(102, 0.5f);
+        room.force(f2, FireCastLod.FRAME_QUADS - FireCastLod.cost(true, FireCastLod.HALF));                  // room for exactly one half form
+        assertEquals(FireCastLod.HALF, FireCastLod.fit(true, FireCastLod.FULL, room, f2), "a form that does not fit at its level is drawn at the next lower one that does");
+        assertEquals(FireCastLod.CULL, FireCastLod.fit(false, FireCastLod.FULL, room, f2), "then the budget is spent");
         int l = FireCastLod.fit(true, FireCastLod.FULL, b, FireCastLod.frameKey(101, 0.25f));
         assertEquals(FireCastLod.FULL, l, "a new frame starts with an empty budget");
     }
