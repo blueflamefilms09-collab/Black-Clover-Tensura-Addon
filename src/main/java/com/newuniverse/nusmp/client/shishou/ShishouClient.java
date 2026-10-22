@@ -9,6 +9,9 @@ import com.newuniverse.nusmp.shishou.ShishouItems;
 import com.newuniverse.nusmp.shishou.ShishouNet;
 import com.newuniverse.nusmp.shishou.ShishouSkill;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.network.chat.contents.TranslatableContents;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -39,6 +42,7 @@ public final class ShishouClient {
         ShishouNet.clientSync = ShishouClientState::onSync;
         ShishouNet.clientAppraisal = ShishouClientState::onReply;
         NeoForge.EVENT_BUS.addListener(ShishouClient::onTick);
+        NeoForge.EVENT_BUS.addListener(ShishouClient::onScreenOpening);
         NeoForge.EVENT_BUS.addListener(ShishouClient::onTooltip);
     }
 
@@ -55,6 +59,15 @@ public final class ShishouClient {
         if (looked != null) PacketDistributor.sendToServer(new ShishouNet.AppraiseRequest(looked.getId()));
         else if (!mc.player.getOffhandItem().isEmpty() && mc.player.getOffhandItem().getItem() != ShishouItems.SHISHOU.get()) PacketDistributor.sendToServer(new ShishouNet.AppraiseRequest(-1));
     }
+
+    /** The server opens Stomach over vanilla's chest menu with the title {@code shishou.storage.title}; the client draws it in the Akashic screen. Only the picture changes: same menu, same slots, same packets. */
+    static void onScreenOpening(ScreenEvent.Opening e) {
+        if (!(e.getNewScreen() instanceof ContainerScreen cs) || !isStomach(cs.getTitle())) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player != null) e.setNewScreen(new ShishouStomachScreen(cs.getMenu(), mc.player.getInventory(), cs.getTitle()));
+    }
+
+    static boolean isStomach(Component title) { return title != null && title.getContents() instanceof TranslatableContents tc && "shishou.storage.title".equals(tc.getKey()); }
 
     /** Stat Concealment: anyone but the wielder who reads the tooltip of the sword sees a rusty sword. A stack with no wielder written (the creative tab) shows the truth. */
     static void onTooltip(ItemTooltipEvent e) {
