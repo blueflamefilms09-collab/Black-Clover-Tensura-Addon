@@ -57,18 +57,73 @@ public final class NoelleFormRules {
         return f != Form.SEA_DRAGON && f != Form.BLACK_DRAGON || noelleGrimoire;
     }
 
+    // ------------------------------------------------------------------ the models of a form (the single list the painter, the tests and the self-test agree on)
+    /** The model key of a form's pieces: assets/nusmp/geo/entity/&lt;key&gt;_arm_&lt;piece&gt;.geo.json (tools/gen_noelle_forms_geo.py). Style 0 has none. */
+    public static String key(Form f) {
+        return switch (f) {
+            case VALKYRIE -> "nvl";
+            case MERMAID -> "nml";
+            case SEA_DRAGON -> "ndg";
+            case BLACK_DRAGON -> "nbk";
+            default -> "";
+        };
+    }
+
+    private static final String[] VAL_STD = {"helm", "chest", "skirt", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "gauntlet_r", "gauntlet_l", "greave_r", "greave_l", "wings", "halo"},
+            VAL_CHAR = {"wings2", "aureole", "sash", "lance"},
+            MER_STD = {"crown", "hair", "bust", "train", "veil", "leg_r", "leg_l", "vambrace_r", "vambrace_l", "trident"}, MER_CHAR = {"dorsal", "scarf", "coral"},
+            DRG_STD = {"helm", "chest", "tassets", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "greave_r", "greave_l", "wings", "tail", "cannon_r"},
+            DRG_CHAR = {"ridge", "horns2", "wings2", "cannon_l"}, NO_PIECES = {};
+
+    /** The pieces every player in the form wears (the standard tier). */
+    public static String[] standardPieces(Form f) {
+        return switch (f) {
+            case VALKYRIE -> VAL_STD.clone();
+            case MERMAID -> MER_STD.clone();
+            case SEA_DRAGON, BLACK_DRAGON -> DRG_STD.clone();
+            default -> NO_PIECES.clone();
+        };
+    }
+
+    /** The extra pieces of the character tier (Noelle's grimoire). */
+    public static String[] characterPieces(Form f) {
+        return switch (f) {
+            case VALKYRIE -> VAL_CHAR.clone();
+            case MERMAID -> MER_CHAR.clone();
+            case SEA_DRAGON, BLACK_DRAGON -> DRG_CHAR.clone();
+            default -> NO_PIECES.clone();
+        };
+    }
+
+    /** The sprite and skin textures the painter draws (assets/nusmp/textures/aura/&lt;name&gt;.png; the shells also have a _glow map). */
+    public static final String[] SPRITES = {"noelle_ring", "noelle_ribbon", "noelle_feather", "noelle_ember", "noelle_eye", "noelle_bubble", "noelle_spark", "noelle_dot", "noelle_haze",
+            "noelle_sigil_val", "noelle_sigil_mer", "noelle_sigil_drg", "noelle_sigil_blk", "noelle_val_shell", "noelle_mer_shell", "noelle_drg_shell", "noelle_blk_shell"};
+
     // ------------------------------------------------------------------ level of detail (client)
     /** What the painter draws for a player at a distance: NONE beyond {@link #FAR_BLOCKS}; FAR = only the big pieces and the glow; STANDARD = every standard piece; CHARACTER = + the character pieces. */
     public enum Lod { NONE, FAR, STANDARD, CHARACTER }
 
-    public static final double DETAIL_BLOCKS = 24.0, CHARACTER_BLOCKS = 32.0, FAR_BLOCKS = 64.0;
+    public static final double DETAIL_BLOCKS = 24.0, FAR_BLOCKS = 64.0;
 
-    /** The level of detail from the SQUARED distance to the camera (no square root per frame). A standard-tier player never gets above STANDARD. */
+    /**
+     * The level of detail from the SQUARED distance to the camera (no square root per frame). Up to {@link #DETAIL_BLOCKS}: every piece and every effect of the tier (a standard-tier player is
+     * never above STANDARD); up to {@link #FAR_BLOCKS}: only the big standard pieces and the glow, no ribbons, rings, drops or skin shells; beyond: nothing.
+     */
     public static Lod lod(double dist2, boolean characterTier) {
         if (dist2 > FAR_BLOCKS * FAR_BLOCKS) return Lod.NONE;
         if (dist2 > DETAIL_BLOCKS * DETAIL_BLOCKS) return Lod.FAR;
-        if (characterTier && dist2 <= CHARACTER_BLOCKS * CHARACTER_BLOCKS) return Lod.CHARACTER;
-        return Lod.STANDARD;
+        return characterTier ? Lod.CHARACTER : Lod.STANDARD;
+    }
+
+    /** The most players per frame that may be drawn at the CHARACTER level, and at the STANDARD level or above (the nearest-first budget of the painter: the rest fall back one level). */
+    public static final int MAX_CHARACTER_PER_FRAME = 2, MAX_FULL_PER_FRAME = 6;
+
+    /** The level a player gets when {@code charDrawn} / {@code fullDrawn} players were already drawn this frame at CHARACTER / at STANDARD or above: a crowd costs a bounded number of full figures. */
+    public static Lod budgeted(Lod wanted, int charDrawn, int fullDrawn) {
+        Lod l = wanted;
+        if (l == Lod.CHARACTER && charDrawn >= MAX_CHARACTER_PER_FRAME) l = Lod.STANDARD;
+        if (l == Lod.STANDARD && fullDrawn >= MAX_FULL_PER_FRAME) l = Lod.FAR;
+        return l;
     }
 
     /**

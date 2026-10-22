@@ -3009,6 +3009,74 @@
     ]
    }
   },
+  "form.noelle.valkyrie": {
+   "particles": [
+    "feather_white",
+    "glint",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#BFEFFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "form.noelle.mermaid": {
+   "particles": [
+    "bubble",
+    "droplet",
+    "gem_sparkle",
+    "mote_soft"
+   ],
+   "color": "#7CF0FF",
+   "dark": {
+    "particles": [
+     "ink_splat",
+     "droplet",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "form.noelle.dragon": {
+   "particles": [
+    "droplet",
+    "mana_mote",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#46D8FF",
+   "dark": {
+    "particles": [
+     "ink_splat",
+     "droplet",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "form.noelle.black_dragon": {
+   "particles": [
+    "flame_soul",
+    "ember",
+    "void_speck",
+    "soot_puff"
+   ],
+   "color": "#2C7CFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
   "corpse": {
    "particles": [
     "soul_wisp",

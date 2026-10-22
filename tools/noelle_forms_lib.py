@@ -184,8 +184,9 @@ def wfeather(seed, root="F6FBFF", mid="BFE8FF", tip="5AB4FF", edge="FFFFFF", glo
 
 
 # ====================================================================================================================== dragon scales and membrane
-def dscale(seed, base="1F5FA8", dark="0A2450", light="7CC8F0", seam="46E4FF", belly="CFE8F2", cell=5.0, glow_k=0.8, belly_rows=False, sheen=None, alpha=255):
-    """Rows of overlapping keeled dragon scales. `belly_rows`: pale horizontal belly plates instead (the cuirass front). The seams between scales glow."""
+def dscale(seed, base="1F5FA8", dark="0A2450", light="7CC8F0", seam="46E4FF", belly="CFE8F2", cell=8.0, glow_k=0.8, belly_rows=False, sheen=None, alpha=255):
+    """Rows of overlapping dragon scales (texels per scale = `cell`): each scale is a shield with a lit free edge, a dark gap between the scales, a soft gradient and a faint per-scale tone;
+    a few scales glow along their lower edge. `belly_rows`: pale horizontal belly plates instead. `sheen` (hex) tints the highlights (the black form's blue)."""
     B, D, L, S, BL = col(base), col(dark), col(light), col(seam), col(belly)
     SH = col(sheen) if sheen else None
 
@@ -193,33 +194,34 @@ def dscale(seed, base="1F5FA8", dark="0A2450", light="7CC8F0", seam="46E4FF", be
         rng = _rng(tag, face, seed)
         u, v, x, y = grid(w, h)
         img, g = blank(w, h)
-        cs = max(3.0, cell * max(1.0, w / 28.0) if w > 28 else cell)
-        cs = min(cs, max(3.0, w / 2.0))
-        rowh = cs * 0.62
+        cs = max(4.0, min(cell, w / 2.0))
+        rowh = cs * 0.72
         row = np.floor(y / rowh)
-        fx = ((x + (row % 2) * cs * 0.5) % cs) / cs
+        xo = (row % 2) * cs * 0.5
+        cx = np.floor((x + xo) / cs)
+        fx = ((x + xo) % cs) / cs
         fy = (y % rowh) / rowh
-        d = np.hypot((fx - 0.5) * 1.85, (1.0 - fy) * 1.12)
-        body = np.clip(1.0 - d, 0, 1)
-        keel = np.clip(1.0 - np.abs(fx - 0.5) * 7.0, 0, 1) * (1 - fy) * 0.5
-        seamm = (d > 0.84) & (d < 1.14)
-        n = fbm(rng, w, h, 3, 4) - 0.5
-        lum = np.clip(0.42 + 0.50 * body + keel * 0.5 - 0.10 * fy + n * 0.14, 0, 1)
+        d = np.hypot((fx - 0.5) / 0.60, (1.0 - fy) / 1.18)
+        inside = d < 1.0
+        tone = (hash2(cx, row, seed) - 0.5) * 0.12
+        lum = np.clip(0.30 + 0.34 * fy + 0.22 * (1 - np.abs(fx - 0.5) * 2) * (1 - fy * 0.5) + tone, 0, 1)
+        rim = inside & (d > 0.80)
+        lum = np.where(rim, np.clip(lum + 0.30 * (d - 0.80) / 0.20 + 0.18, 0, 1), lum)
         c = np.where((lum < 0.5)[..., None], D + (B - D) * (lum * 2)[..., None], B + (L - B) * ((lum - 0.5) * 2)[..., None])
         if SH is not None:
-            c = c + (SH - c) * (np.clip(0.5 + 0.5 * np.sin(u * 5.0 + v * 7.0 + seed), 0, 1) * 0.30)[..., None]
-        c = np.where(seamm[..., None], D * 0.55, c)
+            c = c + (SH - c) * (np.clip((lum - 0.55) * 1.6, 0, 1) * 0.55)[..., None]
+        c = np.where(inside[..., None], c, D * 0.85)
         if belly_rows:
-            ph = (y % (cs * 0.9)) / (cs * 0.9)
-            plate = 0.55 + 0.45 * (1 - ph)
-            bc = BL * (0.72 + 0.28 * plate[..., None])
-            bc = np.where((ph > 0.9)[..., None], BL * 0.5, bc)
-            c = bc
+            ph = (y % (cs * 1.1)) / (cs * 1.1)
+            plate = 0.62 + 0.38 * np.clip(1 - ph * 1.1, 0, 1)
+            c = BL * plate[..., None]
+            c = np.where((ph > 0.86)[..., None], BL * 0.45, c)
+            inside = np.ones_like(inside)
         img[..., :3] = c
         img[..., 3] = alpha
-        sg = seamm * (hash2(np.floor((x + (row % 2) * cs * 0.5) / cs), row, seed) > 0.22)
-        add_glow(g, S, sg * 0.75 * glow_k)
-        add_glow(g, S, np.clip(body - 0.8, 0, 1) * 2.0 * 0.15 * glow_k)
+        lit = (hash2(cx, row, seed + 3) > 0.55) & rim & (fy > 0.45)
+        add_glow(g, S, lit * 0.75 * glow_k)
+        add_glow(g, S, (inside & ~rim) * 0.06 * glow_k)
         return _finish(img, g, face)
     return FnMat(fn, "dscale")
 

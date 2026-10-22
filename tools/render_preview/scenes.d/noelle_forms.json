@@ -1,143 +1,29 @@
 {
- "_comment": "Noelle Silva's armour forms (docs/magic/noelle_forms.md): Aura.WATER style = form (low four bits) + 16 for the character tier. 1 Valkyrie / Saint Valkyrie, 2 Mermaid, 3 Sea Dragon God, 4 Black Dragon. Run: python3 -B tools/render_preview/preview.py noelle_val_char ...",
- "nvl_piece_wings": {
-  "kind": "geo",
-  "model": "nvl_arm_wings",
-  "space": "PLAYER",
-  "layer": "TRANSLUCENT",
-  "glow": "FFBFF4FF",
-  "anim": "idle",
-  "ages": [
-   0
-  ],
-  "tile": [
-   420,
-   520
-  ],
-  "views": [
-   {
-    "name": "back",
-    "yaw": 180,
-    "pitch": 8
-   },
-   {
-    "name": "front",
-    "yaw": 0,
-    "pitch": 8
-   },
-   {
-    "name": "top",
-    "yaw": 0,
-    "pitch": 80
-   }
-  ]
- },
- "noelle_val_std": {
-  "kind": "aura",
-  "attr": "Water",
-  "realFiles": [
-   "book/NoelleFormRules.java",
-   "client/aura/NoelleFormRig.java",
-   "client/aura/NoelleFormsAura.java",
-   "client/aura/NoelleFormsOptions.java"
-  ],
-  "style": 1,
-  "total": 140,
-  "ages": [
-   60
-  ],
-  "tile": [
-   440,
-   600
-  ],
-  "views": [
-   {
-    "name": "front",
-    "yaw": 12,
-    "pitch": 6,
-    "target": [
-     0,
-     1.0,
-     0.1
-    ],
-    "dist": 5.800000000000001
-   },
-   {
-    "name": "back 3/4",
-    "yaw": 150,
-    "pitch": 12,
-    "target": [
-     0,
-     1.0,
-     0.1
-    ],
-    "dist": 6.0
-   },
-   {
-    "name": "side",
-    "yaw": 90,
-    "pitch": 6,
-    "target": [
-     0,
-     1.0,
-     0.4
-    ],
-    "dist": 6.0
-   }
-  ]
- },
- "noelle_val_char": {
-  "kind": "aura",
-  "attr": "Water",
-  "realFiles": [
-   "book/NoelleFormRules.java",
-   "client/aura/NoelleFormRig.java",
-   "client/aura/NoelleFormsAura.java",
-   "client/aura/NoelleFormsOptions.java"
-  ],
-  "style": 17,
-  "total": 140,
-  "ages": [
-   60
-  ],
-  "tile": [
-   440,
-   600
-  ],
-  "views": [
-   {
-    "name": "front",
-    "yaw": 12,
-    "pitch": 6,
-    "target": [
-     0,
-     1.0,
-     0.1
-    ],
-    "dist": 6.199999999999999
-   },
-   {
-    "name": "back 3/4",
-    "yaw": 150,
-    "pitch": 12,
-    "target": [
-     0,
-     1.0,
-     0.1
-    ],
-    "dist": 6.4
-   },
-   {
-    "name": "side",
-    "yaw": 90,
-    "pitch": 6,
-    "target": [
-     0,
-     1.0,
-     0.5
-    ],
-    "dist": 6.4
-   }
-  ]
- }
+ "_comment": "Noelle Silva's armour forms (docs/magic/noelle_forms.md): Aura.WATER style = form (low four bits) + 16 for the character tier. 1 Valkyrie / Saint Valkyrie, 2 Mermaid, 3 Sea Dragon God, 4 Black Dragon. Run: python3 -B tools/render_preview/preview.py noelle_val_char ... (noelle_<form>_<tier> draw front / back 3/4 / side, noelle_<form>_<tier>_close the upper body, noelle_<form>_<tier>_forge the first ticks, nvl_piece_* single models; regenerate this file with tools/render_preview/gen_noelle_scenes.py)",
+ "noelle_val_std": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 1, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 6.0}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.30000000000000004], "dist": 6.2}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.5], "dist": 6.2}]},
+ "noelle_val_std_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 1, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_val_std_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 1, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.1], "dist": 6.4}]},
+ "noelle_val_char": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 17, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.1], "dist": 6.4}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.30000000000000004], "dist": 6.6000000000000005}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.5], "dist": 6.6000000000000005}]},
+ "noelle_val_char_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 17, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_val_char_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 17, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.1], "dist": 6.800000000000001}]},
+ "noelle_mer_std": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 2, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 5.4}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 5.6000000000000005}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 5.6000000000000005}]},
+ "noelle_mer_std_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 2, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_mer_std_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 2, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 5.800000000000001}]},
+ "noelle_mer_char": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 18, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 5.800000000000001}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 6.000000000000001}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 6.000000000000001}]},
+ "noelle_mer_char_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 18, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_mer_char_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 18, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 6.200000000000001}]},
+ "noelle_drg_std": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 3, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 6.0}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 6.2}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 6.2}]},
+ "noelle_drg_std_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 3, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_drg_std_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 3, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 6.4}]},
+ "noelle_drg_char": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 19, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 6.4}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 6.6000000000000005}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 6.6000000000000005}]},
+ "noelle_drg_char_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 19, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_drg_char_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 19, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 6.800000000000001}]},
+ "noelle_blk_std": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 4, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 6.0}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 6.2}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 6.2}]},
+ "noelle_blk_std_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 4, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_blk_std_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 4, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 6.4}]},
+ "noelle_blk_char": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 20, "total": 140, "ages": [60], "tile": [440, 600], "views": [{"name": "front", "yaw": 14, "pitch": 6, "target": [0, 1.0, 0.4], "dist": 6.4}, {"name": "back 3/4", "yaw": 150, "pitch": 12, "target": [0, 1.0, 0.6000000000000001], "dist": 6.6000000000000005}, {"name": "side", "yaw": 90, "pitch": 6, "target": [0, 1.0, 0.8], "dist": 6.6000000000000005}]},
+ "noelle_blk_char_close": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 20, "total": 140, "ages": [60], "tile": [520, 520], "views": [{"name": "close front", "yaw": 18, "pitch": 4, "target": [0, 1.25, 0.0], "dist": 2.5}, {"name": "close 3/4", "yaw": 55, "pitch": 8, "target": [0, 1.25, 0.1], "dist": 2.7}]},
+ "noelle_blk_char_forge": {"kind": "aura", "attr": "Water", "realFiles": ["book/NoelleFormRules.java", "client/aura/NoelleFormRig.java", "client/aura/NoelleFormsAura.java", "client/aura/NoelleFormsOptions.java"], "style": 20, "total": 140, "ages": [1, 5, 9, 14, 20, 30, 48], "tile": [260, 380], "views": [{"name": "3/4", "yaw": 35, "pitch": 10, "target": [0, 1.0, 0.4], "dist": 6.800000000000001}]},
+ "nvl_piece_wings": {"kind": "geo", "model": "nvl_arm_wings", "space": "PLAYER", "layer": "TRANSLUCENT", "glow": "FFBFF4FF", "anim": "idle", "ages": [0], "tile": [420, 520], "views": [{"name": "back", "yaw": 180, "pitch": 8}, {"name": "front", "yaw": 0, "pitch": 8}, {"name": "top", "yaw": 0, "pitch": 80}]},
+ "nml_piece_train": {"kind": "geo", "model": "nml_arm_train", "space": "PLAYER", "layer": "TRANSLUCENT", "glow": "FF9CF8FF", "anim": "idle", "ages": [0], "tile": [420, 400], "views": [{"name": "side", "yaw": 90, "pitch": 4}, {"name": "back", "yaw": 180, "pitch": 20}, {"name": "top", "yaw": 0, "pitch": 80}]}
 }

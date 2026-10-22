@@ -62,9 +62,42 @@ public final class NoelleFormsAura {
             Piece.of("sash", Anchor.BODY, 6, 0, 6, -8).clip("idle", 1f).glass().detail().character(),
             Piece.of("lance", Anchor.BODY, 11, -14, 0, -4).clip("idle", 1f).glass().detail().character());
 
-    private static final NoelleFormRig.Set MER = new NoelleFormRig.Set("nml");
-    private static final NoelleFormRig.Set DRG = new NoelleFormRig.Set("ndg");
-    private static final NoelleFormRig.Set BLK = new NoelleFormRig.Set("nbk");
+    private static final NoelleFormRig.Set MER = new NoelleFormRig.Set("nml",
+            Piece.of("bust", Anchor.BODY, 1, 0, 0, -14),
+            Piece.of("train", Anchor.BODY, 6, 0, 8, 12).clip("idle", 1f).glass(),
+            Piece.of("veil", Anchor.BODY, 5, 0, 6, 8).clip("idle", 1f).glass().detail(),
+            Piece.of("leg_r", Anchor.LEG_R, 4, -3, 14, -6),
+            Piece.of("leg_l", Anchor.LEG_L, 4, 3, 14, -6),
+            Piece.of("vambrace_r", Anchor.ARM_R, 3, -12, 2, -6).clip("idle", 1f).glass(),
+            Piece.of("vambrace_l", Anchor.ARM_L, 3, 12, 2, -6).clip("idle", 1f).glass(),
+            Piece.of("crown", Anchor.HEAD, 0, 0, -16, 0).glass().head(),
+            Piece.of("hair", Anchor.HEAD, 2, 0, -8, 6).clip("idle", 1f).glass().head(),
+            Piece.of("trident", Anchor.BODY, 8, -14, 0, -4).clip("idle", 1f).glass().detail(),
+            Piece.of("dorsal", Anchor.BODY, 9, 0, 0, 14).clip("idle", 1f).glass().character(),
+            Piece.of("scarf", Anchor.BODY, 7, 0, -4, 10).clip("idle", 1f).glass().detail().character(),
+            Piece.of("coral", Anchor.HEAD, 10, 0, -14, 0).clip("idle", 1f).glass().detail().head().character());
+    private static final NoelleFormRig.Set DRG = dragonSet("ndg"), BLK = dragonSet("nbk");
+
+    /** The Sea Dragon God Form and the Black Dragon Form are one silhouette in two palettes (tools/noelle_dragon_kit.py): the same pieces under two model keys. */
+    private static NoelleFormRig.Set dragonSet(String key) {
+        return new NoelleFormRig.Set(key,
+                Piece.of("chest", Anchor.BODY, 1, 0, 0, -14),
+                Piece.of("tassets", Anchor.BODY, 5, 0, 10, -6).clip("idle", 1f),
+                Piece.of("pauldron_r", Anchor.ARM_R, 2, -14, -4, 0),
+                Piece.of("pauldron_l", Anchor.ARM_L, 2, 14, -4, 0),
+                Piece.of("vambrace_r", Anchor.ARM_R, 4, -12, 2, -6),
+                Piece.of("vambrace_l", Anchor.ARM_L, 4, 12, 2, -6),
+                Piece.of("greave_r", Anchor.LEG_R, 6, -3, 14, -6),
+                Piece.of("greave_l", Anchor.LEG_L, 7, 3, 14, -6),
+                Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).head(),
+                Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().glass(),
+                Piece.of("tail", Anchor.BODY, 9, 0, 8, 14).clip("idle", 1f).glass(),
+                Piece.of("cannon_r", Anchor.ARM_R, 11, -10, 6, -6).clip("idle", 1f),
+                Piece.of("ridge", Anchor.BODY, 10, 0, -6, 10).clip("idle", 1f).glass().detail().character(),
+                Piece.of("horns2", Anchor.HEAD, 10, 0, -14, 0).detail().head().character(),
+                Piece.of("wings2", Anchor.BODY, 11, 0, 4, 14).clip("idle", 1f).flap().glass().character(),
+                Piece.of("cannon_l", Anchor.ARM_L, 12, 10, 6, -6).clip("idle", 1f).detail().character());
+    }
 
     private static final Look L_VAL = new Look(VAL, AuraRender.tex("aura/noelle_val_shell"), AuraRender.tex("aura/noelle_sigil_val"), FEATHER, 0xBFF4FF, 0xFFFFFF, 0xFFE49A, 0x9CE8FF, 0xBFEFFF, 0.55f);
     private static final Look L_MER = new Look(MER, AuraRender.tex("aura/noelle_mer_shell"), AuraRender.tex("aura/noelle_sigil_mer"), BUBBLE, 0x9CF8FF, 0xFFFFFF, 0x7CF0FF, 0xFFB8E8, 0x9CF4FF, 0.5f);
@@ -92,7 +125,7 @@ public final class NoelleFormsAura {
         float fade = c.fade();
         if (fade <= 0.002f) return true;
         boolean tierC = NoelleFormRules.character(style);
-        Lod lod = NoelleFormRules.lod(NoelleFormRig.dist2(c), tierC);
+        Lod lod = frameBudget(c.player().getId(), NoelleFormRules.lod(NoelleFormRig.dist2(c), tierC));
         if (lod == Lod.NONE) return true;
         Look k = look(f);
         Recipe r = NoelleFormRules.recipe(f, lod);
@@ -106,6 +139,25 @@ public final class NoelleFormsAura {
         }
         extras(c, k, f, r, forge, pulse, tierC);
         return true;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------- the per-frame budget of a crowd
+    private static final int[] SEEN = new int[16];
+    private static int seenN, charDrawn, fullDrawn;
+
+    /**
+     * A crowd costs a bounded number of full figures ({@link NoelleFormRules#budgeted}): the players are drawn in one pass per frame, so a player that comes round a second time starts a new
+     * frame and the counters restart. The first players drawn get the full figure, the rest fall back one level (then to the distant one). Render thread only; nothing allocated.
+     */
+    private static Lod frameBudget(int playerId, Lod wanted) {
+        for (int i = 0; i < seenN; i++) {
+            if (SEEN[i] == playerId) { seenN = 0; charDrawn = 0; fullDrawn = 0; break; }
+        }
+        if (seenN >= SEEN.length) { seenN = 0; charDrawn = 0; fullDrawn = 0; }
+        SEEN[seenN++] = playerId;
+        Lod l = NoelleFormRules.budgeted(wanted, charDrawn, fullDrawn);
+        if (l == Lod.CHARACTER) { charDrawn++; fullDrawn++; } else if (l == Lod.STANDARD) fullDrawn++;
+        return l;
     }
 
     // ---------------------------------------------------------------------------------------------------------------- the dynamic parts
@@ -175,7 +227,7 @@ public final class NoelleFormsAura {
             case SEA_DRAGON -> {                                                                    // a serpent of water coiling up the body
                 float a = ph + w * 1.2f + s * Mth.TWO_PI * (1.1f + 0.25f * lane), rad = 0.58f + 0.12f * Mth.sin(s * 5f + w);
                 x = Mth.cos(a) * rad;
-                y = 1.46f - s * 2.15f;
+                y = 1.46f - s * 1.55f;                                                              // up to the shoulders: the face stays clear
                 z = Mth.sin(a) * rad;
             }
             case BLACK_DRAGON -> {                                                                  // tendrils of ink from the shoulder blades, licking up and back like flame
