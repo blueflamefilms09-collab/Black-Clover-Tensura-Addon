@@ -19,9 +19,20 @@ public final class SylphLod {
     public static final int SMALL = 0, POWERED = 1;
 
     /** Quads of the body model (the colour pass) per level, per form; counted from the generated files. */
-    public static final int[] SMALL_BODY = {365, 199, 66}, POWERED_BODY = {381, 229, 70};
-    /** The wings (all levels) and the glow-only model, per form. */
-    public static final int[] WINGS_QUADS = {16, 28}, FX_QUADS = {23, 23};
+    public static final int[] SMALL_BODY = {377, 211, 66}, POWERED_BODY = {385, 233, 70};
+    /**
+     * The wings model (all levels) and the glow-only model, per form. The wings are four dragonfly wings, each a chain of 4 (small) or 5 (powered) cards cut out of one painted wing picture, two
+     * faces a card (2 x 4 x 4 = 32 quads), plus for the powered form the six petal wings of the skirt (2 x 5 x 4 + 12 = 52).
+     */
+    public static final int[] WINGS_QUADS = {32, 52}, FX_QUADS = {29, 25};
+    /**
+     * The wing sheen: one additive sheet holds this many phases of an iridescent pastel gradient stacked top to bottom; the client shows the phase that the clock asks for and, on the full level,
+     * blends it with the next one (two passes), so the sheen sweeps slowly over the membrane. One phase lasts this many ticks (a whole sweep of all phases is about 8 seconds).
+     */
+    public static final int SHEEN_PHASES = 6;
+    public static final float SHEEN_TICKS_PER_PHASE = 27f;
+    /** How many times the wings model is drawn per level: the membrane, and the sheen once (half level: the nearest phase) or twice (full level: two phases blended); none at the lowest level. */
+    public static int wingPasses(int lod) { return lod <= FULL ? 3 : lod == HALF ? 2 : 1; }
     /** The halo behind the Sylph: one camera-facing square on every level but the lowest. */
     public static final int HALO_QUADS = 2;
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the form is not drawn (64 blocks small, 112 powered). */
@@ -31,10 +42,10 @@ public final class SylphLod {
 
     public static int[] body(int form) { return form == POWERED ? POWERED_BODY : SMALL_BODY; }
 
-    /** The quads one Sylph costs at a level (body, wings, glow-only model, halo); 0 for CULL. */
+    /** The quads one Sylph costs at a level (body, the wings once per pass, glow-only model, halo); 0 for CULL. */
     public static int cost(int form, int lod) {
         if (lod >= CULL) return 0;
-        return body(form)[lod] + WINGS_QUADS[form] + (lod <= HALF ? FX_QUADS[form] + HALO_QUADS : 0);
+        return body(form)[lod] + WINGS_QUADS[form] * wingPasses(lod) + (lod <= HALF ? FX_QUADS[form] + HALO_QUADS : 0);
     }
 
     /**

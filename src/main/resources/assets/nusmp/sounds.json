@@ -2367,5 +2367,48 @@
   "voice.gnome_hurt_3": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_hurt_3", "stream": false } ] },
   "voice.gnome_surprised_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_surprised_1", "stream": false } ] },
   "voice.gnome_lowhp_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_lowhp_1", "stream": false } ] },
-  "voice.gnome_wake_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_wake_1", "stream": false } ] }
+  "voice.gnome_wake_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_wake_1", "stream": false } ] },
+  "voice.sylph_link_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_link_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_link_1"
+  },
+  "voice.sylph_link_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_link_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_link_2"
+  },
+  "sylph.hum": {
+    "subtitle": "subtitles.nusmp.sylph.hum",
+    "sounds": [
+      { "name": "nusmp:sylph/hum_1" },
+      { "name": "nusmp:sylph/hum_2" }
+    ]
+  },
+  "sylph.gasp": {
+    "subtitle": "subtitles.nusmp.sylph.gasp",
+    "sounds": [
+      { "name": "nusmp:sylph/gasp_1" },
+      { "name": "nusmp:sylph/gasp_2" }
+    ]
+  },
+  "sylph.whimper": {
+    "subtitle": "subtitles.nusmp.sylph.whimper",
+    "sounds": [
+      { "name": "nusmp:sylph/whimper_1" },
+      { "name": "nusmp:sylph/whimper_2" }
+    ]
+  },
+  "sylph.cheer": {
+    "subtitle": "subtitles.nusmp.sylph.cheer",
+    "sounds": [
+      { "name": "nusmp:sylph/cheer_1" },
+      { "name": "nusmp:sylph/cheer_2" }
+    ]
+  },
+  "sylph.pout": {
+    "subtitle": "subtitles.nusmp.sylph.pout",
+    "sounds": [
+      { "name": "nusmp:sylph/pout_1" },
+      { "name": "nusmp:sylph/pout_2" }
+    ]
+  }
 }

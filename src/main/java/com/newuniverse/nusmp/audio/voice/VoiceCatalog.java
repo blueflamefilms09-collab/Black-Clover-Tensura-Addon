@@ -18,6 +18,8 @@ public final class VoiceCatalog {
     private VoiceCatalog() {}
 
     public static final String SYSTEM = "system", BOSS = "boss", NPC = "npc", DJINN = "djinn", GNOME = "gnome";
+    /** 1.99.0: Sylph's own spoken lines ({@code sylph/SylphVoiceLines}, {@code tools/audio/sylph_lines.json}); appended after the others, so the first 120 ids and their order are unchanged. */
+    public static final String SYLPH = "sylph";
 
     /** The System announcer's lines (suffix after {@code system_}). */
     public static final List<String> SYSTEM_LINES = List.of("floor_enter", "floor_sealed", "lockdown_start", "lockdown_clear", "ambush_warning", "rest_safe", "boss_ahead", "rift_open",
@@ -59,6 +61,7 @@ public final class VoiceCatalog {
         for (String g : GNOME_LINES) ids.add(gnomeId(g));
         BASE_IDS = Collections.unmodifiableList(new ArrayList<>(ids));
         ids.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());                                // the Undine's registered lines (the ones that have a voice file), after the base set
+        ids.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());                             // Sylph's registered lines, after the Undine's
         IDS = Collections.unmodifiableList(ids);
         SET = Collections.unmodifiableSet(new LinkedHashSet<>(ids));
     }
@@ -83,8 +86,8 @@ public final class VoiceCatalog {
     /** The resource path of the file, without the namespace and extension: {@code voice/system/system_floor_enter}. */
     public static String filePath(String id) { return "voice/" + role(id) + "/" + id; }
 
-    /** The roles of the manifest's lines (the Undine's role is {@link #UNDINE}, her lines come after them). */
-    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN, GNOME); }
+    /** The roles of the manifest's lines and Sylph's (the Undine's role is {@link #UNDINE}, her lines come after the base set). */
+    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN, GNOME, SYLPH); }
 
     /** The role -> its ids, for reports. */
     public static Map<String, List<String>> byRole() {

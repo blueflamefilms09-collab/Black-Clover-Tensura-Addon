@@ -37,7 +37,7 @@ class SylphAssetsTest {
     void everyModelOfBothFormsIsWellFormedAndHasItsOwnSheet() throws IOException {
         for (String form : new String[]{"small", "powered"}) {
             int fullW = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/sylph_" + form + ".png").toFile()).getWidth();
-            for (String suffix : new String[]{"", "_lod1", "_lod2", "_wings", "_fx"}) {
+            for (String suffix : new String[]{"", "_lod1", "_lod2", "_wings", "_wings_v1", "_fx"}) {
                 String id = "sylph_" + form + suffix;
                 JsonObject d = geo(id).getAsJsonObject("description");
                 int tw = d.get("texture_width").getAsInt(), th = d.get("texture_height").getAsInt();
@@ -62,8 +62,11 @@ class SylphAssetsTest {
             for (String g : new String[]{"sylph_" + form + "_wings_glow"}) assertTrue(Files.exists(ASSETS.resolve("textures/entity/" + g + ".png")), g);
             BufferedImage wings = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/sylph_" + form + "_wings.png").toFile());
             BufferedImage glow = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/sylph_" + form + "_wings_glow.png").toFile());
-            assertEquals(wings.getWidth(), glow.getWidth(), "the glow map of the wings has the layout of the wings' sheet");
-            assertEquals(wings.getHeight(), glow.getHeight());
+            // the glow sheet is the sheen: SHEEN_PHASES copies of the wings' sheet layout stacked top to bottom at half size (the client shifts V to show a phase, client/prop/SheenUv)
+            assertEquals(wings.getWidth() / 2, glow.getWidth(), "the sheen sheet is half the width of the wings' sheet");
+            assertEquals(wings.getHeight() * SylphLod.SHEEN_PHASES / 2, glow.getHeight(), "and holds SHEEN_PHASES phases of its height");
+            for (String v1 : new String[]{"sylph_" + form + "_wings_v1", "sylph_" + form + "_wings_v1_glow"}) assertTrue(Files.exists(ASSETS.resolve("textures/entity/" + v1 + ".png")), "the first version of the wings is kept: " + v1);
+            assertTrue(Files.exists(ASSETS.resolve("geo/entity/sylph_" + form + "_wings_v1.geo.json")));
         }
         assertTrue(Files.exists(ASSETS.resolve("textures/entity/sylph_halo.png")));
     }
@@ -72,7 +75,7 @@ class SylphAssetsTest {
     void theLodAndOtherModelsUseBonesOfTheFullModelWithTheSamePivots() throws IOException {
         for (String form : new String[]{"small", "powered"}) {
             Map<String, JsonObject> full = bones(geo("sylph_" + form));
-            for (String suffix : new String[]{"_lod1", "_lod2", "_wings", "_fx"}) {
+            for (String suffix : new String[]{"_lod1", "_lod2", "_wings", "_fx"}) {                               // (the first-version wings, _wings_v1, are a model of their own: not driven by this animation file)
                 for (var e : bones(geo("sylph_" + form + suffix)).entrySet()) {
                     if (e.getKey().equals("root")) continue;
                     JsonObject f = full.get(e.getKey());
@@ -115,7 +118,7 @@ class SylphAssetsTest {
             JsonObject anim = json(ASSETS.resolve("animations/entity/sylph_" + form + ".animation.json")).getAsJsonObject("animations");
             Set<String> faces = new HashSet<>();
             for (String b : bones(geo("sylph_" + form)).keySet()) if (b.startsWith("face_")) faces.add(b);
-            assertEquals(3, faces.size(), form + " has three face plates");
+            assertEquals(form.equals("small") ? 9 : 5, faces.size(), form + " has its face plates (small: laugh, smile, stern, smug, angry, sad, surprised, sleepy, pout; powered: stern, shout, smile, angry, laugh)");
             for (String clip : form.equals("small") ? SylphRules.SMALL_CLIPS : SylphRules.POWERED_CLIPS) {
                 JsonObject bones = anim.getAsJsonObject(clip).getAsJsonObject("bones");
                 int shown = 0;
@@ -145,7 +148,7 @@ class SylphAssetsTest {
         assertTrue(small > 0.5 && small < 0.7, "the small form stands about " + small + " blocks with her ahoge");
         assertTrue(powered > 1.4 && powered < 2.0, "the powered form with her streaming hair is " + powered + " blocks tall");
         double span = halfSpan("sylph_powered_wings") * 2 * 0.36 / 16.0;
-        assertTrue(span > 2.2 && span < 3.2, "her wings spread " + span + " blocks");
+        assertTrue(span > 1.6 && span < 3.2, "her wings spread " + span + " blocks");
     }
 
     private static double height(String id) throws IOException {

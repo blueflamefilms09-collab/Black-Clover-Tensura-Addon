@@ -46,8 +46,8 @@ class SylphSoundsTest {
     private static String nameOf(JsonElement s) { return s.isJsonObject() ? s.getAsJsonObject().get("name").getAsString() : s.getAsString(); }
 
     @Test
-    void theCatalogueIsEightCuesWithRealParameters() {
-        assertEquals(8, SylphSoundSet.cues().size());
+    void theCatalogueIsThirteenCuesWithRealParameters() {
+        assertEquals(13, SylphSoundSet.cues().size(), "the first eight, and the five wordless stand-ins of the moods");
         Set<String> ids = new HashSet<>();
         for (SylphSoundSet.Cue c : SylphSoundSet.cues()) {
             assertTrue(ids.add(c.id()), "unique " + c.id());
@@ -62,7 +62,7 @@ class SylphSoundsTest {
         }
         assertFalse(SylphSoundSet.has("nope"));
         assertNull(SylphSoundSet.cue("nope"));
-        for (String id : new String[]{"link", "unlink", "chime", "flutter", "giggle", "gust", "surge", "gale"}) assertTrue(SylphSoundSet.has(id), id);
+        for (String id : new String[]{"link", "unlink", "chime", "flutter", "giggle", "gust", "surge", "gale", "hum", "gasp", "whimper", "cheer", "pout"}) assertTrue(SylphSoundSet.has(id), id);
         SylphSoundSet.Cue chime = SylphSoundSet.cue("chime");
         assertEquals(chime.pitchMin(), SylphSoundSet.pitch(chime, 0.0), 1e-6);
         assertEquals(chime.pitchMax(), SylphSoundSet.pitch(chime, 1.0), 1e-6);
@@ -121,7 +121,7 @@ class SylphSoundsTest {
     void theOlderEntriesOfSoundsJsonAreStillThere() throws IOException {
         JsonObject doc = soundsJson();
         assertEquals(200, doc.keySet().stream().filter(k -> k.startsWith("mob.")).count(), "the 200 mob voices are untouched");
-        assertEquals(120, doc.keySet().stream().filter(k -> k.startsWith("voice.")).count(), "the 120 spoken lines are untouched");
+        assertEquals(120, doc.keySet().stream().filter(k -> k.startsWith("voice.") && !k.startsWith("voice.sylph_") && !k.startsWith("voice.undine_") && !k.startsWith("voice.gnome_")).count(), "the 120 spoken lines are untouched (the own lines of Sylph, the Undine and the Gnome are voice.sylph_*, voice.undine_*, voice.gnome_*)");
         assertTrue(doc.size() >= 352 + SylphSoundSet.cues().size(), "nothing was removed");
     }
 }

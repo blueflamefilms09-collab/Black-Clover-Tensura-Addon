@@ -124,7 +124,7 @@ class UndineSourceScanTest {
         String cast = code(read(COMMON.resolve("UndineCasting.java")));
         assertTrue(cast.contains("return FireCasting.run(book, page, inst, p, mode)"), "every other caster takes the generic path untouched");
         String pk = read(MAIN.resolve("prop/PropKind.java"));
-        assertTrue(pk.indexOf("FIRECAST_2") < pk.indexOf("UNDINE_1") && pk.trim().endsWith("UNDINE_1\n}") , "the new kind is appended at the end of the enum");
+        assertTrue(pk.indexOf("FIRECAST_2") < pk.indexOf("UNDINE_1") && pk.indexOf("SYLPH_1") < pk.indexOf("UNDINE_1"), "the new kind is appended after the older ones (later spirits follow it)");
         String r = read(MAIN.resolve("client/ElementalSpiritRenderer.java"));
         assertTrue(r.contains("GreatSpiritModels.UNDINE_MERMAID") && r.contains("UndineEntityDraw.draw("), "the old mermaid stays, drawn when the switch is off");
         assertTrue(read(MAIN.resolve("client/undine/UndineEntityDraw.java")).contains("if (!UndineConfig.enabled()) return false;"));

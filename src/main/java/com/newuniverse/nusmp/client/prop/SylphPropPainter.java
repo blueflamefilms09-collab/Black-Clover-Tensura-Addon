@@ -56,7 +56,8 @@ public final class SylphPropPainter {
         float fade = Mth.clamp(Math.min((e.life() + partial) / 8f, (e.maxLife() - e.life() - partial) / 8f), 0f, 1f);
         if (fade <= 0.01f) return;
         int since = SylphRules.sinceStamp(SylphRules.extra(param), now);
-        String clip = powered ? SylphRules.poweredClip(since, e.life()) : SylphRules.smallClip(since, moving, now, e.seed());
+        int mood = SylphRules.pose(param);
+        String clip = powered ? SylphRules.poweredClip(since, e.life(), mood) : SylphRules.smallClip(since, moving, now, e.seed(), mood);
         float secs = ("cast".equals(clip) || "powered_cast".equals(clip)) ? (since + partial) / 20f : age / 20f;
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(Mth.rotLerp(partial, e.yRotO, e.getYRot())));         // undo the renderer's turn: the offset below is in world axes

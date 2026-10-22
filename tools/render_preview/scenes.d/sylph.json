@@ -1,11 +1,12 @@
 {
- "_comment": "Sylph (docs/magic/sylph.md): the small fairy and the powered form drawn by the real client.prop.SylphDraw (example SylphProp; param = placed*1000 + form*100 + lod*10 + clip: form 0 small, 1 powered; clip 0 idle, 1 laugh, 2 cast, 3 hover, 4 powered_cast, 5 shout). Regenerate the models with tools/gen_sylph_geo.py and the scenes with tools/sylph_scenes.py.",
+ "_comment": "Sylph (docs/magic/sylph.md): the small fairy and the powered form drawn by the real client.prop.SylphDraw (example SylphProp; param = placed*10000 + form*1000 + lod*100 + clip index, see tools/sylph_scenes.py). Regenerate the models with tools/gen_sylph_geo.py and the scenes with tools/sylph_scenes.py.",
  "sylph_small": {
   "kind": "prop",
   "example": "SylphProp",
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -73,6 +74,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -118,6 +120,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -164,6 +167,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -188,6 +192,497 @@
      0
     ],
     "dist": 1.5
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_small": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   60,
+   120
+  ],
+  "tile": [
+   380,
+   440
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 10,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_small_cast": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   3,
+   9
+  ],
+  "tile": [
+   380,
+   440
+  ],
+  "views": [
+   {
+    "name": "cast back",
+    "yaw": 160,
+    "pitch": 6,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   },
+   {
+    "name": "cast front",
+    "yaw": -20,
+    "pitch": 4,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_powered": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1003,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   60,
+   120
+  ],
+  "tile": [
+   380,
+   440
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.35,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     0.35,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 10,
+    "target": [
+     0,
+     0.35,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.35,
+     0
+    ],
+    "dist": 4.6
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "cmp_wings_119": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6
+  ],
+  "tile": [
+   560,
+   560
+  ],
+  "views": [
+   {
+    "name": "small wings, seated (the first picture)",
+    "yaw": 28,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "cmp_wings_small": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   8
+  ],
+  "tile": [
+   560,
+   640
+  ],
+  "views": [
+   {
+    "name": "small wings, from the front (the second picture)",
+    "yaw": -12,
+    "pitch": 3,
+    "target": [
+     0,
+     0.16,
+     0
+    ],
+    "dist": 1.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "cmp_wings_powered": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1003,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   6
+  ],
+  "tile": [
+   560,
+   640
+  ],
+  "views": [
+   {
+    "name": "powered wings, from the front (the third picture)",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     0.42,
+     0
+    ],
+    "dist": 3.6
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "wings_close_small": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   70
+  ],
+  "tile": [
+   560,
+   640
+  ],
+  "views": [
+   {
+    "name": "back, close",
+    "yaw": 180,
+    "pitch": 3,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 1.0
+   },
+   {
+    "name": "front, close",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 1.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "wings_close_powered": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1003,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0,
+   70
+  ],
+  "tile": [
+   560,
+   640
+  ],
+  "views": [
+   {
+    "name": "back, close",
+    "yaw": 180,
+    "pitch": 3,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "front, close",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     0.55,
+     0
+    ],
+    "dist": 3.4
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_lods": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   380
+  ],
+  "views": [
+   {
+    "name": "full",
+    "yaw": 160,
+    "pitch": 6,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_lod1": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   380
+  ],
+  "views": [
+   {
+    "name": "lod1",
+    "yaw": 160,
+    "pitch": 6,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "sylph_wings_lod2": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 200,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   380
+  ],
+  "views": [
+   {
+    "name": "lod2",
+    "yaw": 160,
+    "pitch": 6,
+    "target": [
+     0,
+     0.12,
+     0
+    ],
+    "dist": 1.45
    }
   ],
   "light": "0xF000F0"
@@ -241,6 +736,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -275,6 +771,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -309,10 +806,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 103,
+  "param": 1003,
   "figure": false,
   "floor": false,
   "ages": [
@@ -343,6 +841,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -388,6 +887,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -424,6 +924,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -470,6 +971,7 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
@@ -504,10 +1006,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 10,
+  "param": 100,
   "figure": false,
   "floor": false,
   "ages": [
@@ -538,10 +1041,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 20,
+  "param": 200,
   "figure": false,
   "floor": false,
   "ages": [
@@ -572,10 +1076,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1000,
+  "param": 10000,
   "figure": true,
   "floor": false,
   "ages": [
@@ -606,10 +1111,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1000,
+  "param": 10000,
   "figure": true,
   "floor": false,
   "ages": [
@@ -640,10 +1146,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 103,
+  "param": 1003,
   "figure": false,
   "floor": false,
   "ages": [
@@ -707,10 +1214,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 103,
+  "param": 1003,
   "figure": false,
   "floor": false,
   "ages": [
@@ -752,10 +1260,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 104,
+  "param": 1004,
   "figure": false,
   "floor": false,
   "ages": [
@@ -787,10 +1296,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 113,
+  "param": 1103,
   "figure": false,
   "floor": false,
   "ages": [
@@ -821,10 +1331,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 123,
+  "param": 1203,
   "figure": false,
   "floor": false,
   "ages": [
@@ -855,10 +1366,11 @@
   "realFiles": [
    "client/prop/SylphDraw.java",
    "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
    "sylph/SylphLod.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1103,
+  "param": 11003,
   "figure": true,
   "floor": false,
   "ages": [
@@ -879,6 +1391,1126 @@
      -1.0
     ],
     "dist": 8.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_idle": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "idle",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_laugh": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "laugh",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_point": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "point",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_cast": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "cast",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_fly": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 8,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "fly",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_swing": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 9,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "swing",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_wave": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 10,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "wave",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_crossed": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 11,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "crossed",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_pout": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 12,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "pout",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_victory": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 13,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "victory",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_sleepy": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 14,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "sleepy",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_startled": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 15,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "startled",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_hurt": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 16,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "hurt",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_worry": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 17,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "worry",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_cry": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 18,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "cry",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_small_cheer": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 19,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "cheer",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 1.25
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_hover": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1003,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "hover",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_powered_cast": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1004,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "powered_cast",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_shout": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1005,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "shout",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_battle": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1020,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "battle",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_fury": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1021,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "fury",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "pose_powered_triumph": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1022,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "triumph",
+    "yaw": 24,
+    "pitch": 5,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 4.0
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_laugh": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "laugh",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_smile": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 7,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "smile",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_smug": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 11,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "smug",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_angry": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 16,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "angry",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_sad": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 18,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "sad",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_surprised": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 15,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "surprised",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_sleepy": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 14,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "sleepy",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_pout": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 12,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "pout",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 0.62
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_stern": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1003,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "stern",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.42,
+     0
+    ],
+    "dist": 1.7
+   }
+  ],
+  "light": "0xF000F0"
+ },
+ "face_shout": {
+  "kind": "prop",
+  "example": "SylphProp",
+  "realFiles": [
+   "client/prop/SylphDraw.java",
+   "client/prop/FlatLit.java",
+   "client/prop/SheenUv.java",
+   "sylph/SylphLod.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1005,
+  "figure": false,
+  "floor": false,
+  "ages": [
+   5
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "views": [
+   {
+    "name": "shout",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     0.42,
+     0
+    ],
+    "dist": 1.7
    }
   ],
   "light": "0xF000F0"

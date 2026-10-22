@@ -18,7 +18,17 @@ public final class SylphRules {
     /** The cast clip plays this many ticks after the stamped cast tick. */
     public static final int CAST_CLIP_TICKS = 24;
 
+    /** Param bits 4 to 7: the POSE she holds (0 = none; the codes are {@link SylphMood}'s: a clip of her animation file, which also carries her face). Set by the server, played by the clients. */
+    public static final int POSE_SHIFT = 4, POSE_MASK = 15 << 4;
+
     public static int param(int variant, int extra) { return (variant & V_MASK) | (extra << EXTRA_SHIFT); }
+
+    public static int pose(int param) { return (param & POSE_MASK) >>> POSE_SHIFT; }
+
+    public static int withPose(int param, int pose) { return (param & ~POSE_MASK) | ((pose & 15) << POSE_SHIFT); }
+
+    /** The bits of a param the cast stamp must keep: the hidden flag and the pose. */
+    public static final int KEEP_ON_STAMP = HIDDEN | POSE_MASK;
 
     public static int variant(int param) { return param & V_MASK; }
 
@@ -132,8 +142,8 @@ public final class SylphRules {
 
     // ================================================================================================ the clip of the moment
     /** The clip names of the small form's animation file (animations/entity/sylph_small.animation.json) and the powered form's. */
-    public static final String[] SMALL_CLIPS = {"idle", "laugh", "point", "cast", "fly"};
-    public static final String[] POWERED_CLIPS = {"hover", "powered_cast", "shout"};
+    public static final String[] SMALL_CLIPS = {"idle", "laugh", "point", "cast", "fly", "swing", "wave", "crossed", "pout", "victory", "sleepy", "startled", "hurt", "worry", "cry", "cheer"};
+    public static final String[] POWERED_CLIPS = {"hover", "powered_cast", "shout", "battle", "fury", "triumph"};
 
     /**
      * The clip the small form plays: the cast clip for {@link #CAST_CLIP_TICKS} after a cast, the fly clip while the owner moves, otherwise idle, with a laugh now and then (a few seconds of
@@ -152,5 +162,26 @@ public final class SylphRules {
     public static String poweredClip(int sinceCast, int age) {
         if (sinceCast < 30) return "powered_cast";
         return age < 16 ? "shout" : "hover";
+    }
+
+    /**
+     * The clip the small form plays when she may hold a POSE (the mood the server set, {@link SylphMood}): the cast clip still comes first (her hand is out, the spell leaves it), then the pose's
+     * clip if the code names one, otherwise the ordinary choice ({@link #smallClip(int, boolean, long, int)}). An unknown code plays the ordinary clip.
+     */
+    public static String smallClip(int sinceCast, boolean moving, long ticks, int seed, int pose) {
+        if (sinceCast >= CAST_CLIP_TICKS) {
+            String p = SylphMood.smallClip(pose);
+            if (p != null) return p;
+        }
+        return smallClip(sinceCast, moving, ticks, seed);
+    }
+
+    /** The powered form's clip with a pose: the cast clip first, then the pose's clip (the stance, fury or triumph), then the arrival shout and the hover. */
+    public static String poweredClip(int sinceCast, int age, int pose) {
+        if (sinceCast >= 30) {
+            String p = SylphMood.poweredClip(pose);
+            if (p != null) return p;
+        }
+        return poweredClip(sinceCast, age);
     }
 }

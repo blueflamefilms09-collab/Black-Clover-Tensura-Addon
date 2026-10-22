@@ -191,7 +191,7 @@ class ScaleCastingScanTest {
         assertTrue(book.contains("magic == MagicType.SCALE") && book.contains("ScaleCastKit.onHeld(p)"), "the hold hook is gone");
         assertTrue(code(read("mana/ManaLaw.java")).contains("m *= com.newuniverse.nusmp.scalecast.ScaleCastKit.magicMult(p);"), "the spell power hook is gone");
         String kinds = code(read("prop/PropKind.java"));
-        assertTrue(kinds.replaceAll("\\s+", "").endsWith("BONE_JA,SCALE_BALANCE}"), "SCALE_BALANCE must stay the last PropKind (ordinals are synced)");
+        assertTrue(kinds.replaceAll("\\s+", "").contains("BONE_JA,SCALE_BALANCE,"), "SCALE_BALANCE must keep its place right after BONE_JA (ordinals are synced; later kinds are appended after it)");
         assertTrue(code(read("client/prop/PropPainterRegistry.java")).contains("ScaleBalancePainter.register();"));
         assertTrue(code(read("book/ScaleSpells.java")).contains("ScaleCastKit.origin(p, start)"), "Scale Volley no longer starts at the Scale");
     }

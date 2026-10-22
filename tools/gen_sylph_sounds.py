@@ -9,7 +9,8 @@ with ffmpeg. It is reproducible: every variant is seeded from its own name, so a
   python3 -B tools/gen_sylph_sounds.py --preview DIR   also write a .wav and a spectrogram .png per file into DIR (to look at them without the game)
   python3 -B tools/gen_sylph_sounds.py --check         verify that every file sounds.json names exists, is a valid Ogg and short
 
-The cues are the ones of src/main/java/.../sylph/SylphSoundSet (a test keeps the table, the files and sounds.json in step): link, unlink, chime, flutter, giggle, gust, surge, gale.
+The cues are the ones of src/main/java/.../sylph/SylphSoundSet (a test keeps the table, the files and sounds.json in step): link, unlink, chime, flutter, giggle, gust, surge, gale, and (the moods) hum, gasp, whimper, cheer, pout.
+  --only hum,gasp   makes just those cues (the others are left as they are)
 """
 from __future__ import annotations
 
@@ -42,6 +43,12 @@ CUES = {
     'gust': (3, -21.0, 'Sylph\'s gust whooshes'),
     'surge': (2, -20.0, 'Sylph surges with wind'),
     'gale': (2, -19.0, 'Sylph\'s gale howls'),
+    # 1.99.0 (moods): vocal stand-ins for the moods whose spoken lines are missing (sylph/SylphVoiceLines.fallbackCue): wordless, bell-voiced, synthesised like the rest
+    'hum': (2, -25.0, 'Sylph hums'),
+    'gasp': (2, -23.0, 'Sylph gasps'),
+    'whimper': (2, -24.0, 'Sylph whimpers'),
+    'cheer': (2, -21.0, 'Sylph cheers'),
+    'pout': (2, -25.0, 'Sylph huffs'),
 }
 for _k, (_n, _l, _s) in CUES.items():
     M.LOUDNESS[_k] = _l
@@ -198,7 +205,69 @@ def r_gale(c, i):
     return M.reverb(x, c.sr, 1.3, 0.3)
 
 
-RECIPES = {'link': r_link, 'unlink': r_unlink, 'chime': r_chime, 'flutter': r_flutter, 'giggle': r_giggle, 'gust': r_gust, 'surge': r_surge, 'gale': r_gale}
+def voice_note(c, f0, dur, glide=0.0, vib=5.5, depth=0.012, breath=0.16, attack=0.02, release=0.07, overtones=(0.42, 0.18)):
+    """One soft sung note (no word): a sine with two overtones, a slow vibrato, a glide over the note, a breath of noise and a smooth start and end."""
+    n = c.n(dur)
+    t = np.arange(n) / c.sr
+    f = f0 * (1.0 + glide * (t / dur)) * (1.0 + depth * np.sin(2 * np.pi * vib * t + c.rng.uniform(0, 6.28)))
+    ph = 2 * np.pi * np.cumsum(f) / c.sr
+    tone = np.sin(ph) + overtones[0] * np.sin(2 * ph) + overtones[1] * np.sin(3 * ph)
+    env = np.minimum(1.0, t / attack) * np.clip((dur - t) / release, 0.0, 1.0)
+    air = M.bp(M.white(c, n), 3600.0, 1.0, c.sr) * breath
+    return (tone * 0.55 + air) * env
+
+
+def r_hum(c, i):
+    """A little tune hummed to herself: five or six soft notes of the pentatonic scale, a lilt, a touch of room."""
+    tune = ([523.25, 587.33, 659.25, 587.33, 523.25, 659.25], [659.25, 587.33, 523.25, 587.33, 659.25, 783.99])[i - 1]
+    out = np.zeros(c.n(0.26 * len(tune) + 0.5))
+    t0 = 0.02
+    for k, f in enumerate(tune):
+        d = 0.21 + 0.04 * (k % 2)
+        out = M.place(out, voice_note(c, f, d, 0.02, 5.0, 0.01, 0.12), int(t0 * c.sr), 0.8)
+        t0 += d + 0.04
+    return M.reverb(out, c.sr, 0.5, 0.18)
+
+
+def r_gasp(c, i):
+    """A quick intake of breath and a small startled 'oh': air that swells for a moment, then a short rising note."""
+    n = c.n(0.5)
+    t = np.arange(n) / c.sr
+    air = M.bp(M.white(c, n), 3000.0 + 500.0 * i, 0.8, c.sr) * M.curve([(0, 0), (0.16, 1), (0.3, 0.1), (1, 0)], n) * 0.9
+    note = voice_note(c, 640.0 + 60.0 * i, 0.2, 0.45, 8.0, 0.02, 0.1, 0.01, 0.06)
+    x = M.place(air, note, int(0.2 * c.sr), 0.9)
+    return M.reverb(x, c.sr, 0.4, 0.12)
+
+
+def r_whimper(c, i):
+    """A small sob: two falling wavering notes with breath between them."""
+    out = np.zeros(c.n(1.25))
+    out = M.place(out, voice_note(c, 880.0 - 40.0 * i, 0.42, -0.30, 7.5, 0.03, 0.2, 0.04, 0.12), int(0.03 * c.sr), 0.9)
+    out = M.place(out, M.bp(M.white(c, c.n(0.18)), 2600.0, 0.9, c.sr) * M.curve([(0, 0), (0.4, 1), (1, 0)], c.n(0.18)) * 0.5, int(0.48 * c.sr))
+    out = M.place(out, voice_note(c, 740.0 - 40.0 * i, 0.5, -0.34, 7.0, 0.035, 0.22, 0.04, 0.2), int(0.62 * c.sr), 0.8)
+    return M.reverb(out, c.sr, 0.7, 0.2)
+
+
+def r_cheer(c, i):
+    """A bright 'yay': a short rising voiced note, a run of chimes over it and a glitter."""
+    out = np.zeros(c.n(1.1))
+    out = M.place(out, voice_note(c, 720.0 + 40.0 * i, 0.3, 0.55, 6.0, 0.015, 0.1, 0.012, 0.1, (0.6, 0.3)), int(0.02 * c.sr), 1.0)
+    out = M.place(out, run_of_chimes(c, PENTA[3:8] if i == 1 else PENTA[4:9], 0.06, 0.6, True, 0.9), int(0.14 * c.sr), 0.55)
+    out = M.place(out, sparkle(c, 0.7, 90.0, 5200.0, 10500.0, 0.45), int(0.2 * c.sr))
+    return M.reverb(out, c.sr, 0.7, 0.22)
+
+
+def r_pout(c, i):
+    """A huffy 'hmph': a puff of air through the nose and a short low note that sags."""
+    n = c.n(0.14)
+    puff = M.lp(M.white(c, n), 1800.0, c.sr, 1) * M.curve([(0, 0), (0.2, 1), (1, 0)], n)
+    out = np.zeros(c.n(0.55))
+    out = M.place(out, puff, int(0.02 * c.sr), 0.8)
+    out = M.place(out, voice_note(c, 520.0 - 30.0 * i, 0.26, -0.30, 6.0, 0.02, 0.05, 0.015, 0.1, (0.3, 0.1)), int(0.12 * c.sr), 0.9)
+    return M.reverb(out, c.sr, 0.35, 0.1)
+
+
+RECIPES = {'link': r_link, 'unlink': r_unlink, 'chime': r_chime, 'flutter': r_flutter, 'giggle': r_giggle, 'gust': r_gust, 'surge': r_surge, 'gale': r_gale, 'hum': r_hum, 'gasp': r_gasp, 'whimper': r_whimper, 'cheer': r_cheer, 'pout': r_pout}
 
 
 # ====================================================================================================================== writing
@@ -207,10 +276,12 @@ def render(cue, index):
     return M.finalize(RECIPES[cue](c, index), SR, cue)
 
 
-def generate(preview=None, quality=3):
+def generate(preview=None, quality=3, only=None):
     os.makedirs(SOUND_DIR, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         for cue, (variants, _l, _s) in CUES.items():
+            if only and cue not in only:
+                continue
             for i in range(1, variants + 1):
                 x = render(cue, i)
                 wav = os.path.join(tmp, '%s_%d.wav' % (cue, i))
@@ -247,17 +318,24 @@ def manifest():
 
 
 def write_manifest():
+    """Appends the entries of the cues that have none yet (every entry that is in the file, and every other builder's entries and the spoken voice lines after it, stay byte for byte)."""
     entries, lang = manifest()
     with open(SOUNDS_JSON, encoding='utf-8') as f:
         text = f.read()
-    # the Sylph entries are the LAST ones of the file: everything before them stays byte for byte, in its place and its form
-    at = text.find('\n  "sylph.')
-    base = text[:at] if at >= 0 else text.rstrip()[:-1]
-    base = base.rstrip().rstrip(',')
-    text = base + ',\n' + ',\n'.join(M._entry_text(k, v) for k, v in entries.items()) + '\n}\n'
-    json.loads(text)                                                                     # never write a file that does not parse
-    with open(SOUNDS_JSON, 'w', encoding='utf-8') as f:
-        f.write(text)
+    added = 0
+    tail = ''
+    for k, v in entries.items():
+        if '"%s"' % k in text:
+            continue
+        tail += ',\n' + M._entry_text(k, v)
+        added += 1
+    if tail:
+        body = text.rstrip()
+        assert body.endswith('}')
+        text = body[:-1].rstrip() + tail + '\n}\n'
+        json.loads(text)                                                                 # never write a file that does not parse
+        with open(SOUNDS_JSON, 'w', encoding='utf-8') as f:
+            f.write(text)
     try:
         with open(LANG_OUT, encoding='utf-8') as f:
             old = json.load(f)
@@ -268,7 +346,7 @@ def write_manifest():
     with open(LANG_OUT, 'w', encoding='utf-8') as f:
         json.dump(old, f, indent=2, ensure_ascii=False)
         f.write('\n')
-    print('sounds.json: %d sylph events; %d subtitles' % (len(entries), len(lang)))
+    print('sounds.json: %d sylph events (%d new); %d subtitles' % (len(entries), added, len(lang)))
 
 
 def check():
@@ -296,7 +374,8 @@ def main():
     if '--check' in args:
         sys.exit(0 if check() else 1)
     preview = args[args.index('--preview') + 1] if '--preview' in args else None
-    generate(preview)
+    only = args[args.index('--only') + 1].split(',') if '--only' in args else None
+    generate(preview, only=only)
     write_manifest()
 
 

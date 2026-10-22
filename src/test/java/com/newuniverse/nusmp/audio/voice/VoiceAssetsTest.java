@@ -85,7 +85,11 @@ class VoiceAssetsTest {
             assertFalse(o.get("voice").getAsString().isBlank(), id + " has no voice id");
         }
         assertEquals(120 + VoiceCatalog.GNOME_LINES.size(), ids.size(), "the owner asked for all 120 lines; the Gnome's lines are appended after them");
-        assertEquals(ids, VoiceCatalog.baseIds(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines (the Undine's lines come after them)");
+        assertEquals(ids, VoiceCatalog.baseIds(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines (the Undine's and Sylph's lines come after them)");
+        List<String> all = new ArrayList<>(ids);
+        all.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());
+        all.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());                    // their own lines (UndineVoiceAssetsTest, SylphVoiceDataTest check them) are appended after the manifest
+        assertEquals(all, VoiceCatalog.ids(), "VoiceCatalog.ids() is the manifest plus the Undine's and Sylph's generated lines");
         assertEquals(new HashSet<>(ids).size(), ids.size(), "an id is listed twice");
     }
 
@@ -102,7 +106,9 @@ class VoiceAssetsTest {
                 continue;
             }
             JsonObject e = entry.getAsJsonObject();
-            if (e.has("subtitle") && !VoiceCatalog.UNDINE.equals(VoiceCatalog.role(id))) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");        // the Undine's words are written nowhere else: her lines have a subtitle (UndineVoiceAssetsTest)
+            boolean own = id.startsWith("sylph_") || VoiceCatalog.UNDINE.equals(VoiceCatalog.role(id));
+            if (!own && e.has("subtitle")) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");
+            if (id.startsWith("sylph_") && !e.has("subtitle")) bad.add(key + ": Sylph's lines are spoken with no message: they carry a subtitle");
             JsonArray sounds = e.getAsJsonArray("sounds");
             if (sounds == null || sounds.size() != 1) {
                 bad.add(key + ": exactly one file expected");
