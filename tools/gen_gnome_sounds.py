@@ -13,6 +13,8 @@ The cue table (names, variants, subtitles) is the one of gnome/GnomeSoundRules.j
   GRIND   stick-slip friction: band-passed noise gated by an irregular pulse train that speeds up and slows down, plus stone-on-stone squeal partials (the grinding)
   CRASH   a noise burst with a fast decay, a shower of stone clacks (inharmonic ringing modes with random pitch) and a sub thud sweeping 95 -> 34 Hz (the slam)
   TONE    the low resonant earth tone: a fundamental near 55 to 82 Hz with a few stone partials (ratios 1, 1.51, 2.76, 4.16) that ring and slowly beat, a slow attack and a long tail
+  GRUFF   the non-verbal voice of the golem (grunt, chuckle, snore, huff; appended after the seven cues above): an irregular "vocal fry" pulse train at 38 to 80 Hz (a glottal source) shaped by
+          low vowel formants (a few hundred Hz to about two kHz), with breath noise and a little stone grit under it. Synthesised from nothing like the rest: it is NOT a person's recording
 """
 from __future__ import annotations
 
@@ -44,6 +46,10 @@ CUES = {
     "rise": (3, "The Gnome heaves out of the ground", -17.0),
     "slam": (3, "The Gnome slams the earth", -16.0),
     "sink": (2, "The Gnome sinks into the ground", -19.0),
+    "grunt": (4, "The Gnome grunts", -20.0),
+    "chuckle": (2, "The Gnome chuckles deeply", -22.0),
+    "snore": (2, "The Gnome snores", -26.0),
+    "huff": (2, "The Gnome huffs", -23.0),
 }
 
 
@@ -195,6 +201,83 @@ def tone(rng, dur, f0=None, attack=0.5, tail=1.6, level=1.0, glide=0.0):
     return out * env * 0.4 * level
 
 
+def fry(rng, dur, f0, f_end=None, irregular=0.28, amp_var=0.35):
+    """A glottal source with 'vocal fry': impulses whose spacing and strength are irregular, each one softened to a low pulse."""
+    n = int(dur * SR)
+    f_end = f_end or f0
+    x = np.zeros(n)
+    tt = 0.0
+    while tt < dur:
+        i = int(tt * SR)
+        if i < n:
+            x[i] += 1.0 - amp_var * rng.random()
+        f = f0 + (f_end - f0) * (tt / dur)
+        tt += (1.0 / f) * max(0.4, 1.0 + irregular * rng.standard_normal())
+    return fft_filter(x, hi=700, slope=2) * 5.0
+
+
+def formants(x, spec, floor=0.04):
+    """The mouth: sum of smooth peaks (centre Hz, width Hz, gain) in the spectrum, with a small floor so nothing is silent."""
+    X = np.fft.rfft(x)
+    f = np.fft.rfftfreq(len(x), 1.0 / SR)
+    g = np.full_like(f, floor)
+    for c, w, a in spec:
+        g += a * np.exp(-0.5 * ((f - c) / w) ** 2)
+    return np.fft.irfft(X * g, len(x))
+
+
+def breath(rng, dur, lo=150.0, hi=1800.0):
+    return fft_filter(rng.standard_normal(int(dur * SR)), lo=lo, hi=hi, slope=2)
+
+
+def gruff(rng, kind, v):
+    if kind == "grunt":
+        dur = 0.5 + 0.09 * v
+        n = int(dur * SR)
+        top = rng.uniform(62, 78)
+        src = fry(rng, dur, top, top * rng.uniform(0.62, 0.74))
+        o = [(rng.uniform(330, 440), 85, 1.0), (rng.uniform(720, 900), 140, 0.55), (rng.uniform(2200, 2500), 300, 0.08)]
+        body = formants(src, o) * env_ad(n, 0.05, 1.2)
+        air = formants(breath(rng, dur), [(450, 220, 1.0), (1300, 400, 0.4)]) * 0.16 * env_ad(n, 0.02, 1.6)
+        grit = grind(rng, dur, lo=200, hi=900, rate=(18, 30), level=0.35, squeal=False) * env_ad(n, 0.04, 1.8)
+        sub = np.sin(2 * np.pi * np.cumsum(np.linspace(top * 0.55, top * 0.4, n)) / SR) * 0.35 * env_ad(n, 0.05, 1.5)
+        return body * 1.0 + air + grit * 0.5 + sub, dur
+    if kind == "chuckle":
+        beats = 3 + v
+        dur = 0.22 + 0.27 * beats
+        out = np.zeros(int(dur * SR))
+        for b in range(beats):
+            d = 0.2
+            n = int(d * SR)
+            f0 = rng.uniform(70, 82) * (1.0 - 0.05 * b)
+            src = fry(rng, d, f0, f0 * 0.82, irregular=0.2)
+            body = formants(src, [(rng.uniform(480, 560), 100, 1.0), (rng.uniform(1000, 1150), 160, 0.55), (2400, 300, 0.07)]) * env_ad(n, 0.025, 1.5)
+            h = formants(breath(rng, d), [(900, 400, 1.0)]) * 0.2 * env_ad(n, 0.01, 2.2)
+            amp = 1.0 - 0.12 * b
+            out += at((body + h) * amp, 0.02 + 0.27 * b, dur)
+        rum = rumble(rng, dur, 0.3, peak_at=0.4)
+        return out + rum * 0.4, dur
+    if kind == "snore":
+        dur = 2.3 + 0.1 * v
+        n = int(dur * SR)
+        t = t_axis(dur)
+        a_n = int(0.95 * SR)
+        rattle = 0.5 + 0.5 * np.sin(2 * np.pi * rng.uniform(24, 32) * t[:a_n])
+        inh = formants(breath(rng, 0.95, 80, 900), [(260, 120, 1.0), (700, 200, 0.5)]) * rattle ** 1.5 * swell(a_n, 0.7, 1.4) * 1.4
+        e_n = int(1.0 * SR)
+        exh_src = fry(rng, 1.0, 40, 33, irregular=0.35)
+        exh = formants(exh_src, [(300, 110, 1.0), (640, 180, 0.5)]) * swell(e_n, 0.35, 1.3) * 1.0
+        exh += formants(breath(rng, 1.0, 100, 700), [(350, 150, 1.0)]) * 0.15 * swell(e_n, 0.35, 1.3)
+        out = mix(at(inh, 0.05, dur), at(exh, 1.2, dur), rumble(rng, dur, 0.25, peak_at=0.5))
+        return out, dur
+    # huff: a breath through the stone
+    dur = 0.55 + 0.1 * v
+    n = int(dur * SR)
+    air = formants(breath(rng, dur, 100, 2400), [(420, 200, 1.0), (1150, 320, 0.5)]) * env_ad(n, 0.04, 1.7)
+    thump = np.sin(2 * np.pi * np.cumsum(np.linspace(72, 48, n)) / SR) * 0.28 * env_ad(n, 0.02, 2.2)
+    return air * 1.3 + thump + grind(rng, dur, lo=150, hi=700, rate=(14, 22), level=0.2, squeal=False) * env_ad(n, 0.05, 2.0) * 0.4, dur
+
+
 def shape_lufs(x, target_db):
     x = x - np.mean(x)
     act = np.abs(x) > 0.02 * (np.max(np.abs(x)) + 1e-9)
@@ -231,6 +314,8 @@ def make(cue, k):
     elif cue == "slam":
         dur = 1.8 + 0.1 * v
         x = mix(crash(rng, dur, 46, 1.0), tone(rng, dur, attack=0.02, tail=1.6, f0=rng.uniform(52, 70), level=0.95), rumble(rng, dur, 0.55, peak_at=0.05))
+    elif cue in ("grunt", "chuckle", "snore", "huff"):
+        x, dur = gruff(rng, cue, v)
     else:                                                                  # sink
         dur = 2.1 + 0.1 * v
         n = int(dur * SR)
@@ -289,11 +374,17 @@ def entries_text():
 def update_sounds_json():
     raw = open(SOUNDS_JSON, newline="").read()
     cut = raw.find(',\n  "gnome.link"')
-    if cut >= 0:
+    tail = "\n}\n"
+    if cut >= 0:                                                                  # replace the gnome.* block, keep whatever follows it (the voice lines of tools/audio/gnome_voice.py)
+        import re
+        last = None
+        for m in re.finditer(r'"gnome\.[a-z_]+": \{.*?\n  \}', raw[cut:], re.S):
+            last = m
+        tail = raw[cut + last.end():] if last else tail
         raw = raw[:cut] + "\n}\n"
     end = raw.rstrip().rfind("}")
     head = raw[:end].rstrip()
-    out = head + ",\n" + entries_text() + "\n}\n"
+    out = head + ",\n" + entries_text() + tail
     json.loads(out)
     open(SOUNDS_JSON, "w", newline="").write(out)
     lang = json.load(open(LANG_OUT)) if os.path.exists(LANG_OUT) else {}

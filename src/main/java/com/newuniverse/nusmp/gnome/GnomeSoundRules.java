@@ -26,7 +26,7 @@ public final class GnomeSoundRules {
         public float pitch(double unit) { return (float) (pitchLow + (pitchHigh - pitchLow) * Math.max(0.0, Math.min(1.0, unit))); }
     }
 
-    /** The seven cues. Order is the registry order (append only). */
+    /** The eleven cues (seven of the first build, then the four non-verbal voice cues). Order is the registry order (append only). */
     public static final List<Cue> CUES = List.of(
             new Cue("link", 3, 0.9f, 20, 0.92f, 1.04f, "The Gnome rises beside its master"),
             new Cue("unlink", 2, 0.8f, 20, 0.92f, 1.04f, "The Gnome sinks into the earth"),
@@ -34,7 +34,12 @@ public final class GnomeSoundRules {
             new Cue("cast", 3, 1.0f, 6, 0.92f, 1.08f, "The Gnome grinds stone"),
             new Cue("rise", 3, 2.0f, 40, 0.94f, 1.04f, "The Gnome heaves out of the ground"),
             new Cue("slam", 3, 2.2f, 6, 0.92f, 1.06f, "The Gnome slams the earth"),
-            new Cue("sink", 2, 1.6f, 40, 0.94f, 1.04f, "The Gnome sinks into the ground"));
+            new Cue("sink", 2, 1.6f, 40, 0.94f, 1.04f, "The Gnome sinks into the ground"),
+            // the non-verbal voice of the golem (GnomeMoodRules): short, low, quiet; appended after the seven
+            new Cue("grunt", 4, 0.8f, 30, 0.92f, 1.06f, "The Gnome grunts"),
+            new Cue("chuckle", 2, 0.7f, 120, 0.94f, 1.04f, "The Gnome chuckles deeply"),
+            new Cue("snore", 2, 0.5f, 200, 0.94f, 1.04f, "The Gnome snores"),
+            new Cue("huff", 2, 0.7f, 60, 0.92f, 1.06f, "The Gnome huffs"));
 
     public static Cue cue(String id) {
         for (Cue c : CUES) if (c.id().equals(id)) return c;

@@ -139,7 +139,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1000,
+  "param": 100000,
   "figure": true,
   "ages": [
    30
@@ -204,7 +204,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1000,
+  "param": 100000,
   "figure": false,
   "ages": [
    30
@@ -431,7 +431,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 2000,
+  "param": 200000,
   "figure": true,
   "ages": [
    30
@@ -474,7 +474,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1020,
+  "param": 100200,
   "figure": true,
   "ages": [
    0,
@@ -511,7 +511,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1030,
+  "param": 100302,
   "figure": true,
   "ages": [
    0,
@@ -548,7 +548,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1040,
+  "param": 100400,
   "figure": true,
   "ages": [
    0,
@@ -584,7 +584,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 10,
+  "param": 100,
   "figure": true,
   "ages": [
    0,
@@ -619,7 +619,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 30,
+  "param": 302,
   "figure": true,
   "ages": [
    0,
@@ -656,7 +656,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1050,
+  "param": 100505,
   "figure": true,
   "ages": [
    0,
@@ -692,7 +692,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1060,
+  "param": 100600,
   "figure": true,
   "ages": [
    0,
@@ -728,7 +728,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 50,
+  "param": 505,
   "figure": true,
   "ages": [
    0,
@@ -1035,6 +1035,806 @@
    }
   ]
  },
+ "gnome_pose_comp_kneel": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1200,
+  "figure": false,
+  "ages": [
+   14
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_slam": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 705,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_guard": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 905,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_stomp": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 604,
+  "figure": false,
+  "ages": [
+   10
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_shrug": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 805,
+  "figure": false,
+  "ages": [
+   7
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_pound": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1001,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_doze": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1103,
+  "figure": false,
+  "ages": [
+   40
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_cast": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 302,
+  "figure": false,
+  "ages": [
+   13
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_comp_idle": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   330,
+   400
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     -1.15,
+     0.75,
+     -0.35
+    ],
+    "dist": 3.2
+   }
+  ]
+ },
+ "gnome_pose_full_slam": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100705,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   300,
+   460
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     3.3,
+     4.8
+    ],
+    "dist": 15
+   }
+  ]
+ },
+ "gnome_pose_full_guard": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100905,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   460
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     3.3,
+     4.8
+    ],
+    "dist": 15
+   }
+  ]
+ },
+ "gnome_pose_full_shrug": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100805,
+  "figure": false,
+  "ages": [
+   7
+  ],
+  "tile": [
+   300,
+   460
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     3.3,
+     4.8
+    ],
+    "dist": 15
+   }
+  ]
+ },
+ "gnome_pose_full_pound": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 101001,
+  "figure": false,
+  "ages": [
+   12
+  ],
+  "tile": [
+   300,
+   460
+  ],
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     3.3,
+     4.8
+    ],
+    "dist": 15
+   }
+  ]
+ },
+ "gnome_face_comp_calm": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_calm": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100000,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_face_comp_amused": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 1,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_amused": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100001,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_face_comp_angry": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 2,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_angry": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100002,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_face_comp_sleepy": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 3,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_sleepy": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100003,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_face_comp_surprised": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 4,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_surprised": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100004,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
+ "gnome_face_comp_stern": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 5,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     -1.15,
+     1.15,
+     -0.35
+    ],
+    "dist": 1.3
+   }
+  ]
+ },
+ "gnome_face_full_stern": {
+  "kind": "prop",
+  "example": "GnomeProp",
+  "realFiles": [
+   "client/prop/GnomeDraw.java",
+   "gnome/GnomeLod.java",
+   "gnome/GnomeRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 100005,
+  "figure": false,
+  "ages": [
+   30
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     5.3,
+     4.2
+    ],
+    "dist": 3.6
+   }
+  ]
+ },
  "gnome_full_lod1": {
   "kind": "prop",
   "example": "GnomeProp",
@@ -1044,7 +1844,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1100,
+  "param": 110000,
   "figure": true,
   "ages": [
    30
@@ -1076,7 +1876,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 100,
+  "param": 10000,
   "figure": true,
   "ages": [
    30
@@ -1108,7 +1908,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 1200,
+  "param": 120000,
   "figure": true,
   "ages": [
    30
@@ -1140,7 +1940,7 @@
    "gnome/GnomeRules.java"
   ],
   "propKind": "BRONZE_1",
-  "param": 200,
+  "param": 20000,
   "figure": true,
   "ages": [
    30

@@ -1774,5 +1774,22 @@
   "gnome.sink": {
     "subtitle": "subtitles.nusmp.gnome.sink",
     "sounds": [ { "name": "nusmp:gnome/sink_1", "stream": false }, { "name": "nusmp:gnome/sink_2", "stream": false } ]
-  }
+  },
+  "gnome.grunt": {
+    "subtitle": "subtitles.nusmp.gnome.grunt",
+    "sounds": [ { "name": "nusmp:gnome/grunt_1", "stream": false }, { "name": "nusmp:gnome/grunt_2", "stream": false }, { "name": "nusmp:gnome/grunt_3", "stream": false }, { "name": "nusmp:gnome/grunt_4", "stream": false } ]
+  },
+  "gnome.chuckle": {
+    "subtitle": "subtitles.nusmp.gnome.chuckle",
+    "sounds": [ { "name": "nusmp:gnome/chuckle_1", "stream": false }, { "name": "nusmp:gnome/chuckle_2", "stream": false } ]
+  },
+  "gnome.snore": {
+    "subtitle": "subtitles.nusmp.gnome.snore",
+    "sounds": [ { "name": "nusmp:gnome/snore_1", "stream": false }, { "name": "nusmp:gnome/snore_2", "stream": true } ]
+  },
+  "gnome.huff": {
+    "subtitle": "subtitles.nusmp.gnome.huff",
+    "sounds": [ { "name": "nusmp:gnome/huff_1", "stream": false }, { "name": "nusmp:gnome/huff_2", "stream": false } ]
+  },
+  "voice.gnome_greet_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_greet_1", "stream": false } ] }
 }

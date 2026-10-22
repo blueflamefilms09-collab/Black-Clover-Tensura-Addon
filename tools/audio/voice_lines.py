@@ -50,6 +50,8 @@ def main():
         tag = AFF_TAG.get(r["affinity"], "dark")
         lines.append({"id": "djinn_%s_summon" % r["id"], "role": "djinn", "voice": VOICES["djinn"], "prompt": "[%s, low] I am %s, %s. Speak your command, vessel." % (tag, r["name"], r["title"])})
         lines.append({"id": "djinn_%s_attack" % r["id"], "role": "djinn", "voice": VOICES["djinn"], "prompt": "[%s, fierce] Feel the %s of %s!" % (tag, r["affinity"].lower(), r["name"])})
+    import gnome_voice  # the Gnome's own lines (only those with a recording), appended after the others
+    lines += gnome_voice.manifest_entries()
     json.dump(lines, open(os.path.join(HERE, "voice_lines.json"), "w"), indent=1)
     print(len(lines), "lines")
 main()

@@ -407,6 +407,10 @@
   "bytes": 47529,
   "seconds": 5.4
  },
+ "gnome_greet_1": {
+  "bytes": 30619,
+  "seconds": 3.64
+ },
  "npc_guide_greet": {
   "bytes": 39025,
   "seconds": 4.4

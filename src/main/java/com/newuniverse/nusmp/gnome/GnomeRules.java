@@ -21,8 +21,11 @@ public final class GnomeRules {
 
     // ================================================================================================ forms, caps
     public static final int V_COMPANION = 0, V_FULL = 1, V_MASK = 15;
-    /** Param bit: the companion is hidden (the full form is out). The cast stamp lives from bit 12 up (20 bits of game time). */
-    public static final int HIDDEN = 1 << 8, PUNCH = 1 << 9, EXTRA_SHIFT = 12, STAMP_MASK = 0xFFFFF;
+    /**
+     * The prop word: bits 0..3 the variant; bit 8 HIDDEN (the companion while the giant stands); bits 9..12 the POSE (a clip id, 0 = none); bits 13..15 the FACE (an expression); bits 16..31 the tick stamp
+     * of the event that set the pose and the face (16 bits of game time: 54 minutes, far longer than any clip or face lasts and than a companion's life).
+     */
+    public static final int HIDDEN = 1 << 8, POSE_SHIFT = 9, POSE_MASK = 15, FACE_SHIFT = 13, FACE_MASK = 7, STAMP_SHIFT = 16, STAMP_MASK = 0xFFFF;
     /** One companion and one full form per player. The server-wide caps are config values (defaults below). */
     public static final int SPIRITS_PER_PLAYER = 1, FULL_PER_PLAYER = 1, DEFAULT_MAX_SPIRITS = 48, DEFAULT_MAX_FULL = 6;
     /** The full form: how long it stays (rise, hold, sink) and how long before it may come again; the cost tier of the pages that call it. */
@@ -32,33 +35,43 @@ public final class GnomeRules {
     public static final int CAST_CLIP_TICKS = 24, CAST_CONTACT_TICK = 12;
     /** The punch clip (a page below the big tiers: one fist drives forward, the spell leaves it): 20 ticks, the fist lands on tick 10. The stomp clip (the giant lifts a foot and slams it now and then): 18 ticks, the foot lands on tick 10. */
     public static final int PUNCH_CLIP_TICKS = 20, PUNCH_CONTACT_TICK = 10, STOMP_CLIP_TICKS = 18, STOMP_CONTACT_TICK = 10, STOMP_AT = 62;
+    /** The one-fist slam (a mid page): 22 ticks, the fist lands on tick 10. The shrug (a hit rolls off the stone): 22 ticks. The victory chest-pound: 36 ticks. The kneel and rise from the earth: 40 ticks. */
+    public static final int SLAM_CLIP_TICKS = 22, SLAM_CONTACT_TICK = 10, SHRUG_CLIP_TICKS = 22, POUND_CLIP_TICKS = 36, KNEEL_CLIP_TICKS = 40;
     /** Ticks between two position nudges of the companion prop (the clients place it from the owner every frame). */
     public static final int NUDGE = 5;
     /** Hit boxes (width, height) of the two forms: they only keep the entity inside the clients' tracking range and out of the way. */
     public static final float COMPANION_W = 0.9f, COMPANION_H = 1.6f, FULL_W = 3.6f, FULL_H = 7.0f;
 
-    public static int param(int variant, int stamp) { return (variant & V_MASK) | ((stamp & STAMP_MASK) << EXTRA_SHIFT); }
+    public static int param(int variant, int stamp) { return word(variant, false, CLIP_IDLE, FACE_CALM, stamp); }
+
+    /** The whole prop word. */
+    public static int word(int variant, boolean hidden, int pose, int face, int stamp) {
+        return (variant & V_MASK) | (hidden ? HIDDEN : 0) | ((pose & POSE_MASK) << POSE_SHIFT) | ((face & FACE_MASK) << FACE_SHIFT) | ((stamp & STAMP_MASK) << STAMP_SHIFT);
+    }
 
     public static int variant(int param) { return param & V_MASK; }
 
-    /** The cast stamp (a game tick modulo 2^20, 0 = none). */
-    public static int stamp(int param) { return (param >>> EXTRA_SHIFT) & STAMP_MASK; }
+    /** The tick stamp of the last event (a game tick modulo 2^16, 0 = none). */
+    public static int stamp(int param) { return (param >>> STAMP_SHIFT) & STAMP_MASK; }
+
+    /** The pose (a clip id) the last event asked for; 0 = none (the clients choose walk or idle). */
+    public static int pose(int param) { return (param >>> POSE_SHIFT) & POSE_MASK; }
+
+    /** The expression the last event asked for. */
+    public static int face(int param) { return (param >>> FACE_SHIFT) & FACE_MASK; }
 
     public static boolean hidden(int param) { return (param & HIDDEN) != 0; }
 
-    /** Does the last cast of this prop play the punch clip (a page below the big tiers) rather than the slam? */
-    public static boolean punch(int param) { return (param & PUNCH) != 0; }
+    /** The word with another hidden bit and nothing else changed. */
+    public static int withHidden(int param, boolean hidden) { return hidden ? param | HIDDEN : param & ~HIDDEN; }
 
-    /** The ticks the fist lands after a cast: the punch's or the slam's. */
-    public static int contactTick(boolean punch) { return punch ? PUNCH_CONTACT_TICK : CAST_CONTACT_TICK; }
+    /** The word with a new pose, face and stamp, the variant and the hidden bit kept. */
+    public static int withPose(int param, int pose, int face, int stamp) { return word(variant(param), hidden(param), pose, face, stamp); }
 
-    /** The length in ticks of the cast clip that is playing. */
-    public static int castTicks(boolean punch) { return punch ? PUNCH_CLIP_TICKS : CAST_CLIP_TICKS; }
-
-    /** The stamp a cast at game time {@code now} writes (never 0, which means "no cast"). */
+    /** The stamp an event at game time {@code now} writes (never 0, which means "no event"). */
     public static int stampOf(long now) { int s = (int) (now & STAMP_MASK); return s == 0 ? 1 : s; }
 
-    /** Ticks since the stamp, or {@link Integer#MAX_VALUE} for none; wraps correctly over the 20 bit clock. */
+    /** Ticks since the stamp, or {@link Integer#MAX_VALUE} for none; wraps correctly over the 16 bit clock. */
     public static int sinceStamp(long now, int stamp) { return stamp == 0 ? Integer.MAX_VALUE : (int) ((now - stamp) & STAMP_MASK); }
 
     /** Does a page of this cost tier (percent of the mana pool) call the full form? */
@@ -70,22 +83,70 @@ public final class GnomeRules {
     }
 
     // ================================================================================================ what clip, when
-    public static final int CLIP_IDLE = 0, CLIP_WALK = 1, CLIP_RISE = 2, CLIP_CAST = 3, CLIP_SINK = 4, CLIP_PUNCH = 5, CLIP_STOMP = 6;
+    public static final int CLIP_IDLE = 0, CLIP_WALK = 1, CLIP_RISE = 2, CLIP_CAST = 3, CLIP_SINK = 4, CLIP_PUNCH = 5, CLIP_STOMP = 6, CLIP_SLAM = 7, CLIP_SHRUG = 8, CLIP_GUARD = 9, CLIP_POUND = 10,
+            CLIP_DOZE = 11, CLIP_KNEEL = 12;
+    /** The faces of the Gnome (a golem: its eye and mouth plates and the strength of its glow change). */
+    public static final int FACE_CALM = 0, FACE_AMUSED = 1, FACE_ANGRY = 2, FACE_SLEEPY = 3, FACE_SURPRISED = 4, FACE_STERN = 5, FACES = 6;
+    /** How long a face is held after the event that set it (the calm face never expires; a doze and a guard keep their faces while they last). */
+    public static final int FACE_TICKS = 100;
+
+    /** The length in ticks of a one-shot pose clip; 0 for the poses that loop until the server clears them (the guard and the doze) and for the plain clips. */
+    public static int poseTicks(int clip) {
+        return switch (clip) {
+            case CLIP_PUNCH -> PUNCH_CLIP_TICKS;
+            case CLIP_CAST -> CAST_CLIP_TICKS;
+            case CLIP_SLAM -> SLAM_CLIP_TICKS;
+            case CLIP_STOMP -> STOMP_CLIP_TICKS;
+            case CLIP_SHRUG -> SHRUG_CLIP_TICKS;
+            case CLIP_POUND -> POUND_CLIP_TICKS;
+            case CLIP_KNEEL -> KNEEL_CLIP_TICKS;
+            case CLIP_SINK -> FULL_SINK_TICKS;
+            default -> 0;
+        };
+    }
+
+    /** The poses that hold until the server sets another (the arms-crossed guard and the dozing settle). */
+    public static boolean persistent(int clip) { return clip == CLIP_GUARD || clip == CLIP_DOZE; }
+
+    /** Is a pose set {@code since} ticks ago still playing? (A persistent pose always is; a one-shot for its clip's length.) */
+    public static boolean poseActive(int pose, int since) {
+        if (pose == CLIP_IDLE) return false;
+        return persistent(pose) || (since >= 0 && since < poseTicks(pose));
+    }
+
+    /** The tick of a clip at which a fist or a foot lands (the server's effect and sound, the client's dust), or -1 for a clip with no landing. */
+    public static int contactTick(int clip) {
+        return switch (clip) {
+            case CLIP_CAST -> CAST_CONTACT_TICK;
+            case CLIP_PUNCH -> PUNCH_CONTACT_TICK;
+            case CLIP_SLAM -> SLAM_CONTACT_TICK;
+            case CLIP_STOMP -> STOMP_CONTACT_TICK;
+            case CLIP_RISE -> FULL_SLAM_TICK;
+            default -> -1;
+        };
+    }
+
+    /** The expression drawn now: the one the last event set while it lasts, calm after; a doze is always sleepy and a guard always at least stern. */
+    public static int faceNow(int face, int pose, int since) {
+        if (pose == CLIP_DOZE) return FACE_SLEEPY;
+        if (pose == CLIP_GUARD) return face == FACE_CALM ? FACE_STERN : face;
+        return since >= 0 && since < FACE_TICKS ? face : FACE_CALM;
+    }
 
     /**
-     * The clip of the FULL form at an age: rise for the first {@link #FULL_RISE_TICKS}, sink for the last {@link #FULL_SINK_TICKS}, the cast (or punch) clip after a cast stamp (outside rise and sink),
-     * one stomp at {@link #STOMP_AT}, idle otherwise.
+     * The clip of the FULL form at an age: rise for the first {@link #FULL_RISE_TICKS}, sink for the last {@link #FULL_SINK_TICKS}, a pose the server asked for while it plays (cast, punch, slam,
+     * shrug, guard, pound), one stomp at {@link #STOMP_AT}, idle otherwise.
      */
-    public static int fullClip(int life, int maxLife, int sinceCast, boolean punch) {
+    public static int fullClip(int life, int maxLife, int pose, int since) {
         if (life < FULL_RISE_TICKS) return CLIP_RISE;
         if (maxLife - life <= FULL_SINK_TICKS) return CLIP_SINK;
-        if (sinceCast >= 0 && sinceCast < castTicks(punch)) return punch ? CLIP_PUNCH : CLIP_CAST;
+        if (poseActive(pose, since) && pose != CLIP_KNEEL && pose != CLIP_DOZE) return pose;
         return life >= STOMP_AT && life < STOMP_AT + STOMP_CLIP_TICKS ? CLIP_STOMP : CLIP_IDLE;
     }
 
-    /** The clip of the COMPANION: the cast clip after a cast, walk while the master moves, idle otherwise. */
-    public static int companionClip(boolean moving, int sinceCast, boolean punch) {
-        if (sinceCast >= 0 && sinceCast < castTicks(punch)) return punch ? CLIP_PUNCH : CLIP_CAST;
+    /** The clip of the COMPANION: a pose the server asked for while it plays, walk while the master moves (a doze ends when it moves), idle otherwise. */
+    public static int companionClip(boolean moving, int pose, int since) {
+        if (poseActive(pose, since) && !(moving && pose == CLIP_DOZE)) return pose;
         return moving ? CLIP_WALK : CLIP_IDLE;
     }
 
@@ -98,10 +159,10 @@ public final class GnomeRules {
         return Math.max(0f, Math.min(1f, out));
     }
 
-    /** A footfall-free dust moment: the ticks at which a full form's clips land their fists (the painter sends its dust then). */
+    /** Is this the tick at which a full form's clip lands a fist or a foot (the painter sends its dust then)? */
     public static boolean slamNow(int clip, int ticksIntoClip) {
-        return (clip == CLIP_RISE && ticksIntoClip == FULL_SLAM_TICK) || (clip == CLIP_CAST && ticksIntoClip == CAST_CONTACT_TICK)
-                || (clip == CLIP_PUNCH && ticksIntoClip == PUNCH_CONTACT_TICK) || (clip == CLIP_STOMP && ticksIntoClip == STOMP_CONTACT_TICK);
+        int c = contactTick(clip);
+        return c >= 0 && c == ticksIntoClip;
     }
 
     // ================================================================================================ where it stands

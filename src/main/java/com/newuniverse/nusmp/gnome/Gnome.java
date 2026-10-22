@@ -1,8 +1,10 @@
 package com.newuniverse.nusmp.gnome;
 
+import com.newuniverse.nusmp.audio.voice.Voice;
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpellRuntime;
+import com.newuniverse.nusmp.gnome.GnomeMoodRules.Situation;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.MagicProps;
 import com.newuniverse.nusmp.prop.PropKind;
@@ -33,11 +35,15 @@ import java.util.function.BooleanSupplier;
 
 /**
  * Why: the Gnome, the Earth Spirit of Black Clover (docs/magic/gnome.md): the Spirit Lord variant of EARTH that follows an Earth Magic caster and acts as the emitter of the earth spells, in the way
- * the Salamander does for fire, with a stone body of its own and a sound set of its own. A per-player "spirit link": a small stone golem (the COMPANION) walks beside its master while the link is on, and
- * every Earth page leaves its fist (the emitter point, {@link GnomeRules#companionHand}). The big pages (cost tier 20 and up: Divided Mother Earth, Rampaging Mother Earth, Swallowing Ground) call the
- * FULL form, a stone giant that rises out of the ground ahead of its master, slams the earth with both fists and stands for {@link GnomeRules#FULL_TICKS} ticks (it hardens its master meanwhile); it
- * may come once per cooldown, one per caster and a few on the whole server. The earth pages themselves are unchanged (ids, numbers, cooldowns): the Gnome only changes WHERE the spell starts, and
- * what is seen and heard.
+ * the Salamander does for fire, with a stone body of its own, a face that changes, poses for every situation, and a voice of its own. A per-player "spirit link": a small stone golem (the COMPANION) walks
+ * beside its master while the link is on, and every Earth page leaves its fist (the emitter point, {@link GnomeRules#companionHand}). The big pages (cost tier 20 and up: Divided Mother Earth,
+ * Rampaging Mother Earth, Swallowing Ground) call the FULL form, a stone giant that rises out of the ground ahead of its master, slams the earth with both fists and stands for
+ * {@link GnomeRules#FULL_TICKS} ticks (it hardens its master meanwhile); it may come once per cooldown, one per caster and a few on the whole server. The earth pages themselves are unchanged (ids,
+ * numbers, cooldowns): the Gnome only changes WHERE the spell starts, and what is seen and heard.
+ *
+ * <p><b>Moods.</b> {@link GnomeMoodRules} (pure) says which pose, face, grunt and spoken line go with each situation (link, unlink, a page of each tier, a hit on the master, the master nearly dead, a kill,
+ * the master's death, a long stillness); {@link #react} applies one: the pose, the face and the tick stamp go into the synced prop word, the grunt is played to the players in range, and the spoken line goes
+ * through the project's voice system ({@code audio.voice.Voice}) to the players within 32 blocks, at most one line every 4 seconds to one listener.</p>
  *
  * <p>All state is per player UUID in {@link #STATES} and is dropped on logout, death, respawn, dimension change and server stop ({@link #forget}); the players that have anything live are in {@link #LIVE}
  * and are visited every fourth tick, nobody else costs a tick. The server decides everything; the clients draw the two props from the synced kind, param and owner.</p>
@@ -51,7 +57,11 @@ public final class Gnome {
     /** The state of one player's Gnome. */
     static final class State {
         UUID spirit, full;
-        long fullReadyAt, lastPacket = Long.MIN_VALUE / 4, lastMessage = Long.MIN_VALUE / 4, idleAt;
+        long fullReadyAt, lastPacket = Long.MIN_VALUE / 4, lastMessage = Long.MIN_VALUE / 4, poseUntil;
+        boolean dozing;
+        String lastLine;
+        final GnomeMoodRules.Cooldowns mood = new GnomeMoodRules.Cooldowns();
+        final GnomeMoodRules.Stillness still = new GnomeMoodRules.Stillness();
     }
 
     static final Map<UUID, State> STATES = new HashMap<>();
@@ -59,6 +69,8 @@ public final class Gnome {
     static final Set<UUID> LIVE = new HashSet<>();
     static final GnomeLedger SPIRITS = new GnomeLedger(), FULLS = new GnomeLedger();
     static final GnomeSoundRules.Gate GATE = new GnomeSoundRules.Gate();
+    /** One spoken line every 4 seconds to one listener, whoever speaks (keyed by the listener's UUID). */
+    static final GnomeMoodRules.LineGate LINES = new GnomeMoodRules.LineGate();
 
     private static State state(UUID id) { return STATES.computeIfAbsent(id, k -> new State()); }
 
@@ -103,10 +115,11 @@ public final class Gnome {
         e.setSize(GnomeRules.COMPANION_W, GnomeRules.COMPANION_H);
         e.setTarget(p);
         s.spirit = e.getUUID();
-        s.idleAt = sl.getGameTime() + 300;
+        s.dozing = false;
         LIVE.add(p.getUUID());
         VfxSpawn.send(sl, VfxShape.EARTHFAM_BURST, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.6, a[2]), EARTH_COLOR, 20, 0.5f);
         playCue(sl, p.getUUID(), "link", a[0], a[1], a[2]);
+        react(p, s, Situation.LINK, e, -1);                                                         // it kneels and rises out of the earth, and greets
         say(p, s, "nusmp.gnome.linked", "The Gnome rises beside you.", ChatFormatting.GOLD);
         return true;
     }
@@ -115,12 +128,103 @@ public final class Gnome {
         ServerLevel sl = p.serverLevel();
         MagicPropEntity e = prop(sl, s.spirit);
         if (e != null) {
-            playCue(sl, p.getUUID(), "unlink", e.getX(), e.getY(), e.getZ());
-            e.discard();
+            if (speak) {                                                                             // it says goodbye and sinks into the ground, then it is gone
+                playCue(sl, p.getUUID(), "unlink", e.getX(), e.getY(), e.getZ());
+                react(p, s, Situation.UNLINK, e, -1);
+                SpellRuntime.later(sl, GnomeRules.FULL_SINK_TICKS, () -> { if (!e.isRemoved()) e.discard(); });
+            } else {
+                e.discard();
+            }
         }
         if (s.spirit != null) SPIRITS.release(p.getUUID());
         s.spirit = null;
         if (speak) say(p, s, "nusmp.gnome.unlinked", "The Gnome sinks back into the earth.", ChatFormatting.GRAY);
+    }
+
+    // ================================================================================================ moods
+    /**
+     * The Gnome reacts to a situation: if the situation's own cooldown is over, the pose, the face and the stamp go into the prop word of {@code who} (the giant when it stands, else the companion; the
+     * clients play the clip and show the face from it), a persistent pose is given its end, the non-verbal cue is played and the spoken line is said, each by its own chance. {@code poseOverride} (a clip
+     * id, or -1) replaces the mood's pose (the giant keeps its rise clip). Returns true when it reacted.
+     */
+    static boolean react(ServerPlayer p, State s, Situation sit, MagicPropEntity who, int poseOverride) {
+        if (who == null) return false;
+        ServerLevel sl = p.serverLevel();
+        long now = sl.getGameTime();
+        if (!s.mood.ready(sit, now)) return false;
+        GnomeMoodRules.Mood m = GnomeMoodRules.of(sit);
+        s.mood.mark(sit, now);
+        int pose = poseOverride >= 0 ? poseOverride : m.pose();
+        who.setParam(GnomeRules.withPose(who.param(), pose, m.face(), GnomeRules.stampOf(now)));
+        s.poseUntil = sit == Situation.LOW_HEALTH ? now + GnomeMoodRules.GUARD_TICKS : 0L;
+        s.dozing = sit == Situation.SLEEP || sit == Situation.OWNER_DEATH;
+        int roll = sl.getRandom().nextInt(10000);
+        if (GnomeMoodRules.makesCue(m, roll)) playCue(sl, p.getUUID(), m.cue(), who.getX(), who.getY() + 0.8, who.getZ());
+        if (GnomeMoodRules.says(m, roll / 100 + 37)) speak(sl, s, who, m.lineGroup(), roll);
+        return true;
+    }
+
+    /** The pose and the face go back to nothing (a guard that has been held long enough, a doze that is over). */
+    private static void clearPose(ServerLevel sl, State s) {
+        s.poseUntil = 0L;
+        MagicPropEntity who = standing(sl, s);
+        if (who != null) who.setParam(GnomeRules.withPose(who.param(), GnomeRules.CLIP_IDLE, GnomeRules.FACE_CALM, 0));
+    }
+
+    /** The prop that is out and speaks: the giant while it stands, else the companion. */
+    private static MagicPropEntity standing(ServerLevel sl, State s) {
+        MagicPropEntity full = prop(sl, s.full);
+        return full != null ? full : prop(sl, s.spirit);
+    }
+
+    /** Says a line of a group to the players within 32 blocks of the Gnome, through the voice system, at most one line every 4 seconds to one listener. */
+    private static void speak(ServerLevel sl, State s, MagicPropEntity who, String group, int roll) {
+        String id = GnomeMoodRules.pick(group, roll, s.lastLine);
+        if (id == null) return;
+        s.lastLine = id;
+        long now = sl.getGameTime();
+        double r2 = GnomeMoodRules.LINE_RADIUS * GnomeMoodRules.LINE_RADIUS;
+        for (ServerPlayer l : sl.players()) {
+            if (l.isSpectator() || l.distanceToSqr(who) > r2) continue;
+            if (LINES.allow(l.getUUID(), now)) Voice.say(l, id, GnomeMoodRules.LINE_REPEAT_TICKS);
+        }
+    }
+
+    /** A hit landed on the master (the damage event, after the damage was taken). */
+    public static void onOwnerHurt(ServerPlayer p, float damage) {
+        State s = STATES.get(p.getUUID());
+        if (s == null || (s.spirit == null && s.full == null)) return;
+        Situation sit = GnomeMoodRules.fromDamage(damage, p.getHealth(), p.getMaxHealth());
+        if (sit == null) return;
+        ServerLevel sl = p.serverLevel();
+        react(p, s, sit, standing(sl, s), -1);
+    }
+
+    /** The master killed something. */
+    public static void onOwnerKill(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s == null || (s.spirit == null && s.full == null)) return;
+        react(p, s, Situation.KILL, standing(p.serverLevel(), s), -1);
+    }
+
+    /** The master died: the Gnome mourns where it stands (a doze with sleepy eyes, a few words) for three seconds, then sinks away; the state and the ledgers are dropped at once. */
+    public static void onOwnerDeath(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        if (s != null && (s.spirit != null || s.full != null) && p.level() instanceof ServerLevel sl) {
+            MagicPropEntity who = standing(sl, s);
+            if (who != null) {
+                react(p, s, Situation.OWNER_DEATH, who, -1);
+                MagicPropEntity a = prop(sl, s.spirit), b = prop(sl, s.full);
+                SpellRuntime.later(sl, 60, () -> { if (a != null && !a.isRemoved()) a.discard(); if (b != null && !b.isRemoved()) b.discard(); });
+                STATES.remove(p.getUUID());                                                          // the props live on for the farewell only: nothing else refers to them
+                LIVE.remove(p.getUUID());
+                SPIRITS.forget(p.getUUID());
+                FULLS.forget(p.getUUID());
+                GATE.forget(p.getUUID());
+                return;
+            }
+        }
+        forget(p);
     }
 
     // ================================================================================================ the cast
@@ -153,11 +257,15 @@ public final class Gnome {
         else hand = GnomeRules.companionHand(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
         Vec3 mouth = new Vec3(hand[0], hand[1], hand[2]);
         if (!withEmitter(p, mouth, () -> original.cast(book, inst, p, mode))) return false;
-        if (wantFull && summonFull(p, s, now, at)) return true;
+        Situation sit = GnomeMoodRules.fromTier(page.costPercent());
+        if (wantFull && summonFull(p, s, now, at)) {
+            react(p, s, sit, prop(sl, s.full), GnomeRules.CLIP_IDLE);                                // the giant's own clip is the rise; the angry face and the words come with it
+            return true;
+        }
         MagicPropEntity who = full != null ? full : comp;
-        boolean punch = !GnomeRules.callsFull(page.costPercent());                                   // a page below the big tiers is a punch, a big one a slam of both fists
-        who.setParam((who.param() & GnomeRules.HIDDEN) | (punch ? GnomeRules.PUNCH : 0) | GnomeRules.param(GnomeRules.variant(who.param()), GnomeRules.stampOf(now)));      // the clients play the clip for a second after this tick
-        contact(p, sl, GnomeRules.contactTick(punch), mouth, full != null || wantFull);
+        react(p, s, sit, who, -1);                                                                    // the pose (punch, slam, both fists), the face and the voice of the tier
+        int contact = GnomeRules.contactTick(GnomeMoodRules.of(sit).pose());
+        if (contact >= 0) contact(p, sl, contact, mouth, full != null || wantFull);
         return true;
     }
 
@@ -227,7 +335,10 @@ public final class Gnome {
     }
 
     // ================================================================================================ upkeep and cleanup
-    /** Every fourth tick for the players in {@link #LIVE}: lost props are dropped, the link ends when the book or the switch is gone, the master is hardened while the giant stands, an idle rumble now and then. */
+    /**
+     * Every fourth tick for the players in {@link #LIVE}: lost props are dropped, the link ends when the book or the switch is gone, the master is hardened while the giant stands, a held guard
+     * ends, and the stillness of the master is watched: half a minute without a step and the Gnome dozes off (sleepy eyes, a snore), a step wakes it, and after twice as long an idle remark.
+     */
     public static void upkeep(ServerPlayer p) {
         UUID id = p.getUUID();
         State s = STATES.get(id);
@@ -238,15 +349,22 @@ public final class Gnome {
         if (s.spirit != null && p.tickCount % 20 == 0 && !eligible(p)) unlink(p, s, false);
         if (s.full != null && p.tickCount % 20 == 0) p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0, true, false));      // the giant hardens its master (the old Earth spirit's aura), only while it stands
         long now = sl.getGameTime();
-        if (s.spirit != null && s.full == null && now >= s.idleAt) {
+        if (s.poseUntil != 0L && now >= s.poseUntil) clearPose(sl, s);
+        if (s.spirit != null && s.full == null) {
+            boolean moved = s.still.update(now, p.getX(), p.getY(), p.getZ());
+            int still = s.still.stillTicks(now);
             MagicPropEntity e = prop(sl, s.spirit);
-            s.idleAt = now + 400 + sl.getRandom().nextInt(400);
-            if (e != null) playCue(sl, id, "idle", e.getX(), e.getY() + 0.5, e.getZ());
+            if (s.dozing) {
+                if (moved) react(p, s, Situation.WAKE, e, -1);
+            } else if (e != null) {
+                if (GnomeMoodRules.dozeDue(still)) react(p, s, Situation.SLEEP, e, -1);
+                else if (GnomeMoodRules.idleRemarkDue(still, s.mood.sinceAny(now))) react(p, s, Situation.IDLE, e, -1);
+            }
         }
         if (s.spirit == null && s.full == null) LIVE.remove(id);
     }
 
-    /** Everything of this player goes: logout, death, respawn, dimension change. */
+    /** Everything of this player goes: logout, respawn, dimension change (and a death that has nothing to mourn). */
     public static void forget(ServerPlayer p) {
         UUID id = p.getUUID();
         State s = STATES.remove(id);
@@ -254,6 +372,7 @@ public final class Gnome {
         SPIRITS.forget(id);
         FULLS.forget(id);
         GATE.forget(id);
+        LINES.forget(id);
         if (s == null || !(p.level() instanceof ServerLevel sl)) return;
         for (UUID e : new UUID[]{s.spirit, s.full}) if (e != null && sl.getEntity(e) instanceof MagicPropEntity m) m.discard();
     }
@@ -265,6 +384,7 @@ public final class Gnome {
         SPIRITS.clear();
         FULLS.clear();
         GATE.clear();
+        LINES.clear();
         emitterOwner = null;
         emitterAt = null;
     }

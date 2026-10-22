@@ -24,6 +24,8 @@ public final class GnomeProps implements MagicProps.Behavior {
     @Override
     public void tick(MagicPropEntity e, ServerLevel sl) {
         int variant = GnomeRules.variant(e.param());
+        int pose = GnomeRules.pose(e.param());
+        if (variant == GnomeRules.V_COMPANION && (pose == GnomeRules.CLIP_SINK || pose == GnomeRules.CLIP_DOZE) && Gnome.stateOf(e.ownerId()) == null) return;      // the farewell (unlinked or its master died): it stays where it stands until the scheduled discard
         if (variant == GnomeRules.V_FULL) {
             if (e.life() == GnomeRules.FULL_TICKS - GnomeRules.FULL_SINK_TICKS) {                       // the last second begins: it sinks back
                 Gnome.playCue(sl, e.ownerId(), "sink", e.getX(), e.getY() + 1.0, e.getZ());
@@ -35,11 +37,14 @@ public final class GnomeProps implements MagicProps.Behavior {
         LivingEntity o = e.owner();
         if (o == null) { e.expire(); return; }
         Gnome.State s = Gnome.stateOf(o.getUUID());
-        if (s == null || !e.getUUID().equals(s.spirit)) { e.expire(); return; }                          // an orphan (the link was dropped): gone
+        if (s == null || !e.getUUID().equals(s.spirit)) {                                                // an orphan (the link was dropped): gone, unless it is saying goodbye
+            if (pose != GnomeRules.CLIP_SINK) e.expire();
+            return;
+        }
         double[] a = GnomeRules.companion(o.getX(), o.getY(), o.getZ(), o.yBodyRot);
         e.setPos(a[0], a[1], a[2]);
         e.setYRot(o.yBodyRot);
-        int want = s.full != null ? e.param() | GnomeRules.HIDDEN : e.param() & ~GnomeRules.HIDDEN;      // hidden while the giant stands
+        int want = GnomeRules.withHidden(e.param(), s.full != null);                                    // hidden while the giant stands
         if (want != e.param()) e.setParam(want);
     }
 

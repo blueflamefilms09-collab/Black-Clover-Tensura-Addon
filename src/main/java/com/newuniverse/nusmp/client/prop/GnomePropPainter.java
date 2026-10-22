@@ -68,25 +68,27 @@ public final class GnomePropPainter {
         long now = e.level().getGameTime();
         int stamp = GnomeRules.stamp(param);
         int since = GnomeRules.sinceStamp(now, stamp);
-        boolean punch = GnomeRules.punch(param);
+        int pose0 = GnomeRules.pose(param);
         int clip;
         float secs;
         float fade;
         if (full) {
             int life = e.life();
-            clip = GnomeRules.fullClip(life, e.maxLife(), since, punch);
+            clip = GnomeRules.fullClip(life, e.maxLife(), pose0, since);
             int into = clip == GnomeRules.CLIP_RISE ? life : clip == GnomeRules.CLIP_SINK ? life - (e.maxLife() - GnomeRules.FULL_SINK_TICKS)
-                    : clip == GnomeRules.CLIP_STOMP ? life - GnomeRules.STOMP_AT : since;
-            secs = GnomeRules.secs(Math.max(0, into), partial);
+                    : clip == GnomeRules.CLIP_STOMP && pose0 != GnomeRules.CLIP_STOMP ? life - GnomeRules.STOMP_AT : since;
+            secs = GnomeRules.persistent(clip) ? age / 20f : GnomeRules.secs(Math.max(0, into), partial);
             fade = GnomeRules.fullFade(life, e.maxLife(), partial);
             dust(e, clip, into, ex, ey, ez, yaw, lod);
         } else {
-            clip = GnomeRules.companionClip(moving, since, punch);
-            secs = clip == GnomeRules.CLIP_CAST || clip == GnomeRules.CLIP_PUNCH ? GnomeRules.secs(since, partial) : age / 20f;
+            clip = GnomeRules.companionClip(moving, pose0, since);
+            boolean posed = clip != GnomeRules.CLIP_IDLE && clip != GnomeRules.CLIP_WALK && !GnomeRules.persistent(clip);       // a one-shot pose plays from the moment of its event
+            secs = posed ? GnomeRules.secs(since, partial) : age / 20f;
             fade = Mth.clamp((e.life() + partial) / 8f, 0f, 1f);
-            if (lod == GnomeLod.LOD_FULL && dsq < 20 * 20 && (clip == GnomeRules.CLIP_CAST || clip == GnomeRules.CLIP_PUNCH) && since == GnomeRules.contactTick(punch)) pebbles(e, ax, ay + 0.15, az, 5);
+            if (lod == GnomeLod.LOD_FULL && dsq < 20 * 20 && posed && GnomeRules.slamNow(clip, since)) pebbles(e, ax, ay + 0.15, az, 5);
             else if (lod == GnomeLod.LOD_FULL && dsq < 16 * 16 && clip == GnomeRules.CLIP_IDLE && e.tickCount % 40 == 0) pebbles(e, ax, ay + 0.3, az, 1);
         }
+        int face = GnomeRules.faceNow(GnomeRules.face(param), GnomeRules.persistent(pose0) && clip != pose0 ? GnomeRules.CLIP_IDLE : pose0, since);      // a doze that the walk ended is not sleepy any more
         if (fade <= 0.01f) return;
         pose.pushPose();
         if (!full) {
@@ -94,14 +96,14 @@ public final class GnomePropPainter {
             pose.translate(ax - ex, ay - ey, az - ez);
             pose.mulPose(Axis.YP.rotationDegrees(-yaw));
         }
-        GnomeDraw.gnome(pose, buffers, form, lod, GnomeDraw.CLIPS[clip], secs, age, fade, light);
+        GnomeDraw.gnome(pose, buffers, form, lod, GnomeDraw.CLIPS[clip], secs, age, fade, light, face);
         pose.popPose();
     }
 
     /** The dust of the giant: a ring when it breaks the ground, rubble while it rises, a burst when its fists land. Custom particles, once per game tick per giant, through the client budget. */
     private static void dust(MagicPropEntity e, int clip, int into, double x, double y, double z, float yaw, int lod) {
         if (lod > GnomeLod.LOD_HALF) return;
-        int slot = e.getId() & 15, key = e.tickCount * 8 + clip;
+        int slot = e.getId() & 15, key = e.tickCount * 16 + clip;
         if (LAST_DUST[slot] == key) return;
         if (clip == GnomeRules.CLIP_RISE && into < GnomeRules.FULL_SLAM_TICK && e.tickCount % 2 == 0) {
             LAST_DUST[slot] = key;
@@ -119,7 +121,7 @@ public final class GnomePropPainter {
 
     /** A few pebbles from the companion's feet (once per tick at most per companion). */
     private static void pebbles(MagicPropEntity e, double x, double y, double z, int n) {
-        int slot = e.getId() & 15, key = e.tickCount * 8 + 7;
+        int slot = e.getId() & 15, key = e.tickCount * 16 + 15;
         if (LAST_DUST[slot] == key) return;
         LAST_DUST[slot] = key;
         Fx.send(e.level(), EARTH, x, y, z, n, 0.35);

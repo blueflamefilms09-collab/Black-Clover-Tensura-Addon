@@ -107,8 +107,13 @@ class GnomeAssetsTest {
                         for (var key : track.getValue().getAsJsonObject().entrySet()) assertTrue(Double.parseDouble(key.getKey()) <= len + 1e-6, form + "/" + clip + " keyframe " + key.getKey() + " is inside the clip");
                 }
             }
-            assertTrue(anim.getAsJsonObject("idle").get("loop").getAsBoolean() && anim.getAsJsonObject("walk").get("loop").getAsBoolean());
-            for (String once : new String[]{"rise", "cast", "sink", "punch", "stomp"}) assertFalse(anim.getAsJsonObject(once).get("loop").getAsBoolean(), once + " plays once");
+            for (String loops : new String[]{"idle", "walk", "guard", "doze"}) assertTrue(anim.getAsJsonObject(loops).get("loop").getAsBoolean(), loops + " loops");
+            for (String once : new String[]{"rise", "cast", "sink", "punch", "stomp", "slam", "shrug", "pound", "kneel"}) assertFalse(anim.getAsJsonObject(once).get("loop").getAsBoolean(), once + " plays once");
+            assertEquals(GnomeRules.SLAM_CLIP_TICKS, Math.round(anim.getAsJsonObject("slam").get("animation_length").getAsDouble() * 20), form + ": the slam clip is the server's 22 ticks");
+            assertEquals(GnomeRules.SHRUG_CLIP_TICKS, Math.round(anim.getAsJsonObject("shrug").get("animation_length").getAsDouble() * 20), form + ": the shrug clip is 22 ticks");
+            assertEquals(GnomeRules.POUND_CLIP_TICKS, Math.round(anim.getAsJsonObject("pound").get("animation_length").getAsDouble() * 20), form + ": the pound clip is 36 ticks");
+            assertEquals(GnomeRules.KNEEL_CLIP_TICKS, Math.round(anim.getAsJsonObject("kneel").get("animation_length").getAsDouble() * 20), form + ": the kneel clip is 40 ticks");
+            assertTrue(anim.getAsJsonObject("slam").getAsJsonObject("bones").getAsJsonObject("chest").getAsJsonObject("rotation").has(String.format("%.2f", GnomeRules.SLAM_CONTACT_TICK / 20.0)), "a chest keyframe at the slam contact");
             assertEquals(GnomeRules.FULL_RISE_TICKS, Math.round(anim.getAsJsonObject("rise").get("animation_length").getAsDouble() * 20), form + ": the rise clip is the server's 20 ticks");
             assertEquals(GnomeRules.CAST_CLIP_TICKS, Math.round(anim.getAsJsonObject("cast").get("animation_length").getAsDouble() * 20), form + ": the cast clip is the server's 24 ticks");
             assertEquals(GnomeRules.FULL_SINK_TICKS, Math.round(anim.getAsJsonObject("sink").get("animation_length").getAsDouble() * 20), form + ": the sink clip is the server's 20 ticks");
@@ -124,12 +129,70 @@ class GnomeAssetsTest {
     }
 
     @Test
+    void theClipIdsOfTheRulesAreThePositionsOfTheNamesTheDrawerPlays() throws IOException {
+        String draw = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/prop/GnomeDraw.java"));
+        String listed = "{\"" + String.join("\", \"", GnomeDraw0.CLIPS) + "\"}";
+        assertTrue(draw.contains("CLIPS = " + listed), "GnomeDraw.CLIPS is " + listed);
+        int[] ids = {GnomeRules.CLIP_IDLE, GnomeRules.CLIP_WALK, GnomeRules.CLIP_RISE, GnomeRules.CLIP_CAST, GnomeRules.CLIP_SINK, GnomeRules.CLIP_PUNCH, GnomeRules.CLIP_STOMP, GnomeRules.CLIP_SLAM,
+                GnomeRules.CLIP_SHRUG, GnomeRules.CLIP_GUARD, GnomeRules.CLIP_POUND, GnomeRules.CLIP_DOZE, GnomeRules.CLIP_KNEEL};
+        for (int i = 0; i < ids.length; i++) assertEquals(i, ids[i], GnomeDraw0.CLIPS[i] + " has the id of its position");
+        String faces = "{\"" + String.join("\", \"", GnomeDraw0.FACES) + "\"}";
+        assertTrue(draw.contains("FACES = " + faces), "GnomeDraw.FACES is " + faces);
+        int[] fid = {GnomeRules.FACE_CALM, GnomeRules.FACE_AMUSED, GnomeRules.FACE_ANGRY, GnomeRules.FACE_SLEEPY, GnomeRules.FACE_SURPRISED, GnomeRules.FACE_STERN};
+        for (int i = 0; i < fid.length; i++) assertEquals(i, fid[i], GnomeDraw0.FACES[i] + " has the id of its position");
+        assertEquals(GnomeRules.FACES, fid.length);
+    }
+
+    @Test
+    void everyFacePlateIsOneQuadOnTheHeadOfItsFormAndReadsTheFaceSheets() throws IOException {
+        BufferedImage col = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/gnome_faces.png").toFile());
+        BufferedImage fx = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/gnome_faces_fx.png").toFile());
+        assertEquals(col.getWidth(), fx.getWidth());
+        assertEquals(col.getHeight(), fx.getHeight());
+        for (String form : FORMS) {
+            Map<String, JsonObject> full = bones(geo("gnome_" + form));
+            for (String face : GnomeDraw0.FACES) {
+                JsonObject g = json(ASSETS.resolve("geo/gnome/gnome_" + form + "_face_" + face + ".geo.json")).getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();
+                JsonObject d = g.getAsJsonObject("description");
+                assertEquals(col.getWidth(), d.get("texture_width").getAsInt(), form + " " + face);
+                assertEquals(col.getHeight(), d.get("texture_height").getAsInt(), form + " " + face);
+                Map<String, JsonObject> bones = bones(g);
+                int quads = 0;
+                for (JsonObject b : bones.values()) {
+                    JsonObject f = full.get(b.get("name").getAsString());
+                    assertNotNull(f, form + " " + face + " bone " + b.get("name") + " exists on the body model");
+                    assertEquals(f.getAsJsonArray("pivot"), b.getAsJsonArray("pivot"), form + " " + face + " pivot of " + b.get("name") + " (so the one animation file moves the plate with the head)");
+                    assertEquals(f.has("parent") ? f.get("parent") : null, b.has("parent") ? b.get("parent") : null);
+                    for (JsonElement ce : b.getAsJsonArray("cubes"))
+                        for (var uvFace : ce.getAsJsonObject().getAsJsonObject("uv").entrySet()) {
+                            quads++;
+                            JsonObject u = uvFace.getValue().getAsJsonObject();
+                            JsonArray uv = u.getAsJsonArray("uv"), sz = u.getAsJsonArray("uv_size");
+                            double u0 = uv.get(0).getAsDouble(), v0 = uv.get(1).getAsDouble();
+                            assertTrue(u0 >= 0 && v0 >= 0 && u0 + sz.get(0).getAsDouble() <= col.getWidth() + 0.01 && v0 + sz.get(1).getAsDouble() <= col.getHeight() + 0.01, form + " " + face + " uv inside the face sheet");
+                        }
+                }
+                assertEquals(GnomeLod.FACE_QUADS / 2, quads, form + " " + face + ": one quad (the cost table counts the colour quad and the glow quad)");
+            }
+        }
+        int bad = 0, lit = 0;
+        for (int y = 0; y < fx.getHeight(); y++)
+            for (int x = 0; x < fx.getWidth(); x++) {
+                int v = fx.getRGB(x, y);
+                if ((v >>> 24) == 0 && (v & 0xFFFFFF) != 0) bad++;
+                if ((v >>> 24) > 0) lit++;
+            }
+        assertEquals(0, bad, "gnome_faces_fx: colour under alpha 0");
+        assertTrue(lit > 100, "the face glow sheet has glowing pixels: " + lit);
+    }
+
+    @Test
     void theLimbsMoveByBoneRotationAndTheBodyAndTheGroundByPositionOnly() throws IOException {
         JsonObject anim = json(ASSETS.resolve("animations/entity/gnome_full.animation.json")).getAsJsonObject("animations");
         for (String clip : GnomeDraw0.CLIPS)
             for (var be : anim.getAsJsonObject(clip).getAsJsonObject("bones").entrySet())
                 if (be.getKey().startsWith("arm_") || be.getKey().startsWith("fore_") || be.getKey().startsWith("leg_") || be.getKey().startsWith("shin_"))
-                    assertTrue(be.getValue().getAsJsonObject().has("rotation") && !be.getValue().getAsJsonObject().has("position"), clip + " " + be.getKey());
+                    assertTrue(be.getValue().getAsJsonObject().has("rotation") && (!be.getValue().getAsJsonObject().has("position") || (clip.equals("shrug") && be.getKey().startsWith("arm_"))), clip + " " + be.getKey() + " (only the shrug heaves the shoulders by a position)");
         assertTrue(anim.getAsJsonObject("rise").getAsJsonObject("bones").getAsJsonObject("root").has("position"), "it rises out of the ground by the root's position");
         assertTrue(anim.getAsJsonObject("sink").getAsJsonObject("bones").getAsJsonObject("root").has("position"), "and sinks back the same way");
     }
@@ -185,6 +248,7 @@ class GnomeAssetsTest {
 
     /** The clip names of client.prop.GnomeDraw, repeated here (a common-side test never loads a client class). */
     private static final class GnomeDraw0 {
-        static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink", "punch", "stomp"};
+        static final String[] CLIPS = {"idle", "walk", "rise", "cast", "sink", "punch", "stomp", "slam", "shrug", "guard", "pound", "doze", "kneel"};
+        static final String[] FACES = {"calm", "amused", "angry", "sleepy", "surprised", "stern"};
     }
 }

@@ -44,6 +44,9 @@ class GnomeLodTest {
         assertTrue(GnomeLod.cost(GnomeLod.FULL, GnomeLod.LOD_HALF) <= 495, "giant level 1: about 450 (within a tenth)");
         for (int f = 0; f < 2; f++) assertTrue(GnomeLod.cost(f, GnomeLod.LOD_LOW) <= 140, "level 2 at most 140 quads");
         assertEquals(0, GnomeLod.cost(GnomeLod.FULL, GnomeLod.CULL));
+        assertEquals(2, GnomeLod.FACE_QUADS, "the face plate is one colour quad and one glow quad");
+        assertEquals(GnomeLod.BODY[0][0] + GnomeLod.FX[0][0] + GnomeLod.HALO_QUADS + GnomeLod.FACE_QUADS, GnomeLod.cost(GnomeLod.COMPANION, GnomeLod.LOD_FULL), "the cost counts body, glow-only model, halos and face");
+        assertEquals(GnomeLod.BODY[1][2], GnomeLod.cost(GnomeLod.FULL, GnomeLod.LOD_LOW), "the low level has no glow pass, no halo and no face plate");
         assertEquals(3200, GnomeLod.FRAME_QUADS);
     }
 

@@ -8,6 +8,8 @@
     gnome_closeups.png  the face, the chest circle and a fist of the giant, the face and a 3/4 of the companion
     gnome_clips.png     rise, cast, punch, stomp and sink of the giant; walk, cast and punch of the companion
     gnome_lod.png       the three levels of detail of each form side by side
+    gnome_poses.png     the nine poses of the companion (kneel, slam, guard, stomp, shrug, pound, doze, cast, idle) and four of the giant, each with the face its situation gives it
+    gnome_faces.png     the six faces (calm, amused, angry, sleepy, surprised, stern) of both forms
 """
 import os
 import sys
@@ -105,6 +107,19 @@ def main():
         parts += [tiles(os.path.join(src, "gnome_%s_lod%d.png" % (form, l)), 1)[0][0] for l in (1, 2)]
         lods.append(row([caption(parts[i].copy(), "%s: level %d" % (form, i)) for i in range(3)], 420))
     save(stack(lods), os.path.join(OUT, "gnome_lod.png"))
+
+    def one(name):
+        return tiles(os.path.join(src, name + ".png"), 1)[0][0].copy()
+
+    cp = ("kneel", "slam", "guard", "stomp", "shrug", "pound", "doze", "cast", "idle")
+    why = {"kneel": "kneel: linked, it rises", "slam": "slam: a mid page", "guard": "guard: master nearly dead", "stomp": "stomp: it wakes", "shrug": "shrug: a hit lands",
+           "pound": "pound: a kill", "doze": "doze: still for 30 s", "cast": "cast: a big page", "idle": "idle: calm"}
+    rows = [row([caption(one("gnome_pose_comp_" + n), why[n]) for n in cp[:5]], 330), row([caption(one("gnome_pose_comp_" + n), why[n]) for n in cp[5:]], 330),
+            row([caption(one("gnome_pose_full_" + n), "giant " + why[n]) for n in ("slam", "guard", "shrug", "pound")], 400)]
+    save(stack(rows), os.path.join(OUT, "gnome_poses.png"))
+
+    fn = ("calm", "amused", "angry", "sleepy", "surprised", "stern")
+    save(stack([row([caption(one("gnome_face_comp_" + n), "companion: " + n) for n in fn], 250), row([caption(one("gnome_face_full_" + n), "giant: " + n) for n in fn], 250)]), os.path.join(OUT, "gnome_faces.png"))
     print("wrote", sorted(os.listdir(OUT)))
 
 

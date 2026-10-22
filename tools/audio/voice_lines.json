@@ -718,5 +718,11 @@
   "role": "djinn",
   "voice": "QjEdRoRdZC2i3ncmFpNy",
   "prompt": "[dark, fierce] Feel the sound of Murmur!"
+ },
+ {
+  "id": "gnome_greet_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly] Gnome rises. The earth is with you."
  }
 ]

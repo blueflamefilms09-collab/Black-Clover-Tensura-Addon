@@ -1,0 +1,10 @@
+-cp
+/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/tc/libs/gson-2.10.1.jar
+-d
+/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/jt_gnome/out
+-sourcepath
+/home/user/Black-Clover-Tensura-Addon/.claude/worktrees/agent-aabb61050a11b905c/src/main/java:/home/user/Black-Clover-Tensura-Addon/.claude/worktrees/agent-aabb61050a11b905c/src/test/java
+/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/lu2_shim/org/junit/jupiter/api/Assertions.java
+/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/lu2_shim/org/junit/jupiter/api/Test.java
+/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/atm_run/RunTests.java
+/home/user/Black-Clover-Tensura-Addon/.claude/worktrees/agent-aabb61050a11b905c/src/test/java/com/newuniverse/nusmp/audio/voice/VoiceLogicTest.java

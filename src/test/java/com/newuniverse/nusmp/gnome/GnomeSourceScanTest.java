@@ -53,8 +53,8 @@ class GnomeSourceScanTest {
         assertFalse(Pattern.compile("static\\s+(ServerPlayer|Player)\\s+\\w+\\s*[;=]").matcher(g).find(), "no static 'current player'");
         String ev = code(read("gnome/GnomeEvents.java"));
         for (String h : new String[]{"PlayerLoggedOutEvent", "LivingDeathEvent", "PlayerRespawnEvent", "PlayerChangedDimensionEvent", "ServerStoppingEvent"}) assertTrue(ev.contains(h), "cleanup on " + h);
-        String forget = method(g, "forget");
-        for (String s : new String[]{"STATES.remove", "LIVE.remove", "SPIRITS.forget", "FULLS.forget", "GATE.forget", "discard()"}) assertTrue(forget.contains(s), "forget: " + s);
+        String forget = method(g, "void forget");
+        for (String s : new String[]{"STATES.remove", "LIVE.remove", "SPIRITS.forget", "FULLS.forget", "GATE.forget", "LINES.forget", "discard()"}) assertTrue(forget.contains(s), "forget: " + s);
         assertTrue(method(g, "clearAll").contains("STATES.clear()"), "a server stop clears everything");
     }
 
@@ -126,6 +126,24 @@ class GnomeSourceScanTest {
         assertTrue(d.contains("Layer.ADDITIVE") && !d.contains("RenderType.eyes"), "the glow is the additive pass with a glow-only sheet, never RenderType.eyes");
         String lod = code(read("gnome/GnomeLod.java"));
         assertTrue(lod.contains("FRAME_QUADS = 3200") && lod.contains("112.0") && lod.contains("64.0"));
+    }
+
+    @Test
+    void theMoodsAndTheVoiceAreDecidedByTheServerHeardNearbyAndLimited() throws IOException {
+        String mood = code(read("gnome/GnomeMoodRules.java"));
+        assertFalse(mood.contains("net.minecraft") || mood.contains("net.neoforged"), "the table of moods is pure: no game class");
+        String g = code(read("gnome/Gnome.java"));
+        assertTrue(g.contains("Voice.say(") && g.contains("LINES.allow(") && g.contains("LINE_RADIUS") && g.contains("isSpectator"), "a line goes through the voice system, to listeners within 32 blocks, through the per-listener gate");
+        assertTrue(g.contains("GnomeMoodRules.pick(") && g.contains("mood.ready(") || g.contains("s.mood.ready("), "a situation has its own cooldown");
+        assertFalse(g.contains("PacketDistributor"), "no packet of its own for the voice: the voice system sends its tiny Say packet");
+        String ev = code(read("gnome/GnomeEvents.java"));
+        assertTrue(ev.contains("LivingDamageEvent.Post") && ev.contains("onOwnerHurt") && ev.contains("onOwnerKill") && ev.contains("onOwnerDeath"), "hit, kill and death of the master are heard");
+        assertTrue(method(ev, "onDamage").contains("LIVE.contains"), "only a master with a Gnome out costs anything on a hit");
+        assertTrue(method(ev, "onDeath").contains("LIVE.contains") || method(ev, "onDeath").contains("onOwnerDeath"), "death handling is gated");
+        String props = code(read("gnome/GnomeProps.java"));
+        assertTrue(props.contains("CLIP_SINK") && props.contains("CLIP_DOZE"), "a farewell is not cut short by the orphan check");
+        String sounds = code(read("gnome/GnomeSounds.java"));
+        assertFalse(sounds.contains("Minecraft.getInstance"), "sounds are server driven");
     }
 
     @Test

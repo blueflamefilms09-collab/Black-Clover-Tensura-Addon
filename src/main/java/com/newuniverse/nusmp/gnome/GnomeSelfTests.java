@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.gnome;
 
 import com.newuniverse.nusmp.book.BookPage;
+import com.newuniverse.nusmp.audio.voice.VoiceCatalog;
 import com.newuniverse.nusmp.book.EarthBook;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 /**
  * Why: nothing of the Gnome can be seen by its author in a game, so what can be proved without a person is proved by the real game: the CI server smoke test boots the mod and runs this (key
- * {@code magic.gnome}). It checks, on a dedicated server with a stand-in player: the prop kind and the seven sound events are registered and their files are on the class path; the nine pages of the Earth
+ * {@code magic.gnome}). It checks, on a dedicated server with a stand-in player: the prop kind and the eleven sound events are registered and their files are on the class path; the nine pages of the Earth
  * book are still the old ones in the old order (nothing renamed, nothing removed); the caps, the emitter, the clip and the sound rules answer as the doc says; and the companion and the full form really
  * spawn on the server, are counted, are capped, and are all gone (entity and ledger) when the player's state is forgotten (logout, death and a change of dimension do exactly that). Pure and server safe:
  * no client class is touched. Everything is cleaned up at the end.
@@ -64,7 +65,26 @@ public final class GnomeSelfTests {
 
         // the rules
         if (GnomeRules.variant(GnomeRules.param(GnomeRules.V_FULL, 77)) != GnomeRules.V_FULL || GnomeRules.stamp(GnomeRules.param(GnomeRules.V_FULL, 77)) != 77) return Result.fail("the prop word does not round trip");
-        if (GnomeRules.fullClip(3, 120, -1, false) != GnomeRules.CLIP_RISE || GnomeRules.fullClip(110, 120, -1, false) != GnomeRules.CLIP_SINK || GnomeRules.fullClip(40, 120, 5, false) != GnomeRules.CLIP_CAST) return Result.fail("the clip choice is wrong");
+        if (GnomeRules.fullClip(3, 120, 0, 0) != GnomeRules.CLIP_RISE || GnomeRules.fullClip(110, 120, 0, 0) != GnomeRules.CLIP_SINK || GnomeRules.fullClip(40, 120, GnomeRules.CLIP_CAST, 5) != GnomeRules.CLIP_CAST) return Result.fail("the clip choice is wrong");
+        int word = GnomeRules.withPose(GnomeRules.param(GnomeRules.V_COMPANION, 0), GnomeRules.CLIP_POUND, GnomeRules.FACE_AMUSED, 4321);
+        if (GnomeRules.pose(word) != GnomeRules.CLIP_POUND || GnomeRules.face(word) != GnomeRules.FACE_AMUSED || GnomeRules.stamp(word) != 4321 || GnomeRules.variant(word) != GnomeRules.V_COMPANION) return Result.fail("the pose and face do not round trip in the prop word");
+
+        // the moods: every situation has a pose that is a clip of the animation files, a face, and lines or a cue that exist
+        for (GnomeMoodRules.Situation sit : GnomeMoodRules.Situation.values()) {
+            GnomeMoodRules.Mood m = GnomeMoodRules.of(sit);
+            if (m.face() < 0 || m.face() >= GnomeRules.FACES || m.pose() < 0 || m.pose() > GnomeRules.CLIP_KNEEL) return Result.fail("mood out of range: " + sit);
+            if (m.cue() != null && GnomeSoundRules.cue(m.cue()) == null) return Result.fail("mood " + sit + " names a cue that does not exist: " + m.cue());
+            if (GnomeMoodRules.planned(m.lineGroup()).isEmpty()) return Result.fail("mood " + sit + " names a line group that does not exist: " + m.lineGroup());
+        }
+        for (String line : VoiceCatalog.GNOME_LINES) {
+            boolean grouped = false;
+            for (String g : GnomeMoodRules.groups()) grouped |= GnomeMoodRules.planned(g).contains(line);
+            if (!grouped) return Result.fail("the voice line " + line + " belongs to no group");
+        }
+        for (String line : VoiceCatalog.GNOME_LINES)
+            try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/voice/gnome/" + VoiceCatalog.gnomeId(line) + ".ogg")) {
+                if (in == null) return Result.fail("missing voice file " + line);
+            }
         GnomeLedger l = new GnomeLedger();
         UUID u = UUID.randomUUID();
         if (!l.acquire(u, 1, 2) || l.acquire(u, 1, 2)) return Result.fail("the per player cap does not hold");
@@ -88,8 +108,11 @@ public final class GnomeSelfTests {
             double[] f = GnomeRules.full(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
             if (!Gnome.summonFull(p, s, level.getGameTime(), f) || Gnome.prop(level, s.full) == null) return Result.fail("the full form did not spawn");
             if (Gnome.summonFull(p, s, level.getGameTime(), f) && Gnome.FULLS.count(p.getUUID()) > 1) return Result.fail("a second giant was allowed for one player");
+            if (!Gnome.react(p, s, GnomeMoodRules.Situation.CAST_MID, Gnome.prop(level, s.spirit), -1) || GnomeRules.pose(Gnome.prop(level, s.spirit).param()) != GnomeRules.CLIP_SLAM) return Result.fail("a reaction did not set the pose in the prop word");
+            if (Gnome.react(p, s, GnomeMoodRules.Situation.CAST_MID, Gnome.prop(level, s.spirit), -1)) return Result.fail("a situation reacted again inside its own cooldown");
             Gnome.forget(p);
             if (Gnome.liveCount() != before) return Result.fail("the ledgers kept a slot after the player was forgotten");
+            if (Gnome.LINES.tracked() != 0 && Gnome.LINES.tracked() > 8) return Result.fail("the line gate keeps too many listeners");
         } finally {
             Gnome.forget(p);
         }

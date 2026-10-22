@@ -20,63 +20,120 @@ class GnomeRulesTest {
                 int w = GnomeRules.param(variant, stamp);
                 assertEquals(variant, GnomeRules.variant(w));
                 assertEquals(stamp, GnomeRules.stamp(w));
+                assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.pose(w));
+                assertEquals(GnomeRules.FACE_CALM, GnomeRules.face(w));
                 assertFalse(GnomeRules.hidden(w));
-                assertTrue(GnomeRules.hidden(w | GnomeRules.HIDDEN), "the hidden bit is its own");
-                assertEquals(stamp, GnomeRules.stamp(w | GnomeRules.HIDDEN), "hiding keeps the stamp");
+                assertTrue(GnomeRules.hidden(GnomeRules.withHidden(w, true)), "the hidden bit is its own");
+                assertEquals(stamp, GnomeRules.stamp(GnomeRules.withHidden(w, true)), "hiding keeps the stamp");
+                assertEquals(w, GnomeRules.withHidden(GnomeRules.withHidden(w, true), false));
             }
         }
-        assertEquals(1, GnomeRules.stampOf(0), "a stamp is never 0 (0 means no cast)");
-        assertEquals(1, GnomeRules.stampOf(1L << 20));
-        long now = (1L << 20) + 5;
-        assertEquals(10, GnomeRules.sinceStamp(now, GnomeRules.stampOf(now - 10)), "ticks since the cast across the wrap of the 20 bit clock");
+        assertEquals(1, GnomeRules.stampOf(0), "a stamp is never 0 (0 means no event)");
+        assertEquals(1, GnomeRules.stampOf(1L << 16));
+        long now = (1L << 16) + 5;
+        assertEquals(10, GnomeRules.sinceStamp(now, GnomeRules.stampOf(now - 10)), "ticks since the event across the wrap of the 16 bit clock");
         assertEquals(Integer.MAX_VALUE, GnomeRules.sinceStamp(now, 0));
+    }
+
+    @Test
+    void everyPoseAndFaceSitsInItsOwnBitsWithoutTouchingTheOthers() {
+        for (int pose = 0; pose <= GnomeRules.CLIP_KNEEL; pose++)
+            for (int face = 0; face < GnomeRules.FACES; face++)
+                for (boolean hidden : new boolean[]{false, true}) {
+                    int w = GnomeRules.word(GnomeRules.V_FULL, hidden, pose, face, 40000);
+                    assertEquals(pose, GnomeRules.pose(w));
+                    assertEquals(face, GnomeRules.face(w));
+                    assertEquals(hidden, GnomeRules.hidden(w));
+                    assertEquals(GnomeRules.V_FULL, GnomeRules.variant(w));
+                    assertEquals(40000, GnomeRules.stamp(w));
+                    int w2 = GnomeRules.withPose(w, GnomeRules.CLIP_DOZE, GnomeRules.FACE_SLEEPY, 9);
+                    assertEquals(hidden, GnomeRules.hidden(w2), "a new pose keeps the hidden bit");
+                    assertEquals(GnomeRules.V_FULL, GnomeRules.variant(w2));
+                }
+        assertTrue(GnomeRules.CLIP_KNEEL <= GnomeRules.POSE_MASK, "all poses fit the four pose bits");
+        assertTrue(GnomeRules.FACES - 1 <= GnomeRules.FACE_MASK, "all faces fit the three face bits");
+        assertEquals(6, GnomeRules.FACES);
+        assertEquals(13, GnomeRules.CLIP_KNEEL + 1, "thirteen clips: idle walk rise cast sink punch stomp slam shrug guard pound doze kneel");
     }
 
     @Test
     void theFullFormRisesStandsCastsAndSinksOnItsOwnTicks() {
         int max = GnomeRules.FULL_TICKS;
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(0, max, -1, false));
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS - 1, max, -1, false));
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS, max, -1, false));
-        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(60, max, 3, false), "a cast while it stands plays the cast clip");
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(60, max, GnomeRules.CAST_CLIP_TICKS, false), "the cast clip is 24 ticks long");
-        assertEquals(GnomeRules.CLIP_SINK, GnomeRules.fullClip(max - GnomeRules.FULL_SINK_TICKS, max, 3, false), "the sink wins over a late cast");
-        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(2, max, 1, false), "the rise wins over a cast at the start");
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(0, max, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS - 1, max, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.FULL_RISE_TICKS, max, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(60, max, GnomeRules.CLIP_CAST, 3), "a cast while it stands plays the cast clip");
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(60, max, GnomeRules.CLIP_CAST, GnomeRules.CAST_CLIP_TICKS), "the cast clip is 24 ticks long");
+        assertEquals(GnomeRules.CLIP_SINK, GnomeRules.fullClip(max - GnomeRules.FULL_SINK_TICKS, max, GnomeRules.CLIP_CAST, 3), "the sink wins over a late cast");
+        assertEquals(GnomeRules.CLIP_RISE, GnomeRules.fullClip(2, max, GnomeRules.CLIP_CAST, 1), "the rise wins over a cast at the start");
         assertEquals(max, GnomeRules.FULL_RISE_TICKS + 80 + GnomeRules.FULL_SINK_TICKS, "rise 20 + hold 80 + sink 20 = 120 ticks (6 seconds)");
         assertTrue(GnomeRules.FULL_SLAM_TICK < GnomeRules.FULL_RISE_TICKS, "the fists land inside the rise clip");
         assertTrue(GnomeRules.CAST_CONTACT_TICK < GnomeRules.CAST_CLIP_TICKS);
     }
 
     @Test
-    void aPageBelowTheBigTiersPunchesAndTheGiantStompsOnceWhileItStands() {
+    void theGiantPlaysTheServersPoseWhileItLastsAndStompsOnceOnItsOwn() {
         int max = GnomeRules.FULL_TICKS;
-        assertEquals(GnomeRules.CLIP_PUNCH, GnomeRules.fullClip(40, max, 4, true));
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(40, max, GnomeRules.PUNCH_CLIP_TICKS, true), "the punch clip is 20 ticks long");
-        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT, max, -1, false));
-        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS - 1, max, -1, false));
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS, max, -1, false));
+        assertEquals(GnomeRules.CLIP_PUNCH, GnomeRules.fullClip(40, max, GnomeRules.CLIP_PUNCH, 4));
+        assertEquals(GnomeRules.CLIP_SLAM, GnomeRules.fullClip(40, max, GnomeRules.CLIP_SLAM, 4));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(40, max, GnomeRules.CLIP_PUNCH, GnomeRules.PUNCH_CLIP_TICKS), "the punch clip is 20 ticks long");
+        assertEquals(GnomeRules.CLIP_GUARD, GnomeRules.fullClip(40, max, GnomeRules.CLIP_GUARD, 5000), "the guard holds until the server clears it");
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(40, max, GnomeRules.CLIP_DOZE, 5), "the giant never dozes or kneels");
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(40, max, GnomeRules.CLIP_KNEEL, 5));
+        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT, max, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_STOMP, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS - 1, max, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.fullClip(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS, max, 0, Integer.MAX_VALUE));
         assertTrue(GnomeRules.STOMP_AT + GnomeRules.STOMP_CLIP_TICKS <= max - GnomeRules.FULL_SINK_TICKS, "the stomp is over before the sink begins");
-        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(GnomeRules.STOMP_AT + 2, max, 3, false), "a cast wins over the stomp");
-        assertEquals(GnomeRules.CLIP_PUNCH, GnomeRules.companionClip(true, 2, true));
-        assertEquals(GnomeRules.PUNCH_CONTACT_TICK, GnomeRules.contactTick(true));
-        assertEquals(GnomeRules.CAST_CONTACT_TICK, GnomeRules.contactTick(false));
-        assertEquals(GnomeRules.PUNCH_CLIP_TICKS, GnomeRules.castTicks(true));
-        int w = GnomeRules.param(GnomeRules.V_COMPANION, 9) | GnomeRules.PUNCH | GnomeRules.HIDDEN;
-        assertTrue(GnomeRules.punch(w) && GnomeRules.hidden(w) && GnomeRules.stamp(w) == 9 && GnomeRules.variant(w) == GnomeRules.V_COMPANION, "the punch bit is its own");
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.fullClip(GnomeRules.STOMP_AT + 2, max, GnomeRules.CLIP_CAST, 3), "a pose wins over the stomp");
+        assertEquals(GnomeRules.PUNCH_CONTACT_TICK, GnomeRules.contactTick(GnomeRules.CLIP_PUNCH));
+        assertEquals(GnomeRules.CAST_CONTACT_TICK, GnomeRules.contactTick(GnomeRules.CLIP_CAST));
+        assertEquals(GnomeRules.SLAM_CONTACT_TICK, GnomeRules.contactTick(GnomeRules.CLIP_SLAM));
+        assertEquals(-1, GnomeRules.contactTick(GnomeRules.CLIP_SHRUG));
         assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_PUNCH, GnomeRules.PUNCH_CONTACT_TICK) && GnomeRules.slamNow(GnomeRules.CLIP_STOMP, GnomeRules.STOMP_CONTACT_TICK));
     }
 
     @Test
-    void theCompanionWalksWhenItsMasterMovesAndCastsForOneClip() {
-        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.companionClip(false, Integer.MAX_VALUE, false));
-        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, Integer.MAX_VALUE, false));
-        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.companionClip(true, 5, false), "the cast wins over the walk");
-        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, GnomeRules.CAST_CLIP_TICKS, false));
+    void theClipLengthsAreTheOnesOfTheAnimationFiles() {
+        assertEquals(22, GnomeRules.poseTicks(GnomeRules.CLIP_SLAM), "slam 1.1 s");
+        assertEquals(22, GnomeRules.poseTicks(GnomeRules.CLIP_SHRUG), "shrug 1.1 s");
+        assertEquals(36, GnomeRules.poseTicks(GnomeRules.CLIP_POUND), "pound 1.8 s");
+        assertEquals(40, GnomeRules.poseTicks(GnomeRules.CLIP_KNEEL), "kneel 2.0 s");
+        assertEquals(24, GnomeRules.poseTicks(GnomeRules.CLIP_CAST), "cast 1.2 s");
+        assertEquals(20, GnomeRules.poseTicks(GnomeRules.CLIP_PUNCH), "punch 1.0 s");
+        assertEquals(18, GnomeRules.poseTicks(GnomeRules.CLIP_STOMP), "stomp 0.9 s");
+        assertEquals(0, GnomeRules.poseTicks(GnomeRules.CLIP_GUARD), "the guard loops until cleared");
+        assertTrue(GnomeRules.persistent(GnomeRules.CLIP_GUARD) && GnomeRules.persistent(GnomeRules.CLIP_DOZE));
+        assertFalse(GnomeRules.persistent(GnomeRules.CLIP_SLAM));
+        assertTrue(GnomeRules.poseActive(GnomeRules.CLIP_DOZE, 100000));
+        assertTrue(GnomeRules.poseActive(GnomeRules.CLIP_SLAM, 21));
+        assertFalse(GnomeRules.poseActive(GnomeRules.CLIP_SLAM, 22));
+        assertFalse(GnomeRules.poseActive(GnomeRules.CLIP_IDLE, 0), "no pose is no pose");
+    }
+
+    @Test
+    void theCompanionWalksWhenItsMasterMovesAndPlaysItsPose() {
+        assertEquals(GnomeRules.CLIP_IDLE, GnomeRules.companionClip(false, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, 0, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.CLIP_CAST, GnomeRules.companionClip(true, GnomeRules.CLIP_CAST, 5), "the pose wins over the walk");
+        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, GnomeRules.CLIP_CAST, GnomeRules.CAST_CLIP_TICKS));
+        assertEquals(GnomeRules.CLIP_DOZE, GnomeRules.companionClip(false, GnomeRules.CLIP_DOZE, 99999), "a doze holds while the master stands still");
+        assertEquals(GnomeRules.CLIP_WALK, GnomeRules.companionClip(true, GnomeRules.CLIP_DOZE, 99999), "a step wakes it");
+        assertEquals(GnomeRules.CLIP_GUARD, GnomeRules.companionClip(true, GnomeRules.CLIP_GUARD, 99999), "the guard holds even while walking");
         assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_RISE, GnomeRules.FULL_SLAM_TICK));
         assertTrue(GnomeRules.slamNow(GnomeRules.CLIP_CAST, GnomeRules.CAST_CONTACT_TICK));
         assertFalse(GnomeRules.slamNow(GnomeRules.CLIP_IDLE, GnomeRules.CAST_CONTACT_TICK));
         assertEquals(1f, GnomeRules.fullFade(60, 120, 0f), "solid while it stands");
         assertEquals(0f, GnomeRules.fullFade(120, 120, 0f), "gone when its life ends");
+    }
+
+    @Test
+    void theFaceShownIsTheEventsFaceWhileItLastsThenCalmWithTheDozeAndGuardKeepingTheirs() {
+        assertEquals(GnomeRules.FACE_ANGRY, GnomeRules.faceNow(GnomeRules.FACE_ANGRY, GnomeRules.CLIP_CAST, 10));
+        assertEquals(GnomeRules.FACE_CALM, GnomeRules.faceNow(GnomeRules.FACE_ANGRY, GnomeRules.CLIP_CAST, GnomeRules.FACE_TICKS), "the face goes back to calm");
+        assertEquals(GnomeRules.FACE_CALM, GnomeRules.faceNow(GnomeRules.FACE_ANGRY, GnomeRules.CLIP_CAST, Integer.MAX_VALUE));
+        assertEquals(GnomeRules.FACE_SLEEPY, GnomeRules.faceNow(GnomeRules.FACE_CALM, GnomeRules.CLIP_DOZE, 99999), "a doze is always sleepy");
+        assertEquals(GnomeRules.FACE_STERN, GnomeRules.faceNow(GnomeRules.FACE_CALM, GnomeRules.CLIP_GUARD, 99999), "a guard is at least stern");
+        assertEquals(GnomeRules.FACE_SURPRISED, GnomeRules.faceNow(GnomeRules.FACE_SURPRISED, GnomeRules.CLIP_GUARD, 99999));
     }
 
     @Test

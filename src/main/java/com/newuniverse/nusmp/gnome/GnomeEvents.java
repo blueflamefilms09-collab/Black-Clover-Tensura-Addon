@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.gnome;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -18,6 +19,7 @@ public final class GnomeEvents {
         bus.addListener(GnomeEvents::onPlayerTick);
         bus.addListener(GnomeEvents::onLogout);
         bus.addListener(GnomeEvents::onDeath);
+        bus.addListener(GnomeEvents::onDamage);
         bus.addListener(GnomeEvents::onRespawn);
         bus.addListener(GnomeEvents::onDimension);
         bus.addListener(GnomeEvents::onStopping);
@@ -31,7 +33,17 @@ public final class GnomeEvents {
 
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { if (e.getEntity() instanceof ServerPlayer p) Gnome.forget(p); }
 
-    static void onDeath(LivingDeathEvent e) { if (e.getEntity() instanceof ServerPlayer p) Gnome.forget(p); }
+    /** The master died: the Gnome mourns for three seconds and goes (everything of the player is dropped at once). A kill by a master with a Gnome out makes the Gnome pound its chest. */
+    static void onDeath(LivingDeathEvent e) {
+        if (e.getEntity() instanceof ServerPlayer p) Gnome.onOwnerDeath(p);
+        else if (!Gnome.LIVE.isEmpty() && e.getSource().getEntity() instanceof ServerPlayer k && Gnome.LIVE.contains(k.getUUID())) Gnome.onOwnerKill(k);
+    }
+
+    /** A hit that landed on a master with a Gnome out (after the damage was taken: the health is the health after the hit). */
+    static void onDamage(LivingDamageEvent.Post e) {
+        if (Gnome.LIVE.isEmpty() || !(e.getEntity() instanceof ServerPlayer p) || !Gnome.LIVE.contains(p.getUUID())) return;
+        Gnome.onOwnerHurt(p, e.getNewDamage());
+    }
 
     static void onRespawn(PlayerEvent.PlayerRespawnEvent e) { if (e.getEntity() instanceof ServerPlayer p) Gnome.forget(p); }
 

@@ -109,8 +109,14 @@ class GnomeSoundsTest {
             for (Path f : (Iterable<Path>) files::iterator) bytes += Files.size(f);
         }
         assertTrue(bytes < 1_000_000, "the Gnome's sounds are under 1 MB: " + bytes);
-        assertEquals(7, GnomeSoundRules.CUES.size());
-        for (String cue : new String[]{"link", "unlink", "idle", "cast", "rise", "slam", "sink"}) assertNotNull(GnomeSoundRules.cue(cue), cue);
+        assertEquals(11, GnomeSoundRules.CUES.size());
+        for (String cue : new String[]{"link", "unlink", "idle", "cast", "rise", "slam", "sink", "grunt", "chuckle", "snore", "huff"}) assertNotNull(GnomeSoundRules.cue(cue), cue);
+        String[] first = {"link", "unlink", "idle", "cast", "rise", "slam", "sink"};
+        for (int i = 0; i < first.length; i++) assertEquals(first[i], GnomeSoundRules.CUES.get(i).id(), "the first seven cues keep their order (append only)");
+        for (String voice : new String[]{"grunt", "chuckle", "snore", "huff"}) {
+            GnomeSoundRules.Cue c = GnomeSoundRules.cue(voice);
+            assertTrue(c.volume() <= 0.8f && c.range() == 16, voice + " is a quiet sound of the golem's voice, heard within 16 blocks");
+        }
         for (GnomeSoundRules.Cue c : GnomeSoundRules.CUES) {
             assertTrue(c.event().startsWith("gnome."), "its own namespace of events, not spirit.* or the Tensura ones: " + c.event());
             assertTrue(c.pitchLow() >= 0.5f && c.pitchHigh() <= 2.0f && c.pitchLow() <= c.pitchHigh(), c.event() + " pitch inside the game's range");
