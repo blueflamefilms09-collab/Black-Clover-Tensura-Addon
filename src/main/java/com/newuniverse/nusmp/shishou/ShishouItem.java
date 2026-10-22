@@ -90,6 +90,19 @@ public class ShishouItem extends Item {
         return InteractionResult.PASS;
     }
 
+    // ---------------------------------------------------------------- feeding from the inventory (2.1.0)
+    /** The sword on the cursor, clicked on a stack in your inventory: left click eats the stack (up to the per-click cap), right click one item. */
+    @Override
+    public boolean overrideStackedOnOther(ItemStack sword, net.minecraft.world.inventory.Slot slot, net.minecraft.world.inventory.ClickAction action, Player player) {
+        return ShishouFeedService.swordOnStack(sword, slot, action, player);
+    }
+
+    /** A stack on the cursor, clicked on the sword in your inventory (the pattern of the Djinn Seal). */
+    @Override
+    public boolean overrideOtherStackedOnMe(ItemStack sword, ItemStack cursor, net.minecraft.world.inventory.Slot slot, net.minecraft.world.inventory.ClickAction action, Player player, net.minecraft.world.entity.SlotAccess access) {
+        return ShishouFeedService.stackOnSword(sword, cursor, slot, action, player);
+    }
+
     // ---------------------------------------------------------------- blows
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
@@ -115,7 +128,8 @@ public class ShishouItem extends Item {
         lines.add(Component.translatableWithFallback("shishou.tooltip.level", "Level %s", ShishouComponents.level(stack)).withStyle(net.minecraft.ChatFormatting.AQUA));
         lines.add(Component.translatableWithFallback("shishou.tooltip.soulbound", "Soulbound. Only its wielder may hold it.").withStyle(net.minecraft.ChatFormatting.GRAY));
         lines.add(Component.translatableWithFallback("shishou.tooltip.stomach", "Shift + right click: Stomach (internal storage).").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-        lines.add(Component.translatableWithFallback("shishou.tooltip.keys", "Keys: throw or recall, cast, next skill (Controls > Multiverse of Anime).").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatableWithFallback("shishou.tooltip.skill_route", "Skills: the Ultimate skill Shishou (Tensura skill screen: mode key, skill key).").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatableWithFallback("shishou.tooltip.feed", "Click a stack of monster drops or magic stones on me in your inventory to feed me.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         int shown = 0;
         int level = ShishouComponents.level(stack);
         List<ShishouSkill> have = ShishouSkill.availableList(level, 0L);

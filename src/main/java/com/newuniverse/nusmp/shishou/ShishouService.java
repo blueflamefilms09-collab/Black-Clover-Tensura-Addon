@@ -652,7 +652,7 @@ public final class ShishouService {
         }
     }
 
-    private static void levelUp(ServerPlayer w, ServerLevel sl, ShishouRecord.Gain g) {
+    static void levelUp(ServerPlayer w, ServerLevel sl, ShishouRecord.Gain g) {
         ShishouSpeech.say(w, sl, ShishouVoiceLines.Group.LEVELUP, g.to());
         List<ShishouSkill> fresh = ShishouSkill.unlockedBetween(g.from(), g.to());
         if (!fresh.isEmpty()) ShishouSpeech.say(w, sl, groupOf(fresh.get(0)), Component.translatableWithFallback(fresh.get(0).langKey(), fresh.get(0).english()));
@@ -939,8 +939,8 @@ public final class ShishouService {
         if (s.isEmpty()) return new ShishouNet.AppraisalReply(id, 2, "", 0f, 0f, 0, 0, 0, "", false);
         if (s.getItem() == ShishouItems.SHISHOU.get()) return selfReply(id, wielder, d);
         String key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).toString();
-        long worth = ShishouPredation.stoneExp(key, s.getCount(), 0);
-        if (worth == 0L) worth = ShishouPredation.dropExp(s.getCount(), s.getRarity().ordinal());
+        long worth = ShishouFeed.value(ShishouFeedService.describe(s), s.getCount());                // what feeding it to him would pay (0 for what he does not eat)
+
         return new ShishouNet.AppraisalReply(id, 1, s.getDescriptionId(), s.getCount(), s.getMaxStackSize(), s.getRarity().ordinal() * 10 + s.getEnchantments().size(), (int) Math.min(9999L, worth), 0, "", false);
     }
 
