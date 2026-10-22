@@ -229,7 +229,7 @@ def head_parts(c, JH, hs, big, lod, d):
     zend = -(6.9 + L1 + L2 - 0.8)
     jlen = -zend - 1.2
     if lod == 2:
-        c.box("head", H(0, 0.3, zend / 2), (7.4 * ws * hs, 6.4 * hs, -zend * hs), I3, {"up": ("head_top", 0), "west": ("snout_w", 0), "east": ("snout_e", 0), "south": SK, "down": ("jaw_in", 0)}, 0)
+        c.box("head", H(0, 0.3, zend / 2), (7.4 * ws * hs, 6.4 * hs, -zend * hs), I3, {"up": ("head_top", 0), "west": ("snout_w", 0), "east": ("snout_e", 0), "south": SK, "down": SK}, 0)
     else:
         c.box("head", H(0, 0.5, -3.4), (7.6 * ws * hs, 6.8 * hs, 7.0 * hs), I3, {"up": ("head_top", 0), "west": ("skull_w", 0), "east": ("skull_e", 0), "south": SK, "down": SK}, 0)
         sn1 = {"up": SK, "west": ("snout_w", 0), "east": ("snout_e", 0), "down": ("jaw_in", 0)}
@@ -259,6 +259,9 @@ def head_parts(c, JH, hs, big, lod, d):
             for k, z in enumerate((-3.8, -5.8, -7.8)[: 3 if big else 2]):          # the jagged jaw line: small spikes down and back
                 c.spike("jaw", H(sx * 2.7 * ws, -3.6, z * (1.0 if big else 0.85)), vec(sx * 0.25, -0.55, 0.8), 2.6 * hs, 1.5 * hs, vec(0, 0, -1), "spike")
             nf = 3 if big else 2
+            if sx > 0:
+                c.box("head", H(0, 2.9, zs1 + 0.2), (1.8 * hs, 1.2 * hs, (L1 + 1.6) * hs), rx(-9), {"up": SK, "west": SK, "east": SK}, d)                          # the ridge down the nose
+                c.box("jaw", H(0, -3.6, zend + 0.8), (3.6 * ws * hs, 1.6 * hs, 2.6 * hs), rx(-4), {"up": SK, "west": SK, "east": SK, "down": SK, "north": SK}, d)          # the chin
             for k in range(nf):                                                      # fangs standing up from the lower jaw and hanging from the lip
                 z = -(6.2 + k * (4.2 if big else 3.0) * sl)
                 c.spike("jaw", H(sx * 2.3 * ws, -2.2, z - 0.8), vec(0, 1, -0.2), 2.0 * hs, 1.2 * hs, vec(0, 0, 1), "fang")
@@ -389,7 +392,7 @@ def build_small(lod, atlas, fx=False):
 
     # ------------------------------------------------------------------ neck
     N = [vec(0, 11.6, -12.5), vec(0, 10.2, -16.4), vec(0, 8.8, -19.8)]
-    c.limb("neck1", N[0], N[1], 7.0, 6.6, sk, pad=1.2)
+    c.limb("neck1", N[0], N[1] if lod < 2 else N[2], 7.0, 6.6, sk, pad=1.2)
     if lod < 2:
         c.limb("neck2", N[1], N[2], 6.2, 5.8, sk, pad=1.2)
         for i, z in enumerate([-14.0, -17.2]):                                       # the neck's crest: short spikes
@@ -644,7 +647,7 @@ def build_dragon(lod, atlas, fx=False):
                 curl_finger(c, "foot_" + tag, st, vec(off * 0.05, -0.3, -0.95), (4.6, 4.0) if lod == 0 else (8.0,), (3.3, 2.9) if lod == 0 else (3.2,), -30, (1, 0, 0), L4, (5.4, 3.2) if lod == 0 else (4.4, 2.8), cross=lod == 0, d=d)
 
     # ------------------------------------------------------------------ the tail: a long spiny chain that trails down and sweeps up
-    tail_chain(c, d, ("skin", "skin"), {0: 14, 1: 7, 2: 4}[lod], 14, (-1.0, 9.0), -22.0, 26.0, 150.0, 16.0, 0.915, 9.0, 5.0, lod, barb=(11.0, 5.5))
+    tail_chain(c, d, ("skin", "skin"), {0: 14, 1: 7, 2: 4}[lod], 14, (-1.0, 9.0), -24.0, 62.0, 150.0, 16.0, 0.915, 9.0, 5.0, lod, barb=(11.0, 5.5))
 
     # ------------------------------------------------------------------ the wings: huge, four long finger bones, veined membrane
     for sx, tag in ((-1, "R"), (1, "L")):

@@ -53,6 +53,23 @@ class FireCastLodTest {
         assertEquals(112.0, FireCastLod.DRAGON_RANGE[2]);
     }
 
+    /** The doc's table of quads per level is the code's table (rule 11: the worst case is stated, and the statement cannot drift from the files). */
+    @Test
+    void theDocStatesTheExactQuadsPerLevelAndTheOwnerApprovedLimits() throws IOException {
+        String doc = Files.readString(Path.of("docs", "magic", "fire_casting.md"));
+        for (boolean dragon : new boolean[]{false, true}) {
+            int[] body = dragon ? FireCastLod.DRAGON_QUADS : FireCastLod.SALAMANDER_QUADS;
+            for (int lod = 0; lod < 3; lod++) {
+                int fx = lod <= FireCastLod.HALF ? (dragon ? FireCastLod.DRAGON_FX_QUADS : FireCastLod.SALAMANDER_FX_QUADS) : 0;
+                String row = "| " + body[lod] + " | " + fx + " | " + (body[lod] + fx) + " |";
+                assertTrue(doc.contains(row), "the doc's level table has the row " + row);
+            }
+        }
+        assertTrue(doc.contains("Owner-approved raised limits"), "the doc says the raised limits are the owner's");
+        for (String n : new String[]{"700", "900", "300", "380", "120", "3200", "64 blocks", "112 blocks"}) assertTrue(doc.contains(n), "the doc states " + n);
+        assertTrue(doc.contains("never dropped"), "the doc states the own-form rule");
+    }
+
     @Test
     void theCastersOwnFormIsNeverDroppedByTheFrameBudget() {
         FireCastLod.QuadBudget b = new FireCastLod.QuadBudget();

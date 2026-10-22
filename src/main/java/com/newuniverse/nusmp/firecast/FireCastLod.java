@@ -17,7 +17,7 @@ public final class FireCastLod {
     public static final int FULL = 0, HALF = 1, LOW = 2, CULL = 3;
 
     /** Quads of the models, full / half / low (the colour pass; counted from the generated files). */
-    public static final int[] SALAMANDER_QUADS = {478, 278, 98}, DRAGON_QUADS = {610, 314, 91};
+    public static final int[] SALAMANDER_QUADS = {486, 278, 98}, DRAGON_QUADS = {618, 314, 91};
     /** The glow-only models (the slit eyes, the furnace of the mouth, licks of flame on the wing tips and the tail's barb), drawn additive on the full and half levels. */
     public static final int SALAMANDER_FX_QUADS = 13, DRAGON_FX_QUADS = 17;
     /** The larger of the two glow-only models (kept for the callers that only need a bound). */
