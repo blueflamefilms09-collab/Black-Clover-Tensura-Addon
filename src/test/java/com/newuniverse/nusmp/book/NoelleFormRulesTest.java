@@ -79,23 +79,24 @@ class NoelleFormRulesTest {
     }
 
     @Test
-    void aCrowdCostsABoundedNumberOfFullFigures() {
-        assertEquals(Lod.CHARACTER, NoelleFormRules.budgeted(Lod.CHARACTER, 0, 0));
-        assertEquals(Lod.CHARACTER, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME - 1, 0));
-        assertEquals(Lod.STANDARD, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME, 0), "the third character-tier player falls back one level");
-        assertEquals(Lod.FAR, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME, NoelleFormRules.MAX_FULL_PER_FRAME), "and then another");
-        assertEquals(Lod.FAR, NoelleFormRules.budgeted(Lod.STANDARD, 0, NoelleFormRules.MAX_FULL_PER_FRAME));
-        assertEquals(Lod.NONE, NoelleFormRules.budgeted(Lod.NONE, 99, 99), "nothing is never drawn");
-        assertEquals(Lod.FAR, NoelleFormRules.budgeted(Lod.FAR, 99, 99));
-        int full = 0, chars = 0;                                                                // 40 players in view, all character tier, all near: how many are drawn in full?
-        int characters = 0, standards = 0, fars = 0;
+    void aCrowdCostsABoundedNumberOfFigures() {
+        assertEquals(Lod.CHARACTER, NoelleFormRules.budgeted(Lod.CHARACTER, 0, 0, 0));
+        assertEquals(Lod.CHARACTER, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME - 1, 0, 0));
+        assertEquals(Lod.STANDARD, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME, 0, 0), "the third character-tier player falls back one level");
+        assertEquals(Lod.FAR, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME, NoelleFormRules.MAX_FULL_PER_FRAME, 0), "and then another");
+        assertEquals(Lod.NONE, NoelleFormRules.budgeted(Lod.CHARACTER, NoelleFormRules.MAX_CHARACTER_PER_FRAME, NoelleFormRules.MAX_FULL_PER_FRAME, NoelleFormRules.MAX_FAR_PER_FRAME), "and past the last level: nothing");
+        assertEquals(Lod.FAR, NoelleFormRules.budgeted(Lod.STANDARD, 0, NoelleFormRules.MAX_FULL_PER_FRAME, 0));
+        assertEquals(Lod.NONE, NoelleFormRules.budgeted(Lod.NONE, 99, 99, 99), "nothing is never drawn");
+        assertEquals(Lod.NONE, NoelleFormRules.budgeted(Lod.FAR, 0, 0, NoelleFormRules.MAX_FAR_PER_FRAME));
+        int chars = 0, full = 0, far = 0, characters = 0, standards = 0, fars = 0, nones = 0;                 // 40 players in view, all character tier, all near
         for (int i = 0; i < 40; i++) {
-            Lod l = NoelleFormRules.budgeted(Lod.CHARACTER, chars, full);
-            if (l == Lod.CHARACTER) { chars++; full++; characters++; } else if (l == Lod.STANDARD) { full++; standards++; } else fars++;
+            Lod l = NoelleFormRules.budgeted(Lod.CHARACTER, chars, full, far);
+            if (l == Lod.CHARACTER) { chars++; full++; characters++; } else if (l == Lod.STANDARD) { full++; standards++; } else if (l == Lod.FAR) { far++; fars++; } else nones++;
         }
         assertEquals(NoelleFormRules.MAX_CHARACTER_PER_FRAME, characters);
         assertEquals(NoelleFormRules.MAX_FULL_PER_FRAME - NoelleFormRules.MAX_CHARACTER_PER_FRAME, standards);
-        assertEquals(40 - NoelleFormRules.MAX_FULL_PER_FRAME, fars);
+        assertEquals(NoelleFormRules.MAX_FAR_PER_FRAME, fars);
+        assertEquals(40 - NoelleFormRules.MAX_FULL_PER_FRAME - NoelleFormRules.MAX_FAR_PER_FRAME, nones, "the rest of the crowd is not drawn");
     }
 
     @Test

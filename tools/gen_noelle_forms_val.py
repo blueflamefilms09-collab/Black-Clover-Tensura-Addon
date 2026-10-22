@@ -274,8 +274,8 @@ def aureole():
     a.clip("idle", length=40.0, loop=True)
     cy, cz, R = 22.0, 9.5, 14.0
     p.bone("disc", (0, cy, cz))
-    for i in range(12):
-        p.box("disc", (-2.5, cy + R, cz), (5.0, 1.2, 0.8), GOLD_P if i % 2 else ENAMEL_B, rot=(0, 0, i * 30.0), pivot=(0, cy, cz))
+    for i in range(18):
+        p.box("disc", (-2.7, cy + R, cz), (5.4, 1.2, 0.8), GOLD_P if i % 2 else ENAMEL_B, rot=(0, 0, i * 20.0), pivot=(0, cy, cz))
     for i in range(16):
         L = 9.0 if i % 2 == 0 else 5.5
         p.box("disc", (-0.7, cy + R + 1.0, cz - 0.1), (1.4, L, 0.5), CRYSTAL_W if i % 2 else FEATHER_B, rot=(0, 0, i * 22.5 + 11.25), pivot=(0, cy, cz))
@@ -303,20 +303,21 @@ def sash():
 
 
 def lance():
-    """The Valkyrie's lance, hovering at the right hand: a gold shaft, a guard of three feathers and a drill of water (six cones, each turned a little more), spinning."""
+    """The Valkyrie's lance, hovering upright at the right hand: a gold shaft with a feathered guard and a great drill of water (seven cones, each turned a little more), spinning."""
     p = P("lance", 3)
     a = Anim()
     a.clip("idle", length=3.0, loop=True)
-    cx, cz = -12.5, -3.5
-    p.bone("lance", (cx, 20.0, cz), rotation=(-62, 0, 0))
-    p.box("lance", (cx - 0.5, 6.0, cz - 0.5), (1.0, 16.0, 1.0), GOLD_P)
-    p.box("lance", (cx - 1.2, 20.4, cz - 1.2), (2.4, 1.2, 2.4), GOLD)
-    for k in range(3):
-        p.box("lance", (cx - 0.4, 20.6, cz - 3.6), (0.8, 3.0, 0.6), FEATHER_B, rot=(0, 120.0 * k, 0), pivot=(cx, 20.6, cz))
-    p.bone("drill", (cx, 22.0, cz), parent="lance")
-    for k in range(6):
-        w = 3.6 - 0.5 * k
-        p.box("drill", (cx - w / 2, 21.8 + k * 2.2, cz - w / 2), (w, 2.4, w), CRYSTAL, rot=(0, 15.0 * k, 0), pivot=(cx, 22.0 + k * 2.2, cz))
+    cx, cz = -12.5, -5.0
+    p.bone("lance", (cx, 18.0, cz), rotation=(-10, 0, 8))
+    p.box("lance", (cx - 0.8, 2.0, cz - 0.8), (1.6, 24.0, 1.6), GOLD_P)
+    p.box("lance", (cx - 1.6, 8.0, cz - 1.6), (3.2, 1.4, 3.2), GOLD)
+    p.box("lance", (cx - 1.4, 25.8, cz - 1.4), (2.8, 1.4, 2.8), GOLD)
+    for k in range(4):
+        p.box("lance", (cx - 0.5, 24.8, cz - 4.6), (1.0, 4.6, 0.6), FEATHER_B, rot=(0, 90.0 * k, 0), pivot=(cx, 25.0, cz))
+    p.bone("drill", (cx, 27.0, cz), parent="lance")
+    for k in range(7):
+        w = 6.6 - 0.85 * k
+        p.box("drill", (cx - w / 2, 27.0 + k * 2.6, cz - w / 2), (w, 2.8, w), CRYSTAL, rot=(0, 18.0 * k, 0), pivot=(cx, 27.0 + k * 2.6, cz))
     spin_y(a, "idle", "drill", 3.0, turns=2, steps=8)
     a.pos("idle", "lance", {0.0: (0, 0, 0), 1.5: (0, 1.4, 0), 3.0: (0, 0, 0)})
     p.save(a)

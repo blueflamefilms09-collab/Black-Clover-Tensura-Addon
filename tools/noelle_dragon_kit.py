@@ -50,29 +50,37 @@ def piece(pal, name, d=3):
 
 
 # ---------------------------------------------------------------------------------------------------------------------- standard pieces
+def horn_chain(p, a, name, x0, y0, z0, sx, segs, mat, lean=(-34.0, -22.0, -18.0), out=(12.0, 7.0, 5.0), clip="idle", length=4.0):
+    """A horn as a chain of bones: each segment sits on the end of the one below (straight in the unposed model) and bends further back and out through its own rotation, so the horn is one
+    continuous curve. segs = [(length, width)]."""
+    prev, y = "root", y0
+    for k, (L, w) in enumerate(segs):
+        n = "%s%d" % (name, k)
+        p.bone(n, (x0, y, z0), parent=prev, rotation=(lean[min(k, len(lean) - 1)], sx * 3.0, -sx * out[min(k, len(out) - 1)]))
+        p.box(n, (x0 - w / 2, y, z0 - w / 2), (w, L + 0.2, w), mat, d=3)
+        if a is not None:
+            sine_rot(a, clip, n, length, 0, 1.2 + 0.4 * k, phase=0.1 * k)
+        prev, y = n, y + L
+
+
 def helm(pal):
-    """The dragon helm: a brow guard and a crest, two long horns swept back and up (three bent segments, ringed), cheek spikes and jaw fins. The face stays open."""
+    """The dragon helm: a brow guard and a crest, two long horns swept back and up (a chain of three bent segments, ringed), cheek fins and jaw fins. The face stays open."""
     b = pal.black
     p = piece(pal, "helm")
+    a = Anim()
+    a.clip("idle", length=4.0, loop=True)
     for (o, s) in (((-4.7, 29.2, -4.7), (9.4, 1.6, 0.9)), ((-4.7, 29.2, 3.8), (9.4, 1.6, 0.9)), ((-4.7, 29.2, -3.8), (0.9, 1.6, 7.6)), ((3.8, 29.2, -3.8), (0.9, 1.6, 7.6))):
         p.box("root", o, s, pal.metal)
     p.box("root", (-1.0, 30.8, -4.9), (2.0, 5.2 + (1.4 if b else 0.0), 1.0), pal.scale, rot=(-10, 0, 0), pivot=(0, 30.8, -4.9))        # the crest on the brow
     p.box("root", (-0.8, 29.3, -5.5), (1.6, 1.6, 0.9), pal.gem, rot=(0, 0, 45), pivot=(0, 30.1, -5.2))                               # the brow gem
     for sx in (-1, 1):
         p.box("root", (sx * 4.2 - 0.8, 28.0, -4.8), (1.6, 2.4, 1.6), pal.scale2, rot=(-20, sx * -10, 0), pivot=(sx * 4.2, 28.0, -4.0))   # the brow guards over the eyes
-        # the horn: three segments, each bent further back and up
-        x0, y0, z0 = sx * 3.4, 30.0, -1.0
-        prev_rot = (-30, sx * -8, sx * 12)
-        for k, (L, w) in enumerate(((5.0, 2.2), (5.0, 1.8), (4.4 + (2.0 if b else 0.0), 1.3))):
-            p.box("root", (x0 - w / 2, y0, z0 - w / 2 + k * 2.4), (w, L, w), pal.horn, rot=(-34 - 22 * k, sx * (-8 - 4 * k), sx * (12 + 6 * k)), pivot=(x0, y0, z0 + k * 2.4))
-            y0 += L * 0.78
-            z0 += 0.0
+        horn_chain(p, a, "h%s" % ("l" if sx > 0 else "r"), sx * 3.6, 30.0, -0.6, sx, [(5.6, 2.6), (5.6, 2.0), (5.2 + (2.2 if b else 0.0), 1.4)], pal.horn)
         p.box("root", (sx * 4.5 - 0.4, 25.6, -3.4), (0.8, 2.6, 2.0), pal.scale, rot=(0, 0, sx * -18), pivot=(sx * 4.5, 27.0, -3.0))        # a cheek fin
         p.box("root", (sx * 4.55 - 0.4, 25.2, -0.8), (0.8, 2.2, 2.6), pal.scale2, rot=(0, 0, sx * -14), pivot=(sx * 4.5, 27.0, -0.6))
-    if b:
-        for sx in (-1, 1):                                                                                                         # the black form's second, jagged pair at the temples
-            p.box("root", (sx * 4.9 - 0.5, 30.2, 0.2), (1.0, 5.0, 1.0), pal.horn, rot=(-50, 0, sx * 38), pivot=(sx * 4.9, 30.2, 0.2))
-    p.save()
+        if b:                                                                                                                      # the black form's second, jagged pair at the temples
+            horn_chain(p, None, "j%s" % ("l" if sx > 0 else "r"), sx * 4.8, 29.6, 1.4, sx, [(3.6, 1.6), (3.2, 1.1)], pal.horn, lean=(-60.0, -30.0), out=(30.0, 12.0))
+    p.save(a)
     return p
 
 
@@ -269,11 +277,11 @@ def cannon(pal, side):
     mbox(p, "root", side, (-9.1, 18.0, -3.2), (6.2, 1.0, 6.4), pal.metal)
     mbox(p, "root", side, (-9.1, 13.0, -3.2), (6.2, 1.0, 6.4), pal.metal)
     hx = -6.1 if side == 0 else 6.1
-    p.bone("head", (hx, 12.6, 0.0))
+    p.bone("head", (hx, 12.6, 0.0), rotation=(52, 0, 0))                                                                           # the head points forward and down from the fist
     mbox(p, "head", side, (-8.2, 8.0, -2.6), (4.4, 5.0, 5.2), pal.scale)                                                              # the skull
     mbox(p, "head", side, (-7.9, 3.4, -2.2), (3.8, 4.8, 4.4), pal.scale2)                                                             # the snout
     mbox(p, "head", side, (-7.6, 3.0, -1.8), (3.2, 1.0, 3.6), pal.horn)
-    p.bone("jaw", (hx, 6.0, 0.0), parent="head")
+    p.bone("jaw", (hx, 6.0, 0.0), parent="head", rotation=(14, 0, 0))
     mbox(p, "jaw", side, (-7.7, 1.6, -1.9), (3.4, 4.2, 3.8), pal.scale2, rot=(-18, 0, 0), pivot=(-6.1, 6.0, 0.0))        # the lower jaw, hanging open
     for k in range(3):                                                                                                                # teeth
         mbox(p, "jaw", side, (-7.5 + k * 1.1, 4.8, -1.9), (0.5, 1.8, 0.5), pal.claw, rot=(-18, 0, 0), pivot=(-6.1, 6.0, 0.0))
@@ -281,7 +289,8 @@ def cannon(pal, side):
     mbox(p, "head", side, (-7.2, 5.0, -1.2), (2.4, 2.4, 2.4), pal.flame)                                                              # the glowing throat
     for sx2 in (0, 1):
         mbox(p, "head", side, (-8.4 + 0.2 * sx2, 12.0, -2.4 + sx2 * 4.0), (0.9, 4.4 + (1.6 if b else 0.0), 0.9), pal.horn, rot=(-24, 0, 0), pivot=(-6.1, 12.6, 0.0))     # horns on the skull
-    sine_rot(a, "idle", "jaw", 2.0, 0, 6.0, phase=0.0)
+    sine_rot(a, "idle", "jaw", 2.0, 0, 7.0, phase=0.0)
+    sine_rot(a, "idle", "head", 2.0, 0, 3.0, phase=0.3)
     p.save(a)
     return p
 

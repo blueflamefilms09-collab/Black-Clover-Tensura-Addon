@@ -35,7 +35,7 @@ public final class NoelleFormsAura {
     private NoelleFormsAura() {}
 
     private static final int FB = PropDraw.FULL_BRIGHT;
-    private static final ResourceLocation RING = AuraRender.tex("aura/noelle_ring"), RIBBON = AuraRender.tex("aura/noelle_ribbon"), FEATHER = AuraRender.tex("aura/noelle_feather"),
+    private static final ResourceLocation RING = AuraRender.tex("aura/noelle_ring"), RIBBON = AuraRender.tex("aura/noelle_ribbon"), RIBBON_INK = AuraRender.tex("aura/noelle_ribbon_ink"), FEATHER = AuraRender.tex("aura/noelle_feather"),
             EMBER = AuraRender.tex("aura/noelle_ember"), EYE = AuraRender.tex("aura/noelle_eye"), BUBBLE = AuraRender.tex("aura/noelle_bubble"), SPARK = AuraRender.tex("aura/noelle_spark"),
             DOT = AuraRender.tex("aura/noelle_dot"), HAZE = AuraRender.tex("aura/noelle_haze"), RIPPLE = AuraRender.tex("particle/waterfx_ripple");
 
@@ -44,8 +44,8 @@ public final class NoelleFormsAura {
 
     // ---------------------------------------------------------------------------------------------------------------- the sets
     private static final NoelleFormRig.Set VAL = new NoelleFormRig.Set("nvl",
-            Piece.of("chest", Anchor.BODY, 1, 0, 0, -14),
-            Piece.of("skirt", Anchor.BODY, 5, 0, 10, -6).clip("idle", 1f).glass(),
+            Piece.of("chest", Anchor.BODY, 1, 0, 0, -14).silhouette(),
+            Piece.of("skirt", Anchor.BODY, 5, 0, 10, -6).silhouette().clip("idle", 1f).glass(),
             Piece.of("pauldron_r", Anchor.ARM_R, 2, -14, -4, 0),
             Piece.of("pauldron_l", Anchor.ARM_L, 2, 14, -4, 0),
             Piece.of("vambrace_r", Anchor.ARM_R, 4, -12, 2, -6),
@@ -54,8 +54,8 @@ public final class NoelleFormsAura {
             Piece.of("gauntlet_l", Anchor.ARM_L, 5, 10, 8, -6).detail(),
             Piece.of("greave_r", Anchor.LEG_R, 6, -3, 14, -6),
             Piece.of("greave_l", Anchor.LEG_L, 7, 3, 14, -6),
-            Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).head(),
-            Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().unfold().glass(),
+            Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).silhouette().head(),
+            Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).silhouette().clip("idle", 1f).flap().unfold().glass(),
             Piece.of("halo", Anchor.HEAD, 10, 0, -16, 0).clip("idle", 1f).glass().detail().head(),
             Piece.of("wings2", Anchor.BODY, 9, 0, 4, 14).clip("idle", 1f).flap().unfold().glass().character(),
             Piece.of("aureole", Anchor.BODY, 12, 0, 0, 18).clip("idle", 1f).glass().detail().character(),
@@ -63,15 +63,15 @@ public final class NoelleFormsAura {
             Piece.of("lance", Anchor.BODY, 11, -14, 0, -4).clip("idle", 1f).glass().detail().character());
 
     private static final NoelleFormRig.Set MER = new NoelleFormRig.Set("nml",
-            Piece.of("bust", Anchor.BODY, 1, 0, 0, -14),
-            Piece.of("train", Anchor.BODY, 6, 0, 8, 12).clip("idle", 1f).glass(),
+            Piece.of("bust", Anchor.BODY, 1, 0, 0, -14).silhouette(),
+            Piece.of("train", Anchor.BODY, 6, 0, 8, 12).silhouette().clip("idle", 1f).glass(),
             Piece.of("veil", Anchor.BODY, 5, 0, 6, 8).clip("idle", 1f).glass().detail(),
-            Piece.of("leg_r", Anchor.LEG_R, 4, -3, 14, -6),
-            Piece.of("leg_l", Anchor.LEG_L, 4, 3, 14, -6),
+            Piece.of("leg_r", Anchor.LEG_R, 4, -3, 14, -6).silhouette(),
+            Piece.of("leg_l", Anchor.LEG_L, 4, 3, 14, -6).silhouette(),
             Piece.of("vambrace_r", Anchor.ARM_R, 3, -12, 2, -6).clip("idle", 1f).glass(),
             Piece.of("vambrace_l", Anchor.ARM_L, 3, 12, 2, -6).clip("idle", 1f).glass(),
             Piece.of("crown", Anchor.HEAD, 0, 0, -16, 0).glass().head(),
-            Piece.of("hair", Anchor.HEAD, 2, 0, -8, 6).clip("idle", 1f).glass().head(),
+            Piece.of("hair", Anchor.HEAD, 2, 0, -8, 6).silhouette().clip("idle", 1f).glass().head(),
             Piece.of("trident", Anchor.BODY, 8, -14, 0, -4).clip("idle", 1f).glass().detail(),
             Piece.of("dorsal", Anchor.BODY, 9, 0, 0, 14).clip("idle", 1f).glass().unfold().character(),
             Piece.of("scarf", Anchor.BODY, 7, 0, -4, 10).clip("idle", 1f).glass().detail().character(),
@@ -81,7 +81,7 @@ public final class NoelleFormsAura {
     /** The Sea Dragon God Form and the Black Dragon Form are one silhouette in two palettes (tools/noelle_dragon_kit.py): the same pieces under two model keys. */
     private static NoelleFormRig.Set dragonSet(String key) {
         return new NoelleFormRig.Set(key,
-                Piece.of("chest", Anchor.BODY, 1, 0, 0, -14),
+                Piece.of("chest", Anchor.BODY, 1, 0, 0, -14).silhouette(),
                 Piece.of("tassets", Anchor.BODY, 5, 0, 10, -6).clip("idle", 1f),
                 Piece.of("pauldron_r", Anchor.ARM_R, 2, -14, -4, 0),
                 Piece.of("pauldron_l", Anchor.ARM_L, 2, 14, -4, 0),
@@ -89,9 +89,9 @@ public final class NoelleFormsAura {
                 Piece.of("vambrace_l", Anchor.ARM_L, 4, 12, 2, -6),
                 Piece.of("greave_r", Anchor.LEG_R, 6, -3, 14, -6),
                 Piece.of("greave_l", Anchor.LEG_L, 7, 3, 14, -6),
-                Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).head(),
-                Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).clip("idle", 1f).flap().unfold().glass(),
-                Piece.of("tail", Anchor.BODY, 9, 0, 8, 14).clip("idle", 1f).glass(),
+                Piece.of("helm", Anchor.HEAD, 0, 0, -16, 0).silhouette().head(),
+                Piece.of("wings", Anchor.BODY, 8, 0, -4, 14).silhouette().clip("idle", 1f).flap().unfold().glass(),
+                Piece.of("tail", Anchor.BODY, 9, 0, 8, 14).silhouette().clip("idle", 1f).glass(),
                 Piece.of("cannon_r", Anchor.ARM_R, 11, -10, 6, -6).clip("idle", 1f),
                 Piece.of("ridge", Anchor.BODY, 10, 0, -6, 10).clip("idle", 1f).glass().detail().character(),
                 Piece.of("horns2", Anchor.HEAD, 10, 0, -14, 0).detail().head().character(),
@@ -143,20 +143,20 @@ public final class NoelleFormsAura {
 
     // ---------------------------------------------------------------------------------------------------------------- the per-frame budget of a crowd
     private static final int[] SEEN = new int[16];
-    private static int seenN, charDrawn, fullDrawn;
+    private static int seenN, charDrawn, fullDrawn, farDrawn;
 
     /**
      * A crowd costs a bounded number of full figures ({@link NoelleFormRules#budgeted}): the players are drawn in one pass per frame, so a player that comes round a second time starts a new
-     * frame and the counters restart. The first players drawn get the full figure, the rest fall back one level (then to the distant one). Render thread only; nothing allocated.
+     * frame and the counters restart. The first players drawn get the full figure, the rest fall back one level (to the distant silhouette, and past six of those to nothing). Render thread only; nothing allocated.
      */
     private static Lod frameBudget(int playerId, Lod wanted) {
         for (int i = 0; i < seenN; i++) {
-            if (SEEN[i] == playerId) { seenN = 0; charDrawn = 0; fullDrawn = 0; break; }
+            if (SEEN[i] == playerId) { seenN = 0; charDrawn = 0; fullDrawn = 0; farDrawn = 0; break; }
         }
-        if (seenN >= SEEN.length) { seenN = 0; charDrawn = 0; fullDrawn = 0; }
+        if (seenN >= SEEN.length) { seenN = 0; charDrawn = 0; fullDrawn = 0; farDrawn = 0; }
         SEEN[seenN++] = playerId;
-        Lod l = NoelleFormRules.budgeted(wanted, charDrawn, fullDrawn);
-        if (l == Lod.CHARACTER) { charDrawn++; fullDrawn++; } else if (l == Lod.STANDARD) fullDrawn++;
+        Lod l = NoelleFormRules.budgeted(wanted, charDrawn, fullDrawn, farDrawn);
+        if (l == Lod.CHARACTER) { charDrawn++; fullDrawn++; } else if (l == Lod.STANDARD) fullDrawn++; else if (l == Lod.FAR) farDrawn++;
         return l;
     }
 
@@ -170,6 +170,10 @@ public final class NoelleFormsAura {
         float age = c.age();
         if (r.sigil()) ground(c, k, f, forge, pulse, tierC);
         if (r.ribbons() > 0) {
+            if (r.ink()) {                                                                                  // the black form: a dark, wider ribbon of ink under every flame
+                VertexConsumer ink = c.buffers().getBuffer(AuraRender.translucent(RIBBON_INK));
+                for (int i = 0; i < r.ribbons(); i++) ribbonInk(pose, ink, f, i, r.ribbonSegs(), age, forge, tierC, SealDraw.lift(c.light(), 3));
+            }
             VertexConsumer vc = c.buffers().getBuffer(AuraRender.additive(RIBBON));
             for (int i = 0; i < r.ribbons(); i++) ribbon(pose, vc, k, f, i, r.ribbonSegs(), age, forge, tierC);
         }
@@ -254,6 +258,21 @@ public final class NoelleFormsAura {
                 float hw = (f == Form.SEA_DRAGON ? 0.15f : 0.125f) * (1f - 0.5f * s) * (tierC ? 1.15f : 1f);
                 float a = (float) Math.pow(Math.sin(Mth.PI * Math.min(1f, (s - 0.5f / segs) * 1.02f + 0.02f)), 0.6) * 0.9f * forge;
                 SealDraw.ribbon(pose, vc, px, py, pz, PT[0], PT[1], PT[2], hw, (i - 1) / (float) segs, s, SealDraw.argb(a, (idx & 1) == 0 ? k.glow : k.accent), FB);
+            }
+            px = PT[0]; py = PT[1]; pz = PT[2];
+        }
+    }
+
+    /** The dark under-ribbon of the black form: the same curve as {@link #ribbon}, a third wider, drawn translucent so it is ink and not light. */
+    private static void ribbonInk(PoseStack pose, VertexConsumer vc, Form f, int idx, int segs, float age, float forge, boolean tierC, int light) {
+        float px = 0f, py = 0f, pz = 0f;
+        for (int i = 0; i <= segs; i++) {
+            float s = i / (float) segs;
+            ribbonPoint(f, idx, s, age, tierC);
+            if (i > 0) {
+                float hw = 0.17f * (1f - 0.5f * s) * (tierC ? 1.15f : 1f);
+                float a = (float) Math.pow(Math.sin(Mth.PI * Math.min(1f, (s - 0.5f / segs) * 1.02f + 0.02f)), 0.6) * 0.85f * forge;
+                SealDraw.ribbon(pose, vc, px, py, pz, PT[0], PT[1], PT[2], hw, (i - 1) / (float) segs, s, SealDraw.argb(a, 0xFFFFFF), light);
             }
             px = PT[0]; py = PT[1]; pz = PT[2];
         }

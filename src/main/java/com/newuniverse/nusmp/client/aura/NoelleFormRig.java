@@ -28,7 +28,7 @@ public final class NoelleFormRig {
         public final String name;
         public final Anchor anchor;
         public final float delay, dx, dy, dz;
-        boolean glass, flap, detail, head, character, unfold;
+        boolean glass, flap, detail, head, character, unfold, silhouette;
         String clip;
         float speed = 1f, glowK = 1f, phase;
 
@@ -48,6 +48,8 @@ public final class NoelleFormRig {
         public Piece head() { this.head = true; return this; }
         /** Only the character tier (Noelle's grimoire) draws it, and only within 32 blocks. */
         public Piece character() { this.character = true; return this; }
+        /** Part of the silhouette: the only pieces a player between 24 and 64 blocks away still draws. */
+        public Piece silhouette() { this.silhouette = true; return this; }
         /** Wings: while the piece forges in it opens out from the spine (its width grows from 30 to 100 percent). */
         public Piece unfold() { this.unfold = true; return this; }
         public Piece glow(float k) { this.glowK = k; return this; }
@@ -118,7 +120,7 @@ public final class NoelleFormRig {
         int lit = SealDraw.lift(c.light(), 6);
         for (int i = 0; i < set.pieces.length; i++) {
             Piece p = set.pieces[i];
-            if ((p.detail && !near) || (p.character && !ch) || (p.head && self1p)) continue;
+            if ((!near && !p.silhouette) || (p.detail && !near) || (p.character && !ch) || (p.head && self1p)) continue;
             float a = EquipAnimation.assembled(c, p.delay);
             if (a == 0f) continue;
             ModelPart part = part(c.model(), p.anchor);
@@ -134,7 +136,7 @@ public final class NoelleFormRig {
             pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);               // the model is authored in whole-body coordinates: undo the part's rest position
             float seconds = c.age() / 20f * p.speed * (p.flap ? (air ? 2.3f : 1f) : 1f) + p.phase;
             int white = ((int) (Mth.clamp(alpha, 0f, 1f) * 255f + 0.5f) << 24) | (tintRgb & 0xFFFFFF);
-            int glow = ((int) (Mth.clamp(alpha * glowK * p.glowK, 0f, 1f) * 255f + 0.5f) << 24) | (glowRgb & 0xFFFFFF);
+            int glow = near ? ((int) (Mth.clamp(alpha * glowK * p.glowK, 0f, 1f) * 255f + 0.5f) << 24) | (glowRgb & 0xFFFFFF) : 0;          // the distant silhouette has no glow pass: half the vertices
             boolean translucent = p.glass || a < 1f;
             GeoDraw.paint(pose, c.buffers(), set.specs[i], p.clip, seconds, GeoDraw.Space.PLAYER, translucent ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT,
                     translucent ? lit : c.light(), white, glow);

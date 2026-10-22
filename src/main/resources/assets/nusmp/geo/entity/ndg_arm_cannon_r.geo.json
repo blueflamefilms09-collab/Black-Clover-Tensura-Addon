@@ -942,7 +942,12 @@
        }
       }
      ],
-     "parent": "root"
+     "parent": "root",
+     "rotation": [
+      52,
+      0,
+      0
+     ]
     },
     {
      "name": "jaw",
@@ -1289,7 +1294,12 @@
        }
       }
      ],
-     "parent": "head"
+     "parent": "head",
+     "rotation": [
+      14,
+      0,
+      0
+     ]
     }
    ]
   }

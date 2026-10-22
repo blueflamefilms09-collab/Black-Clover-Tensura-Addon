@@ -96,7 +96,7 @@ public final class NoelleFormRules {
     }
 
     /** The sprite and skin textures the painter draws (assets/nusmp/textures/aura/&lt;name&gt;.png; the shells also have a _glow map). */
-    public static final String[] SPRITES = {"noelle_ring", "noelle_ribbon", "noelle_feather", "noelle_ember", "noelle_eye", "noelle_bubble", "noelle_spark", "noelle_dot", "noelle_haze",
+    public static final String[] SPRITES = {"noelle_ring", "noelle_ribbon", "noelle_ribbon_ink", "noelle_feather", "noelle_ember", "noelle_eye", "noelle_bubble", "noelle_spark", "noelle_dot", "noelle_haze",
             "noelle_sigil_val", "noelle_sigil_mer", "noelle_sigil_drg", "noelle_sigil_blk", "noelle_val_shell", "noelle_mer_shell", "noelle_drg_shell", "noelle_blk_shell"};
 
     // ------------------------------------------------------------------ level of detail (client)
@@ -115,14 +115,18 @@ public final class NoelleFormRules {
         return characterTier ? Lod.CHARACTER : Lod.STANDARD;
     }
 
-    /** The most players per frame that may be drawn at the CHARACTER level, and at the STANDARD level or above (the nearest-first budget of the painter: the rest fall back one level). */
-    public static final int MAX_CHARACTER_PER_FRAME = 2, MAX_FULL_PER_FRAME = 6;
+    /**
+     * The most players per frame drawn at the CHARACTER level, at STANDARD or above (characters included), and at the distant FAR level; any further player falls back one level and, past
+     * {@link #MAX_FAR_PER_FRAME}, is not drawn at all. This is what keeps a crowd of form wearers from costing a frame each (docs/magic/noelle_forms.md: worst case per frame).
+     */
+    public static final int MAX_CHARACTER_PER_FRAME = 2, MAX_FULL_PER_FRAME = 4, MAX_FAR_PER_FRAME = 6;
 
-    /** The level a player gets when {@code charDrawn} / {@code fullDrawn} players were already drawn this frame at CHARACTER / at STANDARD or above: a crowd costs a bounded number of full figures. */
-    public static Lod budgeted(Lod wanted, int charDrawn, int fullDrawn) {
+    /** The level a player gets when {@code charDrawn} / {@code fullDrawn} / {@code farDrawn} players were already drawn this frame at CHARACTER / at STANDARD or above / at FAR. */
+    public static Lod budgeted(Lod wanted, int charDrawn, int fullDrawn, int farDrawn) {
         Lod l = wanted;
         if (l == Lod.CHARACTER && charDrawn >= MAX_CHARACTER_PER_FRAME) l = Lod.STANDARD;
         if (l == Lod.STANDARD && fullDrawn >= MAX_FULL_PER_FRAME) l = Lod.FAR;
+        if (l == Lod.FAR && farDrawn >= MAX_FAR_PER_FRAME) l = Lod.NONE;
         return l;
     }
 
@@ -135,27 +139,28 @@ public final class NoelleFormRules {
      * @param sigil    the ground sigil and ripples (three ripple quads + the sigil quad)
      * @param backSigil the big seal standing behind the back (two quads)
      * @param eyes     glowing eye quads (two) and the brow flare
+     * @param ink      a dark translucent under-ribbon beneath every ribbon (the black form's ink: the blue flame is the additive ribbon on top)
      * @param skin     the water / ink skin shell and the haze shell (two full body passes: ~1700 vertices each at the player model's 6 boxes... counted in the doc)
      */
-    public record Recipe(int ribbons, int ribbonSegs, int drops, int rings, int ringSegs, boolean sigil, boolean backSigil, boolean eyes, boolean skin) {}
+    public record Recipe(int ribbons, int ribbonSegs, int drops, int rings, int ringSegs, boolean sigil, boolean backSigil, boolean eyes, boolean skin, boolean ink) {}
 
-    private static final Recipe NONE = new Recipe(0, 0, 0, 0, 0, false, false, false, false);
+    private static final Recipe NONE = new Recipe(0, 0, 0, 0, 0, false, false, false, false, false);
 
     /** The dynamic budget of a form. Plain armour (style 0) is the old painter's own and is not part of this table. */
     public static Recipe recipe(Form f, Lod lod) {
         if (lod == Lod.NONE || f == Form.ARMOUR) return NONE;
         boolean c = lod == Lod.CHARACTER, near = lod != Lod.FAR;
         return switch (f) {
-            case VALKYRIE -> new Recipe(c ? 4 : near ? 2 : 0, 10, c ? 14 : near ? 8 : 0, c ? 3 : near ? 1 : 0, 24, near, c, false, near);
-            case MERMAID -> new Recipe(c ? 4 : near ? 2 : 0, 10, c ? 16 : near ? 8 : 0, c ? 2 : near ? 1 : 0, 24, near, c, false, near);
-            case SEA_DRAGON -> new Recipe(c ? 3 : near ? 2 : 0, 12, c ? 12 : near ? 6 : 0, c ? 3 : near ? 1 : 0, 24, near, c, near, near);
-            case BLACK_DRAGON -> new Recipe(c ? 5 : near ? 3 : 0, 12, c ? 16 : near ? 8 : 0, c ? 2 : near ? 1 : 0, 24, near, c, true, near);
+            case VALKYRIE -> new Recipe(c ? 4 : near ? 2 : 0, 10, c ? 14 : near ? 8 : 0, c ? 3 : near ? 1 : 0, 24, near, c, false, near, false);
+            case MERMAID -> new Recipe(c ? 4 : near ? 2 : 0, 10, c ? 16 : near ? 8 : 0, c ? 2 : near ? 1 : 0, 24, near, c, false, near, false);
+            case SEA_DRAGON -> new Recipe(c ? 3 : near ? 2 : 0, 12, c ? 12 : near ? 6 : 0, c ? 3 : near ? 1 : 0, 24, near, c, near, near, false);
+            case BLACK_DRAGON -> new Recipe(c ? 5 : near ? 3 : 0, 12, c ? 16 : near ? 8 : 0, c ? 2 : near ? 1 : 0, 24, near, c, true, near, near);
             default -> NONE;
         };
     }
 
     /** The sprite quads of a recipe (strips count one quad per segment, a ring one per segment, the sigil four, the back seal two, the eyes four). Excludes the skin shells and the geo pieces. */
-    public static int quads(Recipe r) { return r.ribbons() * r.ribbonSegs() + r.drops() + r.rings() * r.ringSegs() * 2 + (r.sigil() ? 16 : 0) + (r.backSigil() ? 2 : 0) + (r.eyes() ? 2 : 0); }
+    public static int quads(Recipe r) { return r.ribbons() * r.ribbonSegs() * (r.ink() ? 2 : 1) + r.drops() + r.rings() * r.ringSegs() * 2 + (r.sigil() ? 16 : 0) + (r.backSigil() ? 2 : 0) + (r.eyes() ? 2 : 0); }
 
     /** The most sprite quads one player's forms may draw in a frame (the tests hold every form at every level under it). */
     public static final int QUAD_CAP = 400;

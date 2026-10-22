@@ -174,23 +174,28 @@ def vambrace(side):
 
 
 def trident():
-    """The trident of ice-water at the right hand: a long crystal shaft, a three-pronged head with barbs, a wave-shaped guard and a spiral of water that turns round the shaft."""
+    """The trident of ice-water hovering upright at the right hand: a crystal shaft with a silver grip, a three-pronged head (the centre prong long, the side prongs curved and barbed), a wave-shaped
+    guard and a spiral of water that turns round the shaft."""
     p = P("trident", 3)
     a = Anim()
     a.clip("idle", length=3.0, loop=True)
-    cx, cz = -12.0, -5.5
-    p.bone("t", (cx, 20.0, cz), rotation=(-14, 0, 6))
-    p.box("t", (cx - 0.7, 3.0, cz - 0.7), (1.4, 28.0, 1.4), ICE)
-    p.box("t", (cx - 1.1, 3.0, cz - 1.1), (2.2, 3.0, 2.2), GOLDM)
-    p.box("t", (cx - 2.6, 30.0, cz - 0.6), (5.2, 1.2, 1.2), GOLDM)                                                                  # the guard under the head
-    for k, (dx, h) in enumerate(((-2.4, 6.0), (0.0, 9.0), (2.4, 6.0))):                                                              # the three prongs
-        p.box("t", (cx + dx - 0.6, 31.0, cz - 0.6), (1.2, h, 1.2), ICE)
-        p.box("t", (cx + dx - 1.0, 31.0 + h - 2.0, cz - 0.4), (2.0, 1.6, 0.8), CRYSTAL, rot=(0, 0, 45), pivot=(cx + dx, 31.0 + h, cz))
-    p.box("t", (cx - 2.4, 30.8, cz - 0.4), (4.8, 1.0, 0.8), CRYSTAL)
+    cx, cz = -12.5, -5.0
+    p.bone("t", (cx, 18.0, cz), rotation=(-8, 0, 6))
+    p.box("t", (cx - 1.0, 3.0, cz - 1.0), (2.0, 25.0, 2.0), ICE)
+    p.box("t", (cx - 1.5, 8.0, cz - 1.5), (3.0, 4.0, 3.0), GOLDM)
+    p.box("t", (cx - 1.7, 3.0, cz - 1.7), (3.4, 1.4, 3.4), GOLDM)
+    p.box("t", (cx - 4.4, 27.8, cz - 0.8), (8.8, 1.6, 1.6), GOLDM)                                                                  # the guard
+    for sx in (-1, 1):
+        p.box("t", (cx + sx * 3.2 - 0.9, 29.0, cz - 0.9), (1.8, 7.0, 1.8), ICE, rot=(0, 0, sx * -8), pivot=(cx + sx * 3.2, 29.0, cz))      # the side prongs, curving in
+        p.box("t", (cx + sx * 3.8 - 0.7, 35.4, cz - 0.7), (1.4, 3.0, 1.4), CRYSTAL, rot=(0, 0, sx * -16), pivot=(cx + sx * 3.4, 35.0, cz))
+        p.box("t", (cx + sx * 2.0 - 0.5, 31.0, cz - 0.5), (1.0, 2.6, 1.0), CRYSTAL, rot=(0, 0, sx * 40), pivot=(cx + sx * 2.4, 31.0, cz))   # a barb
+    p.box("t", (cx - 1.1, 29.0, cz - 1.1), (2.2, 12.0, 2.2), ICE)                                                                   # the centre prong
+    p.box("t", (cx - 0.8, 40.4, cz - 0.8), (1.6, 3.2, 1.6), CRYSTAL)
+    p.box("t", (cx - 1.8, 38.4, cz - 0.6), (3.6, 1.2, 1.2), CRYSTAL, rot=(0, 0, 45), pivot=(cx, 39.0, cz))
     p.bone("spiral", (cx, 18.0, cz), parent="t")
-    for k in range(7):
-        w = 4.0 - 0.28 * k
-        p.box("spiral", (cx - w / 2, 6.0 + k * 3.4, cz - w / 2), (w, 0.9, w), CLOTH, rot=(0, k * 40.0, 0), pivot=(cx, 7.0 + k * 3.4, cz))
+    for k in range(8):
+        w = 6.0 - 0.45 * k
+        p.box("spiral", (cx - w / 2, 4.0 + k * 3.0, cz - w / 2), (w, 1.1, w), CLOTH, rot=(0, k * 40.0, 0), pivot=(cx, 4.5 + k * 3.0, cz))
     spin_y(a, "idle", "spiral", 3.0, turns=2, steps=8)
     a.pos("idle", "t", {0.0: (0, 0, 0), 1.5: (0, 1.4, 0), 3.0: (0, 0, 0)})
     p.save(a)

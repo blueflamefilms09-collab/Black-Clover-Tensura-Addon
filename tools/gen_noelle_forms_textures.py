@@ -97,6 +97,19 @@ def ribbon():
     save("noelle_ribbon", lum * fade, alpha=np.clip(lum * 1.2, 0, 1) * fade * smooth(1 - np.abs(v - 0.5) * 2, 0, 0.2))
 
 
+def ribbon_ink():
+    """The dark under-ribbon of the Black Dragon Form (drawn translucent, not additive): ink black with a navy sheen, ragged soft edges, the same length profile as the light ribbon."""
+    w, h = 256, 32
+    u, v, x, y = grid(w, h)
+    rng = np.random.default_rng(10)
+    n = fbm(rng, w, h, 4, 4)
+    prof = np.exp(-((v - 0.5) / 0.30) ** 2)
+    streak = 0.5 + 0.5 * np.sin(u * TAU * 4 + (v - 0.5) * 5 + n * 5)
+    alpha = np.clip(prof * (0.70 + 0.30 * streak) * (0.8 + 0.4 * n), 0, 1) * smooth(u, 0.0, 0.10) * smooth(1 - u, 0.0, 0.05)
+    rgb = np.stack([0.02 + 0.03 * streak, 0.03 + 0.04 * streak, 0.07 + 0.08 * streak], axis=-1) * 1.0
+    save("noelle_ribbon_ink", alpha, alpha=alpha, rgb=rgb)
+
+
 # ---------------------------------------------------------------------------------------------------------------------- sigils
 def sigil_base(w):
     px, py, r, a = polar(w, w)
@@ -240,6 +253,7 @@ def shells():
 def main():
     ring()
     ribbon()
+    ribbon_ink()
     sigil_val()
     sigil_mer()
     sigil_drg()
