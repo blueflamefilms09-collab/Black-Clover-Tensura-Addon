@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.book;
 
 import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.compass3d.CompassKit;
+import com.newuniverse.nusmp.compass3d.CompassRules;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -37,6 +39,11 @@ import java.util.UUID;
  * </ul>
  * Pages: Useless North (offensive), Willful Compass (defensive), Another Atlas (supplementary), all three from the wiki, and
  * Compass Rose (appended signature).
+ * <p>
+ * 3D Compass Magic (docs/magic/compass_3d.md): the caster has ONE floating 3D compass ({@link CompassKit#ensure}); every spell comes out of it: the needles are 3D arrow-needles that leave the compass and ride
+ * the same bolts as before ({@link CompassKit#bolt}), the lock sigils are 3D seal discs that fly from it to the foe's feet, Another Atlas draws a 3D route to the charted foe, Willful Compass leaves a turn
+ * disc where it bends a shot back. The flat effects ({@code COMPASS_ARRAY / NEEDLE / LOCK}) are still sent; the client shows one set or the other ({@code visual.compass3d}). Damage, ranges, cooldowns
+ * and page order are unchanged.
  */
 public class CompassBook extends GrimoireBook {
     static final int GOLD = 0xFFFFC94A, GREEN = 0xFF4AD08A;
@@ -51,6 +58,14 @@ public class CompassBook extends GrimoireBook {
     public CompassBook() { super(MagicType.COMPASS, GOLD); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.SPACE_ELEMENTAL; }
+
+    /** 3D Compass Magic: while a Compass page is held (charging) the caster's compass floats beside them; it never changes what the compass is doing. */
+    @Override
+    public boolean onHeld(ManasSkillInstance instance, net.minecraft.world.entity.LivingEntity entity, int heldTicks, int mode) {
+        boolean r = super.onHeld(instance, entity, heldTicks, mode);
+        if (entity instanceof ServerPlayer p && heldTicks > 0) CompassKit.ensure(p, 40, -1, null);
+        return r;
+    }
 
     /** The foe the needles lock onto: the Another Atlas mark, else the strongest magicule signature in front of you. */
     static LivingEntity lock(ServerPlayer p, double range) {
@@ -67,12 +82,18 @@ public class CompassBook extends GrimoireBook {
     }
 
     /** One homing needle from 'from' to 't'. */
-    static void needle(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Vec3 from, LivingEntity t, float raw) {
+    static void needle(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Vec3 from, LivingEntity t, float raw) { needle(b, i, p, mode, from, t, raw, 0); }
+
+    /** The same needle, 3D: 'from' is the caster's compass (see {@link #out}); the bolt, its speed, radius, life and damage are exactly the old ones, the arrow-needle model rides it. */
+    static void needle(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Vec3 from, LivingEntity t, float raw, int index) {
         Vec3 dir = t.getBoundingBox().getCenter().subtract(from).normalize();
         b.vfx(p, VfxShape.COMPASS_NEEDLE, from, t.getBoundingBox().getCenter(), 14, 0.8f);
-        SpellRuntime.bolt(p, from, dir.scale(1.3 + 0.3 * EnergyBridge.scale(p)), 0.6, 30, false, t,
-                (bolt, v) -> b.hurt(i, p, v, mode, raw * EnergyBridge.scale(p)), null);
+        CompassKit.bolt(p, from, dir.scale(1.3 + 0.3 * EnergyBridge.scale(p)), 0.6, 30, false, t,
+                (bolt, v) -> b.hurt(i, p, v, mode, raw * EnergyBridge.scale(p)), null, index);
     }
+
+    /** Where the needles leave from: the caster's 3D compass (floats where {@link #behind} used to put the flat compasses, close enough that the old origin and this one are the same neighbourhood). */
+    static Vec3 out(ServerPlayer p) { return CompassKit.centre(p); }
 
     static Vec3 behind(ServerPlayer p, int k, int n) {
         Vec3 fwd = p.getViewVector(1f).multiply(1, 0, 1).normalize(), side = new Vec3(-fwd.z, 0, fwd.x);
@@ -87,9 +108,11 @@ public class CompassBook extends GrimoireBook {
         int n = 3 + MirrorWorks.tier(EnergyBridge.power(p));
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.COMPASS_ARRAY, p, t.getBoundingBox().getCenter(), GOLD, 40, n);
         b.vfx(p, VfxShape.COMPASS_LOCK, t.position().add(0, 0.05, 0), t.position(), 30, 1f);
+        CompassKit.ensure(p, CompassRules.LINGER, CompassRules.MODE_ATTACK, t);                     // the compass floats up beside the caster, its needle swings to the foe
+        CompassKit.seal(p, t, 40, 0);                                                                  // a 3D seal disc flies out of it and turns at the foe's feet
         for (int k = 0; k < n; k++) {
             int kk = k;
-            SpellRuntime.later(p.serverLevel(), 6 + k * 3, () -> { if (t.isAlive()) needle(b, i, p, mode, behind(p, kk, n), t, 5f); });
+            SpellRuntime.later(p.serverLevel(), 6 + k * 3, () -> { if (t.isAlive()) needle(b, i, p, mode, out(p), t, 5f, kk); });
         }
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.LODESTONE_COMPASS_LOCK, SoundSource.PLAYERS, 1.2f, 1f);
         return true;
@@ -100,6 +123,7 @@ public class CompassBook extends GrimoireBook {
         ServerLevel level = p.serverLevel();
         int n = 3 + MirrorWorks.tier(EnergyBridge.power(p));
         VfxSpawn.sendFollowing(level, VfxShape.COMPASS_ARRAY, p, p.position().add(p.getViewVector(1f).scale(5)), GOLD, 200, n);
+        CompassKit.ensure(p, 200 + CompassRules.FADE, CompassRules.MODE_GUARD, null);                // the one compass guards: a field ring round it, the needle follows the incoming shots
         SpellRuntime.zone(level, 200, 1, age -> {
             for (Projectile pr : level.getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(7),
                     x -> x.getOwner() != p && !x.getPersistentData().getBoolean(K_TURNED))) {
@@ -112,6 +136,7 @@ public class CompassBook extends GrimoireBook {
                 pr.hasImpulse = true;
                 pr.getPersistentData().putBoolean(K_TURNED, true);
                 b.vfx(p, VfxShape.COMPASS_LOCK, pr.position(), pr.position(), 12, 0.4f);
+                CompassKit.turnDisc(p, pr.position(), shooter);                                      // a 3D turn disc where the shot is bent back at its shooter
             }
         });
         level.playSound(null, p.blockPosition(), SoundEvents.LODESTONE_COMPASS_LOCK, SoundSource.PLAYERS, 1.2f, 0.7f);
@@ -129,9 +154,12 @@ public class CompassBook extends GrimoireBook {
         t.addEffect(new MobEffectInstance(MobEffects.GLOWING, 300, 0));
         VfxSpawn.sendFollowing(level, VfxShape.COMPASS_LOCK, t, t.position(), GOLD, 300, 1.2f);
         VfxSpawn.sendFollowing(level, VfxShape.COMPASS_ARRAY, p, t.getBoundingBox().getCenter(), GOLD, 300, 3);
+        CompassKit.ensure(p, 300 + CompassRules.FADE, CompassRules.MODE_CHART, t);                    // the compass keeps pointing at the charted foe for the whole 15 seconds
+        CompassKit.route(p, t, 300);                                                                    // a 3D route of marching dashes from the compass to the foe
+        CompassKit.seal(p, t, 300, 0);                                                                  // and a seal disc turning at the foe's feet
         SpellRuntime.zone(level, 300, 30, age -> {
             if (age == 0 || !t.isAlive() || !p.isAlive() || t.distanceToSqr(p) > 48 * 48) return;
-            needle(b, i, p, mode, behind(p, (int) (age / 30) % 3, 3), t, 3.5f);
+            needle(b, i, p, mode, out(p), t, 3.5f, (int) (age / 30) % 3);
         });
         p.displayClientMessage(Component.literal("Charted: " + t.getName().getString()).withStyle(ChatFormatting.GOLD), true);
         return true;
@@ -144,12 +172,14 @@ public class CompassBook extends GrimoireBook {
         b.castCircle(p, 1.6f);
         b.vfx(p, VfxShape.COMPASS_LOCK, p.position().add(0, 0.05, 0), p.position(), 30, 3f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.COMPASS_ARRAY, p, p.position().add(p.getViewVector(1f).scale(5)), GOLD, 50, 5);
+        CompassKit.ensure(p, 80 + CompassRules.FADE, CompassRules.MODE_ATTACK, null);                 // every needle swings at once: the one compass spins up
         int k = 0;
         for (LivingEntity t : foes.subList(0, Math.min(10, foes.size()))) {
             b.vfx(p, VfxShape.COMPASS_LOCK, t.position().add(0, 0.05, 0), t.position(), 30, 0.8f);
+            CompassKit.seal(p, t, 40, k);                                                              // a 3D seal disc to each foe
             for (int j = 0; j < 2; j++) {
                 int kk = k++;
-                SpellRuntime.later(p.serverLevel(), 8 + kk * 2, () -> { if (t.isAlive()) needle(b, i, p, mode, behind(p, kk % 5, 5), t, 6f); });
+                SpellRuntime.later(p.serverLevel(), 8 + kk * 2, () -> { if (t.isAlive()) needle(b, i, p, mode, out(p), t, 6f, kk); });
             }
         }
         return true;

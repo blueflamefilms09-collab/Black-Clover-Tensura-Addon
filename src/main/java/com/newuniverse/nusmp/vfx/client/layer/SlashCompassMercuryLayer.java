@@ -66,6 +66,9 @@ public class SlashCompassMercuryLayer extends AbstractVfxLayer {
 
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        // 3D Compass Magic (docs/magic/compass_3d.md): with visual.compass3d on (the default) the one 3D compass and its 3D props are the Compass look; the flat effects below are kept and drawn when it is off
+        if ((inst.shape == VfxShape.COMPASS_ARRAY || inst.shape == VfxShape.COMPASS_NEEDLE || inst.shape == VfxShape.COMPASS_LOCK)
+                && com.newuniverse.nusmp.compass3d.CompassVisualConfig.compass3d()) return;
         switch (inst.shape) {
             case SLASH_BLADES -> blades(inst, ctx, buf);
             case SLASH_WAVE -> wave(inst, ctx, buf);
