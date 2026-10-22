@@ -62,6 +62,15 @@ def main():
     both.paste(b, (0, a.height))
     both.save(os.path.join(OUT, "spirit_dark_poses.png"), optimize=True)
     print("wrote spirit_dark_poses.png", both.size)
+    # the two portraits and the levels of detail
+    for scene, name in (("sd_powered_game", "powered_demon.png"), ("sd_companion_game", "companion_wisp.png")):
+        src = os.path.join(rd, scene + ".png")
+        if os.path.exists(src):
+            Image.open(src).convert("RGB").save(os.path.join(OUT, name), optimize=True)
+            print("wrote", name)
+    sheet([("powered, full", os.path.join(rd, "sd_powered_battle.png")), ("powered, level 1", os.path.join(rd, "sd_powered_lod.png")), ("powered, level 2", os.path.join(rd, "sd_powered_lod2.png")),
+           ("companion, full", os.path.join(rd, "sd_companion_full.png")), ("companion, level 1", os.path.join(rd, "sd_companion_lod.png")), ("companion, level 2", os.path.join(rd, "sd_companion_lod2.png"))],
+          os.path.join(OUT, "lods.png"), 3, "Spirit of Darkness: the three levels of detail of each form (quads: see docs/magic/spirit_dark.md)")
 
 
 if __name__ == "__main__":

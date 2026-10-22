@@ -79,6 +79,7 @@ def powered_atlas():
     at.region("puff", 64, 64, lambda w, h: A.puff_glow(w, h, A.GLOW_V, 170.0, 41))
     at.region("tendril", 32, 64, lambda w, h: A.tendril_glow(w, h, A.GLOW_V, 210.0))
     at.region("ring", 96, 96, lambda w, h: ring_glow(w, h))
+    at.region("hemline", 48, 12, lambda w, h: A.hemline(w, h))
     at.region("eye_card", 32, 16, lambda w, h: A.eye_glow(w, h, A.GLOW_R, (255, 200, 220)))
     return at
 
@@ -331,6 +332,9 @@ def build_powered(lod, atlas, fx=False):
     # ---------------------------------------------------------------- glow-only extras: runes on the chest, wisps trailing the coat, the ground ring
     if fx:
         X("chest", (-5.2, 17.8, -3.3), (10.4, 6.4, 0.1), {"north": ("chest_front", 0)})
+        for s, t in ((1, "L"), (-1, "R")):                                                              # the glowing hem of the tailcoat, a hair proud of the panels' bottom edges
+            m.cube("coatF_" + t, (s * 2.6 - 2.8, 3.9, -3.7), (5.6, 0.9, 1.5), {"north": ("hemline", 0), "south": ("hemline", 0)}, rot=(-6, 0, s * 3), pivot=(s * 2.6, 14.8, -3.0), d=0)
+            m.cube("coatB_" + t, (s * 2.4 - 2.4, 2.5, 2.1), (4.8, 0.9, 1.4), {"north": ("hemline", 0), "south": ("hemline", 0)}, rot=(8, 0, s * 3), pivot=(s * 2.4, 14.8, 2.8), d=0)
         for s, t in ((1, "L"), (-1, "R")):
             for j in range(2):
                 XP("wisp_" + t, (s * (5.4 + 1.6 * j), 3.2 - 1.2 * j, 1.0 * j - 0.6), (1, 0, 0.4 * s), (0, 1, 0), 3.6, 7.0, {"north": ("tendril", 0), "south": ("tendril", 0)})

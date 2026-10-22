@@ -16,7 +16,7 @@ public final class SpiritDarkLod {
     /** Quads of the body models, full / half / low (counted from the generated files). */
     public static final int[] COMPANION_QUADS = {374, 286, 40}, POWERED_QUADS = {637, 347, 109};
     /** The glow-only models (runes, wing seams, smoke wisps, the ring), drawn additive on the full and half levels. */
-    public static final int COMPANION_FX_QUADS = 34, POWERED_FX_QUADS = 46;
+    public static final int COMPANION_FX_QUADS = 34, POWERED_FX_QUADS = 54;
     /** The face model (the head's plates with the sheet of the mood; drawn on every level) and its glow copy (the two nearer levels): the north faces the body models leave out. */
     public static final int COMPANION_FACE_QUADS = 1, POWERED_FACE_QUADS = 2;
     /** Distances (blocks, at the best effect quality) up to which each level is used; beyond the last the form is not drawn: the companion is culled at 64 blocks, the powered form at 112. */

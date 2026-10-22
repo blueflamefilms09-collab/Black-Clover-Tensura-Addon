@@ -360,6 +360,39 @@
    }
   ]
  },
+ "sd_companion_full": {
+  "kind": "prop",
+  "example": "SpiritDarkProp",
+  "realFiles": [
+   "client/prop/SpiritDarkDraw.java",
+   "spiritdark/SpiritDarkLod.java",
+   "spiritdark/SpiritDarkRules.java",
+   "spiritdark/DarkMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 0,
+  "figure": true,
+  "ages": [
+   30
+  ],
+  "tile": [
+   400,
+   400
+  ],
+  "views": [
+   {
+    "name": "full",
+    "yaw": 30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0.0
+    ],
+    "dist": 3.0
+   }
+  ]
+ },
  "sd_companion_lod": {
   "kind": "prop",
   "example": "SpiritDarkProp",

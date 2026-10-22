@@ -10,7 +10,7 @@ import math
 import numpy as np
 
 INK = np.array([11, 7, 19], dtype=np.float32)
-COAT = np.array([52, 36, 82], dtype=np.float32)
+COAT = np.array([62, 44, 98], dtype=np.float32)
 VIOLET_DK = np.array([72, 46, 118], dtype=np.float32)
 VIOLET = np.array([112, 74, 178], dtype=np.float32)
 RIM = np.array([184, 142, 255], dtype=np.float32)
@@ -56,7 +56,7 @@ def outline(c, w, h, px=2, rim_side="tl", rim=RIM, rim_k=0.55):
     x, y = grid(w, h)
     d = edge_dist(w, h)
     ink = d < px
-    rimmask = (d >= px) & (d < px + 1) & (((y < h / 2) | (x < w / 2)) if rim_side == "tl" else True)
+    rimmask = (d >= px) & (d < px + 2) & (((y < h / 2) | (x < w / 2)) if rim_side == "tl" else True)
     c[rimmask, :3] = c[rimmask, :3] * (1 - rim_k) + rim * rim_k
     c[ink, :3] = INK
     c[ink, 3] = 255.0
@@ -450,5 +450,17 @@ def eye_glow(w, h, rgb=GLOW_V, hot=(255, 220, 255), slit=True):
     col = col * (1 - hotc[..., None] * 0.7) + np.array(hot, np.float32) * hotc[..., None] * 0.7
     g[..., :3] = col
     g[..., 3] = a * 255.0
+    g[g[..., 3] < 1.0] = 0
+    return c, g
+
+
+def hemline(w, h):
+    """A thin glowing violet line (the hem of the tailcoat): brightest in the middle, soft at both ends, alpha 0 at the border."""
+    c, g = blank(w, h)
+    x, y = grid(w, h)
+    u, v = (x + 0.5) / w * 2 - 1, (y + 0.5) / h * 2 - 1
+    a = smooth(1 - np.abs(v)) ** 1.2 * smooth(1 - np.abs(u)) ** 0.6
+    g[..., :3] = GLOW_V
+    g[..., 3] = a * 210
     g[g[..., 3] < 1.0] = 0
     return c, g

@@ -55,6 +55,7 @@ def main():
     sc["sd_powered_lod"] = prop(code(1, 1, "battle", "angry"), [view("lod 1", 25, 12, PT, 8.0)], ages=(30,), tile=(420, 460))
     sc["sd_powered_lod2"] = prop(code(1, 2, "battle", "angry"), [view("lod 2", 25, 12, PT, 8.0)], ages=(30,), tile=(420, 460))
     sc["sd_companion_game"] = prop(code(0, 0, "idle", "smug"), [view("shoulder 3/4", 30, 8, [0, 1.7, 0.0], 3.2), view("beside", 90, 6, [0, 1.6, 0.0], 3.6), view("behind", 160, 10, [0, 1.7, 0.0], 3.4)], ages=(30,), tile=(520, 480))
+    sc["sd_companion_full"] = prop(code(0, 0, "idle", "smug"), [view("full", 30, 8, [0, 1.7, 0.0], 3.0)], ages=(30,), tile=(400, 400))
     sc["sd_companion_lod"] = prop(code(0, 1, "idle", "smug"), [view("lod 1", 30, 8, [0, 1.7, 0.0], 3.0)], ages=(30,), tile=(400, 400))
     sc["sd_companion_lod2"] = prop(code(0, 2, "idle", "smug"), [view("lod 2", 30, 8, [0, 1.7, 0.0], 3.0)], ages=(30,), tile=(400, 400))
     # the sheets: one scene per pose and per mood, one view each (tools/spirit_dark_sheets.py joins them)
