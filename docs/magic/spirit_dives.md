@@ -118,6 +118,9 @@ draw the character tier. The effects of far players are skipped. **Client partic
 character dive: at most 12 per tick (240 a second) before the client particle budget (`clientParticlesPerTick`, 400) and the quality and distance bands thin them; one burst of 8 / 28 particles on the
 tick after a dive begins.
 
+**Measuring:** the remake adds four sections to the performance probe (`/multiverse perf`): `c.spiritdive.paint` (the remade dive of one player), `c.fuegoleon.arm` (the arm of one player),
+`c.spiritdive.particles` (the trail, once a tick) and `s.spiritdive.arm` (the server check, only on a wearer's own turn); `SpiritDiveRemakeScanTest` keeps them in place.
+
 **Server, per player:** the tier costs one grimoire NBT read a second per DIVING player. Fuegoleon's arm costs, for every player, one `instanceof` and one modulo per tick, and once every 40 ticks one
 grimoire-slot read (every non-Fuegoleon player stops there; a Fuegoleon player also reads the spirit bond, the firecast state map and the aura table). No entity is spawned, no chunk is loaded, nothing is
 scanned. **Network:** the dive adds no packet (the grade rides inside the style number of the lease the dive already sent every second); the arm adds at most 0.5 packets a second per Fuegoleon plus one

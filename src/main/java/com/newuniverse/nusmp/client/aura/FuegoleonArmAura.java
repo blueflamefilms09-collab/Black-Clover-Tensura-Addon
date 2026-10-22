@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.client.prop.SealDraw;
+import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.util.Mth;
@@ -27,6 +28,7 @@ public final class FuegoleonArmAura {
 
     private static final GeoSpec SPEC = GeoSpec.of("spiritdive", "arm_flame_arm_r");
     private static final Quaternionf ROT = new Quaternionf();                                   // scratch: the render thread is the only user
+    private static final PerfProbe.Section SECTION = PerfProbe.section("c.fuegoleon.arm");           // timed (/multiverse perf)
 
     /** Called once by AuraRegistry on the client. */
     public static void register() {
@@ -35,6 +37,15 @@ public final class FuegoleonArmAura {
 
     private static void paint(AuraContext c) {
         if (!FuegoleonArmRules.valid(c.style()) || c.player().isInvisible()) return;
+        long t0 = PerfProbe.begin();
+        try {
+            paintArm(c);
+        } finally {
+            PerfProbe.end(SECTION, t0);
+        }
+    }
+
+    private static void paintArm(AuraContext c) {
         FuegoleonArmRules.View view = SpiritDiveLook.armView();
         if (view == FuegoleonArmRules.View.OFF) return;
         int id = c.player().getId();

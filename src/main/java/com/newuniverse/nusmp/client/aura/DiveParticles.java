@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.book.SpiritDivePieces.Element;
 import com.newuniverse.nusmp.book.SpiritDiveTier;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Grade;
 import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.perf.PerfProbe;
 import com.newuniverse.nusmp.particle.fx.FxSlot;
 import com.newuniverse.nusmp.particle.fx.FxTone;
 import com.newuniverse.nusmp.particle.fx.ThemeKey;
@@ -30,6 +31,7 @@ public final class DiveParticles {
     private DiveParticles() {}
 
     private static final ThemeKey[] STANDARD = {ThemeKey.of("spirit_dive.wind"), ThemeKey.of("spirit_dive.water"), ThemeKey.of("spirit_dive.fire"), ThemeKey.of("spirit_dive.earth")};
+    private static final PerfProbe.Section SECTION = PerfProbe.section("c.spiritdive.particles");   // timed (/multiverse perf)
     private static final ThemeKey YUNO = ThemeKey.of("spirit_dive.yuno"), FUEGOLEON = ThemeKey.of("spirit_dive.fuegoleon"), NOELLE = ThemeKey.of("spirit_dive.noelle");
 
     private static ThemeKey theme(Element el, Grade g) {
@@ -44,6 +46,15 @@ public final class DiveParticles {
     /** Game bus, client: once per tick. */
     public static void onClientTick(ClientTickEvent.Post e) {
         if (!SpiritDiveLook.particles()) return;
+        long t0 = PerfProbe.begin();
+        try {
+            trail();
+        } finally {
+            PerfProbe.end(SECTION, t0);
+        }
+    }
+
+    private static void trail() {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         if (level == null || mc.player == null || mc.isPaused()) return;

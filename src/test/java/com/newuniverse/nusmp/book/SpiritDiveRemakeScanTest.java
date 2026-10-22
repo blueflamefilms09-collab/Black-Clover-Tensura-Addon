@@ -163,6 +163,16 @@ class SpiritDiveRemakeScanTest {
     }
 
     @Test
+    void theBiggestHandlersOfTheRemakeAreWrappedInProbeSections() {
+        String[][] probes = {{"client/aura/SpiritDiveAura.java", "c.spiritdive.paint"}, {"client/aura/FuegoleonArmAura.java", "c.fuegoleon.arm"}, {"client/aura/DiveParticles.java", "c.spiritdive.particles"},
+                {"book/FuegoleonArm.java", "s.spiritdive.arm"}};
+        for (String[] p : probes) {
+            String src = read(JAVA.resolve(p[0]));
+            assertTrue(src.contains("PerfProbe.section(\"" + p[1] + "\")") && src.contains("PerfProbe.begin()") && src.contains("PerfProbe.end("), p[0] + " lost its probe section " + p[1]);
+        }
+    }
+
+    @Test
     void theDiveCountsEveryEffectFromTheBudgetAndFromNothingElse() {
         String fx = code(read(JAVA.resolve("client/aura/SpiritDiveFx.java")));
         for (String need : new String[]{"b.columns()", "b.pillars()", "b.motes()", "b.bits()", "b.strands()", "b.spirals()", "b.rings()", "b.flares()"})

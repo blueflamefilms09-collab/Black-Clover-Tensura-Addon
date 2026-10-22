@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.aura.PlayerAuras;
 import com.newuniverse.nusmp.firecast.FireCasting;
 import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.multiverse.SpiritLordSkill;
+import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -17,6 +18,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  */
 public final class FuegoleonArm {
     private FuegoleonArm() {}
+
+    private static final PerfProbe.Section SECTION = PerfProbe.section("s.spiritdive.arm");        // timed (/multiverse perf): only the wearer's own turn, once every 40 ticks
 
     /** The wearer's current reason for the arm (NONE when it is off). Reads the bound grimoire first, so every other player exits after one NBT read. */
     public static FuegoleonArmRules.Reason reasonFor(ServerPlayer p) {
@@ -47,7 +50,13 @@ public final class FuegoleonArm {
 
     /** Game bus: every player tick; only the wearer's own turn does any work. */
     public static void onPlayerTick(PlayerTickEvent.Post e) {
-        if (e.getEntity() instanceof ServerPlayer p && FuegoleonArmRules.due(p.tickCount, p.getId())) update(p);
+        if (!(e.getEntity() instanceof ServerPlayer p) || !FuegoleonArmRules.due(p.tickCount, p.getId())) return;
+        long t0 = PerfProbe.begin();
+        try {
+            update(p);
+        } finally {
+            PerfProbe.end(SECTION, t0);
+        }
     }
 
     /** Game bus: the arm goes with its wearer. */

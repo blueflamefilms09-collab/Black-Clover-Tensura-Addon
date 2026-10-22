@@ -15,6 +15,7 @@ import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
+import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -77,6 +78,7 @@ public final class SpiritDiveAura {
             SHELL2 = {SHELL[0], SHELL[1], AuraRender.tex("aura/spirit2_fire_shell"), SHELL[3]},
             SHELL2_GLOW = {SHELL_GLOW[0], SHELL_GLOW[1], AuraRender.tex("aura/spirit2_fire_shell_glow"), SHELL_GLOW[3]};
     private static final Quaternionf ROT = new Quaternionf();                                       // scratch: the render thread is the only user
+    private static final PerfProbe.Section SECTION = PerfProbe.section("c.spiritdive.paint");        // the remade look, timed (/multiverse perf)
 
     private static final ModelPart[] PARTS = new ModelPart[12];
     private static final boolean[] WAS = new boolean[12];
@@ -139,6 +141,15 @@ public final class SpiritDiveAura {
     private static void remade(AuraContext c, Element el, Stage st, Grade grade, float pulse) {
         Lod lod = SpiritDiveTier.lod(dist2(c));
         if (lod == Lod.CULLED) return;
+        long t0 = PerfProbe.begin();
+        try {
+            remadeLod(c, el, st, grade, pulse, lod);
+        } finally {
+            PerfProbe.end(SECTION, t0);
+        }
+    }
+
+    private static void remadeLod(AuraContext c, Element el, Stage st, Grade grade, float pulse, Lod lod) {
         boolean self1p = firstPersonSelf(c);
         boolean character = SpiritDiveTier.character(el, grade) && SpiritDiveLook.characterEffects() && lod != Lod.FAR && SpiritDiveFrame.admitCharacter();
         Grade use = character ? SpiritDiveTier.effective(el, grade) : Grade.STANDARD;
