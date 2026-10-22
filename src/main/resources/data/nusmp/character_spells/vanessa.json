@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "canon": "vanessa",
+  "magic": "THREAD",
+  "book": "book_thread",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) Vanessa Enoteca page, read through search summaries only (the wiki host is not reachable from the build machine): Thread Magic to mend and alter clothes; Trap Magic; Compound Magic; Arachne's Web; the Red Thread of Fate whose cat is Rouge.",
+    "ja_search": "Japanese pages found by search (the official 魔法騎士名鑑 post on X for Rouge, pixiv encyclopedia, manga-tantei, manga-legend, anitubu episode 64 review): バネッサ, 糸魔法「運命の赤い糸」, the cat ルージュ, awakened in episode 64.",
+    "repo": "A page that already existed in the mod's Thread book (names carried over from the earlier wiki pass of the 0.34 and 1.43 releases); no source for it could be re-read this round.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "red_thread", "name": "Thread Magic: Red Thread", "ja": "糸魔法", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "Her basic thread: binds, whips and pulls. Mode 0 of the Thread book, so it stays in the basic book too." },
+    { "page": "thread_mending", "name": "Thread Magic: Mending", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "The wiki's first listed use: she mends and alters clothing for her squadmates." },
+    { "page": "arachnes_web", "name": "Arachne's Web", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.12 }, "note": "Named on her wiki page; a web of threads that holds a crowd. The episode of its first use was not confirmed." },
+    { "page": "thread_trap", "name": "Thread Trap Generation (Trap Magic)", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.22 }, "note": "The wiki lists Trap Magic for her; the page was already locked to her grimoire." },
+    { "page": "arresting_dark_weave", "name": "Arresting Dark Weave", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "mastery", "min": 0.3 }, "note": "Already her exclusive page; not re-confirmed this round." },
+    { "page": "dancing_doll", "name": "Dancing Doll", "ja": "", "origin": "anime", "exclusive": false, "source": "repo",
+      "acquire": { "type": "mastery", "min": 0.38 }, "note": "Threads move a body like a puppet; not re-confirmed this round." },
+    { "page": "rouge", "name": "Red Thread of Fate: Rouge", "ja": "運命の赤い糸 ルージュ", "origin": "anime", "exclusive": true, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "red_thread", "count": 5 }, { "type": "mastery", "min": 0.5 } ] },
+      "note": "Her signature: the cat Rouge. Awakened in episode 64 after she had fought with the plain thread for a long time, so it needs the Red Thread cast five times first. While the cat is out it bends fate for the Black Bulls." },
+    { "page": "dancing_doll_recall", "name": "Dancing Doll: Recall", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "dancing_doll", "count": 3 }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "A follow-up of the Dancing Doll, so it needs the doll cast first." },
+    { "page": "reinforcement", "name": "Reinforcement Magic and Mana Skin", "ja": "", "origin": "anime", "exclusive": true, "source": "repo",
+      "acquire": { "type": "mastery", "min": 0.75 }, "note": "The Mana Method the Black Bulls learned late in the story; already locked to her." }
+  ],
+  "planned": [
+    { "name": "Door of Fate (Compound Magic with Finral)", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Listed on her wiki page as a compound spell; the page lives in the Spatial book and is in Finral's set." },
+    { "name": "Thread Whip / Thread Binding Magic / Thread Cocoon", "ja": "", "origin": "manga", "source": "design", "note": "Names from the mobile game databases only (not the series): no page." }
+  ],
+  "notes": "No new page was needed: every canon spell she used already had a page in the Thread book. The Black Bulls flair (a thread web ring, a burst of strings, the Rouge fate tap aura) is added on top of her casts by book.CharacterFlairBulls."
+}

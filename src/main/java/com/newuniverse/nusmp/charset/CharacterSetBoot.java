@@ -17,5 +17,6 @@ public final class CharacterSetBoot {
         done = true;
         container.registerConfig(ModConfig.Type.SERVER, CharacterSetConfig.SPEC, "nusmp-character-spells-server.toml");
         CharacterSetSelfTests.register();
+        CharacterSetBullsSelfTests.register();      // the Black Bulls' sets (docs/magic/character_spells_bulls.md)
     }
 }

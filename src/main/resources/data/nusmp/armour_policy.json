@@ -51,7 +51,7 @@
     "senses": true,
     "absorb": 0.012
    },
-   "new_pages": ["leo_parma", "salamanders_breath"],
+   "new_pages": ["leo_parma", "salamanders_breath", "exploding_buckshot", "grand_slam", "soul_chain_deathmatch"],
    "canon": "Spirit Dive with the fire spirit Salamander: Fuegoleon's arms cloaked in fire mana with draconic scales, claws and fiery wings (Fana hosts it too); Fuegoleon's Flame Armour is the everyday armour. FORM: Spirit Dive (mana upkeep, ambient intake); explicit page: Flame Armour."
   },
   "EXPLOSION": {
@@ -204,6 +204,7 @@
     "ward": "lightning",
     "upkeep": 0.005
    },
+   "new_pages": ["thunderclap_crumbling_orb", "thunder_gods_gloves", "keraunos"],
    "canon": "Luck Voltia's lightning armour (Thunder Fiend, Black Lightning Battle Fiend, Raging Lightning: the white-and-gold armour with bolts of docs/mode_armor_spec.md). The three Fiend pages are the explicit armour pages."
   },
   "SWORD": {
@@ -237,10 +238,12 @@
     "unite_equus",
     "unite_felis"
    ],
+   "new_pages": ["dark_hunting_ground", "atonement_monument"],
    "canon": "Nacht Faust's Devil Unite modes with his devils (Slotos, Gimodelo, Plumede, Walgner): a body-wide transformation with its own armour overlay. The Unite pages (shadow.UniteState, blackclover.ModeArmor) are the explicit form pages and are left as they are."
   },
   "POISON": {
    "kind": "NONE",
+   "new_pages": ["verbotenes_obst", "poison_clouds_abode"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "SPATIAL": {
@@ -249,6 +252,7 @@
     "SPATIAL"
    ],
    "shimmer": "SPATIAL_FX2",
+   "new_pages": ["fallen_angel_wingbeat"],
    "canon": "Spatial Magic opens gates and cuts space; nothing is worn. Dimensional Armour (Gate Garb) keeps its blow-turning effect but is no render layer."
   },
   "MIRROR": {
@@ -257,6 +261,7 @@
     "MIRROR"
    ],
    "shimmer": "MIRROR_FX2",
+   "new_pages": ["double_reflect_refrain", "mirrors_brigade"],
    "canon": "Mirror Magic makes doubles and reflections; nothing is worn. Glass Garb keeps its reflecting effect but is no render layer."
   },
   "GRAVITY": {
@@ -277,6 +282,7 @@
     "SEALING"
    ],
    "shimmer": "SEALING_FX2",
+   "new_pages": ["inverse_release"],
    "canon": "Seal Magic binds and seals; the ally seal shows as an orbiting seal effect, not as armour."
   },
   "REINFORCEMENT": {
@@ -352,6 +358,7 @@
     "TRANSMUTATION"
    ],
    "shimmer": "TRANSMUTATION_FX2",
+   "new_pages": ["transformation_guise"],
    "canon": "Transmutation Magic changes the material of things (Grey); nothing is worn. Alchemic Plate keeps its damage cut but is no render layer."
   },
   "ASH": {
@@ -360,10 +367,12 @@
     "ASH"
    ],
    "shimmer": "ASH_FX2",
+   "new_pages": ["ash_snare_trap", "counter_trap_magic"],
    "canon": "Ash Magic makes clouds, soldiers and traps of ash (Zora); nothing is worn. Ash Shroud keeps its guard effect but is no render layer."
   },
   "COTTON": {
    "kind": "NONE",
+   "new_pages": ["fluffy_sheep_cushion"],
    "canon": "Cotton Magic makes clouds and sheep (Charmy); nothing is worn."
   },
   "RECOMBINATION": {
@@ -372,6 +381,7 @@
     "RECOMBINATION"
    ],
    "shimmer": "RECOMBINATION_FX2",
+   "new_pages": ["mana_rocket_punch", "mini_bull"],
    "canon": "Recombination Magic reshapes houses and matter; nothing is worn. House Armour keeps its damage cut but is no render layer."
   },
   "PAINTING": {

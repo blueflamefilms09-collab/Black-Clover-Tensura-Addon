@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "canon": "henry",
+  "magic": "RECOMBINATION",
+  "book": "book_recombination",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Henry Legolant and Recombination Magic, read through search summaries only (host unreachable): the magic reshapes the magic house (rearranging rooms, humanoid and beast shapes); spells listed for him: Raging Black Bull, Mana Corkscrew, Mana Rocket Punch, The Mini Bull, Ultra Giant Bull.",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, manga-legend, namu): 組換魔法, 黒の暴牛号 in a two-legged battle form and a four-legged travel form, マナ・コークスクリュー, マナロケットパンチ, the hideout can be repaired and rebuilt by the same magic.",
+    "repo_wiki": "The fandom spell page Ultra Giant Bull (Compound Magic) cached in the repo (.github/wiki/spell_ultra_giant_bull.txt).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "mana_corkscrew", "name": "Recombination Magic: Mana Corkscrew", "ja": "マナ・コークスクリュー", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "The hideout's fist turns as it punches. Mode 0 of the Recombination book, so it stays in the basic book too." },
+    { "page": "raging_black_bull", "name": "Recombination Magic: Raging Black Bull", "ja": "黒の暴牛号", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "mana_corkscrew", "count": 3 }, { "type": "mastery", "min": 0.2 } ] },
+      "note": "The hideout becomes a giant bull. Already locked to his grimoire." },
+    { "page": "mana_rocket_punch", "name": "Recombination Magic: Mana Rocket Punch", "ja": "マナロケットパンチ", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "raging_black_bull" }, { "type": "mastery", "min": 0.3 } ] },
+      "note": "NEW page: the bull's fist flies on mana." },
+    { "page": "mini_bull", "name": "Recombination Magic: The Mini Bull", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "raging_black_bull" }, { "type": "mastery", "min": 0.4 } ] },
+      "note": "NEW page: a small bull that charges. Only the name is known, so the effect is modest." },
+    { "page": "room_rebuild", "name": "Recombination Magic: Room Rebuild", "ja": "", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.5 }, "note": "The hideout is repaired and rebuilt by the same magic after a battle." },
+    { "page": "room_swap", "name": "Recombination Magic: Room Swap", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.6 }, "note": "Rearranging the rooms of the house." },
+    { "page": "ultra_giant_bull", "name": "Compound Magic: Ultra Giant Bull", "ja": "", "origin": "anime", "exclusive": true, "source": "repo_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "raging_black_bull", "count": 3 }, { "type": "mastery", "min": 0.85 } ] },
+      "note": "The compound spell of four Black Bulls (Mirror multiplies the Transmutation user, who turns a structure into the house's material, Recombination builds the bull with a cockpit, Poison absorbs the enemy's magic through it)." }
+  ],
+  "planned": [],
+  "notes": "Not in Henry's grimoire (kept in the basic Recombination book, no source found): Bulwark, House Armour, Plank Snare."
+}

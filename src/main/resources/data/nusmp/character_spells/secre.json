@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "canon": "secre",
+  "magic": "SEALING",
+  "book": "book_sealing",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Inverse Release, Closed Sorrow and Eternal Prison, read through search summaries only (host unreachable): Inverse Release unseals (forces a closed gateway, a sealed soul or magical bindings open), Closed Sorrow is a sealing-based healing spell that closes wounds, Eternal Prison is a forbidden sealing spell (a clear cube around the target).",
+    "ja_search": "Japanese pages found by search (manga-legend, manga-comic-netabare, the official site): 封緘魔法 (open and close), she freed the elf Licht from his seal, a forbidden art used against a devil.",
+    "owner": "The owner's own specification of Secre's four exclusive spells (docs/owner_specs/sealing_secre_spec.md): Branching Array (Mana Method), Eternal Prison, Wound Sealing, Orbital Bind.",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "seal", "name": "Seal Magic: Seal", "ja": "封緘魔法", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "start" }, "note": "Mode 0 of the Sealing book, so it stays in the basic book too." },
+    { "page": "wound_sealing", "name": "Seal Magic: Closed Sorrow (Wound Sealing)", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.1 }, "note": "The wiki's name is Closed Sorrow; the mod's page is called Wound Sealing (the owner's name). It closes wounds instead of healing them. Already locked to her grimoire." },
+    { "page": "inverse_release", "name": "Seal Magic: Inverse Release", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "wound_sealing", "count": 2 }, { "type": "mastery", "min": 0.25 } ] },
+      "note": "NEW page: the unsealing spell she used to give Licht back his power. Frees allies of binds and a sealed grimoire." },
+    { "page": "branching_array", "name": "Seal Magic: Branching Array (Mana Method)", "ja": "", "origin": "anime", "exclusive": true, "source": "owner",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "inverse_release" }, { "type": "mastery", "min": 0.4 } ] },
+      "note": "The owner's spell: a web of sealing lines that locks or unlocks an area. Already locked to her grimoire." },
+    { "page": "orbital_bind", "name": "Seal Magic: Orbital Bind", "ja": "", "origin": "anime", "exclusive": true, "source": "owner",
+      "acquire": { "type": "mastery", "min": 0.5 }, "note": "The owner's spell: rings that orbit an ally as a lingering ward. Already locked to her grimoire." },
+    { "page": "eternal_prison", "name": "Seal Magic: Eternal Prison", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "inverse_release", "count": 2 }, { "type": "mastery", "min": 0.8 } ] },
+      "note": "A forbidden spell that could hold a target for centuries. Already locked to her grimoire." }
+  ],
+  "planned": [
+    { "name": "Forbidden Art against the devil (the black horns)", "ja": "", "origin": "anime", "source": "ja_search", "note": "The act that turned her into the bird Nero for 500 years; no spell name." }
+  ],
+  "notes": "Not in Secre's grimoire (kept in the basic Sealing book): Grand Seal, Sealing Chains, Trinity Seal Magic (a compound spell of other mages), Seal Barrier and the Sigil Combo (the basic seal's random combo)."
+}

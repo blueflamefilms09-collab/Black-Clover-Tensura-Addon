@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "canon": "gauche",
+  "magic": "MIRROR",
+  "book": "book_mirror",
+  "sources": {
+    "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages Reflect Ray, Double Reflect Refrain, Large Reflect Refrain, Full Reflection and Mirrors Brigade, plus the Grimshot wiki Mirror Magic list (Reflect Ray, Reflect Refrain, Big Reflect Ray, Full Reflection, Real Double), read through search summaries only (hosts unreachable).",
+    "ja_search": "Japanese pages found by search (pixiv encyclopedia, 必殺技辞典, manga-legend, battle-one): リアル・ダブル, リフレクト・レイ, ラージ・リフレクト・レイ, リフレクト・リフレイン, ダブル・リフレクト・リフレイン, フル・リフレクション, ミラーズブリゲイド.",
+    "repo_wiki": "The fandom spell page Reflect Iris (Union Magic of Mirror and Eye) cached in the repo (.github/wiki/spell_reflect_iris.txt); Mirrors Meteorite is listed on the wiki as a compound Mirror Magic spell (no description found).",
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+  },
+  "spells": [
+    { "page": "reflect_refrain", "name": "Mirror Magic: Reflect Refrain", "ja": "リフレクト・リフレイン", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "Light bounced between several mirrors. Mode 0 of the Mirror book, so it stays in the basic book too." },
+    { "page": "reflect_ray", "name": "Mirror Magic: Reflect Ray", "ja": "リフレクト・レイ", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "start" }, "note": "A mirror in the hand and a beam out of it; strong enough to break a wall." },
+    { "page": "real_double", "name": "Mirror Magic: Real Double", "ja": "リアル・ダブル", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "reflect_ray", "count": 3 }, { "type": "mastery", "min": 0.15 } ] },
+      "note": "A copy of himself out of the mirror world that casts with him." },
+    { "page": "large_reflect_ray", "name": "Mirror Magic: Large Reflect Ray", "ja": "ラージ・リフレクト・レイ", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "mastery", "min": 0.25 }, "note": "The Reflect Ray out of a big mirror: a wide beam that pushes foes back." },
+    { "page": "double_reflect_refrain", "name": "Mirror Magic: Double Reflect Refrain", "ja": "ダブル・リフレクト・リフレイン", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "real_double", "count": 2 }, { "type": "mastery", "min": 0.35 } ] },
+      "note": "NEW page. The wiki says it needs Real Double used first and makes twice as many mirrors as the Reflect Refrain; the light destroys what lies between the mirrors." },
+    { "page": "full_reflection", "name": "Mirror Magic: Full Reflection", "ja": "フル・リフレクション", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.5 }, "note": "A defensive mirror that sends a spell back (Licht's Light of Divine Punishment was thrown back with it)." },
+    { "page": "mirrors_brigade", "name": "Mirror Magic: Mirrors Brigade", "ja": "ミラーズブリゲイド", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "full_reflection" }, { "type": "mastery", "min": 0.6 } ] },
+      "note": "NEW page: large square mirrors that reflect spells; a wall of them round the caster for a while." },
+    { "page": "reflect_iris", "name": "Union Magic: Reflect Iris", "ja": "", "origin": "anime", "exclusive": false, "source": "repo_wiki",
+      "acquire": { "type": "mastery", "min": 0.72 }, "note": "A union spell: an array of mirrors that paralyses whoever looks into it; the Mirror caster sets the array." },
+    { "page": "mirrors_meteorite", "name": "Compound Magic: Mirrors Meteorite", "ja": "", "origin": "anime", "exclusive": true, "source": "repo_wiki",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "mirrors_brigade" }, { "type": "mastery", "min": 0.85 } ] },
+      "note": "Listed as a compound Mirror spell; no description found, the existing page is a meteor shower of mirrors." }
+  ],
+  "planned": [
+    { "name": "Mirror Magic: communication and mirror travel", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Used for two-way talk and moving between mirrors; no spell names found." }
+  ],
+  "notes": "Not in Gauche's grimoire (kept in the basic Mirror book, no source found): Mirror Array, Mirror Step, Mirrors Slash, Glass Garb."
+}
