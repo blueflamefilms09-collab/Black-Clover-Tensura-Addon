@@ -445,8 +445,10 @@ public class MagicWeaponItem extends SwordItem {
         double max = EnergyHelper.getMaxMagicule(target), current = existence.getMagicule();
         if (max <= 0 || current <= 0) return;
         double absorbed = Math.min(current, Math.max(1, max * 0.015));
-        existence.setMagicule(current - absorbed);
-        existence.markDirty();
+        if (com.newuniverse.nusmp.NUConfig.WEAPON_DRAINS_TARGET.get()) {                  // 1.113.0: off by default, the weapon only charges and takes nothing from the target
+            existence.setMagicule(current - absorbed);
+            existence.markDirty();
+        }
         CustomData.update(DataComponents.CUSTOM_DATA, stack, t -> t.putInt("DwellerCharge", Math.min(5, t.getInt("DwellerCharge") + 1)));
         AntiMagic.addAmp(wielder, Math.max(1, (int) (absorbed / Math.max(1, max) * 100)));
     }
@@ -459,8 +461,10 @@ public class MagicWeaponItem extends SwordItem {
         double max = EnergyHelper.getMaxMagicule(target), current = existence.getMagicule();
         if (max <= 0 || current <= 0) return;
         double absorbed = Math.min(current, Math.max(1, max * 0.02));
-        existence.setMagicule(current - absorbed);
-        existence.markDirty();
+        if (com.newuniverse.nusmp.NUConfig.WEAPON_DRAINS_TARGET.get()) {                  // 1.113.0: off by default, Elsdocia only charges and takes nothing from the target
+            existence.setMagicule(current - absorbed);
+            existence.markDirty();
+        }
         int gained = Math.max(1, (int) Math.ceil(absorbed / max * 1000));
         CustomData.update(DataComponents.CUSTOM_DATA, stack,
                 tag -> tag.putInt("ElsdociaCharge", Math.min(1000, tag.getInt("ElsdociaCharge") + gained)));

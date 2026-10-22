@@ -65,6 +65,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
+    public static final ModConfigSpec.BooleanValue WEAPON_DRAINS_TARGET;     // 1.113.0: Elsdocia and the Demon Dweller take magicules from whoever they hit (the old behaviour); default false = they only charge
     public static final ModConfigSpec.BooleanValue LIGHT_BONE_JA;           // 1.99.0: Light and Bone Magic after the Black Clover wiki (book.LightBoneJa); false = the old pages
     public static final ModConfigSpec.BooleanValue BOSS_GLOBAL_BUFFS;                    // 1.25.0: Mod Boss Global Buff Engine
     public static final ModConfigSpec.DoubleValue BOSS_BUFF_MULTIPLIER;
@@ -165,6 +166,7 @@ public final class NUConfig {
         b.pop();
 
         b.push("magic");
+        WEAPON_DRAINS_TARGET = b.comment("Elsdocia and the Demon Dweller used to take a share of the TARGET's magicules on every hit (2 percent and 1.5 percent of its maximum). false (default) = they still charge from hits (the charge their techniques use) but take nothing from the target, player or mob. true = the old drain.").define("weaponsDrainTargetMagicule", false);
         LIGHT_BONE_JA = b.comment("Light Magic and Bone Magic follow the Black Clover wiki spell lists (the remake): Light gets the Bright Judgment Whip, Heaven-Splitting Flash, Arrows of Judgment, Lamp of Avior and the Absolute Monarch of Divine Brilliance, Bone gets Bone Bullets, Eternal Fangs, Demon Sword Dainsleif and Spatial Rupture.",
                 "false = the old pages of both books (every old page id stays either way).").define("lightBoneJa", true);
         b.pop();
