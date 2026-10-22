@@ -238,8 +238,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && upTier < com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_FAR) {      // 1.102.0: no additive pass beyond 24 blocks for an upgraded weapon
             float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f) * GodMeleeBRender.flicker(upTier, state.meshId(), time) * WeaponUpgrade.flicker(mesh, time);
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
+            if (ExSingularityFx.applies(id)) rgb = ExSingularityFx.glowRgb(time);          // EX-Singularity (Shishou): the glow walks through every hue (client/ExSingularityFx)
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
-            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(mesh.glowTex)), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ExSingularityFx.glowTex(id, mesh))), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
             if (state.intensify()) {                                               // 1.25.0: a Genesis glow adds a translucent emissive pass on top
                 int a = VariantRules.emissiveAlpha(time);
                 emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
@@ -254,6 +255,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
             emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
+        if (ExSingularityFx.applies(id) && mesh.glowTex != null) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards
         if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
         if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         pose.popPose();

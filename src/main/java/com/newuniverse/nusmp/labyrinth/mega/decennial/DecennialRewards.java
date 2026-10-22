@@ -35,7 +35,7 @@ final class DecennialRewards {
     static List<DecennialLoot.Candidate> catalog() {
         List<DecennialLoot.Candidate> out = new ArrayList<>();
         for (RelicDef d : Relics.all()) {
-            if (d.isPairHalf()) continue;
+            if (d.isPairHalf() || !d.grade().rollable()) continue;                       // EX-Singularity items are never paid by a roll
             String kind = DecennialLoot.kindOfSlot(d.slot().name());
             if (kind.isEmpty()) continue;
             out.add(new DecennialLoot.Candidate(d.id(), d.cardName(), kind, kind.equals(DecennialLoot.WEAPON) ? GradeDamageItems.weaponTypeOf(d) : "", d.grade().ordinal()));

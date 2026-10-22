@@ -64,6 +64,7 @@ public final class DecennialReward {
     public static List<RelicDef> candidates() {
         List<RelicDef> out = new ArrayList<>();
         for (RelicDef d : Relics.all()) {
+            if (!d.grade().rollable()) continue;                                         // EX-Singularity items are never handed out by a roll
             if (VesselRules.eligible(d.isUnique(), d.isVessel(), d.grade().djinnCapable(), d.isPairHalf())) out.add(d);
         }
         return out;

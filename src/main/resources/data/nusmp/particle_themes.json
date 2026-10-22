@@ -1938,6 +1938,23 @@
     ]
    }
   },
+  "relic.grade.AKASHIC": {
+   "particles": [
+    "star4",
+    "glint",
+    "gem_sparkle",
+    "dream_star"
+   ],
+   "color": "#FFFFFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
   "relic.element.fire": {
    "particles": [
     "ember",

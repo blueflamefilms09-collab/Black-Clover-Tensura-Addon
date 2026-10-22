@@ -30,9 +30,10 @@ class GradeTest {
     @Test
     void theOrderIsTheTensuraOrder() {
         Grade[] g = Grade.values();
-        assertEquals(7, g.length);
+        assertEquals(8, g.length);                       // EX-Singularity (AKASHIC) is appended above Genesis; the seven Tensura grades keep their ordinals
         assertEquals(Grade.NORMAL, g[0]);
         assertEquals(Grade.GENESIS, g[6]);
+        assertEquals(Grade.AKASHIC, g[7]);
         for (int i = 0; i < g.length; i++) assertEquals(i + 1, g[i].tier());
         assertTrue(Grade.GOD.atLeast(Grade.LEGEND));
         assertTrue(Grade.LEGEND.atLeast(Grade.LEGEND));

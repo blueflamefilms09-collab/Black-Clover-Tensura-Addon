@@ -49,6 +49,7 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener(RelicLayerGuard::onPre);                      // 1.99.0: attaches the worn layer to a player renderer the layer event never reached
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onEntityTick);
         NeoForge.EVENT_BUS.addListener(RelicGradeFx::onClientTick);
+        com.newuniverse.nusmp.client.ex.ExSingularityClient.init(modBus);                  // EX-Singularity (above Genesis): the slot frame and the motes (docs/relics/ex_singularity.md)
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn e) -> RelicTextures.registerAll());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             RelicClientState.clear();

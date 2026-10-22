@@ -147,6 +147,7 @@ OTHER = {
     "relic.grade.LEGEND": ("fire", "star4 glint ember gem_sparkle", "FFAA00"),
     "relic.grade.GOD": ("light", "glint star4 rune_sol mote", "FFE9A0"),
     "relic.grade.GENESIS": ("space", "star4 mana_mote dream_star nebula_puff", "E8D8FF"),
+    "relic.grade.AKASHIC": ("space", "star4 glint gem_sparkle dream_star", "FFFFFF"),                # EX-Singularity (above Genesis): sharp stars and gem glints, tinted with the glow's current hue
     # relic elements (also chosen by hue from a relic's colour)
     "relic.element.fire": ("fire", "ember flame_tongue spark soot_puff", "FF7A2E"),
     "relic.element.water": ("water", "bubble droplet mana_mote mote_soft", "3F8FFF"),

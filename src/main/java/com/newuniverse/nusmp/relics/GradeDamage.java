@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * The base attack damage of a weapon by grade and weapon type (docs/grade_damage.md). Pure: no Minecraft types, so it is unit-tested.
  * <p>
- * Each grade owns a disjoint range (normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, genesis 260-350).
+ * Each grade owns a disjoint range (normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, genesis 260-350, akashic / EX-Singularity 420-560: the top, above Elsdocia's own 400; no rolled relic has it).
  * The weapon type picks the place inside the range from {@link #factor}: light, fast daggers and rapiers sit low (they make it up in attack speed),
  * swords and spears in the middle, greatswords, hammers, scythes and halberds high; bows, crossbows and staves use their own ranged scale.
  * The type names are the class names of {@code assets/nusmp/weapon_classes.json} plus the plain Tensura names (sword, axe, lance ...).
@@ -23,8 +23,8 @@ import java.util.Map;
 public final class GradeDamage {
     private GradeDamage() {}
 
-    private static final int[][] RANGES = {{20, 30}, {35, 55}, {60, 85}, {90, 115}, {130, 175}, {190, 240}, {260, 350}};
-    private static final String[] NAMES = {"normal", "special", "rare", "unique", "legend", "god", "genesis"};
+    private static final int[][] RANGES = {{20, 30}, {35, 55}, {60, 85}, {90, 115}, {130, 175}, {190, 240}, {260, 350}, {420, 560}};
+    private static final String[] NAMES = {"normal", "special", "rare", "unique", "legend", "god", "genesis", "akashic"};
 
     /** Position inside the range (0 = minimum, 1 = maximum) by weapon type. */
     private static final Map<String, Double> FACTORS = Map.ofEntries(
@@ -40,12 +40,13 @@ public final class GradeDamage {
             Map.entry("horn", 0.45), Map.entry("claws", 0.05), Map.entry("claymore", 1.00), Map.entry("harpoon", 0.55), Map.entry("daggers", 0.00),
             Map.entry("anchor", 0.95), Map.entry("fans", 0.25), Map.entry("pincers", 0.30));
 
-    /** The grade's ordinal 0..6 (normal, special, rare, unique, legend, god, genesis); "common" is normal; any case. Unknown names give normal. */
+    /** The grade's ordinal 0..7 (normal, special, rare, unique, legend, god, genesis, akashic = EX-Singularity); "common" is normal; any case. Unknown names give normal. */
     public static int ordinal(String grade) {
         if (grade == null) return 0;
         String g = grade.trim().toLowerCase(Locale.ROOT);
         if (g.endsWith(" grade")) g = g.substring(0, g.length() - 6).trim();
         if (g.equals("common")) return 0;
+        if (g.equals("ex-singularity") || g.equals("ex singularity") || g.equals("exsingularity")) return 7;
         for (int i = 0; i < NAMES.length; i++) if (NAMES[i].equals(g)) return i;
         return 0;
     }
@@ -53,8 +54,8 @@ public final class GradeDamage {
     /** {min, max} of the grade (a fresh array). */
     public static int[] range(String grade) { return RANGES[ordinal(grade)].clone(); }
 
-    /** {min, max} of the grade by ordinal 0..6 (clamped). */
-    public static int[] range(int ordinal) { return RANGES[Math.max(0, Math.min(6, ordinal))].clone(); }
+    /** {min, max} of the grade by ordinal 0..7 (clamped). */
+    public static int[] range(int ordinal) { return RANGES[Math.max(0, Math.min(RANGES.length - 1, ordinal))].clone(); }
 
     /** The place (0..1) of a weapon type inside the range; an unknown type is the middle. */
     public static double factor(String weaponType) {
