@@ -85,7 +85,9 @@ class VoiceAssetsTest {
             assertFalse(o.get("voice").getAsString().isBlank(), id + " has no voice id");
         }
         assertEquals(120, ids.size(), "the owner asked for all 120 lines");
-        assertEquals(ids, VoiceCatalog.ids(), "VoiceCatalog and tools/audio/voice_lines.json must list the same lines");
+        List<String> all = new ArrayList<>(ids);
+        all.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());                    // Sylph's own lines (tools/audio/sylph_lines.json; SylphVoiceDataTest checks them) are appended after the 120
+        assertEquals(all, VoiceCatalog.ids(), "VoiceCatalog and tools/audio/voice_lines.json (plus Sylph's generated lines) must list the same lines");
         assertEquals(new HashSet<>(ids).size(), ids.size(), "an id is listed twice");
     }
 
@@ -102,7 +104,9 @@ class VoiceAssetsTest {
                 continue;
             }
             JsonObject e = entry.getAsJsonObject();
-            if (e.has("subtitle")) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");
+            boolean sylph = id.startsWith("sylph_");
+            if (!sylph && e.has("subtitle")) bad.add(key + ": subtitles must be off (the text is shown by the message itself)");
+            if (sylph && !e.has("subtitle")) bad.add(key + ": Sylph's lines are spoken with no message: they carry a subtitle");
             JsonArray sounds = e.getAsJsonArray("sounds");
             if (sounds == null || sounds.size() != 1) {
                 bad.add(key + ": exactly one file expected");

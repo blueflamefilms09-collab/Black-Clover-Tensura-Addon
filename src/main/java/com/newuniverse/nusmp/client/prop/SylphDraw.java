@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.prop;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.client.aura.AuraRender;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
@@ -19,8 +20,8 @@ import net.minecraft.util.Mth;
  * Why: the drawing of the Sylph (docs/magic/sylph.md), apart from the entity glue ({@link SylphPropPainter}) and the Spirit Lord body ({@code client.ElementalSpiritRenderer}), so the headless
  * preview (tools/render_preview, example SylphProp) draws exactly what the game draws. Everything here is primitive math into a pose and a buffer: no entity, no world, no allocation per frame.
  *
- * <p>One Sylph is: the body (cutout: the girl, her dress, her hair; three levels of detail), the four dragonfly wings (translucent, with a glow map of the veins whose tint wanders like a thin
- * film), the glow-only model (the irises of the shown face and the hem of the skirt, additive), and a halo (one camera-facing square). The face that is shown, the pose, the laugh and the sway
+ * <p>One Sylph is: the body (cutout: the girl, her dress, her hair; three levels of detail), the four dragonfly wings (long, narrow, tapered, translucent, painted with a vein network, plus an
+ * additive iridescent sheen sheet of several phases that is shown by shifting V and sweeps slowly over the membrane: {@link #sheen}), the glow-only model (the irises of the shown face and the hem of the skirt, additive), and a halo (one camera-facing square). The face that is shown, the pose, the laugh and the sway
  * all come from the clip: the models are posed by bone rotation only.</p>
  */
 public final class SylphDraw {
@@ -43,14 +44,35 @@ public final class SylphDraw {
     public static final float SMALL_SCALE = 0.24f, POWERED_SCALE = 0.36f;
     /** The height (model units) of the middle of each body: the anchor of a Sylph is the middle of her body. */
     static final float ANCHOR_SMALL = 20f, ANCHOR_POWERED = 30f;
-    /** The colour of the halo (a soft green) and of the wing film at its two ends of the wander (green, a pale blue-green). */
+    /** The colour of the halo (a soft green). */
     static final int HALO_RGB = 0x6CFF6C;
 
-    /** The tint of the wing glow: the thin-film hue wanders slowly between green and a pale aqua. {@code age} in ticks. */
-    public static int filmArgb(float age, float alpha) {
-        float k = 0.5f + 0.5f * Mth.sin(age * 0.05f);
-        int r = (int) (150f + 70f * k), g = 255, b = (int) (150f + 90f * k);
-        return (Mth.clamp((int) (alpha * 255f + 0.5f), 0, 255) << 24) | (r << 16) | (g << 8) | b;
+    /**
+     * The sheen of the wings: the glow sheet holds {@link SylphLod#SHEEN_PHASES} phases of a pastel rainbow gradient; the phase follows the clock ({@link SylphLod#SHEEN_TICKS_PER_PHASE} ticks each),
+     * and on the full level the phase and the next one are drawn with weights that cross-fade, so the sheen drifts smoothly; on the half level the nearest phase only; none on the lowest level.
+     * Additive, through {@link SafeAdditive} (alpha-weighted: the sheet is black under every transparent texel).
+     */
+    private static void sheen(PoseStack pose, MultiBufferSource b, GeoSpec wings, String clip, float secs, float age, float fade, int lod) {
+        if (lod >= SylphLod.LOW) return;
+        int n = SylphLod.SHEEN_PHASES;
+        float x = (age / SylphLod.SHEEN_TICKS_PER_PHASE) % n;
+        int k0 = (int) x;
+        float w = x - k0;
+        RenderType rt = SafeAdditive.additive(wings.glow());
+        if (lod == SylphLod.FULL) {
+            passSheen(pose, b, wings, rt, clip, secs, SealDraw.argb(fade * 0.95f * (1f - w), 0xFFFFFF), k0, n);
+            passSheen(pose, b, wings, rt, clip, secs, SealDraw.argb(fade * 0.95f * w, 0xFFFFFF), (k0 + 1) % n, n);
+        } else {
+            passSheen(pose, b, wings, rt, clip, secs, SealDraw.argb(fade * 0.95f, 0xFFFFFF), w < 0.5f ? k0 : (k0 + 1) % n, n);
+        }
+    }
+
+    private static void passSheen(PoseStack pose, MultiBufferSource b, GeoSpec spec, RenderType rt, String clip, float secs, int argb, int k, int n) {
+        if ((argb >>> 24) < 3) return;
+        GeoModelData m = GeoModels.model(spec.model());
+        GeoAnim a = clip == null ? null : GeoModels.animations(spec.animations());
+        GeoAnim.Clip c = a == null ? null : a.clip(clip);
+        GeoDraw.draw(pose, SheenUv.over(b.getBuffer(rt), k, n), m, c, secs, GeoDraw.Space.PROP, FB, OverlayTexture.NO_OVERLAY, argb);
     }
 
     /**
@@ -66,8 +88,8 @@ public final class SylphDraw {
         pose.scale(s, s, s);
         int white = ((int) (fade * 255f + 0.5f) << 24) | 0xFFFFFF;
         GeoSpec wings = powered ? POWERED_WINGS : SMALL_WINGS;
-        pass(pose, b, wings, AuraRender.translucent(wings.texture()), clip, secs, light, white, true);
-        pass(pose, b, wings, AuraRender.additive(wings.glow()), clip, secs, FB, filmArgb(age, fade * 0.9f), false);                 // the veins glow, tinted by the wandering film
+        pass(pose, b, wings, AuraRender.translucent(wings.texture()), clip, secs, light, white, true);                              // the membrane and its veins
+        sheen(pose, b, wings, clip, secs, age, fade, lod);                                                                          // the iridescent sheen sweeping over it
         GeoSpec body = (powered ? POWERED_LOD : SMALL_LOD)[lod];
         pass(pose, b, body, fade < 0.99f ? AuraRender.translucent(body.texture()) : AuraRender.cutout(body.texture()), clip, secs, light, white, true);
         if (lod <= SylphLod.HALF) GeoDraw.paint(pose, b, powered ? POWERED_FX : SMALL_FX, clip, secs, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, FB,

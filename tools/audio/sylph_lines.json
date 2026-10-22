@@ -1,0 +1,450 @@
+[
+ {
+  "id": "sylph_link_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "link",
+  "prompt": "[cheerful] Hi hi! It's me, Sylph! Let's go together!",
+  "text": "Hi hi! It's me, Sylph! Let's go together!"
+ },
+ {
+  "id": "sylph_link_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "link",
+  "prompt": "[excited] I'm here! I'm here! Where are we flying to?",
+  "text": "I'm here! I'm here! Where are we flying to?"
+ },
+ {
+  "id": "sylph_link_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "link",
+  "prompt": "[sweetly] Yay, you called! I'll stay right beside you!",
+  "text": "Yay, you called! I'll stay right beside you!"
+ },
+ {
+  "id": "sylph_unlink_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "unlink",
+  "prompt": "[softly] Okay, bye bye! Call me again, okay?",
+  "text": "Okay, bye bye! Call me again, okay?"
+ },
+ {
+  "id": "sylph_unlink_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "unlink",
+  "prompt": "[cheerful] See you later! Don't have too much fun without me!",
+  "text": "See you later! Don't have too much fun without me!"
+ },
+ {
+  "id": "sylph_unlink_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "unlink",
+  "prompt": "[sleepy] Mm, I'll go nap in the wind. Bye bye.",
+  "text": "Mm, I'll go nap in the wind. Bye bye."
+ },
+ {
+  "id": "sylph_cast_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[cheerful] Here goes the wind!",
+  "text": "Here goes the wind!"
+ },
+ {
+  "id": "sylph_cast_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[playful] Whoosh! Take this!",
+  "text": "Whoosh! Take this!"
+ },
+ {
+  "id": "sylph_cast_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[excited] Gust, gust, go!",
+  "text": "Gust, gust, go!"
+ },
+ {
+  "id": "sylph_cast_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[determined] Wind, listen to me!",
+  "text": "Wind, listen to me!"
+ },
+ {
+  "id": "sylph_cast_5",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[giggling] Hee hee, blow them away!",
+  "text": "Hee hee, blow them away!"
+ },
+ {
+  "id": "sylph_cast_6",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[bright] Fly, little breeze!",
+  "text": "Fly, little breeze!"
+ },
+ {
+  "id": "sylph_cast_7",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cast",
+  "prompt": "[cheerful] Leave it to me!",
+  "text": "Leave it to me!"
+ },
+ {
+  "id": "sylph_big_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "big",
+  "prompt": "[powerful, shouting] Spirit of the wind, answer me!",
+  "text": "Spirit of the wind, answer me!"
+ },
+ {
+  "id": "sylph_big_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "big",
+  "prompt": "[intense] Everyone, stand back! Here comes the storm!",
+  "text": "Everyone, stand back! Here comes the storm!"
+ },
+ {
+  "id": "sylph_big_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "big",
+  "prompt": "[shouting] Tornado, go go go!",
+  "text": "Tornado, go go go!"
+ },
+ {
+  "id": "sylph_shout_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "shout",
+  "prompt": "[fierce, shouting] I won't let anyone hurt you!",
+  "text": "I won't let anyone hurt you!"
+ },
+ {
+  "id": "sylph_shout_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "shout",
+  "prompt": "[powerful] This is my true power!",
+  "text": "This is my true power!"
+ },
+ {
+  "id": "sylph_shout_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "shout",
+  "prompt": "[commanding] Wind of the heavens, rise!",
+  "text": "Wind of the heavens, rise!"
+ },
+ {
+  "id": "sylph_hurt_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "hurt",
+  "prompt": "[gasp] Ouch! Are you okay?!",
+  "text": "Ouch! Are you okay?!"
+ },
+ {
+  "id": "sylph_hurt_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "hurt",
+  "prompt": "[worried] Hey! That hurt! Be careful!",
+  "text": "Hey! That hurt! Be careful!"
+ },
+ {
+  "id": "sylph_hurt_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "hurt",
+  "prompt": "[angry, cute] Don't hurt my friend!",
+  "text": "Don't hurt my friend!"
+ },
+ {
+  "id": "sylph_hurt_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "hurt",
+  "prompt": "[startled] Eek! Watch out!",
+  "text": "Eek! Watch out!"
+ },
+ {
+  "id": "sylph_startle_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "startle",
+  "prompt": "[yelp] Waah! What was that?!",
+  "text": "Waah! What was that?!"
+ },
+ {
+  "id": "sylph_startle_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "startle",
+  "prompt": "[gasp] Kyaa! Don't scare me like that!",
+  "text": "Kyaa! Don't scare me like that!"
+ },
+ {
+  "id": "sylph_idle_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[humming] La la la, the wind feels so nice today.",
+  "text": "La la la, the wind feels so nice today."
+ },
+ {
+  "id": "sylph_idle_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[curious] Hey, hey, what are we doing next?",
+  "text": "Hey, hey, what are we doing next?"
+ },
+ {
+  "id": "sylph_idle_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[dreamy] The clouds look like cotton candy. Yum!",
+  "text": "The clouds look like cotton candy. Yum!"
+ },
+ {
+  "id": "sylph_idle_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[playful] I'm bored. Let's go somewhere fun!",
+  "text": "I'm bored. Let's go somewhere fun!"
+ },
+ {
+  "id": "sylph_idle_5",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[cheerful] Do you hear that? The wind is singing.",
+  "text": "Do you hear that? The wind is singing."
+ },
+ {
+  "id": "sylph_idle_6",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[sighs] Hmm hmm hmm... nothing's happening.",
+  "text": "Hmm hmm hmm... nothing's happening."
+ },
+ {
+  "id": "sylph_idle_7",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "idle",
+  "prompt": "[proud] I'm the strongest wind spirit, you know!",
+  "text": "I'm the strongest wind spirit, you know!"
+ },
+ {
+  "id": "sylph_worry_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "worry",
+  "prompt": "[worried] You're hurt! Please be careful!",
+  "text": "You're hurt! Please be careful!"
+ },
+ {
+  "id": "sylph_worry_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "worry",
+  "prompt": "[scared] Are you okay? Your health is low!",
+  "text": "Are you okay? Your health is low!"
+ },
+ {
+  "id": "sylph_worry_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "worry",
+  "prompt": "[anxious] Hold on! Don't give up!",
+  "text": "Hold on! Don't give up!"
+ },
+ {
+  "id": "sylph_worry_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "worry",
+  "prompt": "[trembling] Please, please don't fall down!",
+  "text": "Please, please don't fall down!"
+ },
+ {
+  "id": "sylph_cheer_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cheer",
+  "prompt": "[excited] Yay! You did it!",
+  "text": "Yay! You did it!"
+ },
+ {
+  "id": "sylph_cheer_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cheer",
+  "prompt": "[proud] That was amazing! Do it again!",
+  "text": "That was amazing! Do it again!"
+ },
+ {
+  "id": "sylph_cheer_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cheer",
+  "prompt": "[delighted] Hooray! One down!",
+  "text": "Hooray! One down!"
+ },
+ {
+  "id": "sylph_cheer_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cheer",
+  "prompt": "[cheerful] You're so strong!",
+  "text": "You're so strong!"
+ },
+ {
+  "id": "sylph_cheer_5",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "cheer",
+  "prompt": "[giggles] Hee hee, nice one!",
+  "text": "Hee hee, nice one!"
+ },
+ {
+  "id": "sylph_sad_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "sad",
+  "prompt": "[crying] No... please wake up...",
+  "text": "No... please wake up..."
+ },
+ {
+  "id": "sylph_sad_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "sad",
+  "prompt": "[sobbing] Don't leave me alone...",
+  "text": "Don't leave me alone..."
+ },
+ {
+  "id": "sylph_sad_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "sad",
+  "prompt": "[tearful] I'll wait for you. Come back soon.",
+  "text": "I'll wait for you. Come back soon."
+ },
+ {
+  "id": "sylph_giggle_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "giggle",
+  "prompt": "[giggles] Hee hee hee!",
+  "text": "Hee hee hee!"
+ },
+ {
+  "id": "sylph_giggle_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "giggle",
+  "prompt": "[laughs] Ahaha, tee hee!",
+  "text": "Ahaha, tee hee!"
+ },
+ {
+  "id": "sylph_giggle_3",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "giggle",
+  "prompt": "[giggling] Hihi, that tickles!",
+  "text": "Hihi, that tickles!"
+ },
+ {
+  "id": "sylph_giggle_4",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "giggle",
+  "prompt": "[laughs happily] Ehehe!",
+  "text": "Ehehe!"
+ },
+ {
+  "id": "sylph_pout_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "pout",
+  "prompt": "[pouting] Hmph! I'm not talking to you.",
+  "text": "Hmph! I'm not talking to you."
+ },
+ {
+  "id": "sylph_pout_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "pout",
+  "prompt": "[sulky] Hmph. You never play with me.",
+  "text": "Hmph. You never play with me."
+ },
+ {
+  "id": "sylph_smug_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "smug",
+  "prompt": "[smug] Hehe, I knew I'd be useful.",
+  "text": "Hehe, I knew I'd be useful."
+ },
+ {
+  "id": "sylph_smug_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "smug",
+  "prompt": "[teasing] Told you I was the best.",
+  "text": "Told you I was the best."
+ },
+ {
+  "id": "sylph_sleepy_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "sleepy",
+  "prompt": "[yawning] Ahh... I'm sleepy...",
+  "text": "Ahh... I'm sleepy..."
+ },
+ {
+  "id": "sylph_sleepy_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "sleepy",
+  "prompt": "[drowsy] Just five more minutes...",
+  "text": "Just five more minutes..."
+ },
+ {
+  "id": "sylph_victory_1",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "victory",
+  "prompt": "[cheering] We won! We won!",
+  "text": "We won! We won!"
+ },
+ {
+  "id": "sylph_victory_2",
+  "role": "sylph",
+  "voice": "Nggzl2QAXh3OijoXD116",
+  "group": "victory",
+  "prompt": "[excited] Victory! I'm so happy!",
+  "text": "Victory! I'm so happy!"
+ }
+]

@@ -18,6 +18,8 @@ public final class VoiceCatalog {
     private VoiceCatalog() {}
 
     public static final String SYSTEM = "system", BOSS = "boss", NPC = "npc", DJINN = "djinn";
+    /** 1.99.0: the fifth role, Sylph's own spoken lines ({@code sylph/SylphVoiceLines}, {@code tools/audio/sylph_lines.json}); appended after the others, so the first 120 ids and their order are unchanged. */
+    public static final String SYLPH = "sylph";
 
     /** The System announcer's lines (suffix after {@code system_}). */
     public static final List<String> SYSTEM_LINES = List.of("floor_enter", "floor_sealed", "lockdown_start", "lockdown_clear", "ambush_warning", "rest_safe", "boss_ahead", "rift_open",
@@ -45,6 +47,7 @@ public final class VoiceCatalog {
         for (String f : BOSS_FAMILIES) for (String e : BOSS_EVENTS) ids.add(BOSS + "_" + f + "_" + e);
         for (String n : NPC_LINES) ids.add("npc_" + n);
         for (String d : DJINN_NAMES) for (String e : DJINN_EVENTS) ids.add(DJINN + "_" + d + "_" + e);
+        ids.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());
         IDS = Collections.unmodifiableList(ids);
         SET = Collections.unmodifiableSet(new LinkedHashSet<>(ids));
     }
@@ -67,7 +70,7 @@ public final class VoiceCatalog {
     public static String filePath(String id) { return "voice/" + role(id) + "/" + id; }
 
     /** Which role folders there are. */
-    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN); }
+    public static List<String> roles() { return List.of(SYSTEM, BOSS, NPC, DJINN, SYLPH); }
 
     /** The role -> its ids, for reports. */
     public static Map<String, List<String>> byRole() {

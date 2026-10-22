@@ -45,12 +45,29 @@ class SylphLodTest {
         for (int form : new int[]{SylphLod.SMALL, SylphLod.POWERED}) {
             boolean powered = form == SylphLod.POWERED;
             int full = SylphLod.cost(form, SylphLod.FULL), half = SylphLod.cost(form, SylphLod.HALF), low = SylphLod.cost(form, SylphLod.LOW);
-            assertTrue(full <= (powered ? 1000 : 800), "full detail: " + full);
+            assertTrue(full <= (powered ? 900 : 700), "full detail: " + full);               // the wings are chains of cards with a sheen: the owner allowed up to 700 / 900
             assertTrue(half <= (powered ? 450 : 350), "level 1: " + half);
             assertTrue(low <= 140, "level 2: " + low);
             assertTrue(full > half && half > low, "every level is cheaper than the one above");
             assertEquals(0, SylphLod.cost(form, SylphLod.CULL));
         }
+    }
+
+    @Test
+    void theWingsAreCountedOncePerPassTheyAreDrawnAndTheTableIsExact() {
+        // the wings model (membrane) is drawn again for every sheen pass: full level 1 + 2, half level 1 + 1, low level 1 + 0
+        assertEquals(3, SylphLod.wingPasses(SylphLod.FULL));
+        assertEquals(2, SylphLod.wingPasses(SylphLod.HALF));
+        assertEquals(1, SylphLod.wingPasses(SylphLod.LOW));
+        int[] expectSmall = {377 + 32 * 3 + 29 + 2, 211 + 32 * 2 + 29 + 2, 66 + 32};
+        int[] expectPowered = {385 + 52 * 3 + 25 + 2, 233 + 52 * 2 + 25 + 2, 70 + 52};
+        for (int l = 0; l < 3; l++) {
+            assertEquals(expectSmall[l], SylphLod.cost(SylphLod.SMALL, l), "small level " + l);
+            assertEquals(expectPowered[l], SylphLod.cost(SylphLod.POWERED, l), "powered level " + l);
+        }
+        assertEquals(504, SylphLod.cost(SylphLod.SMALL, SylphLod.FULL));
+        assertEquals(568, SylphLod.cost(SylphLod.POWERED, SylphLod.FULL));
+        assertTrue(SylphLod.SHEEN_PHASES >= 4 && SylphLod.SHEEN_TICKS_PER_PHASE >= 10f, "a slow sweep over several phases");
     }
 
     @Test

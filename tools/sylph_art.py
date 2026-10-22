@@ -128,7 +128,9 @@ def lerp(a, b, t):
 # ====================================================================================================================== the face
 def face(kind, wu=9.0, hu=8.5, ppu=16):
     """The front of the head, 9 x 8.5 units (the forehead, the eyes, the nose, the mouth, the cheeks and the chin). kind: laugh (closed eyes, open mouth, blush: the first picture),
-    smile (pale green open eyes, a bright open smile: the second), stern (green narrow eyes, down-slanted brows, a small flat mouth: the powered form), shout (open eyes, open mouth: a cast)."""
+    smile (pale green open eyes, a bright open smile: the second), stern (green narrow eyes, down-slanted brows, a small flat mouth: the powered form), shout (open eyes, open mouth: a cast);
+    1.99.0 (poses and faces): smug (half-lidded, a smirk), angry (glaring, bared teeth, a red anger mark), sad (wet eyes, tears, a wide wobbly mouth: the first picture's cry), surprised (huge eyes, a small o),
+    sleepy (drooping closed lids, a small yawn), pout (side-looking half-closed eyes, a sulky mouth, puffed cheeks)."""
     c = Canvas(wu, hu, ppu, SKIN)
     # the cheek shading: a soft cel shadow at the chin and the temples (hard band, no gradient)
     c.poly([(0, hu * 0.93), (wu, hu * 0.93), (wu, hu), (0, hu)], SKIN_SH)
@@ -164,6 +166,69 @@ def face(kind, wu=9.0, hu=8.5, ppu=16):
             c.line([(x + s * 1.2, ey - 0.28), (x + s * 1.72, ey - 0.46)], INK, 0.20)
             c.curve([(x - s * 0.9, ey + 0.72), (x, ey + 0.98), (x + s * 0.9, ey + 0.72)], (150, 120, 100, 255), 0.10)
             c.curve([(x - s * 1.3, ey - 1.45), (x - s * 0.2, ey - 1.80), (x + s * 1.1, ey - 1.55)], (150, 130, 80, 255), 0.17)
+        elif kind == "smug":
+            # half-lidded eyes: a heavy straight upper lid over the top of the eye, the iris slid to the side, one brow cocked up and one pressed down
+            c.ellipse(x, ey + 0.2, 1.10, 0.62, (255, 255, 255, 255))
+            c.ellipse(x + 0.35, ey + 0.28, 0.66, 0.60, EYE_IRIS_DK)
+            c.ellipse(x + 0.35, ey + 0.32, 0.54, 0.48, EYE_IRIS)
+            c.ellipse(x + 0.35, ey + 0.30, 0.22, 0.32, (40, 78, 66, 255))
+            c.ellipse(x + 0.05, ey + 0.08, 0.16, 0.16, (255, 255, 255, 255))
+            c.poly([(x - 1.35, ey - 0.50), (x + 1.35, ey - 0.50), (x + 1.30, ey + 0.02), (x - 1.30, ey + 0.02)], SKIN)
+            c.line([(x - s * 1.25, ey + 0.02), (x + s * 1.3, ey + 0.0)], INK, 0.30)
+            c.line([(x + s * 1.2, ey - 0.02), (x + s * 1.66, ey - 0.16)], INK, 0.2)
+            if s < 0:
+                c.curve([(x - 1.2, ey - 1.05), (x, ey - 1.55), (x + 1.2, ey - 1.3)], (150, 130, 80, 255), 0.19)
+            else:
+                c.line([(x - 1.2, ey - 1.0), (x + 1.2, ey - 0.78)], (150, 130, 80, 255), 0.20)
+        elif kind == "angry":
+            # narrow glaring eyes, steep brows pressed down to the nose, a red anger mark on the forehead
+            c.ellipse(x, ey + 0.14, 1.06, 0.62, (255, 255, 255, 255))
+            c.ellipse(x, ey + 0.2, 0.72, 0.58, EYE_IRIS_DK)
+            c.ellipse(x, ey + 0.22, 0.58, 0.46, EYE_IRIS)
+            c.ellipse(x, ey + 0.22, 0.22, 0.30, (40, 78, 66, 255))
+            c.curve([(x - s * 1.2, ey - 0.46), (x - s * 0.4, ey - 0.62), (x + s * 0.7, ey - 0.40), (x + s * 1.28, ey - 0.02)], INK, 0.30)
+            c.line([(x - s * 1.2, ey - 1.55), (x + s * 1.25, ey - 0.62)], (110, 84, 44, 255), 0.30)
+        elif kind == "sad":
+            # big wet eyes: a wide iris full of catch-lights, brows pulled up in the middle, tears welling and running down the cheeks
+            c.ellipse(x, ey + 0.05, 1.18, 1.08, (255, 255, 255, 255))
+            c.ellipse(x, ey + 0.12, 0.92, 0.98, EYE_IRIS_DK)
+            c.ellipse(x, ey + 0.16, 0.80, 0.86, EYE_IRIS)
+            c.ellipse(x, ey + 0.62, 0.70, 0.34, (206, 246, 214, 255))
+            c.ellipse(x, ey + 0.12, 0.30, 0.46, (40, 78, 66, 255))
+            c.ellipse(x - 0.34, ey - 0.34, 0.30, 0.30, (255, 255, 255, 255))
+            c.ellipse(x + 0.36, ey + 0.36, 0.14, 0.14, (255, 255, 255, 255))
+            c.curve([(x - s * 1.2, ey - 0.25), (x - s * 0.5, ey - 0.82), (x + s * 0.5, ey - 1.04), (x + s * 1.3, ey - 0.4)], INK, 0.26)
+            c.curve([(x - s * 1.2, ey - 1.0), (x + s * 0.1, ey - 1.48), (x + s * 1.3, ey - 1.9)], (150, 130, 80, 255), 0.17)
+            tear = c.layer()
+            tear.c.ellipse(x, ey + 1.05, 0.95, 0.30, (150, 205, 255, 180))
+            tear.c.line([(x + s * 0.55, ey + 0.95), (x + s * 0.85, ey + 2.0), (x + s * 0.75, ey + 2.55)], (150, 205, 255, 200), 0.26)
+            tear.c.ellipse(x + s * 0.75, ey + 2.62, 0.20, 0.28, (170, 215, 255, 220))
+            tear.apply()
+        elif kind == "surprised":
+            # huge round eyes with tiny pupils, brows flung high
+            c.ellipse(x, ey, 1.30, 1.22, (255, 255, 255, 255))
+            c.ellipse(x, ey + 0.02, 0.62, 0.66, EYE_IRIS_DK)
+            c.ellipse(x, ey + 0.04, 0.52, 0.56, EYE_IRIS)
+            c.ellipse(x, ey + 0.04, 0.20, 0.26, (40, 78, 66, 255))
+            c.ellipse(x - 0.20, ey - 0.20, 0.16, 0.16, (255, 255, 255, 255))
+            c.curve([(x - 1.3, ey - 0.30), (x - 0.7, ey - 1.0), (x, ey - 1.22), (x + 0.7, ey - 1.0), (x + 1.3, ey - 0.30)], INK, 0.22)
+            c.curve([(x - s * 1.1, ey - 1.85), (x, ey - 2.20), (x + s * 1.1, ey - 1.95)], (150, 130, 80, 255), 0.17)
+        elif kind == "sleepy":
+            # drooping closed lids: a soft downward arc (a u) with a few lashes, the brows slack
+            arc = [(x - s * 1.2, ey - 0.05), (x - s * 0.6, ey + 0.38), (x, ey + 0.5), (x + s * 0.6, ey + 0.38), (x + s * 1.2, ey - 0.05)]
+            c.curve(arc, INK, 0.26)
+            c.line([(x + s * 1.1, ey + 0.05), (x + s * 1.5, ey + 0.3)], INK, 0.18)
+            c.curve([(x - s * 1.3, ey - 1.15), (x, ey - 1.45), (x + s * 1.2, ey - 1.1)], (150, 130, 80, 255), 0.15)
+        elif kind == "pout":
+            # sulky eyes: half closed, the iris looking off to one side, brows low
+            c.ellipse(x, ey + 0.2, 1.08, 0.66, (255, 255, 255, 255))
+            c.ellipse(x - 0.42, ey + 0.26, 0.66, 0.62, EYE_IRIS_DK)
+            c.ellipse(x - 0.42, ey + 0.30, 0.54, 0.50, EYE_IRIS)
+            c.ellipse(x - 0.42, ey + 0.28, 0.22, 0.34, (40, 78, 66, 255))
+            c.ellipse(x - 0.62, ey + 0.08, 0.14, 0.14, (255, 255, 255, 255))
+            c.poly([(x - 1.35, ey - 0.50), (x + 1.35, ey - 0.50), (x + 1.30, ey - 0.06), (x - 1.30, ey - 0.02)], SKIN)
+            c.line([(x - s * 1.25, ey - 0.04), (x + s * 1.3, ey - 0.10)], INK, 0.28)
+            c.line([(x - s * 1.2, ey - 1.35), (x + s * 1.25, ey - 0.95)], (150, 130, 80, 255), 0.20)
         else:                                                   # stern
             c.ellipse(x, ey + 0.1, 1.08, 0.74, (255, 255, 255, 255))
             c.ellipse(x, ey + 0.16, 0.76, 0.70, EYE_IRIS_DK)
@@ -191,6 +256,39 @@ def face(kind, wu=9.0, hu=8.5, ppu=16):
         c.line(catmull(mouth, 12) + [mouth[0]], INK, 0.2)
         c.ellipse(cx, my + 0.62, 0.62, 0.26, (238, 120, 128, 255))
         c.poly([(cx - 1.05, my - 0.22), (cx + 1.05, my - 0.22), (cx + 0.85, my + 0.1), (cx - 0.85, my + 0.1)], (255, 255, 255, 255))
+    elif kind == "smug":
+        # a sly smirk: a long curve that climbs on one side, a small dimple
+        c.curve([(cx - 1.1, my + 0.2), (cx - 0.2, my + 0.35), (cx + 0.8, my + 0.2), (cx + 1.35, my - 0.35)], INK, 0.22)
+        c.line([(cx + 1.4, my - 0.38), (cx + 1.6, my - 0.62)], INK, 0.16)
+    elif kind == "angry":
+        # bared teeth: a wide flat rectangle of white with a dark outline and tooth lines, the corners pulled down
+        c.poly([(cx - 1.35, my - 0.15), (cx + 1.35, my - 0.15), (cx + 1.2, my + 0.55), (cx - 1.2, my + 0.55)], (255, 255, 255, 255), INK, 0.2)
+        for k in range(-3, 4):
+            c.line([(cx + k * 0.38, my - 0.12), (cx + k * 0.36, my + 0.52)], (150, 130, 120, 255), 0.07)
+        c.line([(cx - 1.35, my - 0.15), (cx - 1.6, my + 0.15)], INK, 0.18)
+        c.line([(cx + 1.35, my - 0.15), (cx + 1.6, my + 0.15)], INK, 0.18)
+        c.line([(cx + 2.9, hu * 0.14), (cx + 3.4, hu * 0.14)], (230, 70, 70, 255), 0.20)            # the anger mark at the temple: a red cross
+        c.line([(cx + 3.15, hu * 0.14 - 0.25), (cx + 3.15, hu * 0.14 + 0.25)], (230, 70, 70, 255), 0.20)
+    elif kind == "sad":
+        # a wide wobbly open mouth (the first picture's cry): dark, the corners down, the tongue pink
+        mouth = [(cx - 1.9, my + 0.55), (cx - 1.3, my - 0.25), (cx, my - 0.45), (cx + 1.3, my - 0.25), (cx + 1.9, my + 0.55), (cx + 1.0, my + 1.35), (cx, my + 1.6), (cx - 1.0, my + 1.35)]
+        c.poly(catmull(mouth + [mouth[0]], 10), (120, 48, 52, 255))
+        c.line(catmull(mouth + [mouth[0]], 10), INK, 0.22)
+        c.ellipse(cx, my + 1.12, 1.0, 0.34, (238, 120, 128, 255))
+    elif kind == "surprised":
+        c.ellipse(cx, my + 0.55, 0.62, 0.78, (120, 48, 52, 255), INK, 0.2)
+        c.ellipse(cx, my + 0.95, 0.36, 0.30, (238, 120, 128, 255))
+    elif kind == "sleepy":
+        c.ellipse(cx + 0.2, my + 0.5, 0.55, 0.62, (120, 48, 52, 255), INK, 0.18)
+        c.ellipse(cx + 0.2, my + 0.78, 0.30, 0.24, (238, 120, 128, 255))
+    elif kind == "pout":
+        # a small sulky mouth pushed to one side, the cheeks puffed (a wider blush)
+        c.curve([(cx - 0.9, my + 0.35), (cx - 0.45, my + 0.05), (cx, my + 0.3), (cx + 0.45, my + 0.0), (cx + 0.9, my + 0.3)], INK, 0.20)
+        lay = c.layer()
+        for sd in (-1, 1):
+            lay.c.ellipse(cx + sd * 3.0, ey + 1.7, 1.0, 0.8, (255, 140, 140, 90))
+        lay.c.blur(0.15)
+        lay.apply()
     else:
         c.curve([(cx - 0.8, my + 0.2), (cx - 0.3, my + 0.05), (cx + 0.3, my + 0.05), (cx + 0.8, my + 0.22)], INK, 0.2)
     return c.done()
@@ -482,7 +580,7 @@ def face_glow(kind, wu=9.0, hu=8.5, ppu=16):
     cx = wu / 2.0
     for s in (-1, 1):
         x = cx + s * 2.35
-        if kind in ("smile", "shout", "stern"):
+        if kind in ("smile", "shout", "stern", "smug", "angry", "sad", "surprised", "pout"):
             c.ellipse(x, ey + 0.12, 0.62, 0.66, (150, 255, 170, 255))
         else:
             c.curve([(x - s * 1.1, ey + 0.5), (x, ey - 0.4), (x + s * 1.1, ey + 0.5)], (255, 236, 200, 200), 0.22)

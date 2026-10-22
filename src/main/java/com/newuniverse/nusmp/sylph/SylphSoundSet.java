@@ -38,7 +38,13 @@ public final class SylphSoundSet {
             new Cue("giggle", "a small tinkling giggle", 3, 0.8f, 1.0f, 0.07f, 100),
             new Cue("gust", "a gust whooshing out of her hand with a flick of chimes", 3, 0.9f, 1.0f, 0.06f, 14),
             new Cue("surge", "the powered form arriving: a rising swell of wind and bells", 2, 1.0f, 1.0f, 0.03f, 60),
-            new Cue("gale", "the powered form's big gale: a deep whoosh with a ring of chimes", 2, 1.1f, 1.0f, 0.03f, 40));
+            new Cue("gale", "the powered form's big gale: a deep whoosh with a ring of chimes", 2, 1.1f, 1.0f, 0.03f, 40),
+            // the moods' wordless stand-ins for spoken lines that are missing ({@code SylphVoiceLines#fallbackCue}); appended, so the first eight keep their place
+            new Cue("hum", "a little tune hummed to herself", 2, 0.6f, 1.0f, 0.04f, 200),
+            new Cue("gasp", "a quick startled breath and a small 'oh'", 2, 0.8f, 1.0f, 0.05f, 100),
+            new Cue("whimper", "a small sob, two falling wavering notes", 2, 0.7f, 1.0f, 0.04f, 200),
+            new Cue("cheer", "a bright 'yay' with a run of chimes over it", 2, 0.85f, 1.0f, 0.04f, 100),
+            new Cue("pout", "a huffy 'hmph'", 2, 0.7f, 1.0f, 0.04f, 200));
 
     public static List<Cue> cues() { return CUES; }
 

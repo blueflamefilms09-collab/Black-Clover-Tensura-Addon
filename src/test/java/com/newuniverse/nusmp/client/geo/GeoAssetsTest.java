@@ -86,8 +86,14 @@ class GeoAssetsTest {
             File glow = new File(TEX, stem(f) + "_glow.png");
             if (glow.isFile()) {
                 BufferedImage g = ImageIO.read(glow);
-                assertEquals(img.getWidth(), g.getWidth(), f.getName() + ": glow map size differs");
-                assertEquals(img.getHeight(), g.getHeight(), f.getName() + ": glow map size differs");
+                if (stem(f).startsWith("sylph_") && stem(f).endsWith("_wings")) {
+                    // the Sylph's wing glow map is the iridescent SHEEN: several phases of the wing sheet's layout stacked top to bottom at half size (client/prop/SheenUv shifts V to show a phase)
+                    assertEquals(img.getWidth(), g.getWidth() * 2, f.getName() + ": the sheen sheet is half as wide as the wing sheet");
+                    assertEquals(0, (g.getHeight() * 2) % img.getHeight(), f.getName() + ": the sheen sheet holds whole phases of the wing sheet's height");
+                } else {
+                    assertEquals(img.getWidth(), g.getWidth(), f.getName() + ": glow map size differs");
+                    assertEquals(img.getHeight(), g.getHeight(), f.getName() + ": glow map size differs");
+                }
             }
         }
     }

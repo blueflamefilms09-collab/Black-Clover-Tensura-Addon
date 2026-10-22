@@ -21,13 +21,16 @@ class VoiceLogicTest {
 
     @Test
     void theCatalogueHasTheExpectedShape() {
-        assertEquals(10 + 30 + 8 + 72, VoiceCatalog.ids().size());
+        int sylph = com.newuniverse.nusmp.sylph.SylphVoiceLines.ids().size();                    // Sylph's own spoken lines are the fifth role, appended after the 120
+        assertEquals(10 + 30 + 8 + 72 + sylph, VoiceCatalog.ids().size());
         assertEquals(36, VoiceCatalog.DJINN_NAMES.size());
-        assertEquals(List.of("system", "boss", "npc", "djinn"), VoiceCatalog.roles());
+        assertEquals(List.of("system", "boss", "npc", "djinn", "sylph"), VoiceCatalog.roles());
         assertEquals(10, VoiceCatalog.byRole().get("system").size());
         assertEquals(30, VoiceCatalog.byRole().get("boss").size());
         assertEquals(8, VoiceCatalog.byRole().get("npc").size());
         assertEquals(72, VoiceCatalog.byRole().get("djinn").size());
+        assertEquals(sylph, VoiceCatalog.byRole().get("sylph").size());
+        assertEquals(VoiceCatalog.ids().subList(120, 120 + sylph), com.newuniverse.nusmp.sylph.SylphVoiceLines.ids(), "Sylph's lines come after the first 120, in their own order");
         for (String id : VoiceCatalog.ids()) {
             assertTrue(id.matches("[a-z0-9_]+") && id.length() < VoiceNet.MAX_ID, id);
             assertEquals(id.substring(0, id.indexOf('_')), VoiceCatalog.role(id));

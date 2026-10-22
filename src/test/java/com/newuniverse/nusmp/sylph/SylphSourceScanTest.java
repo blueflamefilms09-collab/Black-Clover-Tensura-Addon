@@ -119,7 +119,7 @@ class SylphSourceScanTest {
 
     @Test
     void theDrawCodeAllocatesNothingPerFrameAndBuildsNoRenderTypeOfItsOwn() throws IOException {
-        for (String f : new String[]{"client/prop/SylphDraw.java", "client/prop/SylphPropPainter.java", "client/prop/SylphView.java", "client/prop/FlatLit.java"}) {
+        for (String f : new String[]{"client/prop/SylphDraw.java", "client/prop/SylphPropPainter.java", "client/prop/SylphView.java", "client/prop/FlatLit.java", "client/prop/SheenUv.java"}) {
             String c = code(SRC.resolve(f)).replaceAll("(?m)^.*static final.*$", "");      // static tables are built once
             assertFalse(c.contains("new float[") || c.contains("new double[") || c.contains("new Vec3") || c.contains("new ArrayList") || c.contains("new HashMap"), f + " allocates per frame");
             for (String b : new String[]{"RenderType.eyes(", "RenderType.lightning(", "ADDITIVE_TRANSPARENCY"}) assertFalse(c.contains(b), f + " uses " + b);
@@ -128,6 +128,18 @@ class SylphSourceScanTest {
         assertTrue(painter.contains("SylphView.lod("), "the level of detail and the frame budget");
         assertTrue(code(SRC.resolve("client/prop/SylphView.java")).contains("SylphLod.fit(") && code(SRC.resolve("client/prop/SylphView.java")).contains("SylphLod.level("));
         assertTrue(code(SRC.resolve("client/ElementalSpiritRenderer.java")).contains("SylphView.lod("), "the Spirit Lord body goes through the same shared budget");
+    }
+
+    @Test
+    void theWingSheenIsDrawnOnlyThroughSafeAdditiveAndShiftsVNotModels() throws IOException {
+        String d = code(SRC.resolve("client/prop/SylphDraw.java"));
+        assertTrue(d.contains("SafeAdditive.additive(wings.glow())"), "the sheen pass asks the safe additive type for the sheet");
+        assertFalse(d.contains("AuraRender.additive(wings"), "no other additive route for the wings");
+        assertTrue(d.contains("SheenUv.over(") && d.contains("SylphLod.SHEEN_PHASES") && d.contains("SylphLod.SHEEN_TICKS_PER_PHASE"), "the phase comes from the clock through the shared constants");
+        assertTrue(d.contains("if (lod >= SylphLod.LOW) return;"), "the lowest level draws no sheen");
+        String u = code(SRC.resolve("client/prop/SheenUv.java"));
+        assertTrue(u.contains("(v + k) * inv"), "V moves into the phase");
+        assertFalse(u.contains("RenderType") || u.contains("Minecraft.getInstance"), "the wrapper only moves V");
     }
 
     @Test

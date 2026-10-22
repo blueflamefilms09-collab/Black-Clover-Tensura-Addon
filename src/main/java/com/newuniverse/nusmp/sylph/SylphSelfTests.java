@@ -67,6 +67,28 @@ public final class SylphSelfTests {
             if (!onClassPath("/assets/nusmp/animations/entity/sylph_" + form + ".animation.json")) return Result.fail("missing animations of " + form);
         }
 
+        // her moods: every clip a pose names is in her animation files, every spoken line is a registered event with its entry and its file, the fallbacks are real cues
+        for (String form : new String[]{"small", "powered"}) {
+            String anim;
+            try (InputStream in = SylphSelfTests.class.getResourceAsStream("/assets/nusmp/animations/entity/sylph_" + form + ".animation.json")) { anim = new String(in.readAllBytes(), StandardCharsets.UTF_8); }
+            for (String clip : form.equals("small") ? SylphRules.SMALL_CLIPS : SylphRules.POWERED_CLIPS) if (!anim.contains("\"" + clip + "\"")) return Result.fail("the " + form + " animation file has no clip " + clip);
+        }
+        for (String line : SylphVoiceLines.ids()) {
+            if (!com.newuniverse.nusmp.audio.voice.VoiceCatalog.has(line)) return Result.fail("the voice catalogue lacks her line " + line);
+            if (com.newuniverse.nusmp.audio.voice.VoiceSounds.event(line) == null) return Result.fail("no sound event for her line " + line);
+            if (!sounds.contains("\"voice." + line + "\"")) return Result.fail("sounds.json has no entry for her line " + line);
+            if (!onClassPath("/assets/nusmp/sounds/voice/sylph/" + line + ".ogg")) return Result.fail("missing file of her line " + line);
+        }
+        for (String g : new String[]{"hurt", "worry", "idle", "cheer", "pout", "sad", "smug", "giggle"}) {
+            String cue = SylphVoiceLines.fallbackCue(g);
+            if (cue != null && !SylphSoundSet.has(cue)) return Result.fail("the stand-in cue " + cue + " of " + g + " does not exist");
+        }
+        SylphMood.State mood = new SylphMood.State();
+        SylphMood.Decision hello = SylphMood.decide(mood, SylphMood.Event.LINK, 100L, 0);
+        if (hello.pose() != SylphMood.WAVE || !"link".equals(hello.voice())) return Result.fail("linking does not wave and say hello");
+        if (SylphMood.decide(mood, SylphMood.Event.HURT, 110L, 0).pose() != SylphMood.HURT) return Result.fail("a flinch (more important) did not replace the wave");
+        if (SylphRules.pose(SylphRules.withPose(SylphRules.param(SylphRules.V_SMALL, 9), SylphMood.CRY)) != SylphMood.CRY) return Result.fail("the pose bits do not round trip");
+
         // the Wind book is as it was: the page and its lock
         WindBook wind = new WindBook();
         boolean zephyr = false;
@@ -100,6 +122,11 @@ public final class SylphSelfTests {
             if (SylphCasting.liveCount() != before + 1) return Result.fail("the link was not counted");
             MagicPropEntity e = SylphCasting.prop(level, s.spirit);
             if (SylphRules.variant(e.param()) != SylphRules.V_SMALL || e.getBbHeight() > 0.7f) return Result.fail("the small Sylph has the wrong size or variant");
+            if (SylphConfig.poses() && SylphRules.pose(e.param()) != SylphMood.WAVE) return Result.fail("the fresh link did not make her wave (pose bits " + SylphRules.pose(e.param()) + ")");
+            long now = level.getGameTime();
+            if (SylphMoods.syncPose(e.param(), s, now + 100000L, false) != SylphRules.withPose(e.param(), 0)) return Result.fail("an over mood did not clear her pose bits");
+            SylphMoods.fire(p, s, SylphMood.Event.HURT_HEAVY);
+            if (SylphConfig.poses() && SylphRules.pose(e.param()) == 0) return Result.fail("a heavy hit did not give her a pose");
             if (SylphCasting.link(p, s) && SylphCasting.SPIRITS.count(p.getUUID()) > 1) return Result.fail("a second Sylph was allowed for one player");
             SylphCasting.forget(p);
             if (SylphCasting.liveCount() != before) return Result.fail("the ledgers kept a slot after the player was forgotten");
@@ -107,6 +134,6 @@ public final class SylphSelfTests {
         } finally {
             SylphCasting.forget(p);
         }
-        return Result.ok("sounds, models, rules, the Wind book, the Sylph link and its cleanup hold");
+        return Result.ok("sounds, models, rules, moods, voice lines, the Wind book, the Sylph link and its cleanup hold");
     }
 }

@@ -44,6 +44,10 @@ public final class SylphCasting {
     /** The state of one player's Sylph. */
     static final class State {
         UUID spirit, powered;
+        /** Her moods (pure rules, docs/magic/sylph.md): the pose she holds, the idle clock, the cooldowns of what she says. */
+        final SylphMood.State mood = new SylphMood.State();
+        /** Game time until which she stays after her owner died (a cry, then she goes); 0 = not mourning. */
+        long mourningUntil;
         long poweredReadyAt, lastPacket = Long.MIN_VALUE / 4, nextChime, lastGiggle = Long.MIN_VALUE / 4, lastFlutter = Long.MIN_VALUE / 4;
     }
 
@@ -85,9 +89,12 @@ public final class SylphCasting {
         e.setTarget(p);
         s.spirit = e.getUUID();
         s.nextChime = sl.getGameTime() + 100;
+        s.mood.lastX = p.getX();
+        s.mood.lastZ = p.getZ();
         LIVE.add(p.getUUID());
         VfxSpawn.send(sl, VfxShape.WIND_GALE, new Vec3(a[0], a[1] - 0.2, a[2]), new Vec3(a[0], a[1] + 0.6, a[2]), SYLPH_COLOR, 12, 0.4f);
         SylphSounds.play(sl, a[0], a[1], a[2], "link");
+        SylphMoods.fire(p, s, SylphMood.Event.LINK);
         p.displayClientMessage(Component.translatableWithFallback("nusmp.sylph.linked", "Sylph floats to your side.").withStyle(ChatFormatting.GREEN), true);
         return true;
     }
@@ -96,6 +103,7 @@ public final class SylphCasting {
         ServerLevel sl = p.serverLevel();
         MagicPropEntity e = prop(sl, s.spirit);
         if (e != null) {
+            SylphMoods.fire(p, s, SylphMood.Event.UNLINK);
             SylphSounds.play(sl, e.getX(), e.getY(), e.getZ(), "unlink");
             e.discard();
         }
@@ -118,8 +126,8 @@ public final class SylphCasting {
         State s = STATES.get(p.getUUID());
         long now = sl.getGameTime();
         double[] hand = null;
-        boolean big = false;
-        if (SylphRules.callsPowered(page.costPercent())) {
+        boolean big = false, bigPage = SylphRules.callsPowered(page.costPercent());
+        if (bigPage) {
             s = s == null ? state(p.getUUID()) : s;
             if (summonPowered(p, s, now, "spirit_of_zephyr".equals(page.id()))) {
                 hand = SylphRules.poweredHand(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -131,6 +139,7 @@ public final class SylphCasting {
             stamp(sl, s.spirit, now);
         }
         if (hand == null) return inner.getAsBoolean();
+        if (s != null && !big) SylphMoods.fire(p, s, bigPage ? SylphMood.Event.CAST_BIG : SylphMood.Event.CAST);                 // (the powered form's arrival has its own shout)
         Vec3 at = new Vec3(hand[0], hand[1], hand[2]);
         Vec3 look = p.getViewVector(1f);
         VfxSpawn.send(sl, VfxShape.WIND_GALE, at, at.add(look.scale(big ? 6.0 : 3.5)), SYLPH_COLOR, big ? 14 : 10, big ? 0.8f : 0.45f);
@@ -141,7 +150,7 @@ public final class SylphCasting {
     /** Stamps the cast tick on a small Sylph so the clients play her cast clip for a moment. */
     private static void stamp(ServerLevel sl, UUID id, long now) {
         MagicPropEntity sp = prop(sl, id);
-        if (sp != null) sp.setParam((sp.param() & SylphRules.HIDDEN) | SylphRules.param(SylphRules.V_SMALL, SylphRules.stamp(now)));
+        if (sp != null) sp.setParam((sp.param() & SylphRules.KEEP_ON_STAMP) | SylphRules.param(SylphRules.V_SMALL, SylphRules.stamp(now)));
     }
 
     /** Calls the powered form for this cast if it is allowed (cooldown, one per caster, the server cap). */
@@ -159,6 +168,7 @@ public final class SylphCasting {
         s.poweredReadyAt = now + SylphRules.POWERED_COOLDOWN;
         LIVE.add(p.getUUID());
         SylphSounds.play(sl, a[0], a[1], a[2], "surge");
+        SylphMoods.fire(p, s, SylphMood.Event.POWERED_ARRIVE);
         return true;
     }
 
@@ -200,7 +210,10 @@ public final class SylphCasting {
             MagicPropEntity sp = prop(sl, s.spirit);
             if (sp == null) { s.spirit = null; SPIRITS.release(p.getUUID()); }
             else if (!applies(p)) unlink(p, s, false);
-            else voice(p, s, sp, sl, now);
+            else {
+                voice(p, s, sp, sl, now);
+                SylphMoods.idleTick(p, s, sl, now, sp);
+            }
         }
         if (s.spirit == null && s.powered == null) LIVE.remove(p.getUUID());
     }
@@ -224,6 +237,25 @@ public final class SylphCasting {
         }
     }
 
+    /** How long she stays, crying, after her owner died (ticks), before she goes. */
+    static final int MOURN_TICKS = 70;
+
+    /**
+     * The owner died: if a small Sylph is out she cries for a moment (the cry pose and her sad line) and then goes; everything else of theirs goes at once. The prop's own tick ends the vigil
+     * ({@link SylphProps}); a respawn, a logout or a dimension change before that cleans up as always.
+     */
+    static void mourn(ServerPlayer p) {
+        State s = STATES.get(p.getUUID());
+        ServerLevel sl = p.serverLevel();
+        if (s == null || prop(sl, s.spirit) == null || !SylphConfig.poses()) { forget(p); return; }
+        MagicPropEntity pw = prop(sl, s.powered);
+        if (pw != null) pw.discard();
+        s.powered = null;
+        POWERED.release(p.getUUID());
+        s.mourningUntil = sl.getGameTime() + MOURN_TICKS;
+        SylphMoods.fire(p, s, SylphMood.Event.DEATH);
+    }
+
     /** Everything of this player goes: logout, death, respawn, dimension change. */
     public static void forget(ServerPlayer p) {
         State s = STATES.remove(p.getUUID());
@@ -231,6 +263,7 @@ public final class SylphCasting {
         SPIRITS.forget(p.getUUID());
         POWERED.forget(p.getUUID());
         SylphSounds.forget(p.getUUID());
+        SylphVoice.forget(p.getUUID());
         if (s == null || !(p.level() instanceof ServerLevel sl)) return;
         for (UUID id : new UUID[]{s.spirit, s.powered}) if (id != null && sl.getEntity(id) instanceof MagicPropEntity e) e.discard();
     }
@@ -242,6 +275,7 @@ public final class SylphCasting {
         SPIRITS.clear();
         POWERED.clear();
         SylphSounds.clearAll();
+        SylphVoice.clearAll();
         emitterOwner = null;
         emitterAt = null;
     }

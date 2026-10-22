@@ -30,6 +30,10 @@ public final class SylphProps implements MagicProps.Behavior {
         if (o == null) { e.expire(); return; }
         SylphCasting.State s = SylphCasting.STATES.get(o.getUUID());
         if (s == null || !e.getUUID().equals(variant == SylphRules.V_POWERED ? s.powered : s.spirit)) { e.expire(); return; }          // an orphan (the link was dropped): gone
+        long now = sl.getGameTime();
+        if (s.mourningUntil != 0L && now >= s.mourningUntil && o instanceof ServerPlayer dead) { SylphCasting.forget(dead); return; }   // the vigil is over
+        int shown = SylphMoods.syncPose(e.param(), s, now, variant == SylphRules.V_POWERED);
+        if (shown != e.param()) e.setParam(shown);                                                                                   // her mood is over: the pose bits go
         if (variant == SylphRules.V_POWERED) {
             double[] a = SylphRules.powered(o.getX(), o.getY(), o.getZ(), o.yBodyRot);
             e.setPos(a[0], a[1], a[2]);
