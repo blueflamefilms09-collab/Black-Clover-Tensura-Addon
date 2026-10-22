@@ -7,15 +7,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import java.util.List;
 
 /**
- * Why: the five behaviours of the sword (docs/items/shishou.md). Each is a vanilla goal with a cheap guard, so a body that has nothing to do costs almost nothing:
- * {@link WanderAirGoal} (hovers and explores), {@link HuntHostilesGoal} (a nearest-attackable target goal that only ever picks the creatures {@link ShishouEntity#isValidTarget} allows),
+ * Why: the behaviours of the sword (2.1.0: a fast hunter, see {@link ShishouHunt}) (docs/items/shishou.md). Each is a vanilla goal with a cheap guard, so a body that has nothing to do costs almost nothing:
+ * {@link WanderAirGoal} (hovers and explores), {@link HuntHostilesGoal} (a bounded box-query target goal that only ever picks the creatures {@link ShishouEntity#isValidTarget} allows),
  * {@link TelekineticStrikeGoal} (charges at the target and strikes in reach), {@link StayByWielderGoal} (a thrown sword hovers near its wielder and comes back when it is too far) and
  * {@link DormantPedestalGoal} (after its kills, days or mana, finds the ground by a BOUNDED search, flies to it, embeds itself and goes static). All state is on the server.
  */
@@ -27,7 +29,7 @@ public final class ShishouGoals {
         private final ShishouEntity sword;
 
         public WanderAirGoal(ShishouEntity sword) {
-            super(sword, 1.0);
+            super(sword, 1.6);
             this.sword = sword;
         }
 
@@ -38,26 +40,78 @@ public final class ShishouGoals {
         public boolean canContinueToUse() { return !sword.isDormant() && sword.getTarget() == null && super.canContinueToUse(); }
     }
 
-    /** Goal 2: the nearest hostile creature, never a player, a villager, a tamed creature or an ally. */
-    public static class HuntHostilesGoal extends NearestAttackableTargetGoal<Mob> {
+    /**
+     * Goal 2 (2.1.0): the prey. Every {@link ShishouHunt#SCAN_TICKS} ticks (config) while he has no target, ONE box query around himself (a thrown sword: around its wielder) in a cube of the hunt radius, and
+     * of the creatures it returns at most {@link ShishouHunt#MAX_EXAMINED} (config) are looked at, the best by {@link ShishouHunt#score} wins: the nearest threat, bigger and player-hurting ones first. Never a player,
+     * a villager, a tamed creature or an ally ({@link ShishouEntity#isValidTarget}). After a kill the next look is immediate. No chunk is loaded, nothing is sorted, nothing is allocated but the box and its list.
+     */
+    public static class HuntHostilesGoal extends Goal {
         private final ShishouEntity sword;
+        private LivingEntity found;
 
         public HuntHostilesGoal(ShishouEntity sword) {
-            super(sword, Mob.class, 10, false, false, sword::isValidTarget);
             this.sword = sword;
+            setFlags(EnumSet.of(Flag.TARGET));
         }
 
         @Override
-        public boolean canUse() { return !sword.isDormant() && ShishouConfig.enabled() && (!sword.isMinion() || sword.owner() != null) && super.canUse(); }
+        public boolean canUse() {
+            if (sword.isDormant() || !ShishouConfig.enabled() || sword.isMinion() && sword.owner() == null || !(sword.level() instanceof ServerLevel sl)) return false;
+            LivingEntity cur = sword.getTarget();
+            if (cur != null && cur.isAlive() && sword.isValidTarget(cur)) return false;
+            long now = sl.getGameTime();
+            if (now < sword.huntNextScan()) return false;
+            sword.setHuntNextScan(now + ShishouHunt.scanGap(ShishouConfig.huntScanTicks(), sword.getId()));
+            found = scan(sword, sl, now);
+            return found != null;
+        }
+
+        @Override
+        public void start() { sword.setTarget(found); }
 
         @Override
         public boolean canContinueToUse() {
             LivingEntity t = sword.getTarget();
-            return !sword.isDormant() && t != null && t.isAlive() && sword.isValidTarget(t);
+            return !sword.isDormant() && t != null && t.isAlive() && sword.isValidTarget(t) && !sword.isIgnored(t);
+        }
+
+        @Override
+        public void stop() {
+            found = null;
+            LivingEntity t = sword.getTarget();
+            if (t == null || !t.isAlive() || !sword.isValidTarget(t) || sword.isIgnored(t)) sword.setTarget(null);
         }
     }
 
-    /** Goal 3: charges at the target at high speed and strikes when it is in reach (the animation state and the damage are the entity's). */
+    /** One look for prey: a single box query, at most the configured number of creatures examined, the best by score; null when there is none. */
+    static LivingEntity scan(ShishouEntity s, ServerLevel sl, long now) {
+        boolean minion = s.isMinion();
+        ServerPlayer o = minion ? s.owner() : null;
+        if (minion && (o == null || o.level() != sl)) return null;
+        double r = ShishouHunt.scanRadius(minion, ShishouConfig.huntRadius(), ShishouConfig.minionLeash()), h = ShishouHunt.scanHeight(r);
+        Vec3 c = minion ? o.position() : s.position();
+        AABB box = new AABB(c.x - r, c.y - h, c.z - r, c.x + r, c.y + h, c.z + r);
+        List<Mob> list = sl.getEntitiesOfClass(Mob.class, box, Mob::isAlive);
+        int cap = ShishouConfig.huntExamined(), n = 0;
+        Mob best = null;
+        double bestScore = Double.MAX_VALUE;
+        for (Mob m : list) {
+            if (++n > cap) break;
+            if (s.isIgnored(m) || !s.isValidTarget(m)) continue;
+            double sc = ShishouHunt.score(Math.sqrt(m.distanceToSqr(s)), m.getMaxHealth(), m.getTarget() instanceof Player);
+            if (sc < bestScore) {
+                bestScore = sc;
+                best = m;
+            }
+        }
+        return best;
+    }
+
+    /**
+     * Goal 3 (2.1.0): the telekinetic charge. Direct 3D steering, no path finding (a flying sword needs none and a path that cannot be found never stalls it): the velocity is blended toward the target with a
+     * short acceleration curve ({@link ShishouHunt#chargeSpeed}, supersonic feel: 23 to 38 blocks a second), slows near the target ({@link ShishouHunt#arrive}), strikes in reach on a level-scaled cooldown, and a
+     * blocked charge nudges up and aside, then gives the target up for a while ({@link ShishouHunt#unstick}).
+     */
     public static class TelekineticStrikeGoal extends Goal {
         private final ShishouEntity sword;
 
@@ -76,7 +130,10 @@ public final class ShishouGoals {
         public boolean canContinueToUse() { return canUse(); }
 
         @Override
-        public void start() { sword.setState(ShishouRules.STATE_AGGRO); }
+        public void start() {
+            sword.setState(ShishouRules.STATE_AGGRO);
+            sword.beginCharge();
+        }
 
         @Override
         public void stop() {
@@ -93,9 +150,48 @@ public final class ShishouGoals {
             if (t == null) return;
             double reach = ShishouRules.REACH + t.getBbWidth() * 0.5;
             Vec3 aim = new Vec3(t.getX(), t.getY(0.5), t.getZ());
-            if (sword.distanceToSqr(aim) > reach * reach) sword.getMoveControl().setWantedPosition(aim.x, aim.y, aim.z, ShishouRules.CHARGE_SPEED);
-            else if (sword.strikeReady()) sword.strike(t);
+            if (sword.distanceToSqr(aim) > reach * reach) sword.charge(aim);
+            else {
+                sword.hoverOn(aim);
+                if (sword.strikeReady()) sword.strike(t);
+            }
         }
+    }
+
+    /** Goal 4b: a wild sword with no prey in range flies toward the nearest player (monsters spawn near players) instead of wandering at random; every second one nearest-player lookup at most. */
+    public static class PatrolGoal extends Goal {
+        private final ShishouEntity sword;
+        private Vec3 dest;
+        private long nextLook;
+
+        public PatrolGoal(ShishouEntity sword) {
+            this.sword = sword;
+            setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (sword.isDormant() || sword.isMinion() || sword.getTarget() != null || !ShishouConfig.patrol() || !ShishouConfig.enabled() || !(sword.level() instanceof ServerLevel sl)) return false;
+            long now = sl.getGameTime();
+            if (now < nextLook) return false;
+            nextLook = now + ShishouHunt.PATROL_PERIOD;
+            Player p = sl.getNearestPlayer(sword, ShishouHunt.PATROL_MAX);
+            if (p == null) return false;
+            double d = Math.sqrt(sword.distanceToSqr(p)), leg = ShishouHunt.patrolLeg(d);
+            if (leg <= 0.0) return false;
+            Vec3 dir = p.position().add(0, 6, 0).subtract(sword.position()).normalize();
+            dest = sword.position().add(dir.scale(Math.min(leg, 32.0)));
+            return true;
+        }
+
+        @Override
+        public boolean canContinueToUse() { return dest != null && sword.getTarget() == null && !sword.isDormant() && sword.distanceToSqr(dest) > 9.0 && sword.level().getGameTime() < nextLook + 3L * ShishouHunt.PATROL_PERIOD; }
+
+        @Override
+        public void tick() { if (dest != null) sword.fly(dest, 0.9); }
+
+        @Override
+        public void stop() { dest = null; }
     }
 
     /** A thrown sword with no target hovers a few blocks above its wielder's shoulder and follows; far away it flies back (the service teleports it when it is very far). */

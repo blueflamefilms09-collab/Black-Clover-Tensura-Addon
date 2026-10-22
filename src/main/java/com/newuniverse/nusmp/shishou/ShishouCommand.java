@@ -65,6 +65,7 @@ public final class ShishouCommand {
         d.cap().reset();
         d.touch();
         ShishouLive.clearAll();
+        ShishouGrantService.syncAll(c.getSource().getServer());                              // nobody is the wielder now: the Tensura skill goes
         if (body != null) for (ServerLevel l : c.getSource().getServer().getAllLevels()) if (l.getEntity(body) instanceof ShishouEntity se) {
             se.expectRemoval();
             se.discard();
@@ -80,7 +81,7 @@ public final class ShishouCommand {
 
     private static int setLevel(CommandContext<CommandSourceStack> c) {
         if (!ShishouData.bound()) return fail(c, "The server has not started.");
-        int n = IntegerArgumentType.getInteger(c, "n");
+        int n = Math.max(IntegerArgumentType.getInteger(c, "n"), ShishouConfig.startLevel());      // he never drops below his start level
         ShishouData d = ShishouData.get();
         d.record().setLevel(n);
         d.touch();

@@ -9,11 +9,32 @@ public final class ShishouLevels {
 
     public static final int MAX_LEVEL = 100;
 
-    /** The experience that takes level {@code level} to the next (0 at the cap). 31 at level 1, 285 at 20, 1200 at 50, 4049 at 99. */
+    /** The version of the curve: 1 was the 2.0.0 curve ({@link #legacyToNext}), 2 (2.1.0) is gentler. A saved record carries the version it was written with so the migration only runs once. */
+    public static final int CURVE_VERSION = 2;
+
+    /** The experience that takes level {@code level} to the next (0 at the cap): {@code 18 + 3.5 L + 0.2 L^2}. 73 at level 10, 258 at 30, 693 at 50, 2324 at 99 (the 2.0.0 curve needed 1200 at 50 and 4049 at 99). */
     public static long toNext(int level) {
         if (level >= MAX_LEVEL) return 0L;
         int l = Math.max(1, level);
+        return Math.round(18.0 + 3.5 * l + 0.2 * l * l);
+    }
+
+    /** The 2.0.0 curve (31 at level 1, 285 at 20, 1200 at 50, 4049 at 99): kept only to read old saves, so no saved Shishou ever loses a level. */
+    public static long legacyToNext(int level) {
+        if (level >= MAX_LEVEL) return 0L;
+        int l = Math.max(1, level);
         return Math.round(25.0 + 6.0 * l + 0.35 * l * l);
+    }
+
+    /** The level an experience total had on the 2.0.0 curve (1..MAX_LEVEL). */
+    public static int legacyLevelFor(long totalExp) {
+        long t = Math.max(0L, totalExp);
+        int level = 1;
+        while (level < MAX_LEVEL && t >= legacyToNext(level)) {
+            t -= legacyToNext(level);
+            level++;
+        }
+        return level;
     }
 
     /** The total experience at which {@code level} starts (level 1 starts at 0). */

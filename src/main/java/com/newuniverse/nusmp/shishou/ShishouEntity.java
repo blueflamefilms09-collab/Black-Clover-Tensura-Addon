@@ -65,8 +65,8 @@ public class ShishouEntity extends PathfinderMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0).add(Attributes.FLYING_SPEED, 0.6).add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.ATTACK_DAMAGE, 6.0).add(Attributes.FOLLOW_RANGE, ShishouRules.TARGET_RANGE).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
+        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0).add(Attributes.FLYING_SPEED, 1.0).add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.ATTACK_DAMAGE, ShishouRules.START_ATTACK).add(Attributes.FOLLOW_RANGE, ShishouHunt.RADIUS_MAX).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
     @Override
@@ -92,6 +92,7 @@ public class ShishouEntity extends PathfinderMob {
         this.goalSelector.addGoal(1, new ShishouGoals.DormantPedestalGoal(this));
         this.goalSelector.addGoal(2, new ShishouGoals.TelekineticStrikeGoal(this));
         this.goalSelector.addGoal(3, new ShishouGoals.StayByWielderGoal(this));
+        this.goalSelector.addGoal(4, new ShishouGoals.PatrolGoal(this));
         this.goalSelector.addGoal(5, new ShishouGoals.WanderAirGoal(this));
         this.targetSelector.addGoal(1, new ShishouGoals.HuntHostilesGoal(this));
     }
@@ -179,6 +180,74 @@ public class ShishouEntity extends PathfinderMob {
         return ownerCache;
     }
 
+    // ---------------------------------------------------------------- the hunt (2.1.0)
+    private long huntNextScan, ignoreUntil;
+    private int ignoredId = -1, chargeTicks, stuckTicks;
+    private Vec3 lastPos = Vec3.ZERO;
+
+    public long huntNextScan() { return huntNextScan; }
+
+    public void setHuntNextScan(long t) { huntNextScan = t; }
+
+    /** After a kill, or when the target is given up: the next look for prey is immediate. */
+    public void scanNow() { huntNextScan = 0L; }
+
+    /** Has this creature been given up on (a charge that could not reach it) and is the pause not over yet? */
+    public boolean isIgnored(LivingEntity t) { return t != null && t.getId() == ignoredId && level().getGameTime() < ignoreUntil; }
+
+    private void ignore(LivingEntity t) {
+        ignoredId = t.getId();
+        ignoreUntil = level().getGameTime() + ShishouHunt.IGNORE_TICKS;
+    }
+
+    /** A new charge begins: the speed curve starts over. */
+    public void beginCharge() {
+        chargeTicks = 0;
+        stuckTicks = 0;
+        lastPos = position();
+    }
+
+    /** One tick of the charge at {@code aim}: accelerating direct steering, with the unstick rule. */
+    public void charge(Vec3 aim) {
+        chargeTicks++;
+        double top = ShishouHunt.topSpeed(swordLevel(), ShishouConfig.chargePercent());
+        steer(aim, ShishouHunt.chargeSpeed(chargeTicks, top), true);
+    }
+
+    /** One tick of an ordinary flight toward {@code aim} at {@code blocksPerTick} (the patrol). */
+    public void fly(Vec3 aim, double blocksPerTick) { steer(aim, blocksPerTick, false); }
+
+    /** In reach of the target: the velocity dies down so he rides along with it instead of shooting past. */
+    public void hoverOn(Vec3 aim) {
+        stuckTicks = 0;
+        setDeltaMovement(getDeltaMovement().scale(0.6));
+    }
+
+    private void steer(Vec3 aim, double speed, boolean charging) {
+        Vec3 to = aim.subtract(position());
+        double dist = to.length();
+        if (dist < 1.0e-4) return;
+        double sp = charging ? ShishouHunt.arrive(speed, dist) : speed;
+        Vec3 want = to.scale(sp / dist), v = getDeltaMovement();
+        Vec3 nv = new Vec3(ShishouHunt.blend(v.x, want.x), ShishouHunt.blend(v.y, want.y), ShishouHunt.blend(v.z, want.z));
+        double movedSqr = position().distanceToSqr(lastPos);
+        lastPos = position();
+        stuckTicks = ShishouHunt.progressed(movedSqr) ? 0 : stuckTicks + 1;
+        int u = ShishouHunt.unstick(stuckTicks);
+        if (u == 1) {                                                                         // blocked: slide up and to the side of the way in
+            Vec3 side = new Vec3(-to.z, 0.0, to.x).normalize().scale(((tickCount / 10) & 1) == 0 ? 0.25 : -0.25);
+            nv = nv.add(0.0, 0.3, 0.0).add(side);
+        } else if (u == 2 && charging && getTarget() != null) {                               // cannot get there: another creature first
+            ignore(getTarget());
+            setTarget(null);
+            scanNow();
+            stuckTicks = 0;
+            return;
+        }
+        setDeltaMovement(nv);
+        hasImpulse = true;
+    }
+
     /** May this creature be hunted by this body? */
     public boolean isValidTarget(LivingEntity t) {
         if (t == this || !ShishouConfig.enabled()) return false;
@@ -208,10 +277,15 @@ public class ShishouEntity extends PathfinderMob {
     public boolean strike(LivingEntity target) {
         if (!(level() instanceof ServerLevel sl) || !strikeReady() || target == null || !target.isAlive()) return false;
         if (!ShishouService.payStrike(this, sl)) return false;
-        strikeCooldown = ShishouRules.STRIKE_COOLDOWN;
+        strikeCooldown = ShishouHunt.strikeCooldown(swordLevel());
         attackTicks = ShishouRules.ATTACK_ANIM_TICKS;
         setState(ShishouRules.STATE_ATTACK);
-        return ShishouService.strike(this, sl, target);
+        boolean landed = ShishouService.strike(this, sl, target);
+        if (!target.isAlive()) {                                                              // a kill: the next prey is looked for at once
+            setTarget(null);
+            scanNow();
+        }
+        return landed;
     }
 
     // ---------------------------------------------------------------- the tick

@@ -56,6 +56,16 @@ public final class ShishouEvents {
         bus.addListener(ShishouEvents::onRespawn);
         bus.addListener(ShishouEvents::onDimension);
         bus.addListener(ShishouEvents::onServerTick);
+        bus.addListener(ShishouEvents::onLogin);
+        bus.addListener(ShishouEvents::onPlayerTick);
+    }
+
+    /** The Tensura skill follows the sword: a player who logs in gets (or loses) the Ultimate skill Shishou by the record. */
+    static void onLogin(PlayerEvent.PlayerLoggedInEvent e) { if (e.getEntity() instanceof ServerPlayer p) SafeCast.tick("shishou.grant", () -> ShishouGrantService.sync(p)); }
+
+    /** Every 100 ticks per player (spread by id): one owner compare and, only when the list is wrong, a grant or a revoke. */
+    static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
+        if (e.getEntity() instanceof ServerPlayer p && ShishouGrant.due(p.tickCount, p.getId())) SafeCast.tick("shishou.grant", () -> ShishouGrantService.sync(p));
     }
 
     static void onStarted(ServerStartedEvent e) { ShishouData.bind(e.getServer()); }
@@ -136,7 +146,7 @@ public final class ShishouEvents {
         ItemStack s = e.getItemStack();
         if (s.getItem() != ShishouItems.SHISHOU.get() || !ShishouConfig.enabled()) return;
         int level = ShishouComponents.level(s);
-        e.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(LEVEL_ATTACK, Math.min(ShishouRules.ATTACK_BONUS_CAP, ShishouRules.ATTACK_PER_LEVEL * level), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+        e.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(LEVEL_ATTACK, ShishouRules.attackBonus(level, ShishouConfig.damagePercent()), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         if (ShishouConfig.skillOn(ShishouSkill.SWORD_ARTS_MASTERY) && ShishouSkill.SWORD_ARTS_MASTERY.available(level, 0L)) {
             e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ARTS_SPEED, ShishouRules.SPEED_ARTS_BONUS, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
             e.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ARTS, ShishouRules.ARTS_DAMAGE_SHARE, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), EquipmentSlotGroup.MAINHAND);
