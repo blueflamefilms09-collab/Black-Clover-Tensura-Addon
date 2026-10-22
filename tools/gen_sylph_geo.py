@@ -272,6 +272,8 @@ def build_body(form, lod, at):
     arms(b, at, lod, o)
     legs(b, at, lod, o)
     skirt(b, at, lod, o)
+    if lod == 0:
+        add_wings(b, form, None)                                                                   # the wing bones (no plates: those are the wings model's) so the clips name real bones of this model
     return b
 
 
@@ -298,9 +300,11 @@ def low_poly(b, at, form, o):
     b.top("head", -4.9, 6.4, -4.4, 9.8, 2.6, 8.8, {"north": W("fringe_n"), "south": W("fringe_s"), "west": W("fringe_w"), "east": W("fringe_e"), "up": W("hair_top"), "down": None})
     b.top("head", -4.8, 0.8, 3.1, 9.6, 7.4, 1.5, {"south": W("hair_back"), "north": None, "west": None, "east": None, "up": None, "down": None})
     if powered:
-        for i, x in enumerate((-4.0, 0.0, 4.0)):
-            b.bone("hair%d_0" % (i * 2 if i < 2 else 4), (x, 8.6, 1.0), "head")
-            b.top("hair%d_0" % (i * 2 if i < 2 else 4), x - 5.0, 8.6, 1.0, 10.0, 30.0, 0.12, {"north": W("ribbon%d" % i), "south": W("ribbon%d" % i)})
+        for j, i in enumerate((0, 2, 4)):                                                              # three of the five ribbons, each one card, on the pivots of the full model's first segments
+            x = (-4.6, -2.3, 0.0, 2.3, 4.6)[i]
+            z = 1.0 - 0.4 * i
+            b.bone("hair%d_0" % i, (x, 8.6, z), "head")
+            b.top("hair%d_0" % i, x - 5.0, 8.6, z, 10.0, 30.0, 0.12, {"north": W("ribbon%d" % j), "south": W("ribbon%d" % j)})
     else:
         b.bone("ahoge0", (0.0, 8.9, -0.4), "head")
         b.top("ahoge0", -0.8, 8.9, -0.45, 1.6, 4.0, 0.12, {"north": W("ahoge"), "south": W("ahoge")})
@@ -339,7 +343,14 @@ def build_wings(form, at):
     o = SMALL if form == "small" else POWERED
     b = B("sylph_%s_wings" % form, at)
     skeleton_only(b, o)
-    W = lambda n, *a: win(at, n, *a)
+    add_wings(b, form, at)
+    return b
+
+
+def add_wings(b, form, at):
+    """The wing bones (and the petal bones of the powered form). With an atlas the plates are built too (the wings model); with None only the bones (the full body model carries them, so
+    its one animation file names real bones)."""
+    W = (lambda n, *a: win(at, n, *a)) if at is not None else None
     if form == "small":
         # (name, root x, root y, root z, length, chord, roll, yaw): a wing is a plate standing in the x-y plane (seen broad from the front and the back), rolled up and out, swept back
         specs = [("f", 1.6, 22.6, 2.6, 24.0, 7.5, 62.0, 10.0), ("h", 1.4, 21.4, 2.9, 18.0, 6.0, 24.0, 14.0)]
@@ -354,22 +365,25 @@ def build_wings(form, at):
             ox = s * rx_
             # the picture has its root at the left and the leading edge up; from the front the model's right (-x) is on the viewer's right, so the +x wing (tip on the viewer's left) is mirrored
             x0 = ox if s > 0 else ox - ln * cut
-            b.top(bn, x0, ry_ - ch * 0.40, rz_ - 0.05, ln * cut, ch, 0.1, {"north": (W(img, 0, 0, cut, 1), s > 0), "south": (W(img, 0, 0, cut, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
+            if at is not None: b.top(bn, x0, ry_ - ch * 0.40, rz_ - 0.05, ln * cut, ch, 0.1, {"north": (W(img, 0, 0, cut, 1), s > 0), "south": (W(img, 0, 0, cut, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
             jx = ox + s * ln * cut
             bo = "wingo_%s_%s" % (nm, tag)
             b.bone(bo, (jx, ry_, rz_), bn, rot=(0, 0, s * 9.0))
             x1 = jx if s > 0 else jx - ln * (1 - cut)
-            b.top(bo, x1, ry_ - ch * 0.40, rz_ - 0.05, ln * (1 - cut), ch, 0.1, {"north": (W(img, cut, 0, 1, 1), s > 0), "south": (W(img, cut, 0, 1, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
+            if at is not None: b.top(bo, x1, ry_ - ch * 0.40, rz_ - 0.05, ln * (1 - cut), ch, 0.1, {"north": (W(img, cut, 0, 1, 1), s > 0), "south": (W(img, cut, 0, 1, 1), s < 0), "up": None, "down": None, "west": None, "east": None})
     if form == "powered":                                                                          # the petal wings of the skirt: three a side, a fan from the hip
         for tag, s in (("R", -1), ("L", 1)):
             for k, (roll, yaw, ln, ch, z) in enumerate(((66.0, 6.0, 18.0, 11.0, 2.4), (38.0, 10.0, 21.0, 13.0, 2.8), (12.0, 14.0, 24.0, 15.0, 3.2))):
                 bn = "petal_%d_%s" % (k, tag)
                 b.bone(bn, (s * 2.6, 27.4, z), "body", rot=(0, s * -yaw, s * roll))
+                if at is None:
+                    continue
                 img = W("petal%d" % k)
                 x0 = s * 2.6 if s > 0 else s * 2.6 - ln
                 face = {"north": (img, s > 0), "south": (img, s < 0), "up": None, "down": None, "west": None, "east": None}
                 b.top(bn, x0, 27.4 - ch * 0.5, z - 0.05, ln, ch, 0.1, face)
-    return b
+
+
 
 
 def build_fx(form, at):
@@ -443,34 +457,38 @@ def small_animations():
         return out
 
     # ---- idle: floating, seated and leaning back (the first picture): one knee up, one leg dangling, a hand at the cheek, the shoulders shaking with a laugh
+    def seated(T):
+        L = lambda v: hold(v, T)
+        bones = {
+            "body": {"position": sn(T, 0.5, 1, 0.0, steps=8), "rotation": mg(L((-18, 0, 4)), sn(T, 1.5, 0, 0.0, steps=8))},
+            "chest": {"rotation": mg(L((14, 0, 0)), sn(T * 0.25, 2.4, 2, 0.0, steps=8))},
+            "head": {"rotation": mg(L((-8, 4, -7)), sn(T, 1.5, 1, 0.2, steps=8), sn(T * 0.25, 1.8, 0, 0.0, steps=8))},
+            "leg_R": {"rotation": mg(L((84, 0, 2)), sn(T, 2.5, 0, 0.0, steps=8))},
+            "shin_R": {"rotation": mg(L((-100, 0, 0)), sn(T, 2.5, 0, 0.3, steps=8))},
+            "foot_R": {"rotation": L((30, 0, 0))},
+            "leg_L": {"rotation": mg(L((38, 0, -3)), sn(T, 4.0, 0, 0.5, steps=8))},
+            "shin_L": {"rotation": mg(L((-14, 0, 0)), sn(T, 5.0, 0, 0.7, steps=8))},
+            "foot_L": {"rotation": mg(L((26, 0, 0)), sn(T, 5.0, 0, 0.8, steps=8))},
+            "arm_R": {"rotation": mg(L((70, 0, -16)), sn(T * 0.25, 4.0, 0, 0.0, steps=8))},
+            "fore_R": {"rotation": L((96, 0, 0))},
+            "hand_R": {"rotation": L((0, 0, -16))},
+            "arm_L": {"rotation": L((-26, 0, 18))},
+            "fore_L": {"rotation": L((18, 0, 0))},
+        }
+        bones.update(wings(T * 0.25, 7.0))
+        bones.update(skirt_sway(T, 3.5))
+        bones.update(hair(T, 4.0))
+        bones.update(face_tracks(kinds, "laugh"))
+        return bones
+
     T = 2.4
-    L = lambda v: hold(v, T)
-    bones = {
-        "body": {"position": sn(T, 0.5, 1, 0.0, steps=8), "rotation": mg(L((-18, 0, 4)), sn(T, 1.5, 0, 0.0, steps=8))},
-        "chest": {"rotation": mg(L((14, 0, 0)), sn(T * 0.25, 2.4, 2, 0.0, steps=8))},
-        "head": {"rotation": mg(L((-8, 4, -7)), sn(T, 1.5, 1, 0.2, steps=8), sn(T * 0.25, 1.8, 0, 0.0, steps=8))},
-        "leg_R": {"rotation": mg(L((84, 0, 2)), sn(T, 2.5, 0, 0.0, steps=8))},
-        "shin_R": {"rotation": mg(L((-100, 0, 0)), sn(T, 2.5, 0, 0.3, steps=8))},
-        "foot_R": {"rotation": L((30, 0, 0))},
-        "leg_L": {"rotation": mg(L((38, 0, -3)), sn(T, 4.0, 0, 0.5, steps=8))},
-        "shin_L": {"rotation": mg(L((-14, 0, 0)), sn(T, 5.0, 0, 0.7, steps=8))},
-        "foot_L": {"rotation": mg(L((26, 0, 0)), sn(T, 5.0, 0, 0.8, steps=8))},
-        "arm_R": {"rotation": mg(L((70, 0, -16)), sn(T * 0.25, 4.0, 0, 0.0, steps=8))},
-        "fore_R": {"rotation": L((96, 0, 0))},
-        "hand_R": {"rotation": L((0, 0, -16))},
-        "arm_L": {"rotation": L((-26, 0, 18))},
-        "fore_L": {"rotation": L((18, 0, 0))},
-    }
-    bones.update(wings(T * 0.25, 7.0))
-    bones.update(skirt_sway(T, 3.5))
-    bones.update(hair(T, 4.0))
-    bones.update(face_tracks(kinds, "laugh"))
+    bones = seated(T)
     clips["idle"] = {"loop": True, "length": T, "bones": bones}
 
     # ---- laugh: the same pose, a bigger fit: the head thrown back, the chest heaving, the hand pressed to the mouth
     T = 1.2
     L = lambda v: hold(v, T)
-    b2 = dict(bones)
+    b2 = seated(T)
     b2.update({
         "body": {"position": sn(T, 0.7, 1, 0.0, steps=8), "rotation": mg(L((-22, 0, 4)), sn(T * 0.5, 2.4, 0, 0.0, steps=8))},
         "chest": {"rotation": mg(L((14, 0, 0)), sn(T * 0.25, 4.5, 0, 0.0, steps=8))},

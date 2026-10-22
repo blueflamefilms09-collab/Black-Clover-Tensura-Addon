@@ -7182,6 +7182,126 @@
       }
      ],
      "parent": "skb9"
+    },
+    {
+     "name": "wing_f_R",
+     "pivot": [
+      -1.6,
+      22.6,
+      2.6
+     ],
+     "cubes": [],
+     "parent": "chest",
+     "rotation": [
+      0.0,
+      10.0,
+      -62.0
+     ]
+    },
+    {
+     "name": "wingo_f_R",
+     "pivot": [
+      -16.0,
+      22.6,
+      2.6
+     ],
+     "cubes": [],
+     "parent": "wing_f_R",
+     "rotation": [
+      0.0,
+      0.0,
+      -9.0
+     ]
+    },
+    {
+     "name": "wing_h_R",
+     "pivot": [
+      -1.4,
+      21.4,
+      2.9
+     ],
+     "cubes": [],
+     "parent": "chest",
+     "rotation": [
+      0.0,
+      14.0,
+      -24.0
+     ]
+    },
+    {
+     "name": "wingo_h_R",
+     "pivot": [
+      -12.2,
+      21.4,
+      2.9
+     ],
+     "cubes": [],
+     "parent": "wing_h_R",
+     "rotation": [
+      0.0,
+      0.0,
+      -9.0
+     ]
+    },
+    {
+     "name": "wing_f_L",
+     "pivot": [
+      1.6,
+      22.6,
+      2.6
+     ],
+     "cubes": [],
+     "parent": "chest",
+     "rotation": [
+      0.0,
+      -10.0,
+      62.0
+     ]
+    },
+    {
+     "name": "wingo_f_L",
+     "pivot": [
+      16.0,
+      22.6,
+      2.6
+     ],
+     "cubes": [],
+     "parent": "wing_f_L",
+     "rotation": [
+      0.0,
+      0.0,
+      9.0
+     ]
+    },
+    {
+     "name": "wing_h_L",
+     "pivot": [
+      1.4,
+      21.4,
+      2.9
+     ],
+     "cubes": [],
+     "parent": "chest",
+     "rotation": [
+      0.0,
+      -14.0,
+      24.0
+     ]
+    },
+    {
+     "name": "wingo_h_L",
+     "pivot": [
+      12.2,
+      21.4,
+      2.9
+     ],
+     "cubes": [],
+     "parent": "wing_h_L",
+     "rotation": [
+      0.0,
+      0.0,
+      9.0
+     ]
     }
    ]
   }

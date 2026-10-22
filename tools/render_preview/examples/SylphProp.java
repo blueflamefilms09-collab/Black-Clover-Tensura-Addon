@@ -12,7 +12,7 @@ import com.newuniverse.nusmp.prop.PropKind;
 public final class SylphProp {
     private SylphProp() {}
 
-    private static final String[] CLIPS = {"idle", "laugh", "cast", "hover", "powered_cast", "shout", "rest"};
+    private static final String[] CLIPS = {"idle", "laugh", "cast", "hover", "powered_cast", "shout", "rest", "point", "fly"};
 
     public static void register() {
         PropPainters.register(PropKind.BRONZE_1, (e, partial, age, pose, buffers, light) -> {

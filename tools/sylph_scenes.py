@@ -3,7 +3,7 @@
     python3 -B tools/sylph_scenes.py
 
 The scenes are drawn by the real client.prop.SylphDraw through the example SylphProp: param = placed * 1000 + form * 100 + lod * 10 + clip (form 0 small, 1 powered; clip 0 idle, 1 laugh, 2 cast,
-3 hover, 4 powered_cast, 5 shout; placed 1 puts the Sylph where the game puts her next to a standing player).
+3 hover, 4 powered_cast, 5 shout, 6 rest, 7 point, 8 fly; placed 1 puts the Sylph where the game puts her next to a standing player).
 """
 import json
 import os
@@ -28,6 +28,8 @@ def main():
                      "form 0 small, 1 powered; clip 0 idle, 1 laugh, 2 cast, 3 hover, 4 powered_cast, 5 shout). Regenerate the models with tools/gen_sylph_geo.py and the scenes with tools/sylph_scenes.py."}
     s["sylph_small"] = sc(0, [v("front", 0, 6, 0, 0, 0, 1.5), v("3/4", 35, 8, 0, 0, 0, 1.5), v("side", 90, 6, 0, 0, 0, 1.5), v("back", 160, 10, 0, 0, 0, 1.5)], tile=(420, 460))
     s["sylph_small_rest"] = sc(6, [v("rest front", 0, 4, 0, 0, 0, 1.6), v("rest side", 90, 4, 0, 0, 0, 1.6)], tile=(380, 460))
+    s["sylph_small_point"] = sc(7, [v("point 3/4", 20, 6, 0, 0, 0, 1.5), v("point front", -10, 4, 0, 0, 0, 1.5)], ages=(0, 8), tile=(420, 460))
+    s["sylph_small_fly"] = sc(8, [v("fly side", 90, 6, 0, 0, 0, 1.5)], tile=(420, 420))
     s["sylph_small_face"] = sc(0, [v("face front", 0, 2, 0, 0.18, 0, 0.55), v("face 3/4", 30, 4, 0, 0.18, 0, 0.55)], tile=(520, 520))
     s["sylph_small_laugh"] = sc(1, [v("laugh 3/4", 25, 6, 0, 0.04, 0, 1.1)], ages=(0, 6, 12), tile=(380, 420))
     s["sylph_small_cast"] = sc(2, [v("cast 3/4", -30, 6, 0, 0.0, 0, 1.4), v("cast side", -90, 6, 0, 0, 0, 1.4)], ages=(4, 12), tile=(420, 460))
