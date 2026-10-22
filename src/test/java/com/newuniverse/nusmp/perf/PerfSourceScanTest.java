@@ -486,4 +486,34 @@ class PerfSourceScanTest {
         String rules = code(read("compass3d/CompassRules.java"));
         assertTrue(rules.contains("GLOBAL_NEEDLES") && rules.contains("AIM_RESEND_TICKS"));
     }
+
+    // ================================================================ GUI Move (docs/ui/gui_move.md): the HUD of every movable GUI costs one lookup and some field writes per frame
+    @Test
+    void theGuiMoveFrameCostIsOneLookupPerElementAndNoAllocation() throws IOException {
+        // every method a HUD element or a layer hook calls on every frame: no allocation, no string building, no config read, no reflection
+        String[] frame = {"begin", "end", "hidden", "moved", "report", "reportDrawn", "note", "guiScale", "layerPre", "toLocalX", "toLocalY", "lastScale", "screenXf", "panelOf", "editing"};
+        Pattern strings = Pattern.compile("\\+\\s*\"|String\\.format|\\.getString\\(|Component\\.|translatable|StringBuilder|\\.stream\\(|GuiMoveOptions\\.|\\.get\\(\\)");
+        for (String name : frame) {
+            for (Method m : methodsNamed("client/ui/move/GuiMove.java", name)) {
+                String body = code(m.body());
+                assertFalse(NEW_OBJECT.matcher(body).find(), "GuiMove." + name + " allocates per frame");
+                assertFalse(strings.matcher(body).find(), "GuiMove." + name + " builds a string or reads the config per frame");
+            }
+        }
+        // the pure math the frame calls
+        for (String name : new String[]{"total", "own", "clampVisible", "axisGui", "leftGui", "topGui", "toLocal", "toScreen", "sane"}) {
+            for (Method m : methodsNamed("client/ui/move/GuiMoveMath.java", name)) assertFalse(NEW_OBJECT.matcher(code(m.body())).find(), "GuiMoveMath." + name + " allocates per frame");
+        }
+        // an element is found by one map lookup (the id is a constant), and the layout is read from the config only when the file loads or changes
+        String move = code(read("client/ui/move/GuiMove.java"));
+        assertTrue(move.contains("GuiMoveRegistry.byId(id)"), "GuiMove no longer finds an element with one lookup");
+        assertTrue(code(read("client/ui/move/GuiMoveRegistry.java")).contains("BY_ID.get(id)"), "the registry lookup is not a map lookup any more");
+        assertTrue(move.contains("ModConfigEvent.Loading") && move.contains("ModConfigEvent.Reloading") && move.contains("GuiMoveOptions.loadAll()"), "the layout is not loaded on the config events");
+        // the edit overlay is drawn by its own screen only: no HUD layer, no per-frame hook of edit mode in the always-on path
+        String screen = code(read("client/ui/move/GuiMoveScreen.java"));
+        assertFalse(screen.contains("RenderGuiLayerEvent") || screen.contains("registerAboveAll") || screen.contains("ClientTickEvent"), "edit mode must draw only while its screen is open");
+        assertTrue(move.contains("new GuiMoveScreen(") && !move.contains("RenderGuiEvent"), "edit mode is opened by the key or the command, never drawn by a hook");
+        // the always-on tick is a counter, a key poll and a flag
+        assertFalse(NEW_OBJECT.matcher(code(method("client/ui/move/GuiMove.java", "onTick").body()).replace("new GuiMoveScreen(null)", "")).find(), "GuiMove's tick allocates");
+    }
 }

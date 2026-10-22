@@ -60,7 +60,14 @@ public final class DjinnScreenFx {
         if (!show) { DjinnGui.hide(); return; }
         if (DjinnGuiConfig.style() == GuiStyle.NEW) { DjinnGui.render(g, mc, s, d, gt, partial); return; }
         DjinnGui.hide();
-        classicBar(g, mc, s, d, gt, now);
+        if (com.newuniverse.nusmp.client.ui.move.GuiMove.hidden(DjinnGui.MOVE_ID)) return;
+        int cx = g.guiWidth() / 2 - 118 / 2 - 3, cy = g.guiHeight() - 66 - 12;                  // the classic bar's box (see classicBar); GUI Move can drag it like the themed panel
+        boolean moved = com.newuniverse.nusmp.client.ui.move.GuiMove.begin(g, DjinnGui.MOVE_ID, cx, cy, 118 + 6, 33, cx + (118 + 6) / 2f, cy + 33);
+        try {
+            classicBar(g, mc, s, d, gt, now);
+        } finally {
+            com.newuniverse.nusmp.client.ui.move.GuiMove.end(g, moved);
+        }
     }
 
     /** The original small bar above the hotbar, kept unchanged as the CLASSIC style: four phase pips, Magoi, assimilation, trust and the timers as text. */

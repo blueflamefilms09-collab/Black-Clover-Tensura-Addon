@@ -23,7 +23,7 @@ final class QuestOverlay {
 
     static void render(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.level == null || mc.options.hideGui || mc.screen != null || !HubClient.trackerShown) return;
+        if (mc.player == null || mc.level == null || mc.options.hideGui || (mc.screen != null && !com.newuniverse.nusmp.client.ui.move.GuiMove.editing()) || !HubClient.trackerShown) return;
         if (mc.getDebugOverlay().showDebugScreen()) return;
         List<HubNet.HudEntry> list = HubClient.hud;
         if (list.isEmpty()) return;
@@ -32,6 +32,7 @@ final class QuestOverlay {
         int y = TOP;
         int shown = Math.min(MAX_SHOWN, list.size());
         int blockH = 22;
+        com.newuniverse.nusmp.client.ui.move.GuiMove.report("quest_tracker", x - 4, y - 4, WIDTH + 8, 16 + shown * blockH + (list.size() > shown ? 10 : 0));     // GUI Move: where the tracker is drawn (the layer hook moves it)
         g.fill(x - 4, y - 4, x + WIDTH + 4, y + 12 + shown * blockH + (list.size() > shown ? 10 : 0), 0x80000000);
         g.drawString(font, "Quests", x, y, HubGui.GOLD, true);
         y += 12;

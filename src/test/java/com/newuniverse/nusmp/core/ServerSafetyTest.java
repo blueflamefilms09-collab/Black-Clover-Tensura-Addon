@@ -67,4 +67,23 @@ class ServerSafetyTest {
         }
         assertTrue(bad.isEmpty(), "Minecraft.getInstance() outside client/ (it does not exist on a server): " + bad);
     }
+
+    @Test
+    void guiMoveIsClientOnlyAndCommonCodeNeverNamesIt() throws IOException {
+        List<String> bad = new ArrayList<>();
+        try (Stream<Path> w = Files.walk(SRC)) {
+            for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator) {
+                String rel = SRC.relativize(p).toString().replace('\\', '/');
+                if (rel.startsWith("client/") || rel.contains("/client/")) continue;
+                if (Files.readString(p, StandardCharsets.UTF_8).contains("client.ui.move")) bad.add(rel);
+            }
+        }
+        assertTrue(bad.isEmpty(), "common code that names the client-only GUI Move package: " + bad);
+        assertTrue(Files.exists(SRC.resolve("client/ui/move/GuiMove.java")), "GUI Move must live under client/");
+        for (String line : Files.readAllLines(SRC.resolve("client/ui/move/GuiMove.java"), StandardCharsets.UTF_8)) {
+            String t = line.strip();
+            if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) continue;
+            assertTrue(!t.contains("PacketDistributor") && !t.contains("sendToServer"), "GUI Move sends nothing to the server: " + t);
+        }
+    }
 }

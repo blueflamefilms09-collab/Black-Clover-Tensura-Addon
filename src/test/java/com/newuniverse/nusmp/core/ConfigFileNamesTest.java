@@ -55,4 +55,22 @@ class ConfigFileNamesTest {
         unnamed.forEach((k, v) -> { if (v > 1) bad.add(v + " " + k + " configs without a file name"); });
         assertTrue(bad.isEmpty(), "config file names registered more than once: " + bad);
     }
+
+    @Test
+    void theGuiLayoutFileIsRegisteredOnceAsAClientConfig() throws IOException {
+        int count = 0;
+        try (Stream<Path> w = Files.walk(SRC)) {
+            for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator) {
+                String text = Files.readString(p, StandardCharsets.UTF_8);
+                int at = 0;
+                while ((at = text.indexOf("\"nusmp-gui-layout-client.toml\"", at)) >= 0) {
+                    count++;
+                    String line = text.substring(text.lastIndexOf('\n', at) + 1, text.indexOf('\n', at));
+                    if (!line.strip().startsWith("*") && !line.strip().startsWith("//")) assertTrue(line.contains("ModConfig.Type.CLIENT"), "the GUI layout (where a GUI sits) is a looks setting: CLIENT only, in " + p.getFileName());
+                    at++;
+                }
+            }
+        }
+        assertTrue(count >= 1, "the GUI Move layout file is not registered");
+    }
 }

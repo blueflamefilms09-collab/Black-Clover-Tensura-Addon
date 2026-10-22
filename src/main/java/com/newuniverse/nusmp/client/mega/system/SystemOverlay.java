@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.mega.system;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.system.PointsText;
 import com.newuniverse.nusmp.labyrinth.mega.system.Stat;
@@ -44,7 +45,7 @@ public final class SystemOverlay {
     /** The layer: called every frame by the GUI. Open screens are left alone (the edit screen draws the window itself, through {@link #drawPreview}). */
     public static void render(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.screen != null) return;
+        if (mc.screen != null && !GuiMove.editing()) return;                          // GUI Move's edit mode shows the real window while it is moved
         run(g, mc, delta.getGameTimeDeltaPartialTick(false));
     }
 
@@ -53,16 +54,17 @@ public final class SystemOverlay {
         if (mc.player == null || mc.level == null || mc.options.hideGui) return;
         boolean dungeon = Labyrinth.inMega(mc.level) || Labyrinth.inSanctuary(mc.level);
         boolean normal = SystemClientConfig.enabled() && !ClientSystem.hidden && dungeon;
-        boolean live = normal && ClientSystem.active;
+        boolean live = normal && ClientSystem.active && !GuiMove.hidden(SystemClientConfig.GUI_MOVE_ID);     // GUI Move: the player can switch the window off (the pop-up lines stay)
         boolean toasts = normal && SystemClientConfig.toasts() && !ClientSystem.TOASTS.isEmpty();
         if (!live && !toasts) return;
         boolean pushed = false;
         try {
-            float scale = SystemClientConfig.scale() * com.newuniverse.nusmp.client.ui.GuiScale.hud("system_hud");     // GUI Size: the window keeps its place and own size, times the player's GUI size
+            float gs = com.newuniverse.nusmp.client.ui.GuiScale.hud("system_hud");
+            float scale = SystemClientConfig.scale() * gs;     // GUI Size x GUI Move: the window's own size (set in either edit mode) times the player's GUI size, one product; its place is the stored anchor + offset
             g.pose().pushPose();
             pushed = true;
             g.pose().scale(scale, scale, 1.0f);
-            draw(g, mc, partialTick, scale, live, toasts);
+            draw(g, mc, partialTick, scale, gs, live, toasts);
         } catch (RuntimeException | LinkageError e) {
             ClientSystem.broken = true;
             LOG.warn("[nusmp] The System window failed to draw and is switched off until the server sends news", e);
@@ -84,7 +86,7 @@ public final class SystemOverlay {
         return layout;
     }
 
-    private static void draw(GuiGraphics g, Minecraft mc, float partialTick, float scale, boolean showPanel, boolean showToasts) {
+    private static void draw(GuiGraphics g, Minecraft mc, float partialTick, float scale, float guiScale, boolean showPanel, boolean showToasts) {
         Font font = mc.font;
         OverlayLayout lay = layoutFor(font);
         long gameTime = mc.level.getGameTime();
@@ -93,6 +95,7 @@ public final class SystemOverlay {
         int toastY = OverlayStyle.MARGIN + 2;
         if (showPanel) {
             OverlayLayout.Frame frame = lay.panel(panel(time, gameTime), view);
+            GuiMove.reportDrawn(SystemClientConfig.GUI_MOVE_ID, frame.x() * (double) scale, frame.y() * (double) scale, frame.w(), frame.h(), scale, guiScale);     // GUI Move: where the window really is
             replay(g, font, frame.ops());
             toastY = OverlayMath.toastTop(frame.x(), frame.y(), frame.w(), frame.h(), view.h(), OverlayStyle.TOAST_COLUMN_W, OverlayStyle.MARGIN, 8);
         }

@@ -78,6 +78,9 @@ public class GuiSizeScreen extends Screen {
             b.setMessage(hudLabel());
         }));
 
+        // GUI Move: the sibling of this screen. Sizes are set here, places are set in edit mode (also on the F9 key and /nusmp gui move)
+        addRenderableWidget(new ThemedButton(x0 + listW - 100, 5, 100, 15, com.newuniverse.nusmp.client.ui.move.GuiMoveScreen.tr("gui_move.open", "Move GUIs"),
+                b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.move.GuiMoveScreen(this))));
         int bw = Math.min(100, (listW - 8) / 3);
         addRenderableWidget(new ThemedButton(x0, height - 26, bw, 18, tr("done", "Done"), b -> onClose()));
         addRenderableWidget(new ThemedButton(x0 + bw + 4, height - 26, bw, 18, tr("reset", "Reset all"), b -> {

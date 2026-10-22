@@ -119,6 +119,7 @@ public final class PageUnlockOverlay {
         int h = Math.max(62, SAGE.height(font) + 35);                       // name, the text, the bar: the panel is as tall as its text
         int x = (g.guiWidth() - W) / 2;
         int y = 8 - Math.round((1f - ToastTimeline.slide(age)) * (h + 16));
+        com.newuniverse.nusmp.client.ui.move.GuiMove.report("page_toast", x, 8, W, h);                    // GUI Move: where the toast rests (the layer hook moves it; the slide-in is part of the drawing)
 
         UiPanel.panelScan(g, x, y, W, h, UiTheme.CYAN, 1f, alpha, anim);
         MagicCircle.draw(g, x + 34, y + h / 2f, 29f, anim, UiTheme.CYAN, alpha, MagicCircle.STANDARD, ToastTimeline.build(age));

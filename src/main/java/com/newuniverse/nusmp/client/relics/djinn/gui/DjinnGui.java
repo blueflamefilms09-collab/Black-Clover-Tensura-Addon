@@ -19,6 +19,9 @@ import java.util.Map;
 public final class DjinnGui {
     private DjinnGui() {}
 
+    /** The id of the panel in the GUI Move and GUI Size registries. */
+    public static final String MOVE_ID = "djinn_panel";
+
     private static final GuiState STATE = new GuiState();
     private static final DjinnGuiPainter PAINTER = new DjinnGuiPainter();
     private static final GfxCanvas CANVAS = new GfxCanvas();
@@ -58,6 +61,7 @@ public final class DjinnGui {
      * @param gt      the game time of this frame, {@code partial} the partial tick
      */
     public static void render(GuiGraphics g, Minecraft mc, Snap s, Djinn d, long gt, float partial) {
+        if (com.newuniverse.nusmp.client.ui.move.GuiMove.hidden(MOVE_ID)) return;                     // GUI Move: the player switched the panel off
         float now = gt + partial;
         if (!visible || shownDjinn != d) {
             visible = true;
@@ -88,12 +92,13 @@ public final class DjinnGui {
         int ox = GuiLayout.originX(anchor, g.guiWidth()), oy = GuiLayout.originY(anchor, g.guiHeight());
         // GUI Size: the panel grows from the bottom edge of where the anchor option put it (centre, left or right), so the anchor and its place are kept
         float fx = anchor == GuiLayout.Anchor.BOTTOM_LEFT ? 0f : anchor == GuiLayout.Anchor.BOTTOM_RIGHT ? 1f : 0.5f;
-        boolean sized = com.newuniverse.nusmp.client.ui.GuiScale.begin(g, "djinn_panel", ox + GuiLayout.W * fx, oy + GuiLayout.H);
+        // GUI Move: the panel can be dragged anywhere in edit mode (F9); not moved, it is drawn here as always and GUI Size grows it from this pivot; moved, it is drawn at the saved place
+        boolean sized = com.newuniverse.nusmp.client.ui.move.GuiMove.begin(g, MOVE_ID, ox, oy, GuiLayout.W, GuiLayout.H, ox + GuiLayout.W * fx, oy + GuiLayout.H);
         try {
             PAINTER.paint(CANVAS, theme(d, st.dark), st, ox, oy);
             if (st.phase == 1) com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnPortrait.draw(g, d, st.dark, ox + GuiLayout.MED_CX, oy + GuiLayout.MED_CY, st.time);   // 1.105.0: the tiny figure's head in the circle (the silhouette is the fallback)
         } finally {
-            if (sized) g.pose().popPose();
+            com.newuniverse.nusmp.client.ui.move.GuiMove.end(g, sized);
         }
     }
 }

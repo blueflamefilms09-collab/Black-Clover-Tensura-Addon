@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.scalecast;
 
+import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.scalecast.ScaleVisualConfig;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import net.neoforged.neoforge.common.NeoForge;
 public final class ScaleHud {
     private ScaleHud() {}
 
+    private static final String MOVE_ID = "scale_readout";
     private static String line1 = "", line2 = "";
     private static long seen = Long.MIN_VALUE;
     private static boolean registered;
@@ -49,10 +51,16 @@ public final class ScaleHud {
         if (mc.level.getGameTime() - seen > 6L) return;
         Font font = mc.font;
         int w = Math.max(font.width(line1), font.width(line2)) + 12, h = 24;
+        if (GuiMove.hidden(MOVE_ID)) return;                                           // GUI Move: the player switched the readout off
         int x = g.guiWidth() / 2 - w / 2, y = g.guiHeight() - 80;
-        g.fill(x, y, x + w, y + h, 0x88101418);
-        g.fill(x, y, x + w, y + 1, 0xCCD7B25A);
-        g.drawCenteredString(font, line1, g.guiWidth() / 2, y + 4, 0xFFE8B0);
-        g.drawCenteredString(font, line2, g.guiWidth() / 2, y + 14, 0x9CF0E4);
+        boolean moved = GuiMove.apply(g, MOVE_ID, x, y, w, h);                         // GUI Move: not moved, drawn right here as always
+        try {
+            g.fill(x, y, x + w, y + h, 0x88101418);
+            g.fill(x, y, x + w, y + 1, 0xCCD7B25A);
+            g.drawCenteredString(font, line1, g.guiWidth() / 2, y + 4, 0xFFE8B0);
+            g.drawCenteredString(font, line2, g.guiWidth() / 2, y + 14, 0x9CF0E4);
+        } finally {
+            GuiMove.end(g, moved);
+        }
     }
 }

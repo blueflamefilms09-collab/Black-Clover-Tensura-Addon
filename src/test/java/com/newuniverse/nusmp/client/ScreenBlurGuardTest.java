@@ -136,4 +136,18 @@ class ScreenBlurGuardTest {
         assertTrue(render.indexOf("drawMap(") > render.indexOf("super.render(") && render.indexOf("drawBars(") > render.indexOf("super.render("), "the map and the bars are drawn after super.render");
         assertEquals(null, blurProblem(Files.readString(f)));
     }
+
+    @Test
+    void theGuiMoveEditScreenIsFlatAndDrawsAfterSuper() throws IOException {
+        Path f = CLIENT.resolve("ui/move/GuiMoveScreen.java");
+        String src = stripComments(Files.readString(f));
+        assertTrue(SCREEN_CLASS.matcher(src).find(), "the GUI Move edit screen must be a Screen");
+        String rb = body(src, "void renderBackground(");
+        assertTrue(rb != null, "the edit screen must override renderBackground (a flat dim, no blur)");
+        assertTrue(!rb.contains("super.renderBackground(") && !rb.contains("renderBlurredBackground("), "the dim must not call the blurring vanilla background");
+        String render = body(src, "void render(");
+        assertTrue(render != null && render.contains("super.render("), "render must call super.render (the buttons)");
+        assertTrue(render.indexOf("outline(") > render.indexOf("super.render("), "the outlines are drawn after super.render");
+        assertEquals(null, blurProblem(Files.readString(f)));
+    }
 }
