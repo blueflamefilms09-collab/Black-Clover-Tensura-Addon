@@ -188,7 +188,7 @@ def sigil_blk():
         along = r * np.cos(a - ang)
         d = np.abs(np.sin(a - ang)) * r
         ln = 0.98 if k % 2 == 0 else 0.84
-        th = np.maximum(th, np.clip(1 - d / (0.04 * (1 - (along - 0.72).clip(0, 0.3) / 0.3)), 0, 1) * (along > 0.72) * (along < ln))
+        th = np.maximum(th, np.clip(1 - d / np.maximum(0.04 * (1 - (along - 0.72).clip(0, 0.3) / 0.3), 0.004), 0, 1) * (along > 0.72) * (along < ln))
     broken = ringline(r, 0.62, 0.016) * (np.sin(a * 5) > -0.2) + ringline(r, 0.5, 0.01) * (np.sin(a * 7 + 1) > 0.1) * 0.8
     horn = np.zeros_like(r)
     for sgn in (-1, 1):                                                                         # two horns curving over the centre
