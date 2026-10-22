@@ -61,7 +61,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
         // 1.99.0 (Great Spirits): Salamander a MASSIVE dragon, Undine a GIANT mermaid, Sylph a TINY fairy (the hit boxes follow the canon sizes the renderer draws, client.SpiritLooks)
         SALAMANDER("Salamander", "Salamander", 0xFFFF6A1E, true, 1.8f, 2.5f),
         UNDINE("Undine", "Undine", 0xFF4FA8FF, true, 1.3f, 3.3f),
-        SYLPH("Sylph", "Sylph", 0xFF8CFFC2, true, 0.35f, 0.45f),
+        SYLPH("Sylph", "Sylph", 0xFF8CFFC2, true, 0.4f, 0.6f),
         GNOME("Gnome", "Gnome", 0xFFB08850, false, 1.3f, 3.0f);
 
         public final String display, slot;
@@ -235,7 +235,11 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
         switch (k) {
             case SALAMANDER -> p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 220, 0, true, false));
             case UNDINE -> p.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 220, 0, true, false));
-            case SYLPH -> { p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 220, 0, true, false)); p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 220, 0, true, false)); }
+            case SYLPH -> {
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 220, 0, true, false));
+                p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 220, 0, true, false));
+                if (com.newuniverse.nusmp.sylph.SylphConfig.enabled() && level() instanceof ServerLevel sl) com.newuniverse.nusmp.sylph.SylphSounds.play(sl, getX(), getY() + 0.3, getZ(), "chime");      // her own sound set: a wind chime now and then
+            }
             case GNOME -> p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 220, 0, true, false));
         }
     }
@@ -268,6 +272,7 @@ public class ElementalSpiritLordEntity extends TamableAnimal {
                 t.setDeltaMovement(t.getDeltaMovement().add(0, 0.6, 0));
                 t.hurtMarked = true;
                 VfxSpawn.send(sl, VfxShape.WIND_EMPEROR, from, to, k.color, 16, 1.0f);
+                if (com.newuniverse.nusmp.sylph.SylphConfig.enabled()) com.newuniverse.nusmp.sylph.SylphSounds.play(sl, from.x, from.y, from.z, "gust");      // her own sound set: a gust out of her hand
             }
             case GNOME -> {
                 for (LivingEntity e : sl.getEntitiesOfClass(LivingEntity.class, t.getBoundingBox().inflate(3), x -> x != this && x != owner && x.isAlive() && !x.isAlliedTo(this))) {

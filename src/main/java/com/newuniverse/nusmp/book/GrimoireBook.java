@@ -349,7 +349,7 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
-        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.firecast.FireCasting.run(this, p, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.sylph.SylphCasting.run(this, p, player, mode, () -> com.newuniverse.nusmp.firecast.FireCasting.run(this, p, instance, player, mode)))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
         if (castMagic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onCast(player);      // Scale casting (docs/magic/scale_casting.md): the floating Scale weighs the foe, the weighing animation starts
@@ -462,7 +462,7 @@ public abstract class GrimoireBook extends Skill {
 
     // ---------------------------------------------------------------- VFX helpers
     public void vfx(ServerPlayer p, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
-        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
+        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from)), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
     }
 
     /** Spinning magic circle under the caster in this book's color (every cast). */

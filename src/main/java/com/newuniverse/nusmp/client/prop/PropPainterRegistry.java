@@ -89,5 +89,6 @@ final class PropPainterRegistry {
         MucusPropPainter.register();
         CelestialPropPainter.register();     // Celestial Spirit Magic: the spirits, the Gate and the Spirit King's summon
         FireCastPropPainter.register();      // fire casting: the ball, the spiral, the Salamander and its dragon form
+        SylphPropPainter.register();      // the Sylph: Yuno's wind Spirit Lord, small and powered
     }
 }

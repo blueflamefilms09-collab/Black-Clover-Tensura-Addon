@@ -66,7 +66,7 @@ public class WindBook extends GrimoireBook {
         for (Player ally : p.serverLevel().getEntitiesOfClass(Player.class, new AABB(a, end).inflate(1.5))) {
             if (ally == p || ally.isAlliedTo(p)) ally.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 0));
         }
-        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_GALE, a, end, 0, 24, 1f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_GALE, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, a), end, 0, 24, 1f);      // the Sylph: the gale leaves her hand (the picture only; the hits are the caster's)
         return true;
     }
 
@@ -114,7 +114,7 @@ public class WindBook extends GrimoireBook {
         float s = size(i, p);
         Vec3 a = p.getEyePosition(), dir = p.getViewVector(1f), end = a.add(dir.scale(28));
         b.castCircle(p, 1.5f);
-        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_EMPEROR, a, end, 0, 20, 1.8f * s);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_EMPEROR, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, a), end, 0, 20, 1.8f * s);      // the Sylph: the crescent leaves her hands (the picture only)
         for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, new AABB(a, end).inflate(3 * s))) if (pr.getOwner() != p) pr.discard();
         for (LivingEntity t : along(p, a, end, 3.0 * s)) {
             double f = Math.min(1, t.position().distanceTo(a) / 28);

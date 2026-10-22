@@ -126,7 +126,12 @@ public class SpiritLordEntity extends TamableAnimal implements GeoEntity {
             switch (k) {
                 case SALAMANDER -> { VfxSpawn.send(sl, VfxShape.FLAME_TRAIL, from, to, k.color, 14, 0.8f); t.igniteForSeconds(4); }
                 case UNDINE -> { VfxSpawn.send(sl, VfxShape.WATER_SPLASH, to, to, k.color, 18, 0.9f); t.clearFire(); }
-                case SYLPH -> { VfxSpawn.send(sl, VfxShape.WIND_SLASH, from, to, k.color, 14, 1f); t.setDeltaMovement(t.getDeltaMovement().add(0, 0.5, 0)); t.hurtMarked = true; }
+                case SYLPH -> {
+                    VfxSpawn.send(sl, VfxShape.WIND_SLASH, from, to, k.color, 14, 1f);
+                    t.setDeltaMovement(t.getDeltaMovement().add(0, 0.5, 0));
+                    t.hurtMarked = true;
+                    if (com.newuniverse.nusmp.sylph.SylphConfig.enabled()) com.newuniverse.nusmp.sylph.SylphSounds.play(sl, from.x, from.y, from.z, "gust");      // her own sound set, not the basic spirit's
+                }
                 case GNOME -> VfxSpawn.send(sl, VfxShape.EARTH_SPIKES, position(), t.position(), k.color, 18, 1.2f);
                 case BLACK_DEVIL -> VfxSpawn.send(sl, VfxShape.ANTI_MAGIC_SLASH, from, to, k.color, 16, 1.2f);
             }
