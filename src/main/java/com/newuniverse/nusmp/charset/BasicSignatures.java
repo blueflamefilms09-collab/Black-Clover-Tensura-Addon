@@ -35,8 +35,7 @@ public final class BasicSignatures {
     static {
         // Crimson Lion / Vermillion: the Crimson Lion King is Fuegoleon's (docs/attributes/flame_rebuild.md); his set does not list it
         reserve("book_fire", "crimson_lion_king", "fuegoleon", "Fuegoleon's Crimson Lion King (flame_rebuild.md); no set lists it");
-        // Noelle's Valkyrie variations (owner's picture 126, docs/magic/noelle_forms.md); her set leaves them to the Valkyrie lane
-        reserve("book_water", "mermaid_form", "noelle", "Noelle's Mermaid Form (picture 126)");
+        // Noelle's dragon forms (owner's picture 126, docs/magic/noelle_forms.md); her set leaves them to the Valkyrie lane. The Mermaid Form stays open to every Water mage (the owner's decision in noelle_forms.md)
         reserve("book_water", "sea_dragon_god_form", "noelle", "Noelle's Dragon Form (picture 126)");
         reserve("book_water", "black_dragon_form", "noelle", "Noelle's Black Dragon Form (picture 126)");
         // pages already locked to one character by CharacterSpells but still listed in another book
