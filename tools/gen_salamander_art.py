@@ -322,9 +322,9 @@ def flame_lick(w, h, pal, seed):
     n = fbm(rng, w, h, 3, 4)
     body = np.clip(body * (0.85 + 0.3 * n), 0.0, 1.0)
     a = smoothstep(body, 0.05, 0.22)
-    t = np.clip(body * 1.3 - 0.1, 0.0, 1.0)[..., None]
+    t = np.clip(body * 1.05 - 0.12, 0.0, 1.0)[..., None]
     red, org, yel, wht = rgb("#E8341A"), rgb("#FF8A20"), rgb("#FFD860"), rgb("#FFF6D0")
-    c = red + (org - red) * np.clip(t * 2.0, 0, 1) + (yel - org) * np.clip(t * 2.0 - 1.0, 0, 1) * 0.9 + (wht - yel) * np.clip(t * 2.4 - 1.6, 0, 1)
+    c = red + (org - red) * np.clip(t * 2.0, 0, 1) + (yel - org) * np.clip(t * 2.0 - 1.0, 0, 1) * 0.9 + (wht - yel) * np.clip(t * 2.6 - 2.0, 0, 1)
     g = np.zeros((h, w, 4), dtype=np.float32)
     g[..., :3] = np.clip(c, 0, 255) * a[..., None]
     g[..., 3] = a * 255.0

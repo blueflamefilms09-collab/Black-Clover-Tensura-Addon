@@ -1,0 +1,5 @@
+{
+ "_comment": "Fire casting (docs/magic/fire_casting.md): Mereoleona's finisher punch. The spell's own flame stream (FLAMEFX_CAST, the shape Calidos Brachium and the other Fire pages draw) leaves the FIST (firecast.FireCastRules.fistPosition: in front of the shoulder, low, on the right), and a burst opens on the foe the fist landed on.",
+ "firecast_punch_finisher": {"layer": "FlameFxLayer", "shape": "FLAMEFX_CAST", "from": [-0.35, 1.3, 0.9], "to": [-0.1, 1.3, 4.5], "power": 1.1, "duration": 18, "cam": [-3.6, 1.7, -1.4], "target": [0, 1.3, 2.2], "ages": [2, 4, 7, 11, 15], "figures": [[0, 0, 0, 1.8], [0, 0, 2.6, 1.8]], "sky": [0.3, 0.34, 0.44],
+  "also": [{"shape": "FLAMEFX_BURST", "from": [0, 1.2, 2.5], "to": [0, 1.2, 2.5], "power": 1.1, "duration": 24, "ages": [0, 0, 2, 5, 9]}]}
+}

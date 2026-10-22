@@ -22,7 +22,8 @@ class SafeAdditiveTextureScanTest {
     private static final Path TEX = Path.of("src/main/resources/assets/nusmp/textures");
     private static final String[][] SCOPE = {
             {"entity/weapon_vu", ""}, {"visual_upgrade", "vu_fx|halo|glow|veins|nebula|star"}, {"entity/weapon", "_glow|veins|halo|nebula|star"}, {"entity/weapon/up", "_glow|veins|halo|nebula|star"},
-            {"entity/djinn", "glow|rune|nebula|star|halo"}, {"relic_worn", "glow|nebula|star|halo|atlas|shimmer|fx"}, {"aura", "glow"}};
+            {"entity/djinn", "glow|rune|nebula|star|halo"}, {"relic_worn", "glow|nebula|star|halo|atlas|shimmer|fx"}, {"aura", "glow"},
+            {"entity", "firecast_salamander_fx|firecast_dragon_fx"}};
 
     private static boolean wanted(String name, String keys) {
         if (!name.endsWith(".png") || name.startsWith("time_")) return false;

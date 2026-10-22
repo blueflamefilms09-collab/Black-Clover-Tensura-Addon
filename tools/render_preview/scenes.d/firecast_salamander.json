@@ -5,7 +5,7 @@
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
-  "glow": "FFFFFFFF",
+  "glow": "00000000",
   "ages": [
    0
   ],
@@ -70,7 +70,7 @@
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
-  "glow": "FFFFFFFF",
+  "glow": "00000000",
   "ages": [
    0
   ],
@@ -113,7 +113,7 @@
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
-  "glow": "FFFFFFFF",
+  "glow": "00000000",
   "ages": [
    0,
    5,
@@ -147,7 +147,7 @@
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
-  "glow": "FFFFFFFF",
+  "glow": "00000000",
   "ages": [
    0,
    8,

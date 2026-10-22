@@ -30,10 +30,9 @@ public final class FireCastProps implements MagicProps.Behavior {
     @Override
     public void tick(MagicPropEntity e, ServerLevel sl) {
         int variant = FireCastRules.variant(e.param());
-        if (variant == FireCastRules.V_BALL) return;                                    // it hangs where it was put
+        if (variant == FireCastRules.V_BALL || e.life() % NUDGE != 0) return;           // the ball hangs where it was put; the others are looked after every few ticks
         LivingEntity o = e.owner();
         if (o == null) { e.expire(); return; }
-        if (e.life() % NUDGE != 0) return;
         switch (variant) {
             case FireCastRules.V_SPIRAL -> {
                 Vec3 at = o.getEyePosition().add(o.getViewVector(1f).scale(1.5)).subtract(0, 0.5, 0);

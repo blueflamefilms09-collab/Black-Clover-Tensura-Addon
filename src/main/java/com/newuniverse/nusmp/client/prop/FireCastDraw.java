@@ -21,22 +21,20 @@ import net.minecraft.util.Mth;
 public final class FireCastDraw {
     private FireCastDraw() {}
 
+    /** A level of detail (or the glow-only model): its own model and its own copy of the sheet (a lower level reads a smaller one), the animation file of the full model, no glow pass. */
     private static GeoSpec lod(GeoSpec base, String modelId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(), base.texture(), base.glow());
-    }
-
-    private static GeoSpec fx(GeoSpec base, String modelId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(), base.glow(), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
     }
 
     private static final GeoSpec SAL = GeoSpec.of("firecast", "salamander"), DRAGON = GeoSpec.of("firecast", "dragon");
     private static final GeoSpec[] SAL_LOD = {SAL, lod(SAL, "firecast_salamander_lod1"), lod(SAL, "firecast_salamander_lod2")};
     private static final GeoSpec[] DRAGON_LOD = {DRAGON, lod(DRAGON, "firecast_dragon_lod1"), lod(DRAGON, "firecast_dragon_lod2")};
-    private static final GeoSpec SAL_FX = fx(SAL, "firecast_salamander_fx"), DRAGON_FX = fx(DRAGON, "firecast_dragon_fx");
+    private static final GeoSpec SAL_FX = lod(SAL, "firecast_salamander_fx"), DRAGON_FX = lod(DRAGON, "firecast_dragon_fx");
     private static final ResourceLocation FLAME = AuraRender.tex("particle/flamefx_flame"), EMBER = AuraRender.tex("particle/flamefx_ember"), BURST = AuraRender.tex("particle/flamefx_burst");
     static final int FB = PropDraw.FULL_BRIGHT, BODY = 0xFF5A14, CORE = 0xFFA838, GLOW = 0xFF8A2A, HOT = 0xFFD070;
     /** The small form is drawn at this scale, the dragon at its own size (the models are built in 1/16 block units). */
-    public static final float SMALL_SCALE = 0.14f, DRAGON_SCALE = 0.6f;
+    public static final float SMALL_SCALE = 0.14f, DRAGON_SCALE = 0.5f;
 
     /**
      * One Salamander in the pose's space (its anchor at the origin, facing +z): the body at the level of detail, the glow-only model (eyes, the furnace of the mouth, and the licks of flame on the wing tips and the tail's barb) on the two nearer levels.
@@ -49,7 +47,7 @@ public final class FireCastDraw {
         pose.pushPose();
         if (dragon) {
             pose.translate(0f, -1.07f * s, 0.47f * s);                                              // the body's centre on the anchor
-            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-10f + 4f * Mth.sin(age * 0.07f)));    // nose a little up, hanging in the air
+            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-26f + 4f * Mth.sin(age * 0.07f)));    // nose a little up, hanging in the air
         } else {
             pose.translate(0f, -0.01f, 0.02f);
         }

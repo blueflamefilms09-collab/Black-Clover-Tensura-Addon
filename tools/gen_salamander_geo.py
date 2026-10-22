@@ -27,7 +27,7 @@ import gen_salamander_art as A  # noqa: E402
 
 FORMS = {
     "salamander": dict(pal=A.SMALL, k=1.0, S=1, seed=1500, d=6.0, muscular=False, wk=1.0, neck3=False, neck_up=2.0),
-    "dragon": dict(pal=A.BIG, k=1.9, S=2, seed=1600, d=7.0, muscular=True, wk=0.9, neck3=True, neck_up=9.0),
+    "dragon": dict(pal=A.BIG, k=1.9, S=2, seed=1600, d=7.0, muscular=True, wk=1.5, neck3=True, neck_up=9.0),
 }
 WING_D = 7.2                                           # texels per unit of the wing sheet at S = 1
 WING_SPAN, WING_INNER, WING_CHORD = 44.2, 14.2, 22.0
@@ -68,7 +68,7 @@ def build(form, lod, atlas, fx=False):
     f = FORMS[form]
     k, d = f["k"], f["d"]
     ident = "firecast_" + form + ("_fx" if fx else "" if lod == 0 else "_lod%d" % lod)
-    m = L.Model(ident, atlas, seed=f["seed"] + lod)
+    m = L.Model(ident, atlas, seed=f["seed"] + lod, tex_scale=0.5 if fx else {0: 1.0, 1: 0.5, 2: 0.25}[lod])
     sk = ("skin", d)
 
     DY = -5.0                                                         # the whole creature sits lower: a crouch, belly near the ground
@@ -304,8 +304,11 @@ def main():
             rows.append((m.id, m.cubes(), m.quads()))
             if not count_only:
                 m.save()
+                if fx:
+                    at.save_glow(m.id, 0.5)
+                else:
+                    at.save_color(m.id, m.tex_scale)
         if not count_only:
-            at.save("firecast_" + form)
             L.write_animations("firecast_" + form, animations(form))
         for r in rows:
             print("%-28s cubes %4d  quads %5d" % r)

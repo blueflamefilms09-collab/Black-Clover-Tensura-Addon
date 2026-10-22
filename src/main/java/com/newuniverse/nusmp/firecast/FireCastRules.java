@@ -193,7 +193,7 @@ public final class FireCastRules {
     /** The big dragon's mouth: out in front of its body (the neck stretched forward), at its head height. */
     public static double[] dragonMouth(double px, double py, double pz, double bodyYaw) {
         double[] d = dragonPosition(px, py, pz, bodyYaw), a = axes(bodyYaw);
-        return new double[]{d[0] + a[0] * 3.0, d[1] + 0.25, d[2] + a[1] * 3.0};
+        return new double[]{d[0] + a[0] * 2.6, d[1] + 0.9, d[2] + a[1] * 2.6};
     }
 
     /**

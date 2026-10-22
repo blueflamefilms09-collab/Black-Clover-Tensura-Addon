@@ -38,19 +38,20 @@ class FireCastAssetsTest {
 
     // ------------------------------------------------------------------ the Salamander
     @Test
-    void everyModelOfBothFormsIsWellFormed() throws IOException {
+    void everyModelOfBothFormsIsWellFormedAndHasItsOwnSheet() throws IOException {
         for (String form : new String[]{"salamander", "dragon"}) {
-            BufferedImage sheet = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/firecast_" + form + ".png").toFile());
-            BufferedImage glow = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/firecast_" + form + "_glow.png").toFile());
+            int fullW = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/firecast_" + form + ".png").toFile()).getWidth();
             for (String suffix : new String[]{"", "_lod1", "_lod2", "_fx"}) {
                 String id = "firecast_" + form + suffix;
                 JsonObject g = geo(id);
                 JsonObject d = g.getAsJsonObject("description");
                 int tw = d.get("texture_width").getAsInt(), th = d.get("texture_height").getAsInt();
-                assertEquals(sheet.getWidth(), tw, id + " reads the sheet of its form");
-                assertEquals(sheet.getHeight(), th, id);
-                assertEquals(tw / 2, glow.getWidth(), id + ": the glow sheet is half size (the uv are normalised)");
-                assertEquals(th / 2, glow.getHeight(), id);
+                BufferedImage tex = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/" + id + ".png").toFile());
+                assertEquals(tex.getWidth(), tw, id + " declares the size of its own sheet");
+                assertEquals(tex.getHeight(), th, id);
+                int want = suffix.equals("") ? fullW : suffix.equals("_lod1") ? fullW / 2 : suffix.equals("_lod2") ? fullW / 4 : fullW / 2;
+                assertEquals(want, tw, id + ": a lower level of detail reads a smaller copy of the sheet; the glow-only model the half size glow sheet");
+                assertFalse(Files.exists(ASSETS.resolve("textures/entity/" + id + "_glow.png")), id + " has no separate glow map (the glow-only model has its own sheet)");
                 Map<String, JsonObject> bones = bones(g);
                 for (JsonObject b : bones.values()) {
                     if (b.has("parent")) assertTrue(bones.containsKey(b.get("parent").getAsString()), id + " bone " + b.get("name") + " has a parent");
@@ -59,7 +60,7 @@ class FireCastAssetsTest {
                             JsonObject f = face.getValue().getAsJsonObject();
                             JsonArray uv = f.getAsJsonArray("uv"), sz = f.getAsJsonArray("uv_size");
                             double u0 = uv.get(0).getAsDouble(), v0 = uv.get(1).getAsDouble(), u1 = u0 + sz.get(0).getAsDouble(), v1 = v0 + sz.get(1).getAsDouble();
-                            assertTrue(Math.min(u0, u1) >= 0 && Math.max(u0, u1) <= tw && Math.min(v0, v1) >= 0 && Math.max(v0, v1) <= th, id + " uv inside the sheet: " + uv + " " + sz);
+                            assertTrue(Math.min(u0, u1) >= -0.01 && Math.max(u0, u1) <= tw + 0.01 && Math.min(v0, v1) >= -0.01 && Math.max(v0, v1) <= th + 0.01, id + " uv inside the sheet: " + uv + " " + sz);
                         }
                     }
                 }

@@ -81,20 +81,31 @@ class Atlas:
             self.glow[y:y + h, x:x + w] = g
         return self.regions[name]
 
-    def save(self, sheet):
+    def save_color(self, name, scale=1.0):
+        """The colour sheet as textures/entity/<name>.png, at `scale` times its size (a lower level of detail reads a smaller copy of the same layout)."""
         os.makedirs(os.path.join(ROOT, "textures", "entity"), exist_ok=True)
-        Image.fromarray(np.clip(self.color, 0, 255).astype(np.uint8), "RGBA").save(os.path.join(ROOT, "textures", "entity", sheet + ".png"), optimize=True)
-        g = self.glow
-        gw, gh = self.w // 2, self.h // 2                                     # the glow sheet is half the size: the uv are normalised, so the same layout reads from it
-        small = Image.fromarray(np.clip(g, 0, 255).astype(np.uint8), "RGBA").resize((gw, gh), Image.LANCZOS)
-        small.save(os.path.join(ROOT, "textures", "entity", sheet + "_glow.png"), optimize=True)
+        img = Image.fromarray(np.clip(self.color, 0, 255).astype(np.uint8), "RGBA")
+        if scale != 1.0:
+            img = img.resize((int(self.w * scale), int(self.h * scale)), Image.LANCZOS)
+        img.save(os.path.join(ROOT, "textures", "entity", name + ".png"), optimize=True)
+
+    def save_glow(self, name, scale=0.5):
+        """The glow sheet as textures/entity/<name>.png (the glow-only model's own texture, drawn additive), at `scale` times the sheet's size."""
+        os.makedirs(os.path.join(ROOT, "textures", "entity"), exist_ok=True)
+        img = Image.fromarray(np.clip(self.glow, 0, 255).astype(np.uint8), "RGBA")
+        img = img.resize((int(self.w * scale), int(self.h * scale)), Image.LANCZOS)
+        a = np.asarray(img).copy()
+        a[a[..., 3] == 0] = 0                                                  # nothing under a fully transparent texel (the safe additive rule)
+        img = Image.fromarray(a, "RGBA")
+        img.save(os.path.join(ROOT, "textures", "entity", name + ".png"), optimize=True)
 
 
 class Model:
     """Bones and cubes in the file frame. A cube's faces name a region of the atlas (and which part of it); only the faces that are given are drawn (a face that is not given costs nothing)."""
 
-    def __init__(self, ident, atlas, seed=1):
+    def __init__(self, ident, atlas, seed=1, tex_scale=1.0):
         self.id, self.atlas, self.rng = ident, atlas, np.random.default_rng(seed)
+        self.tex_scale = tex_scale                                           # the model reads a copy of the sheet at this scale (a LOD, the glow-only model)
         self.bones, self.order = {}, []
         self.bone("root", (0, 0, 0))
         self.count = 0
@@ -157,8 +168,16 @@ class Model:
 
     def save(self):
         bones = [self.bones[n] for n in self.order]
+        k = self.tex_scale
+        if k != 1.0:                                                         # the same layout on a smaller copy of the sheet
+            bones = json.loads(json.dumps(bones))
+            for b in bones:
+                for c in b["cubes"]:
+                    for f in c["uv"].values():
+                        f["uv"] = [v * k for v in f["uv"]]
+                        f["uv_size"] = [v * k for v in f["uv_size"]]
         geo = {"format_version": "1.12.0", "minecraft:geometry": [{
-            "description": {"identifier": "geometry." + self.id, "texture_width": self.atlas.w, "texture_height": self.atlas.h,
+            "description": {"identifier": "geometry." + self.id, "texture_width": int(self.atlas.w * k), "texture_height": int(self.atlas.h * k),
                             "visible_bounds_width": 8, "visible_bounds_height": 8, "visible_bounds_offset": [0, 1, 0]}, "bones": bones}]}
         os.makedirs(os.path.join(ROOT, "geo", "entity"), exist_ok=True)
         with open(os.path.join(ROOT, "geo", "entity", self.id + ".geo.json"), "w", newline="\n") as f:
