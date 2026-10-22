@@ -112,8 +112,11 @@ public final class GrimoireAcceptance {
         if (starters.isEmpty()) starters.addAll(List.of(MagicType.FLAME, MagicType.WATER, MagicType.WIND, MagicType.EARTH));
         List<MagicType> soulPool = MagicType.forSoul(soul == null ? NightmareSouls.NO_NIGHTMARE : soul);
         List<MagicType> both = new java.util.ArrayList<>(starters);
+        both.removeIf(com.newuniverse.nusmp.fairytail.storm.StormGate::hidden);                       // Storm Magic is a Fairy Tail staff magic (config storm.staffOnly)
+        starters.removeIf(com.newuniverse.nusmp.fairytail.storm.StormGate::hidden);
         both.retainAll(soulPool);
-        return both.isEmpty() || soulPool.size() == MagicType.values().length - 2 ? starters : both;   // all but Anti-Magic and Kotodama
+        if (starters.isEmpty()) starters.addAll(List.of(MagicType.FLAME, MagicType.WATER, MagicType.WIND, MagicType.EARTH));
+        return both.isEmpty() || soulPool.size() == MagicType.values().length - 2 - com.newuniverse.nusmp.fairytail.storm.StormGate.hiddenCount() ? starters : both;   // all but Anti-Magic and Kotodama (and Storm while it is staff-only)
     }
 
     /** Weighted kingdom roll (config). */

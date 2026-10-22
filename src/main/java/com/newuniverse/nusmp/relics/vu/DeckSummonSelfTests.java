@@ -19,7 +19,7 @@ public final class DeckSummonSelfTests {
     public static void register() { SelfTests.register("visual.deck_summon", server -> run()); }
 
     static SelfTests.Result run() throws IOException {
-        if (VfxShape.valueOf("DECK_SUMMON").ordinal() != VfxShape.values().length - 1) return SelfTests.Result.fail("DECK_SUMMON is not the last VfxShape (ordinals are saved)");
+        if (VfxShape.valueOf("DECK_SUMMON").ordinal() != 439) return SelfTests.Result.fail("DECK_SUMMON moved from its shipped ordinal 439 (ordinals are saved; shapes are only ever appended after it)");   // 439 = its place when it shipped; later shapes (the Storm Magic ones) are appended behind it
         try (InputStream in = DeckSummonSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/deck_summon.png")) {
             if (in == null) return SelfTests.Result.fail("the summon atlas textures/particle/deck_summon.png is not in the jar");
         }
