@@ -168,5 +168,7 @@ public enum PropKind {
     SCALE_BALANCE,
     /** Fire casting (firecast.FireCastProps): FIRECAST_1 = Magna's tossed ball (variant 0) and Leopold's charge spiral (1); FIRECAST_2 = Fuegoleon's small Salamander on the shoulder (2) and its big dragon form (3); the variant is the low four bits of the param (painter client.prop.FireCastPropPainter) */
     FIRECAST_1,
-    FIRECAST_2
+    FIRECAST_2,
+    /** Spirit of Darkness (spiritdark.SpiritDarkProps): the shadow-wisp companion (variant 0) and the powered demon form (variant 1); the param word is spiritdark.SpiritDarkRules (painter client.prop.SpiritDarkPropPainter) */
+    SPIRITDARK_1
 }

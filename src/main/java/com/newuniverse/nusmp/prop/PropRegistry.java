@@ -83,5 +83,6 @@ final class PropRegistry {
         BoneJaProps.init();
         TreeProps.init();                    // 1.93.0 nature-magic rebuild: starts the props of Tree, Vine, Plant, Poison Plant, Mud and Mucus Magic
         com.newuniverse.nusmp.firecast.FireCastProps.init();      // fire casting: the ball, the spiral, the Salamander
+        com.newuniverse.nusmp.spiritdark.SpiritDarkProps.init();    // Spirit of Darkness: the companion and the powered form
     }
 }
