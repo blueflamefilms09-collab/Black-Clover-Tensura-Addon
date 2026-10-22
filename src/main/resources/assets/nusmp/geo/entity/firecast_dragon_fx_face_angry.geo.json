@@ -1,0 +1,189 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.firecast_dragon_fx_face_angry",
+    "texture_width": 512,
+    "texture_height": 128,
+    "visible_bounds_width": 8,
+    "visible_bounds_height": 8,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "body",
+     "pivot": [
+      0.0,
+      26.0,
+      0.0
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "chest",
+     "pivot": [
+      0.0,
+      44.0,
+      -5.0
+     ],
+     "cubes": [],
+     "parent": "body"
+    },
+    {
+     "name": "neck1",
+     "pivot": [
+      0.0,
+      60.0,
+      -8.0
+     ],
+     "cubes": [],
+     "parent": "chest"
+    },
+    {
+     "name": "neck2",
+     "pivot": [
+      0.0,
+      73.0,
+      -12.0
+     ],
+     "cubes": [],
+     "parent": "neck1"
+    },
+    {
+     "name": "neck3",
+     "pivot": [
+      0.0,
+      87.0,
+      -18.0
+     ],
+     "cubes": [],
+     "parent": "neck2"
+    },
+    {
+     "name": "neck4",
+     "pivot": [
+      0.0,
+      98.0,
+      -27.0
+     ],
+     "cubes": [],
+     "parent": "neck3"
+    },
+    {
+     "name": "head",
+     "pivot": [
+      0.0,
+      103.0,
+      -36.0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -16.037999999999997,
+        101.64999999999999,
+        -47.28
+       ],
+       "size": [
+        9.899999999999999,
+        9.899999999999999,
+        0.0
+       ],
+       "rotation": [
+        0.0,
+        90.0,
+        -0.0
+       ],
+       "pivot": [
+        -11.088,
+        106.6,
+        -47.28
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          112,
+          112
+         ]
+        }
+       }
+      },
+      {
+       "origin": [
+        6.138,
+        101.64999999999999,
+        -47.28
+       ],
+       "size": [
+        9.899999999999999,
+        9.899999999999999,
+        0.0
+       ],
+       "rotation": [
+        0.0,
+        -90.0,
+        -0.0
+       ],
+       "pivot": [
+        11.088,
+        106.6,
+        -47.28
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          112,
+          0
+         ],
+         "uv_size": [
+          112,
+          112
+         ]
+        }
+       }
+      }
+     ],
+     "parent": "neck4",
+     "rotation": [
+      -16.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "jaw",
+     "pivot": [
+      0.0,
+      98.2,
+      -38.88
+     ],
+     "cubes": [],
+     "parent": "head",
+     "rotation": [
+      -9.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

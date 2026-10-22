@@ -33,6 +33,7 @@ public final class FireCastBoot {
         if (done) return;
         done = true;
         ITEMS.register(modBus);
+        SalamanderSounds.SOUNDS.register(modBus);                                                    // the Salamander's creature sounds (docs/magic/fire_casting.md, 4.2)
         container.registerConfig(ModConfig.Type.SERVER, FireCastConfig.SPEC, "nusmp-firecast-server.toml");
         modBus.addListener(FireCastNet::registerPayloads);
         FireCastEvents.register(NeoForge.EVENT_BUS);

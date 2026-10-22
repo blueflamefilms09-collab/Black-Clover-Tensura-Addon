@@ -20,6 +20,12 @@ public final class FireCastLod {
     public static final int[] SALAMANDER_QUADS = {486, 278, 98}, DRAGON_QUADS = {618, 314, 91};
     /** The glow-only models (the slit eyes, the furnace of the mouth, licks of flame on the wing tips and the tail's barb), drawn additive on the full and half levels. */
     public static final int SALAMANDER_FX_QUADS = 13, DRAGON_FX_QUADS = 17;
+    /**
+     * The face plates (docs/magic/fire_casting.md, 4.2): the most quads one face model adds on the FULL level (two eye plates, plus the mouth plate of the roaring face). A Salamander with a non-calm face draws at
+     * most this many quads more, never on the half or low level. The cost of a full form below includes them whether or not a face is on (the budget is kept honest, not tight), and a unit test holds the face files
+     * under {@link #MAX_FACE_QUADS} (the owner's "no more than 20 quads" for the faces).
+     */
+    public static final int SALAMANDER_FACE_QUADS = 3, DRAGON_FACE_QUADS = 3, MAX_FACE_QUADS = 20;
     /** The larger of the two glow-only models (kept for the callers that only need a bound). */
     public static final int FX_QUADS = Math.max(SALAMANDER_FX_QUADS, DRAGON_FX_QUADS);
     /** The owner-approved ceilings of the models (a unit test holds the generated files under them). */
@@ -32,11 +38,11 @@ public final class FireCastLod {
     /** The quads all fire casting props together may add to one frame. */
     public static final int FRAME_QUADS = 3200;
 
-    /** The quads one form costs at a level (body and glow-only model); 0 for CULL. */
+    /** The quads one form costs at a level (body, glow-only model and, on the full level, the largest face); 0 for CULL. */
     public static int cost(boolean dragon, int lod) {
         if (lod >= CULL) return 0;
         int[] body = dragon ? DRAGON_QUADS : SALAMANDER_QUADS;
-        return body[lod] + (lod <= HALF ? (dragon ? DRAGON_FX_QUADS : SALAMANDER_FX_QUADS) : 0);
+        return body[lod] + (lod <= HALF ? (dragon ? DRAGON_FX_QUADS : SALAMANDER_FX_QUADS) : 0) + (lod == FULL ? (dragon ? DRAGON_FACE_QUADS : SALAMANDER_FACE_QUADS) : 0);
     }
 
     /**

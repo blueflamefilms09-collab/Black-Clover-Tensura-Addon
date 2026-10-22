@@ -65,6 +65,8 @@ public final class FireCasting {
         double effectDamage = 1.0, effectSize = 1.0;
         // the live props (entity ids) and whether each holds a slot of its ledger
         UUID ball, spiral, spirit, dragon;
+        /** The Salamander's moods: which pose, face and sound for what happens (pure state, a dozen numbers). */
+        final SalamanderMoodRules.Tracker mood = new SalamanderMoodRules.Tracker();
     }
 
     /** The custom particle theme of the fire styles (looked up once, not per call). */
@@ -361,6 +363,36 @@ public final class FireCasting {
         }
         if (s.spirit != null) { Salamander.unlink(p, s, true); return; }
         Salamander.link(p, s);
+    }
+
+    // ================================================================================================ the Salamander's moods (its owner is hurt, strikes, kills, dies)
+    private static State withSalamander(UUID id) {
+        State s = STATES.isEmpty() ? null : STATES.get(id);
+        return s != null && (s.spirit != null || s.dragon != null) ? s : null;
+    }
+
+    /** The owner took damage: the Salamander flinches (small) or is hurt (big). Cooldown-bound in the tracker. */
+    public static void onOwnerHurt(ServerPlayer p) {
+        State s = withSalamander(p.getUUID());
+        if (s != null) SalamanderMood.event(p, s, SalamanderMoodRules.Event.DAMAGED);
+    }
+
+    /** The owner struck something with their own hand or weapon (the big form swipes with a claw). */
+    public static void onOwnerMelee(ServerPlayer p) {
+        State s = withSalamander(p.getUUID());
+        if (s != null) SalamanderMood.event(p, s, SalamanderMoodRules.Event.OWNER_MELEE);
+    }
+
+    /** The owner killed something: the small form puffs up proudly, the big form roars. */
+    public static void onOwnerKill(ServerPlayer p) {
+        State s = withSalamander(p.getUUID());
+        if (s != null) SalamanderMood.event(p, s, SalamanderMoodRules.Event.OWNER_KILL);
+    }
+
+    /** The owner died (called before {@link #forget} takes the props away): a whimper, heard by the players nearby. */
+    public static void onOwnerDeath(ServerPlayer p) {
+        State s = withSalamander(p.getUUID());
+        if (s != null) SalamanderMood.event(p, s, SalamanderMoodRules.Event.OWNER_DEATH);
     }
 
     // ================================================================================================ upkeep and cleanup

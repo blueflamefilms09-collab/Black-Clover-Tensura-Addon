@@ -1,0 +1,1470 @@
+{
+ "_comment": "The Salamander's mood poses and faces (docs/magic/fire_casting.md, 4.2). Written by tools/gen_salamander_scenes.py; param = 100000 + face * 10000 + variant * 1000 + lod * 100 + pose id.",
+ "firecast_pose_small_grip_tighten": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   11,
+   17,
+   22,
+   28
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "grip_tighten",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_head_tilt": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   7,
+   14,
+   22,
+   29,
+   36
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "head_tilt",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_tail_flick": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   5,
+   10,
+   14,
+   19,
+   24
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "tail_flick",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_wing_stretch": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   9,
+   18,
+   26,
+   35,
+   44
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "wing_stretch",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_yawn": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   10,
+   19,
+   29,
+   38,
+   48
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "yawn",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_flinch": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   3,
+   6,
+   8,
+   11,
+   14
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "flinch",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_puff_up": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   7,
+   14,
+   22,
+   29,
+   36
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "puff_up",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_small_sleepy_curl": {
+  "kind": "geo",
+  "model": "firecast_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   8,
+   16,
+   24,
+   32,
+   40
+  ],
+  "tile": [
+   360,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "sleepy_curl",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.95,
+     0.3
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "firecast_pose_big_hover": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   8,
+   16,
+   24,
+   32,
+   40
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hover",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_roar": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   13,
+   19,
+   26,
+   32
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "roar",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_wing_display": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   6,
+   13,
+   19,
+   26,
+   32
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "wing_display",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_claw_swipe": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   4,
+   7,
+   11,
+   14,
+   18
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "claw_swipe",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_hurt": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   3,
+   6,
+   10,
+   13,
+   16
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_descend": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   2,
+   3,
+   5,
+   6,
+   8
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "descend",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_pose_big_land": {
+  "kind": "geo",
+  "model": "firecast_dragon",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   2,
+   5,
+   7,
+   10,
+   12
+  ],
+  "tile": [
+   340,
+   360
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "land",
+  "views": [
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 5,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     3.6,
+     0.3
+    ],
+    "dist": 17.0
+   }
+  ]
+ },
+ "firecast_face_small_calm": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 102000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_calm": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 103000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_small_alert": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 112000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_alert": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 113000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_small_angry": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 122000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_angry": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 123000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_small_sleepy": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 132000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_sleepy": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 133000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_small_smug": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 142000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_smug": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 143000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_small_roaring": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 152000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_face_big_roaring": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 153000,
+  "figure": false,
+  "ages": [
+   24
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side (right)",
+    "yaw": -90,
+    "pitch": 4,
+    "target": [
+     0.0,
+     4.2,
+     0.9
+    ],
+    "dist": 3.2
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_combo_small_breathe_roaring": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 152001,
+  "figure": false,
+  "ages": [
+   8,
+   14,
+   20
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_combo_small_yawn_sleepy": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 132006,
+  "figure": false,
+  "ages": [
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     -0.4,
+     1.62,
+     0.2
+    ],
+    "dist": 0.55
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_combo_big_roar_roaring": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 153002,
+  "figure": false,
+  "ages": [
+   8,
+   14,
+   20
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "firecast_combo_big_swipe_angry": {
+  "kind": "prop",
+  "example": "FireCastProp",
+  "realFiles": [
+   "client/prop/FireCastDraw.java",
+   "firecast/FireCastLod.java",
+   "firecast/FireCastRules.java",
+   "firecast/SalamanderMoodRules.java"
+  ],
+  "propKind": "BRONZE_1",
+  "param": 123004,
+  "figure": false,
+  "ages": [
+   6,
+   9
+  ],
+  "tile": [
+   380,
+   380
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0.5,
+     4.2,
+     1.5
+    ],
+    "dist": 3.4
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ }
+}

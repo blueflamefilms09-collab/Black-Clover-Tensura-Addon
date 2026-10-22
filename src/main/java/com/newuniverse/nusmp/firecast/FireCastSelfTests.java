@@ -32,6 +32,69 @@ public final class FireCastSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("magic.fire_casting", FireCastSelfTests::run);
+        SelfTests.register("magic.salamander_moods", FireCastSelfTests::runMoods);
+    }
+
+    /**
+     * The Salamander's moods (docs/magic/fire_casting.md, 4.2) on the real server: the creature sound events are registered and their files, subtitles and the pose clips and face models are in the jar;
+     * a stand-in player's Salamander really takes the pose and face the table gives a link and a hit (written to the prop's synced param), a hit twice in a row does not change it again (the cooldown),
+     * the clients' reading of the param gives the pose back, the per listener sound gate holds, and everything is gone with the player's state.
+     */
+    private static Result runMoods(MinecraftServer server) throws Exception {
+        for (SalamanderSoundSet.Cue c : SalamanderSoundSet.cues()) {
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.event()))) return Result.fail("sound event " + c.event() + " is not registered");
+            for (int v = 1; v <= c.variants(); v++)
+                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/" + c.file(v) + ".ogg")) {
+                    if (in == null) return Result.fail("sound file " + c.file(v) + " is missing");
+                }
+        }
+        try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json")) {
+            String text = in == null ? "" : new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            for (SalamanderSoundSet.Cue c : SalamanderSoundSet.cues()) if (!text.contains("\"" + c.event() + "\"")) return Result.fail("sounds.json has no entry " + c.event());
+        }
+        for (String form : new String[]{"salamander", "dragon"}) {
+            boolean big = form.equals("dragon");
+            try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/animations/entity/firecast_" + form + ".animation.json")) {
+                String text = in == null ? "" : new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                for (int pose = 0; pose < SalamanderMoodRules.poseCount(big); pose++)
+                    if (!text.contains("\"" + SalamanderMoodRules.clipName(big, pose) + "\"")) return Result.fail(form + " clip " + SalamanderMoodRules.clipName(big, pose) + " is missing");
+            }
+            for (int f = 1; f < SalamanderMoodRules.FACES; f++)
+                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/geo/entity/firecast_" + form + "_fx_face_" + SalamanderMoodRules.faceName(f) + ".geo.json")) {
+                    if (in == null) return Result.fail("face model " + form + " " + SalamanderMoodRules.faceName(f) + " is missing");
+                }
+        }
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 2, 0);
+        ServerPlayer p = SelfTests.standIn(level, "salamander_moods", at.x, at.y, at.z);
+        int before = FireCasting.liveCount();
+        try {
+            FireCasting.State s = FireCasting.stateOf(p);
+            if (!Salamander.link(p, s)) return Result.fail("the small Salamander did not spawn");
+            var prop = FireCasting.prop(level, s.spirit);
+            if (prop == null) return Result.fail("no prop");
+            long now = level.getGameTime();
+            if (FireCastConfig.moods()) {
+                int look = SalamanderMoodRules.look(false, prop.param(), now, prop.life(), prop.maxLife());
+                if (SalamanderMoodRules.poseOfLook(look) != SalamanderMoodRules.GRIP_TIGHTEN || SalamanderMoodRules.faceOfLook(look) != SalamanderMoodRules.FACE_ALERT)
+                    return Result.fail("the link did not give the grip and the alert face: look " + look);
+                FireCasting.onOwnerHurt(p);
+                look = SalamanderMoodRules.look(false, prop.param(), now, prop.life(), prop.maxLife());
+                if (SalamanderMoodRules.poseOfLook(look) != SalamanderMoodRules.FLINCH || SalamanderMoodRules.faceOfLook(look) != SalamanderMoodRules.FACE_ANGRY) return Result.fail("a hit did not make it flinch");
+                int param = prop.param();
+                FireCasting.onOwnerHurt(p);
+                if (prop.param() != param) return Result.fail("a second hit at once changed the pose again (the cooldown does not hold)");
+                if (FireCastRules.variant(prop.param()) != FireCastRules.V_SALAMANDER) return Result.fail("the mood changed the prop's variant");
+            }
+            SalamanderSoundSet.Gate gate = new SalamanderSoundSet.Gate();
+            UUID listener = UUID.randomUUID();
+            if (!gate.tryAcquire(listener, "trill", now) || gate.tryAcquire(listener, "hiss", now + 5)) return Result.fail("the sound gate does not hold one sound per three seconds");
+            FireCasting.forget(p);
+            if (FireCasting.liveCount() != before) return Result.fail("the ledgers kept a slot after the player was forgotten");
+        } finally {
+            FireCasting.forget(p);
+        }
+        return Result.ok("sounds, clips, faces, the link and hit moods, the cooldown and the sound gate hold");
     }
 
     private static Result run(MinecraftServer server) throws Exception {

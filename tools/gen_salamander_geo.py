@@ -28,6 +28,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import firecast_geo_lib as L  # noqa: E402
 import gen_salamander_art as A  # noqa: E402
+import gen_salamander_poses as P  # noqa: E402
 
 from firecast_geo_lib import vec  # noqa: E402
 
@@ -755,6 +756,7 @@ def animations(form):
             bones["wf%d_%s" % (k + 1, tag)] = {"rotation": z6([(0, 0, 0), (0, sx * -8 * (k + 1) / 2, 0), (0, sx * -4, 0), (0, sx * -3, 0), (0, sx * -5, 0), (0, 0, 0)])}
     bones.update({"t%d" % i: {"rotation": z6([(0, 0, 0), (0, 6 + i * 0.5, 0), (0, -6 - i * 0.5, 0), (0, 6, 0), (0, 0, 0), (0, 0, 0)])} for i in range(ntail)})
     clips["breathe"] = {"loop": False, "length": BT, "bones": bones}
+    clips.update(P.pose_clips(form))                                                 # the mood poses (tools/gen_salamander_poses.py), added after the four clips above, which stay as they were
     return clips
 
 
@@ -776,6 +778,11 @@ def sync_java(counts):
 
 
 def main():
+    if "--poses" in sys.argv:                                                        # only the animation files (the mood poses), no model or sheet is touched
+        for form in ("salamander", "dragon"):
+            L.write_animations("firecast_" + form, animations(form))
+            print("animations/entity/firecast_%s.animation.json: %s" % (form, ", ".join(animations(form))))
+        return
     count_only = "--count" in sys.argv
     only = [a for a in sys.argv[1:] if not a.startswith("--")]
     counts = {}

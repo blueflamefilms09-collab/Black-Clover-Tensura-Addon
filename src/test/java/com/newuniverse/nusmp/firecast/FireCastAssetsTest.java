@@ -206,6 +206,105 @@ class FireCastAssetsTest {
         assertEquals(FireCastRules.SWING_CLIP_TICKS, Math.round(all.getAsJsonObject("fire_bat_swing").get("animation_length").getAsDouble() * 20), "the clip is 16 ticks long (0.8 s)");
     }
 
+    // ------------------------------------------------------------------ the moods (poses, faces)
+    @Test
+    void theMoodPosesAreAddedAfterTheFourOldClipsWhichStayAsTheyWere() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            JsonObject anim = json(ASSETS.resolve("animations/entity/firecast_" + form + ".animation.json")).getAsJsonObject("animations");
+            JsonObject v1 = json(ASSETS.resolve("animations/entity/firecast_" + form + "_v1.animation.json")).getAsJsonObject("animations");
+            assertEquals(form.equals("dragon") ? 11 : 12, anim.size(), form + ": four old clips and the new poses");
+            java.util.Iterator<String> it = anim.keySet().iterator();
+            assertEquals(List.of("idle", "perch", "fly", "breathe"), List.of(it.next(), it.next(), it.next(), it.next()), form + ": the old clips come first, in their order");
+            assertTrue(v1.has("idle"), "the first version's clips are kept");
+            Map<String, JsonObject> bones = bones(geo("firecast_" + form));
+            for (String clip : anim.keySet()) {
+                JsonObject c = anim.getAsJsonObject(clip);
+                double len = c.get("animation_length").getAsDouble();
+                for (var be : c.getAsJsonObject("bones").entrySet()) {
+                    assertTrue(bones.containsKey(be.getKey()), form + "/" + clip + " moves the unknown bone " + be.getKey());
+                    for (var track : be.getValue().getAsJsonObject().entrySet()) {
+                        assertTrue(track.getKey().equals("rotation") || track.getKey().equals("position") || track.getKey().equals("scale"), clip + " track " + track.getKey());
+                        for (var key : track.getValue().getAsJsonObject().entrySet()) assertTrue(Double.parseDouble(key.getKey()) <= len + 1e-6, form + "/" + clip + " keyframe " + key.getKey());
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    void everyFaceIsATinyModelOfTheHeadBonesWithTwoEyePlatesAndItsOwnSheetPair() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            Map<String, JsonObject> full = bones(geo("firecast_" + form));
+            for (String face : new String[]{"alert", "angry", "sleepy", "smug", "roaring"}) {
+                String id = "firecast_" + form + "_fx_face_" + face;
+                JsonObject g = geo(id);
+                Map<String, JsonObject> bones = bones(g);
+                assertTrue(bones.containsKey("head") && bones.containsKey("jaw") && bones.containsKey("root"), id);
+                for (var e : bones.entrySet()) {                                                // the same pivots, parents and rest turns as the body: the one animation file poses it exactly like the body
+                    if (e.getKey().equals("root")) continue;
+                    JsonObject f = full.get(e.getKey());
+                    assertNotNull(f, id + " bone " + e.getKey() + " is a bone of the full model");
+                    assertEquals(f.getAsJsonArray("pivot"), e.getValue().getAsJsonArray("pivot"), id + " pivot of " + e.getKey());
+                    assertEquals(f.has("parent") ? f.get("parent") : null, e.getValue().has("parent") ? e.getValue().get("parent") : null, id + " parent of " + e.getKey());
+                    assertEquals(f.has("rotation") ? f.get("rotation") : null, e.getValue().has("rotation") ? e.getValue().get("rotation") : null, id + " rest turn of " + e.getKey());
+                }
+                assertEquals(2, bones.get("head").getAsJsonArray("cubes").size(), id + ": two eye plates");
+                assertEquals(face.equals("roaring") ? 1 : 0, bones.get("jaw").getAsJsonArray("cubes").size(), id + ": the roaring face has a mouth plate");
+                assertEquals(face.equals("roaring") ? 3 : 2, cards(g, ""), id + ": every plate is one quad");
+                BufferedImage tex = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/" + id + ".png").toFile());
+                BufferedImage glow = javax.imageio.ImageIO.read(ASSETS.resolve("textures/entity/" + id + "_glow.png").toFile());
+                JsonObject d = g.getAsJsonObject("description");
+                assertEquals(d.get("texture_width").getAsInt(), tex.getWidth(), id);
+                assertEquals(d.get("texture_height").getAsInt(), tex.getHeight(), id);
+                assertEquals(tex.getWidth(), glow.getWidth(), id + ": the glow sheet is the size of the colour sheet");
+                assertEquals(tex.getHeight(), glow.getHeight(), id);
+                assertTrue(tex.getWidth() * tex.getHeight() <= 512 * 128, id + ": a small sheet");
+                int opaque = 0, lit = 0;
+                for (int y = 0; y < tex.getHeight(); y++) for (int x = 0; x < tex.getWidth(); x++) {
+                    int c = tex.getRGB(x, y), gl = glow.getRGB(x, y);
+                    if ((c >>> 24) > 200) opaque++;
+                    if ((gl >>> 24) > 100) lit++;
+                    assertFalse((c >>> 24) == 0 && (c & 0xFFFFFF) != 0, id + ": no colour under a transparent texel (colour sheet)");
+                    assertFalse((gl >>> 24) == 0 && (gl & 0xFFFFFF) != 0, id + ": no colour under a transparent texel (glow sheet)");
+                }
+                assertTrue(opaque > 500, id + ": the plates are opaque (they cover the model's own eyes)");
+                assertTrue(lit > 20, id + ": the iris glows");
+            }
+        }
+    }
+
+    /** The centre of a cube in the file's frame (a turned flat card keeps its pivot at its centre). */
+    private static double[] centre(JsonObject c) {
+        if (c.has("pivot")) return arr3(c.getAsJsonArray("pivot"));
+        double[] o = arr3(c.getAsJsonArray("origin")), sz = arr3(c.getAsJsonArray("size"));
+        return new double[]{o[0] + sz[0] / 2, o[1] + sz[1] / 2, o[2] + sz[2] / 2};
+    }
+
+    @Test
+    void theFacePlatesStandJustProudOfTheModelsOwnEyeCardsAndCoverThem() throws IOException {
+        for (String form : new String[]{"salamander", "dragon"}) {
+            double hs = form.equals("dragon") ? 2.4 : 1.0;
+            JsonObject body = geo("firecast_" + form);
+            JsonObject face = geo("firecast_" + form + "_fx_face_angry");
+            int covered = 0;
+            for (JsonElement fe : bones(face).get("head").getAsJsonArray("cubes")) {
+                double[] p = centre(fe.getAsJsonObject());
+                double best = Double.NaN;
+                for (JsonElement ce : bones(body).get("head").getAsJsonArray("cubes")) {            // the model's own eye card at the same height and place along the head, on the same side
+                    double[] e = centre(ce.getAsJsonObject());
+                    double[] sz = arr3(ce.getAsJsonObject().getAsJsonArray("size"));
+                    if (sz[2] != 0 || Math.abs(e[1] - p[1]) > 0.01 || Math.abs(e[2] - p[2]) > 0.01 || Math.signum(e[0]) != Math.signum(p[0]) || Math.abs(e[0]) >= Math.abs(p[0])) continue;
+                    if (Double.isNaN(best) || Math.abs(e[0]) > best) best = Math.abs(e[0]);
+                }
+                assertFalse(Double.isNaN(best), form + ": an eye card of the body lies under the plate at " + java.util.Arrays.toString(p));
+                double out = Math.abs(p[0]) - best;
+                assertTrue(out > 0 && out <= 0.3 * hs + 0.01, form + ": the plate stands " + out + " units outside the eye card: it covers it by a hair");
+                covered++;
+            }
+            assertEquals(2, covered, form + ": both eyes");
+        }
+    }
+
     // ------------------------------------------------------------------ the bat
     @Test
     void theBatHasItsModelsMeshSkinsAndIcon() throws IOException {

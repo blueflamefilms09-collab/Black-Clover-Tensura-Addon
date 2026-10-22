@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class FireCastConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue FIRE_CASTING;
+    public static final ModConfigSpec.BooleanValue FIRE_CASTING, SALAMANDER_MOODS, SALAMANDER_SOUNDS;
     public static final ModConfigSpec.IntValue MAX_BALLS, MAX_SPIRALS, MAX_SPIRITS, MAX_DRAGONS;
     public static final ModConfigSpec.DoubleValue CHARGE_COST_SCALE;
 
@@ -19,6 +19,12 @@ public final class FireCastConfig {
         FIRE_CASTING = b.comment("The casting styles of the Fire grimoire for the canon books of Magna (the Soul Bat swing), Mereoleona (punch combos), Fuegoleon (the Salamander) and Leopold (the spiral charge).",
                 "false = every caster casts the generic way; the pages, their numbers and their cooldowns are the same either way.")
                 .define("fireCasting", true);
+        SALAMANDER_MOODS = b.comment("Fuegoleon's Salamander shows how it feels: poses (a curious tilt, a yawn, a flinch, a roar ...) and faces (alert, angry, sleepy, smug, roaring) chosen by the server from what happens.",
+                "false = the Salamander only perches, flies and breathes, as before.")
+                .define("salamanderMoods", true);
+        SALAMANDER_SOUNDS = b.comment("The Salamander's creature sounds (trills, hisses, a roar ...), heard by players within 32 blocks, at most one every three seconds for a listener.",
+                "false = no creature sounds, and the big form's summon keeps the plain Ravager roar it had before.")
+                .define("salamanderSounds", true);
         b.pop();
         b.push("caps");
         MAX_BALLS = b.comment("Most Magna Swing balls alive across the whole server (one per caster, a few ticks each).").defineInRange("maxBalls", 32, 1, 256);
@@ -38,6 +44,8 @@ public final class FireCastConfig {
     }
 
     public static boolean enabled() { return get(FIRE_CASTING); }
+    public static boolean moods() { return get(FIRE_CASTING) && get(SALAMANDER_MOODS); }
+    public static boolean sounds() { return get(FIRE_CASTING) && get(SALAMANDER_SOUNDS); }
     public static int maxBalls() { return get(MAX_BALLS); }
     public static int maxSpirals() { return get(MAX_SPIRALS); }
     public static int maxSpirits() { return get(MAX_SPIRITS); }
