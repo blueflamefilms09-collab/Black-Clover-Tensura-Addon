@@ -166,6 +166,7 @@ class CharacterSetBullsTest {
             String book = o.get("book").getAsString();
             List<String> have = new ArrayList<>(legacy(book));
             have.addAll(ADDED.getOrDefault(book, List.of()));
+            have.addAll(pages15(book));
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
                 assertTrue(have.contains(page) || pages15Source().contains("\"" + page + "\""), c + ": page " + page + " is not in " + book + " " + have);      // the "15 spells for every grimoire" batches add pages in book/pages15/BatchN.java
