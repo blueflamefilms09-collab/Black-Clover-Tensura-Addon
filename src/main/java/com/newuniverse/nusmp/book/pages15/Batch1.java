@@ -232,6 +232,32 @@ public final class Batch1 {
                 Pages15Kit.signature("meteor_swarm", "Meteor Swarm",
                         cast(Tier.SIGNATURE, c -> strikes(c, 6, 6, 3.5, false, 2.6, VfxShape.MAGIC_CIRCLE_EXPLOSION, knock(0.8)))).withCooldown(900).withAnim("up")));
 
+    private static final List<BookPage> LIGHTNING = register("book_lightning", List.of(
+                Pages15Kit.starter("spark_shot", "Spark Shot",
+                        bolt(Tier.STARTER, 2, VfxShape.LIGHTNING_SPEAR, null, slow(30, 1))),
+                Pages15Kit.starter("volt_step", "Volt Step",
+                        dash(Tier.STARTER, true, 7, false, VfxShape.FX_LIGHTNING_ARC, NONE)).withCooldown(100).withAnim("thrust"),
+                Pages15Kit.mid("thunder_arrow", "Thunder Arrow",
+                        line(Tier.MID, 22, 0.8, VfxShape.LIGHTNING_SPEAR, knock(0.6))).withCooldown(220).withAnim("thrust"),
+                Pages15Kit.mid("lightning_stomp", "Lightning Stomp",
+                        nova(Tier.MID, 4, false, VfxShape.LIGHTNINGFX_BURST, all(knock(1.0), slow(40, 2)))).withCooldown(220).withAnim("slam"),
+                Pages15Kit.mid("static_aegis", "Static Aegis",
+                        empower(Tier.MID, 200, true, VfxShape.LIGHTNING_FIEND, () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 0))).withCooldown(380),
+                Pages15Kit.zone("volt_barrage", "Volt Barrage",
+                        volley(Tier.ZONE, 5, true, VfxShape.LIGHTNING_SPEAR, slow(30, 1))).withCooldown(400),
+                Pages15Kit.zone("thunderstorm_field", "Thunderstorm Field",
+                        field(Tier.ZONE, 6, 100, 20, true, VfxShape.LIGHTNINGFX_ZONE, slow(30, 1))).withCooldown(450),
+                Pages15Kit.signature("judgment_bolt", "Judgment Bolt",
+                        line(Tier.SIGNATURE, 24, 2.5, VfxShape.LIGHTNING_SPEAR, all(knock(1.0), slow(60, 2)))).withCooldown(900).withAnim("thrust")));
+
+    private static final List<BookPage> DEMON_FIRE = register("book_demon_fire", List.of(
+                Pages15Kit.starter("cinder_lash", "Cinder Lash",
+                        cone(Tier.STARTER, 6, 0.5, VfxShape.DEMON_FIRE_FX1, all(ignite(4), weak(60, 0)))).withCooldown(90).withAnim("sweep"),
+                Pages15Kit.mid("soul_brand", "Soul Brand",
+                        bolt(Tier.MID, 3, VfxShape.DEMON_FIRE_FX1, VfxShape.DEMON_FIRE_FX3, all(ignite(6), weak(80, 1)))).withCooldown(240),
+                Pages15Kit.zone("inferno_gate", "Inferno Gate",
+                        field(Tier.ZONE, 5, 100, 20, true, VfxShape.DEMON_FIRE_FX2, ignite(5))).withCooldown(480)));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

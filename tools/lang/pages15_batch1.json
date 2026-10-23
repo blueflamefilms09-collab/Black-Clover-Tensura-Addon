@@ -79,5 +79,16 @@
   "nusmp.page.book_star.star_chain": "A chain of stars binds the foe under your crosshair (18 blocks): a small hit, a short hold and a glow for 5 seconds.",
   "nusmp.page.book_star.orbit_barrage": "Five small stars leave your orbit and home in on separate foes, making each glow for 3 seconds.",
   "nusmp.page.book_star.stardust_field": "Stardust drifts down over the aim point for 5 seconds; everything within 5 blocks is hurt every second, slowed and lit up.",
-  "nusmp.page.book_star.meteor_swarm": "Six meteors fall around the aim point, six ticks apart, each blasting the foes beneath it. Needs Senior rank."
+  "nusmp.page.book_star.meteor_swarm": "Six meteors fall around the aim point, six ticks apart, each blasting the foes beneath it. Needs Senior rank.",
+  "nusmp.page.book_lightning.spark_shot": "A condensed bolt flies where you look and bursts in 2 blocks, slowing what it hits for 1.5 seconds.",
+  "nusmp.page.book_lightning.volt_step": "You turn into a streak of lightning for 7 blocks and shock everything on the line.",
+  "nusmp.page.book_lightning.thunder_arrow": "A single arrow of lightning crosses 22 blocks in an instant and goes through everything in a line.",
+  "nusmp.page.book_lightning.lightning_stomp": "You stamp the ground and lightning runs out through it: foes within 4 blocks are shocked, shoved and slowed for 2 seconds. The name echoes a Black Clover M skill.",
+  "nusmp.page.book_lightning.static_aegis": "Arcs of static coil round you for 10 seconds: Speed I and a shock for whoever strikes you.",
+  "nusmp.page.book_lightning.volt_barrage": "Five homing bolts leap from your hands, each seeking a different foe and slowing it for 1.5 seconds.",
+  "nusmp.page.book_lightning.thunderstorm_field": "A storm crackles over the aim point for 5 seconds, striking everything within 6 blocks every second and slowing it.",
+  "nusmp.page.book_lightning.judgment_bolt": "One vast bolt tears a lane 24 blocks long and 2.5 wide, hurting up to ten foes and slowing them for 3 seconds. Needs Senior rank.",
+  "nusmp.page.book_demon_fire.cinder_lash": "A lash of black flame cracks across a 6 block cone, burning for 4 seconds and sapping strength.",
+  "nusmp.page.book_demon_fire.soul_brand": "A bolt of demon fire burns a brand into whatever it hits: a 3 block burst, 6 seconds of burning and Weakness II.",
+  "nusmp.page.book_demon_fire.inferno_gate": "A gate of black flame opens at the aim point for 5 seconds and scorches everything within 5 blocks every second."
 }

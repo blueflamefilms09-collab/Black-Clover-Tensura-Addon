@@ -58,6 +58,18 @@ class CharacterSetRestSourceScanTest {
         return s.substring(a, z);
     }
 
+    /** The pages the "15 spells for every grimoire" batches (book.pages15.Batch1..8) append to a book. */
+    private static List<String> pages15(String book) throws IOException {
+        List<String> out = new ArrayList<>();
+        for (int b = 1; b <= 8; b++) {
+            Path f = SRC.resolve("book/pages15/Batch" + b + ".java");
+            if (!Files.isRegularFile(f)) continue;
+            Matcher m = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(f));
+            if (m.find()) { Matcher q = Pattern.compile("Pages15Kit\\.\\w+\\(\"(\\w+)\"").matcher(m.group(1)); while (q.find()) out.add(q.group(1)); }
+        }
+        return out;
+    }
+
     private static List<String> added(String book) throws IOException {
         String file = read(SRC.resolve("book/CharacterPagesRest.java"));
         Matcher m = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(file);
@@ -77,10 +89,10 @@ class CharacterSetRestSourceScanTest {
         for (var e : files().entrySet()) {
             String book = e.getValue().get("book").getAsString();
             String src = bookSource(book);
-            List<String> add = added(book);
+            List<String> add = added(book), batch = pages15(book);
             for (var sp : e.getValue().getAsJsonArray("spells")) {
                 String page = sp.getAsJsonObject().get("page").getAsString();
-                assertTrue(add.contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
+                assertTrue(add.contains(page) || batch.contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
             }
         }
     }

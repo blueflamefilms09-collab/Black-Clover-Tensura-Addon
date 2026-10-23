@@ -94,6 +94,17 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_star` | `orbit_barrage` | Orbit Barrage | zone | original | Five small stars leave your orbit and home in on separate foes, making each glow for 3 seconds. | volley + STAR_MAGIC | 5 bolts, 8 targets |
 | `book_star` | `stardust_field` | Stardust Field | zone | original | Stardust drifts down over the aim point for 5 seconds; everything within 5 blocks is hurt every second, slowed and lit up. | field + STAR_MAGIC | 8 targets per pulse, 5 pulses |
 | `book_star` | `meteor_swarm` | Meteor Swarm | signature | original | Six meteors fall around the aim point, six ticks apart, each blasting the foes beneath it. Needs Senior rank. | custom strikes + MAGIC_CIRCLE_EXPLOSION | 10 targets, 6 packets, 6 delayed tasks |
+| `book_lightning` | `spark_shot` | Spark Shot | starter | original | A condensed bolt flies where you look and bursts in 2 blocks, slowing what it hits for 1.5 seconds. | bolt + LIGHTNING_SPEAR | 4 targets, 1-2 packets |
+| `book_lightning` | `volt_step` | Volt Step | starter | original | You turn into a streak of lightning for 7 blocks and shock everything on the line. | dash + FX_LIGHTNING_ARC | 4 targets on the line, 1 packet |
+| `book_lightning` | `thunder_arrow` | Thunder Arrow | mid | canon: ja-wiki (search summary): 神鳴の矢, compound spell of Luck, Klaus and Pouly; played alone it is the lightning arrow | A single arrow of lightning crosses 22 blocks in an instant and goes through everything in a line. | line + LIGHTNING_SPEAR | 6 targets, 1-2 packets |
+| `book_lightning` | `lightning_stomp` | Lightning Stomp | mid | original | You stamp the ground and lightning runs out through it: foes within 4 blocks are shocked, shoved and slowed for 2 seconds. The name echoes a Black Clover M skill. | nova + LIGHTNINGFX_BURST | 6 targets, 1-2 packets |
+| `book_lightning` | `static_aegis` | Static Aegis | mid | original | Arcs of static coil round you for 10 seconds: Speed I and a shock for whoever strikes you. | empower + LIGHTNING_FIEND | self only |
+| `book_lightning` | `volt_barrage` | Volt Barrage | zone | original | Five homing bolts leap from your hands, each seeking a different foe and slowing it for 1.5 seconds. | volley + LIGHTNING_SPEAR | 5 bolts, 8 targets |
+| `book_lightning` | `thunderstorm_field` | Thunderstorm Field | zone | original | A storm crackles over the aim point for 5 seconds, striking everything within 6 blocks every second and slowing it. | field + LIGHTNINGFX_ZONE | 8 targets per pulse, 5 pulses |
+| `book_lightning` | `judgment_bolt` | Judgment Bolt | signature | original | One vast bolt tears a lane 24 blocks long and 2.5 wide, hurting up to ten foes and slowing them for 3 seconds. Needs Senior rank. | line + LIGHTNING_SPEAR | 10 targets, 2 packets |
+| `book_demon_fire` | `cinder_lash` | Cinder Lash | starter | original | A lash of black flame cracks across a 6 block cone, burning for 4 seconds and sapping strength. | cone + DEMON_FIRE_FX1 | 4 targets, 1-2 packets |
+| `book_demon_fire` | `soul_brand` | Soul Brand | mid | original | A bolt of demon fire burns a brand into whatever it hits: a 3 block burst, 6 seconds of burning and Weakness II. | bolt + DEMON_FIRE_FX1/3 | 6 targets, 1-2 packets |
+| `book_demon_fire` | `inferno_gate` | Inferno Gate | zone | original | A gate of black flame opens at the aim point for 5 seconds and scorches everything within 5 blocks every second. | field + DEMON_FIRE_FX2 | 8 targets per pulse, 5 pulses |
 
 ## Research sources
 
@@ -111,7 +122,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 11 canon pages (most of them weakly sourced, see above), 70 original pages, 81 in all.
+Count: 12 canon pages (most of them weakly sourced, see above), 80 original pages, 92 in all.
 
 ## Character grimoires (set entries added)
 
@@ -125,6 +136,8 @@ Several new Flame pages are shared by two or more characters, because the Fire b
 * `leopold` (book_fire): +10 entries: `cinder_jab` 0.06, `gamblers_base_run` 0.14, `smoulder_veil` 0.25, `calderos` 0.33, `flame_rope_binding_formation` 0.40, `prison_kill_buckshot` 0.48, `flame_armour` 0.55, `phoenix_flare` 0.62, `flame_lightning_explosive_cannon` 0.74, `excelitius_leonum` 0.80.
 * `magna` (book_fire): +11 entries: `flame_rope_binding_formation` 0.05, `gamblers_base_run` 0.12, `cinder_jab` 0.18, `prison_kill_buckshot` 0.26, `smoulder_veil` 0.34, `calderos` 0.42, `phoenix_flare` 0.50, `purgatory_cremation` 0.60, `flame_lightning_explosive_cannon` 0.68, `excelitius_leonum` 0.78, `purgatory_flame_burial` 0.88.
 * `mereoleona` (book_fire): +9 entries: `cinder_jab` 0.06, `calderos` 0.20, `smoulder_veil` 0.30, `flame_armour` 0.40, `phoenix_flare` 0.50, `gamblers_base_run` 0.58, `purgatory_cremation` 0.72, `excelitius_leonum` 0.82, `purgatory_flame_burial` 0.90.
+* `gadjah` (book_lightning): +11 entries: `spark_shot` 0.05, `volt_step` 0.10, `lightning_stomp` 0.18, `static_aegis` 0.25, `thunder_lance` 0.34, `lightning_surge` 0.42, `thunderstorm_field` 0.50, `volt_barrage` 0.58, `thunder_drum` 0.66, `thunderbird_cavalry` 0.74, `judgment_bolt` 0.90.
+* `luck` (book_lightning): +7 entries: `spark_shot` 0.04, `volt_step` 0.08, `lightning_stomp` 0.15, `static_aegis` 0.28, `thunder_arrow` 0.38, `volt_barrage` 0.50, `judgment_bolt` 0.92.
 
 ## Worst case of the batch (rule 11)
 

@@ -95,5 +95,20 @@
     "orbit_barrage",
     "stardust_field",
     "meteor_swarm"
+  ],
+  "LIGHTNING": [
+    "spark_shot",
+    "volt_step",
+    "thunder_arrow",
+    "lightning_stomp",
+    "static_aegis",
+    "volt_barrage",
+    "thunderstorm_field",
+    "judgment_bolt"
+  ],
+  "DEMON_FIRE": [
+    "cinder_lash",
+    "soul_brand",
+    "inferno_gate"
   ]
 }
