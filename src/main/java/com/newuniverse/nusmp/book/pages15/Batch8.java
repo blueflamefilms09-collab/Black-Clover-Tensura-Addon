@@ -314,6 +314,41 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1500).withAnim("slam")));
 
+    private static final List<BookPage> TRANSMUTATION = register("book_transmutation", List.of(
+            Pages15Kit.starter("alchemic_copper_bolts", "Transmutation: Copper Bolts",
+                    Pages15Kit.bolt(Tier.STARTER, 1.2, T1, T3, weak(40, 0))),
+            Pages15Kit.starter("alchemic_sand_shower", "Transmutation: Sand Shower",
+                    Pages15Kit.cone(Tier.STARTER, 5, 0.5, T1, blind(40))).withAnim("sweep"),
+            Pages15Kit.mid("alchemic_rubber_spring", "Transmutation: Rubber Spring",
+                    leap(Tier.MID, 1.2, 0.5, 80, T2)).withCooldown(200),
+            Pages15Kit.mid("alchemic_lead_weights", "Transmutation: Lead Weights",
+                    Pages15Kit.bind(Tier.MID, 14, false, T1, weak(60, 1))).withCooldown(220),
+            Pages15Kit.mid("alchemic_brass_whips", "Transmutation: Brass Whips",
+                    Pages15Kit.line(Tier.MID, 10, 1.5, T1, Pages15Kit.knock(0.8))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.zone("alchemic_salt_flats", "Transmutation: Salt Flats",
+                    Pages15Kit.field(Tier.ZONE, 5, 100, 10, true, T2, Pages15Kit.all(slow(30, 1), wither(30, 0)))).withCooldown(480),
+            Pages15Kit.zone("alchemic_iron_rain", "Transmutation: Iron Rain",
+                    Pages15Kit.field(Tier.ZONE, 4.5, 80, 8, true, T2, Pages15Kit.knock(0.2))).withCooldown(400),
+            Pages15Kit.signature("living_statue", "Transformation: Living Statue",
+                    Pages15Kit.cast(Tier.SIGNATURE, c -> {
+                    Vec3 at = c.aim(20);
+                    List<LivingEntity> foes = c.foes(at, 5);
+                    if (foes.isEmpty()) return c.fail("No one to turn to stone.");
+                    if (!GrimoireBook.control(c.caster)) return false;
+                    Fx fx = new Fx(c);
+                    c.circle(1.5f);
+                    fx.shape(T2, at.add(0, 0.05, 0), at.add(0, 1, 0), 60, 3f);
+                    for (LivingEntity e : foes) {
+                        c.hit(e);
+                        int tk = BalanceLaw.controlTicks(e, 80);
+                        e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, tk, 9));
+                        e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, tk, 1));
+                        e.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, tk, 2));
+                        fx.shape(T3, centre(e), centre(e).add(0, 1, 0), 30, 1f);
+                    }
+                    return true;
+                })).withCooldown(1500).withAnim("slam")));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

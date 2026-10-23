@@ -57,5 +57,15 @@
     "house_roof_slam",
     "house_hallway_maze",
     "house_collapse"
+  ],
+  "TRANSMUTATION": [
+    "alchemic_copper_bolts",
+    "alchemic_sand_shower",
+    "alchemic_rubber_spring",
+    "alchemic_lead_weights",
+    "alchemic_brass_whips",
+    "alchemic_salt_flats",
+    "alchemic_iron_rain",
+    "living_statue"
   ]
 }
