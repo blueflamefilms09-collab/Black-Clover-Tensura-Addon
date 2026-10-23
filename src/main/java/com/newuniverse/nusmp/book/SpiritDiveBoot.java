@@ -29,5 +29,6 @@ public final class SpiritDiveBoot {
         SpiritDiveWind4SelfTests.register();                                                         // 4.x final A: self-test magic.spirit_dive_windfinal
         SpiritDiveMergeSelfTests.register();                                                         // 4.x: self-test magic.spirit_dive_merge
         SpiritDiveMerge2SelfTests.register();                                                        // 4.x: self-test magic.spirit_dive_merge2
+        ModeArmorWindV2SelfTests.register();                                                         // Mode Armour Wind v2 (Yuno): self-test magic.mode_wind_v2
     }
 }

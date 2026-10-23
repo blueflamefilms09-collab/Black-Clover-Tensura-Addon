@@ -86,20 +86,23 @@ public final class SpiritDiveWind {
         float k = casting ? 1.35f : 1f, lit = pulse * k;
         boolean self1p = firstPersonSelf(c);
         int mask = SpiritDivePieces.shellParts(el, st), keptMask = upgrade ? SpiritDivePieces.shellParts(el, Stage.HALF) & mask : 0;
+        boolean overlayWings = real3d && SpiritDiveWindRules.character(grade) && com.newuniverse.nusmp.client.mode.ModeArmorWindV2.replacesAuraPieces(c.player().getId());   // Mode Armour v2 (Yuno): the overlay draws the wings and the crown
         float e = real3d ? SpiritDiveWind4.energy(c, casting) : 1f;                                          // 4.x final A: 1 loud (entry, exit, a cast) .. 0 the quiet steady state
         if (e <= SpiritDiveWind4Rules.QUIET) sp = SpiritDiveWind4Rules.calmSpec(sp);                         // the loud effects have faded out: the quiet set (no ribbons, no circle, a quarter of the sparkles)
 
         SpiritDiveAnimeShell.draw(c, el, sp.shellPasses(), pal.body(), pal.rim(), pal.glow(), pulse * k, SpiritDiveReelRules.assemble(u), mask, false, false, keptMask, k);
-        if (!self1p && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) {
-            if (real3d && lod == Lod.FULL) SpiritDiveWind4.crown(c, character, pal, u, uk, upgrade, half, lit, e);   // the crown is a real 3D layer at full detail
-            else crown(c, sp, character, pal, u, uk, upgrade, half, lit);
+        if (!overlayWings) {                                                                                // Mode Armour v2 (Yuno): the overlay draws the crown, not the aura
+            if (!self1p && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) {
+                if (real3d && lod == Lod.FULL) SpiritDiveWind4.crown(c, character, pal, u, uk, upgrade, half, lit, e);   // the crown is a real 3D layer at full detail
+                else crown(c, sp, character, pal, u, uk, upgrade, half, lit);
+            }
         }
         if (sp.wrists() > 0) wrists(c, sp, pal, u, uk, mask, keptMask, lit, e);
         PoseStack pose = c.pose();
         pose.pushPose();                                                                                    // the body frame in px, the camera read in it
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
         SpiritDiveAnimeRibbon.camera(pose);
-        leaves(c, sp, lod, character, pal, st, u, uk, half, lit);
+        if (!overlayWings) leaves(c, sp, lod, character, pal, st, u, uk, half, lit);
         if (full && sp.backCircle()) backCircle(c, pal, SpiritDiveReelRules.settle(u) * e, lit);
         if (real3d) { if (full && lod == Lod.FULL) SpiritDiveWind3.weaponsA(c, pal, character, casting, SpiritDiveReelRules.weapon(u), lit, pulse, e); }
         else if (full && sp.weapon()) weapon(c, pal, SpiritDiveWindRules.weapon(casting), SpiritDiveReelRules.weapon(u), lit, pulse);

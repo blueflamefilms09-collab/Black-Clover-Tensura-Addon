@@ -164,6 +164,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
             com.newuniverse.nusmp.client.mode.ModeArmorClient.init(modEventBus);
+            com.newuniverse.nusmp.client.mode.ModeArmorWindV2Config.init(modEventBus, modContainer);                           // Wind Spirit Dive overlay v2 (Yuno): nusmp-modearmor-client.toml (modeArmor.windLook = V2 | CLASSIC)
             com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);

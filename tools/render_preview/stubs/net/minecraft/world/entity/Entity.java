@@ -36,6 +36,7 @@ public class Entity {
     public double getY() { return y; }
     public double getZ() { return z; }
     public Vec3 position() { return new Vec3(x, y, z); }
+    public double distanceToSqr(Vec3 v) { return v.distanceToSqr(x, y, z); }
     public Vec3 getPosition(float partialTicks) { return new Vec3(xo + (x - xo) * partialTicks, yo + (y - yo) * partialTicks, zo + (z - zo) * partialTicks); }
     public void setPos(double x, double y, double z) { this.x = x; this.y = y; this.z = z; this.xo = x; this.yo = y; this.zo = z; }
     public void setPos(Vec3 pos) { setPos(pos.x, pos.y, pos.z); }
