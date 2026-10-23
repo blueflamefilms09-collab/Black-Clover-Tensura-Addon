@@ -128,6 +128,7 @@ public final class SpiritDiveAura {
         Element el = SpiritDivePieces.element(style);
         Stage st = SpiritDivePieces.stage(style);
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.17f) + 0.08f * Mth.sin(age * 0.53f);
+        if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.ANIME) { SpiritDiveAnime.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // the default since 3.2: the look of the anime
         if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.DJINN) { SpiritDiveDjinn.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // the default: the Djinn-style set of plates
         if (!SpiritDiveLook.classic()) { remade(c, el, st, SpiritDivePieces.grade(style), pulse); return; }                                                                         // look V2: the remake of 3.0.0
         // the classic look (the 1.99 dive; the client option spiritDive.classicLook)

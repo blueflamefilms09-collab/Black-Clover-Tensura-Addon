@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * Spirit Dive remake: the CLIENT config {@code nusmp-spiritdive-client.toml} (it only changes what THIS client draws; the dedicated server never registers it). The values are mirrored into the plain
  * flags of {@link SpiritDiveLook} when the file loads or reloads, so the painters read a field, not a config, every frame.
  * <ul>
- *   <li>{@code spiritDive.look} (default DJINN): which Spirit Dive look this client draws. DJINN = a full set of plates in the style of the Djinn Full Equip (forged on piece by piece, engraved glow veins),
+ *   <li>{@code spiritDive.look} (default ANIME since 3.2): which Spirit Dive look this client draws. ANIME = the look of the anime (the wearer's own body bathed in the energy of the spirit: a flowing shell, glowing hair and eyes, a crown halo, plume sheets), DJINN = a full set of plates in the style of the Djinn Full Equip (forged on piece by piece, engraved glow veins),
  *       V2 = the remade look of 3.0.0 (wind halo and blades, flame mane, water ribbons, rock crown), CLASSIC = the 1.99 look.</li>
  *   <li>{@code spiritDive.classicLook} (default false, kept from 3.0.0): true is the same as look CLASSIC (it wins over {@code look}).</li>
  *   <li>{@code spiritDive.characterEffects} (default true): draw the character tier of Yuno, Fuegoleon and Noelle; false draws every dive as the standard tier (cheaper).</li>
@@ -28,8 +28,8 @@ public final class DiveClientConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("spiritDive");
-        LOOK = b.comment("The Spirit Dive look this client draws: DJINN (a full set of plates in the style of the Djinn Full Equip), V2 (the 3.0.0 remake: wind halo and blades, flame mane, water ribbons, rock crown) or CLASSIC (1.99).")
-                .defineEnum("look", Look.DJINN);
+        LOOK = b.comment("The Spirit Dive look this client draws: ANIME (default: what the anime shows: the wearer bathed in the energy of the spirit, glowing hair and eyes, a crown halo, big plume sheets; Fuegoleon, Yuno and Noelle get more), DJINN (a full set of plates in the style of the Djinn Full Equip), V2 (the 3.0.0 remake: wind halo and blades, flame mane, water ribbons, rock crown) or CLASSIC (1.99).")
+                .defineEnum("look", Look.ANIME);
         CLASSIC = b.comment("true: the Spirit Dive is drawn as in 1.99 (armour-like pieces), whatever 'look' says (the same as look = CLASSIC).").define("classicLook", false);
         CHARACTER_FX = b.comment("The character tier of the dive (Yuno's, Fuegoleon's and Noelle's own look). false = every dive is drawn as the standard tier.").define("characterEffects", true);
         PARTICLES = b.comment("The ember / mote particle trail of a Spirit Dive.").define("particles", true);
@@ -49,7 +49,7 @@ public final class DiveClientConfig {
             SpiritDiveLook.set(CLASSIC.get() ? Look.CLASSIC : LOOK.get(), CHARACTER_FX.get(), PARTICLES.get(), ARM_VIEW.get());
             FuegoleonArmLook.set(ARM_LOOK.get());
         } catch (IllegalStateException notLoaded) {
-            SpiritDiveLook.set(Look.DJINN, true, true, FuegoleonArmRules.View.ALWAYS);
+            SpiritDiveLook.set(Look.ANIME, true, true, FuegoleonArmRules.View.ALWAYS);
             FuegoleonArmLook.set(FuegoleonArmDjinnRules.DEFAULT_LOOK);
         }
     }

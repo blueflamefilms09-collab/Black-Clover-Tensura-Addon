@@ -19,7 +19,7 @@ public final class SpiritDiveLook {
     private SpiritDiveLook() {}
 
     private static volatile boolean characterEffects = true, particles = true;
-    private static volatile Look look = Look.DJINN;
+    private static volatile Look look = Look.ANIME;
     private static volatile FuegoleonArmRules.View armView = FuegoleonArmRules.View.ALWAYS;
 
     /** The look this client draws. */
@@ -27,6 +27,9 @@ public final class SpiritDiveLook {
 
     /** True for the classic (1.99) look. */
     public static boolean classic() { return look == Look.CLASSIC; }
+
+    /** True for the ANIME look (the default since 3.2). */
+    public static boolean anime() { return look == Look.ANIME; }
 
     /** True for the remade look of 3.0.0 (the one before the Djinn style). */
     public static boolean v2() { return look == Look.V2; }
@@ -45,7 +48,7 @@ public final class SpiritDiveLook {
     }
 
     public static void set(Look which, boolean characterFx, boolean particleTrail, FuegoleonArmRules.View arm) {
-        look = which == null ? Look.DJINN : which;
+        look = which == null ? Look.ANIME : which;
         characterEffects = characterFx;
         particles = particleTrail;
         armView = arm == null ? FuegoleonArmRules.View.ALWAYS : arm;

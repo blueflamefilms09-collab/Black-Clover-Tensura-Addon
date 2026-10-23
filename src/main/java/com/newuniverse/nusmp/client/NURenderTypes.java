@@ -119,4 +119,7 @@ public final class NURenderTypes extends RenderType {
         }
         return true;
     }
+
+    /** 3.2 (Spirit Dive, ANIME look): the vanilla scrolling energy type (additive, both faces) of a swirl texture at a fixed texture offset; the dive caches one per element and scroll step. */
+    public static RenderType spiritSwirl(ResourceLocation tex, float u, float v) { return RenderType.energySwirl(tex, u, v); }
 }
