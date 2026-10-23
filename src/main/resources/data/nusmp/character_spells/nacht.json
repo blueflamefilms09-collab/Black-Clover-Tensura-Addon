@@ -34,7 +34,19 @@
       "note": "Two unions at once. Already locked to his grimoire." },
     { "page": "atonement_monument", "name": "Shadow Magic: Atonement Monument", "ja": "贖罪の碑", "origin": "anime", "exclusive": true, "source": "en_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "unite_equus" }, { "type": "mastery", "min": 0.85 } ] },
-      "note": "NEW page: buries the enemy, himself included, in an empty world of shadow. The mod holds the foes near the caster for 4 s under the full weight of it; the caster is not harmed." }
+      "note": "NEW page: buries the enemy, himself included, in an empty world of shadow. The mod holds the foes near the caster for 4 s under the full weight of it; the caster is not harmed." },
+    { "page": "grasping_hands", "name": "Grasping Hands", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.12},
+      "note": "NEW shared page: the hands of shadow of the Dark Garden Invitation, on their own." },
+    { "page": "doppelganger", "name": "Doppelganger", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_open", "page": "unite_canis"}, {"type": "mastery", "min": 0.5}]},
+      "note": "NEW shared page: the wiki's Dark x Shadow compound spell, used with Yami." },
+    { "page": "unite_canis_equus", "name": "Unite Mode: Canis x Equus", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_open", "page": "unite_canis"}, {"type": "page_open", "page": "unite_equus"}, {"type": "mastery", "min": 0.75}]},
+      "note": "NEW page: Unite Mode Canis x Equus, two devils at once (the wiki)." },
+    { "page": "walpurgis_night", "name": "Walpurgis Night", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_open", "page": "unite_canis"}, {"type": "page_open", "page": "unite_gallus"}, {"type": "page_open", "page": "unite_felis"}, {"type": "page_open", "page": "unite_equus"}, {"type": "mastery", "min": 0.9}]},
+      "note": "NEW page: the four-way Devil Union and the Dark x Dark x Shadow compound spell with the Yami siblings (the wiki)." }
   ],
   "planned": [],
   "notes": "Not in Nacht's grimoire (kept in the basic Shadow book, no source found): Kids' Playground and Shadow Realm. The order of the four Union Modes is this mod's design (the series names the four devils but not the order they were first united)."

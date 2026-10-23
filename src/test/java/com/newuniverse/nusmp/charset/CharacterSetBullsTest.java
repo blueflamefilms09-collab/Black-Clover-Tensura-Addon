@@ -65,6 +65,15 @@ class CharacterSetBullsTest {
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
+    /** The text of the pages the "15 spells" project appends (book/pages15/Batch*.java): a character set may list them (docs/magic/pages15_recipe.md). */
+    private static String pages15Text() throws IOException {
+        StringBuilder b = new StringBuilder();
+        try (java.util.stream.Stream<Path> s = Files.list(SRC.resolve("book/pages15"))) {
+            for (Path f : (Iterable<Path>) s.filter(p -> p.getFileName().toString().matches("Batch[1-8]\\.java"))::iterator) b.append(read(f));
+        }
+        return b.toString();
+    }
+
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     private static final Pattern PAGE = Pattern.compile("(?:\\b(?:starter|mid|zone|signature|daily)|new BookPage)\\(\\s*\"([a-z0-9_]+)\"");
@@ -161,7 +170,7 @@ class CharacterSetBullsTest {
             have.addAll(ADDED.getOrDefault(book, List.of()));
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
-                assertTrue(have.contains(page), c + ": page " + page + " is not in " + book + " " + have);
+                assertTrue(have.contains(page) || pages15Text().contains("\"" + page + "\""), c + ": page " + page + " is not in " + book + " " + have);
             }
         }
     }
