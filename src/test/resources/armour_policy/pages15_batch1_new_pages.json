@@ -1,1 +1,15 @@
-{}
+{
+  "EXPLOSION": [
+    "blast_step",
+    "flash_bang",
+    "powder_burst",
+    "delayed_charge",
+    "shockwave_ring",
+    "cluster_bomb",
+    "blast_ward",
+    "blast_leap",
+    "carpet_blast",
+    "volatile_ground",
+    "megaton_crater"
+  ]
+}
