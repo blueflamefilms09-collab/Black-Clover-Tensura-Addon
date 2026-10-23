@@ -167,6 +167,19 @@ public final class FuegoleonArmDjinnRules {
 
     public static int sparksAt(State s, Lod lod) { return lod == Lod.FULL ? Math.min(sparkCount(s), MAX_SPARKS) : 0; }
 
+    // ------------------------------------------------------------------ the spark particles (client, through the client particle budget)
+    /** Arms within this many blocks of the camera shed sparks, at most {@link #SPARK_ARMS} arms per client tick, one particle every {@link #sparkEvery} ticks per arm (staggered by entity id). */
+    public static final double SPARK_RANGE = 16.0;
+    public static final int SPARK_ARMS = 4;
+
+    public static int sparkEvery(State s) { return switch (s) { case QUIET -> 10; case OUT -> 5; case FLARE -> 2; }; }
+
+    /** Whether the arm of entity {@code id} sheds a spark at client tick {@code tick}. */
+    public static boolean sparkNow(State s, long tick, int id) { return Math.floorMod(tick + id, (long) sparkEvery(s)) == 0; }
+
+    /** The most spark particles per second the arms in view can ask for (before the client particle budget, the effect quality and the distance bands thin them). */
+    public static double worstSparksPerSecond() { return SPARK_ARMS * 20.0 / sparkEvery(State.FLARE); }
+
     // ------------------------------------------------------------------ budgets (pinned by the test and the doc)
     /** The most cubes of the limb's models (all five pieces); 24 vertices a cube, body pass and glow pass. The test counts the cubes of the real files. */
     public static final int LIMB_CUBES_MAX = 26;

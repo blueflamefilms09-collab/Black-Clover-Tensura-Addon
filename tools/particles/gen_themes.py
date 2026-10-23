@@ -238,6 +238,8 @@ OTHER = {
     "spirit_dive.water": ("water", "droplet bubble glint mote_soft", "8FD8FF"),
     "spirit_dive.noelle": ("water", "droplet glint star4 bubble", "B8E8FF"),
     "spirit_dive.earth": ("earth", "earth_chip shard_crystal glint ash_flake", "E8B060"),
+    # Fuegoleon's flame arm, Djinn look (client.aura.FuegoleonArmSparks): the sparks drifting off the arm
+    "fuegoleon_arm.sparks": ("fire", "ember spark flame_tongue cinder", "FF7A18"),
 }
 
 

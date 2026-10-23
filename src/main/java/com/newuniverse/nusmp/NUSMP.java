@@ -185,6 +185,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
             com.newuniverse.nusmp.client.aura.DiveClient.init(modEventBus, modContainer);                                      // Spirit Dive remake: client config nusmp-spiritdive-client.toml, the first person flaming arm, the particle trail
+            com.newuniverse.nusmp.client.aura.FuegoleonArmSparks.init();                                                       // Fuegoleon's flame arm (Djinn look): the spark particles off the arm
 
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);

@@ -3366,6 +3366,23 @@
     ]
    }
   },
+  "fuegoleon_arm.sparks": {
+   "particles": [
+    "ember",
+    "spark",
+    "flame_tongue",
+    "cinder"
+   ],
+   "color": "#FF7A18",
+   "dark": {
+    "particles": [
+     "cinder",
+     "ember",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
   "relic.wave.0": {
    "particles": [
     "ember",
