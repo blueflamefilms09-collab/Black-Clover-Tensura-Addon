@@ -35,7 +35,19 @@
       "note": "On the wiki's offensive list; no description found. The effect is inferred from the name: a wide crescent cut." },
     { "page": "dimension_slash_equinox", "name": "Dark Cloaked Dimension Slash: Equinox", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "dimension_slash", "count": 4 }, { "type": "mastery", "min": 0.85 } ] },
-      "note": "Dimension Slash with the Mana Zone's reach." }
+      "note": "Dimension Slash with the Mana Zone's reach." },
+    { "page": "avidya_blunt_strike", "name": "Dark Cloaked Avidya Blunt Strike", "ja": "", "origin": "manga", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "mastery", "min": 0.1},
+      "note": "NEW page: the wiki's offensive list names it; no description found. Yami strikes with the flat of the darkness-coated blade." },
+    { "page": "black_cocoon", "name": "Dark Cloaked Black Cocoon", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "mastery", "min": 0.18},
+      "note": "NEW page: a defensive spell of the wiki's list, first shown against Patolli's Light Magic." },
+    { "page": "dusk", "name": "Dark Cloaked Dusk", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_open", "page": "black_cocoon"}, {"type": "mastery", "min": 0.38}]},
+      "note": "NEW page: a defensive spell of the wiki's list; no description found, the effect is this mod's reading." },
+    { "page": "black_blade_shadow_strike", "name": "Black Blade Shadow Strike", "ja": "", "origin": "manga", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_uses", "page": "black_blade", "count": 2}, {"type": "mastery", "min": 0.55}]},
+      "note": "NEW page: the wiki's offensive list names it; no description found, the effect is this mod's reading." }
   ],
   "planned": [
     { "name": "Dark Cloaked Avidya Blunt Strike", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named on the wiki's offensive list; no description found." },

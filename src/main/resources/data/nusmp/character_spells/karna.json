@@ -114,7 +114,34 @@
         ]
       },
       "note": "Long range: she gathers mana round the red moon and releases it as an enormous ray of moonlight. NEW page; the latest in the set."
-    }
+    },
+    { "page": "light_speed", "name": "Light Magic: (travelling on a beam of light)", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.1},
+      "note": "The old shared page (travelling on a beam of light); moonlight is light, so it sits in her grimoire too." },
+    { "page": "photon_lance", "name": "Photon Lance", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.14},
+      "note": "NEW shared page, this mod's own." },
+    { "page": "radiant_flare", "name": "Radiant Flare", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.18},
+      "note": "NEW shared page, this mod's own." },
+    { "page": "karna_gibbous_ray", "name": "Moonlight Magic: Gibbous Ray", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_open", "page": "karna_bewitching_moonlight"}, {"type": "mastery", "min": 0.3}]},
+      "note": "NEW page: Moonlight Magic's Gibbous Ray (offensive); the wiki page was not read, the effect is this mod's reading." },
+    { "page": "karna_moon_trap", "name": "Moonlight Magic: Moon Trap", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
+      "acquire": {"type": "all", "of": [{"type": "page_uses", "page": "karna_bewitching_moonlight", "count": 2}, {"type": "mastery", "min": 0.4}]},
+      "note": "NEW page: Moonlight Magic's Moon Trap (supplementary); the wiki page was not read, the effect is this mod's reading." },
+    { "page": "radiant_ward", "name": "Radiant Ward", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.45},
+      "note": "NEW shared page, this mod's own." },
+    { "page": "dawn_beam", "name": "Dawn Beam", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.5},
+      "note": "NEW shared page, this mod's own." },
+    { "page": "healing_ray", "name": "Healing Ray of Light", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.55},
+      "note": "The old shared page (Healing Ray of Light)." },
+    { "page": "protecting_light", "name": "Demon-Dweller Sword: Protecting Light", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": {"type": "mastery", "min": 0.65},
+      "note": "NEW shared page: the wiki's Protecting Light, in a moon-mage's grimoire." }
   ],
   "planned": [
     {

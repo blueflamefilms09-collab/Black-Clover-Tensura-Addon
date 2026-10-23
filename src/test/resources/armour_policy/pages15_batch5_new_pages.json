@@ -1,1 +1,116 @@
-{}
+{
+  "BONE": [
+    "bone_sprout",
+    "bone_blade",
+    "branching_bone",
+    "bone_thicket",
+    "bone_extension",
+    "bone_wall",
+    "splinter_burst",
+    "bone_regrowth",
+    "bone_forest",
+    "bone_cage",
+    "thousand_bone_grave"
+  ],
+  "DARK": [
+    "dark_cloaked_afterimage",
+    "umbral_lance",
+    "gloom_cloak",
+    "void_snare",
+    "dark_cloaked_crossing_slash",
+    "midnight_wave",
+    "devouring_shade",
+    "crescent_barrage",
+    "abyssal_pit",
+    "eclipse_fall",
+    "avidya_blunt_strike",
+    "black_cocoon",
+    "dusk",
+    "black_blade_shadow_strike"
+  ],
+  "SHADOW": [
+    "shadow_needles",
+    "grasping_hands",
+    "shadow_slip",
+    "umbral_shroud",
+    "doppelganger",
+    "shadow_eruption",
+    "veil_of_night",
+    "shadow_double",
+    "unite_canis_equus",
+    "endless_night",
+    "shadow_prison",
+    "walpurgis_night"
+  ],
+  "ASH": [
+    "ash_lash",
+    "pitfall_trap",
+    "ash_step",
+    "mine_trap",
+    "smothering_ash",
+    "ash_barricade",
+    "cinder_rain",
+    "smoldering_ground",
+    "ash_sentinels",
+    "ash_storm"
+  ],
+  "BLOOD": [
+    "jets_of_blood",
+    "blood_spikes",
+    "blood_surge",
+    "scaffold_of_fresh_blood",
+    "puppet_bloodflow",
+    "curse_breaking_blood_cocoon",
+    "lifeblood_scythe",
+    "blood_frenzy",
+    "thorn_sigil",
+    "sanguine_eruption"
+  ],
+  "LIGHT": [
+    "photon_lance",
+    "radiant_flare",
+    "radiant_ward",
+    "dawn_beam",
+    "protecting_light",
+    "storm_of_light_imperial_swords",
+    "quintet_sword_of_judgment",
+    "karna_gibbous_ray",
+    "karna_moon_trap"
+  ],
+  "CURSE": [
+    "hex_needle",
+    "wasting_touch",
+    "jinx",
+    "plague_wind",
+    "effigy_curse",
+    "hex_swarm",
+    "rotting_ground"
+  ],
+  "ANTI_MAGIC": [
+    "dispelling_thrust",
+    "black_sweep",
+    "black_guard",
+    "causality_break",
+    "black_slash_barrage",
+    "dweller_flight",
+    "magic_negating_barrier",
+    "devils_claw",
+    "contract_bolt",
+    "soul_siphon",
+    "devils_bargain",
+    "damned_cry",
+    "condemned_volley",
+    "abyssal_chains"
+  ],
+  "CURSE_WARDING": [
+    "spell_severing_curse",
+    "quickening_curse",
+    "detonation_hex",
+    "rune_field"
+  ],
+  "DEMON_LIGHT": [
+    "black_light_ray",
+    "demon_arrows_of_judgment",
+    "demon_heaven_splitting_flash"
+  ]
+}

@@ -29,6 +29,15 @@ class CharacterSetRestSourceScanTest {
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
+    /** The text of the pages the "15 spells" project appends (book/pages15/Batch*.java): a character set may list them (docs/magic/pages15_recipe.md). */
+    private static String pages15Text() throws IOException {
+        StringBuilder b = new StringBuilder();
+        try (java.util.stream.Stream<Path> s = Files.list(SRC.resolve("book/pages15"))) {
+            for (Path f : (Iterable<Path>) s.filter(p -> p.getFileName().toString().matches("Batch[1-8]\\.java"))::iterator) b.append(read(f));
+        }
+        return b.toString();
+    }
+
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     /** The source files (and an optional section of the first) whose quoted strings are the family page ids of a book. */
