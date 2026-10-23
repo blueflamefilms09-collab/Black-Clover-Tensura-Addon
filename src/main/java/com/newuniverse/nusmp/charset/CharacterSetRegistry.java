@@ -106,7 +106,7 @@ public final class CharacterSetRegistry {
         if (modeZero) return false;
         CharacterSet set = of(canon);
         if (set != null) return set.book().equals(book) && !set.has(page) && !BasicSignatures.reservedFor(canon, book, page);      // basic grimoires (docs/magic/basic_grimoires.md): a page reserved for this character is his even when his set does not list it
-        if (canon == null || canon.isEmpty()) return hideSignatures && (exclusive.containsKey(book + "|" + page) || BasicSignatures.hides(book, page));      // ... and the basic book hides it
+        if (canon == null || canon.isEmpty()) return hideSignatures && !com.newuniverse.nusmp.corpse.SoulCorpseAccess.alwaysListed(book, page) && (exclusive.containsKey(book + "|" + page) || BasicSignatures.hides(book, page));      // ... and the basic book hides it (except the numbered Soul Corpse undead, which the owner wants listed: docs/magic/soul_corpse_fix.md)
         return false;
     }
 

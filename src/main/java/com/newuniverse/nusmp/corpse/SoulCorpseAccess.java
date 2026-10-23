@@ -56,6 +56,13 @@ public final class SoulCorpseAccess {
     /** True when the page is Rades Spirito's own (only his grimoire may open it). */
     public static boolean isRadesOnly(String pageId) { return pageId != null && RADES_ONLY.contains(pageId); }
 
+    /**
+     * True for the pages the basic Soul Corpse grimoire keeps LISTED even though they are Rades's (owner report 3.x: "none of the numbered summon spells show anymore"): the character spell sets hide an
+     * exclusive page in the basic book, which made Jimmy, Alfredo, Carl, David, Michael Caesal and True Soul Corpse Magic vanish from every Soul Corpse grimoire but Rades's. They are listed again; using them
+     * still needs Rades's grimoire ({@link #mayOpen}, the lock in {@code book.CharacterSpells}).
+     */
+    public static boolean alwaysListed(String registryPath, String pageId) { return isBook(registryPath) && isRadesOnly(pageId); }
+
     /** True when any Soul Corpse holder may open this page by mastery (every page that is not Rades's). */
     public static boolean openToEveryone(String pageId) { return pageId != null && !isRadesOnly(pageId); }
 

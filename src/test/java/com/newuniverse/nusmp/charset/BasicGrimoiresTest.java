@@ -174,6 +174,11 @@ class BasicGrimoiresTest {
                 assertTrue(family.contains(s.page()) || literalExists(s.page()), set.canon() + ": " + s.page() + " is not a page of " + set.book());      // a page named by a constant (Paladin Conversion ...) is found as a string literal
                 boolean modeZero = family.indexOf(s.page()) == 0;
                 if (modeZero) continue;      // the engine never hides mode 0
+                if (com.newuniverse.nusmp.corpse.SoulCorpseAccess.alwaysListed(set.book(), s.page())) {      // Rades's numbered undead stay listed in the basic Soul Corpse book (soul_corpse_fix.md)
+                    assertFalse(r.hidden("", set.book(), s.page(), false, true), set.book() + "/" + s.page() + " must stay listed in the basic Soul Corpse grimoire");
+                    assertFalse(r.hidden(null, set.book(), s.page(), false, true), set.book() + "/" + s.page());
+                    continue;
+                }
                 assertTrue(r.hidden("", set.book(), s.page(), false, true), set.book() + "/" + s.page() + " is visible in the basic grimoire");
                 assertTrue(r.hidden(null, set.book(), s.page(), false, true), set.book() + "/" + s.page());
                 assertFalse(r.hidden("", set.book(), s.page(), false, false), "the setting off lists it as before");
