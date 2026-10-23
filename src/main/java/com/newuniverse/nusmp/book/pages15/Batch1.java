@@ -102,6 +102,30 @@ public final class Batch1 {
                 Pages15Kit.signature("storm_maelstrom", "Storm Maelstrom",
                         nova(Tier.SIGNATURE, 8, true, VfxShape.STORM_CLOUD, all(knock(1.5), lift(0.5)))).withCooldown(900).withAnim("slam")));
 
+    private static final List<BookPage> THREAD = register("book_thread", List.of(
+                Pages15Kit.starter("thread_whip", "Thread Whip",
+                        line(Tier.STARTER, 8, 1.0, VfxShape.THREAD_LINE, pull(0.7))).withCooldown(90).withAnim("sweep"),
+                Pages15Kit.starter("tripwire_snare", "Tripwire Snare",
+                        cone(Tier.STARTER, 5, 0.5, VfxShape.THREAD_TRAP_LINE, slow(60, 3))),
+                Pages15Kit.starter("thread_needle", "Thread Needle",
+                        bolt(Tier.STARTER, 0, VfxShape.THREAD_LINE, null, weak(60, 0))),
+                Pages15Kit.mid("thread_cocoon", "Thread Cocoon",
+                        empower(Tier.MID, 160, true, VfxShape.THREAD_COCOON, () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 160, 0), () -> new MobEffectInstance(MobEffects.ABSORPTION, 160, 0))).withCooldown(360),
+                Pages15Kit.mid("puppet_strings", "Puppet Strings",
+                        bind(Tier.MID, 16, false, VfxShape.THREAD_STRINGS, weak(80, 1))).withCooldown(260),
+                Pages15Kit.mid("silk_swing", "Silk Swing",
+                        dash(Tier.MID, false, 10, false, VfxShape.THREAD_LINE, NONE)).withCooldown(160).withAnim("thrust"),
+                Pages15Kit.mid("razor_weave", "Razor Weave",
+                        cone(Tier.MID, 7, 0.4, VfxShape.THREAD_LINE, slow(40, 1))).withCooldown(200).withAnim("sweep"),
+                Pages15Kit.mid("stitching_threads", "Stitching Threads",
+                        healAllies(6, 0.15f)).withCooldown(360),
+                Pages15Kit.zone("thousand_threads", "Thousand Threads",
+                        volley(Tier.ZONE, 5, true, VfxShape.THREAD_LINE, pull(0.4))).withCooldown(400),
+                Pages15Kit.zone("thread_cage", "Thread Cage",
+                        nova(Tier.ZONE, 5, true, VfxShape.THREAD_COCOON, all(slow(60, 3), weak(60, 0)))).withCooldown(420).withAnim("slam"),
+                Pages15Kit.signature("crimson_loom", "Crimson Loom",
+                        nova(Tier.SIGNATURE, 8, true, VfxShape.THREAD_WEB, all(slow(80, 3), pull(0.8)))).withCooldown(900).withAnim("slam")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

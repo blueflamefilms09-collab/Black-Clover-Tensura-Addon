@@ -65,6 +65,18 @@ class CharacterSetBullsTest {
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
+    /** The pages the "15 spells for every grimoire" batches (book.pages15.Batch1..8) append to a book: register("book", List.of(...)). */
+    private static List<String> pages15(String book) throws IOException {
+        List<String> out = new ArrayList<>();
+        for (int b = 1; b <= 8; b++) {
+            Path batch = SRC.resolve("book/pages15/Batch" + b + ".java");
+            if (!Files.isRegularFile(batch)) continue;
+            Matcher reg = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(batch));
+            if (reg.find()) out.addAll(ids(reg.group(1)));
+        }
+        return out;
+    }
+
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     private static final Pattern PAGE = Pattern.compile("(?:\\b(?:starter|mid|zone|signature|daily)|new BookPage)\\(\\s*\"([a-z0-9_]+)\"");
@@ -159,6 +171,7 @@ class CharacterSetBullsTest {
             String book = o.get("book").getAsString();
             List<String> have = new ArrayList<>(legacy(book));
             have.addAll(ADDED.getOrDefault(book, List.of()));
+            have.addAll(pages15(book));
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
                 assertTrue(have.contains(page), c + ": page " + page + " is not in " + book + " " + have);

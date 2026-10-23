@@ -35,6 +35,17 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_storm` | `thundercloud` | Thundercloud | zone | original | A small thundercloud follows you for 5 seconds and pelts everything within 6 blocks every second, lifting and pushing it. | field + STORM_CLOUD | 8 targets per pulse, 5 pulses |
 | `book_storm` | `tempest_barrage` | Tempest Barrage | zone | original | Calls a bolt down on each of up to eight foes within 12 blocks, one after another four ticks apart. | custom smite + STORM_BOLT | 8 targets, 8 packets, 8 delayed tasks |
 | `book_storm` | `storm_maelstrom` | Storm Maelstrom | signature | original | The whole storm collapses into one great whirl at the aim point, 8 blocks wide, that hurls up to ten foes into the air. Needs Senior rank. | nova + STORM_CLOUD | 10 targets, 2 packets |
+| `book_thread` | `thread_whip` | Thread Whip | starter | original | Snaps a bundle of threads 8 blocks ahead; everything it lashes is dragged toward you. The name echoes the Black Clover M game list, not the series. | line + THREAD_LINE | 4 targets, 1-2 packets |
+| `book_thread` | `tripwire_snare` | Tripwire Snare | starter | original | Hidden trip threads spring up across a 5 block cone and tangle up to four foes, slowing them hard for 3 seconds (Vanessa's Trap Magic style). | cone + THREAD_TRAP_LINE | 4 targets, 1-2 packets |
+| `book_thread` | `thread_needle` | Thread Needle | starter | original | A single hard-spun thread flies straight and pins its target: a small hit and weakness for 3 seconds. | bolt + THREAD_LINE | 4 targets, 1-2 packets |
+| `book_thread` | `thread_cocoon` | Thread Cocoon | mid | original | You wrap yourself in a cocoon of threads for 8 seconds: resistance, an absorption heart and a sting of thorns for whoever hits you. The name echoes the game lists, not the series. | empower + THREAD_COCOON | self only |
+| `book_thread` | `puppet_strings` | Puppet Strings | mid | original | Strings settle on the foe under your crosshair (16 blocks): it is held in place for a few seconds, takes a small hit and is weakened. | bind + THREAD_STRINGS | 1 target (the shared control lock applies) |
+| `book_thread` | `silk_swing` | Silk Swing | mid | original | You shoot a thread ahead and swing along it, covering up to 10 blocks at once without hitting anything: a pure move. | dash + THREAD_LINE | self only |
+| `book_thread` | `razor_weave` | Razor Weave | mid | original | A wide net of sharpened threads sweeps a 7 block cone, cutting up to six foes and slowing them for 2 seconds. | cone + THREAD_LINE | 6 targets, 1-2 packets |
+| `book_thread` | `stitching_threads` | Stitching Threads | mid | original | Fine threads stitch wounds shut: you and every ally within 6 blocks recover 15 percent of their health (the healing decay applies). Grows out of her mending of clothes. | healAllies | allies in 6 blocks |
+| `book_thread` | `thousand_threads` | Thousand Threads | zone | original | Five homing threads leave your hands, each seeking a foe and hauling it a little toward you as it cuts. | volley + THREAD_LINE | 5 bolts, 8 targets |
+| `book_thread` | `thread_cage` | Thread Cage | zone | original | Threads rise in a ring of 5 blocks at the aim point and close over up to eight foes: damage, heavy slowness and weakness for 3 seconds. | nova + THREAD_COCOON | 8 targets, 1-2 packets |
+| `book_thread` | `crimson_loom` | Crimson Loom | signature | original | A great red web is woven at the aim point, 8 blocks wide: up to ten foes are hurt, hauled toward its centre and slowed for 4 seconds. Needs Senior rank. | nova + THREAD_WEB | 10 targets, 2 packets |
 
 ## Research sources
 
@@ -52,7 +63,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 0 canon pages (most of them weakly sourced, see above), 22 original pages, 22 in all.
+Count: 0 canon pages (most of them weakly sourced, see above), 33 original pages, 33 in all.
 
 ## Character grimoires (set entries added)
 
@@ -61,6 +72,7 @@ Every page below is appended to the set file of the character (`exclusive: false
 Several new Flame pages are shared by two or more characters, because the Fire book has only 33 pages for four grimoires of 15; that is this batch's own reading, not a statement that each of them uses each page in the series.
 
 * `kaiser` (book_storm): +12 entries: `gust_jab` 0.05, `squall_step` 0.12, `tempest_ring` 0.18, `rain_curtain` 0.25, `thunderhead_strike` 0.32, `squall_front` 0.40, `downburst` 0.46, `thundercloud` 0.55, `thunder_sphere` 0.62, `tempest_barrage` 0.70, `eye_of_the_storm` 0.82, `storm_maelstrom` 0.90.
+* `vanessa` (book_thread): +6 entries: `thread_whip` 0.05, `tripwire_snare` 0.10, `stitching_threads` 0.18, `thread_cocoon` 0.34, `puppet_strings` 0.45, `thousand_threads` 0.62.
 
 ## Worst case of the batch (rule 11)
 

@@ -20,5 +20,16 @@
   "nusmp.page.book_storm.downburst": "A column of cold air slams down at the aim point, hitting foes within 5 blocks and pinning them with heavy slowness for 2 seconds.",
   "nusmp.page.book_storm.thundercloud": "A small thundercloud follows you for 5 seconds and pelts everything within 6 blocks every second, lifting and pushing it.",
   "nusmp.page.book_storm.tempest_barrage": "Calls a bolt down on each of up to eight foes within 12 blocks, one after another four ticks apart.",
-  "nusmp.page.book_storm.storm_maelstrom": "The whole storm collapses into one great whirl at the aim point, 8 blocks wide, that hurls up to ten foes into the air. Needs Senior rank."
+  "nusmp.page.book_storm.storm_maelstrom": "The whole storm collapses into one great whirl at the aim point, 8 blocks wide, that hurls up to ten foes into the air. Needs Senior rank.",
+  "nusmp.page.book_thread.thread_whip": "Snaps a bundle of threads 8 blocks ahead; everything it lashes is dragged toward you. The name echoes the Black Clover M game list, not the series.",
+  "nusmp.page.book_thread.tripwire_snare": "Hidden trip threads spring up across a 5 block cone and tangle up to four foes, slowing them hard for 3 seconds (Vanessa's Trap Magic style).",
+  "nusmp.page.book_thread.thread_needle": "A single hard-spun thread flies straight and pins its target: a small hit and weakness for 3 seconds.",
+  "nusmp.page.book_thread.thread_cocoon": "You wrap yourself in a cocoon of threads for 8 seconds: resistance, an absorption heart and a sting of thorns for whoever hits you. The name echoes the game lists, not the series.",
+  "nusmp.page.book_thread.puppet_strings": "Strings settle on the foe under your crosshair (16 blocks): it is held in place for a few seconds, takes a small hit and is weakened.",
+  "nusmp.page.book_thread.silk_swing": "You shoot a thread ahead and swing along it, covering up to 10 blocks at once without hitting anything: a pure move.",
+  "nusmp.page.book_thread.razor_weave": "A wide net of sharpened threads sweeps a 7 block cone, cutting up to six foes and slowing them for 2 seconds.",
+  "nusmp.page.book_thread.stitching_threads": "Fine threads stitch wounds shut: you and every ally within 6 blocks recover 15 percent of their health (the healing decay applies). Grows out of her mending of clothes.",
+  "nusmp.page.book_thread.thousand_threads": "Five homing threads leave your hands, each seeking a foe and hauling it a little toward you as it cuts.",
+  "nusmp.page.book_thread.thread_cage": "Threads rise in a ring of 5 blocks at the aim point and close over up to eight foes: damage, heavy slowness and weakness for 3 seconds.",
+  "nusmp.page.book_thread.crimson_loom": "A great red web is woven at the aim point, 8 blocks wide: up to ten foes are hurt, hauled toward its centre and slowed for 4 seconds. Needs Senior rank."
 }

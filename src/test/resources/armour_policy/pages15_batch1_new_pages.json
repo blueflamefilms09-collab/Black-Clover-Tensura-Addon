@@ -24,5 +24,18 @@
     "thundercloud",
     "tempest_barrage",
     "storm_maelstrom"
+  ],
+  "THREAD": [
+    "thread_whip",
+    "tripwire_snare",
+    "thread_needle",
+    "thread_cocoon",
+    "puppet_strings",
+    "silk_swing",
+    "razor_weave",
+    "stitching_threads",
+    "thousand_threads",
+    "thread_cage",
+    "crimson_loom"
   ]
 }
