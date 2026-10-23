@@ -764,6 +764,12 @@
     "stormcaller_staff": {
       "class": "staff"
     },
+    "spirit_of_zephyr": {
+      "class": "longsword"
+    },
+    "spirit_of_boreas": {
+      "class": "bow"
+    },
     "wisp_staff": {
       "class": "staff"
     },
