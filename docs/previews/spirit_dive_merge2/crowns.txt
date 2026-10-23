@@ -1,0 +1,10 @@
+Spirit Dive MERGE 2: the smaller crowns of tools/gen_sdm2_crowns.py (the old crowns: tools/gen_sdw4_models.py)
+crown_wind_char        layer0  332  layer1   68  total  400 vertices
+crown_wind_char_half   layer0  184  layer1   36  total  220 vertices
+crown_wind_std         layer0  260  layer1   60  total  320 vertices
+crown_wind_std_half    layer0  148  layer1   32  total  180 vertices
+crown_fire_char        layer0  332  layer1   68  total  400 vertices
+crown_fire_std         layer0  260  layer1   60  total  320 vertices
+crown_water_char       layer0  544  layer1   68  total  612 vertices
+crown_water_std        layer0  416  layer1   60  total  476 vertices
+crown_earth_std        layer0  264  layer1   52  total  316 vertices

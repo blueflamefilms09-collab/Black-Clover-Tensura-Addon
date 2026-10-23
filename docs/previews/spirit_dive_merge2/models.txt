@@ -1,0 +1,12 @@
+Spirit Dive MERGE 2: the slim spirit meshes of tools/gen_sdm2_models.py (layer 0 solid + layer 1 glow shell; both drawn additive)
+wind_char    quads 222  vertices 888 (solid 824 + glow  64)  budget 900 ok  size  32.0 x  23.5 x   6.4 px
+wind_std     quads 122  vertices 488 (solid 456 + glow  32)  budget 500 ok  size  14.1 x  32.0 x   8.8 px
+wind_core    quads  36  vertices 144 (solid 144 + glow   0)  budget 300 ok  size  12.9 x  32.0 x   7.4 px
+water_char   quads 216  vertices 864 (solid 816 + glow  48)  budget 900 ok  size  18.0 x  32.0 x   7.2 px
+water_std    quads 123  vertices 492 (solid 444 + glow  48)  budget 500 ok  size  15.9 x  32.0 x   4.1 px
+water_core   quads  56  vertices 224 (solid 224 + glow   0)  budget 300 ok  size  16.5 x  32.0 x   4.3 px
+fire_char    quads 168  vertices 672 (solid 576 + glow  96)  budget 900 ok  size  32.0 x  26.7 x  29.3 px
+fire_std     quads 121  vertices 484 (solid 436 + glow  48)  budget 500 ok  size  12.0 x  14.9 x  32.0 px
+fire_core    quads  28  vertices 112 (solid 112 + glow   0)  budget 300 ok  size   3.6 x   9.5 x  32.0 px
+earth_std    quads 120  vertices 480 (solid 360 + glow 120)  budget 500 ok  size  19.6 x  32.0 x  14.4 px
+earth_core   quads  24  vertices  96 (solid  96 + glow   0)  budget 300 ok  size  15.8 x  32.0 x  14.3 px
