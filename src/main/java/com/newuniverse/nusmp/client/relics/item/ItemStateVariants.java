@@ -118,6 +118,12 @@ public final class ItemStateVariants {
             float pull = using ? RangedStage.bowPull(stack.getUseDuration(holder), holder.getUseItemRemainingTicks()) : 0f;
             return RangedStage.stage(RangedStage.Kind.BOW, using, false, pull);
         }
+        // Spirit of Boreas (a creative-display bow, spiritblades): drawn like a relic bow, its pull meshes (spirit_of_boreas_pull1..3) carry the arrow of light on the nock
+        if (item instanceof com.newuniverse.nusmp.spiritblades.BoreasBowItem) {
+            boolean using = holder != null && holder.isUsingItem() && holder.getUseItem() == stack;
+            float pull = using ? RangedStage.bowPull(stack.getUseDuration(holder), holder.getUseItemRemainingTicks()) : 0f;
+            return RangedStage.stage(RangedStage.Kind.BOW, using, false, pull);
+        }
         return RangedStage.REST;
     }
 

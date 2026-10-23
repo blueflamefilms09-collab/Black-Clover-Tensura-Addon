@@ -169,6 +169,7 @@ def leaf_sprite():
     img[..., 1] = alpha * 1.0 * k
     img[..., 2] = alpha * 0.84 * k
     img[..., 3] = alpha
+    img[alpha < 0.02] = 0.0                                                # black (and clear) under the transparent texels: it is drawn additively (docs/vfx_square_bug.md)
     path = os.path.join(GAME_ASSETS, "textures", "entity", "weapon", "spirit_blades_leaf.png")
     Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8), "RGBA").save(path)
 
