@@ -31,7 +31,7 @@ public final class SpiritDiveWindRules {
     }
 
     /** The default of the option. */
-    public static final WindLook DEFAULT_LOOK = WindLook.B_CLIP;     // 4.x: the Wind remake's recommended design (closest to the clips the owner showed); PACK, REEL, A_ANIME and C_SAINT stay choosable
+    public static final WindLook DEFAULT_LOOK = WindLook.A_ANIME;    // 4.x final: the owner picked "Version A" (Anime-true) for both tiers; PACK, REEL, B_CLIP and C_SAINT stay choosable
 
     /** Parses the option text; anything unknown is the default (PACK). */
     public static WindLook parse(String s) {

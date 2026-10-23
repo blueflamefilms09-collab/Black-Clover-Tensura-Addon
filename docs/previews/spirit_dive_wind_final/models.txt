@@ -1,0 +1,4 @@
+crown_yuno       layer0  432  layer1  160  layer2   96  total  688 vertices
+crown_std        layer0  288  layer1  112  layer2    0  total  400 vertices
+crown_yuno_half  layer0  216  layer1   80  layer2   48  total  344 vertices
+crown_std_half   layer0  168  layer1   64  layer2    0  total  232 vertices

@@ -102,7 +102,7 @@ class SpiritDiveWind3Test {
                 for (Stage st : Stage.values())
                     for (Lod lod : LODS) {
                         int n = SpiritDiveWind3Rules.vertices(v, ch, lod, st);
-                        if (n > SpiritDiveWind3Rules.cap(ch)) bad.add(v + " " + (ch ? "Yuno " : "standard ") + st + " " + lod + " " + n);
+                        if (n > SpiritDiveWind3Rules.cap(v, ch)) bad.add(v + " " + (ch ? "Yuno " : "standard ") + st + " " + lod + " " + n);
                     }
         assertTrue(bad.isEmpty(), bad.toString());
         assertEquals(4000, SpiritDiveWind3Rules.CAP_CHARACTER);

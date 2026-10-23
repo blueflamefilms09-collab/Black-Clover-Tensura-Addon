@@ -20,7 +20,7 @@ import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
 public final class SpiritDiveLook {
     private SpiritDiveLook() {}
 
-    private static volatile boolean characterEffects = true, particles = true;
+    private static volatile boolean characterEffects = true, particles = true, calm = true;
     private static volatile Look look = Look.REEL;
     private static volatile WindLook windLook = SpiritDiveWindRules.DEFAULT_LOOK;
     private static volatile FuegoleonArmRules.View armView = FuegoleonArmRules.View.ALWAYS;
@@ -42,6 +42,11 @@ public final class SpiritDiveLook {
 
     /** Which Wind the REEL look draws: PACK (the owner's reference pack of Yuno's Spirit Dive, the default since 3.4) or REEL (the Wind of 3.3: cube crown, cube gauntlets, hex-membrane wings). */
     public static WindLook windLook() { return windLook; }
+
+    /** True (the default) when the final Wind A draws the quiet steady state after the entry; false keeps the 3.5 density of ribbons, sparkles, rings and the circle behind the back all the time. */
+    public static boolean calm() { return calm; }
+
+    public static void setCalm(boolean on) { calm = on; }
 
     public static boolean windPack() { return windLook == WindLook.PACK; }
 

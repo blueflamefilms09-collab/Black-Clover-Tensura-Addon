@@ -16,6 +16,7 @@ import com.newuniverse.nusmp.book.SpiritDiveWind3Mesh;
 import com.newuniverse.nusmp.book.SpiritDiveWind3Rules;
 import com.newuniverse.nusmp.book.SpiritDiveWind3Rules.Spec;
 import com.newuniverse.nusmp.book.SpiritDiveWind3Rules.Ver;
+import com.newuniverse.nusmp.book.SpiritDiveWind4Rules;
 import com.newuniverse.nusmp.book.SpiritDiveWindGeometry;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules;
 import com.newuniverse.nusmp.client.SafeAdditive;
@@ -130,7 +131,10 @@ public final class SpiritDiveWind3 {
      * Version A: Yuno's sword floats at his right hip (blade, fuller, cross-guard and the two crossed rings of the guard turning slowly), the leaf bow rides on his back and is in the left hand with a real
      * arrow of light while a page is cast; the standard tier floats a small leaf blade. {@code k} (0..1) draws them out of their circle on entry.
      */
-    static void weaponsA(AuraContext c, Pal pal, boolean character, boolean casting, float k, float lit, float pulse) {
+    static void weaponsA(AuraContext c, Pal pal, boolean character, boolean casting, float k, float lit, float pulse) { weaponsA(c, pal, character, casting, k, lit, pulse, 1f); }
+
+    /** The same with the energy {@code e} of the final A: the crossed rings of the sword's guard are drawn only while the dive is loud (entry, exit, a cast and 2 s after it). */
+    static void weaponsA(AuraContext c, Pal pal, boolean character, boolean casting, float k, float lit, float pulse, float e) {
         if (k <= 0.02f) return;
         float age = c.age(), a = alpha(k), ga = 0.55f * k * lit;
         if (!character) {
@@ -139,7 +143,7 @@ public final class SpiritDiveWind3 {
             piece(c, BLADE, SpiritDiveWind3Rules.SOLID_GLOW, s[0], s[1] + bob, s[2], s[3], s[4], s[5], 1f, 0f, 0f, s[6] * 0.55f * (0.6f + 0.4f * k), s[6] * k, s[6] * 0.55f * (0.6f + 0.4f * k), a, ga, pal.glow());
             return;
         }
-        sword(c, SpiritDiveWind3Geometry.SWORD, pal, k, a, ga, age, 0.035f, true);
+        sword(c, SpiritDiveWind3Geometry.SWORD, pal, k, a, ga, age, 0.035f, true, e);
         float[] b = casting ? SpiritDiveWind3Geometry.BOW_HAND : SpiritDiveWind3Geometry.BOW_BACK;
         float bob = SpiritDiveWindGeometry.bob(age, 1.9f) * b[7];
         piece(c, BOW, SpiritDiveWind3Rules.ALL, b[0], b[1] + bob, b[2], b[3], b[4], b[5], 0f, 0f, -1f, b[6], b[6] * (0.5f + 0.5f * k), b[6], a, 0.5f * k * lit, pal.glow());
@@ -151,15 +155,19 @@ public final class SpiritDiveWind3 {
     }
 
     /** The sword at a root and direction of the table {@code g}: the blade and guard solid and glowing, the rings turning about the blade axis; {@code soft} adds a soft glow at the hilt. */
-    private static void sword(AuraContext c, float[] g, Pal pal, float k, float a, float ga, float age, float spin, boolean soft) {
+    private static void sword(AuraContext c, float[] g, Pal pal, float k, float a, float ga, float age, float spin, boolean soft) { sword(c, g, pal, k, a, ga, age, spin, soft, 1f); }
+
+    private static void sword(AuraContext c, float[] g, Pal pal, float k, float a, float ga, float age, float spin, boolean soft, float rings) {
         float bob = SpiritDiveWindGeometry.bob(age, 0.6f) * g[7];
         float s = g[6], sy = s * k, sxz = s * (0.5f + 0.5f * k);
         PoseStack pose = c.pose();
         pose.pushPose();
         SpiritDiveWind3Draw.basis(pose, g[0], g[1] + bob, g[2], g[3], g[4], g[5], 1f, 0f, 0f, sxz, sy, sxz);
         SpiritDiveWind3Draw.mesh(c, SWORD, 3, a, ga, pal.glow());                                           // blade, guard, grip, pommel and the glow shell
-        pose.mulPose(ROT.rotationY(age * spin));
-        SpiritDiveWind3Draw.mesh(c, SWORD, 4, a, 0f, pal.glow());                                           // the crossed rings of the guard, turning
+        if (rings > SpiritDiveWind4Rules.QUIET) {
+            pose.mulPose(ROT.rotationY(age * spin));
+            SpiritDiveWind3Draw.mesh(c, SWORD, 4, a * rings, 0f, pal.glow());                              // the crossed rings of the guard, turning (fade out when the dive is quiet)
+        }
         pose.popPose();
         if (soft) SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(SOFT)), g[0], g[1] + bob, g[2], 6.5f * k, 0f, SealDraw.argb(Math.min(1f, 0.5f * k * ga), pal.light()), FB);
     }

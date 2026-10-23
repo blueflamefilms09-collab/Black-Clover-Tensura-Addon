@@ -52,7 +52,7 @@ public final class SpiritDiveWind3SelfTests {
                 for (Stage st : Stage.values())
                     for (Lod lod : new Lod[]{Lod.FULL, Lod.MID, Lod.FAR}) {
                         int n = SpiritDiveWind3Rules.vertices(v, ch, lod, st);
-                        if (n > SpiritDiveWind3Rules.cap(ch)) bad.add(v + (ch ? " Yuno " : " standard ") + st + " " + lod + ": " + n + " vertices");
+                        if (n > SpiritDiveWind3Rules.cap(v, ch)) bad.add(v + (ch ? " Yuno " : " standard ") + st + " " + lod + ": " + n + " vertices");
                     }
         for (Ver v : Ver.values()) if (SpiritDiveWind3Rules.vertices(v, true, Lod.CULLED, Stage.FULL) != 0) bad.add(v + ": a culled dive draws vertices");
 
