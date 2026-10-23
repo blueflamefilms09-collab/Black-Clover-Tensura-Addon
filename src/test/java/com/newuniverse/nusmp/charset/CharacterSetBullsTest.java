@@ -65,6 +65,13 @@ class CharacterSetBullsTest {
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
+    /** The source of the eight "15 spells for every grimoire" batches (book/pages15/Batch1..8.java): their page ids are pages of the book too. */
+    private static String pages15Source() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (int n = 1; n <= 8; n++) sb.append(read(SRC.resolve("book/pages15/Batch" + n + ".java")));
+        return sb.toString();
+    }
+
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     private static final Pattern PAGE = Pattern.compile("(?:\\b(?:starter|mid|zone|signature|daily)|new BookPage)\\(\\s*\"([a-z0-9_]+)\"");
@@ -161,7 +168,7 @@ class CharacterSetBullsTest {
             have.addAll(ADDED.getOrDefault(book, List.of()));
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
-                assertTrue(have.contains(page), c + ": page " + page + " is not in " + book + " " + have);
+                assertTrue(have.contains(page) || pages15Source().contains("\"" + page + "\""), c + ": page " + page + " is not in " + book + " " + have);      // the "15 spells for every grimoire" batches add pages in book/pages15/BatchN.java
             }
         }
     }

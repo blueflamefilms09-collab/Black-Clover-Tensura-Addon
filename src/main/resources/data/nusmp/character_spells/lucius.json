@@ -116,6 +116,138 @@
         "min": 0.85
       },
       "note": "Design from the attribute."
+    },
+    {
+      "page": "soul_chill",
+      "name": "Soul Magic (a cold touch on the soul)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.16
+      },
+      "note": "Design: a basic soul attack of the shared Soul book."
+    },
+    {
+      "page": "soul_spirit_drain",
+      "name": "Soul Magic (draining a soul)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.19
+      },
+      "note": "Design: a basic soul attack of the shared Soul book."
+    },
+    {
+      "page": "soul_wisps",
+      "name": "Soul Magic (soul wisps)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "Design: an existing page of the Soul book."
+    },
+    {
+      "page": "imprint_of_ideals",
+      "name": "Soul Magic: Imprint of Ideals",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "soul_bind",
+            "count": 1
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "His Soul Magic can plant a belief in a mind and change a person's ideals (manga ch.333 to 335 as covered by news sites)."
+    },
+    {
+      "page": "soul_ward",
+      "name": "Soul Magic (a ward of souls)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.46
+      },
+      "note": "Design: guarding the souls of his allies."
+    },
+    {
+      "page": "soul_mend",
+      "name": "Soul Magic: Soul Mend",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "paladin_conversion"
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "Chapter 333 hints that his Soul Magic can bring back and mend the dead (speculative in the sources)."
+    },
+    {
+      "page": "attribute_guard",
+      "name": "Soul Magic (a guard of souls)",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.6
+      },
+      "note": "Design: an existing generic page of the Soul book."
+    },
+    {
+      "page": "grimoire_tower_link",
+      "name": "Soul Magic: Grimoire Tower Link",
+      "ja": "",
+      "origin": "manga",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "paladin_recall"
+          },
+          {
+            "type": "mastery",
+            "min": 0.75
+          }
+        ]
+      },
+      "note": "Chapter 379: he connects to the grimoire towers and casts the spells of dead mages."
     }
   ],
   "planned": [
@@ -134,5 +266,5 @@
       "note": "A union of four attributes; no page."
     }
   ],
-  "notes": "His CanonBook entry changed from Dark Magic to Soul Magic (the series' attribute; the mod has a Soul book since 1.44.0): a grimoire already bound with the old pair (DARK, lucius) keeps working as before. Soul Magic has no named spells on the wiki, so only the two Paladin pages are canon; the other pages are marked design."
+  "notes": "His CanonBook entry changed from Dark Magic to Soul Magic (the series' attribute; the mod has a Soul book since 1.44.0): a grimoire already bound with the old pair (DARK, lucius) keeps working as before. Soul Magic has no named spells on the wiki, so only the two Paladin pages are canon; the other pages are marked design. Pages 15 (batch 3): the entries after the first ones are the new shared pages of the book (and some older pages of it), none exclusive, so the basic grimoire keeps showing them too."
 }

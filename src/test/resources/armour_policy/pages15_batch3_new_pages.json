@@ -1,1 +1,115 @@
-{}
+{
+  "DREAM": [
+    "drowsy_mist",
+    "counting_sheep",
+    "pillow_burst",
+    "lucid_step",
+    "dreamcatcher_ward",
+    "mind_read",
+    "dream_nightmare_seed",
+    "slumber_field",
+    "pastel_garden",
+    "sleepwalker",
+    "eternal_slumber"
+  ],
+  "ILLUSION": [
+    "mirage_prism_ray",
+    "afterimage_bolt",
+    "vertigo_ring",
+    "illusion_mirage_walk",
+    "illusory_visage",
+    "phantom_host",
+    "paralyzing_illusion",
+    "endless_corridor",
+    "curtain_of_lies",
+    "illusion_reality_break"
+  ],
+  "AIR": [
+    "gust_jab",
+    "air_needles",
+    "featherfall_gift",
+    "air_updraft",
+    "compression_lance",
+    "air_pressure_wall",
+    "pressure_rampart"
+  ],
+  "SMOKE": [
+    "smoke_bomb",
+    "hermits_thick_smoke",
+    "smoke_double",
+    "smoke_choking_fumes",
+    "degenerate_kings_smoke_prison",
+    "billowing_wall",
+    "smoke_garden_of_usurpation"
+  ],
+  "VORTEX": [
+    "eddy_bolt",
+    "swirl_kick",
+    "vortex_centrifuge",
+    "vortex_undertow",
+    "vortex_whirlpool_snare",
+    "vortex_cyclone_lance",
+    "vortex_maelstrom_ring"
+  ],
+  "WING": [
+    "feather_flick",
+    "wing_downbeat",
+    "glide_grace",
+    "wing_soaring_leap",
+    "wing_talon_rake",
+    "feather_mantle",
+    "skyward_gale"
+  ],
+  "WIND": [
+    "cutting_breeze",
+    "thiefs_wind_cloud",
+    "wind_veil",
+    "spirit_of_euros",
+    "spirit_of_notos",
+    "saint_spirit_of_zephyr"
+  ],
+  "SOUND": [
+    "tuning_fork_strike",
+    "piercing_shriek",
+    "sonic_echolocation",
+    "bass_drop",
+    "subsonic_lance",
+    "sound_barrier"
+  ],
+  "MEMORY": [
+    "memory_flashback",
+    "blank_stare",
+    "mind_probe",
+    "oblivion_azusa_arrow",
+    "shared_memory",
+    "memory_labyrinth"
+  ],
+  "PERMEATION": [
+    "magic_slip",
+    "seeping_touch",
+    "vanish_from_sight",
+    "unseen_creation",
+    "seepage_trap",
+    "permeation_hollow_beam"
+  ],
+  "SOUL": [
+    "soul_chill",
+    "soul_spirit_drain",
+    "soul_ward",
+    "soul_mend",
+    "imprint_of_ideals",
+    "grimoire_tower_link"
+  ],
+  "SOUL_CORPSE": [
+    "grasping_dead",
+    "corpse_bone_rattle",
+    "corpse_puppet_strings",
+    "corpse_death_rattle",
+    "corpse_revenant_rush",
+    "soul_abductor"
+  ],
+  "SONG": [
+    "song_forte_bubbles",
+    "song_silver_spiral"
+  ]
+}

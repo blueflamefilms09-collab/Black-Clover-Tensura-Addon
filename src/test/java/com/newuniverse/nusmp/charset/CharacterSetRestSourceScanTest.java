@@ -32,6 +32,20 @@ class CharacterSetRestSourceScanTest {
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     /** The source files (and an optional section of the first) whose quoted strings are the family page ids of a book. */
+    /** "15 spells" project: the page ids the eight Batch classes append to a book (book/pages15/Batch1..8.java). */
+    private static List<String> pages15(String book) throws IOException {
+        List<String> out = new ArrayList<>();
+        for (int n = 1; n <= 8; n++) {
+            String t = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/book/pages15/Batch" + n + ".java"));
+            Matcher m = Pattern.compile("register\\(\\s*\"" + book + "\"\\s*,").matcher(t);
+            if (!m.find()) continue;
+            int end = t.indexOf("register(", m.end());
+            Matcher d = Pattern.compile("\\b(?:starter|mid|zone|signature)\\(\\s*\"([a-z0-9_]+)\"").matcher(t.substring(m.end(), end < 0 ? t.length() : end));
+            while (d.find()) out.add(d.group(1));
+        }
+        return out;
+    }
+
     private static String bookSource(String book) throws IOException {
         String b = "book/";
         return switch (book) {
@@ -46,7 +60,7 @@ class CharacterSetRestSourceScanTest {
             case "book_soul" -> read(SRC.resolve(b + "SoulBook.java")) + read(SRC.resolve(b + "ext/SoulExt.java")) + read(SRC.resolve("soul/PaladinCasts.java"));
             case "book_soul_corpse" -> read(SRC.resolve(b + "SoulCorpseBook.java")) + read(SRC.resolve(b + "ext/SoulCorpseExt.java")) + read(SRC.resolve("corpse/SoulCorpseAccess.java"));
             case "book_mineral" -> section(read(SRC.resolve(b + "EarthFamilyBooks.java")), "// MINERAL", "return new EarthFamilyBook");
-            case "book_song" -> read(SRC.resolve(b + "SongBook.java")) + read(SRC.resolve("song/SongPages.java"));
+            case "book_song" -> read(SRC.resolve(b + "SongBook.java")) + read(SRC.resolve("song/SongPages.java")) + read(SRC.resolve("song/SongMode.java"));
             case "book_butoh" -> read(SRC.resolve(b + "ButohBook.java"));
             default -> throw new IllegalArgumentException(book);
         };

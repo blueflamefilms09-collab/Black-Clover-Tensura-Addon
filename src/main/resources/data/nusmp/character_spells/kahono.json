@@ -81,6 +81,154 @@
         "min": 0.7
       },
       "note": "LEGACY page locked to Kahono since 1.44.0 (not on the wiki's list): kept in her set so it stays reachable."
+    },
+    {
+      "page": "attribute_cut",
+      "name": "Song Magic: Glissando",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "Design: an existing page of the shared Song book."
+    },
+    {
+      "page": "song_forte_bubbles",
+      "name": "Song Magic: Forte Bubbles",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "A Kahono skill of the mobile game Black Clover M (not a wiki spell)."
+    },
+    {
+      "page": "song_mode_heal",
+      "name": "Song Magic: Healing Hymn",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "Design: an existing page of the shared Song book (open to anyone with Song Magic)."
+    },
+    {
+      "page": "song_mode_barrier",
+      "name": "Song Magic: Barrier Chorus",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.36
+      },
+      "note": "Design: an existing page of the shared Song book."
+    },
+    {
+      "page": "song_harmony",
+      "name": "Song Magic: Harmony",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "heal_lullaby"
+          },
+          {
+            "type": "mastery",
+            "min": 0.44
+          }
+        ]
+      },
+      "note": "Design: an existing page of the shared Song book (shared Regeneration, Speed and Resistance)."
+    },
+    {
+      "page": "attribute_field",
+      "name": "Song Magic: Choir Field",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "Design: an existing page of the shared Song book."
+    },
+    {
+      "page": "song_silver_spiral",
+      "name": "Song Magic: Silver Spiral",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.58
+      },
+      "note": "A Kahono skill of the mobile game Black Clover M (not a wiki spell)."
+    },
+    {
+      "page": "song_choir",
+      "name": "Song Magic: Choir of Spirits",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.62
+      },
+      "note": "Design: an existing page of the shared Song book."
+    },
+    {
+      "page": "attribute_domain",
+      "name": "Song Magic: Grand Concerto",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.8
+      },
+      "note": "Design: an existing page of the shared Song book."
+    },
+    {
+      "page": "song_finale",
+      "name": "Song Magic: Grand Finale",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "song_crescendo"
+          },
+          {
+            "type": "mastery",
+            "min": 0.9
+          }
+        ]
+      },
+      "note": "Design: an existing page of the shared Song book, the finishing page after Crescendo."
     }
   ],
   "planned": [
@@ -99,5 +247,5 @@
       "note": "With Kiato, anime only; Kiato's page."
     }
   ],
-  "notes": "Her old singing system (song.SongSkill: hymn, lullaby, barrier, requiem) is a separate skill and is untouched. Not in her grimoire (kept in the basic Song book): Staccato-style cuts, the Choir field and domain, Choir of Spirits, Metronome, Harmony and Grand Finale are this mod's own pages."
+  "notes": "Her old singing system (song.SongSkill: hymn, lullaby, barrier, requiem) is a separate skill and is untouched. Not in her grimoire (kept in the basic Song book): Staccato-style cuts, the Choir field and domain, Choir of Spirits, Metronome, Harmony and Grand Finale are this mod's own pages. Pages 15 (batch 3): the entries after the first ones are the new shared pages of the book (and some older pages of it), none exclusive, so the basic grimoire keeps showing them too."
 }
