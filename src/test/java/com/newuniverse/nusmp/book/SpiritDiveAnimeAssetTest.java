@@ -39,7 +39,7 @@ class SpiritDiveAnimeAssetTest {
             if (t.contains("swirl") && (w != 256 || h != 256)) bad.add(t + " is " + w + "x" + h);
             if ((t.contains("plume_") || t.contains("plume_glow")) && (w != 128 || h != 256)) bad.add(t + " is " + w + "x" + h);
             if (t.contains("lock_") && (w != 64 || h != 128)) bad.add(t + " is " + w + "x" + h);
-            if ((t.contains("halo") || t.contains("hair")) && (w != 256 || h != 256)) bad.add(t + " is " + w + "x" + h);
+            if ((t.contains("halo") || t.contains("crown") || t.contains("hair")) && (w != 256 || h != 256)) bad.add(t + " is " + w + "x" + h);
         }
         assertTrue(bad.isEmpty(), bad.toString());
     }
@@ -59,7 +59,7 @@ class SpiritDiveAnimeAssetTest {
                     if ((p >>> 24) == 0 && (p & 0xFFFFFF) != 0) { bad.add(t + " has colour under alpha 0 at " + x + "," + y); y = im.getHeight(); break; }
                 }
         }
-        assertTrue(checked >= 18, "the scan found the additive textures with alpha (" + checked + ")");
+        assertTrue(checked >= 22, "the scan found the additive textures with alpha (" + checked + ")");
         assertTrue(bad.isEmpty(), bad.toString());
     }
 

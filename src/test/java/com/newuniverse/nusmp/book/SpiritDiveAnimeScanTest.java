@@ -118,7 +118,7 @@ class SpiritDiveAnimeScanTest {
     @Test
     void theRibbonsShareTheirEdgesAndTurnTheirWindingToTheViewer() {
         String r = code(read("client/aura/SpiritDiveAnimeRibbon.java"));
-        assertTrue(r.contains("SpiritDiveAnimeGeometry.edges(") && r.contains("SpiritDiveAnimeGeometry.facing("), "one continuous strip, the winding chosen for the viewer");
+        assertTrue(r.contains("SpiritDiveAnimeGeometry.edges(") && r.contains("SpiritDiveAnimeGeometry.facingQuad("), "one continuous strip, the winding chosen for the viewer");
         assertTrue(r.contains("static final float[] SPINE = new float["), "scratch arrays are statics");
     }
 
@@ -165,8 +165,8 @@ class SpiritDiveAnimeScanTest {
     @Test
     void theTextureGeneratorExistsAndWritesEveryTexture() throws IOException {
         String py = Files.readString(ROOT.resolve("tools/gen_spirit_dive_anime_textures.py"), StandardCharsets.UTF_8);
-        for (String p : new String[]{"sda_swirl_", "sda_plume_", "sda_plume_glow_", "sda_lock_", "sda_lock_glow_", "sda_halo_", "sda_hair_", "\"sda_rim\"", "\"sda_soft\"", "\"sda_eye\"", "\"sda_burst\""})
+        for (String p : new String[]{"sda_swirl_", "sda_plume_", "sda_plume_glow_", "sda_lock_", "sda_lock_glow_", "sda_halo_", "sda_crown_", "sda_hair_", "\"sda_rim\"", "\"sda_soft\"", "\"sda_eye\"", "\"sda_burst\""})
             assertTrue(py.contains(p), "the generator does not write " + p);
-        assertEquals(4 * 7 + 4, SpiritDiveAnimeRules.allTextures().size());
+        assertEquals(4 * 8 + 4, SpiritDiveAnimeRules.allTextures().size());
     }
 }

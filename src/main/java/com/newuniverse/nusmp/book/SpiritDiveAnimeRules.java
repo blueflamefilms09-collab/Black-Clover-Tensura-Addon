@@ -167,7 +167,8 @@ public final class SpiritDiveAnimeRules {
         v += s.trails() * s.trailSegs() * 4 * PLUME_PASSES;
         if (s.cap()) v += PART_VERTICES;
         v += smallVertices(s);
-        if (s.backdrop()) v += BACKDROP_QUADS[el.ordinal()] * 4;
+        if (s.backdrop()) v += BACKDROP_QUADS[el.ordinal()] * 4 + 8;                      // the spirit, and the circle of the element standing behind the back (two quads)
+        if (SpiritDivePieces.halfBody(el, st) && s.ground()) v += 4;                                   // the circle of crosses round the left wrist
         if (lod == Lod.FULL) v += ENTRY_QUADS * 4;
         return v;
     }
@@ -194,7 +195,7 @@ public final class SpiritDiveAnimeRules {
         Grade use = SpiritDiveTier.effective(el, g);
         int glow = SpiritDiveTier.glow(el, use, false), prim = SpiritDiveTier.primary(el, use), acc = SpiritDiveTier.accent(el, use);
         return switch (el) {
-            case WIND -> new Pal(prim, 0xE8FFF4, glow, use == Grade.YUNO ? 0xB8FFD8 : 0x9CF2C4, 0xE8FFB0, 0xE8FFF4);
+            case WIND -> new Pal(glow, 0xE8FFF4, glow, use == Grade.YUNO ? 0xB8FFD8 : 0x9CF2C4, 0xE8FFB0, 0xE8FFF4);
             case FIRE -> new Pal(0xFF5A18, 0xFFE4A0, glow, 0xFF6A1C, 0xFFE070, 0xFFC060);
             case WATER -> new Pal(0x86BEF8, 0xE4F6FF, glow, use == Grade.NOELLE ? 0x7CC4FF : 0x6CB8F8, 0xE8F6FF, 0xD8F0FF);
             case EARTH -> new Pal(0xC9A25C, 0xFFE9A8, 0xFFB040, 0xC8A860, 0xFFC050, 0xFFD878);
@@ -211,6 +212,7 @@ public final class SpiritDiveAnimeRules {
     public static String lockTexture(Element el) { return "aura/sda_lock_" + name(el); }
     public static String lockGlowTexture(Element el) { return "aura/sda_lock_glow_" + name(el); }
     public static String haloTexture(Element el) { return "aura/sda_halo_" + name(el); }
+    public static String crownTexture(Element el) { return "aura/sda_crown_" + name(el); }
     public static String hairTexture(Element el) { return "aura/sda_hair_" + name(el); }
     public static final String RIM_TEXTURE = "aura/sda_rim", SOFT_TEXTURE = "aura/sda_soft", EYE_TEXTURE = "aura/sda_eye", BURST_TEXTURE = "aura/sda_burst";
 
@@ -220,7 +222,7 @@ public final class SpiritDiveAnimeRules {
     public static java.util.List<String> allTextures() {
         java.util.ArrayList<String> l = new java.util.ArrayList<>();
         for (Element el : Element.values()) {
-            l.add(swirlTexture(el)); l.add(plumeTexture(el)); l.add(plumeGlowTexture(el)); l.add(lockTexture(el)); l.add(lockGlowTexture(el)); l.add(haloTexture(el)); l.add(hairTexture(el));
+            l.add(swirlTexture(el)); l.add(plumeTexture(el)); l.add(plumeGlowTexture(el)); l.add(lockTexture(el)); l.add(lockGlowTexture(el)); l.add(haloTexture(el)); l.add(crownTexture(el)); l.add(hairTexture(el));
         }
         l.add(RIM_TEXTURE); l.add(SOFT_TEXTURE); l.add(EYE_TEXTURE); l.add(BURST_TEXTURE);
         return l;
@@ -228,7 +230,7 @@ public final class SpiritDiveAnimeRules {
 
     /** The textures drawn with additive blending: they must carry no colour under alpha 0 (SafeAdditive). */
     public static boolean additive(String path) {
-        return path.contains("_glow_") || path.contains("_halo_") || path.contains("_hair_") || path.contains("_swirl_") || path.equals(RIM_TEXTURE) || path.equals(SOFT_TEXTURE)
+        return path.contains("_glow_") || path.contains("_halo_") || path.contains("_crown_") || path.contains("_hair_") || path.contains("_swirl_") || path.equals(RIM_TEXTURE) || path.equals(SOFT_TEXTURE)
                 || path.equals(EYE_TEXTURE) || path.equals(BURST_TEXTURE);
     }
 

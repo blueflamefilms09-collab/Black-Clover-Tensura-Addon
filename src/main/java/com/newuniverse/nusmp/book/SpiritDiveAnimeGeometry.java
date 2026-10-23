@@ -29,9 +29,9 @@ public final class SpiritDiveAnimeGeometry {
 
     // ------------------------------------------------------------------ the plume tables (px; the first rows are the standard tier's)
     private static final float[][] WIND = {
-            {4.2f, 2.0f, 2.8f, 0.45f, 0.35f, 0.05f, 0.90f, 0.70f, 0.12f, 1.20f, 0.85f, 0.30f, 30f, 4.0f, 2.2f, 0.0f, 0},
-            {4.4f, 3.5f, 2.8f, 0.50f, 0.10f, 0.10f, 1.00f, 0.20f, 0.25f, 1.35f, 0.10f, 0.50f, 30f, 3.6f, 2.5f, 1.3f, 0},
-            {4.0f, 5.0f, 2.8f, 0.40f, -0.10f, 0.15f, 0.80f, -0.30f, 0.35f, 1.00f, -0.50f, 0.65f, 26f, 3.2f, 3.0f, 2.1f, 0},
+            {4.0f, 2.0f, 2.8f, 0.30f, 0.50f, 0.00f, 0.90f, 0.90f, 0.10f, 1.50f, 0.90f, 0.60f, 34f, 5.5f, 2.2f, 0.0f, 0},
+            {4.2f, 3.5f, 2.8f, 0.60f, 0.15f, 0.10f, 1.20f, 0.20f, 0.30f, 1.70f, 0.00f, 0.80f, 30f, 4.5f, 2.5f, 1.3f, 0},
+            {4.0f, 5.0f, 2.8f, 0.40f, -0.20f, 0.10f, 0.90f, -0.50f, 0.30f, 1.20f, -0.90f, 0.80f, 24f, 3.5f, 3.0f, 2.1f, 0},
             {3.6f, 1.0f, 2.6f, 0.25f, 0.50f, 0.05f, 0.50f, 0.90f, 0.10f, 0.65f, 1.15f, 0.25f, 22f, 3.0f, 1.8f, 3.4f, 0}};
     private static final float[][] FIRE = {
             {3.2f, 1.5f, 2.5f, 0.25f, -0.20f, 0.35f, 0.40f, -0.70f, 0.75f, 0.35f, -1.00f, 1.10f, 40f, 5.5f, 3.0f, 0.0f, 1},
@@ -75,9 +75,9 @@ public final class SpiritDiveAnimeGeometry {
                 case 0 -> {                                                                                     // WIND: short spikes lifted up and swept back, a few long ones behind
                     boolean longOne = i >= 10;
                     r[0] = a * 3.4f; r[1] = -8.2f + (longOne ? 0.8f : 0f) ; r[2] = longOne ? 3.4f : -2.8f + 5.2f * (i % 4) / 3f;
-                    r[3] = a * 0.7f; r[4] = -1f; r[5] = longOne ? 0.9f : 0.15f + 0.1f * (i % 3);
+                    r[3] = a * 1.1f; r[4] = -0.8f; r[5] = longOne ? 0.9f : 0.25f + 0.1f * (i % 3);
                     r[6] = 0f; r[7] = longOne ? 0.9f : 0.15f; r[8] = longOne ? 0.9f : 0.5f;
-                    r[9] = longOne ? 14f : 8.5f + 3f * rr; r[10] = longOne ? 2.0f : 2.2f; r[11] = 1.1f; r[12] = i * 0.9f; r[13] = 4;
+                    r[9] = longOne ? 12f : 5.5f + 2.5f * rr; r[10] = longOne ? 2.0f : 2.0f; r[11] = 1.1f; r[12] = i * 0.9f; r[13] = 4;
                 }
                 case 1 -> {                                                                                     // FIRE: long flame locks streaming up and back off the head
                     if (i < 2) {                                                                                // the first two rows are the Salamander's horns (canon: draconic features), swept back
@@ -90,7 +90,7 @@ public final class SpiritDiveAnimeGeometry {
                     r[0] = a * 3.4f; r[1] = -8.0f + 0.5f * Math.abs(a); r[2] = -1.0f + 4.6f * back;
                     r[3] = a * 0.35f; r[4] = -0.85f; r[5] = 0.55f + 0.4f * back;
                     r[6] = a * 0.1f; r[7] = 0.15f; r[8] = 0.5f;
-                    r[9] = 12f + 9f * rr; r[10] = 2.6f; r[11] = 2.6f; r[12] = i * 0.8f; r[13] = 1;
+                    r[9] = 16f + 12f * rr; r[10] = 3.0f; r[11] = 2.6f; r[12] = i * 0.8f; r[13] = 1;
                 }
                 case 2 -> {                                                                                     // WATER: twin tails and glints: long ribbons from the back of the head hanging down
                     boolean tail = i < 4;
@@ -130,7 +130,7 @@ public final class SpiritDiveAnimeGeometry {
         s = clamp01(s);
         switch (sh) {
             case LEAF: {
-                float f = (float) Math.pow(Math.sin(Math.PI * Math.pow(s, 0.7)), 0.85);
+                float f = (float) Math.pow(Math.sin(Math.PI * Math.pow(s, 0.8)), 1.0) * (1f - 0.3f * s);
                 return Math.max(f, 0.2f * (1f - s));
             }
             case FLAME: {
@@ -253,6 +253,14 @@ public final class SpiritDiveAnimeGeometry {
         float ax = right[m] - left[m], ay = right[m + 1] - left[m + 1], az = right[m + 2] - left[m + 2];
         float cx = left[m2] - left[m], cy = left[m2 + 1] - left[m + 1], cz = left[m2 + 2] - left[m + 2];
         float nx = ay * cz - az * cy, ny = az * cx - ax * cz, nz = ax * cy - ay * cx;      // the quad's normal (the vanilla winding: counter-clockwise seen from the front)
+        return nx * look[0] + ny * look[1] + nz * look[2] < 0f;
+    }
+
+    /** The same test for one quad of the strip (left_k, right_k, right_k+1, left_k+1), given the offsets {@code i} and {@code j} of the two points in the edge arrays. */
+    public static boolean facingQuad(float[] left, float[] right, int i, int j, float[] look) {
+        float ax = right[i] - left[i], ay = right[i + 1] - left[i + 1], az = right[i + 2] - left[i + 2];
+        float cx = left[j] - left[i], cy = left[j + 1] - left[i + 1], cz = left[j + 2] - left[i + 2];
+        float nx = ay * cz - az * cy, ny = az * cx - ax * cz, nz = ax * cy - ay * cx;
         return nx * look[0] + ny * look[1] + nz * look[2] < 0f;
     }
 

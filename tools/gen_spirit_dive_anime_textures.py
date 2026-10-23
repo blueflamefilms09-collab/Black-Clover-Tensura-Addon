@@ -7,6 +7,7 @@ Everything is cel-shaded: flat bands (a dark outline where the art has one, a ba
     sda_plume_<el>.png        128x256 RGBA: the translucent body of a plume sheet (u across: leading edge .. trailing edge, v along: root .. tip), outline and bands baked in.
     sda_plume_glow_<el>.png   the additive glow of the same sheet (bright leading edge and streak lines; no colour under alpha 0).
     sda_lock_<el>.png / sda_lock_glow_<el>.png   the same for a lock of hair (64x128).
+    sda_crown_<el>.png        256x256 additive: the upright crown of the stills (a circlet with bars / flame tongues / waves / crystals rising from it).
     sda_halo_<el>.png         256x256 additive: the thin spiky crown of light (wind: sharp spikes, fire: flame tongues, water: scalloped double ring, earth: crystal shards).
     sda_hair_<el>.png         256x256 additive: the glowing hair cap on the hat layer of the head (the 64x64 skin layout at x4: hair on the top, back, sides and a fringe).
     sda_rim.png, sda_soft.png 64x64: the solid rim of the shell hull and its soft outer hull.
@@ -245,6 +246,54 @@ def halo(el):
     return clean_additive(out)
 
 
+
+# ------------------------------------------------------------------ crowns (the upright crown of the stills: a circlet and spikes rising from it)
+def crown(el):
+    S, SS = 256, 2
+    n = S * SS
+    core = Image.new("L", (n, n), 0)
+    d = ImageDraw.Draw(core)
+
+    def P(x, y):
+        return (x * n, y * n)
+
+    cy, rx, ry = 0.74, 0.40, 0.085                                                  # the circlet, an ellipse seen from slightly above
+    for k, t in ((0, 0.014), (1, 0.007)):
+        e = 0.0 if k == 0 else 0.03
+        d.ellipse([P(0.5 - rx + e, cy - ry + e * 0.3), P(0.5 + rx - e, cy + ry - e * 0.3)], outline=255, width=max(1, int(t * n)))
+    xs = [0.5 + (i - 3) * 0.105 for i in range(7)]
+    hs = [0.12, 0.30, 0.50, 0.66, 0.50, 0.30, 0.12]                                  # tallest in the middle
+    if el == "wind":                                                               # vertical bars with pointed tips, like a tiara
+        for i, (x, h) in enumerate(zip(xs, hs)):
+            lean = (i - 3) * 0.012
+            base = cy - ry * math.sqrt(max(0.0, 1 - ((x - 0.5) / rx) ** 2)) + 0.01
+            w = 0.020
+            d.polygon([P(x - w, base), P(x - w + lean, base - h + 0.05), P(x + lean, base - h), P(x + w + lean, base - h + 0.05), P(x + w, base)], fill=255)
+    elif el == "fire":                                                             # flame tongues
+        for i, (x, h) in enumerate(zip(xs, hs)):
+            base = cy - ry * math.sqrt(max(0.0, 1 - ((x - 0.5) / rx) ** 2)) + 0.01
+            sg = 1 if i % 2 == 0 else -1
+            d.polygon([P(x - 0.034, base), P(x - 0.02 + sg * 0.01, base - h * 0.55), P(x + sg * 0.035, base - h), P(x + 0.012 + sg * 0.006, base - h * 0.55), P(x + 0.034, base)], fill=255)
+    elif el == "water":                                                            # rounded wave crests: tall teardrops, a drop floating above each
+        for i, (x, h) in enumerate(zip(xs, hs)):
+            base = cy - ry * math.sqrt(max(0.0, 1 - ((x - 0.5) / rx) ** 2)) + 0.012
+            d.ellipse([P(x - 0.036, base - h), P(x + 0.036, base - h * 0.12)], fill=255)
+            r = 0.014
+            d.ellipse([P(x - r, base - h - 0.05 - r), P(x + r, base - h - 0.05 + r)], fill=255)
+    else:                                                                          # crystals
+        for i, (x, h) in enumerate(zip(xs, hs)):
+            base = cy - ry * math.sqrt(max(0.0, 1 - ((x - 0.5) / rx) ** 2)) + 0.01
+            lean = (i - 3) * 0.008
+            d.polygon([P(x - 0.03, base), P(x - 0.034 + lean, base - h * 0.7), P(x + lean, base - h), P(x + 0.034 + lean, base - h * 0.7), P(x + 0.03, base)], fill=255)
+    core = core.resize((S, S), Image.LANCZOS)
+    c_arr = np.asarray(core, np.float32) / 255.0
+    glow = np.asarray(core.filter(ImageFilter.GaussianBlur(4)), np.float32) / 255.0
+    inten = np.clip(c_arr + glow * 0.85, 0.0, 1.0)
+    g = rgb(GLOW[el])
+    colr = g[None, None, :] * (1.0 - c_arr[..., None]) + 255.0 * c_arr[..., None]
+    out = np.dstack([colr * inten[..., None], inten * 255.0])
+    return clean_additive(out)
+
 # ------------------------------------------------------------------ hair cap (hat layer of the head, skin UV layout x4)
 def hair(el, rnd):
     S, K = 256, 4
@@ -278,7 +327,7 @@ def hair(el, rnd):
             m = inten >= lo
             colr[m] = col
         colr[inten >= 0.95] = bands[4]
-        colr = (colr * 0.55 + g[None, None, :] * 0.45 * inten[..., None]) * 0.85
+        colr = np.minimum(255.0, (colr * 0.6 + g[None, None, :] * 0.5 * inten[..., None]) * 1.05)
         sl = (slice(y0 * K, y0 * K + H), slice(x0 * K, x0 * K + W))
         img[sl][..., :3] = np.where(cov[..., None] > 0, colr, 0.0)
         img[sl][..., 3] = cov * 255.0
@@ -360,12 +409,13 @@ def main():
         save(plume(el, 64, 128, rr, False, True), "sda_lock_" + el, "RGBA")
         save(plume(el, 64, 128, rr, True, True), "sda_lock_glow_" + el, "RGBA")
         save(halo(el), "sda_halo_" + el, "RGBA")
+        save(crown(el), "sda_crown_" + el, "RGBA")
         save(hair(el, rr), "sda_hair_" + el, "RGBA")
     save(rim(), "sda_rim", "RGB")
     save(soft(), "sda_soft", "RGB")
     save(eye(), "sda_eye", "RGBA")
     save(burst(), "sda_burst", "RGBA")
-    print("wrote", len(ELS) * 7 + 4, "textures to", os.path.normpath(OUT))
+    print("wrote", len(ELS) * 8 + 4, "textures to", os.path.normpath(OUT))
 
 
 if __name__ == "__main__":

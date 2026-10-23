@@ -186,7 +186,8 @@ class SpiritDiveAnimeTest {
         if (s.cap()) v += 24;
         if (s.eyes()) v += 16;
         v += s.halos() * 4 + (s.ground() ? 8 : 0);
-        if (s.backdrop()) v += SpiritDiveAnimeRules.BACKDROP_QUADS[e.ordinal()] * 4;
+        if (s.backdrop()) v += SpiritDiveAnimeRules.BACKDROP_QUADS[e.ordinal()] * 4 + 8;
+        if (SpiritDivePieces.halfBody(e, st) && s.ground()) v += 4;
         if (lod == Lod.FULL) v += SpiritDiveAnimeRules.ENTRY_QUADS * 4;
         return v;
     }
@@ -326,6 +327,13 @@ class SpiritDiveAnimeTest {
     }
 
     @Test
+    void theQuadWindingFollowsTheViewerOneQuadAtATime() {
+        float[] l = {0, 0, 0, 0, 1, 0}, r = {1, 0, 0, 1, 1, 0};          // two points of a strip in the xy plane, the quad (l0, r0, r1, l1): normal = (r0 - l0) x (l1 - l0)
+        float[] towardZ = {0f, 0f, -1f}, awayZ = {0f, 0f, 1f};          // the camera looks along -z / +z
+        assertTrue(SpiritDiveAnimeGeometry.facingQuad(l, r, 0, 3, towardZ) != SpiritDiveAnimeGeometry.facingQuad(l, r, 0, 3, awayZ));
+    }
+
+    @Test
     void theHalfDiveDrawsOneSideAndTheFirstWindDiveIsTheLeftOne() {
         assertTrue(SpiritDivePieces.halfBody(Element.WIND, Stage.HALF));
         assertFalse(SpiritDivePieces.halfBody(Element.WIND, Stage.FULL));
@@ -350,7 +358,7 @@ class SpiritDiveAnimeTest {
     void everyTexturePathIsUniqueAndNamedByElement() {
         Set<String> all = new HashSet<>(SpiritDiveAnimeRules.allTextures());
         assertEquals(SpiritDiveAnimeRules.allTextures().size(), all.size());
-        assertEquals(4 * 7 + 4, all.size());
+        assertEquals(4 * 8 + 4, all.size());
         for (Element e : Element.values()) {
             assertTrue(all.contains(SpiritDiveAnimeRules.plumeTexture(e)) && all.contains(SpiritDiveAnimeRules.haloTexture(e)) && all.contains(SpiritDiveAnimeRules.hairTexture(e)));
             assertFalse(SpiritDiveAnimeRules.additive(SpiritDiveAnimeRules.plumeTexture(e)), "the plume body is alpha blended, with its outline");

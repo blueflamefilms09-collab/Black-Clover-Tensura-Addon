@@ -44,14 +44,13 @@ final class SpiritDiveAnimeRibbon {
         if (LOOK[0] * nx + LOOK[1] * ny + LOOK[2] * nz > 0f) { nx = -nx; ny = -ny; nz = -nz; }          // the normal faces the viewer
         for (int k = 0; k < pts; k++) WIDTH[k] = width * SpiritDiveAnimeGeometry.profile(shape, k / (float) segs, ph);
         SpiritDiveAnimeGeometry.edges(SPINE, pts, WIDTH, nx, ny, nz, LOOK, blend, LEFT, RIGHT);
-        boolean front = SpiritDiveAnimeGeometry.facing(LEFT, RIGHT, pts, LOOK);
         PoseStack.Pose p = pose.last();
         int a0 = argb >>> 24, rgb = argb & 0xFFFFFF;
         for (int k = 0; k < segs; k++) {
             float s0 = k / (float) segs, s1 = (k + 1) / (float) segs;
             int c0 = (Math.round(a0 * fade(s0, fadeIn)) << 24) | rgb, c1 = (Math.round(a0 * fade(s1, fadeIn)) << 24) | rgb;
             int i = k * 3, j = i + 3;
-            if (front) {
+            if (SpiritDiveAnimeGeometry.facingQuad(LEFT, RIGHT, i, j, LOOK)) {                                          // each quad takes the winding that shows its front to the viewer (a twisting strip never vanishes)
                 v(p, vc, LEFT, i, 0f, s0, c0, light, nx, ny, nz);
                 v(p, vc, RIGHT, i, 1f, s0, c0, light, nx, ny, nz);
                 v(p, vc, RIGHT, j, 1f, s1, c1, light, nx, ny, nz);

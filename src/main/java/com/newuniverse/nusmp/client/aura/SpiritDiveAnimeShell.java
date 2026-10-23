@@ -138,7 +138,7 @@ final class SpiritDiveAnimeShell {
             if (i == HEAD ? !head : (mask & MASK[i]) == 0) continue;
             if (i == ARM_R && skipArmR) continue;
             float a = (keptMask & MASK[i]) != 0 && i != HEAD ? 1f : SpiritDiveAnimeRules.partAlpha(progress, ORDER[i]);
-            a *= strength;
+            a *= strength * (i == HEAD && !flip ? 0.4f : 1f);                                   // the face keeps most of its own colour: the light on it is a third of the light on the clothes
             if (a <= 0.01f) continue;
             ModelPart p = part(m, i);
             if (!p.visible) continue;
@@ -159,7 +159,7 @@ final class SpiritDiveAnimeShell {
     /** Draws the whole shell of one dive: the passes the level of detail allows (3: wash, rim, soft; 2: wash, rim; 1: the rim outline alone). */
     static void draw(AuraContext c, Element el, int passes, int tint, int rim, int glow, float pulse, float progress, int mask, boolean head, boolean skipArmR, int keptMask, float k) {
         boolean slim = WaterAuraRig.slim(c.model());
-        if (passes >= 2) pass(c, SafeAdditive.emissive(SOFT), false, SpiritDiveAnimeRules.INFLATE[0] * 0.5f, tint, (el == Element.WATER ? 0.2f : 0.3f) * k, progress, mask, true, skipArmR, keptMask, slim);   // the light on the clothes: a translucent cover in the colour of the spirit
+        if (passes >= 2) pass(c, SafeAdditive.emissive(SOFT), false, SpiritDiveAnimeRules.INFLATE[0] * 0.5f, tint, (el == Element.WATER ? 0.2f : el == Element.WIND ? 0.4f : 0.3f) * k, progress, mask, true, skipArmR, keptMask, slim);   // the light on the clothes: a translucent cover in the colour of the spirit
         if (passes >= 2) pass(c, swirl(el, SpiritDiveAnimeRules.swirlStep(el, c.age())), false, SpiritDiveAnimeRules.INFLATE[0], tint, 0.85f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);
         pass(c, SafeAdditive.additive(RIM), true, SpiritDiveAnimeRules.INFLATE[1], rim, 0.95f * k, progress, mask, head, skipArmR, keptMask, slim);
         if (passes >= 3) pass(c, SafeAdditive.additive(SOFT), true, SpiritDiveAnimeRules.INFLATE[2], glow, 0.4f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);

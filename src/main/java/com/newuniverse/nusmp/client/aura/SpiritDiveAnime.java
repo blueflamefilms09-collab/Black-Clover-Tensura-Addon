@@ -52,7 +52,7 @@ public final class SpiritDiveAnime {
     private static final PerfProbe.Section SECTION = PerfProbe.section("c.spiritdive.anime");                  // timed (/multiverse perf)
 
     private static final ResourceLocation[] PLUME = new ResourceLocation[4], PLUME_GLOW = new ResourceLocation[4], LOCK = new ResourceLocation[4], LOCK_GLOW = new ResourceLocation[4],
-            HALO = new ResourceLocation[4], HAIR = new ResourceLocation[4], SIGIL = new ResourceLocation[4], RING = new ResourceLocation[4];
+            HALO = new ResourceLocation[4], CROWN = new ResourceLocation[4], HAIR = new ResourceLocation[4], SIGIL = new ResourceLocation[4], RING = new ResourceLocation[4];
     private static final ResourceLocation EYE = AuraRender.tex(SpiritDiveAnimeRules.EYE_TEXTURE), BURST = AuraRender.tex(SpiritDiveAnimeRules.BURST_TEXTURE),
             GLOW = AuraRender.tex("particle/glow"), PILLAR = AuraRender.tex("aura/sdv_pillar");
     private static final GeoSpec[][] SPIRIT = new GeoSpec[4][];
@@ -67,6 +67,7 @@ public final class SpiritDiveAnime {
             LOCK_GLOW[i] = AuraRender.tex(SpiritDiveAnimeRules.lockGlowTexture(e));
             HALO[i] = AuraRender.tex(SpiritDiveAnimeRules.haloTexture(e));
             HAIR[i] = AuraRender.tex(SpiritDiveAnimeRules.hairTexture(e));
+            CROWN[i] = AuraRender.tex(SpiritDiveAnimeRules.crownTexture(e));
         }
         SIGIL[0] = AuraRender.tex("aura/sdv_sigil_wind"); SIGIL[1] = AuraRender.tex("aura/sdv_sigil_water"); SIGIL[2] = AuraRender.tex("aura/sdv_sigil_fire"); SIGIL[3] = AuraRender.tex("aura/sdv_sigil_earth");
         RING[0] = AuraRender.tex("particle/air_ring"); RING[1] = AuraRender.tex("particle/waterfx_ripple"); RING[2] = AuraRender.tex("particle/flamefx_ring"); RING[3] = AuraRender.tex("particle/earthfam_rock_ring");
@@ -190,7 +191,7 @@ public final class SpiritDiveAnime {
         float age = c.age(), sw = Mth.clamp(c.limbSwingAmount(), 0f, 1f), vy = (float) c.player().getDeltaMovement().y;
         float head = SpiritDiveAnimeRules.partAlpha(progress, 2);
         if (head <= 0.01f && progress < 0.99f) return;
-        if (sp.cap() && !helmet) SpiritDiveAnimeShell.hat(c, SafeAdditive.additive(HAIR[i]), 0.6f, 0xFFFFFF, Math.min(1f, 0.42f * head * lit));
+        if (sp.cap() && !helmet) SpiritDiveAnimeShell.hat(c, SafeAdditive.additive(HAIR[i]), 0.6f, 0xFFFFFF, Math.min(1f, 0.62f * head * lit));
         PoseStack pose = c.pose();
         pose.pushPose();
         applyPart(pose, c.model().head);
@@ -232,8 +233,9 @@ public final class SpiritDiveAnime {
     }
 
     /**
-     * The halo: a thin spiky crown of light, the camera-facing sprite turning slowly behind the head, opening with the entry (a pulse of light as it appears); the character tier adds a larger second
-     * crown turning the other way. In the half dive of Wind it is a half crown standing behind the head on the left (not turning: a fixed vertical half disc).
+     * The crown and the halo. The CROWN is the upright crown of the stills: a circlet with bars of light (flame tongues, waves, crystals) rising from it, a camera-facing sprite that stays upright above
+     * the forehead and opens with the entry (a pulse of light as it appears). The HALO (the character tier, the second count) is the thin spiky ring of light turning slowly behind the head, larger and
+     * dimmer. In the half dive of Wind the crown is HALF a crown standing behind the head on the left (a fixed vertical half disc).
      */
     private static void halo(AuraContext c, PoseStack pose, Element el, boolean character, Pal pal, float progress, float lit, boolean half, int count) {
         if (count <= 0) return;
@@ -242,19 +244,23 @@ public final class SpiritDiveAnime {
         float a = SpiritDiveAnimeRules.smooth((progress - 0.3f) / 0.5f);
         if (a <= 0.01f) return;
         float pulse = 1f + 0.8f * Math.max(0f, 1f - Math.abs(progress - 0.7f) * 6f);                          // the flash as it opens
-        float hs = (character ? 9.5f : 7f) * open;
-        VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(HALO[i]));
+        float hs = (character ? 8.0f : 6.5f) * open, cy = -6.4f - 0.48f * hs;                                  // the circlet sits on the forehead: the sprite's circlet is 0.24 of its height below its centre
+        float fire = el == Element.FIRE ? 0.7f : 1f;
+        VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(CROWN[i]));
         if (half) {
-            halfCrown(pose, vc, hs, SealDraw.argb(Math.min(1f, 0.9f * a * lit), pal.halo()));
+            halfCrown(pose, vc, hs, cy, SealDraw.argb(Math.min(1f, 0.9f * a * lit * fire), pal.halo()));
             return;
         }
-        SealDraw.glow(pose, vc, 0f, -9.5f, 2.5f, hs, age * 0.018f, SealDraw.argb(Math.min(1f, (el == Element.FIRE ? 0.55f : 0.9f) * a * lit * pulse), pal.halo()), FB);
-        if (count > 1) SealDraw.glow(pose, vc, 0f, -9.5f, 2.0f, hs * 1.35f, -age * 0.011f + 1f, SealDraw.argb(Math.min(1f, 0.55f * a * lit * pulse), pal.glow()), FB);
+        SealDraw.glow(pose, vc, 0f, cy, 1.2f, hs, 0.03f * Mth.sin(age * 0.07f), SealDraw.argb(Math.min(1f, 0.95f * a * lit * pulse * fire), pal.halo()), FB);
+        if (count > 1) {
+            VertexConsumer ring = c.buffers().getBuffer(SafeAdditive.additive(HALO[i]));
+            SealDraw.glow(pose, ring, 0f, -7.5f, 3.2f, hs * 1.3f, age * 0.014f, SealDraw.argb(Math.min(1f, 0.42f * a * lit * pulse * fire), pal.glow()), FB);
+        }
     }
 
     /** Half of the crown on the left side, standing behind the head (head frame px): the right half of the texture on the +x side, drawn from both sides. */
-    private static void halfCrown(PoseStack pose, VertexConsumer vc, float hs, int argb) {
-        float cy = -9.5f, z = 2.5f;
+    private static void halfCrown(PoseStack pose, VertexConsumer vc, float hs, float cy, int argb) {
+        float z = 2.5f;
         PropDraw.quad(pose, vc, 0f, cy + hs, z, hs, cy + hs, z, hs, cy - hs, z, 0f, cy - hs, z, 0.5f, 0f, 1f, 1f, argb, FB);
         PropDraw.quad(pose, vc, hs, cy + hs, z, 0f, cy + hs, z, 0f, cy - hs, z, hs, cy - hs, z, 1f, 0f, 0.5f, 1f, argb, FB);
     }
@@ -276,7 +282,7 @@ public final class SpiritDiveAnime {
         if (lod != Lod.FULL) return;
         float fl = SpiritDiveAnimeRules.flash(t);
         if (fl > 0f && t < 6f && st != Stage.UPGRADE) {                                                     // the flash at the chest: a star-burst
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(BURST)), 0f, 1.5f - 1.05f, 0f, 0.5f + 1.5f * (1f - fl), age * 0.05f, SealDraw.argb(fl * 0.95f, 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(BURST)), 0f, 1.5f - 1.05f, 0f, 0.9f + 2.2f * (1f - fl), age * 0.05f, SealDraw.argb(Math.min(1f, fl * 1.3f), 0xFFFFFF), FB);
         }
         float rp = SpiritDiveAnimeRules.ringPulse(t);
         if (rp > 0f && st != Stage.UPGRADE) {                                                               // the ring pulse of the halo opening: a ring expanding from the feet
