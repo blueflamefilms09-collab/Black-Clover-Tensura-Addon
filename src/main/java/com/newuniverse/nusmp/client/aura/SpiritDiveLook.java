@@ -7,7 +7,7 @@ import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look;
  * Spirit Dive remake: what THIS client chooses to draw (the values come from the CLIENT config {@code nusmp-spiritdive-client.toml}, see {@link DiveClientConfig}; plain flags so the painters read them
  * with no config lookup per frame). Only looks: nothing here changes what the server decides.
  * <ul>
- *   <li>{@code look}: which Spirit Dive look this client draws: {@code DJINN} (the default: a full set of plates in the style of the Djinn Full Equip), {@code V2} (the remade look of 3.0.0: wind halo, wing blades,
+ *   <li>{@code look}: which Spirit Dive look this client draws: {@code REEL} (the default since 3.3: the V2 design executed like the owner's videos), {@code ANIME} (3.2), {@code DJINN} (a full set of plates in the style of the Djinn Full Equip), {@code V2} (the remade look of 3.0.0: wind halo, wing blades,
  *       flame mane, water ribbons, rock crown) or {@code CLASSIC} (the 1.99 look). The old option {@code classic} is the same as look CLASSIC ({@link #classic}).</li>
  *   <li>{@code classic}: the 1.99 Spirit Dive look (armour-like pieces, the old effects). True exactly when the look is CLASSIC; the old {@code classicLook} config key still switches it on.</li>
  *   <li>{@code characterEffects}: draw the character tier (Yuno, Fuegoleon, Noelle) as such; false draws every dive as the standard tier. Default true.</li>
@@ -19,7 +19,7 @@ public final class SpiritDiveLook {
     private SpiritDiveLook() {}
 
     private static volatile boolean characterEffects = true, particles = true;
-    private static volatile Look look = Look.ANIME;
+    private static volatile Look look = Look.REEL;
     private static volatile FuegoleonArmRules.View armView = FuegoleonArmRules.View.ALWAYS;
 
     /** The look this client draws. */
@@ -28,7 +28,10 @@ public final class SpiritDiveLook {
     /** True for the classic (1.99) look. */
     public static boolean classic() { return look == Look.CLASSIC; }
 
-    /** True for the ANIME look (the default since 3.2). */
+    /** True for the REEL look (the default since 3.3): the V2 design executed like the owner's videos. */
+    public static boolean reel() { return look == Look.REEL; }
+
+    /** True for the ANIME look (the default of 3.2). */
     public static boolean anime() { return look == Look.ANIME; }
 
     /** True for the remade look of 3.0.0 (the one before the Djinn style). */
@@ -48,7 +51,7 @@ public final class SpiritDiveLook {
     }
 
     public static void set(Look which, boolean characterFx, boolean particleTrail, FuegoleonArmRules.View arm) {
-        look = which == null ? Look.ANIME : which;
+        look = which == null ? Look.REEL : which;
         characterEffects = characterFx;
         particles = particleTrail;
         armView = arm == null ? FuegoleonArmRules.View.ALWAYS : arm;

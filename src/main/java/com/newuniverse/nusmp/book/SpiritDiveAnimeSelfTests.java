@@ -80,11 +80,11 @@ public final class SpiritDiveAnimeSelfTests {
                 }
 
         // ---- 4. the option
-        if (SpiritDiveDjinnPieces.Look.values().length != 4 || SpiritDiveDjinnPieces.Look.valueOf("ANIME").ordinal() != 3) bad.add("the look values changed (they are append only: DJINN, V2, CLASSIC, ANIME)");
-        if (SpiritDiveDjinnPieces.DEFAULT_LOOK != SpiritDiveDjinnPieces.Look.ANIME || SpiritDiveAnimeRules.parse("garbage") != SpiritDiveDjinnPieces.Look.ANIME) bad.add("the default look is not ANIME");
+        if (SpiritDiveDjinnPieces.Look.values().length < 4 || SpiritDiveDjinnPieces.Look.valueOf("ANIME").ordinal() != 3) bad.add("the look values changed (they are append only: DJINN, V2, CLASSIC, ANIME, then REEL)");
+        if (SpiritDiveAnimeRules.parse("anime") != SpiritDiveDjinnPieces.Look.ANIME) bad.add("the ANIME look cannot be chosen any more");   // 3.3: the default moved on to REEL (magic.spirit_dive_reel checks it)
         for (String old : new String[]{"DJINN", "V2", "CLASSIC"}) if (!SpiritDiveAnimeRules.parse(old).name().equals(old)) bad.add("the old look " + old + " cannot be chosen any more");
         if (!bad.isEmpty()) return Result.fail(String.join("; ", bad.subList(0, Math.min(8, bad.size()))));
         return Result.ok(SpiritDiveAnimeRules.allTextures().size() + " textures and the spirit models are in place; the tables hold; the worst full dive draws " + worst + " vertices (V2: "
-                + SpiritDiveAnimeRules.V2_WORST_VERTICES + "); the style numbers round trip; ANIME is the default and the old looks are still choosable");
+                + SpiritDiveAnimeRules.V2_WORST_VERTICES + "); the style numbers round trip; ANIME and the old looks are still choosable");
     }
 }

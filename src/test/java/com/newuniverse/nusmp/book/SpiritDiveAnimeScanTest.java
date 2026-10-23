@@ -145,15 +145,15 @@ class SpiritDiveAnimeScanTest {
         for (String f : new String[]{"client/aura/SpiritDiveDjinn.java", "client/aura/DiveFirstPerson.java", "client/aura/SpiritDiveFx.java", "book/SpiritDiveDjinnPieces.java", "book/SpiritDivePieces.java", "client/aura/FuegoleonArmAura.java"})
             assertTrue(Files.exists(JAVA.resolve(f)), f + " was removed");
         String e = code(read("book/SpiritDiveDjinnPieces.java"));
-        assertTrue(e.contains("enum Look { DJINN, V2, CLASSIC, ANIME }"), "the values are append only");
+        assertTrue(e.contains("enum Look { DJINN, V2, CLASSIC, ANIME, REEL }"), "the values are append only");
     }
 
     // ------------------------------------------------------------------ 4. registered
     @Test
     void theOptionTheSelfTestAndTheFirstPersonHookAreRegistered() {
         String cfg = code(read("client/aura/DiveClientConfig.java"));
-        assertTrue(cfg.contains("defineEnum(\"look\", Look.ANIME)") && cfg.contains("\"classicLook\"") && cfg.contains("characterEffects"), "look = ANIME | DJINN | V2 | CLASSIC; the old options stay");
-        assertTrue(code(read("client/aura/SpiritDiveLook.java")).contains("Look look = Look.ANIME"));
+        assertTrue(cfg.contains("defineEnum(\"look\", Look.REEL)") && cfg.contains("\"classicLook\"") && cfg.contains("characterEffects"), "look = ANIME | DJINN | V2 | CLASSIC; the old options stay");
+        assertTrue(code(read("client/aura/SpiritDiveLook.java")).contains("Look look = Look.REEL"));
         assertTrue(code(read("book/SpiritDiveBoot.java")).contains("SpiritDiveAnimeSelfTests.register()"));
         assertTrue(read("book/SpiritDiveAnimeSelfTests.java").contains("\"magic.spirit_dive_anime\""));
         String c = code(read("client/aura/DiveClient.java"));

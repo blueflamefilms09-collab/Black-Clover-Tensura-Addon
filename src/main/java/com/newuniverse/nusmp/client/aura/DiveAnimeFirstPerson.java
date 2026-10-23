@@ -42,7 +42,7 @@ public final class DiveAnimeFirstPerson {
 
     /** Works out what the local player's {@code arm} wears right now (sets the statics above); false = draw nothing. */
     private static boolean state(AbstractClientPlayer p, HumanoidArm arm) {
-        if (!SpiritDiveLook.anime() || p.isInvisible()) return false;
+        if (!(SpiritDiveLook.anime() || SpiritDiveLook.reel()) || p.isInvisible()) return false;           // the REEL look (3.3) wears the same light arms
         var running = PlayerAuraClient.running(p.getId());
         long[] w = running == null ? null : running.get(Aura.SPIRIT_DIVE);
         long gt = p.level().getGameTime();
