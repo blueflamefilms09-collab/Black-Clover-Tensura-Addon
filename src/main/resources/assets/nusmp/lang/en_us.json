@@ -17908,5 +17908,9 @@
   "nusmp.page.book_chain.chain_downpour": "Chains rain down on the point you look at for four seconds: every half second the foes within five blocks take a pulse, are slowed and jolted. Damage scales with your EP.",
   "nusmp.page.book_barrier.barrier_shove": "Barrier Shove - a wide pane of barrier is pushed out in front of you: foes in a short cone are hit and shoved hard away. Damage scales with your EP.",
   "nusmp.page.book_barrier.barrier_stairs": "Barrier Stairs - hexagons of barrier stack up under your feet like steps and throw you up and forward; you fall slowly for four seconds.",
-  "nusmp.page.book_barrier.barrier_lattice": "Barrier Lattice - a honeycomb of barrier is laid over the ground where you look for five seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP."
+  "nusmp.page.book_barrier.barrier_lattice": "Barrier Lattice - a honeycomb of barrier is laid over the ground where you look for five seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP.",
+  "item.nusmp.spirit_of_zephyr": "Spirit of Zephyr",
+  "item.nusmp.spirit_of_zephyr.lore": "The long green blade of the Wind Spirit Zephyr: crossed rings turn at its hilt, and a hit scatters wind-green light.",
+  "item.nusmp.spirit_of_boreas": "Spirit of Boreas",
+  "item.nusmp.spirit_of_boreas.lore": "The leaf bow of the Wind Spirit Boreas: its arrows leave a short trail of light."
 }
