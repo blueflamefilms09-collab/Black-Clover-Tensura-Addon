@@ -148,6 +148,97 @@
         ]
       },
       "note": "Mercury strands and drops are spread over an area and gathered into a giant cage whose bars switch between spears and shields. His signature."
+    },
+    {
+      "page": "silver_needles",
+      "name": "Mercury Magic: Silver Needles",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Slivers of toxic mercury, in the line of Silver Bullet."
+    },
+    {
+      "page": "quicksilver_pool",
+      "name": "Mercury Magic: Quicksilver Pool",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). The pool of mercury the Silver Rain leaves behind, as its own page."
+    },
+    {
+      "page": "silver_wave",
+      "name": "Mercury Magic: Silver Wave",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "silver_shackles",
+      "name": "Mercury Magic: Silver Shackles",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Mercury that sets hard round a target."
+    },
+    {
+      "page": "toxic_quicksilver",
+      "name": "Mercury Magic: Toxic Quicksilver",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.4
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). The wiki notes that mercury in the bloodstream can be fatal."
+    },
+    {
+      "page": "liquid_metal_tide",
+      "name": "Mercury Magic: Liquid Metal Tide",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.6
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "silver_wing_barrage",
+      "name": "Mercury Magic: Silver Wing Barrage",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.9
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Named for his Silver Eagle squad; shared, not exclusive, so the basic book keeps 15 pages."
     }
   ],
   "planned": [

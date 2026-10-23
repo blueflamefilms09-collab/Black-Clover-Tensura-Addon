@@ -10,18 +10,18 @@ book_blood 7 5 | vanica=4
 book_body 11 10 |
 book_bone 7 4 | zenon=5
 book_briar 13 9 | charlotte=8
-book_bronze 14 14 |
+book_bronze 15 15 |
 book_bubble 12 12 |
 book_butoh 13 9 | kiato=6
 book_chain 12 12 |
 book_cherry_blossom 12 9 | kirsch=6
 book_compass 4 3 | letoile=3
-book_copper 12 12 |
+book_copper 15 15 |
 book_copy 4 4 |
-book_corundum 13 13 |
+book_corundum 15 15 |
 book_cotton 7 4 | charmy=7
 book_creation 4 3 |
-book_crystal 12 12 |
+book_crystal 15 15 |
 book_curse 12 8 |
 book_curse_warding 12 11 |
 book_dark 15 5 | yami=11
@@ -32,7 +32,7 @@ book_demon_light 12 12 |
 book_demon_water 10 10 |
 book_dice 4 4 |
 book_dream 5 4 | dorothy=4
-book_earth 9 9 |
+book_earth 15 15 |
 book_explosion 4 4 |
 book_eye 12 11 |
 book_eyeball 12 12 |
@@ -41,13 +41,13 @@ book_food 12 11 |
 book_fungus 12 12 |
 book_game 6 6 |
 book_gel 12 12 |
-book_glass 12 12 |
+book_glass 15 15 |
 book_gravity 9 6 | dante=8
 book_hair 10 10 |
 book_ice 9 9 |
 book_ice_wedge 12 12 |
 book_illusion 5 5 |
-book_iron 12 12 |
+book_iron 15 15 |
 book_key 14 14 |
 book_kotodama 16 16 |
 book_legion 12 12 |
@@ -55,8 +55,8 @@ book_light 15 8 | karna=6 lemiel=4
 book_lightning 16 7 | gadjah=4 luck=8
 book_magma 5 5 |
 book_memory 9 9 |
-book_mercury 8 4 | nozel=8
-book_mineral 8 7 | mars=4
+book_mercury 19 15 | nozel=15
+book_mineral 16 15 | mars=15
 book_mirror 13 8 | gauche=9
 book_mist 4 4 |
 book_modification 10 10 |
@@ -69,15 +69,15 @@ book_plant 14 8 | mimosa=6
 book_poison 7 4 | gordon=5
 book_poison_plant 10 10 |
 book_recombination 10 6 | henry=7
-book_red_ochre 7 7 |
+book_red_ochre 15 15 |
 book_reinforcement 5 5 |
-book_rock 7 7 |
-book_sand 5 5 |
-book_sandstone 8 8 |
+book_rock 15 15 |
+book_sand 15 15 |
+book_sandstone 15 15 |
 book_scale 10 10 |
 book_sealing 11 5 | secre=7
 book_shadow 13 5 | nacht=11
-book_shakudo 10 10 |
+book_shakudo 15 15 |
 book_skin 5 5 |
 book_slash 6 4 | jack=5
 book_smoke 8 8 |
@@ -89,8 +89,8 @@ book_sound 9 9 |
 book_spatial 14 8 | finral=4 langris=4
 book_spike 10 10 |
 book_star 6 6 |
-book_steel 9 5 | klaus=5
-book_stone 7 7 |
+book_steel 19 15 | klaus=15
+book_stone 15 15 |
 book_storm 6 4 | kaiser=3
 book_switching 5 5 |
 book_sword 6 5 |
