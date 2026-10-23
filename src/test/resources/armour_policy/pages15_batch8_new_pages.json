@@ -10,5 +10,17 @@
     "seal_sigil_field",
     "seal_pillars",
     "forbidden_seal_art"
+  ],
+  "SKIN": [
+    "skin_leather_lash",
+    "skin_hardened_hide",
+    "soft_skin",
+    "peeling_skin",
+    "skin_bristling_hide",
+    "skin_graft",
+    "skin_stretch",
+    "skin_wrap",
+    "skin_blistering_field",
+    "skin_cast_off"
   ]
 }

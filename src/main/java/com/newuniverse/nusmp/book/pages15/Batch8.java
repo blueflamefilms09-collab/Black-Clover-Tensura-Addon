@@ -113,6 +113,42 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1500).withAnim("seal_crush")));
 
+    private static final List<BookPage> SKIN = register("book_skin", List.of(
+            Pages15Kit.starter("skin_leather_lash", "Skin Magic: Leather Lash",
+                    Pages15Kit.cone(Tier.STARTER, 4, 0.45, W, Pages15Kit.knock(0.7))).withAnim("sweep"),
+            Pages15Kit.starter("skin_hardened_hide", "Skin Magic: Hardened Hide",
+                    selfBuff(Tier.STARTER, WF, 0.5f, eff(MobEffects.DAMAGE_RESISTANCE, 100, 1), eff(MobEffects.MOVEMENT_SLOWDOWN, 100, 0))).withCooldown(160),
+            Pages15Kit.starter("soft_skin", "Skin Magic: Soft Skin",
+                    selfBuff(Tier.STARTER, WF, 0.5f, eff(MobEffects.ABSORPTION, 160, 2), eff(MobEffects.SLOW_FALLING, 160, 0))).withCooldown(160),
+            Pages15Kit.mid("peeling_skin", "Skin Magic: Peeling Skin",
+                    Pages15Kit.volley(Tier.MID, 4, true, W, weak(60, 0))).withCooldown(200),
+            Pages15Kit.mid("skin_bristling_hide", "Skin Magic: Bristling Hide",
+                    Pages15Kit.empower(Tier.MID, 200, true, WF)).withCooldown(300),
+            Pages15Kit.mid("skin_graft", "Skin Magic: Skin Graft",
+                    cleanse(Tier.MID, WF, 0.2f)).withCooldown(400),
+            Pages15Kit.mid("skin_stretch", "Skin Magic: Stretching Skin",
+                    Pages15Kit.dash(Tier.MID, true, 9, false, W, Pages15Kit.knock(0.6))).withCooldown(180).withAnim("thrust"),
+            Pages15Kit.zone("skin_wrap", "Skin Magic: Skin Wrap",
+                    Pages15Kit.bind(Tier.ZONE, 14, false, W, weak(80, 1))).withCooldown(450),
+            Pages15Kit.zone("skin_blistering_field", "Skin Magic: Blistering Field",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, WF, Pages15Kit.all(slow(30, 1), weak(30, 0)))).withCooldown(450),
+            Pages15Kit.signature("skin_cast_off", "Skin Magic: Cast-Off Skin",
+                    Pages15Kit.cast(Tier.SIGNATURE, c -> {
+                    Vec3 at = c.caster.position();
+                    Fx fx = new Fx(c);
+                    c.circle(1.5f);
+                    Rider flung = Pages15Kit.all(Pages15Kit.knock(1.1), weak(80, 1));
+                    for (LivingEntity e : c.foes(at, 6)) {
+                        c.hit(e);
+                        flung.apply(e, c.caster);
+                    }
+                    fx.shape(WB, at.add(0, 0.8, 0), at.add(0, 1.8, 0), 36, 2.2f);
+                    vanish(c, 80);
+                    c.caster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, 1));
+                    c.caster.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 160, 1));
+                    return true;
+                })).withCooldown(1200).withAnim("slam")));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
