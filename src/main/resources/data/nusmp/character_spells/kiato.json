@@ -104,8 +104,125 @@
         ]
       },
       "note": "Anime only: underwater the dancer swims overhead of the target and is propelled down with tremendous force."
+    },
+    {
+      "page": "butoh_hand_sway",
+      "name": "Swaying Hand",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "NEW shared page (Pages-15): a hand drawn across the air in a slow arc."
+    },
+    {
+      "page": "butoh_heel_stamp",
+      "name": "Heel Stamp",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "NEW shared page (Pages-15): the heel comes down and the floor answers."
+    },
+    {
+      "page": "butoh_flowing_blade",
+      "name": "Flowing Water Blade",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "The dancer turns and the water follows (existing page; a dance spell fits the Butoh user)."
+    },
+    {
+      "page": "butoh_rhythm_wave",
+      "name": "Rhythm Wave",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "Three beats of the heel (existing page)."
+    },
+    {
+      "page": "butoh_ebb_step",
+      "name": "Ebb Step",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "Slipping back like the tide (existing page)."
+    },
+    {
+      "page": "butoh_tidal_veil",
+      "name": "Tidal Veil",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "A curtain of water round the sleeves (existing page)."
+    },
+    {
+      "page": "butoh_undertow",
+      "name": "Undertow",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "A slow circle on the floor and the sea answers (existing page)."
+    },
+    {
+      "page": "butoh_metronome_field",
+      "name": "Metronome Field",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "A stage with a heartbeat (existing page)."
+    },
+    {
+      "page": "butoh_seabed_hymn",
+      "name": "Seabed Hymn",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.75
+      },
+      "note": "The worship dance of the Seabed Temple (existing page)."
     }
   ],
   "planned": [],
-  "notes": "Not in his set (kept in the basic Butoh book): Flowing Water Blade, Rhythm Wave, Ebb Step, Tidal Veil, Undertow, Metronome Field and Seabed Hymn are this mod's own pages and were not found as Kiato's spells."
+  "notes": "Pages-15 added nine pages to his set so his grimoire shows 15: Flowing Water Blade, Rhythm Wave, Ebb Step, Tidal Veil, Undertow, Metronome Field and Seabed Hymn are this mod's own dance pages (no source names them for Kiato, `design`), and Swaying Hand and Heel Stamp are new. Not in his set (kept in the basic Butoh book): Mirror Step, Serpent Arm, Echo of the Dancer and Crescendo."
 }

@@ -24,10 +24,34 @@
       "acquire": { "type": "mastery", "min": 0.5 }, "note": "The owner's spell: rings that orbit an ally as a lingering ward. Already locked to her grimoire." },
     { "page": "eternal_prison", "name": "Seal Magic: Eternal Prison", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "inverse_release", "count": 2 }, { "type": "mastery", "min": 0.8 } ] },
-      "note": "A forbidden spell that could hold a target for centuries. Already locked to her grimoire." }
+      "note": "A forbidden spell that could hold a target for centuries. Already locked to her grimoire." },
+    { "page": "seal_stamp", "name": "Seal Magic: Sealing Stamp", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.05 },
+      "note": "NEW shared page (Pages-15): a small seal thrown at a foe; the basic Seal Magic of her grimoire." },
+    { "page": "sealing_needles", "name": "Seal Magic: Sealing Needles", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.15 },
+      "note": "NEW shared page (Pages-15): homing needles that cut a foe's casting." },
+    { "page": "seal_ward_mark", "name": "Seal Magic: Ward Mark", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.2 },
+      "note": "NEW shared page (Pages-15): she seals a ward on herself and breaks a seal laid on her." },
+    { "page": "seal_gate_closing", "name": "Seal Magic: Closing Gate", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
+      "acquire": { "type": "mastery", "min": 0.3 },
+      "note": "NEW shared page (Pages-15): the attribute opens and closes things; this page closes (Inverse Release opens)." },
+    { "page": "seal_rune_lattice", "name": "Seal Magic: Rune Lattice", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.35 },
+      "note": "NEW shared page (Pages-15): a cone of runes that slows and jams." },
+    { "page": "protective_seal", "name": "Seal Magic: Protective Seal", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.45 },
+      "note": "NEW shared page (Pages-15): a ward seal on her allies." },
+    { "page": "seal_sigil_field", "name": "Seal Magic: Sigil Field", "ja": "", "origin": "anime", "exclusive": false, "source": "design",
+      "acquire": { "type": "mastery", "min": 0.6 },
+      "note": "NEW shared page (Pages-15): a field of sigils." },
+    { "page": "forbidden_seal_art", "name": "Seal Magic: Forbidden Seal Art", "ja": "", "origin": "anime", "exclusive": false, "source": "ja_search",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "eternal_prison" }, { "type": "mastery", "min": 0.9 } ] },
+      "note": "NEW shared page (Pages-15): the forbidden art she used against the devil (the manga gives it no name; the page name is the mod's). Opens only after Eternal Prison." }
   ],
   "planned": [
     { "name": "Forbidden Art against the devil (the black horns)", "ja": "", "origin": "anime", "source": "ja_search", "note": "The act that turned her into the bird Nero for 500 years; no spell name." }
   ],
-  "notes": "Not in Secre's grimoire (kept in the basic Sealing book): Grand Seal, Sealing Chains, Trinity Seal Magic (a compound spell of other mages), Seal Barrier and the Sigil Combo (the basic seal's random combo)."
+  "notes": "Not in Secre's grimoire (kept in the basic Sealing book): Grand Seal, Sealing Chains, Trinity Seal Magic (a compound spell of other mages), Seal Barrier, the Sigil Combo (the basic seal's random combo), Sigil Burst and Pillars of Seal. Pages-15 added eight shared pages to her set so her grimoire shows 15."
 }

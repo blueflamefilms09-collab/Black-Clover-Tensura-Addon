@@ -1,1 +1,124 @@
-{}
+{
+  "SEALING": [
+    "seal_stamp",
+    "sealing_needles",
+    "seal_ward_mark",
+    "seal_rune_lattice",
+    "seal_gate_closing",
+    "protective_seal",
+    "seal_sigil_burst",
+    "seal_sigil_field",
+    "seal_pillars",
+    "forbidden_seal_art"
+  ],
+  "SKIN": [
+    "skin_leather_lash",
+    "skin_hardened_hide",
+    "soft_skin",
+    "peeling_skin",
+    "skin_bristling_hide",
+    "skin_graft",
+    "skin_stretch",
+    "skin_wrap",
+    "skin_blistering_field",
+    "skin_cast_off"
+  ],
+  "TONGUE": [
+    "tongue_lash",
+    "tongue_snatch",
+    "tongue_acid_spit",
+    "tongue_whip_crack",
+    "tongue_swing",
+    "tongue_savouring_lick",
+    "tongue_numbing_saliva",
+    "wrapping_tongue",
+    "tongue_lashing_barrage",
+    "tongue_great_swallow"
+  ],
+  "SWITCHING": [
+    "switching_place_swap",
+    "blink_switch",
+    "switching_inversion_pulse",
+    "ailment_swap",
+    "aggro_switch",
+    "foe_swap",
+    "up_down_switch",
+    "switching_tangle_field",
+    "shuffling_barrage",
+    "grand_reversal"
+  ],
+  "RECOMBINATION": [
+    "house_door_slam",
+    "house_plank_volley",
+    "house_stair_leap",
+    "house_chimney_cannon",
+    "house_trapdoor",
+    "house_scaffold_span",
+    "house_roof_slam",
+    "house_hallway_maze",
+    "house_collapse"
+  ],
+  "TRANSMUTATION": [
+    "alchemic_copper_bolts",
+    "alchemic_sand_shower",
+    "alchemic_rubber_spring",
+    "alchemic_lead_weights",
+    "alchemic_brass_whips",
+    "alchemic_salt_flats",
+    "alchemic_iron_rain",
+    "living_statue"
+  ],
+  "BUTOH": [
+    "butoh_hand_sway",
+    "butoh_heel_stamp",
+    "butoh_mirror_step",
+    "butoh_serpent_arm",
+    "butoh_echo_step",
+    "butoh_crescendo"
+  ],
+  "MODIFICATION": [
+    "modification_scalpel_cut",
+    "modification_adrenal_edit",
+    "modification_nerve_edit",
+    "modification_regeneration",
+    "modification_mutagen_field"
+  ],
+  "HAIR": [
+    "hair_reach",
+    "hair_needles",
+    "hair_wall",
+    "hair_spear",
+    "hair_forest"
+  ],
+  "NAIL": [
+    "nail_claws",
+    "nail_hook",
+    "nail_lance",
+    "nail_hardening",
+    "nail_thicket"
+  ],
+  "SCALE": [
+    "scale_dart",
+    "scale_slide",
+    "scale_cyclone",
+    "scale_dragon_tail",
+    "scale_reef"
+  ],
+  "SPIKE": [
+    "spike_jab",
+    "spike_vault",
+    "spike_lance",
+    "spike_snare",
+    "spike_garden"
+  ],
+  "CHAIN": [
+    "chain_hook_throw",
+    "chain_whirl",
+    "chain_downpour"
+  ],
+  "BARRIER": [
+    "barrier_shove",
+    "barrier_stairs",
+    "barrier_lattice"
+  ]
+}
