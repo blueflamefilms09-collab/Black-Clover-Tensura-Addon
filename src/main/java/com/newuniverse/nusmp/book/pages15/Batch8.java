@@ -447,6 +447,14 @@ public final class Batch8 {
             Pages15Kit.zone("chain_downpour", "Chain Downpour",
                     Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, CH2, Pages15Kit.all(slow(30, 1), Pages15Kit.knock(0.2)))).withCooldown(450)));
 
+    private static final List<BookPage> BARRIER = register("book_barrier", List.of(
+            Pages15Kit.starter("barrier_shove", "Barrier Shove",
+                    Pages15Kit.cone(Tier.STARTER, 3.5, 0.45, BR3, Pages15Kit.knock(1.1))).withAnim("thrust"),
+            Pages15Kit.mid("barrier_stairs", "Barrier Stairs",
+                    leap(Tier.MID, 1.0, 0.8, 80, BR2)).withCooldown(200),
+            Pages15Kit.zone("barrier_lattice", "Barrier Lattice",
+                    Pages15Kit.field(Tier.ZONE, 5, 100, 10, true, BR2, Pages15Kit.all(slow(40, 2), weak(40, 0)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

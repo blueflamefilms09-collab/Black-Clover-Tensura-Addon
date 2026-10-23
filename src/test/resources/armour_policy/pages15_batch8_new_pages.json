@@ -115,5 +115,10 @@
     "chain_hook_throw",
     "chain_whirl",
     "chain_downpour"
+  ],
+  "BARRIER": [
+    "barrier_shove",
+    "barrier_stairs",
+    "barrier_lattice"
   ]
 }
