@@ -1,0 +1,119 @@
+{
+ "zephyr_close_front": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_ZEPHYR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 600,
+  "cam": [
+   0,
+   1.8,
+   -3.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   12,
+   60,
+   200
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "zephyr_close_side": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_ZEPHYR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 600,
+  "cam": [
+   3.6,
+   1.8,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   12,
+   60,
+   200
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "zephyr_close_back34": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_ZEPHYR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 600,
+  "cam": [
+   -2.6,
+   2.0,
+   2.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   12,
+   60,
+   200
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}
