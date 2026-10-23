@@ -55,6 +55,220 @@
         ]
       },
       "note": "Supplementary: opened from the grimoire, a small compass and a large compass face above an area, the large needle mirroring the small one's spin; it disrupts the mana of the area, dissolving other spells and impeding other people's magic while her own is unaffected."
+    },
+    {
+      "page": "needle_flick",
+      "name": "Compass Magic: Needle Flick",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.04
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "bearing_step",
+      "name": "Compass Magic: Bearing Step",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "magnet_draw",
+      "name": "Compass Magic: Magnet Draw",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "needle_flick",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.12
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "true_heading",
+      "name": "Compass Magic: True Heading",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.16
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "lodestone_snare",
+      "name": "Compass Magic: Lodestone Snare",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "cardinal_volley",
+      "name": "Compass Magic: Cardinal Volley",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "useless_north",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.34
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "declination_wave",
+      "name": "Compass Magic: Declination Wave",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.38
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "dead_reckoning",
+      "name": "Compass Magic: Dead Reckoning",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "bearing_step",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "safe_bearing",
+      "name": "Compass Magic: Safe Bearing",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "magnetic_storm",
+      "name": "Compass Magic: Magnetic Storm",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "another_atlas"
+          },
+          {
+            "type": "mastery",
+            "min": 0.6
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "meridian_lance",
+      "name": "Compass Magic: Meridian Lance",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "dead_reckoning",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.68
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "cardinal_burst",
+      "name": "Compass Magic: Cardinal Burst",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "cardinal_volley"
+          },
+          {
+            "type": "mastery",
+            "min": 0.78
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     }
   ],
   "planned": [

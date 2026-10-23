@@ -64,8 +64,8 @@ class CharacterSetRestSourceScanTest {
             case "book_dream" -> section(read(SRC.resolve(b + "ElementBooks.java")), "public static GrimoireBook dream()", "public static GrimoireBook antiMagic()");
             case "book_bone" -> section(read(SRC.resolve(b + "ElementBooks.java")), "static List<BookPage> legacyBonePages()", "public static GrimoireBook blood()") + read(SRC.resolve(b + "BoneBook.java"));
             case "book_lightning" -> read(SRC.resolve(b + "LightningBook.java"));
-            case "book_gravity" -> read(SRC.resolve(b + "GravityBook.java")) + read(SRC.resolve(b + "GravityWorksPages.java"));
-            case "book_slash" -> read(SRC.resolve(b + "SlashBook.java")) + read(SRC.resolve(b + "SlashWorks.java"));
+            case "book_gravity" -> read(SRC.resolve(b + "GravityBook.java")) + read(SRC.resolve(b + "GravityWorksPages.java")) + read(SRC.resolve(b + "pages15/Batch6.java"));      // + the pages the 15-spells project appended (batch 6)
+            case "book_slash" -> read(SRC.resolve(b + "SlashBook.java")) + read(SRC.resolve(b + "SlashWorks.java")) + read(SRC.resolve(b + "pages15/Batch6.java"));      // + the pages the 15-spells project appended (batch 6)
             case "book_soul" -> read(SRC.resolve(b + "SoulBook.java")) + read(SRC.resolve(b + "ext/SoulExt.java")) + read(SRC.resolve("soul/PaladinCasts.java"));
             case "book_soul_corpse" -> read(SRC.resolve(b + "SoulCorpseBook.java")) + read(SRC.resolve(b + "ext/SoulCorpseExt.java")) + read(SRC.resolve("corpse/SoulCorpseAccess.java"));
             case "book_mineral" -> section(read(SRC.resolve(b + "EarthFamilyBooks.java")), "// MINERAL", "return new EarthFamilyBook");

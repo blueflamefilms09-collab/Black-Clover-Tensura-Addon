@@ -121,6 +121,169 @@
         ]
       },
       "note": "Greek for time resurrection: the last spell he used before Licht stabbed him; it rewinds time to undo the attack. His signature; the latest in the set."
+    },
+    {
+      "page": "stopwatch_strike",
+      "name": "Time Magic (stopwatch strike)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "borrowed_second",
+      "name": "Time Magic (borrowed second)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "hourglass_step",
+      "name": "Time Magic (hourglass step)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "frozen_instant",
+      "name": "Time Magic (frozen instant)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "chrono_stasis"
+          },
+          {
+            "type": "mastery",
+            "min": 0.34
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "dial_back",
+      "name": "Time Magic (dial back)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "acceleration"
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "future_sight",
+      "name": "Time Magic (borrowed future)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "stolen_time",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.48
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "pendulum_ward",
+      "name": "Time Magic (pendulum ward)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.55
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "age_breaker",
+      "name": "Time Magic (age breaker)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "reversal"
+          },
+          {
+            "type": "mastery",
+            "min": 0.62
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "slow_hour",
+      "name": "Time Magic (slow hour)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "frozen_instant"
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     }
   ],
   "planned": [

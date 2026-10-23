@@ -1,1 +1,110 @@
-{}
+{
+  "COMPASS": [
+    "needle_flick",
+    "bearing_step",
+    "magnet_draw",
+    "true_heading",
+    "lodestone_snare",
+    "cardinal_volley",
+    "declination_wave",
+    "dead_reckoning",
+    "safe_bearing",
+    "magnetic_storm",
+    "meridian_lance",
+    "cardinal_burst"
+  ],
+  "COPY": [
+    "borrowed_strike",
+    "echo_step",
+    "touch_and_learn",
+    "returned_blow",
+    "delayed_echo",
+    "mimic_fan",
+    "imitated_fetters",
+    "copycat_pounce",
+    "hall_of_echoes",
+    "chorus_of_copies",
+    "perfect_reproduction"
+  ],
+  "DICE": [
+    "snake_eyes",
+    "pip_toss",
+    "lucky_seven",
+    "dice_cup_shake",
+    "critical_roll",
+    "double_or_nothing",
+    "bowling_roll",
+    "snare_roll",
+    "reroll",
+    "craps_table",
+    "rain_of_dice"
+  ],
+  "SLASH": [
+    "rending_cut",
+    "cross_slash",
+    "razor_flurry",
+    "edge_guard",
+    "crescent_salvo",
+    "severing_line",
+    "blade_cyclone",
+    "hamstring_cut",
+    "parrying_blades",
+    "final_slash",
+    "reaper_field"
+  ],
+  "GRAVITY": [
+    "gravity_jab",
+    "ground_slam",
+    "featherfall",
+    "pressure_lane",
+    "inward_pull",
+    "anchor_weight",
+    "weightless_burst",
+    "gravity_singularity",
+    "falling_weight"
+  ],
+  "GAME": [
+    "health_potion",
+    "warp_tile",
+    "button_mash",
+    "skip_turn",
+    "fog_of_war",
+    "combo_chain",
+    "loot_drop",
+    "boss_arena",
+    "random_encounter"
+  ],
+  "SPATIAL": [
+    "archangel_shootdown",
+    "rift_step",
+    "crevice_men",
+    "blackout",
+    "rift_burst",
+    "archangel_destruction",
+    "different_dimension_sphere"
+  ],
+  "MIRROR": [
+    "shard_shot",
+    "glint_flash",
+    "silver_backing",
+    "prism_split",
+    "large_reflect_refrain",
+    "hall_of_mirrors",
+    "mirrors_meteor_dragon"
+  ],
+  "TIME": [
+    "stopwatch_strike",
+    "borrowed_second",
+    "frozen_instant",
+    "dial_back",
+    "slow_hour"
+  ],
+  "LEGION": [
+    "bishops_reach",
+    "queens_charge",
+    "checkmate_field"
+  ],
+  "KEY": [
+    "lock_pick"
+  ]
+}

@@ -31,7 +31,126 @@
       "acquire": { "type": "mastery", "min": 0.72 }, "note": "A union spell: an array of mirrors that paralyses whoever looks into it; the Mirror caster sets the array." },
     { "page": "mirrors_meteorite", "name": "Compound Magic: Mirrors Meteorite", "ja": "", "origin": "anime", "exclusive": true, "source": "repo_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "mirrors_brigade" }, { "type": "mastery", "min": 0.85 } ] },
-      "note": "Listed as a compound Mirror spell; no description found, the existing page is a meteor shower of mirrors." }
+      "note": "Listed as a compound Mirror spell; no description found, the existing page is a meteor shower of mirrors." },
+    {
+      "page": "shard_shot",
+      "name": "Mirror Magic (shard shot)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.04
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "glint_flash",
+      "name": "Mirror Magic (glint flash)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "prism_split",
+      "name": "Mirror Magic (prism split)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "reflect_ray",
+            "count": 5
+          },
+          {
+            "type": "mastery",
+            "min": 0.2
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "silver_backing",
+      "name": "Mirror Magic (silver backing)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "large_reflect_refrain",
+      "name": "Mirror Magic: Large Reflect Refrain",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "large_reflect_ray"
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "The wiki's Large Reflect Refrain: large mirrors bounce magical light between each other and destroy what is between them."
+    },
+    {
+      "page": "hall_of_mirrors",
+      "name": "Mirror Magic (hall of mirrors)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.55
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "mirrors_meteor_dragon",
+      "name": "Union Magic: Mirrors Meteor Dragon",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mirrors_meteorite"
+          },
+          {
+            "type": "mastery",
+            "min": 0.9
+          }
+        ]
+      },
+      "note": "Named on the wiki's Mirror Magic navigation among the union spells; the effect is the mod's."
+    }
   ],
   "planned": [
     { "name": "Mirror Magic: communication and mirror travel", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Used for two-way talk and moving between mirrors; no spell names found." }

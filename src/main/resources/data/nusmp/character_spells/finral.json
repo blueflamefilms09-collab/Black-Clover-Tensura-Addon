@@ -16,7 +16,207 @@
       "note": "NEW page: gained after his training, a sphere of space that sends the foe it hits to another place. The mod throws the foe 12 to 20 blocks away." },
     { "page": "door_of_fate", "name": "Compound Magic: Door of Fate", "ja": "", "origin": "anime", "exclusive": false, "source": "en_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "fallen_angel_wingbeat", "count": 3 }, { "type": "mastery", "min": 0.7 } ] },
-      "note": "Listed as a compound spell on Vanessa's wiki page (her Red Thread through his doors); needs her in the series, here it is his late signature." }
+      "note": "Listed as a compound spell on Vanessa's wiki page (her Red Thread through his doors); needs her in the series, here it is his late signature." },
+    {
+      "page": "rift_step",
+      "name": "Spatial Magic (stepping through a rift)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "archangel_shootdown",
+      "name": "Spatial Magic: Archangel Shootdown",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "The wiki lists Archangel Shootdown under Spatial Magic. Langris is its user in the series; it is a shared page of the book and is here so the grimoire shows 15 pages. The order is the mod's design."
+    },
+    {
+      "page": "gate_swap",
+      "name": "Spatial Magic (swapping places through gates)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "fallen_angel_gate",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.16
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "gate_strike",
+      "name": "Spatial Magic (striking through a gate)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "fallen_angel_gate",
+            "count": 4
+          },
+          {
+            "type": "mastery",
+            "min": 0.2
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "crevice_men",
+      "name": "Spatial Magic: Crevice Men",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "Named on the wiki's Spatial Magic navigation; the effect is the mod's."
+    },
+    {
+      "page": "blackout",
+      "name": "Spatial Magic: Blackout",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "fallen_angel_gate",
+            "count": 8
+          },
+          {
+            "type": "mastery",
+            "min": 0.32
+          }
+        ]
+      },
+      "note": "The wiki's Blackout carries targets between marked places through black matter, which suits the squad's transport mage. The mod's effect: a group transport."
+    },
+    {
+      "page": "rift_burst",
+      "name": "Spatial Magic (bursting a rift)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.4
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "myriad_black",
+      "name": "Spatial Magic: Myriad Black",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "dimensional_armour",
+      "name": "Spatial Magic (spatial armour of his late training)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "door_of_fate"
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "Listed as planned in this file (the spatial armour of his late training); the mod's Dimensional Armour page is used for it."
+    },
+    {
+      "page": "archangel_destruction",
+      "name": "Spatial Magic: Archangel Destruction",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "archangel_shootdown"
+          },
+          {
+            "type": "mastery",
+            "min": 0.65
+          }
+        ]
+      },
+      "note": "Named on the wiki's Spatial Magic navigation (the stronger form of Shootdown); the effect is the mod's."
+    },
+    {
+      "page": "different_dimension_sphere",
+      "name": "Spatial Magic: Different Dimension Sphere",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "blackout"
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "Named on the wiki's Spatial Magic navigation; the effect is the mod's."
+    }
   ],
   "planned": [
     { "name": "Spatial Support / Spatial Movement Magic Bullet", "ja": "", "origin": "manga", "source": "en_wiki", "note": "Skill names of the mobile game only: no page." },
