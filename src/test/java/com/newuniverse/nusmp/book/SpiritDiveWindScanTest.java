@@ -135,7 +135,7 @@ class SpiritDiveWindScanTest {
     @Test
     void theOptionTheSelfTestAndTheToolsAreRegistered() {
         String cfg = code(read("client/aura/DiveClientConfig.java"));
-        assertTrue(cfg.contains("defineEnum(\"windLook\", SpiritDiveWindRules.DEFAULT_LOOK)") && cfg.contains("SpiritDiveLook.setWindLook(WIND_LOOK.get())"), "windLook = PACK | REEL | A_ANIME | B_CLIP | C_SAINT, default B_CLIP");
+        assertTrue(cfg.contains("defineEnum(\"windLook\", SpiritDiveWindRules.DEFAULT_LOOK)") && cfg.contains("SpiritDiveLook.setWindLook(WIND_LOOK.get())"), "windLook = PACK | REEL | A_ANIME | B_CLIP | C_SAINT, default A_ANIME");
         assertTrue(cfg.contains("defineEnum(\"look\", Look.REEL)") && cfg.contains("\"classicLook\""), "the old options stay");
         assertTrue(code(read("client/aura/SpiritDiveLook.java")).contains("WindLook windLook = SpiritDiveWindRules.DEFAULT_LOOK"));
         assertTrue(code(read("book/SpiritDiveBoot.java")).contains("SpiritDiveWindSelfTests.register()") && code(read("book/SpiritDiveBoot.java")).contains("SpiritDiveReelSelfTests.register()"));

@@ -120,7 +120,7 @@ class SpiritDiveWind3Test {
                 for (Lod lod : LODS) {
                     int pack = SpiritDiveWindRules.vertices(ch, lod, st), a = SpiritDiveWind3Rules.vertices(Ver.A, ch, lod, st);
                     boolean weapons = lod == Lod.FULL && SpiritDivePieces.full(st);
-                    if (!weapons) assertEquals(pack, a, "A is the PACK look away from the weapons: " + ch + " " + st + " " + lod);
+                    if (!weapons) assertEquals(pack + SpiritDiveWind4Rules.crownDelta(ch, lod, st), a, "A is the PACK look away from the weapons and the 3D crown (4.x final): " + ch + " " + st + " " + lod);
                     else assertTrue(a > pack - 16, "A draws the real weapons: " + a + " vs " + pack);
                 }
     }
