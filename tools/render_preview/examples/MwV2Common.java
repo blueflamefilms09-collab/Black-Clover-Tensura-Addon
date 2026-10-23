@@ -3,6 +3,7 @@ package examples;
 import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.blackclover.ModeArmor;
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
+import com.newuniverse.nusmp.book.ModeArmorWindV2Rules;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Rules.Look;
 import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
@@ -24,12 +25,15 @@ import net.minecraft.resources.ResourceLocation;
 final class MwV2Common {
     private MwV2Common() {}
 
-    static void install(boolean yuno, boolean v2) {
+    static void install(boolean yuno, boolean v2) { install(yuno, v2, ModeArmorWindV2Rules.ArmStyle.BLOCKY); }
+
+    static void install(boolean yuno, boolean v2, ModeArmorWindV2Rules.ArmStyle arms) {
         SpiritDiveLook.set(SpiritDiveDjinnPieces.Look.REEL, true, true, FuegoleonArmRules.View.ALWAYS);
         SpiritDiveLook.setWindLook(WindLook.A_ANIME);
         SpiritDiveLook.setCalm(true);
         ModeArmorClient.MODE = yuno ? ModeArmor.Mode.WIND_SPIRIT_DIVE_YUNO : ModeArmor.Mode.WIND_SPIRIT_DIVE;
         ModeArmorWindV2.setLook(v2 ? Look.V2 : Look.CLASSIC);
+        ModeArmorWindV2.setArms(arms);
         PlayerAuraClient.register(Aura.MUCUS, ctx -> {
             PlayerModel<AbstractClientPlayer> model = ctx.model();
             ModeArmorLayer layer = new ModeArmorLayer(new RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>() {

@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "render_preview", "scenes.d", "mode_armor_wind_v2.json")
 REAL = ["book/SpiritDiveDjinnPieces.java", "book/SpiritDivePieces.java", "book/SpiritDiveTier.java", "book/SpiritDiveAnimeRules.java", "book/SpiritDiveAnimeGeometry.java",
         "book/SpiritDiveReelRules.java", "book/SpiritDiveReelGeometry.java", "book/SpiritDiveWindRules.java", "book/SpiritDiveWindGeometry.java",
-        "book/SpiritDiveWind3Rules.java", "book/SpiritDiveWind3Geometry.java", "book/SpiritDiveWind3Mesh.java", "book/SpiritDiveWind4Rules.java", "book/SpiritDiveMergeRules.java", "book/SpiritDiveMergeMesh.java",
+        "book/SpiritDiveWind3Rules.java", "book/SpiritDiveWind3Geometry.java", "book/SpiritDiveWind3Mesh.java", "book/SpiritDiveWind4Rules.java", "book/SpiritDiveMergeRules.java", "book/SpiritDiveMergeMesh.java", "book/SpiritDiveMerge2Rules.java",
         "book/FuegoleonArmRules.java", "book/FuegoleonArmDjinnRules.java", "perf/PerfBudget.java", "client/aura/FuegoleonArmAura.java", "client/aura/FuegoleonArmFx.java",
         "client/aura/FuegoleonArmDjinn.java", "client/aura/FuegoleonArmDjinnFx.java", "client/aura/FuegoleonArmLook.java",
         "book/ModeArmorWindV2Rules.java", "book/ModeArmorWindV2Mesh.java", "client/mode/ModeArmorLayer.java", "client/mode/ModeArmorWindV2.java"]
@@ -43,7 +43,7 @@ def scene(example, ages=(50,), vs=None, tile=(420, 620), combined=False, limb=No
 
 def main():
     out = {"_comment": "Wind Spirit Dive overlay v2 (Yuno): written by tools/mode_armor_wind_v2_scenes.py (do not edit by hand)."}
-    for tag, ex in (("after", "MwV2New"), ("before", "MwV2Classic")):
+    for tag, ex in (("after", "MwV2New"), ("before", "MwV2Classic"), ("smooth", "MwV2Smooth")):   # after = the default BLOCKY arms, smooth = the first v2, before = the classic overlay
         out["mwv2_%s_full" % tag] = scene(ex, vs=views(3.6, (0, 1.05, 0.15)), tile=(480, 700))
         out["mwv2_%s_collar" % tag] = scene(ex, vs=views(1.7, (0, 1.5, 0.1), ("front", "front 3/4", "side", "back")), tile=(420, 420))
         out["mwv2_%s_crown" % tag] = scene(ex, vs=views(1.8, (0, 2.3, 0.0), ("front", "front 3/4", "side", "back")), tile=(420, 420))
@@ -52,6 +52,7 @@ def main():
         out["mwv2_%s_entry" % tag] = scene(ex, ages=(1, 4, 8, 11, 14, 18, 22, 40), vs=views(4.4, (0, 1.05, 0.15), ("front 3/4",)), tile=(300, 520))
         out["mwv2_%s_dive" % tag] = scene(ex, combined=True, vs=views(5.2, (0, Y, 0.1), ("front", "front 3/4", "back 3/4", "side")), tile=(420, 620))
         out["mwv2_%s_dive_entry" % tag] = scene(ex, combined=True, ages=(2, 6, 10, 14, 18, 22, 30, 50), vs=views(4.6, (0, Y, 0.1), ("front 3/4",)), tile=(300, 520))
+        out["mwv2_%s_arms" % tag] = scene(ex, vs=views(1.9, (0, 1.2, 0.1), ("front", "front 3/4", "side", "back 3/4")), tile=(420, 520))
         out["mwv2_%s_dive_big" % tag] = scene(ex, combined=True, vs=views(3.6, (0, 1.05, 0.15), ("front 3/4", "back 3/4")), tile=(560, 760))
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=1)

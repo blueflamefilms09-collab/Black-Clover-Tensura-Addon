@@ -331,6 +331,84 @@ def paint_mantle(R):
     return P
 
 
+def box_edges(P, w, face_w, a=0.9):
+    """The chunky corner lines of a box atlas: a dark line on every face border and a light line just inside it (the cel look of the classic box, in the v2 palette)."""
+    X = P.X
+    for k in range(w // face_w):
+        P.only_coat(aa(np.abs(wrapdx(X, k * face_w, w)), 1.6), OUTLINE, a)
+        P.only_coat(aa(np.abs(wrapdx(X, k * face_w + 2.0, w)), 1.0), MINT_L, 0.30)
+        P.only_glow(aa(np.abs(wrapdx(X, k * face_w, w)), 1.0), GLOWC, 0.35)
+
+
+def paint_sleeve_box(R):
+    """The BLOCKY sleeve (the classic's box arm, 4 faces of 20 x 36: front, outer, back, inner), cel banded cloth with the gold band above the fur cuff, shoulder stitch, seam, buttons and a wind curl."""
+    w, h = R[2] - R[0], R[3] - R[1]
+    fw = w // 4
+    P = Pair(w, h, 6, 57, PAL_COAT, True, fade=0.14)
+    X, Y = P.X, P.Y
+    P.both(aa(np.abs(Y - 30.0), 2.0), GOLD, GLOWC, 1.0, 0.85)                      # the band above the cuff
+    P.only_coat(aa(np.abs(Y - 32.4), 1.0), OUTLINE, 0.8)
+    P.only_coat(aa(np.abs(Y - 27.6), 1.0), OUTLINE, 0.8)
+    P.both(aa(np.abs(Y - 7.0), 1.0), GOLD_D, GLOWC, 0.8, 0.4)                      # the shoulder stitch
+    P.only_coat(aa(np.abs(wrapdx(X, 2.5 * fw, w)), 1.2), OUTLINE, 0.9)             # the seam up the back of the arm
+    P.only_glow(aa(np.abs(wrapdx(X, 2.5 * fw, w)), 1.0), GLOWC, 0.5)
+    for cy in (13.0, 19.0):                                                        # two gold buttons on the front face
+        d = np.hypot(wrapdx(X, 0.5 * fw, w), Y - cy)
+        P.only_coat(aa(d - 2.0, 1.0), OUTLINE)
+        P.both(aa(d - 1.5, 1.0), GOLD, GLOWC, 1.0, 0.0)
+        P.only_glow(aa(d - 2.8, 1.0), GLOWC, 0.5)
+    for cx, cy, fl in ((1.5 * fw, 15.0, 1), (3.5 * fw, 15.0, -1)):                # a wind curl on the outer and the inner face
+        pts = spiral(cx, cy, 0.4, 5.6, 1.5, 0.3, 36, fl)
+        P.both(aa(poly_d(X, Y, pts, w), 1.0), rgb(166, 240, 196), GLOWC, 0.6, 0.55)
+    box_edges(P, w, fw)
+    outline_edges(P.cv, True, False)
+    return P
+
+
+def paint_sleeve_cap(R):
+    """The top of the blocky sleeve (20 x 20): a stitched seam, a gold ring and a small wind curl."""
+    w, h = R[2] - R[0], R[3] - R[1]
+    P = Pair(w, h, 3, 63, PAL_COAT_LIGHT, True, fade=0.05)
+    X, Y = P.X, P.Y
+    d = np.hypot(X - w / 2, Y - h / 2)
+    P.both(aa(np.abs(d - 6.4), 1.2), GOLD_D, GLOWC, 0.85, 0.45)
+    pts = spiral(w / 2, h / 2, 0.4, 4.6, 1.4, 0.2, 30, 1)
+    P.both(aa(poly_d(X, Y, pts), 1.0), rgb(166, 240, 196), GLOWC, 0.6, 0.55)
+    for m in (np.abs(X - 0.5), np.abs(X - w + 0.5), np.abs(Y - 0.5), np.abs(Y - h + 0.5)):
+        P.only_coat(aa(m, 1.6), OUTLINE, 0.95)
+    return P
+
+
+def paint_mantle_box(R):
+    """The BLOCKY shoulder mantle (the pauldron over the sleeve: 4 faces of 20 x 12): lighter cloth, a gold line and a small gold cross on the outer face."""
+    w, h = R[2] - R[0], R[3] - R[1]
+    fw = w // 4
+    P = Pair(w, h, 5, 43, PAL_COAT_LIGHT, True, fade=0.08)
+    X, Y = P.X, P.Y
+    P.both(aa(np.abs(Y - 8.4), 1.4), GOLD, GLOWC, 1.0, 0.85)
+    P.only_coat(aa(np.abs(Y - 10.2), 1.0), OUTLINE, 0.9)
+    cx = 1.5 * fw                                                                  # the outer face
+    P.both(aa(seg_d(X, Y, cx, 1.6, cx, 7.0, w), 1.3), GOLD_L, WHITE, 1.0, 0.9)
+    P.both(aa(seg_d(X, Y, cx - 2.8, 3.4, cx + 2.8, 3.4, w), 1.3), GOLD_L, WHITE, 1.0, 0.9)
+    box_edges(P, w, fw, 0.8)
+    outline_edges(P.cv, True, False)
+    return P
+
+
+def paint_mantle_cap(R):
+    """The top of the blocky mantle (20 x 20): a gold ring round a mint star, the crest of the shoulder."""
+    w, h = R[2] - R[0], R[3] - R[1]
+    P = Pair(w, h, 3, 71, PAL_COAT_LIGHT, True, fade=0.04)
+    X, Y = P.X, P.Y
+    d = np.hypot(X - w / 2, Y - h / 2)
+    P.both(aa(np.abs(d - 7.4), 1.4), GOLD, GLOWC, 1.0, 0.85)
+    P.both(aa(seg_d(X, Y, w / 2, h / 2 - 4.6, w / 2, h / 2 + 4.6), 1.3), MINT_L, WHITE, 0.95, 0.9)
+    P.both(aa(seg_d(X, Y, w / 2 - 4.6, h / 2, w / 2 + 4.6, h / 2), 1.3), MINT_L, WHITE, 0.95, 0.9)
+    for m in (np.abs(X - 0.5), np.abs(X - w + 0.5), np.abs(Y - 0.5), np.abs(Y - h + 0.5)):
+        P.only_coat(aa(m, 1.6), OUTLINE, 0.95)
+    return P
+
+
 def paint_trouser(R):
     w, h = R[2] - R[0], R[3] - R[1]
     P = Pair(w, h, 3, 51, PAL_TROUSER, True, fade=0.1)
@@ -423,7 +501,8 @@ def build_coat():
     reg = LAYOUT["coat"]["regions"]
     W, H = LAYOUT["coat"]["size"]
     coat, glow = Cv(W, H), Cv(W, H)
-    for name, fn in (("TORSO", paint_torso), ("SLEEVE", paint_sleeve), ("MANTLE", paint_mantle), ("TROUSER", paint_trouser), ("BOOT", paint_boot)):
+    for name, fn in (("TORSO", paint_torso), ("SLEEVE", paint_sleeve), ("MANTLE", paint_mantle), ("TROUSER", paint_trouser), ("BOOT", paint_boot),
+                     ("SLEEVE_BOX", paint_sleeve_box), ("SLEEVE_CAP", paint_sleeve_cap), ("MANTLE_BOX", paint_mantle_box), ("MANTLE_CAP", paint_mantle_cap)):
         R = reg[name]
         P = fn(R)
         P.cv.paste_into(coat, R[0], R[1]); P.gl.paste_into(glow, R[0], R[1])

@@ -89,6 +89,17 @@ def before_after(name, scene_after, scene_before, views=None, title=None):
     return vstack([hstack(b), hstack(a)], title=title or name)
 
 
+def three_rows(title, scenes, views=None):
+    """One row per scene: [(label, scene), ...] (the blocky arms, the smooth arms, the classic overlay), the same views side by side."""
+    rows = []
+    for text, scene in scenes:
+        ims = row_of(scene, views=views)
+        for im in ims:
+            label(im, text, (6, 24))
+        rows.append(hstack(ims))
+    return vstack(rows, title=title)
+
+
 def entry(scene, title):
     t = tiles(scene)
     sc = SCENES[scene]
@@ -113,6 +124,12 @@ def main():
         "yuno_dive_combined.png": lambda: before_after("Yuno's Spirit Dive: aura + overlay (sword, wrist circle and merge layer stay)", "mwv2_after_dive", "mwv2_before_dive"),
         "yuno_dive_big.png": lambda: before_after("Yuno's Spirit Dive, large", "mwv2_after_dive_big", "mwv2_before_dive_big"),
         "yuno_dive_entry.png": lambda: vstack([entry("mwv2_before_dive_entry", "before: aura + classic overlay"), entry("mwv2_after_dive_entry", "after: aura + overlay v2")]),
+        # the blocky arms of the classic in v2 (modeArmor.windArms): BEFORE = SMOOTH (the first v2), AFTER = BLOCKY (the new default), next to the CLASSIC overlay
+        "arms_before_after_classic_full.png": lambda: three_rows("Arms: BEFORE v2 smooth | AFTER v2 blocky (default) | CLASSIC", [("BEFORE smooth", "mwv2_smooth_full"), ("AFTER blocky", "mwv2_after_full"), ("CLASSIC", "mwv2_before_full")],
+                                                                 ("front", "front 3/4", "back", "side")),
+        "arms_closeup.png": lambda: three_rows("Arms close up: BEFORE v2 smooth | AFTER v2 blocky (default) | CLASSIC", [("BEFORE smooth", "mwv2_smooth_arms"), ("AFTER blocky", "mwv2_after_arms"), ("CLASSIC", "mwv2_before_arms")]),
+        "arms_yuno_dive_sword.png": lambda: three_rows("Yuno's Spirit Dive with the sword: BEFORE smooth | AFTER blocky | CLASSIC overlay", [("BEFORE smooth", "mwv2_smooth_dive_big"), ("AFTER blocky", "mwv2_after_dive_big"), ("CLASSIC", "mwv2_before_dive_big")]),
+        "arms_yuno_dive.png": lambda: three_rows("Yuno's Spirit Dive, whole body: BEFORE smooth | AFTER blocky | CLASSIC overlay", [("BEFORE smooth", "mwv2_smooth_dive"), ("AFTER blocky", "mwv2_after_dive"), ("CLASSIC", "mwv2_before_dive")]),
     }
     only = sys.argv[2:]
     for name, fn in jobs.items():

@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import com.newuniverse.nusmp.blackclover.ModeArmor;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Mesh;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Rules;
+import com.newuniverse.nusmp.book.ModeArmorWindV2Rules.ArmStyle;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Rules.Entry;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Rules.Look;
 import com.newuniverse.nusmp.book.ModeArmorWindV2Rules.Part;
@@ -47,6 +48,13 @@ public final class ModeArmorWindV2 {
     public static Look look() { return look; }
 
     public static void setLook(Look l) { look = l == null ? ModeArmorWindV2Rules.DEFAULT_LOOK : l; }
+
+    private static volatile ArmStyle arms = ModeArmorWindV2Rules.DEFAULT_ARMS;
+
+    /** The client option {@code modeArmor.windArms}: BLOCKY (default, the classic's box sleeves and chunky cuffs) or SMOOTH (the rounded sleeves of the first v2). */
+    public static ArmStyle arms() { return arms; }
+
+    public static void setArms(ArmStyle a) { arms = a == null ? ModeArmorWindV2Rules.DEFAULT_ARMS : a; }
 
     /** True when the overlay of {@code mode} is drawn by this class (Yuno's mode with the option on V2). */
     public static boolean active(ModeArmor.Mode mode) { return mode == ModeArmor.Mode.WIND_SPIRIT_DIVE_YUNO && look == Look.V2; }
@@ -93,7 +101,7 @@ public final class ModeArmorWindV2 {
         capture(pose, m, now, k, wing, ignite, lod);
         int alpha = (int) (255 * Mth.clamp(k, 0f, 1f));
         if (alpha <= 2) { clear(); return; }
-        Entry[] es = ModeArmorWindV2Rules.entries(lod);
+        Entry[] es = ModeArmorWindV2Rules.entries(lod, arms);
         for (Pass pass : PASSES) {
             VertexConsumer vc = null;
             for (int i = 0; i < es.length; i++) {
