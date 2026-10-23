@@ -94,7 +94,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
-            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.requip.RequipItems.weapons().stream(), com.newuniverse.nusmp.celestial.CelestialItems.renderables().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; + the six weapons of Requip: The Knight
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.requip.RequipItems.weapons().stream(), com.newuniverse.nusmp.celestial.CelestialItems.renderables().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; + the six weapons of Requip: The Knight
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
@@ -256,6 +256,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
             emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
         if (ExSingularityFx.applies(id) && mesh.glowTex != null) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards
+        if (SpiritBladesFx.applies(id) && mesh.glowTex != null) SpiritBladesFx.extras(pose, buffers, mesh, time);              // the Wind Spirit blades (Zephyr, Boreas): a few drifting leaves (client/SpiritBladesFx)
         if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
         if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         pose.popPose();

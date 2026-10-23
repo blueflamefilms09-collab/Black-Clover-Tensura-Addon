@@ -134,7 +134,10 @@ public final class WeaponEngravings {
             Map.entry("wisp_staff", List.of(e("magic_weapon", 1), e("magicule_absorption", 1), e("swift", 1))),          // a casting focus that drinks stray mana
             Map.entry("stormcaller_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 1), e("barrier_piercing", 1), e("swift", 1))),   // Storm Magic (Fairy Tail): storm and lightning boosted, a casting staff, bolts that go through wards, a gale-quick rod
             Map.entry("magnas_soul_bat", List.of(e("crushing", 2), e("elemental_boost", 2), e("magic_weapon", 1), e("sturdy", 1))),   // Magna Swing: a club that breaks what it strikes, flame boosted, a casting focus that sends his spells, a hard soul-bound wood
-            Map.entry("golem_maul", List.of(e("crushing", 2), e("sturdy", 2), e("magic_interference", 1))));             // a golem's fist on a haft: heavy, hard, jams spells
+            Map.entry("golem_maul", List.of(e("crushing", 2), e("sturdy", 2), e("magic_interference", 1))),              // a golem's fist on a haft: heavy, hard, jams spells
+            // the Wind Spirit blades (spiritblades.SpiritBladesBoot; creative-display items): the sword of Zephyr cuts clean through wards and is holy; the bow of Boreas jams magic
+            Map.entry("spirit_of_zephyr", List.of(e("severance", 1), e("barrier_piercing", 1), e("holy_weapon", 1))),    // Spirit of Zephyr: a clean cut that parts wards, light of the wind spirit
+            Map.entry("spirit_of_boreas", List.of(e("magic_interference", 1))));                                        // Spirit of Boreas: its arrow of light jams the magic it strikes
 
     static final String FLAG = "NUEngraved";
 
