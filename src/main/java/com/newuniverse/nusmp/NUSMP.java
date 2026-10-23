@@ -86,6 +86,7 @@ public class NUSMP {
         com.newuniverse.nusmp.fairytail.storm.StormBoot.init(modEventBus, modContainer);                                  // Storm Magic (Fairy Tail): the Stormcaller Staff, the storm cells, nusmp-storm-server.toml (staffOnly), self-test magic.storm_staff
         com.newuniverse.nusmp.undine.UndineBoot.init(modEventBus, modContainer);                                           // Undine: nusmp-undine-server.toml (magic.undine), the sound events, the key packet, the events, self-test magic.undine
         com.newuniverse.nusmp.shishou.ShishouBoot.init(modEventBus, modContainer);      // Shishou, the talking sword (Akashic Relic): item, entity, components, Black Flame, nusmp-shishou-server.toml (relic.shishouEnabled), the packets, the events, self-tests relic.shishou*
+        com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.init(modEventBus);      // the Wind Spirit blades (creative display): Spirit of Zephyr sword and Spirit of Boreas bow, self-test magic.spirit_blades
         com.newuniverse.nusmp.gnome.GnomeBoot.init(modEventBus, modContainer);      // the Gnome (Earth Spirit): its sound events, nusmp-gnome-server.toml (magic.gnome), the key packet, the events, self-test magic.gnome
 
         com.newuniverse.nusmp.firecast.FireCastBoot.init(modEventBus, modContainer);                                      // fire casting: Magna's Soul Bat, nusmp-firecast-server.toml (magic.fireCasting), the key packet, the events, self-test magic.fire_casting

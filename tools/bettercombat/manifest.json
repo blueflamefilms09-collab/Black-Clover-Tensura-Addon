@@ -1505,6 +1505,11 @@
       "class": "dagger",
       "profile": "dagger",
       "source": "relic"
+    },
+    "spirit_of_zephyr": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
     }
   },
   "excluded": {
@@ -1594,6 +1599,7 @@
     "written_consent": "hand item / charm / book / key: not a weapon",
     "zogratis_hourglass": "hand item / charm / book / key: not a weapon",
     "arashs_stella_bow": "ranged (bow): Better Combat only handles melee",
-    "hylian_hero_shield": "shield: no swing"
+    "hylian_hero_shield": "shield: no swing",
+    "spirit_of_boreas": "ranged (bow): Better Combat only handles melee"
   }
 }

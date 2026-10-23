@@ -1944,6 +1944,25 @@
       "length_blocks": 1.091
     },
     {
+      "id": "spirit_of_boreas",
+      "action": "keep",
+      "length_blocks": 0.831
+    },
+    {
+      "id": "spirit_of_zephyr",
+      "action": "preset",
+      "length_blocks": 1.906,
+      "first_person_scale": 0.513,
+      "first_person_translation_px": [
+        1.13,
+        2.73,
+        0.8
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.419,
+      "fixed_scale": 0.787
+    },
+    {
       "id": "spotlight",
       "action": "keep",
       "length_blocks": 1.318

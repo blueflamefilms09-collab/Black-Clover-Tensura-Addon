@@ -2727,6 +2727,46 @@
   "y": 12.734,
   "z": 0.0
  },
+ "spirit_of_boreas": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 11.065,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "spirit_of_boreas_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 22.65,
+  "y": 0.0,
+  "z": 0.164
+ },
+ "spirit_of_boreas_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.25,
+  "y": 0.0,
+  "z": 0.164
+ },
+ "spirit_of_boreas_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.25,
+  "y": 0.0,
+  "z": 0.164
+ },
+ "spirit_of_zephyr": {
+  "class": "longsword",
+  "fraction": 0.134,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 14.5,
+  "z": 0.0
+ },
  "spotlight": {
   "class": "shortsword",
   "fraction": 0.133,

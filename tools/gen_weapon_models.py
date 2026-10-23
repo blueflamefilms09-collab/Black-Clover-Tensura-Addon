@@ -3331,6 +3331,10 @@ def main(only=None):
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import gen_magna_bat_model
         return gen_magna_bat_model.main(only[1:])
+    if only and only[0] == "spirit_blades":                        # the Wind Spirit blades (Spirit of Zephyr sword, Spirit of Boreas bow) are built by tools/gen_spirit_blades_models.py (same method, own file)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import gen_spirit_blades_models
+        return gen_spirit_blades_models.main(only[1:])
     if not only or "butcher_cleaver" in only:                      # 1.19.0: its sprite must exist before the mesh is placed on it
         _bc_write_icon()
     for fit, specs in ((False, SPECS), (True, RELICS)):
