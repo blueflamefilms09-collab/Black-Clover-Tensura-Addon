@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.1.0] — Spirit Dives rebuilt in the Full Djinn Equip style, Fuegoleon's arm rebuilt as a flame limb
+
+### NEW
+- **Spirit Dives are now full sets of body-hugging armour plates in the style of the Full Djinn Equip** (same armour engine as the Requip armours): Wind (green-gold, feathered-wing pauldrons, laurel; Yuno adds a crown-like helm crest and wing plates), Fire (crimson-gold, flame crest; Fuegoleon adds a seven-tongue horned crest, plate plume and mantle), Water (pearl-sapphire and silver, wave engravings, fin crest, plated skirt panels; Noelle adds a dorsal fin and long plated skirt), Earth (stone and crystal, heaviest silhouette). Standard tier for every mage, character tier for Yuno, Fuegoleon and Noelle grimoires; forged in piece by piece with the Djinn equip's animation, half and upgrade stages, forge sound, Djinn-style first-person gauntlets. At most the vertex count of a Djinn full equip, level of detail, at most 3 character dives per frame (`docs/magic/spirit_dives_djinn.md`).
+- **Fuegoleon's arm is a sculpted flame limb that matches your reference image:** shoulder, upper arm, elbow, forearm and clenched fist made of cel-banded molten flame (yellow-white core, orange body, red outline), ten curling flame tongues, sparks, kindled from shoulder to fist like a Djinn forge-in; first person and slim-arm handled (`docs/magic/fuegoleon_arm_djinn.md`).
+- Client options: `spiritDive.look = DJINN | V2 | CLASSIC` and `fuegoleonArm.look = DJINN | V3 | CLASSIC` in `nusmp-spiritdive-client.toml` (default DJINN).
+
+### REPLACED
+- The default look of the Spirit Dives (the 3.0.0 floating halo, wing blades, mane and ribbons) and of Fuegoleon's arm (the 3.0.0 box arm with flame sheets); both stay one option away.
+
+### KEPT
+- All server rules, tiers, switches and caps, the Djinn files, everything from 3.0.0.
+
+### Not done / caveats
+- Not run in a real game; all previews are harness renders. The flame arm is built from cubes and its tongues are flat cards, so it is blockier than the reference art. The dives do not use the Zagred rim shader of the Djinn (weaker rim glow). Boots keep a flat sole slab shared with the Requip armours.
+
 ## [3.0.0] — Magic overhaul: anime-accurate character spell sets, spirits without keybinds + combat mode, remade Spirit Dives and Noelle's forms, Fuegoleon's flaming arm, basic grimoires, Soul Corpse fixed
 
 ### NEW
