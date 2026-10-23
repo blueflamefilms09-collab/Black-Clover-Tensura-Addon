@@ -49,5 +49,17 @@
     "lava_flow",
     "pyroclastic_surge",
     "supervolcano"
+  ],
+  "SWORD": [
+    "blade_flurry",
+    "sword_step",
+    "light_edge",
+    "crescent_wave",
+    "light_thrust",
+    "blade_ward",
+    "rising_cleave",
+    "sword_storm",
+    "skyfall_blades",
+    "sovereign_blade"
   ]
 }

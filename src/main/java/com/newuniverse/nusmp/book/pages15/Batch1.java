@@ -148,6 +148,28 @@ public final class Batch1 {
                 Pages15Kit.signature("supervolcano", "Supervolcano",
                         nova(Tier.SIGNATURE, 8, false, VfxShape.FIRE_WILD, all(ignite(6), lift(0.7), knock(1.2)))).withCooldown(1000).withAnim("slam")));
 
+    private static final List<BookPage> SWORD = register("book_sword", List.of(
+                Pages15Kit.starter("blade_flurry", "Blade Flurry",
+                        cone(Tier.STARTER, 4, 0.65, VfxShape.WIND_SLASH, NONE)).withAnim("sweep"),
+                Pages15Kit.starter("sword_step", "Sword Step",
+                        dash(Tier.STARTER, true, 6, false, VfxShape.WIND_SLASH, NONE)).withCooldown(100).withAnim("thrust"),
+                Pages15Kit.starter("light_edge", "Light Edge",
+                        bolt(Tier.STARTER, 0, VfxShape.LIGHT_BLADE, null, NONE)).withCooldown(90).withAnim("thrust"),
+                Pages15Kit.mid("crescent_wave", "Crescent Wave",
+                        bolt(Tier.MID, 2.5, VfxShape.WIND_SLASH, VfxShape.WIND_RING, knock(0.8))).withCooldown(200).withAnim("sweep"),
+                Pages15Kit.mid("light_thrust", "Light Thrust",
+                        line(Tier.MID, 9, 0.9, VfxShape.LIGHT_BLADE, knock(0.6))).withCooldown(190).withAnim("thrust"),
+                Pages15Kit.mid("blade_ward", "Blade Ward",
+                        empower(Tier.MID, 200, true, VfxShape.WEAPON_CONSTRUCTS, () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 0))).withCooldown(380),
+                Pages15Kit.mid("rising_cleave", "Rising Cleave",
+                        cone(Tier.MID, 4.5, 0.7, VfxShape.WIND_SLASH, lift(0.7))).withCooldown(200).withAnim("up"),
+                Pages15Kit.zone("sword_storm", "Sword Storm",
+                        field(Tier.ZONE, 5, 100, 20, false, VfxShape.WEAPON_CONSTRUCTS, knock(0.3))).withCooldown(450),
+                Pages15Kit.zone("skyfall_blades", "Skyfall Blades",
+                        cast(Tier.ZONE, c -> strikes(c, 5, 4, 3.0, false, 2.2, VfxShape.KOTO_SWORDS, NONE))).withCooldown(420).withAnim("up"),
+                Pages15Kit.signature("sovereign_blade", "Sovereign Blade",
+                        line(Tier.SIGNATURE, 20, 2.5, VfxShape.LIGHT_BLADE, knock(1.0))).withCooldown(900).withAnim("thrust")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

@@ -41,5 +41,15 @@
   "nusmp.page.book_magma.molten_fist": "Your fist glows white-hot: a narrow, short blow that burns for 5 seconds and drives the foe back hard.",
   "nusmp.page.book_magma.lava_flow": "The ground splits and a river of lava runs 14 blocks ahead, 2.5 blocks wide, burning and slowing up to eight foes.",
   "nusmp.page.book_magma.pyroclastic_surge": "A rolling cloud of hot ash and gas pours across a wide 9 block cone, burning and shoving everything in it.",
-  "nusmp.page.book_magma.supervolcano": "The land around you erupts in an 8 block ring: up to ten foes are burned for 6 seconds, thrown up and pushed away. Needs Senior rank."
+  "nusmp.page.book_magma.supervolcano": "The land around you erupts in an 8 block ring: up to ten foes are burned for 6 seconds, thrown up and pushed away. Needs Senior rank.",
+  "nusmp.page.book_sword.blade_flurry": "A quick fan of summoned blades cuts across a 4 block cone in front of you.",
+  "nusmp.page.book_sword.sword_step": "You vanish into a lunge of 6 blocks, cutting every foe on the line.",
+  "nusmp.page.book_sword.light_edge": "Throws a single blade of pure light that flies straight and cuts the first foe it meets.",
+  "nusmp.page.book_sword.crescent_wave": "Releases a wide crescent of cutting force that bursts in 2.5 blocks where it lands, hurting up to six foes.",
+  "nusmp.page.book_sword.light_thrust": "A needle-thin thrust of light 9 blocks long that runs through everything in a line.",
+  "nusmp.page.book_sword.blade_ward": "Spectral blades circle you for 10 seconds: a little resistance, and anything that strikes you takes a cut in return.",
+  "nusmp.page.book_sword.rising_cleave": "An upward cleave that cuts a 4.5 block cone and throws the foes it catches into the air.",
+  "nusmp.page.book_sword.sword_storm": "A ring of summoned swords whirls around you for 5 seconds and cuts everything within 5 blocks every second.",
+  "nusmp.page.book_sword.skyfall_blades": "Swords fall out of a rift above the aim point in five places around it, four ticks apart, each cutting the foes beneath it.",
+  "nusmp.page.book_sword.sovereign_blade": "One enormous blade of light cuts a lane 20 blocks long and 2.5 wide through up to ten foes. Needs Senior rank."
 }

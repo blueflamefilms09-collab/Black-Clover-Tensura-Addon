@@ -56,6 +56,16 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_magma` | `lava_flow` | Lava Flow | zone | original | The ground splits and a river of lava runs 14 blocks ahead, 2.5 blocks wide, burning and slowing up to eight foes. | line + EARTH_SPIKES | 8 targets, 1-2 packets |
 | `book_magma` | `pyroclastic_surge` | Pyroclastic Surge | zone | original | A rolling cloud of hot ash and gas pours across a wide 9 block cone, burning and shoving everything in it. | cone + FIRE_WILD | 8 targets, 1-2 packets |
 | `book_magma` | `supervolcano` | Supervolcano | signature | original | The land around you erupts in an 8 block ring: up to ten foes are burned for 6 seconds, thrown up and pushed away. Needs Senior rank. | nova + FIRE_WILD | 10 targets, 2 packets |
+| `book_sword` | `blade_flurry` | Blade Flurry | starter | original | A quick fan of summoned blades cuts across a 4 block cone in front of you. | cone + WIND_SLASH | 4 targets, 1-2 packets |
+| `book_sword` | `sword_step` | Sword Step | starter | original | You vanish into a lunge of 6 blocks, cutting every foe on the line. | dash + WIND_SLASH | 4 targets on the line, 1 packet |
+| `book_sword` | `light_edge` | Light Edge | starter | original | Throws a single blade of pure light that flies straight and cuts the first foe it meets. | bolt + LIGHT_BLADE | 4 targets, 1-2 packets |
+| `book_sword` | `crescent_wave` | Crescent Wave | mid | original | Releases a wide crescent of cutting force that bursts in 2.5 blocks where it lands, hurting up to six foes. | bolt + WIND_SLASH | 6 targets, 1-2 packets |
+| `book_sword` | `light_thrust` | Light Thrust | mid | original | A needle-thin thrust of light 9 blocks long that runs through everything in a line. | line + LIGHT_BLADE | 6 targets, 1-2 packets |
+| `book_sword` | `blade_ward` | Blade Ward | mid | original | Spectral blades circle you for 10 seconds: a little resistance, and anything that strikes you takes a cut in return. | empower + WEAPON_CONSTRUCTS | self only |
+| `book_sword` | `rising_cleave` | Rising Cleave | mid | original | An upward cleave that cuts a 4.5 block cone and throws the foes it catches into the air. | cone + WIND_SLASH | 6 targets, 1-2 packets |
+| `book_sword` | `sword_storm` | Sword Storm | zone | original | A ring of summoned swords whirls around you for 5 seconds and cuts everything within 5 blocks every second. | field + WEAPON_CONSTRUCTS | 8 targets per pulse, 5 pulses |
+| `book_sword` | `skyfall_blades` | Skyfall Blades | zone | original | Swords fall out of a rift above the aim point in five places around it, four ticks apart, each cutting the foes beneath it. | custom strikes + KOTO_SWORDS | 8 targets, 5 packets, 5 delayed tasks |
+| `book_sword` | `sovereign_blade` | Sovereign Blade | signature | original | One enormous blade of light cuts a lane 20 blocks long and 2.5 wide through up to ten foes. Needs Senior rank. | line + LIGHT_BLADE | 10 targets, 2 packets |
 
 ## Research sources
 
@@ -73,7 +83,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 0 canon pages (most of them weakly sourced, see above), 43 original pages, 43 in all.
+Count: 0 canon pages (most of them weakly sourced, see above), 53 original pages, 53 in all.
 
 ## Character grimoires (set entries added)
 
