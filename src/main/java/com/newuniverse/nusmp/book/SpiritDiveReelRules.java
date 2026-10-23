@@ -25,7 +25,7 @@ public final class SpiritDiveReelRules {
     /** The worst case the V2 remake drew per diver (docs/magic/spirit_dives.md), and the ANIME look's heaviest character dive (docs/magic/spirit_dives_anime.md). */
     public static final int V2_WORST_VERTICES = 7700, ANIME_WORST_VERTICES = 5384;
     /** What this look may draw per diver at the full level of detail (vertices): the character tier and the standard tier, the entry sprites included. */
-    public static final int CAP_CHARACTER = 4300, CAP_STANDARD = 2400;
+    public static final int CAP_CHARACTER = 3200, CAP_STANDARD = 2400;
 
     // ------------------------------------------------------------------ the timeline
     /** Ticks the entry lasts (the same 22 ticks as {@link SpiritDiveTier#ENTRY_TICKS}, the server's entry window). */

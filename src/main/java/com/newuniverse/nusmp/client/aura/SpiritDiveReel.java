@@ -251,9 +251,9 @@ public final class SpiritDiveReel {
         float fl = Math.max(SpiritDiveReelRules.flash(u), SpiritDiveReelRules.reveal(u));
         if (fl > 0.01f) {                                                                                   // the flash: a star and a soft white bloom at the chest, growing as it fades; a second burst when the final form appears
             float grow = SpiritDiveReelRules.reveal(u) > SpiritDiveReelRules.flash(u) ? 0.5f + 0.5f * SpiritDiveReelRules.reveal(u) : SpiritDiveReelRules.smooth(u / 4.5f);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(FLASH)), 0f, 1.5f - 1.05f, 0f, 0.8f + 1.8f * grow, age * 0.04f, SealDraw.argb(Math.min(1f, fl * 1.2f), 0xFFFFFF), FB);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.05f, 0f, 1.1f + 2.0f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xE8FFFA), FB);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.05f, 0f, 0.6f + 1.0f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(FLASH)), 0f, 1.5f - 1.2f, 0f, 0.8f + 1.5f * grow, age * 0.04f, SealDraw.argb(Math.min(1f, fl * 1.2f), 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, 1.1f + 1.6f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xE8FFFA), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, 0.6f + 0.9f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xFFFFFF), FB);
         }
         float gp = SpiritDiveReelRules.groundPulse(u);
         if (gp > 0f) {                                                                                      // the ring pulse: a ring running out from the feet

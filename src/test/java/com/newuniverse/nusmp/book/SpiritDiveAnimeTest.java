@@ -28,10 +28,10 @@ class SpiritDiveAnimeTest {
     // ------------------------------------------------------------------ the look option
     @Test
     void animeIsTheDefaultLookAndTheOldLooksAreStillThere() {
-        assertEquals(Look.ANIME, SpiritDiveDjinnPieces.DEFAULT_LOOK);
-        assertEquals(Look.ANIME, SpiritDiveAnimeRules.DEFAULT_LOOK);
-        assertEquals(Look.ANIME, SpiritDiveLook.look(), "a client that never read its config");
-        assertEquals("[DJINN, V2, CLASSIC, ANIME]", java.util.Arrays.toString(Look.values()), "the option values are append only: ANIME was appended");
+        assertEquals(Look.REEL, SpiritDiveDjinnPieces.DEFAULT_LOOK);   // 3.3: the default moved on to REEL; ANIME stays choosable
+        assertEquals(Look.ANIME, SpiritDiveAnimeRules.DEFAULT_LOOK, "the ANIME rules keep their own default (the one of 3.2)");
+        assertEquals(Look.REEL, SpiritDiveLook.look(), "a client that never read its config");
+        assertEquals("[DJINN, V2, CLASSIC, ANIME, REEL]", java.util.Arrays.toString(Look.values()), "the option values are append only: ANIME, then REEL were appended");
         assertEquals(Look.ANIME, SpiritDiveAnimeRules.parse(null));
         assertEquals(Look.ANIME, SpiritDiveAnimeRules.parse("nonsense"));
         assertEquals(Look.DJINN, SpiritDiveAnimeRules.parse("djinn"));
@@ -53,9 +53,9 @@ class SpiritDiveAnimeTest {
                 assertEquals(l, SpiritDiveLook.look());
             }
             SpiritDiveLook.set((Look) null, true, true, null);
-            assertEquals(Look.ANIME, SpiritDiveLook.look(), "a missing value is the default");
+            assertEquals(Look.REEL, SpiritDiveLook.look(), "a missing value is the default");
         } finally {
-            SpiritDiveLook.set(Look.ANIME, true, true, com.newuniverse.nusmp.book.FuegoleonArmRules.View.ALWAYS);
+            SpiritDiveLook.set(Look.REEL, true, true, com.newuniverse.nusmp.book.FuegoleonArmRules.View.ALWAYS);
         }
     }
 

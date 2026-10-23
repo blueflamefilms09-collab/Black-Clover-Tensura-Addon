@@ -34,7 +34,7 @@ public final class SpiritDiveReelGeometry {
     public static final float CUBE = 2.9f, CUBE_CHARACTER = 3.2f, CUBE_HEIGHT = 3.0f, CUBE_HEIGHT_CHARACTER = 3.4f;
     /** The y of the foot of the cubes (the top of the head is -8), the foot of the bars and the height of a bar above it, px, by element ordinal (WIND, WATER, FIRE, EARTH). */
     public static final float CROWN_Y = -8.0f;
-    public static final float[] BAR_HEIGHT = {3.6f, 3.0f, 4.6f, 3.4f};
+    public static final float[] BAR_HEIGHT = {2.6f, 2.2f, 3.4f, 2.5f};
 
     /** Cubes of the ring that are drawn for a spec count; the half dive of Wind draws only the left half (x >= 0). */
     public static int crownCount(int n, boolean leftOnly) {
@@ -57,9 +57,9 @@ public final class SpiritDiveReelGeometry {
      */
     public static final int LEAF_ROW = 14;
     private static final float[][] LEAF = {
-            {3.4f, 1.6f, 2.6f, 0.38f, 0.88f, 0.30f, 0.55f, -0.10f, 0.42f, 24f, 5.0f, 1.3f, 0.0f, 0f},
-            {3.2f, 3.4f, 2.6f, 0.82f, 0.42f, 0.30f, 0.40f, -0.12f, 0.36f, 15f, 3.2f, 1.0f, 1.9f, 0f},
-            {3.0f, 5.2f, 2.6f, 0.88f, 0.05f, 0.36f, 0.30f, 0.20f, 0.30f, 13f, 2.8f, 0.8f, 3.3f, 0f}};
+            {3.4f, 1.6f, 2.6f, 0.38f, 0.88f, 0.30f, 0.55f, -0.10f, 0.42f, 21f, 4.4f, 1.3f, 0.0f, 0f},
+            {3.2f, 3.4f, 2.6f, 0.82f, 0.42f, 0.30f, 0.40f, -0.12f, 0.36f, 13f, 2.9f, 1.0f, 1.9f, 0f},
+            {3.0f, 5.2f, 2.6f, 0.88f, 0.05f, 0.36f, 0.30f, 0.20f, 0.30f, 11.5f, 2.6f, 0.8f, 3.3f, 0f}};
     /** The leaves of the character tier are a quarter bigger. */
     public static final float LEAF_CHARACTER = 1.18f;
 
@@ -94,7 +94,7 @@ public final class SpiritDiveReelGeometry {
     /** Floats of a blade: root xyz, direction xyz, bend xyz, length, half width. */
     public static final int BLADE_ROW = 11;
     /** The length of the longest blade, px, by element ordinal (WIND unused, WATER, FIRE, EARTH): standard tier, character tier. */
-    public static final float[][] BLADE_LENGTH = {{0f, 0f}, {22f, 27f}, {24f, 29f}, {20f, 20f}};
+    public static final float[][] BLADE_LENGTH = {{0f, 0f}, {18f, 22f}, {20f, 24f}, {17f, 17f}};
 
     private static float clamp01(float x) { return x < 0f ? 0f : x > 1f ? 1f : x; }
 
@@ -113,7 +113,7 @@ public final class SpiritDiveReelGeometry {
         row[3] = side * 0.93f * ca; row[4] = -sa; row[5] = 0.22f * ca + 0.12f * closed;              // out, up (y is down), a little back
         row[6] = side * 0.05f; row[7] = -0.10f * (1f + closed); row[8] = 0.12f;                      // a gentle curl
         row[9] = len;
-        row[10] = Math.max(0.9f, 0.6f * len * (float) Math.abs(((FAN_UP - FAN_DOWN) * (float) (Math.PI / 180.0)) / Math.max(1, n - 1)) * 1.06f);
+        row[10] = Math.max(1.2f, 1.0f * len * (float) Math.abs(((FAN_UP - FAN_DOWN) * (float) (Math.PI / 180.0)) / Math.max(1, n - 1)));   // wide enough that neighbours overlap: a comb of feathers, not needles
     }
 
     /** A blade's spine into {@code out} (3 floats per point), px; {@code age} flutters the tip. */
