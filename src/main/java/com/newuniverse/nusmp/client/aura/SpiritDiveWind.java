@@ -91,9 +91,11 @@ public final class SpiritDiveWind {
         if (e <= SpiritDiveWind4Rules.QUIET) sp = SpiritDiveWind4Rules.calmSpec(sp);                         // the loud effects have faded out: the quiet set (no ribbons, no circle, a quarter of the sparkles)
 
         SpiritDiveAnimeShell.draw(c, el, sp.shellPasses(), pal.body(), pal.rim(), pal.glow(), pulse * k, SpiritDiveReelRules.assemble(u), mask, false, false, keptMask, k);
-        if (!self1p && !overlayWings && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) {
-            if (real3d && lod == Lod.FULL) SpiritDiveWind4.crown(c, character, pal, u, uk, upgrade, half, lit, e);   // the crown is a real 3D layer at full detail
-            else crown(c, sp, character, pal, u, uk, upgrade, half, lit);
+        if (!overlayWings) {                                                                                // Mode Armour v2 (Yuno): the overlay draws the crown, not the aura
+            if (!self1p && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) {
+                if (real3d && lod == Lod.FULL) SpiritDiveWind4.crown(c, character, pal, u, uk, upgrade, half, lit, e);   // the crown is a real 3D layer at full detail
+                else crown(c, sp, character, pal, u, uk, upgrade, half, lit);
+            }
         }
         if (sp.wrists() > 0) wrists(c, sp, pal, u, uk, mask, keptMask, lit, e);
         PoseStack pose = c.pose();

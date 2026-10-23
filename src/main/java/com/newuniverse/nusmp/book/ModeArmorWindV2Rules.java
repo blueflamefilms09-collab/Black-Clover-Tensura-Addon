@@ -149,6 +149,22 @@ public final class ModeArmorWindV2Rules {
         return v;
     }
 
+    /**
+     * The calm steady state of a Yuno Spirit Dive at the full level of detail as the AURA draws it once the overlay v2 is on: the aura's own count ({@link SpiritDiveWind4Rules#steadyVertices}) minus the 3D crown and
+     * the leaf wings that the overlay now draws instead of it.
+     */
+    public static int yunoAuraSteadyWithoutWingsAndCrown() {
+        SpiritDivePieces.Stage st = SpiritDivePieces.Stage.FULL;
+        SpiritDiveWindRules.Spec p = SpiritDiveWindRules.spec(true, Lod.FULL);
+        int aura = SpiritDiveWind4Rules.steadyVertices(true, Lod.FULL, st, true);
+        int crown = SpiritDiveWind4Rules.crownVerts(true, false);
+        int leaves = SpiritDiveWindRules.leaves(true, Lod.FULL, st) * p.leafSegs() * 4 * 2;
+        return aura - crown - leaves;
+    }
+
+    /** The whole Yuno dive in the calm steady state at the full level of detail: the aura without its wings and crown plus the overlay v2. Held under {@link #CAP_COMBINED_STEADY}. */
+    public static int yunoCombinedSteady() { return yunoAuraSteadyWithoutWingsAndCrown() + vertices(Lod.FULL); }
+
     /** Vertices a wearer draws in a pass at a level of detail (for the doc's table). */
     public static int vertices(Lod lod, Pass pass) {
         int v = pass == Pass.FX ? leaves(lod) * 4 : 0;
@@ -164,8 +180,8 @@ public final class ModeArmorWindV2Rules {
     }
 
     // ------------------------------------------------------------------ which mode draws it
-    /** The wire ordinal the server sends for a wind dive overlay: Yuno's grimoire holder gets the Yuno variant (append only in {@code ModeArmor.Mode}). */
-    public static boolean yunoVariant(String modeName) { return "WIND_SPIRIT_DIVE_YUNO".equals(modeName); }
+    /** The name of the mode the server sends for a mode it keeps: the Wind Spirit Dive of a Yuno-tier wearer goes out as the Yuno variant (append only in {@code ModeArmor.Mode}), everything else as itself. Pure. */
+    public static String wireName(String modeName, boolean yuno) { return yuno && "WIND_SPIRIT_DIVE".equals(modeName) ? "WIND_SPIRIT_DIVE_YUNO" : modeName; }
 
     // ------------------------------------------------------------------ the motion constants (pure so the test can pin them)
     /** The crown: bob (px) and its speed, turn (degrees a tick), the height of the ring above the head top (px, head y is down so negative is up), the radius and the arrow heights (60 to 65 percent of the old crown). */

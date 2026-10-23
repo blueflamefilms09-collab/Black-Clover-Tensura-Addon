@@ -48,7 +48,7 @@ public final class ModeArmor {
     }
 
     /** The mode the clients are told about: the Wind Spirit Dive of a Yuno-tier wearer is the Yuno variant, everything else is the mode itself. Pure. */
-    public static Mode wire(Mode mode, boolean yuno) { return yuno && mode == Mode.WIND_SPIRIT_DIVE ? Mode.WIND_SPIRIT_DIVE_YUNO : mode; }
+    public static Mode wire(Mode mode, boolean yuno) { return Mode.valueOf(com.newuniverse.nusmp.book.ModeArmorWindV2Rules.wireName(mode.name(), yuno)); }
 
     /** True when the wearer's Spirit Dive tier is Yuno's (the bound grimoire is Yuno's and the server allows the character tier); false on any failure. */
     private static boolean yunoTier(ServerPlayer p) {

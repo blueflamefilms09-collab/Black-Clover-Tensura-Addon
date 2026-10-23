@@ -436,7 +436,7 @@ public final class ModeArmorWindV2Mesh {
     // ------------------------------------------------------------------ THE CROWN (the frame of the ring: origin at the ring's centre, y down)
     private static final float CROWN_R = 2.9f;
     private static final int CROWN_BLADES = 10;
-    private static final float TALL_SHAFT = 3.4f, SHORT_SHAFT = 2.4f, HEAD_LEN = 1.5f;
+    private static final float TALL_SHAFT = 3.1f, SHORT_SHAFT = 1.8f, HEAD_LEN = 1.35f;
 
     /** Height of blade {@code i} from the ring to its tip (shaft plus the arrow head). */
     public static float bladeHeight(int i) { return (i % 2 == 0 ? TALL_SHAFT : SHORT_SHAFT) + HEAD_LEN; }
