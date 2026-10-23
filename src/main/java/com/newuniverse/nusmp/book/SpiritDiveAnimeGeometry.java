@@ -18,7 +18,7 @@ public final class SpiritDiveAnimeGeometry {
     private SpiritDiveAnimeGeometry() {}
 
     /** The ribbon profiles. */
-    public enum Shape { LEAF, FLAME, RIBBON, SHARD, SPIKE }
+    public enum Shape { LEAF, FLAME, RIBBON, SHARD, SPIKE, BLADE }                    // BLADE (appended for the REEL look): a feather blade, a steady width with a rounded tip
 
     /** Most segments of any ribbon (the scratch arrays are this big). */
     public static final int MAX_SEGS = 12;
@@ -145,6 +145,10 @@ public final class SpiritDiveAnimeGeometry {
             case SHARD: {
                 float up = Math.min(1f, s / 0.12f);
                 return up * (float) Math.pow(1f - s, 0.8);
+            }
+            case BLADE: {
+                float up = Math.min(1f, s / 0.07f), t = Math.max(0f, (s - 0.78f) / 0.22f);
+                return up * (float) Math.sqrt(Math.max(0.0, 1.0 - t * t)) * (1f - 0.25f * s);
             }
             default: {
                 float up = Math.min(1f, s / 0.06f);
