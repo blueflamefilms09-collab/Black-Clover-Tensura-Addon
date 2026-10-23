@@ -52,7 +52,7 @@ class SpiritBladesSourceScanTest {
     @Test
     void everyParticleCallUsesTheCappedCounts() throws IOException {
         int calls = 0;
-        Pattern call = Pattern.compile("sendParticles\\(([^;]*?)\\);", Pattern.DOTALL);
+        Pattern call = Pattern.compile("(?:sendParticles|Fx\\.spray)\\(([^;]*?)\\);", Pattern.DOTALL);
         for (Path p : sources()) {
             String t = strip(Files.readString(p));
             Matcher m = call.matcher(t);
