@@ -50,7 +50,7 @@ class SpiritDiveDjinnTest {
             SpiritDiveLook.set((Look) null, true, true, null);
             assertEquals(Look.REEL, SpiritDiveLook.look(), "a missing value is the default");
         } finally {
-            SpiritDiveLook.set(Look.DJINN, true, true, FuegoleonArmRules.View.ALWAYS);
+            SpiritDiveLook.set(Look.REEL, true, true, FuegoleonArmRules.View.ALWAYS);      // the default look: another test in the same JVM must find it as a fresh client has it
         }
     }
 
