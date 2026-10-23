@@ -57,7 +57,7 @@ public class CottonBook extends ElementBook {
         else if (!h.isEmpty()) return h;
         else h = p.getRandom().nextBoolean() ? "COTTON" : "FOOD";
         i.getOrCreateTag().putString("Half", h);
-        i.getOrCreateTag().remove("GateTold");
+        PageBits.remove(i.getOrCreateTag(), PageBits.GATE_TOLD);
         i.markDirty();
         p.sendSystemMessage(Component.literal(switch (h) {
             case "BOTH" -> "Your grimoire holds both halves: Cotton and Food.";

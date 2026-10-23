@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * The basic grimoires (docs/magic/basic_grimoires.md). Reads the real sources and files (no game class): no page a character set marks exclusive is visible to a grimoire bound to nobody; every
  * reserved page ({@link BasicSignatures}) is a real family page that is hidden for the basic book and shown again for its owner; every generic page {@code BasicPages} appends is new, unique, last of
- * its book, owned by nobody, not a copy of a character's spell, texted and listed in the armour policy; no book is over the 24 family pages the unlock mask allows; the casts are bounded; the hooks
+ * its book, owned by nobody, not a copy of a character's spell, texted and listed in the armour policy; no book is over the 32 family pages one grimoire may hold; the casts are bounded; the hooks
  * are in place and the Time Magic files are not touched.
  */
 class BasicGrimoiresTest {
@@ -264,7 +264,7 @@ class BasicGrimoiresTest {
                 assertFalse(characterNames.contains(norm(name)) || characterNames.contains(tail(name)), id + " (" + name + ") is the name of a character's spell");
             }
             int family = before.size() + e.getValue().size();
-            assertTrue(family <= 24, book + " would have " + family + " family pages: the unlock mask is 32 bits");
+            assertTrue(family <= 32, book + " would have " + family + " family pages: the budget of one grimoire is 32 (the unlock mask holds 64)");
         }
         assertEquals(19, total, "the pages added");
     }
@@ -283,7 +283,7 @@ class BasicGrimoiresTest {
         }
         for (String book : bookClasses().keySet()) {
             int n = familyWithoutBasic(book).size() + added.getOrDefault(book, List.of()).size();
-            assertTrue(n <= 24, book + " has " + n + " family pages");
+            assertTrue(n <= 32, book + " has " + n + " family pages: the budget of one grimoire is 32");
         }
     }
 

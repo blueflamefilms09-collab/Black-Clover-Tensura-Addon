@@ -312,10 +312,11 @@ def book_ids(cls, factory, body=None):
 def appenders():
     """{class: {book: [ids]}} read from the `register("book_x", ... List.of(...))` blocks."""
     out = {}
-    for cls in ('CharacterPages', 'CharacterPagesBulls', 'CharacterPagesGold', 'CharacterPagesRest', 'BasicPages'):
+    # the "15 spells for every grimoire" batches (book/pages15/Batch1..8.java) are appended after BasicPages by Pages15.append, in this order
+    for cls in ('CharacterPages', 'CharacterPagesBulls', 'CharacterPagesGold', 'CharacterPagesRest', 'BasicPages') + tuple('Batch%d' % i for i in range(1, 9)):
         t = read(CLASS_FILE[cls])
         d = {}
-        for m in re.finditer(r'register\(\s*"(book_[a-z_]+)"\s*,', t):
+        for m in re.finditer(r'register\(\s*"(book_[a-z_]+|forbidden_magic)"\s*,', t):
             j = t.index('List.of(', m.end())
             d[m.group(1)] = ids_in(t[j:match_close(t, j + 7)], CLASS_FILE[cls], follow=False)
         out[cls] = d
@@ -385,6 +386,8 @@ def build():
     for b in books.values():
         a = b.get('app', {})
         seq = b['own'] + a.get('CharacterPages', []) + a.get('CharacterPagesBulls', []) + a.get('CharacterPagesGold', []) + a.get('CharacterPagesRest', []) + a.get('BasicPages', [])
+        for i in range(1, 9):
+            seq = seq + a.get('Batch%d' % i, [])
         b['pages'] = uniq(seq)
     return books, order, ap
 

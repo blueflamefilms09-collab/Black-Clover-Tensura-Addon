@@ -20,7 +20,14 @@ public final class PageTier {
         return Math.max(1, Math.min(familyCount, n));
     }
 
-    /** The grimoire's "Unlocked" mask for the first {@code pages} modes. */
+    /** The 64-bit mask (low int = tag "Unlocked", high int = tag "Unlocked2") of the first {@code pages} modes; for a book of more than 31 family pages (book.UnlockMask). */
+    public static long mask64(int pages) {
+        if (pages <= 0) return 0L;
+        if (pages >= 64) return -1L;
+        return (1L << pages) - 1L;
+    }
+
+    /** The grimoire's low "Unlocked" mask for the first {@code pages} modes (modes 0-30; {@link #mask64} for more). */
     public static int mask(int pages) {
         if (pages <= 0) return 0;
         if (pages >= 31) return 0x7FFFFFFF;

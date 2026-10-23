@@ -48,7 +48,7 @@ public final class ShakudoSelfTests {
         List<BookPage> family = book.familyPages();
         int n = GENERIC.size() + added.size();
         if (family.size() != n) return Result.fail(m + ": " + family.size() + " family pages, expected " + n);
-        if (family.size() > 24) return Result.fail(m + ": more than 24 family pages");
+        if (family.size() > 32) return Result.fail(m + ": more than 32 family pages");
         Set<String> seen = new HashSet<>();
         for (int i = 0; i < n; i++) {
             String want = i < GENERIC.size() ? GENERIC.get(i) : added.get(i - GENERIC.size()), got = family.get(i).id();

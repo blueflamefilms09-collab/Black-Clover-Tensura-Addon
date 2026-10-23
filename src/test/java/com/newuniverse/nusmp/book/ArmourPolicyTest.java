@@ -1,8 +1,15 @@
 package com.newuniverse.nusmp.book;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.newuniverse.nusmp.book.pages15.Pages15Plan;
+import com.newuniverse.nusmp.book.pages15.Pages15Rules;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,6 +47,36 @@ class ArmourPolicyTest {
     private static final Pattern PAGE = Pattern.compile("(?:\\b(?:starter|mid|zone|signature|daily)|new BookPage)\\(\\s*\"([a-z0-9_]+)\"");
     /** The pages every grimoire has besides its family pages (GrimoireBook.pages()). */
     private static final Set<String> UNIVERSAL = Set.of("spirit_dive", "spirit_channeling", "devil_union", "summon_grimoire", "store_weapon", "draw_weapon", "mana_strike", "mana_zone");
+
+    /** "15 spells for every grimoire": each batch builder lists the ids of the pages it appends in its OWN file, so eight builders never edit the same json. */
+    private static final Path PAGES15_DIR = ROOT.resolve("src/test/resources/armour_policy");
+    private static final Pattern PAGES15_FILE = Pattern.compile("pages15_batch([1-8])_new_pages\\.json");
+
+    /** file name -> { magic -> ids }, read from every {@code pages15_batch*_new_pages.json} (format: an object with a MagicType name as key and a list of page ids as value). */
+    private static Map<String, Map<String, List<String>>> pages15Files() throws IOException {
+        Map<String, Map<String, List<String>>> out = new LinkedHashMap<>();
+        List<Path> files = new ArrayList<>();
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(PAGES15_DIR, "pages15_batch*_new_pages.json")) { for (Path f : ds) files.add(f); }
+        files.sort(null);
+        for (Path f : files) {
+            Map<String, List<String>> m = new LinkedHashMap<>();
+            JsonObject o = JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject();
+            for (var e : o.entrySet()) {
+                List<String> ids = new ArrayList<>();
+                JsonArray a = e.getValue().getAsJsonArray();
+                for (JsonElement x : a) ids.add(x.getAsString());
+                m.put(e.getKey(), ids);
+            }
+            out.put(f.getFileName().toString(), m);
+        }
+        return out;
+    }
+
+    private static Set<String> pages15Listed() throws IOException {
+        Set<String> all = new LinkedHashSet<>();
+        for (Map<String, List<String>> m : pages15Files().values()) for (List<String> ids : m.values()) all.addAll(ids);
+        return all;
+    }
 
     private static ArmourPolicy policy() throws IOException { return ArmourPolicy.parse(Files.readString(FILE, StandardCharsets.UTF_8)); }
 
@@ -218,6 +255,7 @@ class ArmourPolicyTest {
         ArmourPolicy p = policy();
         Set<String> appended = new LinkedHashSet<>();
         for (ArmourPolicy.Entry e : p.entries().values()) appended.addAll(e.newPages());
+        appended.addAll(pages15Listed());      // the "15 spells" batches list their ids in pages15_batchN_new_pages.json (one file per builder)
         int files = 0, ids = 0;
         for (String line : Files.readAllLines(SNAPSHOT, StandardCharsets.UTF_8)) {
             if (line.isBlank() || line.startsWith("#")) continue;
@@ -242,6 +280,28 @@ class ArmourPolicyTest {
         assertTrue(files > 60 && ids > 800, "the snapshot is read: " + files + " files, " + ids + " ids");
         for (String file : now.keySet()) if (Files.readAllLines(SNAPSHOT, StandardCharsets.UTF_8).stream().noneMatch(l -> l.startsWith(file + ": ")))
             assertTrue(appended.containsAll(now.get(file)), file + " is new and defines pages the policy does not list");
+    }
+
+    @Test
+    void thePages15FilesAreWellFormedAndEveryListedIdIsARealPageOfItsOwnBatch() throws IOException {
+        Set<String> real = allPageIds();
+        List<String> magics = magics();
+        Set<String> seen = new LinkedHashSet<>();
+        for (var f : pages15Files().entrySet()) {
+            Matcher nm = PAGES15_FILE.matcher(f.getKey());
+            assertTrue(nm.matches(), f.getKey() + ": the name is pages15_batch<1-8>_new_pages.json");
+            int batch = Integer.parseInt(nm.group(1));
+            for (var e : f.getValue().entrySet()) {
+                assertTrue(magics.contains(e.getKey()), f.getKey() + ": " + e.getKey() + " is not a MagicType");
+                int owner = Pages15Plan.batchOf("book_" + e.getKey().toLowerCase());      // (a few magics have another book name, FLAME is book_fire: those are not checked here)
+                if (owner != 0) assertEquals(batch, owner, f.getKey() + ": book_" + e.getKey().toLowerCase() + " belongs to batch " + owner);
+                for (String id : e.getValue()) {
+                    assertNull(Pages15Rules.idProblem(id), f.getKey() + ": " + id);
+                    assertTrue(seen.add(id), f.getKey() + ": " + id + " is listed twice (ids are unique across all books)");
+                    assertTrue(real.contains(id), f.getKey() + ": " + id + " is not a page defined in any book source");
+                }
+            }
+        }
     }
 
     // ------------------------------------------------------------------ the pure rules

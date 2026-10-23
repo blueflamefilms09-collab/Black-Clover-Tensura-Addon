@@ -128,7 +128,7 @@ class EarthFamilyRebuildTest {
             Matcher m = Pattern.compile("(?:starter|mid|zone|signature)\\(\"([a-z_]+)\"").matcher(block);
             while (m.find()) ids.add(m.group(1));
             assertEquals(ids.size(), ids.stream().distinct().count(), "page ids are unique in " + cases[c]);
-            assertTrue(ids.size() >= 7 && ids.size() <= 24, "page count of " + cases[c]);
+            assertTrue(ids.size() >= 7 && ids.size() <= 32, "page count of " + cases[c]);
             assertEquals(List.of(order), ids.subList(0, 5), cases[c] + ": the five generic ids come first, in order");
         }
         String wiki = read("src/main/java/com/newuniverse/nusmp/book/WikiBooks.java");

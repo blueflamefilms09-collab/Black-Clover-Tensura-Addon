@@ -121,6 +121,14 @@ public final class DiscoveryRules {
         return out;
     }
 
+    /** The same for the 64-bit mask of a book with more than 31 family pages (modes 32-63 in the second int tag): up to 64 modes, mode 0 always open. */
+    public static List<Integer> unlockedModes(long mask, int familyCount) {
+        List<Integer> out = new ArrayList<>();
+        int n = Math.min(Math.max(familyCount, 0), 64);
+        for (int m = 0; m < n; m++) if (m == 0 || (mask & (1L << m)) != 0) out.add(m);
+        return out;
+    }
+
     // ---------------------------------------------------------------- sync and migration
     /** Cuts a key list into packet-sized chunks (at least one, possibly empty, so a full sync always sends something). */
     public static List<List<String>> chunks(List<String> keys) {

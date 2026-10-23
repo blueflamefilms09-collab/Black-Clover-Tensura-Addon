@@ -21,5 +21,6 @@ public final class CharacterSetBoot {
         CharacterRestSelfTests.register();      // the squad captains / Spade / Heart / Diamond / Seabed sets (magic.character_spells_rest)
         CharacterSetBullsSelfTests.register();      // the Black Bulls' sets (docs/magic/character_spells_bulls.md)
         BasicGrimoireSelfTests.register();      // the basic grimoires: reserved signature pages and the generic anime pages (magic.basic_grimoires, docs/magic/basic_grimoires.md)
+        com.newuniverse.nusmp.book.pages15.Pages15Boot.init();      // "15 spells for every grimoire": magic.pagesFifteen (in this file), self-test magic.pages15 (docs/magic/pages15_recipe.md)
     }
 }

@@ -184,7 +184,7 @@ class CharacterSetBullsTest {
         for (var e : ADDED.entrySet()) {
             int n = legacy(e.getKey()).size() + e.getValue().size();
             if (e.getKey().equals("book_fire")) n += 2;      // the pilot's Leo Parma and Salamander's Breath
-            assertTrue(n <= 24, e.getKey() + " would have " + n + " family pages");
+            assertTrue(n <= 32, e.getKey() + " would have " + n + " family pages (budget 32)");
         }
     }
 

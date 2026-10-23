@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * 1.93.0 (the Water / Dark / Lightning / Flame rebuild): what can be proved without the game. The pure rules (the armour's end time, the prop param word and its yaw / pitch), and the
  * files the rebuild is made of, read from the source tree: every armour piece an Aura painter lists has its geo model, texture, glow map and animation (bones that exist, uvs inside the
- * texture), every summon model a prop painter names does too, the books keep their legacy pages in their legacy order with the new ones appended (at most 24), the enums only grew at
+ * texture), every summon model a prop painter names does too, the books keep their legacy pages in their legacy order with the new ones appended (at most 32), the enums only grew at
  * the end, and every appended page has its lang text in the fragment.
  */
 class WaterRebuildTest {
@@ -163,7 +163,7 @@ class WaterRebuildTest {
         assertEquals(legacy.length + added.length, ids.size(), file + ": page count");
         for (int i = 0; i < legacy.length; i++) assertEquals(legacy[i], ids.get(i), file + ": legacy page " + i + " moved");
         for (int i = 0; i < added.length; i++) assertEquals(added[i], ids.get(legacy.length + i), file + ": a new page is not appended in order");
-        assertTrue(ids.size() <= 24, file + ": at most 24 family pages");
+        assertTrue(ids.size() <= 32, file + ": at most 32 family pages (budget; the unlock mask holds 64)");
         assertEquals(new HashSet<>(ids).size(), ids.size(), file + ": duplicate page id");
     }
 
