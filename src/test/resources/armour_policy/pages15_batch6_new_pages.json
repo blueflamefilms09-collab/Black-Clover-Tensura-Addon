@@ -1,1 +1,16 @@
-{}
+{
+  "COMPASS": [
+    "needle_flick",
+    "bearing_step",
+    "magnetic_pull",
+    "true_heading",
+    "lodestone_snare",
+    "cardinal_volley",
+    "declination_wave",
+    "dead_reckoning",
+    "safe_bearing",
+    "magnetic_storm",
+    "meridian_lance",
+    "cardinal_burst"
+  ]
+}
