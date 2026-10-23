@@ -75,5 +75,12 @@
     "butoh_serpent_arm",
     "butoh_echo_step",
     "butoh_crescendo"
+  ],
+  "MODIFICATION": [
+    "modification_scalpel_cut",
+    "modification_adrenal_edit",
+    "modification_nerve_edit",
+    "modification_regeneration",
+    "modification_mutagen_field"
   ]
 }

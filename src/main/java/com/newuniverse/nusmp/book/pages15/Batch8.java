@@ -372,6 +372,18 @@ public final class Batch8 {
             Pages15Kit.zone("butoh_crescendo", "Crescendo",
                     Pages15Kit.field(Tier.ZONE, 5, 80, 10, false, B2, Pages15Kit.all(jam(30), slow(30, 1)))).withCooldown(450)));
 
+    private static final List<BookPage> MODIFICATION = register("book_modification", List.of(
+            Pages15Kit.starter("modification_scalpel_cut", "Modification: Scalpel Cut",
+                    Pages15Kit.line(Tier.STARTER, 6, 0.8, M1, wither(40, 0))).withAnim("sweep"),
+            Pages15Kit.starter("modification_adrenal_edit", "Modification: Adrenal Edit",
+                    selfBuff(Tier.STARTER, M2, 0.8f, eff(MobEffects.MOVEMENT_SPEED, 120, 1), eff(MobEffects.DAMAGE_BOOST, 120, 0))).withCooldown(200),
+            Pages15Kit.mid("modification_nerve_edit", "Modification: Nerve Edit",
+                    Pages15Kit.bind(Tier.MID, 14, false, M1, weak(60, 1))).withCooldown(220),
+            Pages15Kit.mid("modification_regeneration", "Modification: Cell Regrowth",
+                    cleanse(Tier.MID, M2, 0.25f)).withCooldown(400),
+            Pages15Kit.zone("modification_mutagen_field", "Modification: Mutagen Field",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, M2, Pages15Kit.all(poison(40, 0), weak(40, 0)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
