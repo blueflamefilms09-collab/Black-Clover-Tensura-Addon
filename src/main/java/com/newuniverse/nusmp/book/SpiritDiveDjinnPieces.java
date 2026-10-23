@@ -248,6 +248,18 @@ public final class SpiritDiveDjinnPieces {
         return c * characterVertices + Math.max(0, divers - c) * standardVertices;
     }
 
+    // ------------------------------------------------------------------ the particle trail of the Djinn look (restrained: the Djinn's own ambient is 6 to 13 particles a second)
+    /** Particles one diving player spawns this client tick: the standard set one every fourth tick (5 a second), the character set one every second tick (10 a second), staggered by entity id. */
+    public static int trailCount(boolean character, long tick, int entityId) {
+        return Math.floorMod(tick + entityId, character ? 2L : 4L) == 0 ? 1 : 0;
+    }
+
+    /** The burst on the tick after a dive begins: smaller than the remake's (the forge itself is the show). */
+    public static int entryBurst(boolean character) { return character ? 16 : 6; }
+
+    /** The most particles per second the trails of all dives in view can ask for (before the client particle budget and the effect quality thin them). */
+    public static int worstTrailPerSecond() { return SpiritDiveTier.TRAIL_PLAYERS * 10; }
+
     // ------------------------------------------------------------------ the forge-in
     /** The tick (from the start of the dive) at which the last piece of a set has finished forging in: the largest delay plus the forge time of EquipAnimation. */
     public static float forgeEnd(List<Def> pieces) {

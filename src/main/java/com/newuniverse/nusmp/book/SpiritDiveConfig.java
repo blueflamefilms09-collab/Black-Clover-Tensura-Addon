@@ -7,12 +7,13 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * <ul>
  *   <li>{@code spiritDive.characterTier}: the character tier of the dive (Yuno, Fuegoleon, Noelle). false = every dive is sent as the standard tier.</li>
  *   <li>{@code spiritDive.fuegoleonArm}: Fuegoleon's flaming right arm. false = the server never turns the arm on.</li>
+ *   <li>{@code spiritDive.forgeSound}: the sound of the dive forging on, upgrading and ending (the Djinn Full Equip's own kind of sound). false = silent.</li>
  * </ul>
  * What a client DRAWS is its own choice (client.aura.SpiritDiveLook, nusmp-spiritdive-client.toml): the classic look, the arm view, the character effects.
  */
 public final class SpiritDiveConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue CHARACTER_TIER, FUEGOLEON_ARM;
+    public static final ModConfigSpec.BooleanValue CHARACTER_TIER, FUEGOLEON_ARM, FORGE_SOUND;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -21,6 +22,8 @@ public final class SpiritDiveConfig {
                 "false = every dive is the standard tier. Only changes what the clients are told to draw.").define("characterTier", true);
         FUEGOLEON_ARM = b.comment("Fuegoleon's flaming right arm while the Salamander is his (the contract, the spirit out, or the Fire dive).",
                 "false = the arm is never switched on.").define("fuegoleonArm", true);
+        FORGE_SOUND = b.comment("The sound of the Spirit Dive forging on, ending and upgrading (vanilla sounds sent from the server, as the Djinn Full Equip does: one or two sounds, at most once a second per player).",
+                "false = the dive is silent.").define("forgeSound", true);
         b.pop();
         SPEC = b.build();
     }
@@ -34,4 +37,6 @@ public final class SpiritDiveConfig {
     public static boolean characterTier() { return get(CHARACTER_TIER); }
 
     public static boolean fuegoleonArm() { return get(FUEGOLEON_ARM); }
+
+    public static boolean forgeSound() { return get(FORGE_SOUND); }
 }

@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.aura;
 
 import com.newuniverse.nusmp.aura.Aura;
+import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces;
 import com.newuniverse.nusmp.book.SpiritDivePieces;
 import com.newuniverse.nusmp.book.SpiritDivePieces.Element;
 import com.newuniverse.nusmp.book.SpiritDiveTier;
@@ -63,6 +64,7 @@ public final class DiveParticles {
         long now = level.getGameTime();
         double range2 = SpiritDiveTier.TRAIL_RANGE * SpiritDiveTier.TRAIL_RANGE;
         int served = 0;
+        boolean djinn = SpiritDiveLook.look() == SpiritDiveDjinnPieces.Look.DJINN;                       // the Djinn look trails fewer particles
         for (int i = 0, n = players.size(); i < n && served < SpiritDiveTier.TRAIL_PLAYERS; i++) {
             AbstractClientPlayer p = players.get(i);
             var running = PlayerAuraClient.running(p.getId());
@@ -74,8 +76,8 @@ public final class DiveParticles {
             Grade g = SpiritDivePieces.grade(style);
             boolean character = SpiritDiveTier.character(el, g) && SpiritDiveLook.characterEffects();
             ThemeKey key = theme(el, character ? g : Grade.STANDARD);
-            if (now - w[0] == 1L) Fx.burst(level, key, p.getX(), p.getY() + 1.0, p.getZ(), FxTone.LIGHT, SpiritDiveTier.entryBurst(character));
-            int count = SpiritDiveTier.trailCount(character, now, p.getId());
+            if (now - w[0] == 1L) Fx.burst(level, key, p.getX(), p.getY() + 1.0, p.getZ(), FxTone.LIGHT, djinn ? SpiritDiveDjinnPieces.entryBurst(character) : SpiritDiveTier.entryBurst(character));
+            int count = djinn ? SpiritDiveDjinnPieces.trailCount(character, now, p.getId()) : SpiritDiveTier.trailCount(character, now, p.getId());
             RandomSource r = level.getRandom();
             for (int k = 0; k < count; k++) spawn(level, key, el, p, r, k);
         }

@@ -64,7 +64,7 @@ public final class SpiritDiveDjinn {
     private static final boolean[] WAS = new boolean[12];
     private static final Map<String, GeoSpec> SPECS = new HashMap<>();
 
-    private static GeoSpec spec(Element e, boolean character, Def d) {
+    static GeoSpec specOf(Element e, boolean character, Def d) {
         String id = SpiritDiveDjinnPieces.modelId(e, character, d.name());
         GeoSpec s = SPECS.get(id);
         if (s == null) {                                                                                     // once per piece, ever (the table is small and fixed)
@@ -184,7 +184,7 @@ public final class SpiritDiveDjinn {
             float g = lod == Lod.FAR ? 0f : alpha * glowK * p.glow();                                         // no glow pass at the far level (and none for a piece without glow)
             int glow = ((int) (Mth.clamp(g, 0f, 1f) * 255f + 0.5f) << 24) | (glowRgb & 0xFFFFFF);
             boolean translucent = p.glass() || a < 1f;
-            GeoDraw.paint(pose, c.buffers(), spec(el, character, p), clip, seconds, GeoDraw.Space.PLAYER, translucent ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT,
+            GeoDraw.paint(pose, c.buffers(), specOf(el, character, p), clip, seconds, GeoDraw.Space.PLAYER, translucent ? GeoDraw.Layer.TRANSLUCENT : GeoDraw.Layer.CUTOUT,
                     translucent ? lit : c.light(), white, glow);
             pose.popPose();
         }
