@@ -238,6 +238,19 @@
         ]
       },
       "note": "The wiki's one compound spell: a combination of five elements."
+    },
+    {
+      "page": "heat_infused_ice",
+      "name": "Painting Magic: Invasion of Heat-Infused Ice",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.38
+      },
+      "note": "NEW shared page (pages15, batch 2, the spell that was 'planned' below). A magic circle pours ice over a target and holds it; it stays in the basic Painting book too."
     }
   ],
   "planned": [

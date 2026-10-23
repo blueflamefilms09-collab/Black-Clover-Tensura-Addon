@@ -1,1 +1,129 @@
-{}
+{
+  "CREATION": [
+    "created_crystal_armor",
+    "wind_hawk",
+    "climbing_coelacanth",
+    "created_spear",
+    "created_shield",
+    "created_arrows",
+    "created_chains",
+    "created_hammer",
+    "created_steed",
+    "created_cage",
+    "created_repairs",
+    "created_colossus"
+  ],
+  "MIST": [
+    "mist_doubles",
+    "mist_bullets",
+    "concealing_fog",
+    "dew_needles",
+    "rolling_fog",
+    "chilling_haze",
+    "vapor_lance",
+    "morning_mist",
+    "mist_ambush",
+    "mist_cloak",
+    "sea_of_fog"
+  ],
+  "PAINTING": [
+    "heat_infused_ice",
+    "color_splash",
+    "ink_darts",
+    "canvas_screen",
+    "gloss_slide",
+    "wet_paint",
+    "vague_azur",
+    "etincelle_rouge",
+    "verdure_embrace",
+    "pigment_storm",
+    "gallery_of_giants"
+  ],
+  "SNOW": [
+    "miniature_snow_garden",
+    "snow_barrier",
+    "snow_binding",
+    "powder_burst",
+    "snowball_barrage",
+    "frostbite_wind",
+    "snow_avalanche"
+  ],
+  "ICE": [
+    "ice_funeral",
+    "ice_slicer",
+    "ice_needle",
+    "jotunns_ice_floe",
+    "cage_of_infinite_hail",
+    "endless_ice_fangs"
+  ],
+  "WATER": [
+    "sea_dragon_god_vortex",
+    "sea_dragon_god_tail",
+    "riptide_undertow",
+    "riptide_dash",
+    "tidal_geyser"
+  ],
+  "DEMON_WATER": [
+    "brine_lash",
+    "drowned_chains",
+    "abyssal_ambush",
+    "black_deluge",
+    "depth_pressure"
+  ],
+  "MUCUS": [
+    "mucus_spit",
+    "mucus_siphon",
+    "mucus_cocoon",
+    "glob_slam",
+    "mucus_whirl"
+  ],
+  "MUD": [
+    "mud_splash",
+    "mud_slide",
+    "grasping_mud",
+    "mud_armor",
+    "quagmire"
+  ],
+  "FOOD": [
+    "mana_munch",
+    "restoring_plate",
+    "spice_burst",
+    "syrup_flood"
+  ],
+  "EYE": [
+    "hypnotic_gaze",
+    "dazzle_sweep",
+    "silencing_gaze",
+    "watchful_circle"
+  ],
+  "DEMON_ICE": [
+    "demon_ice_fangs",
+    "demon_ice_chains",
+    "demon_ice_comet"
+  ],
+  "BUBBLE": [
+    "soap_slide",
+    "bubble_whirl",
+    "bubble_bath"
+  ],
+  "ICE_WEDGE": [
+    "wedge_anchor",
+    "wedge_spiral",
+    "wedge_cataclysm"
+  ],
+  "GEL": [
+    "gel_whip",
+    "gel_mortar",
+    "gel_flood"
+  ],
+  "BLACK_OIL": [
+    "oil_spray",
+    "tar_chains",
+    "oil_geyser"
+  ],
+  "EYEBALL": [
+    "eyeball_volley",
+    "optic_beam",
+    "eyeball_storm"
+  ]
+}
