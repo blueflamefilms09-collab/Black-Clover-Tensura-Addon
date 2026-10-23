@@ -61,5 +61,17 @@
     "sword_storm",
     "skyfall_blades",
     "sovereign_blade"
+  ],
+  "REINFORCEMENT": [
+    "leg_strength_boost",
+    "rushing_fist",
+    "reinforced_guard",
+    "arm_strength_boost",
+    "shoulder_charge",
+    "rising_kick",
+    "ironclad_body",
+    "fist_barrage",
+    "skyfall_smash",
+    "titan_body"
   ]
 }

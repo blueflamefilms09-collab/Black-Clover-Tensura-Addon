@@ -66,6 +66,16 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_sword` | `sword_storm` | Sword Storm | zone | original | A ring of summoned swords whirls around you for 5 seconds and cuts everything within 5 blocks every second. | field + WEAPON_CONSTRUCTS | 8 targets per pulse, 5 pulses |
 | `book_sword` | `skyfall_blades` | Skyfall Blades | zone | original | Swords fall out of a rift above the aim point in five places around it, four ticks apart, each cutting the foes beneath it. | custom strikes + KOTO_SWORDS | 8 targets, 5 packets, 5 delayed tasks |
 | `book_sword` | `sovereign_blade` | Sovereign Blade | signature | original | One enormous blade of light cuts a lane 20 blocks long and 2.5 wide through up to ten foes. Needs Senior rank. | line + LIGHT_BLADE | 10 targets, 2 packets |
+| `book_reinforcement` | `leg_strength_boost` | Leg Strength Boost | starter | canon: en-wiki (read through a search summary, not the page): Leg Strength Boost, supplementary Reinforcement Magic | Reinforces your legs for 8 seconds: Speed II and Jump Boost II, and your next blows hit a little harder. | empower + SPIRIT_AURA | self only |
+| `book_reinforcement` | `rushing_fist` | Rushing Fist | starter | original | You close 5 blocks in one reinforced step and drive a fist through whoever is in the way. | dash + WIND_SLASH | 4 targets on the line, 1 packet |
+| `book_reinforcement` | `reinforced_guard` | Reinforced Guard | starter | original | Hardens your whole body for 5 seconds: Resistance II. | empower + SPIRIT_AURA | self only |
+| `book_reinforcement` | `arm_strength_boost` | Arm Strength Boost | mid | original | Reinforces your arms for 10 seconds: Strength II and a bonus on every melee blow. Named after the Leg Strength Boost; not a wiki page. | empower + SPIRIT_AURA | self only |
+| `book_reinforcement` | `shoulder_charge` | Shoulder Charge | mid | original | You barge 8 blocks forward shoulder first, hurting and throwing aside everything on the way. | dash + WIND_SLASH | 6 targets on the line, 1 packet |
+| `book_reinforcement` | `rising_kick` | Rising Kick | mid | original | A reinforced kick from below that lifts every foe in a short 3.5 block cone off the ground. | cone + WIND_SLASH | 6 targets, 1-2 packets |
+| `book_reinforcement` | `ironclad_body` | Ironclad Body | mid | original | Your skin turns hard as iron for 11 seconds: resistance, an absorption heart and thorns against whoever hits you. | empower + SPIRIT_AURA | self only |
+| `book_reinforcement` | `fist_barrage` | Hundred-Fist Barrage | zone | original | Six punches in under a second on the foe in front of you (within 5 blocks); together they hit for about one and a half zone hits. | custom barrage | 1 target, 6 packets, 6 delayed tasks |
+| `book_reinforcement` | `skyfall_smash` | Skyfall Smash | zone | original | You jump high, then crash down fist first: foes within 5.5 blocks of the landing are hurt and thrown back. | custom skySmash | 8 targets, 2 packets, 1 delayed task |
+| `book_reinforcement` | `titan_body` | Titan Body | signature | original | Reinforces every muscle for 14 seconds: Strength II, Resistance II, Speed I and a large bonus on every melee blow. Needs Senior rank. | empower + SPIRIT_AURA | self only |
 
 ## Research sources
 
@@ -83,7 +93,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 0 canon pages (most of them weakly sourced, see above), 53 original pages, 53 in all.
+Count: 1 canon pages (most of them weakly sourced, see above), 62 original pages, 63 in all.
 
 ## Character grimoires (set entries added)
 

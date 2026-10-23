@@ -170,6 +170,28 @@ public final class Batch1 {
                 Pages15Kit.signature("sovereign_blade", "Sovereign Blade",
                         line(Tier.SIGNATURE, 20, 2.5, VfxShape.LIGHT_BLADE, knock(1.0))).withCooldown(900).withAnim("thrust")));
 
+    private static final List<BookPage> REINFORCEMENT = register("book_reinforcement", List.of(
+                Pages15Kit.starter("leg_strength_boost", "Leg Strength Boost",
+                        empower(Tier.STARTER, 160, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 160, 1), () -> new MobEffectInstance(MobEffects.JUMP, 160, 1))).withCooldown(200),
+                Pages15Kit.starter("rushing_fist", "Rushing Fist",
+                        dash(Tier.STARTER, true, 5, false, VfxShape.WIND_SLASH, knock(0.9))).withCooldown(100).withAnim("thrust"),
+                Pages15Kit.starter("reinforced_guard", "Reinforced Guard",
+                        empower(Tier.STARTER, 100, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1))).withCooldown(240),
+                Pages15Kit.mid("arm_strength_boost", "Arm Strength Boost",
+                        empower(Tier.MID, 200, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, 1))).withCooldown(360),
+                Pages15Kit.mid("shoulder_charge", "Shoulder Charge",
+                        dash(Tier.MID, true, 8, false, VfxShape.WIND_SLASH, knock(1.4))).withCooldown(200).withAnim("thrust"),
+                Pages15Kit.mid("rising_kick", "Rising Kick",
+                        cone(Tier.MID, 3.5, 0.7, VfxShape.WIND_SLASH, lift(0.8))).withCooldown(190).withAnim("up"),
+                Pages15Kit.mid("ironclad_body", "Ironclad Body",
+                        empower(Tier.MID, 220, true, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 220, 0), () -> new MobEffectInstance(MobEffects.ABSORPTION, 220, 0))).withCooldown(400),
+                Pages15Kit.zone("fist_barrage", "Hundred-Fist Barrage",
+                        cast(Tier.ZONE, c -> barrage(c, 5.0, 6, 4))).withCooldown(380).withAnim("thrust"),
+                Pages15Kit.zone("skyfall_smash", "Skyfall Smash",
+                        cast(Tier.ZONE, c -> skySmash(c))).withCooldown(420).withAnim("slam"),
+                Pages15Kit.signature("titan_body", "Titan Body",
+                        empower(Tier.SIGNATURE, 280, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 280, 1), () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 280, 1), () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 280, 0))).withCooldown(1200).withAnim("up")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

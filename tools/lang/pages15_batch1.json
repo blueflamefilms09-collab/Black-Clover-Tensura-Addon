@@ -51,5 +51,15 @@
   "nusmp.page.book_sword.rising_cleave": "An upward cleave that cuts a 4.5 block cone and throws the foes it catches into the air.",
   "nusmp.page.book_sword.sword_storm": "A ring of summoned swords whirls around you for 5 seconds and cuts everything within 5 blocks every second.",
   "nusmp.page.book_sword.skyfall_blades": "Swords fall out of a rift above the aim point in five places around it, four ticks apart, each cutting the foes beneath it.",
-  "nusmp.page.book_sword.sovereign_blade": "One enormous blade of light cuts a lane 20 blocks long and 2.5 wide through up to ten foes. Needs Senior rank."
+  "nusmp.page.book_sword.sovereign_blade": "One enormous blade of light cuts a lane 20 blocks long and 2.5 wide through up to ten foes. Needs Senior rank.",
+  "nusmp.page.book_reinforcement.leg_strength_boost": "Reinforces your legs for 8 seconds: Speed II and Jump Boost II, and your next blows hit a little harder.",
+  "nusmp.page.book_reinforcement.rushing_fist": "You close 5 blocks in one reinforced step and drive a fist through whoever is in the way.",
+  "nusmp.page.book_reinforcement.reinforced_guard": "Hardens your whole body for 5 seconds: Resistance II.",
+  "nusmp.page.book_reinforcement.arm_strength_boost": "Reinforces your arms for 10 seconds: Strength II and a bonus on every melee blow. Named after the Leg Strength Boost; not a wiki page.",
+  "nusmp.page.book_reinforcement.shoulder_charge": "You barge 8 blocks forward shoulder first, hurting and throwing aside everything on the way.",
+  "nusmp.page.book_reinforcement.rising_kick": "A reinforced kick from below that lifts every foe in a short 3.5 block cone off the ground.",
+  "nusmp.page.book_reinforcement.ironclad_body": "Your skin turns hard as iron for 11 seconds: resistance, an absorption heart and thorns against whoever hits you.",
+  "nusmp.page.book_reinforcement.fist_barrage": "Six punches in under a second on the foe in front of you (within 5 blocks); together they hit for about one and a half zone hits.",
+  "nusmp.page.book_reinforcement.skyfall_smash": "You jump high, then crash down fist first: foes within 5.5 blocks of the landing are hurt and thrown back.",
+  "nusmp.page.book_reinforcement.titan_body": "Reinforces every muscle for 14 seconds: Strength II, Resistance II, Speed I and a large bonus on every melee blow. Needs Senior rank."
 }
