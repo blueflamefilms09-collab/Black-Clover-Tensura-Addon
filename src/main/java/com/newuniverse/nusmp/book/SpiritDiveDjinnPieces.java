@@ -29,10 +29,10 @@ public final class SpiritDiveDjinnPieces {
     private SpiritDiveDjinnPieces() {}
 
     /** The look clients draw. The ordinal is stored nowhere (a client option); append only anyway. */
-    public enum Look { DJINN, V2, CLASSIC }
+    public enum Look { DJINN, V2, CLASSIC, ANIME }
 
     /** The default look (the owner's request: the style of the Full Djinn equip). */
-    public static final Look DEFAULT_LOOK = Look.DJINN;
+    public static final Look DEFAULT_LOOK = Look.ANIME;   // 3.2: the owner rejected the plates; the default is the ANIME look (SpiritDiveAnimeRules)
 
     /**
      * One piece. {@code delay} 0 to 12 ticks, {@code dx dy dz} the side it flies in from (model pixels), {@code glass} always translucent, {@code detail} skipped beyond 24 blocks, {@code silhouette} still

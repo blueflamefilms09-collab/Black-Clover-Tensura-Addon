@@ -140,13 +140,13 @@ class SpiritDiveDjinnScanTest {
         for (Path p : new Path[]{ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_wind_halo.geo.json"), ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_fire_mane.geo.json"),
                 ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_saint_halo.geo.json"), ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_fire_claws_r.geo.json")})
             assertTrue(Files.isRegularFile(p), "the model of an old look is gone: " + p);
-        assertEquals(3, SpiritDiveDjinnPieces.Look.values().length);
+        assertEquals(4, SpiritDiveDjinnPieces.Look.values().length, "DJINN, V2, CLASSIC and the appended ANIME");
     }
 
     @Test
     void theOptionIsInTheClientConfigWithTheDjinnLookAsDefaultAndTheOldKeyKept() {
         String cfg = code(read(JAVA.resolve("client/aura/DiveClientConfig.java")));
-        assertTrue(cfg.contains("defineEnum(\"look\", Look.DJINN)"), "look = DJINN | V2 | CLASSIC, default DJINN");
+        assertTrue(cfg.contains("defineEnum(\"look\", Look.ANIME)"), "look = ANIME | DJINN | V2 | CLASSIC, default ANIME since 3.2");
         assertTrue(cfg.contains("define(\"classicLook\", false)"), "the old key stays");
         assertTrue(cfg.contains("CLASSIC.get() ? Look.CLASSIC : LOOK.get()"), "the old key still wins");
         assertTrue(read(JAVA.resolve("client/aura/DiveClient.java")).contains("ModConfig.Type.CLIENT") && read(JAVA.resolve("client/aura/DiveClient.java")).contains("\"nusmp-spiritdive-client.toml\""), "a CLIENT config");

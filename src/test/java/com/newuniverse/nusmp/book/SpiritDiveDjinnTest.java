@@ -28,9 +28,9 @@ class SpiritDiveDjinnTest {
     // ------------------------------------------------------------------ look selection
     @Test
     void theDefaultLookIsTheDjinnStyleAndTheOldLooksStayAChoice() {
-        assertEquals(Look.DJINN, SpiritDiveDjinnPieces.DEFAULT_LOOK);
-        assertEquals(Look.DJINN, SpiritDiveLook.look(), "a client that never read its config draws the Djinn look");
-        assertEquals(3, Look.values().length, "DJINN, V2 and CLASSIC: nothing was removed");
+        assertEquals(Look.ANIME, SpiritDiveDjinnPieces.DEFAULT_LOOK, "3.2: the default look is ANIME (the owner rejected the plates); DJINN stays choosable");
+        assertEquals(Look.ANIME, SpiritDiveLook.look(), "a client that never read its config draws the ANIME look");
+        assertEquals(4, Look.values().length, "DJINN, V2, CLASSIC and ANIME: nothing was removed, ANIME was appended");
         assertEquals("V2", Look.V2.name());
         assertEquals("CLASSIC", Look.CLASSIC.name());
     }
@@ -48,7 +48,7 @@ class SpiritDiveDjinnTest {
             assertFalse(SpiritDiveLook.classic());
             assertFalse(SpiritDiveLook.v2());
             SpiritDiveLook.set((Look) null, true, true, null);
-            assertEquals(Look.DJINN, SpiritDiveLook.look(), "a missing value is the default");
+            assertEquals(Look.ANIME, SpiritDiveLook.look(), "a missing value is the default");
         } finally {
             SpiritDiveLook.set(Look.DJINN, true, true, FuegoleonArmRules.View.ALWAYS);
         }
