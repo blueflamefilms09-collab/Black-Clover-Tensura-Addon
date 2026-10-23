@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.spiritblades;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: Spirit of Zephyr, the long glowing green sword of the Wind Spirit Dive, as a creative-display item. It is an honest sword: netherite damage and speed (7 damage, 1.6 swings a second),
@@ -56,7 +58,7 @@ public class ZephyrSwordItem extends SwordItem {
         bursts++;
         double x = target.getX(), y = target.getY() + target.getBbHeight() * 0.55, z = target.getZ();
         level.sendParticles(MINT, x, y, z, SpiritBladesRules.HIT_PARTICLES - 2, 0.35, 0.35, 0.35, 0.02);
-        level.sendParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.25, 0.25, 0.25, 0.04);
+        Fx.spray(level, FxThemes.WORLD, FxOld.END_ROD, x, y, z, 2, 0.25, 0.25, 0.25, 0.04);
     }
 
     /** Forgets an attacker (logout). */

@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.spiritblades;
 
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -11,6 +10,9 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the glowing trail of Spirit of Boreas' arrows, drawn by the server. A trailed arrow is one small record in a list (at most {@value SpiritBladesRules#TRAIL_GLOBAL} over the whole server and
@@ -67,7 +69,7 @@ public final class SpiritBladesTrail {
             if (SpiritBladesRules.puffDue(t.age) && puffs < SpiritBladesRules.TRAIL_PUFFS_PER_TICK) {
                 puffs++;
                 level.sendParticles(MINT, a.getX(), a.getY(), a.getZ(), SpiritBladesRules.TRAIL_PARTICLES - 1, 0.04, 0.04, 0.04, 0.0);
-                level.sendParticles(ParticleTypes.END_ROD, a.getX(), a.getY(), a.getZ(), 1, 0.03, 0.03, 0.03, 0.0);
+                Fx.spray(level, FxThemes.WORLD, FxOld.END_ROD, a.getX(), a.getY(), a.getZ(), 1, 0.03, 0.03, 0.03, 0.0);
             }
             t.age++;
         }
