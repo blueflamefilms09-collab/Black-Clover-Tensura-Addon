@@ -12,5 +12,44 @@
     "magnetic_storm",
     "meridian_lance",
     "cardinal_burst"
+  ],
+  "COPY": [
+    "borrowed_strike",
+    "echo_step",
+    "touch_and_learn",
+    "returned_blow",
+    "delayed_echo",
+    "mimic_fan",
+    "imitated_fetters",
+    "copycat_pounce",
+    "hall_of_echoes",
+    "chorus_of_copies",
+    "perfect_reproduction"
+  ],
+  "DICE": [
+    "snake_eyes",
+    "pip_toss",
+    "lucky_seven",
+    "dice_cup_shake",
+    "critical_roll",
+    "double_or_nothing",
+    "bowling_roll",
+    "snare_roll",
+    "reroll",
+    "craps_table",
+    "rain_of_dice"
+  ],
+  "SLASH": [
+    "ripper_cut",
+    "cross_slash",
+    "blade_flurry",
+    "edge_guard",
+    "crescent_barrage",
+    "severing_line",
+    "blade_cyclone",
+    "hamstring_cut",
+    "parrying_blades",
+    "final_slash",
+    "reaper_field"
   ]
 }

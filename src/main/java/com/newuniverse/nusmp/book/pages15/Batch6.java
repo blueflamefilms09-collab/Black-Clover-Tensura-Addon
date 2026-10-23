@@ -95,6 +95,134 @@ public final class Batch6 {
             Pages15Kit.zone("cardinal_burst", "Cardinal Burst",
                     Pages15Kit.nova(Tier.ZONE, 6, false, VfxShape.COMPASS_FX2, Pages15Kit.knock(0.9))).withCooldown(400).withAnim("slam")));
 
+    // ---- Copy (Imitation) Magic (11 new): borrowing, echoing and reproducing; all original (the wiki has no spell pages for it)
+    private static final List<BookPage> COPY = register("book_copy", List.of(
+            Pages15Kit.starter("borrowed_strike", "Borrowed Strike",
+                    Pages15Kit.cone(Tier.STARTER, 5, 0.6, VfxShape.IMITATION_FX1, Pages15Kit.knock(0.5))).withAnim("sweep"),
+            Pages15Kit.starter("echo_step", "Echo Step",
+                    Pages15Kit.dash(Tier.STARTER, false, 7, false, VfxShape.IMITATION_FX2, Pages15Kit.NONE)).withCooldown(100).withAnim("out"),
+            Pages15Kit.starter("touch_and_learn", "Touch and Learn",
+                    Pages15Kit.nova(Tier.STARTER, 3, false, VfxShape.IMITATION_FX1, Pages15Kit.leech(1.5f))).withCooldown(140).withAnim("slam"),
+            Pages15Kit.starter("returned_blow", "Returned Blow",
+                    Pages15Kit.empower(Tier.STARTER, 120, true, VfxShape.IMITATION_FX2)).withCooldown(220).withAnim("up"),
+            Pages15Kit.mid("delayed_echo", "Delayed Echo", Pages15Kit.cast(Tier.MID, c -> {
+                LivingEntity t = c.target(18);
+                if (!foe(c, t)) return c.fail("There is nothing to echo against.");
+                c.circle(0.7f);
+                c.hit(t);
+                c.fx(VfxShape.IMITATION_FX1, c.caster.getEyePosition(), t.getBoundingBox().getCenter(), 14, 0.8f);
+                c.later(14, () -> {
+                    if (!t.isAlive()) return;
+                    c.hit(t, c.tier.hit * 0.6f);
+                    c.fx(VfxShape.IMITATION_FX3, t.position().add(0, 0.05, 0), t.position().add(0, 1, 0), 20, 0.8f);
+                });
+                return true;
+            })).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("mimic_fan", "Mimic Fan",
+                    Pages15Kit.cone(Tier.MID, 8, 0.5, VfxShape.IMITATION_FX3, Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 80, 0)))).withAnim("sweep"),
+            Pages15Kit.mid("imitated_fetters", "Imitated Fetters",
+                    Pages15Kit.bind(Tier.MID, 18, false, VfxShape.IMITATION_FX2, Pages15Kit.NONE)).withCooldown(260),
+            Pages15Kit.mid("copycat_pounce", "Copycat Pounce",
+                    Pages15Kit.dash(Tier.MID, true, 10, true, VfxShape.IMITATION_FX1, Pages15Kit.NONE)).withCooldown(180).withAnim("out"),
+            Pages15Kit.zone("hall_of_echoes", "Hall of Echoes",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, VfxShape.IMITATION_FX3,
+                            Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 24, 0)))).withCooldown(450),
+            Pages15Kit.zone("chorus_of_copies", "Chorus of Copies",
+                    Pages15Kit.nova(Tier.ZONE, 6, true, VfxShape.IMITATION_FX3, Pages15Kit.knock(0.6))).withCooldown(380).withAnim("slam"),
+            Pages15Kit.signature("perfect_reproduction", "Perfect Reproduction",
+                    Pages15Kit.nova(Tier.SIGNATURE, 7, false, VfxShape.IMITATION_FX3, Pages15Kit.all(Pages15Kit.knock(0.8), Pages15Kit.strip()))).withCooldown(900).withAnim("slam")));
+
+    // ---- Dice Magic (11 new): rolls, odds and loaded luck; "Gambler's Fallacy" (the wiki's only dice spell) is already a page, so every new page is original
+    private static final List<BookPage> DICE = register("book_dice", List.of(
+            Pages15Kit.starter("snake_eyes", "Snake Eyes",
+                    Pages15Kit.bolt(Tier.STARTER, 1.5, VfxShape.DICE_D6, VfxShape.DICE_FX1, Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0)))).withAnim("thrust"),
+            Pages15Kit.starter("pip_toss", "Pip Toss",
+                    Pages15Kit.volley(Tier.STARTER, 3, false, VfxShape.DICE_D6, Pages15Kit.NONE)),
+            Pages15Kit.starter("lucky_seven", "Lucky Seven",
+                    Pages15Kit.empower(Tier.STARTER, 200, false, VfxShape.DICE_FX2, () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 0),
+                            () -> new MobEffectInstance(MobEffects.LUCK, 200, 1))).withCooldown(260).withAnim("up"),
+            Pages15Kit.starter("dice_cup_shake", "Dice Cup Shake",
+                    Pages15Kit.cone(Tier.STARTER, 5, 0.5, VfxShape.DICE_FX3, Pages15Kit.knock(0.8))).withAnim("sweep"),
+            Pages15Kit.mid("critical_roll", "Critical Roll", Pages15Kit.cast(Tier.MID, c -> {
+                LivingEntity t = c.target(20);
+                if (!foe(c, t)) return c.fail("There is nothing to roll against.");
+                int face = 1 + c.caster.getRandom().nextInt(20);
+                float scale = face == 20 ? 1.5f : face == 1 ? 0.2f : 0.45f + 0.5f * face / 20f;
+                c.circle(0.7f);
+                c.hit(t, c.tier.hit * scale);
+                say(c, "d20: " + face + (face == 20 ? "  critical!" : face == 1 ? "  fumble" : ""));
+                c.fx(VfxShape.DICE_FX2, c.caster.getEyePosition(), t.getBoundingBox().getCenter(), 16, 0.8f);
+                c.impact(t.getBoundingBox().getCenter(), face == 20 ? 0.9f : 0.5f);
+                return true;
+            })).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("double_or_nothing", "Double or Nothing", Pages15Kit.cast(Tier.MID, c -> {
+                int a = 1 + c.caster.getRandom().nextInt(6), b = 1 + c.caster.getRandom().nextInt(6);
+                Vec3 at = c.caster.position();
+                c.circle(0.9f);
+                float scale = a + b >= 7 ? 1.2f : 0.4f;
+                for (LivingEntity t : c.foes(at, 6)) c.hit(t, c.tier.hit * scale);
+                say(c, "Two dice: " + a + " + " + b + (a + b >= 7 ? "  double!" : "  nothing much"));
+                c.fx(VfxShape.DICE_FX3, at, at.add(0, 1, 0), 24, a + b >= 7 ? 2f : 1f);
+                return true;
+            })).withCooldown(240).withAnim("slam"),
+            Pages15Kit.mid("bowling_roll", "Bowling Roll",
+                    Pages15Kit.line(Tier.MID, 16, 1.0, VfxShape.DICE_D6, Pages15Kit.knock(0.8))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("snare_roll", "Snare Roll",
+                    Pages15Kit.bind(Tier.MID, 18, false, VfxShape.DICE_D20, Pages15Kit.NONE)).withCooldown(260),
+            Pages15Kit.mid("reroll", "Reroll", Pages15Kit.cast(Tier.MID, c -> {
+                int cleared = 0;
+                for (MobEffectInstance e : new ArrayList<>(c.caster.getActiveEffects())) {
+                    if (cleared >= 4) break;
+                    if (!e.getEffect().value().isBeneficial()) { c.caster.removeEffect(e.getEffect()); cleared++; }
+                }
+                c.caster.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 80, 0));
+                c.circle(0.8f);
+                c.fx(VfxShape.DICE_FX1, c.caster.position(), c.caster.position().add(0, 1, 0), 24, 1f);
+                return true;
+            })).withCooldown(400).withAnim("up"),
+            Pages15Kit.zone("craps_table", "Craps Table",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, VfxShape.DICE_FX2,
+                            Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 24, 0)))).withCooldown(450),
+            Pages15Kit.zone("rain_of_dice", "Rain of Dice",
+                    Pages15Kit.volley(Tier.ZONE, 5, true, VfxShape.DICE_D6, Pages15Kit.knock(0.4))).withCooldown(380).withAnim("up")));
+
+    // ---- Slash Magic (11 new): Ripper Cut is named in Jack's character notes, Final Slash in the Japanese summaries; the rest is original
+    private static final List<BookPage> SLASH = register("book_slash", List.of(
+            Pages15Kit.starter("ripper_cut", "Ripper Cut",
+                    Pages15Kit.cone(Tier.STARTER, 4, 0.6, VfxShape.SLASH_WAVE, Pages15Kit.NONE)).withAnim("sweep"),
+            Pages15Kit.starter("cross_slash", "Cross Slash",
+                    Pages15Kit.volley(Tier.STARTER, 2, false, VfxShape.SLASH_WAVE, Pages15Kit.NONE)).withAnim("sweep"),
+            Pages15Kit.starter("blade_flurry", "Blade Flurry",
+                    Pages15Kit.nova(Tier.STARTER, 3, false, VfxShape.SLASH_FX2, Pages15Kit.NONE)).withCooldown(100).withAnim("sweep"),
+            Pages15Kit.starter("edge_guard", "Edge Guard",
+                    Pages15Kit.empower(Tier.STARTER, 120, true, VfxShape.SLASH_BLADES)).withCooldown(240).withAnim("up"),
+            Pages15Kit.mid("crescent_barrage", "Crescent Barrage",
+                    Pages15Kit.volley(Tier.MID, 5, false, VfxShape.SLASH_WAVE, Pages15Kit.NONE)).withAnim("sweep"),
+            Pages15Kit.mid("severing_line", "Severing Line",
+                    Pages15Kit.line(Tier.MID, 14, 1.2, VfxShape.SLASH_WAVE, Pages15Kit.NONE)).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.mid("blade_cyclone", "Blade Cyclone",
+                    Pages15Kit.nova(Tier.MID, 5, false, VfxShape.SLASH_FX3, Pages15Kit.lift(0.3))).withCooldown(240).withAnim("sweep"),
+            Pages15Kit.mid("hamstring_cut", "Hamstring Cut",
+                    Pages15Kit.bolt(Tier.MID, 0, VfxShape.SLASH_WAVE, VfxShape.SLASH_FX1, Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2)))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.mid("parrying_blades", "Parrying Blades", Pages15Kit.cast(Tier.MID, c -> {
+                // three seconds: arrows and bolts that come within 3.5 blocks are cut out of the air (at most 3 per step, a small box around the caster)
+                boolean held = c.zone(60, 4, age -> {
+                    int cut = 0;
+                    for (Projectile pr : c.caster.serverLevel().getEntitiesOfClass(Projectile.class, c.caster.getBoundingBox().inflate(3.5), x -> x.getOwner() != c.caster)) {
+                        if (cut++ >= 3) break;
+                        pr.discard();
+                    }
+                });
+                if (!held) return false;
+                c.circle(0.8f);
+                c.fx(VfxShape.SLASH_FX2, c.caster.position(), c.caster.position().add(0, 1, 0), 60, 1.2f);
+                return true;
+            })).withCooldown(400).withAnim("sweep"),
+            Pages15Kit.zone("final_slash", "Final Slash",
+                    Pages15Kit.line(Tier.ZONE, 20, 2.5, VfxShape.SLASH_WAVE, Pages15Kit.knock(0.7))).withCooldown(420).withAnim("sweep"),
+            Pages15Kit.zone("reaper_field", "Reaper Field",
+                    Pages15Kit.field(Tier.ZONE, 4, 60, 10, false, VfxShape.SLASH_FX2, Pages15Kit.NONE)).withCooldown(420)));
+
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
         return PAGES.getOrDefault(bookPath, List.of());

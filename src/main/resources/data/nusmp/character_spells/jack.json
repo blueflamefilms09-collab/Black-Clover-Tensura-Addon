@@ -101,6 +101,185 @@
         ]
       },
       "note": "A chaotic flurry of flying slashes: the Death Scythe's later form."
+    },
+    {
+      "page": "ripper_cut",
+      "name": "Slash Magic: Ripper Cut",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "The wiki's \"Ripper Cut\" (named in the earlier notes of this file as planned). The effect is the mod's: a quick narrow cut."
+    },
+    {
+      "page": "cross_slash",
+      "name": "Slash Magic (crossed crescents)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "blade_flurry",
+      "name": "Slash Magic (flurry of cuts)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "forearm_blades",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.18
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "edge_guard",
+      "name": "Slash Magic (guarding blades)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.22
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "crescent_barrage",
+      "name": "Slash Magic (crescent barrage)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "slash_wave",
+            "count": 4
+          },
+          {
+            "type": "mastery",
+            "min": 0.3
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "severing_line",
+      "name": "Slash Magic (severing line)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "hamstring_cut",
+      "name": "Slash Magic (low cut)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "ripper_cut",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.38
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "blade_cyclone",
+      "name": "Slash Magic (blade cyclone)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "parrying_blades",
+      "name": "Slash Magic (parrying blades)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "edge_guard",
+            "count": 2
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "final_slash",
+      "name": "Slash Magic: Final Slash",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "lunatic_slash"
+          },
+          {
+            "type": "mastery",
+            "min": 0.75
+          }
+        ]
+      },
+      "note": "Japanese summaries: the last technique Jack used before his death, said to cut everything in its way. The effect is the mod's."
     }
   ],
   "planned": [
