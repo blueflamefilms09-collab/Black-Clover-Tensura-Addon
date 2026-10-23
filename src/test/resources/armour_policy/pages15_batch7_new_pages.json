@@ -1,1 +1,114 @@
-{}
+{
+  "WORLD_TREE": [
+    "dracaena_formation",
+    "sapling_lance",
+    "mana_root_sip",
+    "mistilteinn_thorn_barrage",
+    "branch_sweep",
+    "root_spring",
+    "canopy_shelter",
+    "heartroot_mending",
+    "warding_root_net",
+    "living_root_wall",
+    "spirit_light_tree",
+    "root_eruption",
+    "mana_drinking_field",
+    "world_tree_awakening"
+  ],
+  "POISON": [
+    "venom_needle_volley",
+    "blight_spit",
+    "badger_burrow",
+    "withering_touch",
+    "miasma_mantle",
+    "antidote_draught",
+    "paralytic_sting",
+    "poison_fog_bomb",
+    "venom_rain",
+    "pestilence_stream",
+    "deluge_of_venom"
+  ],
+  "COTTON": [
+    "cotton_ball_toss",
+    "lamb_charge",
+    "wool_volley",
+    "cotton_spring",
+    "cotton_candy_snack",
+    "wool_wall",
+    "drowsy_wool_mist",
+    "warm_wool_blanket",
+    "sheep_stampede",
+    "cotton_meadow",
+    "sleepy_sheep_parade"
+  ],
+  "PLANT": [
+    "magic_flower_bullet",
+    "pollen_puff",
+    "bloom_leap",
+    "sunflower_beam",
+    "wisteria_ward",
+    "lullaby_blossom",
+    "princess_healing_flower_garden"
+  ],
+  "CHERRY_BLOSSOM": [
+    "petal_burst",
+    "blossom_spring",
+    "sakura_lance",
+    "petal_cyclone",
+    "scent_of_spring",
+    "falling_petal_rain"
+  ],
+  "BRIAR": [
+    "thorn_spike_row",
+    "thorn_javelin",
+    "bramble_cage",
+    "briar_whirl",
+    "healing_rose",
+    "wild_rose_thicket"
+  ],
+  "TREE": [
+    "acorn_barrage",
+    "branch_snap",
+    "sap_trap",
+    "rooted_stance",
+    "whirling_leaf_storm"
+  ],
+  "VINE": [
+    "hooking_vine",
+    "thrashing_vines",
+    "vine_whirl",
+    "sapping_vine",
+    "creeping_overgrowth"
+  ],
+  "POISON_PLANT": [
+    "nightshade_dart",
+    "stinging_nettle_whip",
+    "venom_pod_burst",
+    "foxglove_seize",
+    "hemlock_haze"
+  ],
+  "BEAST": [
+    "tiger_pounce",
+    "hawk_eye",
+    "holy_hunting",
+    "bogeyman",
+    "holy_howling"
+  ],
+  "BODY": [
+    "shoulder_tackle",
+    "pressure_point_jab",
+    "adrenaline_surge",
+    "second_wind",
+    "titan_shockwave"
+  ],
+  "FUNGUS": [
+    "mushroom_cap_bounce",
+    "puffball_barrage",
+    "deathcap_garden"
+  ],
+  "DEMON_BEAST": [
+    "chimera_tail_lash",
+    "cerberus_triple_bite",
+    "underworld_stampede"
+  ]
+}
