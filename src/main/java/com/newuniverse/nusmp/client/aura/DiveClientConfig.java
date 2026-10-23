@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.aura;
 import com.newuniverse.nusmp.book.FuegoleonArmDjinnRules;
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
 import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look;
+import com.newuniverse.nusmp.book.SpiritDiveWindRules;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -33,8 +34,8 @@ public final class DiveClientConfig {
         b.push("spiritDive");
         LOOK = b.comment("The Spirit Dive look this client draws: REEL (default: the V2 design like the showcase videos: a crown of glowing cubes with a gold ring halo, cube gauntlets, a mosaic of block patches on the body, a leaf / comb wing, a ribbon-and-flash entry, the character's own weapon), ANIME (what the anime shows: the wearer bathed in the energy of the spirit, glowing hair and eyes, a crown halo, big plume sheets; Fuegoleon, Yuno and Noelle get more), DJINN (a full set of plates in the style of the Djinn Full Equip), V2 (the 3.0.0 remake: wind halo and blades, flame mane, water ribbons, rock crown) or CLASSIC (1.99).")
                 .defineEnum("look", Look.REEL);
-        WIND_LOOK = b.comment("Which Wind the REEL look draws: PACK (default: the Wind of the owner's reference pack of Yuno's Spirit Dive: a pale green-white light over the body, a crown of tall bars with arrow tips on a thin ring, one huge smooth leaf wing with an ornate cross, a circle of connected crosses round the wrist, Yuno's sword of Zephyr and bow of Boreas) or REEL (the Wind of 3.3: cube crown, cube gauntlets, hex-membrane wings). Only changes what this client draws.")
-                .defineEnum("windLook", WindLook.PACK);
+        WIND_LOOK = b.comment("Which Wind the REEL look draws: B_CLIP (default, 4.x: the Wind remake in the style of the clips: cube crown and gauntlets, a voxel leaf wing, a real 3D sword with a magic circle and a second blade), A_ANIME (the remake closest to the anime: the pack's light, bar crown and leaf wing with a real 3D sword and leaf bow), C_SAINT (the remake as Saint Spirit: spirit feathers, a crown of arrow bars, a halo of arrows), PACK (the 3.4 Wind of the owner's reference pack of Yuno's Spirit Dive: a pale green-white light over the body, a crown of tall bars with arrow tips on a thin ring, one huge smooth leaf wing with an ornate cross, a circle of connected crosses round the wrist, Yuno's sword of Zephyr and bow of Boreas) or REEL (the Wind of 3.3: cube crown, cube gauntlets, hex-membrane wings). Only changes what this client draws.")
+                .defineEnum("windLook", SpiritDiveWindRules.DEFAULT_LOOK);
         CLASSIC = b.comment("true: the Spirit Dive is drawn as in 1.99 (armour-like pieces), whatever 'look' says (the same as look = CLASSIC).").define("classicLook", false);
         CHARACTER_FX = b.comment("The character tier of the dive (Yuno's, Fuegoleon's and Noelle's own look). false = every dive is drawn as the standard tier.").define("characterEffects", true);
         PARTICLES = b.comment("The ember / mote particle trail of a Spirit Dive.").define("particles", true);
@@ -56,7 +57,7 @@ public final class DiveClientConfig {
             FuegoleonArmLook.set(ARM_LOOK.get());
         } catch (IllegalStateException notLoaded) {
             SpiritDiveLook.set(Look.REEL, true, true, FuegoleonArmRules.View.ALWAYS);
-            SpiritDiveLook.setWindLook(WindLook.PACK);
+            SpiritDiveLook.setWindLook(SpiritDiveWindRules.DEFAULT_LOOK);
             FuegoleonArmLook.set(FuegoleonArmDjinnRules.DEFAULT_LOOK);
         }
     }

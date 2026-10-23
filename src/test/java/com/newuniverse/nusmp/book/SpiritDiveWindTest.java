@@ -121,12 +121,12 @@ class SpiritDiveWindTest {
 
     @Test
     void theOptionParsesAndKeepsTheReelWindReachable() {
-        assertEquals(SpiritDiveWindRules.WindLook.PACK, SpiritDiveWindRules.DEFAULT_LOOK);
-        assertEquals(SpiritDiveWindRules.WindLook.PACK, SpiritDiveWindRules.parse(null));
-        assertEquals(SpiritDiveWindRules.WindLook.PACK, SpiritDiveWindRules.parse("garbage"));
+        assertEquals(SpiritDiveWindRules.WindLook.B_CLIP, SpiritDiveWindRules.DEFAULT_LOOK);
+        assertEquals(SpiritDiveWindRules.DEFAULT_LOOK, SpiritDiveWindRules.parse(null));
+        assertEquals(SpiritDiveWindRules.DEFAULT_LOOK, SpiritDiveWindRules.parse("garbage"));
         assertEquals(SpiritDiveWindRules.WindLook.REEL, SpiritDiveWindRules.parse(" reel "));
         assertEquals(SpiritDiveWindRules.WindLook.PACK, SpiritDiveWindRules.parse("PACK"));
-        assertEquals("[PACK, REEL]", java.util.Arrays.toString(SpiritDiveWindRules.WindLook.values()), "append only");
+        assertEquals("[PACK, REEL, A_ANIME, B_CLIP, C_SAINT]", java.util.Arrays.toString(SpiritDiveWindRules.WindLook.values()), "append only");
     }
 
     @Test

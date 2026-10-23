@@ -24,10 +24,14 @@ public final class SpiritDiveWindRules {
     private SpiritDiveWindRules() {}
 
     /** The client option {@code spiritDive.windLook}: which Wind the default look draws. The ordinal is not stored anywhere (a text option), but the values are append only. */
-    public enum WindLook { PACK, REEL }
+    public enum WindLook {
+        PACK, REEL,
+        /** The Wind remake (4.x), three designs with real 3D weapons: A anime-true, B clip-style, C saint spirit (see {@link SpiritDiveWind3Rules}). Appended, the older two keep their meaning. */
+        A_ANIME, B_CLIP, C_SAINT
+    }
 
     /** The default of the option. */
-    public static final WindLook DEFAULT_LOOK = WindLook.PACK;
+    public static final WindLook DEFAULT_LOOK = WindLook.B_CLIP;     // 4.x: the Wind remake's recommended design (closest to the clips the owner showed); PACK, REEL, A_ANIME and C_SAINT stay choosable
 
     /** Parses the option text; anything unknown is the default (PACK). */
     public static WindLook parse(String s) {

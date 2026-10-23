@@ -135,9 +135,9 @@ class SpiritDiveWindScanTest {
     @Test
     void theOptionTheSelfTestAndTheToolsAreRegistered() {
         String cfg = code(read("client/aura/DiveClientConfig.java"));
-        assertTrue(cfg.contains("defineEnum(\"windLook\", WindLook.PACK)") && cfg.contains("SpiritDiveLook.setWindLook(WIND_LOOK.get())"), "windLook = PACK | REEL, default PACK");
+        assertTrue(cfg.contains("defineEnum(\"windLook\", SpiritDiveWindRules.DEFAULT_LOOK)") && cfg.contains("SpiritDiveLook.setWindLook(WIND_LOOK.get())"), "windLook = PACK | REEL | A_ANIME | B_CLIP | C_SAINT, default B_CLIP");
         assertTrue(cfg.contains("defineEnum(\"look\", Look.REEL)") && cfg.contains("\"classicLook\""), "the old options stay");
-        assertTrue(code(read("client/aura/SpiritDiveLook.java")).contains("WindLook windLook = WindLook.PACK"));
+        assertTrue(code(read("client/aura/SpiritDiveLook.java")).contains("WindLook windLook = SpiritDiveWindRules.DEFAULT_LOOK"));
         assertTrue(code(read("book/SpiritDiveBoot.java")).contains("SpiritDiveWindSelfTests.register()") && code(read("book/SpiritDiveBoot.java")).contains("SpiritDiveReelSelfTests.register()"));
         assertTrue(read("book/SpiritDiveWindSelfTests.java").contains("\"magic.spirit_dive_wind\""));
         for (String f : new String[]{"tools/gen_spirit_dive_wind_textures.py", "tools/spirit_dive_wind_scenes.py", "tools/spirit_dive_wind_previews.py", "tools/render_preview/scenes.d/spirit_dive_wind.json",

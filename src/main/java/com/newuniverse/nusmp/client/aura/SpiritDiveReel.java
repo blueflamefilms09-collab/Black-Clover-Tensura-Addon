@@ -12,6 +12,7 @@ import com.newuniverse.nusmp.book.SpiritDiveReelRules;
 import com.newuniverse.nusmp.book.SpiritDiveReelRules.Pal;
 import com.newuniverse.nusmp.book.SpiritDiveReelRules.Spec;
 import com.newuniverse.nusmp.book.SpiritDiveTier;
+import com.newuniverse.nusmp.book.SpiritDiveWind3Rules;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Grade;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
 import com.newuniverse.nusmp.client.SafeAdditive;
@@ -63,6 +64,7 @@ public final class SpiritDiveReel {
     // ------------------------------------------------------------------ the entry point
     /** Called by {@link SpiritDiveAura} for the REEL look: one dive of {@code el} at {@code st} for the tier {@code grade}. */
     static void paint(AuraContext c, Element el, Stage st, Grade grade, float pulse) {
+        if (el == Element.WIND && SpiritDiveWind3Rules.ver(SpiritDiveLook.windLook()) != null) { SpiritDiveWind3.paint(c, st, grade, pulse, SpiritDiveWind3Rules.ver(SpiritDiveLook.windLook())); return; }   // 4.x: the Wind remake, three designs with real 3D weapons (A, B, C)
         if (el == Element.WIND && SpiritDiveLook.windPack()) { SpiritDiveWind.paint(c, st, grade, pulse); return; }   // 3.4: the Wind of the owner's reference pack (client option spiritDive.windLook = REEL brings this Wind back)
         Lod lod = SpiritDiveTier.lod(SpiritDiveFrame.distSq(c));
         if (lod == Lod.CULLED) return;
