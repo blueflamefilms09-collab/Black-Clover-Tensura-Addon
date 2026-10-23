@@ -82,6 +82,7 @@ public final class CharacterSpells {
     /** Who may open this page, or null if anyone may. */
     public static Set<CanonBook> owners(GrimoireBook book, BookPage page) {
         if (book == null || page == null || book.getRegistryName() == null) return null;
+        if (com.newuniverse.nusmp.corpse.SoulCorpseAccess.alwaysListed(book.getRegistryName().getPath(), page.id()) && com.newuniverse.nusmp.corpse.CorpseConfig.numberedForAll()) return null;      // corpse.numberedForAll: Rades's numbered undead are open to every Soul Corpse holder (config false = his lock)
         Set<CanonBook> legacy = LOCKS.get(book.getRegistryName().getPath() + ":" + page.id());
         return legacy != null ? legacy : com.newuniverse.nusmp.charset.CharacterSets.addedPageOwners(book, page);      // character spell sets: a page added for one character belongs to that character only
     }

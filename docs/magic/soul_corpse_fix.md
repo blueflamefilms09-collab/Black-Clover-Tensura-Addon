@@ -73,3 +73,11 @@ Unchanged on purpose: every page id, order and unlock bit, magicule costs and co
 * The self-test does not cover: the key press and hold timing (`onPressed`/`onHeld`/`onRelease`, the 4 to 7 tick wind-up and `SpellRuntime.later`), the client (what the page list and the codex look like, the unlock overlay), two casters at once, the dimension change and logout (shared with `magic.rades_undead`), the look of the zombies and numbered undead, and the 40-tick scheduling of the starter and mastery ticks (they are called directly).
 * The mastery numbers (30 / 50 / 60 / 70 / 80 %) are a design choice of mine to make the strong summons reachable but still earned by casting; the owner may want them higher or lower (one table in `SoulCorpseAccess.MASTERY_CAP`), or to open Necropolis and Legion from the start like the Marionette.
 * A player who already had Necropolis or Legion sealed gets them at the next unlock tick; a server that sets `multiverse.pageGates` for these pages keeps its own rank.
+
+
+## Follow-up (3.1.x): the numbered undead are listed again and open to everyone by default
+
+* The basic-grimoire hiding of character spells (`magic.basicBookHidesSignatures`) had removed Jimmy, Alfredo, Carl, David, Michael Caesal and True Soul Corpse Magic from every Soul Corpse grimoire that
+  was not Rades's. `SoulCorpseAccess.alwaysListed` exempts them: they are always listed.
+* New server config `corpse.numberedForAll` (default **true**): every holder of a Soul Corpse grimoire may open them by mastery (the caps of `MASTERY_CAP`, the zombie caps and the cooldowns are unchanged).
+  `false` restores the 1.44.0 rule: only Rades's grimoire opens them (the lock lines in `book.CharacterSpells` are kept).

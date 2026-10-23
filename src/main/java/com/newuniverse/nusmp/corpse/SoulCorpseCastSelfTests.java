@@ -96,7 +96,7 @@ public final class SoulCorpseCastSelfTests {
             inst.setMastery(inst.getMaxMastery());
             unlockAll(p, inst, book);
             for (String s : SoulCorpseAccess.GENERIC_SUMMONS) if (!book.usable(inst, p, mode(book, s))) return Result.fail(s + " stays sealed at full mastery for a holder of any grimoire");
-            for (String s : SoulCorpseAccess.RADES_ONLY) if (book.usable(inst, p, mode(book, s))) return Result.fail(s + " opened for a caster who is not Rades");
+            if (!CorpseConfig.numberedForAll()) for (String s : SoulCorpseAccess.RADES_ONLY) if (book.usable(inst, p, mode(book, s))) return Result.fail(s + " opened for a caster who is not Rades");
             sb.append("generic open / Rades shut; ");
 
             // ---- 3. the generic casts through the real pipeline
@@ -174,10 +174,10 @@ public final class SoulCorpseCastSelfTests {
         for (BookPage pg : pages.subList(0, book.familyCount())) {
             if (pg.cast() == null) return pg.id() + " has no handler";
             if (pg.costPercent() <= 0 || pg.costPercent() > 35 || pg.costFloor() <= 0 || pg.cooldown() < 0 || pg.cooldown() > 20 * 60 * 20) return pg.id() + " has an odd cost or cooldown";
-            boolean locked = CharacterSpells.owners(book, pg) != null;
+            boolean locked = CharacterSpells.owners(book, pg) != null;      // with corpse.numberedForAll (default) Rades's pages are open to every holder, else locked to him
             boolean rades = SoulCorpseAccess.isRadesOnly(pg.id());
-            if (locked != rades) return pg.id() + (rades ? " lost its Rades lock" : " is character-locked but should be open to every holder");
-            if (rades && !CharacterSpells.owners(book, pg).equals(java.util.EnumSet.of(CanonBook.RADES))) return pg.id() + " is locked to someone besides Rades";
+            if (locked != (rades && !CorpseConfig.numberedForAll())) return pg.id() + (rades ? " lost its Rades lock" : " is character-locked but should be open to every holder");
+            if (rades && locked && !CharacterSpells.owners(book, pg).equals(java.util.EnumSet.of(CanonBook.RADES))) return pg.id() + " is locked to someone besides Rades";
         }
         double scale = MultiverseConfig.get(MultiverseConfig.PAGE_MASTERY_SCALE);
         for (String s : SoulCorpseAccess.MASTERY_CAP.keySet()) {

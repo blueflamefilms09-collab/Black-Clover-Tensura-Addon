@@ -13,6 +13,7 @@ public final class CorpseConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.IntValue ZOMBIE_CAP, ZOMBIE_GLOBAL_CAP, NAMED_GLOBAL_CAP;
     public static final ModConfigSpec.BooleanValue ZOMBIES_INSTEAD_OF_PUPPETS;
+    public static final ModConfigSpec.BooleanValue NUMBERED_FOR_ALL;
     public static final ModConfigSpec.IntValue LEDGER_MAX, RAISE_MAX, MAX_ACTIVE, LIFE_SECONDS, NAMED_LIFE_SECONDS, TRUE_COOLDOWN_SECONDS,
             PACT_MINUTES, REVIVE_DECAY_SECONDS, PET_WINDOW_SECONDS, PACT_RANGE, LEDGER_RADIUS, REVIVE_MANA_PERCENT;
     public static final ModConfigSpec.DoubleValue DAMAGE_MULT, REVIVE_HEALTH, REVIVE_MAX_HEALTH_CUT;
@@ -65,6 +66,9 @@ public final class CorpseConfig {
         ZOMBIES_INSTEAD_OF_PUPPETS = b.comment("true: Soul Corpse Magic summons real zombies (owned by the caster, no sun burn, no drops) in the Marionette, Necropolis and Legion pages, in Reanimation and",
                 "in True Soul Corpse Magic's re-raising of fallen pets. false = the old behaviour: stitched puppet props, and Reanimation raising the dead creature's own kind.")
                 .define("zombiesInsteadOfPuppets", true);
+        NUMBERED_FOR_ALL = b.comment("true: Rades's numbered undead (No.4 Jimmy, Alfredo, Carl, No.3 David, No.0 Michael Caesal and True Soul Corpse Magic) can be opened by every holder of a Soul Corpse grimoire (by mastery, with their",
+                "caps and cooldowns unchanged). false = only Rades Spirito's own grimoire may open them (the 1.44.0 exclusive lock).")
+                .define("numberedForAll", true);
         ZOMBIE_CAP = b.comment("Most summoned zombies one caster owns at once, over every page; summoning more dismisses the oldest.")
                 .defineInRange("zombieCap", 6, 1, 16);
         ZOMBIE_GLOBAL_CAP = b.comment("Most summoned zombies on the whole server at once, all casters together (a new summon is cut to what is left).")
@@ -89,6 +93,7 @@ public final class CorpseConfig {
         try { return v.get(); } catch (IllegalStateException unloaded) { return fallback; }
     }
 
+    public static boolean numberedForAll() { return getb(NUMBERED_FOR_ALL, true); }
     public static boolean zombiesInsteadOfPuppets() { return getb(ZOMBIES_INSTEAD_OF_PUPPETS, true); }
     public static int zombieGlobalCap() { return geti(ZOMBIE_GLOBAL_CAP, SoulZombieRules.GLOBAL_CAP_DEFAULT); }
     public static int namedGlobalCap() { return geti(NAMED_GLOBAL_CAP, SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT); }
