@@ -39,7 +39,7 @@ The camera option `spiritDive.cameraPush` was NOT added (see section 8).
 - common: `book/SpiritDiveReelRules.java` (clock, timeline, specs, vertex counting, palette, texture paths, option parse), `book/SpiritDiveReelGeometry.java` (crown, leaf, comb, helix, orbit, cage, weapons, sparks as float-array arithmetic), `book/SpiritDiveReelSelfTests.java` (self-test `magic.spirit_dive_reel`, registered in `SpiritDiveBoot`).
 - client: `client/aura/SpiritDiveReel.java` (entry point, shell, ribbons, extras, cage), `client/aura/SpiritDiveReelPieces.java` (gauntlets, crown, halo, wings, sword, ball, spire), dispatch in `SpiritDiveAura`, flag `SpiritDiveLook.reel()`, first person arms `DiveAnimeFirstPerson` (also for REEL).
 - appended to shared files: enum `Look.REEL`, ribbon `Shape.BLADE` (`SpiritDiveAnimeGeometry`), ANIME self-test updated (the default moved on).
-- assets: 55 textures `assets/nusmp/textures/aura/sdr_*.png` written by `tools/gen_spirit_dive_reel_textures.py`; the ANIME `sda_rim` and `sda_soft` hulls are shared.
+- assets: 52 textures `assets/nusmp/textures/aura/sdr_*.png` written by `tools/gen_spirit_dive_reel_textures.py`; the ANIME `sda_rim` and `sda_soft` hulls are shared.
 - tools: `tools/spirit_dive_reel_scenes.py` (43 preview scenes), `tools/spirit_dive_reel_previews.py` (the sheets), `tools/render_preview/examples/SdrReel.java`.
 
 ## 5. NEW / REPLACED / KEPT (rules 2 and 5)
