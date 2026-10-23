@@ -6,7 +6,8 @@
   "sources": {
     "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
     "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
-    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md.",
+    "pages15": "Pages added by the 15-spells project (docs/magic/pages15_batch7.md): canon first, otherwise the mod's own pages in the book's style; each page says which in that document."
   },
   "spells": [
     {
@@ -112,6 +113,175 @@
         ]
       },
       "note": "Her Ultimate Magic: heals the injuries and exhaustion of everyone in the cradle, even fatal wounds in a short time. NEW page. The mod places it late (the Heart Kingdom training)."
+    },
+    {
+      "page": "magic_flower_bullet",
+      "name": "Magic Flower Bullet",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "Canon page (en-wiki: Mimosa Vermillion (Magic Flower Bullet, named in the repo's mimosa.json planned list)); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "pollen_puff",
+      "name": "Pollen Puff",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.075
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "bloom_leap",
+      "name": "Bloom Leap",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "sunflower_beam",
+      "name": "Sunflower Beam",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "wisteria_ward",
+      "name": "Wisteria Ward",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.285
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "lullaby_blossom",
+      "name": "Lullaby Blossom",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.31
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "princess_healing_flower_garden",
+      "name": "Princess Healing Flower Garden",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "Canon page (en-wiki: Mimosa Vermillion (Princess Healing Flower Garden, named in the repo's mimosa.json planned list)); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "seed_bloom",
+      "name": "Plant Magic: Seed Bloom",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "healing_bloom",
+      "name": "Plant Magic: Healing Bloom",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "flower_sprite",
+      "name": "Plant Magic: Flower Sprite",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "ivy_barrier",
+      "name": "Plant Magic: Ivy Barrier",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.25
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "blossom_dress",
+      "name": "Plant Magic: Blossom Dress",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "petal_storm",
+      "name": "Plant Magic: Petal Storm",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.35
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
     }
   ],
   "planned": [

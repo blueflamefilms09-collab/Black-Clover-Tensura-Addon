@@ -7,7 +7,8 @@
     "en_wiki": "Black Clover Wiki (blackclover.fandom.com) Charmy Pappitson page, read through search summaries only (host unreachable): Cotton Magic (Sleeping Sheep Strike, Sheep Cook, platforms and restraints of cotton), Food Magic awakened by her dwarf blood in the Elf Reincarnation arc, Glutton's Banquet (a giant wolf that eats spells).",
     "ja_search": "Japanese pages found by search (pixiv encyclopedia, manga-tantei, manga-comic-netabare, playnews): 綿創成魔法, 眠れる羊の一撃, ヒツジのコックさん, 羊のモコモコクッション, 綿雲, 大食らいの晩餐会 (Food Magic awakened in chapter 194 by an elf attack).",
     "repo_wiki": "The fandom spell page Glutton's Banquet cached in the repo (.github/wiki/spell_glutton_s_banquet.txt).",
-    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md."
+    "design": "Order of acquisition decided by this mod from the arcs: see docs/magic/character_spells_bulls.md.",
+    "pages15": "Pages added by the 15-spells project (docs/magic/pages15_batch7.md): canon first, otherwise the mod's own pages in the book's style; each page says which in that document."
   },
   "spells": [
     { "page": "sleeping_sheep_strike", "name": "Cotton Creation Magic: Sleeping Sheep Strike", "ja": "眠れる羊の一撃", "origin": "anime", "exclusive": false, "source": "en_wiki",
@@ -22,7 +23,29 @@
       "acquire": { "type": "mastery", "min": 0.33 }, "note": "A big sheep that works as a cushion. NEW page: soft landing for the party, a bounce for foes." },
     { "page": "gluttons_banquet", "name": "Food Magic: Glutton's Banquet", "ja": "大食らいの晩餐会", "origin": "anime", "exclusive": true, "source": "repo_wiki",
       "acquire": { "type": "all", "of": [ { "type": "page_uses", "page": "sheep_cook", "count": 3 }, { "type": "mastery", "min": 0.6 } ] },
-      "note": "Awakened in the Elf Reincarnation arc (her dwarf blood), long after the Cotton spells, so it needs the Sheep Cook cast first. A giant wolf with a fork and knife eats the enemy's spells and turns them into her mana." }
+      "note": "Awakened in the Elf Reincarnation arc (her dwarf blood), long after the Cotton spells, so it needs the Sheep Cook cast first. A giant wolf with a fork and knife eats the enemy's spells and turns them into her mana." },
+    { "page": "cotton_ball_toss", "name": "Cotton Ball Toss", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.05 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "lamb_charge", "name": "Lamb Charge", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.075 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "wool_volley", "name": "Wool Volley", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.1 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "cotton_spring", "name": "Cotton Spring", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.125 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "cotton_candy_snack", "name": "Cotton Candy Snack", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.15 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "wool_wall", "name": "Wool Wall", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.26 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "drowsy_wool_mist", "name": "Drowsy Wool Mist", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.285 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "warm_wool_blanket", "name": "Warm Wool Blanket", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.31 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "sheep_stampede", "name": "Sheep Stampede", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.5 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "cotton_meadow", "name": "Cotton Meadow", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "mastery", "min": 0.53 }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." },
+    { "page": "sleepy_sheep_parade", "name": "Sleepy Sheep Parade", "ja": "", "origin": "anime", "exclusive": false, "source": "pages15",
+      "acquire": { "type": "all", "of": [ { "type": "page_open", "page": "cotton_meadow" }, { "type": "mastery", "min": 0.84 } ] }, "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire." }
   ],
   "planned": [
     { "name": "Cotton Magic: shrinking herself to palm size / shrinking a foe and wrapping it in cotton", "ja": "", "origin": "anime", "source": "ja_search", "note": "Described in one Japanese summary only; no spell name." },

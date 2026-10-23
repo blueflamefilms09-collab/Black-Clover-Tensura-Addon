@@ -6,7 +6,8 @@
   "sources": {
     "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
     "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
-    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md.",
+    "pages15": "Pages added by the 15-spells project (docs/magic/pages15_batch7.md): canon first, otherwise the mod's own pages in the book's style; each page says which in that document."
   },
   "spells": [
     {
@@ -125,6 +126,197 @@
         ]
       },
       "note": "Supplementary: the world tree buds and catches attacks in mid-air. His late signature."
+    },
+    {
+      "page": "dracaena_formation",
+      "name": "Dracaena Formation",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "Canon page (en-wiki: World Tree Magic (spell list): Dracaena Formation); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "sapling_lance",
+      "name": "Sapling Lance",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "mana_root_sip",
+      "name": "Mana Root Sip",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.075
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "mistilteinn_thorn_barrage",
+      "name": "Mistilteinn Thorn Barrage",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "branch_sweep",
+      "name": "Branch Sweep",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.125
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "root_spring",
+      "name": "Root Spring",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "canopy_shelter",
+      "name": "Canopy Shelter",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.285
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "heartroot_mending",
+      "name": "Heartroot Mending",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.31
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "warding_root_net",
+      "name": "Warding Root Net",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.335
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "living_root_wall",
+      "name": "Living Root Wall",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.36
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "spirit_light_tree",
+      "name": "Spirit Light Tree",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "Canon page (en-wiki: Demon-Dweller Sword: Spirit Light Tree (spell page, copy in .github/wiki)); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "root_eruption",
+      "name": "Great Root Eruption",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.53
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "mana_drinking_field",
+      "name": "Mana-Drinking Field",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.56
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "world_tree_awakening",
+      "name": "World Tree Awakening",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "mana_drinking_field"
+          },
+          {
+            "type": "mastery",
+            "min": 0.84
+          }
+        ]
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
     }
   ],
   "planned": [
