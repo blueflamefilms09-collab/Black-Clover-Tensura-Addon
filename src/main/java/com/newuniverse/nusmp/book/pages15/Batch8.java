@@ -149,6 +149,48 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1200).withAnim("slam")));
 
+    private static final List<BookPage> TONGUE = register("book_tongue", List.of(
+            Pages15Kit.starter("tongue_lash", "Tongue Magic: Tongue Lash",
+                    Pages15Kit.line(Tier.STARTER, 8, 0.9, W, slow(30, 1))).withAnim("thrust"),
+            Pages15Kit.starter("tongue_snatch", "Tongue Magic: Tongue Snatch",
+                    snatch(Tier.STARTER, 14, W, Pages15Kit.NONE)).withCooldown(160),
+            Pages15Kit.starter("tongue_acid_spit", "Tongue Magic: Acid Spit",
+                    Pages15Kit.bolt(Tier.STARTER, 1.5, W, WB, poison(60, 0))),
+            Pages15Kit.mid("tongue_whip_crack", "Tongue Magic: Whip Crack",
+                    Pages15Kit.cone(Tier.MID, 6, 0.3, W, Pages15Kit.knock(1.1))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.mid("tongue_swing", "Tongue Magic: Tongue Swing",
+                    swing(Tier.MID, 22, W)).withCooldown(240),
+            Pages15Kit.mid("tongue_savouring_lick", "Tongue Magic: Savouring Lick",
+                    Pages15Kit.cone(Tier.MID, 3.5, 0.6, W, Pages15Kit.leech(2.5f))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.mid("tongue_numbing_saliva", "Tongue Magic: Numbing Saliva",
+                    Pages15Kit.bolt(Tier.MID, 3, W, WB, Pages15Kit.all(slow(60, 2), weak(60, 0)))).withCooldown(220),
+            Pages15Kit.zone("wrapping_tongue", "Tongue Magic: Wrapping Tongue",
+                    Pages15Kit.bind(Tier.ZONE, 16, false, W, slow(60, 3))).withCooldown(450),
+            Pages15Kit.zone("tongue_lashing_barrage", "Tongue Magic: Lashing Barrage",
+                    flurry(Tier.ZONE, 5, 5, 16, W, Pages15Kit.knock(0.2))).withCooldown(400).withAnim("thrust"),
+            Pages15Kit.signature("tongue_great_swallow", "Tongue Magic: Great Swallow",
+                    Pages15Kit.cast(Tier.SIGNATURE, c -> {
+                    LivingEntity e = c.target(14);
+                    if (e == null || e.isAlliedTo(c.caster)) return c.fail("Nothing to swallow.");
+                    if (!GrimoireBook.control(c.caster)) return false;
+                    Fx fx = new Fx(c);
+                    c.circle(1.4f);
+                    if (!BalanceLaw.isBoss(e)) {
+                        Vec3 front = c.caster.position().add(c.caster.getViewVector(1f).multiply(1, 0, 1).normalize().scale(2.0));
+                        if (fits(e, front)) place(e, front);
+                    }
+                    fx.shape(W, c.caster.getEyePosition(), centre(e), 16, 1.6f);
+                    c.hit(e);
+                    e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(e, 60), 9));
+                    BalanceLaw.heal(c.caster, 4f);
+                    c.later(14, () -> {
+                        if (!e.isAlive()) return;
+                        c.hit(e, c.tier.hit * 0.5f);
+                        fx.shape(WB, centre(e), centre(e).add(0, 1, 0), 20, 1.4f);
+                    });
+                    return true;
+                })).withCooldown(1500).withAnim("slam")));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

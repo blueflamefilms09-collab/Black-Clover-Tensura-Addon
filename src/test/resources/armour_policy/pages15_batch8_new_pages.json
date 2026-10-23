@@ -22,5 +22,17 @@
     "skin_wrap",
     "skin_blistering_field",
     "skin_cast_off"
+  ],
+  "TONGUE": [
+    "tongue_lash",
+    "tongue_snatch",
+    "tongue_acid_spit",
+    "tongue_whip_crack",
+    "tongue_swing",
+    "tongue_savouring_lick",
+    "tongue_numbing_saliva",
+    "wrapping_tongue",
+    "tongue_lashing_barrage",
+    "tongue_great_swallow"
   ]
 }
