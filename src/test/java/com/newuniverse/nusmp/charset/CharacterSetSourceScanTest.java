@@ -29,6 +29,23 @@ class CharacterSetSourceScanTest {
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
+    /** Pages BasicPages and the "15 spells" batches (book.pages15.Batch1..8) append to a book: register("book", List.of(...)). */
+    private static List<String> appended(String book) throws IOException {
+        List<String> out = new ArrayList<>();
+        List<Path> files = new ArrayList<>(List.of(SRC.resolve("book/BasicPages.java")));
+        for (int b = 1; b <= 8; b++) files.add(SRC.resolve("book/pages15/Batch" + b + ".java"));
+        for (Path f : files) {
+            if (!Files.isRegularFile(f)) continue;
+            Matcher reg = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(f));
+            if (reg.find()) {
+                out.addAll(ids(reg.group(1)));
+                Matcher kit = Pattern.compile("Pages15Kit\\.\\w+\\(\"(\\w+)\"").matcher(reg.group(1));      // the kit's page factories
+                while (kit.find()) out.add(kit.group(1));
+            }
+        }
+        return out;
+    }
+
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
     private static List<String> ids(String src) {
@@ -93,6 +110,7 @@ class CharacterSetSourceScanTest {
                 Matcher twin = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(SRC.resolve("book/CharacterPagesBulls.java")));      // the Black Bulls' twin class (pages for Magna in the Fire book)
                 if (twin.find()) have.addAll(ids(twin.group(1)));
                 have.addAll(addedGold(book));      // builder gold: the Golden Dawn / Crimson Lion pages
+                have.addAll(appended(book));      // the generic pages BasicPages and the "15 spells" batches (book.pages15.Batch1..8) append
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);

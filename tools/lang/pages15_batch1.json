@@ -61,5 +61,14 @@
   "nusmp.page.book_reinforcement.ironclad_body": "Your skin turns hard as iron for 11 seconds: resistance, an absorption heart and thorns against whoever hits you.",
   "nusmp.page.book_reinforcement.fist_barrage": "Six punches in under a second on the foe in front of you (within 5 blocks); together they hit for about one and a half zone hits.",
   "nusmp.page.book_reinforcement.skyfall_smash": "You jump high, then crash down fist first: foes within 5.5 blocks of the landing are hurt and thrown back.",
-  "nusmp.page.book_reinforcement.titan_body": "Reinforces every muscle for 14 seconds: Strength II, Resistance II, Speed I and a large bonus on every melee blow. Needs Senior rank."
+  "nusmp.page.book_reinforcement.titan_body": "Reinforces every muscle for 14 seconds: Strength II, Resistance II, Speed I and a large bonus on every melee blow. Needs Senior rank.",
+  "nusmp.page.book_fire.flame_rope_binding_formation": "A rope of flame ties up the foe under your crosshair (14 blocks): a small burning hit and a short hold.",
+  "nusmp.page.book_fire.gamblers_base_run": "Flame around your legs launches you 8 blocks forward in a straight sprint that scorches whatever you pass.",
+  "nusmp.page.book_fire.cinder_jab": "A short burning jab at close range: a narrow 4 block cone that scorches and shoves.",
+  "nusmp.page.book_fire.prison_kill_buckshot": "Five exploding fireballs seek out separate foes and strike from different angles, burning each for 3 seconds.",
+  "nusmp.page.book_fire.smoulder_veil": "A veil of embers wraps you for 10 seconds: fire resistance and a burn for anyone who strikes you in melee.",
+  "nusmp.page.book_fire.purgatory_cremation": "The flames around you burn hotter and hotter for 5 seconds: every second they sear everything within 5 blocks and set it alight for 5 seconds.",
+  "nusmp.page.book_fire.flame_lightning_explosive_cannon": "Flame and lightning fused into one beam 18 blocks long that burns and throws back up to eight foes. Played alone it is the flame half of the union.",
+  "nusmp.page.book_fire.excelitius_leonum": "The spirits of fallen comrades rise as four lions of flame that run down separate foes and burn them for 4 seconds.",
+  "nusmp.page.book_fire.purgatory_flame_burial": "Coats your body in the fiercest flame for 15 seconds: fire resistance, Strength I, thorns and a large bonus on every melee blow. Needs Senior rank."
 }

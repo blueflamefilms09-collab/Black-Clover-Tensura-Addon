@@ -192,6 +192,26 @@ public final class Batch1 {
                 Pages15Kit.signature("titan_body", "Titan Body",
                         empower(Tier.SIGNATURE, 280, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 280, 1), () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 280, 1), () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 280, 0))).withCooldown(1200).withAnim("up")));
 
+    private static final List<BookPage> FIRE = register("book_fire", List.of(
+                Pages15Kit.starter("flame_rope_binding_formation", "Flame Rope Binding Formation",
+                        bind(Tier.STARTER, 14, false, VfxShape.FLAME_TRAIL, ignite(3))).withCooldown(140),
+                Pages15Kit.starter("gamblers_base_run", "Gambler's Base Run",
+                        dash(Tier.STARTER, true, 8, false, VfxShape.FLAME_TRAIL, ignite(2))).withCooldown(110).withAnim("thrust"),
+                Pages15Kit.starter("cinder_jab", "Cinder Jab",
+                        cone(Tier.STARTER, 4, 0.7, VfxShape.FIRE_BURST, all(ignite(3), knock(0.6)))).withAnim("thrust"),
+                Pages15Kit.mid("prison_kill_buckshot", "Prison Kill Buckshot",
+                        volley(Tier.MID, 5, true, VfxShape.FLAME_TRAIL, ignite(3))).withCooldown(230),
+                Pages15Kit.mid("smoulder_veil", "Smoulder Veil",
+                        empower(Tier.MID, 200, true, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0))).withCooldown(380),
+                Pages15Kit.zone("purgatory_cremation", "Calidus Brachium Purgatory: Cremation",
+                        field(Tier.ZONE, 5, 100, 20, false, VfxShape.FIRE_WILD, ignite(5))).withCooldown(480),
+                Pages15Kit.zone("flame_lightning_explosive_cannon", "Flame-Lightning Explosive Cannon",
+                        line(Tier.ZONE, 18, 2.0, VfxShape.FIRE_SPEAR, all(ignite(4), knock(1.2)))).withCooldown(420).withAnim("thrust"),
+                Pages15Kit.zone("excelitius_leonum", "Excelitius Leonum",
+                        volley(Tier.ZONE, 4, true, VfxShape.FIRE_LION, ignite(4))).withCooldown(480).withAnim("up"),
+                Pages15Kit.signature("purgatory_flame_burial", "Calidus Brachium Purgatory: Flame Burial",
+                        empower(Tier.SIGNATURE, 300, true, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 300, 0), () -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0))).withCooldown(1000).withAnim("up")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

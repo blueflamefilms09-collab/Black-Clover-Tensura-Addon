@@ -68,6 +68,9 @@ class CharacterSetBullsTest {
     /** The pages the "15 spells for every grimoire" batches (book.pages15.Batch1..8) append to a book: register("book", List.of(...)). */
     private static List<String> pages15(String book) throws IOException {
         List<String> out = new ArrayList<>();
+        Path basic = SRC.resolve("book/BasicPages.java");      // the generic pages (Shining Flame Cross, Combo Eruption ...) a set may also list
+        Matcher bm = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(basic));
+        if (bm.find()) out.addAll(ids(bm.group(1)));
         for (int b = 1; b <= 8; b++) {
             Path batch = SRC.resolve("book/pages15/Batch" + b + ".java");
             if (!Files.isRegularFile(batch)) continue;

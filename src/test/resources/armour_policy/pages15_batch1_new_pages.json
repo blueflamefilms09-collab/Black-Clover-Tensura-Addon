@@ -73,5 +73,16 @@
     "fist_barrage",
     "skyfall_smash",
     "titan_body"
+  ],
+  "FLAME": [
+    "flame_rope_binding_formation",
+    "gamblers_base_run",
+    "cinder_jab",
+    "prison_kill_buckshot",
+    "smoulder_veil",
+    "purgatory_cremation",
+    "flame_lightning_explosive_cannon",
+    "excelitius_leonum",
+    "purgatory_flame_burial"
   ]
 }

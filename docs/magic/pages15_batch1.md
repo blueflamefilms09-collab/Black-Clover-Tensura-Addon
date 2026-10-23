@@ -76,6 +76,15 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_reinforcement` | `fist_barrage` | Hundred-Fist Barrage | zone | original | Six punches in under a second on the foe in front of you (within 5 blocks); together they hit for about one and a half zone hits. | custom barrage | 1 target, 6 packets, 6 delayed tasks |
 | `book_reinforcement` | `skyfall_smash` | Skyfall Smash | zone | original | You jump high, then crash down fist first: foes within 5.5 blocks of the landing are hurt and thrown back. | custom skySmash | 8 targets, 2 packets, 1 delayed task |
 | `book_reinforcement` | `titan_body` | Titan Body | signature | original | Reinforces every muscle for 14 seconds: Strength II, Resistance II, Speed I and a large bonus on every melee blow. Needs Senior rank. | empower + SPIRIT_AURA | self only |
+| `book_fire` | `flame_rope_binding_formation` | Flame Rope Binding Formation | starter | canon: ja-wiki (search summary): 炎縄緊縛陣, Magna's spell; the English wiki page was not found | A rope of flame ties up the foe under your crosshair (14 blocks): a small burning hit and a short hold. | bind + FLAME_TRAIL | 1 target (the shared control lock applies) |
+| `book_fire` | `gamblers_base_run` | Gambler's Base Run | starter | canon: ja-wiki (search summary): 博打走塁, Magna's flame-legged run; single source | Flame around your legs launches you 8 blocks forward in a straight sprint that scorches whatever you pass. | dash + FLAME_TRAIL | 4 targets on the line, 1 packet |
+| `book_fire` | `cinder_jab` | Cinder Jab | starter | original | A short burning jab at close range: a narrow 4 block cone that scorches and shoves. | cone + FIRE_BURST | 4 targets, 1-2 packets |
+| `book_fire` | `prison_kill_buckshot` | Prison Kill Buckshot | mid | canon: fan-wiki list (Magna's Prison Kill Buckshot; found only in a fan list, not on the English or Japanese wiki) | Five exploding fireballs seek out separate foes and strike from different angles, burning each for 3 seconds. | volley + FLAME_TRAIL | 5 bolts, 6 targets |
+| `book_fire` | `smoulder_veil` | Smoulder Veil | mid | original | A veil of embers wraps you for 10 seconds: fire resistance and a burn for anyone who strikes you in melee. | empower + SPIRIT_AURA | self only |
+| `book_fire` | `purgatory_cremation` | Calidus Brachium Purgatory: Cremation | zone | canon: en-wiki (search summary): Calidos Brachium Purgatory: Cremation, Mereoleona's hotter Hellfire Incarnate | The flames around you burn hotter and hotter for 5 seconds: every second they sear everything within 5 blocks and set it alight for 5 seconds. | field + FIRE_WILD | 8 targets per pulse, 5 pulses |
+| `book_fire` | `flame_lightning_explosive_cannon` | Flame-Lightning Explosive Cannon | zone | canon: en-wiki: Flame-Lightning Explosive Cannon (union of Magna and Luck; ja 炎雷爆尽砲, from the sets' source notes) | Flame and lightning fused into one beam 18 blocks long that burns and throws back up to eight foes. Played alone it is the flame half of the union. | line + FIRE_SPEAR | 8 targets, 2 packets |
+| `book_fire` | `excelitius_leonum` | Excelitius Leonum | zone | canon: manga ch.371 (Mereoleona's Ultimate Flame Magic: Excelitius Leonum, named by search summaries, not confirmed on the wiki) | The spirits of fallen comrades rise as four lions of flame that run down separate foes and burn them for 4 seconds. | volley + FIRE_LION | 4 bolts, 8 targets |
+| `book_fire` | `purgatory_flame_burial` | Calidus Brachium Purgatory: Flame Burial | signature | canon: en-wiki (search summary): Calidos Brachium Purgatory: Flame Burial, Mereoleona's pinnacle attack | Coats your body in the fiercest flame for 15 seconds: fire resistance, Strength I, thorns and a large bonus on every melee blow. Needs Senior rank. | empower + SPIRIT_AURA | self only |
 
 ## Research sources
 
@@ -93,16 +102,20 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 1 canon pages (most of them weakly sourced, see above), 62 original pages, 63 in all.
+Count: 8 canon pages (most of them weakly sourced, see above), 64 original pages, 72 in all.
 
 ## Character grimoires (set entries added)
 
 Every page below is appended to the set file of the character (`exclusive: false`, so the basic book keeps it; the acquisition rule is a mastery threshold in the order of the tiers). Existing generic pages of the book that no set lists
-(Calderos, Flame Armour, Phoenix Flare, Shining Flame Cross, Combo Eruption, Thunder Lance, Lightning Surge, Raijin's Thunder Drums, Thunderbird Cavalry, Tempest Ring, Thunder Sphere, Eye of the Storm) are listed where they fit a character's style.
-Several new Flame pages are shared by two or more characters, because the Fire book has only 33 pages for four grimoires of 15; that is this batch's own reading, not a statement that each of them uses each page in the series.
+(Calderos, Flame Armour, Phoenix Flare, Thunder Lance, Lightning Surge, Raijin's Thunder Drums, Thunderbird Cavalry, Tempest Ring, Thunder Sphere, Eye of the Storm) are listed where they fit a character's style.
+Several new Flame pages are shared by two or more characters, because the Fire book has only 33 pages for four grimoires of 15; that is this batch's own reading, not a statement that each of them uses each page in the series. The two generic pages of `BasicPages` (Shining Flame Cross, Combo Eruption) are deliberately NOT listed: `BasicGrimoiresTest` pins them as pages no set lists.
 
 * `kaiser` (book_storm): +12 entries: `gust_jab` 0.05, `squall_step` 0.12, `tempest_ring` 0.18, `rain_curtain` 0.25, `thunderhead_strike` 0.32, `squall_front` 0.40, `downburst` 0.46, `thundercloud` 0.55, `thunder_sphere` 0.62, `tempest_barrage` 0.70, `eye_of_the_storm` 0.82, `storm_maelstrom` 0.90.
 * `vanessa` (book_thread): +6 entries: `thread_whip` 0.05, `tripwire_snare` 0.10, `stitching_threads` 0.18, `thread_cocoon` 0.34, `puppet_strings` 0.45, `thousand_threads` 0.62.
+* `fuegoleon` (book_fire): +8 entries: `cinder_jab` 0.08, `calderos` 0.22, `smoulder_veil` 0.35, `flame_armour` 0.45, `prison_kill_buckshot` 0.52, `phoenix_flare` 0.60, `flame_lightning_explosive_cannon` 0.68, `excelitius_leonum` 0.76.
+* `leopold` (book_fire): +10 entries: `cinder_jab` 0.06, `gamblers_base_run` 0.14, `smoulder_veil` 0.25, `calderos` 0.33, `flame_rope_binding_formation` 0.40, `prison_kill_buckshot` 0.48, `flame_armour` 0.55, `phoenix_flare` 0.62, `flame_lightning_explosive_cannon` 0.74, `excelitius_leonum` 0.80.
+* `magna` (book_fire): +11 entries: `flame_rope_binding_formation` 0.05, `gamblers_base_run` 0.12, `cinder_jab` 0.18, `prison_kill_buckshot` 0.26, `smoulder_veil` 0.34, `calderos` 0.42, `phoenix_flare` 0.50, `purgatory_cremation` 0.60, `flame_lightning_explosive_cannon` 0.68, `excelitius_leonum` 0.78, `purgatory_flame_burial` 0.88.
+* `mereoleona` (book_fire): +9 entries: `cinder_jab` 0.06, `calderos` 0.20, `smoulder_veil` 0.30, `flame_armour` 0.40, `phoenix_flare` 0.50, `gamblers_base_run` 0.58, `purgatory_cremation` 0.72, `excelitius_leonum` 0.82, `purgatory_flame_burial` 0.90.
 
 ## Worst case of the batch (rule 11)
 
