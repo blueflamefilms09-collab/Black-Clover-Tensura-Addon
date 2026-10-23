@@ -64,7 +64,7 @@ class CharacterSetRegistryTest {
         assertFalse(r.hidden("yuno", "book_wind", "spirit_of_zephyr", false, true));
         assertFalse(r.hidden("yuno", "book_wind", "sylphs_breath", false, true));
         assertFalse(r.hidden("yuno", "book_wind", "gust_lane", true, true), "mode 0 is the book's default page and is never hidden");
-        assertTrue(r.hidden("noelle", "book_water", "aqua_javelin", false, true));
+        assertTrue(r.hidden("noelle", "book_water", "cascade_destroyer", false, true), "a basic Water page that is not Noelle's");      // pages15 batch 2 put aqua_javelin into her set
         assertTrue(r.hidden("yami", "book_dark", "dark_cloak", false, true));
         assertTrue(r.hidden("fuegoleon", "book_fire", "calidos_brachium", false, true), "Mereoleona's spell is not Fuegoleon's");
         assertFalse(r.hidden("asta", "book_anti_magic", "black_meteorite", false, true));

@@ -93,6 +93,7 @@ class CharacterSetSourceScanTest {
                 Matcher twin = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(SRC.resolve("book/CharacterPagesBulls.java")));      // the Black Bulls' twin class (pages for Magna in the Fire book)
                 if (twin.find()) have.addAll(ids(twin.group(1)));
                 have.addAll(addedGold(book));      // builder gold: the Golden Dawn / Crimson Lion pages
+                have.addAll(com.newuniverse.nusmp.book.pages15.Pages15Added.of(book));      // the "15 spells" batches' pages (book/pages15/Batch*.java)
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);

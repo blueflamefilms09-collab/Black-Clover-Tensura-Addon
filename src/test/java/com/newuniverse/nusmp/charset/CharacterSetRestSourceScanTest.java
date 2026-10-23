@@ -80,7 +80,7 @@ class CharacterSetRestSourceScanTest {
             List<String> add = added(book);
             for (var sp : e.getValue().getAsJsonArray("spells")) {
                 String page = sp.getAsJsonObject().get("page").getAsString();
-                assertTrue(add.contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
+                assertTrue(add.contains(page) || com.newuniverse.nusmp.book.pages15.Pages15Added.of(book).contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
             }
         }
     }
