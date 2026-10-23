@@ -84,5 +84,16 @@
     "flame_lightning_explosive_cannon",
     "excelitius_leonum",
     "purgatory_flame_burial"
+  ],
+  "STAR": [
+    "quartile_flagellum",
+    "twinkle_dart",
+    "star_conjunction",
+    "never_never_land",
+    "star_beam",
+    "star_chain",
+    "orbit_barrage",
+    "stardust_field",
+    "meteor_swarm"
   ]
 }

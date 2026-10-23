@@ -212,6 +212,26 @@ public final class Batch1 {
                 Pages15Kit.signature("purgatory_flame_burial", "Calidus Brachium Purgatory: Flame Burial",
                         empower(Tier.SIGNATURE, 300, true, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 300, 0), () -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 0))).withCooldown(1000).withAnim("up")));
 
+    private static final List<BookPage> STAR = register("book_star", List.of(
+                Pages15Kit.starter("quartile_flagellum", "Quartile Flagellum",
+                        cone(Tier.STARTER, 8, 0.5, VfxShape.STAR_MAGIC, glow(60))).withCooldown(90).withAnim("sweep"),
+                Pages15Kit.starter("twinkle_dart", "Twinkle Dart",
+                        bolt(Tier.STARTER, 0, VfxShape.STAR_MAGIC, null, glow(80))),
+                Pages15Kit.mid("star_conjunction", "Conjunction",
+                        dash(Tier.MID, false, 12, false, VfxShape.STAR_MAGIC, NONE)).withCooldown(160).withAnim("thrust"),
+                Pages15Kit.mid("never_never_land", "Never Never Land",
+                        cast(Tier.MID, c -> neverNeverLand(c))).withCooldown(400),
+                Pages15Kit.mid("star_beam", "Star Beam",
+                        line(Tier.MID, 16, 1.2, VfxShape.STAR_MAGIC, glow(60))).withCooldown(200).withAnim("thrust"),
+                Pages15Kit.mid("star_chain", "Star Chain",
+                        bind(Tier.MID, 18, false, VfxShape.THREAD_LINE, glow(100))).withCooldown(260),
+                Pages15Kit.zone("orbit_barrage", "Orbit Barrage",
+                        volley(Tier.ZONE, 5, true, VfxShape.STAR_MAGIC, glow(60))).withCooldown(400),
+                Pages15Kit.zone("stardust_field", "Stardust Field",
+                        field(Tier.ZONE, 5, 100, 20, true, VfxShape.STAR_MAGIC, all(glow(40), slow(30, 1)))).withCooldown(450),
+                Pages15Kit.signature("meteor_swarm", "Meteor Swarm",
+                        cast(Tier.SIGNATURE, c -> strikes(c, 6, 6, 3.5, false, 2.6, VfxShape.MAGIC_CIRCLE_EXPLOSION, knock(0.8)))).withCooldown(900).withAnim("up")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

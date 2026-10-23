@@ -70,5 +70,14 @@
   "nusmp.page.book_fire.purgatory_cremation": "The flames around you burn hotter and hotter for 5 seconds: every second they sear everything within 5 blocks and set it alight for 5 seconds.",
   "nusmp.page.book_fire.flame_lightning_explosive_cannon": "Flame and lightning fused into one beam 18 blocks long that burns and throws back up to eight foes. Played alone it is the flame half of the union.",
   "nusmp.page.book_fire.excelitius_leonum": "The spirits of fallen comrades rise as four lions of flame that run down separate foes and burn them for 4 seconds.",
-  "nusmp.page.book_fire.purgatory_flame_burial": "Coats your body in the fiercest flame for 15 seconds: fire resistance, Strength I, thorns and a large bonus on every melee blow. Needs Senior rank."
+  "nusmp.page.book_fire.purgatory_flame_burial": "Coats your body in the fiercest flame for 15 seconds: fire resistance, Strength I, thorns and a large bonus on every melee blow. Needs Senior rank.",
+  "nusmp.page.book_star.quartile_flagellum": "A line of starlight joins four stars and is swung like a whip across an 8 block cone, lighting up every foe it touches.",
+  "nusmp.page.book_star.twinkle_dart": "One bright star-dart that flies straight and marks its target with a glow for 4 seconds.",
+  "nusmp.page.book_star.star_conjunction": "You step to the point beneath one of your stars, up to 12 blocks ahead, without hitting anything.",
+  "nusmp.page.book_star.never_never_land": "A field of starlight over 8 blocks makes you faster and stronger for 10 seconds while the foes inside are weakened and slowed. A solo reading of a union spell.",
+  "nusmp.page.book_star.star_beam": "A beam of starlight 16 blocks long that hurts everything in a line and makes it glow for 3 seconds.",
+  "nusmp.page.book_star.star_chain": "A chain of stars binds the foe under your crosshair (18 blocks): a small hit, a short hold and a glow for 5 seconds.",
+  "nusmp.page.book_star.orbit_barrage": "Five small stars leave your orbit and home in on separate foes, making each glow for 3 seconds.",
+  "nusmp.page.book_star.stardust_field": "Stardust drifts down over the aim point for 5 seconds; everything within 5 blocks is hurt every second, slowed and lit up.",
+  "nusmp.page.book_star.meteor_swarm": "Six meteors fall around the aim point, six ticks apart, each blasting the foes beneath it. Needs Senior rank."
 }

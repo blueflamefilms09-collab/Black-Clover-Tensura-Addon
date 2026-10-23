@@ -85,6 +85,15 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_fire` | `flame_lightning_explosive_cannon` | Flame-Lightning Explosive Cannon | zone | canon: en-wiki: Flame-Lightning Explosive Cannon (union of Magna and Luck; ja 炎雷爆尽砲, from the sets' source notes) | Flame and lightning fused into one beam 18 blocks long that burns and throws back up to eight foes. Played alone it is the flame half of the union. | line + FIRE_SPEAR | 8 targets, 2 packets |
 | `book_fire` | `excelitius_leonum` | Excelitius Leonum | zone | canon: manga ch.371 (Mereoleona's Ultimate Flame Magic: Excelitius Leonum, named by search summaries, not confirmed on the wiki) | The spirits of fallen comrades rise as four lions of flame that run down separate foes and burn them for 4 seconds. | volley + FIRE_LION | 4 bolts, 8 targets |
 | `book_fire` | `purgatory_flame_burial` | Calidus Brachium Purgatory: Flame Burial | signature | canon: en-wiki (search summary): Calidos Brachium Purgatory: Flame Burial, Mereoleona's pinnacle attack | Coats your body in the fiercest flame for 15 seconds: fire resistance, Strength I, thorns and a large bonus on every melee blow. Needs Senior rank. | empower + SPIRIT_AURA | self only |
+| `book_star` | `quartile_flagellum` | Quartile Flagellum | starter | canon: en-wiki: Quartile Flagellum (Star Magic page; a line of starlight joining four stars, swung as a whip) | A line of starlight joins four stars and is swung like a whip across an 8 block cone, lighting up every foe it touches. | cone + STAR_MAGIC | 4 targets, 1-2 packets |
+| `book_star` | `twinkle_dart` | Twinkle Dart | starter | original | One bright star-dart that flies straight and marks its target with a glow for 4 seconds. | bolt + STAR_MAGIC | 4 targets, 1-2 packets |
+| `book_star` | `star_conjunction` | Conjunction | mid | canon: en-wiki: Conjunction (Star Magic page; teleport to beneath one of your stars) | You step to the point beneath one of your stars, up to 12 blocks ahead, without hitting anything. | dash + STAR_MAGIC | self only |
+| `book_star` | `never_never_land` | Never Never Land | mid | canon: en-wiki: Never Never Land (Star Magic page; union spell that strengthens friends and weakens enemies) | A field of starlight over 8 blocks makes you faster and stronger for 10 seconds while the foes inside are weakened and slowed. A solo reading of a union spell. | custom neverNeverLand + STAR_MAGIC | 6 targets, 1 packet |
+| `book_star` | `star_beam` | Star Beam | mid | original | A beam of starlight 16 blocks long that hurts everything in a line and makes it glow for 3 seconds. | line + STAR_MAGIC | 6 targets, 1-2 packets |
+| `book_star` | `star_chain` | Star Chain | mid | original | A chain of stars binds the foe under your crosshair (18 blocks): a small hit, a short hold and a glow for 5 seconds. | bind + THREAD_LINE | 1 target (the shared control lock applies) |
+| `book_star` | `orbit_barrage` | Orbit Barrage | zone | original | Five small stars leave your orbit and home in on separate foes, making each glow for 3 seconds. | volley + STAR_MAGIC | 5 bolts, 8 targets |
+| `book_star` | `stardust_field` | Stardust Field | zone | original | Stardust drifts down over the aim point for 5 seconds; everything within 5 blocks is hurt every second, slowed and lit up. | field + STAR_MAGIC | 8 targets per pulse, 5 pulses |
+| `book_star` | `meteor_swarm` | Meteor Swarm | signature | original | Six meteors fall around the aim point, six ticks apart, each blasting the foes beneath it. Needs Senior rank. | custom strikes + MAGIC_CIRCLE_EXPLOSION | 10 targets, 6 packets, 6 delayed tasks |
 
 ## Research sources
 
@@ -102,7 +111,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 8 canon pages (most of them weakly sourced, see above), 64 original pages, 72 in all.
+Count: 11 canon pages (most of them weakly sourced, see above), 70 original pages, 81 in all.
 
 ## Character grimoires (set entries added)
 
