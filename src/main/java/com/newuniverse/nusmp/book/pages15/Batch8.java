@@ -403,6 +403,18 @@ public final class Batch8 {
             Pages15Kit.zone("hair_forest", "Hair Forest",
                     Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, HR2, slow(40, 2))).withCooldown(450)));
 
+    private static final List<BookPage> NAIL = register("book_nail", List.of(
+            Pages15Kit.starter("nail_claws", "Elongated Nails",
+                    Pages15Kit.cone(Tier.STARTER, 3.5, 0.5, NL1, wither(40, 0))).withAnim("sweep"),
+            Pages15Kit.starter("nail_hook", "Nail Hook",
+                    swing(Tier.STARTER, 18, NL1)).withCooldown(200),
+            Pages15Kit.mid("nail_lance", "Nail Lance",
+                    Pages15Kit.line(Tier.MID, 12, 1.0, NL1, Pages15Kit.all(slow(40, 1), Pages15Kit.knock(0.4)))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("nail_hardening", "Hardened Nails",
+                    Pages15Kit.empower(Tier.MID, 240, false, NL3)).withCooldown(300),
+            Pages15Kit.zone("nail_thicket", "Nail Thicket",
+                    Pages15Kit.field(Tier.ZONE, 4.5, 80, 10, true, NL2, Pages15Kit.all(slow(30, 1), wither(30, 0)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

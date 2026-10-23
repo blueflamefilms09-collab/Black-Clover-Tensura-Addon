@@ -71,5 +71,10 @@
   "nusmp.page.book_hair.hair_needles": "Hair Needles: five strands of hair stiffen into needles and fly after the nearest foes, thin enough to slip through a guard. Damage scales with your EP.",
   "nusmp.page.book_hair.hair_wall": "Hair Wall: hair is woven into a wall round you for three seconds: spells and arrows that come within four blocks are unravelled (at most four at a time), and you gain Absorption I.",
   "nusmp.page.book_hair.hair_spear": "Hair Spear: your hair is braided into a spear and thrust twelve blocks ahead: every foe on the line is hit, shoved back and weakened for two seconds. Damage scales with your EP.",
-  "nusmp.page.book_hair.hair_forest": "Hair Forest: hair grows up out of the ground where you look and tangles round every ankle for four seconds: the foes in it take a pulse every half second and are slowed (Slowness III). Damage scales with your EP."
+  "nusmp.page.book_hair.hair_forest": "Hair Forest: hair grows up out of the ground where you look and tangles round every ankle for four seconds: the foes in it take a pulse every half second and are slowed (Slowness III). Damage scales with your EP.",
+  "nusmp.page.book_nail.nail_claws": "Elongated Nails: your fingernails grow into claws and rake a short cone ahead: foes in it are hit and wither for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_nail.nail_hook": "Nail Hook: a nail is shot at the block or foe you aim at (3 to 18 blocks) and you are pulled across on it, with Slow Falling for 2.5 seconds. A way across, not a weapon.",
+  "nusmp.page.book_nail.nail_lance": "Nail Lance: the nails of one hand are fused into a lance and driven twelve blocks ahead: every foe on the line is hit, slowed and nudged back. Damage scales with your EP.",
+  "nusmp.page.book_nail.nail_hardening": "Hardened Nails: your nails harden to steel for twelve seconds: your melee hits deal extra damage. Bonus scales with your EP.",
+  "nusmp.page.book_nail.nail_thicket": "Nail Thicket: nails sprout from the ground where you look for four seconds: every half second the foes within four and a half blocks take a pulse, are slowed and wither. Damage scales with your EP."
 }

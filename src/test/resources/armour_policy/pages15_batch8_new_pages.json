@@ -89,5 +89,12 @@
     "hair_wall",
     "hair_spear",
     "hair_forest"
+  ],
+  "NAIL": [
+    "nail_claws",
+    "nail_hook",
+    "nail_lance",
+    "nail_hardening",
+    "nail_thicket"
   ]
 }
