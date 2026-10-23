@@ -102,7 +102,7 @@ class SpiritDiveWind3Test {
                 for (Stage st : Stage.values())
                     for (Lod lod : LODS) {
                         int n = SpiritDiveWind3Rules.vertices(v, ch, lod, st);
-                        if (n > SpiritDiveWind3Rules.cap(ch)) bad.add(v + " " + (ch ? "Yuno " : "standard ") + st + " " + lod + " " + n);
+                        if (n > SpiritDiveWind3Rules.cap(v, ch)) bad.add(v + " " + (ch ? "Yuno " : "standard ") + st + " " + lod + " " + n);
                     }
         assertTrue(bad.isEmpty(), bad.toString());
         assertEquals(4000, SpiritDiveWind3Rules.CAP_CHARACTER);
@@ -120,7 +120,7 @@ class SpiritDiveWind3Test {
                 for (Lod lod : LODS) {
                     int pack = SpiritDiveWindRules.vertices(ch, lod, st), a = SpiritDiveWind3Rules.vertices(Ver.A, ch, lod, st);
                     boolean weapons = lod == Lod.FULL && SpiritDivePieces.full(st);
-                    if (!weapons) assertEquals(pack, a, "A is the PACK look away from the weapons: " + ch + " " + st + " " + lod);
+                    if (!weapons) assertEquals(pack + SpiritDiveWind4Rules.crownDelta(ch, lod, st), a, "A is the PACK look away from the weapons and the 3D crown (4.x final): " + ch + " " + st + " " + lod);
                     else assertTrue(a > pack - 16, "A draws the real weapons: " + a + " vs " + pack);
                 }
     }

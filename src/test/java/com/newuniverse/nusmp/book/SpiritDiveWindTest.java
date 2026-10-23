@@ -121,7 +121,7 @@ class SpiritDiveWindTest {
 
     @Test
     void theOptionParsesAndKeepsTheReelWindReachable() {
-        assertEquals(SpiritDiveWindRules.WindLook.B_CLIP, SpiritDiveWindRules.DEFAULT_LOOK);
+        assertEquals(SpiritDiveWindRules.WindLook.A_ANIME, SpiritDiveWindRules.DEFAULT_LOOK, "4.x final: A_ANIME is the default Wind");
         assertEquals(SpiritDiveWindRules.DEFAULT_LOOK, SpiritDiveWindRules.parse(null));
         assertEquals(SpiritDiveWindRules.DEFAULT_LOOK, SpiritDiveWindRules.parse("garbage"));
         assertEquals(SpiritDiveWindRules.WindLook.REEL, SpiritDiveWindRules.parse(" reel "));

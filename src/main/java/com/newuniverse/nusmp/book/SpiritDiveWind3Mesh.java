@@ -24,6 +24,8 @@ public final class SpiritDiveWind3Mesh {
     /** Every mesh of the look (the generator writes exactly these). */
     public static final List<String> NAMES = List.of("sword", "bow", "arrow", "spear", "blade", "feather", "cube", "panel", "plate", "crown");
     public static final String DIR = "/assets/nusmp/sdw3_meshes/";
+    /** The mesh folder of the final Wind A (the 3D crown, {@code tools/gen_sdw4_models.py}); loaded by the same code through {@link #getIn}. */
+    public static final String FOLDER3 = "sdw3_meshes", FOLDER4 = "sdw4_meshes";
     /** The shade of a face: the light comes from the front, a little from above and the side (mesh space: x across, y along the piece, z through it). */
     private static final float LX = 0.30f, LY = 0.35f, LZ = 0.89f;
 
@@ -63,26 +65,32 @@ public final class SpiritDiveWind3Mesh {
     private static final SpiritDiveWind3Mesh EMPTY = parse("empty", List.of());
 
     /** The mesh of that name (read once, shared); the empty mesh when the file is missing (nothing is drawn, the self-test reports it). */
-    public static SpiritDiveWind3Mesh get(String name) {
-        SpiritDiveWind3Mesh m = CACHE.get(name);
+    public static SpiritDiveWind3Mesh get(String name) { return getIn(FOLDER3, name); }
+
+    /** The mesh of that name in a mesh folder ({@link #FOLDER3} or {@link #FOLDER4}), read once and shared. */
+    public static SpiritDiveWind3Mesh getIn(String folder, String name) {
+        String key = folder + "/" + name;
+        SpiritDiveWind3Mesh m = CACHE.get(key);
         if (m != null) return m;
-        List<String> lines = read(name);
+        List<String> lines = read(folder, name);
         m = lines == null ? EMPTY : parse(name, lines);
-        CACHE.put(name, m);
+        CACHE.put(key, m);
         return m;
     }
 
     /** True when the file of that name could be read. */
-    public static boolean exists(String name) { return read(name) != null; }
+    public static boolean exists(String name) { return read(FOLDER3, name) != null; }
 
-    private static List<String> read(String name) {
-        try (InputStream in = SpiritDiveWind3Mesh.class.getResourceAsStream(DIR + name + ".txt")) {
+    public static boolean existsIn(String folder, String name) { return read(folder, name) != null; }
+
+    private static List<String> read(String folder, String name) {
+        try (InputStream in = SpiritDiveWind3Mesh.class.getResourceAsStream("/assets/nusmp/" + folder + "/" + name + ".txt")) {
             if (in != null) {
                 try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) { return r.lines().toList(); }
             }
         } catch (IOException ignored) { }
         try {
-            Path p = Path.of("src", "main", "resources", "assets", "nusmp", "sdw3_meshes", name + ".txt");
+            Path p = Path.of("src", "main", "resources", "assets", "nusmp", folder, name + ".txt");
             if (Files.isRegularFile(p)) return Files.readAllLines(p, StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException ignored) { }
         return null;

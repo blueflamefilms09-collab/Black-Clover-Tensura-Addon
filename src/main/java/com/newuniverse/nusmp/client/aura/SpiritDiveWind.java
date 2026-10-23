@@ -12,6 +12,7 @@ import com.newuniverse.nusmp.book.SpiritDiveReelRules.Pal;
 import com.newuniverse.nusmp.book.SpiritDiveTier;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Grade;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
+import com.newuniverse.nusmp.book.SpiritDiveWind4Rules;
 import com.newuniverse.nusmp.book.SpiritDiveWindGeometry;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules.Spec;
@@ -85,22 +86,27 @@ public final class SpiritDiveWind {
         float k = casting ? 1.35f : 1f, lit = pulse * k;
         boolean self1p = firstPersonSelf(c);
         int mask = SpiritDivePieces.shellParts(el, st), keptMask = upgrade ? SpiritDivePieces.shellParts(el, Stage.HALF) & mask : 0;
+        float e = real3d ? SpiritDiveWind4.energy(c, casting) : 1f;                                          // 4.x final A: 1 loud (entry, exit, a cast) .. 0 the quiet steady state
+        if (e <= SpiritDiveWind4Rules.QUIET) sp = SpiritDiveWind4Rules.calmSpec(sp);                         // the loud effects have faded out: the quiet set (no ribbons, no circle, a quarter of the sparkles)
 
         SpiritDiveAnimeShell.draw(c, el, sp.shellPasses(), pal.body(), pal.rim(), pal.glow(), pulse * k, SpiritDiveReelRules.assemble(u), mask, false, false, keptMask, k);
-        if (!self1p && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) crown(c, sp, character, pal, u, uk, upgrade, half, lit);
-        if (sp.wrists() > 0) wrists(c, sp, pal, u, uk, mask, keptMask, lit);
+        if (!self1p && SpiritDiveReelRules.crowned(el, st) && sp.bars() > 0) {
+            if (real3d && lod == Lod.FULL) SpiritDiveWind4.crown(c, character, pal, u, uk, upgrade, half, lit, e);   // the crown is a real 3D layer at full detail
+            else crown(c, sp, character, pal, u, uk, upgrade, half, lit);
+        }
+        if (sp.wrists() > 0) wrists(c, sp, pal, u, uk, mask, keptMask, lit, e);
         PoseStack pose = c.pose();
         pose.pushPose();                                                                                    // the body frame in px, the camera read in it
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
         SpiritDiveAnimeRibbon.camera(pose);
         leaves(c, sp, lod, character, pal, st, u, uk, half, lit);
-        if (full && sp.backCircle()) backCircle(c, pal, SpiritDiveReelRules.settle(u), lit);
-        if (real3d) { if (full && lod == Lod.FULL) SpiritDiveWind3.weaponsA(c, pal, character, casting, SpiritDiveReelRules.weapon(u), lit, pulse); }
+        if (full && sp.backCircle()) backCircle(c, pal, SpiritDiveReelRules.settle(u) * e, lit);
+        if (real3d) { if (full && lod == Lod.FULL) SpiritDiveWind3.weaponsA(c, pal, character, casting, SpiritDiveReelRules.weapon(u), lit, pulse, e); }
         else if (full && sp.weapon()) weapon(c, pal, SpiritDiveWindRules.weapon(casting), SpiritDiveReelRules.weapon(u), lit, pulse);
-        if (full && sp.ribbons() > 0) ribbons(c, sp, SpiritDiveReelRules.settle(u));
+        if (full && sp.ribbons() > 0) ribbons(c, sp, SpiritDiveReelRules.settle(u) * e);
         if (u < SpiritDiveReelRules.ENTRY_TICKS - 0.5f && reel.ribbons() > 0 && !upgrade) SpiritDiveReel.ribbons(c, reel, el, pal, u);
         pose.popPose();
-        extras(c, sp, reel, pal, st, u, uk, full, lit, pulse, lod);
+        extras(c, sp, reel, pal, st, u, uk, full, lit, pulse, lod, e);
     }
 
     // ------------------------------------------------------------------ the crown (head frame, px)
@@ -151,19 +157,23 @@ public final class SpiritDiveWind {
     }
 
     // ------------------------------------------------------------------ the wrist circles (arm frame, px)
-    static void wrists(AuraContext c, Spec sp, Pal pal, float u, float uk, int mask, int keptMask, float lit) {
+    static void wrists(AuraContext c, Spec sp, Pal pal, float u, float uk, int mask, int keptMask, float lit) { wrists(c, sp, pal, u, uk, mask, keptMask, lit, 1f); }
+
+    /** The same with the energy {@code e} of the final A: below 1 the wrist ring breathes at a low alpha and the facing sprite fades out (the quiet state). */
+    static void wrists(AuraContext c, Spec sp, Pal pal, float u, float uk, int mask, int keptMask, float lit, float e) {
         boolean slim = WaterAuraRig.slim(c.model());
         int drawn = 0;
         if ((mask & SpiritDivePieces.SHELL_ARM_L) != 0 && drawn < sp.wrists()) {                                // the left hand is the casting hand of the pack
-            wrist(c, c.model().leftArm, false, slim, (keptMask & SpiritDivePieces.SHELL_ARM_L) != 0 ? 1f : SpiritDiveReelRules.gauntlet(u), pal, lit);
+            wrist(c, c.model().leftArm, false, slim, (keptMask & SpiritDivePieces.SHELL_ARM_L) != 0 ? 1f : SpiritDiveReelRules.gauntlet(u), pal, lit, e);
             drawn++;
         }
-        if ((mask & SpiritDivePieces.SHELL_ARM_R) != 0 && drawn < sp.wrists()) wrist(c, c.model().rightArm, true, slim, (keptMask & SpiritDivePieces.SHELL_ARM_R) != 0 ? 1f : SpiritDiveReelRules.gauntlet(u), pal, lit);
+        if ((mask & SpiritDivePieces.SHELL_ARM_R) != 0 && drawn < sp.wrists()) wrist(c, c.model().rightArm, true, slim, (keptMask & SpiritDivePieces.SHELL_ARM_R) != 0 ? 1f : SpiritDiveReelRules.gauntlet(u), pal, lit, e);
     }
 
     /** One wrist circle: the ring of crosses in the plane perpendicular to the arm (seen from both sides) and a copy that always faces the viewer, so the ring reads from every side. */
-    private static void wrist(AuraContext c, ModelPart arm, boolean right, boolean slim, float g, Pal pal, float lit) {
+    private static void wrist(AuraContext c, ModelPart arm, boolean right, boolean slim, float g, Pal pal, float lit, float e) {
         float a = Math.min(1f, g * 1.2f);
+        if (e < 1f) a *= SpiritDiveWind4Rules.WRIST_CALM + SpiritDiveWind4Rules.WRIST_PULSE * Mth.sin(c.age() * 0.09f + (right ? 1.7f : 0f)) + (1f - SpiritDiveWind4Rules.WRIST_CALM) * e;   // a low breath when quiet
         if (a <= 0.02f) return;
         PoseStack pose = c.pose();
         pose.pushPose();
@@ -172,7 +182,8 @@ public final class SpiritDiveWind {
         float cx = (right ? -1f : 1f) * (slim ? 0.5f : 1f), spin = c.age() * (right ? -0.04f : 0.045f), s = Math.min(1.1f, g);
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(WRIST));
         SpiritDiveReelPieces.ringFlat(pose, vc, cx, SpiritDiveWindGeometry.WRIST_Y, 0f, SpiritDiveWindGeometry.WRIST_PLANE * s, spin, 0f, SealDraw.argb(Math.min(1f, 0.9f * a * lit), 0xFFFFFF));
-        SealDraw.glow(pose, vc, cx, SpiritDiveWindGeometry.WRIST_Y, 0f, SpiritDiveWindGeometry.WRIST_SPRITE * s, spin * 0.5f, SealDraw.argb(Math.min(1f, 0.7f * a * lit), pal.light()), FB);
+        if (e > SpiritDiveWind4Rules.QUIET)
+            SealDraw.glow(pose, vc, cx, SpiritDiveWindGeometry.WRIST_Y, 0f, SpiritDiveWindGeometry.WRIST_SPRITE * s, spin * 0.5f, SealDraw.argb(Math.min(1f, 0.7f * a * lit * e), pal.light()), FB);
         pose.popPose();
     }
 
@@ -283,28 +294,34 @@ public final class SpiritDiveWind {
     }
 
     // ------------------------------------------------------------------ the rest (block frame)
-    static void extras(AuraContext c, Spec sp, SpiritDiveReelRules.Spec reel, Pal pal, Stage st, float u, float uk, boolean full, float lit, float pulse, Lod lod) {
+    static void extras(AuraContext c, Spec sp, SpiritDiveReelRules.Spec reel, Pal pal, Stage st, float u, float uk, boolean full, float lit, float pulse, Lod lod) { extras(c, sp, reel, pal, st, u, uk, full, lit, pulse, lod, 1f); }
+
+    /** The same with the energy {@code e} of the final A: the ground ring is dimmed and the extra sparkles fade out when quiet. */
+    static void extras(AuraContext c, Spec sp, SpiritDiveReelRules.Spec reel, Pal pal, Stage st, float u, float uk, boolean full, float lit, float pulse, Lod lod, float e) {
         PoseStack pose = c.pose();
         float age = c.age(), set = SpiritDiveReelRules.settle(Math.max(u, uk));
         SealDraw.camera(pose);
         pose.pushPose();                                                                                    // the ring on the ground, turning slowly
         pose.translate(0f, 1.478f, 0f);
-        SealDraw.flat(pose, c.buffers().getBuffer(SafeAdditive.additive(GROUND)), 0.95f * (0.55f + 0.45f * set), age * 0.6f, SealDraw.argb(0.8f * set * pulse, pal.glow()), FB);
+        SealDraw.flat(pose, c.buffers().getBuffer(SafeAdditive.additive(GROUND)), 0.95f * (0.55f + 0.45f * set), age * 0.6f, SealDraw.argb(0.8f * set * pulse * (e < 1f ? SpiritDiveWind4Rules.GROUND_CALM + (1f - SpiritDiveWind4Rules.GROUND_CALM) * e : 1f), pal.glow()), FB);
         pose.popPose();
         if (lod == Lod.FAR) return;
-        if (full && sp.sparks() > 0) sparks(c, sp, pal, set, age);
+        if (full && sp.sparks() > 0) sparks(c, sp, pal, set, age, e <= SpiritDiveWind4Rules.QUIET ? sp.sparks() : e < 1f ? SpiritDiveWind4Rules.calmSparks(sp) : sp.sparks(), e);
         if (lod != Lod.FULL) return;
         SpiritDiveReel.entry(c, reel, Element.WIND, pal, u, st, SpiritDiveWindRules.CAGE_RGB);
     }
 
     /** Four-point sparkles drifting up round the body (the white stars of Spirit of Zephyr). */
-    static void sparks(AuraContext c, Spec sp, Pal pal, float set, float age) {
+    static void sparks(AuraContext c, Spec sp, Pal pal, float set, float age) { sparks(c, sp, pal, set, age, sp.sparks(), 1f); }
+
+    /** The same keeping the first {@code keep} sparkles at full strength and fading the rest with the energy {@code e} (the quiet state of the final A). */
+    static void sparks(AuraContext c, Spec sp, Pal pal, float set, float age, int keep, float e) {
         PoseStack pose = c.pose();
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(STAR));
         for (int i = 0; i < sp.sparks(); i++) {
             SpiritDiveReelGeometry.spark(SPARK_POS, i, age);
             float ph = SPARK_POS[3];
-            SealDraw.glow(pose, vc, SPARK_POS[0], 1.5f - SPARK_POS[1], SPARK_POS[2], 0.07f + 0.05f * (1f - ph), age * 0.04f + i, SealDraw.argb(Mth.sin(ph * Mth.PI) * 0.95f * set, i % 3 == 0 ? pal.glow() : 0xFFFFFF), FB);
+            SealDraw.glow(pose, vc, SPARK_POS[0], 1.5f - SPARK_POS[1], SPARK_POS[2], 0.07f + 0.05f * (1f - ph), age * 0.04f + i, SealDraw.argb(Mth.sin(ph * Mth.PI) * 0.95f * set * (i < keep ? 1f : e), i % 3 == 0 ? pal.glow() : 0xFFFFFF), FB);
         }
     }
 

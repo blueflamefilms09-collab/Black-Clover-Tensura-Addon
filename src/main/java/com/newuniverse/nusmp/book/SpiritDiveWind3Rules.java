@@ -112,6 +112,9 @@ public final class SpiritDiveWind3Rules {
     /** Vertices of the sword mesh as the version draws it (all layers; the layers named by {@code spec.sword}). */
     public static int swordVerts(int kind) { return kind == 1 ? mv("sword", ALL) : kind == 2 ? mv("blade", SOLID_GLOW) : 0; }
 
+    /** Zephyr's sword without its crossed rings (the quiet steady state of the final A draws it that way). */
+    public static int swordVertsCalm() { return mv("sword", SOLID_GLOW); }
+
     public static int bowVerts() { return mv("bow", ALL); }
 
     public static int arrowVerts() { return mv("arrow", ALL); }
@@ -178,7 +181,7 @@ public final class SpiritDiveWind3Rules {
             SpiritDiveWindRules.Spec p = SpiritDiveWindRules.spec(character, lod);
             if (full && p.weapon()) v -= Math.max(SpiritDiveWindRules.SWORD_VERTICES, SpiritDiveWindRules.BOW_VERTICES);
             if (full) v += swordVerts(s.sword()) + (s.bow() > 0 ? bowVerts() : 0) + (s.arrow() ? arrowVerts() : 0);
-            return v;
+            return v + SpiritDiveWind4Rules.crownDelta(character, lod, st);                                   // 4.x final A: the sprite crown of the pack look is a real 3D crown at full detail
         }
         int v = base(character, lod, st);
         if (lod == Lod.FAR) return v;
@@ -194,4 +197,13 @@ public final class SpiritDiveWind3Rules {
 
     /** The cap a tier is held to. */
     public static int cap(boolean character) { return character ? CAP_CHARACTER : CAP_STANDARD; }
+
+    /**
+     * The cap of a design: the same for B and C; design A, whose crown is a real 3D mesh since 4.x, gets {@link #CAP_CHARACTER_A} for the character tier (the entry spike only: the quiet steady state is far
+     * below, see {@link SpiritDiveWind4Rules#steadyVertices}).
+     */
+    public static int cap(Ver ver, boolean character) { return ver == Ver.A && character ? CAP_CHARACTER_A : cap(character); }
+
+    /** The character-tier cap of design A (the entry of the 22 ticks with the 3D crown lit and a bow drawn in a cast, worst case). */
+    public static final int CAP_CHARACTER_A = 4600;
 }
