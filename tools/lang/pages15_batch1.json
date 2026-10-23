@@ -9,5 +9,16 @@
   "nusmp.page.book_explosion.blast_leap": "You detonate the ground under your feet, hurting foes within 3.5 blocks, and ride the blast high and forward, then float down softly for two seconds.",
   "nusmp.page.book_explosion.carpet_blast": "Five blasts walk away from you in a straight line, three blocks apart and five ticks between them, shoving whatever stands in their path.",
   "nusmp.page.book_explosion.volatile_ground": "The ground where you aim turns to powder for 5 seconds: every 1.25 seconds it blows up under everything in 5.5 blocks.",
-  "nusmp.page.book_explosion.megaton_crater": "The book's heaviest charge: one huge blast at the aim point, 7 blocks wide, that burns and hurls up to ten foes. Needs Senior rank."
+  "nusmp.page.book_explosion.megaton_crater": "The book's heaviest charge: one huge blast at the aim point, 7 blocks wide, that burns and hurls up to ten foes. Needs Senior rank.",
+  "nusmp.page.book_storm.gust_jab": "A hard gust punches out in a 5 block cone and shoves up to four foes back.",
+  "nusmp.page.book_storm.static_snap": "A crackling spark flies where you look and snaps on impact, hitting everything within 2.5 blocks and slowing it for 1.5 seconds.",
+  "nusmp.page.book_storm.squall_step": "You ride a squall 8 blocks forward and knock aside everything on the way.",
+  "nusmp.page.book_storm.rain_curtain": "A curtain of rain falls around you for 10 seconds: it douses fire (fire resistance) and soaks two hearts of damage.",
+  "nusmp.page.book_storm.thunderhead_strike": "Calls a bolt out of the cloud deck onto the foe under your crosshair (28 blocks), hurting it for a bit more than a normal mid hit and slowing it.",
+  "nusmp.page.book_storm.hailstone_volley": "Five hailstones fan out ahead of you; each one slows its target for 2 seconds.",
+  "nusmp.page.book_storm.squall_front": "A wall of gale rolls 14 blocks ahead of you, 2.5 blocks wide, and drives everything in it back.",
+  "nusmp.page.book_storm.downburst": "A column of cold air slams down at the aim point, hitting foes within 5 blocks and pinning them with heavy slowness for 2 seconds.",
+  "nusmp.page.book_storm.thundercloud": "A small thundercloud follows you for 5 seconds and pelts everything within 6 blocks every second, lifting and pushing it.",
+  "nusmp.page.book_storm.tempest_barrage": "Calls a bolt down on each of up to eight foes within 12 blocks, one after another four ticks apart.",
+  "nusmp.page.book_storm.storm_maelstrom": "The whole storm collapses into one great whirl at the aim point, 8 blocks wide, that hurls up to ten foes into the air. Needs Senior rank."
 }

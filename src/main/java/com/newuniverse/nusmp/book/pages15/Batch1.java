@@ -78,6 +78,30 @@ public final class Batch1 {
                 Pages15Kit.signature("megaton_crater", "Megaton Crater",
                         nova(Tier.SIGNATURE, 7, true, VfxShape.MAGIC_CIRCLE_EXPLOSION, all(knock(1.5), ignite(4)))).withCooldown(900).withAnim("slam")));
 
+    private static final List<BookPage> STORM = register("book_storm", List.of(
+                Pages15Kit.starter("gust_jab", "Gust Jab",
+                        cone(Tier.STARTER, 5, 0.6, VfxShape.FX_WIND_GUST, knock(1.2))),
+                Pages15Kit.starter("static_snap", "Static Snap",
+                        bolt(Tier.STARTER, 2.5, VfxShape.LIGHTNING_SPEAR, null, slow(30, 1))),
+                Pages15Kit.starter("squall_step", "Squall Step",
+                        dash(Tier.STARTER, true, 8, false, VfxShape.FX_WIND_GUST, knock(0.5))).withCooldown(100).withAnim("thrust"),
+                Pages15Kit.mid("rain_curtain", "Rain Curtain",
+                        empower(Tier.MID, 200, false, VfxShape.WIND_RING, () -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0), () -> new MobEffectInstance(MobEffects.ABSORPTION, 200, 1))).withCooldown(360),
+                Pages15Kit.mid("thunderhead_strike", "Thunderhead Strike",
+                        cast(Tier.MID, c -> skyStrike(c, 28, 1.2f, VfxShape.STORM_BOLT, slow(40, 1)))).withCooldown(200),
+                Pages15Kit.mid("hailstone_volley", "Hailstone Volley",
+                        volley(Tier.MID, 5, false, VfxShape.WIND_SLASH, slow(40, 1))).withCooldown(220),
+                Pages15Kit.mid("squall_front", "Squall Front",
+                        line(Tier.MID, 14, 2.5, VfxShape.STORM_FRONT, knock(1.4))).withCooldown(240).withAnim("out"),
+                Pages15Kit.mid("downburst", "Downburst",
+                        nova(Tier.MID, 5, true, VfxShape.STORM_FALL, all(knock(1.0), slow(40, 2)))).withCooldown(260).withAnim("slam"),
+                Pages15Kit.zone("thundercloud", "Thundercloud",
+                        field(Tier.ZONE, 6, 100, 20, false, VfxShape.STORM_CLOUD, all(lift(0.25), knock(0.4)))).withCooldown(480),
+                Pages15Kit.zone("tempest_barrage", "Tempest Barrage",
+                        cast(Tier.ZONE, c -> smite(c, 12, 4, VfxShape.STORM_BOLT, NONE))).withCooldown(450),
+                Pages15Kit.signature("storm_maelstrom", "Storm Maelstrom",
+                        nova(Tier.SIGNATURE, 8, true, VfxShape.STORM_CLOUD, all(knock(1.5), lift(0.5)))).withCooldown(900).withAnim("slam")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

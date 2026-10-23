@@ -24,6 +24,17 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_explosion` | `carpet_blast` | Carpet Blast | zone | original | Five blasts walk away from you in a straight line, three blocks apart and five ticks between them, shoving whatever stands in their path. | custom strikes + FLAME_EXPLOSION | 8 targets, 5 packets, 5 delayed tasks |
 | `book_explosion` | `volatile_ground` | Volatile Ground | zone | original | The ground where you aim turns to powder for 5 seconds: every 1.25 seconds it blows up under everything in 5.5 blocks. | field + FLAME_EXPLOSION | 8 targets per pulse, 4 pulses |
 | `book_explosion` | `megaton_crater` | Megaton Crater | signature | original | The book's heaviest charge: one huge blast at the aim point, 7 blocks wide, that burns and hurls up to ten foes. Needs Senior rank. | nova + MAGIC_CIRCLE_EXPLOSION | 10 targets, 2 packets |
+| `book_storm` | `gust_jab` | Gust Jab | starter | original | A hard gust punches out in a 5 block cone and shoves up to four foes back. | cone + FX_WIND_GUST | 4 targets, 1-2 packets |
+| `book_storm` | `static_snap` | Static Snap | starter | original | A crackling spark flies where you look and snaps on impact, hitting everything within 2.5 blocks and slowing it for 1.5 seconds. | bolt + LIGHTNING_SPEAR | 4 targets, 1-2 packets |
+| `book_storm` | `squall_step` | Squall Step | starter | original | You ride a squall 8 blocks forward and knock aside everything on the way. | dash + FX_WIND_GUST | 4 targets on the line, 1 packet |
+| `book_storm` | `rain_curtain` | Rain Curtain | mid | original | A curtain of rain falls around you for 10 seconds: it douses fire (fire resistance) and soaks two hearts of damage. | empower + WIND_RING | self only |
+| `book_storm` | `thunderhead_strike` | Thunderhead Strike | mid | original | Calls a bolt out of the cloud deck onto the foe under your crosshair (28 blocks), hurting it for a bit more than a normal mid hit and slowing it. | custom skyStrike + STORM_BOLT | 1 target, 2 packets |
+| `book_storm` | `hailstone_volley` | Hailstone Volley | mid | original | Five hailstones fan out ahead of you; each one slows its target for 2 seconds. | volley + WIND_SLASH | 5 bolts, 6 targets |
+| `book_storm` | `squall_front` | Squall Front | mid | original | A wall of gale rolls 14 blocks ahead of you, 2.5 blocks wide, and drives everything in it back. | line + STORM_FRONT | 6 targets, 1-2 packets |
+| `book_storm` | `downburst` | Downburst | mid | original | A column of cold air slams down at the aim point, hitting foes within 5 blocks and pinning them with heavy slowness for 2 seconds. | nova + STORM_FALL | 6 targets, 1-2 packets |
+| `book_storm` | `thundercloud` | Thundercloud | zone | original | A small thundercloud follows you for 5 seconds and pelts everything within 6 blocks every second, lifting and pushing it. | field + STORM_CLOUD | 8 targets per pulse, 5 pulses |
+| `book_storm` | `tempest_barrage` | Tempest Barrage | zone | original | Calls a bolt down on each of up to eight foes within 12 blocks, one after another four ticks apart. | custom smite + STORM_BOLT | 8 targets, 8 packets, 8 delayed tasks |
+| `book_storm` | `storm_maelstrom` | Storm Maelstrom | signature | original | The whole storm collapses into one great whirl at the aim point, 8 blocks wide, that hurls up to ten foes into the air. Needs Senior rank. | nova + STORM_CLOUD | 10 targets, 2 packets |
 
 ## Research sources
 
@@ -41,7 +52,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 0 canon pages (most of them weakly sourced, see above), 11 original pages, 11 in all.
+Count: 0 canon pages (most of them weakly sourced, see above), 22 original pages, 22 in all.
 
 ## Character grimoires (set entries added)
 
@@ -49,7 +60,7 @@ Every page below is appended to the set file of the character (`exclusive: false
 (Calderos, Flame Armour, Phoenix Flare, Shining Flame Cross, Combo Eruption, Thunder Lance, Lightning Surge, Raijin's Thunder Drums, Thunderbird Cavalry, Tempest Ring, Thunder Sphere, Eye of the Storm) are listed where they fit a character's style.
 Several new Flame pages are shared by two or more characters, because the Fire book has only 33 pages for four grimoires of 15; that is this batch's own reading, not a statement that each of them uses each page in the series.
 
-
+* `kaiser` (book_storm): +12 entries: `gust_jab` 0.05, `squall_step` 0.12, `tempest_ring` 0.18, `rain_curtain` 0.25, `thunderhead_strike` 0.32, `squall_front` 0.40, `downburst` 0.46, `thundercloud` 0.55, `thunder_sphere` 0.62, `tempest_barrage` 0.70, `eye_of_the_storm` 0.82, `storm_maelstrom` 0.90.
 
 ## Worst case of the batch (rule 11)
 

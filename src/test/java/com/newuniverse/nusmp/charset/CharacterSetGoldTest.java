@@ -79,6 +79,13 @@ class CharacterSetGoldTest {
             Matcher bu = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(bulls);
             if (bu.find()) m.get(book).addAll(ids(bu.group(1)));      // the Black Bulls' twin class: Magna's Fire pages, Finral's Spatial page (counted for the 32-page budget)
         }
+        // "15 spells for every grimoire": the pages book.pages15.Batch1..8 append (same register("book", List.of(...)) shape)
+        for (int b = 1; b <= 8; b++) {
+            Path batch = SRC.resolve("book/pages15/Batch" + b + ".java");
+            if (!Files.isRegularFile(batch)) continue;
+            Matcher reg = Pattern.compile("register\\(\"(book_[a-z_]+)\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(code(batch));
+            while (reg.find()) if (m.containsKey(reg.group(1))) m.get(reg.group(1)).addAll(ids(reg.group(2)));
+        }
         return m;
     }
 

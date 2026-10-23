@@ -11,5 +11,18 @@
     "carpet_blast",
     "volatile_ground",
     "megaton_crater"
+  ],
+  "STORM": [
+    "gust_jab",
+    "static_snap",
+    "squall_step",
+    "rain_curtain",
+    "thunderhead_strike",
+    "hailstone_volley",
+    "squall_front",
+    "downburst",
+    "thundercloud",
+    "tempest_barrage",
+    "storm_maelstrom"
   ]
 }
