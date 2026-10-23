@@ -76,5 +76,10 @@
   "nusmp.page.book_nail.nail_hook": "Nail Hook: a nail is shot at the block or foe you aim at (3 to 18 blocks) and you are pulled across on it, with Slow Falling for 2.5 seconds. A way across, not a weapon.",
   "nusmp.page.book_nail.nail_lance": "Nail Lance: the nails of one hand are fused into a lance and driven twelve blocks ahead: every foe on the line is hit, slowed and nudged back. Damage scales with your EP.",
   "nusmp.page.book_nail.nail_hardening": "Hardened Nails: your nails harden to steel for twelve seconds: your melee hits deal extra damage. Bonus scales with your EP.",
-  "nusmp.page.book_nail.nail_thicket": "Nail Thicket: nails sprout from the ground where you look for four seconds: every half second the foes within four and a half blocks take a pulse, are slowed and wither. Damage scales with your EP."
+  "nusmp.page.book_nail.nail_thicket": "Nail Thicket: nails sprout from the ground where you look for four seconds: every half second the foes within four and a half blocks take a pulse, are slowed and wither. Damage scales with your EP.",
+  "nusmp.page.book_scale.scale_dart": "Scale Dart: a single sharp scale is flicked at the first foe or wall it meets and bursts there; foes within 1.2 blocks are hit and weakened for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_scale.scale_slide": "Scale Slide: the scales under your feet lie flat and you slide eight blocks forward in a moment (the furthest free spot, never inside a wall). A pure move, no damage.",
+  "nusmp.page.book_scale.scale_cyclone": "Scale Cyclone: your scales spin off you in a ring: foes within four and a half blocks are hit and flung outward. Damage scales with your EP.",
+  "nusmp.page.book_scale.scale_dragon_tail": "Dragon Tail Sweep: a tail of scales lashes eight blocks ahead in a broad band: every foe in it is hit and thrown aside. Damage scales with your EP.",
+  "nusmp.page.book_scale.scale_reef": "Scale Reef: a reef of scales rises where you look for four seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP."
 }

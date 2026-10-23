@@ -95,6 +95,11 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_nail` | `nail_lance` | Nail Lance | mid | original | Nail Lance: the nails of one hand are fused into a lance and driven twelve blocks ahead: every foe on the line is hit, slowed and nudged back. Damage scales with your EP. | line + NAIL_FX1 | 6 targets, 2 packets |
 | `book_nail` | `nail_hardening` | Hardened Nails | mid | canon: en-wiki: Hischer Ongg (Nail Magic: he lengthens and hardens his fingernails at will; the spell name is the mod's) | Hardened Nails: your nails harden to steel for twelve seconds: your melee hits deal extra damage. Bonus scales with your EP. | empower + NAIL_FX3 | self only, 1 packet |
 | `book_nail` | `nail_thicket` | Nail Thicket | zone | original | Nail Thicket: nails sprout from the ground where you look for four seconds: every half second the foes within four and a half blocks take a pulse, are slowed and wither. Damage scales with your EP. | field (at aim) + NAIL_FX2 | 8 targets per pulse, 8 pulses, zone slot 1 |
+| `book_scale` | `scale_dart` | Scale Dart | starter | original | Scale Dart: a single sharp scale is flicked at the first foe or wall it meets and bursts there; foes within 1.2 blocks are hit and weakened for two seconds. Damage scales with your EP. | bolt + SCALE_FX | 4 targets, 3 packets |
+| `book_scale` | `scale_slide` | Scale Slide | starter | original | Scale Slide: the scales under your feet lie flat and you slide eight blocks forward in a moment (the furthest free spot, never inside a wall). A pure move, no damage. | dash (no hits) + SCALE_FX1 | self only, 2 packets |
+| `book_scale` | `scale_cyclone` | Scale Cyclone | mid | original | Scale Cyclone: your scales spin off you in a ring: foes within four and a half blocks are hit and flung outward. Damage scales with your EP. | nova + SCALE_FX3 | 6 targets, 2 packets |
+| `book_scale` | `scale_dragon_tail` | Dragon Tail Sweep | mid | original | Dragon Tail Sweep: a tail of scales lashes eight blocks ahead in a broad band: every foe in it is hit and thrown aside. Damage scales with your EP. | line (wide) + SCALE_FX1 | 6 targets, 2 packets |
+| `book_scale` | `scale_reef` | Scale Reef | zone | original | Scale Reef: a reef of scales rises where you look for four seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP. | field (at aim) + SCALE_FX2 | 8 targets per pulse, 8 pulses, zone slot 1 |
 
 ## Research sources
 
@@ -113,7 +118,7 @@ search summaries and from the repo's own copies of the English wiki (`.github/wi
 * **Scale Magic, Spike Magic, Modification Magic, Chain Magic, Barrier Magic, Butoh Magic, Recombination Magic, Transmutation Magic**: the repo wiki copies list only the spells that are already pages (Chain: Pitless Viper, Scorpio Chain,
   Heavy Chain, Magic Binding Iron Chain Formation; Barrier: Voodoo Regalia / Shangrila / Kingdom; Butoh: Sea God Slash / Descent); the searches found no further spell names. Grey's Transformation Magic (the wiki: she can
   transform other things, such as rocks) is the canon behind Living Statue; the squad's existing `character_spells` notes (repo) were read for Henry and Kiato. All other pages of these books are original, in the book's own naming.
-* **Counts**: 11 pages are marked canon (the ability the page uses is from a source, the page name is the mod's), 67 are original. No page is a 1:1 reproduction of a named canon spell.
+* **Counts**: 11 pages are marked canon (the ability the page uses is from a source, the page name is the mod's), 72 are original. No page is a 1:1 reproduction of a named canon spell.
 * **Could not be fetched at all**: every blackclover.fandom.com page (host closed to the sandbox: Seal Magic, Skin Magic, Tongue Magic, Switching Magic, Scale Magic, Spike Magic, Nail Magic, Hair Magic full text), the Japanese fandom / wikipedia
   pages of the same attributes (the searches returned only anime overview pages and shops), and Hischer Ongg's spell list.
 

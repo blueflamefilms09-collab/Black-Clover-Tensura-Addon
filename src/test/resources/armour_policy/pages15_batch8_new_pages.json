@@ -96,5 +96,12 @@
     "nail_lance",
     "nail_hardening",
     "nail_thicket"
+  ],
+  "SCALE": [
+    "scale_dart",
+    "scale_slide",
+    "scale_cyclone",
+    "scale_dragon_tail",
+    "scale_reef"
   ]
 }

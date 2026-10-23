@@ -415,6 +415,18 @@ public final class Batch8 {
             Pages15Kit.zone("nail_thicket", "Nail Thicket",
                     Pages15Kit.field(Tier.ZONE, 4.5, 80, 10, true, NL2, Pages15Kit.all(slow(30, 1), wither(30, 0)))).withCooldown(450)));
 
+    private static final List<BookPage> SCALE = register("book_scale", List.of(
+            Pages15Kit.starter("scale_dart", "Scale Dart",
+                    Pages15Kit.bolt(Tier.STARTER, 1.2, SC1, SC3, weak(40, 0))),
+            Pages15Kit.starter("scale_slide", "Scale Slide",
+                    Pages15Kit.dash(Tier.STARTER, false, 8, false, SC1, Pages15Kit.NONE)).withCooldown(100),
+            Pages15Kit.mid("scale_cyclone", "Scale Cyclone",
+                    Pages15Kit.nova(Tier.MID, 4.5, false, SC3, Pages15Kit.knock(0.9))).withCooldown(200).withAnim("slam"),
+            Pages15Kit.mid("scale_dragon_tail", "Dragon Tail Sweep",
+                    Pages15Kit.line(Tier.MID, 8, 2.0, SC1, Pages15Kit.knock(1.0))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.zone("scale_reef", "Scale Reef",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, SC2, Pages15Kit.all(slow(30, 1), weak(30, 0)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
