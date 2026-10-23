@@ -67,5 +67,13 @@
     "alchemic_salt_flats",
     "alchemic_iron_rain",
     "living_statue"
+  ],
+  "BUTOH": [
+    "butoh_hand_sway",
+    "butoh_heel_stamp",
+    "butoh_mirror_step",
+    "butoh_serpent_arm",
+    "butoh_echo_step",
+    "butoh_crescendo"
   ]
 }

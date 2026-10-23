@@ -349,6 +349,29 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1500).withAnim("slam")));
 
+    private static final List<BookPage> BUTOH = register("book_butoh", List.of(
+            Pages15Kit.starter("butoh_hand_sway", "Swaying Hand",
+                    Pages15Kit.cone(Tier.STARTER, 4.5, 0.4, B1, slow(30, 1))).withAnim("sweep"),
+            Pages15Kit.starter("butoh_heel_stamp", "Heel Stamp",
+                    Pages15Kit.nova(Tier.STARTER, 3.5, false, B3, Pages15Kit.knock(0.8))),
+            Pages15Kit.mid("butoh_mirror_step", "Mirror Step",
+                    Pages15Kit.dash(Tier.MID, true, 9, true, B1, Pages15Kit.knock(0.4))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("butoh_serpent_arm", "Serpent Arm",
+                    Pages15Kit.line(Tier.MID, 9, 1.0, B1, Pages15Kit.knock(-0.7))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("butoh_echo_step", "Echo of the Dancer",
+                    Pages15Kit.cast(Tier.MID, c -> {
+                    Vec3 at = c.caster.position();
+                    Fx fx = new Fx(c);
+                    c.circle(0.8f);
+                    fx.shape(VfxShape.BUTOH_AFTERIMAGE, at, at.add(0, 1, 0), 50, 1f);
+                    fx.shape(VfxShape.BUTOH_DANCE_RIPPLE, at.add(0, 0.05, 0), at, 40, 1.4f);
+                    vanish(c, 60);
+                    c.caster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 0));
+                    return true;
+                })).withCooldown(300),
+            Pages15Kit.zone("butoh_crescendo", "Crescendo",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, false, B2, Pages15Kit.all(jam(30), slow(30, 1)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
