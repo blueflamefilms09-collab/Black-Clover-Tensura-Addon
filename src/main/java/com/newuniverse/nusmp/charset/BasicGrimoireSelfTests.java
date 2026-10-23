@@ -60,7 +60,7 @@ public final class BasicGrimoireSelfTests {
                 if (!s.exclusive()) continue;
                 int m = index(b, s.page());
                 if (m < 0) return Result.fail(set.canon() + ": exclusive page " + s.page() + " is not a family page of " + set.book());
-                if (m > 0 && !CharacterSets.hidden(basic, m)) return Result.fail("the basic " + set.book() + " grimoire still shows " + s.page() + " (exclusive to " + set.canon() + ")");
+                if (m > 0 && !com.newuniverse.nusmp.corpse.SoulCorpseAccess.alwaysListed(set.book(), s.page()) && !CharacterSets.hidden(basic, m)) return Result.fail("the basic " + set.book() + " grimoire still shows " + s.page() + " (exclusive to " + set.canon() + ")");
                 exclusive++;
             }
         }

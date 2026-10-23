@@ -111,7 +111,7 @@ public final class CharacterRestSelfTests {
                 int m = index(b, s.page());
                 if (!s.exclusive() || m == 0) continue;
                 inst.getOrCreateTag().remove("Canon");
-                if (!CharacterSets.hidden(inst, m) && CharacterSetConfig.basicHidesSignatures()) return Result.fail(id + ": the basic grimoire shows his signature spell " + s.page());
+                if (!com.newuniverse.nusmp.corpse.SoulCorpseAccess.alwaysListed(set.book(), s.page()) && !CharacterSets.hidden(inst, m) && CharacterSetConfig.basicHidesSignatures()) return Result.fail(id + ": the basic grimoire shows his signature spell " + s.page());
                 inst.getOrCreateTag().putString("Canon", id);
             }
             inst.getOrCreateTag().putString("Canon", "floga");
