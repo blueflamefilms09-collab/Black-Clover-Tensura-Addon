@@ -1,5 +1,7 @@
 # Spirit Dive remake: the remade dives, the character tier and Fuegoleon's flaming arm
 
+> **Update (Djinn style):** the default look of the four dives is now the set of plates in the style of the Djinn Full Equip, see `docs/magic/spirit_dives_djinn.md`. The look described below is the client option `spiritDive.look = V2` (kept unchanged); `CLASSIC` is the 1.99 look.
+
 Owner request (round 1.99.x): "Remake all the Spirit Dives ... make the Fuegoleon user have his flaming arm when they acquire the spirit. If you need to remake the VFX, the effects must look 10x cooler
 than the non-Character-Grimoire users."
 

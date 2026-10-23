@@ -46,10 +46,11 @@ def crystal(p, bone, base, direction, length, width, mat, normal=(0, 0, -1)):
     body = length * 0.62
     c0 = b + d * (body / 2.0)
     M = frame(d, normal, 1, 2)
+    tipmat = mat.with_(base="FFE6A0", dark="B8741C", light="FFFFFF")                   # the point of a crystal is pale, the body deep
     p.cbox(bone, c0, (width, body, width * 0.8), mat, eul=euler_of(M))
     p.cbox(bone, c0, (width, body * 0.98, width * 0.8), mat, eul=euler_of(M @ rot_xyz(0, 45, 0)))
     tip0 = b + d * body
-    p.cbox(bone, tip0 + d * (length * 0.19), (width * 0.62, length * 0.38, width * 0.5), mat, eul=euler_of(M @ rot_xyz(0, 45, 0)))
+    p.cbox(bone, tip0 + d * (length * 0.19), (width * 0.62, length * 0.38, width * 0.5), tipmat, eul=euler_of(M @ rot_xyz(0, 45, 0)))
     return b + d * length
 
 
@@ -166,9 +167,9 @@ def _earth_crest(c):
         th = -180 + k * 360.0 / n
         out = unit(V3((math.sin(math.radians(th)), 0.0, -math.cos(math.radians(th)))))
         front = max(0.0, math.cos(math.radians(th)))
-        L = 3.2 + 3.6 * front ** 3 + 0.5 * (k % 2)
+        L = 2.8 + 3.0 * front ** 3 + 0.6 * (k % 2)
         base = cap.point(th, 33.2, 0.1)
-        crystal(p, "root", base, V3((0, 1, 0)) + out * (0.28 + 0.1 * (k % 3)), L, 2.0 if front > 0.9 else 1.5, P["gem"], normal=out)
+        crystal(p, "root", base, V3((0, 1, 0)) + out * (0.28 + 0.1 * (k % 3)), L, 1.7 if front > 0.9 else 1.25, P["gem"], normal=out)
     for sx in (0, 1):                                          # a small crystal cluster at each temple
         crystal(p, "root", V(-4.9, 30.6, -0.6, sx), V(-0.7, 0.9, 0.0, sx), 3.8, 1.5, P["gem"], normal=V(0, 0, -1, sx))
         crystal(p, "root", V(-4.9, 30.2, 0.8, sx), V(-0.8, 0.5, 0.4, sx), 2.8, 1.2, P["gem"], normal=V(0, 0, -1, sx))
@@ -246,8 +247,8 @@ def backcrystals(c):
     flat_plate(p, "root", V3((0, 19.0, 2.95)), V3((1, 0, 0)), V3((0, 1, 0)), 7.6, 8.0, P["main"].with_(grooves=1), thick=1.0, outward=V3((0, 0, 1)), nu=3, nv=3)
     flat_plate(p, "root", V3((0, 23.2, 3.0)), V3((1, 0, 0)), V3((0, 1, 0)), 8.4, 0.9, P["trim"], thick=1.1, outward=V3((0, 0, 1)))
     flat_plate(p, "root", V3((0, 14.9, 3.0)), V3((1, 0, 0)), V3((0, 1, 0)), 6.6, 0.9, P["trim"], thick=1.1, outward=V3((0, 0, 1)))
-    prisms = [(0.0, 21.5, 0.0, 12.0, 2.6), (-2.6, 21.0, -0.3, 9.0, 2.2), (2.6, 21.0, 0.3, 9.4, 2.2), (-4.4, 20.2, -0.7, 6.4, 1.8), (4.4, 20.2, 0.7, 6.8, 1.8), (-1.3, 22.0, 0.15, 8.0, 1.8),
-              (1.3, 22.0, -0.15, 7.4, 1.7)]
+    prisms = [(0.0, 21.5, 0.0, 9.6, 2.1), (-2.6, 21.0, -0.3, 7.4, 1.8), (2.6, 21.0, 0.3, 7.8, 1.8), (-4.4, 20.2, -0.7, 5.2, 1.5), (4.4, 20.2, 0.7, 5.6, 1.5), (-1.3, 22.0, 0.15, 6.4, 1.5),
+              (1.3, 22.0, -0.15, 6.0, 1.4)]
     for k, (x, y, lean, L, w) in enumerate(prisms):
         crystal(p, "root", V3((x, y, 3.8)), V3((lean * 0.5 + x * 0.09, 1.0, 0.18)), L, w, P["gem"], normal=V3((0, 0, 1)))
     return c.done(p)

@@ -212,13 +212,17 @@ class SpiritDiveDjinnAssetTest {
     }
 
     @Test
-    void theTexturesAreAtTheDjinnsDensityOrBetter() throws IOException {
-        // the Djinn atlas is 1024 px for a whole set (5.4 to 7.3 texels per model pixel); every piece of this kit is painted at 7 or more (standard) / 10 (character) texels per pixel
-        long painted = 0;
-        for (String[] p : allPieces()) {
-            BufferedImage img = ImageIO.read(ASSETS.resolve("textures/entity/" + p[2] + ".png").toFile());
-            painted += (long) img.getWidth() * img.getHeight();
+    void theCharacterSetsPaintMoreTexelsThanTheDjinnsWholeAtlasAndTheStandardSetsAreNotBlank() throws IOException {
+        // the Djinn atlas is one 1024 x 1024 sheet for a whole set (5.4 to 7.3 texels per model pixel); the character sets are painted at 10 texels a pixel, the standard sets at 7
+        for (String set : sets()) {
+            long painted = 0;
+            for (String[] p : allPieces()) {
+                if (!p[0].equals(set)) continue;
+                BufferedImage img = ImageIO.read(ASSETS.resolve("textures/entity/" + p[2] + ".png").toFile());
+                painted += (long) img.getWidth() * img.getHeight();
+            }
+            if (set.endsWith("_c")) assertTrue(painted >= 1024L * 1024L, set + " paints " + painted + " texels, fewer than the Djinn's 1024 x 1024 atlas");
+            else assertTrue(painted >= 250_000L, set + " paints only " + painted + " texels");
         }
-        assertTrue(painted > 1024L * 1024L, "painted texels in total: " + painted);
     }
 }

@@ -66,7 +66,7 @@ _FIRE = dict(
     feather=("feather", "C02A20", "50080A", "FF8A40", "FF7A22", 0.7, "E0B040", {}),
 )
 _WATER = dict(
-    main=("plate", "7CB8E4", "1A4272", "E8F8FF", "A8E4FF", 0.8, "E6EEF8", dict(trim=1, grooves=1, inlay=2)),
+    main=("plate", "4E92D2", "0E2C5A", "BEE6FF", "A8E4FF", 0.8, "E6EEF8", dict(trim=1, grooves=1, inlay=2)),
     alt=("plate", "E6F2F8", "6A8A9C", "FFFFFF", "A8E4FF", 0.5, "E6EEF8", dict(trim=1, grooves=1, wear=0.25)),
     trim=SILVER,
     hot=("steel", "E8FCFF", "6A8AA0", "FFFFFF", "B8F0FF", 1.0, "E6EEF8", dict(wear=0.2, rivets=0)),
@@ -81,7 +81,7 @@ _EARTH = dict(
     alt=("plate", "5E6C48", "1A2012", "9CB078", "FFB040", 0.4, "B49A3C", dict(trim=1, grooves=1, wear=0.5, inlay=1)),
     trim=MOSSGOLD,
     hot=("plate", "4A4438", "12100C", "8A806A", "FFB040", 0.9, None, dict(inlay=2, wear=0.4)),
-    gem=("gem", "FFB040", "8A4A08", "FFE8A8", "FFC860", 1.0, None, {}),
+    gem=("gem", "E8921C", "5A2E04", "FFD890", "FFC860", 1.0, None, {}),
     cloth=("cloth", "4E6034", "161E0C", "8CA860", "C8E070", 0.3, "B49A3C", dict(trim=1, wear=0.0, shine=0.1)),
     leather=("leather", "4A3220", "1A0E06", "9A7248", None, 0.0, None, dict(wear=0.0, shine=0.25)),
     glass=("crystal", "FFC868", "A86A10", "FFF4C8", "FFD070", 0.95, None, dict(alpha=200, cells=5)),
