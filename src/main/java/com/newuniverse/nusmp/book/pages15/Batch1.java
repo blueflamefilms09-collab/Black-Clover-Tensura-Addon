@@ -126,6 +126,28 @@ public final class Batch1 {
                 Pages15Kit.signature("crimson_loom", "Crimson Loom",
                         nova(Tier.SIGNATURE, 8, true, VfxShape.THREAD_WEB, all(slow(80, 3), pull(0.8)))).withCooldown(900).withAnim("slam")));
 
+    private static final List<BookPage> MAGMA = register("book_magma", List.of(
+                Pages15Kit.starter("ember_splash", "Ember Splash",
+                        cone(Tier.STARTER, 5, 0.5, VfxShape.FLAME_TRAIL, ignite(4))),
+                Pages15Kit.starter("lava_whip", "Lava Whip",
+                        line(Tier.STARTER, 9, 1.0, VfxShape.FLAME_TRAIL, ignite(3))).withCooldown(90).withAnim("sweep"),
+                Pages15Kit.starter("molten_stride", "Molten Stride",
+                        dash(Tier.STARTER, true, 6, false, VfxShape.FLAME_TRAIL, ignite(3))).withCooldown(110).withAnim("thrust"),
+                Pages15Kit.mid("obsidian_crust", "Obsidian Crust",
+                        empower(Tier.MID, 200, true, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 0), () -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0))).withCooldown(380),
+                Pages15Kit.mid("magma_geyser", "Magma Geyser",
+                        nova(Tier.MID, 4, true, VfxShape.FIRE_PILLAR, all(lift(0.6), ignite(4)))).withCooldown(220).withAnim("slam"),
+                Pages15Kit.mid("slag_shower", "Slag Shower",
+                        volley(Tier.MID, 5, false, VfxShape.FLAME_TRAIL, ignite(3))).withCooldown(230),
+                Pages15Kit.mid("molten_fist", "Molten Fist",
+                        cone(Tier.MID, 3.5, 0.8, VfxShape.FLAME_EXPLOSION, all(ignite(5), knock(1.4)))).withCooldown(190).withAnim("thrust"),
+                Pages15Kit.zone("lava_flow", "Lava Flow",
+                        line(Tier.ZONE, 14, 2.5, VfxShape.EARTH_SPIKES, all(ignite(5), slow(40, 1)))).withCooldown(380).withAnim("out"),
+                Pages15Kit.zone("pyroclastic_surge", "Pyroclastic Surge",
+                        cone(Tier.ZONE, 9, 0.35, VfxShape.FIRE_WILD, all(ignite(5), knock(1.2)))).withCooldown(420).withAnim("out"),
+                Pages15Kit.signature("supervolcano", "Supervolcano",
+                        nova(Tier.SIGNATURE, 8, false, VfxShape.FIRE_WILD, all(ignite(6), lift(0.7), knock(1.2)))).withCooldown(1000).withAnim("slam")));
+
 
     // ---------------------------------------------------------------- riders (what a hit does besides damage)
     private static ElementBook.Rider slow(int ticks, int amp) { return Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, amp)); }

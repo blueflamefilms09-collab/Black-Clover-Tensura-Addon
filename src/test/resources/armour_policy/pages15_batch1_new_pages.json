@@ -37,5 +37,17 @@
     "thousand_threads",
     "thread_cage",
     "crimson_loom"
+  ],
+  "MAGMA": [
+    "ember_splash",
+    "lava_whip",
+    "molten_stride",
+    "obsidian_crust",
+    "magma_geyser",
+    "slag_shower",
+    "molten_fist",
+    "lava_flow",
+    "pyroclastic_surge",
+    "supervolcano"
   ]
 }

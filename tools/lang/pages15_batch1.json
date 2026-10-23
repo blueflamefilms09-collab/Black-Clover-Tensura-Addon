@@ -31,5 +31,15 @@
   "nusmp.page.book_thread.stitching_threads": "Fine threads stitch wounds shut: you and every ally within 6 blocks recover 15 percent of their health (the healing decay applies). Grows out of her mending of clothes.",
   "nusmp.page.book_thread.thousand_threads": "Five homing threads leave your hands, each seeking a foe and hauling it a little toward you as it cuts.",
   "nusmp.page.book_thread.thread_cage": "Threads rise in a ring of 5 blocks at the aim point and close over up to eight foes: damage, heavy slowness and weakness for 3 seconds.",
-  "nusmp.page.book_thread.crimson_loom": "A great red web is woven at the aim point, 8 blocks wide: up to ten foes are hurt, hauled toward its centre and slowed for 4 seconds. Needs Senior rank."
+  "nusmp.page.book_thread.crimson_loom": "A great red web is woven at the aim point, 8 blocks wide: up to ten foes are hurt, hauled toward its centre and slowed for 4 seconds. Needs Senior rank.",
+  "nusmp.page.book_magma.ember_splash": "A spray of molten droplets across a 5 block cone burns every foe it touches for 4 seconds.",
+  "nusmp.page.book_magma.lava_whip": "A lash of liquid rock cracks 9 blocks ahead and sets whatever it strikes alight.",
+  "nusmp.page.book_magma.molten_stride": "You skate 6 blocks on a slick of lava, burning anything you pass through.",
+  "nusmp.page.book_magma.obsidian_crust": "Your skin cools to black glass for 10 seconds: resistance, fire resistance and a burn for those who strike you.",
+  "nusmp.page.book_magma.magma_geyser": "A geyser of magma bursts at the aim point, lifting up to six foes within 4 blocks and burning them for 4 seconds.",
+  "nusmp.page.book_magma.slag_shower": "Five clots of slag fly out in a fan; each one that lands burns its target for 3 seconds.",
+  "nusmp.page.book_magma.molten_fist": "Your fist glows white-hot: a narrow, short blow that burns for 5 seconds and drives the foe back hard.",
+  "nusmp.page.book_magma.lava_flow": "The ground splits and a river of lava runs 14 blocks ahead, 2.5 blocks wide, burning and slowing up to eight foes.",
+  "nusmp.page.book_magma.pyroclastic_surge": "A rolling cloud of hot ash and gas pours across a wide 9 block cone, burning and shoving everything in it.",
+  "nusmp.page.book_magma.supervolcano": "The land around you erupts in an 8 block ring: up to ten foes are burned for 6 seconds, thrown up and pushed away. Needs Senior rank."
 }

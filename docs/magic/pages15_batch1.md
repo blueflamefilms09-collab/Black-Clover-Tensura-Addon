@@ -46,6 +46,16 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_thread` | `thousand_threads` | Thousand Threads | zone | original | Five homing threads leave your hands, each seeking a foe and hauling it a little toward you as it cuts. | volley + THREAD_LINE | 5 bolts, 8 targets |
 | `book_thread` | `thread_cage` | Thread Cage | zone | original | Threads rise in a ring of 5 blocks at the aim point and close over up to eight foes: damage, heavy slowness and weakness for 3 seconds. | nova + THREAD_COCOON | 8 targets, 1-2 packets |
 | `book_thread` | `crimson_loom` | Crimson Loom | signature | original | A great red web is woven at the aim point, 8 blocks wide: up to ten foes are hurt, hauled toward its centre and slowed for 4 seconds. Needs Senior rank. | nova + THREAD_WEB | 10 targets, 2 packets |
+| `book_magma` | `ember_splash` | Ember Splash | starter | original | A spray of molten droplets across a 5 block cone burns every foe it touches for 4 seconds. | cone + FLAME_TRAIL | 4 targets, 1-2 packets |
+| `book_magma` | `lava_whip` | Lava Whip | starter | original | A lash of liquid rock cracks 9 blocks ahead and sets whatever it strikes alight. | line + FLAME_TRAIL | 4 targets, 1-2 packets |
+| `book_magma` | `molten_stride` | Molten Stride | starter | original | You skate 6 blocks on a slick of lava, burning anything you pass through. | dash + FLAME_TRAIL | 4 targets on the line, 1 packet |
+| `book_magma` | `obsidian_crust` | Obsidian Crust | mid | original | Your skin cools to black glass for 10 seconds: resistance, fire resistance and a burn for those who strike you. | empower + SPIRIT_AURA | self only |
+| `book_magma` | `magma_geyser` | Magma Geyser | mid | original | A geyser of magma bursts at the aim point, lifting up to six foes within 4 blocks and burning them for 4 seconds. | nova + FIRE_PILLAR | 6 targets, 1-2 packets |
+| `book_magma` | `slag_shower` | Slag Shower | mid | original | Five clots of slag fly out in a fan; each one that lands burns its target for 3 seconds. | volley + FLAME_TRAIL | 5 bolts, 6 targets |
+| `book_magma` | `molten_fist` | Molten Fist | mid | original | Your fist glows white-hot: a narrow, short blow that burns for 5 seconds and drives the foe back hard. | cone + FLAME_EXPLOSION | 6 targets, 1-2 packets |
+| `book_magma` | `lava_flow` | Lava Flow | zone | original | The ground splits and a river of lava runs 14 blocks ahead, 2.5 blocks wide, burning and slowing up to eight foes. | line + EARTH_SPIKES | 8 targets, 1-2 packets |
+| `book_magma` | `pyroclastic_surge` | Pyroclastic Surge | zone | original | A rolling cloud of hot ash and gas pours across a wide 9 block cone, burning and shoving everything in it. | cone + FIRE_WILD | 8 targets, 1-2 packets |
+| `book_magma` | `supervolcano` | Supervolcano | signature | original | The land around you erupts in an 8 block ring: up to ten foes are burned for 6 seconds, thrown up and pushed away. Needs Senior rank. | nova + FIRE_WILD | 10 targets, 2 packets |
 
 ## Research sources
 
@@ -63,7 +73,7 @@ What was found and used:
 
 Could not be fetched at all: every blackclover.fandom.com page (Flame, Lightning, Star, Sword, Reinforcement, Thread, Storm Magic and the character pages), the Japanese fandom wiki, ja.wikipedia (the search tool returned no hits for them). The repo wiki copies in `.github/wiki` have none of the ten books except Demon Fire, whose spells are all covered.
 
-Count: 0 canon pages (most of them weakly sourced, see above), 33 original pages, 33 in all.
+Count: 0 canon pages (most of them weakly sourced, see above), 43 original pages, 43 in all.
 
 ## Character grimoires (set entries added)
 
