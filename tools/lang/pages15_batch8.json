@@ -81,5 +81,10 @@
   "nusmp.page.book_scale.scale_slide": "Scale Slide: the scales under your feet lie flat and you slide eight blocks forward in a moment (the furthest free spot, never inside a wall). A pure move, no damage.",
   "nusmp.page.book_scale.scale_cyclone": "Scale Cyclone: your scales spin off you in a ring: foes within four and a half blocks are hit and flung outward. Damage scales with your EP.",
   "nusmp.page.book_scale.scale_dragon_tail": "Dragon Tail Sweep: a tail of scales lashes eight blocks ahead in a broad band: every foe in it is hit and thrown aside. Damage scales with your EP.",
-  "nusmp.page.book_scale.scale_reef": "Scale Reef: a reef of scales rises where you look for four seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP."
+  "nusmp.page.book_scale.scale_reef": "Scale Reef: a reef of scales rises where you look for four seconds: every half second the foes in it take a pulse, are slowed and weakened. Damage scales with your EP.",
+  "nusmp.page.book_spike.spike_jab": "Spike Jab: spikes jut from your arm in a narrow cone three and a half blocks long: foes in it are hit and slowed for a second and a half. Damage scales with your EP.",
+  "nusmp.page.book_spike.spike_vault": "Spike Vault: a spike thrust under you vaults you up and forward; you fall slowly for two seconds.",
+  "nusmp.page.book_spike.spike_lance": "Spike Lance: one great spike is thrust twelve blocks ahead and pierces every foe on the line, nudging it back. Damage scales with your EP.",
+  "nusmp.page.book_spike.spike_snare": "Spike Snare: spikes close round the foe in your crosshair like a cage and hold it (hard control: shares the twelve-second lock, three seconds on a player, a boss for one); it is weakened. Damage scales with your EP.",
+  "nusmp.page.book_spike.spike_garden": "Spike Garden: a garden of spikes grows where you look for five seconds: every half second the foes in it take a pulse and are slowed. Damage scales with your EP."
 }

@@ -427,6 +427,18 @@ public final class Batch8 {
             Pages15Kit.zone("scale_reef", "Scale Reef",
                     Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, SC2, Pages15Kit.all(slow(30, 1), weak(30, 0)))).withCooldown(450)));
 
+    private static final List<BookPage> SPIKE = register("book_spike", List.of(
+            Pages15Kit.starter("spike_jab", "Spike Jab",
+                    Pages15Kit.cone(Tier.STARTER, 3.5, 0.65, SP1, slow(30, 1))).withAnim("thrust"),
+            Pages15Kit.starter("spike_vault", "Spike Vault",
+                    leap(Tier.STARTER, 1.0, 0.6, 40, SP2)).withCooldown(120),
+            Pages15Kit.mid("spike_lance", "Spike Lance",
+                    Pages15Kit.line(Tier.MID, 12, 1.0, SP1, Pages15Kit.knock(0.4))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.mid("spike_snare", "Spike Snare",
+                    Pages15Kit.bind(Tier.MID, 14, false, SP2, weak(40, 0))).withCooldown(220),
+            Pages15Kit.zone("spike_garden", "Spike Garden",
+                    Pages15Kit.field(Tier.ZONE, 5, 100, 10, true, SP2, slow(30, 1))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

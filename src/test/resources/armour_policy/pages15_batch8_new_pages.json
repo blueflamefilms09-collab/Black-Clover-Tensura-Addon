@@ -103,5 +103,12 @@
     "scale_cyclone",
     "scale_dragon_tail",
     "scale_reef"
+  ],
+  "SPIKE": [
+    "spike_jab",
+    "spike_vault",
+    "spike_lance",
+    "spike_snare",
+    "spike_garden"
   ]
 }
