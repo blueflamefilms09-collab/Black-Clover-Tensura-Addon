@@ -63,6 +63,7 @@ public final class SpiritDiveReel {
     // ------------------------------------------------------------------ the entry point
     /** Called by {@link SpiritDiveAura} for the REEL look: one dive of {@code el} at {@code st} for the tier {@code grade}. */
     static void paint(AuraContext c, Element el, Stage st, Grade grade, float pulse) {
+        if (el == Element.WIND && SpiritDiveLook.windPack()) { SpiritDiveWind.paint(c, st, grade, pulse); return; }   // 3.4: the Wind of the owner's reference pack (client option spiritDive.windLook = REEL brings this Wind back)
         Lod lod = SpiritDiveTier.lod(SpiritDiveFrame.distSq(c));
         if (lod == Lod.CULLED) return;
         long t0 = PerfProbe.begin();
@@ -173,7 +174,7 @@ public final class SpiritDiveReel {
      * The spiral ribbons of the entry: one canonical helix spine, turned about the body for each ribbon (the geometry is shared), thin white-gold strips that always face the viewer and rise from
      * the feet over the head. {@code exiting} runs them downward (the clock runs backwards, the ribbons come back down).
      */
-    private static void ribbons(AuraContext c, Spec sp, Element el, Pal pal, float u) {
+    static void ribbons(AuraContext c, Spec sp, Element el, Pal pal, float u) {
         float a = SpiritDiveReelRules.ribbonAlpha(u);
         if (a <= 0.01f) return;
         PoseStack pose = c.pose();
@@ -207,7 +208,7 @@ public final class SpiritDiveReel {
         if (full && sp.orbit() > 0) orbit(c, sp, pal, set, age);
         if (full && sp.sparks() > 0) sparks(c, sp, pal, set, age);
         if (lod != Lod.FULL) return;
-        entry(c, sp, el, pal, u, st);
+        entry(c, sp, el, pal, u, st, CAGE_RGB);
     }
 
     private static void bands(AuraContext c, float set) {
@@ -244,7 +245,10 @@ public final class SpiritDiveReel {
     }
 
     /** The sprites that only exist during the entry: the flash at the chest, the ring running out over the ground, the cage of crossing circles. */
-    private static void entry(AuraContext c, Spec sp, Element el, Pal pal, float u, Stage st) {
+    /** The cream of the cage of circles of the REEL look; the PACK Wind passes its own mint. */
+    static final int CAGE_RGB = 0xFFF0C0;
+
+    static void entry(AuraContext c, Spec sp, Element el, Pal pal, float u, Stage st, int cageRgb) {
         if (u >= SpiritDiveReelRules.ENTRY_TICKS - 0.5f || st == Stage.UPGRADE) return;
         PoseStack pose = c.pose();
         float age = c.age();
@@ -263,11 +267,11 @@ public final class SpiritDiveReel {
             pose.popPose();
         }
         float cg = SpiritDiveReelRules.cage(u);
-        if (cg > 0.01f && sp.cage() > 0) cage(c, sp, cg, SpiritDiveReelRules.cageScale(u), age);
+        if (cg > 0.01f && sp.cage() > 0) cage(c, sp, cg, SpiritDiveReelRules.cageScale(u), age, cageRgb);
     }
 
     /** The sphere of crossing circles round the body: great circles at different tilts, each turning slowly, closing round the wearer as the entry runs. */
-    private static void cage(AuraContext c, Spec sp, float a, float scale, float age) {
+    private static void cage(AuraContext c, Spec sp, float a, float scale, float age, int cageRgb) {
         PoseStack pose = c.pose();
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(RING));
         for (int i = 0; i < Math.min(sp.cage(), SpiritDiveReelGeometry.CAGE.length); i++) {
@@ -282,7 +286,7 @@ public final class SpiritDiveReel {
             float ph = g[4] + age * g[5] * 0.5f, cs = Mth.cos(ph), sn = Mth.sin(ph), r = 1.15f * scale;
             float ax = (ux * cs + vx * sn) * r, ay = (uy * cs + vy * sn) * r, az = (uz * cs + vz * sn) * r;
             float bx = (-ux * sn + vx * cs) * r, by = (-uy * sn + vy * cs) * r, bz = (-uz * sn + vz * cs) * r;
-            int col = SealDraw.argb(0.8f * a, i % 2 == 0 ? 0xFFFFFF : 0xFFF0C0);
+            int col = SealDraw.argb(0.8f * a, i % 2 == 0 ? 0xFFFFFF : cageRgb);
             SealDraw.plane(pose, vc, 0f, 1.5f - g[0], 0f, ax, ay, az, bx, by, bz, false, col, FB);
             SealDraw.plane(pose, vc, 0f, 1.5f - g[0], 0f, ax, ay, az, bx, by, bz, true, col, FB);
         }

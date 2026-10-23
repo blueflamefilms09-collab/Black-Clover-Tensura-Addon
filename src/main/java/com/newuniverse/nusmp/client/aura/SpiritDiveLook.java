@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
 import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look;
+import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
 
 /**
  * Spirit Dive remake: what THIS client chooses to draw (the values come from the CLIENT config {@code nusmp-spiritdive-client.toml}, see {@link DiveClientConfig}; plain flags so the painters read them
@@ -20,6 +21,7 @@ public final class SpiritDiveLook {
 
     private static volatile boolean characterEffects = true, particles = true;
     private static volatile Look look = Look.REEL;
+    private static volatile WindLook windLook = WindLook.PACK;
     private static volatile FuegoleonArmRules.View armView = FuegoleonArmRules.View.ALWAYS;
 
     /** The look this client draws. */
@@ -36,6 +38,13 @@ public final class SpiritDiveLook {
 
     /** True for the remade look of 3.0.0 (the one before the Djinn style). */
     public static boolean v2() { return look == Look.V2; }
+
+    /** Which Wind the REEL look draws: PACK (the owner's reference pack of Yuno's Spirit Dive, the default since 3.4) or REEL (the Wind of 3.3: cube crown, cube gauntlets, hex-membrane wings). */
+    public static WindLook windLook() { return windLook; }
+
+    public static boolean windPack() { return windLook == WindLook.PACK; }
+
+    public static void setWindLook(WindLook which) { windLook = which == null ? WindLook.PACK : which; }
 
     public static boolean characterEffects() { return characterEffects; }
 
