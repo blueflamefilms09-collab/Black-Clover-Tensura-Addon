@@ -40,7 +40,52 @@
       "note": "Listed by the wiki as anime-only. The effect is inferred from the name (a violent tempest zone); no description was found." },
     { "page": "spirit_of_boreas", "name": "Wind Spirit Creation Magic: Spirit of Boreas", "ja": "", "origin": "anime", "exclusive": true, "source": "en_wiki",
       "acquire": { "type": "all", "of": [ { "type": "flag", "name": "saint_stage" }, { "type": "page_open", "page": "spirit_of_zephyr" } ] },
-      "note": "The wiki lists it as a Wind, Spirit and Creation Magic spell, offensive and close range. Saint Stage (near 100% resonance with Sylph) comes first." }
+      "note": "The wiki lists it as a Wind, Spirit and Creation Magic spell, offensive and close range. Saint Stage (near 100% resonance with Sylph) comes first." },
+    {
+      "page": "spirit_of_notos",
+      "name": "Wind Spirit Magic: Spirit of Notos",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "flag",
+            "name": "spirit_bond"
+          },
+          {
+            "type": "page_uses",
+            "page": "spirit_dive",
+            "count": 3
+          }
+        ]
+      },
+      "note": "Spirit of Notus (manga ch.360): a wind shield that pushes back attacks and enemies and gave Yuno room to land a hit on Lucius."
+    },
+    {
+      "page": "saint_spirit_of_zephyr",
+      "name": "Wind Spirit Creation Magic: Saint Spirit of Zephyr",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "flag",
+            "name": "saint_stage"
+          },
+          {
+            "type": "page_open",
+            "page": "spirit_of_zephyr"
+          }
+        ]
+      },
+      "note": "The Saint Stage form of Spirit of Zephyr (named on the wiki; the effect is designed)."
+    }
   ],
   "planned": [
     { "name": "Spirit of Euros", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Named in the wiki's spirit list; no description found, no page yet." },
@@ -50,5 +95,5 @@
     { "name": "Union Magic: Never-Never Land", "ja": "", "origin": "anime", "source": "en_wiki", "note": "Star Magic combined with Sylph's wind: a rotating dome of stars over the whole kingdom. Needs Star Magic, which is a second attribute and not part of the Wind book." },
     { "name": "Star Magic", "ja": "星魔法", "origin": "anime", "source": "en_wiki", "note": "Yuno's second attribute (a VfxShape STAR_MAGIC exists); a different book." }
   ],
-  "notes": "Not in Yuno's grimoire (kept in the basic Wind book): Gust Lane and Slicing Wind Emperor were not found in any source for Yuno. Spirit Dive itself is the book's universal Spirit page."
+  "notes": "Not in Yuno's grimoire (kept in the basic Wind book): Gust Lane and Slicing Wind Emperor were not found in any source for Yuno. Spirit Dive itself is the book's universal Spirit page. Pages 15 (batch 3): the entries after the first ones are the new shared pages of the book (and some older pages of it), none exclusive, so the basic grimoire keeps showing them too."
 }

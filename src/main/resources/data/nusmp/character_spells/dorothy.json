@@ -68,8 +68,179 @@
         ]
       },
       "note": "A multi-hued mist pulls whatever it touches into a dream world; those inside grow drowsier and die if they fall asleep there."
+    },
+    {
+      "page": "drowsy_mist",
+      "name": "Dream Magic: Drowsy Mist",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "Her dream makes everyone in it drowsy (the wiki names drowsiness as the trait of Dream Magic)."
+    },
+    {
+      "page": "counting_sheep",
+      "name": "Dream Magic: Counting Sheep",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "Design: a sleepy page of the shared Dream book."
+    },
+    {
+      "page": "pillow_burst",
+      "name": "Dream Magic: Pillow Burst",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.16
+      },
+      "note": "Design: a sleepy page of the shared Dream book."
+    },
+    {
+      "page": "lucid_step",
+      "name": "Dream Magic: Lucid Step",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "Design: walking through her own dream."
+    },
+    {
+      "page": "dreamcatcher_ward",
+      "name": "Dream Magic: Dreamcatcher Ward",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "Design: a ward against bad dreams for her allies."
+    },
+    {
+      "page": "mind_read",
+      "name": "Dream Magic: Mind Read",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "dream_world"
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "Her mind reading lets her manifest the thoughts of her opponents inside the dream (character guides quoting the wiki)."
+    },
+    {
+      "page": "dream_nightmare_seed",
+      "name": "Dream Magic: Nightmare Seed",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "Design: a bad dream planted where she aims."
+    },
+    {
+      "page": "slumber_field",
+      "name": "Dream Magic: Slumber Field",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.58
+      },
+      "note": "Design: a field of dream mist."
+    },
+    {
+      "page": "pastel_garden",
+      "name": "Dream Magic: Pastel Garden",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "imagination_manifestation"
+          },
+          {
+            "type": "mastery",
+            "min": 0.65
+          }
+        ]
+      },
+      "note": "Design: what she imagines into being inside the dream, a garden of sweets."
+    },
+    {
+      "page": "sleepwalker",
+      "name": "Dream Magic: Sleepwalker",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.72
+      },
+      "note": "Design: Dorothy is always asleep; she walks on unnoticed."
+    },
+    {
+      "page": "eternal_slumber",
+      "name": "Dream Magic: Eternal Slumber",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "glamour_world",
+            "count": 1
+          },
+          {
+            "type": "mastery",
+            "min": 0.88
+          }
+        ]
+      },
+      "note": "Design: the whole room falls asleep for good, the finishing page after Glamour World."
     }
   ],
   "planned": [],
-  "notes": "Glamour World is the only Dream spell the sources name for her. Not in her grimoire (kept in the basic Dream book): Sweet Dream is this mod's own page and was not found in any source for Dorothy."
+  "notes": "Glamour World is the only Dream spell the sources name for her. Not in her grimoire (kept in the basic Dream book): Sweet Dream is this mod's own page and was not found in any source for Dorothy. Pages 15 (batch 3): the entries after the first ones are the new shared pages of the book (and some older pages of it), none exclusive, so the basic grimoire keeps showing them too."
 }
