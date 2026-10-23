@@ -94,3 +94,43 @@ tests `ModeArmorWindV2Test`, `ModeArmorWindV2AssetTest`, `ModeArmorWindV2ScanTes
   once (budgeted and counted, not measured; `/multiverse perf` shows the layer as `c.mode.armor_layer`).
 * The CI smoke list in `.github` was not touched: add the prefix `magic.mode_wind_v2`.
 * The entry peak (about 7,300 vertices for a few ticks) is above the steady cap by design.
+
+## Blocky arms (option `modeArmor.windArms = BLOCKY | SMOOTH`)
+
+Owner request: "I want the Blocky part for the arms for the classic." Our reading: the arms of the V2 overlay should have the CLASSIC overlay's blocky pieces (square box sleeve, chunky fur cuff, sitting square round the arm).
+Everything else of V2 (coat, collar, crown, wings, ribbons, glow, sash, tails) is unchanged. Previews (harness renders, not game screenshots): `docs/previews/mode_armor_wind_v2_blocky_arms/`
+(`arms_before_after_classic_full.png`, `arms_closeup.png`, `arms_yuno_dive.png`, `arms_yuno_dive_sword.png`; rows BEFORE = smooth, AFTER = blocky, CLASSIC).
+Reproduce: `python tools/gen_mwv2_textures.py`, `python tools/mode_armor_wind_v2_scenes.py`, `RENDER_PREVIEW_BUILD=<dir> python tools/render_preview/preview.py "mwv2_*"`,
+`RENDER_PREVIEW_BUILD=<dir> python tools/mode_armor_wind_v2_sheets.py <out> arms_closeup.png ...`.
+
+* **BLOCKY (default)**: the sleeve is the classic box (x -1.3..3.3, y -2.3..6.6, z +-2.3: the same boxes as `ModeArmorLayer.wind`), the fur cuff is the classic box (0.5 px wider all round, y 6.4..8.6) with the
+  tuft line of the V2 fur along its top and a fur lip on top, and the shoulder junction is a square mantle slab (y -3.1..-0.9) over a square fur band (the cuff's box again), instead of the dome. The cloth is the
+  cel banded V2 cloth: new regions of `mwv2_coat.png` / `mwv2_glow.png` (`SLEEVE_BOX` 4 faces of 20 x 36, `SLEEVE_CAP`, `MANTLE_BOX`, `MANTLE_CAP`; the coat texture rows 128..163 only, every old texel is byte for byte
+  the same) with dark chunky corner lines, the gold band above the cuff, two gold buttons on the front face, a back seam, a wind curl on the outer and inner face, and the glow thread of V2. The boxes are 5 faces
+  (the bottom is hidden by the cuff or faces the hand), flat normals, nothing sways. The wind ribbon from the cuff stays.
+* **SMOOTH**: the first V2 arms (lofted round sleeve, flared cuff, domed mantle with fur trim), exactly as before.
+* **Client option**: `modeArmor.windArms = BLOCKY | SMOOTH` (default BLOCKY) in the existing `nusmp-modearmor-client.toml` (`ModeArmorWindV2Config`, mirrored into `ModeArmorWindV2.setArms` on load / reload, so the painter reads a field).
+  A CLIENT setting: only changes what this client draws; nothing on the server or the network.
+* **`modeArmor.windLook = CLASSIC` is unchanged** and still draws the 73-quad classic overlay (`ModeArmorLayer.wind`, 292 vertices in the harness, the same as before): the change touches neither `ModeArmorLayer` nor the
+  classic textures, `ModeArmorWindV2.active` is false for CLASSIC so `windArms` is ignored there; `ModeArmorWindV2Test` pins the wiring and the untouched classic sleeve / cuff boxes.
+
+### Budget (rule 11)
+
+| level | cap | SMOOTH (before) | BLOCKY (after) |
+|---|---|---|---|
+| FULL | 3,200 | 3,168 | **2,792** (-376: sleeve 128 + glow 128, cuff 128, mantle 128, trim 64 = 576 became 5 faces x 4 x 2 x 5 pieces = 200) |
+| MID | 1,200 | 732 | **700** |
+| FAR | 150 | 60 | 60 (no arms at this level) |
+
+The vertex count does not grow with the option (`ModeArmorWindV2Test` pins blocky <= smooth at every level, 3,168 and 2,792 at FULL). Combined Yuno dive in the harness (aura Wind A with the sword, merge layer, ring, age 50): 4,924 smooth, 4,548 blocky;
+the steady-state cap check (`yunoCombinedSteady`) still uses the smooth numbers (the larger). Texture cost: one extra 80 x 36 + three small regions in textures that are already loaded (no new texture, no new draw call, same passes).
+No packet, no server state, no per-frame allocation (the same pass-by-pass painter; the arm pieces are static meshes).
+
+### NEW / REPLACED / KEPT
+
+* **NEW**: `ArmStyle` (BLOCKY, SMOOTH), pieces `SLEEVE_BOX`, `CUFF_BOX`, `MANTLE_BOX`, `MANTLE_TRIM_BOX` (appended to `Piece`), four coat / glow texture regions, the client option `windArms`, tests, previews, a harness scene set (`mwv2_smooth_*`) and a stub of the worn library for the harness.
+* **REPLACED (default only)**: what the V2 overlay draws on the arms and the shoulders by default (smooth sleeves, cuffs, domed mantles -> blocky ones). Nothing is removed: the smooth pieces stay registered and are one option away.
+* **KEPT**: everything else of V2, the classic overlay and the CLASSIC option, all textures (old regions identical), the aura, all other modes.
+
+Not seen in a game: the real lighting of the box faces, the look with slim arms (the box is the wide-arm size, 0.3 px off the arm, like the classic), z-fighting of the shoulder slab with a worn chestplate.
+No new smoke prefix: the self-test `magic.mode_wind_v2` now checks both arm styles, their caps and the option default.

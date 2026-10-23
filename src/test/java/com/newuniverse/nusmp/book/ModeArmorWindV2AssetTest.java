@@ -47,6 +47,7 @@ class ModeArmorWindV2AssetTest {
         String[][] map = {
                 {"coat", "TORSO", "R_TORSO"}, {"coat", "TAIL_BACK", "R_TAIL_BACK"}, {"coat", "TAIL_FRONT", "R_TAIL_FRONT"}, {"coat", "SLEEVE", "R_SLEEVE"}, {"coat", "MANTLE", "R_MANTLE"},
                 {"coat", "TROUSER", "R_TROUSER"}, {"coat", "BOOT", "R_BOOT"}, {"coat", "SASH", "R_SASH"}, {"coat", "BUCKLE", "R_BUCKLE"}, {"coat", "CORD", "R_CORD"}, {"coat", "TASSEL", "R_TASSEL"},
+                {"coat", "SLEEVE_BOX", "R_SLEEVE_BOX"}, {"coat", "SLEEVE_CAP", "R_SLEEVE_CAP"}, {"coat", "MANTLE_BOX", "R_MANTLE_BOX"}, {"coat", "MANTLE_CAP", "R_MANTLE_CAP"},
                 {"fur", "OUTER", "R_FUR_OUTER"}, {"fur", "LIP", "R_FUR_LIP"}, {"fur", "INNER", "R_FUR_INNER"}, {"wing", "WING", "R_WING"},
                 {"fx", "BLADE", "R_BLADE"}, {"fx", "BLADE_FLAT", "R_BLADE_FLAT"}, {"fx", "ARROW", "R_ARROW"}, {"fx", "RING", "R_RING"}, {"fx", "RING_TOP", "R_RING_TOP"}, {"fx", "HALO", "R_HALO"},
                 {"fx", "CROSS", "R_CROSS"}, {"fx", "RIBBON", "R_RIBBON"}, {"fx", "LEAF", "R_LEAF"}, {"fx", "EYE", "R_EYE"}, {"fx", "HAIR", "R_HAIR"}};
@@ -73,7 +74,7 @@ class ModeArmorWindV2AssetTest {
             assertEquals(sizes[i][1], im.getHeight(), all.get(i));
         }
         int[][] coat = {ModeArmorWindV2Rules.R_TORSO, ModeArmorWindV2Rules.R_TAIL_BACK, ModeArmorWindV2Rules.R_TAIL_FRONT, ModeArmorWindV2Rules.R_SLEEVE, ModeArmorWindV2Rules.R_MANTLE,
-                ModeArmorWindV2Rules.R_TROUSER, ModeArmorWindV2Rules.R_BOOT, ModeArmorWindV2Rules.R_SASH, ModeArmorWindV2Rules.R_BUCKLE, ModeArmorWindV2Rules.R_CORD, ModeArmorWindV2Rules.R_TASSEL};
+                ModeArmorWindV2Rules.R_TROUSER, ModeArmorWindV2Rules.R_BOOT, ModeArmorWindV2Rules.R_SASH, ModeArmorWindV2Rules.R_BUCKLE, ModeArmorWindV2Rules.R_CORD, ModeArmorWindV2Rules.R_TASSEL, ModeArmorWindV2Rules.R_SLEEVE_BOX, ModeArmorWindV2Rules.R_SLEEVE_CAP, ModeArmorWindV2Rules.R_MANTLE_BOX, ModeArmorWindV2Rules.R_MANTLE_CAP};
         int[][] fx = {ModeArmorWindV2Rules.R_BLADE, ModeArmorWindV2Rules.R_BLADE_FLAT, ModeArmorWindV2Rules.R_ARROW, ModeArmorWindV2Rules.R_RING, ModeArmorWindV2Rules.R_RING_TOP, ModeArmorWindV2Rules.R_HALO,
                 ModeArmorWindV2Rules.R_CROSS, ModeArmorWindV2Rules.R_RIBBON, ModeArmorWindV2Rules.R_LEAF, ModeArmorWindV2Rules.R_EYE, ModeArmorWindV2Rules.R_HAIR};
         int[][] fur = {ModeArmorWindV2Rules.R_FUR_OUTER, ModeArmorWindV2Rules.R_FUR_LIP, ModeArmorWindV2Rules.R_FUR_INNER};
@@ -88,7 +89,7 @@ class ModeArmorWindV2AssetTest {
         BufferedImage coat = read(ModeArmorWindV2Rules.COAT), fur = read(ModeArmorWindV2Rules.FUR), glow = read(ModeArmorWindV2Rules.GLOW), wing = read(ModeArmorWindV2Rules.WING), fx = read(ModeArmorWindV2Rules.FX);
         List<String> bad = new ArrayList<>();
         int furQuads = 0, furClear = 0, fxQuads = 0, fxClear = 0;
-        for (Entry e : ModeArmorWindV2Rules.entries(Lod.FULL)) {
+        for (ModeArmorWindV2Rules.ArmStyle arms : ModeArmorWindV2Rules.ArmStyle.values()) for (Entry e : ModeArmorWindV2Rules.entries(Lod.FULL, arms)) {
             ModeArmorWindV2Mesh m = ModeArmorWindV2Mesh.get(e.piece(), e.detail());
             BufferedImage im = switch (e.pass()) { case COAT -> coat; case FUR -> fur; case GLOW -> glow; case WING, WING_ADD -> wing; case FX, ADD -> fx; };
             for (int q = 0; q < m.verts; q += 4) {
@@ -110,7 +111,7 @@ class ModeArmorWindV2AssetTest {
     void theClothIsOpaqueAndTheAdditiveTexturesCarryNoColourUnderTransparentTexels() throws IOException {
         BufferedImage coat = read(ModeArmorWindV2Rules.COAT);
         int[][] cloth = {ModeArmorWindV2Rules.R_TORSO, ModeArmorWindV2Rules.R_TAIL_BACK, ModeArmorWindV2Rules.R_TAIL_FRONT, ModeArmorWindV2Rules.R_SLEEVE, ModeArmorWindV2Rules.R_MANTLE,
-                ModeArmorWindV2Rules.R_TROUSER, ModeArmorWindV2Rules.R_BOOT, ModeArmorWindV2Rules.R_SASH, ModeArmorWindV2Rules.R_BUCKLE, ModeArmorWindV2Rules.R_CORD, ModeArmorWindV2Rules.R_TASSEL};
+                ModeArmorWindV2Rules.R_TROUSER, ModeArmorWindV2Rules.R_BOOT, ModeArmorWindV2Rules.R_SASH, ModeArmorWindV2Rules.R_BUCKLE, ModeArmorWindV2Rules.R_CORD, ModeArmorWindV2Rules.R_TASSEL, ModeArmorWindV2Rules.R_SLEEVE_BOX, ModeArmorWindV2Rules.R_SLEEVE_CAP, ModeArmorWindV2Rules.R_MANTLE_BOX, ModeArmorWindV2Rules.R_MANTLE_CAP};
         for (int[] r : cloth)
             for (int y = r[1]; y < r[3]; y++)
                 for (int x = r[0]; x < r[2]; x++) assertEquals(255, coat.getRGB(x, y) >>> 24, "a hole in the cloth at " + x + "," + y);
