@@ -34,5 +34,17 @@
     "wrapping_tongue",
     "tongue_lashing_barrage",
     "tongue_great_swallow"
+  ],
+  "SWITCHING": [
+    "switching_place_swap",
+    "blink_switch",
+    "switching_inversion_pulse",
+    "ailment_swap",
+    "aggro_switch",
+    "foe_swap",
+    "up_down_switch",
+    "switching_tangle_field",
+    "shuffling_barrage",
+    "grand_reversal"
   ]
 }

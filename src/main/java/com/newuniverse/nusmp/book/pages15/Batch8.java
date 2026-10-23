@@ -191,6 +191,94 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1500).withAnim("slam")));
 
+    private static final List<BookPage> SWITCHING = register("book_switching", List.of(
+            Pages15Kit.starter("switching_place_swap", "Switching Magic: Place Swap",
+                    swapWithTarget(Tier.STARTER, 16, WB)),
+            Pages15Kit.starter("blink_switch", "Switching Magic: Blink Switch",
+                    Pages15Kit.dash(Tier.STARTER, false, 7, false, W, Pages15Kit.NONE)).withCooldown(100),
+            Pages15Kit.starter("switching_inversion_pulse", "Switching Magic: Inversion Pulse",
+                    Pages15Kit.nova(Tier.STARTER, 4.5, false, WB, Pages15Kit.knock(-0.9))),
+            Pages15Kit.mid("ailment_swap", "Switching Magic: Ailment Swap",
+                    Pages15Kit.cast(Tier.MID, c -> {
+                    LivingEntity e = c.target(16);
+                    if (e == null || e == c.caster || e.isAlliedTo(c.caster)) return c.fail("No one to pass your ailments to.");
+                    List<MobEffectInstance> bad = new ArrayList<>();
+                    for (MobEffectInstance m : c.caster.getActiveEffects()) if (!m.getEffect().value().isBeneficial()) bad.add(m);
+                    if (bad.isEmpty()) return c.fail("You carry no ailment.");
+                    int n = 0;
+                    for (MobEffectInstance m : bad) {
+                        if (n++ >= 3) break;
+                        c.caster.removeEffect(m.getEffect());
+                        e.addEffect(new MobEffectInstance(m.getEffect(), soft(e, Math.min(m.getDuration(), 100)), Math.min(m.getAmplifier(), 2)));
+                    }
+                    c.hit(e, c.tier.hit * 0.5f);
+                    c.circle(0.8f);
+                    new Fx(c).shape(WB, c.caster.getEyePosition(), centre(e), 16, 1f);
+                    return true;
+                })).withCooldown(240),
+            Pages15Kit.mid("aggro_switch", "Switching Magic: Aggro Switch",
+                    Pages15Kit.cast(Tier.MID, c -> {
+                    List<Mob> mobs = new ArrayList<>();
+                    for (LivingEntity e : c.foes(c.caster.position(), 10)) if (e instanceof Mob m && !BalanceLaw.isBoss(m)) mobs.add(m);
+                    if (mobs.size() < 2) return c.fail("Needs two creatures to turn on each other.");
+                    Fx fx = new Fx(c);
+                    c.circle(1f);
+                    for (int k = 0; k < mobs.size(); k++) {
+                        Mob m = mobs.get(k);
+                        m.setTarget(mobs.get((k + 1) % mobs.size()));
+                        nausea(40).apply(m, c.caster);
+                        fx.shape(WB, centre(m), centre(m).add(0, 1, 0), 16, 0.7f);
+                    }
+                    return true;
+                })).withCooldown(300),
+            Pages15Kit.mid("foe_swap", "Switching Magic: Foe Swap",
+                    Pages15Kit.cast(Tier.MID, c -> {
+                    List<LivingEntity> foes = c.foes(c.aim(20), 8);
+                    if (foes.size() < 2) return c.fail("Needs two foes to switch.");
+                    LivingEntity a = foes.get(0), b = foes.get(1);
+                    Vec3 pa = a.position(), pb = b.position();
+                    if (!fits(a, pb) || !fits(b, pa)) return c.fail("No room to switch them.");
+                    place(a, pb);
+                    place(b, pa);
+                    for (LivingEntity e : List.of(a, b)) {
+                        c.hit(e, c.tier.hit * 0.6f);
+                        nausea(50).apply(e, c.caster);
+                    }
+                    c.circle(0.9f);
+                    Fx fx = new Fx(c);
+                    fx.shape(WB, pa.add(0, 0.2, 0), pa.add(0, 1.4, 0), 24, 1f);
+                    fx.shape(WB, pb.add(0, 0.2, 0), pb.add(0, 1.4, 0), 24, 1f);
+                    return true;
+                })).withCooldown(240),
+            Pages15Kit.mid("up_down_switch", "Switching Magic: Up-Down Switch",
+                    Pages15Kit.nova(Tier.MID, 4, true, WB, Pages15Kit.all(Pages15Kit.lift(0.8), Pages15Kit.effect(() -> new MobEffectInstance(MobEffects.LEVITATION, 25, 0))))).withCooldown(220).withAnim("up"),
+            Pages15Kit.zone("switching_tangle_field", "Switching Magic: Tangle Field",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, WF, Pages15Kit.all(nausea(50), Pages15Kit.knock(-0.4)))).withCooldown(450),
+            Pages15Kit.zone("shuffling_barrage", "Switching Magic: Shuffling Barrage",
+                    Pages15Kit.volley(Tier.ZONE, 5, true, W, Pages15Kit.knock(-0.4))).withCooldown(350),
+            Pages15Kit.signature("grand_reversal", "Switching Magic: Grand Reversal",
+                    Pages15Kit.cast(Tier.SIGNATURE, c -> {
+                    List<LivingEntity> foes = c.foes(c.caster.position(), 8);
+                    if (foes.size() < 2) return c.fail("Needs at least two foes to shuffle.");
+                    List<Vec3> spots = new ArrayList<>();
+                    for (LivingEntity e : foes) spots.add(e.position());
+                    Fx fx = new Fx(c);
+                    c.circle(1.5f);
+                    for (int k = 0; k < foes.size(); k++) {
+                        LivingEntity e = foes.get(k);
+                        Vec3 to = spots.get((k + 1) % spots.size());
+                        if (fits(e, to)) {
+                            fx.shape(WB, e.position(), e.position().add(0, 1.2, 0), 20, 1f);
+                            place(e, to);
+                        }
+                        c.hit(e);
+                        nausea(80).apply(e, c.caster);
+                    }
+                    Vec3 at = c.caster.position();
+                    fx.shape(WF, at.add(0, 0.05, 0), at.add(0, 1, 0), 40, 2.6f);
+                    return true;
+                })).withCooldown(1500).withAnim("slam")));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
