@@ -1,108 +1,108 @@
 # grimoire page counts per book (family pages: GrimoireBook.familyCount()), made by tools/page_counts.py; phase 2 may only INCREASE these (PageCountsTest)
 # book total basic_visible | character=pages_visible ...
-book_air 8 8 |
-book_anti_magic 8 8 | asta=8
-book_ash 9 5 | zora=5
-book_barrier 12 12 |
-book_beast 10 10 |
-book_black_oil 12 12 |
-book_blood 7 5 | vanica=4
-book_body 11 10 |
-book_bone 7 4 | zenon=5
-book_briar 13 9 | charlotte=8
+book_air 15 15 |
+book_anti_magic 15 15 | asta=15
+book_ash 19 15 | zora=15
+book_barrier 15 15 |
+book_beast 15 15 |
+book_black_oil 15 15 |
+book_blood 17 15 | vanica=15
+book_body 16 15 |
+book_bone 18 15 | zenon=15
+book_briar 19 15 | charlotte=17
 book_bronze 15 15 |
-book_bubble 12 12 |
-book_butoh 13 9 | kiato=6
-book_chain 12 12 |
-book_cherry_blossom 12 9 | kirsch=6
-book_compass 4 3 | letoile=3
+book_bubble 15 15 |
+book_butoh 19 15 | kiato=15
+book_chain 15 15 |
+book_cherry_blossom 18 15 | kirsch=18
+book_compass 16 15 | letoile=15
 book_copper 15 15 |
-book_copy 4 4 |
+book_copy 15 15 |
 book_corundum 15 15 |
-book_cotton 7 4 | charmy=7
-book_creation 4 3 |
+book_cotton 18 15 | charmy=18
+book_creation 16 15 |
 book_crystal 15 15 |
-book_curse 12 8 |
-book_curse_warding 12 11 |
-book_dark 15 5 | yami=11
-book_demon_beast 12 12 |
-book_demon_fire 12 12 |
-book_demon_ice 12 12 |
-book_demon_light 12 12 |
-book_demon_water 10 10 |
-book_dice 4 4 |
-book_dream 5 4 | dorothy=4
+book_curse 19 15 |
+book_curse_warding 16 15 |
+book_dark 29 15 | yami=15
+book_demon_beast 15 15 |
+book_demon_fire 15 15 |
+book_demon_ice 15 15 |
+book_demon_light 15 15 |
+book_demon_water 15 15 |
+book_dice 15 15 |
+book_dream 16 15 | dorothy=15
 book_earth 15 15 |
-book_explosion 4 4 |
-book_eye 12 11 |
-book_eyeball 12 12 |
-book_fire 24 6 | fuegoleon=7 leopold=5 magna=4 mereoleona=6
-book_food 12 11 |
-book_fungus 12 12 |
-book_game 6 6 |
-book_gel 12 12 |
+book_explosion 15 15 |
+book_eye 16 15 |
+book_eyeball 15 15 |
+book_fire 33 15 | fuegoleon=15 leopold=15 magna=15 mereoleona=15
+book_food 16 15 |
+book_fungus 15 15 |
+book_game 15 15 |
+book_gel 15 15 |
 book_glass 15 15 |
-book_gravity 9 6 | dante=8
-book_hair 10 10 |
-book_ice 9 9 |
-book_ice_wedge 12 12 |
-book_illusion 5 5 |
+book_gravity 18 15 | dante=15
+book_hair 15 15 |
+book_ice 15 15 |
+book_ice_wedge 15 15 |
+book_illusion 15 15 |
 book_iron 15 15 |
-book_key 14 14 |
+book_key 15 15 |
 book_kotodama 16 16 |
-book_legion 12 12 |
-book_light 15 8 | karna=6 lemiel=4
-book_lightning 16 7 | gadjah=4 luck=8
-book_magma 5 5 |
-book_memory 9 9 |
+book_legion 15 15 |
+book_light 24 15 | karna=15 lemiel=15
+book_lightning 24 15 | gadjah=15 luck=15
+book_magma 15 15 |
+book_memory 15 15 |
 book_mercury 19 15 | nozel=15
 book_mineral 16 15 | mars=15
-book_mirror 13 8 | gauche=9
-book_mist 4 4 |
-book_modification 10 10 |
-book_mucus 10 10 |
-book_mud 10 10 |
-book_nail 10 10 |
-book_painting 17 5 | rill=14
-book_permeation 9 9 |
-book_plant 14 8 | mimosa=6
-book_poison 7 4 | gordon=5
-book_poison_plant 10 10 |
-book_recombination 10 6 | henry=7
+book_mirror 20 15 | gauche=16
+book_mist 15 15 |
+book_modification 15 15 |
+book_mucus 15 15 |
+book_mud 15 15 |
+book_nail 15 15 |
+book_painting 28 16 | rill=15
+book_permeation 15 15 |
+book_plant 21 15 | mimosa=19
+book_poison 18 15 | gordon=16
+book_poison_plant 15 15 |
+book_recombination 19 15 | henry=15
 book_red_ochre 15 15 |
-book_reinforcement 5 5 |
+book_reinforcement 15 15 |
 book_rock 15 15 |
 book_sand 15 15 |
 book_sandstone 15 15 |
-book_scale 10 10 |
-book_sealing 11 5 | secre=7
-book_shadow 13 5 | nacht=11
+book_scale 15 15 |
+book_sealing 21 15 | secre=15
+book_shadow 25 15 | nacht=15
 book_shakudo 15 15 |
-book_skin 5 5 |
-book_slash 6 4 | jack=5
-book_smoke 8 8 |
-book_snow 8 8 |
-book_song 16 13 | kahono=5
-book_soul 11 9 | lucius=7
-book_soul_corpse 15 9 | rades=15
-book_sound 9 9 |
-book_spatial 14 8 | finral=4 langris=4
-book_spike 10 10 |
-book_star 6 6 |
+book_skin 15 15 |
+book_slash 17 15 | jack=15
+book_smoke 15 15 |
+book_snow 15 15 |
+book_song 18 15 | kahono=15
+book_soul 17 15 | lucius=15
+book_soul_corpse 21 15 | rades=15
+book_sound 15 15 |
+book_spatial 21 15 | finral=15 langris=15
+book_spike 15 15 |
+book_star 15 15 |
 book_steel 19 15 | klaus=15
 book_stone 15 15 |
-book_storm 6 4 | kaiser=3
-book_switching 5 5 |
-book_sword 6 5 |
-book_thread 9 4 | vanessa=9
-book_time 12 10 | julius=6
-book_tongue 5 5 |
-book_transmutation 9 7 | grey=3
-book_tree 10 10 |
-book_vine 10 10 |
-book_vortex 8 8 |
-book_water 17 10 | noelle=8
-book_wind 21 9 | yuno=13
-book_wing 8 8 |
-book_world_tree 7 1 | william=7
-forbidden_magic 8 8 |
+book_storm 17 15 | kaiser=15
+book_switching 15 15 |
+book_sword 16 15 |
+book_thread 20 15 | vanessa=15
+book_time 17 15 | julius=15
+book_tongue 15 15 |
+book_transmutation 17 15 | grey=15
+book_tree 15 15 |
+book_vine 15 15 |
+book_vortex 15 15 |
+book_water 22 15 | noelle=15
+book_wind 27 15 | yuno=15
+book_wing 15 15 |
+book_world_tree 21 15 | william=21
+forbidden_magic 15 15 |
