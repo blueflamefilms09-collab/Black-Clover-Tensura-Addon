@@ -54,9 +54,9 @@ public final class SpiritDiveAnime {
     private static final ResourceLocation[] PLUME = new ResourceLocation[4], PLUME_GLOW = new ResourceLocation[4], LOCK = new ResourceLocation[4], LOCK_GLOW = new ResourceLocation[4],
             HALO = new ResourceLocation[4], CROWN = new ResourceLocation[4], HAIR = new ResourceLocation[4], SIGIL = new ResourceLocation[4], RING = new ResourceLocation[4];
     private static final ResourceLocation EYE = AuraRender.tex(SpiritDiveAnimeRules.EYE_TEXTURE), BURST = AuraRender.tex(SpiritDiveAnimeRules.BURST_TEXTURE),
-            GLOW = AuraRender.tex("particle/glow"), PILLAR = AuraRender.tex("aura/sdv_pillar");
+            GHOST = AuraRender.tex(SpiritDiveAnimeRules.SOFT_TEXTURE), GLOW = AuraRender.tex("particle/glow"), PILLAR = AuraRender.tex("aura/sdv_pillar");
     private static final GeoSpec[][] SPIRIT = new GeoSpec[4][];
-    private static final float[][] SPIRIT_POSE = {{1.18f, 0f, 3f, 0f}, {0.62f, 0f, 3f, 14f}, {1.05f, 0f, 14f, -2f}, {1.0f, 0f, 5f, 0f}};     // scale, (unused), back px, up px by element (WIND, WATER, FIRE, EARTH)
+    private static final float[][] SPIRIT_POSE = {{1.18f, 0f, 3f, 0f}, {0.5f, 0f, 3f, 10.5f}, {1.05f, 0f, 14f, -2f}, {1.0f, 0f, 5f, 0f}};     // scale, (unused), back px, up px by element (WIND, WATER, FIRE, EARTH)
 
     static {
         for (Element e : Element.values()) {
@@ -187,6 +187,7 @@ public final class SpiritDiveAnime {
 
     // ------------------------------------------------------------------ the head: hair, cap, eyes, halo
     private static void head(AuraContext c, Element el, Stage st, Spec sp, boolean character, Pal pal, float progress, float lit, boolean half, boolean full, boolean helmet) {
+        if (!full && !half) return;                                                                          // the first dive of Fire, Water and Earth dresses the arms; only a full dive (and the first dive of Wind, one half) lights the head
         int i = el.ordinal();
         float age = c.age(), sw = Mth.clamp(c.limbSwingAmount(), 0f, 1f), vy = (float) c.player().getDeltaMovement().y;
         float head = SpiritDiveAnimeRules.partAlpha(progress, 2);
@@ -282,7 +283,7 @@ public final class SpiritDiveAnime {
         if (lod != Lod.FULL) return;
         float fl = SpiritDiveAnimeRules.flash(t);
         if (fl > 0f && t < 6f && st != Stage.UPGRADE) {                                                     // the flash at the chest: a star-burst
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(BURST)), 0f, 1.5f - 1.05f, 0f, 0.9f + 2.2f * (1f - fl), age * 0.05f, SealDraw.argb(Math.min(1f, fl * 1.3f), 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(BURST)), 0f, 1.5f - 1.05f, 0f, 0.6f + 1.0f * (1f - fl), age * 0.05f, SealDraw.argb(Math.min(1f, fl * 1.1f), 0xFFFFFF), FB);
         }
         float rp = SpiritDiveAnimeRules.ringPulse(t);
         if (rp > 0f && st != Stage.UPGRADE) {                                                               // the ring pulse of the halo opening: a ring expanding from the feet
@@ -339,10 +340,10 @@ public final class SpiritDiveAnime {
         pose.translate(0f, 1.5f - p[3] / 16f, p[2] / 16f);                                                  // the feet line, a little behind
         pose.scale(p[0], p[0], p[0]);
         pose.translate(0f, -1.5f, 0f);
-        int argb = SealDraw.argb(0.25f * a * (0.85f + 0.15f * pulse), pal.rim());
+        int argb = SealDraw.argb(0.22f * a * (0.85f + 0.15f * pulse), pal.glow());
         float seconds = c.age() / 20f;
-        for (int k = 0; k < specs.length; k++)                                                              // the spirit's own glow map, additive: a ghost in the colour of the dive, not the spirit's skin
-            GeoDraw.draw(pose, c.buffers().getBuffer(SafeAdditive.additive(specs[k].glow())), GeoModels.model(specs[k].model()), null, seconds, GeoDraw.Space.PLAYER, FB, OverlayTexture.NO_OVERLAY, argb);
+        for (int k = 0; k < specs.length; k++)                                                              // the spirit's own shape with a plain light texture, additive: a ghost in the colour of the dive, not the spirit's skin
+            GeoDraw.draw(pose, c.buffers().getBuffer(SafeAdditive.additive(GHOST)), GeoModels.model(specs[k].model()), null, seconds, GeoDraw.Space.PLAYER, FB, OverlayTexture.NO_OVERLAY, argb);
         pose.popPose();
     }
 

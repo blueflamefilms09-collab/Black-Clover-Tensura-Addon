@@ -53,15 +53,28 @@ def ref_tile(name, text, h):
     return label(im, text)
 
 
-def save(name, tiles, note):
-    h = max(t.size[1] for t in tiles)
-    top = 18
-    out = Image.new("RGB", (sum(t.size[0] for t in tiles) + 4 * (len(tiles) - 1), h + top), (20, 20, 26))
-    ImageDraw.Draw(out).text((6, 3), note, fill=(200, 200, 210), font=FONT)
-    x = 0
+def save(name, tiles, note, max_width=2200):
+    """Lays the tiles in rows no wider than max_width (a sheet of ten tiles is too wide to read), a thin gap between tiles and rows."""
+    rows, cur, w = [], [], 0
     for t in tiles:
-        out.paste(t, (x, top))
-        x += t.size[0] + 4
+        if cur and w + t.size[0] > max_width:
+            rows.append(cur)
+            cur, w = [], 0
+        cur.append(t)
+        w += t.size[0] + 4
+    rows.append(cur)
+    top = 18
+    W = max(sum(t.size[0] for t in r) + 4 * (len(r) - 1) for r in rows)
+    H = sum(max(t.size[1] for t in r) for r in rows) + 4 * (len(rows) - 1)
+    out = Image.new("RGB", (W, H + top), (20, 20, 26))
+    ImageDraw.Draw(out).text((6, 3), note, fill=(200, 200, 210), font=FONT)
+    y = top
+    for r in rows:
+        x = 0
+        for t in r:
+            out.paste(t, (x, y))
+            x += t.size[0] + 4
+        y += max(t.size[1] for t in r) + 4
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, name + ".png")
     out.quantize(colors=224, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(path, optimize=True)
@@ -72,10 +85,10 @@ def element(el):
     g, who = CHARS.get(el, (None, None))
     h = SCENES["sda_%s_std_full" % el]["tile"][1]
     tiles = [ref_tile(f, t, h) for f, t in REFS[el]]
-    tiles += [label(tile("sda_%s_std_full" % el, 0), "standard tier, front 3/4"), label(tile("sda_%s_std_full" % el, 1), "standard tier, back")]
+    tiles += [label(tile("sda_%s_std_front" % el, 0), "standard tier, front"), label(tile("sda_%s_std_full" % el, 0), "standard tier, front 3/4"), label(tile("sda_%s_std_full" % el, 1), "standard tier, back")]
     if g:
-        tiles += [label(tile("sda_%s_%s_full" % (el, g), 0), "%s tier, front 3/4" % who), label(tile("sda_%s_%s_full" % (el, g), 1), "%s tier, back" % who),
-                  label(tile("sda_%s_%s_full" % (el, g), 2), "%s tier, side" % who)]
+        tiles += [label(tile("sda_%s_%s_front" % (el, g), 0), "%s tier, front" % who), label(tile("sda_%s_%s_full" % (el, g), 0), "%s tier, front 3/4" % who),
+                  label(tile("sda_%s_%s_full" % (el, g), 1), "%s tier, back" % who), label(tile("sda_%s_%s_full" % (el, g), 2), "%s tier, side" % who)]
     else:
         tiles += [label(tile("sda_%s_std_full" % el, 2), "standard tier, side")]
     save(el, tiles, "%s - Spirit Dive, ANIME look, full stage (preview harness render, not a game screenshot)" % el.upper())
