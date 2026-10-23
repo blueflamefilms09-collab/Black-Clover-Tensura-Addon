@@ -128,3 +128,7 @@ EXTRA = {
     ("earth", "s"): ("crest", "backcrystals", "cuisse"),
     ("earth", "c"): ("crest", "backcrystals", "cuisse"),
 }
+
+# the pieces whose glow map is drawn (a second pass): the same table as book/SpiritDiveDjinnPieces.def (the Java test sums the real numbers from it); used by the generator's report
+GLOW_S = ("helm", "crest", "crest_l", "crest_r", "crest_c", "chest", "backplate", "pauldron_r", "pauldron_l", "gauntlet_r", "gauntlet_l", "wing_r", "wing_l", "plume", "mantle", "backcrystals")
+GLOW_C = GLOW_S + ("vambrace_r", "vambrace_l", "greave_r", "greave_l")

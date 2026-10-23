@@ -33,7 +33,7 @@ ASSETS = os.environ.get("SDJ_ROOT") or os.path.join(ROOT, "src", "main", "resour
 
 # texels per model pixel of a tier (the Djinn atlas is 5.4 to 7.3: the standard tier stays near it, the character tier above it) and the panel thinning (1 = as the Requip armours)
 DENSITY = {"s": float(os.environ.get("SDJ_DS", "7")), "c": float(os.environ.get("SDJ_DC", "10"))}
-COARSE = {"s": float(os.environ.get("SDJ_KS", "1.9")), "c": float(os.environ.get("SDJ_KC", "1.45"))}
+COARSE = {"s": float(os.environ.get("SDJ_KS", "1.4")), "c": float(os.environ.get("SDJ_KC", "1.75"))}
 _coarse = [1.0]
 
 _shell = K.Piece.shell
@@ -49,6 +49,28 @@ def _thin_shell(self, bone, S, nu, nv, mat, **kw):
 
 
 K.Piece.shell = _thin_shell
+
+# a box thinner than this (model pixels) is a PLATE: the Djinn's own pieces are quads without thickness, so only its two broad faces are written (the edge slivers are 1/32 of a block wide and cost
+# a quad each, in two passes); the standard tier thins more plates than the character tier
+THIN = {"s": float(os.environ.get("SDJ_TS", "0.58")), "c": float(os.environ.get("SDJ_TC", "0.52"))}
+_tier = ["c"]
+_cull0 = K.Piece._cull
+AXIS_OF = {"west": 0, "east": 0, "up": 1, "down": 1, "north": 2, "south": 2}
+
+
+def _cull_thin(self, anim):
+    _cull0(self, anim)
+    thr = THIN[_tier[0]]
+    for cu in self.cubes:
+        a = min(range(3), key=lambda i: cu.s[i])
+        if cu.s[a] > thr:
+            continue
+        for f in K.FACES:
+            if AXIS_OF[f] != a and cu.faces[f] and f not in cu.keep:
+                cu.faces[f] = False
+
+
+K.Piece._cull = _cull_thin
 
 
 # the shapes the Requip painter does not have
@@ -93,6 +115,7 @@ def build(el, tier, only=None):
     import sdj_parts as XP
     c = DCtx(el, tier)
     _coarse[0] = COARSE[tier]
+    _tier[0] = tier
     t0 = time.time()
     want = set(SETS.CORE)
     if tier == "c":
@@ -112,7 +135,9 @@ def build(el, tier, only=None):
         XP.build(c, ex)
     cubes = sum(r["cubes"] for r in c.made)
     faces = sum(r["faces"] for r in c.made)
-    print("%-10s pieces %2d cubes %5d faces %5d vertices %6d  (%.1f s)" % (el + ":" + tier, len(c.made), cubes, faces, faces * 8, time.time() - t0))
+    glow = SETS.GLOW_C if tier == "c" else SETS.GLOW_S
+    verts = sum(r["faces"] * 4 * (2 if r["id"].split("_arm_")[1] in glow else 1) for r in c.made)
+    print("%-10s pieces %2d cubes %5d faces %5d vertices (body + glow passes) %6d  (%.1f s)" % (el + ":" + tier, len(c.made), cubes, faces, verts, time.time() - t0))
     for r in c.made:
         print("   %-34s cubes %4d faces %4d tex %s" % (r["id"], r["cubes"], r["faces"], "%dx%d" % r["tex"]))
     return c.made
@@ -132,12 +157,14 @@ def report():
                 cubes += 1
                 faces += len(cu["uv"])
         key = fn.split("_arm_")[0]
-        t = tot.setdefault(key, [0, 0, 0])
+        t = tot.setdefault(key, [0, 0, 0, 0])
+        glow = SETS.GLOW_C if key.endswith("_c") else SETS.GLOW_S
         t[0] += 1
         t[1] += cubes
         t[2] += faces
-    for k, (n, cu, f) in tot.items():
-        print("%-12s pieces %2d cubes %5d faces %5d vertices (body + glow pass) %6d" % (k, n, cu, f, f * 8))
+        t[3] += faces * 4 * (2 if fn.split("_arm_")[1][:-len(".geo.json")] in glow else 1)
+    for k, (n, cu, f, v) in tot.items():
+        print("%-12s pieces %2d cubes %5d faces %5d vertices (body + glow passes) %6d" % (k, n, cu, f, v))
 
 
 def main(argv):
