@@ -86,5 +86,8 @@
   "nusmp.page.book_spike.spike_vault": "Spike Vault: a spike thrust under you vaults you up and forward; you fall slowly for two seconds.",
   "nusmp.page.book_spike.spike_lance": "Spike Lance: one great spike is thrust twelve blocks ahead and pierces every foe on the line, nudging it back. Damage scales with your EP.",
   "nusmp.page.book_spike.spike_snare": "Spike Snare: spikes close round the foe in your crosshair like a cage and hold it (hard control: shares the twelve-second lock, three seconds on a player, a boss for one); it is weakened. Damage scales with your EP.",
-  "nusmp.page.book_spike.spike_garden": "Spike Garden: a garden of spikes grows where you look for five seconds: every half second the foes in it take a pulse and are slowed. Damage scales with your EP."
+  "nusmp.page.book_spike.spike_garden": "Spike Garden: a garden of spikes grows where you look for five seconds: every half second the foes in it take a pulse and are slowed. Damage scales with your EP.",
+  "nusmp.page.book_chain.chain_hook_throw": "A hooked chain is thrown at the first foe it meets: it is hit, slowed for a second and a half and dragged a step towards you. Damage scales with your EP.",
+  "nusmp.page.book_chain.chain_whirl": "You spin with the chains out like a lasso: foes within five blocks are hit, knocked back and slowed for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_chain.chain_downpour": "Chains rain down on the point you look at for four seconds: every half second the foes within five blocks take a pulse, are slowed and jolted. Damage scales with your EP."
 }

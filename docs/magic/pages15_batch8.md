@@ -105,6 +105,9 @@ One table row per page, exactly this shape (the test `Pages15SourceScanTest` rea
 | `book_spike` | `spike_lance` | Spike Lance | mid | original | Spike Lance: one great spike is thrust twelve blocks ahead and pierces every foe on the line, nudging it back. Damage scales with your EP. | line + SPIKE_FX1 | 6 targets, 2 packets |
 | `book_spike` | `spike_snare` | Spike Snare | mid | original | Spike Snare: spikes close round the foe in your crosshair like a cage and hold it (hard control: shares the twelve-second lock, three seconds on a player, a boss for one); it is weakened. Damage scales with your EP. | bind + SPIKE_FX2 | 1 target, 2 packets |
 | `book_spike` | `spike_garden` | Spike Garden | zone | original | Spike Garden: a garden of spikes grows where you look for five seconds: every half second the foes in it take a pulse and are slowed. Damage scales with your EP. | field (at aim) + SPIKE_FX2 | 8 targets per pulse, 10 pulses, zone slot 1 |
+| `book_chain` | `chain_hook_throw` | Hooked Chain | starter | original | A hooked chain is thrown at the first foe it meets: it is hit, slowed for a second and a half and dragged a step towards you. Damage scales with your EP. | bolt + reversed knockback + CHAIN_FX | 1 target, 2 packets |
+| `book_chain` | `chain_whirl` | Chain Whirl | mid | original | You spin with the chains out like a lasso: foes within five blocks are hit, knocked back and slowed for two seconds. Damage scales with your EP. | nova + CHAIN_FX3 | 6 targets, 2 packets |
+| `book_chain` | `chain_downpour` | Chain Downpour | zone | original | Chains rain down on the point you look at for four seconds: every half second the foes within five blocks take a pulse, are slowed and jolted. Damage scales with your EP. | field (at aim) + CHAIN_FX2 | 8 targets per pulse, 8 pulses, zone slot 1 |
 
 ## Research sources
 
@@ -123,7 +126,7 @@ search summaries and from the repo's own copies of the English wiki (`.github/wi
 * **Scale Magic, Spike Magic, Modification Magic, Chain Magic, Barrier Magic, Butoh Magic, Recombination Magic, Transmutation Magic**: the repo wiki copies list only the spells that are already pages (Chain: Pitless Viper, Scorpio Chain,
   Heavy Chain, Magic Binding Iron Chain Formation; Barrier: Voodoo Regalia / Shangrila / Kingdom; Butoh: Sea God Slash / Descent); the searches found no further spell names. Grey's Transformation Magic (the wiki: she can
   transform other things, such as rocks) is the canon behind Living Statue; the squad's existing `character_spells` notes (repo) were read for Henry and Kiato. All other pages of these books are original, in the book's own naming.
-* **Counts**: 11 pages are marked canon (the ability the page uses is from a source, the page name is the mod's), 77 are original. No page is a 1:1 reproduction of a named canon spell.
+* **Counts**: 11 pages are marked canon (the ability the page uses is from a source, the page name is the mod's), 80 are original. No page is a 1:1 reproduction of a named canon spell.
 * **Could not be fetched at all**: every blackclover.fandom.com page (host closed to the sandbox: Seal Magic, Skin Magic, Tongue Magic, Switching Magic, Scale Magic, Spike Magic, Nail Magic, Hair Magic full text), the Japanese fandom / wikipedia
   pages of the same attributes (the searches returned only anime overview pages and shops), and Hischer Ongg's spell list.
 

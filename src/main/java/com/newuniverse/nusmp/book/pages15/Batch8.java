@@ -439,6 +439,14 @@ public final class Batch8 {
             Pages15Kit.zone("spike_garden", "Spike Garden",
                     Pages15Kit.field(Tier.ZONE, 5, 100, 10, true, SP2, slow(30, 1))).withCooldown(450)));
 
+    private static final List<BookPage> CHAIN = register("book_chain", List.of(
+            Pages15Kit.starter("chain_hook_throw", "Hooked Chain",
+                    Pages15Kit.bolt(Tier.STARTER, 0, CH1, CH3, Pages15Kit.all(slow(30, 1), Pages15Kit.knock(-0.7)))).withAnim("thrust"),
+            Pages15Kit.mid("chain_whirl", "Chain Whirl",
+                    Pages15Kit.nova(Tier.MID, 5, false, CH3, Pages15Kit.all(Pages15Kit.knock(0.8), slow(40, 1)))).withCooldown(200).withAnim("sweep"),
+            Pages15Kit.zone("chain_downpour", "Chain Downpour",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, CH2, Pages15Kit.all(slow(30, 1), Pages15Kit.knock(0.2)))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {

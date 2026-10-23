@@ -110,5 +110,10 @@
     "spike_lance",
     "spike_snare",
     "spike_garden"
+  ],
+  "CHAIN": [
+    "chain_hook_throw",
+    "chain_whirl",
+    "chain_downpour"
   ]
 }
