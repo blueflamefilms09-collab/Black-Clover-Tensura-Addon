@@ -102,11 +102,11 @@ public final class SpiritDiveAnimeRules {
     /** The six parts the shell is made of (head, body, two arms, two legs): the base layers of the player model; the clothes layers are not drawn again. */
     public static final int MODEL_PARTS = 6;
 
-    /** Parts the shell draws for a stage, counted as the six body parts of {@link #PART_BOX} (the half wind dive: the left arm and leg; the {@link SpiritDivePieces#shellParts} mask) plus the head in a full dive (the rim hull draws round the head). */
+    /** Parts the shell draws for a stage, counted as the six body parts of {@link #PART_BOX} (the half wind dive: the left arm and leg; the {@link SpiritDivePieces#shellParts} mask) (never the head: its glow is the hair, the halo and the eyes). */
     public static int shellModelParts(Element el, Stage st) {
         int mask = SpiritDivePieces.shellParts(el, st), n = 0;
         for (int bit : new int[]{SpiritDivePieces.SHELL_BODY, SpiritDivePieces.SHELL_ARM_R, SpiritDivePieces.SHELL_ARM_L, SpiritDivePieces.SHELL_LEG_R, SpiritDivePieces.SHELL_LEG_L}) if ((mask & bit) != 0) n++;
-        return n + (SpiritDivePieces.full(st) ? 1 : 0);
+        return n;
     }
 
     // ------------------------------------------------------------------ the tiers
@@ -118,10 +118,10 @@ public final class SpiritDiveAnimeRules {
 
     private static final Spec[][] SPEC = {
             // standard tier: FULL, MID, FAR, CULLED
-            {new Spec(2, 2, 8, 7, 4, 0, 0, 1, true, true, false, true), new Spec(2, 1, 5, 0, 0, 0, 0, 1, true, true, false, true), new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false),
+            {new Spec(2, 2, 8, 9, 4, 0, 0, 1, true, true, false, true), new Spec(2, 1, 5, 0, 0, 0, 0, 1, true, true, false, true), new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false),
                     new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false)},
             // character tier
-            {new Spec(4, 3, 10, 14, 5, 4, 6, 2, true, true, true, true), new Spec(3, 2, 6, 6, 3, 0, 0, 1, true, true, false, true), new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false),
+            {new Spec(3, 2, 10, 14, 5, 4, 6, 2, true, true, true, true), new Spec(3, 2, 6, 6, 3, 0, 0, 1, true, true, false, true), new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false),
                     new Spec(0, 0, 0, 0, 0, 0, 0, 0, false, false, false, false)}};
 
     public static Spec spec(boolean character, Lod lod) { return SPEC[character ? 1 : 0][lod.ordinal()]; }
@@ -186,7 +186,7 @@ public final class SpiritDiveAnimeRules {
         return switch (el) {
             case WIND -> new Pal(prim, 0xE8FFF4, glow, use == Grade.YUNO ? 0xB8FFD8 : 0x9CF2C4, 0xE8FFB0, 0xE8FFF4);
             case FIRE -> new Pal(0xFF5A18, 0xFFE4A0, glow, 0xFF6A1C, 0xFFE070, 0xFFC060);
-            case WATER -> new Pal(0x4C9CF4, 0xE4F6FF, glow, use == Grade.NOELLE ? 0x7CC4FF : 0x6CB8F8, 0xE8F6FF, 0xD8F0FF);
+            case WATER -> new Pal(0x86BEF8, 0xE4F6FF, glow, use == Grade.NOELLE ? 0x7CC4FF : 0x6CB8F8, 0xE8F6FF, 0xD8F0FF);
             case EARTH -> new Pal(0xC9A25C, 0xFFE9A8, 0xFFB040, 0xC8A860, 0xFFC050, 0xFFD878);
         };
     }

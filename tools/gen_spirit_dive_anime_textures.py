@@ -68,7 +68,7 @@ def swirl(el, rnd):
     yy, xx = np.mgrid[0:N, 0:N].astype(np.float32)
     img = np.zeros((N, N, 3), np.float32)
     bands = [rgb(h) for h in BANDS[el]]
-    img[:] = bands[0] * 0.10                                                          # a faint wash of the colour everywhere: the body is bathed in it
+    img[:] = bands[2] * 0.34                                                          # a faint wash of the colour everywhere: the body is bathed in it
     if el == "wind":
         for i in range(30):                                                           # long streaks that sway: flowing air
             x0, ln, w = rnd.uniform(0, N), rnd.uniform(70, 210), rnd.uniform(2.5, 7.5)
@@ -265,10 +265,7 @@ def hair(el, rnd):
                     for r in range(int(rows_cover * K), int((rows_cover + 1.6) * K)):
                         wdt = ((rows_cover + 1.6) * K - r) / (1.6 * K) * (K * 1.4)
                         cov[r, max(0, tx - int(wdt / 2)): min(W, tx + int(wdt / 2))] = 1.0
-            else:                                                                   # ragged lower edge
-                for tx in range(W):
-                    ext = int(K * (0.5 + 1.2 * ((math.sin(tx * 0.9 + rows_cover) + 1) / 2)))
-                    cov[int(rows_cover * K): min(H, int(rows_cover * K) + ext), tx] = 1.0
+            # (the sides end in a straight line: a ragged edge reads as icicles on the head)
         # strands: vertical streaks in three flat tones
         stripe = np.zeros((H, W), np.float32)
         for sx in range(W):
@@ -281,7 +278,7 @@ def hair(el, rnd):
             m = inten >= lo
             colr[m] = col
         colr[inten >= 0.95] = bands[4]
-        colr = colr * 0.5 + g[None, None, :] * 0.5 * inten[..., None]
+        colr = (colr * 0.55 + g[None, None, :] * 0.45 * inten[..., None]) * 0.85
         sl = (slice(y0 * K, y0 * K + H), slice(x0 * K, x0 * K + W))
         img[sl][..., :3] = np.where(cov[..., None] > 0, colr, 0.0)
         img[sl][..., 3] = cov * 255.0

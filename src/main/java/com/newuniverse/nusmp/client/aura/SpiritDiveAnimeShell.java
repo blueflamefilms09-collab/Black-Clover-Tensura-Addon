@@ -48,12 +48,12 @@ final class SpiritDiveAnimeShell {
 
         /** The frame of the part about to be drawn: its centre (world) and its three axes (the columns of its matrix, which carry the scale), from the pose at that part. */
         void frame(Matrix4f m, float lx, float ly, float lz) {
-            ax = m.m00(); ay = m.m10(); az = m.m20();
-            bx = m.m01(); by = m.m11(); bz = m.m21();
-            ex = m.m02(); ey = m.m12(); ez = m.m22();
-            cx = m.m00() * lx + m.m01() * ly + m.m02() * lz + m.m30();
-            cy = m.m10() * lx + m.m11() * ly + m.m12() * lz + m.m31();
-            cz = m.m20() * lx + m.m21() * ly + m.m22() * lz + m.m32();
+            ax = m.m00(); ay = m.m01(); az = m.m02();                                             // JOML names a field m<column><row>: the first column is the world direction of the part's x axis
+            bx = m.m10(); by = m.m11(); bz = m.m12();
+            ex = m.m20(); ey = m.m21(); ez = m.m22();
+            cx = m.m00() * lx + m.m10() * ly + m.m20() * lz + m.m30();
+            cy = m.m01() * lx + m.m11() * ly + m.m21() * lz + m.m31();
+            cz = m.m02() * lx + m.m12() * ly + m.m22() * lz + m.m32();
             n = 0;
         }
 
@@ -71,7 +71,7 @@ final class SpiritDiveAnimeShell {
                 return;
             }
             int i = n++;
-            x[i] = px; y[i] = py; z[i] = pz; u[i] = uu; v[i] = vv; nx[i] = nnx; ny[i] = nny; nz[i] = nnz; col[i] = color; ov[i] = overlay; lt[i] = light;
+            x[i] = px; y[i] = py; z[i] = pz; u[i] = uu; v[i] = vv; nx[i] = -nnx; ny[i] = -nny; nz[i] = -nnz;           // the normal turns with the winding col[i] = color; ov[i] = overlay; lt[i] = light;
             if (n == 4) {                                                                              // a whole quad: emit it in the reverse order 0, 3, 2, 1
                 n = 0;
                 emit(0); emit(3); emit(2); emit(1);
@@ -159,7 +159,8 @@ final class SpiritDiveAnimeShell {
     /** Draws the whole shell of one dive: the passes the level of detail allows (3: wash, rim, soft; 2: wash, rim; 1: the rim outline alone). */
     static void draw(AuraContext c, Element el, int passes, int tint, int rim, int glow, float pulse, float progress, int mask, boolean head, boolean skipArmR, int keptMask, float k) {
         boolean slim = WaterAuraRig.slim(c.model());
-        if (passes >= 2) pass(c, swirl(el, SpiritDiveAnimeRules.swirlStep(el, c.age())), false, SpiritDiveAnimeRules.INFLATE[0], tint, 0.6f * pulse * k, progress, mask, false, skipArmR, keptMask, slim);
+        if (passes >= 2) pass(c, SafeAdditive.emissive(SOFT), false, SpiritDiveAnimeRules.INFLATE[0] * 0.5f, tint, (el == Element.WATER ? 0.2f : 0.3f) * k, progress, mask, head, skipArmR, keptMask, slim);   // the light on the clothes: a translucent cover in the colour of the spirit
+        if (passes >= 2) pass(c, swirl(el, SpiritDiveAnimeRules.swirlStep(el, c.age())), false, SpiritDiveAnimeRules.INFLATE[0], tint, 0.85f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);
         pass(c, SafeAdditive.additive(RIM), true, SpiritDiveAnimeRules.INFLATE[1], rim, 0.95f * k, progress, mask, head, skipArmR, keptMask, slim);
         if (passes >= 3) pass(c, SafeAdditive.additive(SOFT), true, SpiritDiveAnimeRules.INFLATE[2], glow, 0.4f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);
     }

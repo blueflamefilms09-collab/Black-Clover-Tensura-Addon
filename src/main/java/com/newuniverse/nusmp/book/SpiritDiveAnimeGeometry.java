@@ -29,24 +29,24 @@ public final class SpiritDiveAnimeGeometry {
 
     // ------------------------------------------------------------------ the plume tables (px; the first rows are the standard tier's)
     private static final float[][] WIND = {
-            {3.5f, 2.0f, 2.6f, 0.35f, 0.40f, 0.12f, 0.70f, 0.80f, 0.28f, 0.95f, 0.98f, 0.60f, 34f, 7.5f, 2.2f, 0.0f, 0},
-            {3.8f, 3.5f, 2.8f, 0.45f, 0.15f, 0.20f, 0.85f, 0.28f, 0.45f, 1.00f, 0.20f, 0.95f, 36f, 8.0f, 2.5f, 1.3f, 0},
-            {3.5f, 5.0f, 2.8f, 0.20f, -0.15f, 0.30f, 0.45f, -0.35f, 0.60f, 0.60f, -0.45f, 1.00f, 30f, 6.0f, 3.0f, 2.1f, 0},
-            {3.0f, 1.0f, 2.4f, 0.20f, 0.50f, 0.10f, 0.40f, 0.90f, 0.20f, 0.50f, 1.15f, 0.45f, 24f, 5.0f, 1.8f, 3.4f, 0}};
+            {4.2f, 2.0f, 2.8f, 0.45f, 0.35f, 0.05f, 0.90f, 0.70f, 0.12f, 1.20f, 0.85f, 0.30f, 30f, 4.0f, 2.2f, 0.0f, 0},
+            {4.4f, 3.5f, 2.8f, 0.50f, 0.10f, 0.10f, 1.00f, 0.20f, 0.25f, 1.35f, 0.10f, 0.50f, 30f, 3.6f, 2.5f, 1.3f, 0},
+            {4.0f, 5.0f, 2.8f, 0.40f, -0.10f, 0.15f, 0.80f, -0.30f, 0.35f, 1.00f, -0.50f, 0.65f, 26f, 3.2f, 3.0f, 2.1f, 0},
+            {3.6f, 1.0f, 2.6f, 0.25f, 0.50f, 0.05f, 0.50f, 0.90f, 0.10f, 0.65f, 1.15f, 0.25f, 22f, 3.0f, 1.8f, 3.4f, 0}};
     private static final float[][] FIRE = {
-            {3.2f, 1.5f, 2.5f, 0.25f, -0.20f, 0.35f, 0.40f, -0.70f, 0.75f, 0.35f, -1.00f, 1.10f, 40f, 8.5f, 3.0f, 0.0f, 1},
-            {3.6f, 2.0f, 2.6f, 0.30f, 0.40f, 0.20f, 0.65f, 0.70f, 0.40f, 0.85f, 0.85f, 0.80f, 30f, 6.5f, 2.6f, 1.1f, 1},
-            {3.8f, 3.5f, 2.8f, 0.45f, 0.10f, 0.25f, 0.80f, 0.15f, 0.55f, 1.00f, 0.00f, 1.00f, 32f, 6.0f, 2.8f, 2.4f, 1},
-            {3.4f, 5.0f, 2.7f, 0.20f, -0.30f, 0.30f, 0.30f, -0.70f, 0.70f, 0.30f, -1.00f, 1.20f, 26f, 4.5f, 2.2f, 3.3f, 1}};
+            {3.2f, 1.5f, 2.5f, 0.25f, -0.20f, 0.35f, 0.40f, -0.70f, 0.75f, 0.35f, -1.00f, 1.10f, 40f, 5.5f, 3.0f, 0.0f, 1},
+            {3.6f, 2.0f, 2.6f, 0.30f, 0.40f, 0.20f, 0.65f, 0.70f, 0.40f, 0.85f, 0.85f, 0.80f, 30f, 3.8f, 2.6f, 1.1f, 1},
+            {3.8f, 3.5f, 2.8f, 0.45f, 0.10f, 0.25f, 0.80f, 0.15f, 0.55f, 1.00f, 0.00f, 1.00f, 32f, 3.4f, 2.8f, 2.4f, 1},
+            {3.4f, 5.0f, 2.7f, 0.20f, -0.30f, 0.30f, 0.30f, -0.70f, 0.70f, 0.30f, -1.00f, 1.20f, 26f, 3.0f, 2.2f, 3.3f, 1}};
     private static final float[][] WATER = {
-            {3.4f, 2.5f, 2.6f, 0.30f, 0.10f, 0.30f, 0.55f, -0.25f, 0.70f, 0.60f, -0.80f, 1.00f, 36f, 6.5f, 2.6f, 0.0f, 2},
-            {3.2f, 2.0f, 2.5f, 0.30f, 0.50f, 0.20f, 0.70f, 0.75f, 0.40f, 0.95f, 0.60f, 0.75f, 38f, 3.2f, 2.4f, 1.7f, 2},
-            {3.8f, 3.0f, 2.7f, 0.50f, 0.00f, 0.30f, 0.90f, -0.30f, 0.60f, 1.10f, -0.90f, 0.90f, 36f, 3.0f, 2.6f, 2.9f, 2},
-            {3.0f, 6.0f, 2.5f, 0.10f, -0.20f, 0.50f, 0.10f, -0.60f, 0.90f, 0.00f, -1.00f, 1.30f, 40f, 2.6f, 2.2f, 4.0f, 2}};
+            {3.4f, 2.5f, 2.6f, 0.30f, 0.10f, 0.30f, 0.55f, -0.25f, 0.70f, 0.60f, -0.80f, 1.00f, 36f, 4.5f, 2.6f, 0.0f, 2},
+            {3.2f, 2.0f, 2.5f, 0.30f, 0.50f, 0.20f, 0.70f, 0.75f, 0.40f, 0.95f, 0.60f, 0.75f, 38f, 2.0f, 2.4f, 1.7f, 2},
+            {3.8f, 3.0f, 2.7f, 0.50f, 0.00f, 0.30f, 0.90f, -0.30f, 0.60f, 1.10f, -0.90f, 0.90f, 36f, 1.9f, 2.6f, 2.9f, 2},
+            {3.0f, 6.0f, 2.5f, 0.10f, -0.20f, 0.50f, 0.10f, -0.60f, 0.90f, 0.00f, -1.00f, 1.30f, 40f, 1.7f, 2.2f, 4.0f, 2}};
     private static final float[][] EARTH = {
-            {3.4f, 2.2f, 2.6f, 0.30f, 0.45f, 0.10f, 0.65f, 0.85f, 0.25f, 0.90f, 1.00f, 0.50f, 28f, 6.0f, 0.0f, 0.0f, 3},
-            {3.6f, 3.2f, 2.8f, 0.45f, 0.20f, 0.20f, 0.85f, 0.30f, 0.40f, 1.05f, 0.20f, 0.80f, 30f, 6.5f, 0.0f, 1.0f, 3},
-            {3.2f, 4.5f, 2.7f, 0.35f, -0.10f, 0.30f, 0.70f, -0.30f, 0.60f, 0.90f, -0.55f, 0.90f, 24f, 5.0f, 0.0f, 2.0f, 3}};
+            {3.4f, 2.2f, 2.6f, 0.30f, 0.45f, 0.10f, 0.65f, 0.85f, 0.25f, 0.90f, 1.00f, 0.50f, 28f, 3.6f, 0.0f, 0.0f, 3},
+            {3.6f, 3.2f, 2.8f, 0.45f, 0.20f, 0.20f, 0.85f, 0.30f, 0.40f, 1.05f, 0.20f, 0.80f, 30f, 3.8f, 0.0f, 1.0f, 3},
+            {3.2f, 4.5f, 2.7f, 0.35f, -0.10f, 0.30f, 0.70f, -0.30f, 0.60f, 0.90f, -0.55f, 0.90f, 24f, 3.2f, 0.0f, 2.0f, 3}};
 
     /** Plume rows of an element's table (the character tier of a dive may use more of them than the standard tier). */
     public static int rows(Element el, boolean character) { return table(el).length; }
@@ -77,7 +77,7 @@ public final class SpiritDiveAnimeGeometry {
                     r[0] = a * 3.4f; r[1] = -8.2f + (longOne ? 0.8f : 0f) ; r[2] = longOne ? 3.4f : -2.8f + 5.2f * (i % 4) / 3f;
                     r[3] = a * 0.7f; r[4] = -1f; r[5] = longOne ? 0.9f : 0.15f + 0.1f * (i % 3);
                     r[6] = 0f; r[7] = longOne ? 0.9f : 0.15f; r[8] = longOne ? 0.9f : 0.5f;
-                    r[9] = longOne ? 15f : 8f + 2.5f * rr; r[10] = longOne ? 1.6f : 1.9f; r[11] = 1.1f; r[12] = i * 0.9f; r[13] = 4;
+                    r[9] = longOne ? 14f : 8.5f + 3f * rr; r[10] = longOne ? 2.0f : 2.2f; r[11] = 1.1f; r[12] = i * 0.9f; r[13] = 4;
                 }
                 case 1 -> {                                                                                     // FIRE: long flame locks streaming up and back off the head
                     if (i < 2) {                                                                                // the first two rows are the Salamander's horns (canon: draconic features), swept back
@@ -89,15 +89,15 @@ public final class SpiritDiveAnimeGeometry {
                     }
                     r[0] = a * 3.4f; r[1] = -8.0f + 0.5f * Math.abs(a); r[2] = -1.0f + 4.6f * back;
                     r[3] = a * 0.35f; r[4] = -0.85f; r[5] = 0.55f + 0.4f * back;
-                    r[6] = a * 0.1f; r[7] = 0.1f; r[8] = 1.2f;
-                    r[9] = 16f + 12f * rr; r[10] = 3.0f; r[11] = 2.6f; r[12] = i * 0.8f; r[13] = 1;
+                    r[6] = a * 0.1f; r[7] = 0.15f; r[8] = 0.5f;
+                    r[9] = 12f + 9f * rr; r[10] = 2.6f; r[11] = 2.6f; r[12] = i * 0.8f; r[13] = 1;
                 }
                 case 2 -> {                                                                                     // WATER: twin tails and glints: long ribbons from the back of the head hanging down
                     boolean tail = i < 4;
                     r[0] = tail ? (i % 2 == 0 ? 3.6f : -3.6f) : a * 3.4f; r[1] = tail ? -6.4f : -8.0f; r[2] = tail ? 2.8f : -1.5f + 4f * back;
                     r[3] = tail ? (i % 2 == 0 ? 0.55f : -0.55f) : a * 0.4f; r[4] = tail ? -0.1f : -0.9f; r[5] = tail ? 0.8f : 0.4f;
-                    r[6] = 0f; r[7] = tail ? 1.6f : 0.5f; r[8] = tail ? 0.3f : 0.6f;
-                    r[9] = tail ? 30f : 9f + 4f * rr; r[10] = tail ? 2.6f : 1.6f; r[11] = tail ? 1.8f : 1.0f; r[12] = i * 1.1f; r[13] = 2;
+                    r[6] = 0f; r[7] = tail ? 1.1f : 0.5f; r[8] = tail ? 0.2f : 0.5f;
+                    r[9] = tail ? 17f : 8f + 3f * rr; r[10] = tail ? 2.8f : 1.8f; r[11] = tail ? 1.8f : 1.0f; r[12] = i * 1.1f; r[13] = 2;
                 }
                 default -> {                                                                                    // EARTH: crystal shards rising off the head
                     r[0] = a * 3.2f; r[1] = -8.2f; r[2] = -2.5f + 5f * back;

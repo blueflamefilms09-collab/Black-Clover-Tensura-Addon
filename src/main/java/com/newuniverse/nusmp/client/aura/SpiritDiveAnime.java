@@ -15,13 +15,14 @@ import com.newuniverse.nusmp.book.SpiritDiveTier.Grade;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
 import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
+import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
@@ -103,7 +104,7 @@ public final class SpiritDiveAnime {
         boolean helmet = DiveHead.helmet(c.player()), self1p = firstPersonSelf(c);
         int mask = SpiritDivePieces.shellParts(el, st), keptMask = upgrade ? SpiritDivePieces.shellParts(el, Stage.HALF) & mask : 0;
 
-        SpiritDiveAnimeShell.draw(c, el, SpiritDiveAnimeRules.shellPasses(lod), pal.tint(), pal.rim(), pal.glow(), pulse, progress, mask, full, skipArmR, keptMask, k);
+        SpiritDiveAnimeShell.draw(c, el, SpiritDiveAnimeRules.shellPasses(lod), pal.tint(), pal.rim(), pal.glow(), pulse, progress, mask, false, skipArmR, keptMask, k);                      // no hull round the head: the hair, the halo and the eyes are its glow (a box outline would be blocky)
         if (sp.backdrop()) backdrop(c, el, progress, pulse, pal);
         if (sp.plumeRows() > 0) plumes(c, el, st, sp, character, pal, progress, kept, pulse * k, half, full);
         if (sp.trails() > 0) trails(c, el, sp, pal, progress, pulse * k);
@@ -118,7 +119,7 @@ public final class SpiritDiveAnime {
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);                                                           // model pixels
     }
 
-    private static float lenOf(boolean character, boolean full) { return (character ? 1.0f : 0.8f) * (full ? 1f : 0.7f); }
+    private static float lenOf(boolean character, boolean full) { return (character ? 0.66f : 0.48f) * (full ? 1f : 0.75f); }
 
     /**
      * The plume sheets: for each row of the element's table, each side, each layer, a smooth strip along a Bezier spine (the layers are shorter, narrower and brighter toward the front). Two passes:
@@ -148,9 +149,9 @@ public final class SpiritDiveAnime {
                     if (a <= 0.01f) continue;
                     for (int l = 0; l < layers; l++) {
                         float lenK = lk * open * (1f - 0.2f * l), wk = (character ? 1.1f : 0.95f) * (1f - 0.26f * l);
-                        int segs = sp.plumeSegs();
+                        int segs = shape == Shape.SHARD ? Math.min(3, sp.plumeSegs()) : sp.plumeSegs();                  // rock is angular: three flat segments
                         SpiritDiveAnimeGeometry.plumeSpine(SpiritDiveAnimeRibbon.SPINE, segs, row, side, lenK, age + l * 6.5f, sw, vy);
-                        int argb = pass == 0 ? SealDraw.argb(Math.min(1f, (0.9f - 0.1f * l) * a), 0xFFFFFF) : SealDraw.argb(Math.min(1f, (0.75f + 0.1f * l) * a * lit), l == 0 ? pal.glow() : pal.rim());
+                        int argb = pass == 0 ? SealDraw.argb(Math.min(1f, (0.9f - 0.1f * l) * a), 0xFFFFFF) : SealDraw.argb(Math.min(1f, (el == Element.FIRE ? 0.3f : 0.5f + 0.1f * l) * a * lit), pal.glow());
                         SpiritDiveAnimeRibbon.strip(pose, vc, segs, row[13] * wk, shape, row[15] + age * 0.05f, 0.45f, 0f, 0.3f, 1f, argb, 0.1f, FB);
                     }
                 }
@@ -189,7 +190,7 @@ public final class SpiritDiveAnime {
         float age = c.age(), sw = Mth.clamp(c.limbSwingAmount(), 0f, 1f), vy = (float) c.player().getDeltaMovement().y;
         float head = SpiritDiveAnimeRules.partAlpha(progress, 2);
         if (head <= 0.01f && progress < 0.99f) return;
-        if (sp.cap() && !helmet) SpiritDiveAnimeShell.hat(c, SafeAdditive.additive(HAIR[i]), 0.6f, 0xFFFFFF, Math.min(1f, 0.8f * head * lit));
+        if (sp.cap() && !helmet) SpiritDiveAnimeShell.hat(c, SafeAdditive.additive(HAIR[i]), 0.6f, 0xFFFFFF, Math.min(1f, 0.42f * head * lit));
         PoseStack pose = c.pose();
         pose.pushPose();
         applyPart(pose, c.model().head);
@@ -241,13 +242,13 @@ public final class SpiritDiveAnime {
         float a = SpiritDiveAnimeRules.smooth((progress - 0.3f) / 0.5f);
         if (a <= 0.01f) return;
         float pulse = 1f + 0.8f * Math.max(0f, 1f - Math.abs(progress - 0.7f) * 6f);                          // the flash as it opens
-        float hs = (character ? 11.5f : 8.5f) * open;
+        float hs = (character ? 9.5f : 7f) * open;
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(HALO[i]));
         if (half) {
             halfCrown(pose, vc, hs, SealDraw.argb(Math.min(1f, 0.9f * a * lit), pal.halo()));
             return;
         }
-        SealDraw.glow(pose, vc, 0f, -9.5f, 2.5f, hs, age * 0.018f, SealDraw.argb(Math.min(1f, 0.9f * a * lit * pulse), pal.halo()), FB);
+        SealDraw.glow(pose, vc, 0f, -9.5f, 2.5f, hs, age * 0.018f, SealDraw.argb(Math.min(1f, (el == Element.FIRE ? 0.55f : 0.9f) * a * lit * pulse), pal.halo()), FB);
         if (count > 1) SealDraw.glow(pose, vc, 0f, -9.5f, 2.0f, hs * 1.35f, -age * 0.011f + 1f, SealDraw.argb(Math.min(1f, 0.55f * a * lit * pulse), pal.glow()), FB);
     }
 
@@ -334,8 +335,8 @@ public final class SpiritDiveAnime {
         pose.translate(0f, -1.5f, 0f);
         int argb = SealDraw.argb(0.25f * a * (0.85f + 0.15f * pulse), pal.rim());
         float seconds = c.age() / 20f;
-        for (int k = 0; k < specs.length; k++)
-            GeoDraw.paint(pose, c.buffers(), specs[k], null, seconds, GeoDraw.Space.PLAYER, GeoDraw.Layer.ADDITIVE, FB, argb, 0);
+        for (int k = 0; k < specs.length; k++)                                                              // the spirit's own glow map, additive: a ghost in the colour of the dive, not the spirit's skin
+            GeoDraw.draw(pose, c.buffers().getBuffer(SafeAdditive.additive(specs[k].glow())), GeoModels.model(specs[k].model()), null, seconds, GeoDraw.Space.PLAYER, FB, OverlayTexture.NO_OVERLAY, argb);
         pose.popPose();
     }
 
